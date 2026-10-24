@@ -1,0 +1,343 @@
+{
+  "upstreams": [
+    {
+      "repo": "obra/superpowers",
+      "shortname": "superpowers",
+      "license": "MIT",
+      "stars_snapshot_2026-10-24": 304464,
+      "files": [
+        {
+          "upstream": "skills/test-driven-development/SKILL.md",
+          "local": "skills/superpowers/test-driven-development/SKILL.md"
+        },
+        {
+          "upstream": "skills/systematic-debugging/SKILL.md",
+          "local": "skills/superpowers/systematic-debugging/SKILL.md"
+        },
+        {
+          "upstream": "skills/writing-plans/SKILL.md",
+          "local": "skills/superpowers/writing-plans/SKILL.md"
+        },
+        {
+          "upstream": "skills/verification-before-completion/SKILL.md",
+          "local": "skills/superpowers/verification-before-completion/SKILL.md"
+        },
+        {
+          "upstream": "skills/brainstorming/SKILL.md",
+          "local": "skills/superpowers/brainstorming/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/test-driven-development/writing-good-tests.md",
+          "local": "skills/superpowers/test-driven-development/writing-good-tests.md"
+        },
+        {
+          "upstream": "skills/systematic-debugging/root-cause-tracing.md",
+          "local": "skills/superpowers/systematic-debugging/root-cause-tracing.md"
+        },
+        {
+          "upstream": "skills/systematic-debugging/defense-in-depth.md",
+          "local": "skills/superpowers/systematic-debugging/defense-in-depth.md"
+        },
+        {
+          "upstream": "skills/systematic-debugging/condition-based-waiting.md",
+          "local": "skills/superpowers/systematic-debugging/condition-based-waiting.md"
+        },
+        {
+          "upstream": "skills/systematic-debugging/condition-based-waiting-example.ts",
+          "local": "skills/superpowers/systematic-debugging/condition-based-waiting-example.ts"
+        },
+        {
+          "upstream": "skills/systematic-debugging/find-polluter.sh",
+          "local": "skills/superpowers/systematic-debugging/find-polluter.sh"
+        },
+        {
+          "upstream": "skills/brainstorming/builder-check-prompt.md",
+          "local": "skills/superpowers/brainstorming/builder-check-prompt.md"
+        },
+        {
+          "upstream": "skills/brainstorming/visual-companion.md",
+          "local": "skills/superpowers/brainstorming/visual-companion.md"
+        },
+        {
+          "upstream": "skills/brainstorming/scripts/frame-template.html",
+          "local": "skills/superpowers/brainstorming/scripts/frame-template.html"
+        },
+        {
+          "upstream": "skills/brainstorming/scripts/helper.js",
+          "local": "skills/superpowers/brainstorming/scripts/helper.js"
+        },
+        {
+          "upstream": "skills/brainstorming/scripts/server.cjs",
+          "local": "skills/superpowers/brainstorming/scripts/server.cjs"
+        },
+        {
+          "upstream": "skills/brainstorming/scripts/start-server.sh",
+          "local": "skills/superpowers/brainstorming/scripts/start-server.sh"
+        },
+        {
+          "upstream": "skills/brainstorming/scripts/stop-server.sh",
+          "local": "skills/superpowers/brainstorming/scripts/stop-server.sh"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/systematic-debugging/CREATION-LOG.md",
+          "reason": "上游自身开发日志，非 Skill 运行所需"
+        },
+        {
+          "upstream": "skills/systematic-debugging/test-academic.md",
+          "reason": "上游 QA 测试件"
+        },
+        {
+          "upstream": "skills/systematic-debugging/test-pressure-1.md",
+          "reason": "上游 QA 测试件"
+        },
+        {
+          "upstream": "skills/systematic-debugging/test-pressure-2.md",
+          "reason": "上游 QA 测试件"
+        },
+        {
+          "upstream": "skills/systematic-debugging/test-pressure-3.md",
+          "reason": "上游 QA 测试件"
+        }
+      ]
+    },
+    {
+      "repo": "mattpocock/skills",
+      "shortname": "mattpocock-skills",
+      "license": "MIT",
+      "stars_snapshot_2026-10-24": 302187,
+      "files": [
+        {
+          "upstream": "skills/engineering/code-review/SKILL.md",
+          "local": "skills/mattpocock-skills/code-review/SKILL.md"
+        },
+        {
+          "upstream": "skills/engineering/to-spec/SKILL.md",
+          "local": "skills/mattpocock-skills/to-spec/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/engineering/code-review/agents/openai.yaml",
+          "local": "skills/mattpocock-skills/code-review/agents/openai.yaml"
+        },
+        {
+          "upstream": "skills/engineering/to-spec/agents/openai.yaml",
+          "local": "skills/mattpocock-skills/to-spec/agents/openai.yaml"
+        }
+      ]
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "shortname": "addyosmani-agent-skills",
+      "license": "MIT",
+      "stars_snapshot_2026-10-24": 110103,
+      "files": [
+        {
+          "upstream": "skills/context-engineering/SKILL.md",
+          "local": "skills/addyosmani-agent-skills/context-engineering/SKILL.md"
+        },
+        {
+          "upstream": "skills/idea-refine/SKILL.md",
+          "local": "skills/addyosmani-agent-skills/idea-refine/SKILL.md"
+        },
+        {
+          "upstream": "agents/code-reviewer.md",
+          "local": "skills/addyosmani-agent-skills/agents/code-reviewer.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/idea-refine/examples.md",
+          "local": "skills/addyosmani-agent-skills/idea-refine/examples.md"
+        },
+        {
+          "upstream": "skills/idea-refine/frameworks.md",
+          "local": "skills/addyosmani-agent-skills/idea-refine/frameworks.md"
+        },
+        {
+          "upstream": "skills/idea-refine/refinement-criteria.md",
+          "local": "skills/addyosmani-agent-skills/idea-refine/refinement-criteria.md"
+        },
+        {
+          "upstream": "skills/idea-refine/scripts/idea-refine.sh",
+          "local": "skills/addyosmani-agent-skills/idea-refine/scripts/idea-refine.sh"
+        }
+      ]
+    },
+    {
+      "repo": "Leonxlnx/taste-skill",
+      "shortname": "taste-skill",
+      "license": "MIT",
+      "stars_snapshot_2026-10-24": 101829,
+      "files": [
+        {
+          "upstream": "skills/taste-skill/SKILL.md",
+          "local": "skills/taste-skill/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/taste-skill/assets/app.css",
+          "local": "skills/taste-skill/assets/app.css"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/base.css",
+          "local": "skills/taste-skill/assets/base.css"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/base.js",
+          "local": "skills/taste-skill/assets/base.js"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/charts.js",
+          "local": "skills/taste-skill/assets/charts.js"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/scenes/stage.css",
+          "local": "skills/taste-skill/assets/scenes/stage.css"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/scenes/stage.js",
+          "local": "skills/taste-skill/assets/scenes/stage.js"
+        },
+        {
+          "upstream": "skills/taste-skill/evals/evals.json",
+          "local": "skills/taste-skill/evals/evals.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/app.json",
+          "local": "skills/taste-skill/library/app.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/directions.json",
+          "local": "skills/taste-skill/library/directions.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/heroes.json",
+          "local": "skills/taste-skill/library/heroes.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/motions.json",
+          "local": "skills/taste-skill/library/motions.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/palettes.json",
+          "local": "skills/taste-skill/library/palettes.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/photos.json",
+          "local": "skills/taste-skill/library/photos.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/sections.json",
+          "local": "skills/taste-skill/library/sections.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/sites.json",
+          "local": "skills/taste-skill/library/sites.json"
+        },
+        {
+          "upstream": "skills/taste-skill/library/type.json",
+          "local": "skills/taste-skill/library/type.json"
+        },
+        {
+          "upstream": "skills/taste-skill/references/app-screens.md",
+          "local": "skills/taste-skill/references/app-screens.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/colour.md",
+          "local": "skills/taste-skill/references/colour.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/copy.md",
+          "local": "skills/taste-skill/references/copy.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/critique.md",
+          "local": "skills/taste-skill/references/critique.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/imagery.md",
+          "local": "skills/taste-skill/references/imagery.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/layout.md",
+          "local": "skills/taste-skill/references/layout.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/motion.md",
+          "local": "skills/taste-skill/references/motion.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/research.md",
+          "local": "skills/taste-skill/references/research.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/scenes.md",
+          "local": "skills/taste-skill/references/scenes.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/tells.md",
+          "local": "skills/taste-skill/references/tells.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/type.md",
+          "local": "skills/taste-skill/references/type.md"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/assets.mjs",
+          "local": "skills/taste-skill/scripts/assets.mjs"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/draw.mjs",
+          "local": "skills/taste-skill/scripts/draw.mjs"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/inspect.mjs",
+          "local": "skills/taste-skill/scripts/inspect.mjs"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lint.mjs",
+          "local": "skills/taste-skill/scripts/lint.mjs"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/scenes.mjs",
+          "local": "skills/taste-skill/scripts/scenes.mjs"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lib/app-draw.mjs",
+          "local": "skills/taste-skill/scripts/lib/app-draw.mjs"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lib/cdp.mjs",
+          "local": "skills/taste-skill/scripts/lib/cdp.mjs"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lib/probe.mjs",
+          "local": "skills/taste-skill/scripts/lib/probe.mjs"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lib/rules.mjs",
+          "local": "skills/taste-skill/scripts/lib/rules.mjs"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/taste-skill/README.md",
+          "reason": "上游仓库级说明（含安装方式），本仓库 README 已覆盖使用说明"
+        }
+      ]
+    },
+    {
+      "repo": "multica-ai/andrej-karpathy-skills",
+      "shortname": null,
+      "license": "NONE (excluded)",
+      "stars_snapshot_2026-10-24": 223159,
+      "files": []
+    }
+  ]
+}

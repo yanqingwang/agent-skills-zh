@@ -1,0 +1,13 @@
+# macOS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# 临时产物（翻译代理工作文件，禁止入库）
+.tmp-*/
+tmp-*/
+*.tmp
+
+# 本地实验
+*.local.md

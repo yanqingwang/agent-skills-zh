@@ -1,0 +1,56 @@
+name: sync-check
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # 每日 UTC 02:00
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 比对各上游 HEAD，变更则开待翻译 issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          STATE=data/sync-state.json
+          for repo in obra/superpowers mattpocock/skills addyosmani/agent-skills Leonxlnx/taste-skill; do
+            head_sha=$(gh api "repos/$repo/commits/HEAD" --jq '.sha')
+            old_sha=$(jq -r --arg r "$repo" '.repos[$r] // ""' "$STATE")
+            echo "$repo HEAD=$head_sha (prev=${old_sha:-none})"
+            if [ -n "$old_sha" ] && [ "$head_sha" != "$old_sha" ]; then
+              changed=$(gh api "repos/$repo/compare/$old_sha...$head_sha" \
+                --jq '[.files[].filename] | join("\n")' | grep 'SKILL\.md$' || true)
+              if [ -n "$changed" ]; then
+                gh issue create \
+                  --title "上游 $repo 有更新，待重译 $(echo "$changed" | wc -l) 个文件" \
+                  --body "上游 HEAD $old_sha → $head_sha
+
+          变更的 Skill 文件：
+          \`\`\`
+          $changed
+          \`\`\`
+
+          处理流程：重译 → 更新文件头同步日期 → 更新 $STATE" \
+                  --label translation 2>/dev/null || \
+                echo "::warning::issue 创建失败（可能缺 label），变更已打印在上方"
+            fi
+            jq --arg r "$repo" --arg s "$head_sha" '.repos[$r] = $s' "$STATE" > tmp.json \
+              && mv tmp.json "$STATE"
+          done
+
+      - name: 提交同步状态
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet && echo "无变化" || {
+            git add data/sync-state.json
+            git commit -m "chore: 更新上游 HEAD 快照"
+            git push
+          }
