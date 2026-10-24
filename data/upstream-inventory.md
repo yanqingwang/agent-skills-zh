@@ -122,3 +122,50 @@
 
 **第二批落选与延后**：wshobson/agents（41,627，MIT，产出物为 Agent 定义而非 Skill，维持第三批）、alirezarezvani/claude-skills（28,633，380 件大合集，第三批按热度抽取）、alchaincyf/huashu-design 与 JimLiu/baoyu-skills（中文原生，无需翻译）、video-shotcraft/brag-slim/ponytail 变体/rea 与 archify 辅助 skill（第三批候选）。
 
+## 六、第三批候选：接下来 20 个（2026-10-25 检索）
+
+**检索方式**：GitHub Search API，三路查询——`topic:claude-skills` + `topic:agent-skills`（stars:>2000）、`claude skills in:name,description`（stars:>3000）、`topic:ai-agents topic:skills`（stars:>3000），与第一、二批已收录/已排除项去重。
+**核实口径**：每项均经 gh api 核实 License 与目录结构（SKILL.md 有无、语言、skill/工具性质）；网络失败重试 ≥5 次后仍失败才标待查。已完成收录的项目不再列入。
+
+### 收录候选（按星标排序，20 个）
+
+| # | 仓库 | 星标 | License | 类型 | 收录方式与旗舰建议 |
+|:-:|---|---:|---|---|---|
+| 1 | garrytan/gstack | 137,471 | MIT | 整仓型工具链 | **"整仓收录"模式**（第二批已预登记）：office-hours / plan-ceo-review / qa 三个旗舰 + 根 bin/ 依赖 |
+| 2 | wshobson/agents | 41,627 | MIT | Agent 定义型插件市场 | 旗舰抽取；产出物为 Agent 定义而非 SKILL.md，收录前需确认管线适配（如按 harness 分组） |
+| 3 | alirezarezvani/claude-skills | 28,641 | MIT | 380 件大合集 | 按热度抽 3-5 个旗舰 skill |
+| 4 | phuryn/pm-skills | 27,343 | MIT | PM 技能市场（5 组） | 旗舰：create-prd / intended-vs-implemented / ab-test-analysis |
+| 5 | AgriciDaniel/claude-seo | 20,063 | MIT | SEO 26 子 skill + extensions | 旗舰：skills/seo-agentic + seo-audit；extensions/*（第三方集成）排除 |
+| 6 | teng-lin/notebooklm-py | 19,878 | MIT | skill + Python 包 | SKILL.md + notebooklm/ 包原样（skill 依赖 CLI/API） |
+| 7 | wanshuiyin/Auto-claude-code-research-in-sleep | 18,006 | MIT | 科研自动化 skills | 旗舰：auto-paper-improvement-loop / auto-review-loop / arxiv |
+| 8 | yusufkaraaslan/Skill_Seekers | 15,212 | MIT | 文档→skill 转换器 | skills/skill-seekers（"造 skill 的 skill"） |
+| 9 | Orchestra-Research/AI-Research-SKILLs | 13,904 | MIT | AI 研究 skills | 旗舰：0-autoresearch-skill + 01~06 领域件按需 |
+| 10 | Vincentwei1021/video-shotcraft | 13,373 | Apache-2.0 | 单 skill（电影级产品视频） | 整目录（自带 README_CN，中欧受众明确） |
+| 11 | Jeffallan/claude-skills | 12,039 | MIT | 67 全栈 skills | 旗舰抽取（code-reviewer / api-designer / cloud-architect 等） |
+| 12 | tw93/Waza | 7,356 | MIT | 规则插件型（无 SKILL.md） | **结构待评估**：plugins/waza/rules/*.md 习惯规则集；需先定义"规则型收录"管线再动手 |
+| 13 | MengTo/Skills | 6,989 | MIT | 设计师/构建者 skills | agent-skills/ 目录旗舰抽取 |
+| 14 | czlonkowski/n8n-skills | 6,517 | MIT | n8n 工作流 skills | 旗舰：n8n-code-javascript / n8n-error-handling 等按热度 |
+| 15 | gamedev-skills/awesome-gamedev-agent-skills | 3,912 | Apache-2.0 | 74 游戏开发 skills | 旗舰抽取（Godot/Unity/Unreal 各一） |
+| 16 | HughYau/qiushi-skill | 3,825 | MIT | 单 skill（先调查后动手） | 整目录 |
+| 17 | foryourhealth111-pixel/Vibe-Skills | 3,764 | Apache-2.0 | skill 路由编排 | 整目录 |
+| 18 | NVIDIA/skills | 3,718 | Apache-2.0 + CC-BY-4.0 | 官方产品 skills | 旗舰：nvidia-skill-finder（元 skill）+ 1-2 个通用件；双许可需在 NOTICES 分别声明 |
+| 19 | bergside/awesome-design-skills | 3,329 | MIT | 67 设计 skills 合集 | 旗舰抽取 |
+| 20 | tradermonty/claude-trading-skills | 3,250 | MIT | 交易分析 skills | 旗舰抽取（backtest-expert / data-quality-checker 等）；金融内容加免责声明 |
+
+### 检索后排除（新证据）
+
+| 仓库 | 星标 | 排除理由 |
+|---|---:|---|
+| Imbad0202/academic-research-skills | 53,725 | **License 为 CC BY-NC 4.0（非商业）**——非宽松许可，与仓库变现路径（Sponsors/咨询）冲突，原则 #2 排除。GitHub API 显示 NOASSERTION，LICENSE 原文核实 |
+| Graphify-Labs/graphify | 134,312 | 工具型（Docker 服务，无 SKILL.md），非 Skill 文件 |
+| code-yeongyu/oh-my-openagent | 70,303 | 工具型 + License NOASSERTION（非标准），双项不合格 |
+| SnailSploit/Claude-Red | 8,813 | **内容政策排除**：攻击性安全（offensive security）技能库，超出合规汉化范围 |
+| elementalsouls/Claude-BugHunter | 5,271 | 内容政策排除：外部红队/漏洞挖掘技能包，同上 |
+| KKKKhazix/khazix-skills | 21,621 | 中文原生（SKILL.md 正文为中文，leader 实核），无需翻译；可作原创仓引流参考 |
+| zenstory-ai/oh-story-claudecode | 7,962 | 中文原生（story-long-write description 实核为中文），无需翻译 |
+| tradecatlabs/vibe-coding-cn | 17,745 | 中文原生工具箱 |
+| zLanqing/codex-claude-academic-skills | 5,255 | 中文原生（学术 skills） |
+| diet103/claude-code-infrastructure-showcase | 10,039 | 个人基础设施展示（配置范例），非 Skill 产品 |
+| ruvnet/ruflo / zhayujie/CowAgent / nanocoai/nanoclaw 等 | — | Harness/Agent 框架或 App，非 Skill 文件 |
+
+**第三批启动顺序建议**：gstack 整仓模式（含管线改造）→ 单 skill 仓 6 个（video-shotcraft / qiushi / notebooklm / Vibe-Skills / Skill_Seekers / Orchestra）→ 合集旗舰抽取 9 个。wshobson/agents 与 Waza 的"非 SKILL.md 产出物"需先出管线决策。
