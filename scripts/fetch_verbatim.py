@@ -20,11 +20,14 @@ MANIFEST = ROOT / "data" / "manifest.json"
 
 
 def fetch(upstream_path: str, repo: str) -> bytes:
+    # raw 媒体类型：>1MB 的文件（音频/大 JSON 等）contents API 默认 base64 路径会报
+    # "too large"，raw 直返原始字节，上限 100MB；<1MB 文件行为不变。
     out = subprocess.run(
-        ["gh", "api", f"repos/{repo}/contents/{upstream_path}", "--jq", ".content"],
-        capture_output=True, text=True, check=True,
+        ["gh", "api", f"repos/{repo}/contents/{upstream_path}",
+         "-H", "Accept: application/vnd.github.raw"],
+        capture_output=True, check=True,
     ).stdout
-    return base64.b64decode(out)
+    return out
 
 
 def main() -> int:

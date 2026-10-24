@@ -16,11 +16,19 @@ OUT = ROOT / "data" / "category-index.md"
 
 # 关键词 → 分类（顺序即优先级，先匹配先归类）
 RULES: list[tuple[str, list[str]]] = [
-    ("质量与审查", [r"code-review", r"reviewer", r"quality"]),
-    ("上下文工程", [r"context"]),
-    ("设计品味", [r"taste", r"design"]),
+    ("分析与逆向", [r"reverse-engineer", r"understand"]),
+    ("写作与表达", [r"humanizer", r"brag"]),
+    ("调研与信息", [r"last30days"]),
+    ("提示词工程", [r"prompt-master"]),
+    ("知识转化", [r"book-to-skill", r"distilly"]),
+    ("科学研究", [r"experimental-design"]),
+    ("市场与增长", [r"product-marketing"]),
+    ("省 token 与输出格式", [r"caveman", r"i-have-adhd"]),
+    ("质量与审查", [r"code-review", r"reviewer", r"quality", r"security-review"]),
+    ("上下文工程", [r"context", r"continuous-learning", r"autonomous-loops"]),
+    ("设计品味", [r"taste", r"diagram-design", r"archify"]),
     ("头脑风暴与构思", [r"brainstorm", r"idea", r"refine"]),
-    ("工程方法论", [r"tdd|test-driven|debug|plan|spec|verification|triage"]),
+    ("工程方法论", [r"tdd|test-driven|debug|plan|spec|verification|triage|search-first|ponytail"]),
 ]
 
 
@@ -45,6 +53,26 @@ def zh_title(path: str) -> str:
         "idea-refine": "想法精炼",
         "code-reviewer.md": "代码审查者 Agent",
         "taste-skill": "设计品味（taste）",
+        "reverse-engineer-anything": "逆向工程一切（REA）",
+        "ponytail": "最小改动（ponytail）",
+        "caveman": "省 token 电报体（caveman）",
+        "archify": "交互图表生成（archify）",
+        "understand": "代码库知识图谱（understand）",
+        "last30days": "近 30 天调研（last30days）",
+        "diagram-design": "图表设计（diagram-design）",
+        "humanizer": "去 AI 腔（humanizer）",
+        "i-have-adhd": "答案前置输出（i-have-adhd）",
+        "product-marketing": "产品营销基础（product-marketing）",
+        "experimental-design": "实验设计（experimental-design）",
+        "search-first": "先检索后编码（search-first）",
+        "security-review": "安全审查清单（security-review）",
+        "continuous-learning-v2": "持续学习 v2（instinct）",
+        "autonomous-loops": "自主循环（autonomous-loops）",
+        "book-to-skill": "书籍转 Skill（book-to-skill）",
+        "planning-with-files": "文件化计划（planning-with-files）",
+        "distilly": "人物画像蒸馏（distilly）",
+        "brag": "项目宣传文案（brag）",
+        "prompt-master": "提示词大师（prompt-master）",
     }
     stem = pathlib.PurePosixPath(path).name
     parent = pathlib.PurePosixPath(path).parent.name

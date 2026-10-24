@@ -44,5 +44,14 @@
 | boilerplate | 样板代码 |
 | lint | lint（不译） |
 | ship / shipping | 发布上线 |
+| reverse engineering | 逆向工程 |
+| instinct（ECC 语境） | instinct（保留），首次可注"本能规则" |
+| knowledge graph | 知识图谱 |
+| distill | 蒸馏（人格/方法论提炼语境） |
+| positioning | 定位 |
+| messaging | 信息传达 |
+| AI slop | AI 腔 / AI 垃圾内容 |
+| power analysis | 功效分析 |
+| randomization / blocking | 随机化 / 区组化 |
 | maintainer | 维护者 |
 | contributor | 贡献者 |

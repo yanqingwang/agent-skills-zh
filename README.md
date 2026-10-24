@@ -1,11 +1,15 @@
 # Agent Skills 中文汉化库（agent-skills-zh）
 
-> 将 GitHub 上最受欢迎的 Agent Skills（星标 10 万+ 级别）系统性汉化为中文，服务中文 AI 编程用户。
+> 将 GitHub 上最受欢迎的 Agent Skills 系统性汉化为中文，服务中文 AI 编程用户。
 > **本仓库只做翻译，不做原创**——原创人物视角 Skills 另见独立仓库（原则 #7）。
 
 **上游星标快照日期：2026-10-24** · 完整数据见 [data/upstream-inventory.md](data/upstream-inventory.md)
 
-## 来源仓库（第一批）
+## 来源仓库
+
+星标快照 2026-10-24。完整检索与决策记录见 [data/upstream-inventory.md](data/upstream-inventory.md)。
+
+### 第一批（11 个翻译件）
 
 | 上游仓库 | 星标 | License | 本仓库收录 |
 |---|---:|---|---|
@@ -13,17 +17,48 @@
 | [mattpocock/skills](https://github.com/mattpocock/skills) | 302k | MIT | 2 个 Skill |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 110k | MIT | 2 个 Skill + 1 个 Agent |
 | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 102k | MIT | 1 个 Skill |
-| multica-ai/andrej-karpathy-skills (223k) | — | **无 License** | ❌ 不收录（原则 #2） |
+
+### 第二批：全生态 Top 20（20 个翻译件，2026-10-24）
+
+| 上游仓库 | 星标 | License | 本仓库收录 |
+|---|---:|---|---|
+| [morluto/rea](https://github.com/morluto/rea) | 377k | MIT | reverse-engineer-anything |
+| [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 175k | MIT | ponytail |
+| [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | 115k | Apache-2.0 | caveman |
+| [tt-a1i/archify](https://github.com/tt-a1i/archify) | 89k | MIT | archify |
+| [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) | 88k | MIT | understand |
+| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 65k | MIT | last30days |
+| [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | 61k | MIT | diagram-design |
+| [blader/humanizer](https://github.com/blader/humanizer) | 60k | MIT | humanizer |
+| [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | 59k | MIT | i-have-adhd |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 56k | MIT | product-marketing |
+| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 54k | MIT | experimental-design |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | 288k | MIT | search-first / security-review / continuous-learning-v2 / autonomous-loops |
+| [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill) | 36k | MIT | book-to-skill |
+| [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | 28k | MIT | planning-with-files |
+| [titanwings/distilly](https://github.com/titanwings/distilly) | 26k | MIT | distilly |
+| [latent-spaces/brag](https://github.com/latent-spaces/brag) | 18k | MIT | brag |
+| [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 15k | MIT | prompt-master |
+
+**重要合规发现**：`anthropics/skills`（183k 星，官方仓库）经查证**无 License**，按原则 #2 排除，不翻译不分发。`garrytan/gstack`（137k，MIT）为整仓型工具链（skill 强依赖根 `bin/`），推迟至第三批以整仓模式收录。`multica-ai/andrej-karpathy-skills`（223k）无 License，继续排除。
 
 ## 分类索引
 
 由 [scripts/classify.py](scripts/classify.py) 按 [data/manifest.json](data/manifest.json) 自动生成 → [data/category-index.md](data/category-index.md)
 
-- **工程方法论**：TDD、系统化调试、写计划、完成前验证、规格拆解
-- **质量与审查**：代码审查、审查者 Agent
+- **工程方法论**：TDD、系统化调试、写计划、完成前验证、规格拆解、ponytail 最小改动、search-first、planning-with-files
+- **质量与审查**：代码审查、审查者 Agent、security-review 安全检查清单
 - **头脑风暴与构思**：brainstorming、idea-refine
-- **上下文工程**：context-engineering
-- **设计品味**：taste-skill
+- **上下文工程**：context-engineering、continuous-learning-v2、autonomous-loops
+- **设计品味**：taste-skill、diagram-design、archify
+- **写作与表达**：humanizer、brag
+- **分析与逆向**：reverse-engineer-anything、understand
+- **调研与信息**：last30days
+- **提示词工程**：prompt-master
+- **知识转化**：book-to-skill、distilly
+- **科学研究**：experimental-design
+- **市场与增长**：product-marketing
+- **省 token 与输出格式**：caveman、i-have-adhd
 
 ## 使用方法
 

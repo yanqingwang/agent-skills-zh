@@ -54,8 +54,154 @@ SOFTWARE.
 - 收录文件：skills/taste-skill/SKILL.md
 - Copyright (c) Leonxlnx 及 taste-skill 贡献者（MIT 原文同上格式）
 
+## morluto/rea
+
+- 上游：https://github.com/morluto/rea （星标快照 2026-10-24：376,608）
+- License：MIT
+- 收录文件：skills/rea/reverse-engineer-anything/（SKILL.md + references/ 7 件）
+- Copyright (c) 2026 morluto（MIT 原文同 obra/superpowers 条款格式）
+
+## DietrichGebert/ponytail
+
+- 上游：https://github.com/DietrichGebert/ponytail （星标快照 2026-10-24：175,291）
+- License：MIT
+- 收录文件：skills/ponytail/ponytail/SKILL.md
+- Copyright (c) 2026 DietrichGebert（MIT 原文同 obra/superpowers 条款格式）
+
+## tt-a1i/archify
+
+- 上游：https://github.com/tt-a1i/archify （星标快照 2026-10-24：88,591）
+- License：MIT
+- 收录文件：skills/archify/archify/（整目录，SKILL.md + 脚本/示例/Schema 等）
+- Copyright (c) 2026 tt-a1i (Archify)（MIT 原文同 obra/superpowers 条款格式）
+
+## Egonex-AI/Understand-Anything
+
+- 上游：https://github.com/Egonex-AI/Understand-Anything （星标快照 2026-10-24：88,031）
+- License：MIT
+- 收录文件：skills/understand-anything/understand/（整目录，SKILL.md + 构建脚本等）
+- Copyright (c) 2026 Yuxiang Lin（MIT 原文同 obra/superpowers 条款格式）
+
+## mvanhorn/last30days-skill
+
+- 上游：https://github.com/mvanhorn/last30days-skill （星标快照 2026-10-24：65,265）
+- License：MIT
+- 收录文件：skills/last30days-skill/last30days/（SKILL.md + references/ + scripts/，不含 assets/）
+- Copyright (c) 2026 Matt Van Horn（MIT 原文同 obra/superpowers 条款格式）
+
+## cathrynlavery/diagram-design
+
+- 上游：https://github.com/cathrynlavery/diagram-design （星标快照 2026-10-24：60,572）
+- License：MIT
+- 收录文件：skills/diagram-design/diagram-design/（整目录）
+- Copyright (c) 2025 Cathryn Lavery（MIT 原文同 obra/superpowers 条款格式）
+
+## blader/humanizer
+
+- 上游：https://github.com/blader/humanizer （星标快照 2026-10-24：60,170）
+- License：MIT
+- 收录文件：skills/humanizer/humanizer/SKILL.md
+- Copyright (c) 2025 Siqi Chen（MIT 原文同 obra/superpowers 条款格式）
+
+## ayghri/i-have-adhd
+
+- 上游：https://github.com/ayghri/i-have-adhd （星标快照 2026-10-24：58,558）
+- License：MIT
+- 收录文件：skills/i-have-adhd/i-have-adhd/SKILL.md
+- Copyright (c) 2026 Ayoub Ghriss（MIT 原文同 obra/superpowers 条款格式）
+
+## coreyhaines31/marketingskills
+
+- 上游：https://github.com/coreyhaines31/marketingskills （星标快照 2026-10-24：56,336）
+- License：MIT
+- 收录文件：skills/marketingskills/product-marketing/（SKILL.md + references/）
+- Copyright (c) 2025 Corey Haines（MIT 原文同 obra/superpowers 条款格式）
+
+## K-Dense-AI/scientific-agent-skills
+
+- 上游：https://github.com/K-Dense-AI/scientific-agent-skills （星标快照 2026-10-24：54,395）
+- License：MIT
+- 收录文件：skills/scientific-agent-skills/experimental-design/（整目录）
+- Copyright (c) 2025 K-Dense Inc.（MIT 原文同 obra/superpowers 条款格式）
+
+## affaan-m/ECC
+
+- 上游：https://github.com/affaan-m/ECC （星标快照 2026-10-24：287,772）
+- License：MIT
+- 收录文件：skills/ecc/{search-first, security-review, continuous-learning-v2, autonomous-loops}/
+- Copyright (c) 2026 Affaan Mustafa（MIT 原文同 obra/superpowers 条款格式）
+
+## virgiliojr94/book-to-skill
+
+- 上游：https://github.com/virgiliojr94/book-to-skill （星标快照 2026-10-24：35,953）
+- License：MIT
+- 收录文件：skills/book-to-skill/book-to-skill/（SKILL.md + book_to_skill/ + scripts/ + tools/）
+- Copyright (c) 2025 virgiliojr94（MIT 原文同 obra/superpowers 条款格式）
+
+## OthmanAdi/planning-with-files
+
+- 上游：https://github.com/OthmanAdi/planning-with-files （星标快照 2026-10-24：27,618）
+- License：MIT
+- 收录文件：skills/planning-with-files/planning-with-files/（整目录）
+- Copyright (c) 2026 Ahmad Adi（MIT 原文同 obra/superpowers 条款格式）
+
+## titanwings/distilly
+
+- 上游：https://github.com/titanwings/distilly （星标快照 2026-10-24：25,974）
+- License：MIT
+- 收录文件：skills/distilly/distilly/（SKILL.md + tools/ + prompts/）
+- Copyright (c) 2026 titanwings（MIT 原文同 obra/superpowers 条款格式）
+
+## latent-spaces/brag
+
+- 上游：https://github.com/latent-spaces/brag （星标快照 2026-10-24：18,286）
+- License：MIT
+- 收录文件：skills/brag/brag/（整目录，含 assets/music 音频素材）
+- Copyright (c) 2026 Shunit Haviv Hakimi（MIT 原文同 obra/superpowers 条款格式）
+
+## nidhinjs/prompt-master
+
+- 上游：https://github.com/nidhinjs/prompt-master （星标快照 2026-10-24：14,986）
+- License：MIT
+- 收录文件：skills/prompt-master/prompt-master/（SKILL.md + references/）
+- Copyright (c) 2026 Nidhin Joseph Nelson（MIT 原文同 obra/superpowers 条款格式）
+
+
+## JuliusBrussee/caveman
+
+- 上游：https://github.com/JuliusBrussee/caveman （星标快照 2026-10-24：114,756）
+- License：Apache-2.0（自 3.0.0 起全仓库统一；历史 MIT 部分仅覆盖 3.0.0 之前的版本）
+- 收录文件：skills/caveman/caveman/（SKILL.md + README.md）
+- Copyright 2026 Julius Brussee
+
+```
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+```
+
+> 注：caveman 自 3.0.0 起全仓库统一采用 Apache-2.0（此前 MIT 部分仅覆盖历史版本）。上方为 Apache-2.0 条款摘要，完整原文见上游仓库根 `LICENSE`；`NOTICE` 载明版权行 "Copyright 2026 Julius Brussee" 与第三方归属。
+
 ## 明确排除
 
 - `multica-ai/andrej-karpathy-skills`（223,159 星）：**无 License 文件，默认保留所有权利，本仓库不翻译、不分发其任何内容**（PRINCIPLES.md 原则 #2）。
+- `anthropics/skills`（183,439 星，官方仓库，2026-10-24 查证）：**GitHub API 返回无 License（license: NONE），仓库内无 LICENSE 文件，默认保留所有权利，本仓库不翻译、不分发其任何内容**（原则 #2）。
+
+### 第二批技术性排除
+
+- `garrytan/gstack`（137,471 星，MIT）：License 合规，但其 skill 与仓库根部 `bin/` 工具链强耦合（旗舰 skill 引用根 bin/ 30+ 处），上游安装形态为整仓克隆；单 skill 目录收录必然产生悬空引用，推迟至第三批以"整仓收录"模式单独处理。
+- `JuliusBrussee/caveman` 的 proxy/CLI/SDK 等非 skill 部分：仅为工具代码，本仓库只收录 skill 文档（skills/caveman/）。
 
 > 注：各上游 LICENSE 原文以对应仓库当前版本为准，同步时如发现 License 变更，立即停止收录并在 issue 中评估影响。

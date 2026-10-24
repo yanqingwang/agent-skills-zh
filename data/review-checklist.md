@@ -5,9 +5,9 @@
 
 ## A. 合规红线（任一 FAIL 即整体 FAIL）
 
-- [ ] A1. 收录文件仅来自 4 个 MIT 仓库（superpowers / mattpocock-skills / addyosmani-agent-skills / taste-skill）
-- [ ] A2. **无任何内容来自无 License 仓库**（multica-ai/andrej-karpathy-skills 必须零出现）
-- [ ] A3. THIRD-PARTY-NOTICES.md 含全部 4 个上游的 License 声明与版权归属
+- [ ] A1. 收录文件仅来自 License 为 MIT/Apache-2.0 的仓库（第一批 4 个 MIT + 第二批 16 个 MIT + caveman Apache-2.0）
+- [ ] A2. **无任何内容来自无 License 仓库**（multica-ai/andrej-karpathy-skills、anthropics/skills 必须零出现；上游 verbatim 代码中对人名 "karpathy" 的算法性引用除外）
+- [ ] A3. THIRD-PARTY-NOTICES.md 含全部上游（第一批 4 + 第二批 17）的 License 声明与版权归属
 - [ ] A4. 每个翻译文件头部有声明块：上游链接、原文件路径、License、翻译日期、"AI 辅助翻译"、"非官方中文版"
 - [ ] A5. 未声称"官方中文版"
 
@@ -25,9 +25,10 @@
 
 ## D. 结构与管线
 
-- [ ] D1. 11 个文件全部存在于 data/manifest.json 声明的 local 路径
-- [ ] D2. scripts/classify.py 可运行且生成的 data/category-index.md 覆盖全部 11 个文件、分类正确
+- [ ] D1. 全部翻译件与 verbatim 件存在于 data/manifest.json 声明的 local 路径
+- [ ] D2. scripts/classify.py 可运行且生成的 data/category-index.md 覆盖全部翻译件、分类正确
 - [ ] D3. .github/workflows/sync-check.yml 语法有效（yaml 解析通过）
+- [ ] D4. scripts/fetch_verbatim.py --check 全量 1210 件逐字节一致（第二批起含 >1MB 大文件，raw 媒体类型抓取）
 - [ ] D4. data/upstream-inventory.md 星标数与 gh api 实时值一致（±0.5%内）且 License 标注正确
 - [ ] D5. **目录完整性**：各 SKILL.md 正文引用的目录内文件在本地全部存在（无悬空引用）；manifest `verbatim` 清单 51 个文件全部落盘；`python3 scripts/fetch_verbatim.py --check` 返回 diff=0（原样件逐字节一致）；`verbatim_excluded` 之外无遗漏的运行所需文件
 
