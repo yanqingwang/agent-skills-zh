@@ -6,6 +6,7 @@ description: 通过结构化的发散与收敛思维，把原始想法打磨成�
 > **中文汉化版** · 上游：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) · 原文件：`skills/idea-refine/SKILL.md` · License: MIT
 > 翻译日期：2026-10-24 · 同步状态：上游 HEAD（2026-10-24 快照）· AI 辅助翻译 + 人工校对
 > 术语以 [GLOSSARY.md](../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+> 口号本地化：2026-10-24 —— 触发语句补充中文等价句；一页纸输出模板改为双语标题；`idea-refine.sh` 命令保持原样（见仓库 README「口号与命令本地化说明」）。
 
 # 想法打磨
 
@@ -18,7 +19,7 @@ description: 通过结构化的发散与收敛思维，把原始想法打磨成�
 - 当一个想法还很模糊、需要先塑形才能变成计划时
 - 当你需要在确定方向之前压力测试各项假设时
 - 当你想在收敛到唯一选项之前，先扩展备选项时
-- 触发语句："Help me refine this idea"、"Ideate on [concept]"、"Stress-test my plan"
+- 触发语句："Help me refine this idea"、"Ideate on [concept]"、"Stress-test my plan"（中文等价："帮我把这个想法打磨一下"、"围绕 [概念] 发散一下"、"压力测试我的计划"）
 - 不适用于：完全不清楚自己想要什么的用户（请用 `interview-me`），或方向已选定、需要的是规格的场景（请用 `spec-driven-development`）
 
 ## 工作方式
@@ -119,29 +120,29 @@ bash skills/idea-refine/scripts/idea-refine.sh
 产出一个具体的成果物——一页纸 markdown 文档，让工作能往前推进：
 
 ```markdown
-# [Idea Name]
+# [想法名称（Idea Name）]
 
-## Problem Statement
-[One-sentence "How Might We" framing]
+## 问题陈述（Problem Statement）
+[一句话的"我们如何……（How Might We）"式表述]
 
-## Recommended Direction
-[The chosen direction and why — 2-3 paragraphs max]
+## 推荐方向（Recommended Direction）
+[选定的方向及理由 —— 最多 2-3 段]
 
-## Key Assumptions to Validate
-- [ ] [Assumption 1 — how to test it]
-- [ ] [Assumption 2 — how to test it]
-- [ ] [Assumption 3 — how to test it]
+## 待验证的关键假设（Key Assumptions to Validate）
+- [ ] [假设 1 —— 如何验证它]
+- [ ] [假设 2 —— 如何验证它]
+- [ ] [假设 3 —— 如何验证它]
 
-## MVP Scope
-[The minimum version that tests the core assumption. What's in, what's out.]
+## MVP 范围（MVP Scope）
+[验证核心假设的最小版本。包含什么、不包含什么。]
 
-## Not Doing (and Why)
-- [Thing 1] — [reason]
-- [Thing 2] — [reason]
-- [Thing 3] — [reason]
+## 不做什么及原因（Not Doing and Why）
+- [事项 1] —— [原因]
+- [事项 2] —— [原因]
+- [事项 3] —— [原因]
 
-## Open Questions
-- [Question that needs answering before building]
+## 待解问题（Open Questions）
+- [动手构建之前需要回答的问题]
 ```
 
 **"不做什么"（Not Doing）清单可以说是整份产出中最有价值的部分。**聚焦的本质，是对好想法说不。把取舍明明白白写出来。

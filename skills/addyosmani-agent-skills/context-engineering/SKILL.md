@@ -6,6 +6,7 @@ description: 优化 Agent 的上下文配置。适用于：开始新会话时、
 > **中文汉化版** · 上游：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) · 原文件：`skills/context-engineering/SKILL.md` · License: MIT
 > 翻译日期：2026-10-24 · 同步状态：上游 HEAD（2026-10-24 快照）· AI 辅助翻译 + 人工校对
 > 术语以 [GLOSSARY.md](../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+> 口号本地化：2026-10-24 —— 修辞性口号与图注已译中文；`PLAN:`、`CLAUDE.md` 模板等功能标记保留英文（见仓库 README「口号与命令本地化说明」）。
 
 # 上下文工程
 
@@ -27,15 +28,15 @@ description: 优化 Agent 的上下文配置。适用于：开始新会话时、
 
 ```
 ┌─────────────────────────────────────┐
-│  1. Rules Files (CLAUDE.md, etc.)   │ ← Always loaded, project-wide
+│  1. Rules Files (CLAUDE.md, etc.)   │ ← 始终加载，全项目生效
 ├─────────────────────────────────────┤
-│  2. Spec / Architecture Docs        │ ← Loaded per feature/session
+│  2. Spec / Architecture Docs        │ ← 按功能/会话加载
 ├─────────────────────────────────────┤
-│  3. Relevant Source Files            │ ← Loaded per task
+│  3. Relevant Source Files            │ ← 按任务加载
 ├─────────────────────────────────────┤
-│  4. Error Output / Test Results      │ ← Loaded per iteration
+│  4. Error Output / Test Results      │ ← 按迭代加载
 ├─────────────────────────────────────┤
-│  5. Conversation History             │ ← Accumulates, compacts
+│  5. Conversation History             │ ← 持续累积，定期压缩
 └─────────────────────────────────────┘
 ```
 
@@ -307,10 +308,10 @@ C) Append a number suffix like "Task (2)" (most user-friendly)
 
 ```
 PLAN:
-1. Add Zod schema for task creation — validates title (required) and description (optional)
-2. Wire schema into POST /api/tasks route handler
-3. Add test for validation error response
-→ Executing unless you redirect.
+1. 为任务创建添加 Zod schema —— 校验 title（必填）与 description（可选）
+2. 把 schema 接入 POST /api/tasks 路由处理器
+3. 为校验错误响应添加测试
+→ Executing unless you redirect.（除非你纠正方向，否则照此执行）
 ```
 
 这能在你沿着错误方向越走越远之前把它拦下来。30 秒的投入，避免 30 分钟的返工。

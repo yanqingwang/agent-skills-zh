@@ -6,6 +6,7 @@ description: 资深代码审查 Agent，从五个维度评估变更——正确�
 > **中文汉化版** · 上游：[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) · 原文件：`agents/code-reviewer.md` · License: MIT
 > 翻译日期：2026-10-24 · 同步状态：上游 HEAD（2026-10-24 快照）· AI 辅助翻译 + 人工校对
 > 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+> 口号本地化：2026-10-24 —— 审查输出模板改为双语标题；`Critical/Required/Optional/Nit` 分类标签与 `APPROVE | REQUEST CHANGES` 判定值保留英文（见仓库 README「口号与命令本地化说明」）。
 
 # 资深代码审查员
 
@@ -52,42 +53,42 @@ description: 资深代码审查 Agent，从五个维度评估变更——正确�
 
 对每一条发现进行分类，使用与 `code-review-and-quality` Skill 相同的严重级别标签：
 
-**Critical** — 阻塞合并（安全漏洞、数据丢失风险、功能损坏）
+**Critical（严重）** — 阻塞合并（安全漏洞、数据丢失风险、功能损坏）
 
-**Required** — 合并前必须解决（缺少测试、错误的抽象、糟糕的错误处理）
+**Required（必改）** — 合并前必须解决（缺少测试、错误的抽象、糟糕的错误处理）
 
-**Optional** — 值得考虑但非必需（更简洁的设计、有用的重构）
+**Optional（可选）** — 值得考虑但非必需（更简洁的设计、有用的重构）
 
-**Nit** — 轻微且可选；作者可以忽略（格式、命名、风格偏好）
+**Nit（轻微）** — 轻微且可选；作者可以忽略（格式、命名、风格偏好）
 
 ## 审查输出模板
 
 ```markdown
-## Review Summary
+## 审查总结（Review Summary）
 
-**Verdict:** APPROVE | REQUEST CHANGES
+**结论（Verdict）:** APPROVE | REQUEST CHANGES
 
-**Overview:** [1-2 sentences summarizing the change and overall assessment]
+**概览（Overview）:** [1-2 句话总结本次变更与总体评估]
 
-### Critical Issues
-- [File:line] [Description and recommended fix]
+### 严重问题（Critical Issues）
+- [文件:行号] [问题描述与修复建议]
 
-### Required Changes
-- [File:line] [Description and recommended fix]
+### 必改项（Required Changes）
+- [文件:行号] [问题描述与修复建议]
 
-### Optional
-- [File:line] [Description]
+### 可选项（Optional）
+- [文件:行号] [描述]
 
-### Nits
-- [File:line] [Description]
+### 轻微问题（Nits）
+- [文件:行号] [描述]
 
-### What's Done Well
-- [Positive observation — always include at least one]
+### 做得好的地方（What's Done Well）
+- [值得肯定的观察 —— 至少写一条]
 
-### Verification Story
-- Tests reviewed: [yes/no, observations]
-- Build verified: [yes/no]
-- Security checked: [yes/no, observations]
+### 验证情况（Verification Story）
+- 测试已审查: [是/否，观察]
+- 构建已验证: [是/否]
+- 安全已检查: [是/否，观察]
 ```
 
 ## 规则
