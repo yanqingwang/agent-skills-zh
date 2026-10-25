@@ -1,6 +1,6 @@
 ---
 name: hackernews-frontpage
-description: Scrape the Hacker News front page (titles, points, comment counts).
+description: 抓取 Hacker News 首页（标题、票数、评论数）。
 host: news.ycombinator.com
 trusted: true
 source: human
@@ -13,13 +13,16 @@ triggers:
   - latest hacker news stories
 ---
 
-# Hacker News front-page scraper
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`browser-skills/hackernews-frontpage/SKILL.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Scrapes the Hacker News (`news.ycombinator.com`) front page and returns the
-top 30 stories as JSON. Each story has its rank, title, link URL, point count,
-and comment count.
+# Hacker News 首页抓取器
 
-## Usage
+抓取 Hacker News（`news.ycombinator.com`）首页，返回排名前 30 的故事
+（JSON 格式）。每条故事含排名、标题、链接 URL、票数和评论数。
+
+## 用法
 
 ```
 $ $B skill run hackernews-frontpage
@@ -32,21 +35,20 @@ $ $B skill run hackernews-frontpage
 }
 ```
 
-## How it works
+## 工作原理
 
-1. Navigates to `https://news.ycombinator.com` via the daemon.
-2. Reads the page HTML.
-3. Parses each story row (HN's stable `tr.athing` structure) into a typed
-   `Story` record.
-4. Emits a single JSON document on stdout.
+1. 通过 daemon 访问 `https://news.ycombinator.com`。
+2. 读取页面 HTML。
+3. 把每行故事（HN 稳定的 `tr.athing` 结构）解析为类型化的
+   `Story` 记录。
+4. 在 stdout 输出单个 JSON 文档。
 
-## Why this is the reference skill
+## 为什么它是参考 Skill
 
-`hackernews-frontpage` is the smallest interesting browser-skill: no auth,
-stable HTML, deterministic output, file-fixture-friendly. Every Phase 1
-component (SDK, scoped tokens, three-tier lookup, spawn lifecycle) is
-exercised by `$B skill run hackernews-frontpage` and the bundled
-`script.test.ts`.
+`hackernews-frontpage` 是最小而完整的浏览器 Skill：无需登录、HTML 稳定、
+输出确定、便于文件 fixture。每个 Phase 1 组件（SDK、受限 token、三层
+查找、spawn 生命周期）都被 `$B skill run hackernews-frontpage` 和随附的
+`script.test.ts` 覆盖。
 
-When the HN HTML rotates and our selectors break, the test fails against the
-captured fixture before users notice. That's the point.
+当 HN 的 HTML 改版、选择器失效时，测试会在用户察觉之前、基于已捕获
+的 fixture 先失败。这就是它的意义。
