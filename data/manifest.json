@@ -467,7 +467,7 @@
     {
       "repo": "tt-a1i/archify",
       "shortname": "archify",
-      "license": "MIT",
+      "license": "Apache-2.0",
       "stars_snapshot_2026-10-24": 88591,
       "stars_snapshot_2026-10-25": 88808,
       "batch": 2,
@@ -1304,7 +1304,8 @@
           "upstream": ".agents/skills/test-value/",
           "reason": "兄弟辅助 skill，第二批未收录（第三批候选）"
         }
-      ]
+      ],
+      "note": "上游 2026-10-25 起整体转为 Apache-2.0（保留历史 MIT 授权）；本仓收录期间（2026-10-24 快照）原文为 MIT，译文已同步新许可标注"
     },
     {
       "repo": "Egonex-AI/Understand-Anything",
@@ -5544,6 +5545,46 @@
         {
           "upstream": "qa/SKILL.md",
           "local": "skills/developer/gstack/qa/SKILL.md"
+        },
+        {
+          "upstream": "design-review/SKILL.md",
+          "local": "skills/developer/gstack/design-review/SKILL.md"
+        },
+        {
+          "upstream": "health/SKILL.md",
+          "local": "skills/developer/gstack/health/SKILL.md"
+        },
+        {
+          "upstream": "review/SKILL.md",
+          "local": "skills/developer/gstack/review/SKILL.md"
+        },
+        {
+          "upstream": "learn/SKILL.md",
+          "local": "skills/developer/gstack/learn/SKILL.md"
+        },
+        {
+          "upstream": "ship/SKILL.md",
+          "local": "skills/developer/gstack/ship/SKILL.md"
+        },
+        {
+          "upstream": "investigate/SKILL.md",
+          "local": "skills/developer/gstack/investigate/SKILL.md"
+        },
+        {
+          "upstream": "retro/SKILL.md",
+          "local": "skills/developer/gstack/retro/SKILL.md"
+        },
+        {
+          "upstream": "land-and-deploy/SKILL.md",
+          "local": "skills/developer/gstack/land-and-deploy/SKILL.md"
+        },
+        {
+          "upstream": "plan-eng-review/SKILL.md",
+          "local": "skills/developer/gstack/plan-eng-review/SKILL.md"
+        },
+        {
+          "upstream": "spec/SKILL.md",
+          "local": "skills/developer/gstack/spec/SKILL.md"
         }
       ],
       "verbatim": [
@@ -7140,10 +7181,6 @@
           "local": "skills/developer/gstack/design-html/vendor/pretext.js"
         },
         {
-          "upstream": "design-review/SKILL.md",
-          "local": "skills/developer/gstack/design-review/SKILL.md"
-        },
-        {
           "upstream": "design-review/SKILL.md.tmpl",
           "local": "skills/developer/gstack/design-review/SKILL.md.tmpl"
         },
@@ -7828,10 +7865,6 @@
           "local": "skills/developer/gstack/guard/SKILL.md.tmpl"
         },
         {
-          "upstream": "health/SKILL.md",
-          "local": "skills/developer/gstack/health/SKILL.md"
-        },
-        {
           "upstream": "health/SKILL.md.tmpl",
           "local": "skills/developer/gstack/health/SKILL.md.tmpl"
         },
@@ -7942,10 +7975,6 @@
         {
           "upstream": "hosts/slate.ts",
           "local": "skills/developer/gstack/hosts/slate.ts"
-        },
-        {
-          "upstream": "investigate/SKILL.md",
-          "local": "skills/developer/gstack/investigate/SKILL.md"
         },
         {
           "upstream": "investigate/SKILL.md.tmpl",
@@ -8144,10 +8173,6 @@
           "local": "skills/developer/gstack/ios-sync/SKILL.md.tmpl"
         },
         {
-          "upstream": "land-and-deploy/SKILL.md",
-          "local": "skills/developer/gstack/land-and-deploy/SKILL.md"
-        },
-        {
           "upstream": "land-and-deploy/SKILL.md.tmpl",
           "local": "skills/developer/gstack/land-and-deploy/SKILL.md.tmpl"
         },
@@ -8186,10 +8211,6 @@
         {
           "upstream": "landing-report/SKILL.md.tmpl",
           "local": "skills/developer/gstack/landing-report/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "learn/SKILL.md",
-          "local": "skills/developer/gstack/learn/SKILL.md"
         },
         {
           "upstream": "learn/SKILL.md.tmpl",
@@ -9416,10 +9437,6 @@
           "local": "skills/developer/gstack/plan-devex-review/sections/review-sections.md.tmpl"
         },
         {
-          "upstream": "plan-eng-review/SKILL.md",
-          "local": "skills/developer/gstack/plan-eng-review/SKILL.md"
-        },
-        {
           "upstream": "plan-eng-review/SKILL.md.tmpl",
           "local": "skills/developer/gstack/plan-eng-review/SKILL.md.tmpl"
         },
@@ -9556,10 +9573,6 @@
           "local": "skills/developer/gstack/qa-only/sections/reporting.md.tmpl"
         },
         {
-          "upstream": "retro/SKILL.md",
-          "local": "skills/developer/gstack/retro/SKILL.md"
-        },
-        {
           "upstream": "retro/SKILL.md.tmpl",
           "local": "skills/developer/gstack/retro/SKILL.md.tmpl"
         },
@@ -9574,10 +9587,6 @@
         {
           "upstream": "retro/sections/report-format.md.tmpl",
           "local": "skills/developer/gstack/retro/sections/report-format.md.tmpl"
-        },
-        {
-          "upstream": "review/SKILL.md",
-          "local": "skills/developer/gstack/review/SKILL.md"
         },
         {
           "upstream": "review/SKILL.md.tmpl",
@@ -10452,10 +10461,6 @@
           "local": "skills/developer/gstack/setup.ps1"
         },
         {
-          "upstream": "ship/SKILL.md",
-          "local": "skills/developer/gstack/ship/SKILL.md"
-        },
-        {
           "upstream": "ship/SKILL.md.tmpl",
           "local": "skills/developer/gstack/ship/SKILL.md.tmpl"
         },
@@ -10594,10 +10599,6 @@
         {
           "upstream": "slop-scan.config.json",
           "local": "skills/developer/gstack/slop-scan.config.json"
-        },
-        {
-          "upstream": "spec/SKILL.md",
-          "local": "skills/developer/gstack/spec/SKILL.md"
         },
         {
           "upstream": "spec/SKILL.md.tmpl",

@@ -71,7 +71,7 @@ SOFTWARE.
 ## tt-a1i/archify
 
 - 上游：https://github.com/tt-a1i/archify （星标快照 2026-10-24：88,591）
-- License：MIT
+- License：Apache-2.0（2026-10-25 上游由 MIT 转为 Apache-2.0，并保留历史 MIT 授权；本仓收录快照（2026-10-24）原文为 MIT，译文许可标注已同步）
 - 收录文件：skills/designer/design/archify/archify/（整目录，SKILL.md + 脚本/示例/Schema 等）
 - Copyright (c) 2026 tt-a1i (Archify)（MIT 原文同 obra/superpowers 条款格式）
 

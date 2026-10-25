@@ -1,13 +1,13 @@
 ---
 name: archify
 description: "创建经验证（validated）的架构（architecture）、流程（workflow）、时序（sequence）、数据流（dataflow）、生命周期/状态（lifecycle/state）、ERD、类图（class）、树（tree）、时间轴（timeline）与瀑布图（waterfall），输出为可交互探索的独立 HTML，支持深/浅色主题、动态效果与图片/SVG/WebM 导出。接受需求描述或 Mermaid 输入；为基于代码的图表检查仓库证据。适用于可视化系统、API 调用、管道、schema、历史、时序，或日常的步骤、组成、关系与状态。当用户要求把答案做成页面（a page）、一页纸（one page）、讲解页（an explainer）或可分享的答案（做成一页, 用页面讲）时，还可将答案转成结论先行、带结构化面板、原生图表和图表的一页式讲解页（explainer）；当用户的规则以一行 [archify explainer: ...] 选择加入时也可主动制作。不适用于仪表盘（dashboard）。"
-license: MIT
+license: Apache-2.0
 metadata:
   version: "3.2"
   author: tt-a1i
 ---
 
-> **中文汉化版** · 上游：[tt-a1i/archify](https://github.com/tt-a1i/archify) · 原文件：`archify/SKILL.md` · License: MIT
+> **中文汉化版** · 上游：[tt-a1i/archify](https://github.com/tt-a1i/archify) · 原文件：`archify/SKILL.md` · License: Apache-2.0
 > 翻译日期：2026-10-24 · 同步状态：上游 HEAD（2026-10-24 快照）· AI 辅助翻译 + 人工校对
 > 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 

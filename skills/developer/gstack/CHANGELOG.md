@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.91.201.0] - 2026-10-25
+
+**/ship's review army and /plan-eng-review now ask for one severity scale, CRITICAL or INFORMATIONAL, the same scale /review, the specialist JSON and the review checklist already use (#3349).** The shared confidence rubric those two skills render told the model to label findings `[P1]` and `[P2]` and to report a 1-2 confidence finding "only if severity would be P0", while the rest of /ship's Step 9 (Pass 1 CRITICAL, Pass 2 INFORMATIONAL, `"severity":"CRITICAL|INFORMATIONAL"`) used the other scale. A finding from one skill couldn't be compared, deduplicated or gated against a finding from another. Garry picked CRITICAL/INFORMATIONAL for plan-eng-review on 2026-10-24.
+
+### Fixed
+- **`scripts/resolvers/confidence.ts`** (default branch, rendered into `ship/sections/review-army.md` and `plan-eng-review/sections/review-sections.md`): every finding carries a severity, CRITICAL (blocks shipping) or INFORMATIONAL (lower severity, still actioned). The format is `[CRITICAL|INFORMATIONAL] (confidence: N/10) file:line — description` with CRITICAL and INFORMATIONAL examples. A 1-2 score is reported only for a suspected release-blocking catastrophe, at CRITICAL severity and marked explicitly speculative, the rule /review already uses. Repeated sentences in the verification gate and the calibration-learning note were shortened, so ship's skeleton-plus-sections size falls by 77 bytes (313,204 against its 313,281 cap).
+
+### Tests
+- `test/eng-first-review.test.ts`: the two captured plan-eng-review first-review questions (`eng-annotated-cache-au`, `eng-declarative-as`) still open review when their `[P1]` label becomes `[CRITICAL]` or `[INFORMATIONAL]`. They stay closed for `[HIGH]`, `[critical]`, `[Critical]`, `[P4]`, `[CRITICAL|INFORMATIONAL]` and no label.
+
+### Gate integrity
+- One accepted-input change to review: the paid-test detectors `test/helpers/eng-cache-writer-decision.ts` and `test/helpers/pty/boundaries.ts` accept `[CRITICAL]` and `[INFORMATIONAL]` alongside `[P0]`-`[P3]` in a plan finding's annotation, because the skill now asks for those labels. Without it, both captures relabelled `[CRITICAL]` are rejected. Verdict: not a weakening. The label is metadata, and every substantive check (decision, assessment, actors, options) is unchanged. Mutation checks: restoring `P[0-3]` alone fails the positive cases; `[^\]]+`, `P[0-9]` or a case-insensitive CRITICAL each fail the negative controls. `scripts/harness-version.json` records `test/helpers/pty/boundaries.ts` as non-behavioral at HARNESS_VERSION 6: only the changed plan-eng-review prompt asks for the new labels, and the cases that run it already start their own series. The 11 plan-eng-review size pins in `test/fixtures/skill-md-size-allowlist.json` come down by 75 characters. No threshold, budget, timeout, trial count or case kind changed.
+
+## [1.91.200.0] - 2026-10-25
+
+**/cso doctor no longer calls a Go repository "stack: python".** A repository with a root `go.mod` and no Node, Bun, Rails or JVM build matched no supported stack, so preparation fell back to Python and doctor reported `stack: python` with `MISSING_METADATA requirements.txt`, which sent Go users looking for a Python file they never needed (#3263). Go runtime support itself is not planned for now (Garry, 2026-10-24), so /cso keeps running static assessment on Go repositories; the runtime catalog and the /cso release contract are unchanged.
+
+### Fixed
+- **`lib/cso/preparation.ts`**: a root `go.mod` with no other supported stack is reported as `stack: go` with `UNSUPPORTED_STACK` ("Go (go.mod) is not a supported runtime stack yet; supported runtime stacks are Node, Bun, Python, and Rails."), the way a Maven or Gradle build is already reported as Java. Python helper metadata beside `go.mod` (a docs `requirements.txt`, say) no longer turns the repository into Python. A `go.mod` beside a Node, Bun or Rails lockfile leaves that stack's detection as it was.
+
+### Tests
+- `test/cso-preparation.test.ts` checks that a Go module is `go` with exactly that prerequisite and never mentions `requirements.txt`, and that a hashed `requirements.txt` beside `go.mod` stays Go. Both fail on main. Controls: `go.mod` beside a Node lockfile stays a ready Node plan, a Python project without `go.mod` stays Python, and a repository with no stack metadata keeps the Python fallback.
+- `test/helpers/cso-runtime-catalog.ts` leaves `go` out of its qualified-runtime fixture list, as it already did `java`.
+
+### Gate integrity
+- No gate edit. No threshold, budget, timeout, trial count or case kind changed.
+
 ## [1.91.199.0] - 2026-10-25
 
 **When /sync-gbrain refuses because a gbrain autopilot is running, it now says which process it found and what to do.** The guard against syncing while `gbrain autopilot` runs is machine-wide on purpose: two syncs sharing one brain or working tree can race and delete files (#1734). But the refusal only said `(process:gbrain autopilot)`, so someone whose autopilot served a different brain could not tell what was blocking them (#3360, part 1). Garry decided on 2026-10-24 to keep the check machine-wide and improve the message.

@@ -1,9 +1,9 @@
-# 工作状态（自动生成于 2026-10-25 06:59 UTC，勿手改）
+# 工作状态（自动生成于 2026-10-25 08:25 UTC，勿手改）
 
-- **收录规模**：49 个上游 · 127 个翻译件 · 4280 个原样件
+- **收录规模**：49 个上游 · 137 个翻译件 · 4270 个原样件
 - **监控状态**：sync-check CI 每日 UTC 02:00 运行（HEAD 比对 → 原样件自动刷新 → 翻译件变更转重译工单）
 - **最近同步日志**：[data/sync-log/2026-10-25.md](sync-log/2026-10-25.md)
-- **待重译**：无（全部翻译件与上游一致）
+- **待重译**：有 —— 见 [data/sync-pending-retranslation.md](sync-pending-retranslation.md)
 - **快照 HEAD 总数**：49 个上游已纳入监控
 
 ## 按目录分布（翻译件）
@@ -17,7 +17,7 @@
 - `skills/developer/context/` — 7 件
 - `skills/developer/efficiency/` — 2 件
 - `skills/developer/engineering/` — 23 件
-- `skills/developer/gstack/` — 3 件
+- `skills/developer/gstack/` — 13 件
 - `skills/developer/quality/` — 15 件
 - `skills/gamedev/` — 7 件
 - `skills/growth/product/` — 17 件

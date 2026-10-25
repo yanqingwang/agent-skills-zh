@@ -106,9 +106,19 @@
 
 ## 开发者 · gstack
 
+- [design-review](skills/developer/gstack/design-review/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [health](skills/developer/gstack/health/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [investigate](skills/developer/gstack/investigate/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [land-and-deploy](skills/developer/gstack/land-and-deploy/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [learn](skills/developer/gstack/learn/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
 - [office-hours](skills/developer/gstack/office-hours/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
 - [plan-ceo-review](skills/developer/gstack/plan-ceo-review/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [plan-eng-review](skills/developer/gstack/plan-eng-review/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
 - [qa](skills/developer/gstack/qa/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [retro](skills/developer/gstack/retro/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [review](skills/developer/gstack/review/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [ship](skills/developer/gstack/ship/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [spec](skills/developer/gstack/spec/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
 
 ## 开发者 · quality
 

@@ -28,7 +28,7 @@
     "skills/caveman/SKILL.md": "9a94044529e5ee1576361c891b4a271504518e6f"
   },
   "tt-a1i/archify": {
-    "archify/SKILL.md": "fe0448d8f02ab7ce81903d8ec50ef51cd9582346"
+    "archify/SKILL.md": "380de2c1016ee24910d425d74cc0efc91d426be9"
   },
   "Egonex-AI/Understand-Anything": {
     "understand-anything-plugin/skills/understand/SKILL.md": "778b800c1d770ae6401ae86245def77dd220900c"
@@ -76,7 +76,17 @@
   "garrytan/gstack": {
     "office-hours/SKILL.md": "7e925ebf7c8dbaf4b626fd8ef280fc825bbfe082",
     "plan-ceo-review/SKILL.md": "2324db2f8b2d0ab28fb7e3907d4e31d361487d83",
-    "qa/SKILL.md": "5d4bd506b6a837e49790929cccb13ee31b1742f6"
+    "qa/SKILL.md": "5d4bd506b6a837e49790929cccb13ee31b1742f6",
+    "design-review/SKILL.md": "42e10d81dde7cdcbbab719553fabb7dc0f905a6d",
+    "health/SKILL.md": "1078ec6d5677392838319abb851390ece2e028bf",
+    "review/SKILL.md": "f319f1669c558f963d9c993ae9c77e209eee9e2e",
+    "learn/SKILL.md": "9d2626c42a71907b81e9e4cc2adecb0aa42c311b",
+    "ship/SKILL.md": "24d4cfafb8c672b0e7e06c3f75852f83fe2e56fa",
+    "investigate/SKILL.md": "659937b9f4201781a6b6379fc21e1a387c7530be",
+    "retro/SKILL.md": "7f3d287a8583ca30fb3fbd08ae177eb16e3d6fe3",
+    "land-and-deploy/SKILL.md": "9c6571b01dd9803c23fc867abe58852e5b2e5145",
+    "plan-eng-review/SKILL.md": "1dd4d34c4cd13f26a85fba363e4ae9a3ee77f6cc",
+    "spec/SKILL.md": "da4b6b04c65cb00af3d597eaa5703188116c5fce"
   },
   "Vincentwei1021/video-shotcraft": {
     "SKILL.md": "695faad1d7441597a89dea4bd1b44b835005af7c"
@@ -114,7 +124,8 @@
     "skills/api-designer/SKILL.md": "63ca1216eca3cc4962caa6ca44d31bc5f1649694"
   },
   "MengTo/Skills": {
-    "agent-skills/workflow/workflow-ship-change/SKILL.md": "03140c168d6b8a33b23de342a1e890b026562a37"
+    "agent-skills/workflow/workflow-ship-change/SKILL.md": "03140c168d6b8a33b23de342a1e890b026562a37",
+    "agent-skills/web-design/add-shader-cursor-trail/SKILL.md": "8292c5e8518d3d547f1cda690408f69c7c6ca4e3"
   },
   "czlonkowski/n8n-skills": {
     "skills/n8n-code-javascript/SKILL.md": "9471aaf5692808c4488be58a3f7682e72f98e1b8",
