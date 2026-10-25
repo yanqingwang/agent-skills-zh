@@ -75,6 +75,59 @@
 
 **合计：45 个上游 / 72 个翻译件 / 3984 个原样配套件。** 详见 [data/upstream-inventory.md](data/upstream-inventory.md)。
 
+### 上游仓库登记（同步监控清单）
+
+每日 CI（[sync-check.yml](.github/workflows/sync-check.yml)，UTC 02:00）逐仓比对 HEAD → HEAD 变化即拉取上游 tree 逐件比对：**原样件自动刷新**（逐字节）、**翻译件变更转[重译工单](../../issues?q=label%3Atranslation)**、全部变化记入 [data/sync-log/](data/sync-log/)。变更检测用 git blob SHA（内容哈希，等价逐字节）。网络操作失败重试 5 次。
+
+| 上游 | License | 批次 | 模式 | 翻译件 | 原样件 | 最近同步 |
+|---|---|:-:|:-:|--:|--:|---|
+| [obra/superpowers](https://github.com/obra/superpowers) | MIT | ? | ? | 5 | 13 | [`2ce8aa1`](https://github.com/obra/superpowers/commit/2ce8aa1) |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | MIT | ? | ? | 2 | 2 | [`5beb35b`](https://github.com/mattpocock/skills/commit/5beb35b) |
+| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | MIT | ? | ? | 3 | 4 | [`aeac41d`](https://github.com/addyosmani/agent-skills/commit/aeac41d) |
+| [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | MIT | ? | ? | 1 | 36 | [`12af471`](https://github.com/Leonxlnx/taste-skill/commit/12af471) |
+| [morluto/rea](https://github.com/morluto/rea) | MIT | 2 | ? | 1 | 7 | [`26e1559`](https://github.com/morluto/rea/commit/26e1559) |
+| [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | MIT | 2 | ? | 1 | 0 | [`09c434a`](https://github.com/DietrichGebert/ponytail/commit/09c434a) |
+| [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | Apache-2.0 | 2 | ? | 1 | 1 | [`1f951fb`](https://github.com/JuliusBrussee/caveman/commit/1f951fb) |
+| [tt-a1i/archify](https://github.com/tt-a1i/archify) | MIT | 2 | ? | 1 | 202 | [`25cf370`](https://github.com/tt-a1i/archify/commit/25cf370) |
+| [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) | MIT | 2 | ? | 1 | 54 | [`e24fcf6`](https://github.com/Egonex-AI/Understand-Anything/commit/e24fcf6) |
+| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | MIT | 2 | ? | 1 | 152 | [`f3cd06a`](https://github.com/mvanhorn/last30days-skill/commit/f3cd06a) |
+| [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | MIT | 2 | ? | 1 | 286 | [`0b9b10c`](https://github.com/cathrynlavery/diagram-design/commit/0b9b10c) |
+| [blader/humanizer](https://github.com/blader/humanizer) | MIT | 2 | ? | 1 | 0 | [`8c307f3`](https://github.com/blader/humanizer/commit/8c307f3) |
+| [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | MIT | 2 | ? | 1 | 0 | [`1ecea19`](https://github.com/ayghri/i-have-adhd/commit/1ecea19) |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | MIT | 2 | ? | 1 | 1 | [`e85f3cb`](https://github.com/coreyhaines31/marketingskills/commit/e85f3cb) |
+| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | MIT | 2 | ? | 1 | 6 | [`593377b`](https://github.com/K-Dense-AI/scientific-agent-skills/commit/593377b) |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | MIT | 2 | ? | 5 | 11 | [`90606c8`](https://github.com/affaan-m/ECC/commit/90606c8) |
+| [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill) | MIT | 2 | ? | 1 | 25 | [`a24e62f`](https://github.com/virgiliojr94/book-to-skill/commit/a24e62f) |
+| [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | MIT | 2 | ? | 1 | 31 | [`dcdfb27`](https://github.com/OthmanAdi/planning-with-files/commit/dcdfb27) |
+| [titanwings/distilly](https://github.com/titanwings/distilly) | MIT | 2 | ? | 1 | 58 | [`0afc45c`](https://github.com/titanwings/distilly/commit/0afc45c) |
+| [latent-spaces/brag](https://github.com/latent-spaces/brag) | MIT | 2 | ? | 1 | 288 | [`669ab92`](https://github.com/latent-spaces/brag/commit/669ab92) |
+| [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | MIT | 2 | ? | 1 | 2 | [`49b3a72`](https://github.com/nidhinjs/prompt-master/commit/49b3a72) |
+| [garrytan/gstack](https://github.com/garrytan/gstack) | MIT | 3 | 整仓 | 3 | 1285 | [`e66c43c`](https://github.com/garrytan/gstack/commit/e66c43c) |
+| [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | Apache-2.0 | 3 | 整目录 | 1 | 1354 | [`43bd349`](https://github.com/Vincentwei1021/video-shotcraft/commit/43bd349) |
+| [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) | MIT | 3 | 单文件 | 1 | 0 | [`00b2bd5`](https://github.com/teng-lin/notebooklm-py/commit/00b2bd5) |
+| [foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills) | Apache-2.0 | 3 | 引用集 | 1 | 36 | [`0407cb2`](https://github.com/foryourhealth111-pixel/Vibe-Skills/commit/0407cb2) |
+| [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers) | MIT | 3 | 单文件 | 1 | 0 | [`5b5d8df`](https://github.com/yusufkaraaslan/Skill_Seekers/commit/5b5d8df) |
+| [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) | MIT | 3 | 整目录 | 1 | 8 | [`773a529`](https://github.com/Orchestra-Research/AI-Research-SKILLs/commit/773a529) |
+| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | MIT | 3 | 抽取 | 2 | 23 | [`6d2f02e`](https://github.com/alirezarezvani/claude-skills/commit/6d2f02e) |
+| [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | MIT | 3 | 抽取 | 2 | 0 | [`07b34f6`](https://github.com/phuryn/pm-skills/commit/07b34f6) |
+| [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | MIT | 3 | 抽取 | 2 | 8 | [`6be93f4`](https://github.com/AgriciDaniel/claude-seo/commit/6be93f4) |
+| [wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep) | MIT | 3 | 抽取 | 2 | 0 | [`18bceb3`](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/commit/18bceb3) |
+| [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) | MIT | 3 | 抽取 | 2 | 11 | [`9e7dbd6`](https://github.com/Jeffallan/claude-skills/commit/9e7dbd6) |
+| [MengTo/Skills](https://github.com/MengTo/Skills) | MIT | 3 | 抽取 | 1 | 4 | [`398cd41`](https://github.com/MengTo/Skills/commit/398cd41) |
+| [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | MIT | 3 | 抽取 | 2 | 10 | [`e037563`](https://github.com/czlonkowski/n8n-skills/commit/e037563) |
+| [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Apache-2.0 | 4 | 抽取 | 3 | 12 | [`5826794`](https://github.com/anthropics/claude-plugins-official/commit/5826794) |
+| [wshobson/agents](https://github.com/wshobson/agents) | MIT | 4 | 抽取 | 2 | 2 | [`0874a27`](https://github.com/wshobson/agents/commit/0874a27) |
+| [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) | MIT | 4 | Agent 定义 | 2 | 0 | [`05ad7c8`](https://github.com/Donchitos/Claude-Code-Game-Studios/commit/05ad7c8) |
+| [tw93/Waza](https://github.com/tw93/Waza) | MIT | 4 | 规则型 | 2 | 0 | [`4afc0f0`](https://github.com/tw93/Waza/commit/4afc0f0) |
+| [NVIDIA/skills](https://github.com/NVIDIA/skills) | Apache-2.0 AND CC-BY-4.0 | 4 | 抽取 | 2 | 39 | [`b713368`](https://github.com/NVIDIA/skills/commit/b713368) |
+| [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | Apache-2.0 | 4 | 抽取 | 3 | 4 | [`184b72b`](https://github.com/gamedev-skills/awesome-gamedev-agent-skills/commit/184b72b) |
+| [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills) | MIT | 4 | 抽取 | 1 | 1 | [`f631a09`](https://github.com/bergside/awesome-design-skills/commit/f631a09) |
+| [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | MIT | 4 | 抽取 | 2 | 8 | [`52c9323`](https://github.com/tradermonty/claude-trading-skills/commit/52c9323) |
+| [browser-act/skills](https://github.com/browser-act/skills) | MIT | 4 | 抽取 | 1 | 0 | [`11c057b`](https://github.com/browser-act/skills/commit/11c057b) |
+| [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | Apache-2.0 | 4 | 抽取 | 1 | 0 | [`5e3e262`](https://github.com/iOfficeAI/OfficeCLI/commit/5e3e262) |
+
+*登记由 `data/manifest.json` 生成；快照与监测状态在 `data/sync-state.json`，翻译件 blob 基线在 `data/file-shas.json`。*
+
 ## 分类索引
 
 由 [scripts/classify.py](scripts/classify.py) 按 [data/manifest.json](data/manifest.json) 自动生成 → [data/category-index.md](data/category-index.md)

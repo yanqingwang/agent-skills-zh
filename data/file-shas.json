@@ -1,0 +1,162 @@
+{
+  "morluto/rea": {
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "d75f5548bba454f9993b8563797afdb9ea7aa4b2"
+  },
+  "obra/superpowers": {
+    "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
+    "skills/systematic-debugging/SKILL.md": "62fc752aaef59a8bbed5d305f4cadc60f8ae07ed",
+    "skills/writing-plans/SKILL.md": "4cf0275d88d67aa4ef09f4bbca9970ed6ff74a00",
+    "skills/verification-before-completion/SKILL.md": "7d45333cc4a49c57a80df6c1fe2fa777a207afbc",
+    "skills/brainstorming/SKILL.md": "7f5eef02f894c4f24cea313660c0465ce9c084ed"
+  },
+  "mattpocock/skills": {
+    "skills/engineering/code-review/SKILL.md": "373a4f26e6cfa3617778397945bb069d9cb184bc",
+    "skills/engineering/to-spec/SKILL.md": "3f52599ae2a4347aee5a07432c2707518e691a7f"
+  },
+  "addyosmani/agent-skills": {
+    "skills/context-engineering/SKILL.md": "fb8bb5f85128302b231d301c1201da1e223f6869",
+    "skills/idea-refine/SKILL.md": "c35e693a114ba6b5de18ec58fa119992800915e2",
+    "agents/code-reviewer.md": "ea267be01f2e16011d04b90dc234986384c4f7e0"
+  },
+  "Leonxlnx/taste-skill": {
+    "skills/taste-skill/SKILL.md": "d8444f13b76be100b3b088dfdae738e85288d6b6"
+  },
+  "DietrichGebert/ponytail": {
+    ".openclaw/skills/ponytail/SKILL.md": "df5996b4953af9f8c67bb7a13bfe77659003ce4c"
+  },
+  "JuliusBrussee/caveman": {
+    "skills/caveman/SKILL.md": "9a94044529e5ee1576361c891b4a271504518e6f"
+  },
+  "tt-a1i/archify": {
+    "archify/SKILL.md": "fe0448d8f02ab7ce81903d8ec50ef51cd9582346"
+  },
+  "Egonex-AI/Understand-Anything": {
+    "understand-anything-plugin/skills/understand/SKILL.md": "778b800c1d770ae6401ae86245def77dd220900c"
+  },
+  "mvanhorn/last30days-skill": {
+    "skills/last30days/SKILL.md": "f443c8123ce1a69b9e7133f61b0a6b442f3b1418"
+  },
+  "cathrynlavery/diagram-design": {
+    "skills/diagram-design/SKILL.md": "e6162989c378e596983548acb0ba4299c3ba475a"
+  },
+  "blader/humanizer": {
+    "SKILL.md": "19fc634208e8cc6ae55d4ff287152583216fd244"
+  },
+  "ayghri/i-have-adhd": {
+    ".cursor/skills/i-have-adhd/SKILL.md": "6c42757ffae37e442adfb52fbba2a8609f1cff00"
+  },
+  "coreyhaines31/marketingskills": {
+    "skills/product-marketing/SKILL.md": "3af463a602aa0233c4d5fc98c23ba13224aa8f6b"
+  },
+  "K-Dense-AI/scientific-agent-skills": {
+    "skills/experimental-design/SKILL.md": "ee14f9ed795c791ac80e3ea946858d97d09c3e50"
+  },
+  "affaan-m/ECC": {
+    "skills/search-first/SKILL.md": "3d2669e71ba54afba95defb05080253058190600",
+    "skills/security-review/SKILL.md": "3f26b0df65661425de4e5c40c295e04edcad7a83",
+    "skills/continuous-learning-v2/SKILL.md": "397b3d334dd1fdf5d7648dd619b6a744cd4734a5",
+    "skills/autonomous-loops/SKILL.md": "b6c64c2af3d52d325a12181888c0dac4fec4fb5e",
+    "skills/strategic-compact/SKILL.md": "134e767151c4b7f039833bf496cdf4f145875c12"
+  },
+  "virgiliojr94/book-to-skill": {
+    "SKILL.md": "aebe394108e76bebdf7b8848eceddc756e844ec4"
+  },
+  "OthmanAdi/planning-with-files": {
+    ".agents/skills/planning-with-files/SKILL.md": "cf9a31e08ccaee6657b7b3fb95964e3f4c16a269"
+  },
+  "titanwings/distilly": {
+    "SKILL.md": "d2a76e7a9475d870fbce3e4abc8a6495d33582c9"
+  },
+  "latent-spaces/brag": {
+    "skills/brag/SKILL.md": "efcc009686e970dfcb911389b0fbfd49eb7cc67f"
+  },
+  "nidhinjs/prompt-master": {
+    "SKILL.md": "742deafaf4222f9f0e9d9410e72483dad64fe716"
+  },
+  "garrytan/gstack": {
+    "office-hours/SKILL.md": "c22b3db499f43f6c6a627f5d9f7a48c18ab0f0da",
+    "plan-ceo-review/SKILL.md": "2324db2f8b2d0ab28fb7e3907d4e31d361487d83",
+    "qa/SKILL.md": "5d4bd506b6a837e49790929cccb13ee31b1742f6"
+  },
+  "Vincentwei1021/video-shotcraft": {
+    "SKILL.md": "695faad1d7441597a89dea4bd1b44b835005af7c"
+  },
+  "teng-lin/notebooklm-py": {
+    "SKILL.md": "0a231e307ff133793a6ce78d728c197f75e50fe6"
+  },
+  "foryourhealth111-pixel/Vibe-Skills": {
+    "SKILL.md": "83ca6de3fd7c8e214f1e6d95fad17ce91b331378"
+  },
+  "yusufkaraaslan/Skill_Seekers": {
+    "skills/skill-seekers/SKILL.md": "71b11d5aff88f480c4963b11495fc479bd6c02d7"
+  },
+  "Orchestra-Research/AI-Research-SKILLs": {
+    "0-autoresearch-skill/SKILL.md": "cf2ef23d6f571624bc950d3b0de4797308cd9955"
+  },
+  "alirezarezvani/claude-skills": {
+    "engineering/hivemind/SKILL.md": "b9ce55c40c701e1979cb4da82173b4ce15402e8b",
+    "product-team/skills/product-discovery/SKILL.md": "17265eec8bcc4c5e2b8554bfb8c7483c4fc3ab56"
+  },
+  "phuryn/pm-skills": {
+    "pm-execution/skills/create-prd/SKILL.md": "9aa4b7a5a19af2fe4ade43da564dd607efdf0488",
+    "pm-ai-shipping/skills/intended-vs-implemented/SKILL.md": "af80c8e2dbd3dcbaaff30ea5885a6361750a2464"
+  },
+  "AgriciDaniel/claude-seo": {
+    "skills/seo-agentic/SKILL.md": "fa6e62c913c674384b363ab5ecda4f290fbcbbdf",
+    "skills/seo-audit/SKILL.md": "45b957d746731cb50ed7195a3a122a4bbfd3a1b0"
+  },
+  "wanshuiyin/Auto-claude-code-research-in-sleep": {
+    "skills/auto-paper-improvement-loop/SKILL.md": "77cb6331caaabafa0481c9ee3bcdda96742ff0a7",
+    "skills/arxiv/SKILL.md": "f3d0a3408f1534acd1d51624e7b55afacc90a7ae"
+  },
+  "Jeffallan/claude-skills": {
+    "skills/code-reviewer/SKILL.md": "63570a367335539d99fb70697f8376095b270b3e",
+    "skills/api-designer/SKILL.md": "63ca1216eca3cc4962caa6ca44d31bc5f1649694"
+  },
+  "MengTo/Skills": {
+    "agent-skills/workflow/workflow-ship-change/SKILL.md": "03140c168d6b8a33b23de342a1e890b026562a37"
+  },
+  "czlonkowski/n8n-skills": {
+    "skills/n8n-code-javascript/SKILL.md": "9471aaf5692808c4488be58a3f7682e72f98e1b8",
+    "skills/n8n-error-handling/SKILL.md": "287d0b2d2ac5460c1875503a6dd46f969a17f89f"
+  },
+  "anthropics/claude-plugins-official": {
+    "plugins/frontend-design/skills/frontend-design/SKILL.md": "a5333457c414d20d625f307df945842c0952ecc3",
+    "plugins/claude-md-management/skills/claude-md-improver/SKILL.md": "744444e4df385e9b9160e23fba02321062dfba9a",
+    "plugins/mcp-server-dev/skills/build-mcp-server/SKILL.md": "5ab19c3ae3ee57d11f4cdd0a550f942207dc6a5c"
+  },
+  "wshobson/agents": {
+    "plugins/before-you-build/skills/before-you-build/SKILL.md": "6a2aac015556218e8c3c3ec4e775c1d42eea192e",
+    "plugins/api-scaffolding/skills/fastapi-templates/SKILL.md": "1ffd432713bc74c535792bce7ba5d5b27b4da95e"
+  },
+  "Donchitos/Claude-Code-Game-Studios": {
+    ".claude/agents/game-designer.md": "a6fde98a81c720b86dd2fbc7b10b9af719709291",
+    ".claude/agents/creative-director.md": "e8aba2307844ed8fccdcf0c910da45b4d7139fdc"
+  },
+  "tw93/Waza": {
+    "plugins/waza/rules/anti-patterns.md": "8cb70972e19694c50805041f4f0dc05c35a0e95d",
+    "plugins/waza/rules/clarity.md": "56fedb402a45f2c4edb98bc3bf77fc4ee3855755"
+  },
+  "NVIDIA/skills": {
+    "plugins/nvidia-skills/skills/nvidia-skill-finder/SKILL.md": "e9aa2f88736041e0400f5ebdfab5de7febf191a2",
+    "skills/accelerated-computing-cudf/SKILL.md": "8245f13658d20a5fbd50d88e04143acb4291fb32"
+  },
+  "gamedev-skills/awesome-gamedev-agent-skills": {
+    "skills/godot/godot-gdscript/SKILL.md": "44eb9f5b24bfe1c2354f153fc6e34148d8abb7a8",
+    "skills/unity/unity-csharp-scripting/SKILL.md": "0d81d5859ad5a0251b7d0b6f5d477cb913a4199c",
+    "skills/unreal/unreal-cpp-gameplay/SKILL.md": "75185238136c179a53fb47c3075c3528288947c9"
+  },
+  "bergside/awesome-design-skills": {
+    "skills/creative/SKILL.md": "8535915b704a4ac791027f47d4592a34e3d99560"
+  },
+  "tradermonty/claude-trading-skills": {
+    "skills/backtest-expert/SKILL.md": "ad39f2b6f04884768d1891b34309720cf4902b58",
+    "skills/data-quality-checker/SKILL.md": "5508d605d3516305dfbcb12f8a9753092c801cef"
+  },
+  "browser-act/skills": {
+    "browser-act/SKILL.md": "1e0db2ac51c886516adbb3e83b1a8e0f9df911e4"
+  },
+  "iOfficeAI/OfficeCLI": {
+    "skills/officecli/SKILL.md": "6c299f334a2e004ff5dda05641e75f7ec4453f37"
+  }
+}

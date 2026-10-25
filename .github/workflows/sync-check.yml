@@ -7,50 +7,45 @@ on:
 
 permissions:
   issues: write
-  contents: read
+  contents: write
 
 jobs:
-  check-upstream:
+  sync-upstream:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: 比对各上游 HEAD，变更则开待翻译 issue
+      - name: 同步引擎——比对 HEAD、刷新原样件、记录变化
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          STATE=data/sync-state.json
-          for repo in obra/superpowers mattpocock/skills addyosmani/agent-skills Leonxlnx/taste-skill; do
-            head_sha=$(gh api "repos/$repo/commits/HEAD" --jq '.sha')
-            old_sha=$(jq -r --arg r "$repo" '.repos[$r] // ""' "$STATE")
-            echo "$repo HEAD=$head_sha (prev=${old_sha:-none})"
-            if [ -n "$old_sha" ] && [ "$head_sha" != "$old_sha" ]; then
-              changed=$(gh api "repos/$repo/compare/$old_sha...$head_sha" \
-                --jq '[.files[].filename] | join("\n")' | grep 'SKILL\.md$' || true)
-              if [ -n "$changed" ]; then
-                gh issue create \
-                  --title "上游 $repo 有更新，待重译 $(echo "$changed" | wc -l) 个文件" \
-                  --body "上游 HEAD $old_sha → $head_sha
+        run: python3 scripts/sync_daily.py
 
-          变更的 Skill 文件：
-          \`\`\`
-          $changed
-          \`\`\`
-
-          处理流程：重译 → 更新文件头同步日期 → 更新 $STATE" \
-                  --label translation 2>/dev/null || \
-                echo "::warning::issue 创建失败（可能缺 label），变更已打印在上方"
-            fi
-            jq --arg r "$repo" --arg s "$head_sha" '.repos[$r] = $s' "$STATE" > tmp.json \
-              && mv tmp.json "$STATE"
-          done
-
-      - name: 提交同步状态
+      - name: 提交同步产物（HEAD 快照 / 刷新的原样件 / 同步日志）
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet && echo "无变化" || {
-            git add data/sync-state.json
-            git commit -m "chore: 更新上游 HEAD 快照"
-            git push
+          git add -A
+          git diff --cached --quiet && echo "无变化，跳过提交" || {
+            git commit -m "chore(sync): 每日上游同步 $(date -u +%F) — 刷新原样件与 HEAD 快照"
+            for i in 1 2 3 4 5; do git push && break; echo "推送重试 $i/5"; sleep 5; done
           }
+
+      - name: 重译工单——有翻译件变更时开/更新 issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f data/sync-pending-retranslation.md ]; then
+            gh label create translation --color 0E8A16 --force 2>/dev/null || true
+            existing=$(gh issue list --state open --label translation --json number,title \
+              --jq '.[] | select(.title | startswith("上游同步待重译")) | .number' | head -1)
+            if [ -n "$existing" ]; then
+              gh issue comment "$existing" --body-file data/sync-pending-retranslation.md
+            else
+              gh issue create \
+                --title "上游同步待重译（$(date -u +%F)）" \
+                --body-file data/sync-pending-retranslation.md \
+                --label translation || echo "::warning::issue 创建失败，清单已提交在 data/sync-pending-retranslation.md"
+            fi
+          else
+            echo "无待重译文件"
+          fi
