@@ -1,8 +1,12 @@
 <!-- AUTO-GENERATED from design-and-handoff.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-## Phase 5: Design Doc
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`office-hours/sections/design-and-handoff.md` · License: MIT
+> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
 
-Write the design document to the project directory.
+## Phase 5：设计文档
+
+把设计文档写进项目目录。
 
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
@@ -11,44 +15,43 @@ USER=$(whoami)
 DATETIME=$(date +%Y%m%d-%H%M%S)
 ```
 
-**Design lineage:** Before writing, check for existing design docs on this branch:
+**设计血统：**写之前，查本分支已有的设计文档：
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
 setopt +o nomatch 2>/dev/null || true  # zsh compat
 PRIOR=$(ls -t "$GSTACK_STATE_ROOT"/projects/$SLUG/*-$BRANCH-design-*.md 2>/dev/null | head -1)
 ```
-If `$PRIOR` exists, the new doc gets a `Supersedes:` field referencing it. This creates a revision chain — you can trace how a design evolved across office hours sessions.
+`$PRIOR` 存在时，新文档带一个 `Supersedes:` 字段引用它。这形成修订链：
+你可以追溯一份设计在多次 office hours 会话中如何演进。
 
-Write to `<PROJECT_DIR>/{user}-{branch}-design-{datetime}.md` (`PROJECT_DIR` printed by the setup block above).
+写到 `<PROJECT_DIR>/{user}-{branch}-design-{datetime}.md`（`PROJECT_DIR` 由
+上方设置块打印）。
 
-**Repo copy (dual-write).** When the session runs inside a git
-repository, ALSO write the doc to `docs/designs/{topic-slug}.md` in the repo —
-visible, committable, team-shareable. The `~/.gstack` copy is still written
-(memory ingest and cross-session discovery depend on it); the repo copy is
-what teammates and plan reviews read. Rules:
+**仓库副本（双写）。**会话在 git 仓库内运行时，还要把文档写到仓库的
+`docs/designs/{topic-slug}.md`：可见、可提交、可团队共享。`~/.gstack`
+副本仍要写（记忆摄取与跨会话发现依赖它）；仓库副本才是同事与计划评
+审会读的。规则：
 
-1. **Scan at sink first.** The repo copy leaves the private store, so scan the
-   EXACT bytes before writing: write to a temp file, run
-   `~/.claude/skills/gstack/bin/gstack-redact --from-file <tmp>`; exit 3
-   (HIGH) blocks the repo copy (keep the ~/.gstack copy, tell the user why);
-   exit 2 (MEDIUM) confirms per finding before writing.
-2. **Fallback is never blocking.** Read-only checkout, non-git directory, a
-   failed write, or an unconfirmed MEDIUM → keep the `~/.gstack` copy and say
-   in one line why the repo copy was skipped. The handoff continues either way.
-3. **Name the repo path** in the handoff line and any approval questions when
-   the repo copy exists — that's the copy the user can open and commit.
+1. **先在出口扫描。**仓库副本会离开私有存储，所以写之前扫描**确切字
+   节**：写到临时文件，跑
+   `~/.claude/skills/gstack/bin/gstack-redact --from-file <tmp>`；exit 3
+   （HIGH）阻塞仓库副本（保留 ~/.gstack 副本并告诉用户原因）；
+   exit 2（MEDIUM）逐条确认后再写。
+2. **兜底绝不阻塞。**只读检出、非 git 目录、写入失败或未确认的
+   MEDIUM → 保留 `~/.gstack` 副本，并用一行说明为何跳过仓库副本。移交
+   两种情况下都继续。
+3. **点名仓库路径。**仓库副本存在时，在移交行与任何审批问题里点名它的
+   路径：那才是用户能打开并提交的副本。
 
-**Decision-record concision.** The doc is a decision record, not a
-transcript: one bullet per decision with its why; an approach the user ruled
-out DURING the session gets one line (name + rejection reason), never a
-resurrected full section that re-argues the case; omit template sections that
-are empty or that restate what's already settled. No page cap — extra length
-must come from genuinely open questions, not template completeness.
+**决策记录从简。**文档是决策记录，不是逐字稿：每个决策一条 bullet 附
+理由；用户在会话中已排除的方案只占一行（名字 + 拒绝理由），绝不复活成
+完整章节再辩一遍；模板中为空或只是复述已定结论的节直接省略。没有页数
+上限：额外的长度必须来自真正开放的问题，而不是把模板填满。
 
-After writing, tell the user:
-**"Design doc saved to: {repo path if written, else ~/.gstack path}{when both: ' (cross-session copy in ~/.gstack)'}. Other skills (/plan-ceo-review, /plan-eng-review) will find it automatically."**
+写完之后告诉用户：
+**"设计文档已保存到：{写成功则仓库路径，否则 ~/.gstack 路径}{两者都有时：'（跨会话副本在 ~/.gstack）'}。其他 Skill（/plan-ceo-review、/plan-eng-review）会自动找到它。"**
 
-### Startup mode design doc template:
+### Startup 模式设计文档模板：
 
 ```markdown
 # Design: {title}
@@ -111,7 +114,7 @@ Supersedes: {prior filename — omit this line if first design on this branch}
 {observational, mentor-like reflections referencing specific things the user said during the session. Quote their words back to them — don't characterize their behavior. 2-4 bullets.}
 ```
 
-### Builder mode design doc template:
+### Builder 模式设计文档模板：
 
 ```markdown
 # Design: {title}
@@ -166,158 +169,151 @@ Supersedes: {prior filename — omit this line if first design on this branch}
 
 ---
 
-## Spec Review Loop
+## Spec 评审循环
 
-Run an adversarial review before presenting the final document to the user.
-Follow the calling workflow's approval steps.
-The reviewer's saved JSON is the complete verdict. A prose summary is not a second
-finding inventory: the report helper preserves every problem/remedy and counts the
-records mechanically. Do not rewrite, condense, deduplicate, or recount its blocks.
+在把最终文档呈现给用户之前跑一次对抗评审。
+遵循调用工作流的审批步骤。
+评审者保存的 JSON 就是完整判定。散文摘要不是第二份发现清单：报告
+helper 保留每个问题/补救并机械地计数记录。不要重写、压缩、去重或重算
+它的块。
 
-**Step 1: Prepare and dispatch the reviewer**
+**Step 1：准备并派发评审者**
 
-Create a fresh review directory next to the design:
+在设计文档旁边创建一个新的评审目录：
 
 ```bash
 mktemp -d "<design-path>.review.XXXXXX"
 ```
-Keep these evidence files with the design. Maximum 3 iterations total. Before EACH dispatch, generate the complete prompt using
-all preceding valid round files in order (omit them for round 1):
+把这些证据文件与设计放在一起。总共最多 3 轮迭代。**每次**派发之前，
+按序用全部先前的有效轮文件生成完整提示词（第 1 轮不用）：
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-office-hours-review prepare --design "<design-path>" --out-dir "<review-directory>" "<round-1.json if present>" "<round-2.json if present>"
 ```
 
-Omit absent arguments rather than passing placeholders. Users get 3 rounds; only
-when a caller sets a lower review round limit, add `--max-rounds <N>` with that
-same value to every prepare, check, and finalize command. The helper chooses the next
-round and writes `round-N.prompt.md`. It includes the full finding schema, all five
-review dimensions (Completeness, Consistency, Clarity, Scope, Feasibility), the
-office-hours coaching contract, and the COMPLETE preceding JSON verdict. It also
-saves the design as reviewed (`round-N.design.md`). Round 1 is a full review;
-rounds 2 and 3 are delta re-reviews of the exact design diff since the last round,
-so prepare every round in the same review directory and do not edit the design
-between prepare and its review.
+省略不存在的参数，不要传占位符。用户有 3 轮；只有调用方设置了更低的
+评审轮上限时，才把 `--max-rounds <N>` 用同一个值加到每条 prepare、
+check 与 finalize 命令上。helper 选择下一轮并写出
+`round-N.prompt.md`。它含完整发现 schema、全部五个评审维度
+（Completeness、Consistency、Clarity、Scope、Feasibility）、
+office-hours 教练契约，以及**完整**的先前 JSON 判定。它还会把所评审
+的设计存为 `round-N.design.md`。第 1 轮是完整评审；第 2、3 轮是自上
+一轮以来确切设计 diff 的增量复审，所以每轮都要在同一个评审目录里
+prepare，且 prepare 与其评审之间不要编辑设计。
 
-Use the Agent tool with `run_in_background: false` when available and its returned `dispatch`
-string unchanged as the prompt. A launch receipt means it went background: await its completion notice. The reviewer must Read the entire prepared prompt
-file before reviewing the design. Do not recreate the prompt, copy selected fields,
-or summarize prior findings. A parent Read does not deliver the file to the reviewer.
-The reviewer has fresh context and cannot see the brainstorming conversation.
-Its prepared contract requires a complete JSON Write, sealed by the dispatch's
-`Seal:` command, and a one-line `OFFICE_HOURS_VERDICT` receipt as its entire response.
-It protects the required coaching and Assignment sections, distinguishes unknown
-customer facts from committed behavior, and requires evidence for every prior status.
+用 Agent 工具，支持时传 `run_in_background: false`，并把其返回的
+`dispatch` 字符串原样用作提示词。收到启动回执说明进了后台：等它的完成
+通知。评审者必须在评审之前 Read 整个准备好的提示词文件。不要重建提示
+词、复制选中字段或摘述既往发现。父级 Read 不等于把文件交给评审者。
+评审者有全新上下文，看不到头脑风暴对话。
+其准备好的契约要求写出完整 JSON、由派发里的 `Seal:` 命令封存，并以
+一行 `OFFICE_HOURS_VERDICT` 回执作为其全部响应。它保护必需的教练与
+Assignment 节，区分未知客户事实与已承诺行为，并要求每个既往状态都有
+证据。
 
-**Step 2: Check stop conditions, then fix and re-dispatch**
+**Step 2：检查停止条件，然后修复并重新派发**
 
-After each verdict, BEFORE fixing any findings or dispatching again, validate the
-saved files with the helper. Pass the reviewer's entire response unchanged as the
-receipt (a lone `OFFICE_HOURS_VERDICT` line; with a quote, backtick, `$` or `\` it is
-malformed) and list every completed round in order:
+每次判定之后，**修复任何发现或再次派发之前**，用 helper 验证已保存
+文件。把评审者的整个响应原样作为回执传入（单独一行
+`OFFICE_HOURS_VERDICT`；带引号、反引号、`$` 或 `\` 即畸形），并按序
+列出每个已完成轮：
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-office-hours-review check --receipt "<receipt line>" "<round-1.json>" "<round-2.json if present>" "<round-3.json if present>"
 ```
 
-A missing, malformed, or mismatched receipt fails the check: that attempt is a failed review.
+回执缺失、畸形或不匹配即检查失败：那次尝试是失败的评审。
 
-**Convergence guard and stopping rules:** Each finding is blocking or minor. Only
-blocking findings require another round. Read its stop reason:
-- PASS: no blocking findings remain. Any minor findings are recorded, not fixed,
-  and never justify another round; proceed to Step 3.
-- CONVERGENCE: the reviewer explicitly marked a blocking prior obligation
-  persisting with a concrete prior/current finding pair and document evidence.
-  Stop even if new findings appear. Shared topic labels or new refinements alone
-  are insufficient.
-- MAX_ITERATIONS: round 3 completed (or the caller's lower round limit); stop.
-- CONTINUE: fix only the blocking findings in the design, then return to Step 1
-  to prepare and dispatch the next review. Do not edit for minor findings
-  mid-loop: they stay recorded for the user, and new text only gives the next
-  diff more to review. Its reviewer checks every prior finding and raises new
-  blocking findings only for problems your changes introduced or exposed.
+**收敛守卫与停止规则：**每个发现分阻塞或次要。只有阻塞发现需要再跑一
+轮。读其停止原因：
+- PASS：不再有阻塞发现。次要发现只记录、不修复，绝不作为再跑一轮的
+  理由；进入 Step 3。
+- CONVERGENCE：评审者明确标记某个阻塞的既往义务持续存在，配有具体的
+  先前/当前发现对与文档证据。即使出现新发现也停止。只有共享主题标签
+  或新的润色不够。
+- MAX_ITERATIONS：第 3 轮完成（或调用方更低的轮上限）；停止。
+- CONTINUE：只修设计中的阻塞发现，然后回到 Step 1 准备并派发下一轮
+  评审。不要为次要发现中途编辑：它们保持记录给用户，新文本只会给下一
+  个 diff 更多要评审的东西。其评审者检查每个既往发现，只为你的改动引
+  入或暴露的问题提出新的阻塞发现。
 
-On a stop, do not fix again or re-dispatch. Run the finalizer before approval:
+停止之后，不再修复也不再派发。批准之前跑 finalizer：
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-office-hours-review finalize --design "<design-path>" "<round-1.json>" "<round-2.json if present>" "<round-3.json if present>"
 ```
 
-It installs the complete `## Reviewer Concerns` section directly from the JSON.
-Recording concerns does not mark them fixed. Do not edit that generated section.
-At the cap (MAX_ITERATIONS or CONVERGENCE) it lists the unresolved blocking findings
-as numbered gaps. Never launch a fourth reviewer or re-review unchanged input. Either
-apply the listed fixes first and add `--fixes <fixes.json>`
-(`[{"id":"<finding id>","applied_text":"<verbatim new excerpt>"}]`): it records
-`issues verified: k of N` deterministically (new text present, snapshot lacks it),
-never a review verdict; or finalize without it and carry its
-`N fixes unconfirmed — decision: spec not re-verified` into the approval step, which
-stays blocked until the owner accepts it explicitly.
-Then proceed to Step 3 and the existing user approval.
+它直接从 JSON 安装完整的 `## Reviewer Concerns` 节。记录疑虑不等于修
+复。不要编辑那个生成节。在上限处（MAX_ITERATIONS 或 CONVERGENCE）
+它把未解决的阻塞发现列为编号缺口。绝不启动第四个评审者或对未变输入
+复审。要么先应用所列修复并加 `--fixes <fixes.json>`
+（`[{"id":"<finding id>","applied_text":"<verbatim new excerpt>"}]`）：它
+确定性地记录 `issues verified: k of N`（新文本在场、快照里没有），绝不
+是评审判定；要么不带它 finalize，并把它那句
+`N fixes unconfirmed — decision: spec not re-verified` 带进审批步骤，
+该步骤保持阻塞直到 owner 显式接受。
+然后进入 Step 3 与既有的用户审批。
 
-If the subagent fails, times out, or is unavailable — stop the loop and present the
-document unreviewed. Tell the user: "Spec review unavailable — presenting unreviewed doc."
-A missing or invalid verdict is an explicit review failure, never PASS. Preserve the
-failed output and its error. Finalize with `--unreviewed "<actual failure cause>"`
-and only the preceding valid round files (none if round 1 failed); their known
-concerns remain visible. Do not fabricate JSON or hide a completed verdict behind
-UNREVIEWED. The independent review remains a quality bonus, not an approval gate.
+子代理失败、超时或不可用时，停止循环并呈现未评审的文档。告诉用户：
+"Spec review unavailable — presenting unreviewed doc."。判定缺失或非法
+是显式的评审失败，绝不是 PASS。保留失败输出及其错误。用
+`--unreviewed "<actual failure cause>"` 与仅先前的有效轮文件（第 1 轮
+失败则无）finalize；它们已知的疑虑仍然可见。不要伪造 JSON，也不要把
+已完成的判定藏在 UNREVIEWED 背后。独立评审仍是质量加分项，不是审批
+门。
 
-**Step 3: Report and persist metrics**
+**Step 3：报告并持久化指标**
 
-The finalizer prints the exact Spec Review block, quality score, and metrics. Tell the user the
-result using that block; link the design and saved verdicts for details. Confirmed
-resolutions require explicit later reviewer evidence; attempted fix rounds are never
-described as successful fixes.
+finalizer 打印确切的 Spec Review 块、质量分与指标。用那个块把结果告
+诉用户；详情链接设计与已保存判定。已确认的解决需要评审者后续的显式
+证据；已尝试的修复轮绝不描述为成功修复。
 
-When writing a completion report, write its other sections normally, then run the
-same finalizer with `--report "<report-path>"` after the report exists. This installs
-its authoritative `## Spec Review` section and Disposition mechanically. Do not
-summarize or replace that section afterward; refer to it elsewhere instead of
-inventing duplicate counts. Preserve the Assignment, coaching, approval, and Handoff.
+写完成报告时，正常写其他节，然后在报告存在之后用
+`--report "<report-path>"` 跑同一个 finalizer。这机械地安装其权威的
+`## Spec Review` 节与 Disposition。此后不要摘述或替换那个节；在别处
+引用它，不要编造重复计数。保留 Assignment、教练、审批与移交。
 
-Append the helper's actual metrics to the existing analytics log (telemetry is
-best-effort and must not block approval):
+把 helper 的实际指标追加到既有 analytics 日志（telemetry 尽力而为，
+绝不能阻塞审批）：
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
 mkdir -p "$GSTACK_STATE_ROOT/analytics"
 echo '{"skill":"office-hours","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","iterations":ITERATIONS,"issues_found":FOUND,"issues_fixed":FIXED,"remaining":REMAINING,"quality_score":SCORE}' >> "$GSTACK_STATE_ROOT/analytics/spec-review.jsonl" 2>/dev/null || true
 ```
-Use iterations, issues_found, issues_fixed, remaining, and quality_score from the
-helper; its remaining_blocking and remaining_minor split the remaining count. FOUND counts finding observations across rounds; FIXED counts only
-reviewer-confirmed resolutions. An unavailable score is null, never invented.
+用 helper 的 iterations、issues_found、issues_fixed、remaining 与
+quality_score；其 remaining_blocking 与 remaining_minor 拆分 remaining
+计数。FOUND 统计跨轮的发现观察次数；FIXED 只统计评审者确认的解决。
+不可用的分数是 null，绝不编造。
 
 ---
 
-**Before asking for approval, output the full design doc inline.**
+**请求批准之前，把完整设计文档内联输出。**
 
-Print the complete contents of the design doc as direct assistant text in the
-conversation — do NOT ask the user to open the file, and do NOT rely on a
-`Bash cat` or `Read` tool call to show it. Tool outputs are frequently
-collapsed in the Claude Code UI, which leaves the user approving a document
-they cannot actually see. The one place the full doc is guaranteed to render
-is the assistant message itself.
+把设计文档的完整内容作为直接的 assistant 文本打印在对话里：**不要**
+让用户去打开文件，也**不要**依赖 `Bash cat` 或 `Read` 工具调用来展示
+它。工具输出在 Claude Code UI 中经常被折叠，用户会在看不到文档的情况下
+批准它。完整文档唯一保证渲染的位置就是 assistant 消息本身。
 
-Format: a short preamble (`Here is the design doc saved to {path} — please
-review before approving:`) followed by the verbatim document body. Then
-proceed to the AskUserQuestion below.
+格式：一段简短前言（`Here is the design doc saved to {path} — please
+review before approving:`）加逐字文档正文。然后进入下方的
+AskUserQuestion。
 
-Present the reviewed design doc to the user via AskUserQuestion:
-- A) Approve — mark Status: APPROVED and proceed to handoff
-- B) Revise — specify which sections need changes (loop back to revise those sections)
-- C) Start over — return to Phase 2
+经 AskUserQuestion 把已评审的设计文档呈现给用户：
+- A) 批准：标记 Status: APPROVED 并进入移交
+- B) 修改：指明哪些节需要改（回到那些节修订）
+- C) 推倒重来：回到 Phase 2
 
 
 
-## Brain Calibration Write-Back (gated)
+## Brain 校准回写（有门控）
 
-Skip unless `BRAIN_CALIBRATION_WRITEBACK` is set and the preamble/brain-health
-output or gstack config shows `brain_trust_policy@<endpoint-hash>=personal`.
-If unknown, skip. If both gates pass, record one durable
-typed prediction with `mcp__gbrain__takes_add`; if unavailable, use
-`mcp__gbrain__put_page` with a gstack:takes fence block.
+除非设置了 `BRAIN_CALIBRATION_WRITEBACK`，且前导/brain-health 输出或
+gstack 配置显示
+`brain_trust_policy@<endpoint-hash>=personal`，否则跳过。未知则跳过。
+两道门都通过时，用 `mcp__gbrain__takes_add` 记录一条持久的类型化预测；
+不可用时改用带 gstack:takes 围栏块的 `mcp__gbrain__put_page`。
 
-Take frontmatter:
+Take frontmatter：
 ```yaml
 kind: bet
 holder: <user identity from whoami>
@@ -328,7 +324,7 @@ expected_resolution: <date in 1-3 months depending on skill>
 source_skill: office-hours
 ```
 
-After write, invalidate affected digests:
+写入之后，使受影响的摘要失效：
 
 ```bash
 SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null) || true
@@ -337,12 +333,10 @@ SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null) || true
   ~/.claude/skills/gstack/bin/gstack-brain-cache invalidate competitive-intel --project "$SLUG" 2>/dev/null || true
 ```
 
-## Brain Cache Background Refresh
+## Brain 缓存后台刷新
 
-After the skill's work completes (and telemetry has logged), kick a
-background refresh of any cache digest that's getting close to its TTL.
-This is non-blocking — the user doesn't wait. Next invocation benefits
-from the warm cache.
+本 Skill 的工作完成之后（且 telemetry 已记录），为接近 TTL 的缓存摘要
+踢一次后台刷新。这是非阻塞的，用户不等。下次调用受益于热缓存。
 
 ```bash
 SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null) || true
@@ -352,74 +346,83 @@ SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null) || true
 
 ---
 
-## Phase 6: Handoff — The Relationship Closing
+## Phase 6：移交：关系的收尾
 
-Once the design doc is APPROVED, deliver the closing sequence. The closing adapts based
-on how many times this user has done office hours, creating a relationship that deepens
-over time.
+设计文档 APPROVED 之后，交付收尾序列。收尾按该用户做过多少次 office
+hours 而调整，形成一段随时间加深的关系。
 
-### Step 1: Builder Profile
+### Step 1：Builder 画像
 
-Use SESSION_TIER, PRIOR_SESSION_COUNT, LAST_PROJECT, LAST_ASSIGNMENT and CROSS_PROJECT from the
-`Builder profile before this session:` line you wrote in Phase 4.5. This is session
-PRIOR_SESSION_COUNT + 1. If that line says `PROFILE_READ=failed` or is gone, use the introduction
-tier and tell the user: "I couldn't read your builder profile, so I'm treating this as your first
-office hours session."
+用你在 Phase 4.5 写下的 `Builder profile before this session:` 行里的
+SESSION_TIER、PRIOR_SESSION_COUNT、LAST_PROJECT、LAST_ASSIGNMENT 与
+CROSS_PROJECT。本次是第 PRIOR_SESSION_COUNT + 1 次会话。那行写着
+`PROFILE_READ=failed` 或已不存在时，用 introduction 档并告诉用户：
+"I couldn't read your builder profile, so I'm treating this as your
+first office hours session."
 
-Then read the running totals, which now include this session:
+然后读累计总数，现在已包含本次会话：
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-builder-profile 2>/dev/null || echo "PROFILE_READ: failed"
 ```
 
-Use only its DESIGN_COUNT, DESIGN_TITLES, ACCUMULATED_SIGNALS, TOTAL_SIGNAL_COUNT, NUDGE_ELIGIBLE
-and RESOURCES_SHOWN(_COUNT); never its TIER, SESSION_COUNT, LAST_* or CROSS_PROJECT.
+只用它的 DESIGN_COUNT、DESIGN_TITLES、ACCUMULATED_SIGNALS、
+TOTAL_SIGNAL_COUNT、NUDGE_ELIGIBLE 与 RESOURCES_SHOWN(_COUNT)；绝不
+用它的 TIER、SESSION_COUNT、LAST_* 或 CROSS_PROJECT。
 
-### Step 2: Follow the Tier Path
+### Step 2：按档位路径走
 
-Follow ONE tier path below based on `SESSION_TIER`. Do not mix tiers.
+按 `SESSION_TIER` 走下方**一条**档位路径。不要混档。
 
 ---
 
-### If TIER = introduction (first session)
+### TIER = introduction（首次会话）
 
-This is the full introduction. The user has never done office hours before.
+这是完整介绍。用户从未做过 office hours。
 
-**Beat 1: Signal Reflection + Golden Age**
+**Beat 1：信号映照 + 黄金时代**
 
-One paragraph that weaves specific session callbacks with the golden age framing. Reference actual things the user said, quote their words back to them.
+一段话，把具体的会话回响织入黄金时代的框定。引用用户实际说过的话，
+把他们的话还给他们。
 
-**Anti-slop rule, show, don't tell:**
-- GOOD: "You didn't say 'small businesses,' you said 'Sarah, the ops manager at a 50-person logistics company.' That specificity is rare."
-- BAD: "You showed great specificity in identifying your target user."
-- GOOD: "You pushed back when I challenged premise #2. Most people just agree."
-- BAD: "You demonstrated conviction and independent thinking."
+**反 AI 腔规则，展示而非声明：**
+- 好："你没有说'小企业'，你说的是'Sarah，一家 50 人物流公司的运营经
+  理'。这种具体性很罕见。"
+- 差："你在识别目标用户时展现了极好的具体性。"
+- 好："我挑战前提 #2 时你顶了回来。多数人只是同意。"
+- 差："你展现了信念与独立思考。"
 
-Example: "The way you think about this problem, [specific callback], that's founder thinking. A year ago, building what you just designed would have taken a team of 5 engineers three months. Today you can build it this weekend with Claude Code. The engineering barrier is gone. What remains is taste, and you just demonstrated that."
+示例："你对这个问题的思考方式，[具体回响]，那是创始人的思维。一年
+前，建出你刚设计的东西需要一个 5 人工程师团队做三个月。今天你可以用
+Claude Code 在这个周末建出来。工程门槛已经消失。剩下的是品味，而你
+刚刚展示了它。"
 
-**Beat 2: "One more thing."**
+**Beat 2："还有一件事。"**
 
-Output a separator and "One more thing." This resets attention and signals the genre shift.
+输出一个分隔线加"One more thing."。这会重置注意力并标示文类切换。
 
 ---
 
 One more thing.
 
-**Beat 3: Garry's Personal Plea**
+**Beat 3：Garry 的私人寄语**
 
-Use the founder signal count from Phase 4.5 to select the right sub-tier.
+用 Phase 4.5 的创始人信号数选正确的子档。
 
-- **Top tier** (3+ signals AND named a specific user, revenue, or demand evidence):
+- **最高档**（3+ 信号，且点名了具体用户、收入或需求证据）：
 
 > A personal note from me, Garry Tan, the creator of GStack: what you just experienced is about 10% of the value you'd get working with a YC partner at Y Combinator. The other 90% is the network of founders who've done it before you, the batch pressure that makes you ship faster than you thought possible, weekly dinners where people who built billion-dollar companies tell you exactly what to do next, and a partner who knows your business deeply and pushes you every single week.
 >
 > GStack thinks you are among the top people who could do this.
 
-Then use AskUserQuestion: "Would you consider applying to Y Combinator?"
-- If yes: run `open https://ycombinator.com/apply?ref=gstack` and say: "Bring this design doc to your YC interview. It's better than most pitch decks."
-- If no: respond warmly: "Totally fair. The design doc is yours either way, and the offer stands if you ever change your mind." No pressure, no guilt, no re-ask.
+然后用 AskUserQuestion："Would you consider applying to Y Combinator?"
+- 是：运行 `open https://ycombinator.com/apply?ref=gstack` 并说："把这
+  份设计文档带去你的 YC 面试。它比多数 pitch deck 都好。"
+- 否：温暖回应："Totally fair. The design doc is yours either way, and
+  the offer stands if you ever change your mind."不施压、不内疚、不
+  重问。
 
-- **Middle tier** (1-2 signals, or builder whose project solves a real problem):
+- **中档**（1-2 个信号，或项目解决真实问题的 builder）：
 
 > A personal note from me, Garry Tan, the creator of GStack: what you just experienced, the premise challenges, the forced alternatives, the narrowest-wedge thinking, is about 10% of what working with a YC partner is like. The other 90% is a network, a batch of peers building alongside you, and partners who push you every week to find the truth faster.
 >
@@ -427,7 +430,7 @@ Then use AskUserQuestion: "Would you consider applying to Y Combinator?"
 >
 > **ycombinator.com/apply?ref=gstack**
 
-- **Base tier** (everyone else):
+- **基础档**（其余所有人）：
 
 > A personal note from me, Garry Tan, the creator of GStack: the skills you're demonstrating right now, taste, ambition, agency, the willingness to sit with hard questions about what you're building, those are exactly the traits we look for in YC founders. You may not be thinking about starting a company today, and that's fine. But founders are everywhere, and this is the golden age. A single person with AI can now build what used to take a team of 20.
 >
@@ -435,237 +438,266 @@ Then use AskUserQuestion: "Would you consider applying to Y Combinator?"
 >
 > **ycombinator.com/apply?ref=gstack**
 
-Then proceed to Founder Resources below.
+然后进入下方的 Founder Resources。
 
 ---
 
-### If TIER = welcome_back (sessions 2-4)
+### TIER = welcome_back（第 2-4 次会话）
 
-Lead with recognition. The magical moment is immediate.
+以认出开局。魔法时刻立刻发生。
 
-Use LAST_ASSIGNMENT, LAST_PROJECT and CROSS_PROJECT from Step 1 (the Phase 4.5 values).
+用 Step 1 的 LAST_ASSIGNMENT、LAST_PROJECT 与 CROSS_PROJECT（即
+Phase 4.5 的值）。
 
-If CROSS_PROJECT is false (same project as last time):
-"Welcome back. Last time you were working on [LAST_ASSIGNMENT]. How's it going?"
+CROSS_PROJECT 为 false（与上次同一项目）：
+"Welcome back. Last time you were working on [LAST_ASSIGNMENT]. How's it
+going?"
 
-If CROSS_PROJECT is true (different project):
-"Welcome back. Last time we talked about [LAST_PROJECT]. Still on that, or onto something new?"
+CROSS_PROJECT 为 true（不同项目）：
+"Welcome back. Last time we talked about [LAST_PROJECT]. Still on that,
+or onto something new?"
 
-If the value a greeting names (LAST_ASSIGNMENT or LAST_PROJECT) is empty, skip that clause and
-its question and say only "Welcome back." Backfilled profiles can have a tier without them.
+问候所点名的值（LAST_ASSIGNMENT 或 LAST_PROJECT）为空时，跳过该从句
+及其问题，只说 "Welcome back."。回填的画像可能只有档位而没有这些值。
 
-Then: "No pitch this time. You already know about YC. Let's talk about your work."
+然后："No pitch this time. You already know about YC. Let's talk about
+your work."
 
-**Tone examples (prevent generic AI voice):**
-- GOOD: "Welcome back. Last time you were designing that task manager for ops teams. Still on that?"
-- BAD: "Welcome back to your second office hours session. I'd like to check in on your progress."
-- GOOD: "No pitch this time. You already know about YC. Let's talk about your work."
-- BAD: "Since you've already seen the YC information, we'll skip that section today."
+**语气示例（防止通用 AI 腔）：**
+- 好："Welcome back. Last time you were designing that task manager for
+  ops teams. Still on that?"
+- 差："Welcome back to your second office hours session. I'd like to
+  check in on your progress."
+- 好："No pitch this time. You already know about YC. Let's talk about
+  your work."
+- 差："Since you've already seen the YC information, we'll skip that
+  section today."
 
-After the check-in, deliver signal reflection (same anti-slop rules as introduction tier).
+签到之后，交付信号映照（与 introduction 档相同的反 AI 腔规则）。
 
-Then: Design doc trajectory. Read DESIGN_TITLES from the profile.
+然后：设计文档轨迹。读画像里的 DESIGN_TITLES。
 "Your first design was [first title]. Now you're on [latest title]."
 
-Then proceed to Founder Resources below.
+然后进入下方的 Founder Resources。
 
 ---
 
-### If TIER = regular (sessions 5-8)
+### TIER = regular（第 5-8 次会话）
 
-Lead with recognition and session count.
+以认出与会话次数开局。
 
-"Welcome back. This is session [PRIOR_SESSION_COUNT + 1]. Last time: [LAST_ASSIGNMENT]. How'd it go?"
-If LAST_ASSIGNMENT is empty, skip the "Last time" clause and its question.
+"Welcome back. This is session [PRIOR_SESSION_COUNT + 1]. Last time:
+[LAST_ASSIGNMENT]. How'd it go?"
+LAST_ASSIGNMENT 为空时，跳过 "Last time" 从句及其问题。
 
-**Tone examples:**
-- GOOD: "You've been at this for 5 sessions now. Your designs keep getting sharper. Let me show you what I've noticed."
-- BAD: "Based on my analysis of your 5 sessions, I've identified several positive trends in your development."
+**语气示例：**
+- 好："You've been at this for 5 sessions now. Your designs keep getting
+  sharper. Let me show you what I've noticed."
+- 差："Based on my analysis of your 5 sessions, I've identified several
+  positive trends in your development."
 
-After the check-in, deliver arc-level signal reflection. Reference patterns ACROSS sessions, not just this one.
-Example: "In session 1, you described users as 'small businesses.' By now you're saying 'Sarah at Acme Corp.' That specificity shift is a signal."
+签到之后，交付弧线级信号映照。引用**跨**会话的模式，不只本次。
+示例："In session 1, you described users as 'small businesses.' By now
+you're saying 'Sarah at Acme Corp.' That specificity shift is a signal."
 
-Design trajectory with interpretation:
-"Your first design was broad. Your latest narrows to a specific wedge, that's the PMF pattern."
+带解读的设计轨迹：
+"Your first design was broad. Your latest narrows to a specific wedge,
+that's the PMF pattern."
 
-**Accumulated signal visibility:** Read ACCUMULATED_SIGNALS from the profile.
-"Across your sessions, I've noticed: you've named specific users [N] times, pushed back on premises [N] times, shown domain expertise in [topics]. These patterns mean something."
+**累计信号可见化：**读画像里的 ACCUMULATED_SIGNALS。
+"Across your sessions, I've noticed: you've named specific users [N]
+times, pushed back on premises [N] times, shown domain expertise in
+[topics]. These patterns mean something."
 
-**Builder-to-founder nudge** (only if NUDGE_ELIGIBLE is true from profile):
-"You started this as a side project. But you've named specific users, pushed back when challenged, and your designs keep getting sharper each time. I don't think this is a side project anymore. Have you thought about whether this could be a company?"
-This must feel earned, not broadcast. If the evidence doesn't support it, skip entirely.
+**Builder 到创始人的提示**（仅当画像的 NUDGE_ELIGIBLE 为 true）：
+"You started this as a side project. But you've named specific users,
+pushed back when challenged, and your designs keep getting sharper each
+time. I don't think this is a side project anymore. Have you thought
+about whether this could be a company?"
+这必须显得挣来的，不是广播。证据不支持就整体跳过。
 
-**Builder Journey Summary** (session 5+): Auto-generate `builder-journey.md` in the
-gstack state root (`$GSTACK_STATE_ROOT`, resolved by the block below) with a narrative
-arc (not a data table). The arc tells the STORY of their journey in second person,
-referencing specific things they said across sessions. Then open it:
+**Builder 旅程总结**（第 5+ 次会话）：在 gstack 状态根
+（`$GSTACK_STATE_ROOT`，由下方块解析）自动生成
+`builder-journey.md`，写叙事弧（不是数据表）。弧线以第二人称讲他们的
+旅程**故事**，引用他们跨会话说过的具体事。然后打开它：
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
 open "$GSTACK_STATE_ROOT/builder-journey.md"
 ```
 
-Then proceed to Founder Resources below.
+然后进入下方的 Founder Resources。
 
 ---
 
-### If TIER = inner_circle (sessions 9+)
+### TIER = inner_circle（第 9+ 次会话）
 
-"You've done [PRIOR_SESSION_COUNT + 1] sessions. You've iterated [DESIGN_COUNT] designs. Most people who show this pattern end up shipping."
+"You've done [PRIOR_SESSION_COUNT + 1] sessions. You've iterated
+[DESIGN_COUNT] designs. Most people who show this pattern end up
+shipping."
 
-The data speaks. No pitch needed.
+数据说话。不需要 pitch。
 
-Full accumulated signal summary from the profile.
+画像的完整累计信号摘要。
 
-Auto-generate updated `$GSTACK_STATE_ROOT/builder-journey.md` with narrative arc (resolve the state root and open it as in the regular tier).
+自动生成更新后的 `$GSTACK_STATE_ROOT/builder-journey.md`，写叙事弧
+（像 regular 档那样解析状态根并打开）。
 
-Then proceed to Founder Resources below.
+然后进入下方的 Founder Resources。
 
 ---
 
-### Founder Resources (all tiers)
+### Founder Resources（所有档位）
 
-**Standing opt-out check — run FIRST:**
+**常设 opt-out 检查：先跑：**
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-config get founder_resources 2>/dev/null || echo "true"
 ```
 
-If the value is `false`, **skip this entire section silently** — no resources,
-no "skipped as requested" mention. The user said never; config outlives
-session context and memory instructions, so never means never. (Re-enable:
-`gstack-config set founder_resources true`.)
+值为 `false` 时，**静默跳过整节**：不给资源，也不提"已按要求跳过"。
+用户说了永不；配置活得比会话上下文和记忆指令都久，所以永不就是永不。
+（重新启用：`gstack-config set founder_resources true`。）
 
-Share 2-3 resources from the pool below. For repeat users, resources compound by matching
-to accumulated session context, not just this session's category.
+从下方池子里分享 2-3 个资源。回头用户要按累计会话上下文匹配，不只本
+次会话的类别。
 
-**After sharing, close with the standing choice** (one line, not a ceremony):
+**分享之后，以常设选择收尾**（一行，不要仪式）：
 
 > Want these? I can open any of them — or say "never show me these again" and
 > this section disappears for good.
 
-If the user opts out (any clear phrasing of never/stop showing these): run
-`~/.claude/skills/gstack/bin/gstack-config set founder_resources false`, then
-VERIFY the write (`gstack-config get founder_resources` must read back
-`false`) before promising anything — if the write failed, say so and skip for
-this session only. On success confirm in one line with the re-enable command
-and continue the handoff.
+用户 opt-out（任何明确的永不/别再显示的说法）：运行
+`~/.claude/skills/gstack/bin/gstack-config set founder_resources false`，
+然后**验证**写入（`gstack-config get founder_resources` 必须读回
+`false`）再承诺任何事；写入失败就说明情况并只在本次会话跳过。成功则
+用一行确认，附重新启用的命令，继续移交。
 
-**Dedup check:** Read `RESOURCES_SHOWN` from the builder profile output above.
-If `RESOURCES_SHOWN_COUNT` is 34 or more, skip this section entirely (all resources exhausted).
-Otherwise, avoid selecting any URL that appears in the RESOURCES_SHOWN list.
+**去重检查：**读上方 builder 画像输出里的 `RESOURCES_SHOWN`。
+`RESOURCES_SHOWN_COUNT` 为 34 或更多时，整节跳过（资源已耗尽）。
+否则避免选任何出现在 RESOURCES_SHOWN 列表里的 URL。
 
-**Selection rules:**
-- Pick 2-3 resources. Mix categories — never 3 of the same type.
-- Never pick a resource whose URL appears in the dedup log above.
-- Match to session context (what came up matters more than random variety):
-  - Hesitant about leaving their job → "My $200M Startup Mistake" or "Should You Quit Your Job At A Unicorn?"
-  - Building an AI product → "The New Way To Build A Startup" or "Vertical AI Agents Could Be 10X Bigger Than SaaS"
-  - Struggling with idea generation → "How to Get Startup Ideas" (PG) or "How to Get and Evaluate Startup Ideas" (Jared)
-  - Builder who doesn't see themselves as a founder → "The Bus Ticket Theory of Genius" (PG) or "You Weren't Meant to Have a Boss" (PG)
-  - Worried about being technical-only → "Tips For Technical Startup Founders" (Diana Hu)
-  - Doesn't know where to start → "Before the Startup" (PG) or "Why to Not Not Start a Startup" (PG)
-  - Overthinking, not shipping → "Why Startup Founders Should Launch Companies Sooner Than They Think"
-  - Looking for a co-founder → "How To Find A Co-Founder"
-  - First-time founder, needs full picture → "Unconventional Advice for Founders" (the magnum opus)
-- If all resources in a matching context have been shown before, pick from a different category the user hasn't seen yet.
+**选择规则：**
+- 挑 2-3 个资源。混类别：绝不 3 个同类型。
+- 绝不挑 URL 已出现在上方去重日志里的资源。
+- 按会话上下文匹配（谈过什么比随机多样性更重要）：
+  - 对辞职犹豫 → "My $200M Startup Mistake" 或 "Should You Quit Your
+    Job At A Unicorn?"
+  - 在做 AI 产品 → "The New Way To Build A Startup" 或 "Vertical AI
+    Agents Could Be 10X Bigger Than SaaS"
+  - 卡在想法产生 → "How to Get Startup Ideas"（PG）或 "How to Get and
+    Evaluate Startup Ideas"（Jared）
+  - 不把自己当创始人的 builder → "The Bus Ticket Theory of Genius"
+    （PG）或 "You Weren't Meant to Have a Boss"（PG）
+  - 担心只会技术 → "Tips For Technical Startup Founders"（Diana Hu）
+  - 不知从哪开始 → "Before the Startup"（PG）或 "Why to Not Not Start
+    a Startup"（PG）
+  - 想太多、不发布 → "Why Startup Founders Should Launch Companies
+    Sooner Than They Think"
+  - 在找联创 → "How To Find A Co-Founder"
+  - 首次创业、需要全局 → "Unconventional Advice for Founders"（集大成
+    之作）
+- 匹配上下文里的资源全都展示过时，从用户还没看过的另一类别里挑。
 
-**Format each resource as:**
+**每个资源的格式：**
 
-> **{Title}** ({duration or "essay"})
-> {1-2 sentence blurb — direct, specific, encouraging. Match Garry's voice: tell them WHY this one matters for THEIR situation.}
+> **{Title}**（{duration 或 "essay"}）
+> {1-2 句简介：直接、具体、鼓励。用 Garry 的口吻：告诉他们这一个为什么
+> 对**他们**的处境重要。}
 > {url}
 
-**Resource Pool:**
+**资源池：**
 
-GARRY TAN VIDEOS:
-1. "My $200 million startup mistake: Peter Thiel asked and I said no" (5 min) — The single best "why you should take the leap" video. Peter Thiel writes him a check at dinner, he says no because he might get promoted to Level 60. That 1% stake would be worth $350-500M today. https://www.youtube.com/watch?v=dtnG0ELjvcM
-2. "Unconventional Advice for Founders" (48 min, Stanford) — The magnum opus. Covers everything a pre-launch founder needs: get therapy before your psychology kills your company, good ideas look like bad ideas, the Katamari Damacy metaphor for growth. No filler. https://www.youtube.com/watch?v=Y4yMc99fpfY
-3. "The New Way To Build A Startup" (8 min) — The 2026 playbook. Introduces the "20x company" — tiny teams beating incumbents through AI automation. Three real case studies. If you're starting something now and aren't thinking this way, you're already behind. https://www.youtube.com/watch?v=rWUWfj_PqmM
-4. "How To Build The Future: Sam Altman" (30 min) — Sam talks about what it takes to go from an idea to something real — picking what's important, finding your tribe, and why conviction matters more than credentials. https://www.youtube.com/watch?v=xXCBz_8hM9w
-5. "What Founders Can Do To Improve Their Design Game" (15 min) — Garry was a designer before he was an investor. Taste and craft are the real competitive advantage, not MBA skills or fundraising tricks. https://www.youtube.com/watch?v=ksGNfd-wQY4
+GARRY TAN 视频：
+1. "My $200 million startup mistake: Peter Thiel asked and I said no"（5 分钟）：最好的"为什么你该跳出去"视频。Peter Thiel 在饭桌上给他写支票，他因为可能升到 Level 60 而拒绝。那 1% 股份今天值 3.5-5 亿美元。https://www.youtube.com/watch?v=dtnG0ELjvcM
+2. "Unconventional Advice for Founders"（48 分钟，Stanford）：集大成之作。覆盖发布前创始人需要的一切：先去治疗，别让你的心理毁掉公司；好想法看起来像坏想法；用 Katamari Damacy 比喻增长。没有废话。https://www.youtube.com/watch?v=Y4yMc99fpfY
+3. "The New Way To Build A Startup"（8 分钟）：2026 年的打法。提出"20 倍公司"：小团队靠 AI 自动化打败在位者。三个真实案例。如果你现在开始做事却不是这个思路，已经落后了。https://www.youtube.com/watch?v=rWUWfj_PqmM
+4. "How To Build The Future: Sam Altman"（30 分钟）：Sam 谈从想法到真实事物需要什么：挑重要的事、找到你的部落、为什么信念比资历更重要。https://www.youtube.com/watch?v=xXCBz_8hM9w
+5. "What Founders Can Do To Improve Their Design Game"（15 分钟）：Garry 先是设计师，后是投资人。品味与手艺才是真正的竞争优势，不是 MBA 技能或融资技巧。https://www.youtube.com/watch?v=ksGNfd-wQY4
 
-YC BACKSTORY / HOW TO BUILD THE FUTURE:
-6. "Tom Blomfield: How I Created Two Billion-Dollar Fintech Startups" (20 min) — Tom built Monzo from nothing into a bank used by 10% of the UK. The actual human journey — fear, mess, persistence. Makes founding feel like something a real person does. https://www.youtube.com/watch?v=QKPgBAnbc10
-7. "DoorDash CEO: Customer Obsession, Surviving Startup Death & Creating A New Market" (30 min) — Tony started DoorDash by literally driving food deliveries himself. If you've ever thought "I'm not the startup type," this will change your mind. https://www.youtube.com/watch?v=3N3TnaViyjk
+YC BACKSTORY / HOW TO BUILD THE FUTURE：
+6. "Tom Blomfield: How I Created Two Billion-Dollar Fintech Startups"（20 分钟）：Tom 把 Monzo 从零做成被英国十分之一人口使用的银行。真实的人之历程：恐惧、混乱、坚持。让创业显得像真人能做的事。https://www.youtube.com/watch?v=QKPgBAnbc10
+7. "DoorDash CEO: Customer Obsession, Surviving Startup Death & Creating A New Market"（30 分钟）：Tony 起初是自己开车送餐起家。你曾想过"我不是创业的料"？这会改变你的看法。https://www.youtube.com/watch?v=3N3TnaViyjk
 
-LIGHTCONE PODCAST:
-8. "How to Spend Your 20s in the AI Era" (40 min) — The old playbook (good job, climb the ladder) may not be the best path anymore. How to position yourself to build things that matter in an AI-first world. https://www.youtube.com/watch?v=ShYKkPPhOoc
-9. "How Do Billion Dollar Startups Start?" (25 min) — They start tiny, scrappy, and embarrassing. Demystifies the origin stories and shows that the beginning always looks like a side project, not a corporation. https://www.youtube.com/watch?v=HB3l1BPi7zo
-10. "Billion-Dollar Unpopular Startup Ideas" (25 min) — Uber, Coinbase, DoorDash — they all sounded terrible at first. The best opportunities are the ones most people dismiss. Liberating if your idea feels "weird." https://www.youtube.com/watch?v=Hm-ZIiwiN1o
-11. "Vertical AI Agents Could Be 10X Bigger Than SaaS" (40 min) — The most-watched Lightcone episode. If you're building in AI, this is the landscape map — where the biggest opportunities are and why vertical agents win. https://www.youtube.com/watch?v=ASABxNenD_U
-12. "The Truth About Building AI Startups Today" (35 min) — Cuts through the hype. What's actually working, what's not, and where the real defensibility comes from in AI startups right now. https://www.youtube.com/watch?v=TwDJhUJL-5o
-13. "Startup Ideas You Can Now Build With AI" (30 min) — Concrete, actionable ideas for things that weren't possible 12 months ago. If you're looking for what to build, start here. https://www.youtube.com/watch?v=K4s6Cgicw_A
-14. "Vibe Coding Is The Future" (30 min) — Building software just changed forever. If you can describe what you want, you can build it. The barrier to being a technical founder has never been lower. https://www.youtube.com/watch?v=IACHfKmZMr8
-15. "How To Get AI Startup Ideas" (30 min) — Not theoretical. Walks through specific AI startup ideas that are working right now and explains why the window is open. https://www.youtube.com/watch?v=TANaRNMbYgk
-16. "10 People + AI = Billion Dollar Company?" (25 min) — The thesis behind the 20x company. Small teams with AI leverage are outperforming 100-person incumbents. If you're a solo builder or small team, this is your permission slip to think big. https://www.youtube.com/watch?v=CKvo_kQbakU
+LIGHTCONE 播客：
+8. "How to Spend Your 20s in the AI Era"（40 分钟）：旧打法（找份好工作、往上爬）可能不再是最优路径。如何在 AI 优先的世界里把自己放到能做重要事情的位置。https://www.youtube.com/watch?v=ShYKkPPhOoc
+9. "How Do Billion Dollar Startups Start?"（25 分钟）：它们从小、乱、尴尬开始。给起源故事祛魅，说明开头永远像个 side project 而不是一家公司。https://www.youtube.com/watch?v=HB3l1BPi7zo
+10. "Billion-Dollar Unpopular Startup Ideas"（25 分钟）：Uber、Coinbase、DoorDash 起初听起来都很糟。最好的机会是多数人否掉的那些。如果你的想法显得"怪"，这会让你松口气。https://www.youtube.com/watch?v=Hm-ZIiwiN1o
+11. "Vertical AI Agents Could Be 10X Bigger Than SaaS"（40 分钟）：Lightcone 观看最多的一期。如果你在做 AI，这是那张版图：最大的机会在哪、垂直 agent 为什么赢。https://www.youtube.com/watch?v=ASABxNenD_U
+12. "The Truth About Building AI Startups Today"（35 分钟）：穿透炒作。什么真的有效、什么无效、AI 创业当下的真实护城河来自何处。https://www.youtube.com/watch?v=TwDJhUJL-5o
+13. "Startup Ideas You Can Now Build With AI"（30 分钟）：12 个月前不可能的事，现在有具体可执行的想法。如果你在找做什么，从这里开始。https://www.youtube.com/watch?v=K4s6Cgicw_A
+14. "Vibe Coding Is The Future"（30 分钟）：写软件刚刚永久改变。你能描述出来，就能建出来。做技术创始人的门槛从未这么低。https://www.youtube.com/watch?v=IACHfKmZMr8
+15. "How To Get AI Startup Ideas"（30 分钟）：不空谈。走一遍当下有效的具体 AI 创业想法，并解释窗口为什么开着。https://www.youtube.com/watch?v=TANaRNMbYgk
+16. "10 People + AI = Billion Dollar Company?"（25 分钟）：20 倍公司背后的论点。带 AI 杠杆的小团队在跑赢 100 人的在位者。如果你是单人 builder 或小团队，这是你放开想的许可条。https://www.youtube.com/watch?v=CKvo_kQbakU
 
-YC STARTUP SCHOOL:
-17. "Should You Start A Startup?" (17 min, Harj Taggar) — Directly addresses the question most people are too afraid to ask out loud. Breaks down the real tradeoffs honestly, without hype. https://www.youtube.com/watch?v=BUE-icVYRFU
-18. "How to Get and Evaluate Startup Ideas" (30 min, Jared Friedman) — YC's most-watched Startup School video. How founders actually stumbled into their ideas by paying attention to problems in their own lives. https://www.youtube.com/watch?v=Th8JoIan4dg
-19. "How David Lieb Turned a Failing Startup Into Google Photos" (20 min) — His company Bump was dying. He noticed a photo-sharing behavior in his own data, and it became Google Photos (1B+ users). A masterclass in seeing opportunity where others see failure. https://www.youtube.com/watch?v=CcnwFJqEnxU
-20. "Tips For Technical Startup Founders" (15 min, Diana Hu) — How to leverage your engineering skills as a founder rather than thinking you need to become a different person. https://www.youtube.com/watch?v=rP7bpYsfa6Q
-21. "Why Startup Founders Should Launch Companies Sooner Than They Think" (12 min, Tyler Bosmeny) — Most builders over-prepare and under-ship. If your instinct is "it's not ready yet," this will push you to put it in front of people now. https://www.youtube.com/watch?v=Nsx5RDVKZSk
-22. "How To Talk To Users" (20 min, Gustaf Alströmer) — You don't need sales skills. You need genuine conversations about problems. The most approachable tactical talk for someone who's never done it. https://www.youtube.com/watch?v=z1iF1c8w5Lg
-23. "How To Find A Co-Founder" (15 min, Harj Taggar) — The practical mechanics of finding someone to build with. If "I don't want to do this alone" is stopping you, this removes that blocker. https://www.youtube.com/watch?v=Fk9BCr5pLTU
-24. "Should You Quit Your Job At A Unicorn?" (12 min, Tom Blomfield) — Directly speaks to people at big tech companies who feel the pull to build something of their own. If that's your situation, this is the permission slip. https://www.youtube.com/watch?v=chAoH_AeGAg
+YC STARTUP SCHOOL：
+17. "Should You Start A Startup?"（17 分钟，Harj Taggar）：直接回答多数人不敢大声问的问题。诚实地拆解真实权衡，不炒作。https://www.youtube.com/watch?v=BUE-icVYRFU
+18. "How to Get and Evaluate Startup Ideas"（30 分钟，Jared Friedman）：YC 观看最多的 Startup School 视频。创始人如何靠留意自己生活里的问题撞见想法。https://www.youtube.com/watch?v=Th8JoIan4dg
+19. "How David Lieb Turned a Failing Startup Into Google Photos"（20 分钟）：他的公司 Bump 当时在死。他在自己的数据里注意到一个照片分享行为，它成了 Google Photos（10 亿+ 用户）。在别人看到失败处看到机会的大师课。https://www.youtube.com/watch?v=CcnwFJqEnxU
+20. "Tips For Technical Startup Founders"（15 分钟，Diana Hu）：如何把工程能力当杠杆，而不是以为必须变成另一个人。https://www.youtube.com/watch?v=rP7bpYsfa6Q
+21. "Why Startup Founders Should Launch Companies Sooner Than They Think"（12 分钟，Tyler Bosmeny）：多数 builder 准备过头、发布不足。你的直觉若是"还没准备好"，这会推你立刻把它放到人面前。https://www.youtube.com/watch?v=Nsx5RDVKZSk
+22. "How To Talk To Users"（20 分钟，Gustaf Alströmer）：你不需要销售技巧。你需要关于问题的真诚对话。对从没做过的人最平易近人的战术讲解。https://www.youtube.com/watch?v=z1iF1c8w5Lg
+23. "How To Find A Co-Founder"（15 分钟，Harj Taggar）：找一个一起建的伙伴的具体机制。如果"我不想一个人干"在拦你，这能移开那块石头。https://www.youtube.com/watch?v=Fk9BCr5pLTU
+24. "Should You Quit Your Job At A Unicorn?"（12 分钟，Tom Blomfield）：直接对着大厂里感到要自己做点东西的人说。如果那是你，这是许可条。https://www.youtube.com/watch?v=chAoH_AeGAg
 
-PAUL GRAHAM ESSAYS:
-25. "How to Do Great Work" — Not about startups. About finding the most meaningful work of your life. The roadmap that often leads to founding without ever saying "startup." https://paulgraham.com/greatwork.html
-26. "How to Do What You Love" — Most people keep their real interests separate from their career. Makes the case for collapsing that gap — which is usually how companies get born. https://paulgraham.com/love.html
-27. "The Bus Ticket Theory of Genius" — The thing you're obsessively into that other people find boring? PG argues it's the actual mechanism behind every breakthrough. https://paulgraham.com/genius.html
-28. "Why to Not Not Start a Startup" — Takes apart every quiet reason you have for not starting — too young, no idea, don't know business — and shows why none hold up. https://paulgraham.com/notnot.html
-29. "Before the Startup" — Written specifically for people who haven't started anything yet. What to focus on now, what to ignore, and how to tell if this path is for you. https://paulgraham.com/before.html
-30. "Superlinear Returns" — Some efforts compound exponentially; most don't. Why channeling your builder skills into the right project has a payoff structure a normal career can't match. https://paulgraham.com/superlinear.html
-31. "How to Get Startup Ideas" — The best ideas aren't brainstormed. They're noticed. Teaches you to look at your own frustrations and recognize which ones could be companies. https://paulgraham.com/startupideas.html
-32. "Schlep Blindness" — The best opportunities hide inside boring, tedious problems everyone avoids. If you're willing to tackle the unsexy thing you see up close, you might already be standing on a company. https://paulgraham.com/schlep.html
-33. "You Weren't Meant to Have a Boss" — If working inside a big organization has always felt slightly wrong, this explains why. Small groups on self-chosen problems is the natural state for builders. https://paulgraham.com/boss.html
-34. "Relentlessly Resourceful" — PG's two-word description of the ideal founder. Not "brilliant." Not "visionary." Just someone who keeps figuring things out. If that's you, you're already qualified. https://paulgraham.com/relres.html
+PAUL GRAHAM 随笔：
+25. "How to Do Great Work"：不是讲创业。讲如何找到你一生最有意义的工作。那条路常常通向创业，却从不提"创业"二字。https://paulgraham.com/greatwork.html
+26. "How to Do What You Love"：多数人把真正的兴趣和职业分开放。这篇论证该把这个缝隙合上，而公司常常就是这么诞生的。https://paulgraham.com/love.html
+27. "The Bus Ticket Theory of Genius"：你痴迷而别人觉得无聊的那件事？PG 认为它正是每次突破背后的机制。https://paulgraham.com/genius.html
+28. "Why to Not Not Start a Startup"：把你每个悄悄的"不开始"理由逐个拆掉：太年轻、没想法、不懂商业，并说明为什么都站不住。https://paulgraham.com/notnot.html
+29. "Before the Startup"：专为还没开始过任何事的人写。现在该关注什么、该无视什么、如何判断这条路适不适合你。https://paulgraham.com/before.html
+30. "Superlinear Returns"：有些努力会指数复利，多数不会。为什么把 builder 能力投到对的项目上，回报结构是普通职业比不了的。https://paulgraham.com/superlinear.html
+31. "How to Get Startup Ideas"：最好的想法不是头脑风暴出来的，是被注意到的。教你看自己的挫败感，并认出哪些能成为公司。https://paulgraham.com/startupideas.html
+32. "Schlep Blindness"：最好的机会藏在人人都躲的乏味麻烦里。你若愿意啃眼前那件不性感的事，可能已站在一家公司上。https://paulgraham.com/schlep.html
+33. "You Weren't Meant to Have a Boss"：如果在大组织里工作一直让你隐约不适，这篇解释为什么。小群体做自己选的问题才是 builder 的自然状态。https://paulgraham.com/boss.html
+34. "Relentlessly Resourceful"：PG 对理想创始人的两个词描述。不是"天才"，不是"有远见"，只是那个不断把事情搞明白的人。如果你是这样，你已经合格。https://paulgraham.com/relres.html
 
-**After presenting resources — log to builder profile and offer to open:**
+**呈现资源之后：记进 builder 画像并提供打开：**
 
-1. Log the selected resource URLs to the builder profile (single source of truth).
-Append a resource-tracking entry:
+1. 把所选资源 URL 记进 builder 画像（唯一事实来源）。
+追加一条资源跟踪记录：
 ```bash
 SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null) || true
 ~/.claude/skills/gstack/bin/gstack-developer-profile --log-session '{"date":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'","mode":"resources","project_slug":"'"${SLUG:-unknown}"'","signal_count":0,"signals":[],"design_doc":"","assignment":"","resources_shown":["URL1","URL2","URL3"],"topics":[]}' 2>/dev/null || true
 ```
 
-2. Log the selection to analytics:
+2. 把选择记进 analytics：
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
 mkdir -p "$GSTACK_STATE_ROOT"/analytics
 echo '{"skill":"office-hours","event":"resources_shown","count":NUM_RESOURCES,"categories":"CAT1,CAT2","ts":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"}' >> "$GSTACK_STATE_ROOT"/analytics/skill-usage.jsonl 2>/dev/null || true
 ```
 
-3. Use AskUserQuestion to offer opening the resources:
+3. 用 AskUserQuestion 提供打开资源：
 
-Present the selected resources and ask: "Want me to open any of these in your browser?"
+呈现所选资源并问："Want me to open any of these in your browser?"
 
-Options:
-- A) Open all of them (I'll check them out later)
-- B) [Title of resource 1] — open just this one
-- C) [Title of resource 2] — open just this one
-- D) [Title of resource 3, if 3 were shown] — open just this one
-- E) Skip — I'll find them later
+选项：
+- A) 全部打开（我之后再看）
+- B) [资源 1 标题]：只开这个
+- C) [资源 2 标题]：只开这个
+- D) [资源 3 标题，若展示了 3 个]：只开这个
+- E) 跳过：我之后自己找
 
-If A: run `open URL1 && open URL2 && open URL3` (opens each in default browser).
-If B/C/D: run `open` on the selected URL only.
-If E: proceed to next-skill recommendations.
+选 A：运行 `open URL1 && open URL2 && open URL3`（各自在默认浏览器
+打开）。
+选 B/C/D：只对所选 URL 运行 `open`。
+选 E：进入下一 Skill 推荐。
 
-### Next-skill recommendations — hand the user into the loop
+### 下一 Skill 推荐：把用户带进循环
 
-Don't just list options. Offer to launch the next review NOW so the design doc flows
-straight into a structured review. Map the design-doc mode to the recommended option
-(default `/plan-eng-review` when ambiguous — it has the broadest real-world use and the
-strongest retention).
+不要只列选项。**现在**就提议启动下一次评审，让设计文档直接流进结构化
+评审。把设计文档模式映射到推荐选项（含糊时默认 `/plan-eng-review`，
+它实战用得最广、留存最强）。
 
-**If `PROACTIVE` is `false` OR `CONDUCTOR_SESSION: true`:** do NOT auto-launch. Recommend
-in one line and stop, letting the user invoke:
-- EXPANSION / ambitious → "Next: `/plan-ceo-review` to pressure-test scope and find the 10-star product."
-- well-scoped → "Next: `/plan-eng-review` to lock architecture, tests, and edge cases."
-- visual/UX-heavy → "Next: `/plan-design-review` for a visual/UX pass."
+**`PROACTIVE` 为 `false` 或 `CONDUCTOR_SESSION: true` 时：**不要自动
+启动。一行推荐然后停，让用户自行调用：
+- EXPANSION / 雄心型 → "Next: `/plan-ceo-review` to pressure-test scope
+  and find the 10-star product."
+- 范围明确 → "Next: `/plan-eng-review` to lock architecture, tests, and
+  edge cases."
+- 视觉/UX 密集 → "Next: `/plan-design-review` for a visual/UX pass."
 
-**Otherwise**, offer via AskUserQuestion (D<N> format from the preamble):
+**否则**，经 AskUserQuestion 提供（前导的 D<N> 格式）：
 
 D<N> — Run the next review now?
 Project/branch/task: the design doc you just wrote for this feature.
@@ -691,16 +723,16 @@ D) Not now — I'll run a review later
   ❌ Review gaps compound; problems get more expensive after code exists
 Net: 15 minutes of structured review now against rework risk later.
 
-On the user's SELECTION of A/B/C (not on invocation success), log the handoff, then invoke
-the chosen skill via the **Skill tool** (it auto-discovers the design doc). In both log
-commands, replace `SESSION_ID` with the value the skill-start output echoed:
+用户**选定** A/B/C 时（不是调用成功时），记录移交，然后经 **Skill
+工具**调用所选 Skill（它会自动发现设计文档）。两条记录命令中，
+`SESSION_ID` 换成 skill-start 输出回显的值：
 ```bash
 ~/.claude/skills/gstack/bin/gstack-telemetry-log --event-type handoff --skill office-hours --outcome accepted --session-id "SESSION_ID" 2>/dev/null || true
 ```
-On D, log declined and stop:
+选 D：记录 declined 并停止：
 ```bash
 ~/.claude/skills/gstack/bin/gstack-telemetry-log --event-type handoff --skill office-hours --outcome declined --session-id "SESSION_ID" 2>/dev/null || true
 ```
 
-The design doc at `~/.gstack/projects/` is automatically discoverable by downstream skills — they will read it during their pre-review system audit.
-
+`~/.gstack/projects/` 下的设计文档可被下游 Skill 自动发现：它们会在自
+己的评审前系统审计中读取它。
