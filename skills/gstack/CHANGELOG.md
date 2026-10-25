@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.91.191.0] - 2026-10-25
+
+**`gstack-version-bump write --changelog` moves the branch's `[Unreleased]` entry under the new version, and /ship Step 12 stops treating a provisional queue pick as a verified slot.** Stamping by hand meant writing VERSION with `gstack-version-bump write` and then renaming the `## [Unreleased]` heading yourself, because only `gstack-restamp` re-headed the CHANGELOG. Separately, when `gstack-next-version` could not read some open PRs' VERSION it returned `complete:false` and a provisional pick, and Step 12 printed the warning and then wrote that version as if the queue had been checked (left over from #3258, noted in GSTA-45).
+
+### Fixed
+- **`bin/gstack-version-bump`**: `write` takes an opt-in `--changelog <path>`. It re-heads an existing `## [Unreleased]` section as `## [<version>] - <UTC date>` at the top, using the same `reheadChangelog` that `gstack-restamp` uses, so the result is byte-for-byte what a restamp produces. Only the heading changes; every entry is kept. A file with no `[Unreleased]` section, or no file, is left alone, so a released heading is never renamed. A move that would duplicate a version heading exits 2 before anything is written. The output gains a `changelog` field only when the flag is passed. `gstack-restamp` doesn't pass the flag, so under stamp-at-merge it still owns the re-heading, and a later restamp moves an entry this command headed as the branch's own stamp.
+- **`ship/SKILL.md.tmpl` Step 12**: an incomplete queue (`complete:false`) reruns the queue check once, then asks whether to use the provisional candidate (recommended, because Version Gate CI rereads the queue on every push) or stop, naming the PRs in `unknown_claims`. The write in item 4 passes `--changelog CHANGELOG.md`, so an `[Unreleased]` entry written early sits under the new version before Step 13 extends it.
+
+### Tests
+- `test/gstack-version-bump.test.ts`: eight cases for `--changelog`. They cover the re-heading (checked with `normalizeChangelog` and `checkChangelog`), an entry below the predecessor after a main merge, reruns, a file with no `[Unreleased]`, a missing file, the duplicate-heading refusal, bad paths, and a real `gstack-restamp` run after the write (`already headed`, then `1.2.4.0 -> 1.2.5.0`). Seven of them failed before the fix.
+- `test/ship-version-sync.test.ts`: the rendered Step 12 has to handle `complete:false`, using the field names `gstack-next-version` emits. Its write command, run verbatim, has to re-head `[Unreleased]` and leave a released heading alone. Both tests failed before the fix.
+
 ## [1.91.190.0] - 2026-10-25
 
 **The weekly model-policy freshness check reads OpenAI's deprecations page again (#3155).** It has been red since the 2026-10-19 run: OpenAI's page now writes some deprecated models as a display name followed by the backticked ids, for example ``GPT-4o (`gpt-4o-2024-08-06`, `gpt-4o-2024-11-20`)``, and the parser refused any model cell that did not start with a backtick, so every run stopped with `openai-lifecycle:unrecognized-deprecated-model-cell`. Left alone, the stored pinned-model evidence would have gone stale around 2026-11-11.

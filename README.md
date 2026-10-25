@@ -37,6 +37,44 @@
 
 **重要合规发现**：`挑选的skills，均为上游允许翻译的skills。如 anthropics/skills`（183k 星，官方仓库）经查证**无 License**，则排除，不翻译不分发。`garrytan/gstack`（137k，MIT）为整仓型工具链（skill 强依赖根 `bin/`），推迟至第三批以整仓模式收录。`multica-ai/andrej-karpathy-skills`（223k）无 License，继续排除。
 
+### 第三、四批（41 个翻译件收录，2026-10-25）
+
+**第三批（整仓模式 + 旗舰抽取，21 件）**：
+
+| 上游仓库 | 星标 | License | 收录 |
+|---|---:|---|---|
+| [garrytan/gstack](https://github.com/garrytan/gstack) | 137k | MIT | **整仓收录**（新模式，⚠️ 其内置 auto-update 会拉回英文上游）+ 旗舰翻译件 office-hours / plan-ceo-review / qa |
+| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | 29k | MIT | hivemind / product-discovery |
+| [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | 27k | MIT | create-prd / intended-vs-implemented |
+| [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | 20k | MIT | seo-agentic / seo-audit |
+| [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) | 20k | MIT | notebooklm |
+| [wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep) | 18k | MIT | auto-paper-improvement-loop / arxiv |
+| [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers) | 15k | MIT | skill-seekers |
+| [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) | 14k | MIT | autoresearch |
+| [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | 13k | Apache-2.0 | video-shotcraft（上游正文即中文，原生收录） |
+| [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) | 12k | MIT | code-reviewer / api-designer |
+| [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | 6.5k | MIT | n8n-code-javascript / n8n-error-handling |
+| [MengTo/Skills](https://github.com/MengTo/Skills) | 7k | MIT | workflow-ship-change |
+| [foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills) | 3.8k | Apache-2.0 | vibe（引用集） |
+
+**第四批（官方插件 + Agent 定义 + 规则型，20 件）**：
+
+| 上游仓库 | 星标 | License | 收录 |
+|---|---:|---|---|
+| [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 44k | Apache-2.0 | frontend-design / claude-md-improver / build-mcp-server（**官方仓库合规收录**） |
+| [wshobson/agents](https://github.com/wshobson/agents) | 42k | MIT | before-you-build / fastapi-templates |
+| [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | 32k | Apache-2.0 | officecli |
+| [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) | 27k | MIT | game-designer / creative-director（Agent 定义） |
+| [browser-act/skills](https://github.com/browser-act/skills) | 6.3k | MIT | browser-act |
+| [tw93/Waza](https://github.com/tw93/Waza) | 7.4k | MIT | anti-patterns / clarity（规则型，新模式） |
+| [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | 3.9k | Apache-2.0 | godot-gdscript / unity-csharp-scripting / unreal-cpp-gameplay |
+| [NVIDIA/skills](https://github.com/NVIDIA/skills) | 3.7k | Apache-2.0 + CC-BY-4.0 | nvidia-skill-finder / accelerated-computing-cudf |
+| [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills) | 3.3k | MIT | creative |
+| [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | 3.3k | MIT | backtest-expert / data-quality-checker（⚠️ 金融决策辅助，非投资建议） |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC)（追加） | 288k | MIT | strategic-compact |
+
+**合计：45 个上游 / 72 个翻译件 / 3984 个原样配套件。** 详见 [data/upstream-inventory.md](data/upstream-inventory.md)。
+
 ## 分类索引
 
 由 [scripts/classify.py](scripts/classify.py) 按 [data/manifest.json](data/manifest.json) 自动生成 → [data/category-index.md](data/category-index.md)

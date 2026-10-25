@@ -195,3 +195,23 @@
 - video-shotcraft / qiushi 两个"伪英文仓"说明：检索期需抽验 SKILL.md 正文语言，description 英文 ≠ 正文英文。
 - fetch_verbatim.py 新增 `--trees` 模式：整仓收录后 verbatim 达 2739 件（累计 3900+），逐文件 API 校验不可行，改为一仓一次 trees API + 本地 `git hash-object` blob SHA 比对（内容哈希等价于逐字节比对）。
 - 合计：35 上游 / 52 翻译件（51 实译 + 1 中文原生收录）/ 3918 原样件。
+
+## 八、第四批实抓结果（2026-10-25，20 个 SKILL.md 收录）
+
+11 个上游（10 新 + ECC 追加）：
+
+| 上游 | 模式 | 收录 |
+|---|---|---|
+| **anthropics/claude-plugins-official**（44.4k） | 旗舰抽取 | frontend-design / claude-md-improver / build-mcp-server（**官方仓库首个合规收录**，Apache-2.0） |
+| wshobson/agents（41.6k） | 旗舰抽取 | before-you-build / fastapi-templates（v2 格式实为标准 skills/；挂起解除） |
+| iOfficeAI/OfficeCLI（32.4k） | 旗舰抽取 | officecli（Office 文档 CLI 核心 skill） |
+| Donchitos/Claude-Code-Game-Studios（27.4k） | Agent 定义抽取 | game-designer / creative-director（沿用第一批 agents/code-reviewer.md 先例） |
+| tw93/Waza（7.4k） | **规则型（新模式）** | rules/anti-patterns + clarity（工程习惯规则翻译） |
+| NVIDIA/skills（3.7k） | 旗舰抽取 | nvidia-skill-finder / accelerated-computing-cudf（SKILL 文件实为 CC-BY-4.0 AND Apache-2.0 双许可，声明块如实标注） |
+| gamedev-skills（3.9k） | 旗舰抽取 | godot-gdscript / unity-csharp-scripting / unreal-cpp-gameplay |
+| bergside/awesome-design-skills（3.3k） | 旗舰抽取 | creative |
+| tradermonty/claude-trading-skills（3.3k） | 旗舰抽取 | backtest-expert / data-quality-checker（金融内容，README 加风险提示） |
+| browser-act/skills（6.3k） | 旗舰抽取 | browser-act |
+| affaan-m/ECC（追加） | 旗舰抽取 | strategic-compact（上下文压缩，第二批上游追加） |
+
+**合计：45 上游 / 72 翻译件 / 3984 原样件。**

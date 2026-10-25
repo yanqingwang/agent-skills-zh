@@ -3493,6 +3493,10 @@
         {
           "upstream": "skills/autonomous-loops/SKILL.md",
           "local": "skills/ecc/autonomous-loops/SKILL.md"
+        },
+        {
+          "upstream": "skills/strategic-compact/SKILL.md",
+          "local": "skills/ecc/strategic-compact/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16575,6 +16579,555 @@
         {
           "upstream": "其余 n8n-* skills",
           "reason": "本批抽 2 件"
+        }
+      ]
+    },
+    {
+      "repo": "anthropics/claude-plugins-official",
+      "shortname": "claude-plugins-official",
+      "license": "Apache-2.0",
+      "stars_snapshot_2026-10-25": 44366,
+      "batch": 4,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "plugins/frontend-design/skills/frontend-design/SKILL.md",
+          "local": "skills/claude-plugins-official/frontend-design/SKILL.md"
+        },
+        {
+          "upstream": "plugins/claude-md-management/skills/claude-md-improver/SKILL.md",
+          "local": "skills/claude-plugins-official/claude-md-improver/SKILL.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/SKILL.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "plugins/frontend-design/skills/frontend-design/LICENSE.txt",
+          "local": "skills/claude-plugins-official/frontend-design/LICENSE.txt"
+        },
+        {
+          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/quality-criteria.md",
+          "local": "skills/claude-plugins-official/claude-md-improver/references/quality-criteria.md"
+        },
+        {
+          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/templates.md",
+          "local": "skills/claude-plugins-official/claude-md-improver/references/templates.md"
+        },
+        {
+          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/update-guidelines.md",
+          "local": "skills/claude-plugins-official/claude-md-improver/references/update-guidelines.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/auth.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/references/auth.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/deploy-cloudflare-workers.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/references/deploy-cloudflare-workers.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/elicitation.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/references/elicitation.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/remote-http-scaffold.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/references/remote-http-scaffold.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/resources-and-prompts.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/references/resources-and-prompts.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/server-capabilities.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/references/server-capabilities.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/tool-design.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/references/tool-design.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/versions.md",
+          "local": "skills/claude-plugins-official/build-mcp-server/references/versions.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "external_plugins/*",
+          "reason": "第三方贡献插件（telegram/discord 等），未收录"
+        },
+        {
+          "upstream": "其余 plugins/*",
+          "reason": "官方目录其余插件，后续候选"
+        },
+        {
+          "upstream": "example-plugin",
+          "reason": "上游示例模板，非功能 skill"
+        }
+      ]
+    },
+    {
+      "repo": "wshobson/agents",
+      "shortname": "wshobson-agents",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 41647,
+      "batch": 4,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "plugins/before-you-build/skills/before-you-build/SKILL.md",
+          "local": "skills/wshobson-agents/before-you-build/SKILL.md"
+        },
+        {
+          "upstream": "plugins/api-scaffolding/skills/fastapi-templates/SKILL.md",
+          "local": "skills/wshobson-agents/fastapi-templates/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "plugins/before-you-build/skills/before-you-build/references/risk-checklist.md",
+          "local": "skills/wshobson-agents/before-you-build/references/risk-checklist.md"
+        },
+        {
+          "upstream": "plugins/api-scaffolding/skills/fastapi-templates/references/details.md",
+          "local": "skills/wshobson-agents/fastapi-templates/references/details.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "其余 plugins",
+          "reason": "100+ 插件，本批抽 2 个含 SKILL.md 的旗舰；agent-orchestration 等旧式插件无 SKILL.md，暂不适配"
+        }
+      ]
+    },
+    {
+      "repo": "Donchitos/Claude-Code-Game-Studios",
+      "shortname": "game-studio",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 27387,
+      "batch": 4,
+      "mode": "Agent 定义抽取",
+      "files": [
+        {
+          "upstream": ".claude/agents/game-designer.md",
+          "local": "skills/game-studio/agents/game-designer.md"
+        },
+        {
+          "upstream": ".claude/agents/creative-director.md",
+          "local": "skills/game-studio/agents/creative-director.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": [
+        {
+          "upstream": "其余 47 个 agents + 72 workflows",
+          "reason": "角色/工作流合集，本批抽 2 个核心角色（管线先例：第一批 addyosmani agents/code-reviewer.md）"
+        },
+        {
+          "upstream": "hooks/ rules/ scripts/ settings.json",
+          "reason": "仓库级配置，原则 #11 排除"
+        }
+      ]
+    },
+    {
+      "repo": "tw93/Waza",
+      "shortname": "waza",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 7356,
+      "batch": 4,
+      "mode": "规则型（新）",
+      "files": [
+        {
+          "upstream": "plugins/waza/rules/anti-patterns.md",
+          "local": "skills/waza/rules/anti-patterns.md"
+        },
+        {
+          "upstream": "plugins/waza/rules/clarity.md",
+          "local": "skills/waza/rules/clarity.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/* 其余",
+          "reason": "Waza 自带 skills（check/health/hunt 等），后续候选"
+        },
+        {
+          "upstream": "其余 rules（chinese/english/durable-context/waza-routing）",
+          "reason": "本批抽 2 件"
+        }
+      ]
+    },
+    {
+      "repo": "NVIDIA/skills",
+      "shortname": "nvidia-skills",
+      "license": "Apache-2.0 AND CC-BY-4.0",
+      "stars_snapshot_2026-10-25": 3718,
+      "batch": 4,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "plugins/nvidia-skills/skills/nvidia-skill-finder/SKILL.md",
+          "local": "skills/nvidia-skills/nvidia-skill-finder/SKILL.md"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/SKILL.md",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "plugins/nvidia-skills/skills/nvidia-skill-finder/BENCHMARK.md",
+          "local": "skills/nvidia-skills/nvidia-skill-finder/BENCHMARK.md"
+        },
+        {
+          "upstream": "plugins/nvidia-skills/skills/nvidia-skill-finder/agents/openai.yaml",
+          "local": "skills/nvidia-skills/nvidia-skill-finder/agents/openai.yaml"
+        },
+        {
+          "upstream": "plugins/nvidia-skills/skills/nvidia-skill-finder/evals/evals.json",
+          "local": "skills/nvidia-skills/nvidia-skill-finder/evals/evals.json"
+        },
+        {
+          "upstream": "plugins/nvidia-skills/skills/nvidia-skill-finder/references/taxonomy-routing.md",
+          "local": "skills/nvidia-skills/nvidia-skill-finder/references/taxonomy-routing.md"
+        },
+        {
+          "upstream": "plugins/nvidia-skills/skills/nvidia-skill-finder/skill-card.md",
+          "local": "skills/nvidia-skills/nvidia-skill-finder/skill-card.md"
+        },
+        {
+          "upstream": "plugins/nvidia-skills/skills/nvidia-skill-finder/skill.oms.sig",
+          "local": "skills/nvidia-skills/nvidia-skill-finder/skill.oms.sig"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/BENCHMARK.md",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/BENCHMARK.md"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/evals.json",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/evals.json"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-apply-udf/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-apply-udf/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-apply-udf/code/udf_pipeline.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-apply-udf/code/udf_pipeline.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-csv-etl/code/etl_pipeline.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-csv-etl/code/etl_pipeline.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-csv-etl/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-csv-etl/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-groupby-agg/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-groupby-agg/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-groupby-agg/code/groupby_analysis.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-groupby-agg/code/groupby_analysis.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-multi-join/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-multi-join/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-multi-join/code/multi_join.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-multi-join/code/multi_join.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-native-stream-handoff-boundary/NOTICE.md",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-native-stream-handoff-boundary/NOTICE.md"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-native-stream-handoff-boundary/code/run_smoke.sh",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-native-stream-handoff-boundary/code/run_smoke.sh"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-native-stream-handoff-boundary/code/threaded_handoff.cu",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-native-stream-handoff-boundary/code/threaded_handoff.cu"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-null-handling/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-null-handling/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-null-handling/code/null_pipeline.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-null-handling/code/null_pipeline.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-parquet-io/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-parquet-io/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-parquet-io/code/parquet_pipeline.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-parquet-io/code/parquet_pipeline.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-pivot-melt/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-pivot-melt/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-pivot-melt/code/reshape_analysis.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-pivot-melt/code/reshape_analysis.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-string-ops/code/clean_contacts.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-string-ops/code/clean_contacts.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-string-ops/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-string-ops/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-timeseries-resample/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-timeseries-resample/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-timeseries-resample/code/timeseries_analysis.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-timeseries-resample/code/timeseries_analysis.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-window-functions/code/generate_data.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-window-functions/code/generate_data.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/cudf-window-functions/code/window_analysis.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/cudf-window-functions/code/window_analysis.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/negative-deep-learning-training/code/train.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/negative-deep-learning-training/code/train.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/source-cudf-null-fillna-semantics/NOTICE.md",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/source-cudf-null-fillna-semantics/NOTICE.md"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/evals/files/source-cudf-null-fillna-semantics/code/null_cleanup.py",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/evals/files/source-cudf-null-fillna-semantics/code/null_cleanup.py"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/references/api-patterns.md",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/references/api-patterns.md"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/references/cudf-pandas-accelerator.md",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/references/cudf-pandas-accelerator.md"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/references/dask-cudf-patterns.md",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/references/dask-cudf-patterns.md"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/skill-card.md",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/skill-card.md"
+        },
+        {
+          "upstream": "skills/accelerated-computing-cudf/skill.oms.sig",
+          "local": "skills/nvidia-skills/accelerated-computing-cudf/skill.oms.sig"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "其余 200+ 产品向 skills（bionemo-*/amc-* 等）",
+          "reason": "NVIDIA 产品专属工作流，通用性低，后续按需"
+        },
+        {
+          "upstream": "BENCHMARK.md",
+          "reason": "保留在收录目录内（skill 自带元信息）；skill.oms.sig 签名件一并原样保留"
+        }
+      ],
+      "note": "SKILL 文件 frontmatter 标注 License: CC-BY-4.0 AND Apache-2.0 双许可，声明块按实际标注"
+    },
+    {
+      "repo": "gamedev-skills/awesome-gamedev-agent-skills",
+      "shortname": "gamedev-skills",
+      "license": "Apache-2.0",
+      "stars_snapshot_2026-10-25": 3912,
+      "batch": 4,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "skills/godot/godot-gdscript/SKILL.md",
+          "local": "skills/gamedev-skills/godot-gdscript/SKILL.md"
+        },
+        {
+          "upstream": "skills/unity/unity-csharp-scripting/SKILL.md",
+          "local": "skills/gamedev-skills/unity-csharp-scripting/SKILL.md"
+        },
+        {
+          "upstream": "skills/unreal/unreal-cpp-gameplay/SKILL.md",
+          "local": "skills/gamedev-skills/unreal-cpp-gameplay/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/godot/godot-gdscript/references/annotations-and-typing.md",
+          "local": "skills/gamedev-skills/godot-gdscript/references/annotations-and-typing.md"
+        },
+        {
+          "upstream": "skills/unity/unity-csharp-scripting/references/lifecycle-and-coroutines.md",
+          "local": "skills/gamedev-skills/unity-csharp-scripting/references/lifecycle-and-coroutines.md"
+        },
+        {
+          "upstream": "skills/unity/unity-csharp-scripting/scripts/check_unity_project.py",
+          "local": "skills/gamedev-skills/unity-csharp-scripting/scripts/check_unity_project.py"
+        },
+        {
+          "upstream": "skills/unreal/unreal-cpp-gameplay/references/components-and-gc.md",
+          "local": "skills/gamedev-skills/unreal-cpp-gameplay/references/components-and-gc.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "其余 70+ 引擎/品类 skills",
+          "reason": "本批抽三大引擎语言核心各 1 件"
+        }
+      ]
+    },
+    {
+      "repo": "bergside/awesome-design-skills",
+      "shortname": "bergside-design-skills",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 3329,
+      "batch": 4,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "skills/creative/SKILL.md",
+          "local": "skills/bergside-design-skills/creative/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/creative/DESIGN.md",
+          "local": "skills/bergside-design-skills/creative/DESIGN.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "其余 60+ 风格（DESIGN.md+SKILL.md 各一套）",
+          "reason": "本批抽 1 件；DESIGN.md 随目录原样收录"
+        }
+      ]
+    },
+    {
+      "repo": "tradermonty/claude-trading-skills",
+      "shortname": "claude-trading-skills",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 3250,
+      "batch": 4,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "skills/backtest-expert/SKILL.md",
+          "local": "skills/claude-trading-skills/backtest-expert/SKILL.md"
+        },
+        {
+          "upstream": "skills/data-quality-checker/SKILL.md",
+          "local": "skills/claude-trading-skills/data-quality-checker/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/backtest-expert/references/failed_tests.md",
+          "local": "skills/claude-trading-skills/backtest-expert/references/failed_tests.md"
+        },
+        {
+          "upstream": "skills/backtest-expert/references/methodology.md",
+          "local": "skills/claude-trading-skills/backtest-expert/references/methodology.md"
+        },
+        {
+          "upstream": "skills/backtest-expert/requirements.txt",
+          "local": "skills/claude-trading-skills/backtest-expert/requirements.txt"
+        },
+        {
+          "upstream": "skills/backtest-expert/scripts/evaluate_backtest.py",
+          "local": "skills/claude-trading-skills/backtest-expert/scripts/evaluate_backtest.py"
+        },
+        {
+          "upstream": "skills/data-quality-checker/references/common_data_errors.md",
+          "local": "skills/claude-trading-skills/data-quality-checker/references/common_data_errors.md"
+        },
+        {
+          "upstream": "skills/data-quality-checker/references/instrument_notation_standard.md",
+          "local": "skills/claude-trading-skills/data-quality-checker/references/instrument_notation_standard.md"
+        },
+        {
+          "upstream": "skills/data-quality-checker/requirements.txt",
+          "local": "skills/claude-trading-skills/data-quality-checker/requirements.txt"
+        },
+        {
+          "upstream": "skills/data-quality-checker/scripts/check_data_quality.py",
+          "local": "skills/claude-trading-skills/data-quality-checker/scripts/check_data_quality.py"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "scripts/tests/*",
+          "reason": "上游自身 QA 产物，原则 #11 排除"
+        },
+        {
+          "upstream": "其余 40+ skills",
+          "reason": "本批抽 2 件；金融内容已加风险提示，见 README"
+        }
+      ]
+    },
+    {
+      "repo": "browser-act/skills",
+      "shortname": "browser-act",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 6272,
+      "batch": 4,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "browser-act/SKILL.md",
+          "local": "skills/browser-act/browser-act/SKILL.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": [
+        {
+          "upstream": "browser-act-skill-forge",
+          "reason": "兄弟 skill（造浏览器 skill 的 skill），后续候选"
+        },
+        {
+          "upstream": "solutions/ docs/",
+          "reason": "仓库级内容"
+        }
+      ]
+    },
+    {
+      "repo": "iOfficeAI/OfficeCLI",
+      "shortname": "officecli",
+      "license": "Apache-2.0",
+      "stars_snapshot_2026-10-25": 32399,
+      "batch": 4,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "skills/officecli/SKILL.md",
+          "local": "skills/officecli/officecli/SKILL.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/ 其余（word-form/xlsx/morph-ppt 等）",
+          "reason": "子 skill 后续候选；根 SKILL.md 为入口亦未收录（与 officecli 内容重叠）"
+        },
+        {
+          "upstream": "src/ npm/ build 等",
+          "reason": "CLI 工具本体，原则 #11 排除（skill 经 npm/pip 安装 officecli 使用）"
         }
       ]
     }

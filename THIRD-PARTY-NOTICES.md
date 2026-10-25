@@ -290,6 +290,75 @@ SOFTWARE.
 - License：Apache-2.0（条款摘要同 caveman 节；完整原文见上游仓库根 LICENSE）
 - 另：video-shotcraft 同为 Apache-2.0，适用同一条款。
 
+## anthropics/claude-plugins-official
+
+- 上游：https://github.com/anthropics/claude-plugins-official （星标快照 2026-10-25：44,366）
+- License：Apache-2.0
+- 收录文件：skills/claude-plugins-official/{frontend-design, claude-md-improver, build-mcp-server}/
+- Copyright (c) Anthropic 及 claude-plugins-official 贡献者（Apache-2.0 条款摘要同 caveman 节；CC-BY-4.0 部分要求署名——本仓库各翻译文件声明块即署名载体）
+
+## wshobson/agents
+
+- 上游：https://github.com/wshobson/agents （星标快照 2026-10-25：41,647）
+- License：MIT
+- 收录文件：skills/wshobson-agents/{before-you-build, fastapi-templates}/
+- Copyright (c) wshobson 及 agents 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## Donchitos/Claude-Code-Game-Studios
+
+- 上游：https://github.com/Donchitos/Claude-Code-Game-Studios （星标快照 2026-10-25：27,387）
+- License：MIT
+- 收录文件：skills/game-studio/agents/{game-designer, creative-director}.md
+- Copyright (c) Donchitos（MIT 原文同 obra/superpowers 条款格式）
+
+## tw93/Waza
+
+- 上游：https://github.com/tw93/Waza （星标快照 2026-10-25：7,356）
+- License：MIT
+- 收录文件：skills/waza/rules/{anti-patterns, clarity}.md（规则型收录）
+- Copyright (c) tw93（MIT 原文同 obra/superpowers 条款格式）
+
+## NVIDIA/skills
+
+- 上游：https://github.com/NVIDIA/skills （星标快照 2026-10-25：3,718）
+- License：Apache-2.0 AND CC-BY-4.0（SKILL 文件 frontmatter 实际标注，双许可）
+- 收录文件：skills/nvidia-skills/{nvidia-skill-finder, accelerated-computing-cudf}/
+- Copyright (c) NVIDIA Corporation（Apache-2.0 条款摘要同 caveman 节；CC-BY-4.0 部分要求署名——本仓库各翻译文件声明块即署名载体）
+
+## gamedev-skills/awesome-gamedev-agent-skills
+
+- 上游：https://github.com/gamedev-skills/awesome-gamedev-agent-skills （星标快照 2026-10-25：3,912）
+- License：Apache-2.0
+- 收录文件：skills/gamedev-skills/{godot-gdscript, unity-csharp-scripting, unreal-cpp-gameplay}/
+- Copyright (c) gamedev-skills 贡献者（Apache-2.0 条款摘要同 caveman 节；CC-BY-4.0 部分要求署名——本仓库各翻译文件声明块即署名载体）
+
+## bergside/awesome-design-skills
+
+- 上游：https://github.com/bergside/awesome-design-skills （星标快照 2026-10-25：3,329）
+- License：MIT
+- 收录文件：skills/bergside-design-skills/creative/
+- Copyright (c) bergside（MIT 原文同 obra/superpowers 条款格式）
+
+## tradermonty/claude-trading-skills
+
+- 上游：https://github.com/tradermonty/claude-trading-skills （星标快照 2026-10-25：3,250）
+- License：MIT
+- 收录文件：skills/claude-trading-skills/{backtest-expert, data-quality-checker}/
+- Copyright (c) tradermonty（MIT 原文同 obra/superpowers 条款格式）
+
+## browser-act/skills
+
+- 上游：https://github.com/browser-act/skills （星标快照 2026-10-25：6,272）
+- License：MIT
+- 收录文件：skills/browser-act/browser-act/
+- Copyright (c) browser-act 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## iOfficeAI/OfficeCLI
+
+- 上游：https://github.com/iOfficeAI/OfficeCLI （星标快照 2026-10-25：32,399）
+- License：Apache-2.0
+- 收录文件：skills/officecli/officecli/
+- Copyright (c) iOfficeAI（Apache-2.0 条款摘要同 caveman 节；CC-BY-4.0 部分要求署名——本仓库各翻译文件声明块即署名载体）
 ## 明确排除
 
 - `multica-ai/andrej-karpathy-skills`（223,159 星）：**无 License 文件，默认保留所有权利，本仓库不翻译、不分发其任何内容**（PRINCIPLES.md 原则 #2）。
