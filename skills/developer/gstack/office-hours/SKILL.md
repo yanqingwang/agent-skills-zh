@@ -521,7 +521,7 @@ SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null)
 ```
 
 1. 读 `CLAUDE.md`、`TODOS.md`（如果存在）。
-2. 运行 `git log --oneline -30` 和 `git diff origin/main --stat 2>/dev/null`，理解最近上下文。
+2. 运行 `git log --oneline -30` 和 `git diff origin/HEAD --stat`（默认分支），掌握最近上下文。
 3. 用 Grep/Glob 绘制与用户请求最相关的代码区域。
 4. **列出本项目已有的设计文档：**
    ```bash

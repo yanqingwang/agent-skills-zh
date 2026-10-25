@@ -74,7 +74,7 @@
     "SKILL.md": "742deafaf4222f9f0e9d9410e72483dad64fe716"
   },
   "garrytan/gstack": {
-    "office-hours/SKILL.md": "c22b3db499f43f6c6a627f5d9f7a48c18ab0f0da",
+    "office-hours/SKILL.md": "7e925ebf7c8dbaf4b626fd8ef280fc825bbfe082",
     "plan-ceo-review/SKILL.md": "2324db2f8b2d0ab28fb7e3907d4e31d361487d83",
     "qa/SKILL.md": "5d4bd506b6a837e49790929cccb13ee31b1742f6"
   },
@@ -161,5 +161,30 @@
   },
   "iOfficeAI/OfficeCLI": {
     "skills/officecli/SKILL.md": "6c299f334a2e004ff5dda05641e75f7ec4453f37"
+  },
+  "questflowai/investorskills": {
+    "skills/buffett/SKILL.md": "57c8d15256549863527def46b43f055396bb4c1e",
+    "skills/munger/SKILL.md": "634beb958540199417600e7c24b3059472e9574f",
+    "skills/dalio-principles-allweather/SKILL.md": "8ff9d43d936a7157ea93640a52ecef3faae47526",
+    "skills/graham-net-net/SKILL.md": "34762b58ce1203652f66f79c17dfff757bd82bd6"
+  },
+  "RKiding/Awesome-finance-skills": {
+    "skills/alphaear-news/SKILL.md": "e4130b47ffe19706672896a3a9c50bac07a483f3",
+    "skills/alphaear-sentiment/SKILL.md": "2d5fc7f356a93e406e44ddd8a182e7c58660988a"
+  },
+  "muxuuu/serenity-skill": {
+    "SKILL.md": "cc563848a5e284508991b2ad3e4eadf700ebd56e"
+  },
+  "nexscope-ai/eCommerce-Skills": {
+    "dropshipping-product-research/SKILL.md": "3fc5f5254efe9dd653b6b0e1a4cf1720f4b1bf4d",
+    "competitor-price-analysis/SKILL.md": "11c43904b8e4df3c1c8e214a19e1e0f59ea291df",
+    "customer-feedback-analysis/SKILL.md": "d7d9bec2d51a9ba840a1b8b4b977156ebe78f35c"
+  },
+  "zubair-trabzada/ai-sales-team-claude": {
+    "skills/sales-icp/SKILL.md": "c7b6bddb7fe2af8d830bc0cde92f54e60c06ee3b",
+    "skills/sales-outreach/SKILL.md": "f64a58f97ddb8c8f72fe74e5dfbc932c811a4994",
+    "skills/sales-qualify/SKILL.md": "cda3613207c7f2932579b0fa6881c4801ed31b19",
+    "skills/sales-proposal/SKILL.md": "78eb7142fe5f0b912ae9c58063bef04d8ac56187",
+    "skills/sales-research/SKILL.md": "78b59f7eef7258076d8e47c98baec476a3efcae4"
   }
 }

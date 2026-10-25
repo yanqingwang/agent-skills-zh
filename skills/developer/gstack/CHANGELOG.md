@@ -1,5 +1,89 @@
 # Changelog
 
+## [1.91.199.0] - 2026-10-25
+
+**When /sync-gbrain refuses because a gbrain autopilot is running, it now says which process it found and what to do.** The guard against syncing while `gbrain autopilot` runs is machine-wide on purpose: two syncs sharing one brain or working tree can race and delete files (#1734). But the refusal only said `(process:gbrain autopilot)`, so someone whose autopilot served a different brain could not tell what was blocking them (#3360, part 1). Garry decided on 2026-10-24 to keep the check machine-wide and improve the message.
+
+### Changed
+- **`lib/gbrain-guards.ts`**: the live-process probe still runs `pgrep -f "gbrain autopilot"` across the whole machine, then reads each match's command line with `ps`. The refusal names every match as `pid <n> \`<command>\``, says the check counts any process on the machine whose command line contains "gbrain autopilot" (an autopilot serving another brain or repo included), and says to stop that autopilot or its `gbrain autopilot --install` service, or end a process that only mentions it. Commands are cut at 200 characters and the user and password part of a URL is masked. A pid that `ps` cannot describe still refuses, as `command unavailable`. The header comment now gives the machine-wide reason in place of the stale gbrain #1226 note.
+
+### Tests
+- `test/gbrain-guards.test.ts` pins the full refusal for one matched process, lists two matches, keeps an empty match inactive, and runs the real probe against a live process whose command line carries "gbrain autopilot" and a database URL with a password: the refusal names its pid and masks the password. All four fail on main. The existing probe, lock and stale-lock tests are unchanged.
+
+### Gate integrity
+- No gate edit: the guard refuses in exactly the cases it did before, and only its message changed. No threshold, budget, timeout, trial count or case kind changed.
+
+## [1.91.198.0] - 2026-10-25
+
+**A second-opinion reviewer that says "not ready" is no longer reported as clean.** When the outside reviewer (Codex or Claude Code) ended its reply with `Verdict: not ready` but listed only advisory P2 or P3 findings, `lib/outside-review-result.ts` printed `VERDICT: clean` and exited 0, so /ship and /codex carried on as if the reviewer had approved. The not-ready check only ran when no severity parsed at all, so a parsed P2 or P3 switched it off (#3329). Ported from #3364 by @mvanhorn.
+
+### Fixed
+- **`lib/outside-review-result.ts`**: when the reply's last recognized `Verdict:` line says `not ready`, the result is `findings` (exit 3) whatever severities parsed, and `FINDINGS:` still names the highest one. Advisory P2/P3 findings with a ready verdict, or with no verdict, stay `clean`. A `Verdict:` line quoted in a code fence or inline code still does not count, and the proposal and spec gates ignore it as before.
+- **`docs/troubleshooting.md`**: the "Every review gate" rule under *How the verdict is read from a review* now says a not-ready reply blocks even when P2 or P3 parsed.
+
+### Tests
+- `test/outside-review-unparsed-severity.test.ts` covers the issue's reply (numbered bold P2 plus P3, then `Verdict: not ready`) on the execution, structured and review gates, P3-only and unlabeled not-ready replies, the last verdict winning in both directions, bold, bulleted and heading verdict lines, and an unparsed label beside a parsed P2. Five of its tests fail on main's classifier and pass with the fix. Controls that stay `clean`: P2/P3 with `Verdict: ready` or no verdict, a not-ready verdict inside a code fence or inline code, and `ready-one-p3.txt`. Missing review markers, a failed execution, and the proposal and spec gates keep their old results.
+
+### Gate integrity
+- One gate edit, and it strengthens the gate: the pinned `bare-dash-p2.txt` fixture (two P2 lines, then `Verdict: not ready (2 P2)`) moves from `VERDICT: clean`, exit 0 to `VERDICT: findings`, exit 3. Garry approved this reversal on 2026-10-24. No threshold, budget, timeout, trial count or case kind changed.
+
+## [1.91.197.0] - 2026-10-25
+
+**Pregate gives touched Rust files a test lane, and runs a nested pnpm or vitest package with its own runner (#3344).** In a mixed Cargo and JavaScript repo, every touched `.rs` file failed `lanes` with "has no test lane", so /ship could not get a receipt, and a nested package's vitest tests ran under `bun test` from the repo root (about 98 false failures in the reporter's repo). Ported from #3346 by vilano93, whose two commits carry the feature; our commits on top close four findings from a security-focused review of the port and make the new fixtures hermetic.
+
+### Fixed
+- **`lib/pregate/rust.ts`** (new, vilano93): a crate is the nearest Cargo.toml with `[package]`. Its `.rs` files under `tests/` or holding a `#[cfg(test)]` are tests, and every `.rs` file of a crate and its Cargo.toml select that crate's tests and those of every crate depending on it. Manifests are parsed as TOML, so renamed, inherited, dotted, table-form and target-specific dependencies all count, and a crate runs from the workspace it is a member of under Cargo's rules (members, exclude, `package.workspace`). Nothing runs cargo to build the graph.
+- **`lib/pregate/checks/lanes.ts`** (vilano93): selected Rust tests run per crate as `cargo test -p <name>` from the workspace root and are judged on the summed `test result:` lines; zero tests is ZERO-RUN and a missing cargo is incomplete. A JS/TS test owned by a nested package.json that declares vitest or jest runs from that package through the package manager its `packageManager` field or nearest lockfile names (`pnpm exec`, `yarn`, `bun x`, else `npx`).
+- **`lib/pregate/checks/lanes.ts`**: the crate name comes from the repo's Cargo.toml and reaches the lane's shell. Before, a crate named `evil;touch pwned` ran `touch pwned` in the workspace, and a name containing `{files}` spliced the file list into the command. A name outside Cargo's grammar (letters, digits, `_`, `-`) now gets no runner, so its files are unclaimed and the lane is incomplete, as Cargo would refuse the manifest anyway; a valid name is quoted like every file and cwd. The lane only runs with `--allow-repo-commands`, under which the repo's tests run anyway, but no other repo input reached the shell unquoted.
+- **`lib/pregate/rust.ts`**: Cargo `members` globs are matched per path component and by Unicode code point, in one pass. The first cut used the policy glob matcher, which matched `[ab]` literally (a member listed that way lost its inherited workspace dependencies, so its tests were never selected) and backtracked for seconds on a hostile glob. Past 4096 characters of `members` globs, membership is undecided: every crate under the workspace counts as a member for dependency edges (more tests, never fewer), but its own tests are unclaimed and the lane is incomplete, because running `cargo test -p <name>` from the wrong root can test a same-named member instead.
+- **`lib/pregate/rust.ts`**: a plain `#[test]` or `#[tokio::test]` function in `src/` makes the file a test, so a dependent crate tested that way runs when its dependency changes. The `#[cfg(...)]` scan reads each attribute once, up to its closing `]`, so a file of unclosed attributes no longer takes seconds, and an attribute it cannot close counts as a test (more tests selected, never fewer).
+- **`lib/pregate/init-draft.ts`** (vilano93): `init` notes that Rust tests run per crate.
+
+### Tests
+- `test/pregate-rust.test.ts` (new, vilano93) covers the crate model, the dependency forms, workspace membership, the cargo summary parser and three end-to-end lane runs. New cases: crates named `evil;touch pwned-by-crate-name` and `evil{files}` never reach the shell (nothing is created, both are unclaimed) while `naïve_crate-2` still runs quoted; `crates/[ab]`, `nested/**/leaf` and `unicode/?` (a 📦 directory) members inherit workspace dependencies; a plain `#[test]` dependent and a `cfg(any(test, feature = "<300 chars>"))` are tests; and a same-named non-member past the size cap is unclaimed rather than run as the member; a hostile members glob, a million unmatched `[` and 100,000 unclosed `#[cfg(` run in a supervised Bun that kills a super-linear version at 30 s. Each failed before its fix.
+- The cargo stand-in is hermetic on POSIX: where Bun and cargo share a directory, the lane puts Bun's directory first and the real cargo ran against the fixture, so the shim PATH now uses the platform delimiter and the lane's bash puts the shim first again through `BASH_ENV`. On windows-free-shard (5) the two cases that run the stand-in failed deterministically (`local lane exited 1` with an empty log) and still did after the delimiter and a `Path`-key repair, so they are skipped on Windows (`test.skipIf(process.platform === 'win32')`, as other POSIX-shim pregate fixtures are); the selection, planning and hostile-name cases still run there.
+- `test/pregate-selection.test.ts` (vilano93) covers nested pnpm/yarn/vitest/jest packages. Its `pnpm` stand-in gets the same `BASH_ENV` fix: on a host with a real pnpm beside Bun, the end-to-end case installed vitest from the network and came back incomplete.
+
+### Gate integrity
+- One coverage change to review: the two new end-to-end cargo-lane cases in `test/pregate-rust.test.ts` are skipped on Windows (they never passed there); Linux and macOS run them, and the rest of the file runs on Windows.
+- No threshold, budget, timeout, trial count or case kind changed. Pregate's lanes now map and run tests for `.rs` files that previously failed closed with "no test lane", and nested vitest/jest packages run under their own runner instead of `bun test`. A `.rs` file outside any crate, a crate with no tests, and a missing cargo or package manager still fail closed or stay incomplete; the tests above cover each.
+- No new dependency (Cargo.toml is parsed with Bun's built-in TOML parser), no network call in pregate itself, no workflow change. As with the root runner detection on main (`npx vitest run`), a nested package's detected runner (`npx`, `bun x`) may fetch a missing tool when it runs under `--allow-repo-commands`.
+
+## [1.91.196.0] - 2026-10-25
+
+**`/land-and-deploy` no longer stops parallel PRs with a false "VERSION drift detected".** Step 3.4 compared the branch VERSION with the next free patch slot (`gstack-next-version --bump patch --exclude-pr`) under every ship policy. So it stopped a stamp-at-merge PR whenever a sibling shared its tentative stamp, a claim-at-open PR whenever a sibling had claimed a higher slot, and every MICRO bump even with no other PR open. Reported with a full reproduction by Evgenii Lopatin (@exGeni) in #3318.
+
+### Fixed
+- **`land-and-deploy/SKILL.md.tmpl` Step 3.4**: reads `gstack-ship-policy show-effective` and prints one `VERSION_CHECK:` verdict. Under `stamp-at-merge` it ignores claims and checks the exact head stamp: VERSION is the base's version plus one bump, and the changelog's top two headings are that version and then the base's top entry. Otherwise it stops with `STOP stamp stale` and names the `gstack-restamp --next` command. Under `claim-at-open`, and with no policy file, it stops only on a real collision: another open PR holds the same VERSION, or the base is already at or above it. MICRO bumps and versions below a sibling's claim pass.
+
+### Documentation
+- `docs/ship-policy.md` gains "What `/land-and-deploy` reads from it", which gives Step 3.4's stop and pass conditions for each `queue_mode`.
+
+### Tests
+- `test/land-and-deploy-version-check.test.ts` runs the template's own Step 3.4 block against real git fixtures with the real `gstack-ship-policy` and a stubbed claim list, under bash and, when installed, zsh. It covers the three false stops from #3318 (all pass now) and the real stops: a same-VERSION claim, a base at or above the branch, a stale stamp after a sibling landed, a base that moved by MICRO under a stamp, an `[Unreleased]` entry, and a two-bump stamp. A missing VERSION, an invalid policy and unread claims are `unavailable`.
+
+### Gate integrity
+- Step 3.4 now stops on fewer inputs: a unique VERSION below a sibling's claim, a MICRO bump, and a stamp-at-merge stamp that siblings share no longer stop. Every real collision still stops, and six mutation controls of the block (drop the collision check, the base check, the changelog binding, the one-bump rule, the policy read, or the unread-claims rule) each turn the new tests red. One new `unavailable` path: an invalid ship policy. It mirrors the existing offline path, and a base at or above the branch still stops there.
+- Owner-approved budget raise (Garry, 2026-10-24: "do it"): land-and-deploy's exact size pins in `test/fixtures/skill-md-size-allowlist.json` move up by 1,084 to 1,111 characters on 11 hosts, and its parity `maxSizeRatio` in `test/helpers/carve-guards.ts` goes from 1.112 to 1.125 (measured 1.1201). No threshold, timeout, trial count or case kind changed.
+
+## [1.91.195.0] - 2026-10-25
+
+**Four skill prompts stop contradicting themselves or their code.** dgrant's issues #3347, #3350, #3351 and #3352 each found a skill telling the model something wrong or ambiguous: /office-hours read a master-based repo as "no changes", /plan-design-review named a vision model the design binary no longer uses, /health gave two different GBrain scores for the same readings, and /ios-qa's demo mode claimed to override every other rule in the skill.
+
+### Fixed
+- **`office-hours/SKILL.md.tmpl`** (#3347): Phase 1 runs `git diff origin/HEAD --stat`, the remote's default branch, instead of `git diff origin/main --stat 2>/dev/null`. On a clone whose default branch is `master`, the old command exited 128 with its error hidden, so the model read the empty output as "no changes"; the new one shows the diff, and a repo without `origin/HEAD` now shows its error instead of passing for "no diff". The line is the same length, so office-hours stays at its pinned size on every host (the shared `{{BASE_BRANCH_DETECT}}` block would have added 1,727 chars, past the size-guard pins and the parity skeleton cap).
+- **`plan-design-review/SKILL.md.tmpl`** (#3350): the design binary's `check` command is described as "OpenAI vision" instead of "GPT-4o vision", so the prose no longer pins a model. The binary defaults to gpt-5.5 (`design/src/models.ts`), `GSTACK_DESIGN_MODEL` overrides it, and gpt-4o cannot drive gpt-image-2 at all. The swap is the same length, so the pinned host sizes don't move.
+- **`health/SKILL.md.tmpl`** (#3351): the GBrain score is computed by a `bun -e` snippet from the doctor component (10 for `ok`, 7 for `warnings`, else 0), the queue length and the hours since the last push, like the composite already was. The snippet takes only numeric `<N|null>` inputs, the placeholder form the generated-bash lint already allows. The rubric row's 10/7/4 bands, which disagreed with the weighted formula (doctor ok, queue 50, pushed 2h: 7 by the rubric, 9.1 by the formula) and overlapped (a queue of 3 matched both 10 and 7), now point at that computation. The bands are half-open (<10, <100 lines; <24, <72 hours), and with sync off the doctor component carries the whole score. History records `gbrain` with one decimal.
+- **`ios-qa/SKILL.md.tmpl`** (#3352): "DEMO MODE OVERRIDES ALL OTHER RULES" becomes the narrow rule it meant: in demo mode drive every action through visible UI rather than `POST /state/*` writes, and every other rule in the skill (the device lock, no replay of a lost tap, never hand-editing DebugBridge) still applies.
+
+### Tests
+- `test/qa-health-rubric.test.ts` checks that the GBrain rubric row defers to the computation, then runs the template's own snippet: the issue's two inputs score 9.1 and 8.5, the band edges (9/10/99/100 lines, 23.9/24/71.9/72 hours) land on the right side, a missing doctor reading counts as 0, and sync off gives 10, 7 and 0. All four new tests fail on the old template.
+
+- `test/helpers/safety-rules.ts`: the `ios-qa-demo-override` row's anchor moves from `/demo mode overrides/i` to `/drive every action through visible UI/i`, and its hash to the reworded paragraph, in the #3352 commit as the registry requires. `test/safety-rule-registry.test.ts` passes, including its unique-anchor and rule-removed-arm checks.
+
+### Gate integrity
+- One gate edit to review: the safety-rule registry row for `safety-ios-demo-ui-only` now anchors on the reworded paragraph. Verdict: not weaker. The paragraph still requires visible UI (`/tap`, `/swipe`, `/type`) over `POST /state/*` writes, and the only text removed is the "overrides all other rules" claim. The case's rule-removed arm deletes the same paragraph as before. No threshold, budget, timeout, trial count or case kind changed.
+
 ## [1.91.194.0] - 2026-10-25
 
 **A read-only repo can now opt in to Memorable recall, one remote at a time, and a corrupt policy store no longer turns the recall veto off.** #3359 (exGeni) asked for a way to keep a repo out of the brain while still letting its prompts reach Memorable: today the recall hook skips every `deny` and `read-only` repo, and `read-only` is also the tier people pick just to stop code ingest. Garry approved a per-remote flag on 2026-10-24: off by default, and a `deny` always wins. While building the negative controls we found that the hook's policy lookup went through `get`, which quarantines a corrupt store and answers "unset", so a truncated `gbrain-repo-policy.json` let recall run in every repo, read-only and deny included, and reset the store on the way.

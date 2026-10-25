@@ -3435,6 +3435,10 @@
         {
           "upstream": "skills/copywriting/SKILL.md",
           "local": "skills/growth/product/copywriting/SKILL.md"
+        },
+        {
+          "upstream": "skills/cro/SKILL.md",
+          "local": "skills/growth/product/cro/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3453,6 +3457,14 @@
         {
           "upstream": "skills/copywriting/references/natural-transitions.md",
           "local": "skills/growth/product/copywriting/references/natural-transitions.md"
+        },
+        {
+          "upstream": "skills/cro/references/experiments.md",
+          "local": "skills/growth/product/cro/references/experiments.md"
+        },
+        {
+          "upstream": "skills/cro/references/form.md",
+          "local": "skills/growth/product/cro/references/form.md"
         }
       ],
       "verbatim_excluded": [
@@ -3477,6 +3489,10 @@
         {
           "upstream": "skills/exploratory-data-analysis/SKILL.md",
           "local": "skills/researcher/science/exploratory-data-analysis/SKILL.md"
+        },
+        {
+          "upstream": "skills/citation-management/SKILL.md",
+          "local": "skills/researcher/info/citation-management/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3583,6 +3599,90 @@
         {
           "upstream": "skills/exploratory-data-analysis/scripts/tabular_profile.py",
           "local": "skills/researcher/science/exploratory-data-analysis/scripts/tabular_profile.py"
+        },
+        {
+          "upstream": "skills/citation-management/assets/bibtex_template.bib",
+          "local": "skills/researcher/info/citation-management/assets/bibtex_template.bib"
+        },
+        {
+          "upstream": "skills/citation-management/assets/citation_checklist.md",
+          "local": "skills/researcher/info/citation-management/assets/citation_checklist.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/api_contracts.md",
+          "local": "skills/researcher/info/citation-management/references/api_contracts.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/best_practices.md",
+          "local": "skills/researcher/info/citation-management/references/best_practices.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/bibtex_formatting.md",
+          "local": "skills/researcher/info/citation-management/references/bibtex_formatting.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/citation_validation.md",
+          "local": "skills/researcher/info/citation-management/references/citation_validation.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/core_workflow.md",
+          "local": "skills/researcher/info/citation-management/references/core_workflow.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/example_workflows.md",
+          "local": "skills/researcher/info/citation-management/references/example_workflows.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/google_scholar_search.md",
+          "local": "skills/researcher/info/citation-management/references/google_scholar_search.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/metadata_extraction.md",
+          "local": "skills/researcher/info/citation-management/references/metadata_extraction.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/pubmed_search.md",
+          "local": "skills/researcher/info/citation-management/references/pubmed_search.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/script_reference.md",
+          "local": "skills/researcher/info/citation-management/references/script_reference.md"
+        },
+        {
+          "upstream": "skills/citation-management/references/search_strategies.md",
+          "local": "skills/researcher/info/citation-management/references/search_strategies.md"
+        },
+        {
+          "upstream": "skills/citation-management/scripts/_common.py",
+          "local": "skills/researcher/info/citation-management/scripts/_common.py"
+        },
+        {
+          "upstream": "skills/citation-management/scripts/doi_to_bibtex.py",
+          "local": "skills/researcher/info/citation-management/scripts/doi_to_bibtex.py"
+        },
+        {
+          "upstream": "skills/citation-management/scripts/extract_metadata.py",
+          "local": "skills/researcher/info/citation-management/scripts/extract_metadata.py"
+        },
+        {
+          "upstream": "skills/citation-management/scripts/format_bibtex.py",
+          "local": "skills/researcher/info/citation-management/scripts/format_bibtex.py"
+        },
+        {
+          "upstream": "skills/citation-management/scripts/search_google_scholar.py",
+          "local": "skills/researcher/info/citation-management/scripts/search_google_scholar.py"
+        },
+        {
+          "upstream": "skills/citation-management/scripts/search_openalex.py",
+          "local": "skills/researcher/info/citation-management/scripts/search_openalex.py"
+        },
+        {
+          "upstream": "skills/citation-management/scripts/search_pubmed.py",
+          "local": "skills/researcher/info/citation-management/scripts/search_pubmed.py"
+        },
+        {
+          "upstream": "skills/citation-management/scripts/validate_citations.py",
+          "local": "skills/researcher/info/citation-management/scripts/validate_citations.py"
         }
       ],
       "verbatim_excluded": []
@@ -3626,6 +3726,14 @@
         {
           "upstream": "skills/market-research/SKILL.md",
           "local": "skills/growth/product/market-research/SKILL.md"
+        },
+        {
+          "upstream": "skills/backend-patterns/SKILL.md",
+          "local": "skills/developer/engineering/backend-patterns/SKILL.md"
+        },
+        {
+          "upstream": "skills/investor-materials/SKILL.md",
+          "local": "skills/growth/product/investor-materials/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16335,6 +16443,14 @@
         {
           "upstream": "research/deepread/SKILL.md",
           "local": "skills/researcher/knowledge/deepread/SKILL.md"
+        },
+        {
+          "upstream": "product-team/skills/competitive-teardown/SKILL.md",
+          "local": "skills/growth/product/competitive-teardown/SKILL.md"
+        },
+        {
+          "upstream": "product-team/skills/spec-to-repo/SKILL.md",
+          "local": "skills/developer/engineering/spec-to-repo/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16437,6 +16553,38 @@
         {
           "upstream": "research/deepread/references/knowledge-map.md",
           "local": "skills/researcher/knowledge/deepread/references/knowledge-map.md"
+        },
+        {
+          "upstream": "product-team/skills/competitive-teardown/references/analysis-templates.md",
+          "local": "skills/growth/product/competitive-teardown/references/analysis-templates.md"
+        },
+        {
+          "upstream": "product-team/skills/competitive-teardown/references/competitive-analysis-frameworks.md",
+          "local": "skills/growth/product/competitive-teardown/references/competitive-analysis-frameworks.md"
+        },
+        {
+          "upstream": "product-team/skills/competitive-teardown/references/data-collection-guide.md",
+          "local": "skills/growth/product/competitive-teardown/references/data-collection-guide.md"
+        },
+        {
+          "upstream": "product-team/skills/competitive-teardown/references/scoring-rubric.md",
+          "local": "skills/growth/product/competitive-teardown/references/scoring-rubric.md"
+        },
+        {
+          "upstream": "product-team/skills/competitive-teardown/scripts/competitive_matrix_builder.py",
+          "local": "skills/growth/product/competitive-teardown/scripts/competitive_matrix_builder.py"
+        },
+        {
+          "upstream": "product-team/skills/spec-to-repo/references/spec-parsing-guide.md",
+          "local": "skills/developer/engineering/spec-to-repo/references/spec-parsing-guide.md"
+        },
+        {
+          "upstream": "product-team/skills/spec-to-repo/references/stack-templates.md",
+          "local": "skills/developer/engineering/spec-to-repo/references/stack-templates.md"
+        },
+        {
+          "upstream": "product-team/skills/spec-to-repo/scripts/validate_project.py",
+          "local": "skills/developer/engineering/spec-to-repo/scripts/validate_project.py"
         }
       ],
       "verbatim_excluded": [
@@ -16465,6 +16613,10 @@
         {
           "upstream": "pm-data-analytics/skills/ab-test-analysis/SKILL.md",
           "local": "skills/growth/product/ab-test-analysis/SKILL.md"
+        },
+        {
+          "upstream": "pm-data-analytics/skills/cohort-analysis/SKILL.md",
+          "local": "skills/growth/product/cohort-analysis/SKILL.md"
         }
       ],
       "verbatim": [],
@@ -16581,6 +16733,10 @@
         {
           "upstream": "skills/cloud-architect/SKILL.md",
           "local": "skills/developer/quality/cloud-architect/SKILL.md"
+        },
+        {
+          "upstream": "skills/architecture-designer/SKILL.md",
+          "local": "skills/developer/quality/architecture-designer/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16647,6 +16803,26 @@
         {
           "upstream": "skills/cloud-architect/references/multi-cloud.md",
           "local": "skills/developer/quality/cloud-architect/references/multi-cloud.md"
+        },
+        {
+          "upstream": "skills/architecture-designer/references/adr-template.md",
+          "local": "skills/developer/quality/architecture-designer/references/adr-template.md"
+        },
+        {
+          "upstream": "skills/architecture-designer/references/architecture-patterns.md",
+          "local": "skills/developer/quality/architecture-designer/references/architecture-patterns.md"
+        },
+        {
+          "upstream": "skills/architecture-designer/references/database-selection.md",
+          "local": "skills/developer/quality/architecture-designer/references/database-selection.md"
+        },
+        {
+          "upstream": "skills/architecture-designer/references/nfr-checklist.md",
+          "local": "skills/developer/quality/architecture-designer/references/nfr-checklist.md"
+        },
+        {
+          "upstream": "skills/architecture-designer/references/system-design.md",
+          "local": "skills/developer/quality/architecture-designer/references/system-design.md"
         }
       ],
       "verbatim_excluded": [
@@ -16737,6 +16913,10 @@
         {
           "upstream": "skills/n8n-error-handling/SKILL.md",
           "local": "skills/toolbox/automation/n8n-error-handling/SKILL.md"
+        },
+        {
+          "upstream": "skills/n8n-code-python/SKILL.md",
+          "local": "skills/toolbox/automation/n8n-code-python/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16779,6 +16959,14 @@
         {
           "upstream": "skills/n8n-error-handling/RESPONSE_SHAPES.md",
           "local": "skills/toolbox/automation/n8n-error-handling/RESPONSE_SHAPES.md"
+        },
+        {
+          "upstream": "skills/n8n-code-python/COMMON_PATTERNS.md",
+          "local": "skills/toolbox/automation/n8n-code-python/COMMON_PATTERNS.md"
+        },
+        {
+          "upstream": "skills/n8n-code-python/README.md",
+          "local": "skills/toolbox/automation/n8n-code-python/README.md"
         }
       ],
       "verbatim_excluded": [
@@ -16815,6 +17003,10 @@
         {
           "upstream": "plugins/hookify/skills/writing-rules/SKILL.md",
           "local": "skills/developer/engineering/writing-rules/SKILL.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/SKILL.md",
+          "local": "skills/developer/engineering/build-mcp-app/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16889,6 +17081,30 @@
         {
           "upstream": "plugins/claude-security/skills/claude-security/specs/report-spec.md",
           "local": "skills/developer/quality/claude-security/specs/report-spec.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/abuse-protection.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/abuse-protection.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/apps-sdk-messages.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/apps-sdk-messages.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/directory-checklist.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/directory-checklist.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/iframe-sandbox.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/iframe-sandbox.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/payload-budgeting.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/payload-budgeting.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/widget-templates.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/widget-templates.md"
         }
       ],
       "verbatim_excluded": [
@@ -16933,6 +17149,18 @@
         {
           "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/SKILL.md",
           "local": "skills/developer/engineering/deployment-pipeline-design/SKILL.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/secrets-management/SKILL.md",
+          "local": "skills/developer/quality/secrets-management/SKILL.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/task-coordination-strategies/SKILL.md",
+          "local": "skills/developer/context/task-coordination-strategies/SKILL.md"
+        },
+        {
+          "upstream": "plugins/accessibility-compliance/skills/wcag-audit-patterns/SKILL.md",
+          "local": "skills/developer/quality/wcag-audit-patterns/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16959,6 +17187,18 @@
         {
           "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/references/details.md",
           "local": "skills/developer/engineering/deployment-pipeline-design/references/details.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/task-coordination-strategies/references/dependency-graphs.md",
+          "local": "skills/developer/context/task-coordination-strategies/references/dependency-graphs.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/task-coordination-strategies/references/task-decomposition.md",
+          "local": "skills/developer/context/task-coordination-strategies/references/task-decomposition.md"
+        },
+        {
+          "upstream": "plugins/accessibility-compliance/skills/wcag-audit-patterns/references/details.md",
+          "local": "skills/developer/quality/wcag-audit-patterns/references/details.md"
         }
       ],
       "verbatim_excluded": [
@@ -17024,6 +17264,14 @@
         {
           "upstream": "plugins/waza/rules/durable-context.md",
           "local": "skills/developer/engineering/rules/durable-context.md"
+        },
+        {
+          "upstream": "skills/check/SKILL.md",
+          "local": "skills/developer/quality/check/SKILL.md"
+        },
+        {
+          "upstream": "skills/read/SKILL.md",
+          "local": "skills/developer/engineering/read/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17126,6 +17374,86 @@
         {
           "upstream": "skills/health/scripts/scan_skill_security.py",
           "local": "skills/developer/quality/health/scripts/scan_skill_security.py"
+        },
+        {
+          "upstream": "skills/check/agents/reviewer-architecture.md",
+          "local": "skills/developer/quality/check/agents/reviewer-architecture.md"
+        },
+        {
+          "upstream": "skills/check/agents/reviewer-security.md",
+          "local": "skills/developer/quality/check/agents/reviewer-security.md"
+        },
+        {
+          "upstream": "skills/check/references/durable-context.md",
+          "local": "skills/developer/quality/check/references/durable-context.md"
+        },
+        {
+          "upstream": "skills/check/references/mode-audit.md",
+          "local": "skills/developer/quality/check/references/mode-audit.md"
+        },
+        {
+          "upstream": "skills/check/references/mode-ship.md",
+          "local": "skills/developer/quality/check/references/mode-ship.md"
+        },
+        {
+          "upstream": "skills/check/references/mode-triage.md",
+          "local": "skills/developer/quality/check/references/mode-triage.md"
+        },
+        {
+          "upstream": "skills/check/references/persona-catalog.md",
+          "local": "skills/developer/quality/check/references/persona-catalog.md"
+        },
+        {
+          "upstream": "skills/check/references/project-context.md",
+          "local": "skills/developer/quality/check/references/project-context.md"
+        },
+        {
+          "upstream": "skills/check/references/public-reply.md",
+          "local": "skills/developer/quality/check/references/public-reply.md"
+        },
+        {
+          "upstream": "skills/check/references/release-surfaces.md",
+          "local": "skills/developer/quality/check/references/release-surfaces.md"
+        },
+        {
+          "upstream": "skills/check/references/review-patterns.md",
+          "local": "skills/developer/quality/check/references/review-patterns.md"
+        },
+        {
+          "upstream": "skills/check/scripts/audit_signals.py",
+          "local": "skills/developer/quality/check/scripts/audit_signals.py"
+        },
+        {
+          "upstream": "skills/check/scripts/release_gate.py",
+          "local": "skills/developer/quality/check/scripts/release_gate.py"
+        },
+        {
+          "upstream": "skills/check/scripts/run-tests.sh",
+          "local": "skills/developer/quality/check/scripts/run-tests.sh"
+        },
+        {
+          "upstream": "skills/read/references/read-methods.md",
+          "local": "skills/developer/engineering/read/references/read-methods.md"
+        },
+        {
+          "upstream": "skills/read/scripts/deepseek.py",
+          "local": "skills/developer/engineering/read/scripts/deepseek.py"
+        },
+        {
+          "upstream": "skills/read/scripts/fetch.sh",
+          "local": "skills/developer/engineering/read/scripts/fetch.sh"
+        },
+        {
+          "upstream": "skills/read/scripts/fetch_feishu.py",
+          "local": "skills/developer/engineering/read/scripts/fetch_feishu.py"
+        },
+        {
+          "upstream": "skills/read/scripts/fetch_local.py",
+          "local": "skills/developer/engineering/read/scripts/fetch_local.py"
+        },
+        {
+          "upstream": "skills/read/scripts/fetch_weixin.py",
+          "local": "skills/developer/engineering/read/scripts/fetch_weixin.py"
         }
       ],
       "verbatim_excluded": [
@@ -17345,6 +17673,14 @@
         {
           "upstream": "skills/unreal/unreal-cpp-gameplay/SKILL.md",
           "local": "skills/gamedev/unreal-cpp-gameplay/SKILL.md"
+        },
+        {
+          "upstream": "skills/godot/godot-3d-essentials/SKILL.md",
+          "local": "skills/gamedev/godot-3d-essentials/SKILL.md"
+        },
+        {
+          "upstream": "skills/unreal/unreal-behavior-trees/SKILL.md",
+          "local": "skills/gamedev/unreal-behavior-trees/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17363,6 +17699,14 @@
         {
           "upstream": "skills/unreal/unreal-cpp-gameplay/references/components-and-gc.md",
           "local": "skills/gamedev/unreal-cpp-gameplay/references/components-and-gc.md"
+        },
+        {
+          "upstream": "skills/godot/godot-3d-essentials/references/scene-and-environment.md",
+          "local": "skills/gamedev/godot-3d-essentials/references/scene-and-environment.md"
+        },
+        {
+          "upstream": "skills/unreal/unreal-behavior-trees/references/custom-bttask.md",
+          "local": "skills/gamedev/unreal-behavior-trees/references/custom-bttask.md"
         }
       ],
       "verbatim_excluded": [
@@ -17387,6 +17731,10 @@
         {
           "upstream": "skills/dramatic/SKILL.md",
           "local": "skills/designer/design/dramatic/SKILL.md"
+        },
+        {
+          "upstream": "skills/brutalism/SKILL.md",
+          "local": "skills/designer/design/brutalism/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17397,6 +17745,10 @@
         {
           "upstream": "skills/dramatic/DESIGN.md",
           "local": "skills/designer/design/dramatic/DESIGN.md"
+        },
+        {
+          "upstream": "skills/brutalism/DESIGN.md",
+          "local": "skills/designer/design/brutalism/DESIGN.md"
         }
       ],
       "verbatim_excluded": [
@@ -17425,6 +17777,10 @@
         {
           "upstream": "skills/breakout-trade-planner/SKILL.md",
           "local": "skills/growth/product/breakout-trade-planner/SKILL.md"
+        },
+        {
+          "upstream": "skills/drawdown-circuit-breaker/SKILL.md",
+          "local": "skills/growth/product/drawdown-circuit-breaker/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17483,6 +17839,34 @@
         {
           "upstream": "skills/breakout-trade-planner/scripts/risk_calculator.py",
           "local": "skills/growth/product/breakout-trade-planner/scripts/risk_calculator.py"
+        },
+        {
+          "upstream": "skills/drawdown-circuit-breaker/references/circuit_breaker_framework.md",
+          "local": "skills/growth/product/drawdown-circuit-breaker/references/circuit_breaker_framework.md"
+        },
+        {
+          "upstream": "skills/drawdown-circuit-breaker/requirements.txt",
+          "local": "skills/growth/product/drawdown-circuit-breaker/requirements.txt"
+        },
+        {
+          "upstream": "skills/drawdown-circuit-breaker/scripts/_market_calendar.py",
+          "local": "skills/growth/product/drawdown-circuit-breaker/scripts/_market_calendar.py"
+        },
+        {
+          "upstream": "skills/drawdown-circuit-breaker/scripts/check_circuit_breaker.py",
+          "local": "skills/growth/product/drawdown-circuit-breaker/scripts/check_circuit_breaker.py"
+        },
+        {
+          "upstream": "skills/drawdown-circuit-breaker/scripts/tests/conftest.py",
+          "local": "skills/growth/product/drawdown-circuit-breaker/scripts/tests/conftest.py"
+        },
+        {
+          "upstream": "skills/drawdown-circuit-breaker/scripts/tests/test_check_circuit_breaker.py",
+          "local": "skills/growth/product/drawdown-circuit-breaker/scripts/tests/test_check_circuit_breaker.py"
+        },
+        {
+          "upstream": "skills/drawdown-circuit-breaker/scripts/tests/test_market_calendar_contract.py",
+          "local": "skills/growth/product/drawdown-circuit-breaker/scripts/tests/test_market_calendar_contract.py"
         }
       ],
       "verbatim_excluded": [
@@ -17536,9 +17920,454 @@
         {
           "upstream": "skills/officecli-academic-paper/SKILL.md",
           "local": "skills/toolbox/office/officecli-academic-paper/SKILL.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/SKILL.md",
+          "local": "skills/toolbox/office/morph-ppt/SKILL.md"
         }
       ],
-      "verbatim": [],
+      "verbatim": [
+        {
+          "upstream": "skills/morph-ppt/reference/decision-rules.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/decision-rules.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/morph-helpers.py",
+          "local": "skills/toolbox/office/morph-ppt/reference/morph-helpers.py"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/morph-helpers.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/morph-helpers.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/pptx-design.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/pptx-design.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/INDEX.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/INDEX.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--brutalist-raw/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--brutalist-raw/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--brutalist-raw/bw__brutalist_raw.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--brutalist-raw/bw__brutalist_raw.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--brutalist-raw/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--brutalist-raw/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--mono-line/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--mono-line/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--mono-line/bw__mono_line.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--mono-line/bw__mono_line.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--mono-line/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--mono-line/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--swiss-bauhaus/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--swiss-bauhaus/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--swiss-bauhaus/bw__swiss_bauhaus.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--swiss-bauhaus/bw__swiss_bauhaus.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--swiss-bauhaus/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--swiss-bauhaus/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/bw--swiss-system/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/bw--swiss-system/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--architectural-plan/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--architectural-plan/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--architectural-plan/dark__architectural_plan.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--architectural-plan/dark__architectural_plan.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--architectural-plan/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--architectural-plan/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--aurora-softedge/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--aurora-softedge/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--blueprint-grid/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--blueprint-grid/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--blueprint-grid/dark__blueprint_grid.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--blueprint-grid/dark__blueprint_grid.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--blueprint-grid/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--blueprint-grid/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--circle-digital/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--circle-digital/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--circle-digital/dark__circle_digital.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--circle-digital/dark__circle_digital.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--circle-digital/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--circle-digital/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--cosmic-neon/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--cosmic-neon/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--cosmic-neon/dark__cosmic_neon.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--cosmic-neon/dark__cosmic_neon.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--cosmic-neon/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--cosmic-neon/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--cyber-future/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--cyber-future/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--cyber-future/dark__cyber_future.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--cyber-future/dark__cyber_future.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--cyber-future/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--cyber-future/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--diagonal-cut/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--diagonal-cut/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--diagonal-cut/dark__diagonal_cut.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--diagonal-cut/dark__diagonal_cut.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--diagonal-cut/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--diagonal-cut/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--editorial-story/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--editorial-story/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--editorial-story/dark__editorial_story.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--editorial-story/dark__editorial_story.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--editorial-story/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--editorial-story/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--investor-pitch/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--investor-pitch/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--investor-pitch/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--investor-pitch/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--investor-pitch/template.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--investor-pitch/template.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--liquid-flow/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--liquid-flow/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--liquid-flow/dark__liquid_flow.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--liquid-flow/dark__liquid_flow.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--liquid-flow/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--liquid-flow/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--luxury-minimal/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--luxury-minimal/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--luxury-minimal/dark__luxury_minimal.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--luxury-minimal/dark__luxury_minimal.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--luxury-minimal/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--luxury-minimal/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--midnight-blueprint/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--midnight-blueprint/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--neon-productivity/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--neon-productivity/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--neon-productivity/dark__neon_productivity.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--neon-productivity/dark__neon_productivity.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--neon-productivity/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--neon-productivity/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--obsidian-amber/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--obsidian-amber/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--premium-navy/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--premium-navy/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--premium-navy/dark__premium_navy.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--premium-navy/dark__premium_navy.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--premium-navy/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--premium-navy/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--sage-grain/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--sage-grain/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--space-odyssey/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--space-odyssey/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--space-odyssey/dark__space_odyssey.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--space-odyssey/dark__space_odyssey.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--space-odyssey/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--space-odyssey/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--spotlight-stage/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--spotlight-stage/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--spotlight-stage/dark__spotlight_stage.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--spotlight-stage/dark__spotlight_stage.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--spotlight-stage/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--spotlight-stage/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/dark--velvet-rose/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/dark--velvet-rose/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--bold-type/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--bold-type/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--bold-type/light__bold_type.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--bold-type/light__bold_type.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--bold-type/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--bold-type/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--firmwise-saas/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--firmwise-saas/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--fluid-gradient/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--fluid-gradient/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--glassmorphism-vc/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--glassmorphism-vc/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--isometric-clean/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--isometric-clean/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--isometric-clean/light__isometric_clean.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--isometric-clean/light__isometric_clean.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--isometric-clean/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--isometric-clean/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--minimal-corporate/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--minimal-corporate/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--minimal-product/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--minimal-product/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--minimal-product/light__minimal_product.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--minimal-product/light__minimal_product.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--minimal-product/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--minimal-product/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--project-proposal/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--project-proposal/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--spring-launch/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--spring-launch/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--training-interactive/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--training-interactive/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--watercolor-wash/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--watercolor-wash/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--watercolor-wash/light__watercolor_wash.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--watercolor-wash/light__watercolor_wash.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/light--watercolor-wash/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/light--watercolor-wash/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/mixed--bauhaus-blocks/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/mixed--bauhaus-blocks/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/mixed--chromatic-aberration/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/mixed--chromatic-aberration/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/mixed--duotone-split/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/mixed--duotone-split/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/mixed--duotone-split/mixed__duotone_split.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/mixed--duotone-split/mixed__duotone_split.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/mixed--duotone-split/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/mixed--duotone-split/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/mixed--spectral-grid/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/mixed--spectral-grid/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--bauhaus-electric/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--bauhaus-electric/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--candy-stripe/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--candy-stripe/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--candy-stripe/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--candy-stripe/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--candy-stripe/vivid__candy_stripe.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--candy-stripe/vivid__candy_stripe.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--energy-neon/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--energy-neon/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--pink-editorial/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--pink-editorial/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--playful-marketing/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--playful-marketing/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--playful-marketing/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--playful-marketing/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/vivid--playful-marketing/vivid__playful_marketing.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/vivid--playful-marketing/vivid__playful_marketing.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--bloom-academy/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--bloom-academy/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--brand-refresh/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--brand-refresh/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--brand-refresh/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--brand-refresh/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--brand-refresh/warm__brand_refresh.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--brand-refresh/warm__brand_refresh.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--coral-culture/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--coral-culture/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--earth-organic/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--earth-organic/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--earth-organic/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--earth-organic/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--earth-organic/warm__earth_organic.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--earth-organic/warm__earth_organic.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--monument-editorial/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--monument-editorial/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--playful-organic/Cat-Secret-Life.pptx",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--playful-organic/Cat-Secret-Life.pptx"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--playful-organic/build.sh",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--playful-organic/build.sh"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--playful-organic/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--playful-organic/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--sunset-mosaic/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--sunset-mosaic/style.md"
+        },
+        {
+          "upstream": "skills/morph-ppt/reference/styles/warm--vital-bloom/style.md",
+          "local": "skills/toolbox/office/morph-ppt/reference/styles/warm--vital-bloom/style.md"
+        }
+      ],
       "verbatim_excluded": [
         {
           "upstream": "skills/ 其余（word-form/xlsx/morph-ppt 等）",
@@ -17550,293 +18379,293 @@
         }
       ]
     },
-   {
-    "repo": "questflowai/investorskills",
-    "shortname": "investorskills",
-    "license": "MIT",
-    "stars_snapshot_2026-10-25": 1882,
-    "batch": 5,
-    "mode": "旗舰抽取",
-    "files": [
-     {
-      "upstream": "skills/buffett/SKILL.md",
-      "local": "skills/corporate/finance/buffett/SKILL.md"
-     },
-     {
-      "upstream": "skills/munger/SKILL.md",
-      "local": "skills/corporate/finance/munger/SKILL.md"
-     },
-     {
-      "upstream": "skills/dalio-principles-allweather/SKILL.md",
-      "local": "skills/corporate/finance/dalio-principles-allweather/SKILL.md"
-     },
-     {
-      "upstream": "skills/graham-net-net/SKILL.md",
-      "local": "skills/corporate/finance/graham-net-net/SKILL.md"
-     }
-    ],
-    "verbatim": [
-     {
-      "upstream": "skills/buffett/invest.md",
-      "local": "skills/corporate/finance/buffett/invest.md"
-     },
-     {
-      "upstream": "skills/munger/invest.md",
-      "local": "skills/corporate/finance/munger/invest.md"
-     },
-     {
-      "upstream": "skills/dalio-principles-allweather/invest.md",
-      "local": "skills/corporate/finance/dalio-principles-allweather/invest.md"
-     },
-     {
-      "upstream": "skills/graham-net-net/invest.md",
-      "local": "skills/corporate/finance/graham-net-net/invest.md"
-     }
-    ],
-    "verbatim_excluded": [
-     {
-      "upstream": "skills/ 其余 59 个投资人 skill（a16z、ackman、druckenmiller 等）",
-      "reason": "人物方法论后续候选"
-     },
-     {
-      "upstream": "README.md、references/",
-      "reason": "仓库级说明文档，原则 #11 排除"
-     }
-    ]
-   },
-   {
-    "repo": "RKiding/Awesome-finance-skills",
-    "shortname": "awesome-finance",
-    "license": "Apache-2.0",
-    "stars_snapshot_2026-10-25": 3084,
-    "batch": 5,
-    "mode": "抽取",
-    "files": [
-     {
-      "upstream": "skills/alphaear-news/SKILL.md",
-      "local": "skills/corporate/finance/alphaear-news/SKILL.md"
-     },
-     {
-      "upstream": "skills/alphaear-sentiment/SKILL.md",
-      "local": "skills/corporate/finance/alphaear-sentiment/SKILL.md"
-     }
-    ],
-    "verbatim": [
-     {
-      "upstream": "skills/alphaear-news/scripts/__init__.py",
-      "local": "skills/corporate/finance/alphaear-news/scripts/__init__.py"
-     },
-     {
-      "upstream": "skills/alphaear-news/scripts/content_extractor.py",
-      "local": "skills/corporate/finance/alphaear-news/scripts/content_extractor.py"
-     },
-     {
-      "upstream": "skills/alphaear-news/scripts/database_manager.py",
-      "local": "skills/corporate/finance/alphaear-news/scripts/database_manager.py"
-     },
-     {
-      "upstream": "skills/alphaear-news/scripts/news_tools.py",
-      "local": "skills/corporate/finance/alphaear-news/scripts/news_tools.py"
-     },
-     {
-      "upstream": "skills/alphaear-news/references/sources.md",
-      "local": "skills/corporate/finance/alphaear-news/references/sources.md"
-     },
-     {
-      "upstream": "skills/alphaear-sentiment/scripts/__init__.py",
-      "local": "skills/corporate/finance/alphaear-sentiment/scripts/__init__.py"
-     },
-     {
-      "upstream": "skills/alphaear-sentiment/scripts/database_manager.py",
-      "local": "skills/corporate/finance/alphaear-sentiment/scripts/database_manager.py"
-     },
-     {
-      "upstream": "skills/alphaear-sentiment/scripts/sentiment_tools.py",
-      "local": "skills/corporate/finance/alphaear-sentiment/scripts/sentiment_tools.py"
-     },
-     {
-      "upstream": "skills/alphaear-sentiment/scripts/llm/capability.py",
-      "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/capability.py"
-     },
-     {
-      "upstream": "skills/alphaear-sentiment/scripts/llm/factory.py",
-      "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/factory.py"
-     },
-     {
-      "upstream": "skills/alphaear-sentiment/scripts/llm/router.py",
-      "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/router.py"
-     }
-    ],
-    "verbatim_excluded": [
-     {
-      "upstream": "skills/ 其余 8 个 alphaear skill 与 skill-creator",
-      "reason": "后续候选"
-     },
-     {
-      "upstream": "tests/ figs/",
-      "reason": "上游 QA 产物与图示，原则 #11 排除"
-     }
-    ]
-   },
-   {
-    "repo": "muxuuu/serenity-skill",
-    "shortname": "serenity-skill",
-    "license": "MIT",
-    "stars_snapshot_2026-10-25": 4119,
-    "batch": 5,
-    "mode": "整仓",
-    "files": [
-     {
-      "upstream": "SKILL.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/SKILL.md"
-     }
-    ],
-    "verbatim": [
-     {
-      "upstream": "README.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/README.md"
-     },
-     {
-      "upstream": "CHANGELOG.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/CHANGELOG.md"
-     },
-     {
-      "upstream": "LICENSE",
-      "local": "skills/corporate/supply-chain/serenity-skill/LICENSE"
-     },
-     {
-      "upstream": "references/deep-research-workflow.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/references/deep-research-workflow.md"
-     },
-     {
-      "upstream": "references/evidence-ladder.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/references/evidence-ladder.md"
-     },
-     {
-      "upstream": "references/market-source-playbook.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/references/market-source-playbook.md"
-     },
-     {
-      "upstream": "references/output-style-and-language.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/references/output-style-and-language.md"
-     },
-     {
-      "upstream": "references/public-profile-and-evaluation.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/references/public-profile-and-evaluation.md"
-     },
-     {
-      "upstream": "references/research-sources.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/references/research-sources.md"
-     },
-     {
-      "upstream": "references/risk-and-compliance.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/references/risk-and-compliance.md"
-     },
-     {
-      "upstream": "references/serenity-dialogue-protocol.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/references/serenity-dialogue-protocol.md"
-     },
-     {
-      "upstream": "assets/research-prompt-pack.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/assets/research-prompt-pack.md"
-     },
-     {
-      "upstream": "assets/thesis-template.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/assets/thesis-template.md"
-     },
-     {
-      "upstream": "examples/a-share-ai-semiconductor-demo.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/examples/a-share-ai-semiconductor-demo.md"
-     },
-     {
-      "upstream": "examples/cpo-company-challenge.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/examples/cpo-company-challenge.md"
-     },
-     {
-      "upstream": "examples/demo-conversation.md",
-      "local": "skills/corporate/supply-chain/serenity-skill/examples/demo-conversation.md"
-     }
-    ],
-    "verbatim_excluded": [
-     {
-      "upstream": ".gitignore、CONTRIBUTING.md、README.en.md",
-      "reason": "仓库元文件，原则 #11 排除"
-     },
-     {
-      "upstream": "evals/、agents/openai.yaml、scripts/validate_skill.py",
-      "reason": "上游 QA 与工具脚本，原则 #11 排除"
-     }
-    ]
-   },
-   {
-    "repo": "nexscope-ai/eCommerce-Skills",
-    "shortname": "ecommerce-skills",
-    "license": "MIT",
-    "stars_snapshot_2026-10-25": 1251,
-    "batch": 5,
-    "mode": "抽取",
-    "files": [
-     {
-      "upstream": "dropshipping-product-research/SKILL.md",
-      "local": "skills/corporate/ecommerce/dropshipping-product-research/SKILL.md"
-     },
-     {
-      "upstream": "competitor-price-analysis/SKILL.md",
-      "local": "skills/corporate/ecommerce/competitor-price-analysis/SKILL.md"
-     },
-     {
-      "upstream": "customer-feedback-analysis/SKILL.md",
-      "local": "skills/corporate/ecommerce/customer-feedback-analysis/SKILL.md"
-     }
-    ],
-    "verbatim": [],
-    "verbatim_excluded": [
-     {
-      "upstream": "其余 159 个电商 skill",
-      "reason": "后续候选（brand-protection 系列、ebay 系列、amazon 系列等）"
-     }
-    ]
-   },
-   {
-    "repo": "zubair-trabzada/ai-sales-team-claude",
-    "shortname": "ai-sales-team",
-    "license": "MIT",
-    "stars_snapshot_2026-10-25": 1468,
-    "batch": 5,
-    "mode": "抽取",
-    "files": [
-     {
-      "upstream": "skills/sales-icp/SKILL.md",
-      "local": "skills/corporate/sales/sales-icp/SKILL.md"
-     },
-     {
-      "upstream": "skills/sales-outreach/SKILL.md",
-      "local": "skills/corporate/sales/sales-outreach/SKILL.md"
-     },
-     {
-      "upstream": "skills/sales-qualify/SKILL.md",
-      "local": "skills/corporate/sales/sales-qualify/SKILL.md"
-     },
-     {
-      "upstream": "skills/sales-proposal/SKILL.md",
-      "local": "skills/corporate/sales/sales-proposal/SKILL.md"
-     },
-     {
-      "upstream": "skills/sales-research/SKILL.md",
-      "local": "skills/corporate/sales/sales-research/SKILL.md"
-     }
-    ],
-    "verbatim": [],
-    "verbatim_excluded": [
-     {
-      "upstream": "skills/ 其余 9 个 sales skill",
-      "reason": "后续候选"
-     },
-     {
-      "upstream": "sales/SKILL.md",
-      "reason": "编排器入口，与子 skill 内容重叠"
-     }
-    ]
-   }
+    {
+      "repo": "questflowai/investorskills",
+      "shortname": "investorskills",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 1882,
+      "batch": 5,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "skills/buffett/SKILL.md",
+          "local": "skills/corporate/finance/buffett/SKILL.md"
+        },
+        {
+          "upstream": "skills/munger/SKILL.md",
+          "local": "skills/corporate/finance/munger/SKILL.md"
+        },
+        {
+          "upstream": "skills/dalio-principles-allweather/SKILL.md",
+          "local": "skills/corporate/finance/dalio-principles-allweather/SKILL.md"
+        },
+        {
+          "upstream": "skills/graham-net-net/SKILL.md",
+          "local": "skills/corporate/finance/graham-net-net/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/buffett/invest.md",
+          "local": "skills/corporate/finance/buffett/invest.md"
+        },
+        {
+          "upstream": "skills/munger/invest.md",
+          "local": "skills/corporate/finance/munger/invest.md"
+        },
+        {
+          "upstream": "skills/dalio-principles-allweather/invest.md",
+          "local": "skills/corporate/finance/dalio-principles-allweather/invest.md"
+        },
+        {
+          "upstream": "skills/graham-net-net/invest.md",
+          "local": "skills/corporate/finance/graham-net-net/invest.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/ 其余 59 个投资人 skill（a16z、ackman、druckenmiller 等）",
+          "reason": "人物方法论后续候选"
+        },
+        {
+          "upstream": "README.md、references/",
+          "reason": "仓库级说明文档，原则 #11 排除"
+        }
+      ]
+    },
+    {
+      "repo": "RKiding/Awesome-finance-skills",
+      "shortname": "awesome-finance",
+      "license": "Apache-2.0",
+      "stars_snapshot_2026-10-25": 3084,
+      "batch": 5,
+      "mode": "抽取",
+      "files": [
+        {
+          "upstream": "skills/alphaear-news/SKILL.md",
+          "local": "skills/corporate/finance/alphaear-news/SKILL.md"
+        },
+        {
+          "upstream": "skills/alphaear-sentiment/SKILL.md",
+          "local": "skills/corporate/finance/alphaear-sentiment/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/alphaear-news/scripts/__init__.py",
+          "local": "skills/corporate/finance/alphaear-news/scripts/__init__.py"
+        },
+        {
+          "upstream": "skills/alphaear-news/scripts/content_extractor.py",
+          "local": "skills/corporate/finance/alphaear-news/scripts/content_extractor.py"
+        },
+        {
+          "upstream": "skills/alphaear-news/scripts/database_manager.py",
+          "local": "skills/corporate/finance/alphaear-news/scripts/database_manager.py"
+        },
+        {
+          "upstream": "skills/alphaear-news/scripts/news_tools.py",
+          "local": "skills/corporate/finance/alphaear-news/scripts/news_tools.py"
+        },
+        {
+          "upstream": "skills/alphaear-news/references/sources.md",
+          "local": "skills/corporate/finance/alphaear-news/references/sources.md"
+        },
+        {
+          "upstream": "skills/alphaear-sentiment/scripts/__init__.py",
+          "local": "skills/corporate/finance/alphaear-sentiment/scripts/__init__.py"
+        },
+        {
+          "upstream": "skills/alphaear-sentiment/scripts/database_manager.py",
+          "local": "skills/corporate/finance/alphaear-sentiment/scripts/database_manager.py"
+        },
+        {
+          "upstream": "skills/alphaear-sentiment/scripts/sentiment_tools.py",
+          "local": "skills/corporate/finance/alphaear-sentiment/scripts/sentiment_tools.py"
+        },
+        {
+          "upstream": "skills/alphaear-sentiment/scripts/llm/capability.py",
+          "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/capability.py"
+        },
+        {
+          "upstream": "skills/alphaear-sentiment/scripts/llm/factory.py",
+          "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/factory.py"
+        },
+        {
+          "upstream": "skills/alphaear-sentiment/scripts/llm/router.py",
+          "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/router.py"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/ 其余 8 个 alphaear skill 与 skill-creator",
+          "reason": "后续候选"
+        },
+        {
+          "upstream": "tests/ figs/",
+          "reason": "上游 QA 产物与图示，原则 #11 排除"
+        }
+      ]
+    },
+    {
+      "repo": "muxuuu/serenity-skill",
+      "shortname": "serenity-skill",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 4119,
+      "batch": 5,
+      "mode": "整仓",
+      "files": [
+        {
+          "upstream": "SKILL.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "README.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/README.md"
+        },
+        {
+          "upstream": "CHANGELOG.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/CHANGELOG.md"
+        },
+        {
+          "upstream": "LICENSE",
+          "local": "skills/corporate/supply-chain/serenity-skill/LICENSE"
+        },
+        {
+          "upstream": "references/deep-research-workflow.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/deep-research-workflow.md"
+        },
+        {
+          "upstream": "references/evidence-ladder.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/evidence-ladder.md"
+        },
+        {
+          "upstream": "references/market-source-playbook.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/market-source-playbook.md"
+        },
+        {
+          "upstream": "references/output-style-and-language.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/output-style-and-language.md"
+        },
+        {
+          "upstream": "references/public-profile-and-evaluation.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/public-profile-and-evaluation.md"
+        },
+        {
+          "upstream": "references/research-sources.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/research-sources.md"
+        },
+        {
+          "upstream": "references/risk-and-compliance.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/risk-and-compliance.md"
+        },
+        {
+          "upstream": "references/serenity-dialogue-protocol.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/serenity-dialogue-protocol.md"
+        },
+        {
+          "upstream": "assets/research-prompt-pack.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/assets/research-prompt-pack.md"
+        },
+        {
+          "upstream": "assets/thesis-template.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/assets/thesis-template.md"
+        },
+        {
+          "upstream": "examples/a-share-ai-semiconductor-demo.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/examples/a-share-ai-semiconductor-demo.md"
+        },
+        {
+          "upstream": "examples/cpo-company-challenge.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/examples/cpo-company-challenge.md"
+        },
+        {
+          "upstream": "examples/demo-conversation.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/examples/demo-conversation.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": ".gitignore、CONTRIBUTING.md、README.en.md",
+          "reason": "仓库元文件，原则 #11 排除"
+        },
+        {
+          "upstream": "evals/、agents/openai.yaml、scripts/validate_skill.py",
+          "reason": "上游 QA 与工具脚本，原则 #11 排除"
+        }
+      ]
+    },
+    {
+      "repo": "nexscope-ai/eCommerce-Skills",
+      "shortname": "ecommerce-skills",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 1251,
+      "batch": 5,
+      "mode": "抽取",
+      "files": [
+        {
+          "upstream": "dropshipping-product-research/SKILL.md",
+          "local": "skills/corporate/ecommerce/dropshipping-product-research/SKILL.md"
+        },
+        {
+          "upstream": "competitor-price-analysis/SKILL.md",
+          "local": "skills/corporate/ecommerce/competitor-price-analysis/SKILL.md"
+        },
+        {
+          "upstream": "customer-feedback-analysis/SKILL.md",
+          "local": "skills/corporate/ecommerce/customer-feedback-analysis/SKILL.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": [
+        {
+          "upstream": "其余 159 个电商 skill",
+          "reason": "后续候选（brand-protection 系列、ebay 系列、amazon 系列等）"
+        }
+      ]
+    },
+    {
+      "repo": "zubair-trabzada/ai-sales-team-claude",
+      "shortname": "ai-sales-team",
+      "license": "MIT",
+      "stars_snapshot_2026-10-25": 1468,
+      "batch": 5,
+      "mode": "抽取",
+      "files": [
+        {
+          "upstream": "skills/sales-icp/SKILL.md",
+          "local": "skills/corporate/sales/sales-icp/SKILL.md"
+        },
+        {
+          "upstream": "skills/sales-outreach/SKILL.md",
+          "local": "skills/corporate/sales/sales-outreach/SKILL.md"
+        },
+        {
+          "upstream": "skills/sales-qualify/SKILL.md",
+          "local": "skills/corporate/sales/sales-qualify/SKILL.md"
+        },
+        {
+          "upstream": "skills/sales-proposal/SKILL.md",
+          "local": "skills/corporate/sales/sales-proposal/SKILL.md"
+        },
+        {
+          "upstream": "skills/sales-research/SKILL.md",
+          "local": "skills/corporate/sales/sales-research/SKILL.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/ 其余 9 个 sales skill",
+          "reason": "后续候选"
+        },
+        {
+          "upstream": "sales/SKILL.md",
+          "reason": "编排器入口，与子 skill 内容重叠"
+        }
+      ]
+    }
   ]
 }
