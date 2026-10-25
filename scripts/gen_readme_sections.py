@@ -161,6 +161,35 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/creator/video/video-shotcraft/SKILL.md",
         ]),
     ],
+    "🏢 Corporate Functions（企业职能岗）": [
+        ("财务/投资分析（投资人方法论）", [
+            "skills/corporate/finance/buffett/SKILL.md",
+            "skills/corporate/finance/munger/SKILL.md",
+            "skills/corporate/finance/dalio-principles-allweather/SKILL.md",
+            "skills/corporate/finance/graham-net-net/SKILL.md",
+        ]),
+        ("财经舆情监控与情绪分析", [
+            "skills/corporate/finance/alphaear-news/SKILL.md",
+            "skills/corporate/finance/alphaear-sentiment/SKILL.md",
+        ]),
+        ("供应链瓶颈研究（A 股科技/先进制造）", [
+            "skills/corporate/supply-chain/serenity-skill/SKILL.md",
+        ]),
+        ("销售：客户画像与线索资格", [
+            "skills/corporate/sales/sales-icp/SKILL.md",
+            "skills/corporate/sales/sales-qualify/SKILL.md",
+            "skills/corporate/sales/sales-research/SKILL.md",
+        ]),
+        ("销售：冷触达与方案赢单", [
+            "skills/corporate/sales/sales-outreach/SKILL.md",
+            "skills/corporate/sales/sales-proposal/SKILL.md",
+        ]),
+        ("电商：选品、定价与客户反馈", [
+            "skills/corporate/ecommerce/dropshipping-product-research/SKILL.md",
+            "skills/corporate/ecommerce/competitor-price-analysis/SKILL.md",
+            "skills/corporate/ecommerce/customer-feedback-analysis/SKILL.md",
+        ]),
+    ],
     "🧰 通用工具（所有职业）": [
         ("浏览器自动化", [
             "skills/toolbox/automation/browser-act/SKILL.md",
@@ -212,17 +241,22 @@ def upstream_table() -> str:
     state = load_json(STATE)
     repos = state.get("repos", {})
 
+    def star_of(up: dict) -> int:
+        """取最新快照 star 数；取不到按 -1 排到末尾。"""
+        v = up.get(f"stars_snapshot_{STAR_SNAPSHOT_DATE}")
+        if not isinstance(v, int):
+            v = up.get("stars_snapshot_2026-10-24")
+        return v if isinstance(v, int) else -1
+
     lines = [
-        "| 上游 | Star | License | 批次 | 模式 | 翻译件 | 原样件 | 最近同步 |",
-        "|---|--:|---|:-:|:-:|--:|--:|---|",
+        "| 上游 | Star | License | 模式 | 翻译件 | 原样件 | 最近同步 |",
+        "|---|--:|---|:-:|--:|--:|---|",
     ]
-    for up in manifest["upstreams"]:
+    # 批次仍存于 manifest（batch 字段），此处不再展示，只按 star 降序排
+    for up in sorted(manifest["upstreams"], key=star_of, reverse=True):
         repo = up["repo"]
-        stars = up.get(f"stars_snapshot_{STAR_SNAPSHOT_DATE}")
-        if stars is None:
-            # 兼容旧键名（2026-10-24 快照），取不到再退回 '—'
-            stars = up.get("stars_snapshot_2026-10-24")
-        star_cell = f"{stars:,}" if isinstance(stars, int) else "—"
+        stars = star_of(up)
+        star_cell = f"{stars:,}" if stars >= 0 else "—"
         head = repos.get(repo, "")
         head_cell = (
             f"[`{head[:7]}`](https://github.com/{repo}/commit/{head})" if head else "—"
@@ -230,10 +264,9 @@ def upstream_table() -> str:
         n_t = len(up.get("files", []))
         n_v = len(up.get("verbatim", []))
         mode = MODE_ZH.get(up.get("mode", ""), up.get("mode", "") or "?")
-        batch = up.get("batch", "?")
         lines.append(
             f"| [{repo}](https://github.com/{repo}) | {star_cell} | {up.get('license','?')} "
-            f"| {batch} | {mode} | {n_t} | {n_v} | {head_cell} |"
+            f"| {mode} | {n_t} | {n_v} | {head_cell} |"
         )
     return "\n".join(lines)
 
@@ -285,8 +318,8 @@ def main() -> int:
 
     body = (
         "<!-- 由 scripts/gen_readme_sections.py 生成，勿手改 -->\n\n"
-        "## 上游仓库登记表\n\n" + upstream_table() + "\n\n"
-        "## 按职业 / 目的筛选推荐\n\n" + recommendations()
+        "## 按职业 / 目的筛选推荐\n\n" + recommendations() + "\n"
+        "## 上游仓库登记表\n\n" + upstream_table() + "\n"
     )
     if args.write:
         OUT.write_text(body, encoding="utf-8")

@@ -3678,6 +3678,10 @@
         {
           "upstream": "skills/continuous-learning-v2/scripts/test_parse_instinct.py",
           "reason": "上游自身 QA 产物（单测），原则 #11 排除"
+        },
+        {
+          "upstream": "skills/osint-investigation/",
+          "reason": "文件级 License 为 CC BY-SA 4.0（继承上游 shoyann/RZK-The-Hunter，非本仓 MIT 口径），原则 #2 排除；ECC 仓库整体 MIT 不受影响"
         }
       ]
     },
@@ -17545,6 +17549,294 @@
           "reason": "CLI 工具本体，原则 #11 排除（skill 经 npm/pip 安装 officecli 使用）"
         }
       ]
-    }
+    },
+   {
+    "repo": "questflowai/investorskills",
+    "shortname": "investorskills",
+    "license": "MIT",
+    "stars_snapshot_2026-10-25": 1882,
+    "batch": 5,
+    "mode": "旗舰抽取",
+    "files": [
+     {
+      "upstream": "skills/buffett/SKILL.md",
+      "local": "skills/corporate/finance/buffett/SKILL.md"
+     },
+     {
+      "upstream": "skills/munger/SKILL.md",
+      "local": "skills/corporate/finance/munger/SKILL.md"
+     },
+     {
+      "upstream": "skills/dalio-principles-allweather/SKILL.md",
+      "local": "skills/corporate/finance/dalio-principles-allweather/SKILL.md"
+     },
+     {
+      "upstream": "skills/graham-net-net/SKILL.md",
+      "local": "skills/corporate/finance/graham-net-net/SKILL.md"
+     }
+    ],
+    "verbatim": [
+     {
+      "upstream": "skills/buffett/invest.md",
+      "local": "skills/corporate/finance/buffett/invest.md"
+     },
+     {
+      "upstream": "skills/munger/invest.md",
+      "local": "skills/corporate/finance/munger/invest.md"
+     },
+     {
+      "upstream": "skills/dalio-principles-allweather/invest.md",
+      "local": "skills/corporate/finance/dalio-principles-allweather/invest.md"
+     },
+     {
+      "upstream": "skills/graham-net-net/invest.md",
+      "local": "skills/corporate/finance/graham-net-net/invest.md"
+     }
+    ],
+    "verbatim_excluded": [
+     {
+      "upstream": "skills/ 其余 59 个投资人 skill（a16z、ackman、druckenmiller 等）",
+      "reason": "人物方法论后续候选"
+     },
+     {
+      "upstream": "README.md、references/",
+      "reason": "仓库级说明文档，原则 #11 排除"
+     }
+    ]
+   },
+   {
+    "repo": "RKiding/Awesome-finance-skills",
+    "shortname": "awesome-finance",
+    "license": "Apache-2.0",
+    "stars_snapshot_2026-10-25": 3084,
+    "batch": 5,
+    "mode": "抽取",
+    "files": [
+     {
+      "upstream": "skills/alphaear-news/SKILL.md",
+      "local": "skills/corporate/finance/alphaear-news/SKILL.md"
+     },
+     {
+      "upstream": "skills/alphaear-sentiment/SKILL.md",
+      "local": "skills/corporate/finance/alphaear-sentiment/SKILL.md"
+     }
+    ],
+    "verbatim": [
+     {
+      "upstream": "skills/alphaear-news/scripts/__init__.py",
+      "local": "skills/corporate/finance/alphaear-news/scripts/__init__.py"
+     },
+     {
+      "upstream": "skills/alphaear-news/scripts/content_extractor.py",
+      "local": "skills/corporate/finance/alphaear-news/scripts/content_extractor.py"
+     },
+     {
+      "upstream": "skills/alphaear-news/scripts/database_manager.py",
+      "local": "skills/corporate/finance/alphaear-news/scripts/database_manager.py"
+     },
+     {
+      "upstream": "skills/alphaear-news/scripts/news_tools.py",
+      "local": "skills/corporate/finance/alphaear-news/scripts/news_tools.py"
+     },
+     {
+      "upstream": "skills/alphaear-news/references/sources.md",
+      "local": "skills/corporate/finance/alphaear-news/references/sources.md"
+     },
+     {
+      "upstream": "skills/alphaear-sentiment/scripts/__init__.py",
+      "local": "skills/corporate/finance/alphaear-sentiment/scripts/__init__.py"
+     },
+     {
+      "upstream": "skills/alphaear-sentiment/scripts/database_manager.py",
+      "local": "skills/corporate/finance/alphaear-sentiment/scripts/database_manager.py"
+     },
+     {
+      "upstream": "skills/alphaear-sentiment/scripts/sentiment_tools.py",
+      "local": "skills/corporate/finance/alphaear-sentiment/scripts/sentiment_tools.py"
+     },
+     {
+      "upstream": "skills/alphaear-sentiment/scripts/llm/capability.py",
+      "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/capability.py"
+     },
+     {
+      "upstream": "skills/alphaear-sentiment/scripts/llm/factory.py",
+      "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/factory.py"
+     },
+     {
+      "upstream": "skills/alphaear-sentiment/scripts/llm/router.py",
+      "local": "skills/corporate/finance/alphaear-sentiment/scripts/llm/router.py"
+     }
+    ],
+    "verbatim_excluded": [
+     {
+      "upstream": "skills/ 其余 8 个 alphaear skill 与 skill-creator",
+      "reason": "后续候选"
+     },
+     {
+      "upstream": "tests/ figs/",
+      "reason": "上游 QA 产物与图示，原则 #11 排除"
+     }
+    ]
+   },
+   {
+    "repo": "muxuuu/serenity-skill",
+    "shortname": "serenity-skill",
+    "license": "MIT",
+    "stars_snapshot_2026-10-25": 4119,
+    "batch": 5,
+    "mode": "整仓",
+    "files": [
+     {
+      "upstream": "SKILL.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/SKILL.md"
+     }
+    ],
+    "verbatim": [
+     {
+      "upstream": "README.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/README.md"
+     },
+     {
+      "upstream": "CHANGELOG.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/CHANGELOG.md"
+     },
+     {
+      "upstream": "LICENSE",
+      "local": "skills/corporate/supply-chain/serenity-skill/LICENSE"
+     },
+     {
+      "upstream": "references/deep-research-workflow.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/references/deep-research-workflow.md"
+     },
+     {
+      "upstream": "references/evidence-ladder.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/references/evidence-ladder.md"
+     },
+     {
+      "upstream": "references/market-source-playbook.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/references/market-source-playbook.md"
+     },
+     {
+      "upstream": "references/output-style-and-language.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/references/output-style-and-language.md"
+     },
+     {
+      "upstream": "references/public-profile-and-evaluation.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/references/public-profile-and-evaluation.md"
+     },
+     {
+      "upstream": "references/research-sources.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/references/research-sources.md"
+     },
+     {
+      "upstream": "references/risk-and-compliance.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/references/risk-and-compliance.md"
+     },
+     {
+      "upstream": "references/serenity-dialogue-protocol.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/references/serenity-dialogue-protocol.md"
+     },
+     {
+      "upstream": "assets/research-prompt-pack.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/assets/research-prompt-pack.md"
+     },
+     {
+      "upstream": "assets/thesis-template.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/assets/thesis-template.md"
+     },
+     {
+      "upstream": "examples/a-share-ai-semiconductor-demo.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/examples/a-share-ai-semiconductor-demo.md"
+     },
+     {
+      "upstream": "examples/cpo-company-challenge.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/examples/cpo-company-challenge.md"
+     },
+     {
+      "upstream": "examples/demo-conversation.md",
+      "local": "skills/corporate/supply-chain/serenity-skill/examples/demo-conversation.md"
+     }
+    ],
+    "verbatim_excluded": [
+     {
+      "upstream": ".gitignore、CONTRIBUTING.md、README.en.md",
+      "reason": "仓库元文件，原则 #11 排除"
+     },
+     {
+      "upstream": "evals/、agents/openai.yaml、scripts/validate_skill.py",
+      "reason": "上游 QA 与工具脚本，原则 #11 排除"
+     }
+    ]
+   },
+   {
+    "repo": "nexscope-ai/eCommerce-Skills",
+    "shortname": "ecommerce-skills",
+    "license": "MIT",
+    "stars_snapshot_2026-10-25": 1251,
+    "batch": 5,
+    "mode": "抽取",
+    "files": [
+     {
+      "upstream": "dropshipping-product-research/SKILL.md",
+      "local": "skills/corporate/ecommerce/dropshipping-product-research/SKILL.md"
+     },
+     {
+      "upstream": "competitor-price-analysis/SKILL.md",
+      "local": "skills/corporate/ecommerce/competitor-price-analysis/SKILL.md"
+     },
+     {
+      "upstream": "customer-feedback-analysis/SKILL.md",
+      "local": "skills/corporate/ecommerce/customer-feedback-analysis/SKILL.md"
+     }
+    ],
+    "verbatim": [],
+    "verbatim_excluded": [
+     {
+      "upstream": "其余 159 个电商 skill",
+      "reason": "后续候选（brand-protection 系列、ebay 系列、amazon 系列等）"
+     }
+    ]
+   },
+   {
+    "repo": "zubair-trabzada/ai-sales-team-claude",
+    "shortname": "ai-sales-team",
+    "license": "MIT",
+    "stars_snapshot_2026-10-25": 1468,
+    "batch": 5,
+    "mode": "抽取",
+    "files": [
+     {
+      "upstream": "skills/sales-icp/SKILL.md",
+      "local": "skills/corporate/sales/sales-icp/SKILL.md"
+     },
+     {
+      "upstream": "skills/sales-outreach/SKILL.md",
+      "local": "skills/corporate/sales/sales-outreach/SKILL.md"
+     },
+     {
+      "upstream": "skills/sales-qualify/SKILL.md",
+      "local": "skills/corporate/sales/sales-qualify/SKILL.md"
+     },
+     {
+      "upstream": "skills/sales-proposal/SKILL.md",
+      "local": "skills/corporate/sales/sales-proposal/SKILL.md"
+     },
+     {
+      "upstream": "skills/sales-research/SKILL.md",
+      "local": "skills/corporate/sales/sales-research/SKILL.md"
+     }
+    ],
+    "verbatim": [],
+    "verbatim_excluded": [
+     {
+      "upstream": "skills/ 其余 9 个 sales skill",
+      "reason": "后续候选"
+     },
+     {
+      "upstream": "sales/SKILL.md",
+      "reason": "编排器入口，与子 skill 内容重叠"
+     }
+    ]
+   }
   ]
 }

@@ -359,6 +359,38 @@ SOFTWARE.
 - License：Apache-2.0
 - 收录文件：skills/toolbox/office/officecli/officecli/
 - Copyright (c) iOfficeAI（Apache-2.0 条款摘要同 caveman 节；CC-BY-4.0 部分要求署名——本仓库各翻译文件声明块即署名载体）
+## 第五批新增上游（Corporate Functions）
+
+### questflowai/investorskills（MIT）
+
+- 上游：https://github.com/questflowai/investorskills （星标快照 2026-10-25：1,882）
+- License：MIT（条款摘要同第一批各上游节；完整原文见上游仓库根 LICENSE）
+- 收录：skills/corporate/finance/{buffett,munger,dalio-principles-allweather,graham-net-net}/（SKILL.md 译 + invest.md 原样）
+
+### RKiding/Awesome-finance-skills（Apache-2.0）
+
+- 上游：https://github.com/RKiding/Awesome-finance-skills （星标快照 2026-10-25：3,084）
+- License：Apache-2.0（条款摘要同 caveman 节；完整原文见上游仓库根 LICENSE）
+- 收录：skills/corporate/finance/alphaear-{news,sentiment}/（SKILL.md 译 + scripts/、references/ 原样）
+
+### muxuuu/serenity-skill（MIT）
+
+- 上游：https://github.com/muxuuu/serenity-skill （星标快照 2026-10-25：4,119）
+- License：MIT（SKILL.md frontmatter 与仓库根 LICENSE 双重声明）
+- 收录：skills/corporate/supply-chain/serenity-skill/（整仓：SKILL.md 译 + references/assets/examples/README/CHANGELOG/LICENSE 原样）
+
+### nexscope-ai/eCommerce-Skills（MIT）
+
+- 上游：https://github.com/nexscope-ai/eCommerce-Skills （星标快照 2026-10-25：1,251）
+- License：MIT（条款摘要同第一批各上游节；完整原文见上游仓库根 LICENSE）
+- 收录：skills/corporate/ecommerce/{dropshipping-product-research,competitor-price-analysis,customer-feedback-analysis}/
+
+### zubair-trabzada/ai-sales-team-claude（MIT）
+
+- 上游：https://github.com/zubair-trabzada/ai-sales-team-claude （星标快照 2026-10-25：1,468）
+- License：MIT（条款摘要同第一批各上游节；完整原文见上游仓库根 LICENSE）
+- 收录：skills/corporate/sales/{sales-icp,sales-outreach,sales-qualify,sales-proposal,sales-research}/
+
 ## 明确排除
 
 - `multica-ai/andrej-karpathy-skills`（223,159 星）：**无 License 文件，默认保留所有权利，本仓库不翻译、不分发其任何内容**（PRINCIPLES.md 原则 #2）。
