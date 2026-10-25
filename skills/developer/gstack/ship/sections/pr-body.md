@@ -1,8 +1,12 @@
 <!-- AUTO-GENERATED from pr-body.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-### Prepare the title (Step 18)
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`ship/sections/pr-body.md` · License: MIT
+> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
 
-Prepare the title in a private file; Step 19 posts that file, never a shell string:
+### 准备标题（Step 18）
+
+把标题写进私有文件；Step 19 发的是那个文件，绝不是 shell 字符串：
 
 ```bash
 _GT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.gstack/tmp"
@@ -11,66 +15,77 @@ _EX=$(git rev-parse --git-path info/exclude 2>/dev/null) && mkdir -p "$(dirname 
 TITLE_FILE=$(mktemp "${_GT:?}/pr-title.XXXXXX") || { echo "Not sent: mktemp failed in $_GT." >&2; exit 1; }; echo "TITLE_FILE: $TITLE_FILE (name: ${TITLE_FILE##*/})"
 ```
 
-Write the text into each printed file with your file-write tool (Claude Code's Write tool needs a Read of the empty file first), exactly as it should appear. The text never goes into a shell command, heredoc or quoted argument. If a write fails or is refused, do not send: print the cause, the file path and the command below for sending by hand.
+用你的文件写入工具把文本写进每个打印出的文件（Claude Code 的 Write
+工具需要先 Read 一次空文件），内容与应出现的一字不差。文本绝不进
+shell 命令、heredoc 或带引号参数。写入失败或被拒时不发送：打印原
+因、文件路径和下方命令，供手工发送。
 
-1. For an existing open PR/MR (not Step 6.5's early PR, which takes item 2), fill the file from the platform, substituting the
-   printed name, the matched number and `NEW_VERSION`; no title text passes through you:
+1. 已有开放 PR/MR 时（不是 Step 6.5 的提前 PR，它走第 2 条），从平台
+   填充该文件，替换打印名、匹配到的编号与 `NEW_VERSION`；标题文本不
+   经过你：
    ```bash
    TITLE_FILE="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.gstack/tmp/<title-file-name>"
    gh pr view <pr-number> --json title -q .title | ~/.claude/skills/gstack/bin/gstack-pr-title-rewrite.sh <new-version> --stdin > "$TITLE_FILE" || exit 1
    ```
-   GitLab reads `glab mr view <pr-number> --output json | jq -r .title` into the same pipe.
-2. For a new PR/MR, write `v<NEW_VERSION> <type>: <summary>` into the file with your file-write tool.
-3. Every created or updated title MUST start with `v$NEW_VERSION `; check the file with
-   `grep -Eq '^v<new-version>( |$)' "$TITLE_FILE"` and never publish an unprefixed title.
-4. **NO_VERSION:** replaces items 1-3: keep an existing title (the platform title
-   piped straight into the file), or write `<type>: <summary>`; no version prefix.
+   GitLab 把 `glab mr view <pr-number> --output json | jq -r .title`
+   接进同一管道。
+2. 新 PR/MR 时，用文件写入工具把 `v<NEW_VERSION> <type>: <summary>`
+   写进文件。
+3. 每个新建或更新的标题必须以 `v$NEW_VERSION ` 开头；用
+   `grep -Eq '^v<new-version>( |$)' "$TITLE_FILE"` 检查，绝不发布无
+   前缀标题。
+4. **NO_VERSION：**替代第 1-3 条：保留既有标题（平台标题直接管道进
+   文件），或写 `<type>: <summary>`；无版本前缀。
 
-Save the title file name for Step 19.
+保存标题文件名供 Step 19 使用。
 
 ---
 
-## Step 19: Create PR/MR
+## Step 19：创建 PR/MR
 
-Recheck Step 18's PR/MR lookup and record it. Errors or ambiguous matches STOP publication.
-If the open PR/MR or title changed, repeat Step 18's identity/title preparation,
-then return here for a new lookup and a fresh body before publishing.
+复查 Step 18 的 PR/MR 查找并记录。出错或匹配歧义会 STOP 发布。
+开放 PR/MR 或标题变了，重复 Step 18 的身份/标题准备，然后回到这里重
+新查找并写新正文再发布。
 
-### Resolve Linked Spec before composing the body
+### 组装正文前解析 Linked Spec
 
-1. Resolve the archive directory and branch:
+1. 解析归档目录与分支：
    ```bash
    GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
    SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG)
    CURRENT_BRANCH=$(git branch --show-current)
    SPEC_ARCHIVES="$GSTACK_STATE_ROOT/projects/$SLUG/specs"
    ```
-2. Read archive frontmatter as data, never shell source. Select an exact
-   `spec_branch` match to `CURRENT_BRANCH`; among matches use the newest
-   `spec_filed_at`. Never infer an issue number from a branch name. If no readable
-   match or positive integer `spec_issue_number`, omit only `## Linked Spec` and
-   continue composing the PR. Resolve ambiguous matches before linking an issue.
-3. Compare that spec's acceptance criteria with Step 8's results. Only fully
-   completed Step 8 plan scope permits `Closes #N`, with every spec criterion
-   verified. Partial, deferred, failed, dropped or unverified scope uses `Linked to #N`
-   and names the remaining work; never auto-close it. Include the archive filename
-   and `spec_filed_at`, not a private absolute path; `gstack-post` scans them with the body.
+2. 把归档 frontmatter 当数据读，绝不当 shell 源码。选与
+   `CURRENT_BRANCH` 精确匹配 `spec_branch` 的；多个匹配取最新
+   `spec_filed_at`。绝不从分支名推断 issue 编号。无可读匹配或非正整
+   数 `spec_issue_number` 时，只省略 `## Linked Spec` 并继续组装
+   PR。歧义匹配在链接 issue 之前解决。
+3. 把该 spec 的验收标准与 Step 8 的结果对比。只有 Step 8 计划范围全
+   部完成、且每条 spec 标准都验证过，才允许 `Closes #N`。部分、推
+   迟、失败、放弃或未验证的范围用 `Linked to #N` 并点名剩余工作；
+   绝不自动关闭。写归档文件名与 `spec_filed_at`，不写私有绝对路径；
+   `gstack-post` 会随正文扫描它们。
 
-### Issue links
+### Issue 链接
 
-Run `~/.claude/skills/gstack/bin/gstack-issue-links --base <base> --out .gstack/tmp/issues.json`, adding
-`--issue <n>` per issue the user named as fixed and `--ci-run <id>` per failing CI run. Interactive:
-ask once about its `(promote: fix #N)` references (each `fix #<n>` reply adds `--issue <n>`), and add
-`--supersedes <n>`/`--credit <n>` for a `Related:` PR only when the owner confirms; rerun after any change.
-The completion message lists unpromoted candidates, `Related:` lines and any `ISSUE_LOOKUP_FAILED`.
+跑 `~/.claude/skills/gstack/bin/gstack-issue-links --base <base> --out .gstack/tmp/issues.json`，
+用户点名为已修复的 issue 每个加 `--issue <n>`，失败的 CI 运行每个加
+`--ci-run <id>`。交互式：对它的 `(promote: fix #N)` 引用问一次（每个
+`fix #<n>` 回复加 `--issue <n>`），`Related:` PR 的
+`--supersedes <n>`/`--credit <n>` 仅在 owner 确认时加；任何变更后重
+跑。完成消息列出未晋升候选、`Related:` 行与任何 `ISSUE_LOOKUP_FAILED`。
 
 ### Capy
 
-Run `[ "${GSTACK_CAPY:-}" = 1 ] && echo 'CAPY_PR: on' || echo 'CAPY_PR: off'`. On `CAPY_PR: on`, read
-`~/.claude/skills/gstack/ship/sections/capy-pr.md` now: the body opens with its `## What changed`,
-`## Why` and `## Approvals` before the sections below. On `CAPY_PR: off`, skip it.
+跑
+`[ "${GSTACK_CAPY:-}" = 1 ] && echo 'CAPY_PR: on' || echo 'CAPY_PR: off'`。
+`CAPY_PR: on` 时，现在就读
+`~/.claude/skills/gstack/ship/sections/capy-pr.md`：正文以下方各节之
+前的 `## What changed`、`## Why` 与 `## Approvals` 开头。
+`CAPY_PR: off` 时跳过它。
 
-The PR/MR body should contain these sections (never reuse a prior run's body):
+PR/MR 正文应包含这些节（绝不复用上一次运行的正文）：
 
 ```
 ## Summary
@@ -159,17 +174,16 @@ and its `cat -- "$DOCS_SECTION_FILE" && echo &&` step.>
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 ```
 
-#### Compose the body, then publish through gstack-post
+#### 组装正文，经 gstack-post 发布
 
-The PR body is world-readable on a public repo. `gstack-post` scans the exact title
-and body bytes it sends and passes them to `gh`/`glab` as arguments, so there is no
-separate scan here. Wrap any Codex / Greptile / eval output sections in
-tool-attributed fences (` ```codex-review ` / ` ```greptile `) so the scanner
-WARN-degrades the example credentials those tools quote instead of blocking the PR
-(a live-format credential inside the fence still blocks).
+公开仓库的 PR 正文全世界可读。`gstack-post` 扫描它发送的精确标题与
+正文字节并作为参数传给 `gh`/`glab`，此处没有单独扫描。把 Codex /
+Greptile / eval 输出的各节包进工具署名围栏（` ```codex-review ` /
+` ```greptile `），让扫描器对其中示例凭证 WARN 降级而不是阻塞 PR
+（围栏内的真实格式凭证仍然阻塞）。
 
-Write the body from above into two private files: the first through the
-`## Documentation` heading line, the second from `## Test plan` on.
+把上方正文写进两个私有文件：第一个到 `## Documentation` 标题行为止，
+第二个从 `## Test plan` 起。
 
 ```bash
 _GT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.gstack/tmp"
@@ -179,11 +193,14 @@ BODY_TOP_FILE=$(mktemp "${_GT:?}/pr-body-top.XXXXXX") || { echo "Not sent: mktem
 BODY_REST_FILE=$(mktemp "${_GT:?}/pr-body-rest.XXXXXX") || { echo "Not sent: mktemp failed in $_GT." >&2; exit 1; }; echo "BODY_REST_FILE: $BODY_REST_FILE (name: ${BODY_REST_FILE##*/})"
 ```
 
-Write the text into each printed file with your file-write tool (Claude Code's Write tool needs a Read of the empty file first), exactly as it should appear. The text never goes into a shell command, heredoc or quoted argument. If a write fails or is refused, do not send: print the cause, the file path and the command below for sending by hand.
+用你的文件写入工具把文本写进每个打印出的文件（Claude Code 的 Write
+工具需要先 Read 一次空文件），内容与应出现的一字不差。文本绝不进
+shell 命令、heredoc 或带引号参数。写入失败或被拒时不发送：打印原
+因、文件路径和下方命令，供手工发送。
 
-In a new shell, restore Step 14.5's saved section file path as `DOCS_SECTION_FILE`
-and substitute the printed names. The block deletes both drafts; to change the body,
-write fresh ones.
+在新的 shell 里，恢复 Step 14.5 保存的 section 文件路径为
+`DOCS_SECTION_FILE` 并替换打印名。该块会删除两个草稿；要改正文就重
+写新的。
 
 ```bash
 : "${DOCS_SECTION_FILE:?Restore the saved Step 14.5 section file path before composing}"
@@ -196,28 +213,29 @@ rm -f "$BODY_TOP_FILE" "$BODY_REST_FILE"
 echo "PR_BODY_FILE: $PR_BODY_FILE"
 ```
 
-Handoff record first (identifiers survive truncation). Write Step 16 stage 4's
-per-lane counts (`{"<lane>":{"pass":N,"fail":N,"skip":N}}`) to
-`.gstack/tmp/ship-gate.json` with your file-write tool, then:
+先写移交记录（标识符能活过截断）。用文件写入工具把 Step 16 阶段 4
+的逐 lane 计数（`{"<lane>":{"pass":N,"fail":N,"skip":N}}`）写进
+`.gstack/tmp/ship-gate.json`，然后：
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-ship-receipt write --pr <pr-number> --base <base> --gate @.gstack/tmp/ship-gate.json --pregate .gstack/tmp/pregate.json --issues @.gstack/tmp/issues.json --body "$PR_BODY_FILE"
 ```
 
-Add `--receipt .gstack/tmp/tree-receipt.json` only when Step 16 wrote it (gate-ahead).
-New PR/MR: omit `--pr`, then rerun with the number after creation and repost the body.
-Its `SHIP_RECEIPT:` line opens the completion message. `RECEIPT_INVALID` names the bad
-field: fix that input file and rerun; nothing was written. `ISSUE_LINKS_MISSING`: add
-the named line under `## Issues` and rerun. `PREGATE_STALE` means rerun
-`gstack-pregate` on the stamped tree; `PREGATE_REMOTE_UNCLEARED` needs
-`gstack-pregate clear` with the run URL. Both stop publication.
+仅当 Step 16 写过 tree-receipt（gate-ahead）时加
+`--receipt .gstack/tmp/tree-receipt.json`。新 PR/MR：先省略 `--pr`，
+创建后带编号重跑并重发正文。其 `SHIP_RECEIPT:` 行打开完成消息。
+`RECEIPT_INVALID` 点名坏字段：修那个输入文件重跑；什么都没写入。
+`ISSUE_LINKS_MISSING`：在 `## Issues` 下加所点名的行并重跑。
+`PREGATE_STALE` 表示要在已盖章的树上重跑 `gstack-pregate`；
+`PREGATE_REMOTE_UNCLEARED` 需要带 run URL 跑 `gstack-pregate clear`。
+两者都停止发布。
 
-In each block below, restore the literal `PR_BODY_FILE` path and substitute Step 18's
-title file name; `gstack-post` detects GitHub or GitLab from the remote and the repo's
-visibility (an unavailable lookup, including on GitLab, uses the scanner's
-public-strict policy). Never re-render the body: every retry sends the same files.
+下方每个块里，恢复字面 `PR_BODY_FILE` 路径并替换 Step 18 的标题文
+件名；`gstack-post` 从远端与仓库可见性检测 GitHub 或 GitLab（查询不
+可用，包括 GitLab 上，用扫描器的公开严格策略）。绝不重渲染正文：每
+次重试发送同一批文件。
 
-**Existing open PR/MR** (`<pr-number>` from the recheck):
+**已有开放 PR/MR**（复查得到的 `<pr-number>`）：
 
 ```bash
 TITLE_FILE="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.gstack/tmp/<title-file-name>"
@@ -225,47 +243,48 @@ TITLE_FILE="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.gstack/tmp/<tit
 ~/.claude/skills/gstack/bin/gstack-post pr-title <pr-number> --title-file "$TITLE_FILE"
 ```
 
-It updates the body, then the title, retries a retired-GraphQL edit through REST and
-reads the title back. Then resolve the draft state from Step 9's gate findings:
+它先更新正文再更新标题，把退役 GraphQL 编辑经 REST 重试并回读标
+题。然后按 Step 9 的门控发现决定 draft 状态：
 
-1. Step 6.5 opened this PR as an early draft, the user did not ask for a draft, and no
-   gate finding is `open`: mark it ready now with `gh pr ready <pr-number>`.
-2. Step 6.5 opened it as an early draft and any gate finding is `open`: leave it a
-   draft; print `Draft kept: Gate edits: N open` and the open findings' `gate` and path.
-3. The PR was already ready (not a draft) and any gate finding is `open`: publish only
-   under Step 17's recorded human authorisation (option B there); the body already
-   carries the `Gate edits: N open` banner. Without that record, STOP here and report.
+1. Step 6.5 把这个 PR 开成提前 draft、用户没要 draft、且无任何门控
+   发现为 `open`：现在用 `gh pr ready <pr-number>` 标记 ready。
+2. Step 6.5 开成提前 draft 且有门控发现为 `open`：保持 draft；打印
+   `Draft kept: Gate edits: N open` 及 open 发现的 `gate` 与路径。
+3. PR 已是 ready（非 draft）且有门控发现为 `open`：仅在 Step 17 记
+   录的人工授权（那里的选项 B）下发布；正文已带
+   `Gate edits: N open` 横幅。没有那份记录就 STOP 并报告。
 
-Print the existing URL and continue to Step 20; do not run the create command below.
+打印既有 URL 并继续 Step 20；不要跑下方的创建命令。
 
-**No open PR/MR:** add `--draft` when any gate finding is `open` (a later agent never
-infers approval from the PR existing; the human marks it ready after dispositioning
-the open items). Otherwise create it ready:
+**无开放 PR/MR：**任一门控发现为 `open` 时加 `--draft`（之后的
+agent 绝不从"PR 存在"推断批准；人在处置完 open 项后标记 ready）。
+否则直接以 ready 创建：
 
 ```bash
 TITLE_FILE="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.gstack/tmp/<title-file-name>"
 ~/.claude/skills/gstack/bin/gstack-post pr-create --base <base> --title-file "$TITLE_FILE" --body-file "${PR_BODY_FILE:?restore the composed body path}"
 ```
 
-With open gate findings the same command carries `--draft` before `--title-file`.
+带 open 门控发现时，同一命令在 `--title-file` 之前携带 `--draft`。
 
-Branch on the exit code of either block:
-- **0** posted. Remove `$PR_BODY_FILE` and the title file.
-- **1** HIGH finding: BLOCKED — do not publish. Rotate and redact at the source, then
-  compose fresh files.
-- **2** MEDIUM findings, printed as `RULE:` lines with a `TOKEN:`. AskUserQuestion per
-  finding (sterner on public repos, no batch acknowledge). PII offers auto-redact:
-  write `~/.claude/skills/gstack/bin/gstack-redact --from-file "$PR_BODY_FILE" --auto-redact <ids>`
-  output back into the body file and rerun the block, which scans again. Only when the
-  user accepts the findings as they are, rerun the same block with
-  `--confirm <confirm-token>` added to the command that printed it; any edit needs a new token.
-- **3** `gh`/`glab` failed, or **64** no usable remote or CLI: print the error, the
-  branch name, the remote URL and the block for posting by hand. Do not stop — the code
-  is pushed — but never report a PR that was not created. With open gate findings,
-  also say the gate edits were not disclosed and leave the Step 16 open-items report
-  in the invocation record; never report the disclosure as done.
-- Any other exit is an error that blocks publication until its cause is fixed.
+按两个块之一的 exit code 分支：
+- **0** 已发布。删除 `$PR_BODY_FILE` 与标题文件。
+- **1** HIGH 发现：BLOCKED，不发布。在源头轮换并脱敏，然后组装全新
+  文件。
+- **2** MEDIUM 发现，以带 `TOKEN:` 的 `RULE:` 行打印。逐个发现
+  AskUserQuestion（公开仓库语气更硬，不批量确认）。PII 提供自动脱
+  敏：把
+  `~/.claude/skills/gstack/bin/gstack-redact --from-file "$PR_BODY_FILE" --auto-redact <ids>`
+  的输出写回正文文件并重跑该块（它会再扫描）。仅当用户照单接受发
+  现时，在打印它的那条命令上追加 `--confirm <confirm-token>` 重跑；
+  任何编辑都需要新 token。
+- **3** `gh`/`glab` 失败，或 **64** 无可用远端或 CLI：打印错误、分
+  支名、远端 URL 与供手工发布的命令块。不停：代码已推送；但绝不报
+  告一个未创建的 PR。带 open 门控发现时，还要说明门控编辑未披露，
+  并把 Step 16 的 open 项报告留在调用记录里；绝不把披露报告为已完
+  成。
+- 其他任何 exit 都是阻塞发布的错误，修好成因之前不发布。
 
-**Output the PR/MR URL** — then proceed to Step 20.
+**输出 PR/MR URL**，然后进入 Step 20。
 
 ---
