@@ -1,78 +1,74 @@
 <!-- AUTO-GENERATED from reporting.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-# Finalize a report from retained evidence
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`qa-only/sections/reporting.md` · License: MIT
+> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete these steps before the final report Write. They use retained results, not
-new probes. Missing evidence stays unknown; an expired clock stays expired.
-The caller's write boundary includes reports, learning notes and automatic memory.
-Keep all of them in authorized destinations; a memory feature grants no extra path.
+# 从留存的证据定稿报告
 
-## 1. Establish each finding once
+在最终报告 Write 之前完成这些步骤。它们使用留存结果，不做新探测。
+缺失的证据保持未知；过期的时钟保持过期。调用方的写入边界涵盖报告、
+学习笔记与自动记忆。全部放进授权目的地；记忆功能不授予额外路径。
 
-Ground the report and learnings in retained observations. For every finding, distinguish
-the observed result, the expected contract and any untested causal hypothesis. Link the
-supporting command/result or screenshot; unknown impact remains unknown. A console error
-message does not establish an uncaught exception, failed payload or missing UI. Missing
-text in a page-text extract does not establish an absent attribute or inaccessible element.
-Verify those claims with an appropriate probe, or leave them unconfirmed when time expires.
+## 1. 每个发现只确立一次
 
-Give each finding one ID and write its Observed, Expected, Evidence and Confirmation
-fields first. A logged exception-shaped string proves a logged message, not that the
-named operation executed. Keep possible causes in a separate Hypothesis field; omit
-speculation that does not help the next investigation. Observed-once is not replay-confirmed.
+报告与学习笔记以留存观察为根据。对每个发现，区分观察到的结果、预期
+契约与任何未检验的因果假设。链接支撑的命令/结果或截图；未知的影响保
+持未知。一条 console 错误消息不能确立未捕获异常、失败的载荷或缺失的
+UI。页面文本提取中缺失的文字不能确立属性不存在或元素不可达。用合适
+的探测验证这些主张，或时间耗尽时保留为未确认。
 
-## 2. Fill timing fields from their actual boundaries
+每个发现给一个 ID，先写它的 Observed、Expected、Evidence 与
+Confirmation 字段。一条被记录的异常形字符串证明的是一条被记录的
+消息，不是具名操作执行过。可能的原因放进单独的 Hypothesis 字段；
+删去对下一次调查无益的猜测。观察到一次不等于回放确认。
 
-Report **Probe budget** (configured limit) and **Guarded command time** (sum of measured
-child spans). Measure guard start to child launch as pre-launch elapsed time, and child
-start to finish as command duration, not a component's latency without its own measurement.
-A deadline window is not total run time. Gaps between receipts do not measure
-status/Write overhead or prove how many probes fit; if late, say only that this run
-dispatched its follow-up after the deadline.
+## 2. 从真实边界填时间字段
 
-Use **Total session elapsed**: `unmeasured` for the invocation whose report is being written.
-Its final report Write, acknowledgement and cleanup are not finished yet. Do not fetch
-a clock merely to fill that field. An optional **Measured interval** must cite its actual
-start/end receipts and name the work outside those boundaries, including later report
-Writes and cleanup; it is never a completed-session measurement.
+报告**Probe budget**（配置的上限）与**Guarded command time**（子
+span 测量之和）。守卫开始到子进程启动计为 pre-launch elapsed，子进程
+开始到结束计为命令时长，而不是没有自身测量的某组件延迟。deadline
+窗口不是总运行时间。回执之间的间隙测不出 status/Write 开销，也证明
+不了能塞几个探测；迟了就只说这次运行在 deadline 之后才派出后续动作。
 
-## 3. Assemble and check every repetition before writing
+用**Total session elapsed**：为正在写报告的这次调用记 `unmeasured`。
+它的最终报告 Write、确认与清理尚未完成。不要为填这个字段去取时钟。
+可选的**Measured interval**必须引用它真实的起止回执，并点名那些边界
+之外的工作（包括之后的报告 Write 与清理）；它绝不是已完成会话的测
+量。
 
-Use the caller's selected surface templates and assembly rules. Build headlines,
-Top 3, summaries and completion text from each finding's Observed and Confirmation
-fields, not its Hypothesis. Choose one conservative factual sentence per finding and
-reuse it verbatim in those locations; do not introduce a new causal paraphrase.
-A disclaimer in the detail does not qualify a stronger claim elsewhere.
+## 3. 写之前对每处重复做检查
 
-Proposed regression assertions must detect the original observation on its actual
-channel. For a logged console error, capture console errors; exception-only hooks
-do not detect a console-only message. Additional causal tests remain separate proposals.
-Apply these evidence limits to proposed tests and learnings too.
+用调用方选定的表面模板与组装规则。标题、Top 3、摘要与完成文本从每个
+发现的 Observed 与 Confirmation 字段构建，不用 Hypothesis。每个发现
+选一句保守的事实性句子，在这些位置逐字复用；不引入新的因果转述。
+细节里的免责声明不能给别处更强的主张背书。
 
-Before the final Write, check every mention of each finding against its evidence
-fields, every proposed test against the observed channel, and each timing claim against
-its named boundaries. Remove unsupported claims from all sections, not only the detail.
-Keep refused/unstarted probes and untested categories explicit. Write the report only
-after this consistency check; do not repair an evidence gap with invented facts.
-Check claims about frequency and executed checks against the actual commands/results:
-one observation proves neither recurrence nor an unexecuted check. Apply the same
-evidence limits to the final response and any caller-authorized learning note.
+拟议的回归断言必须能在原始观察的真实通道上检出它。对一条被记录的
+console 错误，捕获 console 错误；仅异常的 hook 检不出仅 console 的
+消息。额外的因果测试保持为独立提案。这些证据限制同样适用于拟议测试
+与学习笔记。
 
-## 4. Capture permitted notes, then write the report
+最终 Write 之前，把每个发现的每处提及对照其证据字段、每个拟议测试
+对照观察到的通道、每条时间主张对照其点名边界。从所有小节移除无支撑
+的主张，不只是细节。被拒绝/未启动的探测与未测类别保持显式。通过这
+个一致性检查之后才写报告；不用编造的事实修补证据缺口。把关于频率与
+已执行检查的主张对照真实命令/结果核验：一次观察既不证明复发、也不
+证明某个检查执行过。同样的证据限制适用于最终回复与任何调用方授权的
+学习笔记。
 
-Run the learning step below only if its destination is caller-authorized:
-the user or invoking workflow explicitly permitted that learning-store path.
-Invoking /qa-only alone does not grant this permission. Otherwise
-keep notes in `REPORT_FILE`; do not write learning stores or automatic memory.
+## 4. 记录获准的笔记，然后写报告
 
-**No explicit permission:** skip learning-store writes and continue to the report.
+仅当学习步骤的目的地获调用方授权时才运行它：用户或调用工作流显式许
+可了那条学习存储路径。仅调用 /qa-only 不授予此许可。否则把笔记留在
+`REPORT_FILE`；不写学习存储或自动记忆。
 
-**Explicit permission:** Read the named store first. Preserve its existing contents
-and use the permitted write tool to append a verified note in that store's format.
-If the format or write interface is unavailable, keep the note in the report instead.
-Do not run logging helpers: they may write caches or enqueue synchronization outside
-the permitted path. This branch never changes configuration or enables synchronization.
+**无显式许可：** 跳过学习存储写入，继续写报告。
 
-Write the checked report to the entrypoint's permitted destinations.
-After the final Write, respond briefly with its path and verified coverage/limits;
-do not append new findings or timing explanations.
+**有显式许可：** 先 Read 那个存储。保留既有内容，用获准的写入工具按
+该存储的格式追加一条已验证的笔记。格式或写入接口不可用时，把笔记留
+在报告里。不要运行日志 helper：它们可能在获准路径之外写缓存或入队
+同步。此分支绝不改配置、绝不开同步。
+
+把检查过的报告写入入口点许可的目的地。最终 Write 之后，简短回复其
+路径与已验证的覆盖/局限；不追加新发现或时间解释。
