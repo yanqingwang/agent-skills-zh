@@ -3,7 +3,7 @@
 > 将 GitHub 上最受欢迎的 Agent Skills 系统性汉化为中文，服务中文 AI 编程用户。
 > **本仓库只做翻译，不做原创**——原创人物视角 Skills 另见独立仓库（原则 #7）。
 
-**上游星标快照日期：2026-10-25** · 完整数据见 [data/upstream-inventory.md](data/upstream-inventory.md)
+**上游星标快照日期：2026-10-25** · 完整数据见 [data/upstream-inventory.md](data/upstream-inventory.md) · **工作状态**（收录规模/监控/待重译，CI 每日更新）见 [data/STATUS.md](data/STATUS.md)
 
 ## 按用户角色浏览
 
