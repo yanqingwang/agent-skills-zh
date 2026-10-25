@@ -1,5 +1,70 @@
 # Changelog
 
+## [1.91.194.0] - 2026-10-25
+
+**A read-only repo can now opt in to Memorable recall, one remote at a time, and a corrupt policy store no longer turns the recall veto off.** #3359 (exGeni) asked for a way to keep a repo out of the brain while still letting its prompts reach Memorable: today the recall hook skips every `deny` and `read-only` repo, and `read-only` is also the tier people pick just to stop code ingest. Garry approved a per-remote flag on 2026-10-24: off by default, and a `deny` always wins. While building the negative controls we found that the hook's policy lookup went through `get`, which quarantines a corrupt store and answers "unset", so a truncated `gbrain-repo-policy.json` let recall run in every repo, read-only and deny included, and reset the store on the way.
+
+### Added
+- **`bin/gstack-gbrain-repo-policy memorable set <remote-url> <allow|off>`** stores the opt-in under a reserved `_memorable_recall` map in the policy store. It is refused unless the remote is read-only (deny vetoes recall; read-write never needed it). `memorable get [<remote-url>]` prints `<tier>\t<allow|off>`, and `list` adds a `memorable=allow` column. Changing a remote's tier clears its opt-in, and the two metadata keys (`_schema_version`, `_memorable_recall`) are refused as remotes.
+- **`lib/gbrain-repo-policy-client.ts`**: `memorableRecallPolicy(url)` returns the tier and the opt-in in one spawn. Anything but exactly `<tier>\t<allow|off>` reads as `unreadable`.
+
+### Changed
+- **`hosts/claude/hooks/memorable-user-prompt-hook.ts`**: a `read-only` remote is recalled only when it is opted in; `deny` is always skipped. The skip line in `hook-errors.log` names the opt-in command.
+
+### Fixed
+- The recall hook's policy lookup is now a pure read that fails closed in either state root: a corrupt, empty or non-object store, a present key with an unknown tier, a path that is not a readable file (a dangling symlink included) and a path whose existence an unsearchable ancestor directory hides are all errors, never "no policy", and nothing is migrated, quarantined or rewritten. The opt-in counts only when it is exactly `"allow"` and every store that makes the remote read-only (including `~/.gstack` under a custom state root) opts it in.
+- The hook looks policy up by every configured `remote.origin.url`, as `get` and `/sync-gbrain` read it, instead of the first URL after `url.*.insteadOf` rewriting. A rewrite to another host, or a second origin URL, no longer dodges a deny: any denied or not-opted-in read-only URL skips recall. `hasRepoPolicyStore()` treats only confirmed absence as "no store", so a dangling symlink at or above the store, a file in its path, or an unreadable directory reaches the script's fail-closed checks instead of the no-policy fast path. Origin URLs are read NUL-delimited and used verbatim, so a valid local path containing a newline or edge whitespace is looked up whole.
+
+### Docs
+- `docs/memorable-workflow-memory.md` has a short "Recall in a read-only repo" section and updated refusal and troubleshooting lines.
+
+### Tests
+- `test/memorable-user-prompt-hook.test.ts` drives the real hook: read-only stays blocked by default, the opt-in recalls on that remote and not on a second read-only remote, `deny` with a hand-written opt-in is skipped, and a corrupt store skips recall and is left in place.
+- `test/gbrain-repo-policy.test.ts` covers the CLI: per-remote keying (a different remote, a prefix-sharing remote and an unset remote stay off; the SSH spelling of the same remote matches), refusal on deny, read-write and unset, clearing on a tier change, malformed opt-ins reading off, corrupt and non-file stores in both roots failing with exit 2, and the second-store rule.
+- `test/gbrain-repo-policy-client.test.ts` covers `memorableRecallPolicy`: fast path, per-remote opt-in, deny, corrupt store, an unknown tier, a dangling-symlink store and a timeout.
+- Review hardening, each test red at the pre-review head: empty, whitespace, `null`, array, number and two-document stores and `false`/`null`/unknown tier values fail with exit 2 in either root; dangling symlinks and an unsearchable directory or ancestor fail closed; the lookup leaves a schema-less store byte-for-byte unchanged; and the hook refuses a deny remote whose origin is rewritten to another host or carries a second, unlisted URL in either order, or whose local-path URL contains a newline or edge whitespace; and a dangling symlink above the store or a file in its path skips the no-store fast path.
+
+### Gate integrity
+- One deliberate widening of a privacy veto, approved by Garry: a read-only remote with an explicit opt-in is recalled. Nothing else is loosened, and the corrupt-store path is tightened. Seventeen mutations of the new gate were run against the focused tests. Sixteen turn at least one test red: the hook ignoring the opt-in, the hook dropping deny, the CLI reporting the opt-in on any tier, an unkeyed opt-in, a corrupt store read as no policy, the second store ignored, an opt-in accepted on deny, the hook using the rewritten URL, an existsSync fast path, any JSON document accepted, a non-file path read as absent, the hook checking only the last origin URL, a missing path trusted without checking its ancestors, origin URLs split on newlines or trimmed, and the client fast path ignoring a dangling ancestor symlink. The seventeenth, the client reading unknown script output as no policy, stays green because the script can no longer produce such output. That check is a second layer and is left in place. No threshold, budget, timeout, trial count or case kind changed.
+- Known limit, unchanged by this PR: remotes that the store already treats as one key (`host:8443/x` and `host/8443/x`, or paths that differ only in case) share the opt-in exactly as they already share a tier.
+
+## [1.91.193.0] - 2026-10-25
+
+**Windows: the browse terminal agent stops respawning every 60 seconds and stops flashing a console when Bun came from npm (#2295; ported from #3357 by @adammartin0087).** The agent was spawned as a bare `bun`. With Bun installed through `npm install -g bun`, that name resolves to npm's `bun.cmd` shim and runs as `cmd.exe /c bun …`, so `windowsHide` hid only `cmd.exe` while `bun.exe` opened its own visible console, and the recorded pid was `cmd.exe`'s. The agent's startup check never matched its record, it exited after 2 seconds, and the watchdog respawned it.
+
+### Fixed
+- **`browse/src/terminal-agent-control.ts`**: `spawnTerminalAgent` spawns `resolveBunExecutable()`, which on Windows is the real `bun.exe`: the running `bun.exe` itself, then `BUN_INSTALL\bin`, each absolute `PATH` entry (and, next to an npm `bun.cmd` shim, the `node_modules\bun\bin\bun.exe` it forwards to), then `USERPROFILE\.bun\bin`. With none found it falls back to `bun`, as before. macOS and Linux are unchanged.
+- **`browse/src/bun-child-config.ts`**, **`browse/src/cookie-import-native.ts`**: that lookup is `findWindowsBunExe()`, and the Windows native cookie-import worker now uses it instead of its own copy, so it also finds an npm-global Bun. It lives in `bun-child-config.ts` because that file is already in the native import's source-bound qualification set (`NATIVE_CODE_INPUTS`). The edit changes the hash of `cookie-import-native.ts` and `bun-child-config.ts`; the qualification list is empty today, so no receipt is invalidated.
+
+### Tests
+- `browse/test/terminal-agent-bun-exe.test.ts` (from the PR) covers POSIX, the running `bun.exe`, a compiled `browse.exe`, the npm shim, lookup order and the fallback, plus a source check that the spawn site never passes a bare `'bun'`. New: the shared lookup returns null when nothing is installed, finds the npm-global `bun.exe` for the cookie worker, and `cookie-import-native.ts` has no candidate list of its own.
+- Not verified here: real Windows behaviour. The PR author tested on Windows 11; the `windows-free-tests` lane runs the new unit tests.
+
+## [1.91.192.0] - 2026-10-25
+
+**Merge trains stop refusing correct heads and stop passing damaged CHANGELOGs.** This week's trains hit five defects in the ship-queue tooling. #3331's READY was invisible to the coordinator because its lane's origin was `https://git.capy.ai/...`. #3345's pin replaced the released `## [1.91.179.0]` heading, and three things then failed. The Version Gate passed the pin. `mergeChangelogs` copied 179's body into `[Unreleased]`. `verify --train` refused the correct hand-resolved head at 593e61c. Separately, the train slotted the /cso docs PR (#3337) ahead of the catalog PR it describes (#3343). Each defect now has a regression test built from the real case.
+
+### Fixed
+- **`lib/version-gate-train.ts`**: the unstamped-head check read CHANGELOG.md through `spawnSync`'s default 1 MiB buffer. gstack's CHANGELOG is 1.67 MB, so both reads failed and the check compared two empty strings and passed. That is how #3345's 1eb7092 got through: `classifyTrainHead(base a59b5e4, head 1eb7092)` returned `unstamped`. The buffer is now 64 MiB, a CHANGELOG that can't be read is refused, and a dropped released heading is named in the error ("CHANGELOG.md drops released heading 1.91.179.0"). `gstack-ship-queue ready` runs the same check and refuses with `QUEUE_NOT_READY`.
+- **`lib/changelog-check.ts`**: `mergeChangelogs(ours, theirs, base?)` returns null, meaning resolve by hand, when either side damaged released history. Damage means one of two things: a released heading the merge base carries is missing from that side (dropped or renamed), or a section only that side carries holds a paragraph of a released entry the other side has. The train merge, the gate-ahead recompute and `gstack-restamp --after` all pass the merge base. A damaged PR is now `QUEUE_TRAIN_CONFLICT` on CHANGELOG.md with the reason. Before, the damage went into T<i>.
+- **`lib/ship-queue-train-verify.ts`**: `verify --train` refused #3345's correct stamped head because T1's CHANGELOG was the damaged mechanical merge. The refusal printed the diff against the pin (main's files), not the diff against T1. A merged-in head is now accepted when it contains main and equals T<i> modulo stamps, with its CHANGELOG judged against main: main's header and sections must be unchanged, with only lines from the pin's own CHANGELOG diff above them. The refusal now names the real difference.
+- **`lib/ship-queue-train-record.ts`**: READY receipts, train records and freezes are keyed on origin normalized to `https://github.com/<owner>/<repo>`, whatever URL form the lane uses (github.com, git.capy.ai, scp, ssh, a token URL, with or without `.git`). The canonical key equals the github.com key existing records already use. Readers also accept the keys older versions wrote for the common URL forms, so #3331's `1fb5dd69740a8cf8` receipt is found. The stored `repo` URL never carries credentials.
+- **`lib/restamp.ts`**: its git reads use a 64 MiB buffer too. Before, `gstack-restamp --after` read each CHANGELOG conflict stage through the 1 MiB default.
+
+### Added
+- **`gstack-ship-queue train build --order <pr>,...`**: an explicit slot order naming every pinned PR once. The default order (screened first, then READY order) is unchanged, and the train's later `NEXT:` rebuild lines keep the explicit order.
+
+### Tests
+- `test/changelog-merge-damage.test.ts`: the GSTA-64 repro, plus #3345's real CHANGELOGs (pin 1eb7092, base a59b5e4, main 4a98e40, train T1 6755ab8, stamped de23f5d, under `test/fixtures/merge-train-3345/`). Negative controls: a correct hand resolve, a shared tentative stamp, and two `[Unreleased]` blocks are not damage. An invented line, an edited main section, a changed header and a duplicate heading are still refused.
+- `test/compare-pr-version.test.ts`: on a CHANGELOG over 1 MiB, #3345's edit is refused naming 1.91.179.0, an additive entry passes, and a corrupt CHANGELOG object is refused. All three failed before the fix.
+- `test/ship-queue-train.test.ts`: a git.capy.ai lane writes the owner/repo key, and a legacy-key receipt is admitted. A damaged PR is a CHANGELOG conflict, and ready refuses it. `--order` sets and records the order. A hand-resolved merged-in head verifies, while an invented CHANGELOG line, a head without main and a stray file are refused. `test/ship-queue-train-logic.test.ts`: URL normalization, #3331's real keys, `orderSlots` and `parseOrder`.
+
+### Gate integrity
+- Version Gate unstamped check: **stronger**. It refuses a head it can't read and names dropped headings. Additive heads still pass at full size.
+- `mergeChangelogs` and the train CHANGELOG merge: **stronger**. Damage is now a conflict.
+- `verify --train` merged-in path: **narrower in one place, stronger elsewhere**. The head must now contain main. A CHANGELOG that differs from T<i> is accepted only as main's CHANGELOG plus lines the pin itself added. Every other file must still equal T<i> modulo stamps, and the paid gate never reads CHANGELOG text.
+- READY receipt lookup: **unchanged strength**. The head and CI binding are the same; only the repository key is normalized.
+
 ## [1.91.191.0] - 2026-10-25
 
 **`gstack-version-bump write --changelog` moves the branch's `[Unreleased]` entry under the new version, and /ship Step 12 stops treating a provisional queue pick as a verified slot.** Stamping by hand meant writing VERSION with `gstack-version-bump write` and then renaming the `## [Unreleased]` heading yourself, because only `gstack-restamp` re-headed the CHANGELOG. Separately, when `gstack-next-version` could not read some open PRs' VERSION it returned `complete:false` and a provisional pick, and Step 12 printed the warning and then wrote that version as if the queue had been checked (left over from #3258, noted in GSTA-45).

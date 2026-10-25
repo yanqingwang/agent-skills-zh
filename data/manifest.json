@@ -3431,12 +3431,28 @@
         {
           "upstream": "skills/product-marketing/SKILL.md",
           "local": "skills/growth/product/product-marketing/SKILL.md"
+        },
+        {
+          "upstream": "skills/copywriting/SKILL.md",
+          "local": "skills/growth/product/copywriting/SKILL.md"
         }
       ],
       "verbatim": [
         {
           "upstream": "skills/product-marketing/references/brand-voice.md",
           "local": "skills/growth/product/product-marketing/references/brand-voice.md"
+        },
+        {
+          "upstream": "skills/copywriting/references/ai-tells.md",
+          "local": "skills/growth/product/copywriting/references/ai-tells.md"
+        },
+        {
+          "upstream": "skills/copywriting/references/copy-frameworks.md",
+          "local": "skills/growth/product/copywriting/references/copy-frameworks.md"
+        },
+        {
+          "upstream": "skills/copywriting/references/natural-transitions.md",
+          "local": "skills/growth/product/copywriting/references/natural-transitions.md"
         }
       ],
       "verbatim_excluded": [
@@ -3457,6 +3473,10 @@
         {
           "upstream": "skills/experimental-design/SKILL.md",
           "local": "skills/researcher/science/experimental-design/SKILL.md"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/SKILL.md",
+          "local": "skills/researcher/science/exploratory-data-analysis/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3483,6 +3503,86 @@
         {
           "upstream": "skills/experimental-design/scripts/randomization.py",
           "local": "skills/researcher/science/experimental-design/scripts/randomization.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/assets/report_template.md",
+          "local": "skills/researcher/science/exploratory-data-analysis/assets/report_template.md"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/references/bioinformatics_genomics_formats.md",
+          "local": "skills/researcher/science/exploratory-data-analysis/references/bioinformatics_genomics_formats.md"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/references/chemistry_molecular_formats.md",
+          "local": "skills/researcher/science/exploratory-data-analysis/references/chemistry_molecular_formats.md"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/references/general_scientific_formats.md",
+          "local": "skills/researcher/science/exploratory-data-analysis/references/general_scientific_formats.md"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/references/microscopy_imaging_formats.md",
+          "local": "skills/researcher/science/exploratory-data-analysis/references/microscopy_imaging_formats.md"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/references/proteomics_metabolomics_formats.md",
+          "local": "skills/researcher/science/exploratory-data-analysis/references/proteomics_metabolomics_formats.md"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/references/spectroscopy_analytical_formats.md",
+          "local": "skills/researcher/science/exploratory-data-analysis/references/spectroscopy_analytical_formats.md"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/__init__.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/__init__.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/_capabilities.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/_capabilities.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/_common.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/_common.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/_structured.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/_structured.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/_tabular.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/_tabular.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/capability_manifest.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/capability_manifest.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/distribution_sensitivity.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/distribution_sensitivity.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/eda_analyzer.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/eda_analyzer.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/image_inspector.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/image_inspector.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/missingness_leakage_audit.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/missingness_leakage_audit.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/report_scaffold.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/report_scaffold.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/sequence_inspector.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/sequence_inspector.py"
+        },
+        {
+          "upstream": "skills/exploratory-data-analysis/scripts/tabular_profile.py",
+          "local": "skills/researcher/science/exploratory-data-analysis/scripts/tabular_profile.py"
         }
       ],
       "verbatim_excluded": []
@@ -3514,6 +3614,18 @@
         {
           "upstream": "skills/strategic-compact/SKILL.md",
           "local": "skills/developer/context/strategic-compact/SKILL.md"
+        },
+        {
+          "upstream": "skills/article-writing/SKILL.md",
+          "local": "skills/writer/writing/article-writing/SKILL.md"
+        },
+        {
+          "upstream": "skills/content-engine/SKILL.md",
+          "local": "skills/writer/writing/content-engine/SKILL.md"
+        },
+        {
+          "upstream": "skills/market-research/SKILL.md",
+          "local": "skills/growth/product/market-research/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16215,6 +16327,10 @@
         {
           "upstream": "product-team/skills/product-discovery/SKILL.md",
           "local": "skills/growth/product/product-discovery/SKILL.md"
+        },
+        {
+          "upstream": "research/deepread/SKILL.md",
+          "local": "skills/researcher/knowledge/deepread/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16309,6 +16425,14 @@
         {
           "upstream": "product-team/skills/product-discovery/scripts/assumption_mapper.py",
           "local": "skills/growth/product/product-discovery/scripts/assumption_mapper.py"
+        },
+        {
+          "upstream": "research/deepread/references/feynman.md",
+          "local": "skills/researcher/knowledge/deepread/references/feynman.md"
+        },
+        {
+          "upstream": "research/deepread/references/knowledge-map.md",
+          "local": "skills/researcher/knowledge/deepread/references/knowledge-map.md"
         }
       ],
       "verbatim_excluded": [
@@ -16333,6 +16457,10 @@
         {
           "upstream": "pm-ai-shipping/skills/intended-vs-implemented/SKILL.md",
           "local": "skills/growth/product/intended-vs-implemented/SKILL.md"
+        },
+        {
+          "upstream": "pm-data-analytics/skills/ab-test-analysis/SKILL.md",
+          "local": "skills/growth/product/ab-test-analysis/SKILL.md"
         }
       ],
       "verbatim": [],
@@ -16445,6 +16573,10 @@
         {
           "upstream": "skills/api-designer/SKILL.md",
           "local": "skills/developer/quality/api-designer/SKILL.md"
+        },
+        {
+          "upstream": "skills/cloud-architect/SKILL.md",
+          "local": "skills/developer/quality/cloud-architect/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16491,6 +16623,26 @@
         {
           "upstream": "skills/api-designer/references/versioning.md",
           "local": "skills/developer/quality/api-designer/references/versioning.md"
+        },
+        {
+          "upstream": "skills/cloud-architect/references/aws.md",
+          "local": "skills/developer/quality/cloud-architect/references/aws.md"
+        },
+        {
+          "upstream": "skills/cloud-architect/references/azure.md",
+          "local": "skills/developer/quality/cloud-architect/references/azure.md"
+        },
+        {
+          "upstream": "skills/cloud-architect/references/cost.md",
+          "local": "skills/developer/quality/cloud-architect/references/cost.md"
+        },
+        {
+          "upstream": "skills/cloud-architect/references/gcp.md",
+          "local": "skills/developer/quality/cloud-architect/references/gcp.md"
+        },
+        {
+          "upstream": "skills/cloud-architect/references/multi-cloud.md",
+          "local": "skills/developer/quality/cloud-architect/references/multi-cloud.md"
         }
       ],
       "verbatim_excluded": [
@@ -16511,6 +16663,10 @@
         {
           "upstream": "agent-skills/workflow/workflow-ship-change/SKILL.md",
           "local": "skills/developer/engineering/workflow-ship-change/SKILL.md"
+        },
+        {
+          "upstream": "agent-skills/web-design/add-shader-cursor-trail/SKILL.md",
+          "local": "skills/designer/design/add-shader-cursor-trail/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16529,6 +16685,30 @@
         {
           "upstream": "agent-skills/workflow/workflow-ship-change/scripts/verify-live.sh",
           "local": "skills/developer/engineering/workflow-ship-change/scripts/verify-live.sh"
+        },
+        {
+          "upstream": "agent-skills/web-design/add-shader-cursor-trail/agents/openai.yaml",
+          "local": "skills/designer/design/add-shader-cursor-trail/agents/openai.yaml"
+        },
+        {
+          "upstream": "agent-skills/web-design/add-shader-cursor-trail/assets/react/CursorTrailGate.tsx",
+          "local": "skills/designer/design/add-shader-cursor-trail/assets/react/CursorTrailGate.tsx"
+        },
+        {
+          "upstream": "agent-skills/web-design/add-shader-cursor-trail/assets/react/CursorTrailShader.tsx",
+          "local": "skills/designer/design/add-shader-cursor-trail/assets/react/CursorTrailShader.tsx"
+        },
+        {
+          "upstream": "agent-skills/web-design/add-shader-cursor-trail/assets/react/cursor-trail.css",
+          "local": "skills/designer/design/add-shader-cursor-trail/assets/react/cursor-trail.css"
+        },
+        {
+          "upstream": "agent-skills/web-design/add-shader-cursor-trail/references/implementation.md",
+          "local": "skills/designer/design/add-shader-cursor-trail/references/implementation.md"
+        },
+        {
+          "upstream": "agent-skills/web-design/add-shader-cursor-trail/scripts/verify-cursor-trail.mjs",
+          "local": "skills/designer/design/add-shader-cursor-trail/scripts/verify-cursor-trail.mjs"
         }
       ],
       "verbatim_excluded": [
@@ -16623,6 +16803,14 @@
         {
           "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/SKILL.md",
           "local": "skills/developer/engineering/build-mcp-server/SKILL.md"
+        },
+        {
+          "upstream": "plugins/claude-security/skills/claude-security/SKILL.md",
+          "local": "skills/developer/quality/claude-security/SKILL.md"
+        },
+        {
+          "upstream": "plugins/hookify/skills/writing-rules/SKILL.md",
+          "local": "skills/developer/engineering/writing-rules/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16673,6 +16861,30 @@
         {
           "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/versions.md",
           "local": "skills/developer/engineering/build-mcp-server/references/versions.md"
+        },
+        {
+          "upstream": "plugins/claude-security/skills/claude-security/jobs/scan-changes.md",
+          "local": "skills/developer/quality/claude-security/jobs/scan-changes.md"
+        },
+        {
+          "upstream": "plugins/claude-security/skills/claude-security/jobs/scan-codebase.md",
+          "local": "skills/developer/quality/claude-security/jobs/scan-codebase.md"
+        },
+        {
+          "upstream": "plugins/claude-security/skills/claude-security/jobs/suggest-patches.md",
+          "local": "skills/developer/quality/claude-security/jobs/suggest-patches.md"
+        },
+        {
+          "upstream": "plugins/claude-security/skills/claude-security/role.md",
+          "local": "skills/developer/quality/claude-security/role.md"
+        },
+        {
+          "upstream": "plugins/claude-security/skills/claude-security/specs/patch-spec.md",
+          "local": "skills/developer/quality/claude-security/specs/patch-spec.md"
+        },
+        {
+          "upstream": "plugins/claude-security/skills/claude-security/specs/report-spec.md",
+          "local": "skills/developer/quality/claude-security/specs/report-spec.md"
         }
       ],
       "verbatim_excluded": [
@@ -16705,6 +16917,18 @@
         {
           "upstream": "plugins/api-scaffolding/skills/fastapi-templates/SKILL.md",
           "local": "skills/developer/quality/fastapi-templates/SKILL.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/multi-reviewer-patterns/SKILL.md",
+          "local": "skills/developer/quality/multi-reviewer-patterns/SKILL.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/parallel-debugging/SKILL.md",
+          "local": "skills/developer/engineering/parallel-debugging/SKILL.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/SKILL.md",
+          "local": "skills/developer/engineering/deployment-pipeline-design/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16715,6 +16939,22 @@
         {
           "upstream": "plugins/api-scaffolding/skills/fastapi-templates/references/details.md",
           "local": "skills/developer/quality/fastapi-templates/references/details.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/multi-reviewer-patterns/references/review-dimensions.md",
+          "local": "skills/developer/quality/multi-reviewer-patterns/references/review-dimensions.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/parallel-debugging/references/hypothesis-testing.md",
+          "local": "skills/developer/engineering/parallel-debugging/references/hypothesis-testing.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/references/advanced-strategies.md",
+          "local": "skills/developer/engineering/deployment-pipeline-design/references/advanced-strategies.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/references/details.md",
+          "local": "skills/developer/engineering/deployment-pipeline-design/references/details.md"
         }
       ],
       "verbatim_excluded": [
@@ -16768,9 +17008,122 @@
         {
           "upstream": "plugins/waza/rules/clarity.md",
           "local": "skills/developer/engineering/rules/clarity.md"
+        },
+        {
+          "upstream": "skills/hunt/SKILL.md",
+          "local": "skills/developer/quality/hunt/SKILL.md"
+        },
+        {
+          "upstream": "skills/health/SKILL.md",
+          "local": "skills/developer/quality/health/SKILL.md"
+        },
+        {
+          "upstream": "plugins/waza/rules/durable-context.md",
+          "local": "skills/developer/engineering/rules/durable-context.md"
         }
       ],
-      "verbatim": [],
+      "verbatim": [
+        {
+          "upstream": "skills/hunt/references/durable-context.md",
+          "local": "skills/developer/quality/hunt/references/durable-context.md"
+        },
+        {
+          "upstream": "skills/hunt/references/failure-patterns.md",
+          "local": "skills/developer/quality/hunt/references/failure-patterns.md"
+        },
+        {
+          "upstream": "skills/hunt/references/ime-unicode.md",
+          "local": "skills/developer/quality/hunt/references/ime-unicode.md"
+        },
+        {
+          "upstream": "skills/hunt/references/logging-techniques.md",
+          "local": "skills/developer/quality/hunt/references/logging-techniques.md"
+        },
+        {
+          "upstream": "skills/hunt/references/rendering-debug.md",
+          "local": "skills/developer/quality/hunt/references/rendering-debug.md"
+        },
+        {
+          "upstream": "skills/health/agents/inspector-context.md",
+          "local": "skills/developer/quality/health/agents/inspector-context.md"
+        },
+        {
+          "upstream": "skills/health/agents/inspector-control.md",
+          "local": "skills/developer/quality/health/agents/inspector-control.md"
+        },
+        {
+          "upstream": "skills/health/agents/inspector-maintainability.md",
+          "local": "skills/developer/quality/health/agents/inspector-maintainability.md"
+        },
+        {
+          "upstream": "skills/health/references/durable-context.md",
+          "local": "skills/developer/quality/health/references/durable-context.md"
+        },
+        {
+          "upstream": "skills/health/references/long-running-agents.md",
+          "local": "skills/developer/quality/health/references/long-running-agents.md"
+        },
+        {
+          "upstream": "skills/health/references/maintainability-findings.md",
+          "local": "skills/developer/quality/health/references/maintainability-findings.md"
+        },
+        {
+          "upstream": "skills/health/scripts/block-pipe-to-shell.py",
+          "local": "skills/developer/quality/health/scripts/block-pipe-to-shell.py"
+        },
+        {
+          "upstream": "skills/health/scripts/check-agent-context.sh",
+          "local": "skills/developer/quality/health/scripts/check-agent-context.sh"
+        },
+        {
+          "upstream": "skills/health/scripts/check-doc-refs.sh",
+          "local": "skills/developer/quality/health/scripts/check-doc-refs.sh"
+        },
+        {
+          "upstream": "skills/health/scripts/check-maintainability.sh",
+          "local": "skills/developer/quality/health/scripts/check-maintainability.sh"
+        },
+        {
+          "upstream": "skills/health/scripts/check-verifier-output.sh",
+          "local": "skills/developer/quality/health/scripts/check-verifier-output.sh"
+        },
+        {
+          "upstream": "skills/health/scripts/check_agent_context.py",
+          "local": "skills/developer/quality/health/scripts/check_agent_context.py"
+        },
+        {
+          "upstream": "skills/health/scripts/check_doc_refs.py",
+          "local": "skills/developer/quality/health/scripts/check_doc_refs.py"
+        },
+        {
+          "upstream": "skills/health/scripts/check_maintainability.py",
+          "local": "skills/developer/quality/health/scripts/check_maintainability.py"
+        },
+        {
+          "upstream": "skills/health/scripts/check_verifier_output.py",
+          "local": "skills/developer/quality/health/scripts/check_verifier_output.py"
+        },
+        {
+          "upstream": "skills/health/scripts/collect-data.sh",
+          "local": "skills/developer/quality/health/scripts/collect-data.sh"
+        },
+        {
+          "upstream": "skills/health/scripts/conversation_audit.py",
+          "local": "skills/developer/quality/health/scripts/conversation_audit.py"
+        },
+        {
+          "upstream": "skills/health/scripts/read_skill_description.py",
+          "local": "skills/developer/quality/health/scripts/read_skill_description.py"
+        },
+        {
+          "upstream": "skills/health/scripts/run-health.ps1",
+          "local": "skills/developer/quality/health/scripts/run-health.ps1"
+        },
+        {
+          "upstream": "skills/health/scripts/scan_skill_security.py",
+          "local": "skills/developer/quality/health/scripts/scan_skill_security.py"
+        }
+      ],
       "verbatim_excluded": [
         {
           "upstream": "skills/* 其余",
@@ -17026,12 +17379,20 @@
         {
           "upstream": "skills/creative/SKILL.md",
           "local": "skills/designer/design/creative/SKILL.md"
+        },
+        {
+          "upstream": "skills/dramatic/SKILL.md",
+          "local": "skills/designer/design/dramatic/SKILL.md"
         }
       ],
       "verbatim": [
         {
           "upstream": "skills/creative/DESIGN.md",
           "local": "skills/designer/design/creative/DESIGN.md"
+        },
+        {
+          "upstream": "skills/dramatic/DESIGN.md",
+          "local": "skills/designer/design/dramatic/DESIGN.md"
         }
       ],
       "verbatim_excluded": [
@@ -17056,6 +17417,10 @@
         {
           "upstream": "skills/data-quality-checker/SKILL.md",
           "local": "skills/growth/product/data-quality-checker/SKILL.md"
+        },
+        {
+          "upstream": "skills/breakout-trade-planner/SKILL.md",
+          "local": "skills/growth/product/breakout-trade-planner/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17090,6 +17455,30 @@
         {
           "upstream": "skills/data-quality-checker/scripts/check_data_quality.py",
           "local": "skills/growth/product/data-quality-checker/scripts/check_data_quality.py"
+        },
+        {
+          "upstream": "skills/breakout-trade-planner/references/minervini_entry_rules.md",
+          "local": "skills/growth/product/breakout-trade-planner/references/minervini_entry_rules.md"
+        },
+        {
+          "upstream": "skills/breakout-trade-planner/requirements.txt",
+          "local": "skills/growth/product/breakout-trade-planner/requirements.txt"
+        },
+        {
+          "upstream": "skills/breakout-trade-planner/scripts/_market_calendar.py",
+          "local": "skills/growth/product/breakout-trade-planner/scripts/_market_calendar.py"
+        },
+        {
+          "upstream": "skills/breakout-trade-planner/scripts/order_builder.py",
+          "local": "skills/growth/product/breakout-trade-planner/scripts/order_builder.py"
+        },
+        {
+          "upstream": "skills/breakout-trade-planner/scripts/plan_breakout_trades.py",
+          "local": "skills/growth/product/breakout-trade-planner/scripts/plan_breakout_trades.py"
+        },
+        {
+          "upstream": "skills/breakout-trade-planner/scripts/risk_calculator.py",
+          "local": "skills/growth/product/breakout-trade-planner/scripts/risk_calculator.py"
         }
       ],
       "verbatim_excluded": [
@@ -17139,6 +17528,10 @@
         {
           "upstream": "skills/officecli/SKILL.md",
           "local": "skills/toolbox/office/officecli/SKILL.md"
+        },
+        {
+          "upstream": "skills/officecli-academic-paper/SKILL.md",
+          "local": "skills/toolbox/office/officecli-academic-paper/SKILL.md"
         }
       ],
       "verbatim": [],

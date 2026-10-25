@@ -75,6 +75,34 @@ def fetch_raw(repo: str, upstream_path: str) -> bytes | None:
               "-H", "Accept: application/vnd.github.raw")
 
 
+def gen_status() -> None:
+    """重生成 data/STATUS.md（工作状态：规模 / 监控 / 待重译 / 目录分布）。"""
+    from datetime import datetime, timezone
+    m = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    n_t = sum(len(u.get("files", [])) for u in m["upstreams"])
+    n_v = sum(len(u.get("verbatim", [])) for u in m["upstreams"])
+    n_up = sum(1 for u in m["upstreams"] if u.get("files") or u.get("verbatim"))
+    cats: dict[str, int] = {}
+    for u in m["upstreams"]:
+        for e in u.get("files", []):
+            parts = e["local"].split("/")
+            key = f"{parts[1]}/{parts[2]}" if len(parts) > 4 else parts[1]
+            cats[key] = cats.get(key, 0) + 1
+    pending = "有 —— 见 [data/sync-pending-retranslation.md](sync-pending-retranslation.md)" if PENDING.exists() else "无（全部翻译件与上游一致）"
+    logs = sorted(LOG_DIR.glob("*.md")) if LOG_DIR.exists() else []
+    last_log = logs[-1].name if logs else "无"
+    lines = [f"# 工作状态（自动生成于 {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}，勿手改）", "",
+             f"- **收录规模**：{n_up} 个上游 · {n_t} 个翻译件 · {n_v} 个原样件",
+             f"- **监控状态**：sync-check CI 每日 UTC 02:00 运行（HEAD 比对 → 原样件自动刷新 → 翻译件变更转重译工单）",
+             f"- **最近同步日志**：[data/sync-log/{last_log}](sync-log/{last_log})",
+             f"- **待重译**：{pending}",
+             f"- **快照 HEAD 总数**：{len(json.loads(STATE.read_text(encoding='utf-8'))['repos'])} 个上游已纳入监控", "",
+             "## 按目录分布（翻译件）", ""]
+    for k in sorted(cats):
+        lines.append(f"- `skills/{k}/` — {cats[k]} 件")
+    (ROOT / "data" / "STATUS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     dry = "--dry-run" in sys.argv
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -181,6 +209,9 @@ def main() -> int:
                 + "\n".join(pending) + "\n", encoding="utf-8")
         elif PENDING.exists():
             PENDING.unlink()
+
+    if not dry:
+        gen_status()
 
     mode = "DRY-RUN" if dry else "SYNC"
     print(f"[{mode}] 未变化={unchanged} 首登/跳过={skipped} verbatim刷新={refreshed} 待重译={len(pending)} 失败={failed}")

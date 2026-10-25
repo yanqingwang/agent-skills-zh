@@ -135,7 +135,10 @@
   },
   "tw93/Waza": {
     "plugins/waza/rules/anti-patterns.md": "8cb70972e19694c50805041f4f0dc05c35a0e95d",
-    "plugins/waza/rules/clarity.md": "56fedb402a45f2c4edb98bc3bf77fc4ee3855755"
+    "plugins/waza/rules/clarity.md": "56fedb402a45f2c4edb98bc3bf77fc4ee3855755",
+    "skills/hunt/SKILL.md": "4b1c77a5a530aec3f51f70be3e28a1b2a82f69be",
+    "skills/health/SKILL.md": "80a0d631e3a49a25f796f3d140099563fb3fb10a",
+    "plugins/waza/rules/durable-context.md": "ac9aa5dc92f958f1785dce99aee6c941d71f0144"
   },
   "NVIDIA/skills": {
     "plugins/nvidia-skills/skills/nvidia-skill-finder/SKILL.md": "e9aa2f88736041e0400f5ebdfab5de7febf191a2",
