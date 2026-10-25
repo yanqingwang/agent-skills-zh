@@ -1,86 +1,79 @@
 <!-- AUTO-GENERATED from doctrine.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-## UX Principles: How Users Actually Behave
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`design-shotgun/sections/doctrine.md` · License: MIT
+> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
 
-These principles govern how real humans interact with interfaces. They are observed
-behavior, not preferences. Apply them before, during, and after every design decision.
+## UX 原则：用户的真实行为
 
-### The Three Laws of Usability
+这些原则支配真实人类与界面的交互。它们是观察到的行为，不是偏好。在
+每个设计决策之前、之中、之后都适用。
 
-1. **Don't make me think.** Every page should be self-evident. If a user stops
-   to think "What do I click?" or "What does this mean?", the design has failed.
-   Self-evident > self-explanatory > requires explanation.
+### 可用性三定律
 
-2. **Clicks don't matter, thinking does.** Three mindless, unambiguous clicks
-   beat one click that requires thought. Each step should feel like an obvious
-   choice (animal, vegetable, or mineral), not a puzzle.
+1. **别让我思考。** 每个页面都应不言自明。用户停下想"我该点哪个？"
+   或"这是什么意思？"，设计就失败了。不言自明 > 可自我解释 > 需要
+   解释。
 
-3. **Omit, then omit again.** Get rid of half the words on each page, then get
-   rid of half of what's left. Happy talk (self-congratulatory text) must die.
-   Instructions must die. If they need reading, the design has failed.
+2. **点击不费脑，思考才费脑。** 三次无脑、无歧义的点击好过一次需要
+   思考的点击。每一步都该像显而易见的选择（动物、蔬菜还是矿物），
+   不是解谜。
 
-### How Users Actually Behave
+3. **删，删，再删。** 把每页文字砍掉一半，再把剩下的砍掉一半。欢迎
+   词（自夸文本）必须死。使用说明必须死。需要读才能用的设计就是失败
+   的设计。
 
-- **Users scan, they don't read.** Design for scanning: visual hierarchy
-  (prominence = importance), clearly defined areas, headings and bullet lists,
-  highlighted key terms. We're designing billboards going by at 60 mph, not
-  product brochures people will study.
-- **Users satisfice.** They pick the first reasonable option, not the best.
-  Make the right choice the most visible choice.
-- **Users muddle through.** They don't figure out how things work. They wing
-  it. If they accomplish their goal by accident, they won't seek the "right" way.
-  Once they find something that works, no matter how badly, they stick to it.
-- **Users don't read instructions.** They dive in. Guidance must be brief,
-  timely, and unavoidable, or it won't be seen.
+### 用户的真实行为
 
-### Billboard Design for Interfaces
+- **用户扫视，不阅读。** 为扫视设计：视觉层级（显著度 = 重要性）、
+  清晰界定的区域、标题与 bullet 列表、高亮关键词。我们设计的是 60
+  英里时速掠过的广告牌，不是供人研读的产品手册。
+- **用户满意即止。** 他们选第一个合理的选项，不是最好的。让正确的
+  选择成为最显眼的选择。
+- **用户将就着用。** 他们不搞明白东西怎么运作。他们瞎闯。碰巧达成
+  目标，就不会去找"正确"的方式。找到能用的，再烂也是它，就一直用。
+- **用户不读说明。** 他们直接上手。引导必须简短、及时、无法回避，
+  否则等于没有。
 
-- **Use conventions.** Logo top-left, nav top/left, search = magnifying glass.
-  Don't innovate on navigation to be clever. Innovate when you KNOW you have a
-  better idea, otherwise use conventions. Even across languages and cultures,
-  web conventions let people identify the logo, nav, search, and main content.
-- **Visual hierarchy is everything.** Related things are visually grouped. Nested
-  things are visually contained. More important = more prominent. If everything
-  shouts, nothing is heard. Start with the assumption everything is visual noise,
-  guilty until proven innocent.
-- **Make clickable things obviously clickable.** No relying on hover states for
-  discoverability, especially on mobile where hover doesn't exist. Shape, location,
-  and formatting (color, underlining) must signal clickability without interaction.
-- **Eliminate noise.** Three sources: too many things shouting for attention
-  (shouting), things not organized logically (disorganization), and too much stuff
-  (clutter). Fix noise by removal, not addition.
-- **Clarity trumps consistency.** If making something significantly clearer
-  requires making it slightly inconsistent, choose clarity every time.
+### 界面的广告牌设计
 
-### Navigation as Wayfinding
+- **用惯例。** Logo 左上、导航上/左、搜索 = 放大镜。不要为了显得聪明
+  在导航上创新。确知有更好主意时才创新，否则用惯例。跨语言跨文化，
+  web 惯例都能让人认出 logo、导航、搜索和主内容。
+- **视觉层级就是一切。** 相关的在视觉上成组。嵌套的在视觉上包含。
+  更重要 = 更显著。全都喊，就都没声。从"一切都是视觉噪音"出发，
+  有罪推定，证明清白才保留。
+- **让可点的东西看起来明显可点。** 不靠 hover 状态做可发现性，尤其
+  移动端根本没有 hover。形状、位置和格式（颜色、下划线）必须不经
+  交互就发出可点信号。
+- **消除噪音。** 三个来源：太多东西抢注意力（喊叫）、东西组织得不合
+  逻辑（无序）、东西太多（杂乱）。用删除治噪音，不用添加。
+- **清晰胜过一致。** 让某物明显更清晰需要让它稍不一致时，永远选
+  清晰。
 
-Users on the web have no sense of scale, direction, or location. Navigation
-must always answer: What site is this? What page am I on? What are the major
-sections? What are my options at this level? Where am I? How can I search?
+### 导航即寻路
 
-Persistent navigation on every page. Breadcrumbs for deep hierarchies.
-Current section visually indicated. The "trunk test": cover everything except
-the navigation. You should still know what site this is, what page you're on,
-and what the major sections are. If not, the navigation has failed.
+web 上的用户没有尺度感、方向感、位置感。导航必须永远回答：这是哪个
+站？我在哪页？主要板块有哪些？这一层我有什么选项？我在哪？怎么搜索？
 
-### The Goodwill Reservoir
+每页持久导航。深层级用面包屑。当前分区视觉标示。"树干测试"：遮住
+导航以外的一切，你仍应知道这是哪个站、在哪页、主要板块是什么。否则
+导航失败。
 
-Users start with a reservoir of goodwill. Every friction point depletes it.
+### 善意水库
 
-**Deplete faster:** Hiding info users want (pricing, contact, shipping). Punishing
-users for not doing things your way (formatting requirements on phone numbers).
-Asking for unnecessary information. Putting sizzle in their way (splash screens,
-forced tours, interstitials). Unprofessional or sloppy appearance.
+用户开局带着一座善意水库。每个摩擦点都在消耗它。
 
-**Replenish:** Know what users want to do and make it obvious. Tell them what they
-want to know upfront. Save them steps wherever possible. Make it easy to recover
-from errors. When in doubt, apologize.
+**加速消耗：** 藏用户想要的信息（定价、联系方式、运费）。因用户没按
+你的方式做而惩罚他们（电话号码格式要求）。索要不必要的信息。用花哨
+挡路（splash 屏、强制导览、插页）。不专业或邋遢的外观。
 
-### Mobile: Same Rules, Higher Stakes
+**补充：** 知道用户想做什么并让它显而易见。把他们想知道的预先告诉
+他们。能省的步骤都省。让错误容易恢复。拿不准时，道歉。
 
-All the above applies on mobile, just more so. Real estate is scarce, but never
-sacrifice usability for space savings. Affordances must be VISIBLE: no cursor
-means no hover-to-discover. Touch targets must be big enough (44px minimum).
-Flat design can strip away useful visual information that signals interactivity.
-Prioritize ruthlessly: things needed in a hurry go close at hand, everything
-else a few taps away with an obvious path to get there.
+### 移动端：同样的规则，更高的赌注
+
+以上全部在移动端都适用，只是加倍。空间稀缺，但绝不为省空间牺牲可用
+性。可供性必须**可见**：没有光标就没有 hover 发现。触摸目标必须够大
+（至少 44px）。扁平化设计可能剥掉标记可交互性的有用视觉信息。无情地
+排优先级：急着用的东西放在手边，其余的几步可达且有显眼路径。
