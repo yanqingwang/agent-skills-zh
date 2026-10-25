@@ -22,26 +22,26 @@ metadata:
 2. **检测业务类型**：按照 seo 编排器（seo orchestrator）分析首页信号
 3. **爬取站点**：跟踪内部链接，最多 500 页，遵守 robots.txt
 4. **委派给子代理**（如有子代理可用；否则在当前上下文中按顺序依次执行）：
-   - `seo-technical` —— robots.txt、sitemap、canonical、Core Web Vitals、安全响应头
-   - `seo-content` —— E-E-A-T、可读性、内容单薄（thin content）、AI 引用就绪度
-   - `seo-schema` —— 结构化数据的检测、校验、生成建议
-   - `seo-sitemap` —— 结构分析、质量门（quality gates）、缺失页面
-   - `seo-performance` —— LCP、INP、CLS 测量
-   - `seo-visual` —— 截图、移动端测试、首屏（above-fold）分析
-   - `seo-geo` —— AI 爬虫访问、llms.txt、可引用性（citability）、品牌提及信号
-   - `seo-agentic` —— Lighthouse Agentic Browsing 占比（X/N）、面向代理的无障碍树、AI 代理访问策略、Markdown 与发现文件、WebMCP（完整审计中始终包含；其发现结果输入 AI Search Readiness）
-   - `seo-local` —— GBP 信号、NAP 一致性、评价、本地 schema、行业特定的本地因素（当检测到本地服务（Local Service）行业时启动：实体店面、SAB（服务区企业）或混合业务类型）
-   - `seo-maps` —— 地理网格排名追踪、GBP 审计、评价情报、竞争对手半径映射（当检测到本地服务行业且 DataForSEO MCP 可用时启动）
-   - `seo-google` —— CWV 现场数据（CrUX）、URL 收录情况（GSC）、自然流量（GA4）（当通过 `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run google_auth.py --check` 检测到 Google API 凭据时启动）
-   - `seo-matomo` —— Matomo Reporting API：自然流量、着陆页、设备/国家分布、引荐来源分析（当通过 `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run matomo_auth.py --check` 检测到 Matomo 凭据时启动；两者都配置时与 `seo-google` 并行运行，未配置 GA4 时可作为 GA4 的替代）
-   - `seo-backlinks` —— 反向链接档案数据：DA/PA、引用域名、锚文本、有毒链接（当通过 `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run backlinks_auth.py --check` 检测到 Moz 或 Bing API 凭据时启动，或始终包含 Common Crawl 域级指标）
-   - `seo-cluster` —— 语义聚类分析（当检测到内容策略信号时启动：博客、支柱页面（pillar pages）、主题集群）
-   - `seo-sxo` —— 搜索体验分析：页面类型错配、用户故事、画像评分（完整审计中始终包含）
-   - `seo-drift` —— 漂移分析：与已存储的基线对比（当该 URL 存在漂移基线时，通过 `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run drift_history.py <url>` 启动）
-   - `seo-ecommerce` —— 商品 schema、市场情报（当检测到电商（E-commerce）行业时启动）
-5. **评分** —— 汇总为 SEO 健康分（SEO Health Score，0-100）
-6. **持久化审计产物** —— 将所有输出写入 `{domain}-audit/` 目录
-7. **报告** —— 生成按优先级排序的行动计划，以及可选的 PDF/HTML 报告
+   - `seo-technical` ， robots.txt、sitemap、canonical、Core Web Vitals、安全响应头
+   - `seo-content` ， E-E-A-T、可读性、内容单薄（thin content）、AI 引用就绪度
+   - `seo-schema` ， 结构化数据的检测、校验、生成建议
+   - `seo-sitemap` ， 结构分析、质量门（quality gates）、缺失页面
+   - `seo-performance` ， LCP、INP、CLS 测量
+   - `seo-visual` ， 截图、移动端测试、首屏（above-fold）分析
+   - `seo-geo` ， AI 爬虫访问、llms.txt、可引用性（citability）、品牌提及信号
+   - `seo-agentic` ， Lighthouse Agentic Browsing 占比（X/N）、面向代理的无障碍树、AI 代理访问策略、Markdown 与发现文件、WebMCP（完整审计中始终包含；其发现结果输入 AI Search Readiness）
+   - `seo-local` ， GBP 信号、NAP 一致性、评价、本地 schema、行业特定的本地因素（当检测到本地服务（Local Service）行业时启动：实体店面、SAB（服务区企业）或混合业务类型）
+   - `seo-maps` ， 地理网格排名追踪、GBP 审计、评价情报、竞争对手半径映射（当检测到本地服务行业且 DataForSEO MCP 可用时启动）
+   - `seo-google` ， CWV 现场数据（CrUX）、URL 收录情况（GSC）、自然流量（GA4）（当通过 `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run google_auth.py --check` 检测到 Google API 凭据时启动）
+   - `seo-matomo` ， Matomo Reporting API：自然流量、着陆页、设备/国家分布、引荐来源分析（当通过 `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run matomo_auth.py --check` 检测到 Matomo 凭据时启动；两者都配置时与 `seo-google` 并行运行，未配置 GA4 时可作为 GA4 的替代）
+   - `seo-backlinks` ， 反向链接档案数据：DA/PA、引用域名、锚文本、有毒链接（当通过 `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run backlinks_auth.py --check` 检测到 Moz 或 Bing API 凭据时启动，或始终包含 Common Crawl 域级指标）
+   - `seo-cluster` ， 语义聚类分析（当检测到内容策略信号时启动：博客、支柱页面（pillar pages）、主题集群）
+   - `seo-sxo` ， 搜索体验分析：页面类型错配、用户故事、画像评分（完整审计中始终包含）
+   - `seo-drift` ， 漂移分析：与已存储的基线对比（当该 URL 存在漂移基线时，通过 `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run drift_history.py <url>` 启动）
+   - `seo-ecommerce` ， 商品 schema、市场情报（当检测到电商（E-commerce）行业时启动）
+5. **评分** ， 汇总为 SEO 健康分（SEO Health Score，0-100）
+6. **持久化审计产物** ， 将所有输出写入 `{domain}-audit/` 目录
+7. **报告** ， 生成按优先级排序的行动计划，以及可选的 PDF/HTML 报告
 
 ## 爬取配置
 

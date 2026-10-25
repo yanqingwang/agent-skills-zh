@@ -4,7 +4,7 @@
 > 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
 > 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令保持原文。本文件为翻译作品，非上游官方中文版。
 
-你是 `/sales qualify <url>` 的线索资格评估引擎。你只用公开可得的信息，按照两套经过验证的销售资格框架——BANT 与 MEDDIC——评估一个潜客。本 Skill 可独立调用，也可作为 `/sales prospect` 中的 **sales-opportunity** 子代理被调用。
+你是 `/sales qualify <url>` 的线索资格评估引擎。你只用公开可得的信息，按照两套经过验证的销售资格框架（BANT 与 MEDDIC）评估一个潜客。本 Skill 可独立调用，也可作为 `/sales prospect` 中的 **sales-opportunity** 子代理被调用。
 
 ## 本 Skill 何时被调用
 
@@ -560,7 +560,7 @@ Full report saved to: LEAD-QUALIFICATION.md
 - URL 无法访问时，尝试替代格式后报告错误
 - 招聘帖不公开时，注明缺口并改用替代信号
 - 公司公开存在感极低时，整体下调置信度并注明数据局限
-- 无论数据多少，始终产出资格报告——哪怕不完整的数据对排优先级也有价值
+- 无论数据多少，始终产出资格报告，哪怕不完整的数据对排优先级也有价值
 - BANT 低于 25 分且所有维度置信度为 Low/Inferred 时，建议先人工调研再触达
 
 ## 跨 Skill 协作

@@ -72,7 +72,7 @@ spec:
 
 ### staging 部署成功，但生产作业始终不启动
 
-检查生产环境的保护规则（protection rules）是否已配置——缺少审核人分配时，审批门禁会无限等待且没有任何通知。在 GitHub Actions 中，确保在 **Settings → Environments → production** 中将 `Required reviewers` 设置为真实存在的用户或团队。
+检查生产环境的保护规则（protection rules）是否已配置，缺少审核人分配时，审批门禁会无限等待且没有任何通知。在 GitHub Actions 中，确保在 **Settings → Environments → production** 中将 `Required reviewers` 设置为真实存在的用户或团队。
 
 ### Docker 层缓存每次构建都被击穿，导致构建缓慢
 

@@ -21,7 +21,7 @@ description: "在 n8n Code 节点中编写、审查或调试 JavaScript。当工
    Summarize、Aggregate、Split Out、Merge、Compare Datasets、Remove Duplicates、Sort + Limit、Date & Time、
    XML / HTML / Extract From File / Convert To File、HTTP Request（分页、批处理）和 Crypto 覆盖了 Code 的大多数用武之地。
    它们的配置在 `n8n-node-configuration` → NATIVE_NODES.md。
-2. **在该节点里写一个短表达式就够了吗？** 一个表达式，没有函数体——辅助方法（`.pluck()`、
+2. **在该节点里写一个短表达式就够了吗？** 一个表达式，没有函数体，辅助方法（`.pluck()`、
    `.sum()`、`.unique()`、`$ifEmpty()`、`.diffTo()`）在 `n8n-expression-syntax` 中，n8n-mcp 2.97.0+ 也在
    `tools_documentation({topic: "expression_helpers"})` 中。`{{ }}` 内含多条语句就算代码，因此应归入这里
    而不是 Edit Fields 字段。
@@ -61,11 +61,11 @@ return processed;
 
 1. **选择 "Run Once for All Items" 模式**（大多数用例推荐）
 2. **访问数据**：`$input.all()`、`$input.first()` 或 `$input.item`
-3. **返回 `[{json: {...}}]`** —— 这是规范、跨模式可移植的形式。在 *Run Once for All Items* 模式下，n8n 也会自动包装裸的 `return {…}` 对象，所以那样也能运行；真正会失败的是返回原始值（字符串/数字）或 `null`。
+3. **返回 `[{json: {...}}]`** ， 这是规范、跨模式可移植的形式。在 *Run Once for All Items* 模式下，n8n 也会自动包装裸的 `return {…}` 对象，所以那样也能运行；真正会失败的是返回原始值（字符串/数字）或 `null`。
 4. **关键**：Webhook 数据在 `$json.body` 下（不是直接在 `$json` 下）
-5. **可用的内建项**：`this.helpers.httpRequest()`（无鉴权 —— 裸 `$helpers` 全局在 task-runner 沙箱中**未定义**，因此 `$helpers.httpRequest()` 会抛出 `ReferenceError: $helpers is not defined`）、DateTime（Luxon）、$jmespath()。**不可用**：`this.helpers.httpRequestWithAuthentication`（在拒绝清单上）、$env（当 N8N_BLOCK_ENV_ACCESS_IN_NODE=true 时）、require()（除非在白名单上）。凡是超出简单无鉴权 GET（鉴权、分页、重试）的需求，优先使用 **HTTP Request 节点**，把 Code 节点留给纯逻辑。
-6. **实例级白名单库**：自托管实例可通过 `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES` 和 `N8N_RUNNERS_ALLOWED_EXTERNAL_MODULES`（旧版：`NODE_FUNCTION_ALLOW_BUILTIN` / `NODE_FUNCTION_ALLOW_EXTERNAL`）将模块加入白名单。如果用户说其实例允许特定模块（如 `axios`、`lodash`、`crypto`），就用 `require()` 使用它们——不要拒绝。不确定时，先询问或默认只用内建模块。
-7. **用错 Skill 了？** 如果你在为挂到 AI Agent 上的 **Custom Code Tool**（`@n8n/n8n-nodes-langchain.toolCode`）写代码，停下——那个节点有不同的契约（通过 `query` 输入、必须返回字符串、没有 `$input`/`$helpers`）。请使用 **n8n-code-tool** Skill。
+5. **可用的内建项**：`this.helpers.httpRequest()`（无鉴权 ， 裸 `$helpers` 全局在 task-runner 沙箱中**未定义**，因此 `$helpers.httpRequest()` 会抛出 `ReferenceError: $helpers is not defined`）、DateTime（Luxon）、$jmespath()。**不可用**：`this.helpers.httpRequestWithAuthentication`（在拒绝清单上）、$env（当 N8N_BLOCK_ENV_ACCESS_IN_NODE=true 时）、require()（除非在白名单上）。凡是超出简单无鉴权 GET（鉴权、分页、重试）的需求，优先使用 **HTTP Request 节点**，把 Code 节点留给纯逻辑。
+6. **实例级白名单库**：自托管实例可通过 `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES` 和 `N8N_RUNNERS_ALLOWED_EXTERNAL_MODULES`（旧版：`NODE_FUNCTION_ALLOW_BUILTIN` / `NODE_FUNCTION_ALLOW_EXTERNAL`）将模块加入白名单。如果用户说其实例允许特定模块（如 `axios`、`lodash`、`crypto`），就用 `require()` 使用它们，不要拒绝。不确定时，先询问或默认只用内建模块。
+7. **用错 Skill 了？** 如果你在为挂到 AI Agent 上的 **Custom Code Tool**（`@n8n/n8n-nodes-langchain.toolCode`）写代码，停下，那个节点有不同的契约（通过 `query` 输入、必须返回字符串、没有 `$input`/`$helpers`）。请使用 **n8n-code-tool** Skill。
 
 ---
 
@@ -133,7 +133,7 @@ return [{
 - **每条数据完全独立？** → 用 "Each Item" 模式
 - **不确定？** → 用 "All Items" 模式（你总能在内部循环）
 
-### 为什么 "All Items" 更快——逐条边界
+### 为什么 "All Items" 更快：逐条边界
 
 模式选择是 Code 节点最大的单项性能杠杆。每个*逐条*执行上下文都有一笔启动税（在 n8n 2.x、小记录上实测）：
 
@@ -141,13 +141,13 @@ return [{
 |---|---|
 | Code **All Items**（整个集合一次运行） | ~0.02 ms/条 |
 | 任意节点中的表达式（IF / Set 等） | ~0.2 ms/条 |
-| Code **Each Item**（每条数据一个完整沙箱） | ~0.6 ms/条 —— 约为 All Items 的 25–30 倍 |
+| Code **Each Item**（每条数据一个完整沙箱） | ~0.6 ms/条 ， 约为 All Items 的 25–30 倍 |
 
-所以对 10k 条数据用 `Run Once for Each Item` 是约 6 秒的纯开销，而 `Run Once for All Items` 约为 0.2 秒。只有当某条数据确实需要隔离时（独立的错误处理，或无法批量的逐条 API 调用）才用 Each Item；否则在单个 All Items 节点*内部*循环。表达式复杂度本身几乎免费（约 90% 的成本来自逐条上下文，而非你的代码），而且每次节点→节点跳转都会重新复制全部条目——所以要减少的是*逐条边界的数量*，而不是微观优化每一个。
+所以对 10k 条数据用 `Run Once for Each Item` 是约 6 秒的纯开销，而 `Run Once for All Items` 约为 0.2 秒。只有当某条数据确实需要隔离时（独立的错误处理，或无法批量的逐条 API 调用）才用 Each Item；否则在单个 All Items 节点*内部*循环。表达式复杂度本身几乎免费（约 90% 的成本来自逐条上下文，而非你的代码），而且每次节点→节点跳转都会重新复制全部条目，所以要减少的是*逐条边界的数量*，而不是微观优化每一个。
 
 除逐条成本外，每次 Code 节点运行还要支付一笔固定的向 task runner 交接的开销。默认 internal 模式下，runner 在空闲 15 秒后停止（`N8N_RUNNERS_AUTO_SHUTDOWN_TIMEOUT`），因此偶发运行的工作流在大多数运行中都要支付数百毫秒的冷启动。原生转换节点在一次进程内调用中处理所有条目，省去这笔交接。
 
-**这对节点选择意味着什么。** 大多数工作流是 I/O 受限的，几百条以下这些成本都不重要：按可读性选择，也就是原生节点优先。只有重型全量处理——每次运行数千条、以转换而非 I/O 为主、用户明示或实测得出——性能才成为决定性论据。此时一个 All Items Code 节点可以胜过一长串节点，理由写进它的 `Why Code:` 备注。这组数字是本套件唯一的实测参考；其他 Skill 指向这里而不是各自重复。
+**这对节点选择意味着什么。** 大多数工作流是 I/O 受限的，几百条以下这些成本都不重要：按可读性选择，也就是原生节点优先。只有重型全量处理，每次运行数千条、以转换而非 I/O 为主、用户明示或实测得出，性能才成为决定性论据。此时一个 All Items Code 节点可以胜过一长串节点，理由写进它的 `Why Code:` 备注。这组数字是本套件唯一的实测参考；其他 Skill 指向这里而不是各自重复。
 
 **参见**：[DATA_ACCESS.md](DATA_ACCESS.md) → "Mode Performance"，了解推论、跳转成本和规模检查。
 
@@ -155,7 +155,7 @@ return [{
 
 ## 数据访问模式
 
-四种从上游节点取数据的方式。注意 `$node["Name"]` 和 `$('Name')` 需要 `.first().json` 或 `.all()`——绝不能直接 `.json`。
+四种从上游节点取数据的方式。注意 `$node["Name"]` 和 `$('Name')` 需要 `.first().json` 或 `.all()`，绝不能直接 `.json`。
 
 ```javascript
 const allItems = $input.all();          // 1. All items — batch ops, aggregation (most common)
@@ -166,7 +166,7 @@ const other = $node["Webhook"].json;    // 4. Named node — combine data across
 
 始终通过 `.json` 访问字段（例如 `item.json.name`，而非 `item.name`），并且优先使用显式的 `$input.first().json.field` 而不是裸的 `$json.field`。
 
-**参见**：[DATA_ACCESS.md](DATA_ACCESS.md) 完整指南——每种模式都带示例、一棵决策树，以及常见错误（修改原始对象、缺少长度检查、在错误模式下使用 `$input.item`）。
+**参见**：[DATA_ACCESS.md](DATA_ACCESS.md) 完整指南，每种模式都带示例、一棵决策树，以及常见错误（修改原始对象、缺少长度检查、在错误模式下使用 `$input.item`）。
 
 ---
 
@@ -196,9 +196,9 @@ const name = webhookData.name;
 
 ## 返回格式要求
 
-**规范形式**：`[{json: {...}}]` —— 由带 `json` 属性的对象组成的数组。它没有歧义，且在两种执行模式下行为一致，所以请以它为默认。
+**规范形式**：`[{json: {...}}]` ， 由带 `json` 属性的对象组成的数组。它没有歧义，且在两种执行模式下行为一致，所以请以它为默认。
 
-在 *Run Once for All Items* 模式下，n8n 会在出口自动规范化更松散的形状：单个裸对象，或裸对象数组，会被自动包装进 `json`。所以 `return {foo: 1}` 能运行。没有任何东西可包装——因此运行时真正报 "Code doesn't return items properly" 错误的——是原始值（字符串/数字/布尔）或 `null`/`undefined`。（n8n-mcp ≥ 2.63.0 不再把裸对象返回标记为错误；它反映了这一自动包装行为。）
+在 *Run Once for All Items* 模式下，n8n 会在出口自动规范化更松散的形状：单个裸对象，或裸对象数组，会被自动包装进 `json`。所以 `return {foo: 1}` 能运行。没有任何东西可包装，因此运行时真正报 "Code doesn't return items properly" 错误的，是原始值（字符串/数字/布尔）或 `null`/`undefined`。（n8n-mcp ≥ 2.63.0 不再把裸对象返回标记为错误；它反映了这一自动包装行为。）
 
 ### 正确的返回格式
 
@@ -239,7 +239,7 @@ if (shouldProcess) {
 }
 ```
 
-### 非规范返回（自动包装——仍推荐规范形式）
+### 非规范返回（自动包装：仍推荐规范形式）
 
 ```javascript
 // ⚠️ Auto-wrapped in All Items mode → [{json: {field: value}}]. Runs, but prefer the array form.
@@ -272,24 +272,24 @@ return null;
 
 ## 常见模式总览
 
-来自生产工作流的最有用的 Code 节点形态，供 Code 通过闸门后使用。其中几个有原生等价物（总计 → Summarize，top-N → Sort + Limit，JSON 对比 → Compare Datasets，字符串聚合 → Aggregate 或 Summarize 的 `concatenate`）；模式库中的每个模式开头都会给出其原生替代。完整库覆盖 10 种模式：多源聚合、正则过滤、markdown/结构化文本解析、JSON 对比、CRM/表单转换、发布处理、带计算字段的数组转换、Slack Block Kit 格式化、top-N 排名和字符串聚合报表——各带变体。
+来自生产工作流的最有用的 Code 节点形态，供 Code 通过闸门后使用。其中几个有原生等价物（总计 → Summarize，top-N → Sort + Limit，JSON 对比 → Compare Datasets，字符串聚合 → Aggregate 或 Summarize 的 `concatenate`）；模式库中的每个模式开头都会给出其原生替代。完整库覆盖 10 种模式：多源聚合、正则过滤、markdown/结构化文本解析、JSON 对比、CRM/表单转换、发布处理、带计算字段的数组转换、Slack Block Kit 格式化、top-N 排名和字符串聚合报表，各带变体。
 
 **参见**：[COMMON_PATTERNS.md](COMMON_PATTERNS.md) 查看 10 个详细的生产模式（以及最佳实践部分：校验输入、try-catch、尽早过滤、数组方法优于循环、console.log 调试）。
 
 ---
 
-## 错误预防——高频错误
+## 错误预防：高频错误
 
 Code 节点反复出现的失败，按大致频率排序：
 
-1. **空代码 / 缺少 return** —— 始终以 `return [...]` 结尾，并确保*每个*分支都有返回。
-2. **把表达式语法当代码** —— 不要在属于 JavaScript 的地方写 `{{ }}`（`return {{ $json.x }}` 是语法错误）。使用 `` `${$json.field}` `` 或 `$input.first().json.field`。*字符串字面量内部*的 `{{ }}` 没问题——那只是 n8n 不会求值的字面文本。
-3. **返回形状** —— 优先 `return [{json:{...}}]`。裸的 `return {…}` 在 All Items 模式下会自动包装，但返回原始值（字符串/数字）或 `null` 才是真正会失败的。
-4. **缺少空值检查** —— 使用可选链：`item.json?.user?.email || 'fallback'`。
-5. **Webhook body 嵌套** —— `$json.email` 是 undefined；使用 `$json.body.email`。
-6. **鉴权辅助被禁**（`httpRequestWithAuthentication`）且 `$env` 被禁——密钥走凭据/HTTP Request 节点，不走 Code 节点沙箱。
+1. **空代码 / 缺少 return** ， 始终以 `return [...]` 结尾，并确保*每个*分支都有返回。
+2. **把表达式语法当代码** ， 不要在属于 JavaScript 的地方写 `{{ }}`（`return {{ $json.x }}` 是语法错误）。使用 `` `${$json.field}` `` 或 `$input.first().json.field`。*字符串字面量内部*的 `{{ }}` 没问题，那只是 n8n 不会求值的字面文本。
+3. **返回形状** ， 优先 `return [{json:{...}}]`。裸的 `return {…}` 在 All Items 模式下会自动包装，但返回原始值（字符串/数字）或 `null` 才是真正会失败的。
+4. **缺少空值检查** ， 使用可选链：`item.json?.user?.email || 'fallback'`。
+5. **Webhook body 嵌套** ， `$json.email` 是 undefined；使用 `$json.body.email`。
+6. **鉴权辅助被禁**（`httpRequestWithAuthentication`）且 `$env` 被禁，密钥走凭据/HTTP Request 节点，不走 Code 节点沙箱。
 
-**参见**：[ERROR_PATTERNS.md](ERROR_PATTERNS.md) 综合指南——每个错误的错误/正确代码、转义规则、沙箱限制（错误 #6–#7）、预防清单和快速错误信息查找表。
+**参见**：[ERROR_PATTERNS.md](ERROR_PATTERNS.md) 综合指南，每个错误的错误/正确代码、转义规则、沙箱限制（错误 #6–#7）、预防清单和快速错误信息查找表。
 
 ---
 
@@ -310,18 +310,18 @@ const adults = $jmespath($input.first().json, 'users[?age >= `18`]');
 // $getWorkflowStaticData() — data that persists across executions
 ```
 
-**沙箱（自 n8n v2.0 起，JsTaskRunnerSandbox）：** 访问器是 `this.helpers.httpRequest()` —— 裸 `$helpers` 全局在这里**未定义**（`$helpers.httpRequest()` 会抛出 `ReferenceError`）。在 `this` 丢失的嵌套 async 函数中，用 `await fn.call(this, ...)` 调用。`this.helpers.httpRequestWithAuthentication` 和 `this.helpers.requestWithAuthenticationPaginated` 在拒绝清单上（→ `UnsupportedFunctionError`）；鉴权调用请使用带凭据的 **HTTP Request 节点**（首选）、子工作流，或仅当 token 本来就作为数据流经工作流时，才在 `this.helpers.httpRequest()` 上手动加 `Authorization: Bearer ${token}` 头。`N8N_BLOCK_ENV_ACCESS_IN_NODE=true` 时 `$env` 被禁；`require()` 仅对白名单模块可用。`Buffer`、`URL` 和标准 JS 全局对象（Math、JSON、Object、Array）始终可用。
+**沙箱（自 n8n v2.0 起，JsTaskRunnerSandbox）：** 访问器是 `this.helpers.httpRequest()` ， 裸 `$helpers` 全局在这里**未定义**（`$helpers.httpRequest()` 会抛出 `ReferenceError`）。在 `this` 丢失的嵌套 async 函数中，用 `await fn.call(this, ...)` 调用。`this.helpers.httpRequestWithAuthentication` 和 `this.helpers.requestWithAuthenticationPaginated` 在拒绝清单上（→ `UnsupportedFunctionError`）；鉴权调用请使用带凭据的 **HTTP Request 节点**（首选）、子工作流，或仅当 token 本来就作为数据流经工作流时，才在 `this.helpers.httpRequest()` 上手动加 `Authorization: Bearer ${token}` 头。`N8N_BLOCK_ENV_ACCESS_IN_NODE=true` 时 `$env` 被禁；`require()` 仅对白名单模块可用。`Buffer`、`URL` 和标准 JS 全局对象（Math、JSON、Object、Array）始终可用。
 
-**参见**：[BUILTIN_FUNCTIONS.md](BUILTIN_FUNCTIONS.md) 完整参考——httpRequest 全部选项、全部 DateTime/Luxon 操作、JMESPath 模式、静态数据用例和沙箱限制细节。
+**参见**：[BUILTIN_FUNCTIONS.md](BUILTIN_FUNCTIONS.md) 完整参考，httpRequest 全部选项、全部 DateTime/Luxon 操作、JMESPath 模式、静态数据用例和沙箱限制细节。
 
 ---
 
 ## 最佳实践
 
-- **先校验输入** —— 处理前防护空数组 / 缺失的 `.json`。
+- **先校验输入** ， 处理前防护空数组 / 缺失的 `.json`。
 - **对有风险的工作（HTTP 调用）用 try-catch**，返回错误对象而不是崩溃。
 - **优先数组方法**（`filter`/`map`/`reduce`）而非手写循环。
-- **尽早过滤，延后转换** —— 在昂贵操作之前先缩小数据集。
+- **尽早过滤，延后转换** ， 在昂贵操作之前先缩小数据集。
 - **描述性命名**，用 `console.log()` 调试（输出到浏览器控制台）。
 
 **参见**：[COMMON_PATTERNS.md](COMMON_PATTERNS.md) → "Best Practices" 查看各条目的代码示例。
@@ -330,14 +330,14 @@ const adults = $jmespath($input.first().json, 'users[?age >= `18`]');
 
 ## 生产环境注意事项
 
-来自真实部署的血泪教训——此处为摘要，代码在 [DATA_ACCESS.md](DATA_ACCESS.md) → "Production Gotchas"：
+来自真实部署的血泪教训，此处为摘要，代码在 [DATA_ACCESS.md](DATA_ACCESS.md) → "Production Gotchas"：
 
 - **SplitInBatches 的输出反直觉**：`main[0]` = **done**（在全部批次完成后触发一次），`main[1]` = **每个批次**（循环体）。在 done 输出之后加一个 **Limit 1** 节点作为保险。
-- **迭代次数就是成本**：每次循环迭代都让整个循环体重新穿过引擎（每次约 0.8 ms 开销）。`batchSize: 1` 等价于循环版的 *Each Item* —— 在真实约束（速率限制、页大小、内存）允许下用最大批次，或者干脆不循环。
+- **迭代次数就是成本**：每次循环迭代都让整个循环体重新穿过引擎（每次约 0.8 ms 开销）。`batchSize: 1` 等价于循环版的 *Each Item* ， 在真实约束（速率限制、页大小、内存）允许下用最大批次，或者干脆不循环。
 - **跨迭代累积（关键）**：循环结束后，`$('Node Inside Loop').all()` 只返回最后一次迭代的数据。通过 `$getWorkflowStaticData('global')` 累积（循环前重置、循环内推入、循环后读取）。
 - **pairedItem**：当输出的条目与输入不是 1:1 映射时，设置 `pairedItem: { item: i }`，否则下游 Set 节点会报 `paired_item_no_info` 失败。
-- **节点引用语法**：`$('Node').first().json` 或 `$('Node').all()` —— 绝不在引用上直接 `.json`。
-- **浮点精度**：货币比较放在分一级 —— `Math.round(a*100) !== Math.round(b*100)` —— 以避免浮点噪声造成误判。
+- **节点引用语法**：`$('Node').first().json` 或 `$('Node').all()` ， 绝不在引用上直接 `.json`。
+- **浮点精度**：货币比较放在分一级 ， `Math.round(a*100) !== Math.round(b*100)` ， 以避免浮点噪声造成误判。
 
 ---
 

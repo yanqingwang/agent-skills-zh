@@ -35,7 +35,7 @@ description: >
 2. **把生命周期回调用在它们该用的地方：** `_ready()` 在节点及其子节点进入
    场景树时运行一次；`_process(delta)` 每个渲染帧运行；`_physics_process(delta)`
    在固定的物理节拍上运行（移动/物理相关逻辑用它）。
-3. **用 `@onready` 获取节点引用**，而不是在 `_init()` 里 —— 节点进入场景树
+3. **用 `@onready` 获取节点引用**，而不是在 `_init()` 里 ， 节点进入场景树
    之前子节点并不存在。
 4. **用 `@export` 暴露可调参数**，让设计师能在 Inspector 中编辑。
 5. **用信号 + `await` 响应事件**，在语义通顺的地方用它替代轮询。
@@ -84,7 +84,7 @@ func _on_health_changed(current: int, maximum: int) -> void:
     print("HP: %d/%d" % [current, maximum])
 ```
 
-### 3. await —— 暂停直到计时器或信号触发（取代 3.x 的 yield）
+### 3. await ： 暂停直到计时器或信号触发（取代 3.x 的 yield）
 
 ```gdscript
 func flash_then_continue() -> void:
@@ -109,11 +109,11 @@ func get_first_name(d: Dictionary) -> String:
 ## 陷阱
 
 - **3.x → 4.x 的信号 API 变了。** `emit_signal("x")` 仍可用，但更推荐
-  `x.emit(...)`；`connect("x", self, "_on_x")` 已被移除 —— 请使用带 Callable 的
+  `x.emit(...)`；`connect("x", self, "_on_x")` 已被移除 ， 请使用带 Callable 的
   `x.connect(_on_x)`。`yield(obj, "sig")` 现在是 `await obj.sig`。
 - **`export var` 现在是 `@export var`**（注解）。同理 `onready`→`@onready`、
   `tool`→`@tool`、RPC 关键字 `remote`/`master` → `@rpc(...)` 注解。
-- **在 `_init()` 里使用 `@onready` 和 `$NodePath` 会失败** —— 此时节点尚未
+- **在 `_init()` 里使用 `@onready` 和 `$NodePath` 会失败** ， 此时节点尚未
   进入场景树。请在 `_ready()` 中或用 `@onready` 初始化节点引用。
 - **整数除法会截断。** `5 / 2 == 2`。请使用 `5.0 / 2` 或转换为 `float`。
 - **`_process` 与 `_physics_process` 的取舍。** 把 `move_and_slide()` 和物理
@@ -133,7 +133,7 @@ func get_first_name(d: Dictionary) -> String:
 
 ## 相关 Skill
 
-- `godot-nodes-scenes` —— 场景树、实例化与 autoload。
-- `godot-signals-groups` —— 基于信号与分组（groups）的事件驱动架构。
-- `godot-resources` —— 基于自定义 `Resource` 类型的数据驱动设计。
-- `godot-csharp` —— 用 C#/.NET 表达相同的引擎概念。
+- `godot-nodes-scenes` ， 场景树、实例化与 autoload。
+- `godot-signals-groups` ， 基于信号与分组（groups）的事件驱动架构。
+- `godot-resources` ， 基于自定义 `Resource` 类型的数据驱动设计。
+- `godot-csharp` ， 用 C#/.NET 表达相同的引擎概念。

@@ -10,11 +10,11 @@ version: 0.1.0
 
 # 构建 MCP App（交互式 UI 小部件）
 
-MCP app 是一个**同时提供 UI 资源**的标准 MCP server——即内联渲染在聊天界面中的交互式组件。构建一次，即可同时运行在 Claude *和* ChatGPT 以及任何实现了 apps surface 的宿主中。
+MCP app 是一个**同时提供 UI 资源**的标准 MCP server，即内联渲染在聊天界面中的交互式组件。构建一次，即可同时运行在 Claude *和* ChatGPT 以及任何实现了 apps surface 的宿主中。
 
 UI 层是**增量式的**。底层仍然是 tools、resources 和相同的线上协议（wire protocol）。如果你还没有构建过普通的 MCP server，`build-mcp-server` 技能覆盖了这一基础层；本技能在其上添加小部件。
 
-> **在 Claude 中测试：** 将 server 作为自定义 connector 添加到 claude.ai（本地开发时经由 Cloudflare tunnel）——这会走真实的 iframe sandbox 和 `hostContext`。参见 https://claude.com/docs/connectors/building/testing。
+> **在 Claude 中测试：** 将 server 作为自定义 connector 添加到 claude.ai（本地开发时经由 Cloudflare tunnel），这会走真实的 iframe sandbox 和 `hostContext`。参见 https://claude.com/docs/connectors/building/testing。
 
 ## Claude 宿主专属细节
 
@@ -25,14 +25,14 @@ UI 层是**增量式的**。底层仍然是 tools、resources 和相同的线上
 | `prefersBorder: false` | resource | 去掉宿主的外层卡片边框（移动端）。 |
 | `csp.{connectDomains, resourceDomains, baseUriDomains}` | resource | 声明外部来源；默认全部阻止。`frameDomains` 目前在 Claude 中受限。 |
 
-- `hostContext.safeAreaInsets: {top, right, bottom, left}`（px）——为刘海屏和输入框浮层留出空间时请遵守这些值。
-- 目录提交要求 OAuth 或 **authless**（`none`）——静态 bearer 仅适用于私有部署，且会导致无法上架——此外还需工具 `annotations` 和 3–5 张 PNG 截图；参见 `references/directory-checklist.md`。
+- `hostContext.safeAreaInsets: {top, right, bottom, left}`（px），为刘海屏和输入框浮层留出空间时请遵守这些值。
+- 目录提交要求 OAuth 或 **authless**（`none`），静态 bearer 仅适用于私有部署，且会导致无法上架，此外还需工具 `annotations` 和 3–5 张 PNG 截图；参见 `references/directory-checklist.md`。
 
 ---
 
 ## 什么时候小部件优于纯文本
 
-不要为了 UI 而 UI——大多数工具返回文本或 JSON 就够了。满足以下任一条件时才添加小部件：
+不要为了 UI 而 UI，大多数工具返回文本或 JSON 就够了。满足以下任一条件时才添加小部件：
 
 | 信号 | 小部件类型 |
 |---|---|
@@ -46,7 +46,7 @@ UI 层是**增量式的**。底层仍然是 tools、resources 和相同的线上
 
 ---
 
-## 小部件 vs Elicitation——正确路由
+## 小部件 vs Elicitation：正确路由
 
 构建小部件之前，先检查 **elicitation** 是否已能覆盖需求。Elicitation 是协议原生能力，零 UI 代码，可在任何合规宿主中工作。
 
@@ -87,7 +87,7 @@ UI 层是**增量式的**。底层仍然是 tools、resources 和相同的线上
 
 ### MCPB 打包的 MCP app（本地 + UI）
 
-小部件机制相同，但 server 在 MCPB bundle 内本地运行。当小部件需要驱动**本地**应用时使用——例如浏览真实本地磁盘的文件选择器、控制桌面应用的对话框。
+小部件机制相同，但 server 在 MCPB bundle 内本地运行。当小部件需要驱动**本地**应用时使用，例如浏览真实本地磁盘的文件选择器、控制桌面应用的对话框。
 
 MCPB 打包的具体操作以 **`build-mcpb`** 技能为准。以下所有内容对两种形态均适用。
 
@@ -97,7 +97,7 @@ MCPB 打包的具体操作以 **`build-mcpb`** 技能为准。以下所有内容
 
 一个支持小部件的工具包含**两个独立的注册**：
 
-1. **工具**通过 `_meta.ui.resourceUri` 声明一个 UI 资源。其 handler 返回纯文本/JSON——而不是 HTML。
+1. **工具**通过 `_meta.ui.resourceUri` 声明一个 UI 资源。其 handler 返回纯文本/JSON，而不是 HTML。
 2. **资源**单独注册，负责提供 HTML。
 
 当 Claude 调用工具时，宿主看到 `_meta.ui.resourceUri`，拉取该资源，在 iframe 中渲染，并通过 `ontoolresult` 事件把工具的返回值送入 iframe。
@@ -138,13 +138,13 @@ registerAppResource(
 );
 ```
 
-URI scheme `ui://` 只是约定。MIME 类型必须是 `RESOURCE_MIME_TYPE`（`"text/html;profile=mcp-app"`）——宿主据此将其渲染为交互式 iframe，而不是仅展示源码。
+URI scheme `ui://` 只是约定。MIME 类型必须是 `RESOURCE_MIME_TYPE`（`"text/html;profile=mcp-app"`），宿主据此将其渲染为交互式 iframe，而不是仅展示源码。
 
 ---
 
-## 小部件运行时——`App` 类
+## 小部件运行时：`App` 类
 
-在 iframe 内，你的脚本通过 `@modelcontextprotocol/ext-apps` 的 `App` 类与宿主通信。这是一条**持久的双向连接**——只要会话仍在进行，小部件就保持存活，接收新的工具结果并发送用户操作。
+在 iframe 内，你的脚本通过 `@modelcontextprotocol/ext-apps` 的 `App` 类与宿主通信。这是一条**持久的双向连接**，只要会话仍在进行，小部件就保持存活，接收新的工具结果并发送用户操作。
 
 ```html
 <script type="module">
@@ -172,7 +172,7 @@ URI scheme `ui://` 只是约定。MIME 类型必须是 `RESOURCE_MIME_TYPE`（`"
 </script>
 ```
 
-`/*__EXT_APPS_BUNDLE__*/` 占位符由 server 在启动时替换为 `@modelcontextprotocol/ext-apps/app-with-deps` 的内容——为什么必须这样做以及改写代码片段见 `references/iframe-sandbox.md`。**不要** `import { App } from "https://esm.sh/..."`；iframe 的 CSP 会阻断传递依赖的拉取，小部件会渲染成一片空白。
+`/*__EXT_APPS_BUNDLE__*/` 占位符由 server 在启动时替换为 `@modelcontextprotocol/ext-apps/app-with-deps` 的内容，为什么必须这样做以及改写代码片段见 `references/iframe-sandbox.md`。**不要** `import { App } from "https://esm.sh/..."`；iframe 的 CSP 会阻断传递依赖的拉取，小部件会渲染成一片空白。
 
 | 方法 | 方向 | 用途 |
 |---|---|---|
@@ -187,15 +187,15 @@ URI scheme `ui://` 只是约定。MIME 类型必须是 `RESOURCE_MIME_TYPE`（`"
 | `app.downloadFile({name, mimeType, content})` | 小部件 → 宿主 | 经宿主中转的下载（base64 内容） |
 | `new App(info, caps, {autoResize: true})` | — | iframe 高度跟随渲染内容 |
 
-`sendMessage` 是典型的"用户选好了某样东西，告诉 Claude"路径。`updateModelContext` 用于 Claude 应当知晓但不应刷屏聊天记录的状态。任何对外跳转都**必须**用 `openLink`——`window.open` 和 `<a target="_blank">` 都会被 sandbox 属性阻止。
+`sendMessage` 是典型的"用户选好了某样东西，告诉 Claude"路径。`updateModelContext` 用于 Claude 应当知晓但不应刷屏聊天记录的状态。任何对外跳转都**必须**用 `openLink`，`window.open` 和 `<a target="_blank">` 都会被 sandbox 属性阻止。
 
 **小部件做不到的事：**
 - 访问宿主页面的 DOM、cookie 或存储
-- 向任意来源发起网络请求（受 CSP 限制——请经由 `callServerTool` 中转）
-- 打开弹窗或直接导航——请使用 `app.openLink({url})`
-- 可靠地加载远程图片——请在 server 端内联为 `data:` URL
+- 向任意来源发起网络请求（受 CSP 限制，请经由 `callServerTool` 中转）
+- 打开弹窗或直接导航，请使用 `app.openLink({url})`
+- 可靠地加载远程图片，请在 server 端内联为 `data:` URL
 
-保持小部件**小而单一职责**。选择器就负责选，图表就负责显示。不要在 iframe 里造一个完整的子应用——把它拆成多个工具，各配一个聚焦的小部件。
+保持小部件**小而单一职责**。选择器就负责选，图表就负责显示。不要在 iframe 里造一个完整的子应用，把它拆成多个工具，各配一个聚焦的小部件。
 
 ---
 
@@ -316,23 +316,23 @@ const { App } = globalThis.ExtApps;
 
 **工具描述必须提到小部件。**Claude 在决定调用什么时只看得到工具描述。描述里写上"打开一个交互式选择器"，才能让 Claude 主动用它，而不是瞎猜一个 ID。
 
-**小部件在运行时是可选的。**不支持 apps surface 的宿主会直接忽略 `_meta.ui`，正常渲染工具的文本内容。由于你的工具 handler 本来就返回有意义的文本/JSON（即小部件的数据），降级是自动的——Claude 直接看到数据，而不经由小部件。
+**小部件在运行时是可选的。**不支持 apps surface 的宿主会直接忽略 `_meta.ui`，正常渲染工具的文本内容。由于你的工具 handler 本来就返回有意义的文本/JSON（即小部件的数据），降级是自动的，Claude 直接看到数据，而不经由小部件。
 
 **只读工具不要阻塞等待小部件结果。**纯粹*展示*数据的小部件（图表、预览）不应要求用户操作才能算完成。在同一个结果中同时返回展示型小部件 *和* 文本摘要，让 Claude 无需等待即可继续推理。
 
-**按条目数量分支布局，而不是按工具数量。**如果一个用例是"详细展示单个结果"，另一个是"并排展示多个结果"，不要做两个工具——做一个接受 `items[]` 的工具，让小部件选择布局：`items.length === 1` → 详情视图，`> 1` → 轮播。这样 server schema 保持简单，也让 Claude 自然决定数量。
+**按条目数量分支布局，而不是按工具数量。**如果一个用例是"详细展示单个结果"，另一个是"并排展示多个结果"，不要做两个工具，做一个接受 `items[]` 的工具，让小部件选择布局：`items.length === 1` → 详情视图，`> 1` → 轮播。这样 server schema 保持简单，也让 Claude 自然决定数量。
 
 **把 Claude 的推理放进 payload。**在每个条目上加一个简短的 `note` 字段（说明 Claude 为什么选它），在卡片上渲染为标注框，用户就能在选择旁边直接看到理由。在工具描述里提到这个字段，Claude 才会去填。
 
 **在 server 端归一化图片形状。**如果你的数据源返回的图片长宽比千奇百怪，先在为 data-URL 内联而拉取*之前*改写成可预期的变体（如限定为方形）。然后给小部件的图片容器设置固定的 `aspect-ratio` + `object-fit: contain`，让所有内容居中放置。
 
-**跟随宿主主题。**用 `app.getHostContext()?.theme`（在 `connect()` 之后）加 `app.onhostcontextchanged` 做实时更新。在 `<html>` 上切换 `.dark` 类，颜色放在 CSS 自定义属性中，配一个 `:root.dark {}` 覆盖块，并设置 `color-scheme`。深色模式下禁用 `mix-blend-mode: multiply`——它会让图片消失。
+**跟随宿主主题。**用 `app.getHostContext()?.theme`（在 `connect()` 之后）加 `app.onhostcontextchanged` 做实时更新。在 `<html>` 上切换 `.dark` 类，颜色放在 CSS 自定义属性中，配一个 `:root.dark {}` 覆盖块，并设置 `color-scheme`。深色模式下禁用 `mix-blend-mode: multiply`，它会让图片消失。
 
 ---
 
 ## 测试
 
-**Claude Desktop**——当前版本仍要求 `command`/`args` 配置形态（没有原生 `"type": "http"`）。用 `mcp-remote` 包一层并强制 `http-only` transport，避免 SSE 探测吞掉小部件能力协商：
+**Claude Desktop**，当前版本仍要求 `command`/`args` 配置形态（没有原生 `"type": "http"`）。用 `mcp-remote` 包一层并强制 `http-only` transport，避免 SSE 探测吞掉小部件能力协商：
 
 ```json
 {
@@ -348,7 +348,7 @@ const { App } = globalThis.ExtApps;
 
 Desktop 对 UI 资源的缓存非常激进。编辑小部件 HTML 之后，**彻底退出**（⌘Q / Alt+F4，而不是关窗口）再重启，强制冷重新拉取资源。
 
-**无头 JSON-RPC 循环**——不用在 Desktop 里点来点去，快速迭代：
+**无头 JSON-RPC 循环**，不用在 Desktop 里点来点去，快速迭代：
 
 ```bash
 # test.jsonl — one JSON-RPC message per line
@@ -362,7 +362,7 @@ Desktop 对 UI 资源的缓存非常激进。编辑小部件 HTML 之后，**彻
 
 `sleep` 让 stdin 保持打开足够久，以便收齐所有响应。用 `jq` 或一行 Python 解析 jsonl 输出。
 
-**小部件开发循环**——通过一个普通 GET 路由提供内联后的小部件 HTML，并配一个假的 `ExtApps` shim（从查询参数触发 `ontoolresult`），彻底避开 ⌘Q-重启循环：
+**小部件开发循环**，通过一个普通 GET 路由提供内联后的小部件 HTML，并配一个假的 `ExtApps` shim（从查询参数触发 `ontoolresult`），彻底避开 ⌘Q-重启循环：
 
 ```ts
 app.get("/widget-preview", (_req, res) => {
@@ -380,9 +380,9 @@ app.get("/widget-preview", (_req, res) => {
 
 在普通浏览器标签页中打开 `http://localhost:3000/widget-preview?payload={"rows":[...]}`，用常规 devtools 迭代。
 
-**宿主降级**——用一个不支持 apps surface 的宿主（或 MCP Inspector），确认工具的文本内容能优雅降级。
+**宿主降级**，用一个不支持 apps surface 的宿主（或 MCP Inspector），确认工具的文本内容能优雅降级。
 
-**CSP 调试**——打开 iframe 自身的 devtools console。CSP 违规是小部件静默失败的第一大原因（空白矩形，主 console 无报错）。参见 `references/iframe-sandbox.md`。
+**CSP 调试**，打开 iframe 自身的 devtools console。CSP 违规是小部件静默失败的第一大原因（空白矩形，主 console 无报错）。参见 `references/iframe-sandbox.md`。
 
 ---
 

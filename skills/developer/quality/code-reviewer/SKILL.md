@@ -58,7 +58,7 @@ metadata:
 
 ## 审查模式（快速参考）
 
-### N+1 查询——坏与好
+### N+1 查询：坏与好
 ```python
 # BAD: query inside loop
 for user in users:
@@ -68,7 +68,7 @@ for user in users:
 users = User.objects.prefetch_related('orders').all()
 ```
 
-### 魔法数字——坏与好
+### 魔法数字：坏与好
 ```python
 # BAD
 if status == 3:
@@ -80,7 +80,7 @@ if status == ORDER_STATUS_SHIPPED:
     ...
 ```
 
-### 安全：SQL 注入——坏与好
+### 安全：SQL 注入：坏与好
 ```python
 # BAD: string interpolation in query
 cursor.execute(f"SELECT * FROM users WHERE id = {user_id}")

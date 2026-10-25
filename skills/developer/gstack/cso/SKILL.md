@@ -100,7 +100,7 @@ gstack-cso inspect-v2 <import-id>
 预算：日常 10 分钟，comprehensive 30 分钟。每个 Docker endpoint 最多使用三个调查 worker 与两个复现组。每条发现的尝试有五分钟与三次 harness 修复。优先处理未解决的高影响项。仅在暴露时报告模型用量。helper 回复带有调查的 `remainingSeconds`：只启动装得下的工作；低于 120 秒时停下并 `finish`。
 
 ---
-## 小节索引 —— 情形适用时阅读对应小节
+## 小节索引 ： 情形适用时阅读对应小节
 
 本 Skill 是一棵决策树骨架。下面的步骤指向按需阅读的
 小节。执行某步之前先完整阅读对应小节；不要凭记忆工作。
@@ -123,7 +123,7 @@ gstack-cso inspect-v2 <import-id>
 记录范围内的端点与边界：公开/已认证/管理员、跨租户访问、上传、webhook、任务、WebSocket、集成、秘密、CI/CD、容器、基础设施、agent 工具与存储。记录计划中的评估与 schema 状态。数量与扫描器成功不构成覆盖。
 
 > **STOP。** 在运行由解析出的模式选择的、依赖范围的审计 Phase（Phase 2-11）之前（在 Phase 0 技术栈检测
-> 与 Phase 1 攻击面普查之后），Read `~/.claude/skills/gstack/cso/sections/audit-phases.md` 并完整执行它。不要凭记忆工作——该小节是这一步的事实来源。
+> 与 Phase 1 攻击面普查之后），Read `~/.claude/skills/gstack/cso/sections/audit-phases.md` 并完整执行它。不要凭记忆工作，该小节是这一步的事实来源。
 
 ### Phase 12：证据量规与独立挑战
 

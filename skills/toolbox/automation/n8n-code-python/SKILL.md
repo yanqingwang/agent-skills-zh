@@ -16,7 +16,7 @@ description: 在 n8n Code 节点中编写 Python（原生 Python，`language` py
 
 ---
 
-## JavaScript 优先——比以往更强
+## JavaScript 优先：比以往更强
 
 原生 Python 只给你两个变量和纯 Python，且**默认禁止任何 import**：没有
 `json`、`datetime` 或 `re`。所有 n8n 特有的东西（`$('Node')`、`$jmespath`、Luxon、

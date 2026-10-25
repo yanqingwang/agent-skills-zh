@@ -42,10 +42,10 @@ python3 skills/breakout-trade-planner/scripts/plan_breakout_trades.py \
 
 阅读生成的 JSON 与 Markdown 报告。呈现以下内容：
 
-1. **可执行订单** —— 突破前（pre-breakout）候选股及其订单模板
-2. **复核确认** —— 需实时确认的突破中（breakout-state）候选股
-3. **观察清单** —— 待监控的发展中 VCP 候选股
-4. **已拒绝/推迟/受限** —— 被 Gate 或组合限额过滤掉的候选股
+1. **可执行订单** ， 突破前（pre-breakout）候选股及其订单模板
+2. **复核确认** ， 需实时确认的突破中（breakout-state）候选股
+3. **观察清单** ， 待监控的发展中 VCP 候选股
+4. **已拒绝/推迟/受限** ， 被 Gate 或组合限额过滤掉的候选股
 ### 第 3 步：解释交易计划
 
 对每笔可执行订单，解释：

@@ -110,7 +110,7 @@ notebooklm auth check --test --json
 
 授权边界是用户意图，而不是 CLI 是否出现提示。获得授权后，在支持的地方传入
 `--yes`/`-y`。大多数破坏性 JSON 命令在没有它时会拒绝执行而不提示，但
-有些命令——包括 `ask --new --json` 和 `share remove --json`——会不经提示直接执行。绝不要
+有些命令，包括 `ask --new --json` 和 `share remove --json`，会不经提示直接执行。绝不要
 把“没有提示”当作同意。
 
 `research cancel` 是发出即忘（fire-and-forget）的。在获得授权的取消之后，用

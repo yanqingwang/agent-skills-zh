@@ -70,7 +70,7 @@ _NEW_LEVEL=$((_CUR_LEVEL + 1))
 [ "$_NEW_LEVEL" -gt 3 ] && _NEW_LEVEL=3
 echo "$_REMOTE_VER $_NEW_LEVEL $(date +%s)" > "$_SNOOZE_FILE"
 ```
-注意：`{new}` 是 `UPGRADE_AVAILABLE` 输出中的远端版本——从更新检查结果代入。四字段行用 SHA（第四个字段）作为 `{new}`，这样 main 一移动暂缓即结束。
+注意：`{new}` 是 `UPGRADE_AVAILABLE` 输出中的远端版本，从更新检查结果代入。四字段行用 SHA（第四个字段）作为 `{new}`，这样 main 一移动暂缓即结束。
 
 把暂缓时长告诉用户："Next reminder in 24h"（或 48h 或 1 week，取决于层级）。提示："Set `auto_upgrade: true` in `~/.gstack/config.yaml` for automatic upgrades."
 
@@ -132,7 +132,7 @@ echo "OLD_VERSION=$OLD_VERSION"
 
 **git 安装**（global-git、local-git）：
 
-先做 fast-forward，通过 `bin/gstack-ff-update`——与会话更新
+先做 fast-forward，通过 `bin/gstack-ff-update`，与会话更新
 自动升级用的是同一套代码：能干净合并的本地编辑随更新一起
 带过去；冲突的编辑（或已暂存的改动、或未合并的文件）
 会被存进一个 rescue ref，而不是留成冲突标记：
@@ -161,7 +161,7 @@ setup 的 `--refresh-registered` 会刷新此 checkout 注册过的每一个
 重试命令，绝不说每个宿主都已刷新。`skipped` 行
 属于另一个 checkout 或项目；转述其命令，不要执行。
 
-如果输出以 `FF_OK` 结尾，升级即告完成——完全跳过下方
+如果输出以 `FF_OK` 结尾，升级即告完成，完全跳过下方
 的回退流程。当它前一行读作
 `rescued <old> <new> refs/gstack/rescue/<oid> unmerged=<0|1>` 时，告诉用户
 他们冲突的本地编辑已保存在那里，并转述脚本打印的 `Inspect`、
@@ -177,17 +177,17 @@ setup 的 `--refresh-registered` 会刷新此 checkout 注册过的每一个
 遇 `BUN_VERSION_UNREADABLE`，STOP：`bun --version` 没有打印出 gstack 能读取的版本，所以 `bun upgrade` 可能同样跑不起来；让用户从 https://bun.sh 重装 Bun（在 Git Bash 或 macOS/Linux 终端里执行 `curl -fsSL https://bun.sh/install | bash`），确认 `bun --version` 打印出类似 1.4.2 的版本，然后再运行一次 /gstack-upgrade（docs/troubleshooting.md#bun-version-unreadable）。
 遇 `SETUP_FAILED`，STOP；保留用户改动并报告恢复用 commit。git 路径上没有 `.bak`。不要仅因 setup 失败就进入分叉回退。仅在 `FF_REFUSED`（本地 commit 或历史分叉）时进入；网络/认证失败停下来修理，而不是重置。
 
-**回退（ff-only 被拒——本地 commit 或历史分叉）。**`git reset
+**回退（ff-only 被拒：本地 commit 或历史分叉）。**`git reset
 --hard` 会毁东西：即使工作树干净，未推送的本地 commit
 也会丢。必须设门：
 
 1. 在 `$INSTALL_DIR` 中运行 `git status --porcelain` 和
    `git rev-list origin/main..HEAD --oneline`。
-2. 如果两者都为空，这次 reset 可证明是安全的——不经询问直接运行
+2. 如果两者都为空，这次 reset 可证明是安全的，不经询问直接运行
    下方的回退代码块。
-3. 否则用 AskUserQuestion 询问（单向门——破坏性），逐项列出
+3. 否则用 AskUserQuestion 询问（单向门，破坏性），逐项列出
    将被丢弃的内容：每个脏文件和每个未推送的 commit，
-   附 hash + 主题。选项：**A)** Discard them and upgrade (reset)——
+   附 hash + 主题。选项：**A)** Discard them and upgrade (reset)，
    必须显式键入字母；**B)** Abort the upgrade，让用户先抢救
    自己的工作（存在本地 commit 时为推荐项）。绝不在
    含糊回复上继续。
@@ -316,7 +316,7 @@ fi
 ### Step 4.8：停掉所有过期守护进程（无条件执行）
 
 升级前启动的 browse 守护进程在被停掉之前会一直跑旧二进制的
-代码——它能在 `git reset --hard` 和 `./setup` 之后幸存，因为运行中的
+代码，它能在 `git reset --hard` 和 `./setup` 之后幸存，因为运行中的
 进程持有旧的可执行文件。此步骤始终执行，使用
 Step 2 检测到的安装目录。
 
@@ -349,13 +349,13 @@ fi
 1. **`stale-responsive` + `DAEMON_STOPPED=yes`：**告诉用户 "Stopped the
    old browse daemon (binary {OLD_HASH} → {NEW_HASH}). The next browse command
    starts a fresh daemon on the new binary."
-2. **`stale-busy`：**守护进程跑的是旧二进制但正在干活——让位于
+2. **`stale-busy`：**守护进程跑的是旧二进制但正在干活，让位于
    它，绝不在升级期间杀死忙碌的守护进程。告诉用户："A browse daemon
    is still running the pre-upgrade binary ({OLD_HASH} → {NEW_HASH}) but is
    busy right now. When it finishes, stop it with `browse stop` — or force it
    immediately with `browse --force-restart stop` (loses that session's
    tabs/cookies/logins)."
-3. **`none` / `dead` / `current`：**无事可做——什么都不说。
+3. **`none` / `dead` / `current`：**无事可做，什么都不说。
 
 ### Step 5：写入标记 + 清缓存
 
@@ -369,7 +369,7 @@ rm -f "$GSTACK_STATE_ROOT"/update-snoozed
 
 ### Step 6：展示更新内容
 
-阅读 `$INSTALL_DIR/CHANGELOG.md`。找出旧版本与新版本之间的所有版本条目。按主题分组成 5-7 条摘要。不要堆砌——聚焦面向用户的变更。内部重构除非重大，否则跳过。
+阅读 `$INSTALL_DIR/CHANGELOG.md`。找出旧版本与新版本之间的所有版本条目。按主题分组成 5-7 条摘要。不要堆砌，聚焦面向用户的变更。内部重构除非重大，否则跳过。
 
 四字段情形：把 `git -C "$INSTALL_DIR" log --oneline <PRE_UPGRADE_COMMIT>..HEAD`（≤7 条）摘要表述为 "gstack v{old}, main at {sha}"。
 
@@ -387,7 +387,7 @@ Happy shipping!
 
 ### Step 7：继续
 
-展示完更新内容后，继续用户最初调用的那个 Skill。升级已完成——无需进一步操作。
+展示完更新内容后，继续用户最初调用的那个 Skill。升级已完成，无需进一步操作。
 
 ---
 

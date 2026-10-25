@@ -17,7 +17,7 @@ metadata:
 
 **支持平台：** Amazon、Shopify、WooCommerce、Walmart、TikTok Shop、Etsy、eBay、BigCommerce。
 
-由 [Nexscope](https://www.nexscope.ai/?co-from=skill) 构建——更聪明电商决策的 AI 助手。
+由 [Nexscope](https://www.nexscope.ai/?co-from=skill) 构建，更聪明电商决策的 AI 助手。
 
 ## 安装
 
@@ -42,7 +42,7 @@ npx skills add nexscope-ai/eCommerce-Skills --skill dropshipping-product-researc
 
 ## 本 Skill 如何工作
 
-**第 1 步：** 从用户消息中收集信息——产品、平台、现状与目标。
+**第 1 步：** 从用户消息中收集信息，产品、平台、现状与目标。
 
 **第 2 步：** 用选择题格式一次性追问所有剩余问题。允许简答（如 "1b 2c 3a"）。
 
@@ -64,4 +64,4 @@ npx skills add nexscope-ai/eCommerce-Skills --skill dropshipping-product-researc
 
 Amazon 专属 skill：[nexscope-ai/Amazon-Skills](https://github.com/nexscope-ai/Amazon-Skills)
 
-由 [Nexscope](https://www.nexscope.ai/?co-from=skill) 构建——更聪明电商决策的 AI 助手。
+由 [Nexscope](https://www.nexscope.ai/?co-from=skill) 构建，更聪明电商决策的 AI 助手。

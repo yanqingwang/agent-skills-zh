@@ -107,7 +107,7 @@ brag-output-2026-05-04-143022/
 
 写入 `<output-dir>/brag-plan.md`（其中 `<output-dir>` 是 `brag-output/` 或上面选择的时间戳变体）。回答规划量规。敲定一个创意角度。写出逐拍分镜，包括场景、文字、时序、转场和 SFX 提示。
 
-选定音乐时，加入一个简短的 `Music cue guidance` 章节：如果存在，从 `<skill-dir>/assets/music/cues/` 读取捆绑曲目的 cue 预设；否则注明将在合成时检测 cue（现在任何曲目都支持节拍同步——见 `references/audio.md`）。Cue 元数据只是可选的时序指引：故事、可读性、节奏和产品清晰度始终优先。
+选定音乐时，加入一个简短的 `Music cue guidance` 章节：如果存在，从 `<skill-dir>/assets/music/cues/` 读取捆绑曲目的 cue 预设；否则注明将在合成时检测 cue（现在任何曲目都支持节拍同步，见 `references/audio.md`）。Cue 元数据只是可选的时序指引：故事、可读性、节奏和产品清晰度始终优先。
 
 **门槛（Gate）：** `<output-dir>/brag-plan.md` 存在且包含完整分镜。场景时长之和为 15–25 秒。
 
@@ -115,7 +115,7 @@ brag-output-2026-05-04-143022/
 
 ## 第 3 步：交接给 Hyperframes
 
-**阅读：** Hyperframes skills——`hyperframes`（契约，`references/format.md`、`references/motion.md`、`references/look.md`）、`hyperframes-cli`、`hyperframes-registry`，以及音频相关的 `media-use`。/brag 有自己的工作流：跳过 `hyperframes` 的 storyline 步骤：不要读 `references/types/*` 或 `references/story.md`，不要提出 storyline，也不要写 `SPEC.md`。brag 计划和合成简报取代它们，包括 `references/look.md` 要求的 LOOK 行。同时跳过它的 `usage`、`history`、`feedback` 和 REVIEW.md 步骤；`check` 就是 brag 的门槛。不要进入它的通用 launch-video 工作流。
+**阅读：** Hyperframes skills，`hyperframes`（契约，`references/format.md`、`references/motion.md`、`references/look.md`）、`hyperframes-cli`、`hyperframes-registry`，以及音频相关的 `media-use`。/brag 有自己的工作流：跳过 `hyperframes` 的 storyline 步骤：不要读 `references/types/*` 或 `references/story.md`，不要提出 storyline，也不要写 `SPEC.md`。brag 计划和合成简报取代它们，包括 `references/look.md` 要求的 LOOK 行。同时跳过它的 `usage`、`history`、`feedback` 和 REVIEW.md 步骤；`check` 就是 brag 的门槛。不要进入它的通用 launch-video 工作流。
 **阅读：** [references/step-3-compose.md](references/step-3-compose.md)
 **阅读：** [references/audio.md](references/audio.md)
 
@@ -123,7 +123,7 @@ brag-output-2026-05-04-143022/
 
 `/brag` 负责产品角度、素材、分镜、tone、格式、音频选择、music cue 指引和交付预期。Hyperframes 负责具体的合成结构、精确的动画时序、动画机制、运行时选择、lint 规则和渲染工作流。
 
-**门槛（Gate）：** 在 `<output-dir>/composition/` 内 `npx hyperframes check` 以零错误通过（渲染前的唯一浏览器门槛——它审计什么见 hyperframes-cli）。
+**门槛（Gate）：** 在 `<output-dir>/composition/` 内 `npx hyperframes check` 以零错误通过（渲染前的唯一浏览器门槛，它审计什么见 hyperframes-cli）。
 
 ---
 
@@ -163,7 +163,7 @@ brag-output-2026-05-04-143022/
 
 **短。** 15–25 秒。没有理由就不要多一秒。无论旁白是否开启都成立；旁白不会延长这个时间窗口。
 
-**可读。** 通过运动和剪辑保持高节奏，绝不用闪烁文字来提速。观众需要阅读的每一行文字都要停留足够长的时间让人读完（短标签约 0.8 秒定格；一句话约每词 0.3 秒）。快速进入，然后停留——绝不能快速进入，然后消失。
+**可读。** 通过运动和剪辑保持高节奏，绝不用闪烁文字来提速。观众需要阅读的每一行文字都要停留足够长的时间让人读完（短标签约 0.8 秒定格；一句话约每词 0.3 秒）。快速进入，然后停留，绝不能快速进入，然后消失。
 
 **具体。** 视频必须让人感觉是为这个确切的项目制作的，而不是为任何项目。
 

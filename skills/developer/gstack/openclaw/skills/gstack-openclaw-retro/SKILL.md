@@ -42,7 +42,7 @@ git config user.name
 git config user.email
 ```
 
-`git config user.name` 返回的名字就是 **"you"**——正在读这份复盘的人。
+`git config user.name` 返回的名字就是 **"you"**，正在读这份复盘的人。
 其他所有作者都是队友。
 
 运行全部这些 git 命令（彼此独立）：

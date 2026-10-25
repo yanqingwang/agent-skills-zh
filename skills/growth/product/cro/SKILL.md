@@ -199,4 +199,4 @@ metadata:
 
 当数据富化（enrichment）控制线索表单之后的下一步时，请使用 [revops inbound-routing playbook](https://github.com/coreyhaines31/marketingskills/blob/main/skills/revops/references/inbound-routing.md)：保留有效提交、限制查询等待时长，并在资格未知时提供有用的兜底。
 
-关于详细的表单 CRO 指南——包括字段优化、多步表单、错误处理和表单专属实验——参见 [references/form.md](references/form.md)。
+关于详细的表单 CRO 指南，包括字段优化、多步表单、错误处理和表单专属实验，参见 [references/form.md](references/form.md)。

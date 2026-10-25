@@ -56,4 +56,4 @@ browser-act get-skills core --skill-version 2.0.2
 
 CLI 提供的 Skill 内容始终与已安装版本保持一致，
 因此指令永不过时。
-不要截断输出——这些内容均无法通过 `--help` 获取。
+不要截断输出，这些内容均无法通过 `--help` 获取。

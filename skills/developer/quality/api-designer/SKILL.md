@@ -47,7 +47,7 @@ metadata:
 
 ### 必须做（MUST DO）
 - 遵循 REST 原则（面向资源、正确使用 HTTP 方法）
-- 使用一致的命名约定（snake_case 或 camelCase —— 选定一种，处处适用）
+- 使用一致的命名约定（snake_case 或 camelCase ， 选定一种，处处适用）
 - 包含完备的 OpenAPI 3.1 规格
 - 设计规范、可指导行动的错误响应（RFC 7807）
 - 为所有集合端点实现分页
@@ -201,7 +201,7 @@ security:
 ```
 
 - 错误响应始终使用 `Content-Type: application/problem+json`。
-- `type` 必须是一个稳定且有文档说明的 URI —— 绝不能是泛泛的字符串。
+- `type` 必须是一个稳定且有文档说明的 URI ， 绝不能是泛泛的字符串。
 - `detail` 必须人类可读且可指导行动。
 - 可通过 `errors[]` 扩展，表达字段级校验失败。
 

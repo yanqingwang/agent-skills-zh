@@ -19,17 +19,17 @@ metadata:
 
 ### 第 1 步：检查已有上下文
 
-首先，检查 `.agents/product-marketing.md` 是否已存在。同时检查 `.claude/product-marketing.md` 以及旧文件名 `product-marketing-context.md`（位于 `.agents/` 或 `.claude/` 中）等旧版布置——如果在 `.agents/product-marketing.md` 以外的任何位置找到，主动提议将其移动到规范位置。
+首先，检查 `.agents/product-marketing.md` 是否已存在。同时检查 `.claude/product-marketing.md` 以及旧文件名 `product-marketing-context.md`（位于 `.agents/` 或 `.claude/` 中）等旧版布置，如果在 `.agents/product-marketing.md` 以外的任何位置找到，主动提议将其移动到规范位置。
 
 **如果已存在：**
-- 读取它并概述其中已记录的内容——注明当前的 **Document version** 和最近几条 **Changelog** 条目，让用户看清文档现状与近期变更
+- 读取它并概述其中已记录的内容，注明当前的 **Document version** 和最近几条 **Changelog** 条目，让用户看清文档现状与近期变更
 - 询问用户想更新哪些章节
 - 只为这些章节收集信息
 - 每次实质性保存时，提升版本号并添加一条 changelog 条目（见第 4 步）。这份文档是其他所有营销 Skill 都要读取的共享上下文，因此值得保留一份带日期的 *改了什么、为什么改* 的书面记录。
 
 **如果不存在，提供两个选项：**
 
-1. **从代码库自动起草**（推荐）：你将研究这个仓库——README、落地页、营销文案、package.json 等——并起草上下文文档的 V1 版。随后由用户审阅、纠错并填补空白。这比从零开始更快。
+1. **从代码库自动起草**（推荐）：你将研究这个仓库，README、落地页、营销文案、package.json 等，并起草上下文文档的 V1 版。随后由用户审阅、纠错并填补空白。这比从零开始更快。
 
 2. **从零开始**：以对话方式逐节走查，每次收集一个章节的信息。
 
@@ -52,7 +52,7 @@ metadata:
 3. 确认准确性
 4. 进入下一节
 
-坚持获取客户的原话——确切措辞比润色过的描述更有价值，因为它们反映客户真实的思考与表达方式，能让文案更有共鸣。
+坚持获取客户的原话，确切措辞比润色过的描述更有价值，因为它们反映客户真实的思考与表达方式，能让文案更有共鸣。
 
 ---
 
@@ -61,7 +61,7 @@ metadata:
 ### 1. 产品概述
 - 一句话描述
 - 它做什么（2-3 句）
-- 产品品类（你摆在哪个"货架"上——客户如何搜索到你）
+- 产品品类（你摆在哪个"货架"上，客户如何搜索到你）
 - 产品类型（SaaS、marketplace、电商、服务等）
 - 商业模式与定价
 
@@ -279,16 +279,16 @@ JTBD 四力（Four Forces）：
 
 - 展示完成的文档
 - 询问是否有需要调整之处
-- **设定版本号与 changelog**——这是给所有其他 Skill 都会读取的文档留下的书面轨迹：
-  - **新文档：** 设定 `Document version: v1` 和一条 Changelog 条目——`- v1 ([today]) — Initial context.`
+- **设定版本号与 changelog**，这是给所有其他 Skill 都会读取的文档留下的书面轨迹：
+  - **新文档：** 设定 `Document version: v1` 和一条 Changelog 条目，`- v1 ([today]) — Initial context.`
   - **更新已有文档：** 递增版本号（v2 → v3 ……），把 `Last updated` 更新为今天，并在列表顶部**前置新增一条 Changelog 条目**（最新在前），用一行概括 *改了什么、为什么改*。绝不改写或重排过去的条目。
   - 一条好的条目会写明涉及的章节与原因，而不是笼统一句"更新了文档"。示例：
     - `- v3 (2026-07-16) — Repositioned from "email tool" to "deliverability platform"; added RevOps to the ICP.`
     - `- v2 (2026-06-02) — Rewrote value prop and objections after 5 customer interviews; added competitor Acme.`
   - 条目和 `Last updated` 中的日期使用 ISO 形式（YYYY-MM-DD）的今天。
-  - **纯错别字修正：** 不提升版本号、不加 changelog 条目——直接保存修正即可。除此之外的任何变更都要提升版本号并获得一条条目。当这次变更是真正的重新定位时，请明说——下游 Skill 此后将基于新上下文来生成内容。
+  - **纯错别字修正：** 不提升版本号、不加 changelog 条目，直接保存修正即可。除此之外的任何变更都要提升版本号并获得一条条目。当这次变更是真正的重新定位时，请明说，下游 Skill 此后将基于新上下文来生成内容。
 - 保存到 `.agents/product-marketing.md`
-- 并告知用户："其他营销 Skill 现在会自动使用这份上下文。底部的 Changelog 记录每一次修订——查看它，就能看到你的 positioning 是如何演进的。随时运行 `/product-marketing` 来更新它。"
+- 并告知用户："其他营销 Skill 现在会自动使用这份上下文。底部的 Changelog 记录每一次修订，查看它，就能看到你的 positioning 是如何演进的。随时运行 `/product-marketing` 来更新它。"
 
 ---
 

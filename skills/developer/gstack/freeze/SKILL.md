@@ -53,7 +53,7 @@ echo '{"skill":"freeze","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basen
 询问用户要把编辑限制到哪个目录。使用 AskUserQuestion：
 
 - 问题："要把编辑限制到哪个目录？该路径之外的文件将被禁止编辑。"
-- 文本输入（而非多选）——由用户输入路径。
+- 文本输入（而非多选），由用户输入路径。
 
 一旦用户提供了目录路径：
 
@@ -72,14 +72,14 @@ NotebookEdit 都将被阻止。要更改边界，再次运行 `/freeze`。
 
 hook 从 Edit/Write 工具的输入 JSON 中读取 `file_path`，或从
 NotebookEdit（Jupyter notebook）调用中读取 `notebook_path`（与 /careful
-共享同一个真实 JSON 提取器——一份拷贝，两个 hook 共同引用），
+共享同一个真实 JSON 提取器，一份拷贝，两个 hook 共同引用），
 然后检查该路径是否以冻结目录开头。若不是，它会返回一个带
 `permissionDecision: "deny"` 的 `hookSpecificOutput` 载荷来阻止该操作
-（必须嵌套在 `hookSpecificOutput` 之下——Claude Code 会忽略
+（必须嵌套在 `hookSpecificOutput` 之下，Claude Code 会忽略
 顶层的 `permissionDecision`）。
 
 极性为 fail-closed（默认拒绝）：hook 无法解析的工具载荷会被拒绝而不是
-放行——fail-open 的边界不是边界。可以解析但两个路径字段都不存在的载荷
+放行，fail-open 的边界不是边界。可以解析但两个路径字段都不存在的载荷
 （非文件工具）会被放行。拒绝时会点名工具、路径字段、边界
 和 `/unfreeze`。符号链接会解析到其最终（FINAL）分量，因此位于边界
 之内、指向边界之外的符号链接会按其
@@ -92,6 +92,6 @@ Edit/Write/NotebookEdit 调用时都会读取它。
 ## 说明
 
 - 冻结目录末尾的 `/` 可防止 `/src` 匹配到 `/src-old`
-- 冻结只作用于 Edit、Write 和 NotebookEdit——Read、Bash、PowerShell、Glob、Grep 不受影响
-- 它防止的是误编辑，而不是安全边界——`sed` 或 `Set-Content` 之类的 Bash/PowerShell 命令仍能修改边界之外的文件
+- 冻结只作用于 Edit、Write 和 NotebookEdit，Read、Bash、PowerShell、Glob、Grep 不受影响
+- 它防止的是误编辑，而不是安全边界，`sed` 或 `Set-Content` 之类的 Bash/PowerShell 命令仍能修改边界之外的文件
 - 要停用，运行 `/unfreeze`；结束或终止会话不会移除已持久化的状态

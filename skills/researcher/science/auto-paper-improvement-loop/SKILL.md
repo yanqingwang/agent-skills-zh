@@ -26,8 +26,8 @@ allowed-tools: Bash(*), Read, Write, Edit, Grep, Glob, Skill, mcp__codex__codex,
 > 已经在内部自带循环（审查 → 修复 → 重新编译），拥有自己的
 > 轮次结构，并且每轮刻意带有"全新审查者"偏置护栏
 > （不使用 `codex-reply`）。在墙钟定时器上反复要求它
-> "改进论文"不会产生任何新信号——质量变化取决于
-> *审查*的变化，而不是时钟的走动——而且一次定时重跑
+> "改进论文"不会产生任何新信号，质量变化取决于
+> *审查*的变化，而不是时钟的走动，而且一次定时重跑
 > 如果还接受自己的输出来决定何时停止，就越界成了
 > 自我开脱（`acceptance-gate.md`）。应当调度的是*它之前的
 > 外部等待*，而不是改进循环本身。参见
@@ -39,7 +39,7 @@ allowed-tools: Bash(*), Read, Write, Edit, Grep, Glob, Skill, mcp__codex__codex,
 
 本 Skill 设计为在 Workflow 3（`/paper-plan` → `/paper-figure` → `/paper-write` → `/paper-compile`）**之后**运行。它接收一篇已编译的论文，通过外部 LLM 审查对其进行迭代式改进。
 
-与 `/auto-review-loop`（它迭代的是**研究**本身——跑实验、收集数据、重写叙事）不同，本 Skill 迭代的是**论文写作质量**——修复理论上的不一致、软化过度声称（overclaim）、补充缺失内容、改进呈现效果。
+与 `/auto-review-loop`（它迭代的是**研究**本身：跑实验、收集数据、重写叙事）不同，本 Skill 迭代的是**论文写作质量**，修复理论上的不一致、软化过度声称（overclaim）、补充缺失内容、改进呈现效果。
 
 ## 常量
 
@@ -54,7 +54,7 @@ allowed-tools: Bash(*), Read, Write, Edit, Grep, Glob, Skill, mcp__codex__codex,
 
 ## 可选：风格参考（`— style-ref: <source>`，需显式开启）
 
-让用户在改进过程中把**结构性修复**（章节重排提示、段落长度微调、图密度调整）导向一篇参考论文。**默认关闭——当用户未传入 `— style-ref` 时，行为与之前完全一致，不做任何额外操作。**
+让用户在改进过程中把**结构性修复**（章节重排提示、段落长度微调、图密度调整）导向一篇参考论文。**默认关闭：当用户未传入 `— style-ref` 时，行为与之前完全一致，不做任何额外操作。**
 
 只有当 `— style-ref: <source>` 出现在 `$ARGUMENTS` 中时，才在循环开始前首先运行该助手：
 
@@ -88,17 +88,17 @@ case "$STYLE_STATUS" in
 esac
 ```
 
-接受的来源：本地 TeX 目录/文件、本地 PDF、arXiv id、http(s) URL。Overleaf URL/ID 会被拒绝——请先通过 `/overleaf-sync setup <id>` 克隆，再传入本地克隆路径。
+接受的来源：本地 TeX 目录/文件、本地 PDF、arXiv id、http(s) URL。Overleaf URL/ID 会被拒绝，请先通过 `/overleaf-sync setup <id>` 克隆，再传入本地克隆路径。
 
 **严格规则**（完整契约见 `tools/extract_paper_style.py` 的 docstring）：
 
 - `style_profile.md` 仅在**修复实施**阶段使用，用于在落实审查反馈时微调结构性选择。审查反馈始终优先；风格参考只在*如何*落实某个修复上作为平局裁决者，而不是*是否*落实它。
 - **在实施修复时，绝不复制**缓存可达范围内任何内容的行文、声称、示例或术语。
-- **绝不将 `— style-ref`（或缓存内容）传给 GPT-6-Astra 审查者子代理。**下文的审查者独立性协议要求审查者只看到论文工件与用户的提示词——泄露风格参考会让作者侧上下文污染审查。**这是本 Skill 中最关键的不变量。**
+- **绝不将 `— style-ref`（或缓存内容）传给 GPT-6-Astra 审查者子代理。**下文的审查者独立性协议要求审查者只看到论文工件与用户的提示词，泄露风格参考会让作者侧上下文污染审查。**这是本 Skill 中最关键的不变量。**
 
 ## 可选：编辑白名单（`— edit-whitelist <path>`，需显式开启）
 
-让调用方硬性约束**修复实施**步骤（Step 3 / Step 6）允许触碰哪些文件与操作。**默认关闭——当用户未传入 `— edit-whitelist`（或别名 `— edit_whitelist`）时，循环不加限制地落实所有审查驱动的编辑，与之前完全一致。**
+让调用方硬性约束**修复实施**步骤（Step 3 / Step 6）允许触碰哪些文件与操作。**默认关闭，当用户未传入 `— edit-whitelist`（或别名 `— edit_whitelist`）时，循环不加限制地落实所有审查驱动的编辑，与之前完全一致。**
 
 这是上游流水线（如 `/resubmit-pipeline` Phase 2）用来强制执行"仅文本"重投稿微编辑的参数：不改动 `.bib`、不改动 `.sty` / `.bst`、不编辑既往投稿目录、不新增 `\cite{...}`、不新增定理环境、不新增数值声称。
 
@@ -146,7 +146,7 @@ rationale: "Resubmit mode: text-only microedits, paper structure frozen by user 
 
 ### 禁止操作检测器
 
-对每个候选编辑的 diff（即新增的行——删除行不受限），循环运行以下正则检查，任一禁止操作命中即拒绝：
+对每个候选编辑的 diff（即新增的行，删除行不受限），循环运行以下正则检查，任一禁止操作命中即拒绝：
 
 | 操作 | 检测器（仅针对新增行） |
 |-----------|------------------------------|
@@ -158,7 +158,7 @@ rationale: "Resubmit mode: text-only microedits, paper structure frozen by user 
 ### 循环启动时的行为（第 1 轮修复实施之前）
 
 1. 若 `$ARGUMENTS` 中存在 `— edit-whitelist <path>`，设置 `EDIT_WHITELIST = <path>`。
-2. 加载该文件（`yaml.safe_load`；失败则回退到 `json.loads`）。加载失败时，以明确的错误中止循环——绝不要静默地不受约束地继续。
+2. 加载该文件（`yaml.safe_load`；失败则回退到 `json.loads`）。加载失败时，以明确的错误中止循环，绝不要静默地不受约束地继续。
 3. 将 `rationale`（若存在）回显到 `PAPER_IMPROVEMENT_LOG.md` 中一个新的 "Edit Whitelist" 前言小节，使审计留痕记录编辑为何受限。
 
 ### 修复实施期间的行为（Step 3 与 Step 6）
@@ -200,7 +200,7 @@ rationale: "Resubmit mode: text-only microedits, paper structure frozen by user 
 
 ### 设计理由
 
-没有白名单时，循环中审查驱动的修复步骤可以随意新增引用、引入新的定理环境或改动数值声称——这些对首次投稿的润色都合理，但在结构被外部约束冻结的重投稿 / camera-ready / 仅 rebuttal 模式中是**被禁止的**。把这些约束通过一个一等参数来传递（而不是指望 LLM"记住"不要做这些事），约束才可执行、可经由 `PAPER_IMPROVEMENT_LOG.md` 审计，并在每轮检查点对用户可见。
+没有白名单时，循环中审查驱动的修复步骤可以随意新增引用、引入新的定理环境或改动数值声称，这些对首次投稿的润色都合理，但在结构被外部约束冻结的重投稿 / camera-ready / 仅 rebuttal 模式中是**被禁止的**。把这些约束通过一个一等参数来传递（而不是指望 LLM"记住"不要做这些事），约束才可执行、可经由 `PAPER_IMPROVEMENT_LOG.md` 审计，并在每轮检查点对用户可见。
 
 ## 输入
 
@@ -347,7 +347,7 @@ Reply "go" to implement all fixes, give custom instructions, "skip 2" to skip sp
 2. MAJOR 修复（过度声称、缺失内容、记号问题）
 3. MINOR 修复（时间允许时）
 
-**编辑白名单门控（若设置）：**若设置了 `EDIT_WHITELIST`，在应用每个拟定编辑之前，按"可选：编辑白名单"一节检查目标路径与 `allowed_paths` / `forbidden_paths`，并对照 `forbidden_operations` 检查新增行 diff。拒绝会记录到 `PAPER_IMPROVEMENT_LOG.md` 的 `## Rejected by edit_whitelist (Round 1)` 之下，含文件、原因（`path` 或 `operation`）、违规模式与原始审查关切。循环继续处理剩余编辑——一次拒绝绝不中止整轮。在轮末汇总上报拒绝摘要。
+**编辑白名单门控（若设置）：**若设置了 `EDIT_WHITELIST`，在应用每个拟定编辑之前，按"可选：编辑白名单"一节检查目标路径与 `allowed_paths` / `forbidden_paths`，并对照 `forbidden_operations` 检查新增行 diff。拒绝会记录到 `PAPER_IMPROVEMENT_LOG.md` 的 `## Rejected by edit_whitelist (Round 1)` 之下，含文件、原因（`path` 或 `operation`）、违规模式与原始审查关切。循环继续处理剩余编辑，一次拒绝绝不中止整轮。在轮末汇总上报拒绝摘要。
 
 **在应用任何修复之前：**将声称校准到证据，并直接陈述它们；
 泛泛的限定语只属于 Limitations；写作指令绝不是稿件内容；
@@ -358,7 +358,7 @@ Reply "go" to implement all fixes, give custom instructions, "skip 2" to skip sp
 | 问题 | 修复模式 |
 |-------|-------------|
 | 假设-模型不匹配 | 重写假设使其匹配模型，添加连接两者的形式化命题 |
-| 真实的过度声称 | 将声称本身收窄到被支持的范围/模态——绝不为了修复范围、比较或聚合问题而换一个听起来更软的同义词 |
+| 真实的过度声称 | 将声称本身收窄到被支持的范围/模态，绝不为了修复范围、比较或聚合问题而换一个听起来更软的同义词 |
 | 被支持的声称裹着不必要的谨慎 | 删除冗余的模糊限定；保留使声称成立的范围限定词 |
 | 散落各处的泛泛限定语 | 归并进 Limitations 并删除重复项 |
 | 故事建立在一个必输的指标上，或把结果讲成失败 | 围绕论文取胜的那场较量重新框定；当证据支持时，把差距解释为目标差异或权衡，否则中性陈述并收窄声称；保留表中的每一个数字 |
@@ -423,7 +423,7 @@ PY
 - 由审查者归类的六种具名漂移特征：`conditional_loss`、`scope_change`、`quantifier_loss`、`regime_envelope_change`、`constant_change`、`variable_rename`。
 - 以 `details.restatement_drift[]` 形式输出结构化发现到 `PROOF_AUDIT.json`，便于下游工具或审计留痕使用。
 
-此项仅为建议——内联的 Step 4.5 检查仍是默认项，且在每轮循环中继续运行。在以下情况考虑调用 `/proof-checker --restatement-check`：(a) 你怀疑存在主文↔附录轴之外的跨位置漂移（例如摘要相对定理陈述过度声称），或 (b) 你想要审查者分级的漂移特征而非原始字符串不匹配。两者同时运行是支持的且相互独立：内联检查对字符串漂移快速失败，proof-checker 遍则暴露语义类漂移。
+此项仅为建议，内联的 Step 4.5 检查仍是默认项，且在每轮循环中继续运行。在以下情况考虑调用 `/proof-checker --restatement-check`：(a) 你怀疑存在主文↔附录轴之外的跨位置漂移（例如摘要相对定理陈述过度声称），或 (b) 你想要审查者分级的漂移特征而非原始字符串不匹配。两者同时运行是支持的且相互独立：内联检查对字符串漂移快速失败，proof-checker 遍则暴露语义类漂移。
 
 ### Step 5: 第 2 轮审查
 
@@ -504,7 +504,7 @@ KILL_VERDICT=$(jq -r '.verdict' "$PAPER_DIR/KILL_ARGUMENT.json")
 KILL_REASON=$(jq -r '.reason_code' "$PAPER_DIR/KILL_ARGUMENT.json")
 ```
 
-**合并规则**（这是 auto-loop 的职责——`/kill-argument` 本身仅检测、不改动）：
+**合并规则**（这是 auto-loop 的职责，`/kill-argument` 本身仅检测、不改动）：
 
 - 从 `KILL_ARGUMENT.json` 读取 `details.decomposed_points`。
 - 对每个满足 `verdict == "still_unresolved"` 或 `verdict == "partially_answered"` 且 `severity_if_unresolved == "critical"` 的点：
@@ -516,13 +516,13 @@ KILL_REASON=$(jq -r '.reason_code' "$PAPER_DIR/KILL_ARGUMENT.json")
 
 本阶段直接衔接 Step 6。合并后的发现必须在最终重新编译之前落位。
 
-若 `/kill-argument` 返回 `verdict: NOT_APPLICABLE`（论文不够理论/范围重，无需此检查），整体跳过 Step 5.5 并进入 Step 6。若返回 `BLOCKED` 或 `ERROR`，把原因记录到 `PAPER_IMPROVEMENT_LOG.md` 并在不合并的情况下继续——循环不应卡死在一个无法运行的对抗性检查上。
+若 `/kill-argument` 返回 `verdict: NOT_APPLICABLE`（论文不够理论/范围重，无需此检查），整体跳过 Step 5.5 并进入 Step 6。若返回 `BLOCKED` 或 `ERROR`，把原因记录到 `PAPER_IMPROVEMENT_LOG.md` 并在不合并的情况下继续，循环不应卡死在一个无法运行的对抗性检查上。
 
 **经验动机：**在一次真实的投稿运行中，经过若干轮标准改进（分数 7-8/10）后，kill-argument 练习暴露了此前审查都未捕捉的框定弱点（例如某设定大多是有条件的而非真正普适，或某 baseline 与真实系统无关）。作者的 rebuttal 迫使其在摘要与讨论中写明范围限定。
 
 ### Step 5b: 人工检查点（如启用）
 
-**若 `HUMAN_CHECKPOINT = false` 则跳过。** 同 Step 2b —— 展示第 2 轮审查，等待用户输入。
+**若 `HUMAN_CHECKPOINT = false` 则跳过。** 同 Step 2b ， 展示第 2 轮审查，等待用户输入。
 
 ### Step 6: 实施第 2 轮修复
 
@@ -530,11 +530,11 @@ KILL_REASON=$(jq -r '.reason_code' "$PAPER_DIR/KILL_ARGUMENT.json")
 - 添加验证理论的受控合成实验
 - 双向重新校准声称：收窄真实的过度声称，直接陈述
   被支持的声称，把散落的泛泛限定语归并进
-  Limitations——并且不要把证据已经支持的声称重新软化
+  Limitations，并且不要把证据已经支持的声称重新软化
 - 把非形式化论证形式化（例如截断 → 形式化命题）
 - 只在缺失实质性局限时使 Limitations 更具体
 
-**编辑白名单门控（若设置）：**同 Step 3 —— 若设置了 `EDIT_WHITELIST`，在应用每个拟定编辑之前运行路径 + 禁止操作检查。拒绝记录到 `PAPER_IMPROVEMENT_LOG.md` 的 `## Rejected by edit_whitelist (Round 2)` 之下，循环继续。轮末汇总上报拒绝摘要。
+**编辑白名单门控（若设置）：**同 Step 3 ， 若设置了 `EDIT_WHITELIST`，在应用每个拟定编辑之前运行路径 + 禁止操作检查。拒绝记录到 `PAPER_IMPROVEMENT_LOG.md` 的 `## Rejected by edit_whitelist (Round 2)` 之下，循环继续。轮末汇总上报拒绝摘要。
 
 ### Step 7: 重新编译第 2 轮
 
@@ -668,8 +668,8 @@ echo "$BIB_OVERFULL"
 ### 飞书通知（如已配置）
 
 在每轮审查之后以及最终完成时，检查 `~/.claude/feishu.json`：
-- **每轮之后**：发送 `review_scored` —— "Round N: X/10 — [key changes]"
-- **最终轮之后**：发送 `pipeline_done` —— 分数演进表 + 最终页数
+- **每轮之后**：发送 `review_scored` ， "Round N: X/10 — [key changes]"
+- **最终轮之后**：发送 `pipeline_done` ， 分数演进表 + 最终页数
 - 若配置不存在或 mode 为 `"off"`：完全跳过（no-op）
 
 ## 输出
@@ -685,16 +685,16 @@ paper/
 
 ## 关键规则
 
-- **大文件处理**：如果 Write 工具因文件大小失败，立即改用 Bash（`cat << 'EOF' > file`）分块写入重试。不要询问用户许可——直接静默执行。
+- **大文件处理**：如果 Write 工具因文件大小失败，立即改用 Bash（`cat << 'EOF' > file`）分块写入重试。不要询问用户许可，直接静默执行。
 
-- **保留所有 PDF 版本** —— 用户需要对比演进
-- **保存完整原始审查文本** —— 不要对 GPT-6-Astra 的响应做摘要或截断
+- **保留所有 PDF 版本** ， 用户需要对比演进
+- **保存完整原始审查文本** ， 不要对 GPT-6-Astra 的响应做摘要或截断
 - **审查者独立性（第 2 轮及以后）**：当 `REVIEWER_BIAS_GUARD = true`（默认）时，每轮审查都使用**全新的** `mcp__codex__codex` 线程；绝不使用 `mcp__codex__codex-reply`，也绝不在提示词中包含"自上轮以来"/修复摘要。见上文"审查者独立性协议"一节。
-- **修复后必须重新编译** —— 在继续之前验证 0 错误
-- **不得捏造实验结果** —— 合成验证必须描述方法论，不得编造数字
-- **尊重论文的声称** —— 收窄真实的过度声称而不是添加无支持的新声称，直接陈述被支持的声称而不是裹上新的模糊限定
-- **全局一致性** —— 重命名记号或更改某声称的范围时，让所有文件（摘要、引言、方法、实验、理论章节、结论、表格、图注）中的每一处复述在语义上保持一致；一致指的是范围匹配，而不是到处复制免责声明句
-- **编辑白名单拒绝会被记录，而不是被静默丢弃** —— 当设置了 `EDIT_WHITELIST` 且某个编辑因路径或禁止操作违规被拒绝时，该拒绝必须附加到 `PAPER_IMPROVEMENT_LOG.md`，含文件、原因、违规模式与原始审查关切。循环在每轮结束时报告拒绝摘要（若 `HUMAN_CHECKPOINT = true`，也包含在检查点中）。绝不静默吞掉白名单拒绝——审计留痕正是该参数的全部意义。
+- **修复后必须重新编译** ， 在继续之前验证 0 错误
+- **不得捏造实验结果** ， 合成验证必须描述方法论，不得编造数字
+- **尊重论文的声称** ， 收窄真实的过度声称而不是添加无支持的新声称，直接陈述被支持的声称而不是裹上新的模糊限定
+- **全局一致性** ， 重命名记号或更改某声称的范围时，让所有文件（摘要、引言、方法、实验、理论章节、结论、表格、图注）中的每一处复述在语义上保持一致；一致指的是范围匹配，而不是到处复制免责声明句
+- **编辑白名单拒绝会被记录，而不是被静默丢弃** ， 当设置了 `EDIT_WHITELIST` 且某个编辑因路径或禁止操作违规被拒绝时，该拒绝必须附加到 `PAPER_IMPROVEMENT_LOG.md`，含文件、原因、违规模式与原始审查关切。循环在每轮结束时报告拒绝摘要（若 `HUMAN_CHECKPOINT = true`，也包含在检查点中）。绝不静默吞掉白名单拒绝，审计留痕正是该参数的全部意义。
 
 ## 典型分数演进
 
@@ -711,4 +711,4 @@ paper/
 
 ## 审查留痕
 
-在每次 `mcp__codex__codex` 或 `mcp__codex__codex-reply` 审查者调用之后，按 `shared-references/review-tracing.md` 保存 trace（Policy C —— 取证级；绝不静默跳过）。使用 `save_trace.sh`（按 `shared-references/integration-contract.md` §2 的链条解析）或直接把文件写入 `.aris/traces/<skill>/<date>_run<NN>/`。遵守 `--- trace:` 参数（默认：`full`）。
+在每次 `mcp__codex__codex` 或 `mcp__codex__codex-reply` 审查者调用之后，按 `shared-references/review-tracing.md` 保存 trace（Policy C ， 取证级；绝不静默跳过）。使用 `save_trace.sh`（按 `shared-references/integration-contract.md` §2 的链条解析）或直接把文件写入 `.aris/traces/<skill>/<date>_run<NN>/`。遵守 `--- trace:` 参数（默认：`full`）。

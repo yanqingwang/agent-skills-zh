@@ -12,7 +12,7 @@ description: 在发布前校验市场分析文档与博客文章中的数据质�
 在市场分析文档发布之前，检测其中常见的数据质量问题。该检查器校验五个类别：
 价格量级一致性（price scale consistency）、交易品种记号（instrument notation）、
 日期/星期准确性（date/weekday accuracy）、配分比例加总（allocation totals）以及
-单位用法（unit usage）。所有发现均为建议性质——它们将潜在问题标记出来供人工
+单位用法（unit usage）。所有发现均为建议性质，它们将潜在问题标记出来供人工
 复核，而不是阻止发布。
 
 ## 何时使用
@@ -69,9 +69,9 @@ python3 skills/data-quality-checker/scripts/check_data_quality.py \
 
 阅读相关的参考文档，以便为发现的问题提供语境：
 
-- `references/instrument_notation_standard.md` —— 各交易品种类别的标准
+- `references/instrument_notation_standard.md` ， 各交易品种类别的标准
   ticker 记号、位数提示（digit-count hints）与命名约定
-- `references/common_data_errors.md` —— 常见错误目录，包括 FRED 数据延迟、
+- `references/common_data_errors.md` ， 常见错误目录，包括 FRED 数据延迟、
   ETF/期货量级混淆、节假日疏漏、配分比例加总陷阱以及单位混淆模式
 
 使用这些参考资料来解释发现的问题并给出修正建议。
@@ -80,11 +80,11 @@ python3 skills/data-quality-checker/scripts/check_data_quality.py \
 
 逐一检查输出中的每条发现：
 
-- **ERROR** —— 高置信度问题（例如经日历计算核实的日期-星期不匹配）。
+- **ERROR** ， 高置信度问题（例如经日历计算核实的日期-星期不匹配）。
   强烈建议修正。
-- **WARNING** —— 很可能有问题、需要人工判断的情况（例如价格量级异常、
+- **WARNING** ， 很可能有问题、需要人工判断的情况（例如价格量级异常、
   记号不一致、配分比例加总偏差超过 0.5%）。
-- **INFO** —— 信息性备注（例如混用 bp/% 但可能是有意为之）。
+- **INFO** ， 信息性备注（例如混用 bp/% 但可能是有意为之）。
 
 ### 第 5 步：生成质量报告
 
@@ -131,9 +131,9 @@ python3 skills/data-quality-checker/scripts/check_data_quality.py \
 
 ## 资源
 
-- `scripts/check_data_quality.py` —— 主校验脚本
-- `references/instrument_notation_standard.md` —— 记号与价格量级参考
-- `references/common_data_errors.md` —— 常见错误模式与预防方法
+- `scripts/check_data_quality.py` ， 主校验脚本
+- `references/instrument_notation_standard.md` ， 记号与价格量级参考
+- `references/common_data_errors.md` ， 常见错误模式与预防方法
 
 ## 关键原则
 

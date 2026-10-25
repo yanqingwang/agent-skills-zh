@@ -63,7 +63,7 @@ metadata:
 
 ### 阶段 1：论文发现与检索
 
-找到相关论文。务必检索不止一个数据库——
+找到相关论文。务必检索不止一个数据库，
 各库覆盖范围差异巨大，只依赖单一来源是参考文献清单出现偏差的最常见原因。
 
 ```bash
@@ -110,7 +110,7 @@ Online-first（在线首发）文章可能尚无卷号/页码；
 将不可用/不适用的字段记录在审计日志中；
 只有当 `note` 对读者有用或引文格式要求时才添加渲染后的 `note`。
 
-先查询成本低的来源——OpenAlex 或 CrossRef 的记录中
+先查询成本低的来源，OpenAlex 或 CrossRef 的记录中
 往往带有 PubMed 缺失的字段：
 
 ```bash
@@ -152,7 +152,7 @@ python scripts/validate_citations.py references.bib --manuscript paper.tex
 python scripts/validate_citations.py references.bib --check-dois     # slow; hits CrossRef
 ```
 
-出现高严重性错误时脚本会以非零值退出——包括缺失必填字段、
+出现高严重性错误时脚本会以非零值退出，包括缺失必填字段、
 年份格式错误、未解析的引文，或数量低于显式指定的
 `--min-count`。各 venue 的参考文献数量标准是编辑经验法则，
 而非投稿要求，因此未达标只产生警告。
@@ -162,8 +162,8 @@ python scripts/validate_citations.py references.bib --check-dois     # slow; hit
 
 ### 阶段 5：与写作工作流集成
 
-先检索、再提取、格式化、校验，然后引用。端到端流程——包括
-literature-review 与 Zotero/pyzotero 导出路径——见
+先检索、再提取、格式化、校验，然后引用。端到端流程，包括
+literature-review 与 Zotero/pyzotero 导出路径，见
 [references/core_workflow.md](references/core_workflow.md) 与
 [references/example_workflows.md](references/example_workflows.md)。
 

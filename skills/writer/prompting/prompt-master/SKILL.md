@@ -82,7 +82,7 @@ description: 为 AI 工具生成优化过的提示词。仅在用户明确要求
 
 **Claude（claude.ai、Claude API、Claude 5.x / 当前 Claude 模型）**
 
-不要假设存在统一的 Claude 默认设置。不确定时，复杂 agentic 编程与企业工作从 **Opus 5** 家族入手，最高能力的长时运行 Agent 用 **Fable 5**，速度加前沿智能用 **Sonnet 5**，快速、经济的工作负载用 **Haiku**。仅当模型区别会影响提示词时才询问用哪个模型。始终对照 Anthropic 官方文档核实当前模型 slug —— 版本号变动频繁。
+不要假设存在统一的 Claude 默认设置。不确定时，复杂 agentic 编程与企业工作从 **Opus 5** 家族入手，最高能力的长时运行 Agent 用 **Fable 5**，速度加前沿智能用 **Sonnet 5**，快速、经济的工作负载用 **Haiku**。仅当模型区别会影响提示词时才询问用哪个模型。始终对照 Anthropic 官方文档核实当前模型 slug ， 版本号变动频繁。
 
 *在当前 Claude 模型上普遍适用：*
 - 清晰直接。显式陈述期望的输出、约束与范围；当理由会影响判断时说明原因。

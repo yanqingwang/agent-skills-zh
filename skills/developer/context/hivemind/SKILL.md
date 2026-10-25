@@ -15,14 +15,14 @@ Claude Code = 大脑（规划、审查、合并）。opencode = 免费模型上�
 ## 前置条件（外部依赖）
 
 本 Skill 是 **[opencode](https://opencode.ai)**（一个第三方 CLI）之上的薄编排层。
-它不随包附带 —— 请先自行安装并完成认证：
+它不随包附带 ， 请先自行安装并完成认证：
 
 | 要求 | 说明 |
 |---|---|
 | Node.js >= 18 | 脚本使用了 `fetch` 和 `node:timers/promises`。 |
 | `opencode` CLI 在 `PATH` 上 | `npm i -g opencode-ai`（或 opencode 文档提供的安装器）。 |
 | 一个已完成认证的 opencode 账号 | `opencode auth login`。Worker 以你的账号运行。 |
-| 默认模型 `opencode/mimo-v2.5-free` | 这是 opencode（而非 Anthropic）提供的免费档位。可用性、速率限制和定价由 opencode 自行变更 —— 随时可用 `--model` 覆盖。 |
+| 默认模型 `opencode/mimo-v2.5-free` | 这是 opencode（而非 Anthropic）提供的免费档位。可用性、速率限制和定价由 opencode 自行变更 ， 随时可用 `--model` 覆盖。 |
 | 仅 Windows：`OPENCODE_GIT_BASH_PATH` | 指向 `C:\Program Files\Git\bin\bash.exe`，需持久化设置。 |
 
 ## 数据流向（安装前必读）
@@ -39,7 +39,7 @@ Worker 侧不会有任何东西调用 Anthropic API。
 ## 安装（Setup）
 
 1. 把本 Skill 文件夹放到你的 Agent 加载 skills 的位置（例如 `~/.claude/skills/hivemind`）。
-2. 导出 `HIVEMIND_HOME` 指向该文件夹 —— 内置的 slash 命令会用到它：
+2. 导出 `HIVEMIND_HOME` 指向该文件夹 ， 内置的 slash 命令会用到它：
    ```
    export HIVEMIND_HOME="$HOME/.claude/skills/hivemind"
    ```
@@ -114,7 +114,7 @@ node scripts/oc-verify.mjs --dir <same dir the worker saw> --claims findings.jso
 ```
 
 返回 `{ confirmed, refuted, unsupported, unverified, needs_review[] }`。只需阅读
-`needs_review` —— 那些就是被驳倒和未被支持的断言。已确认的断言只有计数，
+`needs_review` ， 那些就是被驳倒和未被支持的断言。已确认的断言只有计数，
 没有长篇文字，不会回流到你的上下文里。
 
 本阶段的硬性规则：
@@ -183,11 +183,11 @@ node scripts\bench\run-bench.mjs --repo <project> [--configs a,b,c] [--task 1-5]
 ## Windows 注意事项（血泪经验）
 
 - 需要 `OPENCODE_GIT_BASH_PATH=C:\Program Files\Git\bin\bash.exe`（持久化设置）。
-- 脚本通过解析 npm 的 `.cmd` shim 来定位真正的 `opencode.exe` —— Node 的
+- 脚本通过解析 npm 的 `.cmd` shim 来定位真正的 `opencode.exe` ， Node 的
   EINVAL 策略会阻止直接启动 `.cmd`。不要把该解析器"简化"回
   `where.exe` 取第一行的写法。
 - 免费模型：`opencode/mimo-v2.5-free`、`opencode/nemotron-3.5-lightning-free`、
-  `opencode/hy3-free`。注意：`opencode-go/*` 模型需要 workspace 计费 —— 避免使用。
+  `opencode/hy3-free`。注意：`opencode-go/*` 模型需要 workspace 计费 ， 避免使用。
 
 ## 已知局限
 
@@ -199,7 +199,7 @@ node scripts\bench\run-bench.mjs --repo <project> [--configs a,b,c] [--task 1-5]
 
 | 反模式 | 为什么会坏 | 应该这样做 |
 |---|---|---|
-| 把 `opencode run --format json` 直接管道进编排者 | 原始 NDJSON 淹没上下文 —— 正是本 Skill 要避免的那笔成本 | 始终经由 `scripts/oc-worker.mjs`，它只返回一行紧凑 JSON |
+| 把 `opencode run --format json` 直接管道进编排者 | 原始 NDJSON 淹没上下文 ， 正是本 Skill 要避免的那笔成本 | 始终经由 `scripts/oc-worker.mjs`，它只返回一行紧凑 JSON |
 | 两个要写入的 worker 共处一个目录 | 并发编辑互相破坏对方的 diff | 每个写入型 worker 一个 git worktree，在启动前创建 |
 | 让 worker 合并、审查或批准自己的分支 | 免费档位 worker 是对自身产出最不可靠的评判者 | 编排者是唯一的合并者，也是唯一的审查者 |
 | 逐条消息顺序启动 worker | 完全失去蜂群的墙钟时间收益 | 在同一条消息中，以并行调用发出每一个 worker 调用 |
@@ -209,7 +209,7 @@ node scripts\bench\run-bench.mjs --repo <project> [--configs a,b,c] [--task 1-5]
 
 ## 交叉引用
 
-- `engineering/llm-cost-optimizer` —— 在 Hivemind 决定*怎么做*之前，先判断一个任务*值不值得*委托
-- `engineering/agent-harness` —— 编排者一侧循环的 Harness 模式
-- `engineering/workflow-builder` —— 适合不需要独立 worker 判断力的确定性流水线
-- `engineering/skills` 与 `engineering/write-a-skill` —— `assets/agents/` 中 worker agent 定义所采用的编写规范
+- `engineering/llm-cost-optimizer` ， 在 Hivemind 决定*怎么做*之前，先判断一个任务*值不值得*委托
+- `engineering/agent-harness` ， 编排者一侧循环的 Harness 模式
+- `engineering/workflow-builder` ， 适合不需要独立 worker 判断力的确定性流水线
+- `engineering/skills` 与 `engineering/write-a-skill` ， `assets/agents/` 中 worker agent 定义所采用的编写规范

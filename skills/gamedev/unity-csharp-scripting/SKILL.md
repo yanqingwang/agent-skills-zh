@@ -35,7 +35,7 @@ description: >
    （订阅事件）、`Start`（依赖其他对象的 `Awake` 的初始化）、`Update`（每帧逻辑/输入
    轮询）、`FixedUpdate`（物理）、`LateUpdate`（移动之后的相机跟随）、
    `OnDisable`/`OnDestroy`（取消订阅/清理）。
-2. **在 `Awake` 中缓存组件查找结果** —— 绝不要每帧调用 `GetComponent`。
+2. **在 `Awake` 中缓存组件查找结果** ， 绝不要每帧调用 `GetComponent`。
 3. **用 `[SerializeField] private` 暴露可调参数**，而不是 public 字段，这样其他代码无法
    修改它们，但策划可以在 Inspector 中编辑。
 4. **在 `Update` 中用 `Time.deltaTime` 对每帧数值进行缩放**（`Time.fixedDeltaTime` 的
@@ -118,36 +118,36 @@ private System.Collections.IEnumerator FlashThenHide()
 
 ## 陷阱
 
-- **在 `Update` 中调用 `GetComponent`** —— 它每一帧都会进行搜索，严重拖累性能。把引用
+- **在 `Update` 中调用 `GetComponent`** ， 它每一帧都会进行搜索，严重拖累性能。把引用
   缓存在 `Awake`/`Start` 中。
-- **在 `Update` 中做物理** —— 在 `FixedUpdate` 之外用力或 `MovePosition` 移动
+- **在 `Update` 中做物理** ， 在 `FixedUpdate` 之外用力或 `MovePosition` 移动
   `Rigidbody` 会导致抖动和依赖时间步长的行为。在 `Update` 中读取输入，在 `FixedUpdate`
   中应用物理。
-- **依赖各对象之间 `Start` 的执行顺序** —— `Start` 在*所有* `Awake` 之后运行，但各
+- **依赖各对象之间 `Start` 的执行顺序** ， `Start` 在*所有* `Awake` 之后运行，但各
   `Start` 之间的顺序是不确定的。跨对象的接线放在 `Start` 中，自身初始化放在 `Awake` 中。
-- **仅仅为了在 Inspector 中显示就使用 `public` 字段** —— 这同时也允许任何脚本修改它们。
+- **仅仅为了在 Inspector 中显示就使用 `public` 字段** ， 这同时也允许任何脚本修改它们。
   请改用 `[SerializeField] private`。
 - **`gameObject.tag == "Enemy"`** 会分配字符串且更慢；请使用
   `gameObject.CompareTag("Enemy")`。
-- **GameObject 被禁用时协程会停止** —— 被禁用对象的协程会被终止；如果协程必须经受住
+- **GameObject 被禁用时协程会停止** ， 被禁用对象的协程会被终止；如果协程必须经受住
   启停切换，就在 `OnEnable` 中重新 `StartCoroutine`。仅把脚本设为 `enabled = false`
   *并不会*停止它们。
-- **`FindObjectOfType` / `FindObjectsOfType` 的过时警告** —— Unity 6 已替换它们。请使用
+- **`FindObjectOfType` / `FindObjectsOfType` 的过时警告** ， Unity 6 已替换它们。请使用
   `FindFirstObjectByType`（旧行为）、`FindAnyObjectByType`（更快，任意匹配）或
   `FindObjectsByType(FindObjectsSortMode.None)`；它们都很慢，所以要缓存结果。
-- **`async` 方法在其对象被销毁后仍会继续运行** —— `await` 不像协程那样与 GameObject
+- **`async` 方法在其对象被销毁后仍会继续运行** ， `await` 不像协程那样与 GameObject
   绑定。把 `destroyCancellationToken` 传给 `Awaitable` 等待方法（之后它们会抛出
   `OperationCanceledException`），并且绝不要对同一个 `Awaitable` 实例 await 两次：实例
   来自对象池。
 - **`Update` 永远不会在 `Start` 之前运行，但*第一个* `Update` 可能与 `Start` 在同一帧
-  运行** —— 如果你把初始化拆得比较古怪，就要防范尚未初始化的字段。
+  运行** ， 如果你把初始化拆得比较古怪，就要防范尚未初始化的字段。
 
 ## 参考资料
 
 - 完整的事件执行顺序表、进阶协程模式（自定义 `CustomYieldInstruction`、按句柄停止、
   `WaitUntil`/`WaitWhile`）以及协程等待对应的 `Awaitable` 等价物，请阅读
   `references/lifecycle-and-coroutines.md`。
-- `scripts/check_unity_project.py` —— 只读的 `.meta`/GUID 与缺失脚本检查器；
+- `scripts/check_unity_project.py` ， 只读的 `.meta`/GUID 与缺失脚本检查器；
   `--help` 列出全部检查项与退出码。
 - 主要文档：Unity Manual 的 "Event function execution order"
   （`https://docs.unity3d.com/Manual/execution-order.html`）、`ScriptReference/MonoBehaviour`，
@@ -155,6 +155,6 @@ private System.Collections.IEnumerator FlashThenHide()
 
 ## 相关 Skills
 
-- `unity-physics` —— `Rigidbody`、碰撞与 `FixedUpdate` 中的运动。
-- `unity-input-system` —— 把玩家输入读入这些脚本。
-- `unity-scriptableobjects` —— 在脚本之间共享数据/配置，而无需单例。
+- `unity-physics` ， `Rigidbody`、碰撞与 `FixedUpdate` 中的运动。
+- `unity-input-system` ， 把玩家输入读入这些脚本。
+- `unity-scriptableobjects` ， 在脚本之间共享数据/配置，而无需单例。

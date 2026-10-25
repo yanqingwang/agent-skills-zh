@@ -54,7 +54,7 @@ argument-hint: ["[path] [--full|--auto-update|--no-auto-update|--review|--langua
      - 验证解析后的路径存在且是目录（运行 `test -d <path>`）。若不存在或不是目录，向用户报告错误并 **STOP**。
      - 将 `PROJECT_ROOT` 设为解析后的绝对路径。
    - 若未找到目录路径参数，将 `PROJECT_ROOT` 设为当前工作目录。
-   - **worktree 重定向。** 若 `PROJECT_ROOT` 位于某个 git worktree（而非主检出）内，则把输出重定向到主仓库根目录。由 Claude Code 管理的 worktree 是临时的——写在那里的数据目录（`.ua/`，或旧版 `.understand-anything/`）会在会话结束时被销毁，知识图谱也随之丢失（issue #133）。通过比较 `git rev-parse --git-dir` 与 `git rev-parse --git-common-dir` 来检测 worktree：在普通检出或 submodule 中二者解析为同一路径，在 worktree 中二者不同，且 `--git-common-dir` 的父目录即为主仓库根目录。
+   - **worktree 重定向。** 若 `PROJECT_ROOT` 位于某个 git worktree（而非主检出）内，则把输出重定向到主仓库根目录。由 Claude Code 管理的 worktree 是临时的，写在那里的数据目录（`.ua/`，或旧版 `.understand-anything/`）会在会话结束时被销毁，知识图谱也随之丢失（issue #133）。通过比较 `git rev-parse --git-dir` 与 `git rev-parse --git-common-dir` 来检测 worktree：在普通检出或 submodule 中二者解析为同一路径，在 worktree 中二者不同，且 `--git-common-dir` 的父目录即为主仓库根目录。
 
      ```bash
      COMMON_DIR=$(git -C "$PROJECT_ROOT" rev-parse --git-common-dir 2>/dev/null)
@@ -74,8 +74,8 @@ argument-hint: ["[path] [--full|--auto-update|--no-auto-update|--review|--langua
      fi
      ```
 
-     若你确实希望按 worktree 各自生成图谱（少见——大多数用户需要的是重定向），则设置 `UNDERSTAND_NO_WORKTREE_REDIRECT=1`。
-1.5. **确保插件已构建。** 后续阶段会调用导入 `@understand-anything/core` 的 Node 脚本。全新安装时 `packages/core/dist/` 尚不存在——需要先构建一次。
+     若你确实希望按 worktree 各自生成图谱（少见，大多数用户需要的是重定向），则设置 `UNDERSTAND_NO_WORKTREE_REDIRECT=1`。
+1.5. **确保插件已构建。** 后续阶段会调用导入 `@understand-anything/core` 的 Node 脚本。全新安装时 `packages/core/dist/` 尚不存在，需要先构建一次。
 
    **重要：** 不要假定插件根目录就是 Skill 路径字符串上方两层目录。在很多安装中，`~/.agents/skills/understand` 是指向真实插件检出的符号链接。优先使用运行时提供的插件根目录（针对 Claude），然后依次回退到通用符号链接、Skill 符号链接解析，以及常见的基于 clone 的安装路径。
 
@@ -140,14 +140,14 @@ argument-hint: ["[path] [--full|--auto-update|--no-auto-update|--review|--langua
    mkdir -p "$UA_DIR/intermediate"
    mkdir -p "$UA_DIR/tmp"
    ```
-3.1. **清理过期的 trash 目录。** Phase 7 的清理步骤会把临时目录 `mv` 进 `.trash-<timestamp>/`，而不是直接 `rm -rf`（见 issue #301），以免硬化主机上的破坏性操作门禁被刚创建的路径触发。在这里回收超过 7 天的 trash 占用的空间——到这一步，任何新鲜度窗口检查早已不再关心这些目录：
+3.1. **清理过期的 trash 目录。** Phase 7 的清理步骤会把临时目录 `mv` 进 `.trash-<timestamp>/`，而不是直接 `rm -rf`（见 issue #301），以免硬化主机上的破坏性操作门禁被刚创建的路径触发。在这里回收超过 7 天的 trash 占用的空间，到这一步，任何新鲜度窗口检查早已不再关心这些目录：
    ```bash
    find "$UA_DIR/" -maxdepth 1 -type d -name '.trash-*' -mtime +7 -exec rm -rf {} + 2>/dev/null || true
    ```
 3.5. **自动更新配置：**
     - 若 `$ARGUMENTS` 中有 `--auto-update`：向 `$UA_DIR/config.json` 写入 `{"autoUpdate": true}`
     - 若 `$ARGUMENTS` 中有 `--no-auto-update`：向 `$UA_DIR/config.json` 写入 `{"autoUpdate": false}`
-    - 这两个标志只负责设置配置——无论如何分析都会正常进行。
+    - 这两个标志只负责设置配置，无论如何分析都会正常进行。
 
  3.6. **语言配置：**
     - 解析 `$ARGUMENTS` 中的 `--language <lang>` 标志。若找到，提取语言代码。
@@ -156,7 +156,7 @@ argument-hint: ["[path] [--full|--auto-update|--no-auto-update|--review|--langua
       - 区域变体：`zh-TW`、`zh-HK`、`zh-CN`、`pt-BR` 等原样保留。
     - 若**未**指定 `--language`：
       - **已存储的偏好优先。** 若 `$UA_DIR/config.json` 含有 `outputLanguage` 字段，则将 `$OUTPUT_LANGUAGE` 设为该值并跳过其余步骤。
-      - **否则进行检测（仅首次运行）。** 把用户对话的主要语言推断为 ISO 639-1 代码（`$DETECTED_LANG`）。若其为 `en` 或无法有把握地确定，则设 `$OUTPUT_LANGUAGE=en` 并静默继续——不弹出询问（英语用户不会察觉任何变化）。
+      - **否则进行检测（仅首次运行）。** 把用户对话的主要语言推断为 ISO 639-1 代码（`$DETECTED_LANG`）。若其为 `en` 或无法有把握地确定，则设 `$OUTPUT_LANGUAGE=en` 并静默继续，不弹出询问（英语用户不会察觉任何变化）。
       - **若 `$DETECTED_LANG` ≠ `en`，在分析前确认一次：** 告知用户检测到 `<language>`，并询问是否用它生成全部内容；按 Enter/回答"是"即接受，或输入其他语言代码/名称来覆盖（按上面的友好名称映射规范化）。若以非交互方式运行（无法得到回复），跳过等待，使用 `$DETECTED_LANG`，并打印一行提示而不是阻塞。
       - **持久化**解析出的 `$OUTPUT_LANGUAGE`（包括 `en`）到 `config.json`，使该项目今后不再重新询问。
     - 若**指定了** `--language`：
@@ -171,11 +171,11 @@ argument-hint: ["[path] [--full|--auto-update|--no-auto-update|--review|--langua
     - 解析 `$ARGUMENTS` 中的 `--exclude <patterns>` 标志。若找到，提取逗号分隔的模式字符串。
     - 按逗号拆分，去除每个模式两侧的空白，并过滤掉空条目。
     - 将这些模式存为 `$EXCLUDE_PATTERNS`（以逗号连接，便于传给下游脚本：`"tests/*,docs/*"`）。
-    - 这些模式优先级最高——它们叠加在默认模式与 `.understandignore` 规则之上。使用 `!` 前缀可强制纳入本会被排除的文件。
+    - 这些模式优先级最高，它们叠加在默认模式与 `.understandignore` 规则之上。使用 `!` 前缀可强制纳入本会被排除的文件。
     - 增量准备会重新扫描当前清单，因此新提供的排除模式立即生效，并会移除其现在覆盖到的、先前已分析过的文件。
 
 4. **检查待合并的子域知识图谱：**
-   列出 `$UA_DIR/` 下所有 `*knowledge-graph*.json` 文件，**但排除** `knowledge-graph.json` 本身（例如 `frontend-knowledge-graph.json`、`backend-knowledge-graph.json`）。若存在任何子域图谱，运行本 Skill 随附的合并脚本（位于本 SKILL.md 文件旁边——使用 Skill 目录路径，而不是项目根目录）：
+   列出 `$UA_DIR/` 下所有 `*knowledge-graph*.json` 文件，**但排除** `knowledge-graph.json` 本身（例如 `frontend-knowledge-graph.json`、`backend-knowledge-graph.json`）。若存在任何子域图谱，运行本 Skill 随附的合并脚本（位于本 SKILL.md 文件旁边，使用 Skill 目录路径，而不是项目根目录）：
    ```bash
    python "<SKILL_DIR>/merge-subdomain-graphs.py" "$PROJECT_ROOT"
    ```
@@ -190,7 +190,7 @@ argument-hint: ["[path] [--full|--auto-update|--no-auto-update|--review|--langua
    | `$ARGUMENTS` 中有 `--full` 标志 | 完整分析（全部阶段） |
    | 无已有图谱或 meta | 完整分析（全部阶段） |
    | 已有图谱 + 显式 `--exclude` | 即使 commit hash 未变也运行确定性增量准备，使新的清单规则立即生效 |
-   | `--review` 标志 + 已有图谱 + commit hash 未变 | 跳到 Phase 6（仅审查——复用已有的已组装图谱） |
+   | `--review` 标志 + 已有图谱 + commit hash 未变 | 跳到 Phase 6（仅审查，复用已有的已组装图谱） |
    | 已有图谱 + commit hash 未变 | 询问用户："图谱在此 commit 已是最新。你想：**(a)** 运行完整重建（`--full`）、**(b)** 运行 LLM graph reviewer（`--review`），还是 **(c)** 什么都不做？"然后按其选择执行。若选择 (c)，**STOP**。 |
    | 已有图谱 + 有变更文件 | 运行下方的确定性增量准备 |
 
@@ -330,7 +330,7 @@ node "<SKILL_DIR>/compute-batches.mjs" "$PROJECT_ROOT"
 
 捕获 stderr。把任何以 `Warning:` 开头的行追加到 `$PHASE_WARNINGS`，供最终报告使用。
 
-若脚本以非零码退出，则为硬失败——把完整 stderr 作为 Phase 1.5 失败转达给用户。不要尝试恢复；脚本内部的回退机制（按数量）已处理可恢复的问题。非零退出意味着根本性问题（缺少输入文件、JSON 格式错误等）。
+若脚本以非零码退出，则为硬失败，把完整 stderr 作为 Phase 1.5 失败转达给用户。不要尝试恢复；脚本内部的回退机制（按数量）已处理可恢复的问题。非零退出意味着根本性问题（缺少输入文件、JSON 格式错误等）。
 
 ---
 
@@ -361,7 +361,7 @@ node "<SKILL_DIR>/compute-batches.mjs" "$PROJECT_ROOT"
 > Skill 目录（用于随附脚本）：`<SKILL_DIR>`
 > 输出：写入 `$UA_DIR/intermediate/batch-<batchIndex>.json`（单文件模式）或 `batch-<batchIndex>-part-<k>.json`（拆分模式，见你的输出协议 Step B）。
 >
-> 本批次的预解析导入数据（直接使用——不要从源码重新解析导入）：
+> 本批次的预解析导入数据（直接使用，不要从源码重新解析导入）：
 > ```json
 > <batchImportData JSON from batches.json[i].batchImportData>
 > ```
@@ -371,16 +371,16 @@ node "<SKILL_DIR>/compute-batches.mjs" "$PROJECT_ROOT"
 > <neighborMap JSON from batches.json[i].neighborMap>
 > ```
 >
-> 本批次要分析的文件（每一项都必须原样传入 `batchFiles`，并带上全部四个字段——`path`、`language`、`sizeLines`、`fileCategory`）：
+> 本批次要分析的文件（每一项都必须原样传入 `batchFiles`，并带上全部四个字段，`path`、`language`、`sizeLines`、`fileCategory`）：
 > 1. `<path>`（<sizeLines> 行，语言：`<language>`，fileCategory：`<fileCategory>`）
 > 2. `<path>`（<sizeLines> 行，语言：`<language>`，fileCategory：`<fileCategory>`）
 > ...
 
-**输出命名以每个 batchIndex 为准——禁止融合。** 若为了 token 效率把多个小批次融合成一次 file-analyzer 派发，被派发的 Agent 仍必须按原始 `batchIndex` 分别写出输出文件，使用 `batch-<batchIndex>.json` 或 `batch-<batchIndex>-part-<k>.json`。合并脚本的正则（`batch-(\d+)(?:-part-(\d+))?\.json`）会静默丢弃任何其他命名（例如 `batch-fused-8-13.json`、`batch-8-13.json`），导致该文件中的所有节点与边全部丢失。每次派发返回后，先在磁盘上确认派发输入中的每个 `batchIndex` 都有对应的 `batch-<batchIndex>.json`（或 `batch-<batchIndex>-part-*.json`），再进行下一次派发。
+**输出命名以每个 batchIndex 为准：禁止融合。** 若为了 token 效率把多个小批次融合成一次 file-analyzer 派发，被派发的 Agent 仍必须按原始 `batchIndex` 分别写出输出文件，使用 `batch-<batchIndex>.json` 或 `batch-<batchIndex>-part-<k>.json`。合并脚本的正则（`batch-(\d+)(?:-part-(\d+))?\.json`）会静默丢弃任何其他命名（例如 `batch-fused-8-13.json`、`batch-8-13.json`），导致该文件中的所有节点与边全部丢失。每次派发返回后，先在磁盘上确认派发输入中的每个 `batchIndex` 都有对应的 `batch-<batchIndex>.json`（或 `batch-<batchIndex>-part-*.json`），再进行下一次派发。
 
 全部批次完成后，向用户报告：`Phase 2 complete. All <totalBatches> batches analyzed.`
 
-运行本 Skill 随附的合并与规范化脚本（位于本 SKILL.md 文件旁边——使用 Skill 目录路径，而不是项目根目录）：
+运行本 Skill 随附的合并与规范化脚本（位于本 SKILL.md 文件旁边，使用 Skill 目录路径，而不是项目根目录）：
 ```bash
 python "<SKILL_DIR>/merge-batch-graphs.py" "$PROJECT_ROOT"
 ```
@@ -438,7 +438,7 @@ node "<SKILL_DIR>/prepare-symbol-retry.mjs" "$PROJECT_ROOT"
 
 若修复准备、修复派发或第二次合并失败，**STOP** 并保留诊断信息。不要发布或推进 `knowledge-graph.json`、`fingerprints.json` 或 `meta.json`。绝不要把旧节点或旧语义边拼接进候选图来应付门禁。没有符合条件的 unresolved 文件的其他合并失败应立即停止。成功时，继续执行适用的架构/导览阶段。
 
-解析器限制：自动删除判定同时需要确定性解析器与声明覆盖适配器。当前适配器覆盖 JavaScript/JSX、TypeScript/TSX、Ruby、Python、Go、Rust 与 C++；其他语法即便解析成功也保持保守。没有确定性结构解析器的语言（包括 `.sh`、`.ps1` 与 `.bat`）无法自动确认缺失符号已被删除。这类缺失保持 `unknown`——即使是真实删除也一样——并阻止发布，等待人工调查或解析器支持。补充性的 LLM 源码检视与正则猜测不构成删除证据。没有显式类归属的可调用对象需要源身份校验，即使其 ID/名称保持不变且两个图谱都不产出类节点；因此不受支持或无法提取的可调用对象在这种情况下同样阻断。不透明 ID 中的点不是所有权证据。稳定的显式类归属可以在不解析的情况下确立保留。同一 HEAD 内相同的当前描述符可以保住修复引用；这不豁免跨版本对先前已发布符号的校验。
+解析器限制：自动删除判定同时需要确定性解析器与声明覆盖适配器。当前适配器覆盖 JavaScript/JSX、TypeScript/TSX、Ruby、Python、Go、Rust 与 C++；其他语法即便解析成功也保持保守。没有确定性结构解析器的语言（包括 `.sh`、`.ps1` 与 `.bat`）无法自动确认缺失符号已被删除。这类缺失保持 `unknown`（即使是真实删除也一样）并阻止发布，等待人工调查或解析器支持。补充性的 LLM 源码检视与正则猜测不构成删除证据。没有显式类归属的可调用对象需要源身份校验，即使其 ID/名称保持不变且两个图谱都不产出类节点；因此不受支持或无法提取的可调用对象在这种情况下同样阻断。不透明 ID 中的点不是所有权证据。稳定的显式类归属可以在不解析的情况下确立保留。同一 HEAD 内相同的当前描述符可以保住修复引用；这不豁免跨版本对先前已发布符号的校验。
 
 ---
 
@@ -479,9 +479,9 @@ node "<SKILL_DIR>/prepare-symbol-retry.mjs" "$PROJECT_ROOT"
 
 **构建组合提示词模板：**
  1. 使用 `architecture-analyzer` Agent 定义（位于 `agents/architecture-analyzer.md`）。
- 2. **语言上下文注入：** 对 Phase 1 检测到的每种语言（例如 `python`、`markdown`、`dockerfile`、`yaml`、`sql`、`terraform`、`graphql`、`protobuf`、`shell`、`html`、`css`），读取 `./languages/<language-id>.md` 文件（例如 `./languages/python.md`、`./languages/dockerfile.md`），并在基础模板之后以 `## Language Context` 标题附加其内容。若某检测语言没有对应文件，静默跳过并继续。这些文件位于本 SKILL.md 文件旁边的 `languages/` 子目录中。**务必包含非代码语言的片段**——它们为非代码文件提供边模式与摘要风格。
+ 2. **语言上下文注入：** 对 Phase 1 检测到的每种语言（例如 `python`、`markdown`、`dockerfile`、`yaml`、`sql`、`terraform`、`graphql`、`protobuf`、`shell`、`html`、`css`），读取 `./languages/<language-id>.md` 文件（例如 `./languages/python.md`、`./languages/dockerfile.md`），并在基础模板之后以 `## Language Context` 标题附加其内容。若某检测语言没有对应文件，静默跳过并继续。这些文件位于本 SKILL.md 文件旁边的 `languages/` 子目录中。**务必包含非代码语言的片段**，它们为非代码文件提供边模式与摘要风格。
  3. **框架附录注入：** 对 Phase 1 检测到的每个框架（例如 `Django`），读取 `./frameworks/<framework-id-lowercase>.md` 文件（例如 `./frameworks/django.md`），并在语言上下文之后附加其全部内容。若某检测框架没有对应文件，静默跳过并继续。这些文件位于本 SKILL.md 文件旁边的 `frameworks/` 子目录中。
- 4. **输出语言区域注入：** 若 `$OUTPUT_LANGUAGE` **不是** `en`（英语），读取语言区域指引文件 `./locales/<language-code>.md`（例如 `./locales/zh.md`、`./locales/ja.md`、`./locales/ko.md`），并在框架附录之后以 `## Output Language Guidelines` 标题附加其内容。这里提供针对 tag 命名约定、摘要风格与层名翻译的语言专属指引。若指定语言没有对应语言区域文件，静默跳过——`$LANGUAGE_DIRECTIVE` 仍然适用。这些文件位于本 SKILL.md 文件旁边的 `locales/` 子目录中。
+ 4. **输出语言区域注入：** 若 `$OUTPUT_LANGUAGE` **不是** `en`（英语），读取语言区域指引文件 `./locales/<language-code>.md`（例如 `./locales/zh.md`、`./locales/ja.md`、`./locales/ko.md`），并在框架附录之后以 `## Output Language Guidelines` 标题附加其内容。这里提供针对 tag 命名约定、摘要风格与层名翻译的语言专属指引。若指定语言没有对应语言区域文件，静默跳过，`$LANGUAGE_DIRECTIVE` 仍然适用。这些文件位于本 SKILL.md 文件旁边的 `locales/` 子目录中。
 
 将语言/框架上下文与以下额外上下文附加到 Agent 的提示词：
 
@@ -494,7 +494,7 @@ node "<SKILL_DIR>/prepare-symbol-retry.mjs" "$PROJECT_ROOT"
 > $DIR_TREE
 > ```
 >
-> 请利用目录树、语言上下文与框架附录（已在上方附加）来辅助确定分层归属。目录结构是划分层边界的有力证据。非代码文件（config、docs、infrastructure、data）也应分配到合适的层——具体指引见提示词模板。
+> 请利用目录树、语言上下文与框架附录（已在上方附加）来辅助确定分层归属。目录结构是划分层边界的有力证据。非代码文件（config、docs、infrastructure、data）也应分配到合适的层，具体指引见提示词模板。
 >
 > $LANGUAGE_DIRECTIVE
 
@@ -505,7 +505,7 @@ node "<SKILL_DIR>/prepare-symbol-retry.mjs" "$PROJECT_ROOT"
 > 将输出写入：`$UA_DIR/intermediate/layers.json`
 > 项目：`<projectName>` — `<projectDescription>`
 >
-> 文件节点（全部节点类型——包括 code file、config、document、service、pipeline、table、schema、resource、endpoint）：
+> 文件节点（全部节点类型，包括 code file、config、document、service、pipeline、table、schema、resource、endpoint）：
 > ```json
 > [list of {id, type, name, filePath, summary, tags} for ALL file-level nodes — omit complexity, languageNotes]
 > ```
@@ -515,7 +515,7 @@ node "<SKILL_DIR>/prepare-symbol-retry.mjs" "$PROJECT_ROOT"
 > [list of edges with type "imports"]
 > ```
 >
-> 全部边（用于跨类别分析——包括 configures、documents、deploys、triggers 等）：
+> 全部边（用于跨类别分析，包括 configures、documents、deploys、triggers 等）：
 > ```json
 > [list of ALL edges — include all edge types]
 > ```
@@ -585,7 +585,7 @@ node "<SKILL_DIR>/prepare-symbol-retry.mjs" "$PROJECT_ROOT"
 > 项目：`<projectName>` — `<projectDescription>`
 > 语言：`<languages>`
 >
-> 节点（全部文件级节点——包括 code file、config、document、service、pipeline、table、schema、resource、endpoint）：
+> 节点（全部文件级节点，包括 code file、config、document、service、pipeline、table、schema、resource、endpoint）：
 > ```json
 > [list of {id, name, filePath, summary, type} for ALL file-level nodes — do NOT include function or class nodes]
 > ```
@@ -595,7 +595,7 @@ node "<SKILL_DIR>/prepare-symbol-retry.mjs" "$PROJECT_ROOT"
 > [list of {id, name, description} for each layer — omit nodeIds]
 > ```
 >
-> 边（全部类型——包括 imports、calls、configures、documents、deploys、triggers 等）：
+> 边（全部类型，包括 imports、calls、configures、documents、deploys、triggers 等）：
 > ```json
 > [list of ALL edges — include all edge types for complete graph topology analysis]
 > ```
@@ -814,7 +814,7 @@ node "$UA_DIR/tmp/ua-inline-validate.cjs" \
 
 1. 将最终知识图谱写入 `$UA_DIR/knowledge-graph.json`。
 
-2. **生成结构指纹基线。** 这为未来的自动增量更新奠定基础，并且**必须在写入 `meta.json` 之前成功**——否则 auto-update 会看到一个新的 commit hash 却没有指纹可比对，把每个文件都归类为 STRUCTURAL，并在之后的每个 commit 上都升级为 `FULL_UPDATE`（issue #152）。
+2. **生成结构指纹基线。** 这为未来的自动增量更新奠定基础，并且**必须在写入 `meta.json` 之前成功**，否则 auto-update 会看到一个新的 commit hash 却没有指纹可比对，把每个文件都归类为 STRUCTURAL，并在之后的每个 commit 上都升级为 `FULL_UPDATE`（issue #152）。
 
    写入输入文件：
    ```bash
@@ -851,7 +851,7 @@ node "$UA_DIR/tmp/ua-inline-validate.cjs" \
    }
    ```
 
-4. 清理中间文件，**保留 `scan-result.json`**，以便未来的增量运行可以跳过 Phase 1 SCAN（见 issue #293）。我们把临时目录 `mv` 进带时间戳的 `.trash-*`，而不是直接 `rm -rf`——这可以避免触发硬化主机上的破坏性操作门禁（例如新鲜度窗口检查），它们会把"删除片刻之前创建的目录"标记为可疑（见 issue #301）。Phase 0 的延迟清理步骤会在 trash 超过 7 天后回收空间。
+4. 清理中间文件，**保留 `scan-result.json`**，以便未来的增量运行可以跳过 Phase 1 SCAN（见 issue #293）。我们把临时目录 `mv` 进带时间戳的 `.trash-*`，而不是直接 `rm -rf`，这可以避免触发硬化主机上的破坏性操作门禁（例如新鲜度窗口检查），它们会把"删除片刻之前创建的目录"标记为可疑（见 issue #301）。Phase 0 的延迟清理步骤会在 trash 超过 7 天后回收空间。
    ```bash
    # Preserve scan-result.json — Phase 1's deterministic file inventory.
    # Future incremental runs (Phase 2 compute-batches.mjs --changed-files=…)
@@ -887,7 +887,7 @@ node "$UA_DIR/tmp/ua-inline-validate.cjs" \
 - 若任何子代理派发失败，用相同提示词并附上关于失败的额外上下文，重试**一次**。
 - 在 `$PHASE_WARNINGS` 列表中跟踪每个阶段的所有警告与错误。使用 `--review` 时，把该列表传给 Phase 6 的 graph-reviewer。默认路径下，把累积的警告纳入 Phase 7 的最终报告。
 - 若第二次仍失败，跳过该阶段并以部分结果继续。
-- 始终保存部分结果——不完整的图谱也好过没有图谱。
+- 始终保存部分结果，不完整的图谱也好过没有图谱。
 - 在最终摘要中报告任何被跳过的阶段或错误，让用户了解发生了什么。
 - 绝不静默丢弃错误。每个失败都必须在最终报告中可见。
 

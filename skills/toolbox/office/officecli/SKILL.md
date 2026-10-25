@@ -31,7 +31,7 @@ irm https://d.officecli.ai/install.ps1 | iex
 
 **L1（读取）→ L2（DOM 编辑）→ L3（原始 XML）**。始终优先使用更高的层。需要结构化输出时加 `--json`。
 
-**文档工作开始前，先查看「专用 Skill」部分**（本文件底部）。融资 deck、学术论文、财务模型、数据看板和 Morph 动画需要先加载各自的 Skill —— `load_skill` 一次，然后继续。
+**文档工作开始前，先查看「专用 Skill」部分**（本文件底部）。融资 deck、学术论文、财务模型、数据看板和 Morph 动画需要先加载各自的 Skill ， `load_skill` 一次，然后继续。
 
 ---
 
@@ -39,7 +39,7 @@ irm https://d.officecli.ai/install.ps1 | iex
 
 **对属性名、取值格式或命令语法拿不准时，始终运行 help，不要靠猜。** 一次 help 查询胜过"猜测-失败-重试"的循环。
 
-`officecli help` ≡ `officecli --help`，且 `officecli <cmd> --help` ≡ `officecli help <cmd>` —— 内容相同。
+`officecli help` ≡ `officecli --help`，且 `officecli <cmd> --help` ≡ `officecli help <cmd>` ， 内容相同。
 
 ```bash
 officecli help                                  # All commands + global options + schema entry points
@@ -49,13 +49,13 @@ officecli help docx set paragraph               # Verb-filtered: only props usab
 officecli help docx paragraph --json            # Structured schema (machine-readable)
 ```
 
-格式别名：`word`→`docx`、`excel`→`xlsx`、`ppt`/`powerpoint`→`pptx`。动词：`add`、`set`、`get`、`query`、`remove`。MCP 通过单一的 `command` 字符串参数暴露同一套 schema：`{"command":"help docx paragraph"}`（不是结构化的 `{"format":...,"type":...}` 对象 —— MCP 工具只有一个参数 `command`，并原样透传给 CLI）。
+格式别名：`word`→`docx`、`excel`→`xlsx`、`ppt`/`powerpoint`→`pptx`。动词：`add`、`set`、`get`、`query`、`remove`。MCP 通过单一的 `command` 字符串参数暴露同一套 schema：`{"command":"help docx paragraph"}`（不是结构化的 `{"format":...,"type":...}` 对象 ， MCP 工具只有一个参数 `command`，并原样透传给 CLI）。
 
 ---
 
 ## 性能：常驻模式
 
-**每条命令在首次访问时自动启动常驻进程**（60 秒空闲超时）—— 文件锁冲突会被自动避免。更长的会话（12 分钟空闲）仍建议显式使用 `open`/`close`：
+**每条命令在首次访问时自动启动常驻进程**（60 秒空闲超时）， 文件锁冲突会被自动避免。更长的会话（12 分钟空闲）仍建议显式使用 `open`/`close`：
 ```bash
 officecli open report.docx       # explicitly keep in memory
 officecli set report.docx ...    # no file I/O overhead
@@ -64,7 +64,7 @@ officecli close report.docx      # save and release
 
 如需禁用自动启动：`OFFICECLI_NO_AUTO_RESIDENT=1`。
 
-**只在非 officecli 边界处刷新。** officecli 自己的读取（`get`/`query`/`view`/`dump`）总能看到你最新的编辑，因此工作流中途无需保存。只**在非 officecli 程序读取文件之前**才运行 `save`（保留常驻进程）或 `close`（刷新 + 释放）—— 例如 python-docx/openpyxl、Word、渲染器、交付/上传。（空闲会话会在几秒内自动刷新；`OFFICECLI_RESIDENT_FLUSH=each` 会让每次变更在返回前先刷新。）
+**只在非 officecli 边界处刷新。** officecli 自己的读取（`get`/`query`/`view`/`dump`）总能看到你最新的编辑，因此工作流中途无需保存。只**在非 officecli 程序读取文件之前**才运行 `save`（保留常驻进程）或 `close`（刷新 + 释放）， 例如 python-docx/openpyxl、Word、渲染器、交付/上传。（空闲会话会在几秒内自动刷新；`OFFICECLI_RESIDENT_FLUSH=each` 会让每次变更在返回前先刷新。）
 
 ---
 
@@ -112,7 +112,7 @@ officecli validate <file>             # Validate against OpenXML schema
 | `issues` | 格式/内容/结构问题 | `--type format\|content\|structure`、`--limit N` |
 | `text` | 纯文本提取 | `--start N --end N`、`--max-lines N` |
 | `annotated` | 带格式标注的文本 | |
-| `html` | 静态 HTML 快照 —— 与 `watch` 相同的渲染器，无需服务器 | `--browser`、`--page N`（docx）、`--start N --end N`（pptx） |
+| `html` | 静态 HTML 快照 ， 与 `watch` 相同的渲染器，无需服务器 | `--browser`、`--page N`（docx）、`--start N --end N`（pptx） |
 | `screenshot` / `svg` / `pdf` / `forms` | 通过无头浏览器输出 PNG / SVG（pptx 幻灯片）/ 通过导出插件输出 PDF / 通过格式处理器插件输出表单字段 JSON | `-o`、`--screenshot-width/-height`、pptx `--grid N` |
 
 `view html` 适合一次性快照（CI 产物、归档、diff 对比）；需要实时刷新或浏览器端点击选择时用 `watch`。
@@ -129,7 +129,7 @@ officecli get data.xlsx '/Sheet1/B2' --json
 
 ### 稳定 ID 寻址
 
-拥有稳定 ID 的元素会返回 `@attr=value` 形式的路径而非位置索引。在多步骤工作流中优先使用它们 —— 位置索引会随插入/删除而移动，稳定 ID 不会。
+拥有稳定 ID 的元素会返回 `@attr=value` 形式的路径而非位置索引。在多步骤工作流中优先使用它们 ， 位置索引会随插入/删除而移动，稳定 ID 不会。
 
 ```
 /slide[1]/shape[@id=550950021]                    # PPT shape
@@ -163,7 +163,7 @@ officecli goto <file> <path>           # Scroll watching browser(s) to element (
 
 打开打印出的 `http://localhost:N` URL。单击选择；shift/cmd/ctrl+单击多选；从空白处拖拽进行框选。PPT/Word 使用蓝色轮廓；Excel 使用原生风格的绿色选区（双击单元格可内联编辑；拖拽图表可重新定位）。
 
-### `get <file> selected` —— 读取用户点击的内容
+### `get <file> selected` ： 读取用户点击的内容
 
 ```bash
 officecli get <file> selected [--json]
@@ -183,9 +183,9 @@ for p in $PATHS; do officecli set deck.pptx "$p" --prop fill=FF0000; done
 - **所有已连接的浏览器共享同一个选区。** 后写者胜。
 - **同一文件只允许一个 watch。** 同一文件同一时刻只能有一个 watch 进程。
 - **组合形状整体选择。** v1 不支持深入选择组合内的单个子元素。
-- **覆盖范围：** `.pptx` 的形状/图片/表格/图表/连接线/组合；`.docx` 的顶层段落和表格。继承自版式/母版的装饰以及 Word 嵌套元素（表格单元格、run 级）无法寻址。**`.xlsx` 不会输出 `data-path`** —— xlsx 上的 `mark`/`selection` 总是解析为 `stale=true`（v2 候选功能）。
+- **覆盖范围：** `.pptx` 的形状/图片/表格/图表/连接线/组合；`.docx` 的顶层段落和表格。继承自版式/母版的装饰以及 Word 嵌套元素（表格单元格、run 级）无法寻址。**`.xlsx` 不会输出 `data-path`** ， xlsx 上的 `mark`/`selection` 总是解析为 `stale=true`（v2 候选功能）。
 
-### Marks —— 等待审阅的编辑提案
+### Marks ： 等待审阅的编辑提案
 
 当变更在写入文件之前需要人工审阅时使用 `mark`。Marks 只存在于 watch 进程中；被接受的 mark 由单独的 `set` 流水线应用。一次性变更直接用 `set`；永久性文件批注用 `add --type comment`（Word 原生）。
 
@@ -195,19 +195,19 @@ officecli unmark <file> [--path <p> | --all] [--json]
 officecli get-marks <file> [--json]
 ```
 
-属性：`find`（字面量，`regex=true` 时为正则；原始形式 `find='r"[abc]"'`）、`color`（hex / `rgb(...)` / 22 个具名白名单色）、`note`、`tofix`（驱动应用流水线）。**Path** 必须是 watch HTML 中的 `data-path` 格式 —— 完整流水线见各子 Skill。
+属性：`find`（字面量，`regex=true` 时为正则；原始形式 `find='r"[abc]"'`）、`color`（hex / `rgb(...)` / 22 个具名白名单色）、`note`、`tofix`（驱动应用流水线）。**Path** 必须是 watch HTML 中的 `data-path` 格式 ， 完整流水线见各子 Skill。
 
 ---
 
 ## L2：DOM 操作
 
-### set —— 修改属性
+### set ： 修改属性
 
 ```bash
 officecli set <file> <path> --prop key=value [--prop ...]
 ```
 
-通过元素路径（可用 `get --depth N` 找到）**可以设置任何 XML 属性** —— 即使是当前不存在的属性。不带 `find=` 时，`set` 会把格式应用到整个元素。
+通过元素路径（可用 `get --depth N` 找到）**可以设置任何 XML 属性** ， 即使是当前不存在的属性。不带 `find=` 时，`set` 会把格式应用到整个元素。
 
 **取值格式：**
 
@@ -217,9 +217,9 @@ officecli set <file> <path> --prop key=value [--prop ...]
 | 间距 | 带单位 | `12pt`、`0.5cm`、`1.5x`、`150%` |
 | 尺寸 | EMU 或带后缀 | `914400`、`2.54cm`、`1in`、`72pt`、`96px` |
 
-**点号属性别名** —— `font.<attr>` 形式可用于 shape/run/paragraph/table/row/cell/section/styles，例如 `--prop font.color=red --prop font.bold=true --prop font.size=14pt`。运行 `officecli help <fmt> <element>` 查看完整列表。
+**点号属性别名** ， `font.<attr>` 形式可用于 shape/run/paragraph/table/row/cell/section/styles，例如 `--prop font.color=red --prop font.bold=true --prop font.size=14pt`。运行 `officecli help <fmt> <element>` 查看完整列表。
 
-### find —— 格式化或替换匹配文本
+### find ： 格式化或替换匹配文本
 
 在 `set` 上使用顶层 `--find` / `--replace`（`query` 上可用 `--find`）。旧式 `--prop find=X` 仍然有效，但会输出提示。
 
@@ -248,7 +248,7 @@ officecli set slides.pptx / --find draft --replace final
 - 无匹配 = 静默成功。`--json` 中包含 `"matched": N`
 - **Excel：** 只支持 `find` + `replace`（不支持 find + 格式属性）
 
-### add —— 添加元素或克隆
+### add ： 添加元素或克隆
 
 ```bash
 officecli add <file> <parent> --type <type> [--prop ...]
@@ -264,9 +264,9 @@ officecli add <file> <parent> --from <path>                               # clon
 
 | 格式 | 类型 |
 |--------|-------|
-| **pptx** | slide（含隐藏页），shape（font.latin/ea/cs、direction=rtl、underline.color、highlight=COLOR（Add/Set/Get/HTML 预览）、effective.X+effective.X.src；arrow 是 rightArrow 的别名；slideMaster/slideLayout 支持带类型的 add/set/remove），picture（SVG、brightness/contrast/glow/shadow、rotation、link、tooltip），chart（direction=rtl、pieOfPie、barOfPie、axisLine/gridline 逐属性 setter、animation+chartBuild=byCategory\|bySeries、line 的 dropLines/hiLowLines/upDownBars、anchor=x,y,w,h 简写），table（cell 的 direction=rtl、fill/background、内置 PowerPoint 样式目录、/col[C] get + swap/copyFrom、row/col 的 Move/CopyFrom），row（tr），connector（from/to 接受完整路径的 `@name=`/`@id=` 形式 —— 裸 `@name=Foo` 会被拒绝，必须写成 `/slide[N]/shape[@name=Foo]` —— startshape/endshape 支持按路径设置（SetByPath）；默认端到端（edge-to-edge）锚定，fromSide/toSide 可强制指定边，fromIdx/toIdx 用于原始 cxn 索引），group（link、tooltip、可通过 get/query/add/remove 深度遍历，ungroup=true 会解散回 slide 绝对坐标），align/distribute（targets= 接受 shape[@id=N] 路径，不限于位置索引），video/audio（loop、autoStart 别名），equation，notes（direction=rtl、lang），comment（传统版 + 现代 p188 串联回复的往返读写），animation（15 个强调 + 16 个退出预设、多效果链、motion-path 预设、repeat/restart/autoReverse、图表动画），transition（12 个 p15 预设 + morph/p14），paragraph（para），run，zoom，ole（preview=，通过 add-part+raw-set 实现完整 dump 往返），placeholder（phType=...），model3d（rotation=ax,ay,az；完整 dump 往返），smartart（通过 add-part 实现 dump 往返），diagram（仅添加：mermaid → 原生形状或渲染图片，`--type diagram`/`flowchart`）。 |
-| **docx** | paragraph（direction/font.latin/ea/cs、bold.cs/italic.cs/size.cs、lang.latin/ea/cs、wordWrap、framePr.\*、tabs 简写），run（lang 槽位、direction、underline.color、position 半磅单位、**revision.type=ins\|del\|format\|moveFrom\|moveTo + revision.action=accept\|reject**（带 .author/.date）—— 在 `set /revision[...]` 上可用裸 `@author=`/`@type=` 选择器做按条件 accept/reject，但 `query 'revision[...]'` 需要用点号形式 `revision.author=`/`revision.type=`；move+revision 仅支持 run 级路径，不支持段落级；段落/shape 路径上的 **range=START:END** 可按显式 0 基半开偏移量格式化字符区间，而不是定位到某个 run —— 它是 find= 的偏移量版对应功能），table（direction=rtl、hMerge、row 上的 cantSplit / cell 上的 nowrap（add 与 set 均支持）、**虚拟列操作**：在 /body/tbl[N]/col 上执行 add/remove/move/copyfrom），row（tr），cell（td），image，header/footer（direction），section（pageNumFmt 全枚举、direction=rtl、rtlGutter、pgBorders=box），bookmark，comment，footnote，endnote，formfield，sdt，chart，equation，field（28 种类型），hyperlink，style（Add/Set 支持 direction、indents、pbdr、lineSpacing），toc，watermark，break，ole，**num/abstractNum/lvl**，**tab**，**textbox/shape**（以 add 为主 —— Get 仅返回原始 XML 预览，无结构化回读；Set 仅限 width/height/geometry/fill/line.\*；位置用 `anchor.x`/`anchor.y` 而非裸 x/y；`textDirection`/rotation/gradient/shadow **仅 textbox 支持** —— docx shape 本身既无 rotation 也无 gradient），内嵌 **OLE 在 dump→batch 上支持往返**，**diagram**（仅添加：mermaid → 原生形状或渲染图片，`--type diagram`/`flowchart`，添加时不支持 x/y —— 请通过 `set /body/group[N]` 重新定位）。docDefaults.rtl、autoHyphenation，`get /` 会暴露 locale + /comments /footnotes /endnotes。`create --minimal` 用于生成原始 OOXML 脚手架。 |
-| **xlsx** | sheet（visible/hidden/veryHidden、打印边距、printTitleRows/Cols、rightToLeft sheetView、级联感知的重命名），row（c{N}= 单元格内容简写；add 接受 --from /Sheet/col[L]；插入时重写公式引用），col（重写公式引用、移动时命名区域跟随），cell（type=richtext+runs、merge=range/sweep、direction=rtl、phonetic；remove 时 **--shift left\|up**，add 时 shift=right\|down —— 与 Excel UI 对话框行为对齐；公式自动检测；calc 中的 OFFSET/INDIRECT），chart（逐轴 RTL/标题、anchor=x,y,w,h、pareto），image（SVG），comment（direction=rtl），table（listobject），namedrange（definedname、volatile、`[@name=X]`；解析时公式体被内联展开），pivottable（缓存 CoW + 跨透视表共享、labelFilter=field:type:value 仅添加时可用、topN=integer 仅添加时可用、fillDownLabels 是 repeatLabels 的别名而非独立功能、calculatedField），sparkline，validation，autofilter，shape，textbox，CF（databar/colorscale/iconset/formulacf/cellIs/topN/aboveAverage），ole，csv。Query 支持 `merge`/`mergedrange`。Workbook：password。Shape 选择器可枚举 grpSp 内的叶子节点。 |
+| **pptx** | slide（含隐藏页），shape（font.latin/ea/cs、direction=rtl、underline.color、highlight=COLOR（Add/Set/Get/HTML 预览）、effective.X+effective.X.src；arrow 是 rightArrow 的别名；slideMaster/slideLayout 支持带类型的 add/set/remove），picture（SVG、brightness/contrast/glow/shadow、rotation、link、tooltip），chart（direction=rtl、pieOfPie、barOfPie、axisLine/gridline 逐属性 setter、animation+chartBuild=byCategory\|bySeries、line 的 dropLines/hiLowLines/upDownBars、anchor=x,y,w,h 简写），table（cell 的 direction=rtl、fill/background、内置 PowerPoint 样式目录、/col[C] get + swap/copyFrom、row/col 的 Move/CopyFrom），row（tr），connector（from/to 接受完整路径的 `@name=`/`@id=` 形式 ， 裸 `@name=Foo` 会被拒绝，必须写成 `/slide[N]/shape[@name=Foo]` ， startshape/endshape 支持按路径设置（SetByPath）；默认端到端（edge-to-edge）锚定，fromSide/toSide 可强制指定边，fromIdx/toIdx 用于原始 cxn 索引），group（link、tooltip、可通过 get/query/add/remove 深度遍历，ungroup=true 会解散回 slide 绝对坐标），align/distribute（targets= 接受 shape[@id=N] 路径，不限于位置索引），video/audio（loop、autoStart 别名），equation，notes（direction=rtl、lang），comment（传统版 + 现代 p188 串联回复的往返读写），animation（15 个强调 + 16 个退出预设、多效果链、motion-path 预设、repeat/restart/autoReverse、图表动画），transition（12 个 p15 预设 + morph/p14），paragraph（para），run，zoom，ole（preview=，通过 add-part+raw-set 实现完整 dump 往返），placeholder（phType=...），model3d（rotation=ax,ay,az；完整 dump 往返），smartart（通过 add-part 实现 dump 往返），diagram（仅添加：mermaid → 原生形状或渲染图片，`--type diagram`/`flowchart`）。 |
+| **docx** | paragraph（direction/font.latin/ea/cs、bold.cs/italic.cs/size.cs、lang.latin/ea/cs、wordWrap、framePr.\*、tabs 简写），run（lang 槽位、direction、underline.color、position 半磅单位、**revision.type=ins\|del\|format\|moveFrom\|moveTo + revision.action=accept\|reject**（带 .author/.date）， 在 `set /revision[...]` 上可用裸 `@author=`/`@type=` 选择器做按条件 accept/reject，但 `query 'revision[...]'` 需要用点号形式 `revision.author=`/`revision.type=`；move+revision 仅支持 run 级路径，不支持段落级；段落/shape 路径上的 **range=START:END** 可按显式 0 基半开偏移量格式化字符区间，而不是定位到某个 run ， 它是 find= 的偏移量版对应功能），table（direction=rtl、hMerge、row 上的 cantSplit / cell 上的 nowrap（add 与 set 均支持）、**虚拟列操作**：在 /body/tbl[N]/col 上执行 add/remove/move/copyfrom），row（tr），cell（td），image，header/footer（direction），section（pageNumFmt 全枚举、direction=rtl、rtlGutter、pgBorders=box），bookmark，comment，footnote，endnote，formfield，sdt，chart，equation，field（28 种类型），hyperlink，style（Add/Set 支持 direction、indents、pbdr、lineSpacing），toc，watermark，break，ole，**num/abstractNum/lvl**，**tab**，**textbox/shape**（以 add 为主 ， Get 仅返回原始 XML 预览，无结构化回读；Set 仅限 width/height/geometry/fill/line.\*；位置用 `anchor.x`/`anchor.y` 而非裸 x/y；`textDirection`/rotation/gradient/shadow **仅 textbox 支持** ， docx shape 本身既无 rotation 也无 gradient），内嵌 **OLE 在 dump→batch 上支持往返**，**diagram**（仅添加：mermaid → 原生形状或渲染图片，`--type diagram`/`flowchart`，添加时不支持 x/y ， 请通过 `set /body/group[N]` 重新定位）。docDefaults.rtl、autoHyphenation，`get /` 会暴露 locale + /comments /footnotes /endnotes。`create --minimal` 用于生成原始 OOXML 脚手架。 |
+| **xlsx** | sheet（visible/hidden/veryHidden、打印边距、printTitleRows/Cols、rightToLeft sheetView、级联感知的重命名），row（c{N}= 单元格内容简写；add 接受 --from /Sheet/col[L]；插入时重写公式引用），col（重写公式引用、移动时命名区域跟随），cell（type=richtext+runs、merge=range/sweep、direction=rtl、phonetic；remove 时 **--shift left\|up**，add 时 shift=right\|down ， 与 Excel UI 对话框行为对齐；公式自动检测；calc 中的 OFFSET/INDIRECT），chart（逐轴 RTL/标题、anchor=x,y,w,h、pareto），image（SVG），comment（direction=rtl），table（listobject），namedrange（definedname、volatile、`[@name=X]`；解析时公式体被内联展开），pivottable（缓存 CoW + 跨透视表共享、labelFilter=field:type:value 仅添加时可用、topN=integer 仅添加时可用、fillDownLabels 是 repeatLabels 的别名而非独立功能、calculatedField），sparkline，validation，autofilter，shape，textbox，CF（databar/colorscale/iconset/formulacf/cellIs/topN/aboveAverage），ole，csv。Query 支持 `merge`/`mergedrange`。Workbook：password。Shape 选择器可枚举 grpSp 内的叶子节点。 |
 
 ### 数据透视表（xlsx）
 
@@ -313,7 +313,7 @@ officecli add doc.docx '/body/p[1]' --type table --after "find:First sentence." 
 
 ### 克隆
 
-`officecli add <file> / --from '/slide[1]'` —— 连同所有跨部件关系一起复制。
+`officecli add <file> / --from '/slide[1]'` ， 连同所有跨部件关系一起复制。
 
 ### move、swap、remove
 
@@ -323,13 +323,13 @@ officecli swap <file> <path1> <path2>
 officecli remove <file> '/body/p[4]'
 ```
 
-使用 `--after` 或 `--before` 时可省略 `--to` —— 目标容器会从锚点推断。
+使用 `--after` 或 `--before` 时可省略 `--to` ， 目标容器会从锚点推断。
 
-### batch —— 一次保存周期内的多个操作
+### batch ： 一次保存周期内的多个操作
 
-**默认原子化（v1.0.137+）：** 每一项仍然会执行并被逐项报告（因此 `N succeeded, M failed` 的统计依然有意义，每个失败都会显现），但只要*有任何一项*失败，整个 batch 就会回滚 —— 磁盘上的文件与 batch 运行前逐字节一致（已在独立模式和常驻模式下实测确认）。用 `--best-effort` 可恢复旧的"成功多少应用多少"行为（适用于有损的 `dump→batch` 重放场景：为一个不支持的项目丢掉全部结果，还不如保留部分结果）。`--stop-on-error` 只改变运行停止得有多早（剩余项标记为 `skipped`），不改变已执行部分是否保留 —— 如果想要"遇错即停但保留已成功部分"，请将它与 `--best-effort` 组合使用。`--force` 与此无关 —— 它只是 docx 保护绕过。失败项带有机器可读的 `code` 字段（清单与 `error.code` 相同）；被回滚的 batch 其 JSON 摘要会带有 `"atomicRolledBack": true`。
+**默认原子化（v1.0.137+）：** 每一项仍然会执行并被逐项报告（因此 `N succeeded, M failed` 的统计依然有意义，每个失败都会显现），但只要*有任何一项*失败，整个 batch 就会回滚 ， 磁盘上的文件与 batch 运行前逐字节一致（已在独立模式和常驻模式下实测确认）。用 `--best-effort` 可恢复旧的"成功多少应用多少"行为（适用于有损的 `dump→batch` 重放场景：为一个不支持的项目丢掉全部结果，还不如保留部分结果）。`--stop-on-error` 只改变运行停止得有多早（剩余项标记为 `skipped`），不改变已执行部分是否保留 ， 如果想要"遇错即停但保留已成功部分"，请将它与 `--best-effort` 组合使用。`--force` 与此无关 ， 它只是 docx 保护绕过。失败项带有机器可读的 `code` 字段（清单与 `error.code` 相同）；被回滚的 batch 其 JSON 摘要会带有 `"atomicRolledBack": true`。
 
-`officecli dump <file> [<path>]` 会生成可重放的 batch JSON 用于往返读写 —— `.docx`（全覆盖）、`.pptx`（文本/表格/图片/图表/备注/主题 + 通过 raw-set 直通支持 OLE/3D/视频/音频/SmartArt/morph/p15 切换效果）、`.xlsx`（单元格/公式/样式 + 表格、条件格式、数据验证、批注、图表、迷你图、图片、形状、数据透视表；切片器/chartEx/OLE 通过原样载体支持）。路径默认为 `/`（整个文档）；传入子树路径（docx：`/body`、`/body/p[N]`、`/body/tbl[N]`、`/theme`、`/settings`、`/numbering`、`/styles`；xlsx：`/SheetName`、`/sheet[N]`）可限定 dump 范围。`officecli refresh <file.docx>` 在重放后重新计算目录页码 / PAGE / 交叉引用（Windows 上使用 Word 后端；其他平台回退到无头 HTML）。`officecli plugins list` 可将对 `.doc`、`.hwpx`、`.pdf` 导出的支持扩展进来。
+`officecli dump <file> [<path>]` 会生成可重放的 batch JSON 用于往返读写 ， `.docx`（全覆盖）、`.pptx`（文本/表格/图片/图表/备注/主题 + 通过 raw-set 直通支持 OLE/3D/视频/音频/SmartArt/morph/p15 切换效果）、`.xlsx`（单元格/公式/样式 + 表格、条件格式、数据验证、批注、图表、迷你图、图片、形状、数据透视表；切片器/chartEx/OLE 通过原样载体支持）。路径默认为 `/`（整个文档）；传入子树路径（docx：`/body`、`/body/p[N]`、`/body/tbl[N]`、`/theme`、`/settings`、`/numbering`、`/styles`；xlsx：`/SheetName`、`/sheet[N]`）可限定 dump 范围。`officecli refresh <file.docx>` 在重放后重新计算目录页码 / PAGE / 交叉引用（Windows 上使用 Word 后端；其他平台回退到无头 HTML）。`officecli plugins list` 可将对 `.doc`、`.hwpx`、`.pdf` 导出的支持扩展进来。
 
 ```bash
 echo '[
@@ -347,7 +347,7 @@ officecli batch data.xlsx --input updates.json --best-effort --json   # keep wha
 
 ## L3：原始 XML
 
-当 L2 无法表达你的需求时使用。无需 xmlns 声明 —— 前缀会自动注册。
+当 L2 无法表达你的需求时使用。无需 xmlns 声明 ， 前缀会自动注册。
 
 ```bash
 officecli raw <file> <part>                          # view raw XML
@@ -363,7 +363,7 @@ officecli add-part <file> <parent>                   # create new document part 
 
 | 陷阱 | 正确做法 |
 |---------|-----------------|
-| `--name "foo"` | 请用 `--prop name="foo"` —— 所有属性都要通过 `--prop` 传递 |
+| `--name "foo"` | 请用 `--prop name="foo"` ， 所有属性都要通过 `--prop` 传递 |
 | 在 zsh/bash 中不加引号的 `[N]` 路径 | 始终加引号：`'/slide[1]'` 或 `"/slide[1]"`（shell 会对括号做 glob 展开） |
 | 用 PPT 的 `shape[1]` 放内容 | `shape[1]` 通常是标题占位符。内容形状请用 `shape[2]+` |
 | `/shape[myname]` | 不支持按名称索引。请用数字索引或 `@name=`（仅 PPT） |
@@ -376,11 +376,11 @@ officecli add-part <file> <parent>                   # create new document part 
 
 ## 专用 Skill
 
-`officecli load_skill <name>` —— 输出是一份 SKILL.md，遵循其中的规则。
+`officecli load_skill <name>` ， 输出是一份 SKILL.md，遵循其中的规则。
 
 **加载规则**：
 - 在"何时使用"中选最具体的匹配；都不匹配时加载格式默认项（`word` / `pptx` / `excel`）。
-- 场景 Skill 中已包含格式默认项的规则 —— 每个产物只加载 **一个** Skill，绝不叠加。
+- 场景 Skill 中已包含格式默认项的规则 ， 每个产物只加载 **一个** Skill，绝不叠加。
 - 已加载的规则跨轮次持续有效；不要每次回复都重新加载。
 - 两个不同产物 → 两次独立加载。
 
@@ -396,7 +396,7 @@ officecli add-part <file> <parent>                   # create new document part 
 | 名称 | 何时使用 |
 |------|-------------|
 | `pptx` | 通用 deck：董事会评审、销售 deck、全员大会、产品发布 |
-| `pitch-deck` | **仅限融资** —— 种子轮 / A-C 轮 / SAFE / 可转换票据 / 战略融资。不适用于销售 / 产品 / 董事会 deck（请路由到 `pptx`） |
+| `pitch-deck` | **仅限融资** ， 种子轮 / A-C 轮 / SAFE / 可转换票据 / 战略融资。不适用于销售 / 产品 / 董事会 deck（请路由到 `pptx`） |
 | `morph-ppt` | 电影级 Morph 动画演示。不适用于静态 deck（请路由到 `pptx`） |
 | `morph-ppt-3d` | 3D Morph：GLB 模型、镜头运动、景深。不适用于纯 2D Morph（请路由到 `morph-ppt`） |
 

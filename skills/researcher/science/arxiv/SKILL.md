@@ -162,7 +162,7 @@ print(f'Downloaded: {out} ({out.stat().st_size // 1024} KB)')
 
 每次下载之后：
 
-- 确认文件大小 > 10 KB（拒绝更小的文件——很可能是错误 HTML 页面）
+- 确认文件大小 > 10 KB（拒绝更小的文件，很可能是错误 HTML 页面）
 - 连续下载之间加 1 秒延迟，以避免触发速率限制
 - 报告：`Downloaded: papers/2301.07041.pdf (842 KB)`
 
@@ -216,7 +216,7 @@ fi
 ```
 
 该辅助脚本会在一次调用中完成元数据获取、slug、去重、页面创建、
-索引重建和日志追加——**不要手写
+索引重建和日志追加，**不要手写
 `papers/<slug>.md`**。规范辅助脚本规则见
 [`shared-references/integration-contract.md`](../shared-references/integration-contract.md)。
 遗漏的纳入可稍后用
@@ -241,10 +241,10 @@ fi
 
 ## 关键规则
 
-- 始终醒目地展示 arXiv ID——用户做引用和复现都需要它
+- 始终醒目地展示 arXiv ID，用户做引用和复现都需要它
 - 校验下载的 PDF：文件必须 > 10 KB；更小则警告并删除
 - 速率限制：连续下载 PDF 之间等待 1 秒；遇到 HTTP 429 时等 5 秒后重试一次
-- 绝不覆盖同路径下已存在的 PDF——跳过并报告 "already exists"（已存在）
+- 绝不覆盖同路径下已存在的 PDF，跳过并报告 "already exists"（已存在）
 - 兼容两种 arXiv ID 格式：新格式（`2301.07041`）和旧格式（`cs/0601001`）
 - PAPER_DIR 不存在时自动创建
 - 若 arXiv API 不可达，清晰报告错误，并建议改用 `/research-lit` 加 `- sources: web` 作为回退

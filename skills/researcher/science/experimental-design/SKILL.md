@@ -18,12 +18,12 @@ metadata:
 
 ## 概述
 
-一项研究的设计——实验单元如何被分配到各处理条件、哪些因素保持恒定、哪些因素变动、以何种结构变动——决定了数据能够回答哪些问题。任何分析都无法在事后挽救一个存在混杂（confounding）或伪重复（pseudoreplication）问题的设计。本 Skill 关注的是在数据收集*之前*做出的决策：选择能分离目标效应的设计、通过随机化（randomization）使因果论断成立、通过区组化（blocking）消除已知的干扰变异，以及构造多因子实验，使其效应可被估计而非纠缠在一起。
+一项研究的设计，实验单元如何被分配到各处理条件、哪些因素保持恒定、哪些因素变动、以何种结构变动，决定了数据能够回答哪些问题。任何分析都无法在事后挽救一个存在混杂（confounding）或伪重复（pseudoreplication）问题的设计。本 Skill 关注的是在数据收集*之前*做出的决策：选择能分离目标效应的设计、通过随机化（randomization）使因果论断成立、通过区组化（blocking）消除已知的干扰变异，以及构造多因子实验，使其效应可被估计而非纠缠在一起。
 
 几乎所有好设计背后都蕴含三个思想（Fisher 三原则）：
-- **随机化（randomization）** —— 随机分配处理，使已知与未知的混杂因素在期望意义上达到平衡。正是这一点把一次比较变成一个因果论断。
-- **重复（replication）** —— 在正确的层级上进行独立重复，从而能够估计变异性，你的效应也不至于只是单个单元的产物。最常见的致命错误是**伪重复（pseudoreplication）**：把对同一单元的重复测量计作独立重复。
-- **区组化 / 局部控制（blocking / local control）** —— 将相似单元归组（按批次、日期、地点、窝别），并在区组内随机化，从而把这部分干扰变异从误差项中剔除，而不是任其放大噪声。
+- **随机化（randomization）** ， 随机分配处理，使已知与未知的混杂因素在期望意义上达到平衡。正是这一点把一次比较变成一个因果论断。
+- **重复（replication）** ， 在正确的层级上进行独立重复，从而能够估计变异性，你的效应也不至于只是单个单元的产物。最常见的致命错误是**伪重复（pseudoreplication）**：把对同一单元的重复测量计作独立重复。
+- **区组化 / 局部控制（blocking / local control）** ， 将相似单元归组（按批次、日期、地点、窝别），并在区组内随机化，从而把这部分干扰变异从误差项中剔除，而不是任其放大噪声。
 
 本 Skill 帮助你在各类设计之间做出选择、生成实际可用的随机化或 DOE（试验设计，Design of Experiments）布局（附可复现脚本），并避免那些让数据无法解读的结构性错误。
 
@@ -190,7 +190,7 @@ DOE 运行顺序默认随机化（拉丁超立方 Latin hypercube 默认不添�
 
 ## 毁掉研究的设计错误
 
-这些错误是结构性的——无法在分析阶段修复，只能在设计阶段避免。
+这些错误是结构性的，无法在分析阶段修复，只能在设计阶段避免。
 
 1. **伪重复（Pseudoreplication）。** 把对同一单元的重复测量当作独立重复：
    3 只小鼠各测 100 个细胞，对于施加在小鼠身上的任何处理而言，n = 3（小鼠），
@@ -224,7 +224,7 @@ DOE 运行顺序默认随机化（拉丁超立方 Latin hypercube 默认不添�
 1. **陈述问题、单元与响应。** 什么被随机化？测量什么？
    真正的独立重复处于哪个层级？
    这决定了一切。
-2. **列出干扰因子**（批次、日期、地点、操作员、位置）——为每一个规划区组化、
+2. **列出干扰因子**（批次、日期、地点、操作员、位置），为每一个规划区组化、
    分层或跨其随机化。
 3. **选择设计**，使用决策树与参考文件。
 4. **在正确的层级决定重复**（并用 **statistical-power** Skill
@@ -234,7 +234,7 @@ DOE 运行顺序默认随机化（拉丁超立方 Latin hypercube 默认不添�
    核对名册 ID、完整区组平衡、范围限值与秩。
 7. **记录**设计、软件版本、种子与排程。预先指定分析方案；
    入组期间限制对种子与未来分配结果的访问。
-8. **使分析与设计相匹配** —— 区组、层、群组与嵌套必须出现在模型中
+8. **使分析与设计相匹配** ， 区组、层、群组与嵌套必须出现在模型中
    （交接给 **statistical-analysis** / **statsmodels**）。
 
 ---
@@ -242,28 +242,28 @@ DOE 运行顺序默认随机化（拉丁超立方 Latin hypercube 默认不添�
 ## 资源
 
 ### 脚本
-- `scripts/randomization.py` —— 带种子的分配排程：`simple_randomization`、
+- `scripts/randomization.py` ， 带种子的分配排程：`simple_randomization`、
   `block_randomization`、`stratified_block_randomization`、`cluster_randomization`、
   `assign_factorial_runs`、`arm_balance`。
-- `scripts/doe_designs.py` —— 以真实单位表示的 DOE 矩阵：`full_factorial`、
+- `scripts/doe_designs.py` ， 以真实单位表示的 DOE 矩阵：`full_factorial`、
   `two_level_factorial`、`fractional_factorial`、`plackett_burman`、
   `central_composite`、`box_behnken`、`latin_hypercube`。
 
 ### 参考文件
-- `references/randomization_and_blocking.md` —— 随机化方法、区组化、
+- `references/randomization_and_blocking.md` ， 随机化方法、区组化、
   分层、对照、盲法、批次/孔板布局。
-- `references/factorial_and_doe.md` —— 析因与部分析因设计、分辨度
+- `references/factorial_and_doe.md` ， 析因与部分析因设计、分辨度
   与别名效应、筛选，以及响应曲面方法学。
-- `references/design_types.md` —— 完全随机、随机区组、交叉、
+- `references/design_types.md` ， 完全随机、随机区组、交叉、
   重复测量、裂区、拉丁方、整群与嵌套设计；
   伪重复问题的深入探讨。
-- `references/sequential_and_adaptive.md` —— 成组序贯设计、α 消耗函数（alpha spending）、
+- `references/sequential_and_adaptive.md` ， 成组序贯设计、α 消耗函数（alpha spending）、
   期中停止规则，以及自适应样本量再估计。
 
 ### 相关 Skill
-- **statistical-power** —— 为你选定的设计计算所需样本量 / 功效（power）。
-- **statistical-analysis** —— 数据收集完成后运行并报告分析。
-- **statsmodels** / **pymc** —— 拟合设计所隐含的模型。
+- **statistical-power** ， 为你选定的设计计算所需样本量 / 功效（power）。
+- **statistical-analysis** ， 数据收集完成后运行并报告分析。
+- **statsmodels** / **pymc** ， 拟合设计所隐含的模型。
 
 ### 关键文献
 - Fisher, R. A. (1935). *The Design of Experiments*.

@@ -107,7 +107,7 @@ Google Lighthouse 的 **Agentic Browsing**
    以及 P0 失败数。用一句话说明当前对 Agent 限制最大的是什么。
 2. **Lighthouse Agentic Browsing**：每项审计的状态（pass、fail、
    informative、N/A），以及 `lighthouse_agentic.py` 给出的、可增加计分
-   审计的 "paths"——以选项的形式陈述，而非目标。
+   审计的 "paths"，以选项的形式陈述，而非目标。
 3. **按优先级排列的发现**，附证据（状态码、响应头、规则 id、
    selector）与修复方法。
 4. **访问策略**：分别用一行说明 training、search 与 user-triggered

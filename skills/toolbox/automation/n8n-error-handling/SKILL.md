@@ -9,14 +9,14 @@ description: 配置 n8n 错误处理，让失败响亮、结构化且可恢复�
 
 # n8n 错误处理
 
-默认情况下，当一个 n8n 节点抛出错误时，**整个工作流会停摆**。对于你在现场盯着的交互式运行来说，这没问题——你能看到红色的节点并修复它。但对任何无人值守的场景（webhook API、cron 任务、队列 worker、agent 工具），这都是错误的默认：调用方得到超时或空的 500，运维收不到任何告警，症状表现为"集成突然不工作了"，没有日志，也没有线索。
+默认情况下，当一个 n8n 节点抛出错误时，**整个工作流会停摆**。对于你在现场盯着的交互式运行来说，这没问题，你能看到红色的节点并修复它。但对任何无人值守的场景（webhook API、cron 任务、队列 worker、agent 工具），这都是错误的默认：调用方得到超时或空的 500，运维收不到任何告警，症状表现为"集成突然不工作了"，没有日志，也没有线索。
 
-本 Skill 的主题是让失败**响亮、结构化且可恢复**——最好能做到**自愈**，让瞬时抖动根本到不了人手上。
+本 Skill 的主题是让失败**响亮、结构化且可恢复**，最好能做到**自愈**，让瞬时抖动根本到不了人手上。
 
 防止大多数静默失败的两个核心思想：
 
-- **每节点错误输出** —— 节点的失败会沿你控制的第二个输出分流，而不是终结整个运行。
-- **工作流级别的错误工作流** —— 一个兜底机制，凡逃过每节点处理的失败（超时、节点间崩溃、未接线的失败）都会触发它。
+- **每节点错误输出** ， 节点的失败会沿你控制的第二个输出分流，而不是终结整个运行。
+- **工作流级别的错误工作流** ， 一个兜底机制，凡逃过每节点处理的失败（超时、节点间崩溃、未接线的失败）都会触发它。
 
 ---
 
@@ -26,9 +26,9 @@ description: 配置 n8n 错误处理，让失败响亮、结构化且可恢复�
 |---|---|
 | Webhook / API（任何带 `Respond to Webhook` 的） | **必需。** 每个可能失败的节点的错误输出都要接线；状态码与原因匹配。 |
 | 定时 / cron / 队列 worker / agent 工具（无人值守） | **必需。** 一个工作流级别的错误工作流，外加网络类节点上的 `retryOnFail`。 |
-| 你自己运行并盯着看的内部一次性任务 | **可选。** 默认的 `onError: "stopWorkflow"` 就够了——你会看到红色节点并重跑。 |
+| 你自己运行并盯着看的内部一次性任务 | **可选。** 默认的 `onError: "stopWorkflow"` 就够了，你会看到红色节点并重跑。 |
 
-分界线：**只要输出会被你以外的任何人看到**——下游系统、最终用户、值班工程师——失败就必须被处理，而不是被吞掉。如果唯一的观察者是你自己，且失败的代价是"我注意到然后重跑"，那宽松一点没问题。
+分界线：**只要输出会被你以外的任何人看到**（下游系统、最终用户、值班工程师）失败就必须被处理，而不是被吞掉。如果唯一的观察者是你自己，且失败的代价是"我注意到然后重跑"，那宽松一点没问题。
 
 ---
 
@@ -43,7 +43,7 @@ description: 配置 n8n 错误处理，让失败响亮、结构化且可恢复�
 
 | 你的操作 | 运行时的表现 |
 |---|---|
-| `onError` 已设置，错误输出**未**接线 | 错误数据被静默丢弃。下游不触发。面板上这次运行显示为**成功**。最糟的情况——任何地方都没有错误日志。 |
+| `onError` 已设置，错误输出**未**接线 | 错误数据被静默丢弃。下游不触发。面板上这次运行显示为**成功**。最糟的情况，任何地方都没有错误日志。 |
 | 错误输出已接线，`onError` **未**设置 | 插槽永不触发；处理器不可达。失败时工作流直接**停摆**（默认 `stopWorkflow`）。 |
 | 两者都做了 | 失败沿 `main[1]` 路由到你的处理器。✅ |
 
@@ -63,7 +63,7 @@ description: 配置 n8n 错误处理，让失败响亮、结构化且可恢复�
 
 `sourceIndex: 0` 是成功路径，`sourceIndex: 1` 是错误路径。（对 IF 节点，别名 `branch: "true"`/`"false"` 映射到索引 0/1；对一般的可能失败节点，用显式的 `sourceIndex: 1`。）
 
-**然后验证。** 这个陷阱在 `validate_workflow` 里不会暴露——半接线的错误输出能干净地通过校验。用 `n8n_get_workflow` 拉取工作流，确认**两半**都在：
+**然后验证。** 这个陷阱在 `validate_workflow` 里不会暴露，半接线的错误输出能干净地通过校验。用 `n8n_get_workflow` 拉取工作流，确认**两半**都在：
 
 - 节点的 `onError` 是 `"continueErrorOutput"`。
 - `connections["HTTP Request"].main[1]` 包含你的处理器。
@@ -73,7 +73,7 @@ description: 配置 n8n 错误处理，让失败响亮、结构化且可恢复�
 | 取值 | 效果 |
 |---|---|
 | `"stopWorkflow"`（默认） | 错误使整个工作流停摆。 |
-| `"continueRegularOutput"` | 错误条目从**正常**输出流出。少见，通常是错的——下游拿到错误形状的数据还继续跑。 |
+| `"continueRegularOutput"` | 错误条目从**正常**输出流出。少见，通常是错的，下游拿到错误形状的数据还继续跑。 |
 | `"continueErrorOutput"` | 错误条目从**独立的**错误输出（`main[1]`）流出。就是你要接线的那一个。 |
 
 完整的失败模式目录、扇入/扇出形态与验证方法：**NODE_ERROR_OUTPUTS.md**。
@@ -101,7 +101,7 @@ description: 配置 n8n 错误处理，让失败响亮、结构化且可恢复�
 
 ## 自愈优先：先上 `retryOnFail`，再接错误路径
 
-在构建错误分支之前，先把瞬时失败吸收掉，让它们根本到不了那些分支。在**任何调用网络服务的节点**上——HTTP Request、通讯类（Gmail/Slack/Discord）、数据库、AI 节点、第三方集成——设置节点级重试：
+在构建错误分支之前，先把瞬时失败吸收掉，让它们根本到不了那些分支。在**任何调用网络服务的节点**上，HTTP Request、通讯类（Gmail/Slack/Discord）、数据库、AI 节点、第三方集成，设置节点级重试：
 
 ```javascript
 { type: "updateNode", nodeName: "HTTP Request",
@@ -112,15 +112,15 @@ description: 配置 n8n 错误处理，让失败响亮、结构化且可恢复�
   } }
 ```
 
-为什么这一步**先行**：429 或上游短暂抖动会自动重试并通常自己成功。错误输出于是只在*真正、持续*的失败时触发——你的 5xx 响应和值班告警反映的是真实问题而非噪音。
+为什么这一步**先行**：429 或上游短暂抖动会自动重试并通常自己成功。错误输出于是只在*真正、持续*的失败时触发，你的 5xx 响应和值班告警反映的是真实问题而非噪音。
 
-需要知道的引擎限制：重试在**任何**错误上都会触发（没有按状态码过滤的机制），`maxTries` 上限 5，`waitBetweenTries` 上限 5000ms——所以 5000 既是上限也是合理默认值。节点专属注意事项见 **n8n-node-configuration**（NODE_FAMILY_GOTCHAS.md）。
+需要知道的引擎限制：重试在**任何**错误上都会触发（没有按状态码过滤的机制），`maxTries` 上限 5，`waitBetweenTries` 上限 5000ms，所以 5000 既是上限也是合理默认值。节点专属注意事项见 **n8n-node-configuration**（NODE_FAMILY_GOTCHAS.md）。
 
 ---
 
 ## API 工作流：标准形态
 
-一个 webhook 触发、要响应调用方的工作流，有一条压倒一切的规则：**不允许有悬挂分支**。每条路径——成功与每一种错误——都必须终结于一个 `Respond to Webhook`，否则调用方会一直干等到超时。
+一个 webhook 触发、要响应调用方的工作流，有一条压倒一切的规则：**不允许有悬挂分支**。每条路径（成功与每一种错误）都必须终结于一个 `Respond to Webhook`，否则调用方会一直干等到超时。
 
 ```
 Webhook (responseMode: "responseNode")
@@ -133,8 +133,8 @@ Webhook (responseMode: "responseNode")
 让这套形态成立的三件事：
 
 1. **扇入到同一个错误响应器。** 多个可能失败的节点可以把各自的 `main[1]` 路由到一个 `Respond` 节点。保持图的可读性。
-2. **校验失败（4xx）在上游检查，而不是靠错误输出。** 缺字段不是节点*崩溃*——它是一个有已知响应的预期结果。用 IF/Switch（或下面的按字段校验器）对它分支，并直接返回 400/401/403/404。错误输出留给*意外*失败（5xx）。
-3. **`options.responseCode` 默认是 200——即使在错误分支上。** 这本身就是一个静默陷阱（见 RESPONSE_SHAPES.md 与 **n8n-node-configuration** 的 NODE_FAMILY_GOTCHAS.md）：返回 200 加错误体的错误分支，在调用方的 HTTP 客户端看来就是成功，于是他们的错误处理永不触发。在每个 Respond 节点上显式设置 `responseCode`。
+2. **校验失败（4xx）在上游检查，而不是靠错误输出。** 缺字段不是节点*崩溃*，它是一个有已知响应的预期结果。用 IF/Switch（或下面的按字段校验器）对它分支，并直接返回 400/401/403/404。错误输出留给*意外*失败（5xx）。
+3. **`options.responseCode` 默认是 200，即使在错误分支上。** 这本身就是一个静默陷阱（见 RESPONSE_SHAPES.md 与 **n8n-node-configuration** 的 NODE_FAMILY_GOTCHAS.md）：返回 200 加错误体的错误分支，在调用方的 HTTP 客户端看来就是成功，于是他们的错误处理永不触发。在每个 Respond 节点上显式设置 `responseCode`。
 
 ### 输入校验：把条件放在画布上
 
@@ -146,7 +146,7 @@ Webhook (responseMode: "responseNode")
 
 一个返回 `text/plain "Internal Server Error"` 的 5xx，技术上算错误响应，实际上毫无用处。而且并非每个失败都是 5xx。**让状态码与请求失败的*原因*匹配**，因为调用方会据此分支：他们的监控对 5xx（你的锅）告警而不对 4xx（他们的锅）告警，并且 5xx 暗示"可以重试"而 4xx 暗示"别重试"。
 
-**常见错误：** 把所有东西——包括坏输入——都接到一个返回 500 `internal_error` 的 `Respond` 上。于是调用方分不清他们的 bug 和你的宕机，你的错误率也无法区分真实事故与客户端噪音。
+**常见错误：** 把所有东西（包括坏输入）都接到一个返回 500 `internal_error` 的 `Respond` 上。于是调用方分不清他们的 bug 和你的宕机，你的错误率也无法区分真实事故与客户端噪音。
 
 | 原因 | 状态码 | `error` 代码 | 在哪里处理 |
 |---|---|---|---|
@@ -175,7 +175,7 @@ error outputs (main[1]) ─→ Switch "Classify error" (on $json.error.message)
 
 每个状态码都可见于画布之上，新增一个就是加一条规则。把 Switch 的 `options.fallbackOutput` 设为 `extra`，否则未匹配的错误会被丢弃、调用方会挂起。用一个 Respond 加计算出的状态码，只在恰好两种结果时可以接受，即在其 Response Code 字段里写一个简短的三元表达式。Switch 的 JSON 在 **API_WORKFLOWS.md**。
 
-默认的信封是 `{ "error": "<code>", "message": "<human text>" }` ——HTTP 状态码已经说明了成功与失败，所以不需要 `ok: false` 标志。**绝不把内部细节**（堆栈、SQL、上游响应体、token）**泄漏进响应**——私下记录日志，返回经过净化的消息。关联 ID、`retry_after`、校验 `details` 与完整的禁止泄漏清单在 **RESPONSE_SHAPES.md**。
+默认的信封是 `{ "error": "<code>", "message": "<human text>" }` ，HTTP 状态码已经说明了成功与失败，所以不需要 `ok: false` 标志。**绝不把内部细节**（堆栈、SQL、上游响应体、token）**泄漏进响应**，私下记录日志，返回经过净化的消息。关联 ID、`retry_after`、校验 `details` 与完整的禁止泄漏清单在 **RESPONSE_SHAPES.md**。
 
 ---
 
@@ -193,7 +193,7 @@ error outputs (main[1]) ─→ Switch "Classify error" (on $json.error.message)
 }
 ```
 
-最小版本——**捕获 → 通知**：
+最小版本，**捕获 → 通知**：
 
 ```
 Error Trigger → Slack/email (post to #incidents; the alert text is built with expressions in the message field)
@@ -203,10 +203,10 @@ Error Trigger → Slack/email (post to #incidents; the alert text is built with 
 
 两个值得提前点名的陷阱：
 
-- **递归陷阱。** 如果错误工作流向 Slack 发通知，而挂掉的恰恰是 Slack，错误工作流也会失败——原始错误随之消失。在与被监控工作流所用*不同*的渠道上发通知（多数工作流向 Slack 告警 → 错误工作流用邮件），并加一个兜底（写入 Data Table），让失败的通知也留下痕迹。
+- **递归陷阱。** 如果错误工作流向 Slack 发通知，而挂掉的恰恰是 Slack，错误工作流也会失败，原始错误随之消失。在与被监控工作流所用*不同*的渠道上发通知（多数工作流向 Slack 告警 → 错误工作流用邮件），并加一个兜底（写入 Data Table），让失败的通知也留下痕迹。
 - **被"处理过"的错误不会冒泡。** 如果节点的错误输出接到了一个丢弃数据的 no-op，n8n 会认为该错误*已被处理*，错误工作流**不会**触发。只有当你真的要用这个错误做点什么时才做每节点捕获。
 
-> **社区 MCP 做不到的事：** 指派错误工作流（实例默认或按工作流覆盖）是 n8n 的 **UI 设置**——Workflow Settings → Error Workflow。没有 MCP 工具能设置它。用 MCP 搭好错误工作流，然后告诉用户确切的 UI 步骤把它接上，并对每个无人值守工作流重复这一步（或设置实例默认）。
+> **社区 MCP 做不到的事：** 指派错误工作流（实例默认或按工作流覆盖）是 n8n 的 **UI 设置**，Workflow Settings → Error Workflow。没有 MCP 工具能设置它。用 MCP 搭好错误工作流，然后告诉用户确切的 UI 步骤把它接上，并对每个无人值守工作流重复这一步（或设置实例默认）。
 
 ---
 
@@ -215,7 +215,7 @@ Error Trigger → Slack/email (post to #incidents; the alert text is built with 
 | 想做的事 | 现实 |
 |---|---|
 | 设置工作流的 **Error Workflow** 设置 | 仅 UI（Workflow Settings → Error Workflow）。无 MCP 工具。先建工作流，再把 UI 步骤交给用户。 |
-| 切换其他**工作流设置**（Save Execution Data、时区、超时、caller policy） | 仅 UI。`n8n_update_partial_workflow` 有 `updateSettings`，但错误工作流指派并未可靠暴露——在 UI 中确认。 |
+| 切换其他**工作流设置**（Save Execution Data、时区、超时、caller policy） | 仅 UI。`n8n_update_partial_workflow` 有 `updateSettings`，但错误工作流指派并未可靠暴露，在 UI 中确认。 |
 | 启用实例级错误日志（Sentry、服务器日志） | 实例配置，完全在 n8n 工作流之外。 |
 
 MCP **能**做的：搭建错误工作流、在节点上设置 `onError`/`retryOnFail`（`updateNode`/`patchNodeField`）、接线错误输出（`addConnection` 加 `sourceIndex: 1`）、校验（`validate_workflow`、`n8n_validate_workflow`）、自动修复常见问题（`n8n_autofix_workflow`）、测试（`n8n_test_workflow`）、检查失败（`n8n_executions`）。
@@ -253,13 +253,13 @@ MCP **能**做的：搭建错误工作流、在节点上设置 `onError`/`retryO
 
 ## 与其他 Skill 的集成
 
-- **n8n-workflow-patterns** —— webhook/API 与定时模式是错误处理的栖身之处。用它定整体形态；用本 Skill 加固它。
-- **n8n-node-configuration** —— `onError`/`retryOnFail` 属于节点配置；NODE_FAMILY_GOTCHAS.md 深入讲解 Webhook/Respond 的响应码陷阱。
-- **n8n-validation-expert** —— 半接线的错误输出（两步缺一）是连接/配置审计项，不是校验错误。本 Skill 就是修法。
-- **n8n-expression-syntax** —— 基于 `$json.error.message` 的 Switch 条件和告警消息表达式依赖正确的 `{{ }}` 语法和 `$json.error` 访问。
-- **n8n-code-javascript / n8n-code-python** —— 如果你在 Code 节点*内部*捕获错误，要有意识地决策：重新抛出以走错误输出，或处理并继续。不要返回错误形状的数据还假装成功。
-- **n8n-code-tool** —— agent 的 Code Tool 会把抛出的错误回传给 LLM，由 LLM 重试；那是与工作流节点不同的错误契约。
-- **n8n-binary-and-data** —— 文件/二进制操作同样会失败；像任何网络节点一样接好它们的错误输出。
+- **n8n-workflow-patterns** ， webhook/API 与定时模式是错误处理的栖身之处。用它定整体形态；用本 Skill 加固它。
+- **n8n-node-configuration** ， `onError`/`retryOnFail` 属于节点配置；NODE_FAMILY_GOTCHAS.md 深入讲解 Webhook/Respond 的响应码陷阱。
+- **n8n-validation-expert** ， 半接线的错误输出（两步缺一）是连接/配置审计项，不是校验错误。本 Skill 就是修法。
+- **n8n-expression-syntax** ， 基于 `$json.error.message` 的 Switch 条件和告警消息表达式依赖正确的 `{{ }}` 语法和 `$json.error` 访问。
+- **n8n-code-javascript / n8n-code-python** ， 如果你在 Code 节点*内部*捕获错误，要有意识地决策：重新抛出以走错误输出，或处理并继续。不要返回错误形状的数据还假装成功。
+- **n8n-code-tool** ， agent 的 Code Tool 会把抛出的错误回传给 LLM，由 LLM 重试；那是与工作流节点不同的错误契约。
+- **n8n-binary-and-data** ， 文件/二进制操作同样会失败；像任何网络节点一样接好它们的错误输出。
 
 ---
 
@@ -273,7 +273,7 @@ MCP **能**做的：搭建错误工作流、在节点上设置 `onError`/`retryO
 - [ ] 网络节点已配置 `retryOnFail: true, maxTries: 3, waitBetweenTries: 5000`
 - [ ] 错误路径终结于一个带**显式** 4xx/5xx `options.responseCode` 的 Respond（顶层 `responseCode` 会被忽略）
 - [ ] 状态码与原因匹配（4xx 调用方，5xx 你）
-- [ ] 错误响应体为 `{ error, message }` —— 没有堆栈、SQL 或 token
+- [ ] 错误响应体为 `{ error, message }` ， 没有堆栈、SQL 或 token
 - [ ] 已用 `n8n_get_workflow` 验证：每个可能失败的节点上 `onError` 与 `main[1]` 都在
 
 对一个**无人值守**（定时/cron/队列）工作流：
@@ -281,8 +281,8 @@ MCP **能**做的：搭建错误工作流、在节点上设置 `onError`/`retryO
 - [ ] 网络节点已配置 `retryOnFail`
 - [ ] 存在一个 Error Trigger 工作流（捕获 → 通知，可选重试）
 - [ ] 错误工作流用不同渠道通知 + 有兜底（递归陷阱）
-- [ ] 错误工作流设置已在 n8n UI 中指派（MCP 做不到——提醒用户）
+- [ ] 错误工作流设置已在 n8n UI 中指派（MCP 做不到，提醒用户）
 
 ---
 
-**记住**：默认是沉默。错误处理就是两个动作——让失败*可路由*（每节点 `onError` + 接好线的输出，或一个兜底错误工作流），并让它*开口说话*（一个讲真话的状态码和响应体）。只做半个动作比不做更糟，因为它看起来像是做完了。
+**记住**：默认是沉默。错误处理就是两个动作，让失败*可路由*（每节点 `onError` + 接好线的输出，或一个兜底错误工作流），并让它*开口说话*（一个讲真话的状态码和响应体）。只做半个动作比不做更糟，因为它看起来像是做完了。

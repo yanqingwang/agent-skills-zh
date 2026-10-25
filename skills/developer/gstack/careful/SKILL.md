@@ -85,7 +85,7 @@ Bash 启动的任何 `pwsh`/`powershell`/`cmd`。匹配不区分大小写，覆�
 hook 从工具输入 JSON 中读取 `tool_name` 和命令，对照
 上面的模式检查，命中时返回一个带 `permissionDecision: "ask"`
 与警告原因的 `hookSpecificOutput` 载荷（该决定必须嵌套在
-`hookSpecificOutput` 之下——Claude Code 会忽略顶层的
+`hookSpecificOutput` 之下，Claude Code 会忽略顶层的
 `permissionDecision`）。你始终可以覆盖
 MEDIUM 警告并继续。
 
@@ -93,14 +93,14 @@ MEDIUM 警告并继续。
 
 两种灾难性形态会被**直接拒绝**而不是询问：对 `/`、`~` 或 `$HOME` 精确执行的
 `rm -r`/`-R`，以及向仓库**默认分支**的 force-push。仅限 SIMPLE 命令（不含
-`;`、`&&`、`||`、`|`、换行）——复合形态落入 MEDIUM 询问；
+`;`、`&&`、`||`、`|`、换行），复合形态落入 MEDIUM 询问；
 `--force-with-lease` 永远不算 HIGH。这是尽力而为的建议性硬停止，不是
 策略边界：逃生口是结束这个自愿加入、会话级的 /careful 会话。
 
 ## 项目模式（只增不减）
 
 在 `~/.gstack/careful-patterns.txt`（全局）或
-`~/.gstack/projects/<slug>/careful-patterns.txt`（按项目）中添加警告规则——每行
+`~/.gstack/projects/<slug>/careful-patterns.txt`（按项目）中添加警告规则，每行
 一条 POSIX ERE，允许 `#` 注释。它们在内置模式族之后加载，因此配置
 只能增加规则，绝不能压制基线警告。
 无效的正则行会被跳过。

@@ -12,9 +12,9 @@ metadata:
 
 # 持续学习 v2.1 - 基于 Instinct（本能规则）的架构
 
-一套先进的学习系统，通过原子的 "instinct"（本能规则）——带有置信度评分的小型习得行为——把你的 Claude Code 会话转化为可复用的知识。
+一套先进的学习系统，通过原子的 "instinct"（本能规则）（带有置信度评分的小型习得行为）把你的 Claude Code 会话转化为可复用的知识。
 
-**v2.1** 新增 **项目级（project-scoped）instinct**——React 模式留在你的 React 项目里，Python 约定留在你的 Python 项目里，而通用模式（如"始终校验输入"）则全局共享。
+**v2.1** 新增 **项目级（project-scoped）instinct**，React 模式留在你的 React 项目里，Python 约定留在你的 Python 项目里，而通用模式（如"始终校验输入"）则全局共享。
 
 ## 何时激活
 
@@ -75,11 +75,11 @@ Use functional patterns over classes when appropriate.
 ```
 
 **特性：**
-- **原子性** —— 一个触发条件，一个动作
-- **置信度加权** —— 0.3 = 试探性，0.9 = 近乎确定
-- **领域标签** —— code-style、testing、git、debugging、workflow 等
-- **有证据支撑** —— 记录是哪些观察产生了它
-- **作用域感知** —— `project`（默认）或 `global`
+- **原子性** ， 一个触发条件，一个动作
+- **置信度加权** ， 0.3 = 试探性，0.9 = 近乎确定
+- **领域标签** ， code-style、testing、git、debugging、workflow 等
+- **有证据支撑** ， 记录是哪些观察产生了它
+- **作用域感知** ， `project`（默认）或 `global`
 
 ## 工作原理
 
@@ -131,10 +131,10 @@ Session Activity (in a git repo)
 
 系统会自动检测你当前所在的项目：
 
-1. **`CLAUDE_PROJECT_DIR` 环境变量**（最高优先级）——即使该目录不是 git 仓库，也会被视为显式覆盖（按其绝对路径哈希）
-2. **`git remote get-url origin`**——哈希后生成可移植的项目 ID（不同机器上的同一仓库得到相同 ID）
-3. **`git rev-parse --show-toplevel`**——使用仓库路径作为回退（机器特定）
-4. **全局回退**——如果未检测到任何项目，instinct 归入全局作用域
+1. **`CLAUDE_PROJECT_DIR` 环境变量**（最高优先级），即使该目录不是 git 仓库，也会被视为显式覆盖（按其绝对路径哈希）
+2. **`git remote get-url origin`**，哈希后生成可移植的项目 ID（不同机器上的同一仓库得到相同 ID）
+3. **`git rev-parse --show-toplevel`**，使用仓库路径作为回退（机器特定）
+4. **全局回退**，如果未检测到任何项目，instinct 归入全局作用域
 
 每个项目会得到一个 12 字符的哈希 ID（例如 `a1b2c3d4e5f6`）。`${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/projects.json` 处有一个注册表文件，把 ID 映射到人类可读的名称。
 
@@ -160,7 +160,7 @@ bash skills/continuous-learning-v2/scripts/migrate-homunculus.sh
 
 无需额外的 `settings.json` hook 配置块。Claude Code v2.1+ 会自动加载插件的 `hooks/hooks.json`，`observe.sh` 已经在其中注册。
 
-如果你之前把 `observe.sh` 复制进了 `~/.claude/settings.json`，请删除那段重复的 `PreToolUse` / `PostToolUse` 配置块。重复插件 Hook 会导致双重执行，以及 `${CLAUDE_PLUGIN_ROOT}` 解析错误——因为该变量只在插件托管的 `hooks/hooks.json` 条目中可用。
+如果你之前把 `observe.sh` 复制进了 `~/.claude/settings.json`，请删除那段重复的 `PreToolUse` / `PostToolUse` 配置块。重复插件 Hook 会导致双重执行，以及 `${CLAUDE_PLUGIN_ROOT}` 解析错误，因为该变量只在插件托管的 `hooks/hooks.json` 条目中可用。
 
 **如果手动安装**到 `~/.claude/skills`，请将以下内容加入你的 `~/.claude/settings.json`：
 
@@ -245,7 +245,7 @@ mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/ecc-homunculus"/{instincts/{perso
 
 后台 Observer 需要 WSL2、Linux 或 macOS。在原生 Windows
 （Git Bash / MSYS2）上，它会启动并报告成功，但当生成它的 Hook 退出、
-其 Job Object 关闭时，该进程会被杀死，因此分析永远不会运行——
+其 Job Object 关闭时，该进程会被杀死，因此分析永远不会运行，
 在这种环境下设置 `observer.enabled: true` 实际上等于无效操作
 （见 issue #2489）。
 
@@ -346,7 +346,7 @@ python3 instinct-cli.py promote --dry-run
 
 ## 为什么观察用 Hook 而不是 Skill？
 
-> "v1 依赖 Skill 来做观察。Skill 是概率性的——它们大约只有 50-80% 的概率触发，取决于 Claude 的判断。"
+> "v1 依赖 Skill 来做观察。Skill 是概率性的，它们大约只有 50-80% 的概率触发，取决于 Claude 的判断。"
 
 Hook 则以**100%** 的概率、确定性地触发。这意味着：
 - 每次工具调用都会被观察到
@@ -365,7 +365,7 @@ v2.1 与 v2.0 和 v1 完全兼容：
 
 - 观察数据**留在你本机**
 - 项目级 instinct 按项目相互隔离
-- 只有 **instinct**（模式）可以被导出——原始观察数据不能
+- 只有 **instinct**（模式）可以被导出，原始观察数据不能
 - 不共享任何实际代码或对话内容
 - 由你控制导出与晋升什么
 

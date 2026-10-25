@@ -9,7 +9,7 @@ description: "当用户说 'build me an app'（帮我做个应用）、'create a
 
 # 规格转仓库（Spec to Repo）
 
-将一份自然语言项目规格转化为完整、可运行的起始仓库。不是模板填充器——而是一台规格解释器，可为任意技术栈生成真实、可运行的代码。
+将一份自然语言项目规格转化为完整、可运行的起始仓库。不是模板填充器，而是一台规格解释器，可为任意技术栈生成真实、可运行的代码。
 
 ## 何时使用
 
@@ -18,7 +18,7 @@ description: "当用户说 'build me an app'（帮我做个应用）、'create a
 - 用户说"build me an app that..."（帮我做个能……的应用）、"scaffold this"（把这个搭起来）、"bootstrap a project"（初始化一个项目）
 - 用户想要的是一个能跑起来的起始仓库，而不只是一份文件树
 
-**不适用本 Skill** 的情形：用户明确想要带 Stripe + Auth 的 SaaS 应用——请改用 `product-team/saas-scaffolder`。
+**不适用本 Skill** 的情形：用户明确想要带 Stripe + Auth 的 SaaS 应用，请改用 `product-team/saas-scaffolder`。
 
 ## 核心工作流
 

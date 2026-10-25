@@ -37,14 +37,14 @@ metadata:
 
 `suggest-compact.js` 脚本挂在 PreToolUse（Edit/Write）上运行，结合两个信号：
 
-1. **上下文大小（主要信号）** — 从会话转录（hook 载荷中的 `transcript_path`）读取最新的 `usage` 记录，并将 `input_tokens + cache_read_input_tokens + cache_creation_input_tokens` 求和（即该轮真实的上下文大小）。在一个按窗口大小缩放的阈值处建议 `/compact` —— 200k 窗口对应 160k token，1M 窗口对应 250k（通过模型 id 中的 `[1m]` 标记检测窗口大小，或在观测到的 token 已超过 200k 时推断）—— 并且此后每增长 60k token 就再次提醒
+1. **上下文大小（主要信号）** — 从会话转录（hook 载荷中的 `transcript_path`）读取最新的 `usage` 记录，并将 `input_tokens + cache_read_input_tokens + cache_creation_input_tokens` 求和（即该轮真实的上下文大小）。在一个按窗口大小缩放的阈值处建议 `/compact` ， 200k 窗口对应 160k token，1M 窗口对应 250k（通过模型 id 中的 `[1m]` 标记检测窗口大小，或在观测到的 token 已超过 200k 时推断）， 并且此后每增长 60k token 就再次提醒
 2. **工具调用次数（次要信号）** — 统计会话中的工具调用次数；达到可配置阈值（默认：50 次）时建议压缩，此后每 25 次再提醒
 
 仅靠工具调用次数是窗口压力的弱代理：几次大的文件读取或 MCP 响应就能在极少的调用次数内填满窗口，而大量微小的调用即使窗口接近全空也可能超过 50 次。上下文大小信号只在真正要紧的时候触发。
 
 ## Hook 配置
 
-**以插件方式安装的？** 无需任何配置。插件的 `hooks/hooks.json` 已经注册了 `suggest-compact.js`（hook id 为 `pre:edit-write:suggest-compact`，在 `standard` 与 `strict` 两种 hook profile 中启用）。不要把下面的代码块复制进 `~/.claude/settings.json` —— 插件安装方式下 `~/.claude/scripts/` 并不存在，而且重复注册插件 Hook 会导致双重执行。
+**以插件方式安装的？** 无需任何配置。插件的 `hooks/hooks.json` 已经注册了 `suggest-compact.js`（hook id 为 `pre:edit-write:suggest-compact`，在 `standard` 与 `strict` 两种 hook profile 中启用）。不要把下面的代码块复制进 `~/.claude/settings.json` ， 插件安装方式下 `~/.claude/scripts/` 并不存在，而且重复注册插件 Hook 会导致双重执行。
 
 **如果是手动安装**（`./install.sh`），请在 `~/.claude/settings.json` 中加入：
 
@@ -84,7 +84,7 @@ metadata:
 | 阶段转换 | 是否压缩？ | 原因 |
 |-----------------|----------|-----|
 | 研究 → 计划 | 是 | 研究上下文很庞大；计划才是蒸馏后的产出 |
-| 计划 → 实现 | 是 | 计划已经写下来了（写入文件，或写入任务清单——如果你有的话）；把上下文腾给代码 |
+| 计划 → 实现 | 是 | 计划已经写下来了（写入文件，或写入任务清单，如果你有的话）；把上下文腾给代码 |
 | 实现 → 测试 | 视情况 | 如果测试引用了近期代码就保留；如果切换关注点就压缩 |
 | 调试 → 下一个功能 | 是 | 调试痕迹会污染与后续工作无关的上下文 |
 | 实现中途 | 否 | 丢失变量名、文件路径和部分完成的状态代价很高 |
@@ -102,16 +102,16 @@ metadata:
 | Git 状态（commit、分支） | 工具调用历史与计数 |
 | 任务清单 — **仅当你拥有 todo 工具时**（见下文） | 口头表述的微妙用户偏好 |
 
-> ### 不要指望任务清单能在压缩后幸存——它可能根本不存在
+> ### 不要指望任务清单能在压缩后幸存，它可能根本不存在
 >
 > Claude Code **2.1.233 在 Opus 4.8、Sonnet 5、Fable 5、Mythos 5 及更新模型上默认移除了
 > todo/task 工具**（`TodoWrite`、`TaskCreate/Get/Update/List`）。
-> `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` 可以把它们找回来，但那是每台机器的环境设置 ——
+> `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` 可以把它们找回来，但那是每台机器的环境设置 ，
 > **它不会随这个 Skill 一起带过去**，所以你不能假定读者已经配置了它。
 >
 > 这一点很重要，因为"我的 todo 清单能在压缩后幸存"正是人们用压缩 *代替* 把状态
 > 写下来的理由。如果工具不存在，就没有清单可言，计划就直接没了。**压缩前先把计划
-> 写进文件** —— 文件在任何版本、任何模型上都能持久存留。把任务清单当作可能缺席的
+> 写进文件** ， 文件在任何版本、任何模型上都能持久存留。把任务清单当作可能缺席的
 > 便利品，永远不要把它当作你的持久记录。
 
 ## 最佳实践

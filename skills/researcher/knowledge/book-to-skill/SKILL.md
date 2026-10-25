@@ -20,13 +20,13 @@ description: "将书籍和文档（PDF、EPUB、DOCX、HTML、Markdown、纯文�
   - 特意省略 `allowed-tools` 以保持跨 Agent 中立：Copilot CLI 使用
     `shell`/MCP 服务器名称，Claude 使用 `Bash`/`Read`/`Write`/`Glob`/`Grep`，Amp
     额外有 `shell_command`。本 Skill 需要 shell（用于运行 extract.py）和文件
-    读写能力——各宿主会在首次使用时提示授权。
+    读写能力，各宿主会在首次使用时提示授权。
   - 参数提示：<path-to-document-folder-or-glob>... [skill-name-slug]
 -->
 
 # Book-to-Skill 转换器
 
-通过提取结构，把书面知识转化为可操作的 agent skill——而不是产出摘要。
+通过提取结构，把书面知识转化为可操作的 agent skill，而不是产出摘要。
 
 ## 理念
 
@@ -55,7 +55,7 @@ description: "将书籍和文档（PDF、EPUB、DOCX、HTML、Markdown、纯文�
 
 ### 2. 仅分析
 **触发：** 用户说 "analyze"（分析）、"just extract"（只做提取）或 "I want to review before generating"（生成前想先审阅）
-**动作：** 执行步骤 0–3，然后产出一份结构化提取报告（找到的框架、原则、技巧）。停止——不要生成 Skill 文件。
+**动作：** 执行步骤 0–3，然后产出一份结构化提取报告（找到的框架、原则、技巧）。停止，不要生成 Skill 文件。
 **输出：** 供用户审阅的分析报告
 
 ### 3. 基于已有分析生成
@@ -89,7 +89,7 @@ description: "将书籍和文档（PDF、EPUB、DOCX、HTML、Markdown、纯文�
 11. OpenCode 个人 Skill：`~/.config/opencode/skills/` 或 `~/.agents/skills/`
 12. OpenCode 项目 Skill：`.opencode/skills/` 或 `.agents/skills/`
 
-对于**生成的**书籍 Skill，优先使用用户级跨 Agent 根目录 `~/.agents/skills/`——一份物理副本即可同时服务跨 Agent 宿主以及使用默认 state 的 OpenClaw。Copilot CLI 与 Amp 可原生发现它；Claude Code 需要来自 `~/.claude/skills/<skill_name>` 的符号链接（在步骤 10 创建，规则见步骤 5）。仅当用户明确要求时才选择宿主私有或项目本地根目录。`BOOK_TO_SKILL_SCOPE=project` 或 `personal` 可为自动化显式指定该选择；不要仅仅因为两种范围都存在就发出强制的范围询问。
+对于**生成的**书籍 Skill，优先使用用户级跨 Agent 根目录 `~/.agents/skills/`，一份物理副本即可同时服务跨 Agent 宿主以及使用默认 state 的 OpenClaw。Copilot CLI 与 Amp 可原生发现它；Claude Code 需要来自 `~/.claude/skills/<skill_name>` 的符号链接（在步骤 10 创建，规则见步骤 5）。仅当用户明确要求时才选择宿主私有或项目本地根目录。`BOOK_TO_SKILL_SCOPE=project` 或 `personal` 可为自动化显式指定该选择；不要仅仅因为两种范围都存在就发出强制的范围询问。
 
 ---
 
@@ -99,12 +99,12 @@ description: "将书籍和文档（PDF、EPUB、DOCX、HTML、Markdown、纯文�
 > "book-to-skill 需要一个受支持的文档路径、目录或 glob 模式。用法：`book-to-skill <path-to-document-folder-or-glob>... [skill-name-slug]`"
 
 在整个工作流中：
-- **先确定目标根目录。** 在任何已有 Skill 查找之前，先确定本次运行会写入哪里：用户宿主的个人根目录或项目本地根目录，遵循步骤 5 的表格与选择规则——项目本地请求使用其项目本地根目录，绝不使用个人根目录。下文中，"已解析的根目录"即指该目标。
+- **先确定目标根目录。** 在任何已有 Skill 查找之前，先确定本次运行会写入哪里：用户宿主的个人根目录或项目本地根目录，遵循步骤 5 的表格与选择规则，项目本地请求使用其项目本地根目录，绝不使用个人根目录。下文中，"已解析的根目录"即指该目标。
 - 识别输入路径和可选的 skill slug。
 - 如果最后一个参数不是存在或能匹配到文件的文件/目录/glob，且它看起来像一个 skill slug（如小写连字符、字母数字），则将其视为 `SKILL_NAME`。
 - 将所有其他参数视为 `INPUT_PATHS` 列表。
 - 如果任何输入路径是一个已有的 Skill 目录（包含 `SKILL.md` 和 `chapters/` 子目录），或 `SKILL_NAME` 与已解析根目录中已有的 skill slug 匹配，则将本次运行标记为**更新/合入**操作（模式 4）。
-- **重跑保护。** 在开始完整转换的提取之前，按步骤 5 的命名规则推导候选 skill slug——作者-概念式、按书名式，以及给出的任何 `SKILL_NAME`——并在已解析根目录中检查是否已有匹配。若匹配，停止并询问用户："`<skill-name>` 已存在。请选择：(1) 更新/合入（模式 4），(2) 核实已有 Skill 是否完整然后停止，或 (3) 强制完整重新生成。"在用户选择之前不要重新提取。在中断运行后恢复上下文时（网络中断、对话重放或续接），仅在以下条件全部满足时才复用该次运行报告的提取工作目录（其输出中的 `Workdir ->`，或你在 `BOOK_SKILL_WORKDIR` 中设置的路径）：目录仍然完好且仍与当前输入和选项匹配——目录存在、其 `metadata.json` 可读、其中列出的 `sources` 与本次要转换的文件在文件名**和内容指纹**上一一对应（提取器会在 `metadata.json` 中记录每个源的 `sha256`；请按各文件当前状态重新计算指纹并要求完全一致——`book_to_skill/utils.py` 中的 `reuse_is_safe()` 即此检查的可执行形式），且其记录的 `extraction_mode` 与本次运行使用的模式一致（即步骤 2 的"确认提取的确实是你所要求的文档"规则）。如果目录缺失（临时清理）、其 `metadata.json` 丢失、源不再匹配（文件名不同或内容指纹变化）、记录的元数据中某源没有 `sha256`（指纹机制出现之前记录的，无法确认新鲜度），或模式不同，则如实说明并改为开始一次全新提取，而不是恢复。存疑时，先询问用户再决定丢弃或恢复。
+- **重跑保护。** 在开始完整转换的提取之前，按步骤 5 的命名规则推导候选 skill slug，作者-概念式、按书名式，以及给出的任何 `SKILL_NAME`，并在已解析根目录中检查是否已有匹配。若匹配，停止并询问用户："`<skill-name>` 已存在。请选择：(1) 更新/合入（模式 4），(2) 核实已有 Skill 是否完整然后停止，或 (3) 强制完整重新生成。"在用户选择之前不要重新提取。在中断运行后恢复上下文时（网络中断、对话重放或续接），仅在以下条件全部满足时才复用该次运行报告的提取工作目录（其输出中的 `Workdir ->`，或你在 `BOOK_SKILL_WORKDIR` 中设置的路径）：目录仍然完好且仍与当前输入和选项匹配，目录存在、其 `metadata.json` 可读、其中列出的 `sources` 与本次要转换的文件在文件名**和内容指纹**上一一对应（提取器会在 `metadata.json` 中记录每个源的 `sha256`；请按各文件当前状态重新计算指纹并要求完全一致，`book_to_skill/utils.py` 中的 `reuse_is_safe()` 即此检查的可执行形式），且其记录的 `extraction_mode` 与本次运行使用的模式一致（即步骤 2 的"确认提取的确实是你所要求的文档"规则）。如果目录缺失（临时清理）、其 `metadata.json` 丢失、源不再匹配（文件名不同或内容指纹变化）、记录的元数据中某源没有 `sha256`（指纹机制出现之前记录的，无法确认新鲜度），或模式不同，则如实说明并改为开始一次全新提取，而不是恢复。存疑时，先询问用户再决定丢弃或恢复。
 
 ---
 
@@ -123,9 +123,9 @@ description: "将书籍和文档（PDF、EPUB、DOCX、HTML、Markdown、纯文�
 
 > "这些源文档属于哪种内容类型？这有助于我选择最合适的提取方法。
 >
-> 1. **技术类** —— 含代码块、表格、公式、图表（如编程书籍、学术论文、架构指南）
-> 2. **文本为主** —— 以散文为主，几乎没有表格/代码（如管理、效率、叙事性非虚构）
-> 3. **不确定** —— 我将使用快速方法，并在质量似乎欠佳时提醒你"
+> 1. **技术类** ， 含代码块、表格、公式、图表（如编程书籍、学术论文、架构指南）
+> 2. **文本为主** ， 以散文为主，几乎没有表格/代码（如管理、效率、叙事性非虚构）
+> 3. **不确定** ， 我将使用快速方法，并在质量似乎欠佳时提醒你"
 
 将答案记录为 `BOOK_TYPE`：
 - 选项 1 → `BOOK_TYPE=technical`
@@ -133,10 +133,10 @@ description: "将书籍和文档（PDF、EPUB、DOCX、HTML、Markdown、纯文�
 - 选项 3 → `BOOK_TYPE=text`
 
 **若 `BOOK_TYPE=technical`**，在继续之前告知用户：
-> "📐 已选择技术模式——使用 Docling 进行结构感知提取（表格、代码块、公式保留为 markdown）。每页约需 1.5 秒，较长的源文档预计需要几分钟。现在开始……"
+> "📐 已选择技术模式，使用 Docling 进行结构感知提取（表格、代码块、公式保留为 markdown）。每页约需 1.5 秒，较长的源文档预计需要几分钟。现在开始……"
 
 **若 `BOOK_TYPE=text`**，告知：
-> "📄 已选择文本模式——对每种文件类型使用最快的可用提取器。纯文本/Markdown/HTML 通常几秒内即可就绪；PDF 在可用时使用 pdftotext。"
+> "📄 已选择文本模式，对每种文件类型使用最快的可用提取器。纯文本/Markdown/HTML 通常几秒内即可就绪；PDF 在可用时使用 pdftotext。"
 
 ---
 
@@ -248,17 +248,17 @@ fi
 
 提取之前，脚本会检查检测到的格式所需的可选 Python 包。如果缺少更好的提取器，它会向用户提示可用的回退方案。非交互会话默认使用回退方案，除非安装模式被显式设为 `yes`。
 
-**提示——预检环境：** 运行 `"$PYTHON_BIN" "$SCRIPT_PATH" --check`，它会按格式打印一份报告，列出已安装的提取器以及安装缺失项的确切命令，且不处理任何文件。当用户报告安装或质量问题时有用。
+**提示：预检环境：** 运行 `"$PYTHON_BIN" "$SCRIPT_PATH" --check`，它会按格式打印一份报告，列出已安装的提取器以及安装缺失项的确切命令，且不处理任何文件。当用户报告安装或质量问题时有用。
 
-这会创建一个**每次运行独立**的工作目录——默认为 `<tempdir>/book_skill_work-<pid>/`，或精确使用你在 `BOOK_SKILL_WORKDIR` 中设置的路径——其中包含：
-- `full_text.txt` —— 所有源文档合并提取的文本，带有清晰可见的边界标记。
-- `metadata.json` —— 总合并大小、词数、页数、token 数、丢弃的 EPUB 图片数、解析出的 `workdir`，以及逐个处理的 `sources` 详细列表。
+这会创建一个**每次运行独立**的工作目录，默认为 `<tempdir>/book_skill_work-<pid>/`，或精确使用你在 `BOOK_SKILL_WORKDIR` 中设置的路径，其中包含：
+- `full_text.txt` ， 所有源文档合并提取的文本，带有清晰可见的边界标记。
+- `metadata.json` ， 总合并大小、词数、页数、token 数、丢弃的 EPUB 图片数、解析出的 `workdir`，以及逐个处理的 `sources` 详细列表。
 
-运行完成时会打印全部三个路径（`Workdir ->`、`Text ->`、`Meta ->`）。**从该输出（或 `metadata.json` 自身的 `workdir` 字段）获取路径，不要假设固定位置**——目录名每次运行都不同，这样同一台机器上的并发提取才不会互相覆盖结果。
+运行完成时会打印全部三个路径（`Workdir ->`、`Text ->`、`Meta ->`）。**从该输出（或 `metadata.json` 自身的 `workdir` 字段）获取路径，不要假设固定位置**，目录名每次运行都不同，这样同一台机器上的并发提取才不会互相覆盖结果。
 
 读取该次运行的 `metadata.json` 查看结果。
 
-**在生成任何内容之前，务必确认提取的确实是你所要求的文档**：检查 `metadata.json` 中的 `filename` / `source_file`，或 `full_text.txt` 第一行的 `SOURCE:` 头。如果你在等待一个后台运行，等待*它那个*具体的工作目录——轮询共享路径可能读到的是另一次运行的输出。
+**在生成任何内容之前，务必确认提取的确实是你所要求的文档**：检查 `metadata.json` 中的 `filename` / `source_file`，或 `full_text.txt` 第一行的 `SOURCE:` 头。如果你在等待一个后台运行，等待*它那个*具体的工作目录，轮询共享路径可能读到的是另一次运行的输出。
 
 ---
 
@@ -293,7 +293,7 @@ fi
 - 输入 token ≈ 元数据中的 `estimated_tokens` × 1.3（每章处理一遍的提示词开销）
 - 输出 token ≈ 章节数 × 每章预算 + 4,000（SKILL.md）+ 4,500（glossary + patterns + cheatsheet）
   - 每章预算中点按 `BOOK_TYPE`（DEPTH 在步骤 4 中才决定，可能上调）：`text` ≈ 1,000，`technical` ≈ 1,800。如果用户已表明只要参考查阅还是要深入研读，则使用步骤 7 矩阵中对应的一行。
-- 成本：报告 token 数量，并乘以用户当前每 100 万 token 的输入/输出单价。不要硬编码美元数字——模型名称和价格经常变动；如果给出金额，标注为估算并注明日期。
+- 成本：报告 token 数量，并乘以用户当前每 100 万 token 的输入/输出单价。不要硬编码美元数字，模型名称和价格经常变动；如果给出金额，标注为估算并注明日期。
 
 等待用户确认后再继续。如果用户说 "analyze only"（仅分析），切换到模式 2。
 
@@ -376,10 +376,10 @@ grep -c -i "westrum\|dora" "$FULL_TEXT_PATH"
 用这个答案来决定 SKILL.md Core 部分侧重突出什么。
 
 **从答案推导 `DEPTH`（无需额外询问）：**
-- 答案**仅**为选项 3（查阅参考）→ `DEPTH=reference`——精炼、便于快速查阅的章节。
-- 答案包含选项 1、2 或 4 → `DEPTH=study`——更深入的章节，含更多完整推演、示例与推理。
+- 答案**仅**为选项 3（查阅参考）→ `DEPTH=reference`，精炼、便于快速查阅的章节。
+- 答案包含选项 1、2 或 4 → `DEPTH=study`，更深入的章节，含更多完整推演、示例与推理。
 
-`DEPTH` 与 `BOOK_TYPE` 共同决定步骤 7 中的每章 token 预算。**不要**单独再问"研读还是参考"的问题——它在此处推断。（在跳过步骤 4 的模式 2/3 中，默认 `DEPTH=study`。）
+`DEPTH` 与 `BOOK_TYPE` 共同决定步骤 7 中的每章 token 预算。**不要**单独再问"研读还是参考"的问题，它在此处推断。（在跳过步骤 4 的模式 2/3 中，默认 `DEPTH=study`。）
 
 ---
 
@@ -410,23 +410,23 @@ Hermes Agent 是唯一保留自己个人根目录的宿主：它按类别划分�
 
 Hermes Agent 是唯一保留自己个人根目录的宿主：它按类别划分个人 Skill，不扫描跨 Agent 根目录。使用活跃 profile 的 `HERMES_HOME`，并选择与生成 Skill 主题相符的类别。不要手工构造 profile 路径。如果用户选择项目本地的 Hermes 根目录，生成后运行 `hermes skills trust <project-root>`，并用 `hermes skills list` 验证发现；在项目受信任之前，项目 Skill 仍不可用。
 
-OpenCode 原生扫描跨 Agent 的 `~/.agents/skills` 根目录，因此上述生成 Skill 的默认位置已经覆盖它——无需符号链接，也无需信任步骤。它还会读取自己托管的 `~/.config/opencode/skills` 根和 Claude 兼容根 `~/.claude/skills`；仅当用户要求时才使用 OpenCode 托管的根。项目 Skill 通过从工作目录向上遍历到 git worktree 来发现，因此生成后如果 Skill 未出现，请新开会话。（`~/.cache/opencode/skills` 是 `skills.urls` 的远程 Skill 下载缓存，不是创作根目录——绝不要把生成的 Skill 写到那里。）
+OpenCode 原生扫描跨 Agent 的 `~/.agents/skills` 根目录，因此上述生成 Skill 的默认位置已经覆盖它，无需符号链接，也无需信任步骤。它还会读取自己托管的 `~/.config/opencode/skills` 根和 Claude 兼容根 `~/.claude/skills`；仅当用户要求时才使用 OpenCode 托管的根。项目 Skill 通过从工作目录向上遍历到 git worktree 来发现，因此生成后如果 Skill 未出现，请新开会话。（`~/.cache/opencode/skills` 是 `skills.urls` 的远程 Skill 下载缓存，不是创作根目录，绝不要把生成的 Skill 写到那里。）
 
 选择规则：
 1. 个人安装：将 `SKILLS_HOME` 设为 `~/.agents/skills`（如缺失则创建该目录）。有一个例外，以免在别人的地盘上发明约定：如果 `~/.agents/skills` 不存在**且**宿主私有根目录中已有 Skill，则改用私有根目录，并在报告中说明原因。
-2. **Claude Code 不扫描 `~/.agents/skills`** —— 生成完成后，步骤 10 会用 `ln -sfn "$HOME/.agents/skills/<skill_name>" "$HOME/.claude/skills/<skill_name>"` 将 Skill 链接进去。
+2. **Claude Code 不扫描 `~/.agents/skills`** ， 生成完成后，步骤 10 会用 `ln -sfn "$HOME/.agents/skills/<skill_name>" "$HOME/.claude/skills/<skill_name>"` 将 Skill 链接进去。
 3. **Hermes Agent 个人安装使用上表中的 Hermes 行**，而非跨 Agent 根目录，且不需要符号链接。
 4. 如果用户明确要求宿主私有根目录（`~/.copilot/skills`、`~/.claude/skills`、`~/.config/agents/skills`、`~/.config/amp/skills`），照办并跳过符号链接。
 5. 如果用户明确要求项目本地输出，使用其宿主对应的项目本地行。
-6. 如果选择需要知道宿主（项目本地输出、Hermes 个人根目录、OpenClaw state 根目录或 Claude Code 符号链接）而你无法识别，询问："你现在运行在哪个 Agent 中——OpenCode、OpenClaw、Hermes Agent、GitHub Copilot CLI、Amp、Codex 还是 Claude Code？"
+6. 如果选择需要知道宿主（项目本地输出、Hermes 个人根目录、OpenClaw state 根目录或 Claude Code 符号链接）而你无法识别，询问："你现在运行在哪个 Agent 中，OpenCode、OpenClaw、Hermes Agent、GitHub Copilot CLI、Amp、Codex 还是 Claude Code？"
 7. 对 OpenClaw 个人输出，使用 `${OPENCLAW_STATE_DIR:-$HOME/.openclaw}/skills`。共享的 `~/.agents/skills` 根仅在 `OPENCLAW_STATE_DIR` 未设置或等于默认 `$HOME/.openclaw` 时才是有效的 OpenClaw 目标；否则使用活跃 state 根或项目/额外目录。
 8. 如果用户明确要求 OpenClaw 托管的个人根目录，使用活跃 state 根并用 `openclaw skills list` 验证发现。
 
-将 `SKILLS_HOME` 设为所选根目录，并检查 `$SKILLS_HOME/<skill_name>/` 是否已存在。在 Claude Code 上，还要检查 `~/.claude/skills/<skill_name>` 是否作为一个**真实目录**（而非符号链接）存在——可能有先前的安装在那里；如有，先提议迁移（把目录移入 `~/.agents/skills/` 并用符号链接替换原路径）再继续。
+将 `SKILLS_HOME` 设为所选根目录，并检查 `$SKILLS_HOME/<skill_name>/` 是否已存在。在 Claude Code 上，还要检查 `~/.claude/skills/<skill_name>` 是否作为一个**真实目录**（而非符号链接）存在，可能有先前的安装在那里；如有，先提议迁移（把目录移入 `~/.agents/skills/` 并用符号链接替换原路径）再继续。
 如果该 Skill 已存在，提示用户选择：
-1. **更新 / 合入**（模式 4）——将新文件/内容整合进已有 Skill 组件。
-2. **覆盖** —— 删除并从头重新生成该 Skill。
-3. **重命名** —— 追加 `-2` 或改用其他自定义 slug。
+1. **更新 / 合入**（模式 4），将新文件/内容整合进已有 Skill 组件。
+2. **覆盖** ， 删除并从头重新生成该 Skill。
+3. **重命名** ， 追加 `-2` 或改用其他自定义 slug。
 
 如果用户选择**更新 / 合入**，在步骤 2.5 之后立即进入**更新 / 合入工作流**一节（跳过步骤 3、4、6、7、8、9）。
 
@@ -442,7 +442,7 @@ mkdir -p "$SKILLS_HOME/<skill_name>/chapters"
 
 ## 步骤 7 — 生成章节摘要
 
-**TOKEN 预算规则——关键（自适应）：**
+**TOKEN 预算规则：关键（自适应）：**
 
 每章预算随 `BOOK_TYPE` 和 `DEPTH` 缩放。技术类章节需要容纳代码和表格的空间；研读深度需要容纳完整推演的空间。从此矩阵中选取预算：
 
@@ -451,16 +451,16 @@ mkdir -p "$SKILLS_HOME/<skill_name>/chapters"
 | `BOOK_TYPE=text` | 800–1,200 tokens | 1,000–1,800 tokens |
 | `BOOK_TYPE=technical` | 1,200–1,800 tokens | 2,000–3,000 tokens |
 
-- 这些是每文件目标，不是硬性上限——内容密集的章节可能略超，单薄的章节可能不足。密度仍然胜过篇幅（质量规则 #3）：绝不为凑数字而注水。
+- 这些是每文件目标，不是硬性上限，内容密集的章节可能略超，单薄的章节可能不足。密度仍然胜过篇幅（质量规则 #3）：绝不为凑数字而注水。
 - 文件按需加载，所以更大的章节只有在该章被实际读取时才花费 token。
 - 在两个格子之间犹豫时（如混合内容书籍），用较低预算，让深度来自精确而非体量。
 
-**`DEPTH=study` 是靠内容挣来的，不是靠更大的数字。** 标准章节模板（Core Idea → Connects To）自然会让一个内容密集的散文式章节落在 700–900 token 左右。要*诚实地*达到研读预算——而非注水——研读深度的章节必须增加具体材料：
+**`DEPTH=study` 是靠内容挣来的，不是靠更大的数字。** 标准章节模板（Core Idea → Connects To）自然会让一个内容密集的散文式章节落在 700–900 token 左右。要*诚实地*达到研读预算（而非注水）研读深度的章节必须增加具体材料：
 - **复现章节中的一个完整示例（worked example）或产物**（如示例新闻稿、一段示例对话、一份填好的模板、作者从头到尾走完的一个决策），放在 `## Worked Example` 一节。这是最大的杠杆，也是学习者会回头来找的主要内容。
 - **把每个框架的 "How"** 展开为明确的步骤或判据，而不是一句话。
 - **给最重要的 1–2 个框架加一条简短的 "Why it works / failure mode"（为何有效/失效模式）注记**。
 
-如果某章确实没有完整示例且难以扩展，就让它落在研读下限之下，而不是注水——并在其 Core Idea 中注明该章内容单薄。相比之下，`reference` 深度的章节则有意省略完整示例，只保留可直接用于决策的要点。
+如果某章确实没有完整示例且难以扩展，就让它落在研读下限之下，而不是注水，并在其 Core Idea 中注明该章内容单薄。相比之下，`reference` 深度的章节则有意省略完整示例，只保留可直接用于决策的要点。
 
 对步骤 3 中识别出的每一个章节/主要部分：
 
@@ -540,14 +540,14 @@ mkdir -p "$SKILLS_HOME/<skill_name>/chapters"
 ### cheatsheet.md
 创建 `$SKILLS_HOME/<skill_name>/cheatsheet.md`：
 
-**这是该 Skill 区分度最高的一层——把它当作推理辅助，而不是关键词清单。** 任何人都能在术语表里 grep 到一个词条。cheatsheet 捕捉的是作者的*判断力*：他们会做什么决定、为什么。正是这个文件把"我认识这些词"变成"我会像作者那样行动"。
+**这是该 Skill 区分度最高的一层：把它当作推理辅助，而不是关键词清单。** 任何人都能在术语表里 grep 到一个词条。cheatsheet 捕捉的是作者的*判断力*：他们会做什么决定、为什么。正是这个文件把"我认识这些词"变成"我会像作者那样行动"。
 
 按以下优先级排列：
-1. **决策规则** —— "当 X 时，做 Y，因为 Z。"作者应用的 if/then 逻辑，表述到读者无需重读全书就能应用的程度。
-2. **决策树 / 流程图**（以嵌套列表或小表格呈现）—— 用于分支多于两个的选择。
-3. **权衡矩阵** —— 在作者关心的维度上为互相竞争的选项打分，让读者能按自己的约束做选择。
-4. **阈值与默认值** —— 作者明确采用的数字、比率或经验法则（如 "keep functions under ~20 lines"（函数保持在约 20 行以内）、"alert when error budget < 10%"（错误预算低于 10% 时告警））。
-5. **征兆与坏味道（tells & smells）** —— 快速识别处境的经验法则（"如果看到 X，你很可能陷入了 Y 麻烦"）。
+1. **决策规则** ， "当 X 时，做 Y，因为 Z。"作者应用的 if/then 逻辑，表述到读者无需重读全书就能应用的程度。
+2. **决策树 / 流程图**（以嵌套列表或小表格呈现）， 用于分支多于两个的选择。
+3. **权衡矩阵** ， 在作者关心的维度上为互相竞争的选项打分，让读者能按自己的约束做选择。
+4. **阈值与默认值** ， 作者明确采用的数字、比率或经验法则（如 "keep functions under ~20 lines"（函数保持在约 20 行以内）、"alert when error budget < 10%"（错误预算低于 10% 时告警））。
+5. **征兆与坏味道（tells & smells）** ， 快速识别处境的经验法则（"如果看到 X，你很可能陷入了 Y 麻烦"）。
 
 避免：纯术语→定义的行（那是术语表的活），以及散文段落（那是章节的活）。每一行都应该帮助读者*决定*某件事。
 
@@ -559,7 +559,7 @@ mkdir -p "$SKILLS_HOME/<skill_name>/chapters"
 ## 步骤 9 — 生成主 SKILL.md
 
 **关键 TOKEN 预算：SKILL.md 正文保持在 4,000 token 以内。**
-上下文压缩从末尾截断——把最重要的内容放在最前面。
+上下文压缩从末尾截断，把最重要的内容放在最前面。
 
 创建 `$SKILLS_HOME/<skill_name>/SKILL.md`：
 
@@ -642,7 +642,7 @@ SKILL_CONVERTER_ROOT="$(cd "$(dirname "$SCRIPT_PATH")/.." && pwd)"
 
 ## 步骤 10 — 清理与报告
 
-如果宿主是 Claude Code 且 `SKILLS_HOME` 为 `~/.agents/skills`（默认个人安装），用符号链接把该 Skill 暴露给 Claude Code——Claude Code 只扫描 `~/.claude/skills`：
+如果宿主是 Claude Code 且 `SKILLS_HOME` 为 `~/.agents/skills`（默认个人安装），用符号链接把该 Skill 暴露给 Claude Code，Claude Code 只扫描 `~/.claude/skills`：
 
 ```bash
 mkdir -p "$HOME/.claude/skills"
@@ -666,9 +666,9 @@ else
 fi
 ```
 
-真实目录保护是必需的：对已存在的真实目录执行 `ln -sfn` 会把链接嵌到它*里面*（`~/.claude/skills/<skill_name>/<skill_name>`），导致 Claude Code 加载旧副本。如果用户拒绝了步骤 5 的迁移，跳过符号链接并在报告中说明——在迁移完成之前 Claude Code 会继续使用旧目录。
+真实目录保护是必需的：对已存在的真实目录执行 `ln -sfn` 会把链接嵌到它*里面*（`~/.claude/skills/<skill_name>/<skill_name>`），导致 Claude Code 加载旧副本。如果用户拒绝了步骤 5 的迁移，跳过符号链接并在报告中说明，在迁移完成之前 Claude Code 会继续使用旧目录。
 
-**报告任何与链接相关的内容之前，先回读链接。** 符号链接只是一个声明，不是事实："Discoverable by" 一行要根据 `CLAUDE_STATUS`（磁盘上实际的状态）填写，绝不要根据"命令已执行"来填。**当链接缺失或是普通副本时不要硬性失败**——Skill 存在于枢纽目录中，其他所有宿主仍能找到它；诚实的报告是"已写入 `~/.agents/skills/<skill_name>`；在链接创建之前 Claude Code 看不到它"，而不是中止。（Windows 线索，未验证：目录联接（junction）——提升权限的 `cmd` 中用 `mklink /J`，或 PowerShell 中用 `New-Item -ItemType Junction`——既不需要开发者模式也不需要符号链接特权；如果你尝试它，也不改变"先回读再报告"的规则。）
+**报告任何与链接相关的内容之前，先回读链接。** 符号链接只是一个声明，不是事实："Discoverable by" 一行要根据 `CLAUDE_STATUS`（磁盘上实际的状态）填写，绝不要根据"命令已执行"来填。**当链接缺失或是普通副本时不要硬性失败**，Skill 存在于枢纽目录中，其他所有宿主仍能找到它；诚实的报告是"已写入 `~/.agents/skills/<skill_name>`；在链接创建之前 Claude Code 看不到它"，而不是中止。（Windows 线索，未验证：目录联接（junction），提升权限的 `cmd` 中用 `mklink /J`，或 PowerShell 中用 `New-Item -ItemType Junction`，既不需要开发者模式也不需要符号链接特权；如果你尝试它，也不改变"先回读再报告"的规则。）
 
 当用户选择了宿主私有或项目本地根目录时（步骤 5 规则 3-4），跳过此步。
 
@@ -817,7 +817,7 @@ Install on any Agent Skills host:
     https://github.com/<owner>/<repo_name> and fold new material into the clone.
 ```
 
-根目录级的 `SKILL.md` 布局正是 `skills` CLI 所检测的，因此该仓库可直接安装——无需调整结构。在非嵌套仓库情形下，本地文件夹仍是本机的实际安装位置，也是远程的工作副本，因此后续的更新/合入运行可以提交并将其变更推送到同一远程。
+根目录级的 `SKILL.md` 布局正是 `skills` CLI 所检测的，因此该仓库可直接安装，无需调整结构。在非嵌套仓库情形下，本地文件夹仍是本机的实际安装位置，也是远程的工作副本，因此后续的更新/合入运行可以提交并将其变更推送到同一远程。
 
 ---
 
@@ -872,11 +872,11 @@ Install on any Agent Skills host:
 
 ## 质量规则
 
-1. **提取结构，而非摘要** —— 捕获具名框架、确切提法、反模式；而不是章节复述
-2. **保留作者的精确表述** —— "The 5 Whys"（五问法）≠ "ask why multiple times"（多问几次为什么）；保持确切命名
-3. **密度胜过完整** —— 1,000 token 的摘要胜过 10,000 token 的节选
-4. **实践者口吻** —— 写 "Use X when Y"（何时 X 就用 Y），而不是 "The book explains X"（书中解释了 X）
-5. **SKILL.md 前置重点** —— 压缩保留前 5,000 token；最重要的内容放在最前
-6. **章节文件按需加载** —— 在被加载之前不计入 Skill 预算
-7. **绝不复制书籍原文** —— 始终综合、摘要、提取信号
-8. **主题索引至关重要** —— 它是 Agent 导航到正确章节文件的方式
+1. **提取结构，而非摘要** ， 捕获具名框架、确切提法、反模式；而不是章节复述
+2. **保留作者的精确表述** ， "The 5 Whys"（五问法）≠ "ask why multiple times"（多问几次为什么）；保持确切命名
+3. **密度胜过完整** ， 1,000 token 的摘要胜过 10,000 token 的节选
+4. **实践者口吻** ， 写 "Use X when Y"（何时 X 就用 Y），而不是 "The book explains X"（书中解释了 X）
+5. **SKILL.md 前置重点** ， 压缩保留前 5,000 token；最重要的内容放在最前
+6. **章节文件按需加载** ， 在被加载之前不计入 Skill 预算
+7. **绝不复制书籍原文** ， 始终综合、摘要、提取信号
+8. **主题索引至关重要** ， 它是 Agent 导航到正确章节文件的方式

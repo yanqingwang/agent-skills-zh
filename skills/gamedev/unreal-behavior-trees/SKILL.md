@@ -48,11 +48,11 @@ Transitions 结合起来。如果项目已经在使用 StateTree 资产，或者
    运行。
 4. **用 Decorator 限制分支**，Decorator 读取黑板键（例如"Has Target?"守护战斗分支）。设置
    **Observer Aborts**，使键变化时树会重新求值。
-5. **用 Service 保持黑板最新**，Service 挂载在分支上——仅在该分支激活期间周期性 tick
+5. **用 Service 保持黑板最新**，Service 挂载在分支上，仅在该分支激活期间周期性 tick
    （例如通过视野检查更新 `TargetActor`）。
 6. **在 Task 中执行具体工作**，Task 返回 `Succeeded`、`Failed` 或 `InProgress`（潜伏
    （latent）任务如 `MoveTo` 稍后才完成）。
-7. **验证** —— 在 PIE 期间使用行为树调试器，它会高亮正在运行的节点并显示实时的黑板值，让你
+7. **验证** ， 在 PIE 期间使用行为树调试器，它会高亮正在运行的节点并显示实时的黑板值，让你
    准确看到哪个分支在执行。
 
 ## 模式
@@ -83,7 +83,7 @@ ROOT
 ```
 
 `Observer Aborts: Both` 让战斗分支在 `TargetActor` 被设置的瞬间打断巡逻，并在其被清除时立即
-退出——这正是让 AI 显得反应灵敏的关键。
+退出，这正是让 AI 显得反应灵敏的关键。
 
 ### 3. 从代码更新黑板（例如看到玩家时）
 
@@ -98,20 +98,20 @@ void AEnemyAIController::SetTarget(AActor* Target)
 
 ## 常见陷阱
 
-- **AI 永远不启动** —— pawn 未被 possess（把 Pawn 的 *Auto Possess AI* 设为 "Placed in World
+- **AI 永远不启动** ， pawn 未被 possess（把 Pawn 的 *Auto Possess AI* 设为 "Placed in World
   or Spawned" 并指定 AIController），或从未调用 `RunBehaviorTree`。
-- **`MoveTo` 立即失败** —— 关卡中没有 NavMesh（添加一个 Nav Mesh Bounds Volume），或目标
+- **`MoveTo` 立即失败** ， 关卡中没有 NavMesh（添加一个 Nav Mesh Bounds Volume），或目标
   不在 navmesh 上。
-- **分支不响应变化** —— 门控 Decorator 的 **Observer Aborts** 被设为 None；把它设为
+- **分支不响应变化** ， 门控 Decorator 的 **Observer Aborts** 被设为 None；把它设为
   Self/Lower Priority/Both，键变化时树才会重新求值。
-- **一个任务把树卡住** —— 自定义任务返回了 `InProgress` 却从不调用 `FinishLatentTask`。
+- **一个任务把树卡住** ， 自定义任务返回了 `InProgress` 却从不调用 `FinishLatentTask`。
   务必让潜伏任务最终完成。
-- **只有在多个 NPC 共用一棵树时 AI 行为才异常** —— 自定义任务把运行状态存在了成员变量里。
+- **只有在多个 NPC 共用一棵树时 AI 行为才异常** ， 自定义任务把运行状态存在了成员变量里。
   除非实例化，任务节点会被所有使用该资产的 AI 共享；每个 AI 自己的状态应保存在节点内存
   （node memory）中（见参考部分）。
-- **黑板键拼写错误** —— `SetValueAsObject("Taget", ...)` 会静默地什么都不做；键名和类型
+- **黑板键拼写错误** ， `SetValueAsObject("Taget", ...)` 会静默地什么都不做；键名和类型
   必须完全匹配，或使用缓存的 `FBlackboardKeySelector`。
-- **Sequence 与 Selector 混淆** —— Sequence = AND（遇到第一个失败即停止）；Selector = OR
+- **Sequence 与 Selector 混淆** ， Sequence = AND（遇到第一个失败即停止）；Selector = OR
   （遇到第一个成功即停止）。两者互换会导致行为完全颠倒。
 
 ## 参考
@@ -124,6 +124,6 @@ void AEnemyAIController::SetTarget(AActor* Target)
 
 ## 相关技能
 
-- `game-ai` —— 跨引擎的 AI 设计（FSM、BT、steering、寻路选择）。
-- `unreal-cpp-gameplay` —— C++ 中的 AIController 与 pawn 类。
-- `fps-shooter` / `tower-defense` —— 组合敌人 AI 的游戏类型。
+- `game-ai` ， 跨引擎的 AI 设计（FSM、BT、steering、寻路选择）。
+- `unreal-cpp-gameplay` ， C++ 中的 AIController 与 pawn 类。
+- `fps-shooter` / `tower-defense` ， 组合敌人 AI 的游戏类型。
