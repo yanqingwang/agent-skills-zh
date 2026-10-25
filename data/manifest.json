@@ -5,6 +5,7 @@
       "shortname": "superpowers",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 304464,
+      "stars_snapshot_2026-10-25": 304679,
       "files": [
         {
           "upstream": "skills/test-driven-development/SKILL.md",
@@ -109,6 +110,7 @@
       "shortname": "mattpocock-skills",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 302187,
+      "stars_snapshot_2026-10-25": 302600,
       "files": [
         {
           "upstream": "skills/engineering/code-review/SKILL.md",
@@ -135,6 +137,7 @@
       "shortname": "addyosmani-agent-skills",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 110103,
+      "stars_snapshot_2026-10-25": 110246,
       "files": [
         {
           "upstream": "skills/context-engineering/SKILL.md",
@@ -173,6 +176,7 @@
       "shortname": "taste-skill",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 101829,
+      "stars_snapshot_2026-10-25": 102071,
       "files": [
         {
           "upstream": "skills/taste-skill/SKILL.md",
@@ -337,6 +341,7 @@
       "shortname": null,
       "license": "NONE (excluded)",
       "stars_snapshot_2026-10-24": 223159,
+      "stars_snapshot_2026-10-25": 223425,
       "files": []
     },
     {
@@ -344,6 +349,7 @@
       "shortname": "rea",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 376608,
+      "stars_snapshot_2026-10-25": 379407,
       "batch": 2,
       "files": [
         {
@@ -405,6 +411,7 @@
       "shortname": "ponytail",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 175291,
+      "stars_snapshot_2026-10-25": 175600,
       "batch": 2,
       "files": [
         {
@@ -441,6 +448,7 @@
       "shortname": "caveman",
       "license": "Apache-2.0",
       "stars_snapshot_2026-10-24": 114756,
+      "stars_snapshot_2026-10-25": 114844,
       "batch": 2,
       "files": [
         {
@@ -461,6 +469,7 @@
       "shortname": "archify",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 88591,
+      "stars_snapshot_2026-10-25": 88808,
       "batch": 2,
       "files": [
         {
@@ -1302,6 +1311,7 @@
       "shortname": "understand-anything",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 88031,
+      "stars_snapshot_2026-10-25": 88097,
       "batch": 2,
       "files": [
         {
@@ -1534,6 +1544,7 @@
       "shortname": "last30days-skill",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 65265,
+      "stars_snapshot_2026-10-25": 65344,
       "batch": 2,
       "files": [
         {
@@ -2179,6 +2190,7 @@
       "shortname": "diagram-design",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 60572,
+      "stars_snapshot_2026-10-25": 60774,
       "batch": 2,
       "files": [
         {
@@ -3339,6 +3351,7 @@
       "shortname": "humanizer",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 60170,
+      "stars_snapshot_2026-10-25": 60306,
       "batch": 2,
       "files": [
         {
@@ -3379,6 +3392,7 @@
       "shortname": "i-have-adhd",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 58558,
+      "stars_snapshot_2026-10-25": 58621,
       "batch": 2,
       "files": [
         {
@@ -3411,6 +3425,7 @@
       "shortname": "marketingskills",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 56336,
+      "stars_snapshot_2026-10-25": 56393,
       "batch": 2,
       "files": [
         {
@@ -3436,6 +3451,7 @@
       "shortname": "scientific-agent-skills",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 54395,
+      "stars_snapshot_2026-10-25": 54456,
       "batch": 2,
       "files": [
         {
@@ -3476,6 +3492,7 @@
       "shortname": "ecc",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 287772,
+      "stars_snapshot_2026-10-25": 288185,
       "batch": 2,
       "files": [
         {
@@ -3557,6 +3574,7 @@
       "shortname": "book-to-skill",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 35953,
+      "stars_snapshot_2026-10-25": 35996,
       "batch": 2,
       "files": [
         {
@@ -3686,6 +3704,7 @@
       "shortname": "planning-with-files",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 27618,
+      "stars_snapshot_2026-10-25": 27629,
       "batch": 2,
       "files": [
         {
@@ -3826,6 +3845,7 @@
       "shortname": "distilly",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 25974,
+      "stars_snapshot_2026-10-25": 25986,
       "batch": 2,
       "files": [
         {
@@ -4087,6 +4107,7 @@
       "shortname": "brag",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 18286,
+      "stars_snapshot_2026-10-25": 18400,
       "batch": 2,
       "files": [
         {
@@ -5260,6 +5281,7 @@
       "shortname": "prompt-master",
       "license": "MIT",
       "stars_snapshot_2026-10-24": 14986,
+      "stars_snapshot_2026-10-25": 15005,
       "batch": 2,
       "files": [
         {
@@ -5283,7 +5305,7 @@
       "repo": "garrytan/gstack",
       "shortname": "gstack",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 137471,
+      "stars_snapshot_2026-10-25": 137553,
       "batch": 3,
       "mode": "整仓收录",
       "files": [
@@ -10461,7 +10483,7 @@
       "repo": "Vincentwei1021/video-shotcraft",
       "shortname": "video-shotcraft",
       "license": "Apache-2.0",
-      "stars_snapshot_2026-10-25": 13373,
+      "stars_snapshot_2026-10-25": 13457,
       "batch": 3,
       "mode": "整目录",
       "files": [
@@ -15904,7 +15926,7 @@
       "repo": "teng-lin/notebooklm-py",
       "shortname": "notebooklm-py",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 19878,
+      "stars_snapshot_2026-10-25": 19890,
       "batch": 3,
       "mode": "单文件",
       "files": [
@@ -15925,7 +15947,7 @@
       "repo": "foryourhealth111-pixel/Vibe-Skills",
       "shortname": "vibe-skills",
       "license": "Apache-2.0",
-      "stars_snapshot_2026-10-25": 3764,
+      "stars_snapshot_2026-10-25": 3765,
       "batch": 3,
       "mode": "引用集",
       "files": [
@@ -16103,7 +16125,7 @@
       "repo": "yusufkaraaslan/Skill_Seekers",
       "shortname": "skill-seekers",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 15212,
+      "stars_snapshot_2026-10-25": 15217,
       "batch": 3,
       "mode": "单文件",
       "files": [
@@ -16124,7 +16146,7 @@
       "repo": "Orchestra-Research/AI-Research-SKILLs",
       "shortname": "ai-research-skills",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 13904,
+      "stars_snapshot_2026-10-25": 13912,
       "batch": 3,
       "mode": "整目录",
       "files": [
@@ -16182,7 +16204,7 @@
       "repo": "alirezarezvani/claude-skills",
       "shortname": "alirezarezvani-claude-skills",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 28641,
+      "stars_snapshot_2026-10-25": 28664,
       "batch": 3,
       "mode": "旗舰抽取",
       "files": [
@@ -16300,7 +16322,7 @@
       "repo": "phuryn/pm-skills",
       "shortname": "pm-skills",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 27343,
+      "stars_snapshot_2026-10-25": 27356,
       "batch": 3,
       "mode": "旗舰抽取",
       "files": [
@@ -16325,7 +16347,7 @@
       "repo": "AgriciDaniel/claude-seo",
       "shortname": "claude-seo",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 20063,
+      "stars_snapshot_2026-10-25": 20110,
       "batch": 3,
       "mode": "旗舰抽取",
       "files": [
@@ -16387,7 +16409,7 @@
       "repo": "wanshuiyin/Auto-claude-code-research-in-sleep",
       "shortname": "aris",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 18006,
+      "stars_snapshot_2026-10-25": 18014,
       "batch": 3,
       "mode": "旗舰抽取",
       "files": [
@@ -16412,7 +16434,7 @@
       "repo": "Jeffallan/claude-skills",
       "shortname": "jeffallan-claude-skills",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 12039,
+      "stars_snapshot_2026-10-25": 12043,
       "batch": 3,
       "mode": "旗舰抽取",
       "files": [
@@ -16482,7 +16504,7 @@
       "repo": "MengTo/Skills",
       "shortname": "mengto-skills",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 6989,
+      "stars_snapshot_2026-10-25": 6999,
       "batch": 3,
       "mode": "旗舰抽取",
       "files": [
@@ -16520,7 +16542,7 @@
       "repo": "czlonkowski/n8n-skills",
       "shortname": "n8n-skills",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 6517,
+      "stars_snapshot_2026-10-25": 6518,
       "batch": 3,
       "mode": "旗舰抽取",
       "files": [
@@ -16586,7 +16608,7 @@
       "repo": "anthropics/claude-plugins-official",
       "shortname": "claude-plugins-official",
       "license": "Apache-2.0",
-      "stars_snapshot_2026-10-25": 44366,
+      "stars_snapshot_2026-10-25": 44380,
       "batch": 4,
       "mode": "旗舰抽取",
       "files": [
@@ -16672,7 +16694,7 @@
       "repo": "wshobson/agents",
       "shortname": "wshobson-agents",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 41647,
+      "stars_snapshot_2026-10-25": 41653,
       "batch": 4,
       "mode": "旗舰抽取",
       "files": [
@@ -16706,7 +16728,7 @@
       "repo": "Donchitos/Claude-Code-Game-Studios",
       "shortname": "game-studio",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 27387,
+      "stars_snapshot_2026-10-25": 27447,
       "batch": 4,
       "mode": "Agent 定义抽取",
       "files": [
@@ -16764,7 +16786,7 @@
       "repo": "NVIDIA/skills",
       "shortname": "nvidia-skills",
       "license": "Apache-2.0 AND CC-BY-4.0",
-      "stars_snapshot_2026-10-25": 3718,
+      "stars_snapshot_2026-10-25": 3721,
       "batch": 4,
       "mode": "旗舰抽取",
       "files": [
@@ -16951,7 +16973,7 @@
       "repo": "gamedev-skills/awesome-gamedev-agent-skills",
       "shortname": "gamedev-skills",
       "license": "Apache-2.0",
-      "stars_snapshot_2026-10-25": 3912,
+      "stars_snapshot_2026-10-25": 4027,
       "batch": 4,
       "mode": "旗舰抽取",
       "files": [
@@ -16997,7 +17019,7 @@
       "repo": "bergside/awesome-design-skills",
       "shortname": "bergside-design-skills",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 3329,
+      "stars_snapshot_2026-10-25": 3336,
       "batch": 4,
       "mode": "旗舰抽取",
       "files": [
@@ -17023,7 +17045,7 @@
       "repo": "tradermonty/claude-trading-skills",
       "shortname": "claude-trading-skills",
       "license": "MIT",
-      "stars_snapshot_2026-10-25": 3250,
+      "stars_snapshot_2026-10-25": 3262,
       "batch": 4,
       "mode": "旗舰抽取",
       "files": [
@@ -17110,7 +17132,7 @@
       "repo": "iOfficeAI/OfficeCLI",
       "shortname": "officecli",
       "license": "Apache-2.0",
-      "stars_snapshot_2026-10-25": 32399,
+      "stars_snapshot_2026-10-25": 32406,
       "batch": 4,
       "mode": "旗舰抽取",
       "files": [
