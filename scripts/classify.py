@@ -15,28 +15,32 @@ MANIFEST = ROOT / "data" / "manifest.json"
 OUT = ROOT / "data" / "category-index.md"
 
 # 关键词 → 分类（顺序即优先级，先匹配先归类）
-RULES: list[tuple[str, list[str]]] = [
-    ("分析与逆向", [r"reverse-engineer", r"understand"]),
-    ("写作与表达", [r"humanizer", r"brag"]),
-    ("调研与信息", [r"last30days"]),
-    ("提示词工程", [r"prompt-master"]),
-    ("知识转化", [r"book-to-skill", r"distilly"]),
-    ("科学研究", [r"experimental-design"]),
-    ("市场与增长", [r"product-marketing"]),
-    ("省 token 与输出格式", [r"caveman", r"i-have-adhd"]),
-    ("质量与审查", [r"code-review", r"reviewer", r"quality", r"security-review"]),
-    ("上下文工程", [r"context", r"continuous-learning", r"autonomous-loops"]),
-    ("设计品味", [r"taste", r"diagram-design", r"archify"]),
-    ("头脑风暴与构思", [r"brainstorm", r"idea", r"refine"]),
-    ("工程方法论", [r"tdd|test-driven|debug|plan|spec|verification|triage|search-first|ponytail"]),
-]
+# 类别由目录结构承载：skills/<用户角色>/<类别>/<skill>/
+# 角色与类别即分类，不再做关键词推断。
+
+RULES: list[tuple[str, list[str]]] = []
+
+PERSONA_ZH = {
+    "developer": "开发者",
+    "writer": "写作者",
+    "designer": "设计师",
+    "researcher": "研究者",
+    "growth": "产品与增长",
+    "gamedev": "游戏开发者",
+    "creator": "创作者",
+    "toolbox": "通用工具箱",
+    "gstack": "开发者 · gstack 整仓",
+}
 
 
 def classify(path: str) -> str:
-    for category, patterns in RULES:
-        if any(re.search(p, path, re.IGNORECASE) for p in patterns):
-            return category
-    return "其他"
+    parts = pathlib.PurePosixPath(path).parts
+    persona = PERSONA_ZH.get(parts[1], parts[1]) if len(parts) > 2 else "其他"
+    if parts[1] == "gstack":
+        return PERSONA_ZH["gstack"]
+    if len(parts) > 3:
+        return f"{persona} · {parts[2]}"
+    return persona
 
 
 def zh_title(path: str) -> str:
@@ -78,7 +82,6 @@ def zh_title(path: str) -> str:
     parent = pathlib.PurePosixPath(path).parent.name
     return known.get(stem) or known.get(parent) or parent or stem
 
-
 def main() -> None:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     rows: list[tuple[str, str, str, str]] = []  # category, upstream, title, local path
@@ -86,7 +89,7 @@ def main() -> None:
         for entry in up["files"]:
             local = entry["local"]
             if not (ROOT / local).exists():
-                continue  # 尚未翻译完成
+                continue
             rows.append((classify(local), up["repo"], zh_title(local), local))
 
     groups: dict[str, list[tuple[str, str, str]]] = {}
@@ -94,15 +97,13 @@ def main() -> None:
         groups.setdefault(cat, []).append((repo, title, path))
 
     lines = [
-        "<!-- 由 scripts/classify.py 自动生成，勿手改 -->",
-        "# 分类索引",
+        "<!-- 由 scripts/classify.py 自动生成，勿手改；分类 = skills/ 目录结构 -->",
+        "# 分类索引（按用户角色）",
         "",
     ]
-    for cat in [c for c, _ in RULES] + ["其他"]:
-        if cat not in groups:
-            continue
+    for cat in sorted(groups):
         lines.append(f"## {cat}\n")
-        for repo, title, path in sorted(groups[cat]):
+        for repo, title, path in sorted(groups[cat], key=lambda x: x[2]):
             lines.append(f"- [{title}]({path}) — 上游 [{repo}](https://github.com/{repo})")
         lines.append("")
 

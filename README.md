@@ -5,75 +5,22 @@
 
 **上游星标快照日期：2026-10-24** · 完整数据见 [data/upstream-inventory.md](data/upstream-inventory.md)
 
-## 来源仓库
+## 按用户角色浏览
 
-星标快照 2026-10-24。完整检索与决策记录见 [data/upstream-inventory.md](data/upstream-inventory.md)。
+`skills/` 目录按**你是谁、你要做什么**组织，整个目录复制即可用：
 
-### 第一批（20 个翻译件）
+| 你是… | 去这里 | 里面有什么 |
+|---|---|---|
+| 💻 **开发者** | `skills/developer/` | `engineering/`（TDD、系统化调试、写计划、ponytail 最小改动、before-you-build…）、`quality/`（代码审查、安全审查、API 设计、代码审查者 Agent）、`context/`（上下文工程、持续学习、自主循环、hivemind 编排、CLAUDE.md 优化）、`efficiency/`（caveman 省 token、i-have-adhd 输出格式）、`gstack/`（Garry Tan 整仓工具链，23+ 角色） |
+| ✍️ **写作者** | `skills/writer/` | `writing/`（humanizer 去 AI 腔、brag 项目文案）、`prompting/`（prompt-master 提示词工程） |
+| 🎨 **设计师** | `skills/designer/design/` | taste 设计品味、diagram-design 编辑级图表、archify 交互图表、frontend-design（官方）、creative 风格设计 |
+| 🔬 **研究者** | `skills/researcher/` | `analysis/`（REA 逆向工程、understand 代码知识图谱）、`science/`（实验设计、autoresearch、论文改进循环、arxiv）、`info/`（last30days 近 30 天调研）、`knowledge/`（book-to-skill、distilly 人物画像） |
+| 📈 **产品与增长** | `skills/growth/product/` | product-marketing、product-discovery、create-prd、intended-vs-implemented、seo-agentic / seo-audit、回测与数据质量（⚠️ 金融内容非投资建议） |
+| 🎮 **游戏开发者** | `skills/gamedev/` | Godot GDScript / Unity C# / Unreal C++ 三大引擎核心 + 游戏设计师 / 创意总监 Agent |
+| 🎬 **创作者** | `skills/creator/video/` | video-shotcraft 电影级产品视频 |
+| 🧰 **所有人在用的工具** | `skills/toolbox/` | `automation/`（n8n 工作流 ×2、browser-act、notebooklm）、`meta/`（skill-seekers 文档转 skill、NVIDIA 技能发现器）、`office/`（officecli）、`compute/`（GPU cuDF）、`framework/`（vibe 运行时） |
 
-| 上游仓库 | 星标 | License | 本仓库收录 |
-|---|---:|---|---|
-| [obra/superpowers](https://github.com/obra/superpowers) | 304k | MIT | 5 个 Skill |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 302k | MIT | 2 个 Skill |
-| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 110k | MIT | 2 个 Skill + 1 个 Agent |
-| [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 102k | MIT | 1 个 Skill |
-| [morluto/rea](https://github.com/morluto/rea) | 377k | MIT | reverse-engineer-anything |
-| [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 175k | MIT | ponytail |
-| [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | 115k | Apache-2.0 | caveman |
-| [tt-a1i/archify](https://github.com/tt-a1i/archify) | 89k | MIT | archify |
-| [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) | 88k | MIT | understand |
-| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 65k | MIT | last30days |
-| [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | 61k | MIT | diagram-design |
-| [blader/humanizer](https://github.com/blader/humanizer) | 60k | MIT | humanizer |
-| [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | 59k | MIT | i-have-adhd |
-| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 56k | MIT | product-marketing |
-| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 54k | MIT | experimental-design |
-| [affaan-m/ECC](https://github.com/affaan-m/ECC) | 288k | MIT | search-first / security-review / continuous-learning-v2 / autonomous-loops |
-| [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill) | 36k | MIT | book-to-skill |
-| [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | 28k | MIT | planning-with-files |
-| [titanwings/distilly](https://github.com/titanwings/distilly) | 26k | MIT | distilly |
-| [latent-spaces/brag](https://github.com/latent-spaces/brag) | 18k | MIT | brag |
-| [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 15k | MIT | prompt-master |
-
-**重要合规发现**：`挑选的skills，均为上游允许翻译的skills。如 anthropics/skills`（183k 星，官方仓库）经查证**无 License**，则排除，不翻译不分发。`garrytan/gstack`（137k，MIT）为整仓型工具链（skill 强依赖根 `bin/`），推迟至第三批以整仓模式收录。`multica-ai/andrej-karpathy-skills`（223k）无 License，继续排除。
-
-### 第三、四批（41 个翻译件收录，2026-10-25）
-
-**第三批（整仓模式 + 旗舰抽取，21 件）**：
-
-| 上游仓库 | 星标 | License | 收录 |
-|---|---:|---|---|
-| [garrytan/gstack](https://github.com/garrytan/gstack) | 137k | MIT | **整仓收录**（新模式，⚠️ 其内置 auto-update 会拉回英文上游）+ 旗舰翻译件 office-hours / plan-ceo-review / qa |
-| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | 29k | MIT | hivemind / product-discovery |
-| [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | 27k | MIT | create-prd / intended-vs-implemented |
-| [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | 20k | MIT | seo-agentic / seo-audit |
-| [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) | 20k | MIT | notebooklm |
-| [wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep) | 18k | MIT | auto-paper-improvement-loop / arxiv |
-| [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers) | 15k | MIT | skill-seekers |
-| [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) | 14k | MIT | autoresearch |
-| [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | 13k | Apache-2.0 | video-shotcraft（上游正文即中文，原生收录） |
-| [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) | 12k | MIT | code-reviewer / api-designer |
-| [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | 6.5k | MIT | n8n-code-javascript / n8n-error-handling |
-| [MengTo/Skills](https://github.com/MengTo/Skills) | 7k | MIT | workflow-ship-change |
-| [foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills) | 3.8k | Apache-2.0 | vibe（引用集） |
-
-**第四批（官方插件 + Agent 定义 + 规则型，20 件）**：
-
-| 上游仓库 | 星标 | License | 收录 |
-|---|---:|---|---|
-| [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 44k | Apache-2.0 | frontend-design / claude-md-improver / build-mcp-server（**官方仓库合规收录**） |
-| [wshobson/agents](https://github.com/wshobson/agents) | 42k | MIT | before-you-build / fastapi-templates |
-| [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | 32k | Apache-2.0 | officecli |
-| [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) | 27k | MIT | game-designer / creative-director（Agent 定义） |
-| [browser-act/skills](https://github.com/browser-act/skills) | 6.3k | MIT | browser-act |
-| [tw93/Waza](https://github.com/tw93/Waza) | 7.4k | MIT | anti-patterns / clarity（规则型，新模式） |
-| [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | 3.9k | Apache-2.0 | godot-gdscript / unity-csharp-scripting / unreal-cpp-gameplay |
-| [NVIDIA/skills](https://github.com/NVIDIA/skills) | 3.7k | Apache-2.0 + CC-BY-4.0 | nvidia-skill-finder / accelerated-computing-cudf |
-| [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills) | 3.3k | MIT | creative |
-| [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | 3.3k | MIT | backtest-expert / data-quality-checker（⚠️ 金融决策辅助，非投资建议） |
-| [affaan-m/ECC](https://github.com/affaan-m/ECC)（追加） | 288k | MIT | strategic-compact |
-
-**合计：45 个上游 / 72 个翻译件 / 3984 个原样配套件。** 详见 [data/upstream-inventory.md](data/upstream-inventory.md)。
+> 完整索引（含每件的上游链接）：[data/category-index.md](data/category-index.md)，由 [scripts/classify.py](scripts/classify.py) 按目录结构自动生成。
 
 ### 上游仓库登记（同步监控清单）
 
@@ -128,27 +75,9 @@
 
 *登记由 `data/manifest.json` 生成；快照与监测状态在 `data/sync-state.json`，翻译件 blob 基线在 `data/file-shas.json`。*
 
-## 分类索引
-
-由 [scripts/classify.py](scripts/classify.py) 按 [data/manifest.json](data/manifest.json) 自动生成 → [data/category-index.md](data/category-index.md)
-
-- **工程方法论**：TDD、系统化调试、写计划、完成前验证、规格拆解、ponytail 最小改动、search-first、planning-with-files
-- **质量与审查**：代码审查、审查者 Agent、security-review 安全检查清单
-- **头脑风暴与构思**：brainstorming、idea-refine
-- **上下文工程**：context-engineering、continuous-learning-v2、autonomous-loops
-- **设计品味**：taste-skill、diagram-design、archify
-- **写作与表达**：humanizer、brag
-- **分析与逆向**：reverse-engineer-anything、understand
-- **调研与信息**：last30days
-- **提示词工程**：prompt-master
-- **知识转化**：book-to-skill、distilly
-- **科学研究**：experimental-design
-- **市场与增长**：product-marketing
-- **省 token 与输出格式**：caveman、i-have-adhd
-
 ## 使用方法
 
-将 `skills/<上游名>/<skill-name>/` **整个目录**复制到你所用 Harness 的技能目录（如 Claude Code 的 `~/.claude/skills/`、DSH 的技能目录），或按各上游原版安装方式替换为中文版目录。
+将 `skills/<角色>/<类别>/<skill-name>/` **整个目录**复制到你所用 Harness 的技能目录（如 Claude Code 的 `~/.claude/skills/`、DSH 的技能目录），或按各上游原版安装方式替换为中文版目录。
 
 目录内文件分三类（原则 #11，详见 [PRINCIPLES.md](PRINCIPLES.md)）：
 
@@ -199,6 +128,10 @@
 2. **输出检查**：确认一页纸文档/审查报告的双语标题渲染正常、无格式破坏
 3. **PLAN 标记测试**：多步任务中确认 `PLAN:` 行内计划仍被正确识别与执行
 4. 若以上都正常，可推广到其余上游（superpowers 的铁律/闸门块、mattpocock 模板等）；若发现 Agent 识别异常，回退方式见各文件声明块"口号本地化"行的对照说明
+
+## 工作日志（按批次）
+
+收录批次不再作为目录组织方式，仅作为工作日志留存：检索与决策记录见 [data/upstream-inventory.md](data/upstream-inventory.md)，各批校验报告见 [data/review-log-*.md](data/)，每日上游变化见 [data/sync-log/](data/sync-log/)。
 
 ## 同步策略
 
