@@ -9,7 +9,7 @@
 
 星标快照 2026-10-24。完整检索与决策记录见 [data/upstream-inventory.md](data/upstream-inventory.md)。
 
-### 第一批（11 个翻译件）
+### 第一批（20 个翻译件）
 
 | 上游仓库 | 星标 | License | 本仓库收录 |
 |---|---:|---|---|
@@ -17,11 +17,6 @@
 | [mattpocock/skills](https://github.com/mattpocock/skills) | 302k | MIT | 2 个 Skill |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 110k | MIT | 2 个 Skill + 1 个 Agent |
 | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 102k | MIT | 1 个 Skill |
-
-### 第二批：全生态 Top 20（20 个翻译件，2026-10-24）
-
-| 上游仓库 | 星标 | License | 本仓库收录 |
-|---|---:|---|---|
 | [morluto/rea](https://github.com/morluto/rea) | 377k | MIT | reverse-engineer-anything |
 | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 175k | MIT | ponytail |
 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | 115k | Apache-2.0 | caveman |
@@ -40,7 +35,7 @@
 | [latent-spaces/brag](https://github.com/latent-spaces/brag) | 18k | MIT | brag |
 | [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 15k | MIT | prompt-master |
 
-**重要合规发现**：`anthropics/skills`（183k 星，官方仓库）经查证**无 License**，按原则 #2 排除，不翻译不分发。`garrytan/gstack`（137k，MIT）为整仓型工具链（skill 强依赖根 `bin/`），推迟至第三批以整仓模式收录。`multica-ai/andrej-karpathy-skills`（223k）无 License，继续排除。
+**重要合规发现**：`挑选的skills，均为上游允许翻译的skills。如 anthropics/skills`（183k 星，官方仓库）经查证**无 License**，则排除，不翻译不分发。`garrytan/gstack`（137k，MIT）为整仓型工具链（skill 强依赖根 `bin/`），推迟至第三批以整仓模式收录。`multica-ai/andrej-karpathy-skills`（223k）无 License，继续排除。
 
 ## 分类索引
 
@@ -116,11 +111,9 @@
 
 ## 同步策略
 
-
 `.github/workflows/sync-check.yml` 每日比对各上游 HEAD commit 与 `data/sync-state.json`：
 上游有变更 → 自动开 issue 列出待重译文件 → 人工翻译后更新快照。每个翻译文件头部标注同步日期。
 
 ## 与上游的关系（引流策略）
 
 向上游申请的方式：先开 issue 询问维护者，获同意后在其 README 提"中文版"一行链接指向本仓库。
-**绝不把汉化正文直接 PR 进上游**（原则 #1）。

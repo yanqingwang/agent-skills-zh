@@ -194,6 +194,102 @@ SOFTWARE.
 
 > 注：caveman 自 3.0.0 起全仓库统一采用 Apache-2.0（此前 MIT 部分仅覆盖历史版本）。上方为 Apache-2.0 条款摘要，完整原文见上游仓库根 `LICENSE`；`NOTICE` 载明版权行 "Copyright 2026 Julius Brussee" 与第三方归属。
 
+## garrytan/gstack
+
+- 上游：https://github.com/garrytan/gstack （星标快照 2026-10-25：137,471）
+- License：MIT
+- 收录文件：skills/gstack/（整仓收录，SKILL.md 翻译 3 件 + 其余原样；排除 .github/test）
+- Copyright (c) Garry Tan 及 gstack 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## Vincentwei1021/video-shotcraft
+
+- 上游：https://github.com/Vincentwei1021/video-shotcraft （星标快照 2026-10-25：13,373）
+- License：MIT
+- 收录文件：skills/video-shotcraft/video-shotcraft/（整目录，SKILL.md 上游正文即中文，中文原生收录）
+- Copyright (c) Vincentwei 及 video-shotcraft 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## teng-lin/notebooklm-py
+
+- 上游：https://github.com/teng-lin/notebooklm-py （星标快照 2026-10-25：19,878）
+- License：MIT
+- 收录文件：skills/notebooklm-py/notebooklm/SKILL.md
+- Copyright (c) teng-lin 及 notebooklm-py 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## foryourhealth111-pixel/Vibe-Skills
+
+- 上游：https://github.com/foryourhealth111-pixel/Vibe-Skills （星标快照 2026-10-25：3,764）
+- License：MIT
+- 收录文件：skills/vibe-skills/vibe-skills/（SKILL.md + core/ + protocols/）
+- Copyright (c) Vibe-Skills 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## yusufkaraaslan/Skill_Seekers
+
+- 上游：https://github.com/yusufkaraaslan/Skill_Seekers （星标快照 2026-10-25：15,212）
+- License：MIT
+- 收录文件：skills/skill-seekers/skill-seekers/SKILL.md
+- Copyright (c) yusufkaraaslan（MIT 原文同 obra/superpowers 条款格式）
+
+## Orchestra-Research/AI-Research-SKILLs
+
+- 上游：https://github.com/Orchestra-Research/AI-Research-SKILLs （星标快照 2026-10-25：13,904）
+- License：MIT
+- 收录文件：skills/ai-research-skills/autoresearch/（整目录）
+- Copyright (c) Orchestra-Research（MIT 原文同 obra/superpowers 条款格式）
+
+## alirezarezvani/claude-skills
+
+- 上游：https://github.com/alirezarezvani/claude-skills （星标快照 2026-10-25：28,641）
+- License：MIT
+- 收录文件：skills/alirezarezvani-claude-skills/{hivemind, product-discovery}/
+- Copyright (c) Alireza Rezvani 及 claude-skills 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## phuryn/pm-skills
+
+- 上游：https://github.com/phuryn/pm-skills （星标快照 2026-10-25：27,343）
+- License：MIT
+- 收录文件：skills/pm-skills/{create-prd, intended-vs-implemented}/
+- Copyright (c) phuryn 及 pm-skills 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## AgriciDaniel/claude-seo
+
+- 上游：https://github.com/AgriciDaniel/claude-seo （星标快照 2026-10-25：20,063）
+- License：MIT
+- 收录文件：skills/claude-seo/{seo-agentic, seo-audit}/
+- Copyright (c) AgriciDaniel（MIT 原文同 obra/superpowers 条款格式）
+
+## wanshuiyin/Auto-claude-code-research-in-sleep
+
+- 上游：https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep （星标快照 2026-10-25：18,006）
+- License：MIT
+- 收录文件：skills/aris/{auto-paper-improvement-loop, arxiv}/
+- Copyright (c) wanshuiyin 及 ARIS 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## Jeffallan/claude-skills
+
+- 上游：https://github.com/Jeffallan/claude-skills （星标快照 2026-10-25：12,039）
+- License：MIT
+- 收录文件：skills/jeffallan-claude-skills/{code-reviewer, api-designer}/
+- Copyright (c) Jeffallan 及 claude-skills 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## MengTo/Skills
+
+- 上游：https://github.com/MengTo/Skills （星标快照 2026-10-25：6,989）
+- License：MIT
+- 收录文件：skills/mengto-skills/workflow-ship-change/
+- Copyright (c) Meng To（MIT 原文同 obra/superpowers 条款格式）
+
+## czlonkowski/n8n-skills
+
+- 上游：https://github.com/czlonkowski/n8n-skills （星标快照 2026-10-25：6,517）
+- License：MIT
+- 收录文件：skills/n8n-skills/{n8n-code-javascript, n8n-error-handling}/
+- Copyright (c) czlonkowski 及 n8n-skills 贡献者（MIT 原文同 obra/superpowers 条款格式）
+
+## foryourhealth111-pixel/Vibe-Skills 补充（Apache-2.0）
+
+- License：Apache-2.0（条款摘要同 caveman 节；完整原文见上游仓库根 LICENSE）
+- 另：video-shotcraft 同为 Apache-2.0，适用同一条款。
+
 ## 明确排除
 
 - `multica-ai/andrej-karpathy-skills`（223,159 星）：**无 License 文件，默认保留所有权利，本仓库不翻译、不分发其任何内容**（PRINCIPLES.md 原则 #2）。

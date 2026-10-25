@@ -1,11 +1,11 @@
 {
-  "snapshot_date": "2026-10-24",
+  "snapshot_date": "2026-10-25",
   "repos": {
     "obra/superpowers": "2ce8aa15d05b",
     "mattpocock/skills": "5beb35b040e3",
     "addyosmani/agent-skills": "aeac41d4d005",
-    "Leonxlnx/taste-skill": "6010f91a9935",
-    "morluto/rea": "798450638e74",
+    "Leonxlnx/taste-skill": "12af471f627f",
+    "morluto/rea": "f3ed1657f821",
     "DietrichGebert/ponytail": "09c434ab73ca",
     "JuliusBrussee/caveman": "1f951fb4ad40",
     "tt-a1i/archify": "25cf37080fc8",
@@ -21,6 +21,19 @@
     "OthmanAdi/planning-with-files": "dcdfb278de53",
     "titanwings/distilly": "0afc45c29c36",
     "latent-spaces/brag": "669ab9286aa2",
-    "nidhinjs/prompt-master": "49b3a72469b1"
+    "nidhinjs/prompt-master": "49b3a72469b1",
+    "garrytan/gstack": "7b8c3d316d3c",
+    "Vincentwei1021/video-shotcraft": "43bd349a1366",
+    "teng-lin/notebooklm-py": "00b2bd5077b1",
+    "foryourhealth111-pixel/Vibe-Skills": "0407cb2e8db9",
+    "yusufkaraaslan/Skill_Seekers": "5b5d8dfca263",
+    "Orchestra-Research/AI-Research-SKILLs": "773a52944ba4",
+    "alirezarezvani/claude-skills": "6d2f02ea077e",
+    "phuryn/pm-skills": "07b34f64ee82",
+    "AgriciDaniel/claude-seo": "6be93f45064f",
+    "wanshuiyin/Auto-claude-code-research-in-sleep": "18bceb3c71c6",
+    "Jeffallan/claude-skills": "9e7dbd688015",
+    "MengTo/Skills": "398cd41c86ba",
+    "czlonkowski/n8n-skills": "e037563e1017"
   }
 }

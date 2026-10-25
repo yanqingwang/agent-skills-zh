@@ -169,3 +169,29 @@
 | ruvnet/ruflo / zhayujie/CowAgent / nanocoai/nanoclaw 等 | — | Harness/Agent 框架或 App，非 Skill 文件 |
 
 **第三批启动顺序建议**：gstack 整仓模式（含管线改造）→ 单 skill 仓 6 个（video-shotcraft / qiushi / notebooklm / Vibe-Skills / Skill_Seekers / Orchestra）→ 合集旗舰抽取 9 个。wshobson/agents 与 Waza 的"非 SKILL.md 产出物"需先出管线决策。
+
+## 七、第三批实抓结果（2026-10-25，21 个 SKILL.md 收录）
+
+第六节候选中 13 个上游完成收录（wshobson/agents 与 tw93/Waza 因"非 SKILL.md 产出物"管线决策未定继续挂起）：
+
+| 上游 | 模式 | 收录 |
+|---|---|---|
+| garrytan/gstack | **整仓收录（新模式）** | 整仓原样（排除 .github/test 40MB QA）+ 3 旗舰翻译件 office-hours / plan-ceo-review / qa（各 1300/780 行级）。⚠️ gstack 内置 auto-update 会拉回英文上游覆盖译文，使用中文旗舰时需关闭其自动更新或接受回退 |
+| Vincentwei1021/video-shotcraft | 整目录 | **上游 SKILL.md 正文即中文**（中欧双语定位）→ 中文原生收录，逐字节保留；整目录 60MB（Remotion 模板/素材被引用，不可省） |
+| teng-lin/notebooklm-py | 单文件 | SKILL.md（Python 包经 pip 安装，仓库文件零引用） |
+| foryourhealth111-pixel/Vibe-Skills | 引用集 | SKILL.md + core/ + protocols/（根 SKILL.md 仅引用这两个目录；bundled/ 21MB 兄弟库未收录） |
+| yusufkaraaslan/Skill_Seekers | 单文件 | skills/skill-seekers/SKILL.md |
+| Orchestra-Research/AI-Research-SKILLs | 整目录 | 0-autoresearch-skill（references + templates 全套） |
+| alirezarezvani/claude-skills | 旗舰抽取 | engineering/hivemind + product-team/skills/product-discovery |
+| phuryn/pm-skills | 旗舰抽取 | create-prd + intended-vs-implemented |
+| AgriciDaniel/claude-seo | 旗舰抽取 | seo-agentic + seo-audit（含各 6 个 references；extensions/ 排除） |
+| wanshuiyin/…-in-sleep (ARIS) | 旗舰抽取 | auto-paper-improvement-loop + arxiv |
+| Jeffallan/claude-skills | 旗舰抽取 | code-reviewer + api-designer |
+| MengTo/Skills | 旗舰抽取 | workflow/workflow-ship-change |
+| czlonkowski/n8n-skills | 旗舰抽取 | n8n-code-javascript + n8n-error-handling（各 5 个配套 .md） |
+
+**额外发现与调整**：
+- HughYau/qiushi-skill 实核为**中文原生**（矛盾分析等 3 个 skill 正文中文）→ 移出翻译清单，记为中文原生参考。
+- video-shotcraft / qiushi 两个"伪英文仓"说明：检索期需抽验 SKILL.md 正文语言，description 英文 ≠ 正文英文。
+- fetch_verbatim.py 新增 `--trees` 模式：整仓收录后 verbatim 达 2739 件（累计 3900+），逐文件 API 校验不可行，改为一仓一次 trees API + 本地 `git hash-object` blob SHA 比对（内容哈希等价于逐字节比对）。
+- 合计：35 上游 / 52 翻译件（51 实译 + 1 中文原生收录）/ 3918 原样件。

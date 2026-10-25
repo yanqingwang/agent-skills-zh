@@ -33,6 +33,8 @@ def fetch(upstream_path: str, repo: str) -> bytes:
 def main() -> int:
     check_only = "--check" in sys.argv
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    if "--trees" in sys.argv:
+        raise SystemExit(tree_check(manifest))
     ok = fail = changed = 0
     for up in manifest["upstreams"]:
         for entry in up.get("verbatim", []):
@@ -56,6 +58,46 @@ def main() -> int:
     mode = "check" if check_only else "write"
     print(f"[{mode}] ok={ok} fail={fail} diff={changed}")
     return 1 if fail or (check_only and changed) else 0
+
+
+def tree_check(manifest) -> int:
+    """按 git blob SHA 全量校验（整仓收录后 verbatim 件数 3000+，逐文件 API 太重）。
+
+    每个上游仅 1 次 trees API 拿全仓 blob sha 映射，本地用 git hash-object 计算
+    blob sha1 比对——与逐字节比对等价（blob sha 即内容哈希），但无内容下载。
+    """
+    ok = fail = diff = 0
+    for up in manifest["upstreams"]:
+        out = subprocess.run(
+            ["gh", "api", f"repos/{up['repo']}/git/trees/HEAD?recursive=1",
+             "--jq", '.tree[] | select(.type=="blob") | .path + "\t" + .sha'],
+            capture_output=True, text=True, check=False,
+        )
+        if out.returncode != 0:
+            print(f"FAIL tree {up['repo']}: {out.stderr.strip()[:100]}")
+            fail += 1
+            continue
+        shas = {}
+        for line in out.stdout.splitlines():
+            path, _, sha = line.partition("\t")
+            if path and sha:
+                shas[path] = sha
+        for entry in up.get("verbatim", []):
+            local = ROOT / entry["local"]
+            want = shas.get(entry["upstream"])
+            if want is None or not local.exists():
+                print(f"DIFF {entry['local']} (上游不存在或本地缺失)")
+                diff += 1
+                continue
+            h = subprocess.run(["git", "hash-object", str(local)],
+                               capture_output=True, text=True, check=True).stdout.strip()
+            if h == want:
+                ok += 1
+            else:
+                print(f"DIFF {entry['local']}")
+                diff += 1
+    print(f"[tree-check] ok={ok} fail={fail} diff={diff}")
+    return 1 if fail or diff else 0
 
 
 if __name__ == "__main__":

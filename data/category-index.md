@@ -39,6 +39,7 @@
 
 ## 质量与审查
 
+- [code-reviewer](skills/jeffallan-claude-skills/code-reviewer/SKILL.md) — 上游 [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills)
 - [代码审查者 Agent](skills/addyosmani-agent-skills/agents/code-reviewer.md) — 上游 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
 - [安全审查清单（security-review）](skills/ecc/security-review/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
 - [代码审查](skills/mattpocock-skills/code-review/SKILL.md) — 上游 [mattpocock/skills](https://github.com/mattpocock/skills)
@@ -65,8 +66,31 @@
 - [最小改动（ponytail）](skills/ponytail/ponytail/SKILL.md) — 上游 [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)
 - [文件化计划（planning-with-files）](skills/planning-with-files/planning-with-files/SKILL.md) — 上游 [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files)
 - [先检索后编码（search-first）](skills/ecc/search-first/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
+- [plan-ceo-review](skills/gstack/plan-ceo-review/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
 - [从想法到规格](skills/mattpocock-skills/to-spec/SKILL.md) — 上游 [mattpocock/skills](https://github.com/mattpocock/skills)
 - [写计划](skills/superpowers/writing-plans/SKILL.md) — 上游 [obra/superpowers](https://github.com/obra/superpowers)
 - [完成前验证](skills/superpowers/verification-before-completion/SKILL.md) — 上游 [obra/superpowers](https://github.com/obra/superpowers)
 - [测试驱动开发（TDD）](skills/superpowers/test-driven-development/SKILL.md) — 上游 [obra/superpowers](https://github.com/obra/superpowers)
 - [系统化调试](skills/superpowers/systematic-debugging/SKILL.md) — 上游 [obra/superpowers](https://github.com/obra/superpowers)
+
+## 其他
+
+- [seo-agentic](skills/claude-seo/seo-agentic/SKILL.md) — 上游 [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo)
+- [seo-audit](skills/claude-seo/seo-audit/SKILL.md) — 上游 [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo)
+- [api-designer](skills/jeffallan-claude-skills/api-designer/SKILL.md) — 上游 [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills)
+- [workflow-ship-change](skills/mengto-skills/workflow-ship-change/SKILL.md) — 上游 [MengTo/Skills](https://github.com/MengTo/Skills)
+- [autoresearch](skills/ai-research-skills/autoresearch/SKILL.md) — 上游 [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs)
+- [video-shotcraft](skills/video-shotcraft/video-shotcraft/SKILL.md) — 上游 [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft)
+- [hivemind](skills/alirezarezvani-claude-skills/hivemind/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
+- [product-discovery](skills/alirezarezvani-claude-skills/product-discovery/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
+- [n8n-code-javascript](skills/n8n-skills/n8n-code-javascript/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
+- [n8n-error-handling](skills/n8n-skills/n8n-error-handling/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
+- [vibe-skills](skills/vibe-skills/vibe-skills/SKILL.md) — 上游 [foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills)
+- [office-hours](skills/gstack/office-hours/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [qa](skills/gstack/qa/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
+- [create-prd](skills/pm-skills/create-prd/SKILL.md) — 上游 [phuryn/pm-skills](https://github.com/phuryn/pm-skills)
+- [intended-vs-implemented](skills/pm-skills/intended-vs-implemented/SKILL.md) — 上游 [phuryn/pm-skills](https://github.com/phuryn/pm-skills)
+- [notebooklm](skills/notebooklm-py/notebooklm/SKILL.md) — 上游 [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py)
+- [arxiv](skills/aris/arxiv/SKILL.md) — 上游 [wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep)
+- [auto-paper-improvement-loop](skills/aris/auto-paper-improvement-loop/SKILL.md) — 上游 [wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep)
+- [skill-seekers](skills/skill-seekers/skill-seekers/SKILL.md) — 上游 [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers)
