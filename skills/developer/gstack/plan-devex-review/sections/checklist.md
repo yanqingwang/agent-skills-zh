@@ -1,26 +1,22 @@
 <!-- AUTO-GENERATED from checklist.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`skills/developer/gstack/plan-devex-review/sections/checklist.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
+## Checklist (runner profile)
 
-## Checklist（runner 画像）
+DX phase steps and required outputs for `bin/gstack-autoplan` (unattended or
+`light` runs); interactive runs read `sections/review-sections.md` in full.
 
-供 `bin/gstack-autoplan`（无人值守或 `light` 运行）使用的 DX 阶段步骤
-与必需输出；交互式运行完整读 `sections/review-sections.md`。
+### Steps
+1. Step 0 complete (persona, narrative, benchmark, magical moment, journey,
+   confusion roleplay); run the DX Trend Check.
+2. Run Passes 1–8 in order: getting started, API/CLI/SDK design, errors and
+   debugging (the agent-ready error contract in Pass 3: CAP4 Critical and CAP6 High
+   findings cap the score at 4 and 6), documentation, upgrade path, environment and
+   tooling, community, measurement. The Appendix applies to Claude Code skills only.
+3. One decision cycle per unresolved finding; then the required outputs below.
 
-### 步骤
-1. Step 0 完成（persona、叙事、基准、魔法时刻、旅程、困惑角色扮演）；
-   跑 DX Trend Check。
-2. 按序运行 Pass 1-8：getting started、API/CLI/SDK 设计、错误与调试
-   （Pass 3 的 agent-ready 错误契约：CAP4 Critical 与 CAP6 High 发现把
-   分数钳在 4 与 6）、文档、升级路径、环境与工具链、社区、度量。
-   Appendix 仅适用于 Claude Code Skill。
-3. 每个未决发现一个决策循环；然后是下方的必需输出。
+### Required outputs → producing section
 
-### 必需输出 → 产出节
-
-| 输出 | 产出者 | 范围 |
+| Output | Produced by | Scope |
 |---|---|---|
 | Developer Persona Card | Developer Persona Card | dx |
 | Developer Empathy Narrative | Developer Empathy Narrative | dx |

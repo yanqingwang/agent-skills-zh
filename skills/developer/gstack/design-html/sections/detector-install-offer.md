@@ -1,22 +1,11 @@
 <!-- AUTO-GENERATED from detector-install-offer.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
 <!-- Derived in part from nothing third-party: gstack's own consent flow for downloading impeccable's engine (Apache-2.0, see NOTICE.md). -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`design-html/sections/detector-install-offer.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
+# Design detector: the one-time install offer
 
-# 设计检测器：一次性安装提议
+Read this only when the Setup probe printed `DESIGN_DETECTOR_INSTALL_OFFER`. It is the same question `/design-review` asks; whichever design skill runs first asks it, and the answer is remembered.
 
-仅在 Setup 探针打印了 `DESIGN_DETECTOR_INSTALL_OFFER` 时读本节。它与
-`/design-review` 问的是同一个问题；哪个设计 Skill 先跑就由哪个来问，
-答案会被记住。
-
-**安装提议（一个问题，只问一次）。** 探针打印了
-`DESIGN_DETECTOR_INSTALL_OFFER: version=<v> platform=<p> bytes=<n> dest=<path>`
-时，说明用户从未回答过。现在问，先于任何其他步骤，且仅在交互会话中：
-`SESSION_KIND: spawned` 或无头运行下，绝不安装也绝不发问；按"暂不"作答
-继续。Conductor 中把简报渲染为文字并 STOP。用本 Skill 的
-AskUserQuestion 格式：
+**Install offer (one question, asked once).** If the probe printed `DESIGN_DETECTOR_INSTALL_OFFER: version=<v> platform=<p> bytes=<n> dest=<path>`, the user has never answered this. Ask now, before any other step, in an interactive session only: with `SESSION_KIND: spawned` or a headless run, never install and never ask; continue as if the answer were "not now". In Conductor, render the brief as prose and STOP. Use this skill's AskUserQuestion format:
 
 ```
 D<N> — Install impeccable's design detector engine?
@@ -42,18 +31,10 @@ D) Turn the detector off
 Net: a pinned, logged 16 MB download for machine-checked findings, versus every design check staying a judgment call.
 ```
 
-选 **A** 时，运行安装并读其第一行（`IMPECCABLE_INSTALLED: <path>` 加
-新的探针行；或 `IMPECCABLE_INSTALL_REFUSED: <reason>`，此后本 Skill
-不带扫描继续）：
+On **A**, run the install and read its first line (`IMPECCABLE_INSTALLED: <path>` then the fresh probe lines, or `IMPECCABLE_INSTALL_REFUSED: <reason>`, after which this skill continues without scans):
 
 ```bash
 bun --no-env-file --config=/dev/null run $HOME/.claude/skills/gstack/bin/gstack-design-detect.ts install --host claude
 ```
 
-选 **B** 不带扫描继续。选 **C** 运行
-`~/.claude/skills/gstack/bin/gstack-config set design_detector_install_prompted true`。
-选 **D** 运行
-`~/.claude/skills/gstack/bin/gstack-config set design_detector off`。
-绝不自己传 `--sha256` 或 `--base`：它们是给维护者和镜像用的。用户若
-还想要 `/impeccable` Skill 及其 hook，由他们自己跑
-`npx impeccable install`；gstack 绝不代劳。
+On **B**, continue without scans. On **C**, run `~/.claude/skills/gstack/bin/gstack-config set design_detector_install_prompted true`. On **D**, run `~/.claude/skills/gstack/bin/gstack-config set design_detector off`. Never pass `--sha256` or `--base` yourself: they exist for maintainers and mirrors. If the user also wants the `/impeccable` skill and its hook, they run `npx impeccable install` themselves; gstack never does.

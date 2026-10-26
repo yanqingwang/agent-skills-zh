@@ -1,63 +1,61 @@
 <!-- AUTO-GENERATED from system-functional.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`qa/sections/system-functional.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
+# Functional QA with repository-native tools
 
-# 用仓库原生工具做功能性 QA
+Use documented repository commands, CLI/API clients and job/queue tools, not a new
+harness or browser substitution.
 
-用文档化的仓库命令、CLI/API 客户端与 job/队列工具，不新造 harness，
-不用浏览器替代。
+## Functional modes
 
-## 功能性模式
+For /qa and /qa-only, within the selected scope:
+- **Full** (default): cover every applicable documented contract below.
+- **Quick** (`--quick`): check success and the highest-risk changed edge; mark other
+  contracts not run.
+- **Regression** (`--regression <previous-report>`): before probes, read the supplied
+  functional report and linked replay evidence. A missing, unreadable or wrong-target
+  baseline blocks regression mode. A browser-only `baseline.json` is not a functional
+  baseline. Re-establish owned setup; replay prior failed probes against the documented
+  expectation, never recorded buggy output, then check changed adjacent behavior.
+  Preserve the prior report; report fixed, still failing and new findings separately.
+  Missing safe replay inputs block affected probes, never count as passes.
 
-/qa 与 /qa-only，在选定范围内：
-- **Full**（默认）：覆盖下方每条适用的已文档化契约。
-- **Quick**（`--quick`）：检查成功路径与风险最高的变更边缘；其余契约
-  标记未运行。
-- **Regression**（`--regression <previous-report>`）：探测之前，先读
-  所提供的功能性报告与关联的回放证据。基线缺失、不可读或目标错误会
-  阻塞 regression 模式。仅浏览器的 `baseline.json` 不是功能性基线。
-  重建自有环境；对照文档化预期回放既往失败探测，绝不对照记录下来的
-  错误输出；然后检查变更的相邻行为。保留既往报告；修复、仍失败与
-  新发现分开报告。缺失的安全回放输入阻塞受影响探测，绝不算通过。
+Mixed runs apply each surface's mode separately. /review and /ship retain their caller's
+bounded smoke and explicit plan checks, not Full exploration.
 
-混合运行对每个表面分别应用其模式。/review 与 /ship 保留调用方的有界
-冒烟与显式计划检查，不做 Full 探索。
+## Contract map
 
-## 契约图
+Record each contract/source, isolated setup, exact probe, expectation and outcome:
+pass/fail/blocked/not run/inconclusive/not applicable (reason).
 
-逐条记录契约/来源、隔离环境、精确探测、预期与结果：
-pass/fail/blocked/not run/inconclusive/not applicable（原因）。
-
-| 契约 | 观察 |
+| Contract | Observe |
 |---|---|
-| 成功执行 | 预期的返回/输出与最终业务效果，不只是启动/受理 |
-| 非法/缺失输入 | 对每个字段的每条已文档化输入规则（允许字符、格式、符号、范围、元数）各一次只破坏它的探测：声明的拒绝、正确状态、且无禁止的状态变更 |
-| 认证/授权 | 有效身份、缺失/无效身份、错误的 owner/角色，以及持久的无副作用边界 |
-| CLI 进程契约 | 精确 exit code、stdout 与 stderr 分开；产生的文件/状态变更 |
-| 状态迁移 | 初始、中间与完成/失败状态及其允许的迁移 |
-| 超时/取消 | deadline、部分状态、自有工作的终止与恢复 |
-| 重试 | 仓库承诺的尝试/退避/终态；无无界重试 |
-| 重复/幂等 | 重复请求/事件与文档化保证下的持久效果数量 |
-| 并发/顺序 | 受控的竞争操作按两种相关完成顺序；最终不变量 |
-| 部分失败恢复 | 在一次效果之后中断、重启/回放，检查完成/死信状态与重复 |
+| Successful execution | Expected return/output and final business effect, not just launch/acceptance |
+| Invalid/missing input | One probe per documented input rule of each field (allowed characters, format, sign, range, arity) breaking only it: declared rejection, correct status and no forbidden state change |
+| Authentication/authorization | Valid identity, missing/invalid identity, wrong owner/role and durable no-effect boundary |
+| CLI process contract | Exact exit code, stdout and stderr separately; resulting file/state changes |
+| State transitions | Initial, intermediate and completed/failed states and their permitted transitions |
+| Timeout/cancellation | Deadline, partial state, termination of owned work and recovery |
+| Retry | Attempts/backoff/terminal state promised by the repository; no unbounded retry |
+| Duplicates/idempotency | Repeated request/event and number of durable effects under the documented guarantee |
+| Concurrency/order | Controlled competing operations in both relevant completion orders; final invariant |
+| Partial-failure recovery | Interrupt after an effect, restart/replay, inspect completion/dead-letter state and duplicates |
 
-不强加普世的 exactly-once 投递。把受理、入队、处理、重试/死信与最终
-效果分开；2xx 不等于完成。预期的拒绝/注入的失败可以通过；缺失的服务
-导致无法执行则阻塞覆盖。
+Do not impose universal exactly-once delivery. Separate acceptance, enqueue, processing,
+retry/dead-letter and final effect; 2xx is not completion. Expected rejection/injected
+failure may pass; a missing service preventing execution blocks coverage.
 
-## 执行并留存证据
+## Execute and retain evidence
 
-1. 应用共享的隔离/许可预检。核验 cwd、命令、环境变量名与安全重置；
-   用合成数据/凭证。
-2. 遵循共享探索循环的顺序与书面检查点。每个探测都检查初始/最终持久
-   状态，分开留存 exit/status 与 stdout/stderr，不掩盖失败。
-3. 超时时保留部分输出/状态，只停止自有工作。记录 setup 错误与未测契
-   约；绝不为掩盖缺失前提而改产品代码。
-4. 记录精确命令或方法/路径/头/体、setup/重置、预期契约/来源、观察到的
-   输出/状态、版本/运行时、证据路径与局限。密钥只按环境变量名引用。
-   披露脱敏造成的回放局限。
-5. 用已安装 QA SKILL.md 相对的
-   `templates/functional-report-template.md`。先保证据再做自有清理，
-   披露残留。不扩大发现权，返回调用方。
+1. Apply the shared isolation/permission preflight. Verify cwd, command, environment
+   NAMES and safe reset; use synthetic data/credentials.
+2. Follow the shared exploratory loop's order and written checkpoints.
+   For every probe, inspect initial/final durable state and retain exit/status and
+   stdout/stderr separately without masking failure.
+3. On timeout, retain partial output/state and stop only owned work. Record setup errors
+   and untested contracts; never patch product code to hide missing prerequisites.
+4. Record exact command or method/path/headers/body, setup/reset, expected contract/source,
+   observed output/state, revision/runtime, evidence paths and limits. Secrets are referenced
+   only by environment name. Disclose replay limits caused by redaction.
+5. Use `templates/functional-report-template.md` relative to the installed QA SKILL.md.
+   Preserve evidence before owned cleanup and disclose leftovers. Return to the caller
+   without expanding discovery authority.

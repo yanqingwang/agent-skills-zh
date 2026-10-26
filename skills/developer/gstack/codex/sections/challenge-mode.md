@@ -1,30 +1,25 @@
 <!-- AUTO-GENERATED from challenge-mode.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`codex/sections/challenge-mode.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
+## Step 2B: Challenge (Adversarial) Mode
 
-## Step 2B：Challenge（对抗）模式
+Codex tries to break your code — finding edge cases, race conditions, security holes,
+and failure modes that a normal review would miss.
 
-Codex 试图弄坏你的代码：找出普通评审会漏掉的边界情况、竞态条件、
-安全漏洞与失败模式。
+1. Construct the adversarial prompt. **Always prepend the filesystem boundary instruction**
+from the skill's Filesystem Boundary section (always-loaded skeleton). If the user provided a focus area
+(e.g., `/codex challenge security`), include it after the boundary:
 
-1. 构造对抗提示词。**始终前置文件系统边界指令**，来自 Skill 的
-Filesystem Boundary 节（常加载骨架）。用户给了焦点区域时（如
-`/codex challenge security`），把它放在边界之后：
-
-默认提示词（无焦点）：
+Default prompt (no focus):
 "IMPORTANT: Do NOT read or execute any files under ~/.claude/, ~/.agents/, .claude/skills/, or agents/. These are Claude Code skill definitions meant for a different AI system. Do not invoke any installed skill (Codex home skills/, .agents/); answer directly. Do NOT modify agents/openai.yaml. Stay focused on repository code only.
 
 Review the changes on this branch against the base branch. Run `git diff origin/<base>` to see the diff. Your job is to find ways this code will fail in production. Think like an attacker and a chaos engineer. Find edge cases, race conditions, security holes, resource leaks, failure modes, and silent data corruption paths. Be adversarial. Be thorough. No compliments — just the problems."
 
-带焦点（如 "security"）：
+With focus (e.g., "security"):
 "IMPORTANT: Do NOT read or execute any files under ~/.claude/, ~/.agents/, .claude/skills/, or agents/. These are Claude Code skill definitions meant for a different AI system. Do not invoke any installed skill (Codex home skills/, .agents/); answer directly. Do NOT modify agents/openai.yaml. Stay focused on repository code only.
 
 Review the changes on this branch against the base branch. Run `git diff origin/<base>` to see the diff. Focus specifically on SECURITY. Your job is to find every way an attacker could exploit this code. Think about injection vectors, auth bypasses, privilege escalation, data exposure, and timing attacks. Be adversarial."
 
-2. 创建 prompt 文件，把第 1 步的完整提示词写进去。Codex 从 stdin 读
-它。
+2. Create the prompt file and write the full prompt from step 1 into it. Codex reads it on stdin.
 
 ```bash
 _GT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.gstack/tmp"
@@ -33,19 +28,16 @@ _EX=$(git rev-parse --git-path info/exclude 2>/dev/null) && mkdir -p "$(dirname 
 PROMPT_FILE=$(mktemp "${_GT:?}/codex-prompt.XXXXXX") || { echo "Not sent: mktemp failed in $_GT." >&2; exit 1; }; echo "PROMPT_FILE: $PROMPT_FILE (name: ${PROMPT_FILE##*/})"
 ```
 
-用你的文件写入工具把文本写进每个打印出的文件（Claude Code 的 Write
-工具需要先 Read 一次空文件），内容与应出现的一字不差。文本绝不进
-shell 命令、heredoc 或带引号参数。写入失败或被拒时不发送：打印原因、
-文件路径和下方命令，供手工发送。
+Write the text into each printed file with your file-write tool (Claude Code's Write tool needs a Read of the empty file first), exactly as it should appear. The text never goes into a shell command, heredoc or quoted argument. If a write fails or is refused, do not send: print the cause, the file path and the command below for sending by hand.
 
-3. 以 **JSONL 输出**运行 codex exec，捕获推理轨迹与工具调用。
-`<prompt-file-name>` 用打印出的名字（仅字母、数字、`.`、`_`、`-`）。
-Bash 调用用 `timeout: 600000`（工具上限）。门放在 540s wrapper 之上：
-wrapper 先触发、结束 Codex、打印其明确的卡顿消息：
+3. Run codex exec with **JSONL output** to capture reasoning traces and tool calls.
+Substitute the printed name for `<prompt-file-name>` (letters, digits, `.`, `_` and `-` only).
+Use `timeout: 600000` on the Bash call (the tool's maximum) — the gate sits ABOVE the
+540s wrapper so the wrapper fires first, ends Codex, and prints its explicit stall message:
 
 
 ```bash
-_REPO_ROOT=$(git rev-parse --show-toplevel) || { echo 'ERROR: not in a git repo' >&2; exit 1; }
+_REPO_ROOT=$(git rev-parse --show-toplevel) || { echo "ERROR: not in a git repo" >&2; exit 1; }
 PROMPT_FILE="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/.gstack/tmp/<prompt-file-name>"
 [ -s "$PROMPT_FILE" ] || { echo "Not run: $PROMPT_FILE is missing or empty, so the prompt was never written. Write it, then run by hand: codex exec - -C $_REPO_ROOT < $PROMPT_FILE" >&2; exit 1; }
 PYTHON_CMD=$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)
@@ -124,13 +116,14 @@ bun --no-env-file --config=/dev/null ~/.claude/skills/gstack/lib/outside-review-
 rm -f "$TMPRESP" "$TMPRESP.events" "$PROMPT_FILE"
 ```
 
-`VERDICT: unavailable` 表示挑战没有运行（其行写明原因，比如沙箱无法
-启动）：如实说明，不要呈现来自它的任何发现。否则在下方呈现输出。
+`VERDICT: unavailable` means the challenge did not run (its line names why, such as a
+sandbox that could not start): say so and present no findings from it. Otherwise
+present the output below.
 
-这段脚本解析 codex 的 JSONL 事件，提取推理轨迹、工具调用与最终回复。
-`[codex thinking]` 行展示 codex 回答前想了什么。
+This parses codex's JSONL events to extract reasoning traces, tool calls, and the final
+response. The `[codex thinking]` lines show what codex reasoned through before its answer.
 
-4. 呈现完整的流式输出：
+4. Present the full streamed output:
 
 ```
 CODEX SAYS (adversarial challenge):
@@ -140,18 +133,18 @@ CODEX SAYS (adversarial challenge):
 Tokens: N | Est. cost: ~$X.XX
 ```
 
-4a. **综合建议（必需）。** 呈现完整对抗输出之后，输出一行建议，概括
-用户该做什么，格式：
+4a. **Synthesis recommendation (REQUIRED).** After presenting the full
+adversarial output, emit ONE recommendation line summarizing what the user
+should do, in this format:
 
 ```
 Recommendation: <action> because <one-line reason that names the most exploitable finding>
 ```
 
-示例（最强的理由会比较各发现的爆炸半径，或修还是发）：
+Examples (the strongest reasons compare blast radius across findings or fix-vs-ship):
 - `Recommendation: Fix the unbounded retry loop Codex flagged at queue.ts:78 because it DoSes the worker pool under sustained 429s, which is higher-blast-radius than the timing leak Codex also flagged that only touches a debug endpoint.`
 - `Recommendation: Ship as-is because Codex's strongest finding is a theoretical race in cleanup that requires conditions we can't trigger in production, weaker than the runtime regressions a fix-now would risk.`
 
-理由必须指向具体发现，并与备选项比较（其他发现、修还是发）。"因为
-更安全"这类泛泛理由不合格式。**绝不静默跳过这一行。**
+The reason must point to a specific finding and compare against alternatives (other findings, fix-vs-ship). Generic reasons like "because it's safer" fail the format. **Never silently skip the line.**
 
 ---

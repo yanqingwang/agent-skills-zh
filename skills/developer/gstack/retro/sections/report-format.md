@@ -1,14 +1,10 @@
 <!-- AUTO-GENERATED from report-format.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`retro/sections/report-format.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
-
-输出按此结构：
+Structure the output as:
 
 ---
 
-**可推特的总结**（第一行，先于一切）：
+**Tweetable summary** (first line, before everything else):
 ```
 Week of Mar 1: 47 commits (3 contributors), 3.2k LOC, 38% tests, 12 PRs, peak: 10pm | Streak: 47d
 ```
@@ -16,49 +12,43 @@ Week of Mar 1: 47 commits (3 contributors), 3.2k LOC, 38% tests, 12 PRs, peak: 1
 ## Engineering Retro: [date range]
 
 ### Summary Table
-（来自 Step 2）
+(from Step 2)
 
 ### Trends vs Last Retro
-（来自 Step 12，保存前加载；无匹配历史则跳过；`compare` 模式即首次
-运行也用所算前序窗口的 **Current vs Prior Period**）。Step 12 产出
-Recommendation 跟进行时一并附上。
+(from Step 12, loaded before save — skip if no matching history; in `compare` mode use **Current vs Prior Period** from the computed prior window even on the first run). Include the Recommendation follow-through line when Step 12 produced one.
 
 ### Time & Session Patterns
-（来自 Step 3-4）
+(from Steps 3-4)
 
-解读全团队模式的叙事：
-- 产出最高的时段是什么时候、由什么驱动
-- 会话随时间变长还是变短
-- 每天活跃编码的估算小时数（团队合计）
-- 值得注意的模式：团队成员同时编码，还是分班？
+Narrative interpreting what the team-wide patterns mean:
+- When the most productive hours are and what drives them
+- Whether sessions are getting longer or shorter over time
+- Estimated hours per day of active coding (team aggregate)
+- Notable patterns: do team members code at the same time or in shifts?
 
 ### Shipping Velocity
-（来自 Step 5-7）
+(from Steps 5-7)
 
-覆盖以下内容的叙事：
-- commit 类型构成及其揭示的信息
-- PR 体量分布及其对发布节奏的揭示
-- fix 链检测（同一子系统上的连续 fix commit）
-- 版本号纪律
+Narrative covering:
+- Commit type mix and what it reveals
+- PR size distribution and what it reveals about shipping cadence
+- Fix-chain detection (sequences of fix commits on the same subsystem)
+- Version bump discipline
 
 ### Code Quality Signals
-- 测试 LOC 占比趋势
-- 热点分析（同一批文件是否反复 churn？）
-- Greptile 信号比与趋势（有历史时）："Greptile: X% signal (Y valid
-  catches, Z false positives)"
+- Test LOC ratio trend
+- Hotspot analysis (are the same files churning?)
+- Greptile signal ratio and trend (if history exists): "Greptile: X% signal (Y valid catches, Z false positives)"
 
 ### Test Health
-- 测试文件总数：N（`TEST_FILES_TOTAL`）
-- 本期变更过的测试文件：M（`TEST_FILES_CHANGED`；不是新增测试用例）
-- 回归测试 commit：列出 `REGRESSION_COMMIT` 行（`test(qa):`、
-  `test(design):` 与 `test: coverage` commit）
-- 既有 retro 含 `test_health` 时显示差值 "Test count: {last} →
-  {now} (+{delta})"
-- 测试占比 < 20% 时标为增长点："100% test coverage is the goal.
-  Tests make vibe coding safe."
+- Total test files: N (`TEST_FILES_TOTAL`)
+- Test files changed this period: M (`TEST_FILES_CHANGED`; not newly added test cases)
+- Regression test commits: list the `REGRESSION_COMMIT` lines (`test(qa):`, `test(design):`, and `test: coverage` commits)
+- If prior retro exists and has `test_health`: show delta "Test count: {last} → {now} (+{delta})"
+- If test ratio < 20%: flag as growth area — "100% test coverage is the goal. Tests make vibe coding safe."
 
 ### Plan Completion
-检查本期 /ship 运行的评审 JSONL 日志中的计划完成数据：
+Check review JSONL logs for plan completion data from /ship runs this period:
 
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
@@ -67,80 +57,71 @@ SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null)
 cat "$GSTACK_STATE_ROOT"/projects/$SLUG/*-reviews.jsonl 2>/dev/null | grep '"skill":"ship"' | grep '"plan_items_total"' || echo "NO_PLAN_DATA"
 ```
 
-retro 时间窗内存在计划完成数据时：
-- 统计带计划发布的分支数（`plan_items_total` > 0 的条目）
-- 计算平均完成率：`plan_items_done` 之和 / `plan_items_total` 之和
-- 数据支持时识别最常被跳过的条目类别
+If plan completion data exists within the retro time window:
+- Count branches shipped with plans (entries that have `plan_items_total` > 0)
+- Compute average completion: sum of `plan_items_done` / sum of `plan_items_total`
+- Identify most-skipped item category if data supports it
 
-输出：
+Output:
 ```
 Plan Completion This Period:
   {N} branches shipped with plans
   Average completion: {X}% ({done}/{total} items)
 ```
 
-没有计划数据时静默跳过本节。
+If no plan data exists, skip this section silently.
 
 ### Focus & Highlights
-（来自 Step 8）
-- 专注度得分及解读
-- 本周之最亮点
+(from Step 8)
+- Focus score with interpretation
+- Ship of the week callout
 
 ### Shipping Streaks
-（来自 Step 11：团队与个人连击，含断连披露）
+(from Step 11: team and personal streaks, including broken-streak disclosure)
 
 ### Shortcut Debt
-（来自 Step 11.5：标记台账与计数，或干净台账声明）
+(from Step 11.5: marker ledger and count, or the clean-ledger statement)
 
-### Your Week（个人深挖）
-（来自 Step 9，仅当前用户）
+### Your Week (personal deep-dive)
+(from Step 9, for the current user only)
 
-这是用户最在意的一节。包含：
-- 其个人 commit 数、LOC、测试占比
-- 其会话模式与高峰时段
-- 其专注领域
-- 其最大产出
-- **做得好的地方**（2-3 件锚定在 commit 上的具体事）
-- **可以更进一步的地方**（1-2 条具体、可执行的建议）
+This is the section the user cares most about. Include:
+- Their personal commit count, LOC, test ratio
+- Their session patterns and peak hours
+- Their focus areas
+- Their biggest ship
+- **What you did well** (2-3 specific things anchored in commits)
+- **Where to level up** (1-2 specific, actionable suggestions)
 
 ### Team Breakdown
-（来自 Step 9，逐队友；单人仓库跳过）
+(from Step 9, for each teammate — skip if solo repo)
 
-对每位队友（按 commit 降序）写一节：
+For each teammate (sorted by commits descending), write a section:
 
 #### [Name]
-- **发布的东西**：2-3 句话讲其贡献、专注领域与 commit 模式
-- **表扬**：1-2 件他们做得好的具体事，锚定在实际 commit 上。要真
-  诚：你在 1:1 里真会说什么？示例：
-  - "用 3 个小而可评审的 PR 清完了整个 auth 模块，教科书式拆解"
-  - "给每个新 endpoint 都加了集成测试，不止 happy path"
-  - "修掉了让仪表盘加载 2 秒的 N+1 查询"
-- **成长机会**：1 条具体的建设性建议。表述为投资，不是批评。示例：
-  - "payment 模块的测试覆盖只有 8%，下一个功能叠上去之前值得先投入"
-  - "多数 commit 集中在一波里，把工作摊开到全天能减少上下文切换的
-    疲劳"
-  - "全部 commit 落在凌晨 1-4 点，长期看可持续的节奏对代码质量很
-    重要"
+- **What they shipped**: 2-3 sentences on their contributions, areas of focus, and commit patterns
+- **Praise**: 1-2 specific things they did well, anchored in actual commits. Be genuine — what would you actually say in a 1:1? Examples:
+  - "Cleaned up the entire auth module in 3 small, reviewable PRs — textbook decomposition"
+  - "Added integration tests for every new endpoint, not just happy paths"
+  - "Fixed the N+1 query that was causing 2s load times on the dashboard"
+- **Opportunity for growth**: 1 specific, constructive suggestion. Frame as investment, not criticism. Examples:
+  - "Test coverage on the payment module is at 8% — worth investing in before the next feature lands on top of it"
+  - "Most commits land in a single burst — spacing work across the day could reduce context-switching fatigue"
+  - "All commits land between 1-4am — sustainable pace matters for code quality long-term"
 
-**AI 协作注记：**大量 commit 带 `Co-Authored-By` AI trailer（如
-Claude、Copilot）时，把 AI 参与占比记为团队指标。中性表述："N% of
-commits were AI-assisted"，不加评判。
+**AI collaboration note:** If many commits have `Co-Authored-By` AI trailers (e.g., Claude, Copilot), note the AI-assisted commit percentage as a team metric. Frame it neutrally — "N% of commits were AI-assisted" — without judgment.
 
 ### Top 3 Team Wins
-选出窗口内全团队影响最大的三件事。每件：
-- 它是什么
-- 谁发布的
-- 为什么重要（产品/架构影响）
+Identify the 3 highest-impact things shipped in the window across the whole team. For each:
+- What it was
+- Who shipped it
+- Why it matters (product/architecture impact)
 
 ### 3 Things to Improve
-具体、可执行、锚定在实际 commit 上。个人与团队层面混合。措辞为
-"to get even better, the team could..."。这些条目会作为 Step 13 快
-照的 `recommendations` 保存，下次 retro 为其打跟进分，所以每条要
-点名一个具体的文件、脚本或检查。
+Specific, actionable, anchored in actual commits. Mix personal and team-level suggestions. Phrase as "to get even better, the team could..." These are the items saved as `recommendations` in the Step 13 snapshot, which the next retro scores for follow-through, so name a concrete file, script or check in each.
 
 ### 3 Habits for Next Week
-小、实用、现实。每条必须是 5 分钟内能养成的习惯。至少一条面向团队
-（如"同一天互审 PR"）。
+Small, practical, realistic. Each must be something that takes <5 minutes to adopt. At least one should be team-oriented (e.g., "review each other's PRs same-day").
 
 ### Week-over-Week Trends
-（如适用，来自 Step 10）
+(if applicable, from Step 10)

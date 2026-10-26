@@ -1,7 +1,7 @@
 ---
 name: guard
 version: 0.1.0
-description: "全面安全模式：破坏性命令警告 + 目录级编辑限制。（gstack）"
+description: "Full safety mode: destructive command warnings + directory-scoped edits. (gstack)"
 triggers:
   - full safety mode
   - guard against mistakes
@@ -38,21 +38,17 @@ hooks:
           command: 'bash -c "exec bash \"$HOME/.claude/skills/gstack/freeze/bin/check-freeze.sh\""'
           statusMessage: "Checking freeze boundary..."
 ---
-
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`guard/SKILL.md` · License: MIT
-> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
-
 <!-- AUTO-GENERATED from SKILL.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
 
-# /guard — 全面安全模式
+# /guard — Full Safety Mode
 
-同时启用破坏性命令警告与目录级编辑限制。这是把 `/careful` + `/freeze` 合并为
-一条命令的组合。
+Activates both destructive command warnings and directory-scoped edit restrictions.
+This is the combination of `/careful` + `/freeze` in a single command.
 
-**依赖说明：** 本 Skill 引用兄弟目录 `/careful` 与 `/freeze` 中的 hook 脚本。两者都必须已安装
-（gstack 的 setup 脚本会将它们一并安装）。
+**Dependency note:** This skill references hook scripts from the sibling `/careful`
+and `/freeze` skill directories. Both must be installed (they are installed together
+by the gstack setup script).
 
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
@@ -60,29 +56,29 @@ mkdir -p "$GSTACK_STATE_ROOT"/analytics
 echo '{"skill":"guard","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "unknown")'"}'  >> "$GSTACK_STATE_ROOT"/analytics/skill-usage.jsonl 2>/dev/null || true
 ```
 
-## 设置
+## Setup
 
-询问用户要把编辑限制到哪个目录。使用 AskUserQuestion：
+Ask the user which directory to restrict edits to. Use AskUserQuestion:
 
-- 问题："Guard 模式：要把编辑限制到哪个目录？破坏性命令警告始终开启。所选路径之外的文件将被禁止编辑。"
-- 文本输入（而非多选），由用户输入路径。
+- Question: "Guard mode: which directory should edits be restricted to? Destructive command warnings are always on. Files outside the chosen path will be blocked from editing."
+- Text input (not multiple choice) — the user types a path.
 
-一旦用户提供了目录路径：
+Once the user provides a directory path:
 
-用共享写入器设置用户选定的边界；它会解析物理绝对路径，并将替换与调查清理串行化：
+Set the user-selected boundary with the shared writer, which resolves a physical absolute path and serializes replacement with investigation cleanup:
 ```bash
 bash "$HOME/.claude/skills/gstack/freeze/bin/freeze-state.sh" set "<user-provided-path>"
 ```
 
-helper 失败时，不要宣称边界已生效。保持状态并报告恢复方式；绝不用直接写入或删除绕过共享写入器。
+On helper failure, do not claim the boundary is active. Preserve the state and report recovery; never bypass the shared writer with a direct write or deletion.
 
-告诉用户：
-- "**Guard 模式已激活。** 现在同时运行两重保护："
-- "1. **破坏性命令守卫** ， rm -rf、DROP TABLE、force-push 等在执行前警告（可覆盖继续）；灾难性形态（递归删除 / 或 ~、向默认分支 force-push）会被硬拒绝"
-- "2. **编辑边界** ， 文件编辑被限制在 `<path>/` 内。该目录之外的编辑将被阻止。"
-- "要移除持久的编辑边界，运行 `/unfreeze`。结束会话会停止其 hook，但不会删除该边界。"
+Tell the user:
+- "**Guard mode active.** Two protections are now running:"
+- "1. **Destructive command guard** — rm -rf, DROP TABLE, force-push, etc. warn before executing (overridable); catastrophic shapes (recursive delete of / or ~, force-push to the default branch) are hard-denied"
+- "2. **Edit boundary** — file edits restricted to `<path>/`. Edits outside this directory are blocked."
+- "To remove the persistent edit boundary, run `/unfreeze`. Ending the session stops its hooks but does not delete that boundary."
 
-## 保护范围
+## What's protected
 
-完整的破坏性命令模式清单与安全例外见 `/careful`。
-编辑边界的执行机制见 `/freeze`。
+See `/careful` for the full list of destructive command patterns and safe exceptions.
+See `/freeze` for how edit boundary enforcement works.

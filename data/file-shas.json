@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "d75f5548bba454f9993b8563797afdb9ea7aa4b2"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "d173763599565029f5266ba28c4f6b7b0ddd35ec"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -37,7 +37,7 @@
     "skills/last30days/SKILL.md": "f443c8123ce1a69b9e7133f61b0a6b442f3b1418"
   },
   "cathrynlavery/diagram-design": {
-    "skills/diagram-design/SKILL.md": "e6162989c378e596983548acb0ba4299c3ba475a"
+    "skills/diagram-design/SKILL.md": "a78a294f0f96e46c830c8b949664ee4bbc3edfd2"
   },
   "blader/humanizer": {
     "SKILL.md": "19fc634208e8cc6ae55d4ff287152583216fd244"
@@ -56,7 +56,12 @@
     "skills/security-review/SKILL.md": "3f26b0df65661425de4e5c40c295e04edcad7a83",
     "skills/continuous-learning-v2/SKILL.md": "397b3d334dd1fdf5d7648dd619b6a744cd4734a5",
     "skills/autonomous-loops/SKILL.md": "b6c64c2af3d52d325a12181888c0dac4fec4fb5e",
-    "skills/strategic-compact/SKILL.md": "134e767151c4b7f039833bf496cdf4f145875c12"
+    "skills/strategic-compact/SKILL.md": "134e767151c4b7f039833bf496cdf4f145875c12",
+    "skills/article-writing/SKILL.md": "9dfa979ca56940e731ebede2c46ec2dca688818e",
+    "skills/content-engine/SKILL.md": "28ddd4e1676f4ea67d34a9d244a94164e088b80e",
+    "skills/market-research/SKILL.md": "b2ddc25b8cbd74056460a7b28e5628ceb9454ac0",
+    "skills/backend-patterns/SKILL.md": "1142d0a51de34808f8493bac40b68aa745dcd80e",
+    "skills/investor-materials/SKILL.md": "82eaba3a95a9d1eb79672addcffb17c1a18faead"
   },
   "virgiliojr94/book-to-skill": {
     "SKILL.md": "aebe394108e76bebdf7b8848eceddc756e844ec4"
@@ -74,18 +79,18 @@
     "SKILL.md": "742deafaf4222f9f0e9d9410e72483dad64fe716"
   },
   "garrytan/gstack": {
-    "office-hours/SKILL.md": "7e925ebf7c8dbaf4b626fd8ef280fc825bbfe082",
-    "plan-ceo-review/SKILL.md": "2324db2f8b2d0ab28fb7e3907d4e31d361487d83",
+    "office-hours/SKILL.md": "779f50df96b7c17c814feda5dd41264ff13e48af",
+    "plan-ceo-review/SKILL.md": "dd1148184994ce6480916092b47cada921d701a1",
     "qa/SKILL.md": "5d4bd506b6a837e49790929cccb13ee31b1742f6",
     "design-review/SKILL.md": "42e10d81dde7cdcbbab719553fabb7dc0f905a6d",
     "health/SKILL.md": "1078ec6d5677392838319abb851390ece2e028bf",
-    "review/SKILL.md": "f319f1669c558f963d9c993ae9c77e209eee9e2e",
+    "review/SKILL.md": "edb01a2c883f73b43099e6e16e1a892c584a5d74",
     "learn/SKILL.md": "9d2626c42a71907b81e9e4cc2adecb0aa42c311b",
     "ship/SKILL.md": "24d4cfafb8c672b0e7e06c3f75852f83fe2e56fa",
     "investigate/SKILL.md": "659937b9f4201781a6b6379fc21e1a387c7530be",
     "retro/SKILL.md": "7f3d287a8583ca30fb3fbd08ae177eb16e3d6fe3",
     "land-and-deploy/SKILL.md": "9c6571b01dd9803c23fc867abe58852e5b2e5145",
-    "plan-eng-review/SKILL.md": "1dd4d34c4cd13f26a85fba363e4ae9a3ee77f6cc",
+    "plan-eng-review/SKILL.md": "834edb8f06308c2b2a8714628b4f8bb9d19cb701",
     "spec/SKILL.md": "da4b6b04c65cb00af3d597eaa5703188116c5fce"
   },
   "Vincentwei1021/video-shotcraft": {
@@ -121,7 +126,9 @@
   },
   "Jeffallan/claude-skills": {
     "skills/code-reviewer/SKILL.md": "63570a367335539d99fb70697f8376095b270b3e",
-    "skills/api-designer/SKILL.md": "63ca1216eca3cc4962caa6ca44d31bc5f1649694"
+    "skills/api-designer/SKILL.md": "63ca1216eca3cc4962caa6ca44d31bc5f1649694",
+    "skills/cloud-architect/SKILL.md": "aba277fd04a882b8b9f21a9daaf84ac88bea5191",
+    "skills/architecture-designer/SKILL.md": "63823d1e24b70043f424b2d910bd37968fb2f9b1"
   },
   "MengTo/Skills": {
     "agent-skills/workflow/workflow-ship-change/SKILL.md": "03140c168d6b8a33b23de342a1e890b026562a37",
@@ -171,7 +178,9 @@
     "browser-act/SKILL.md": "1e0db2ac51c886516adbb3e83b1a8e0f9df911e4"
   },
   "iOfficeAI/OfficeCLI": {
-    "skills/officecli/SKILL.md": "6c299f334a2e004ff5dda05641e75f7ec4453f37"
+    "skills/officecli/SKILL.md": "6c299f334a2e004ff5dda05641e75f7ec4453f37",
+    "skills/officecli-academic-paper/SKILL.md": "ac82aba4476192a69aa2ef79eca44c9ca4554fe1",
+    "skills/morph-ppt/SKILL.md": "2b067539dc334d9917e374afff0b76e96336b9b7"
   },
   "questflowai/investorskills": {
     "skills/buffett/SKILL.md": "57c8d15256549863527def46b43f055396bb4c1e",

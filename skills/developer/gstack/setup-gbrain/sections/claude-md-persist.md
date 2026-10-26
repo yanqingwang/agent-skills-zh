@@ -1,12 +1,8 @@
 <!-- AUTO-GENERATED from claude-md-persist.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`setup-gbrain/sections/claude-md-persist.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
+Find-and-replace (or append) the section. Block format depends on mode:
 
-查找替换（或追加）该节。块格式取决于模式：
-
-### Path 4（远程 MCP）
+### Path 4 (Remote MCP)
 
 ```markdown
 ## GBrain Configuration (configured by /setup-gbrain)
@@ -21,10 +17,11 @@
 - Current repo policy: {read-write|read-only|deny|unset}
 ```
 
-bearer token **绝不**写入 CLAUDE.md（很多项目的 CLAUDE.md 会提交进
-git）。它只存在于 `claude mcp add` 放置它的 `~/.claude.json`。
+The bearer token is **never** written to CLAUDE.md (CLAUDE.md is checked
+in to git in many projects). It lives only in `~/.claude.json` where
+`claude mcp add` placed it.
 
-### Paths 1、2a、2b、3（本地 stdio）
+### Paths 1, 2a, 2b, 3 (Local stdio)
 
 ```markdown
 ## GBrain Configuration (configured by /setup-gbrain)
@@ -37,6 +34,7 @@ git）。它只存在于 `claude mcp add` 放置它的 `~/.claude.json`。
 - Current repo policy: {read-write|read-only|deny|unset}
 ```
 
-这里不要写 `## GBrain Search Guidance` 块。`/sync-gbrain` 是它唯一的
-写入者：只有当其读取检查确认本仓库的代码索引能应答之后它才写该块，
-并替换同一标题下的旧块。Step 10 会提议运行 `/sync-gbrain`。
+Do not write a `## GBrain Search Guidance` block here. `/sync-gbrain` is its
+only writer: it writes the block after its read check confirms this repo's
+code index answers, and replaces any older block under the same heading.
+Step 10 offers to run `/sync-gbrain`.

@@ -1,10 +1,6 @@
 <!-- AUTO-GENERATED from apple-release.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`ship/sections/apple-release.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
-
-# Apple App Store 发布
+# Apple App Store release
 
 <!-- Ported from time-attack/gstack (GStack 2) APPLE-RELEASE.md, refined
      across 21 live App Store releases. Portions copyright (c) 2026
@@ -13,243 +9,90 @@
      contract, and an idempotency log in place of the fork's durable-state
      wrapper. All credential examples are placeholders, never live formats. -->
 
-发布目标是 Apple 平台应用时适用：仓库含 `.xcodeproj` 或
-`.xcworkspace`，或带 app 产物的 Swift package。在 Step 1 的分支门与
-任何预检之前读本节。本适配器把 ship 的判断力延伸到 App Store 全旅程，
-每次上传或提交都按持久外部效果对待（下文的幂等契约）；但商店分发是
-它自己的发布路径，不是仓库落地：ship 的分支/PR 仪式（feature 分支
-门、commit-review-PR 流水线、合并队列）仅在用户要求落地仓库改动时适
-用。发布到 App Store 或 TestFlight 的用户从所在分支直接走本适配器；
-base 分支上的干净工作树是归档与上传的正常有效状态。绝不为分支拓扑
-中止 App Store 发布。
+Applies when the ship target is an Apple platform app: the repository contains an `.xcodeproj` or `.xcworkspace`, or a Swift package with an app product. Read this BEFORE Step 1's branch gate and any preflight. This adapter extends ship's judgment to the App Store journey end to end, and every upload or submission is treated as a durable external effect (idempotency contract below) — but store distribution is its own release path, not repository landing: ship's branch/PR ceremony (feature-branch gate, commit-review-PR pipeline, merge queue) applies only when the user asked to land repository changes. A user shipping to the App Store or TestFlight proceeds through this adapter from whatever branch they are on; a clean working tree on the base branch is a normal and valid state to archive and upload from. Never abort an App Store release over branch topology.
 
-**文档预检：** 归档/上传/提交之前，Read
-`~/.claude/skills/gstack/ship/sections/documentation.md` 并对其审计门
-以 `read-only` 模式在选定发布源上执行，base 分支上也要。本审计不授
-权任何源码编辑、改变状态的 Git 操作或仓库落地仪式。分发之前解决阻塞
-项或取得显式点名的文档风险例外；在最终商店发布报告里写明
-`updated`/`current`/`blocked` 与任何例外。此指针不改变下文的 App
-Store 权限。
+**Documentation preflight:** Before archive/upload/submission, Read `~/.claude/skills/gstack/ship/sections/documentation.md` and execute its audit gate in `read-only` mode against the selected release source, including on the base branch. No source edits, Git operations that mutate state, or repository-landing ceremony are authorized by this audit. Resolve blockers or obtain an explicit named documentation-risk exception before distribution; include `updated`/`current`/`blocked` and any exception in the final store-release report. This pointer changes no App Store permissions below.
 
-一个工具跑完整场发布：机器级 fastlane。`produce`（应用记录与 bundle
-ID）、`cert` 与 `sigh`（签名）、`gym`（归档与签名导出）、`pilot`
-（TestFlight）、`deliver`（元数据、截图、提交审核）、`frameit`（设备
-边框）。缺失时安装（`brew install fastlane`），一行宣布，不发问；发
-布授权涵盖机器工具安装。绝不安装其他 App Store CLI 工具，运行期间绝
-不向用户提及 API key、`.p8` 文件、会话或任何凭证格式；唯一例外是收尾
-报告里一行常设凭证披露（见"商店收尾"），点名发布创建的持久 key，
-让用户之后可以吊销。他们付了 99 美元是要发布的，发布本身不给用户项
-目添新依赖。
+One tool runs the entire release: machine-level fastlane — `produce` (app record and bundle ID), `cert` and `sigh` (signing), `gym` (archive and signed export), `pilot` (TestFlight), `deliver` (metadata, screenshots, Submit for Review), `frameit` (device frames). Install it when missing (`brew install fastlane`) with a one-line announcement, not a question — the release authorization covers machine-tool installs. Never install additional App Store CLI tools, and never mention API keys, `.p8` files, sessions, or any credential format to the user DURING the run — the sole exception is the one-line standing-credential disclosure in the closing report (see Storefront completion), which names the durable key the release created so the user can revoke it later; they paid US$99 and want to ship, and the release itself adds no new dependency to the user's project.
 
-只有构建环节需要 Mac。归档、签名与二进制上传走 Xcode 仅限 macOS 的
-工具链，Apple 没有在别处提供，也没有工具能绕开。非 macOS 宿主上如
-实说明，然后只把这几个环节路由到 macOS CI runner（GitHub Actions
-的 `macos` runner 执行同样的 `gym` 与 `deliver`/`pilot` 命令，铸出的
-上传 key 作为 CI secret 提供；key 认证正是 CI 想要的）；登录、key
-铸造、元数据、截图、定价与提交判断是普通 API 工作，留在用户机器上。
-绝不声称整场发布离开 Mac 不可能，也绝不假装构建环节在那里可行。
+A Mac is required only for the build legs. Archiving, signing, and the binary upload ride Xcode's macOS-only toolchain — Apple ships it nowhere else, and no tool routes around that. On a non-macOS host, say so plainly, then route exactly those legs through a macOS CI runner (a GitHub Actions `macos` runner executing the same `gym` and `deliver`/`pilot` commands, with the minted upload key supplied as a CI secret — key auth is precisely what CI wants); sign-in, key minting, metadata, screenshots, pricing, and submission judgment are plain API work that stays on the user's machine. Never claim the whole release is impossible off a Mac, and never pretend the build leg is possible there.
 
-## 唯一的授权时刻
+## The one authorization moment
 
-计划两次例行交互。真正的阻塞可能需要安全或点名的文档风险决策；为
-那个决策 STOP，而不是把发布授权当豁免。
+Plan for two routine interactions. A genuine blocker may require a safety or named documentation-risk decision; STOP for that decision rather than treating release authorization as a waiver.
 
-第一，开场：确认用户持有付费 Apple Developer Program 会员（99 美元/
-年，App Store 与 TestFlight 都要求）并授权发布。
+FIRST, up front: confirm the user holds a paid Apple Developer Program membership (US$99/year — the App Store and TestFlight both require it) and authorize the release.
 
-定价归入同一口气，每个应用只此一次：先查决策存储
-（`bin/gstack-decision-search --scope repo --query "pricing"`），然
-后把免费还是付费（付费则价格）放进授权问题里问，绝不作为单独的打
-断；把答案持久化
-（`~/.claude/skills/gstack/bin/gstack-decision-log`，scope `repo`），
-之后的发布不再重问。付费答案要在当场诚实点名一次性的 Paid Apps 银
-行/税务协议，因为它没签就什么都卖不了。价格是发布决策，agent 绝不
-静默默认：免费发布无法撤销。
+Pricing belongs to this same breath, once per app EVER: ask free or paid (and the price if paid) inside the authorization question — never as a separate interruption — after checking the decision store (`bin/gstack-decision-search --scope repo --query "pricing"`); persist the answer (`~/.claude/skills/gstack/bin/gstack-decision-log`, scope `repo`) so no later release re-asks, and a paid answer names the one-time Paid Apps banking/tax agreement honestly right there, since nothing sells until it is signed. Price is a launch decision the agent never defaults silently: a free launch cannot be un-launched.
 
-Apple 登录发生在同一时刻：经宿主的交互命令路径跑
-`fastlane spaceauth -u <apple-id>`（Claude Code 里用户输入
-`! fastlane spaceauth -u <email>`，密码与一次双因子码在会话内直达
-Apple；仅当宿主没有交互路径时才退到单独终端窗口）。打印出的会话
-token 不进 transcript；`~/.fastlane/spaceship/` 里的缓存 cookie 才是
-fastlane 真正用的凭证。密码与 token 绝不存储、回显或记录；会话过期
-就重跑同一条命令。
+Apple sign-in happens inside this same moment: run `fastlane spaceauth -u <apple-id>` through the host's interactive command path (in Claude Code, the user types `! fastlane spaceauth -u <email>` so their password and one two-factor code go directly to Apple in-session; a separate terminal window is the fallback only when the host has no interactive path). Keep the printed session token out of the transcript — the cached cookie in `~/.fastlane/spaceship/` is the credential fastlane actually uses; never store, echo, or log the password or token, and re-run the same one command when the session expires.
 
-首次登录之后立即从会话铸造永久上传 key（"归档与上传"第 4 步）；该
-key 已在 `~/.gstack/apple/api-key.json` 且不需要新应用记录时，整个
-跳过登录：重复发布零登录完成授权与执行。
+Immediately after the first sign-in, mint the permanent upload key from the session (step 4 of Archive and upload) — when that key already sits at `~/.gstack/apple/api-key.json` and no new app record is needed, skip the sign-in entirely: repeat releases authorize and proceed with zero sign-in.
 
-第二，仅当预检发现图标或截图缺失：下方的商店素材问题。
+SECOND, only when preflight finds the icon or screenshots missing: the store-assets question below.
 
-阻塞清除后，工具安装、上传、商店与提交都在授权覆盖内，不再发问。授
-权菜单、工具选择题、计划确认与逐步旁白请求都是契约违规。
+After blockers clear, tool installs, upload, storefront and submission are covered by the authorization and proceed without asking. Auth menus, tool-choice questions, plan confirmations, and step-by-step narration requests are contract violations.
 
-无会员：STOP App Store 路径。提议经 Third-Party Web Actions 契约
-（本 Skill 更早处）陪同走 developer.apple.com 注册（由用户自己完成
-购买；激活可能要一两天），并诚实点名免费账户的天花板：仅能在用户自
-己的设备上做个人团队安装，7 天后过期，无 TestFlight、无 App Store。
+No membership: STOP the App Store path. Offer to walk enrollment at developer.apple.com through the Third-Party Web Actions contract (earlier in this skill) (a purchase the user completes themselves; activation can take a day or two), and name the free-account ceiling honestly: personal-team installs on the user's own devices only, expiring after 7 days, no TestFlight, no App Store.
 
-## 发布预检
+## Release preflight
 
-归档之前解析并验证。打印出的变更边界授权之内的就修；其余报告为阻塞
-发现。
+Resolve and verify before archiving. Fix what the printed mutation boundary authorizes; report everything else as a blocking finding.
 
-- 签名：app target 上的开发团队；无既有证书时 `cert` 与 `sigh` 铸造
-  分发证书与 App Store 描述文件。
-- 版本：用户可见的营销版本，以及严格大于该版本已上传过的任何构建的
-  构建号。
-- 依赖：`xcodebuild -resolvePackageDependencies` 成功；存在
-  `Podfile` 或 `Cartfile` 时其安装步骤已跑、lockfile 为最新。
-- App Store 校验阻塞项：完整的应用图标集（含 1024pt 营销图标）、
-  启动屏、应用触碰的每个隐私受限 API 的用途描述串、必需的隐私清单、
-  出口合规答案（`ITSAppUsesNonExemptEncryption`）、合理的部署目标。
+- Signing: development team on the app target; `cert` and `sigh` mint the distribution certificate and App Store profile when none exist.
+- Versioning: a marketing version users should see and a build number strictly greater than any build already uploaded for that version.
+- Dependencies: `xcodebuild -resolvePackageDependencies` succeeds; if a `Podfile` or `Cartfile` exists, its install step has been run and lockfiles are current.
+- App Store validation blockers: complete app icon set including the 1024pt marketing icon, launch screen, a usage-description string for every privacy-gated API the app touches, required privacy manifests, an export-compliance answer (`ITSAppUsesNonExemptEncryption`), and a sane deployment target.
 
-## 商店素材
+## Store assets
 
-仅当预检发现图标或截图缺失时问一次，全程第二次也是最后一次允许的问
-题，之后按选择执行不再提示。每个应用只此一次：问之前先查决策存储
-（`bin/gstack-decision-search --scope repo --query "store assets"`）；
-已定的选择（包括"推迟截图"或"仅 TestFlight"）静默应用，绝不重问。
-用户答复后持久化
-（`~/.claude/skills/gstack/bin/gstack-decision-log`，scope `repo`），
-之后的运行不再问；用户改主意靠说出口，不靠被反复追问。提供：
+Only when preflight finds the icon or screenshots missing, ask once — the journey's second and final permitted question — then act on the choice without further prompts. Once per app, EVER: before asking, check the decision store (`bin/gstack-decision-search --scope repo --query "store assets"`); a settled choice (including "defer screenshots" or "TestFlight only") is applied silently, never re-asked. After the user answers, persist it (`~/.claude/skills/gstack/bin/gstack-decision-log` with scope `repo`) so no future run asks again; the user changes it by saying so, not by being re-prompted. Offer:
 
-- **应用图标**：SnapAI（`npx snapai`，应用图标 agent skill）用用户自
-  己的图像生成 key 生成单张 1024×1024；Xcode 15+ 从这一张派生全部
-  尺寸。
-- **营销截图，免费本地无 API key**：app-store-screenshots deck 编辑
-  skill。搭好脚手架，用模拟器截图与利益点标题预填其 deck JSON，导出
-  覆盖全部必需 iPhone 尺寸的一套（导出可无头自动化）。营销级不要求
-  图像后端；该 skill 在装时就绝不声称截图需要 API key。
-- **朴素边框，免费本地**：模拟器里截取构建好的应用并用 fastlane
-  `frameit` 加框；不想要设计感 deck 时的最小选项。
-- **AI 增强营销截图**：aso-appstore-screenshots agent skill（利益点
-  标题、拆分面板、精确 App Store 尺寸）；唯一需要用户自己图像生成
-  key 的选项；在装时遵循其工作流，不重新实现。
-- **用户自带文件**：永远是有效答案；校验尺寸后继续。
+- **App icon**: SnapAI (`npx snapai`, the app-icon agent skill) generates the single 1024×1024 with the user's own image-generation key; Xcode 15+ derives every size from that one image.
+- **Marketing screenshots, free and local, no API key**: the app-store-screenshots deck editor skill — scaffold it, prefill its deck JSON with simulator captures and benefit headlines, and export one bundle covering every required iPhone size (the export is headlessly automatable). Marketing-grade does NOT require an image backend; never claim screenshots need an API key while this skill is installed.
+- **Plain frames, free and local**: capture the built app in the simulator and frame with fastlane `frameit` — the minimal option when no designed deck is wanted.
+- **AI-enhanced marketing screenshots**: the aso-appstore-screenshots agent skill (benefit headlines, breakout panels, exact App Store dimensions) — the only option that needs the user's own image-generation key; when installed, follow its workflow rather than reimplementing it.
+- **User-supplied files**: always a valid answer; validate dimensions and move on.
 
-提问时基于对已装 skill 的**实时**检查构建选项，绝不凭记忆或更早的对
-话轮。app-store-screenshots deck 编辑 skill 在装时，其免费无 key 选
-项必须出现在列表里；漏掉它等同于声称截图需要 API key，是契约违规。
-素材已齐则整节跳过。退出时宣布生成了什么。
+Build this question's options from a LIVE check of installed skills at ask time — never from memory or an earlier conversation turn. Whenever the app-store-screenshots deck editor skill is installed, its free no-key option MUST appear in the list; omitting it is a contract violation equal to claiming screenshots need an API key. Assets already present skip this entirely. Announce what was generated at exit.
 
-## 归档与上传
+## Archive and upload
 
-1. 用 `gym` 归档并导出签名的 Release 构建（它驱动 xcodebuild 与预检
-   铸好的签名）。有自定义归档要求的项目可直接落
-   `xcodebuild archive`；两条路产物都是 App Store 签名的 `.ipa`。
-2. 上传是外部效果：在持久效果契约下跑 `pilot`（TestFlight）或
-   `deliver`（App Store）：执行前把 key
-   `appstore.upload.<bundle-id>.<build>` 追加到
-   `$GSTACK_STATE_ROOT/projects/$SLUG/apple-effects.log`（在同一
-   条读/追加命令里解析状态根与 slug）；key 已在（崩溃、重试）则视
-   上传为可能已完成，绝不重跑。歧义时绝不再上传；先查 App Store
-   Connect 上的构建。
-3. 缓存会话、铸出的 key 与每个凭证文件都是 env 或文件级密钥：绝不进
-   argv、绝不回显、绝不提交。
-4. 绝不索要 app 专用密码：会话自己铸造上传 key。
+1. Archive and export the signed Release build with `gym` (it drives xcodebuild and the signing minted in preflight). Projects with custom archive requirements may drop to `xcodebuild archive` directly; the output either way is an App Store-signed `.ipa`.
+2. The upload is an external effect: run `pilot` (TestFlight) or `deliver` (App Store) under the durable-effect contract: before executing, append the key `appstore.upload.<bundle-id>.<build>` to `$GSTACK_STATE_ROOT/projects/$SLUG/apple-effects.log` (resolve the state root and slug in the same command that reads or appends it); if the key is already present from a prior run (crash, retry), treat the upload as possibly-done and do NOT re-run it. Never re-upload on ambiguity; inspect App Store Connect for the build first.
+3. The cached session, the minted key, and every credential file are env- or file-level secrets: never argv, never echoed, never committed.
+4. NEVER demand an app-specific password — the session MINTS the upload key instead.
 
-   按 fastlane 文档化的认证方式，Apple 的二进制上传工具
-   （iTMSTransporter，`deliver`/`pilot` 上传 `.ipa` 时 shell 调用它）
-   不接受 web 会话：只收 App Store Connect API key 或 app 专用密码，
-   Apple 的错误 `-22938`（"Sign in with the app-specific password"）
-   就是 Transporter 在说这件事。
+   Per fastlane's documented authentication, Apple's binary-upload tool (iTMSTransporter, which `deliver`/`pilot` shell out to for the `.ipa`) does not accept the web session: it takes only an App Store Connect API key or an app-specific password, and Apple's error `-22938` ("Sign in with the app-specific password") is Transporter saying exactly this.
 
-   那不是门也不是问题，因为 web 会话自己静默创建 key：经 fastlane
-   内置的 spaceship（`Spaceship::Tunes.login(<apple-id>)` 复用缓存
-   cookie，然后走原始客户端请求），
-   `POST https://appstoreconnect.apple.com/iris/v1/apiKeys`，JSON:API
-   请求体限定在本次发布的应用而非全部：
-   `{data:{type:"apiKeys",attributes:{nickname:"gstack-upload",allAppsVisible:false,roles:["APP_MANAGER"],keyType:"PUBLIC_API"},relationships:{apps:{data:[{type:"apps",id:"<asc-app-id>"}]}}}}`，
-   其中 `<asc-app-id>` 是 App Store Connect 应用 id（来自 `produce`
-   的输出，或
-   `GET https://appstoreconnect.apple.com/iris/v1/apps?filter[bundleId]=<bundle-id>`）。
+   That is not a gate and not a question, because the web session creates the key itself, silently: through fastlane's bundled spaceship (`Spaceship::Tunes.login(<apple-id>)` reuses the cached cookie, then raw client requests), `POST https://appstoreconnect.apple.com/iris/v1/apiKeys` with a JSON:API body SCOPED to the app being released, not all apps: `{data:{type:"apiKeys",attributes:{nickname:"gstack-upload",allAppsVisible:false,roles:["APP_MANAGER"],keyType:"PUBLIC_API"},relationships:{apps:{data:[{type:"apps",id:"<asc-app-id>"}]}}}}`, where `<asc-app-id>` is the App Store Connect app id (from `produce`'s output, or `GET https://appstoreconnect.apple.com/iris/v1/apps?filter[bundleId]=<bundle-id>`).
 
-   `allAppsVisible:false` 加显式 `apps` 关系是有意的最小权限：
-   `allAppsVisible:true` 的 APP_MANAGER key 是对团队每个应用的常设权
-   限，机器日后失守时是无谓的爆炸半径。`apps` 关系是必需而非可选：
-   无应用关联的 key 什么也看不到，上传会报权限错误，所以把范围定到
-   目标应用，而不是只翻 flag。
+   `allAppsVisible:false` with an explicit `apps` relationship is least-privilege on purpose — an `allAppsVisible:true` APP_MANAGER key is standing authority over every app on the team, a needless blast radius if the machine is later compromised. The `apps` relationship is REQUIRED, not optional: a key with no app association can see nothing and uploads fail with a permissions error, so scope it to the target app rather than flipping the flag alone.
 
-   应用记录存在后才铸造（新应用因此先跑 `produce`）。
+   Mint it only after the app record exists (so `produce` runs first when the app is new).
 
-   然后
-   `GET .../iris/v1/apiKeys/<id>?fields[apiKeys]=privateKey`：
-   `privateKey` 属性是完整 PEM 文件的 base64：恰好解码一次，立即写
-   `~/.appstoreconnect/private_keys/AuthKey_<id>.p8`（0600），它只在
-   创建时可供下载。issuer ID 来自
-   `GET https://appstoreconnect.apple.com/olympus/v1/session` 的
-   `provider.publicProviderId`。
+   Then `GET .../iris/v1/apiKeys/<id>?fields[apiKeys]=privateKey` — the `privateKey` attribute is base64 of the COMPLETE PEM file: decode it exactly once and write `~/.appstoreconnect/private_keys/AuthKey_<id>.p8` (0600) immediately, it is downloadable only at creation. The issuer ID is `provider.publicProviderId` from `GET https://appstoreconnect.apple.com/olympus/v1/session`.
 
-   把 key id、issuer id 与 key 内容记为 fastlane api-key JSON，存
-   `~/.gstack/apple/api-key.json`（0600），此后 `deliver`/`pilot` 一律
-   用 `api_key_path`。
+   Record key id, issuer id, and key content as a fastlane api-key JSON at `~/.gstack/apple/api-key.json` (0600) and run `deliver`/`pilot` with `api_key_path` from then on.
 
-   该 key 永不过期，所以同一应用的后续发布全部免登录；发布另一个应用
-   时把该应用关联到 key 上（`PATCH .../iris/v1/apiKeys/<id>` 加入
-   `apps` 关系）或另铸一把应用限定的 key，因为 key 有意不做全应用。
-   会话只在 `produce`（Apple 公开 API 建不了应用记录）、重新关联、
-   key 被吊销后重铸时仍然需要。
+   The key never expires, so every later release of the SAME app skips sign-in; releasing a DIFFERENT app re-associates that app onto the key (`PATCH .../iris/v1/apiKeys/<id>` adding it to the `apps` relationship) or mints a fresh app-scoped key, because the key is deliberately not all-apps. The session stays necessary only for `produce` (Apple's public API cannot create app records), for that re-association, and for re-minting if the key is ever revoked.
 
-   key 铸造尚未尝试就声称用户必须自己生成任何凭证，是契约违规。
+   Stating that the user must generate any credential themselves while key minting is untried is a contract violation.
 
-   碰凭证之前先给错误分类：只有错误明说（401/403、会话无效或过期、
-   Apple 原文的"sign in"、"app-specific password"）才是认证失败。
-   `Spaceship::UnexpectedResponse`、属性缺失/无效、校验或预检错误是
-   元数据问题：修载荷（例如 Apple 扩展的年龄分级属性
-   `lootBox`、`ageAssurance`、`parentalControls`、`messagingAndChat`，
-   在 `app_rating_config.json` 里）并从 CLI 重试。把元数据错误当成凭
-   证问题处理是契约违规。
-5. Apple 发布范围内，本适配器覆盖 Third-Party Web Actions 契约（本
-   Skill 更早处）：通用的 agent 浏览器提议绝不适用于此处的 App
-   Store Connect、Apple ID 或凭证工作。整场发布就是 CLI（fastlane）
-   加上述例行交互与阻塞决策；本适配器允许的唯一浏览器使用，永远只有
-   文末点名的付费应用协议/银行/税务残留。为此旅程中的任何其他事情
-   打开浏览器，无论谁驱动，都是契约违规。
+   CLASSIFY the error before touching credentials: an error is an authentication failure ONLY when it says so (401/403, session invalid or expired, "sign in", "app-specific password" in Apple's own words). A `Spaceship::UnexpectedResponse`, missing/invalid attribute, validation, or precheck error is a METADATA problem — fix the payload (for example, Apple's expanded age-rating attributes such as `lootBox`, `ageAssurance`, `parentalControls`, `messagingAndChat` in `app_rating_config.json`) and retry from the CLI. Treating a metadata error as a credential problem is a contract violation.
+5. Within an Apple release, this adapter OVERRIDES the Third-Party Web Actions contract (earlier in this skill): the general agentic-browser offer never applies to App Store Connect, Apple ID, or credential work here. The entire release is CLI (fastlane) plus the routine interactions and blocking decisions above; the ONLY browser use this adapter allows, ever, is the paid-app agreements/banking/tax residue named at the end of this document. Opening a browser — driven or manual — for anything else in this journey is a contract violation.
 
-   真实错误确实逼出兜底时，先逐字引用错误，然后按此顺序升级：第一，
-   按第 4 步从会话铸造（或重铸）上传 key，带 `api_key_path` 重试上
-   传；磁盘无 key 的上传认证错误说明铸造被跳过，不是用户欠一个凭
-   证。
+   When a real error does force the fallback, QUOTE the error verbatim, then escalate in this order: FIRST mint (or re-mint) the upload key from the session per step 4 and retry the upload with `api_key_path` — an upload-auth error with no key on disk means the mint was skipped, not that the user owes a credential.
 
-   第二，铸造本身因会话错误失败时，请用户重新登录（与最初授权相同的
-   `! fastlane spaceauth -u <apple-id>` 时刻），重铸，重试。
+   SECOND, if the minting itself fails with a session error, ask the user to sign in again (the same `! fastlane spaceauth -u <apple-id>` moment as the original authorization), re-mint, and retry.
 
-   只有全新会话仍铸不出 key 时，即登录的 Apple ID 在其团队不是
-   Admin 或 Account Holder 的权限拒绝，app 专用密码路径才打开，且
-   唯一形态是自助：用户在任意设备生成密码，经宿主会话内的掩码提示
-   输入 macOS 钥匙串（`fastlane fastlane-credentials add --username
-   <apple-id>`），然后重试上传。
+   Only when a FRESH session still cannot mint a key — a permissions refusal because the signed-in Apple ID is not Admin or Account Holder on its team — does the app-specific-password path open, and its only shape is self-service: the user generates the password on any device and enters it through the host's in-session masked prompt into the macOS keychain (`fastlane fastlane-credentials add --username <apple-id>`), then the upload is retried.
 
-   绝不提供或建议用浏览器驱动创建凭证：任何 agent 浏览器、任何密
-   码、key 或 token、任何说法都不行。
-6. App Review 联系信息（姓名、邮箱、电话）是提交的必需元数据：从已
-   登录的 Apple ID 与 git config 推断姓名与邮箱，在授权时刻一次性收
-   集电话号码，存进决策存储，永不重问。联系信息是元数据，不是运行
-   中途要宣布的阻塞门。
+   NEVER offer or recommend a browser drive to create credentials — no agentic browser of any kind, for any password, key, or token, under any framing.
+6. App Review contact details (name, email, phone) are required metadata for submission: infer name and email from the signed-in Apple ID and git config, collect the phone number once inside the authorization moment, persist it to the decision store, and never re-ask. Contact details are metadata, not a blocking gate to announce mid-run.
 
-## 商店收尾
+## Storefront completion
 
-`produce` 在运行中已建好应用记录与 bundle ID：绝不把应用记录称作手
-动门。在授权时刻定下的价格经 App Store Connect 价格计划端点落实
-（经会话或铸好的 key `POST /v1/appPriceSchedules`）：fastlane 的
-`price_tier` 选项对现行 API 是坏的（"'prices' is not a relationship
-on 'apps'"），绝不经它路由定价，也不把它的失败说成账户问题。
-`deliver` 负责商店页面所需的其他一切：描述、关键词、本地化、按设备
-尺寸上传截图、挂接已上传的构建、提交审核；用户要求中间轮时 `pilot`
-管理 TestFlight 组与测试者。提交遵循同一持久效果契约，key 为
-`appstore.submit.<bundle-id>.<version>`；歧义时先查 App Store
-Connect 再重跑。之后从 CLI 监控审核状态。
+`produce` already created the app record and bundle ID during the run — never call the app record a manual gate. Apply the pricing settled in the authorization moment through the App Store Connect price-schedule endpoint (`POST /v1/appPriceSchedules` via the session or the minted key): fastlane's `price_tier` option is broken against the current API ("'prices' is not a relationship on 'apps'"), so never route pricing through it or call its failure an account problem. `deliver` owns everything else the store listing needs: description, keywords, localizations, screenshot upload per device size, attaching the uploaded build, and Submit for Review; `pilot` manages TestFlight groups and testers as an intermediate round when the user asked for one. Submission follows the same durable-effect contract with key `appstore.submit.<bundle-id>.<version>` — on ambiguity, inspect App Store Connect before re-running. Monitor review status from the CLI afterward.
 
-永远只剩 web 的事：付费 Apple Developer Program 会员购买本身（前提，
-不是发布步骤），以及仅付费应用的一次性 Paid Apps 协议（银行与税
-务）；对这两件事在任何手工清单之前，按 Third-Party Web Actions 契
-约提议 agent 浏览器陪同。免费应用全程不需要浏览器。提交后报告
-App Review 通常一两天内答复，然后收尾；审核结果不是本工作流能 hold
-住的门。在**同一份**收尾报告里披露发布创建的持久凭证，一行，每次运
-行一次："This created an App Store Connect API key (`gstack-upload`,
-scoped to this app) that persists for future releases; revoke it
-anytime at App Store Connect → Users and Access → Integrations, or
-delete `~/.gstack/apple/api-key.json` locally."这是本适配器开头
-"运行中不谈凭证"规则有意的例外：否则用户永远不会知道自己的账户与
-磁盘上多了一个常设凭证，它也就永远进不了他们的吊销清单。退出时披
-露，不是运行中的提问，唯一授权时刻的契约因此成立。
+What remains web-only, ever: the paid Apple Developer Program membership purchase itself (a precondition, not a release step) and, for PAID apps only, the one-time Paid Apps agreement with banking and tax — offer the agentic-browser drive per the Third-Party Web Actions contract (earlier in this skill) before any manual checklist for those. A free app needs no browser at any point. After submission, report that App Review typically answers within a day or two and close the run; review outcome is not a gate this workflow can hold open. In that SAME closing report, disclose the durable credential the release created — one line, once per run: "This created an App Store Connect API key (`gstack-upload`, scoped to this app) that persists for future releases; revoke it anytime at App Store Connect → Users and Access → Integrations, or delete `~/.gstack/apple/api-key.json` locally." This is the deliberate exception to the mid-run no-credential-talk rule in this adapter's opening section: the user is otherwise never told a standing credential now exists on their account and on disk, so it never reaches their revocation checklist. Disclosure at exit, not a mid-run question, so the one-authorization-moment contract holds.

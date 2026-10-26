@@ -1,13 +1,9 @@
 <!-- AUTO-GENERATED from tasks-aggregator.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`autoplan/sections/tasks-aggregator.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
+## Implementation Tasks aggregator
 
-## Implementation Tasks 聚合器
-
-渲染下方 Final Approval Gate 输出块之前，先聚合各评审 Skill 写出的
-逐阶段任务清单。
+Before rendering the Final Approval Gate output block below, aggregate the
+per-phase task lists each review skill wrote.
 
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
@@ -61,14 +57,15 @@ else
 fi
 ```
 
-在下方 Final Approval Gate 输出模板的
-`### Implementation Tasks (aggregated across phases)` 节中渲染聚合出的
-markdown：打印消息之前在运行时替换 `$AGGREGATED_TASKS`（上方的 bash
-变量）；它不是 gen-skill-docs 的占位符。
+In the Final Approval Gate output template below, render the aggregated markdown
+in the `### Implementation Tasks (aggregated across phases)` section: substitute
+`$AGGREGATED_TASKS` (the bash variable above) at runtime before printing the
+message; it is not a gen-skill-docs placeholder.
 
-`$AGGREGATED_TASKS` 为空时（没找到 JSONL 文件，本会话没有任何评审
-Skill 跑过），渲染：
+If `$AGGREGATED_TASKS` is empty (no JSONL files found — none of the review
+skills ran in this session), render:
 
 `_No per-phase task lists found in $TASKS_DIR for branch $BRANCH. Each review
 skill writes its own; if you ran one of them but no list appears here, check
 that jq is installed and the tasks-<phase>-*.jsonl files exist._`
+

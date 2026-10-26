@@ -1,49 +1,44 @@
 <!-- AUTO-GENERATED from review-sections.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`plan-devex-review/sections/review-sections.md` · License: MIT
-> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
-> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
+## Review Sections (8 passes, after Step 0 is complete)
 
-## 评审章节（8 个 pass，Step 0 完成之后）
+**Anti-skip rule:** Never condense, abbreviate, or skip any review pass (1-8) regardless of plan type (strategy, spec, code, infra). Every pass in this skill exists for a reason. "This is a strategy doc so DX passes don't apply" is always wrong — DX gaps are where adoption breaks down. If a pass genuinely has zero findings, say "No issues found" and move on — but you must evaluate it.
 
-**反跳过规则：**无论计划类型（战略、规格、代码、基础设施），绝不压缩、缩写
-或跳过任何评审 pass（1-8）。本 Skill 的每个 pass 都有存在理由。"这是战略文
-档，所以 DX pass 不适用"永远是错的：DX 缺口正是采纳崩掉的地方。某 pass 确实
-零发现就说"未发现问题"继续，但你必须评估它。
+**Anti-shortcut clause:** Evaluate every section and outside voice finding through the decision gate below. The plan records the interactive review; writing findings into it never substitutes for approval. Ask once per new or reopened independent decision, wait for the actual answer, and apply only its accepted scope. Necessary code, tests and docs for an exact previously selected contract do not reopen it: cite that selected answer and scope, retain the finding and proof, and disclose the follow-through. Correct factual descriptions against source evidence without authorizing behavior changes. A broad approach or recommendation does not approve independent remedies or optional verification depth. Concrete new risks or changed assumptions may reopen a decision and must be presented. Never skip sections or the terminal report, or invent a question merely because a finding came from another section or reviewer.
 
-**反捷径条款：**通过下方决策门评估每一节与每个外部声音发现。计划记录的是交互
-式评审；把发现写进计划绝不替代批准。每个新的或重开的独立决策问一次、等真实答
-复、只应用其接受的范围。为某个既已选定的确切契约所需的代码、测试与文档不重开
-它：引用那个已选答案与范围、保留发现与证明、披露后续执行。对照源码证据纠正事实
-性描述，不因此授权行为变更。宽泛的方案或推荐不批准独立补救或可选的验证深度。具
-体的新风险或改变的假设可以重开决策，必须呈现。绝不跳过章节或终结报告，也绝不
-仅因某个发现来自别的章节或评审者就编造问题。
+**Review continuity:** Evaluate all eight passes against the current plan and its
+declared baseline. Continue the same working list from Step 0, retaining unresolved
+gaps and required verification. Run the Decision gate before drafting options in
+any pass or responding to outside findings; a new pass does not reset approvals.
 
-**评审连续性：**对照当前计划及其声明的基线评估全部八个 pass。延续 Step 0 的同
-一份工作清单，保留未决缺口与必需验证。任何 pass 起草选项或回应外部发现之前先跑
-决策门；新的 pass 不重置批准。
+- **Prior approval:** For a later or outside proposal, compare its evidence with the prior decision and options already considered.
+  A disclosed tradeoff or rejected alternative is not new evidence merely because a reviewer prefers it;
+  identify a concrete contradiction or changed assumption before reopening.
+  Carry exact approved follow-through and the Decision gate's routine review work
+  forward without a new approval. Inspect source before stating behavior or restoring
+  a declared destination; if verification is unavailable, record that dependency.
+  This does not authorize new presentation choices, behavior, channels or optional
+  verification depth. New independent remedies remain pending decisions.
+- **Scope:** Unverified loss of existing coverage remains a risk to verify,
+  not proof that a new release policy is needed. Establish what the existing
+  contract actually guarantees before claiming that a remedy or delay is required.
+  If a necessary remedy crosses an explicit scope boundary, name that boundary and
+  obtain scope approval before choosing or applying the remedy.
+- **Options:** Name one changed commitment or value. For every option, try accepting
+  one change while rejecting another; if viable, split them before asking.
+  A code example and an optional checklist are separate choices, as are a timer and its release-gate policy.
 
-- **既往批准：**对较晚或外部的提案，把其证据与既往决策及已考虑过的选项比对。
-  已披露的权衡或被拒绝的备选不因某评审者偏好它而成为新证据；重开之前先指出具
-  体矛盾或改变的假设。把确切批准的后续执行与决策门的例行评审工作直接向前带，
-  不另求批准。陈述行为或恢复已声明目的地之前先查源码；验证不可用时记录该依赖。
-  这不授权新的呈现选择、行为、渠道或可选验证深度。新的独立补救保持待决。
-- **范围：**既有覆盖未经证实的丢失仍是要验证的风险，不是需要新发布策略的证
-  明。在声称必需某补救或延迟之前，先确立既有契约实际保证什么。必要补救跨越显
-  式范围边界时，点名该边界并在选择或应用补救前取得范围批准。
-- **选项：**只点名一个改变的承诺或取值。每个选项都试着接受一处变更而拒绝另一
-  处；两者可独立时先拆分再提问。代码示例与可选清单是两个独立选择，计时器与其
-  发布门策略也一样。
-
-DX POLISH 中用既有能力改善已接受的旅程。清单或名人堂示例是透镜，不是要求添加
-其功能。范围外机会单独指出；不为凑 10/10 而添加 API 或改变既定行为。"FIX TO
-10" 意为通过决策门解决有证据的、范围内的缺口；保留诚实的残余分。跨 pass 与外
-部声音复用既往决策。一个选定行为的实现细节与证明放在一起；独立策略各需自己的
-决策。
+In DX POLISH, improve the accepted journey using existing capabilities. A checklist
+or Hall of Fame example is a lens, not a requirement to add its features. Identify
+out-of-scope opportunities separately; do not add APIs or change established
+behavior to earn 10/10. "FIX TO 10" means resolve evidenced, in-scope gaps through
+the Decision gate; retain honest residual scores. Reuse prior decisions across
+passes and outside voice. Implementation details and proof of one chosen behavior
+stay together; independent policies each need their own decision.
 
 ## Prior Learnings
 
-搜索既往会话中的相关学习：
+Search for relevant learnings from previous sessions:
 
 ```bash
 _CROSS_PROJ=$(~/.claude/skills/gstack/bin/gstack-config get cross_project_learnings 2>/dev/null || echo "unset")
@@ -54,41 +49,42 @@ else
   { _LE=$(~/.claude/skills/gstack/bin/gstack-learnings-search --limit 10 2>&1 >&3 3>&-); _LR=$?; } 3>&1
 fi
 [ "$_LR" = 0 ] || { _LE=${_LE%%$'\n'*}; echo "LEARNINGS: unavailable (${_LE:-exit $_LR})"; }
-
 ```
 
-`CROSS_PROJECT` 为 `unset`（首次）：用 AskUserQuestion：
+If `CROSS_PROJECT` is `unset` (first time): Use AskUserQuestion:
 
-> gstack 可以搜索你本机其他项目的学习，找出可能适用于此处的模式。全程本
-> 地（无数据离开你的机器）。推荐单人开发者使用。若你在多个客户代码库之间
-> 工作、担心交叉污染，则跳过。
+> gstack can search learnings from your other projects on this machine to find
+> patterns that might apply here. This stays local (no data leaves your machine).
+> Recommended for solo developers. Skip if you work on multiple client codebases
+> where cross-contamination would be a concern.
 
-选项：
-- A) 启用跨项目学习（推荐）
-- B) 学习仅限项目内
+Options:
+- A) Enable cross-project learnings (recommended)
+- B) Keep learnings project-scoped only
 
-选 A：运行 `~/.claude/skills/gstack/bin/gstack-config set cross_project_learnings true`
-选 B：运行 `~/.claude/skills/gstack/bin/gstack-config set cross_project_learnings false`
+If A: run `~/.claude/skills/gstack/bin/gstack-config set cross_project_learnings true`
+If B: run `~/.claude/skills/gstack/bin/gstack-config set cross_project_learnings false`
 
-然后用相应 flag 重跑搜索。
+Then re-run the search with the appropriate flag.
 
-找到学习时，把它纳入分析。评审发现与既往学习匹配时，展示：
+If learnings are found, incorporate them into your analysis. When a review finding
+matches a past learning, display:
 
-**"应用既往学习：[key]（置信度 N/10，来自 [日期]）"**
+**"Prior learning applied: [key] (confidence N/10, from [date])"**
 
-这让复利可见。用户应看到 gstack 在其代码库上越来越聪明。
+This makes the compounding visible. The user should see that gstack is getting
+smarter on their codebase over time.
 
-### DX 趋势检查
+### DX Trend Check
 
-开始评审 pass 之前，查本项目既往 DX 评审：
+Before starting review passes, check for prior DX reviews on this project:
 
 ```bash
 SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null)
 ~/.claude/skills/gstack/bin/gstack-review-read 2>/dev/null | grep plan-devex-review || echo "NO_PRIOR_DX_REVIEWS"
-
 ```
 
-有既往评审就展示趋势：
+If prior reviews exist, display the trend:
 ```
 DX TREND (prior reviews):
   Dimension        | Prior Score | Notes
@@ -96,102 +92,84 @@ DX TREND (prior reviews):
   ...
 ```
 
-Error Messages、API/CLI/SDK 与 Overall DX 按该行记录的 `dx_rubric` 打分。既往
-行的 `dx_rubric` 缺失或不等于 `agent-ready-v1` 时，那三个维度打印
-"rubric changed, not comparable" 而不是分数或趋势。
+Error Messages, API/CLI/SDK and Overall DX are scored under the `dx_rubric` the row records.
+When a prior row's `dx_rubric` is absent or differs from `agent-ready-v1`, print
+"rubric changed, not comparable" for those three dimensions instead of a score or trend.
 
-### Pass 1：入门体验（零摩擦）
+### Pass 1: Getting Started Experience (Zero Friction)
 
-打 0-10 分：开发者能在 5 分钟内从零跑到 hello world 吗？
+Rate 0-10: Can a developer go from zero to hello world in under 5 minutes?
 
-**证据回忆：**引用 0C 的竞争基准（目标档位）、0D 的魔法时刻（交付载体），以及
-0F 的任何安装/Hello World 摩擦点。
+**Evidence recall:** Reference the competitive benchmark from 0C (target tier), the
+magical moment from 0D (delivery vehicle), and any Install/Hello World friction
+points from 0F.
 
-加载参考：Read `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的
-"## Pass 1" 节。
+Load reference: Read the "## Pass 1" section from `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`.
 
-评估：
-- **安装**：一条命令？一次点击？无前置条件？
-- **首次运行**：第一条命令产出可见、有意义的输出吗？
-- **沙箱/Playground**：开发者能否先试再装？
-- **免费层**：不要信用卡、不要销售电话、不要公司邮箱？
-- **快速开始指南**：复制粘贴完整？展示真实输出？
-- **认证/凭证引导**：从"我想试"到"能跑"要几步？
-- **魔法时刻交付**：0D 选定的载体真的在计划里吗？
-- **竞争缺口**：TTHW 距离 0C 选定的目标档位多远？
+Evaluate:
+- **Installation**: One command? One click? No prerequisites?
+- **First run**: Does the first command produce visible, meaningful output?
+- **Sandbox/Playground**: Can developers try before installing?
+- **Free tier**: No credit card, no sales call, no company email?
+- **Quick start guide**: Copy-paste complete? Shows real output?
+- **Auth/credential bootstrapping**: How many steps between "I want to try" and "it works"?
+- **Magical moment delivery**: Is the vehicle chosen in 0D actually in the plan?
+- **Competitive gap**: How far is the TTHW from the target tier chosen in 0C?
 
-FIX TO 10：写出理想的入门序列。规定确切命令、预期输出与每步时间预算。目标：
-3 步或更少，在 0C 选定的时间内。
+FIX TO 10: Write the ideal getting started sequence. Specify exact commands,
+expected output, and time budget per step. Target: 3 steps or fewer, under the
+time chosen in 0C.
 
-Stripe 检验：一个 [0A 的 persona] 能否在一个终端会话内、不离开终端地从"从没听
-说过"到"跑通了"？
+Stripe test: Can a [persona from 0A] go from "never heard of this" to "it worked"
+in one terminal session without leaving the terminal?
 
-**STOP。**跑决策门；只为新的或有理由重开的决策提问。给推荐加 WHY。引用
-persona。
+**STOP.** Run the Decision gate; ask only for a new or justified reopened decision. Recommend + WHY. Reference the persona.
 
-### Pass 2：API/CLI/SDK 设计（可用 + 有用）
+### Pass 2: API/CLI/SDK Design (Usable + Useful)
 
-打 0-10 分：界面直觉、一致、完整吗？
+Rate 0-10: Is the interface intuitive, consistent, and complete?
 
-**证据回忆：**API 表面匹配 [0A 的 persona] 的心智模型吗？YC 创始人期待
-`tool.do(thing)`。平台工程师期待
-`tool.configure(options).execute(thing)`。
+**Evidence recall:** Does the API surface match [persona from 0A]'s mental model?
+A YC founder expects `tool.do(thing)`. A platform engineer expects
+`tool.configure(options).execute(thing)`.
 
-加载参考：Read `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的
-"## Pass 2" 节。
+Load reference: Read the "## Pass 2" section from `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`.
 
-评估：
-- **命名**：不看文档能猜到？语法一致？
-- **默认值**：每个参数都有合理默认？最简调用给出有用结果？
-- **一致性**：整个 API 表面同一套模式？
-- **完整性**：100% 覆盖，还是边界情况开发者得退回裸 HTTP？
-- **可发现性**：开发者能不看文档就在 CLI/playground 里探索吗？
-- **可靠性/信任**：延迟、重试、限流、幂等、离线行为？
-- **渐进披露**：简单场景生产可用，复杂度逐步揭示？
-- **Persona 贴合**：[persona] 思考问题的方式与这个界面一致吗？
-- **Agent 工效学**（观察式，带证据记录，不单独打分）：默认非交互、结构化输出、
-  分层 `--help`。
+Evaluate:
+- **Naming**: Guessable without docs? Consistent grammar?
+- **Defaults**: Every parameter has a sensible default? Simplest call gives useful result?
+- **Consistency**: Same patterns across the entire API surface?
+- **Completeness**: 100% coverage or do devs drop to raw HTTP for edge cases?
+- **Discoverability**: Can devs explore from CLI/playground without docs?
+- **Reliability/trust**: Latency, retries, rate limits, idempotency, offline behavior?
+- **Progressive disclosure**: Simple case is production-ready, complexity revealed gradually?
+- **Persona fit**: Does the interface match how [persona] thinks about the problem?
+- **Agent ergonomics** (observational, recorded with evidence, not separately scored): non-interactive by default, structured output, layered `--help`.
 
-好 API 设计检验：一个 [persona] 看过一个示例后能正确使用这个 API 吗？
+Good API design test: Can a [persona] use this API correctly after seeing one example?
 
-**STOP。**跑决策门；只为新的或有理由重开的决策提问。给推荐加 WHY。
+**STOP.** Run the Decision gate; ask only for a new or justified reopened decision. Recommend + WHY.
 
-### Pass 3：错误信息与调试（agent-ready）
+### Pass 3: Error Messages & Debugging (agent-ready)
 
-打 0-10 分：出错时，读者（往往是无人值守运行的 AI agent）能否不读源码就说出
-发生了什么、安全恢复并调试？
+Rate 0-10: When something goes wrong, can the reader, often an AI agent running unattended,
+tell what happened, recover safely, and debug it without reading the source?
 
-**证据回忆：**引用 0F 的任何错误相关摩擦点与 0G 的困惑点。Pass 3 始终在 0A 的
-persona 之外把 agent 读者当作第二透镜评估。
+**Evidence recall:** Reference any error-related friction points from 0F and confusion
+points from 0G. Pass 3 always evaluates the agent reader as a second lens beside the
+persona from 0A.
 
-打分之前加载参考：Read
-`~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的 "## Pass 3"
-节：完整契约、校准示例与标准映射。
+Load reference: Read the "## Pass 3" section from `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`
+before scoring: the full contract, calibration examples and the standards mapping.
 
-对照 agent-ready 错误契约
-（https://github.com/garrytan/gstack/blob/main/docs/agent-ready-errors.md）
-给每条错误路径打分：what（操作与实际取值）、fix（首行或末行给出安全、已授权的
-命令或编辑，或精确说明人必须提供什么）、recovery（重试、修复后重试、先做 X，或
-求助人工；副作用 none/partial/complete/unknown，未知结果重试前先对账，重试要有
-界）、code（稳定，带文档锚点）、context（版本、配置、环境变量名、底层原因；仅
-远程服务需考虑调用方安全）、trace（仅意外失败：本地给紧凑 trace 或其文件路径，
-远程给关联 id）、redaction（任何地方都无密钥值）、channel（该表面的原生失败信
-号：CLI 用非零 exit 加 stderr，API 用状态码加 RFC 9457 body，SDK 用类型化错误，
-MCP 工具用 isError）。任何工作之前就被拒的用法与校验错误只需 what、fix、
-code、redaction 与 channel；条目按表面应用，N/A 需要理由，计划为它引入的路径
-却从未规定的条目是缺口，unknown 只留给无法检查的既有行为。泄漏密钥、把失败当
-成功、不安全的修复，或在终端上阻塞（挂起，或没有终端时失败却不给出
-`--yes` 之类非交互替代），报告为 Critical 发现，标题
-"CAP4:<path>:<item>"（把 Error Messages 分数钳在 4/10）；缺失适用的 fix、
-recovery、context 或 trace，报告为 High 发现，标题
-"CAP6:<path>:<item>"（钳在 6/10）。
+Score every error path against the agent-ready error contract (https://github.com/garrytan/gstack/blob/main/docs/agent-ready-errors.md): what (operation and actual values), fix (a safe, authorized command or edit on the first or last line, or the precise thing a human must provide), recovery (retry, fix and retry, do X first, or ask a human; side effects none/partial/complete/unknown, reconcile before retrying an unknown outcome, a retry bound), code (stable, with a doc anchor), context (versions, config, env var names, the underlying cause; caller-safe only for remote services), trace (unexpected failures only: a compact trace or its file path locally, a correlation id remotely), redaction (no secret values anywhere), channel (the surface's native failure signal: non-zero exit and stderr for a CLI, status plus RFC 9457 body for an API, a typed error for an SDK, isError for an MCP tool). Usage and validation errors rejected before any work need only what, fix, code, redaction and channel; items apply per surface, N/A needs a reason, an item the plan never specifies for a path it introduces is a gap, and unknown is reserved for existing behavior you could not inspect. Report a leaked secret, a failure signalled as success, an unsafe fix, or a block on a terminal (a hang, or a no-terminal failure that names no non-interactive alternative such as --yes) as a Critical finding titled "CAP4:<path>:<item>" (caps the Error Messages score at 4/10); report a missing applicable fix, recovery, context or trace as a High finding titled "CAP6:<path>:<item>" (caps it at 6/10).
 
-上方加载的 "## Pass 3" 名人堂节持有完整契约：条目表、逐表面 channel 规则与证据
-状态。
+The "## Pass 3" Hall of Fame section loaded above holds the full contract: the item table,
+the per-surface channel rules and the evidence states.
 
-**追踪 3 条具体错误路径加 1 条意外失败路径**（崩溃、依赖失败），来自计划或代码
-库。计划未点名任何意外失败处理时，把该缺失记为 trace 缺口。输出一张矩阵，仅失败
-项用散文：
+**Trace 3 specific error paths plus one unexpected-failure path** (crash, dependency failure)
+from the plan or codebase. When the plan names no unexpected-failure handling, record that
+absence as the trace gap. Output one matrix, prose only for failures:
 
 ```
 ERROR PATH MATRIX (agent-ready-v1)
@@ -199,133 +177,137 @@ Path                  | Class      | what | fix | recovery | code | context | tr
 [path]                | usage      | pass | fail| N/A      | pass | N/A     | N/A   | pass      | pass    | CAP6:fix
 ```
 
-对每条被钳的路径，展示 agent 今天看到什么与修正后的错误行。同时说明权限与安全
-模型（什么可能出错、爆炸半径有多清楚）以及是否存在 verbose 或 debug 模式。
+For each capped path, show what an agent sees today and the corrected error line. Also note
+the permission and safety model (what can go wrong, how clear the blast radius is) and whether
+a verbose or debug mode exists.
 
-**DX TRIAGE：**只报告触发钳制的缺口，且始终报告每条 CAP4 发现。
+**DX TRIAGE:** report the cap-triggering gaps only, and always every CAP4 finding.
 
-**STOP。**跑决策门；只为新的或有理由重开的决策提问。给推荐加 WHY。
+**STOP.** Run the Decision gate; ask only for a new or justified reopened decision. Recommend + WHY.
 
-### Pass 4：文档与学习（可发现 + 在做中学）
+### Pass 4: Documentation & Learning (Findable + Learn by Doing)
 
-打 0-10 分：开发者能找到所需内容并在做中学吗？
+Rate 0-10: Can a developer find what they need and learn by doing?
 
-**证据回忆：**文档架构匹配 [0A 的 persona] 的学习风格吗？YC 创始人需要把复制粘
-贴示例放在最显眼处。平台工程师需要架构文档与 API 参考。
+**Evidence recall:** Does the docs architecture match [persona from 0A]'s learning
+style? A YC founder needs copy-paste examples front and center. A platform engineer
+needs architecture docs and API reference.
 
-加载参考：Read `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的
-"## Pass 4" 节。
+Load reference: Read the "## Pass 4" section from `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`.
 
-评估：
-- **信息架构**：2 分钟内找到所需？
-- **渐进披露**：新手看到简单，专家找得到高级？
-- **代码示例**：复制粘贴完整？原样可跑？真实上下文？
-- **交互元素**：Playground、沙箱、"试一试"按钮？
-- **版本化**：文档与开发者所用版本一致？
-- **教程 vs 参考**：两者都有？
+Evaluate:
+- **Information architecture**: Find what they need in under 2 minutes?
+- **Progressive disclosure**: Beginners see simple, experts find advanced?
+- **Code examples**: Copy-paste complete? Work as-is? Real context?
+- **Interactive elements**: Playgrounds, sandboxes, "try it" buttons?
+- **Versioning**: Docs match the version dev is using?
+- **Tutorials vs references**: Both exist?
 
-**STOP。**跑决策门；只为新的或有理由重开的决策提问。给推荐加 WHY。
+**STOP.** Run the Decision gate; ask only for a new or justified reopened decision. Recommend + WHY.
 
-### Pass 5：升级与迁移路径（可信）
+### Pass 5: Upgrade & Migration Path (Credible)
 
-打 0-10 分：开发者能无惧升级吗？
+Rate 0-10: Can developers upgrade without fear?
 
-加载参考：Read `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的
-"## Pass 5" 节。
+Load reference: Read the "## Pass 5" section from `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`.
 
-评估：
-- **向后兼容**：什么会坏？爆炸半径受控？
-- **弃用警告**：提前通知？可执行？（"改用 newMethod()"）
-- **迁移指南**：每个破坏性变更都有分步说明？
-- **Codemod**：自动迁移脚本？
-- **版本化策略**：语义化版本？策略清晰？
+Evaluate:
+- **Backward compatibility**: What breaks? Blast radius limited?
+- **Deprecation warnings**: Advance notice? Actionable? ("use newMethod() instead")
+- **Migration guides**: Step-by-step for every breaking change?
+- **Codemods**: Automated migration scripts?
+- **Versioning strategy**: Semantic versioning? Clear policy?
 
-**STOP。**跑决策门；只为新的或有理由重开的决策提问。给推荐加 WHY。
+**STOP.** Run the Decision gate; ask only for a new or justified reopened decision. Recommend + WHY.
 
-### Pass 6：开发者环境与工具链（有价值 + 可访问）
+### Pass 6: Developer Environment & Tooling (Valuable + Accessible)
 
-打 0-10 分：能集成进开发者既有工作流吗？
+Rate 0-10: Does this integrate into developers' existing workflows?
 
-**证据回忆：**本地开发配置在 [0A 的 persona] 的典型环境中可行吗？
+**Evidence recall:** Does local dev setup work for [persona from 0A]'s typical
+environment?
 
-加载参考：Read `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的
-"## Pass 6" 节。
+Load reference: Read the "## Pass 6" section from `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`.
 
-评估：
-- **编辑器集成**：Language server？自动补全？行内文档？
-- **CI/CD**：在 GitHub Actions、GitLab CI 中可用？非交互模式？
-- **TypeScript 支持**：带类型？IntelliSense 好用？
-- **测试支持**：易 mock？测试工具？
-- **本地开发**：热重载？watch 模式？快速反馈？
-- **跨平台**：Mac、Linux、Windows？Docker？ARM/x86？
-- **本地环境可复现**：跨 OS、包管理器、容器、代理都能用？
-- **可观测/可测试**：dry-run 模式？verbose 输出？示例应用？fixture？
+Evaluate:
+- **Editor integration**: Language server? Autocomplete? Inline docs?
+- **CI/CD**: Works in GitHub Actions, GitLab CI? Non-interactive mode?
+- **TypeScript support**: Types included? Good IntelliSense?
+- **Testing support**: Easy to mock? Test utilities?
+- **Local development**: Hot reload? Watch mode? Fast feedback?
+- **Cross-platform**: Mac, Linux, Windows? Docker? ARM/x86?
+- **Local env reproducibility**: Works across OS, package managers, containers, proxies?
+- **Observability/testability**: Dry-run mode? Verbose output? Sample apps? Fixtures?
 
-**STOP。**跑决策门；只为新的或有理由重开的决策提问。给推荐加 WHY。
+**STOP.** Run the Decision gate; ask only for a new or justified reopened decision. Recommend + WHY.
 
-### Pass 7：社区与生态（可发现 + 令人向往）
+### Pass 7: Community & Ecosystem (Findable + Desirable)
 
-打 0-10 分：有社区吗，计划是否投资生态健康？
+Rate 0-10: Is there a community, and does the plan invest in ecosystem health?
 
-加载参考：Read `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的
-"## Pass 7" 节。
+Load reference: Read the "## Pass 7" section from `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`.
 
-评估：
-- **开源**：代码开放？宽松许可？
-- **社区渠道**：开发者在哪提问？有人回答吗？
-- **示例**：真实可跑？不只 hello world？
-- **插件/扩展生态**：开发者能扩展它吗？
-- **贡献指南**：流程清晰？
-- **定价透明**：没有意外账单？
+Evaluate:
+- **Open source**: Code open? Permissive license?
+- **Community channels**: Where do devs ask questions? Someone answering?
+- **Examples**: Real-world, runnable? Not just hello world?
+- **Plugin/extension ecosystem**: Can devs extend it?
+- **Contributing guide**: Process clear?
+- **Pricing transparency**: No surprise bills?
 
-**STOP。**跑决策门；只为新的或有理由重开的决策提问。给推荐加 WHY。
+**STOP.** Run the Decision gate; ask only for a new or justified reopened decision. Recommend + WHY.
 
-### Pass 8：DX 度量与反馈回路（实现 + 精炼）
+### Pass 8: DX Measurement & Feedback Loops (Implement + Refine)
 
-打 0-10 分：计划含随时间度量并改善 DX 的方式吗？
+Rate 0-10: Does the plan include ways to measure and improve DX over time?
 
-加载参考：Read `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的
-"## Pass 8" 节。
+Load reference: Read the "## Pass 8" section from `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`.
 
-评估：
-- **TTHW 跟踪**：能测入门时间吗？有埋点吗？
-- **旅程分析**：开发者在哪流失？
-- **反馈机制**：bug 报告？NPS？反馈按钮？
-- **摩擦审计**：计划了周期性评审？
-- **Boomerang 就绪**：/devex-review 能否度量现实 vs 计划？
+Evaluate:
+- **TTHW tracking**: Can you measure getting started time? Is it instrumented?
+- **Journey analytics**: Where do devs drop off?
+- **Feedback mechanisms**: Bug reports? NPS? Feedback button?
+- **Friction audits**: Periodic reviews planned?
+- **Boomerang readiness**: Will /devex-review be able to measure reality vs. plan?
 
-度量已批准的 0C 时钟与 0D 有用结果。含完整文档化的起始状态；不用温热的执行计
-时或别的终点替代。优先用能度量所选目标的最简方法。目标档位本身不批准
-telemetry、自动化发布门或周期性人工流程；只在提议它们时才问这些独立策略，并
-明确归属与频率。
+Measure the approved 0C clock and 0D useful result. Include the full documented
+start state; do not substitute a warm execution timer or a different endpoint.
+Prefer the simplest method that measures the chosen target. A target tier does not itself approve telemetry, an automated
+release gate, or a recurring human process; ask about those independent policies
+only when proposing them, with ownership and frequency explicit.
 
-**STOP。**跑决策门；只为新的或有理由重开的决策提问。给推荐加 WHY。
+**STOP.** Run the Decision gate; ask only for a new or justified reopened decision. Recommend + WHY.
 
-### 附录：Claude Code Skill DX 清单
+### Appendix: Claude Code Skill DX Checklist
 
-**条件性：仅当产品类型含 "Claude Code skill" 时运行。**
+**Conditional: only run when product type includes "Claude Code skill".**
 
-这不是打分 pass。它是 gstack 自身 DX 里已验证模式的清单。
+This is NOT a scored pass. It's a checklist of proven patterns from gstack's own DX.
 
-加载参考：Read `~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md` 的
-"## Claude Code Skill DX Checklist" 节。
+Load reference: Read the "## Claude Code Skill DX Checklist" section from
+`~/.claude/skills/gstack/plan-devex-review/dx-hall-of-fame.md`.
 
-逐项检查。未勾选项说明缺什么并建议修复。
+Check each item. For any unchecked item, explain what's missing and suggest the fix.
 
-**STOP。**任何需要设计决策的项用 AskUserQuestion。
+**STOP.** AskUserQuestion for any item that requires a design decision.
 
-本宿主跑外部声音时，截断计划正文之前先用工作清单构建其评审上下文。保留对所选模
-式的确切批准例外，以及 persona、时钟、目标与证据局限。提出补救之前，把发现对照
-该上下文与已查源码对账。直接纠正无支撑的草稿主张；未知行为保留为验证工作。新的
-保证、可选示例或度量扩展仍是决策；已接受契约的必需证明不重开该契约。
+When this host runs an outside voice, build its review context from the working list
+before truncating the plan body. Preserve the exact approved exceptions to the selected
+mode, alongside the persona, clock, target and evidence limits. Reconcile findings
+against that context and inspected source before proposing remedies. Correct
+unsupported draft claims directly; preserve unknown behavior as verification work.
+A new guarantee, optional example or measurement extension remains a decision;
+required proof of the accepted contract does not reopen that contract.
 
-## 外部声音：独立计划挑战（默认开启）
+## Outside Voice — Independent Plan Challenge (default-on)
 
-所有评审章节完成之后，自动从另一个 AI 系统取独立第二意见：这是计划评审的标准
-部分，不是 opt-in。两个模型一致同意比一个模型的彻底评审是更强的信号。用户只有显
-式要求才关掉（`gstack-config set codex_reviews disabled`）。
+After all review sections are complete, run an independent second opinion from a
+different AI system automatically — it is a standard part of plan review, not an
+opt-in. Two models agreeing on a plan is stronger signal than one model's thorough
+review. The user turns this off only by asking explicitly
+(`gstack-config set codex_reviews disabled`).
 
-**预检：决定外部声音是否运行、怎样运行：**
+**Preflight — decide whether and how the outside voice runs:**
 
 ```bash
 
@@ -346,25 +328,20 @@ fi
 else
   echo 'CODEX_MODE: under_current_harness'
 fi
-
 ```
 
-历史 `CODEX_MODE` 变量在此描述 **Codex** 的可用性。调用会检查认证与
-[策略](https://github.com/garrytan/gstack/blob/main/docs/model-policy.md) 的
-plan-review 模型。CLI 缺失/损坏：安装或修复 Codex；认证失败：运行
-`codex login`。disabled 会终止这整个额外评审步骤（发送时的 `consent_missing`
-行也一样），含原生兜底；记 outside_status: disabled 并在本节之后继续。disabled
-不是"提供方不可用"，绝不触发替换评审者。提供方失败是外部覆盖缺失；只在评审已
-启用时走调用方既有兜底。绝不替换为其他外部提供方。
+The historical `CODEX_MODE` variable describes **Codex** availability here. The invocation checks auth and the [policy](https://github.com/garrytan/gstack/blob/main/docs/model-policy.md) plan-review model. Missing/broken CLI: install or repair Codex; authentication failure: run `codex login`. Disabled ends this entire extra review step (so does a send's `consent_missing` line), including the native fallback; record outside_status: disabled and continue after the section. Disabled is not an unavailable provider and never triggers a replacement reviewer. Provider failure is missing outside coverage; follow the caller’s existing fallback only when reviews are enabled. Never substitute another external provider.
 
-**disabled 是本节的终止分支。**预检打印 `CODEX_MODE: disabled` 时，用下方带守卫
-的命令持久化 `outside_status: disabled`，然后直接继续本节之后工作流的必需输出。
-不要构造挑战、不要调用外部 CLI、不要派发 Agent/Task 兜底、不要就外部发现提问。
-原生计划评审已经完成。disabled 的评审是有意的 opt-out，不是需要替换评审者的提供
-方故障。
+**Disabled is a terminal branch for this section.** If the preflight prints
+`CODEX_MODE: disabled`, persist `outside_status: disabled` with the guarded
+command below, then continue directly to the workflow's required outputs after this section. Do not construct a challenge,
+invoke an outside CLI, dispatch an Agent/Task fallback, or ask about outside findings.
+The native plan review is already complete. A disabled review is an intentional
+opt-out, not a provider failure that needs a replacement reviewer.
 
-离开 disabled 分支之前跑这条带守卫的命令。它起一个新 shell 并重读控制项；已启用
-的工作流绝不追加 disabled 记录。记录失败就报告持久化失败并保留 disabled 的选择。
+Run this guarded command before leaving the disabled branch. It starts a fresh
+shell and re-reads the control; enabled workflows never append a disabled record.
+If logging fails, report the persistence failure and retain the disabled opt-out.
 
 ```bash
 
@@ -375,20 +352,20 @@ _DISABLED_REVIEW_MODE=$("$HOME/.claude/skills/gstack/bin/gstack-config" get code
 if [ "$_DISABLED_REVIEW_MODE" = disabled ]; then
   "$HOME/.claude/skills/gstack/bin/gstack-review-log" '{"skill":"codex-plan-review","timestamp":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'","status":"skipped","source":"none","host":"claude","outside_provider":"codex","outside_status":"disabled","phase":"plan-review","commit":"'"$(git rev-parse --short HEAD 2>/dev/null || true)"'"}'
 fi
-
 ```
 
-模式不是 `disabled` 时，打印一行让关闭开关保持可发现："Running the outside
-voice automatically (standard step). Disable: `gstack-config set
-codex_reviews disabled`."
+When the mode is anything except `disabled`, print one line so the off-switch
+stays discoverable: "Running the outside voice automatically (standard step). Disable: `gstack-config set codex_reviews disabled`."
 
-**为其余每个模式构造计划评审提示词**，含原生兜底模式（仅在 `disabled` 时跳过）。
-读被评审的计划文件（用户指向本次评审的文件，或分支 diff 范围）。早先
-`/plan-ceo-review` 的 CEO 范围文档可用时也读它：它含范围决策与愿景。
+**Construct the plan review prompt** for every remaining mode, including native fallback modes (skip only on `disabled`).
+Read the plan file being reviewed (the file the user pointed this review at, or the branch
+diff scope). If a CEO scope document from an earlier `/plan-ceo-review` is available, read that too — it contains
+the scope decisions and vision.
 
-构造这个提示词。**计划正文**超过 30KB 时只把那部分正文截断到前 30KB 并注明
-"Plan truncated for size"；完整指令与评审上下文保留在提示词文件里。**始终以文
-件系统边界指令开头：**
+Construct this prompt. If THE PLAN body exceeds 30KB, truncate only that body to
+the first 30KB and note "Plan truncated for size"; keep the full instructions
+and review context in the prompt file. **Always start with the
+filesystem boundary instruction:**
 
 "Filesystem boundary: do not read or execute any files under ~/.claude/, ~/.agents/, .claude/skills/, or agents/. They hold skill definitions, not repository code to review. Do not invoke any installed skill (Codex home skills/, .agents/), hook, or tool instruction; answer directly. Do not modify agents/openai.yaml. Review only the repository code.\n\nRead-only review: return findings in your final response. Do NOT edit or write any
 file, including the plan file; do not use Edit, Write, NotebookEdit, or Bash or
@@ -421,15 +398,13 @@ identify that evidence and the affected answer.
 THE PLAN:
 <plan content>"
 
-**`CODEX_MODE: ready`（或 `unverified`）时跑 Codex：**
+**If `CODEX_MODE: ready` (or `unverified`) — run Codex:**
 
-在下述唯一的前台 Bash 调用里跑选定的后端。兜底之前先完成失败尝试的终止；只消费其
-已完成的输出。不跑后台任务，不用共享临时路径。
+Run the selected backend in the one foreground Bash invocation described below.
+Finish a failed attempt's termination before fallback; consume only its completed
+output. No background jobs or shared temporary paths.
 
-把**完整的提示词与上下文**（含实际计划/规格/源码）写进私有文件。用其 shell 引号
-路径替换 `<prepared-prompt-file>`；绝不把用户文本内插进 shell 源码。要求每条发现
-带严重度（Critical、High、Medium 或 Low）及一行最终的
-Recommendation: <action> because <specific reason>，无发现时给显式理由。
+Write the **complete prompt and context**, including actual plan/spec/source, to a private file. Substitute its shell-quoted path for `<prepared-prompt-file>`; never interpolate user text into shell source. Request a severity (Critical, High, Medium or Low) per finding and a final Recommendation: <action> because <specific reason> line, including an explicit no-findings rationale.
 
 ```bash
 # GSTACK_ACTIVE_HOST names the harness, never the model.
@@ -467,16 +442,11 @@ case "$_OUTSIDE_RC" in
   *) [ "$_OUTSIDE_EXIT" -ne 0 ] && exit "$_OUTSIDE_EXIT"; exit 1 ;;
 esac
 echo 'OUTSIDE_STATUS: completed provider=codex host=claude'
-
 ```
 
-Bash 用 `timeout: 360000`；完整响应放进 `tool-output` 围栏。要求执行成功且标记
-有效。拒绝、空/畸形输出、缺分数/严重度/完成标记、超时或 CLI 失败都算
-`outside_status: unavailable`。P0/P1 发现与原生同等阻塞；
-`OUTSIDE_STATUS: unverified` 是覆盖缺失。用调用方的兜底；覆盖缺失绝不是干净/
-PASS。任一结果之后，只删你的私有提示词；scratch 清理是自动的。
+Use Bash `timeout: 360000`; show the full response in a `tool-output` fence. Require successful execution and valid markers. Refusal, empty/malformed output, missing score/severity/completion markers, timeout or CLI failure means `outside_status: unavailable`. P0/P1 findings block like native ones; `OUTSIDE_STATUS: unverified` is missing coverage. Use the caller's fallback; missing coverage is never clean/PASS. After either outcome, delete only your private prompt; scratch cleanup is automatic.
 
-逐字呈现完整输出：
+Present the full output verbatim:
 
 ```
 CODEX SAYS (plan review — outside voice):
@@ -485,187 +455,165 @@ CODEX SAYS (plan review — outside voice):
 ════════════════════════════════════════════════════════════
 ```
 
-这个围栏是唯一的外部提供方输出面。原生兜底只打印其 `OUTSIDE VOICE (...)`
-子代理报告；一次评审绝不两者都打印。
+This fence is the only external-provider output surface. Native fallback prints
+only its `OUTSIDE VOICE (...)` subagent report; never print both for one review.
 
-**错误处理：**所有错误都不阻塞：外部声音是信息性的。
-- **认证失败：**stderr 含 "auth"、"login"、"unauthorized" 或 "API key"：
-  "Codex authentication failed. Run `codex login` to authenticate."回退到下方的
-  Claude 子代理。
-- **超时：**"Codex timed out after 5 minutes."回退到下方的 Claude 子代理。
-- **空响应：**"Codex returned no response."回退到下方的 Claude 子代理。
+**Error handling:** All errors are non-blocking — the outside voice is informational.
+- **Auth failure:** If stderr contains "auth", "login", "unauthorized", or "API key": "Codex authentication failed. Run \`codex login\` to authenticate." Fall back to the Claude subagent below.
+- **Timeout:** "Codex timed out after 5 minutes." Fall back to the Claude subagent below.
+- **Empty response:** "Codex returned no response." Fall back to the Claude subagent below.
 
-**原生兜底：提供方不可用或执行失败，且评审已启用：**
+**Native fallback — provider unavailable or execution failed, with reviews enabled:**
 
-派发之前立即再查一次预检结果。`CODEX_MODE: disabled` 时以
-`outside_status: disabled` 结束本节；不派发。否则，CLI 缺失/损坏、认证/模型选择
-失败、预检失败或外部调用失败时用这个兜底。disabled 分支绝不走到这里。
-`CODEX_MODE: under_current_harness` 时报告 setup 修复与
-`outside_status: unavailable`，不跑外部 CLI，用下方的原生子代理。原生结果绝不为
-外部覆盖记功。
+Immediately before dispatching, check the preflight result again. On
+`CODEX_MODE: disabled`, finish this section with `outside_status: disabled`;
+do not dispatch. Otherwise, use this fallback for missing/broken CLI, failed
+authentication/model selection, a failed preflight, or a failed outside invocation.
+The disabled branch never reaches this fallback.
+On `CODEX_MODE: under_current_harness`, report the setup repair and
+`outside_status: unavailable`, run no outside CLI, and use the native subagent below.
+A native result never supplies outside coverage.
 
-**有界外部声音等待：一个五分钟宿主计时器：**
+**Bounded outside-voice wait — one five-minute host timer:**
 
-派发之前，检查本会话工具里是否有 TaskStop、Bash 的 `run_in_background`，以及
-Agent 子代理类型中的 Plan。不要为测可用性而启动任务；缺任一项就走不可用路径、不
-启动。
-用 Plan，它拒绝原生 Edit、Write 与 NotebookEdit 工具。不设模型覆盖；沿用继承的
-模型。这不是文件系统沙箱：仅评审的提示词同样禁止通过其他工具变更。原生结果绝不
-为外部覆盖记功。这是此处前台派发的唯一例外。
-四步各执行一次：
+Before dispatch, check this session's tools for TaskStop, Bash's `run_in_background`
+and Plan among Agent's subagent types. Do not launch a task to test availability;
+if any is missing, take the unavailable path without launching.
+Use Plan, which denies native Edit, Write and NotebookEdit tools. Do not set a model
+override; keep the inherited model. This is not a filesystem sandbox: the review-only
+prompt also forbids mutations through other tools. A native result never supplies
+outside coverage. This is the one exception to foreground dispatch here.
+Execute the four steps once:
 
-1. 启动计时器：Bash `command: "sleep 300"`、`run_in_background: true`、
-   `timeout: 300000`。经 Agent 工具以 `subagent_type: "Plan"` 与（支持时）
-   `run_in_background: true` 派发，用同一份计划评审提示词。保留返回的 agent
-   ID；不猜 ID，不启第二个任务。
-2. 结束回合等任务通知。只等一次：不轮询、不 sleep、不读任一输出文件、不续计
-   时器。
-3. 只有先于计时器到达的 agent `<task-notification>` 才算数：`<task-id>` 必须
-   匹配 agent ID，`<status>` 必须为 `completed`，`<summary>` 必须说它完成了
-   （"is waiting on its own background work"：继续等；回合上限：部分），
-   `<result>` 必须非空；"[Subagent hand-back]" 头只是框定它。只有它是可识别的
-   完整最终评审报告才接受发现。拒绝原始或进行中的 transcript；不要从中抽取发现
-   片段。仅终态状态或警告标记不能确立报告完整性。任何检查失败或报告无法识别时
-   走第 4 步。否则用计时器的 ID 调 TaskStop，在
-   `OUTSIDE VOICE (Claude subagent):` 标头下呈现它，然后继续跨模型张力。
-4. 否则（计时器先到、无 ID、失败或停止状态、部分或空结果，或 Agent 直接返回报
-   告：没有强制 deadline，因此不计分）用同一 ID 对 agent 调 TaskStop，若计时器
-   在跑也用其 ID 调 TaskStop。记录每个停止结果；有一个失败即取消未确认。计时器
-   或 TaskStop 之后才完成的，仍不给迟到的结果记功。
+1. Start the timer: Bash `command: "sleep 300"`, `run_in_background: true`,
+   `timeout: 300000`. Dispatch via the Agent tool with `subagent_type: "Plan"`
+   and `run_in_background: true` where offered, with the same plan review prompt.
+   Keep the returned agent ID; do not guess an ID or launch a second task.
+2. End your turn and wait for task notifications. Make one wait only: do not poll,
+   sleep, Read either output file or renew the timer.
+3. Only the agent's `<task-notification>` arriving before the timer's counts:
+   `<task-id>` must match the agent ID, `<status>` must be `completed`, `<summary>`
+   must say it finished ("is waiting on its own background work": keep waiting; a
+   turn limit: partial) and `<result>` must be nonempty; a "[Subagent hand-back]"
+   header only frames it. Accept findings only if it is an identifiable complete
+   final reviewer report. Reject raw or in-progress transcripts; do not extract
+   finding fragments from them. Terminal status or warning markers alone do not
+   establish report completeness. If any check fails or the report cannot be identified, follow step 4. Otherwise call TaskStop with the timer's ID, present it under an `OUTSIDE VOICE (Claude subagent):`
+   header, then continue to Cross-model tension.
+4. Otherwise (timer first, no ID, failed or stopped status, partial or empty result,
+   or Agent returns a report directly: no enforced deadline, so no credit), call
+   TaskStop with the same ID as the agent, and call TaskStop with the timer's ID if it runs.
+   Record each stop result; if one fails, cancellation is unconfirmed.
+   For a completion after the timer or TaskStop, still give no late-result credit.
 
-**不可用路径：**"Outside voice unavailable: <cause>. Fix: <fix>.
-Continuing to outputs. (OUTSIDE_VOICE_UNAVAILABLE)"
-原因附加到提供方诊断上：Plan agent 类型未提供、TaskStop 未提供、后台任务不可用
-（修复：Claude Code 2.1.277+，启用后台任务）、五分钟内无完整报告，或状态失败。
-不要改用 general-purpose agent 重试。报告缺失的外部声音覆盖。忽略部分或迟到的
-结果，不用于批评、同意、干净状态或覆盖。跳过跨模型张力。用下方命令持久化不可用
-结果，STATUS = "unavailable"、SOURCE = "none"、OUTSIDE_STATUS =
-"unavailable"，并加 `"unavailable_reason":"<cause>"`；然后直接继续输出。没有评
-审者完成时不要记录干净评审。
+**Unavailable path:** "Outside voice unavailable: <cause>. Fix: <fix>. Continuing to outputs. (OUTSIDE_VOICE_UNAVAILABLE)"
+The cause adds to the provider's diagnosis: Plan agent type not offered, TaskStop not offered,
+background tasks unavailable (fix: Claude Code 2.1.277+, background tasks on), no complete report within five minutes, or a failed status.
+Do not retry with a general-purpose agent. Report missing outside-voice coverage.
+Ignore partial or late results for critique, agreement, clean status or coverage.
+Skip Cross-model tension. Persist an unavailable result using the command below
+with STATUS = "unavailable", SOURCE = "none", OUTSIDE_STATUS = "unavailable", adding `"unavailable_reason":"<cause>"`;
+then continue directly to outputs.
+Do not record a clean review when no reviewer completed.
 
 
-**跨模型张力：**
+**Cross-model tension:**
 
-用同一份五字段工作清单与上方四步决策门；不要另起第二张表。在 `source/evidence`
-里记录评审者及其证据。提供菜单之前按此顺序处理每个发现：
+Use the same five-field working list and four-step Decision gate above; do not start a second table. Record the reviewer and its evidence in `source/evidence`. Process each finding in this order before offering a menu:
 
-1. **证据落地。**把主张与原始来源及真实答案比对，而不是无支撑的草稿文本。纠正草
-   稿与证据中的事实错误。保留未知事实与必需验证；信息缺失证明不了保证缺失。未知
-   项阻塞必需契约时报告该依赖。具体实质风险仍可能需要在确认其发生前做决策。
-2. **给发现分类。**应用决策门对例行评审工作与新选择的区分。把确切批准的后续直
-   接向前带。范围内的事实或导航纠正直接验证并记录；未知行为或目的地保持验证依
-   赖，不发明保证或链接。已知权衡或被拒备选不因评审者偏好它而成为新证据。只为
-   具体矛盾或改变假设重开。建立一个已批准行为的代码、测试与文档放在一起；新的
-   呈现方式、保证、渠道或可选验证深度保持独立选择。
-3. **检查范围。**从用户的任务边界与请求的 DX 模式出发，仅按 Review Context 中确
-   切批准的例外及其答案引用修订。模式默认值不撤销已批准的例外。声称必需补救或
-   延迟之前先确立当前契约；缺失实现保持验证依赖。跨越新边界要取得范围批准；授
-   权一次扩展不批准另一次。
-4. **起草并回答一个决策。**把待决选择匹配到其行，或加到同一清单。引用当前值、拟
-   议值、确切批准与改变的证据。每个选项里其他每个值都固定或待定；独立可选的变更
-   拆开。用 AskUserQuestion、推荐加 WHY，只在本承诺覆盖范围内比较完整性：
+1. **Ground the evidence.** Compare the claim with original sources and actual answers, not unsupported draft text. Correct factual mistakes in the draft and evidence. Retain unknown facts and required verification; missing information does not prove a missing guarantee. If an unknown blocks a required contract, report the dependency. A concrete material risk may still need a decision before its occurrence is confirmed.
+2. **Classify the finding.** Apply the Decision gate's distinction between routine review work and a new choice. Carry exact approved follow-through forward. Verify and record factual or navigation corrections within scope; unknown behavior or destinations remain verification dependencies, not invented guarantees or links. A known tradeoff or rejected alternative is not new evidence merely because a reviewer prefers it. Reopen only for a concrete contradiction or changed assumption. Keep code, tests and docs establishing one approved behavior together; new presentation approaches, guarantees, channels or optional verification depth remain separate choices.
+3. **Check the scope.** Start with the user's task boundaries and requested DX mode, amended only by exact approved exceptions and their answer references from Review Context. A mode's default does not revoke an approved exception. Establish the current contract before claiming a remedy or delay is necessary; missing implementation stays a verification dependency. Obtain scope approval for a new boundary crossing; authorization for one expansion does not approve another.
+4. **Draft and answer one decision.** Match a pending choice to its row or add one to the same list. Cite the current value, proposed value, exact approval and changed evidence. Hold every other value fixed or pending in EVERY option; split independently selectable changes. Use AskUserQuestion, recommend + WHY, and compare completeness only within this commitment's coverage:
 
-- **策略还是实现：**A) 应用此变更；B) 保持本行当前值；C) 选择前先调查；D) 只推迟
-  这个拟议变更。推迟一次技术栈变更不推迟其整个候选，也不批准新的排期门。那些需
-  要独立的行。
-- **整候选范围：**A) 纳入；B) 推迟；C) 砍掉；D) Hold。点名候选与其当前处置。修订
-  两个候选要两行。Hold 停下讨论、不改变先前处置。逐项回答之后检查组装集合的容量
-  与依赖。冲突回到受影响候选的 Include/Defer/Cut/Hold 行；保留先前答案、报告未
-  解决冲突，并在确认集合前重查。绝不静默修剪或替换另一个候选。这些选择是性质差
-  异，所以省略完整性分。
+- **Policy or implementation:** A) Apply this change; B) Keep this row's current value; C) Investigate before choosing; D) Defer this proposed change only. Deferring a stack change does not defer its entire candidate or approve a new schedule gate. Those need separate rows.
+- **Whole-candidate scope:** A) Include; B) Defer; C) Cut; D) Hold. Name the candidate and its current disposition. Revising two candidates takes two rows. Hold stops for discussion without changing the prior disposition. After individual answers, check the assembled set's capacity and dependencies. A conflict returns to the affected candidate's Include/Defer/Cut/Hold row; preserve prior answers, report unresolved conflicts, and recheck before confirming the set. Never silently trim or replace another candidate. These choices differ in kind, so omit completeness scores.
 
-等真实答复；模型一致是证据，不是同意。记录其答案引用与确切接受范围，然后用限定范
-围的 Edit 做那些修订再进下一行。Keep 保持当前值不变；调查或推迟不授权实现。
-/autoplan 中保留其授权的自动决策、审计轨迹与用户挑战规则；挑战保持待决到最终门。
+Wait for the actual answer; model agreement is evidence, not consent. Record its answer reference and exact accepted scope, then use a scoped Edit for those amendments before taking the next row. Keep leaves the current value unchanged; investigation or deferral does not authorize implementation. In /autoplan, preserve its authorized auto-decisions, audit trail and User Challenge rules; challenges stay pending for the final gate.
 
-报告全部发现、处置、剩余分歧与验证缺口，含无需提问的。回答一行不解决该发现其他
-待决行。
+Report all findings, dispositions, remaining disagreements and verification gaps, including those needing no question. An answer to one row does not resolve the finding's other pending rows.
 
-**持久化结果：**
+**Persist the result:**
 ```bash
 ~/.claude/skills/gstack/bin/gstack-review-log '{"skill":"codex-plan-review","timestamp":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'","status":"STATUS","source":"SOURCE","host":"claude","outside_provider":"codex","outside_status":"OUTSIDE_STATUS","phase":"plan-review","commit":"'"$(git rev-parse --short HEAD)"'"}'
-
 ```
 
-替换：STATUS = 仅当评审者完成且无问题时 "clean"；有发现 "issues_found"；两个评
-审者都没完成 "unavailable"。绝不把缺失覆盖算作干净评审。
-保留历史 review-log 的 skill ID；加
-`"host":"claude","outside_provider":"codex","outside_status":"completed|unavailable|disabled|skipped","phase":"plan-review"`。
-不同的尝试结果分开记录。`source:"codex"` 要求完成的 CLI 输出；原生用
-`source:"in-host"`（历史 `source:"claude"`：原生 Claude）。可用性/原生兜底不算
-外部完成。保留全部上报的 modelUsage；未知模型身份保持未知。
-`GSTACK_CODEX_NO_SANDBOX=1` 下加 `"codex_sandbox":"danger-full-access"`。
+Substitute: STATUS = "clean" only if a reviewer completed and found no issues; "issues_found" if findings exist, or "unavailable" if neither reviewer completed. Never count missing coverage as a clean review.
+Retain the historical review-log skill ID; add `"host":"claude","outside_provider":"codex","outside_status":"completed|unavailable|disabled|skipped","phase":"plan-review"`. Record differing attempt outcomes separately. `source:"codex"` requires completed CLI output; native uses `source:"in-host"` (historical `source:"claude"`: native Claude). Availability/native fallback is not outside completion. Preserve all reported modelUsage; unknown model identity stays unknown. Under `GSTACK_CODEX_NO_SANDBOX=1` add `"codex_sandbox":"danger-full-access"`.
 
 
 
 ---
 
-## 如何提问
+## How to ask questions
 
-遵循上方前导的 AskUserQuestion 格式。DX 评审的附加规则：
+Follow the AskUserQuestion format from the Preamble above. Additional rules for
+DX reviews:
 
-* **一个新的或重开的决策 = 一次 AskUserQuestion 调用。**起草选项之前跑决策门。
-  绝不合并独立决策，包括放进不同的 question tab。
-* **每个问题都落在证据上。**引用 persona、竞争基准、共情叙事或摩擦追踪。绝不抽
-  象提问。
-* **从 persona 视角描述痛。**不是"开发者会沮丧"，而是"[0A 的 persona] 会在入门
-  流程第 [N] 分钟撞上这个，并 [具体后果：放弃、提 issue、绕土办法]"。
-* 给 2-3 个选项。每个含：修复成本、对开发者采纳的影响。
-* **映射到上方 DX 第一性原理。**一句话把推荐接到某条具体原则（如"这违反
-  'T0 零摩擦'，因为 [persona] 在第一次 API 调用之前要额外 3 步配置"）。
-* **无待决决策：**报告该节的发现、证据与处置，然后继续。该节无发现就说"无问题，
-  继续"。否则只为决策门识别出的新的或有理由重开的决策提问。独立选择即便修复显
-  而易见仍需批准；例行验证或恢复既有已声明契约不需要。
-* 假定用户已经 20 分钟没看这个窗口。每个问题都重新落地。
+* **One new or reopened decision = one AskUserQuestion call.** Run the Decision gate before drafting options. Never combine independent decisions, including in separate question tabs.
+* **Ground every question in evidence.** Reference the persona, competitive benchmark,
+  empathy narrative, or friction trace. Never ask a question in the abstract.
+* **Frame pain from the persona's perspective.** Not "developers would be frustrated"
+  but "[persona from 0A] would hit this at minute [N] of their getting-started flow
+  and [specific consequence: abandon, file an issue, hack a workaround]."
+* Present 2-3 options. For each: effort to fix, impact on developer adoption.
+* **Map to DX First Principles above.** One sentence connecting your recommendation
+  to a specific principle (e.g., "This violates 'zero friction at T0' because
+  [persona] needs 3 extra config steps before their first API call").
+* **No pending decisions:** report the section's findings, evidence and dispositions,
+  then proceed. If it has no findings, state "No issues, moving on." Otherwise,
+  ask only for new or justified reopened decisions identified by the Decision gate.
+  An independent choice still needs approval even when its fix is obvious;
+  routine verification or restoring an existing declared contract does not.
+* Assume the user hasn't looked at this window in 20 minutes. Re-ground every question.
 
-## 必需输出
+## Required Outputs
 
-就地更新既有产物章节。把 Step 0 证据放在评审决策之上、评审章节之后。在 Review
-Log 与评审报告之前完成全部正文新增与排序；先组装正文，再在实际文件末尾追加报告。
+Update existing artifact sections in place. Keep Step 0 evidence above review decisions and later review sections. Complete all body additions and ordering before the Review Log and review report; assemble the body first, then append the report at the actual file end.
 
 ### Developer Persona Card
-Step 0A 的 persona 卡。放在计划 DX 节顶部。
+The persona card from Step 0A. This goes at the top of the plan's DX section.
 
 ### Developer Empathy Narrative
-Step 0B 的第一人称叙事，按用户纠正更新。
+The first-person narrative from Step 0B, updated with user corrections.
 
 ### Competitive DX Benchmark
-Step 0C 的基准表，按本产品评审后的分数更新。
+The benchmark table from Step 0C, updated with the product's post-review scores.
 
 ### Magical Moment Specification
-Step 0D 选定的交付载体及实现要求。
+The chosen delivery vehicle from Step 0D with implementation requirements.
 
 ### Developer Journey Map
-Step 0F 的旅程图，按全部摩擦点解决方案更新。
+The journey map from Step 0F, updated with all friction point resolutions.
 
 ### First-Time Developer Confusion Report
-Step 0G 的角色扮演报告，标注哪些项已处理。
+The roleplay report from Step 0G, annotated with which items were addressed.
 
-### "NOT in scope" 节
-考虑过并显式推迟的 DX 改进，各附一行理由。
+### "NOT in scope" section
+DX improvements considered and explicitly deferred, with one-line rationale each.
 
-### "What already exists" 节
-计划应复用的既有文档、示例、错误处理与 DX 模式。
+### "What already exists" section
+Existing docs, examples, error handling, and DX patterns that the plan should reuse.
 
-### TODOS.md 更新
-所有评审 pass 完成之后，把每个潜在 TODO 作为独立的 AskUserQuestion 呈现。绝不批
-量。DX 债务：缺失错误信息、未规定升级路径、文档缺口、缺失 SDK 语言。每个 TODO
-含：
-* **What：**一行描述
-* **Why：**它造成的具体开发者之痛
-* **Pros：**你得到什么（采纳、留存、满意度）
-* **Cons：**成本、复杂度或风险
-* **Context：**足够让 3 个月后有人接手它的细节
-* **Depends on / blocked by：**前提
+### TODOS.md updates
+After all review passes are complete, present each potential TODO as its own individual
+AskUserQuestion. Never batch. For DX debt: missing error messages, unspecified upgrade
+paths, documentation gaps, missing SDK languages. Each TODO gets:
+* **What:** One-line description
+* **Why:** The concrete developer pain it causes
+* **Pros:** What you gain (adoption, retention, satisfaction)
+* **Cons:** Cost, complexity, or risks
+* **Context:** Enough detail for someone to pick this up in 3 months
+* **Depends on / blocked by:** Prerequisites
 
-选项：**A)** 加进 TODOS.md **B)** 跳过 **C)** 现在就做
+Options: **A)** Add to TODOS.md **B)** Skip **C)** Build it now
 
 ### DX Scorecard
 
-在计划文件里把它写为独立的 `## DX Review Scorecard` 节（记分卡、其判定行与下方
-的 Unresolved Decisions），放在终结的 `## GSTACK REVIEW REPORT` 之前，替换本次
-评审更早的那一份。绝不要写进报告内部：下一次计划评审会删除并重生成该标题下的全
-部内容。
+In the plan file, write it as its own `## DX Review Scorecard` section
+(the scorecard, its verdict lines and the Unresolved Decisions below) above the terminal
+`## GSTACK REVIEW REPORT`, replacing this review's earlier one. Never write it inside
+the report: the next plan review deletes and regenerates everything under that heading.
 
 ```
 +====================================================================+
@@ -700,9 +648,9 @@ Step 0G 的角色扮演报告，标注哪些项已处理。
 +====================================================================+
 ```
 
-全部 pass 8+ 时："DX plan is solid. Developers will have a good experience."
-任何低于 6：标为关键 DX 债务，说明对采纳的具体影响。
-TTHW > 10 分钟：标为阻塞问题。
+If all passes 8+: "DX plan is solid. Developers will have a good experience."
+If any below 6: Flag as critical DX debt with specific impact on adoption.
+If TTHW > 10 min: Flag as blocking issue.
 
 ### DX Implementation Checklist
 
@@ -728,13 +676,14 @@ DX IMPLEMENTATION CHECKLIST
 [ ] Community channel exists and is monitored
 ```
 
-## 实现任务
+## Implementation Tasks
 
-结束本次评审之前，把上方发现综合成一份扁平的、可构建任务清单。每个任务源自一个
-具体发现：不注水。既输出 markdown 节，也写一份 JSONL 产物供 `/autoplan` 跨阶段
-聚合。
+Before closing this review, synthesize the findings above into a flat list of
+build-actionable tasks. Each task derives from a specific finding — no padding.
+Emit the markdown section AND write a JSONL artifact that `/autoplan` can
+aggregate across phases.
 
-### Markdown 节（始终输出）
+### Markdown section (always emit)
 
 ```markdown
 ## Implementation Tasks
@@ -748,18 +697,17 @@ finding above. Run with Claude Code or Codex; checkbox as you ship.
 - [ ] **T2 (P2, human: ~30min / CC: ~5min)** — ...
 ```
 
-规则：
-- P1 阻塞发布；P2 应同一分支落地；P3 是后续 TODO。
-- 某发现没产出可执行任务就不要编一个。
-- 某节零发现就输出 `_No new tasks from <section>._`
-- 展示人类团队与 CC+gstack 工作量估算。默认任务类型比例（人类 ÷ CC 时间）：脚手
-  架约 100 倍、测试约 50 倍、功能约 30 倍、带回归的 bug 修复约 20 倍、架构约 5
-  倍、调研约 3 倍。按实际工作调整并说明假设。
+Rules:
+- P1 blocks ship; P2 should land same branch; P3 is a follow-up TODO.
+- If a finding produced no actionable task, do not invent one.
+- If a section had zero findings, emit `_No new tasks from <section>._`
+- Show human-team and CC+gstack effort estimates. Default task-type ratios (human ÷ CC time): scaffolding ~100x, tests ~50x, features ~30x, bug fix with regression ~20x, architecture ~5x, research ~3x. Adjust to the actual work and state the assumption.
 
-### JSONL 产物（始终写，即使零任务）
+### JSONL artifact (always write, even if zero tasks)
 
-`/autoplan` 读这个文件跨阶段聚合。每行都用 `jq -nc` 构建，让含引号、换行或反斜
-杠的标题与来源发现干净序列化：绝不用手搓 `echo` / `printf`。
+`/autoplan` reads this file to aggregate across phases. Build each line with
+`jq -nc` so titles and source findings containing quotes, newlines, or
+backslashes serialize cleanly — never use hand-rolled `echo` / `printf`.
 
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
@@ -792,222 +740,197 @@ jq -nc \
   --argjson files "$FILES_JSON" \
   '{phase:$phase, run_id:$run_id, branch:$branch, commit:$commit, id:$id, priority:$priority, component:$component, files:$files, effort_human:$effort_human, effort_cc:$effort_cc, title:$title, source_finding:$source_finding}' \
   >> "$TASKS_FILE"
-
 ```
 
-`jq` 未安装时，回退为跳过 JSONL 写入并警告用户安装 jq 以便 autoplan 聚合。绝不
-手搓 JSONL。
+If `jq` is not installed, fall back to skipping the JSONL write and warn
+the user to install jq for autoplan aggregation. Never hand-roll JSONL.
 
-本次评审零任务时，仍 touch 该 JSONL 文件（`: > "$TASKS_FILE"`），让聚合器看到本
-阶段本次运行产出了输出（空文件意为"跑了，无发现"，与"没跑"区分）。
+If zero tasks were identified in this review, still touch the JSONL file
+(`: > "$TASKS_FILE"`) so the aggregator sees that the phase produced output
+this run (an empty file means "ran, no findings" — distinct from "didn't run").
 
 
 ### Unresolved Decisions
-任何 AskUserQuestion 未回答的，记在这里。绝不静默默认。
+If any AskUserQuestion goes unanswered, note here. Never silently default.
 
-## 计划文件评审报告
+## Plan File Review Report
 
-记录或宣布完成之前，保存已接受计划变更与完整评审输出（含下方报告）。
+Save the accepted plan changes and full review output, including the report below, before logging or announcing completion.
 
-### 检测计划文件
+### Detect the plan file
 
-优先用显式请求的输出/报告文件。否则用用户点名的被评审计划，再否则用宿主活跃
-计划。范围内无文件就跳过本节；常规的无文件评审记录照常适用。
+Use an explicitly requested output/report file first. Otherwise use the reviewed plan named by the user, then the host active plan. If no file is in scope, skip this section; ordinary no-file review logging still applies.
 
-### 生成报告
+### Generate the report
 
-跑 `~/.claude/skills/gstack/bin/gstack-review-read` 取既往评审条目。
-用当前 DX Scorecard 或 Completion Summary 作为本次评审的状态与发现；应用下方
-Review Log 字段规则并在其既往运行数上加恰好一。不要为填充报告而预先记录本次
-运行。其他评审用既往条目，保留其状态、归属与新鲜度。
+Run `~/.claude/skills/gstack/bin/gstack-review-read` for prior review entries.
+Use the current Completion Summary or DX Scorecard for this review's status and findings;
+apply the Review Log field rules below and add exactly one to its prior run count.
+Do not pre-log this run to populate the report.
+Use prior entries for other reviews, retaining their status, attribution and freshness.
 
-用记录的 provenance 解析每条 JSONL 条目。历史 source "claude" 是原生 Claude
-子代理；"claude-code" 是外部 CLI。保留历史 codex 标识符，绝不用当前 harness
-重新标注旧记录。未知模型身份保持未知。新记录展示 host、outside_provider、
-outside_status 与 phase。只有已完成的 external 记录确立外部覆盖；原生兜底不
-算。
+Parse each JSONL entry using recorded provenance. Historical source "claude" is a native Claude subagent; "claude-code" is the external CLI. Keep historical codex identifiers and never relabel old records from the current harness. Unknown model identity remains unknown. For new records, show host, outside_provider, outside_status, and phase. Only completed external records establish outside coverage; native fallbacks do not.
 
-每个 Skill 记录的字段不同：
+Each skill logs different fields:
 
-- **plan-ceo-review**：`status`、`unresolved`、`critical_gaps`、`mode`、
-  `scope_proposed`、`scope_accepted`、`scope_deferred`、`commit`
-  → Findings："{scope_proposed} proposals, {scope_accepted} accepted,
-  {scope_deferred} deferred"
-  → scope 字段为 0 或缺失时（HOLD/REDUCTION 模式）："mode: {mode},
-  {critical_gaps} critical gaps"
-- **plan-eng-review**：`status`、`unresolved`、`critical_gaps`、
-  `issues_found`、`mode`、`commit`
-  → Findings："{issues_found} issues, {critical_gaps} critical gaps"
-- **plan-devex-review**：`status`、`initial_score`、`overall_score`、
-  `unresolved`、`decisions_made`、`commit`
-  → Findings："score: {initial_score}/10 → {overall_score}/10,
-  {decisions_made} decisions"
-- **plan-devex-review**：`status`、`initial_score`、`overall_score`、
-  `product_type`、`tthw_current`、`tthw_target`、`mode`、`persona`、
-  `competitive_tier`、`unresolved`、`commit`
-  → Findings："score: {initial_score}/10 → {overall_score}/10, TTHW:
-  {tthw_current} → {tthw_target}"
-- **devex-review**：`status`、`overall_score`、`product_type`、
-  `tthw_measured`、`dimensions_tested`、`dimensions_inferred`、
-  `boomerang`、`commit`
-  → Findings："score: {overall_score}/10, TTHW: {tthw_measured},
-  {dimensions_tested} tested/{dimensions_inferred} inferred"
-- **codex-review**：`status`、`gate`、`findings`、`findings_fixed`
-  → Findings："{findings} findings, {findings_fixed}/{findings} fixed"
+- **plan-ceo-review**: \`status\`, \`unresolved\`, \`critical_gaps\`, \`mode\`, \`scope_proposed\`, \`scope_accepted\`, \`scope_deferred\`, \`commit\`
+  → Findings: "{scope_proposed} proposals, {scope_accepted} accepted, {scope_deferred} deferred"
+  → If scope fields are 0 or missing (HOLD/REDUCTION mode): "mode: {mode}, {critical_gaps} critical gaps"
+- **plan-eng-review**: \`status\`, \`unresolved\`, \`critical_gaps\`, \`issues_found\`, \`mode\`, \`commit\`
+  → Findings: "{issues_found} issues, {critical_gaps} critical gaps"
+- **plan-design-review**: \`status\`, \`initial_score\`, \`overall_score\`, \`unresolved\`, \`decisions_made\`, \`commit\`
+  → Findings: "score: {initial_score}/10 → {overall_score}/10, {decisions_made} decisions"
+- **plan-devex-review**: \`status\`, \`initial_score\`, \`overall_score\`, \`product_type\`, \`tthw_current\`, \`tthw_target\`, \`mode\`, \`persona\`, \`competitive_tier\`, \`unresolved\`, \`commit\`
+  → Findings: "score: {initial_score}/10 → {overall_score}/10, TTHW: {tthw_current} → {tthw_target}"
+- **devex-review**: \`status\`, \`overall_score\`, \`product_type\`, \`tthw_measured\`, \`dimensions_tested\`, \`dimensions_inferred\`, \`boomerang\`, \`commit\`
+  → Findings: "score: {overall_score}/10, TTHW: {tthw_measured}, {dimensions_tested} tested/{dimensions_inferred} inferred"
+- **codex-review**: \`status\`, \`gate\`, \`findings\`, \`findings_fixed\`
+  → Findings: "{findings} findings, {findings_fixed}/{findings} fixed"
 
-当前行与其后续日志必须描述同一份已保存评审。
+The current row and its later log must describe the same saved review.
 
-产出这张 markdown 表：
+Produce this markdown table:
 
-```markdown
+\`\`\`markdown
 ## GSTACK REVIEW REPORT
 
 | Review | Trigger | Why | Runs | Status | Findings |
 |--------|---------|-----|------|--------|----------|
-| CEO Review | `/plan-ceo-review` | Scope & strategy | {runs} | {status} | {findings} |
+| CEO Review | \`/plan-ceo-review\` | Scope & strategy | {runs} | {status} | {findings} |
 | Outside Review | {recorded provider and trigger} | Independent 2nd opinion | {runs} | {outside_status} | {findings} |
-| Eng Review | `/plan-eng-review` | Architecture & tests (required) | {runs} | {status} | {findings} |
-| Design Review | `/plan-devex-review` | UI/UX gaps | {runs} | {status} | {findings} |
-| DX Review | `/plan-devex-review` | Developer experience gaps | {runs} | {status} | {findings} |
-```
+| Eng Review | \`/plan-eng-review\` | Architecture & tests (required) | {runs} | {status} | {findings} |
+| Design Review | \`/plan-design-review\` | UI/UX gaps | {runs} | {status} | {findings} |
+| DX Review | \`/plan-devex-review\` | Developer experience gaps | {runs} | {status} | {findings} |
+\`\`\`
 
-表下加这几行。**OUTSIDE COVERAGE** 与 **CROSS-MODEL** 是条件性的：阶段运行
-过、被禁用/跳过/不可用、或有发现时包含；没有此类阶段时才省略。**VERDICT** 永
-远在：
+Below the table, add these lines. **OUTSIDE COVERAGE** and **CROSS-MODEL** are conditional:
+include them when the phase ran, was disabled/skipped/unavailable, or has findings;
+omit them only when no such phase applies. **VERDICT** is always present:
 
-- **OUTSIDE COVERAGE：**提供方、阶段、完成状态和发现。不可用、被禁用和被跳
-  过的阶段都要包含；绝不从其他阶段推断完成。
-- **CROSS-MODEL：**仅当存在原生评审和已完成的 external 评审时：重叠分析要写
-  记录的提供方与已知模型身份。不要从 harness 名推断模型家族。
-- **VERDICT：**列出 CLEAR 的评审（如 "CEO + ENG CLEARED — ready to
-  implement"）。Eng Review 不 CLEAR 且未被全局跳过时，追加
-  "eng review required"。
+- **OUTSIDE COVERAGE:** provider, phase, completion state, and findings. Include unavailable, disabled, and skipped phases; never infer completion from another phase.
+- **CROSS-MODEL:** only when native and completed external reviews exist — overlap analysis with recorded providers and known model identity. Do not infer distinct model families from harness names.
+- **VERDICT:** list reviews that are CLEAR (e.g., "CEO + ENG CLEARED — ready to implement").
+  If Eng Review is not CLEAR and not skipped globally, append "eng review required".
 
-**未决决策状态（强制：绝不可省；报告最后一个非空白行）。** VERDICT 之后，以
-以下之一结束报告（`## GSTACK REVIEW REPORT` 标题下的内容：一个粗体标签，绝不
-是新的 `## ` 标题；豁免于"为空即省略"规则）：精确的非粗体行
-`NO UNRESOLVED DECISIONS`（粗体的不算），或 `**UNRESOLVED DECISIONS:**` 标头
-加每个未决项一条 bullet（最后一条 bullet 是末行；仅当 N > 0 时加
-`+ N unresolved from prior reviews`）。这避免重复计数：从上下文列出本次评审
-的未决项；既往评审在你 DROP 当前 Skill 那一行之后，对每个 Skill 最新 fresh 行
-的 `unresolved` 求和（dashboard 7 天窗口）；两者皆零才输出哨兵行。
+**Unresolved-decisions status (MANDATORY — never omitted; the report's final non-whitespace
+line).** After VERDICT, end the report (content under the \`## GSTACK REVIEW REPORT\`
+heading — a bold label, never a new \`## \` heading; exempt from the "omit when empty"
+rule) with exactly one: the exact unbolded line \`NO UNRESOLVED DECISIONS\` (a bolded one
+does NOT count), OR a \`**UNRESOLVED DECISIONS:**\` header + one bullet per open item
+(last bullet = final line; add \`+ N unresolved from prior reviews\` only when N > 0).
+This avoids double-counting: list THIS review's open items from context; for prior reviews
+sum \`unresolved\` over the latest fresh row per skill (dashboard 7-day window) after you
+DROP the current skill's row; emit the sentinel only when both are zero.
 
-### 写入计划文件
+### Write to the plan file
 
-**PLAN MODE EXCEPTION — ALWAYS RUN：**只应用已接受变更地保存完整被评审计划/
-报告；未决选择保持待定。
+**PLAN MODE EXCEPTION — ALWAYS RUN:** Save the complete reviewed plan/report with only accepted changes applied; keep unresolved choices pending.
 
-报告必须永远是计划文件的最后一节：绝不在文件中部。
-用单一的"删除后追加"流程：
+The report must always be the LAST section of the plan file — never mid-file.
+Use a single delete-then-append flow:
 
-1. 读既有计划/报告（若有）。保留其内容，只应用已接受变更；含完整评审输出。
-   定位任何既有的 `## GSTACK REVIEW REPORT` 节。
-2. 找到时，用 Edit 工具删除整个既有节。匹配从
-   `## GSTACK REVIEW REPORT` 到下一个 `## ` 标题或文件末尾（先到者）。替换为
-   空字符串。无论该节现在在哪都适用：中段删除是有意为之，不是特例。Edit 失
-   败（如并发编辑改了内容）时，重读计划文件并重试一次。
-3. 删除过报告时，Read 更新后的文件。在 EOF 追加新的
-   `## GSTACK REVIEW REPORT`。用 Edit 匹配最近一次 Read 确认的文件后缀，或用
-   Write 写全文件、报告最后。无论此前是否有报告都追加。
-   "Unresolved Decisions" 在后面还有其他节时不是 EOF 锚点。
-4. **Read-back 门：**Read 已保存文件。核验已接受变更、完整评审输出、当前评审
-   行、判定与最终未决决策状态，且 `## GSTACK REVIEW REPORT` 是最后一节。写入
-   或验证失败就报告错误并在 Review Log 或决策记录之前停止。
+1. Read the existing plan/report, if present. Preserve its content and apply only
+   accepted changes; include the full review output. Locate any existing
+   `## GSTACK REVIEW REPORT` section.
+2. If found, use the Edit tool to DELETE the entire existing section. Match from
+   \`## GSTACK REVIEW REPORT\` through either the next \`## \` heading or end of
+   file, whichever comes first. Replace with the empty string. This applies
+   regardless of where the section currently lives — mid-file deletion is
+   intentional, not a special case. If the Edit fails (e.g., concurrent edit
+   changed the content), re-read the plan file and retry once.
+3. If a report was deleted, Read the updated file. Append the new
+   \`## GSTACK REVIEW REPORT\` at EOF. Use Edit to match the suffix
+   confirmed by the latest Read, or Write the full file with the report last. Append whether or not a prior report existed.
+   "Unresolved Decisions" is not an EOF anchor when other sections follow it.
+4. **Read-back gate:** Read the saved file. Verify the accepted changes, full review
+   output, current review row, verdict and final unresolved-decisions status, with
+   `## GSTACK REVIEW REPORT` as the last section. If writing or verification fails,
+   report the error and stop before Review Log or decision logging.
 
-不要原地替换该节；删掉它、在 EOF 追加新报告，让评审报告永远是计划的最后一
-节。
+Do NOT replace the section in place; delete it and append the new report at EOF,
+so the review report is always the plan's last section.
 
 ## Review Log
 
-范围内有计划/报告文件时，只在其成功写入与上方 Read-back 之后持久化。失败就
-报告错误并停止；不记录完成或已接受决策。
-**PLAN MODE EXCEPTION — ALWAYS RUN after verification：**这些命令把评审元数据
-写进 `~/.gstack/`；随后的 dashboard 读已保存结果。
+When a plan/report file is in scope, persist only after its successful write and Read-back
+above. On failure, report the error and stop; do not log completion or an accepted decision.
+**PLAN MODE EXCEPTION — ALWAYS RUN after verification:** these commands write review
+metadata to `~/.gstack/`; the following dashboard reads the saved result.
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-review-log '{"skill":"plan-devex-review","timestamp":"TIMESTAMP","status":"STATUS","initial_score":N,"overall_score":N,"product_type":"PRODUCT_TYPE","tthw_current":"TTHW_CURRENT","tthw_target":"TTHW_TARGET","mode":"MODE","persona":"PERSONA","competitive_tier":"COMPETITIVE_TIER","unresolved":N,"dx_rubric":"agent-ready-v1","dimension_scores":{"getting_started":N,"api_cli_sdk":N,"error_messages":N,"documentation":N,"upgrade_path":N,"dev_environment":N,"community":N,"dx_measurement":N},"commit":"COMMIT"}'
-
 ```
 
-用 Completion Summary 的值替换：
-- **TIMESTAMP**：当前 ISO 8601 日期时间
-- **STATUS**：整体分 8+ 且 0 未决时 "clean"；否则 "issues_open"
-- **initial_score**：修复前的整体初始 DX 分（0-10）
-- **overall_score**：修复后的最终整体 DX 分（0-10）
-- **product_type**：Step 0 检测到的开发者产品类型
-- **tthw_current** / **tthw_target**：当前与目标的 TTHW（分钟）
-- **mode**：本次评审模式（EXPANSION/POLISH/TRIAGE）
-- **persona**：0A 的 persona
-- **competitive_tier**：0C 的目标档位
-- **unresolved**：未决 DX 决策数
-- **dx_rubric**：`agent-ready-v1`
-- **dimension_scores**：8 个维度的分数对象
-- **COMMIT**：`git rev-parse --short HEAD` 的输出
+TIMESTAMP = current ISO 8601 datetime; STATUS = "clean" if score 8+ AND 0 unresolved, else "issues_open"; other fields from the DX Scorecard + Step 0; COMMIT = `git rev-parse --short HEAD`.
 
 ## Review Readiness Dashboard
 
-完成评审后，读评审日志与配置以展示 dashboard。
+After completing the review, read the review log and config to display the dashboard.
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-review-read
-
 ```
 
-**1. 选要展示的记录。**每行用最新记录。不用超过 7 天的记录清行，绝不用更旧
-的成功顶替更新的失败。Ship 指标不是评审记录。
+**1. Choose the records to display.** Use the latest record for each row below.
+Do not use a record older than 7 days to clear a row, and never substitute an older
+success for a newer failure. Ship metrics are not review records.
 
-| 行 | 选最新的 | 状态后缀 |
+| Row | Choose the latest of | Status suffix |
 |---|---|---|
-| Eng Review | `review` 或 `plan-eng-review` | (DIFF) 或 (PLAN) |
+| Eng Review | `review` or `plan-eng-review` | (DIFF) or (PLAN) |
 | CEO Review | `plan-ceo-review` | — |
-| Design Review | `plan-design-review` 或 `design-review-lite` | (FULL) 或 (LITE) |
-| Adversarial | `adversarial-review` 或 legacy `codex-review` | — |
-| Outside Voice | CEO 或 Eng review 的 `codex-plan-review` | — |
+| Design Review | `plan-design-review` or `design-review-lite` | (FULL) or (LITE) |
+| Adversarial | `adversarial-review` or legacy `codex-review` | — |
+| Outside Voice | `codex-plan-review` from CEO or Eng review | — |
 
-保留每条记录的 host、source、outside_provider、outside_status 与 phase。历史
-source "claude" 是原生子代理；"claude-code" 是外部 CLI。不要用今天的 harness
-推断旧提供方或未知模型。原生结果不填补缺失、禁用或跳过的外部覆盖。
+Keep each record's host, source, outside_provider, outside_status and phase.
+Historical source "claude" is a native subagent; "claude-code" is the external CLI.
+Do not infer old providers or unknown models from today's harness. A native result
+does not fill missing, disabled or skipped outside coverage.
 
-**来源归属：**把记录到的 `via` 加进后缀（"CLEAR (PLAN via /autoplan)"）；没有
-就保持 "CLEAR (PLAN)" 或 "CLEAR (DIFF)"。dashboard 下方，按工作流运行与阶段分
-组展示 `autoplan-voices` 与 `design-outside-voices`。展示每阶段的 provider 与
-outside_status；保留部分覆盖。这些细节不清 Eng Review。
+**Source attribution:** Append a recorded `via` to the suffix ("CLEAR (PLAN via
+/autoplan)"); without one, keep "CLEAR (PLAN)" or "CLEAR (DIFF)". Below the dashboard, group `autoplan-voices`
+and `design-outside-voices` by workflow run and phase. Show each phase's provider
+and outside_status; retain partial coverage. These details do not clear Eng Review.
 
-**2. 选判定前先查新鲜度。**
+**2. Check freshness before choosing a verdict.**
 
-- **内容优先规则：**对 `review`、`adversarial-review`、`codex-review`、ship
-  阶段评审和 `design-review-lite`，用 `review_freshness.status` 并展示其
-  `reason`。CURRENT 指一次完成的干净评审，其起止内容指纹等于当前
-  `---WTREE---` 指纹。STALE 或 UNVERIFIED 清不了 Eng Review。缺
-  `review_freshness`（含 legacy 仅日志记录）即 UNVERIFIED。绝不为 diff 证据
-  回退到 HEAD 相等或 commit 距离，即使零 commit。展示记录的轮数、
-  completed/converged 字段和缺失的 source/phase 覆盖。未知覆盖不是通过。
-- **计划记录**（plan-ceo-review、plan-eng-review、plan-devex-review 和
-  codex-plan-review）用 7 天窗口，不用工作区指纹。有 `plan_sha256` 时可对比
-  计划文件并报告不匹配。把记录的 commit 与 `---HEAD---` 对比；不同则运行
-  `git rev-list --count STORED_COMMIT..HEAD` 并报告
-  "Note: {skill} review from {date} may be stale — {N} commits since
-  review"。命令失败即 UNKNOWN，按过期处理；无 commit 跟踪就建议重跑。全部评
-  审都新鲜时省略注记。
+- **Content-first rule:** For `review`, `adversarial-review`, `codex-review`,
+  ship-stage reviews and `design-review-lite`, use `review_freshness.status`
+  and show its `reason`. CURRENT means a completed clean review whose start and
+  end content fingerprints equal the current `---WTREE---` fingerprint.
+  STALE or UNVERIFIED cannot clear Eng Review. Missing `review_freshness`,
+  including legacy log-only records, means UNVERIFIED. Never fall back to HEAD
+  equality or commit distance for diff evidence, even at zero commits.
+  Show recorded cycles, completed/converged fields and missing source/phase
+  coverage. Unknown coverage is not a pass.
+- **Plan records** (plan-ceo-review, plan-eng-review, plan-design-review and
+  codex-plan-review) use the 7-day window, not the working-tree fingerprint.
+  If `plan_sha256` is present, you may compare the plan file and report a mismatch.
+  Compare the recorded commit with `---HEAD---`; if different, run
+  `git rev-list --count STORED_COMMIT..HEAD` and report
+  "Note: {skill} review from {date} may be stale — {N} commits since review".
+  A failed command means UNKNOWN, treated as stale; without commit tracking,
+  suggest a re-run. Omit notes when all reviews are current.
 
-**3. 选历史判定。**CLEARED 要求所选 Eng Review 为 `clean`、7 天内、且按第 2
-步新鲜。否则报 NOT CLEARED 及其缺失、过期或 open-issue 的原因。
-`skip_eng_review` 为 true 时，Eng Review 显示 "SKIPPED (global)" 且本
-dashboard 判 CLEARED。Eng Review 默认必需；
-`gstack-config set skip_eng_review true` 关闭该要求。
+**3. Choose the historical verdict.** CLEARED requires the selected Eng Review
+to be `clean`, within 7 days and fresh under step 2. Otherwise report NOT CLEARED
+and its missing, stale or open-issue reason. If `skip_eng_review` is true, show
+"SKIPPED (global)" for Eng Review and CLEARED for this dashboard.
+Eng Review is required by default; `gstack-config set skip_eng_review true` disables that requirement.
 
-其他行提供上下文，不替代 Eng Review：
-- 产品/业务或范围决策建议 CEO Review，例行修复或清理不必。
-- UI/UX 工作建议 Design Review，后端、基础设施或纯提示词工作不必。
-- Adversarial review 始终含原生 pass。可用且启用的外部挑战是补充；200+ 行的
-  diff 还要过结构化 P1 门。
-- Outside Voice 是 CEO/Eng review 之后默认开启的计划评审。`codex_reviews`
-  关闭该额外步骤。提供方失败用原生兜底并记录外部覆盖缺失；本 dashboard 行绝
-  不当发布的门。
+Other rows provide context, not a substitute for Eng Review:
+- Recommend CEO Review for product/business or scope decisions, not routine fixes or cleanup.
+- Recommend Design Review for UI/UX work, not backend, infrastructure or prompt-only work.
+- Adversarial review always includes a native pass. Available, enabled outside
+  challenges supplement it; diffs of 200+ lines also get the structured P1 gate.
+- Outside Voice is the default-on plan review after CEO/Eng review. `codex_reviews`
+  disables that extra step. Provider failure uses native fallback and records
+  missing outside coverage; this dashboard row never gates shipping.
 
-**4. 展示 dashboard。**缺失、过期、禁用或不可用的结果显式展示，绝不显示为
-CLEAR。新鲜的 `clean` 结果显示 CLEAR，`issues_open` 显示 ISSUES OPEN，不改
-存储状态。
+**4. Display the dashboard.** Show missing, stale, disabled or unavailable results
+explicitly, never as CLEAR. Display a fresh `clean` result as CLEAR and
+`issues_open` as ISSUES OPEN without changing the stored status.
 
 ```
 +====================================================================+
@@ -1025,105 +948,111 @@ CLEAR。新鲜的 `clean` 结果显示 CLEAR，`issues_open` 显示 ISSUES OPEN�
 +====================================================================+
 ```
 
-## 记录学习
+## Capture Learnings
 
-本会话发现了非显而易见的模式、坑或架构洞见时，为未来会话记录：
+If you discovered a non-obvious pattern, pitfall, or architectural insight during
+this session, log it for future sessions:
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-learnings-log '{"skill":"plan-devex-review","type":"TYPE","key":"SHORT_KEY","insight":"DESCRIPTION","confidence":N,"source":"SOURCE","files":["path/to/relevant/file"]}'
-
 ```
 
-**Types：**`pattern`（可复用方法）、`pitfall`（不要做什么）、`preference`
-（用户声明的偏好）、`architecture`（结构性决策）、`tool`（库/框架洞见）、
-`operational`（项目环境/CLI/工作流知识）。
+**Types:** `pattern` (reusable approach), `pitfall` (what NOT to do), `preference`
+(user stated), `architecture` (structural decision), `tool` (library/framework insight),
+`operational` (project environment/CLI/workflow knowledge).
 
-**Sources：**`observed`（你在代码里发现的）、`user-stated`（用户告诉你的）、
-`inferred`（AI 推断）、`cross-model`（Claude 与 Codex 一致同意）。
+**Sources:** `observed` (you found this in the code), `user-stated` (user told you),
+`inferred` (AI deduction), `cross-model` (both Claude and Codex agree).
 
-**Confidence：**1-10。要诚实。代码中验证过的模式是 8-9。拿不准的推断是 4-5。
-用户明确说过的偏好是 10。
+**Confidence:** 1-10. Be honest. An observed pattern you verified in the code is 8-9.
+An inference you're not sure about is 4-5. A user preference they explicitly stated is 10.
 
-**files：**写明该学习引用的具体文件路径。这支持过期检测：那些文件日后被删，
-该学习可被标记。
+**files:** Include the specific file paths this learning references. This enables
+staleness detection: if those files are later deleted, the learning can be flagged.
 
-**只记录真正的发现。**明显的东西不记。用户已经知道的东西不记。好的检验：这个
-洞见能在未来会话省时间吗？能就记。
+**Only log genuine discoveries.** Don't log obvious things. Don't log things the user
+already knows. A good test: would this insight save time in a future session? If yes, log it.
 
 
 
-## Brain 校准回写（有门控）
+## Brain Calibration Write-Back (gated)
 
-除非设置了 `BRAIN_CALIBRATION_WRITEBACK`，且前导/brain-health 输出或 gstack
-配置显示 `brain_trust_policy@<endpoint-hash>=personal`，否则跳过。未知则跳过。
-两道门都通过时，用 `mcp__gbrain__takes_add` 记录一条持久的类型化预测；不可用
-时改用带 gstack:takes 围栏块的 `mcp__gbrain__put_page`。
+Skip unless `BRAIN_CALIBRATION_WRITEBACK` is set and the preamble/brain-health
+output or gstack config shows `brain_trust_policy@<endpoint-hash>=personal`.
+If unknown, skip. If both gates pass, record one durable
+typed prediction with `mcp__gbrain__takes_add`; if unavailable, use
+`mcp__gbrain__put_page` with a gstack:takes fence block.
 
-Take frontmatter：
+Take frontmatter:
 ```yaml
 kind: bet
 holder: <user identity from whoami>
 claim: <one-line prediction the skill is making>
-weight: 0.5
+weight: 0.6
 since_date: <today's date>
 expected_resolution: <date in 1-3 months depending on skill>
 source_skill: plan-devex-review
 ```
 
-写入之后，使受影响的摘要失效：
+After write, invalidate affected digests:
 
 ```bash
 SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null) || true
   ~/.claude/skills/gstack/bin/gstack-brain-cache invalidate developer-persona --project "$SLUG" 2>/dev/null || true
-
 ```
 
-## Brain 缓存后台刷新
+## Brain Cache Background Refresh
 
-本 Skill 的工作完成之后（且 telemetry 已记录），为接近 TTL 的缓存摘要踢一次
-后台刷新。这是非阻塞的，用户不等。下次调用受益于热缓存。
+After the skill's work completes (and telemetry has logged), kick a
+background refresh of any cache digest that's getting close to its TTL.
+This is non-blocking — the user doesn't wait. Next invocation benefits
+from the warm cache.
 
 ```bash
 SLUG=$(~/.claude/skills/gstack/bin/gstack-slug --get SLUG 2>/dev/null) || true
 (~/.claude/skills/gstack/bin/gstack-brain-cache refresh --project "$SLUG" 2>/dev/null &) || true
-
 ```
 
 
-## 下一步：评审链
+## Next Steps — Review Chaining
 
-展示 Review Readiness Dashboard 之后，按本次设计评审发现推荐下一次评审。读
-dashboard 输出看哪些评审已跑、是否过期。
+After displaying the Review Readiness Dashboard, recommend next reviews:
 
-**若 eng review 未被全局跳过就推荐 /plan-eng-review**：在 dashboard 输出里查
-`skip_eng_review`。为 `true` 时 eng review 已 opt-out：不要推荐。否则 eng
-review 是必需的发布门。本次设计评审加入重要交互规格、新用户流程或改了信息架构
-时，强调 eng review 需要验证架构影响。eng review 已存在但 commit hash 显示它
-早于本次设计评审时，注明它可能过期，应重跑。
+**Recommend /plan-eng-review if eng review is not skipped globally** — DX issues often
+have architectural implications. If this DX review found API design problems, error
+handling gaps, or CLI ergonomics issues, eng review should validate the fixes.
 
-**考虑推荐 /plan-ceo-review**：但仅当本次设计评审暴露了根本的产品方向缺口。具
-体是：整体设计分初评低于 4/10、信息架构有重大结构问题、或评审浮现了"是不是在
-解决正确问题"的疑问，且 dashboard 里没有 CEO review。这是选择性推荐：多数设计
-评审**不应**触发 CEO review。
+**Suggest /plan-design-review if user-facing UI exists** — DX review focuses on
+developer-facing surfaces; design review covers end-user-facing UI.
 
-**两者都需要时先推荐 eng review**（必需门）。
+**Recommend /devex-review after implementation** — the boomerang. Plan said TTHW would
+be [target from 0C]. Did reality match? Run /devex-review on the live product to find
+out. This is where the competitive benchmark pays off: you have a concrete target to
+measure against.
 
-**适当时推荐设计探索 Skill**：/design-shotgun 与 /design-html 产出设计产物
-（mockup、HTML 预览），不是应用代码。它们与评审一起属于计划模式。本次设计评审
-发现值得探索新方向的视觉问题时推荐 /design-shotgun。已有获批 mockup 且需转成
-可运行 HTML 时推荐 /design-html。
+Use AskUserQuestion with applicable options:
+- **A)** Run /plan-eng-review next (required gate)
+- **B)** Run /plan-design-review (only if UI scope detected)
+- **C)** Ready to implement, run /devex-review after shipping
+- **D)** Skip, I'll handle next steps manually
 
-用 AskUserQuestion 呈现下一步。始终包含手动/停止选项 E；只提供适用的后续
-Skill。用户选手动就不再启动其他 Skill 地结束：
-- **A)** 接着跑 /plan-eng-review（必需门）
-- **B)** 跑 /plan-ceo-review（仅在发现根本产品缺口时）
-- **C)** 跑 /design-shotgun：为发现的问题探索视觉设计变体
-- **D)** 跑 /design-html：从获批 mockup 生成 Pretext 原生 HTML
-- **E)** 跳过：我自己处理下一步
+## Mode Quick Reference
+```
+             | DX EXPANSION     | DX POLISH          | DX TRIAGE
+Scope        | Push UP (opt-in) | Maintain           | Critical only
+Posture      | Enthusiastic     | Rigorous           | Surgical
+Competitive  | Full benchmark   | Full benchmark     | Target only
+Magical      | Full design      | Verify exists      | Verify exists
+Journey      | All stages +     | All stages         | Install + Hello
+             | best-in-class    |                    | World only
+Passes       | All 8, expanded  | All 8, standard    | All 8, blockers only
+Outside voice| Recommended      | Recommended        | Skip
+```
 
-## 格式规则
-* 问题编号（1、2、3……），选项字母（A、B、C……）。
-* 标注为编号 + 字母（如 "3A"、"3B"）。
-* 每个选项最多一句。
-* 每个未决问题都暂停。某 pass 没有就说清楚并继续；不要制造问题。
-* 每个 pass 前后都打分，便于扫读。
+## Formatting Rules
+
+* NUMBER issues (1, 2, 3...) and LETTERS for options (A, B, C...).
+* Label with NUMBER + LETTER (e.g., "3A", "3B").
+* One sentence max per option.
+* After each pass, report its findings. Wait for any pending decision before moving on.
+* Rate before and after each pass for scannability.
