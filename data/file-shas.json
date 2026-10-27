@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "d173763599565029f5266ba28c4f6b7b0ddd35ec"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "1073b9b68d08f3a8813c8395682d0c40dc1e686f"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -34,7 +34,7 @@
     "understand-anything-plugin/skills/understand/SKILL.md": "778b800c1d770ae6401ae86245def77dd220900c"
   },
   "mvanhorn/last30days-skill": {
-    "skills/last30days/SKILL.md": "f443c8123ce1a69b9e7133f61b0a6b442f3b1418"
+    "skills/last30days/SKILL.md": "2eeff5f15fb4cb5c2760276d771c918bd5e68feb"
   },
   "cathrynlavery/diagram-design": {
     "skills/diagram-design/SKILL.md": "a78a294f0f96e46c830c8b949664ee4bbc3edfd2"
@@ -46,10 +46,14 @@
     ".cursor/skills/i-have-adhd/SKILL.md": "6c42757ffae37e442adfb52fbba2a8609f1cff00"
   },
   "coreyhaines31/marketingskills": {
-    "skills/product-marketing/SKILL.md": "3af463a602aa0233c4d5fc98c23ba13224aa8f6b"
+    "skills/product-marketing/SKILL.md": "3af463a602aa0233c4d5fc98c23ba13224aa8f6b",
+    "skills/copywriting/SKILL.md": "e70bd2e1f4e96cb94ef69b3899150950b0128be5",
+    "skills/cro/SKILL.md": "2b0a5bb9aa17ed83ff111dbfe6ea722610828a29"
   },
   "K-Dense-AI/scientific-agent-skills": {
-    "skills/experimental-design/SKILL.md": "ee14f9ed795c791ac80e3ea946858d97d09c3e50"
+    "skills/experimental-design/SKILL.md": "ee14f9ed795c791ac80e3ea946858d97d09c3e50",
+    "skills/exploratory-data-analysis/SKILL.md": "c461f99dea057872298ce6f04e7c090a83d80d01",
+    "skills/citation-management/SKILL.md": "b63b589d4d423969a63e032e62c2b74969147c1c"
   },
   "affaan-m/ECC": {
     "skills/search-first/SKILL.md": "3d2669e71ba54afba95defb05080253058190600",
@@ -79,19 +83,19 @@
     "SKILL.md": "742deafaf4222f9f0e9d9410e72483dad64fe716"
   },
   "garrytan/gstack": {
-    "office-hours/SKILL.md": "779f50df96b7c17c814feda5dd41264ff13e48af",
-    "plan-ceo-review/SKILL.md": "dd1148184994ce6480916092b47cada921d701a1",
-    "qa/SKILL.md": "5d4bd506b6a837e49790929cccb13ee31b1742f6",
-    "design-review/SKILL.md": "42e10d81dde7cdcbbab719553fabb7dc0f905a6d",
-    "health/SKILL.md": "1078ec6d5677392838319abb851390ece2e028bf",
-    "review/SKILL.md": "edb01a2c883f73b43099e6e16e1a892c584a5d74",
-    "learn/SKILL.md": "9d2626c42a71907b81e9e4cc2adecb0aa42c311b",
-    "ship/SKILL.md": "24d4cfafb8c672b0e7e06c3f75852f83fe2e56fa",
-    "investigate/SKILL.md": "659937b9f4201781a6b6379fc21e1a387c7530be",
-    "retro/SKILL.md": "7f3d287a8583ca30fb3fbd08ae177eb16e3d6fe3",
-    "land-and-deploy/SKILL.md": "9c6571b01dd9803c23fc867abe58852e5b2e5145",
-    "plan-eng-review/SKILL.md": "834edb8f06308c2b2a8714628b4f8bb9d19cb701",
-    "spec/SKILL.md": "da4b6b04c65cb00af3d597eaa5703188116c5fce"
+    "office-hours/SKILL.md": "cf7f6990d72d7fe7fa1cca43ef4e06bf414b2cef",
+    "plan-ceo-review/SKILL.md": "e1e0ce6e6246ed939f0f4336203f8183638d28bf",
+    "qa/SKILL.md": "1df917c96c81a9b942ffc7bc07332ed22b8e4bf5",
+    "design-review/SKILL.md": "25dd2b22e404d8f40933958527b4784011113094",
+    "health/SKILL.md": "7c66ac77a1599173d00307ad9a70c58a284c1820",
+    "review/SKILL.md": "e0960e203e23dc9b39713af92b3a5f60fc010c2a",
+    "learn/SKILL.md": "ad674c931984c016a7a33fb812d1709872e1ba96",
+    "ship/SKILL.md": "02341223e7b7ee24bf54ce6ab370b492f736c6a5",
+    "investigate/SKILL.md": "36f96da04bdf2b991bfd3d612e46d1fd0df7209d",
+    "retro/SKILL.md": "459f3de3a0f0e0fd5b5e072eee984526b767b3c9",
+    "land-and-deploy/SKILL.md": "69f2352133ee28e47eca47bbbe84e9a795f1039c",
+    "plan-eng-review/SKILL.md": "66beb63c047f87746da305d9544d734a7f611f19",
+    "spec/SKILL.md": "21aaf692c444d8c55f77f1984f0742e9f37ab52c"
   },
   "Vincentwei1021/video-shotcraft": {
     "SKILL.md": "695faad1d7441597a89dea4bd1b44b835005af7c"
@@ -110,7 +114,10 @@
   },
   "alirezarezvani/claude-skills": {
     "engineering/hivemind/SKILL.md": "b9ce55c40c701e1979cb4da82173b4ce15402e8b",
-    "product-team/skills/product-discovery/SKILL.md": "17265eec8bcc4c5e2b8554bfb8c7483c4fc3ab56"
+    "product-team/skills/product-discovery/SKILL.md": "17265eec8bcc4c5e2b8554bfb8c7483c4fc3ab56",
+    "research/deepread/SKILL.md": "0501ad3de6032a712e1c7cfbeac26bdc349bae2b",
+    "product-team/skills/competitive-teardown/SKILL.md": "7de7ec01958aee98b6bb8bafad0a4d252843dfff",
+    "product-team/skills/spec-to-repo/SKILL.md": "7febf697eaf3e9d69fae54454ccc4fa0b73a373b"
   },
   "phuryn/pm-skills": {
     "pm-execution/skills/create-prd/SKILL.md": "9aa4b7a5a19af2fe4ade43da564dd607efdf0488",
@@ -141,7 +148,10 @@
   "anthropics/claude-plugins-official": {
     "plugins/frontend-design/skills/frontend-design/SKILL.md": "a5333457c414d20d625f307df945842c0952ecc3",
     "plugins/claude-md-management/skills/claude-md-improver/SKILL.md": "744444e4df385e9b9160e23fba02321062dfba9a",
-    "plugins/mcp-server-dev/skills/build-mcp-server/SKILL.md": "5ab19c3ae3ee57d11f4cdd0a550f942207dc6a5c"
+    "plugins/mcp-server-dev/skills/build-mcp-server/SKILL.md": "5ab19c3ae3ee57d11f4cdd0a550f942207dc6a5c",
+    "plugins/claude-security/skills/claude-security/SKILL.md": "00fb777430f2e7bc1199a48617acfbcf6b744003",
+    "plugins/hookify/skills/writing-rules/SKILL.md": "58f9e6d1b4f37f52f936372ba0c65ab627fcf4e0",
+    "plugins/mcp-server-dev/skills/build-mcp-app/SKILL.md": "c400abdb126d392a2fbbf11539fa1bebf5b0146a"
   },
   "wshobson/agents": {
     "plugins/before-you-build/skills/before-you-build/SKILL.md": "6a2aac015556218e8c3c3ec4e775c1d42eea192e",
@@ -156,7 +166,9 @@
     "plugins/waza/rules/clarity.md": "56fedb402a45f2c4edb98bc3bf77fc4ee3855755",
     "skills/hunt/SKILL.md": "4b1c77a5a530aec3f51f70be3e28a1b2a82f69be",
     "skills/health/SKILL.md": "80a0d631e3a49a25f796f3d140099563fb3fb10a",
-    "plugins/waza/rules/durable-context.md": "ac9aa5dc92f958f1785dce99aee6c941d71f0144"
+    "plugins/waza/rules/durable-context.md": "ac9aa5dc92f958f1785dce99aee6c941d71f0144",
+    "skills/check/SKILL.md": "b444004cd522412e3b74bc124174f4e71d89b54d",
+    "skills/read/SKILL.md": "7ddbcf9f8586f9f31777530655456268c283f0b5"
   },
   "NVIDIA/skills": {
     "plugins/nvidia-skills/skills/nvidia-skill-finder/SKILL.md": "e9aa2f88736041e0400f5ebdfab5de7febf191a2",
@@ -172,7 +184,9 @@
   },
   "tradermonty/claude-trading-skills": {
     "skills/backtest-expert/SKILL.md": "ad39f2b6f04884768d1891b34309720cf4902b58",
-    "skills/data-quality-checker/SKILL.md": "5508d605d3516305dfbcb12f8a9753092c801cef"
+    "skills/data-quality-checker/SKILL.md": "5508d605d3516305dfbcb12f8a9753092c801cef",
+    "skills/breakout-trade-planner/SKILL.md": "05a021be6ca8151d598771e52602dbaf953266ab",
+    "skills/drawdown-circuit-breaker/SKILL.md": "d9b43cfb5114b319a3369aa05ce8c0e770dec681"
   },
   "browser-act/skills": {
     "browser-act/SKILL.md": "1e0db2ac51c886516adbb3e83b1a8e0f9df911e4"
