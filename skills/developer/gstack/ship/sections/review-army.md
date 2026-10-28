@@ -13,13 +13,24 @@ Steps 10–11 queue findings without editing; include those findings in this pas
 Every repeat starts before the checklist read and captures a fresh REVIEW_START.
 Finish the complete review and QA before applying any fix in Step 9.4.
 
+**Review plan.** Pass 1 runs `~/.claude/skills/gstack/bin/gstack-review-plan
+--base <base>`; a repeat uses the plan run that picked it. Save its `REVIEW_PLAN:` line and
+fingerprint. Dispatch exactly its `DISPATCH:` lines (specialists, Red Team, Step
+11's voices), each at its `effort=` on the same model family, in place of 9.1's and
+9.2's own selection rules; a `SKIP:` reviewer
+logs `{"dispatched":false,"reason":"scope"}`. Audits run at `AUDIT_EFFORT:`. The
+core checklist, gate scan and QA always run. Item 6's row adds
+`"dispatches":[{"role":R,"prompt_bytes":N,"diff_bytes":N}]`.
+
 **Pass 2+ reads the range, not the tree** (`review_scope frozen`): the core read
-in item 2 becomes `git diff $RANGE_BASE`, and wherever this step or its dispatched
-prompts run `DIFF_BASE=$(git merge-base origin/<base> HEAD)`, use `DIFF_BASE=$RANGE_BASE`
-instead, so every reviewer reads what changed since the previous pass. The gate
-scan (2.5) and the QA probes keep the whole candidate: they are tools, not
-reviewers. `NO FINDINGS` is the expected result for a clean range. Under
-`review_scope all`, every pass reads the full diff.
+in item 2 becomes `git diff $RANGE_BASE`, and every dispatched prompt (specialists,
+Red Team, the Step 11 reviewers) carries a literal sha you write in:
+`DIFF_BASE=<diff-base>`, the merge base on pass 1 and `RANGE_BASE` from pass 2 on.
+A reviewer never sees your shell's `RANGE_BASE`; a variable left in a prompt
+re-reads the whole branch. An outside backend receives the range `RANGE_BASE..HEAD`.
+Under `review_scope all` every pass reads the full diff. The gate scan (2.5) and
+the QA probes keep the whole candidate:
+they are tools, not reviewers. `NO FINDINGS` is the expected result for a clean range.
 
 ## Confidence Calibration
 
@@ -310,13 +321,13 @@ echo "TEST_FW: ${TEST_FW:-unknown}"
 
 Select specialists from the scope signals above.
 
-**Always-on (dispatch on every review with 50+ changed lines):**
+**Always-on (every review with 50+ changed lines):**
 1. **Testing** — read `~/.claude/skills/gstack/review/specialists/testing.md`
 2. **Maintainability** — read `~/.claude/skills/gstack/review/specialists/maintainability.md`
 
-**If DIFF_LINES < 50:** Skip all specialists except State Machines. Print: "Small diff ($DIFF_LINES lines) — specialists skipped." Continue to Step 9.2 with the core/design-lite findings and an empty specialist list, then the parent's Exploratory QA step and Step 9.3 (cross-review dedup). Small diffs skip fan-out, never the parent-owned smoke probes. Core shared-code checks also remain required.
+**If DIFF_LINES < 50:** Skip all specialists except State Machines (item 9 decides it). Print: "Small diff ($DIFF_LINES lines) — specialists skipped." Continue to Step 9.2 with the core/design-lite findings and an empty or State Machines-only specialist list, then the parent's Exploratory QA step and Step 9.3 (cross-review dedup). Small diffs skip fan-out, never the parent-owned smoke probes or core shared-code checks.
 
-**Conditional (dispatch if the matching scope signal is true):**
+**Conditional (dispatch when its scope signal is true):**
 3. **Security** — if SCOPE_AUTH=true, OR if SCOPE_BACKEND=true AND DIFF_LINES > 100. Read `~/.claude/skills/gstack/review/specialists/security.md`
 4. **Performance** — if SCOPE_BACKEND=true OR SCOPE_FRONTEND=true. Read `~/.claude/skills/gstack/review/specialists/performance.md`
 5. **Data Migration** — if SCOPE_MIGRATIONS=true. Read `~/.claude/skills/gstack/review/specialists/data-migration.md`
@@ -346,6 +357,17 @@ For each selected specialist, launch an independent subagent via the Agent tool.
 **Launch ALL selected specialists in a single message** (multiple Agent tool calls)
 so they run in parallel. Each subagent has fresh context — no prior review bias.
 
+**Fan-out (`--review-fanout auto|serial|parallel` in the prompt; default `auto`).**
+Under `auto`, when the host reports fewer free subagent slots than selected
+specialists (Capy caps a thread at 8 running subagents, and waiting or idle ones hold
+a slot), dispatch in batches of the free-slot count, at least one per batch, each
+batch in one message, and start the next batch only after every reader of the
+previous one has finished or is confirmed stopped; print `Fan-out: N specialists in
+M batches of K`. A host that reports no slot count runs one parallel batch.
+`serial` is batches of one; `parallel` is one batch regardless of slots (a refused
+launch is a failed reader, never silently dropped coverage). Batching changes the
+order, never the set: every selected specialist still runs before Step 9.2 merges.
+
 **Each specialist subagent prompt:**
 
 Each specialist prompt includes:
@@ -369,9 +391,9 @@ Every other specialist, including Testing, reads the full diff with fixtures.
 5. Instructions:
 
 "You are a specialist code reviewer. Read the checklist at {checklist path}, then run
-`DIFF_BASE=$(git merge-base origin/<base> HEAD) && git diff "$DIFF_BASE"` to get the full diff. Apply the checklist against the diff.
+`DIFF_BASE=<diff-base> && git diff "$DIFF_BASE"` to get the diff (`<diff-base>`: write the sha in before dispatch, the merge base on pass 1 and `RANGE_BASE` from pass 2 on; never a shell variable). Apply the checklist against the diff.
 
-`NO FINDINGS` alone is the expected, complete result for a clean diff; never invent an item to show work. Otherwise output one JSON object per finding, on its own line:
+`NO FINDINGS` alone is the expected, complete result for a clean diff; never invent an item. Otherwise output one JSON object per finding per line, 400 words at most:
 {\"severity\":\"CRITICAL|INFORMATIONAL\",\"confidence\":N,\"path\":\"file\",\"line\":N,\"category\":\"category\",\"summary\":\"description\",\"fix\":\"recommended fix\",\"fingerprint\":\"path:line:category\",\"specialist\":\"name\"}
 
 Required fields: severity, confidence, path, category, summary, specialist.
@@ -443,20 +465,22 @@ Core findings never earn a specialist confidence boost. Preserve `advisory`,
 
 #### 4. Lead judgment
 
-Reviewers fill the space they are given. Before any merged finding counts, the
-parent reads each one and drops or downgrades it on these grounds, saying so:
-- **Nit gravity.** When a reviewer's whole return is style, naming and preference,
-  the code is probably fine; write that down and count nothing from it as a defect.
+Reviewers fill the space they are given. Before a merged finding counts, the
+parent reads it and drops or downgrades it on these grounds, saying so:
+- **Nit gravity.** A reviewer whose whole return is style, naming and preference
+  found nothing; say so and count no defect.
 - **Hypothetical, not actual.** A defect names the call site or input that reaches
-  it. One that does not is a note until someone traces it.
+  it; one that does not is a note until someone traces it.
 - **Structure for a case that does not exist.** Advice to abstract, generalize or
-  guard a path nothing takes is advisory, never a defect.
+  guard a path nothing takes is advisory.
 - **A different design is not a defect.** "I would have done it differently" with
-  no failing case behind it is dropped.
+  no failing case is dropped.
 - **Missing context.** A finding that assumes a rule the repository documents
   otherwise is dropped with the pointer.
-Agreement between reviewers that did not see each other's output is the strongest
-signal; the `MULTI-SPECIALIST CONFIRMED` boost above records it. A reviewer that
+- **On record.** A class `docs/review-policy.md` rules below the floor is a note,
+  named by its ruling.
+Independent agreement between reviewers is the strongest signal (the
+`MULTI-SPECIALIST CONFIRMED` boost records it). A reviewer that
 returned `NO FINDINGS` was right until a traced defect says otherwise.
 
 #### 5. Apply specialist confidence gates
@@ -540,7 +564,7 @@ The Red Team subagent receives:
 
 Prompt, after the defensive framing and fixture handling from item 4 of the specialist dispatch: "You are a red team reviewer. The code has already been reviewed by N specialists
 who found the following issues: {merged findings summary}. Your job is to find what they
-MISSED. Read the checklist at {red-team checklist path}, list changed files with `DIFF_BASE=$(git merge-base origin/<base> HEAD) && git diff --name-status "$DIFF_BASE"`, read them as that fixture handling says, and look for gaps.
+MISSED. Read the checklist at {red-team checklist path}, list changed files with `DIFF_BASE=<diff-base> && git diff --name-status "$DIFF_BASE"`, read them as that fixture handling says, and look for gaps.
 Output findings as JSON objects (same schema as the specialists), or `NO FINDINGS` alone, the expected result when they missed nothing. Focus on cross-cutting
 concerns, integration boundary issues, and failure modes that specialist checklists
 don't cover."
@@ -644,9 +668,12 @@ without edits. After terminal failure, independent evidence may support fixes,
 but missing dispatched output still blocks continuation, even with a QA exception.
 
 0. **Scope the findings.** Write the unmatched or reopened findings from Step 9.3
-   (all sources, queued Steps 10–11 included) as a JSON array to a private file, then:
-   `~/.claude/skills/gstack/bin/gstack-review-scope classify --base <base> --pass $PASS --range-base $RANGE_BASE --findings <file> --json > <classified>`
-   (omit `--range-base` on pass 1). Each finding comes back with `locus` (`diff`,
+   (all sources, queued Steps 10–11 included) as a JSON array to
+   `.gstack/tmp/review-findings-p$PASS.json` with your file-write tool, then:
+   `~/.claude/skills/gstack/bin/gstack-review-scope classify --base <base> --pass $PASS --range-base $RANGE_BASE --findings .gstack/tmp/review-findings-p$PASS.json --json > .gstack/tmp/review-classified-p$PASS.json`
+   (omit `--range-base` on pass 1). Every Step 9.4 scratch file lives under
+   `.gstack/tmp/` (gitignored): `<classified>` below is this pass's classified
+   file and `<deferred.json>` is `.gstack/tmp/review-deferred.json`. Each finding comes back with `locus` (`diff`,
    `fix-range`, `outside`), `kind`, `blocking` (a CRITICAL defect: a test that would
    fail, a production break, a security or data-loss defect) and `scope`: `fix`,
    `defer` or `note`. Under `frozen`, pass 1 fixes the diff and defers blocking
@@ -661,8 +688,12 @@ but missing dispatched output still blocks continuation, even with a QA exceptio
    is in the diff on pass 1, deferred when it is not); a **nit** is the rest (a named
    note, never a pass).
 
-1. **Classify only unmatched or reopened findings as AUTO-FIX or ASK** when the
-   classified output marks them `scope: fix`, per the Fix-First Heuristic in
+1. **Apply the cap before any edit, then classify.** With the classified output in
+   hand and nothing edited yet: if `CYCLES >= 3`, or under `frozen` `PASS >= 3` with
+   a blocking finding in `scope: fix`, skip items 2–3 (no fix is applied on a capped
+   pass), complete items 3.5–6 with the findings unfixed, and take decision 2 below.
+   Otherwise: Classify only unmatched or reopened findings as AUTO-FIX or ASK when
+   the classified output marks them `scope: fix`, per the Fix-First Heuristic in
    checklist.md. Critical findings lean toward ASK; informational lean toward AUTO-FIX.
 
 2. **Auto-fix all AUTO-FIX items.** Apply each fix. Output one line per fix:
@@ -700,6 +731,12 @@ but missing dispatched output still blocks continuation, even with a QA exceptio
    Then `gstack-review-scope render --deferred <deferred.json> --findings <classified>`
    prints the `## Deferred findings` and `## Review notes` sections: save them for
    Step 19's PR body. Deferred and noted findings are never edited.
+   **Late defers from Step 11.** When Step 11's finish rules run this item for a
+   queued adversarial finding after this pass's items 5–6 were logged, append one
+   row under its own skill (a tokenless `review` row would read UNVERIFIED):
+   `~/.claude/skills/gstack/bin/gstack-review-log '{"skill":"review-late-defer","via":"ship","timestamp":"TIMESTAMP","status":"issues_found","issues_found":0,"critical":0,"informational":0,"pass":PASS,"review_scope":"SCOPE","findings":FINDINGS_JSON}'`
+   with `findings` holding only the deferred records (`action: "deferred"`, `issue`,
+   `locus`, `kind`, `blocking` as in item 6) and no `--finish` token.
 
 4. **Finish and log this pass before choosing the next step.** Apply each A) Restore
    by reverting only the relaxation. After any fix or restore in this pass, run item
@@ -762,25 +799,33 @@ finding makes that PR a draft.
 ### Decide whether to repeat Step 9
 
 After persistence, record missing output, CYCLES and fixes in the invocation record.
-Apply these decisions in order:
+Decision 1 always applies first. Then, under `frozen`, run `gstack-review-plan --base <base> --pass $PASS --last full`
+with each flag that holds (`--fixed-blocking`, `--fixed-below`, `--blocking-open`,
+`--touched-gate` for a fix to an item 2.5 path, `--critical-found` when this pass
+logged a CRITICAL, `--adversarial-ran` once Step 11's native pass ran, `--reviewed-numbers <fp>`);
+its `NEXT:` alone picks the next decision: `stop` 2, `full` 3, `fix-check` 3.5, `done` 4.
+Other scopes apply decisions 2–4 in order.
 
 1. **Dispatched reviewer output missing:** STOP and name each failed specialist or
    Red Team. Retain queued fixes and restore coverage. If this pass made edits,
    resume at the next decision; otherwise run a fresh complete Step 9. A successful
    peer or a QA exception cannot replace missing dispatched coverage.
 2. **Third fixing cycle reached (`CYCLES >= 3`):** STOP and report recurring findings with
-   `converged:false`; do not run a fourth fixing cycle. Under `frozen` the cap comes
-   sooner: a blocking finding still in `fix` scope on pass 3 (`PASS >= 3`) stops
-   here too, unfixed. Name each blocking finding (path, severity, problem) for the
-   owner. Deferred and noted items are never recurring findings, so a capped pass
-   whose remaining findings are all below the floor applies no edits and continues
-   at decision 4: the loop ships below the floor. The cap is a stop, not an
-   approval: a blocker it leaves standing is reported, never waved through.
+   `converged:false`; do not run a fourth fixing cycle. Name each blocking finding (path,
+   severity, problem) for the owner, unfixed. The cap is a stop, not an approval. A capped
+   pass whose remaining findings are all deferred or noted applied no edits: decision 4.
 3. **Fixes applied below the cap:** Insert Step 5, affected Steps 6–8 and all of
    Step 9 before the pending Step 10 in the work list. If the fixes grew the diff
    past what the request needs (a helper, a guard, a case nothing takes), cut that
    growth before anything else; the repeat reviews the cut as part of the range. Tests must pass or retain approval for the same verified pre-existing
    failures and scope. Keep CYCLES and scoped approvals across this repeat; PASS increments on entry.
+3.5. **One fix-check.** Take a `gstack-review-log --start review-fix-check` token; write the
+   fix list, touched hunks (`git diff $PASS_HEAD`), callers of changed symbols and
+   test results to `.gstack/tmp/fix-check-*.txt`; dispatch one full-effort reviewer
+   on `gstack-review-plan --fix-check-prompt --fix-list <f> --hunks <f> --tests <f>
+   --callers <f>`, plus the outside voice only if the plan lists it. Log item 6's
+   row as `"skill":"review-fix-check"` with `--finish <token>`; not a pass. A
+   CRITICAL goes to decision 2; otherwise decision 4.
 4. **No edits in this pass:** Resolve the required-probe gate below. Only after it
    clears may you continue to Step 10. A pass whose only findings were deferred or
    noted applied no edits and continues here: the loop converges below the floor.

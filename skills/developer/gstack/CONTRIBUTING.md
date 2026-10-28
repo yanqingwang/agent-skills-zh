@@ -424,11 +424,12 @@ eval files, and misses the strict classifier. No API keys needed.
 - **Aside driver contract** (`test/aside-driver.test.ts`) — Browser behaviour in skills is written against `scripts/resolvers/aside.ts` (`{{ASIDE_SETUP}}`) and verified live against the Aside CLI on a Mac. CI cannot run Aside, so the Aside E2E tests self-skip where `aside` is not installed; the static pins (detection, fallback hand-off, consent, credential, one-flow-per-script, sentinel) are what CI proves.
 - **Aside render wrapper** (`test/aside-render.test.ts`) — Pins the option mapping and generated script of `lib/aside-render.ts` everywhere, and drives both engines hermetically with fake `aside` / `browse` executables (probe classification, the stdout contract, loopback-server policy, failure paths, the timeout kill, engine choice and the mid-run fallback); the live render (PDF + screenshot through a real Aside) runs only where Aside is open and self-skips elsewhere. make-pdf's render gates (`make-pdf/test/e2e/*-gate.test.ts`) and `test/skill-e2e-diagram.test.ts` are engine-agnostic: they run through whichever engine resolves (`browserAvailable()` — Aside, or the browse binary `bun run build:gates` compiles, which is what Linux CI does) and skip only when neither exists.
 - **Render CLI** (`test/gstack-render-cli.test.ts`) — Pins `bin/gstack-render.ts` against a fake daemon (`GSTACK_SKIP_ASIDE=1` + `GSTACK_BROWSE_BIN`): argv guards exit 1 with the usage line, `--help` exits 0, `ENGINE=` first then `OK <path>` then fenced `EVAL` / `PAGE_ERRORS`, `--serve-root` containment, the no-browser first line, and prompt exit after a successful render. `make-pdf/test/cli-exit-codes.test.ts` and `make-pdf/test/setup-smoke.test.ts` pin the `pdf` binary's error-to-exit-code map and `$P setup`'s engine report.
-- **Generator tests** (`test/gen-skill-docs.test.ts`) — Tests the template system: verifies placeholders resolve correctly, output includes value hints for flags (e.g. `-d <N>` not just `-d`), enriched descriptions for key commands (e.g. `is` lists valid states, `press` lists key examples).
+- **Generator tests** (`test/gen-skill-docs.test.ts`) — Tests the template system: verifies placeholders resolve correctly, output includes value hints for flags (e.g. `-d <N>` not just `-d`), enriched descriptions for key commands (e.g. `is` lists valid states, `press` lists key examples), and that a template's `codex_default_prompt:` frontmatter key reaches the Codex `agents/openai.yaml` `default_prompt` (a template without the key keeps `Use <name> for this task.`) while no host's SKILL.md render carries the key.
 - **Design detector, catalog, and DESIGN.md** (`test/gstack-design-detect.test.ts`, `test/design-detect-contract.test.ts`, `test/design-catalog.test.ts`, `test/design-checklist-sync.test.ts`, `test/design-md.test.ts`, `test/frontend-scope.test.ts`, `test/impeccable-fixtures.test.ts`) — Drive `bin/gstack-design-detect.ts` through the fake engine in `test/fixtures/fake-impeccable.ts` (probe order, the never-execute-a-repository-file rule, the `--changed` target allow-list, `design_detector: off`, analytics lines, output sanitizing), pin the catalog invariants and the generated `review/design-checklist.md`, round-trip the open DESIGN.md reader/writer, and check the real engine captures (`test/fixtures/impeccable-*.json`, engine 0.1.3) against the contract. `test/dom-dump-hygiene.test.ts` runs `lib/dom-dump.js` in a real Chromium page through the built browse binary; it self-skips without the binary and is opt-in outside CI (`GSTACK_DOM_DUMP_HYGIENE=1`).
 - **Tier-alignment invariant** (`test/e2e-tier-alignment.test.ts`) — For every self-gated `test/skill-e2e-*.test.ts` named in a touchfiles dep list, the file's `EVALS_TIER` self-gate must match its declared tier in `E2E_TIERS`. Kills the "inert demotion" class where a test is re-tiered in `touchfiles.ts` but the file still gates on the old tier and keeps running in the wrong lane. Unmapped or mixed-tier files are reported, never silently skipped.
-- **Catalog budget** (`test/catalog-budget.test.ts`) — Caps the aggregate discovery surface: the sum of every skill's frontmatter `name` + `description` (what every host loads at discovery, every session) must stay under 1,251 token-equivalents, with a 260-byte per-skill cap. Counting goes through the shared census in `test/helpers/skill-census.ts` (physical files vs authored skills vs registry entries — three deliberately different counts). Adding a skill? The failure message carries the re-measure + ratchet protocol.
+- **Catalog budget** (`test/catalog-budget.test.ts`) — Caps the aggregate discovery surface: the sum of every skill's frontmatter `name` + `description` (what every host loads at discovery, every session) must stay under 1,393 token-equivalents, with a 260-byte per-skill cap. Counting goes through the shared census in `test/helpers/skill-census.ts` (physical files vs authored skills vs registry entries — three deliberately different counts). Adding a skill? The failure message carries the re-measure + ratchet protocol.
 - **Context-budget ratchet** (`test/context-budget-ratchet.test.ts`) — CI ceilings on the two token ledgers the catalog budget doesn't cover: the always-on full-frontmatter aggregate and each skill's per-invocation eager tokens (SKILL.md + forced-read references), graded against `test/fixtures/context-budget.json` via `lib/context-bill.ts`. New skills fail until they have a ceiling; ceilings for removed skills must be pruned. Legitimate growth or a landed reduction: re-run `bun test/helpers/capture-context-budget.ts` and commit the refreshed fixture in the same commit, so the change is a visible decision in the diff.
+- **Skill-to-bin drift ratchet** (`test/skill-bin-drift.test.ts`) — `scripts/skill-bin-drift.ts` statically reads every gstack bin call in skill templates, carved sections, references and the Claude-host renders (it never executes a bin) and fails with `DRIFT_UNKNOWN_BIN` or `DRIFT_UNKNOWN_FLAG` at file:line when a skill names a bin missing from `bin/` or a flag that bin's parser does not accept. Known misses live in `test/fixtures/skill-bin-drift-allowlist.json`, which only shrinks: a new finding fails, and so does an entry that no longer reproduces. Check one skill with `bun run scripts/skill-bin-drift.ts --skill <name>`; bins with permissive parsers or no usage text are reported, never failed.
 - **Dependency security regressions** (`test/dependency-security.test.ts`) — Run `bun test test/dependency-security.test.ts` to check the resolved `sharp` and `adm-zip` version floors, load Sharp, verify ordinary ZIP extraction, and reject extraction through destination-file and destination-directory symlinks. The symlink cases skip Windows. These checks complement the OSV scan; they do not change its existing exceptions.
 
 ### Tier 2: E2E via `claude -p`
@@ -621,7 +622,7 @@ A GitHub Action (`.github/workflows/skill-docs.yml`) generates all hosts on push
 
 Supply-chain gates run alongside it:
 
-- **Quality gate** (`.github/workflows/quality-gate.yml`, every PR and push) — scans the diff's added lines for credentials using gstack's own redact engine (`.github/scripts/gate-secret-scan.mjs`). HIGH findings fail the job; MEDIUM findings surface as an advisory count. Fails closed if the scan can't produce a report. Also runs ShellCheck on the setup/build boundaries.
+- **Quality gate** (`.github/workflows/quality-gate.yml`, every PR and push) — scans the diff's added lines for credentials using gstack's own redact engine (`.github/scripts/gate-secret-scan.mjs`). HIGH findings fail the job; MEDIUM findings surface as an advisory count. Fails closed if the scan can't produce a report. Also runs ShellCheck on the setup/build boundaries, and gates the `## [Unreleased]` block of `CHANGELOG.md` with `bin/gstack-prose-lint CHANGELOG.md --unreleased --gate` (autopilot vocabulary, "not just X, but Y" and the other tells it names; a stamped or absent block passes; fixes in [docs/troubleshooting.md](docs/troubleshooting.md#prose-lint-found)).
 - **Dependency review** (`.github/workflows/dependency-review.yml`) — reviews dependency changes on PRs that touch `package.json` or `bun.lock` files and fails on high or critical advisories. It and the weekly OSV scan are the dependency gates.
 - **OSV scanner** (`.github/workflows/osv-scanner.yml`) — weekly vulnerability scan against the OSV database. Config lives in `.osv-scanner.toml` and is loaded via an explicit `--config` flag (OSV does not auto-discover that filename); every ignore entry needs a reason and an `ignoreUntil` expiry, enforced by `test/osv-config-wiring.test.ts`. A failed main scan upserts the tracking issue "OSV scanner: vulnerable dependency needs triage" and a clean scan closes it; `test/osv-ignore-expiry.test.ts` fails 14 days before any `ignoreUntil`, so an expiring suppression surfaces in a PR.
 - **Weekly test health** (`.github/workflows/test-health.yml`, Mondays and on dispatch) — runs `bun run test:health --since-days 7 --enforce`. It fails when a free test file flakes in more than 5% of at least 20 main runs or more than 5 free files are missing from the duration seed, upserts one tracking issue on failure and closes it only when every previously failing check has evidence and passes. Metrics it cannot read print "unavailable: <reason>; next: <step>" and never fail the run.
@@ -766,6 +767,7 @@ Each host config (`hosts/*.ts`) controls:
 | Hook skills | `hooks:` frontmatter vs inline safety advisory prose |
 | Suppressed sections | GBrain blocks vs GBrain blocks and Review Army; Codex retains outside-review sections routed to Claude Code |
 | Model overlay | `claude` vs `gpt` (per-host `defaultModel`; `--model` or, at setup time, the Codex `config.toml` model overrides) |
+| Metadata file | none vs `agents/openai.yaml` beside each skill (`generation.generateMetadata`); its `default_prompt` is the template's `codex_default_prompt:` frontmatter key, else `Use <name> for this task.` The key is generator input only and appears in no host's SKILL.md render |
 
 See `scripts/host-config.ts` for the full `HostConfig` interface.
 
@@ -802,12 +804,12 @@ install ownership rules in the guide.
 
 ### Adding a new skill
 
-When you add a new skill template, all hosts get it automatically:
-1. Create `{skill}/SKILL.md.tmpl`
+Write or change skill prose with `/write-skill` (edit ladder, levels, `gstack-skill-bill`, drift check). When you add a new skill template, every host renders it; a few static lists still need a row:
+1. Create `{skill}/SKILL.md.tmpl` (optionally with a one-line `codex_default_prompt:` frontmatter key, the sentence Codex's picker inserts for the skill; without it the picker gets `Use <name> for this task.`)
 2. Run `bun run gen:skill-docs --host all`
-3. The dynamic template discovery picks it up, no static list to update
-4. Budget it: run `bun test/helpers/capture-context-budget.ts` and commit the refreshed `test/fixtures/context-budget.json` — the context-budget ratchet fails any skill without a ceiling
-5. Commit `{skill}/SKILL.md`, external host output is generated at setup time and gitignored
+3. The dynamic template discovery picks it up for every host render and for `gstack/llms.txt`. Two things it does not fill in: a row in `SKILL_REQUIREMENTS` in `lib/doctor-components.ts` (the doctor's `--for <skill>` table; `test/doctor-components.test.ts` fails on a skill directory without one, and the same gen run rerenders `bin/gstack-doctor-components.sh`), and the catalog rows readers find the skill through (README.md, AGENTS.md, `docs/skills.md`, `docs/PROJECT_STRUCTURE.md`, the root `SKILL.md.tmpl` router)
+4. Budget it: run `bun test/helpers/capture-context-budget.ts` and commit the refreshed `test/fixtures/context-budget.json` — the context-budget ratchet fails any skill without a ceiling; the catalog budget (`test/catalog-budget.test.ts`) fails until its cap is ratcheted by the protocol in its failure message, and the number is quoted in CLAUDE.md, this file and `docs/CONTRIBUTOR_REFERENCE.md`
+5. Commit `{skill}/SKILL.md` (and the generated `{skill}/sections/preamble.md` when the template's `preamble-tier` is 2 or higher), external host output is generated at setup time and gitignored
 
 ## Conductor workspaces
 
@@ -828,7 +830,7 @@ When Conductor creates a new workspace, `bin/dev-setup` runs automatically. It d
 
 ## Things to know
 
-- **SKILL.md files are generated.** Edit the `.tmpl` template, not the `.md`. Run `bun run gen:skill-docs` to regenerate. The same run generates `review/design-checklist.md` from `lib/design-catalog.ts` and `lib/dom-dump.js` from `lib/dom-dump-script.ts`: edit those sources, never the generated files (`test/design-checklist-sync.test.ts` fails on drift).
+- **SKILL.md files are generated.** Edit the `.tmpl` template, not the `.md`. Run `bun run gen:skill-docs` to regenerate. The same run generates `review/design-checklist.md` from `lib/design-catalog.ts` and `lib/dom-dump.js` from `lib/dom-dump-script.ts`: edit those sources, never the generated files (`test/design-checklist-sync.test.ts` fails on drift). Tier 2+ skills also get a generated `sections/preamble.md`, the shared preamble rendered by `scripts/resolvers/preamble-hoist.ts`: change the preamble resolvers, never that file.
 - **TODOS.md is the unified backlog.** Organized by skill/component with P0-P4 priorities. `/ship` auto-detects completed items. All planning/review/retro skills read it for context.
 - **Browse, make-pdf, design, and `lib/` source changes need a rebuild.** If you touch `browse/src/*.ts`, `make-pdf/src/*.ts`, `design/src/*.ts`, or anything under `lib/` (the canonical `claude-bin.ts`, `error-handling.ts`, and `aside-render.ts` the binaries embed, plus `design-catalog.ts`, whose `MOCKUP_NEVER_NAMES` the design binary's mockup prompt embeds; `browse/src` re-exports the first three), run `bun run build`. `./setup` makes the same call on its own: it rebuilds when any of the three binaries is missing or when those sources, `package.json`, or `bun.lock` are newer than the browse binary (`test/setup-needs-build.test.ts` pins the decision).
 - **Dev mode shadows your global install.** Project-local skills take priority over `~/.claude/skills/gstack`. `bin/dev-teardown` restores the global one.
@@ -933,6 +935,48 @@ When community PRs accumulate, batch them into themed waves:
    in merge commits. Include a summary table of what merged and what closed.
 
 See [PR #205](../../pull/205) (v0.8.3) for the first wave as an example.
+
+## Porting a contributor's PR
+
+Sometimes the right way to land an outside PR is to port it: the diff is right
+but it sits on an old base, its tests need our fixtures, or the repo's gates
+(generated renders, size pins, the CHANGELOG entry) are things only a maintainer
+can finish. The port keeps the contributor's credit and gives them a clear
+answer; the steps below are the repo's version of the rule a maintainer crew
+follows ([docs/captain.md](docs/captain.md#contributions-from-outside-the-crew)).
+
+1. **Treat the diff as untrusted input before anything runs it.** Read it for
+   scope, network egress, credentials, new dependencies, CI permission changes
+   and weakened or deleted tests. A fork's green checks prove nothing about this
+   checkout: the port head gets its own focused review and the free tier
+   (`bun run test:quick` while iterating, `bun run test` once on the final tree)
+   before a PR opens.
+2. **Keep their commits as theirs.** Cherry-pick or rebase the contributor's
+   commits onto the current base with authorship intact (`git cherry-pick -x`
+   keeps the source SHA in the message). A commit you have to rewrite keeps
+   their name as author and gains a `Co-authored-by:` trailer for whoever
+   edited it. Never fold their work into a commit under your own name, and
+   never guess an email: use the identity on their commits.
+3. **Your fixes go on top, as separate commits.** Base merges, generated files,
+   test repairs, the CHANGELOG entry and the version stamp are your commits,
+   after theirs, so `git log` and the PR's commit list show who did what. A
+   squash merge keeps the credit when the squash message carries their
+   `Co-authored-by:` lines; check the merge commit before you call it landed.
+4. **Say so in the port.** The PR body names the original PR and its author in
+   the first paragraph and lists what you changed on top of their diff. The
+   port's `## Approvals` section (when the repo uses one) records who asked for
+   the port.
+5. **Close the original with a specific thank-you.** After the port lands,
+   comment on their PR with what landed (the port's number and version), what
+   you changed and why, and thank them by name for the specific thing they
+   fixed. Then close it. Closing a contribution without landing it is a
+   maintainer's call, never a lane's: ask first, and when the answer is no,
+   say why in the same comment.
+
+A port is not a rewrite. If the contributor's approach is one you would not
+land, say that on their PR and close or park it under
+[Issue triage](#issue-triage) instead of shipping a different change under
+their name.
 
 ## Upgrade migrations
 

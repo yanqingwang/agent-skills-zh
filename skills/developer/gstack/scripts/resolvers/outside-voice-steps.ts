@@ -116,7 +116,7 @@ If A: revise the premise and note the revision. If B: proceed (and note that the
 // ─── Adversarial Review (always-on) ──────────────────────────────────
 
 function adversarialNativePass(ctx: TemplateContext, isShip: boolean): string {
-  return `### ${outsideVoiceFor(ctx).nativeLabel} adversarial subagent (always runs)
+  return `### ${outsideVoiceFor(ctx).nativeLabel} adversarial subagent (${isShip ? 'on \`DISPATCH: adversarial-native\`' : 'always runs'})
 
 Before dispatch, run \`~/.claude/skills/gstack/bin/gstack-review-log --start adversarial-review\`
 and save the returned token for this native attempt. Do the same before each outside
@@ -235,9 +235,9 @@ export function generateAdversarialStep(ctx: TemplateContext): string {
   const isShip = ctx.skillName === 'ship';
   const stepNum = isShip ? '11' : '4.8';
 
-  return `## Step ${stepNum}: Adversarial review (always-on)
+  return `## Step ${stepNum}: Adversarial review${isShip ? '' : ' (always-on)'}
 
-Every diff gets the ${outsideVoiceFor(ctx).nativeLabel} adversarial pass. Add ${outsideVoiceFor(ctx).label} when its preflight is ready; unavailable or disabled outside coverage stays explicit.
+${isShip ? 'Unavailable' : `Every diff gets the ${outsideVoiceFor(ctx).nativeLabel} adversarial pass. Add ${outsideVoiceFor(ctx).label} when its preflight is ready; unavailable`} or disabled outside coverage stays explicit.
 
 **Detect diff size:**
 
@@ -252,8 +252,8 @@ echo "DIFF_SIZE: $DIFF_TOTAL"
 ${outsideVoicePreflight(ctx, { disabledBehavior: 'codex-only', nativeReview: true })}
 
 \`CODEX_MODE: disabled\` means skip the ${outsideVoiceFor(ctx).label} passes ONLY.
-\`ready\` and \`unverified\` run them; every other mode skips them with the printed reason.
-The ${outsideVoiceFor(ctx).nativeLabel} adversarial subagent always runs.
+\`ready\` and \`unverified\` run them; every other mode skips them with the printed reason.${isShip ? '' : `
+The ${outsideVoiceFor(ctx).nativeLabel} adversarial subagent always runs.`}
 
 **User override:** If the user explicitly requested "full review", "structured review", or "P1 gate", also run the ${outsideVoiceFor(ctx).label} structured review regardless of diff size (still requires \`CODEX_MODE: ready\` (or \`unverified\`)).
 
@@ -274,7 +274,7 @@ ${outsideVoiceProvenance(ctx, 'adversarial')}
 After all passes complete, synthesize findings across all sources:
 
 \`\`\`
-ADVERSARIAL REVIEW SYNTHESIS (always-on, N lines):
+ADVERSARIAL REVIEW SYNTHESIS (${isShip ? '' : 'always-on, '}N lines):
 ════════════════════════════════════════════════════════════
   High confidence (found by multiple sources): [findings agreed on by >1 pass]
   Unique to the parent checklist/specialists: [from earlier steps]
@@ -309,7 +309,7 @@ in order before leaving Step 11:
    Step 9 completes full review before fixes; any further repair inserts its checks
    ahead of the remaining items. These fresh reviews after code edits are not recovery retries.
    Returning here never resets Step 9's three-cycle fix limit.
-3. **Native complete with no queued fixes:** Finish the memory updates below,
+3. **Native complete with no queued fixes, or not dispatched:** Finish the memory updates below,
    then continue to Step 11.5. Never jump directly to release preparation.` : 'The native pass is required for Step 5.8 completion. Optional outside failures remain separately recorded, not completed by native coverage. Return all findings and structured-review decisions to Step 5; the parent owns fixes and the full rerun.'}
 
 ---`;
@@ -346,7 +346,7 @@ approval and artifact-write requirements still apply.`}
 |---|---|
 | Disabled | Record disabled coverage below, then continue to planning decisions. No prompt, outside process or native replacement. |
 | Ready | Construct the prompt and run the foreground outside invocation. |
-| Other preflight mode, including harness mismatch | Report the probe's diagnosis, construct the same prompt and use Native fallback. |
+| Any other mode (\`not_installed\`, \`under_current_harness\`) | Report the probe's diagnosis, construct the same prompt and use Native fallback. |
 | Outside execution or output validation fails | Retain its output and diagnosis, finish termination, then use Native fallback. Auth: name the login repair; timeout: report the five-minute limit; empty response: say no response. |
 | Reviewer completes | Present its full output and ${ceo ? 'go to Integrate reviewer findings' : 'resolve findings through Decision procedure'}. |
 | Native fallback unavailable or fails | Record unavailable coverage and continue to planning decisions. No clean-review credit. |
@@ -408,9 +408,11 @@ THE PLAN:
 }
 
 function codexPlanReviewRun(ctx: TemplateContext, ceo: boolean, needsApprovalReadiness: boolean): string {
-  return `**If \`CODEX_MODE: ready\` (or \`unverified\`) — run ${outsideVoiceFor(ctx).label}:**
+  // The plan-review preflight prints disabled, ready, not_installed or under_current_harness and never `unverified`
+  // (gates 40477638211 and 40454750574: every judge sample read "(or unverified)" as a branch nothing can enter).
+  return `**If \`CODEX_MODE: ready\` — run ${outsideVoiceFor(ctx).label}:**
 
-${['plan-ceo-review', 'plan-eng-review'].includes(ctx.skillName) ? `Run this block for \`ready\` or \`unverified\`, in the one foreground Bash call described below.
+${['plan-ceo-review', 'plan-eng-review'].includes(ctx.skillName) ? `Run this block for \`ready\`, in the one foreground Bash call described below.
 Its opening harness guard rechecks the fresh shell: exit 78 uses the same Native
 fallback below, never a replacement provider. Finish termination before fallback and consume only
 completed output. Use private temporary paths, with no background jobs.` : `Run the selected backend in the one foreground Bash invocation described below.
@@ -716,7 +718,7 @@ numbers, and CHANGELOG entries that over- or under-sell what shipped. Be terse. 
 
 THE DOCS AND DIFF: <include current contents of each touched document, with its path, plus affected source context; the parent appends the release diff below>"
 
-**If \`CODEX_MODE: ready\` (or \`unverified\`) — run ${outsideVoiceFor(ctx).label}:**
+**If \`CODEX_MODE: ready\`${outsideVoiceFor(ctx).id === 'codex' ? ' (or \`unverified\`)' : ''} — run ${outsideVoiceFor(ctx).label}:**
 
 ${outsideVoiceInvocation(ctx, { timeoutMs: 300000, diffCommand: 'DOC_DIFF_BASE=$(git merge-base origin/<base> HEAD 2>/dev/null || git merge-base <base> HEAD) && git diff "$DOC_DIFF_BASE" HEAD' })}
 

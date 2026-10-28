@@ -11,18 +11,19 @@ import { approvalSummary } from './approval-citations';
 import { renderIssueLines } from './issue-links';
 import { matchesAny } from './ship-policy';
 import { stampFileKind, versionStampOnly } from './pregate/stamp-only';
+import { stampOnlyLine } from './restamp';
 
 export const RECEIPT_FENCE = 'gstack-ship-receipt';
-const KEY_ORDER: Array<keyof ShipReceipt> = [
+const KEY_ORDER: Array<keyof ShipReceipt | 'docs'> = [
   'schema_version', 'pr', 'head', 'version', 'base', 'gated_tree', 'predecessor', 'tree', 'gate_reuse', 'gate', 'ci', 'spend_usd',
   'session_kind', 'artifacts_consumed', 'run', 'thread', 'policy', 'queue_mode', 'preregistration', 'history',
-  'pregate', 'requires_remote', 'issues', 'approval', 'review_loop', 'carry',
+  'pregate', 'requires_remote', 'issues', 'approval', 'docs', 'review_loop', 'carry',
 ];
 
 /** Keys in the fixed order so identifiers lead; undefined values are dropped. */
-export function orderReceipt(input: Partial<ShipReceipt>): ShipReceipt {
+export function orderReceipt(input: Partial<ShipReceipt> & { docs?: unknown }): ShipReceipt {
   const out: Record<string, unknown> = {};
-  for (const key of KEY_ORDER) if (input[key] !== undefined) out[key] = input[key];
+  for (const key of KEY_ORDER) if ((input as Record<string, unknown>)[key] !== undefined) out[key] = (input as Record<string, unknown>)[key];
   for (const key of Object.keys(input)) if (!(key in out) && (input as any)[key] !== undefined) out[key] = (input as any)[key];
   return { schema_version: 1, ...out } as ShipReceipt;
 }
@@ -119,7 +120,8 @@ export function receiptSummaryLine(r: ShipReceipt): string {
   if (r.artifacts_consumed) parts.push(`artifacts_consumed=${r.artifacts_consumed}`);
   if (r.approval) parts.push(`approval=${approvalSummary(r.approval)}`);
   const loop = parseReviewLoop(r.review_loop);
-  if (loop) parts.push(`passes=${loop.passes} blocking_found=${loop.blocking_found} deferred=${loop.deferred}`);
+  if (loop) parts.push(`passes=${loop.passes} blocking_found=${loop.blocking_found} deferred=${loop.deferred}`
+    + (loop.fix_checks ? ` fix_checks=${loop.fix_checks}` : '') + (loop.dispatches ? ` dispatches=${Object.values(loop.dispatches).reduce((a, c) => a + c, 0)}` : ''));
   if (r.carry && typeof r.carry.from === 'string') parts.push(`carried_from=${r.carry.from.slice(0, 12)}`);
   return `SHIP_RECEIPT: ${oneLine(parts.join(' '))}`;
 }
@@ -145,6 +147,8 @@ export const CARRY_TEST_GLOBS: readonly string[] = [
   '**/*_test.go', '**/test_*.py', '**/*_test.py', '**/*_spec.rb', '**/*Test.java', '**/*Tests.swift',
 ];
 export const CARRY_METADATA_GLOBS: readonly string[] = ['VERSION', 'CHANGELOG.md', 'package.json', 'agents-digest/**'];
+/** How many differing product paths a RECEIPT_CARRY_PRODUCT_CHANGED refusal names, and how far the per-path patch-id walk goes. */
+export const CARRY_NAMED_PATHS = 20;
 
 export type CarryClass = 'product' | 'test' | 'metadata';
 export interface CarryPlanInput {
@@ -163,20 +167,32 @@ export interface CarryPlanInput {
 export interface CarryRecord { from: string; reason: string; product_patch_id: string; changed_paths: string[]; merge_commits: number; range_diff: string; covers: string[]; reruns: string[] }
 export type CarryPlan = { ok: true; carry: CarryRecord } | { ok: false; code: 'RECEIPT_CARRY_PRODUCT_CHANGED' | 'RECEIPT_CARRY_REFUSED'; message: string };
 
-/** The file's text at the reviewed head and at HEAD, with the release version each head carries (from `VERSION`, else `package.json`). */
-export interface CarryChange { before: string | null; after: string | null; oldVersion?: string | null; newVersion?: string | null }
+/**
+ * The file's text at the reviewed head and at HEAD, with the release version each head carries (from `VERSION`, else
+ * `package.json`) and the base policy's `stamp_patterns` templates.
+ */
+export interface CarryChange { before: string | null; after: string | null; oldVersion?: string | null; newVersion?: string | null; templates?: readonly string[] }
 
 /**
  * A policy-named stamp path's change is a stamp when the new text reads as the
- * old text once every new version in it is the old one: the rule the tree receipt
- * applies to the same `stamp_paths`, `stamp_files` and `release_outputs` before
- * the train accepts a stamp commit. No version change, or a file missing on
- * either side, is not a stamp.
+ * old text once every new version in it is the old one, or when every changed
+ * line is a stamp-form rewrite to the new version (`stampOnlyLine`: the old
+ * version or a newer tentative `*_KEY_VERSION` the slot stamp moved, #3512): the rule
+ * the tree receipt applies to the same `stamp_paths`, `stamp_files` and
+ * `release_outputs` before the train accepts a stamp commit. No version
+ * change, or a file missing on either side, is not a stamp.
  */
 export function stampOnlyText(change: CarryChange): boolean {
   const { before, after, oldVersion, newVersion } = change;
   if (before === null || after === null || !oldVersion || !newVersion || oldVersion === newVersion) return false;
-  return after.split(newVersion).join(oldVersion) === before;
+  // Digit-bounded: replacing 1.2.3 inside 11.2.3 or 1.2.34 would read a different version's stamp as this one's.
+  const escaped = newVersion.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (after.replace(new RegExp(`(?<![0-9])${escaped}(?![0-9])`, 'g'), oldVersion) === before) return true;
+  const was = before.split('\n');
+  const now = after.split('\n');
+  if (was.length !== now.length) return false;
+  const changed = was.map((line, i) => i).filter(i => was[i] !== now[i]);
+  return changed.length > 0 && changed.every(i => stampOnlyLine(was[i]!, now[i]!, oldVersion, newVersion, change.templates ?? []));
 }
 
 /**
@@ -207,7 +223,7 @@ export function classifyCarryPath(rel: string, extra: { metadata?: readonly stri
  */
 export function planCarry(input: CarryPlanInput): CarryPlan {
   if (input.productPatchId.from !== input.productPatchId.head) {
-    const named = input.changedProduct.slice(0, 20);
+    const named = input.changedProduct.slice(0, CARRY_NAMED_PATHS);
     return { ok: false, code: 'RECEIPT_CARRY_PRODUCT_CHANGED', message: `product diff changed between ${input.from.slice(0, 12)} and ${input.head.slice(0, 12)}: ${named.join(', ') || 'patch-id differs'}${input.changedProduct.length > named.length ? ` (+${input.changedProduct.length - named.length} more)` : ''}` };
   }
   const reasons: string[] = [];
@@ -253,6 +269,13 @@ export function parseReviewLoop(value: unknown): ReviewLoopReceipt | undefined {
   if (n('noted') !== undefined) out.noted = n('noted');
   if (n('fixed') !== undefined) out.fixed = n('fixed');
   if (typeof v.scope === 'string') out.scope = v.scope.slice(0, 20);
+  if (n('fix_checks') !== undefined) out.fix_checks = n('fix_checks');
+  if (n('est_input_tokens') !== undefined) out.est_input_tokens = n('est_input_tokens');
+  if (v.dispatches && typeof v.dispatches === 'object' && !Array.isArray(v.dispatches)) {
+    const d = Object.fromEntries(Object.entries(v.dispatches as Record<string, unknown>)
+      .filter(([k, c]) => /^[a-z][a-z0-9-]{0,39}$/.test(k) && typeof c === 'number' && Number.isInteger(c) && c >= 0).slice(0, 12)) as Record<string, number>;
+    if (Object.keys(d).length) out.dispatches = d;
+  }
   return out;
 }
 

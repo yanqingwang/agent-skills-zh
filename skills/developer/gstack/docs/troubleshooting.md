@@ -2373,7 +2373,12 @@ exact tokens it finds in these positions:
   `gates`, `backstop`, `bisect`, `rerun`, `dispatched`, `dispatch`,
   `failed`, `passed` (`failed 40269992077 | rerun passed 40287239206`,
   `gate 40323989742`, `run #19368712345`); a generic word such as `id`,
-  `job`, `attempt` or `workflow` exempts nothing;
+  `job`, `attempt` or `workflow` exempts nothing. This position is exempt in
+  the scanner itself (`isCiRunIdentifier` in `lib/redact-patterns.ts`), so
+  `gstack-approvals add`, `gstack-decision-trail` and the pregate secrets
+  check accept it too, not only `gstack-post`. A national number written
+  without its `+` right after a run word reads as a run id there; that is the
+  accepted residual of the ruling that a run id is not a phone number;
 - every 11-digit id chained after an allowlisted one through `, `, ` and `,
   ` & `, ` or ` or ` / `, optionally with a `(#1234)` between
   (`screen 40269992077 (#3434) and 40275443393 (#3453)`).
@@ -2648,7 +2653,11 @@ from the working directory (a bare `bun gstack-pregate`), since a branch could
 then pick the user policy: run `gstack-pregate` directly or as
 `bun --no-env-file`. `gstack-ship-queue ready` under a train policy fetches
 `origin/<base>` first and refuses with this code, quoting git's error, when
-that fetch fails.
+that fetch fails. `gstack-restamp`'s `stamp_paths` stage refuses with it when
+the diff that tells the base's added lines from the branch's own cannot run
+(`cannot diff <since>..<base> for the stamp_paths stage (<git's first stderr
+line>); nothing written`), since an empty diff would read as "the base added
+nothing" and move the base's lines again.
 
 **Fix.** `git fetch origin <base> --depth=1`, then rerun. To run against the
 branch's own file deliberately, pass `--policy-from head --allow-repo-commands`;
@@ -2708,11 +2717,19 @@ code (you already do when you run its tests), or drop the release tool.
 **Meaning.** `gstack-restamp` was told the base SHA (`--expect-base`) or the
 merge order (`--expect-order`) the allocation assumed, and one of them moved:
 the base advanced, a predecessor is not merged, or a successor merged first.
-The JSON result carries `expected`, `actual` and `recompute`.
+`--expect-order` lists the lane's own PR (`--pr`) first, then the remaining
+order; a list that leaves it out reads every entry as an unmerged predecessor,
+and the message says so. The JSON result carries `expected`, `actual` and
+`recompute`.
 
-**Fix.** Run the printed `recompute` command, which recomputes the version
-from the current base, then merge with the server-side head condition
-(`MERGE_CONDITION: sha=<head>`).
+**Fix.** Run the printed `recompute` command: it carries the corrected order
+(this PR first, merged PRs dropped, an unmerged predecessor kept ahead because
+it must merge first) and recomputes the version from the current base; then
+merge with the server-side head condition (`MERGE_CONDITION: sha=<head>`). A
+predecessor GitHub calls merged that the local base does not carry yet
+(`#<pr>=merged-not-in-base`) is kept ahead too, with `fix: git fetch origin
+<base>`: fetch, then rerun, so the recompute, pinned to that local base, never
+allocates the version the predecessor already took.
 
 <a id="restamp-version-source"></a>
 ### `RESTAMP_VERSION_SOURCE`
@@ -4076,7 +4093,10 @@ gate-ahead merge could not be recomputed with `git merge-tree`. The train
 commands use it too: `train forget` on a record that does not exist or on a
 train still building, running or merging, `train watch` on an unknown record,
 `verify --pr <n> --screen` on a run with no verdict to read (an INCOMPLETE or
-unreadable run), and `ready --screen` when the scratch merge branch cannot be
+unreadable run), `verify --pr <n> --train <nonce>` when main's tree mismatches
+and whether a slot merged on GitHub cannot be read (so whether the queue must
+freeze is unknown; it never answers "nothing merged" from an unreadable
+state), and `ready --screen` when the scratch merge branch cannot be
 pushed. Nothing was written unless the `QUEUE_STAMP_REFUSED:` line says
 `committed=yes`.
 
@@ -4174,13 +4194,19 @@ with the new pin (`train build --prs <n>@<new sha>,…`).
 ### `QUEUE_TRAIN_CONFLICT`
 
 **Meaning.** Merging a PR onto the prefix before it conflicts outside the
-version files and the CHANGELOG. The `QUEUE_TRAIN_CONFLICT:` line names the
-PR, the conflicting files and the PRs merged before it. Nothing was
-dispatched and no branch was pushed.
+version files and the CHANGELOG. From `train build`, the
+`QUEUE_TRAIN_CONFLICT:` line names the PR, the conflicting files and the PRs
+merged before it, and the check runs before the fill rule, so a filling train
+finds it too. From `ready --no-screen`, the prefix is the base itself: the
+`BASE_OVERLAP:` line names the files the base moved onto since the head
+forked, and the train would stop at this PR (under `--screen` the same
+conflict is `QUEUE_SCREEN_STALE_REF`). Nothing was dispatched and no branch
+was pushed.
 
-**Fix.** Run the printed `train build --prs <list without that PR>`. The PR's
-lane merges main (with the earlier PRs once they land) and reports READY
-again.
+**Fix.** From `train build`, run the printed `train build --prs <list without
+that PR>`. The PR's lane reports the conflict to the controller and, on its
+word (crew template rule 14), merges main into the pin (with the earlier PRs
+once they land), resolves, pushes, runs /ship and reports READY again.
 
 <a id="queue-train-free-red"></a>
 ### `QUEUE_TRAIN_FREE_RED`
@@ -4209,7 +4235,11 @@ run carrying the nonce, or marks the dispatch absent; only then does
 
 **Meaning.** The train has fewer PRs than `train.max_size` and its oldest
 READY PR has waited less than `train.fill_hours`, so it does not dispatch
-yet. The message prints when it will.
+yet. The message prints when it will. The scratch merges already ran: the
+`MERGE_CHECK: T1..T<k> merge clean onto <base>@<sha>` line above it says every
+seated pin merges in slot order (a pin that does not is `QUEUE_TRAIN_CONFLICT`
+instead), and a `#<pr> BASE_OVERLAP:` line names a pin whose files the base
+moved onto since it forked.
 
 **Fix.** Add READY PRs, rerun after the printed time, or pass `--urgent` for a
 one-PR train.
@@ -4304,17 +4334,52 @@ the repair merges (a changed train).
 
 **Meaning.** Main's tree is neither the train's prefix before this PR nor the
 one after it, modulo stamps, so the merge would not publish what the gate
-tested.
+tested. After a merge, a main that differs from the prefix after the PR in
+the CHANGELOG alone, while being its own first parent's CHANGELOG plus the
+PR's own entry (the rule the pre-merge verify applied to the head), is not a
+mismatch ([one CHANGELOG rule, before and after](ship-policy.md#run-a-merge-train)).
 
-**Fix.** Stop merging. If earlier PRs of the train merged, the queue is now
-frozen (`QUEUE_TRAIN_FROZEN`); otherwise build a new train on current main.
+**Fix.** Stop merging. If a PR of the train merged (verified, or reported
+MERGED by GitHub without a verified tree, slot 1's own squash included), the
+queue is now frozen (`QUEUE_TRAIN_FROZEN`); otherwise build a new train on
+current main. When whether a slot merged on GitHub cannot be read, verify
+refuses with `QUEUE_PROOF_MISSING` instead of either answer; rerun it once
+`gh pr view` answers.
+
+<a id="queue-train-stale"></a>
+### `QUEUE_TRAIN_STALE`
+
+**Meaning.** Verify found main's tree outside this train's prefixes, but every
+slot of the train already merged on GitHub and main's SHA is a prefix another
+train's verify confirmed, so the record is stale: its PRs landed and later
+trains moved main on. Comparing today's main with its prefixes proves nothing,
+so the queue is not frozen and no backstop is dispatched (train 24's record
+did both on a main train 28 had verified, #3519). Other trains are read after
+the notes ref, so a machine that never ran the later train still sees it.
+
+**Fix.** `gstack-ship-queue train prune --stale --train <nonce>` settles the
+record. When some slot is not merged, no train verified main's SHA, or verify
+ran with `--no-fetch`, verify freezes as before (`QUEUE_TRAIN_FROZEN`). A queue
+another machine already froze stays frozen; the refusal prints its freeze
+lines.
 
 <a id="queue-train-frozen"></a>
 ### `QUEUE_TRAIN_FROZEN`
 
 **Meaning.** A train stopped partway through publication, so main holds a
 prefix no gate covered on its own. The `QUEUE_TRAIN_FROZEN:` line lists the
-merged PRs, main's tree and the backstop run dispatched on main's SHA. The
+merged PRs (a slot GitHub reports MERGED counts as merged, verified tree or
+not, and the reason then says `merged on GitHub without a verified tree`, so
+the repair's rebuild never seats it again), main's tree and the backstop run
+dispatched on main's SHA. The record is built from the one GitHub read that
+decided to freeze: a slot that read MERGED stays merged even when `gh pr view`
+stops answering a moment later, and a slot whose state could not be read when
+another slot had merged is left out of `unmerged` and named in the reason
+(`#<n> unreadable on GitHub, left out of unmerged; seat it in a train by hand
+once gh pr view answers`), so the rebuild after the repair never seats a PR
+that may already be in; the record keeps it under `unreadable`, an
+`unreadable:` line prints it, and the `NEXT:` after the repair names it for a
+`gh pr view` check. The
 freeze lives in local state and on `refs/notes/gstack-trains`. Ordinary
 trains and other trains' merges are refused until a repair lands.
 
@@ -4643,18 +4708,79 @@ conflict-only base merge, a test-only change or release metadata, which the
 `carry` object in the carried receipt records with the product patch-id and
 the range-diff evidence ([unattended.md](unattended.md#the-terminal-line)).
 
+<a id="receipt-prose-mismatch"></a>
+### `RECEIPT_PROSE_MISMATCH`
+
+**Meaning.** `gstack-ship-receipt read --check-prose` found a number in the PR
+body that names a counter the receipt records (`passes=3` against
+`review_loop.passes: 2`, `1 deferred` against `deferred: 2`, `passed: 40`
+against `gate.passed: 41`) with a different value. The receipt is written from
+the run; the prose was typed, so a reader of the body would learn a number the
+run did not produce. The `PROSE:` line names each field with both values.
+
+**Fix.** Correct the body to the receipt's number. When the receipt is the
+stale one (the run was repeated), rerun `/ship` so the receipt is rewritten
+([ship-policy.md](ship-policy.md#ship-receipt)).
+
+<a id="receipt-carry-pregate-stale"></a>
+### `RECEIPT_CARRY_PREGATE_STALE`
+
+**Meaning.** The receipt in the body records a pregate result for its old head,
+and `gstack-ship-receipt carry` was asked to rebind it to HEAD without a pregate
+result current for HEAD (or the one passed with `--pregate` is not current). A
+carry certifies the new head, so it never keeps the old tree's checks. Nothing
+was rewritten.
+
+**Fix.** Run `gstack-pregate` at HEAD (the remote tests stage when the policy
+requires it), then rerun `carry --pregate <pregate.json>`. `--dry-run` still
+reports eligibility without one ([ship-policy.md](ship-policy.md#receipt-carry)).
+
+<a id="receipt-git-too-old"></a>
+### `RECEIPT_GIT_TOO_OLD`
+
+**Meaning.** `gstack-ship-receipt carry` compares the product diff at the two
+heads with `git patch-id --verbatim`, which git added in 2.39. The installed git
+is older (the refusal names its version), so the comparison could not run and
+nothing was rewritten.
+
+**Fix.** Upgrade git to 2.39 or later and rerun `carry`; without an upgrade, run
+`/ship` on the new head ([ship-policy.md](ship-policy.md#receipt-carry)).
+
+<a id="docs-audit-blocked"></a>
+### `DOCS_AUDIT_BLOCKED`
+
+**Meaning.** `gstack-ship-receipt write --docs` was given a documentation audit
+whose `status` is `blocked` with no `exception`, or `--body` lacks the exception
+line the record implies, or `gstack-ship-receipt docs-caps` found a declared
+documentation file over its `docs.caps` byte cap (or absent). /ship Step 14.5
+ends blocked only when nobody has accepted the named risk, so a receipt written
+then would publish an unaudited release as audited; nothing was written.
+
+**Fix.** Repair the audit and rerun Step 14.5, or trim the file the `DOCS_CAP: …
+over` line names (or raise its cap on the base branch). When the owner accepts
+the named risk instead, record it as `docs.exception: { accepted_by, date, via,
+reason }` and carry the `Documentation exception: accepted by <owner> <date> via
+<ref>: <reason>` line in the PR body's `## Documentation` section, word for word
+([ship-policy.md](ship-policy.md#ship-receipt)).
 <a id="gstack-pr-wait"></a>
 ## gstack-pr-wait
 
 `gstack-pr-wait <pr> [--repo owner/name] [--until green|ready|any-change]
-[--interval SECONDS] [--timeout MINUTES]` watches one pull request and prints
+[--interval SECONDS] [--timeout MINUTES] [--exclude CHECK,...]` watches one pull request and prints
 one stdout line per real event, prefixed `#<pr>`; progress and recoverable
 errors go to stderr. `/land-and-deploy` Step 3 runs it with `--until green`.
 Exit 0 means the `--until` condition is met or the PR merged; exit 1 and 2
 end with one of the two codes below. `green` gates on every check on the
 head, as `gstack-ci-gate` does, so the two never disagree; a check the base
 branch requires (rulesets and classic branch protection) counts as pending
-until it appears. A 403 on the classic
+until it appears. `--exclude <check,...>` leaves a named non-required check
+out of the verdict, as `gstack-ci-gate --exclude` does: it neither holds
+`green` while pending nor blocks when it fails, and the first poll logs
+`excluded from the verdict: <names>`; a required check cannot be excluded
+(`exclude refused for required check <name>`) and gates, and while a
+required-check source cannot be read nothing is excluded (`exclude refused for
+<names>: the required checks could not be read`), as `gstack-ci-gate` refuses
+its overrides. A 403 on the classic
 protection read (a token without admin scope) is logged and skipped, and the
 rulesets read still names the required checks. The review-bot lists are
 configuration: `gstack-config set pr_wait_gating_bots greptile,macroscope`
@@ -4811,6 +4937,40 @@ every flag and code.
 
 **Fix.** Rerun once; if it repeats, report the printed frame to the gstack maintainers.
 
+## Prose lint (gstack-prose-lint)
+
+`bin/gstack-prose-lint` reads the prose /ship is about to publish, a CHANGELOG
+entry (Step 13) and the sections the author writes in the PR body (Step 19:
+`## Why`, `## Summary` and `## Blast radius`, through `--sections`; the
+`## What changed` captions and image text stay a report), and the quality-gate
+workflow runs it over `CHANGELOG.md`'s `[Unreleased]` block. It decides only
+what a regular expression can: autopilot vocabulary, "not just X, but Y",
+metaphor nouns, a colon used as a conjunction, a bold label that restates its
+line, an arrow or a dropped article standing in for a sentence, and a fence or
+HTML comment left open (`unclosed-block`), because nothing after it was read.
+Fenced code, inline code, URLs, HTML comments and quoted words are never read,
+so the problem quoted in `## Why` is the person's to phrase. Everywhere else (a
+template, a doc, this file) it is a report: run it, read it, keep your em dashes.
+
+<a id="prose-lint-found"></a>
+### `PROSE_LINT_FOUND`
+
+**Meaning.** A gated run (`--gate`) found at least one tell in the text it was
+given. Each `PROSE: <file>:<line> <rule> "<match>" (<hint>)` line above the
+trailer names the rule and what to write instead; `PROSE_LINT: found=<n>` counts
+them. With `--unreleased` only the `## [Unreleased]` block was read; with
+`--base <ref>` only the lines the working tree added since the merge base; with
+`--sections <a,b>` only the text under those `## ` headings (under `--gate`, a
+file with none of them is exit 2, not a pass: the draft lost a heading).
+
+**Fix.** Rewrite each named line in the draft the way its hint says (a measurement
+such as `1.6740 → 1.7010` and the `before → after` heading are not findings), then
+rerun the same command. The PR body's verbatim tool sections (the approvals
+table, issue links, review findings, the coverage diagram) are outside
+`--sections` and are never read, so a finding there means the compose block was
+edited: restore its `--sections` list. A rule that keeps flagging correct prose
+is a bug in `lib/prose-lint.ts`: file it with the sentence.
+
 ## Quick answers
 
 The short troubleshooting entries that used to live in the README. Each names the symptom and the fix; the sections above cover every gate message in depth.
@@ -4906,3 +5066,61 @@ a registered, unlocked worktree whose directory is already gone (`git worktree
 prune`); a locked one, or a `broken` row whose `.git` link is missing, reads
 `review` instead. `clean,ignored:<n>` means the tree is clean but holds
 gitignored entries (`.env`, build output) that go with the worktree.
+
+
+## Agent harnesses (gstack-harness)
+
+`bin/gstack-harness` registers gstack's skills with the agent harness gstack is installed into (OpenClaw, Hermes, a Dot, QM, any other) and records every file it writes in `$GSTACK_STATE_ROOT/harness/<id>.ledger`. Each error line ends with its code and a link here. Per-harness install, verify and uninstall steps: [docs/hosts.md](hosts.md#agent-harnesses).
+
+<a id="harness-unknown-target"></a>
+### `gstack-harness: unknown harness "<name>"` (HARNESS_UNKNOWN_TARGET)
+
+The name is not one of openclaw, hermes, dots, generic, qm, muse or grok. For a harness gstack does not know, use `generic` with `--skills-dir` or `--context`, or `--print` to get the router and block to paste in.
+
+<a id="harness-no-destination"></a>
+### `gstack-harness: <harness> has no default skills folder` (HARNESS_NO_DESTINATION)
+
+`generic` has no default location, and gstack never guesses at your context files. Pass `--skills-dir <dir>` (an Agent Skills folder the harness reads) or `--context <file>` (a file it loads every session), or `--print` to write nothing.
+
+<a id="harness-mode-unsupported"></a>
+### `gstack-harness: Hermes does not support --skills router` (HARNESS_MODE_UNSUPPORTED)
+
+Hermes opens only skills it has indexed, so a router that points at unlisted files would not load. Drop `--skills` to take the harness's default (Hermes: all; OpenClaw, dots and generic: router).
+
+<a id="harness-unsafe-destination"></a>
+### `gstack-harness: refusing to write into <dir>: <why>` (HARNESS_UNSAFE_DESTINATION)
+
+The destination is your home folder, the filesystem root, inside the gstack checkout, a symlink (or holds one where gstack's own folders were), or a path with a tab or newline. Nothing was written. Pick the harness's own skills folder, for example `--skills-dir ~/.openclaw/skills`.
+
+<a id="harness-unowned-entry"></a>
+### `gstack-harness: <path> already exists and gstack did not write it` / `a skill named <name> already exists at <path>` (HARNESS_UNOWNED_ENTRY)
+
+gstack only replaces files its ledger says it wrote. A folder or a skill with the same name is yours (or another tool's), and harnesses resolve skills by name, so gstack stops instead of shadowing it. Rename or move that entry, then register again.
+
+The same code stops `register generic --context <file>` when the file holds a `<!-- gstack:begin harness-routing -->` or `<!-- gstack:end harness-routing -->` line without exactly one partner, or a gstack block someone edited. Delete those marker lines (and the lines between them, once you have kept what you want), then register again.
+
+<a id="harness-render-failed"></a>
+### `gstack-harness: could not render <harness> skills: ...` (HARNESS_RENDER_FAILED)
+
+The harness's skills are rendered from this checkout with `scripts/gen-skill-docs.ts`. Run `bun install` in the checkout and register again; the last lines of the generator's output are in the message.
+
+<a id="harness-budget-exceeded"></a>
+### `gstack-harness: router description is <n> bytes` / `context block is <n> bytes` (HARNESS_BUDGET_EXCEEDED)
+
+The router's description (at most 300 bytes) and the context block (at most 600 bytes) go into every session, so gstack refuses to grow them. This is a gstack bug: report it with the byte count.
+
+<a id="harness-not-registered"></a>
+### `gstack-harness: no registration named "<name>"` (HARNESS_NOT_REGISTERED)
+
+There is no ledger for that harness or id under `$GSTACK_STATE_ROOT/harness`. `gstack-harness status` lists every registration on this machine with its id.
+
+<a id="harness-qm-credentials"></a>
+### `gstack-harness: no QM admin credential in the environment` / `... needs --yes` (HARNESS_QM_CREDENTIALS)
+
+Registering gstack in QM publishes an org skill pack, so it needs an org admin's credential and an explicit `--yes`. Set `GSTACK_QM_URL` and `GSTACK_QM_ADMIN_TOKEN` (or `GSTACK_QM_SIGNING_SECRET` with `GSTACK_QM_ADMIN_ACTOR`) in the environment and run `gstack-harness register qm --yes`. gstack never prompts for, prints or stores the credential; the message shows the exact request instead.
+
+<a id="harness-qm-api"></a>
+### `gstack-harness: <METHOD> /v1/admin/skill-packs... returned HTTP <code>` / `... failed: timed out after 60 s` (HARNESS_QM_API)
+
+QM's admin API refused or did not answer. gstack lists packs before it creates one and retries once, so rerunning never makes a second pack. Check the URL is QM core and the credential is an org admin; `gstack-harness status` shows whether a pack id was recorded.
+

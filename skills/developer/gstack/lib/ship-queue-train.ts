@@ -16,8 +16,9 @@
  */
 import { randomBytes } from 'node:crypto';
 import { DISPATCH_INPUTS, awaitNonceRun, dispatchWorkflow, listDispatchRuns, makeNonce, runForNonce, type WorkflowDispatch } from '../scripts/eval-bg';
-import { changelogDamage, mergeChangelogs, parseChangelog, type ChangelogSection } from './changelog-check';
+import { carryReleasedParent, changelogDamage, mergeChangelogs, parseChangelog, type ChangelogSection } from './changelog-check';
 import type { ResultStatus } from './headless-artifacts';
+import { baseOverlapLine } from './pr-wait';
 import { versionAtRef, versionFiles } from './restamp';
 import type { LoadedPolicy, ShipPolicy, TrainPolicy } from './ship-policy';
 import { loadBasePolicy, type QueueContext } from './ship-queue';
@@ -143,10 +144,13 @@ function unionChangelog(ours: string, theirs: string): string {
 /**
  * One train merge, in object storage: the PR head onto the previous prefix.
  * Version files take the prefix's side; the CHANGELOG merges by section (the
- * gate-ahead rule, else a union of sections, since each heading is restamped
- * at merge), unless a side damaged released history (changelogDamage), which
- * is a conflict the lane resolves. Any other conflict is reported with every
- * conflicting path.
+ * gate-ahead rule with the merge base, which also carries a stacked child
+ * past its released parent, else a union of sections, since each heading is
+ * restamped at merge; the union takes the carried side too, so a prefix that
+ * already holds an earlier slot's [Unreleased] never duplicates the released
+ * parent's text under the child's heading), unless a side damaged released history
+ * (changelogDamage), which is a conflict the lane resolves. Any other
+ * conflict is reported with every conflicting path.
  */
 export function mergeStep(repoRoot: string, pred: string, head: string, policy: ShipPolicy): { tree: string } | { conflicts: string[] } {
   const r = git(repoRoot, ['merge-tree', '--write-tree', head, pred]);
@@ -174,10 +178,11 @@ export function mergeStep(repoRoot: string, pred: string, head: string, policy: 
     else if (file === policy.changelog) {
       const text = (sha: string) => git(repoRoot, ['cat-file', 'blob', sha]).out + '\n';
       const base = entry.get(1);
-      const damage = changelogDamage(text(ours), text(theirs), base ? text(base) : undefined);
+      const merged = mergeChangelogs(text(ours), text(theirs), base ? text(base) : undefined);
+      const damage = merged ? null : changelogDamage(text(ours), text(theirs), base ? text(base) : undefined);
       if (damage) { conflicts.push(`${file} (${damage})`); continue; }
-      const merged = mergeChangelogs(text(ours), text(theirs)) ?? unionChangelog(text(ours), text(theirs));
-      const blob = git(repoRoot, ['hash-object', '-w', '--stdin'], undefined, merged);
+      const own = (base && carryReleasedParent(text(ours), text(theirs), text(base))?.text) || text(ours);
+      const blob = git(repoRoot, ['hash-object', '-w', '--stdin'], undefined, merged ?? unionChangelog(own, text(theirs)));
       if (blob.ok) resolved.push({ path: file, blob: blob.out }); else conflicts.push(file);
     } else if (stampFiles.includes(file)) resolved.push({ path: file, blob: theirs });
     else conflicts.push(file);
@@ -192,6 +197,39 @@ export function mergeStep(repoRoot: string, pred: string, head: string, policy: 
     return w.ok ? { tree: w.out } : { error: `write-tree failed: ${w.err}` };
   });
   return 'error' in out ? { conflicts: [`(${out.error})`] } : { tree: out.tree };
+}
+
+export interface BaseOverlap { touched: string[]; conflicts: string[] | null; unknown: boolean; line: string | null }
+
+/**
+ * What gstack-pr-wait's base-overlap event tells a lane, read from git at
+ * READY and at train build (handoff GSTA-119): the files the base changed
+ * since this head forked that the head also changes and, when `verdict` is
+ * asked for, whether the train's own merge of the head onto the base is
+ * clean. A base that moved onto nothing the PR touches is one line of fact; a
+ * conflict is what QUEUE_TRAIN_CONFLICT would otherwise discover at the
+ * scratch merge. A git read that fails is `unknown`, said so, never "no
+ * overlap". Train build asks for no verdict: its own chain merges each pin
+ * onto its prefix, and a merge onto the bare base would contradict it for T2+.
+ */
+export function baseOverlap(repoRoot: string, base: string, baseSha: string, head: string, policy: ShipPolicy, verdict = true): BaseOverlap {
+  const fork = git(repoRoot, ['merge-base', baseSha, head]);
+  const none = { touched: [] as string[], conflicts: null, unknown: false };
+  if (fork.ok && fork.out === baseSha) return { ...none, line: null };
+  const theirs = fork.ok && fork.out ? git(repoRoot, ['diff', '--name-only', fork.out, baseSha]) : fork;
+  const ours = fork.ok && fork.out ? git(repoRoot, ['diff', '--name-only', fork.out, head]) : fork;
+  if (!fork.ok || !fork.out || !theirs.ok || !ours.ok) {
+    const why = [fork, theirs, ours].find(r => !r.ok)?.out.split('\n')[0] || 'git read failed';
+    return { ...none, unknown: true, line: `BASE_OVERLAP: could not compare ${base}@${baseSha.slice(0, 12)} with ${head.slice(0, 12)} (${why}); conflicts unknown` };
+  }
+  const changed = new Set(theirs.out.split('\n').filter(Boolean));
+  const touched = ours.out.split('\n').filter(f => f && changed.has(f)).sort();
+  if (!touched.length) return { ...none, line: `BASE: ${base} moved to ${baseSha.slice(0, 7)} since this PR forked; its new commits touch no file this PR changes` };
+  if (!verdict) return { touched, conflicts: null, unknown: false, line: `BASE_OVERLAP: ${baseOverlapLine(base, baseSha, touched)}` };
+  const m = mergeStep(repoRoot, baseSha, head, policy);
+  const conflicts = 'conflicts' in m ? m.conflicts : null;
+  const said = conflicts ? `the train's merge onto ${base} conflicts beyond the CHANGELOG and the stamp files (${conflicts.join(', ')})` : `the train's merge onto ${base} is clean`;
+  return { touched, conflicts, unknown: false, line: `BASE_OVERLAP: ${baseOverlapLine(base, baseSha, touched)}; ${said}` };
 }
 
 const TRAIN_IDENTITY = { GIT_AUTHOR_NAME: 'gstack-ship-queue', GIT_AUTHOR_EMAIL: 'ship-queue@gstack.local', GIT_COMMITTER_NAME: 'gstack-ship-queue',
@@ -353,12 +391,15 @@ async function newTrain(env: TrainEnv, o: BuildOptions): Promise<{ t: TrainRecor
     `ORDER: ${order.train.map((s, i) => `${i + 1}:#${s.pr}(${s.screen.choice === 'screen' ? 'screened' : 'unscreened'})`).join(' ')}${explicit ? ' (explicit --order)' : ''}`,
     ...(order.held.length ? [`HELD: ${order.held.map(s => '#' + s.pr).join(',')} (${order.split ? 'unscreened PRs form their own train' : `over the train size ${env.train.max_size}`})`] : []),
   ];
-  const due = fillDue(order.train, env.train, nowIso(), o.urgent || o.repair);
-  if (due && !o.dryRun) return outPending({ code: 'QUEUE_TRAIN_WAITING', message: `${order.train.length} of ${env.train.max_size} PRs; the oldest READY dispatches at ${due}` }, lines, `${Q} train build ${prsArgs(order.train, !!explicit)} (after ${due}, or with more PRs, or --urgent for one)`, 'none');
   const baseSha = git(env.ctx.repoRoot, ['rev-parse', `${env.remote}/${env.ctx.base}`]).out;
   const key = sha256(JSON.stringify({ base: baseSha, slots: order.train.map(s => `${s.pr}@${s.head}`) }));
-  const live = listTrains(env.repo.keys).find(t => t.key === key && !TERMINAL_STATES.includes(t.state) && t.state !== 'red' && t.state !== 'unattributed');
-  if (live) return { t: Object.assign(live, { held: order.held.map(s => s.pr) }), lines };
+  // The scratch merges run before the fill rule (#3485): a QUEUE_TRAIN_WAITING result is also a clean dry-run merge of
+  // every seated pin, and a pin the base moved onto is named (files only; the chain below is the merge verdict) before the
+  // train is refused for it.
+  for (const s of order.train) {
+    const overlap = baseOverlap(env.ctx.repoRoot, env.ctx.base, baseSha, s.head, env.policy.policy, false);
+    if (overlap.touched.length || overlap.unknown) lines.push(`#${s.pr} ${overlap.line}`);
+  }
   const chain = buildChain(env.ctx.repoRoot, baseSha, order.train, env.policy.policy);
   if ('stoppedAt' in chain) {
     const without = order.train.filter(s => s.pr !== chain.stoppedAt);
@@ -366,6 +407,11 @@ async function newTrain(env: TrainEnv, o: BuildOptions): Promise<{ t: TrainRecor
       `QUEUE_TRAIN_CONFLICT: train ${key.slice(0, 12)} stopped at #${chain.stoppedAt} (conflicts: ${chain.conflicts.join(', ')}) after merging ${chain.merged.map(p => '#' + p).join(',') || '(none)'}; nothing dispatched, no branch pushed; fix: ${Q} train build ${prsArgs(without, !!explicit)}`],
     without.length ? `${Q} train build ${prsArgs(without, !!explicit)}` : 'none', 'none');
   }
+  lines.push(`MERGE_CHECK: T1..T${order.train.length} merge clean onto ${env.ctx.base}@${baseSha.slice(0, 12)} (dry run in object storage; nothing pushed)`);
+  const due = fillDue(order.train, env.train, nowIso(), o.urgent || o.repair);
+  if (due && !o.dryRun) return outPending({ code: 'QUEUE_TRAIN_WAITING', message: `${order.train.length} of ${env.train.max_size} PRs; the oldest READY dispatches at ${due}` }, lines, `${Q} train build ${prsArgs(order.train, !!explicit)} (after ${due}, or with more PRs, or --urgent for one)`, 'none');
+  const live = listTrains(env.repo.keys).find(t => t.key === key && !TERMINAL_STATES.includes(t.state) && t.state !== 'red' && t.state !== 'unattributed');
+  if (live) return { t: Object.assign(live, { held: order.held.map(s => s.pr) }), lines };
   const head = chain.prefixes.at(-1)!;
   const nonce = makeNonce('gate', head.commit, baseSha, randomBytes(3).toString('hex'), { purpose: 'train' });
   const now = nowIso();
@@ -381,6 +427,7 @@ export function frozenLines(f: NonNullable<ReturnType<typeof activeFreeze>>): st
   return [
     `QUEUE_TRAIN_FROZEN: train ${f.train} merged ${f.merged.map(p => '#' + p).join(',') || '(none)'}; main ${f.main.sha.slice(0, 12)} tree ${f.main.tree.slice(0, 12)}; backstop ${f.backstop ? `${f.backstop.state} run ${f.backstop.run ?? 'unknown'} (nonce ${f.backstop.nonce})` : 'not dispatched'}`,
     `freeze: ${f.reason}; unmerged ${f.unmerged.map(u => '#' + u.pr).join(',') || '(none)'}; repair ${f.repair ? `#${f.repair.pr}@${f.repair.head.slice(0, 12)}` : 'none admitted'}`,
+    ...(f.unreadable?.length ? [`unreadable: ${f.unreadable.map(u => `#${u.pr}@${u.head.slice(0, 12)}`).join(', ')} (GitHub did not answer at the freeze; neither merged nor unmerged)`] : []),
   ];
 }
 
@@ -563,7 +610,7 @@ export function trainStatus(ctx: QueueContext, o: { train?: string }): TrainOut 
 }
 
 /** A PR's state on GitHub for the stale check: MERGED, CLOSED, OPEN, or unreadable. */
-function prState(ctx: QueueContext, pr: string): string {
+export function prState(ctx: QueueContext, pr: string): string {
   const info = prInfo(ctx, pr);
   return 'error' in info ? 'unreadable' : info.state.toUpperCase();
 }

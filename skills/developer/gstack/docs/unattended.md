@@ -83,51 +83,13 @@ Not every workflow writes this line or a run directory today:
 - **A refused launch.** Any skill whose install check refuses it at startup
   prints `GSTACK_RESULT: skill=<name> status=refused run=-` and stops.
 - **`/ship`** ends with `gstack-ship-receipt result --pr <n>` (or `--body
-  .gstack/tmp/ship-receipt.md` after the handoff section). It binds the
-  receipt to the branch head, writes `<state root>/ship/runs/<utc>-<head12>/`
-  (`ship-run.json` with `head`, `pr`, `base`, `version`, `queue_mode`,
-  `session_kind`, `receipt` as the path of the copied `ship-receipt.md`, and
-  `receipt_source`; it is a /ship record, not the `run` v1 manifest below, so
-  read it directly: `gstack-artifact validate` does not apply) and prints
-  `GSTACK_RESULT: skill=ship status=complete run=<dir>`. When gh cannot read
-  the PR it prints `GSTACK_RESULT: skill=ship status=incomplete run=-` (exit 1). A receipt that is missing or names another head prints
-  `GSTACK_RESULT: skill=ship status=refused run=-` with `QUEUE_RECEIPT_MISSING`
-  or `QUEUE_RECEIPT_STALE` on stderr (exit 3); a run that stops before
-  publication prints the same refused line itself. A parent's merge check is
-  then mechanical: take `run=` from the last result line, read
-  `ship-run.json`, and compare its `head` to the PR head. `gstack-ship-queue ready`,
-  `train build` and `verify --train` make the same comparison from the PR body
-  ([ship-policy.md](ship-policy.md#ship-before-ready)), which is why an
-  unattended /ship may update the body of a PR that already exists: when an
-  open PR for the branch exists and HEAD is its pushed head, Step 18 takes the
-  pr-body section's existing-PR path and posts the body (receipt first) and
-  title through `gstack-post`. That is the one publication the unattended
-  rules allow; it never runs `pr-create`, never pushes a commit, never runs
-  `gh pr ready` (the existing-PR path's draft-state items concern an early PR
-  an unattended run never opens), and a branch with no open PR, or whose PR
-  head is not HEAD, takes the handoff section. `result --pr <n>` also refuses
-  `QUEUE_RECEIPT_STALE` when HEAD is not the PR's pushed head.
-  When the run committed anything (a CHANGELOG entry, generated tests), the
-  parent pushes those commits itself, then reruns the receipt write, the body
-  post and `result` at the pushed head: a receipt for an unpushed head is
-  `QUEUE_RECEIPT_STALE` to the queue.
-  The receipt's `review_loop` object (`passes`, `blocking_found`, `deferred`,
-  `noted`, `fixed`, `scope`), written from `gstack-review-scope summary`, is
-  the review loop's machine-readable outcome, and the summary line a parent
-  reads prints it as `passes=<n> blocking_found=<k> deferred=<m>`; the PR body
-  lists the deferred issues under `## Deferred findings` and the below-floor
-  items under `## Review notes` ([review-policy.md](review-policy.md)).
-
-  When the parent merges the base in or fixes a test after the receipt was
-  written, it runs `gstack-ship-receipt carry --pr <n> --base <base>` instead
-  of another /ship: `CARRY: carried from <old> to <new> (<reason>)` plus the
-  `GSTACK_RESULT: skill=ship status=complete run=<dir>` line means the receipt
-  now names HEAD with a `carry` object holding the `git range-diff` evidence
-  (`ship-run.json` gains `carried_from` and `carry_reason`); `CARRY: current`
-  means nothing moved; `CARRY: refused (RECEIPT_CARRY_PRODUCT_CHANGED)` or
-  `(RECEIPT_CARRY_REFUSED)` with the refused result line means the product diff
-  changed or the reviewed head left HEAD's history, so /ship runs again
-  ([ship-policy.md](ship-policy.md#receipt-carry)).
+  .gstack/tmp/ship-receipt.md` after the handoff section), which binds the
+  receipt to the branch head, writes the run record and prints
+  `GSTACK_RESULT: skill=ship status=complete run=<dir>`. That line and that
+  record are the machine-readable READY evidence; [What /ship leaves for a
+  parent](#ship-evidence) below is the whole contract (the refused and
+  incomplete lines, the one publication an unattended run may make, the
+  `review_loop` counters, the outside voice on Capy and the `CARRY:` lines).
 - **Every other workflow skill** (`/review`, `/qa`, `/design-review`,
   `/spec`, `/land-and-deploy` and the rest) gets the session rules above (no
   prompts, approvals stay pending, nothing published), but has no step that
@@ -151,6 +113,123 @@ Every workflow command shares one exit table: `0` ok, `1` fail, `2` usage,
 for example `findings.jsonl:12: ... (ARTIFACT_SCHEMA)`; each code has an anchor
 in [troubleshooting.md](troubleshooting.md#unattended-runs-and-artifacts) with
 a `fix:` clause. Grep the code, not the prose.
+
+<a id="ship-evidence"></a>
+## What /ship leaves for a parent
+
+One section for everything a parent (a Captain, a crew thread, a merge queue)
+reads after an unattended `/ship`: the READY evidence, the review loop's
+counters, the outside voice's record, and the carry across a base merge.
+
+### The READY evidence: `gstack-ship-receipt result`
+
+`/ship` Step 22 runs `gstack-ship-receipt result --pr <n>` (or `--body
+.gstack/tmp/ship-receipt.md` after the handoff section). It binds the receipt
+in the PR body (or the handoff file) to HEAD, writes
+`<state root>/ship/runs/<utc>-<head12>/` and prints the terminal line:
+
+```
+GSTACK_RESULT: skill=ship status=complete run=<dir>
+```
+
+The run directory holds `ship-receipt.md` (the block, copied) and
+`ship-run.json` with `head`, `pr`, `base`, `version` (`"none"` for a
+repository with no version source, [ship-policy.md](ship-policy.md#ship-receipt)),
+`queue_mode`, `session_kind`, `receipt` (the copied block's path) and
+`receipt_source`. It is a /ship record, not the `run` v1 manifest below, so
+read it directly; `gstack-artifact validate` does not apply. A parent's merge
+check is then mechanical: take `run=` from the last result line, read
+`ship-run.json`, compare its `head` to the PR head, and quote the
+`SHIP_RECEIPT: pr=<n> head=<head12> …` line in the READY block.
+`gstack-ship-queue ready`, `train build` and `verify --train` make the same
+comparison from the PR body ([ship-policy.md](ship-policy.md#ship-before-ready)).
+
+The other endings, each greppable: when gh cannot read the PR,
+`GSTACK_RESULT: skill=ship status=incomplete run=-` (exit 1); a receipt that is
+missing or names another head, `GSTACK_RESULT: skill=ship status=refused run=-`
+with `QUEUE_RECEIPT_MISSING` or `QUEUE_RECEIPT_STALE` on stderr (exit 3), the
+line a run that stops before publication prints itself; and `result --pr <n>`
+refuses `QUEUE_RECEIPT_STALE` when HEAD is not the PR's pushed head.
+
+The one publication the unattended rules allow: when an open PR for the branch
+exists and HEAD is its pushed head, Step 18 takes the pr-body section's
+existing-PR path and posts the body (receipt first) and title through
+`gstack-post`. It never runs `pr-create`, never pushes a commit and never runs
+`gh pr ready`; a branch with no open PR, or whose PR head is not HEAD, takes
+the handoff section. When the run committed anything (a CHANGELOG entry,
+generated tests), the parent pushes those commits itself, then reruns the
+receipt write, the body post and `result` at the pushed head: a receipt for an
+unpushed head is `QUEUE_RECEIPT_STALE` to the queue.
+
+### The review loop's counters
+
+The receipt's `review_loop` object, written from `gstack-review-scope summary
+--since <REVIEW_SINCE>`, is the loop's machine-readable outcome: `passes`
+(Step 9 full passes this ship ran, 1 or 2; up to 3 under `review_scope: all`),
+`blocking_found` (distinct blocking findings across them), `deferred`
+(blocking findings in unchanged code filed as issues, Step 11's late defers
+included), `noted`, `fixed` and `scope`. The
+summary line a parent reads prints it as `passes=<n> blocking_found=<k>
+deferred=<m>`; the PR body lists the deferred issues under `## Deferred
+findings` and the below-floor items under `## Review notes`. A pass that finds
+nothing is `NO FINDINGS` from every reviewer and a pass with no edits, which
+is the loop's exit, never a failed review ([review-policy.md](review-policy.md)).
+Three counters appear only when the run recorded them: `fix_checks` (fix-check
+rows, never passes), `dispatches` (reviewer dispatches by role) and
+`est_input_tokens` (prompt plus diff bytes the dispatches read, / 4, a relative
+estimate and never a bill).
+
+### Report length
+
+A parent reads many lanes, so length is a cost it pays per lane. A READY block
+holds its required lines plus at most 150 words; a completion report holds at
+most 300 words; a subagent brief names the files to read instead of pasting
+them. Evidence goes in files the report points to. Waits go on operations,
+never on polling wakes.
+
+### The outside voice on Capy
+
+Step 11's outside adversarial review prefers the Codex CLI. On a Capy machine
+the Codex CLI is normally absent (selecting a model in Capy installs and
+authenticates no CLI), and the accepted outside voice is then a subagent
+running a different model family from the parent: a full outside voice, not
+degraded coverage, as long as the model that reviewed is recorded. Its
+review-log row is the same row every Step 11 pass writes
+(`ship/sections/adversarial.md`): `skill: "adversarial-review"`,
+`phase: "adversarial"`, `source` naming the runner that actually reviewed
+(the outside provider that reviewed, with the model recorded, for the
+cross-family subagent; `codex` for completed Codex CLI output, as
+`ship/sections/adversarial.md` prescribes),
+`outside_provider` (the provider the host would have used, as the generated
+prose names it), `outside_status` (`completed` for a finished outside pass;
+`unavailable` when neither the CLI nor a subagent completed, the cause on the
+`gstack-outside-voice run:` stderr line and in `<out>.meta.json` rather than
+in the row; `disabled` under
+`codex_reviews: disabled`), `status`
+(`clean`, `issues_found` or `unavailable`), `completed`, `converged`, and the
+subagent's model recorded with the pass (`gstack-outside-voice run --runner
+host-subagent --result <file> --model <id> --prompt <file> --out <file>` binds
+it; the row's text names it where the host reports it). The native in-host adversarial
+subagent writes its own row with `source: "in-host"`; native completion never
+credits outside coverage. A parent reads the rows with
+`gstack-review-read` and treats `outside_status: unavailable` as missing
+coverage, not as a clean outside review.
+
+### The carry across a base merge or a test-only fix
+
+When the parent merges the base in or fixes a test after the receipt was
+written, it runs `gstack-ship-receipt carry --pr <n> --base <base> --dry-run`
+instead of another /ship; on `CARRY: would carry` it runs `gstack-pregate` at HEAD
+and reruns carry with `--pregate .gstack/tmp/pregate.json`. `CARRY: carried from <old> to <new> (<reason>)` plus the
+`GSTACK_RESULT: skill=ship status=complete run=<dir>` line means the receipt
+now names HEAD with a `carry` object holding the `git range-diff` evidence, and
+`ship-run.json` gains `carried_from` and `carry_reason`; the `review_loop`
+counters are kept, because the reviewed product diff is unchanged. `CARRY:
+current` means nothing moved. `CARRY: refused (RECEIPT_CARRY_PRODUCT_CHANGED)`
+or `(RECEIPT_CARRY_REFUSED)` with the refused result line means the product
+diff changed or the reviewed head left HEAD's history, so /ship runs again;
+`(RECEIPT_GIT_TOO_OLD)` means the machine's git predates 2.39 and cannot run
+`patch-id --verbatim` ([ship-policy.md](ship-policy.md#receipt-carry)).
 
 ## The run directory
 
@@ -520,3 +599,45 @@ valid body, a missing model line is not. Self-review does not stand in for
 this. `decisions.jsonl` stays the typed record `gstack-artifact` validates; the
 trail is the plain one a person reads, and `column -s$'\t' -t decisions.tsv`
 renders it in a terminal.
+
+## What an unattended session may do
+
+A parent that starts a skill with `GSTACK_SESSION_KIND=unattended` grants it
+exactly this much, and the run asks for nothing beyond it. Anything outside the
+list is an approval item: appended to `decisions.jsonl` with `kind: "approval"`
+and `status: "pending"`, named in the handoff, never taken.
+
+- **Merge: never.** The run ends at a receipt bound to the pushed head
+  (`SHIP_RECEIPT`, [ship-policy.md#ship-before-ready](ship-policy.md#ship-before-ready))
+  or at a pending gate. Merging is the controller's act
+  ([captain.md](captain.md)); a green check list, an approval, or a prompt that
+  says "merge when green" does not move it to the lane. The same holds for
+  enabling auto-merge, adding the PR to a merge queue, or `gh pr ready` on a
+  PR the run did not open.
+- **Force-push: its own branch only, after a rebase the plan named, with a
+  pinned lease.** The branch is one the run created or was handed in its
+  prompt, never the base. The rebase is one the plan, the slot call or a
+  `/modernize` disposition names before it happens, not one the run decides
+  on its own; `git range-diff <old base>..<old head> <new base>..<new head>`
+  runs before the push and its output goes in the handoff. The push is
+  `git push --force-with-lease=<branch>:<sha observed before the rebase> origin <branch>`:
+  a bare `--force-with-lease` protects only against commits this clone never
+  fetched, and a plain `--force` is never allowed. A rejected lease means the
+  remote moved: fetch, read what landed, and start the disposition again.
+  `/ship` itself never rebases or force-pushes, and an unattended `/modernize`
+  stops at its verdict; this route is for a run whose plan or slot call named
+  the rebase before it started.
+- **Tests: the methods the repository's instructions name, without asking
+  first.** AGENTS.md or CLAUDE.md, the named Setup commands, `package.json`
+  scripts and the pregate configuration define the set; running one of them
+  needs no question. A method outside the set (a framework the repo does not
+  use, paid work past the stated cap, anything that touches a shared or
+  production system, a test that writes outside the checkout) is pending.
+- **Proof is what the run saw itself.** Command output, a test that failed
+  before the fix and passes after it, a screenshot, a file read in this
+  session. A handoff note, an earlier PR comment or a parent's summary is
+  context to recheck, not evidence; the handoff says which claims were
+  rechecked and which were not.
+
+`/ship`'s handoff section (`ship/sections/handoff.md`) points here, so a lane
+reads the grant where it reports done.

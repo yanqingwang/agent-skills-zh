@@ -525,6 +525,52 @@ Evaluate:
 * One realistic production failure per new path/integration; does the plan handle it?
 * **Distribution architecture:** New artifacts' build, publish and update paths; included or deferred CI/CD.
 
+<!-- "Design it twice" and the red flags derive from pstack's architect skill (Lauren Tan, MIT), rewritten for gstack. See NOTICE.md. -->
+### Two shapes before one (design-twice)
+
+Run this only when the plan introduces a new module, service, package or
+boundary: a public surface other code calls; otherwise say so in one line.
+
+**Ask for the second shape.** A plan with one design usually took the first
+shape that compiled in the author's head. Before judging it, require a second
+shape that is structurally different: another owner for the state, another
+split of responsibilities, another place for the boundary. A point fix inside
+the first shape is not a second candidate. When the plan has none, sketch one
+in five lines (types and signatures, bodies `not implemented`) and record it
+as the alternative. Compare the candidates on interface depth: how much
+behavior and policy each hides behind how small a public surface, and prefer
+the one that hides more behind less. A deep module is not a deep call chain:
+the chain scatters the understanding across layers, the module concentrates
+it behind one interface.
+
+**The eight red flags.** Screen the chosen shape before Section 1 closes.
+Assume the next contributor is an agent that sees only the files it opened,
+copies the nearest example and takes the shortest path that compiles; prefer
+the design where a change that looks right from one file is right for the
+whole repo. A flag is a finding with a file or symbol and a reason to revise
+the shape, not a comment asking for care.
+
+1. **Shallow module.** A large interface over little hidden complexity:
+   several calls per operation, options that expose internal stages.
+2. **Information leakage.** One decision (a representation, a policy, a wire
+   or storage detail) lives in more than one module. Re-exported transport
+   types are leakage; parse external data into domain types at the boundary.
+3. **Temporal decomposition.** Modules split by execution order (load,
+   validate, transform, save) instead of by the knowledge they own.
+4. **Pass-through method.** A function that forwards the same arguments to
+   another with the same shape; remove it or move the responsibility.
+5. **Split ownership.** Two modules write the same state or each keep a copy;
+   an agent editing one cannot see the other. One owner per piece of state.
+6. **Two ways to do one task.** An agent copies whichever it meets first.
+   Keep one; move the callers and delete the rest in the same change.
+7. **Importable internals.** The shortest path that compiles imports them and
+   they become interface. Make an outside import fail the build.
+8. **Hand-synced list.** The same items in two places; an agent that sees one
+   list edits one. Derive the second, or fail the build when they disagree.
+
+Record under Architecture: both shapes, the pick, the depth argument for it,
+and each flag with its fix.
+
 ### 2. Code quality review
 Evaluate:
 * Organization and module structure.
@@ -859,7 +905,7 @@ approval and artifact-write requirements still apply.
 |---|---|
 | Disabled | Record disabled coverage below, then continue to planning decisions. No prompt, outside process or native replacement. |
 | Ready | Construct the prompt and run the foreground outside invocation. |
-| Other preflight mode, including harness mismatch | Report the probe's diagnosis, construct the same prompt and use Native fallback. |
+| Any other mode (`not_installed`, `under_current_harness`) | Report the probe's diagnosis, construct the same prompt and use Native fallback. |
 | Outside execution or output validation fails | Retain its output and diagnosis, finish termination, then use Native fallback. Auth: name the login repair; timeout: report the five-minute limit; empty response: say no response. |
 | Reviewer completes | Present its full output and resolve findings through Decision procedure. |
 | Native fallback unavailable or fails | Record unavailable coverage and continue to planning decisions. No clean-review credit. |
@@ -918,9 +964,9 @@ End with Recommendation: <action> because <specific reason>. If there are no fin
 THE PLAN:
 <plan content>"
 
-**If `CODEX_MODE: ready` (or `unverified`) — run Codex:**
+**If `CODEX_MODE: ready` — run Codex:**
 
-Run this block for `ready` or `unverified`, in the one foreground Bash call described below.
+Run this block for `ready`, in the one foreground Bash call described below.
 Its opening harness guard rechecks the fresh shell: exit 78 uses the same Native
 fallback below, never a replacement provider. Finish termination before fallback and consume only
 completed output. Use private temporary paths, with no background jobs.

@@ -70,6 +70,13 @@ gstack-approvals render                                    # the ## Approvals se
 
 ## 3. Plan approvals: the shape
 
+Under a Captain, a thread that builds something plans before any product code. A `/autoplan` run on its
+brief, sized to the work, is its first act, the gate goes up in the shape below, and the build starts only
+when the answer is in the run and it reports `APPROVED`. The short form every Capy thread follows, with the
+exempt work (read-only threads, flaky-pass repairs, slot stamps, CHANGELOG resolves, cap re-pins under a
+grant), is the "Plan, approve, ship" section of SKILL.md in this folder; the rule in full is `docs/captain.md`,
+Plan before build.
+
 Every plan or gate you bring for approval has these parts, in this order, written so someone outside the
 project can follow it:
 
@@ -126,9 +133,12 @@ Every PR you send READY on, and the READY report itself, has:
    With no browser that line says `unavailable`: screenshot the printed `shot.html` with your own browser.
    Upload each PNG with Capy's PR asset tool (`tools.pr.uploadAsset`), only for public repositories, and embed
    the URL it returns with the caption as alt text.
-2. **Why.** The cause and the effect the user will see, in two or three sentences.
-3. **Approvals.** `gstack-approvals render`.
-4. **Evidence.** Checks green at the head, gate or train results, flaky cases.
+2. **Why.** The problem in the person's words first, then the cause and the effect the user will see,
+   in two or three sentences.
+3. **Blast radius.** What else the change touches and the one fact that makes that safe, with the
+   evidence-ladder rung that fact reached.
+4. **Approvals.** `gstack-approvals render`.
+5. **Evidence.** Checks green at the head, gate or train results, flaky cases.
 
 The READY report attaches the key image (Capy message attachment), so the Captain can show it inline.
 /ship does all of this when `GSTACK_CAPY=1` (its `capy-pr` section). Outside Capy, the PR body is unchanged.

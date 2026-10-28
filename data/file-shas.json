@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "1073b9b68d08f3a8813c8395682d0c40dc1e686f"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "9de416eb0a9fe5ac3d712f60ec463b2b795041f7"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -37,7 +37,7 @@
     "skills/last30days/SKILL.md": "2eeff5f15fb4cb5c2760276d771c918bd5e68feb"
   },
   "cathrynlavery/diagram-design": {
-    "skills/diagram-design/SKILL.md": "a78a294f0f96e46c830c8b949664ee4bbc3edfd2"
+    "skills/diagram-design/SKILL.md": "6eb03013afab77fb1d67b9f40d0880b95649b357"
   },
   "blader/humanizer": {
     "SKILL.md": "19fc634208e8cc6ae55d4ff287152583216fd244"
@@ -47,7 +47,7 @@
   },
   "coreyhaines31/marketingskills": {
     "skills/product-marketing/SKILL.md": "3af463a602aa0233c4d5fc98c23ba13224aa8f6b",
-    "skills/copywriting/SKILL.md": "e70bd2e1f4e96cb94ef69b3899150950b0128be5",
+    "skills/copywriting/SKILL.md": "2453731ab7a5e52535b7cf29beccbebe687d5a62",
     "skills/cro/SKILL.md": "2b0a5bb9aa17ed83ff111dbfe6ea722610828a29"
   },
   "K-Dense-AI/scientific-agent-skills": {
@@ -83,19 +83,19 @@
     "SKILL.md": "742deafaf4222f9f0e9d9410e72483dad64fe716"
   },
   "garrytan/gstack": {
-    "office-hours/SKILL.md": "cf7f6990d72d7fe7fa1cca43ef4e06bf414b2cef",
-    "plan-ceo-review/SKILL.md": "e1e0ce6e6246ed939f0f4336203f8183638d28bf",
-    "qa/SKILL.md": "1df917c96c81a9b942ffc7bc07332ed22b8e4bf5",
-    "design-review/SKILL.md": "25dd2b22e404d8f40933958527b4784011113094",
-    "health/SKILL.md": "7c66ac77a1599173d00307ad9a70c58a284c1820",
-    "review/SKILL.md": "e0960e203e23dc9b39713af92b3a5f60fc010c2a",
-    "learn/SKILL.md": "ad674c931984c016a7a33fb812d1709872e1ba96",
-    "ship/SKILL.md": "02341223e7b7ee24bf54ce6ab370b492f736c6a5",
-    "investigate/SKILL.md": "36f96da04bdf2b991bfd3d612e46d1fd0df7209d",
-    "retro/SKILL.md": "459f3de3a0f0e0fd5b5e072eee984526b767b3c9",
-    "land-and-deploy/SKILL.md": "69f2352133ee28e47eca47bbbe84e9a795f1039c",
-    "plan-eng-review/SKILL.md": "66beb63c047f87746da305d9544d734a7f611f19",
-    "spec/SKILL.md": "21aaf692c444d8c55f77f1984f0742e9f37ab52c"
+    "office-hours/SKILL.md": "9bc0af744558834bab5d7c1218528250f8c9599b",
+    "plan-ceo-review/SKILL.md": "c9b4e2231ecc41ebfc9fec26d7b7354dcde3f989",
+    "qa/SKILL.md": "cd3983c9227e950852749485734740c708b9e627",
+    "design-review/SKILL.md": "47100ca3198f5a00b9eafc22f8e4bdb1e5b7c4b9",
+    "health/SKILL.md": "b6c84d87d3cb442608c8cadeb026e1d634cb2376",
+    "review/SKILL.md": "9c54f19aa9f2523254558264f6c9771c9dc57b3e",
+    "learn/SKILL.md": "bd368ee9db3912be4f8aa1f569d58d0371fcc551",
+    "ship/SKILL.md": "881cd39349e1a8e468ee8ca7fcb40d09005ba84d",
+    "investigate/SKILL.md": "64a9e825449173961bd379e85c373145c8089dcc",
+    "retro/SKILL.md": "7607330d11081a639d3ebd7edec020fe5611452e",
+    "land-and-deploy/SKILL.md": "8b6b6fc2e373094e7fa746248396150470165694",
+    "plan-eng-review/SKILL.md": "a35ce149fdcf224ec444a4df697685edd956b6c8",
+    "spec/SKILL.md": "8d94a32c83368e44b0d2d863b96c8b15ff2742f9"
   },
   "Vincentwei1021/video-shotcraft": {
     "SKILL.md": "695faad1d7441597a89dea4bd1b44b835005af7c"
@@ -177,7 +177,9 @@
   "gamedev-skills/awesome-gamedev-agent-skills": {
     "skills/godot/godot-gdscript/SKILL.md": "44eb9f5b24bfe1c2354f153fc6e34148d8abb7a8",
     "skills/unity/unity-csharp-scripting/SKILL.md": "0d81d5859ad5a0251b7d0b6f5d477cb913a4199c",
-    "skills/unreal/unreal-cpp-gameplay/SKILL.md": "75185238136c179a53fb47c3075c3528288947c9"
+    "skills/unreal/unreal-cpp-gameplay/SKILL.md": "75185238136c179a53fb47c3075c3528288947c9",
+    "skills/godot/godot-3d-essentials/SKILL.md": "ccc739c0497bed0a114d3b0860d34ee0a8706cbc",
+    "skills/unreal/unreal-behavior-trees/SKILL.md": "f552227677c47e712fe0a525757159e2680f0b8a"
   },
   "bergside/awesome-design-skills": {
     "skills/creative/SKILL.md": "8535915b704a4ac791027f47d4592a34e3d99560"

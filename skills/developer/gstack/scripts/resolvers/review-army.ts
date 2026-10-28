@@ -59,13 +59,13 @@ ${ctx.paths.binDir}/gstack-specialist-stats 2>/dev/null || true
 
 Select specialists from the scope signals above.
 
-**Always-on (dispatch on every review with 50+ changed lines):**
+**Always-on (every review with 50+ changed lines):**
 1. **Testing** — read \`${ctx.paths.skillRoot}/review/specialists/testing.md\`
 2. **Maintainability** — read \`${ctx.paths.skillRoot}/review/specialists/maintainability.md\`
 
-**If DIFF_LINES < 50:** Skip all specialists except State Machines. Print: "Small diff ($DIFF_LINES lines) — specialists skipped." Continue to Step ${stepMerge} with the ${isShip ? 'core/design-lite' : 'core'} findings and an empty specialist list, then the parent's Exploratory QA step and ${nextStep}. Small diffs skip fan-out, never the parent-owned smoke probes. Core shared-code checks also remain required.
+**If DIFF_LINES < 50:** Skip all specialists except State Machines (item 9 decides it). Print: "Small diff ($DIFF_LINES lines) — specialists skipped." Continue to Step ${stepMerge} with the ${isShip ? 'core/design-lite' : 'core'} findings and an empty or State Machines-only specialist list, then the parent's Exploratory QA step and ${nextStep}. Small diffs skip fan-out, never the parent-owned smoke probes or core shared-code checks.
 
-**Conditional (dispatch if the matching scope signal is true):**
+**Conditional (dispatch when its scope signal is true):**
 3. **Security** — if SCOPE_AUTH=true, OR if SCOPE_BACKEND=true AND DIFF_LINES > 100. Read \`${ctx.paths.skillRoot}/review/specialists/security.md\`
 4. **Performance** — if SCOPE_BACKEND=true OR SCOPE_FRONTEND=true. Read \`${ctx.paths.skillRoot}/review/specialists/performance.md\`
 5. **Data Migration** — if SCOPE_MIGRATIONS=true. Read \`${ctx.paths.skillRoot}/review/specialists/data-migration.md\`
@@ -88,13 +88,34 @@ Print the selection:
 "Dispatching N specialists: [names]. Skipped: [names] (scope not detected). Gated: [names] (0 findings in N+ reviews)."`;
 }
 
+/**
+ * The diff command every dispatched reviewer runs. In /ship the parent writes the
+ * base sha into the prompt (the merge base on pass 1, RANGE_BASE from pass 2 on):
+ * a reviewer is its own process and never sees the parent's shell variables, so a
+ * `$RANGE_BASE` reference there would silently fall back to the whole branch.
+ */
+function diffBase(ctx: TemplateContext): string {
+  return ctx.skillName === 'ship' ? 'DIFF_BASE=<diff-base>' : 'DIFF_BASE=$(git merge-base origin/<base> HEAD)';
+}
+
 function generateSpecialistDispatch(ctx: TemplateContext): string {
   return `### Dispatch specialists in parallel
 
 For each selected specialist, launch an independent subagent via the Agent tool.
 **Launch ALL selected specialists in a single message** (multiple Agent tool calls)
 so they run in parallel. Each subagent has fresh context — no prior review bias.
-
+${ctx.skillName === 'ship' ? `
+**Fan-out (\`--review-fanout auto|serial|parallel\` in the prompt; default \`auto\`).**
+Under \`auto\`, when the host reports fewer free subagent slots than selected
+specialists (Capy caps a thread at 8 running subagents, and waiting or idle ones hold
+a slot), dispatch in batches of the free-slot count, at least one per batch, each
+batch in one message, and start the next batch only after every reader of the
+previous one has finished or is confirmed stopped; print \`Fan-out: N specialists in
+M batches of K\`. A host that reports no slot count runs one parallel batch.
+\`serial\` is batches of one; \`parallel\` is one batch regardless of slots (a refused
+launch is a failed reader, never silently dropped coverage). Batching changes the
+order, never the set: every selected specialist still runs before Step 9.2 merges.
+` : ''}
 **Each specialist subagent prompt:**
 
 Each specialist prompt includes:
@@ -118,9 +139,9 @@ Every other specialist, including Testing, reads the full diff with fixtures.
 5. Instructions:
 
 "You are a specialist code reviewer. Read the checklist at {checklist path}, then run
-\`DIFF_BASE=$(git merge-base origin/<base> HEAD) && git diff "$DIFF_BASE"\` to get the full diff. Apply the checklist against the diff.
+\`${diffBase(ctx)} && git diff "$DIFF_BASE"\` to get the ${ctx.skillName === 'ship' ? 'diff (`<diff-base>`: write the sha in before dispatch, the merge base on pass 1 and `RANGE_BASE` from pass 2 on; never a shell variable)' : 'full diff'}. Apply the checklist against the diff.
 
-\`NO FINDINGS\` alone is the expected, complete result for a clean diff; never invent an item to show work. Otherwise output one JSON object per finding, on its own line:
+\`NO FINDINGS\` alone is the expected, complete result for a clean diff; never invent an item. Otherwise output one JSON object per finding per line, 400 words at most:
 {\\"severity\\":\\"CRITICAL|INFORMATIONAL\\",\\"confidence\\":N,\\"path\\":\\"file\\",\\"line\\":N,\\"category\\":\\"category\\",\\"summary\\":\\"description\\",\\"fix\\":\\"recommended fix\\",\\"fingerprint\\":\\"path:line:category\\",\\"specialist\\":\\"name\\"}
 
 Required fields: severity, confidence, path, category, summary, specialist.
@@ -197,20 +218,22 @@ Core findings never earn a specialist confidence boost. Preserve \`advisory\`,
 
 #### 4. Lead judgment
 
-Reviewers fill the space they are given. Before any merged finding counts, the
-parent reads each one and drops or downgrades it on these grounds, saying so:
-- **Nit gravity.** When a reviewer's whole return is style, naming and preference,
-  the code is probably fine; write that down and count nothing from it as a defect.
+Reviewers fill the space they are given. Before a merged finding counts, the
+parent reads it and drops or downgrades it on these grounds, saying so:
+- **Nit gravity.** A reviewer whose whole return is style, naming and preference
+  found nothing; say so and count no defect.
 - **Hypothetical, not actual.** A defect names the call site or input that reaches
-  it. One that does not is a note until someone traces it.
+  it; one that does not is a note until someone traces it.
 - **Structure for a case that does not exist.** Advice to abstract, generalize or
-  guard a path nothing takes is advisory, never a defect.
+  guard a path nothing takes is advisory.
 - **A different design is not a defect.** "I would have done it differently" with
-  no failing case behind it is dropped.
+  no failing case is dropped.
 - **Missing context.** A finding that assumes a rule the repository documents
   otherwise is dropped with the pointer.
-Agreement between reviewers that did not see each other's output is the strongest
-signal; the \`MULTI-SPECIALIST CONFIRMED\` boost above records it. A reviewer that
+- **On record.** A class \`docs/review-policy.md\` rules below the floor is a note,
+  named by its ruling.
+Independent agreement between reviewers is the strongest signal (the
+\`MULTI-SPECIALIST CONFIRMED\` boost records it). A reviewer that
 returned \`NO FINDINGS\` was right until a traced defect says otherwise.
 
 #### 5. Apply specialist confidence gates
@@ -259,7 +282,7 @@ Core shared-code savings never enter this footer; explain any overlap once in th
 #### 7. Save specialist activity
 
 Compile a \`specialists\` object for ${persistRef}.
-${isShip ? 'For each specialist' : 'For DIFF_LINES < 50, keep `specialists: {}`; do not manufacture per-specialist scope records. Otherwise record each considered specialist'} (testing, maintainability, security, performance, data-migration, api-contract, design, simplification, state-machines, red-team):
+${isShip ? 'For each specialist' : 'For DIFF_LINES < 50, keep `specialists: {}` (or `state-machines` alone when it dispatched); do not manufacture per-specialist scope records. Otherwise record each considered specialist'} (testing, maintainability, security, performance, data-migration, api-contract, design, simplification, state-machines, red-team):
 - If dispatched: \`{"dispatched": true, "findings": N, "critical": N, "informational": N}\`
 - If skipped by scope: \`{"dispatched": false, "reason": "scope"}\`
 - If skipped by gating: \`{"dispatched": false, "reason": "gated"}\`
@@ -297,7 +320,7 @@ The Red Team subagent receives:
 
 Prompt, after the defensive framing and fixture handling from item 4 of the specialist dispatch: "You are a red team reviewer. The code has already been reviewed by N specialists
 who found the following issues: {merged findings summary}. Your job is to find what they
-MISSED. Read the checklist at {red-team checklist path}, list changed files with \`DIFF_BASE=$(git merge-base origin/<base> HEAD) && git diff --name-status "$DIFF_BASE"\`, read them as that fixture handling says, and look for gaps.
+MISSED. Read the checklist at {red-team checklist path}, list changed files with \`${diffBase(ctx)} && git diff --name-status "$DIFF_BASE"\`, read them as that fixture handling says, and look for gaps.
 Output findings as JSON objects (same schema as the specialists), or \`NO FINDINGS\` alone, the expected result when they missed nothing. Focus on cross-cutting
 concerns, integration boundary issues, and failure modes that specialist checklists
 don't cover."
