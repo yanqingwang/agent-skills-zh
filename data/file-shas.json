@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "9de416eb0a9fe5ac3d712f60ec463b2b795041f7"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "64b0bdad239534e6dc157b1d0c7c253003499dc5"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -14,8 +14,8 @@
     "skills/engineering/to-spec/SKILL.md": "3f52599ae2a4347aee5a07432c2707518e691a7f"
   },
   "addyosmani/agent-skills": {
-    "skills/context-engineering/SKILL.md": "fb8bb5f85128302b231d301c1201da1e223f6869",
-    "skills/idea-refine/SKILL.md": "c35e693a114ba6b5de18ec58fa119992800915e2",
+    "skills/context-engineering/SKILL.md": "20b0b9a5b1f35c0144f4cb6e4bda6f4c7f1a92b0",
+    "skills/idea-refine/SKILL.md": "e2a2be0bead74b2916979bfddde38eff24a67ba6",
     "agents/code-reviewer.md": "ea267be01f2e16011d04b90dc234986384c4f7e0"
   },
   "Leonxlnx/taste-skill": {
@@ -71,7 +71,7 @@
     "SKILL.md": "aebe394108e76bebdf7b8848eceddc756e844ec4"
   },
   "OthmanAdi/planning-with-files": {
-    ".agents/skills/planning-with-files/SKILL.md": "cf9a31e08ccaee6657b7b3fb95964e3f4c16a269"
+    ".agents/skills/planning-with-files/SKILL.md": "1157c0da2fc2fc98e6b0e5d88598e8dbcae56079"
   },
   "titanwings/distilly": {
     "SKILL.md": "d2a76e7a9475d870fbce3e4abc8a6495d33582c9"
@@ -88,13 +88,13 @@
     "qa/SKILL.md": "cd3983c9227e950852749485734740c708b9e627",
     "design-review/SKILL.md": "47100ca3198f5a00b9eafc22f8e4bdb1e5b7c4b9",
     "health/SKILL.md": "b6c84d87d3cb442608c8cadeb026e1d634cb2376",
-    "review/SKILL.md": "9c54f19aa9f2523254558264f6c9771c9dc57b3e",
+    "review/SKILL.md": "d8aba2c976d5ef29955f9b10f21868c5e819ae01",
     "learn/SKILL.md": "bd368ee9db3912be4f8aa1f569d58d0371fcc551",
-    "ship/SKILL.md": "881cd39349e1a8e468ee8ca7fcb40d09005ba84d",
+    "ship/SKILL.md": "5846b96d3dc4e985b8c3eba9c05728ffcc741678",
     "investigate/SKILL.md": "64a9e825449173961bd379e85c373145c8089dcc",
     "retro/SKILL.md": "7607330d11081a639d3ebd7edec020fe5611452e",
     "land-and-deploy/SKILL.md": "8b6b6fc2e373094e7fa746248396150470165694",
-    "plan-eng-review/SKILL.md": "a35ce149fdcf224ec444a4df697685edd956b6c8",
+    "plan-eng-review/SKILL.md": "295c9eef58c7eec33ae9cf1c4b7fce64b6b6b838",
     "spec/SKILL.md": "8d94a32c83368e44b0d2d863b96c8b15ff2742f9"
   },
   "Vincentwei1021/video-shotcraft": {
@@ -132,7 +132,7 @@
     "skills/arxiv/SKILL.md": "f3d0a3408f1534acd1d51624e7b55afacc90a7ae"
   },
   "Jeffallan/claude-skills": {
-    "skills/code-reviewer/SKILL.md": "63570a367335539d99fb70697f8376095b270b3e",
+    "skills/code-reviewer/SKILL.md": "18678b7f996d029233416a699cc7c75c123bcfce",
     "skills/api-designer/SKILL.md": "63ca1216eca3cc4962caa6ca44d31bc5f1649694",
     "skills/cloud-architect/SKILL.md": "aba277fd04a882b8b9f21a9daaf84ac88bea5191",
     "skills/architecture-designer/SKILL.md": "63823d1e24b70043f424b2d910bd37968fb2f9b1"
@@ -167,7 +167,7 @@
     "skills/hunt/SKILL.md": "4b1c77a5a530aec3f51f70be3e28a1b2a82f69be",
     "skills/health/SKILL.md": "80a0d631e3a49a25f796f3d140099563fb3fb10a",
     "plugins/waza/rules/durable-context.md": "ac9aa5dc92f958f1785dce99aee6c941d71f0144",
-    "skills/check/SKILL.md": "b444004cd522412e3b74bc124174f4e71d89b54d",
+    "skills/check/SKILL.md": "585247af560600118f3ed50600118e13f1895534",
     "skills/read/SKILL.md": "7ddbcf9f8586f9f31777530655456268c283f0b5"
   },
   "NVIDIA/skills": {

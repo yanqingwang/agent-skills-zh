@@ -146,7 +146,12 @@ Two stages with separate clocks, both printed:
 ~2.5 s for `regen` and under 200 ms for each of the others):
 
 - `regen`: every registry entry whose inputs or outputs are touched is fresh
-  (`gstack-regen check` in a scratch worktree).
+  (`gstack-regen check` in a scratch worktree). A fresh entry with touched
+  outputs then runs once more with those outputs deleted; the ones the command
+  recreates byte-identically are the check's `proven` paths, which
+  `gstack-ship-receipt carry` reads. The verdict comes from the first run: an
+  output the second run does not recreate, or a second run that fails, is
+  simply not proven.
 - `secrets`: `gstack-redact` over the branch's added lines (merge-base to the
   working tree, untracked files included). HIGH, or MEDIUM in the `secret`
   category, fails; other MEDIUM findings warn. Cannot be downgraded.
@@ -195,6 +200,30 @@ Two stages with separate clocks, both printed:
   no lane, and a workspace-only Cargo.toml or Cargo.lock needs a `dependencies` entry),
   transitively through
   non-test files; deleted and renamed files select the tests that named them.
+  A removed test (a deleted one, or a rename's old name) that no remaining
+  test selects owes no lane, and prints `removed (no lane owed): <path> —
+  <why>` (the `lanes` detail adds `N removed path(s)`), when it is a JS, TS,
+  Python, Dart or bats test and no remaining file imports it (directly or
+  through a directory it reads; otherwise `still imported by …`). It runs
+  the tests of each remaining non-Markdown file that mentions its name
+  without the final extension anywhere (`alpha.test`, `test_alpha`:
+  a path with or without the extension, or a dotted module), such as a curation list (`files naming it run: …`), and fails closed when
+  such a file has no test (`still named by …, which no test covers`). A test
+  renamed to another test path then defers to its new name (`old name of
+  <new>`). A deleted test, or one renamed to a non-test path, also runs its
+  owning suite, the remaining tests that directly exercise the files its
+  merge-base text exercised (`owning suite runs: …`; test helpers and
+  fixtures are not subjects), and names each file left with no test at all
+  (`coverage removed: <file> has no remaining test`, and `M subject(s) lost
+  their last test` in the detail). Every other removal owes what an edit
+  owes, as before: a deleted or renamed Go or Ruby test (it may define
+  helpers its package still uses), a deleted test whose merge-base text
+  cannot be read (a symlink, invalid UTF-8, over 1 MiB), and any removed
+  non-test path, a renamed source file's old name included, are still
+  `PREGATE_NO_LANE` until a test or a `dependencies` entry covers them. A
+  modified file whose only test the branch deleted still has no lane, and a
+  remaining test that reads a deleted file or directory is selected. /review
+  lists a deleted test as a gate edit (RH-1) either way.
   An extensionless JS/TS import (relative, a tsconfig/jsconfig `paths` alias or
   `baseUrl`) tries the exact path, then `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`,
   `.cjs`, `.mts`, `.cts`, then `index.ts`, `index.tsx`, `index.js`, `index.jsx`
