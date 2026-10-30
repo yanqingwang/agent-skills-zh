@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "64b0bdad239534e6dc157b1d0c7c253003499dc5"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "9da1eed639fc08d1e8063dd2f19f7dfbd5086a1c"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -10,7 +10,7 @@
     "skills/brainstorming/SKILL.md": "7f5eef02f894c4f24cea313660c0465ce9c084ed"
   },
   "mattpocock/skills": {
-    "skills/engineering/code-review/SKILL.md": "373a4f26e6cfa3617778397945bb069d9cb184bc",
+    "skills/engineering/code-review/SKILL.md": "83183e0ad36fd0eef25d37c7e483284b7e34c1f0",
     "skills/engineering/to-spec/SKILL.md": "3f52599ae2a4347aee5a07432c2707518e691a7f"
   },
   "addyosmani/agent-skills": {
@@ -59,8 +59,8 @@
     "skills/search-first/SKILL.md": "3d2669e71ba54afba95defb05080253058190600",
     "skills/security-review/SKILL.md": "3f26b0df65661425de4e5c40c295e04edcad7a83",
     "skills/continuous-learning-v2/SKILL.md": "397b3d334dd1fdf5d7648dd619b6a744cd4734a5",
-    "skills/autonomous-loops/SKILL.md": "b6c64c2af3d52d325a12181888c0dac4fec4fb5e",
-    "skills/strategic-compact/SKILL.md": "134e767151c4b7f039833bf496cdf4f145875c12",
+    "skills/autonomous-loops/SKILL.md": "b77c5f7424ca5eed0cffd861a54a0ca211cd201c",
+    "skills/strategic-compact/SKILL.md": "52dccf6bdd434b5a04a1e0ed9c7ec1d2860d10ae",
     "skills/article-writing/SKILL.md": "9dfa979ca56940e731ebede2c46ec2dca688818e",
     "skills/content-engine/SKILL.md": "28ddd4e1676f4ea67d34a9d244a94164e088b80e",
     "skills/market-research/SKILL.md": "b2ddc25b8cbd74056460a7b28e5628ceb9454ac0",
@@ -90,7 +90,7 @@
     "health/SKILL.md": "b6c84d87d3cb442608c8cadeb026e1d634cb2376",
     "review/SKILL.md": "d8aba2c976d5ef29955f9b10f21868c5e819ae01",
     "learn/SKILL.md": "bd368ee9db3912be4f8aa1f569d58d0371fcc551",
-    "ship/SKILL.md": "5846b96d3dc4e985b8c3eba9c05728ffcc741678",
+    "ship/SKILL.md": "2c3b87597e4679ec7bab5ff67e58df1086842263",
     "investigate/SKILL.md": "64a9e825449173961bd379e85c373145c8089dcc",
     "retro/SKILL.md": "7607330d11081a639d3ebd7edec020fe5611452e",
     "land-and-deploy/SKILL.md": "8b6b6fc2e373094e7fa746248396150470165694",
@@ -98,7 +98,7 @@
     "spec/SKILL.md": "8d94a32c83368e44b0d2d863b96c8b15ff2742f9"
   },
   "Vincentwei1021/video-shotcraft": {
-    "SKILL.md": "695faad1d7441597a89dea4bd1b44b835005af7c"
+    "SKILL.md": "5e474675e53aac4fa9449f242241f92cc8b6f7bb"
   },
   "teng-lin/notebooklm-py": {
     "SKILL.md": "0a231e307ff133793a6ce78d728c197f75e50fe6"
@@ -121,7 +121,9 @@
   },
   "phuryn/pm-skills": {
     "pm-execution/skills/create-prd/SKILL.md": "9aa4b7a5a19af2fe4ade43da564dd607efdf0488",
-    "pm-ai-shipping/skills/intended-vs-implemented/SKILL.md": "af80c8e2dbd3dcbaaff30ea5885a6361750a2464"
+    "pm-ai-shipping/skills/intended-vs-implemented/SKILL.md": "08ae3aba7a6ec0718ea3363754a48819ee678064",
+    "pm-data-analytics/skills/ab-test-analysis/SKILL.md": "58c239714c0e20e19167fcde3d4cd3a608578754",
+    "pm-data-analytics/skills/cohort-analysis/SKILL.md": "e2d7b0e9fb83e04d7ff584747efedd4d0701d6fd"
   },
   "AgriciDaniel/claude-seo": {
     "skills/seo-agentic/SKILL.md": "fa6e62c913c674384b363ab5ecda4f290fbcbbdf",
