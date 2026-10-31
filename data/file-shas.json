@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "9da1eed639fc08d1e8063dd2f19f7dfbd5086a1c"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "4877b2a7bab18510e7a995e5dc091ec2b56437af"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -14,7 +14,7 @@
     "skills/engineering/to-spec/SKILL.md": "3f52599ae2a4347aee5a07432c2707518e691a7f"
   },
   "addyosmani/agent-skills": {
-    "skills/context-engineering/SKILL.md": "20b0b9a5b1f35c0144f4cb6e4bda6f4c7f1a92b0",
+    "skills/context-engineering/SKILL.md": "abdfe2732255de944db13d0312a1634a425c7c5d",
     "skills/idea-refine/SKILL.md": "e2a2be0bead74b2916979bfddde38eff24a67ba6",
     "agents/code-reviewer.md": "ea267be01f2e16011d04b90dc234986384c4f7e0"
   },
@@ -71,7 +71,7 @@
     "SKILL.md": "aebe394108e76bebdf7b8848eceddc756e844ec4"
   },
   "OthmanAdi/planning-with-files": {
-    ".agents/skills/planning-with-files/SKILL.md": "1157c0da2fc2fc98e6b0e5d88598e8dbcae56079"
+    ".agents/skills/planning-with-files/SKILL.md": "71502bbe26aff1c1e6af15697b846247ac1690e4"
   },
   "titanwings/distilly": {
     "SKILL.md": "d2a76e7a9475d870fbce3e4abc8a6495d33582c9"
@@ -90,10 +90,10 @@
     "health/SKILL.md": "b6c84d87d3cb442608c8cadeb026e1d634cb2376",
     "review/SKILL.md": "d8aba2c976d5ef29955f9b10f21868c5e819ae01",
     "learn/SKILL.md": "bd368ee9db3912be4f8aa1f569d58d0371fcc551",
-    "ship/SKILL.md": "2c3b87597e4679ec7bab5ff67e58df1086842263",
+    "ship/SKILL.md": "128892e8e13b00d5c6f7b7f7821dd79a04cca5e7",
     "investigate/SKILL.md": "64a9e825449173961bd379e85c373145c8089dcc",
     "retro/SKILL.md": "7607330d11081a639d3ebd7edec020fe5611452e",
-    "land-and-deploy/SKILL.md": "8b6b6fc2e373094e7fa746248396150470165694",
+    "land-and-deploy/SKILL.md": "491ba0521578ad007123ec3b3db687177c6fac24",
     "plan-eng-review/SKILL.md": "295c9eef58c7eec33ae9cf1c4b7fce64b6b6b838",
     "spec/SKILL.md": "8d94a32c83368e44b0d2d863b96c8b15ff2742f9"
   },
@@ -113,11 +113,11 @@
     "0-autoresearch-skill/SKILL.md": "cf2ef23d6f571624bc950d3b0de4797308cd9955"
   },
   "alirezarezvani/claude-skills": {
-    "engineering/hivemind/SKILL.md": "b9ce55c40c701e1979cb4da82173b4ce15402e8b",
+    "engineering/hivemind/SKILL.md": "0e68de3ca777b1ab5c6dbc254895931c3458781a",
     "product-team/skills/product-discovery/SKILL.md": "17265eec8bcc4c5e2b8554bfb8c7483c4fc3ab56",
     "research/deepread/SKILL.md": "0501ad3de6032a712e1c7cfbeac26bdc349bae2b",
-    "product-team/skills/competitive-teardown/SKILL.md": "7de7ec01958aee98b6bb8bafad0a4d252843dfff",
-    "product-team/skills/spec-to-repo/SKILL.md": "7febf697eaf3e9d69fae54454ccc4fa0b73a373b"
+    "product-team/skills/competitive-teardown/SKILL.md": "b7d04982478f0822941d3eddfdabace438650497",
+    "product-team/skills/spec-to-repo/SKILL.md": "c842e1d8dcf86fdfdf9ba7448600a7ecc1eb0c68"
   },
   "phuryn/pm-skills": {
     "pm-execution/skills/create-prd/SKILL.md": "9aa4b7a5a19af2fe4ade43da564dd607efdf0488",
@@ -157,7 +157,13 @@
   },
   "wshobson/agents": {
     "plugins/before-you-build/skills/before-you-build/SKILL.md": "6a2aac015556218e8c3c3ec4e775c1d42eea192e",
-    "plugins/api-scaffolding/skills/fastapi-templates/SKILL.md": "1ffd432713bc74c535792bce7ba5d5b27b4da95e"
+    "plugins/api-scaffolding/skills/fastapi-templates/SKILL.md": "1ffd432713bc74c535792bce7ba5d5b27b4da95e",
+    "plugins/agent-teams/skills/multi-reviewer-patterns/SKILL.md": "282bd5d9fe81d801346c461ce262a4b407944c2f",
+    "plugins/agent-teams/skills/parallel-debugging/SKILL.md": "8c84fa3b1ea65e09b606839a124885bdd3d19843",
+    "plugins/cicd-automation/skills/deployment-pipeline-design/SKILL.md": "af677b4ff576edd4bfc9db9d0b4326be3c81eeae",
+    "plugins/cicd-automation/skills/secrets-management/SKILL.md": "c00863fdcda03aa8c7e7aef73ca12fff1d193d89",
+    "plugins/agent-teams/skills/task-coordination-strategies/SKILL.md": "d1bb370779a10c6177f58453d67bb318c8b3705d",
+    "plugins/accessibility-compliance/skills/wcag-audit-patterns/SKILL.md": "c071acee41a2a2c7d4df04da7281d193215dfca7"
   },
   "Donchitos/Claude-Code-Game-Studios": {
     ".claude/agents/game-designer.md": "a6fde98a81c720b86dd2fbc7b10b9af719709291",

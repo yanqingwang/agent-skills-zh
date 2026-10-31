@@ -47,7 +47,13 @@ upgrade: a reviewer later asked to run a workflow runs the same installer
 install in place to --for <skill> (same checkout ...; no second clone)`),
 applies the project's pins, runs `./setup` and both host profiles, and writes
 the workflow's verdict over the reviewer's. Nothing is removed and nothing is
-cloned twice. Every /autoplan reviewer prompt
+cloned twice. A review-voice session never self-upgrades the checkout, because
+the lane on the same machine may be in the middle of a workflow on it: when
+origin is ahead it prints `SELF_UPGRADE: skipped (review-voice never
+self-upgrades a shared checkout; …)`, certifies the installed revision and
+stays ok with `behind=<n> … (UPGRADE_SKIPPED); fix: <root>/bin/gstack-upgrade`.
+The bootstrapper still fast-forwards a checkout below the supported minimum.
+Every /autoplan reviewer prompt
 ends with this command (`GSTACK TRAILER`); the warm run's budget, under 20 s,
 is measured by `test/capy-review-voice.test.ts`.
 
@@ -101,6 +107,11 @@ there is refused with the usual `--for <skill>` fix.
    note, and a project that needs the newer gstack says so with a floor
    (next section).
    `SELF_UPGRADE: none (current)` when nothing is ahead;
+   `--for review-voice` prints `SELF_UPGRADE: skipped (review-voice never
+   self-upgrades a shared checkout; fix: <root>/bin/gstack-upgrade when no other
+   session uses this checkout (UPGRADE_SKIPPED))` whenever origin is ahead,
+   with or without a lease, and `GSTACK_UPGRADE_FORCE=1` does not change that
+   ([reviewer machines](#reviewer-machines---for-review-voice));
    `GSTACK_CAPY_SELF_UPGRADE=off` (or `GSTACK_CAPY_AUTO_UPGRADE=0`) prints
    `SELF_UPGRADE: disabled (<variable>)`. `--check` never moves the checkout;
    behind origin it prints `gstack-capy-session: behind origin/<branch>:
@@ -423,6 +434,14 @@ GSTACK_LAUNCH_FILE: <verdict file without .json>.env
 
 `GSTACK_LAUNCH_FILE` names the same assignments as a sourceable script (mode
 0600, beside the verdict under the state root; the PATH prepend is idempotent).
+The file also appends the checkout's `bin/` directory to PATH, after everything
+already there and only once, so a shell that sourced only this file runs a bare
+`gstack-ship-budget` (GSTA-167: a /ship child got `command not found`, exit 127).
+When the session starts from the Drive skill (a bootstrapper outside the
+checkout), the file also exports `GSTACK_PREFERENCES_FILE`, the path of
+`preferences.yaml` beside that skill's SKILL.md, which the `GSTACK_LAUNCH` line
+leaves out; `gstack-models resolve --role agent` reads it
+([your model preference](model-policy.md#your-model-preference)).
 The file is part of the ok verdict: a passing run that cannot write it exits 1
 with `gstack: fail launch-file — could not write the launch file <path>; fix:
 make <dir> writable, or set GSTACK_STATE_ROOT to a writable directory
