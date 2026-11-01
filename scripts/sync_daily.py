@@ -19,6 +19,7 @@
 """
 from __future__ import annotations
 
+import re
 import json
 import pathlib
 import subprocess
@@ -31,6 +32,7 @@ STATE = ROOT / "data" / "sync-state.json"
 FILE_SHAS = ROOT / "data" / "file-shas.json"
 LOG_DIR = ROOT / "data" / "sync-log"
 PENDING = ROOT / "data" / "sync-pending-retranslation.md"
+PENDING_STATE = ROOT / "data" / "sync-pending-state.json"
 RETRIES = 5
 
 
@@ -108,6 +110,7 @@ def main() -> int:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     state = json.loads(STATE.read_text(encoding="utf-8"))
     shas_store = json.loads(FILE_SHAS.read_text(encoding="utf-8")) if FILE_SHAS.exists() else {}
+    pstate = json.loads(PENDING_STATE.read_text(encoding="utf-8")) if PENDING_STATE.exists() else {}
     baseline_first_run = not FILE_SHAS.exists()
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     log_lines: list[str] = [f"# 上游同步日志 {today}\n"]
@@ -183,6 +186,7 @@ def main() -> int:
             if prev.get(e["upstream"]) not in (None, want):
                 repo_changes.append(f"  - ✏️ 翻译件 `{e['upstream']}` 上游有变更 → 需重译（本地：`{e['local']}`）")
                 pending.append(f"- `{repo}` · `{e['upstream']}` → 本地 `{e['local']}`")
+                pstate.setdefault(e["local"], {"first_seen": today, "upstream_sha": want, "local": e["local"]})
             prev[e["upstream"]] = want
         shas_store[repo] = prev
 
@@ -209,10 +213,24 @@ def main() -> int:
             if not log_file.exists():
                 f.write(f"# 上游同步日志 {today}\n\n")
             f.write("\n".join(log_lines[1:]) + "\n")
-        if pending:
+        # 工单持久化：条目记录首次发现日期；只有译文声明块的同步快照日期 ≥ 首次发现日期才判定已重译
+        pstate = json.loads(PENDING_STATE.read_text(encoding="utf-8")) if PENDING_STATE.exists() else {}
+        live: dict[str, dict] = {}
+        for entry in pstate.values():
+            loc = entry.get("local", "")
+            fp = ROOT / loc
+            if not fp.exists():
+                continue  # 文件被移除，视为已解决
+            m_date = re.search(r"同步状态：上游 HEAD（(\d{4}-\d{2}-\d{2}) 快照）", fp.read_text(encoding="utf-8", errors="ignore"))
+            decl_date = m_date.group(1) if m_date else ""
+            if entry.get("first_seen", "") > decl_date:
+                live[loc] = entry  # 译文未跟上，继续挂单
+        PENDING_STATE.write_text(json.dumps(live, ensure_ascii=False, indent=2) + "\n")
+        if live:
             PENDING.write_text(
-                f"# 待重译清单（{today} 自动生成）\n\n上游翻译件有变更，需按 GLOSSARY/PRINCIPLES 增量重译并更新文件头同步日期：\n\n"
-                + "\n".join(pending) + "\n", encoding="utf-8")
+                f"# 待重译清单（{today} 更新；条目在译文声明块同步日期更新前持续存续）\n\n"
+                + "\n".join(f"- `{k}`（首次发现 {v.get('first_seen','?')}）" for k, v in live.items()) + "\n",
+                encoding="utf-8")
         elif PENDING.exists():
             PENDING.unlink()
 
