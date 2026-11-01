@@ -1,9 +1,9 @@
-# 工作状态（自动生成于 2026-11-01 08:23 UTC，勿手改）
+# 工作状态（自动生成于 2026-11-01 08:42 UTC，勿手改）
 
-- **收录规模**：49 个上游 · 137 个翻译件 · 4270 个原样件
+- **收录规模**：49 个上游 · 138 个翻译件 · 4119 个原样件
 - **监控状态**：sync-check CI 每日 UTC 02:00 运行（HEAD 比对 → 原样件自动刷新 → 翻译件变更转重译工单）
 - **最近同步日志**：[data/sync-log/2026-11-01.md](sync-log/2026-11-01.md)
-- **待重译**：有 —— 见 [data/sync-pending-retranslation.md](sync-pending-retranslation.md)
+- **待重译**：无（全部翻译件与上游一致）
 - **快照 HEAD 总数**：49 个上游已纳入监控
 
 ## 按目录分布（翻译件）
@@ -24,7 +24,7 @@
 - `skills/researcher/analysis/` — 2 件
 - `skills/researcher/info/` — 2 件
 - `skills/researcher/knowledge/` — 3 件
-- `skills/researcher/science/` — 5 件
+- `skills/researcher/science/` — 6 件
 - `skills/toolbox/automation/` — 5 件
 - `skills/toolbox/compute/` — 1 件
 - `skills/toolbox/framework/` — 1 件

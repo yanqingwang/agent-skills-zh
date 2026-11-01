@@ -186,12 +186,18 @@ def main() -> int:
             prev[e["upstream"]] = want
         shas_store[repo] = prev
 
-        if repo_changes:
+        # 有刷新失败（❌）时不得推进 HEAD 快照，否则失败件被静默标记为已同步
+        hard_fail = any(l.startswith("  - ❌") for l in repo_changes)
+        if hard_fail:
+            log_lines.append(f"- ⛔ `{repo}`（`{old_head[:12]}` → `{short}`）存在刷新失败，HEAD 快照保留旧值，下轮重试")
+            failed += 1
+        elif repo_changes:
             log_lines.append(f"- 📦 `{repo}`（`{old_head[:12]}` → `{short}`）")
             log_lines.extend(repo_changes)
+            state["repos"][repo] = new_head
         else:
             log_lines.append(f"- 🔎 `{repo}`（`{old_head[:12]}` → `{short}`）HEAD 变化但收录文件无变更")
-        state["repos"][repo] = new_head
+            state["repos"][repo] = new_head
 
     # 写盘
     if not dry:

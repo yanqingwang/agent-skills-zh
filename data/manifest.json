@@ -10755,10 +10755,6 @@
           "local": "skills/creator/video/video-shotcraft/assets/audio/ATTRIBUTION.md"
         },
         {
-          "upstream": "assets/audio/AUDITION-2026-07-27.md",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/AUDITION-2026-07-27.md"
-        },
-        {
           "upstream": "assets/audio/bgm/bgm-tech-house.mp3",
           "local": "skills/creator/video/video-shotcraft/assets/audio/bgm/bgm-tech-house.mp3"
         },
@@ -10777,602 +10773,6 @@
         {
           "upstream": "assets/audio/bgm/tonight-hiphop.mp3",
           "local": "skills/creator/video/video-shotcraft/assets/audio/bgm/tonight-hiphop.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/camera-autofocus.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/camera-autofocus.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/camera-lens-shutter.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/camera-lens-shutter.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/camera-shutter-hard.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/camera-shutter-hard.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/camera-shutter-vintage.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/camera-shutter-vintage.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/click-camera.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/click-camera.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/ui-zoom-in.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/ui-zoom-in.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/ui-zoom-out.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/ui-zoom-out.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/zoom-air-fast.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/zoom-air-fast.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/zoom-futuristic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/zoom-futuristic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/camera/zoom-swipe-fast.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/camera/zoom-swipe-fast.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/counter/clock-knob-spin.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/counter/clock-knob-spin.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/counter/clock-mech-retract.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/counter/clock-mech-retract.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/counter/clock-tick-single.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/counter/clock-tick-single.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/counter/countdown-bleeps.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/counter/countdown-bleeps.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/crowd/applause-rhythmic-loop.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/crowd/applause-rhythmic-loop.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/crowd/clap-single.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/crowd/clap-single.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/crowd/heartbeat-single.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/crowd/heartbeat-single.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/break-glitch-digital.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/break-glitch-digital.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/data-compute.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/data-compute.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/data-load-os.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/data-load-os.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/data-scan.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/data-scan.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/glitch-electric-small.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/glitch-electric-small.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/glitch-static-electric.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/glitch-static-electric.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/glitch-static.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/glitch-static.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/glitch-virtual-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/glitch-virtual-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/power-up-electronic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/power-up-electronic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/power-up-static.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/power-up-static.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/static-electric-present.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/static-electric-present.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/sweep-digital.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/sweep-digital.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/data/whoosh-electric.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/data/whoosh-electric.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/film/cassette-stretch.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/film/cassette-stretch.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/film/cassette-working.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/film/cassette-working.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/film/projector-spin-antique.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/film/projector-spin-antique.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/film/reel-rewind.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/film/reel-rewind.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/film/tape-rewind-cine.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/film/tape-rewind-cine.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/film/tape-rewind-fast.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/film/tape-rewind-fast.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/film/vinyl-needle-drop.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/film/vinyl-needle-drop.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/film/vinyl-scratch-small.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/film/vinyl-scratch-small.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/fluid/liquid-bubble.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/fluid/liquid-bubble.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/fluid/sand-swish.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/fluid/sand-swish.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/fluid/water-bubble.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/fluid/water-bubble.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/fluid/water-drop-cave.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/fluid/water-drop-cave.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/fluid/water-splash.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/fluid/water-splash.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/glass/glass-break-hammer.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/glass/glass-break-hammer.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/glass/glass-debris-sweep.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/glass/glass-debris-sweep.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/glass/glass-hit-cine.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/glass/glass-hit-cine.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/glass/glass-plate-slide.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/glass/glass-plate-slide.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/bass-hit-futuristic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/bass-hit-futuristic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/bass-hit-short.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/bass-hit-short.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/gravel-fall-hit.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/gravel-fall-hit.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/hit-blow.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/hit-blow.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/hit-fast-exciting.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/hit-fast-exciting.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/hit-weak.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/hit-weak.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/impact-cine-big.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/impact-cine-big.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/impact-deep-whoosh.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/impact-deep-whoosh.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/impact-epic-trailer.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/impact-epic-trailer.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/impact-movie-epic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/impact-movie-epic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/impact-transition.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/impact-transition.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/impact-zoom-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/impact-zoom-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/metal-spring-hit.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/metal-spring-hit.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/impact/stomp-apocalyptic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/impact/stomp-apocalyptic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/light-aura.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/light-aura.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/light-spell.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/light-spell.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/light-sweep-magic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/light-sweep-magic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/light-transition-magic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/light-transition-magic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/shimmer-sparkle-sweep.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/shimmer-sparkle-sweep.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/sparkle-poof-hit.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/sparkle-poof-hit.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/sparkle-touch.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/sparkle-touch.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/sparkle-wand.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/sparkle-wand.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/sparkle.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/sparkle.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/light/stardust-swish.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/light/stardust-swish.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/mech/door-open-futuristic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/mech/door-open-futuristic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/mech/gear-lock-metallic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/mech/gear-lock-metallic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/mech/lock-digital.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/mech/lock-digital.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/mech/lock-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/mech/lock-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/mech/machine-activate-short.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/mech/machine-activate-short.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/mech/mech-robotic-futuristic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/mech/mech-robotic-futuristic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/mech/mech-tech-movement.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/mech/mech-tech-movement.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/mech/metal-drop-scifi-small.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/mech/metal-drop-scifi-small.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-book-browse-fast.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-book-browse-fast.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-crumple-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-crumple-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-move-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-move-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-page-turn-big.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-page-turn-big.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-page-turn.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-page-turn.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-scissors-cut.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-scissors-cut.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-slice-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-slice-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-slide.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-slide.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-staple.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-staple.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/paper/paper-wind-blow.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/paper/paper-wind-blow.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/riser/riser-cine.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/riser/riser-cine.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/scifi/hitech-bleep.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/scifi/hitech-bleep.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/scifi/scifi-click.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/scifi/scifi-click.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/scifi/scifi-computer-ambience.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/scifi/scifi-computer-ambience.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/scifi/space-intro-futuristic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/scifi/space-intro-futuristic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/scifi/tech-hum-futuristic.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/scifi/tech-hum-futuristic.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/chalk-line.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/chalk-line.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/keyboard.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/keyboard.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/marker-pen-line.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/marker-pen-line.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/pen-click-twice.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/pen-click-twice.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/pen-write-paper.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/pen-write-paper.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/pencil-write-short.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/pencil-write-short.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/typewriter-digital.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/typewriter-digital.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/typewriter-hit-hard.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/typewriter-hit-hard.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/typewriter-hit-single.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/typewriter-hit-single.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/typewriter-hit-soft.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/typewriter-hit-soft.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/typewriter-return-bell.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/typewriter-return-bell.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/write-blackboard.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/write-blackboard.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/text/write-fast.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/text/write-fast.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/air-whoosh-powerful.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/air-whoosh-powerful.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/air-woosh-deep.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/air-woosh-deep.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/air-woosh-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/air-woosh-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/air-zoom-vacuum.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/air-zoom-vacuum.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/sweep-fast-small.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/sweep-fast-small.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/sweep-fast.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/sweep-fast.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/sweep-metal-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/sweep-metal-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/sweep-scifi-fast.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/sweep-scifi-fast.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/sweep-short.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/sweep-short.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/swoosh-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/swoosh-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/swoosh-slow.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/swoosh-slow.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/transition-snap.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/transition-snap.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/transition-soft.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/transition-soft.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/transition-tech-slide.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/transition-tech-slide.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/transition-tech.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/transition-tech.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/warp-slide.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/warp-slide.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/whoosh-big.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/whoosh-big.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/whoosh-fast.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/whoosh-fast.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/whoosh-swirl.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/whoosh-swirl.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/wind-pass-vibrate.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/wind-pass-vibrate.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/wind-swoosh-short.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/wind-swoosh-short.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/wind-woosh-throw.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/wind-woosh-throw.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/transition/wing-flutter.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/transition/wing-flutter.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/chime-crystal.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/chime-crystal.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/hitech-touch-magnet.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/hitech-touch-magnet.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/pop-electric.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/pop-electric.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/pop.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/pop.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/switch-click-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/switch-click-quick.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/switch-light.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/switch-light.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/switch-tap.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/switch-tap.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-click-tone.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-click-tone.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-confirm-bleep.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-confirm-bleep.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-confirm-tone.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-confirm-tone.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-message-pop.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-message-pop.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-notify-tech.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-notify-tech.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-option-select.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-option-select.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-popup-dry.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-popup-dry.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-select-click.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-select-click.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-select-modern.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-select-modern.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-success-soft.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-success-soft.mp3"
-        },
-        {
-          "upstream": "assets/audio/sfx/ui/ui-tone-quick.mp3",
-          "local": "skills/creator/video/video-shotcraft/assets/audio/sfx/ui/ui-tone-quick.mp3"
         },
         {
           "upstream": "assets/brand/BRAND.md",
@@ -16143,6 +15543,606 @@
         {
           "upstream": "README*.md",
           "reason": "仓库级文档，不随 skill 分发"
+        },
+        {
+          "upstream": "assets/audio/AUDITION-2026-07-27.md",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/camera-autofocus.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/camera-lens-shutter.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/camera-shutter-hard.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/camera-shutter-vintage.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/click-camera.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/ui-zoom-in.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/ui-zoom-out.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/zoom-air-fast.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/zoom-futuristic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/camera/zoom-swipe-fast.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/counter/clock-knob-spin.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/counter/clock-mech-retract.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/counter/clock-tick-single.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/counter/countdown-bleeps.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/crowd/applause-rhythmic-loop.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/crowd/clap-single.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/crowd/heartbeat-single.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/break-glitch-digital.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/data-compute.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/data-load-os.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/data-scan.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/glitch-electric-small.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/glitch-static-electric.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/glitch-static.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/glitch-virtual-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/power-up-electronic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/power-up-static.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/static-electric-present.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/sweep-digital.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/data/whoosh-electric.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/film/cassette-stretch.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/film/cassette-working.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/film/projector-spin-antique.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/film/reel-rewind.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/film/tape-rewind-cine.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/film/tape-rewind-fast.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/film/vinyl-needle-drop.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/film/vinyl-scratch-small.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/fluid/liquid-bubble.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/fluid/sand-swish.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/fluid/water-bubble.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/fluid/water-drop-cave.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/fluid/water-splash.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/glass/glass-break-hammer.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/glass/glass-debris-sweep.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/glass/glass-hit-cine.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/glass/glass-plate-slide.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/bass-hit-futuristic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/bass-hit-short.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/gravel-fall-hit.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/hit-blow.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/hit-fast-exciting.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/hit-weak.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/impact-cine-big.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/impact-deep-whoosh.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/impact-epic-trailer.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/impact-movie-epic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/impact-transition.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/impact-zoom-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/metal-spring-hit.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/impact/stomp-apocalyptic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/light-aura.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/light-spell.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/light-sweep-magic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/light-transition-magic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/shimmer-sparkle-sweep.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/sparkle-poof-hit.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/sparkle-touch.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/sparkle-wand.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/sparkle.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/light/stardust-swish.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/mech/door-open-futuristic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/mech/gear-lock-metallic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/mech/lock-digital.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/mech/lock-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/mech/machine-activate-short.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/mech/mech-robotic-futuristic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/mech/mech-tech-movement.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/mech/metal-drop-scifi-small.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-book-browse-fast.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-crumple-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-move-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-page-turn-big.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-page-turn.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-scissors-cut.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-slice-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-slide.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-staple.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/paper/paper-wind-blow.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/riser/riser-cine.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/scifi/hitech-bleep.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/scifi/scifi-click.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/scifi/scifi-computer-ambience.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/scifi/space-intro-futuristic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/scifi/tech-hum-futuristic.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/chalk-line.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/keyboard.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/marker-pen-line.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/pen-click-twice.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/pen-write-paper.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/pencil-write-short.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/typewriter-digital.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/typewriter-hit-hard.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/typewriter-hit-single.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/typewriter-hit-soft.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/typewriter-return-bell.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/write-blackboard.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/text/write-fast.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/air-whoosh-powerful.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/air-woosh-deep.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/air-woosh-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/air-zoom-vacuum.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/sweep-fast-small.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/sweep-fast.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/sweep-metal-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/sweep-scifi-fast.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/sweep-short.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/swoosh-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/swoosh-slow.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/transition-snap.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/transition-soft.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/transition-tech-slide.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/transition-tech.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/warp-slide.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/whoosh-big.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/whoosh-fast.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/whoosh-swirl.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/wind-pass-vibrate.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/wind-swoosh-short.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/wind-woosh-throw.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/transition/wing-flutter.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/chime-crystal.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/hitech-touch-magnet.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/pop-electric.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/pop.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/switch-click-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/switch-light.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/switch-tap.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-click-tone.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-confirm-bleep.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-confirm-tone.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-message-pop.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-notify-tech.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-option-select.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-popup-dry.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-select-click.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-select-modern.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-success-soft.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
+        },
+        {
+          "upstream": "assets/audio/sfx/ui/ui-tone-quick.mp3",
+          "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
         }
       ],
       "note": "上游 SKILL.md 正文本身即中文（中欧双语定位），中文原生收录，逐字节保留"
@@ -16378,13 +16378,13 @@
         {
           "upstream": "0-autoresearch-skill/SKILL.md",
           "local": "skills/researcher/science/autoresearch/SKILL.md"
-        }
-      ],
-      "verbatim": [
+        },
         {
           "upstream": "0-autoresearch-skill/SKILL.md",
           "local": "skills/researcher/science/autoresearch/SKILL.md"
-        },
+        }
+      ],
+      "verbatim": [
         {
           "upstream": "0-autoresearch-skill/references/agent-continuity.md",
           "local": "skills/researcher/science/autoresearch/references/agent-continuity.md"
