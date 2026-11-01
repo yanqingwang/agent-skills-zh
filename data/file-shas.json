@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "4877b2a7bab18510e7a995e5dc091ec2b56437af"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "fd0fcfe3f57286f38e5cdd52e6700573a439a06f"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -84,17 +84,17 @@
   },
   "garrytan/gstack": {
     "office-hours/SKILL.md": "9bc0af744558834bab5d7c1218528250f8c9599b",
-    "plan-ceo-review/SKILL.md": "c9b4e2231ecc41ebfc9fec26d7b7354dcde3f989",
-    "qa/SKILL.md": "cd3983c9227e950852749485734740c708b9e627",
+    "plan-ceo-review/SKILL.md": "c804a37a5b35b94eb43b834d7325b5ba46eda859",
+    "qa/SKILL.md": "cdb56114f2e05273c3940f6fb581d78a628f72a5",
     "design-review/SKILL.md": "47100ca3198f5a00b9eafc22f8e4bdb1e5b7c4b9",
     "health/SKILL.md": "b6c84d87d3cb442608c8cadeb026e1d634cb2376",
-    "review/SKILL.md": "d8aba2c976d5ef29955f9b10f21868c5e819ae01",
+    "review/SKILL.md": "8ae90451443897b3e68c796ab0c75960d5f48553",
     "learn/SKILL.md": "bd368ee9db3912be4f8aa1f569d58d0371fcc551",
-    "ship/SKILL.md": "128892e8e13b00d5c6f7b7f7821dd79a04cca5e7",
+    "ship/SKILL.md": "76c60c15c813f3054b207bec8d4e2a3340d3fe55",
     "investigate/SKILL.md": "64a9e825449173961bd379e85c373145c8089dcc",
-    "retro/SKILL.md": "7607330d11081a639d3ebd7edec020fe5611452e",
+    "retro/SKILL.md": "625f93ea4839651179c40b67545487f2e6be2b60",
     "land-and-deploy/SKILL.md": "491ba0521578ad007123ec3b3db687177c6fac24",
-    "plan-eng-review/SKILL.md": "295c9eef58c7eec33ae9cf1c4b7fce64b6b6b838",
+    "plan-eng-review/SKILL.md": "46dc6e36b9688dd05e52bf2d6e804274bb20d68f",
     "spec/SKILL.md": "8d94a32c83368e44b0d2d863b96c8b15ff2742f9"
   },
   "Vincentwei1021/video-shotcraft": {
@@ -130,7 +130,7 @@
     "skills/seo-audit/SKILL.md": "45b957d746731cb50ed7195a3a122a4bbfd3a1b0"
   },
   "wanshuiyin/Auto-claude-code-research-in-sleep": {
-    "skills/auto-paper-improvement-loop/SKILL.md": "77cb6331caaabafa0481c9ee3bcdda96742ff0a7",
+    "skills/auto-paper-improvement-loop/SKILL.md": "7c95613ff25e536315171a2680332dff74b69617",
     "skills/arxiv/SKILL.md": "f3d0a3408f1534acd1d51624e7b55afacc90a7ae"
   },
   "Jeffallan/claude-skills": {

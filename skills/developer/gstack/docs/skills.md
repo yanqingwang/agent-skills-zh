@@ -12,6 +12,7 @@ Detailed guides for every gstack skill — philosophy, workflow, and examples.
 | [`/design-consultation`](#design-consultation) | **Design Partner** | Build a complete design system from scratch. Knows the landscape, proposes creative risks, generates realistic product mockups. Design at the heart of all other phases. |
 | [`/review`](#review) | **Staff Engineer** | Find the bugs that pass CI but blow up in production. Auto-fixes the obvious ones. Flags completeness gaps. Advisory simplification lens flags over-built code — never blocks, never auto-applies. |
 | [`/investigate`](#investigate) | **Debugger** | Systematic root-cause debugging. Iron Law: no fixes without investigation. Traces data flow, tests hypotheses, stops after 3 failed fixes. |
+| [`/verify`](#verify) | **Build Loop** | Run the repo's checks and the tests `/ship`'s pre-gate would pick for your change, fix, repeat until green, then hand off to `/ship`. Never green on an unmapped change. |
 | [`/design-review`](#design-review) | **Designer Who Codes** | Live-site visual audit + fix loop. 80-item audit, then fixes what it finds. Atomic commits, before/after screenshots. |
 | [`/design-shotgun`](#design-shotgun) | **Design Explorer** | Generate multiple AI design variants, open a comparison board in your browser, and iterate until you approve a direction. Taste memory biases toward your preferences. |
 | [`/design-html`](#design-html) | **Design Engineer** | Generates production-quality Pretext-native HTML. Works with approved mockups, CEO plans, design reviews, or from scratch. Text reflows on resize, heights adjust to content. Smart API routing per design type. Framework detection for React/Svelte/Vue. Previews render through your Aside browser. |
@@ -659,6 +660,14 @@ Instead of guessing and patching, it traces data flow, matches against known bug
 
 ---
 
+## `/verify`
+
+`/verify` is the loop you run while you build: change something, run the repo's checks, fix what broke, run again. `gstack-checks detect` finds the checks the repo already declares (a `gstack:verify:` line or a `## Health Stack` section in CLAUDE.md, else package.json scripts, tsconfig, eslint or biome, pyproject, Cargo.toml, go.mod) and never makes one up. `gstack-checks run` runs them plus the tests `/ship`'s pre-gate selects for your change, using pregate's own selector, so a green `/verify` predicts a green pre-gate.
+
+It asks once before running any repo command (`gstack-checks trust`) and asks again when a command changes. A touched file no test covers is `UNMAPPED`, a selection that ran zero tests is `ZERO_RUN`, and neither counts as green. A missing tool or service is reported, not worked around. It stops after five runs or when the same failure comes back twice, and sends a stubborn red to `/investigate`. When everything passes, `gstack-checks status` prints `READY_FOR_SHIP tree=<tree>` without rerunning anything, and you run `/ship`. It never reviews, bumps versions, pushes or opens a PR.
+
+---
+
 ## `/qa`
 
 This is my **QA lead mode**.
@@ -955,6 +964,9 @@ runs every row through the stub model for $0 and flags malformed rows
 (`EVAL_DRY_RUN_FAILED`); `pilot start|settle|release|report` runs three priced
 items, records actual spend, extrapolates to the full set against the cap
 (`EVAL_BUDGET_EXHAUSTED`) and prints the spend table the approval question shows.
+`results --check <prereg> <results.md>` refuses a finished results file unless one
+table holds a filled row for every arm, each `<model>#no-gstack` row beside its
+variants (`EVAL_REPORT_NO_GSTACK_ROW`); no number leaves the run before it passes.
 The skill's closing section lists the tier-3 items (instrument audit, steady
 state, sealed paths, off-machine persistence, memory preflight, power tables, QA
 soak) as `tier 3, after P7`; none of them run yet.
