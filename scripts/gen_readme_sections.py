@@ -23,7 +23,7 @@ MANIFEST = ROOT / "data" / "manifest.json"
 STATE = ROOT / "data" / "sync-state.json"
 OUT = ROOT / "data" / "readme-sections.md"
 
-STAR_SNAPSHOT_DATE = "2026-10-25"
+STAR_SNAPSHOT_DATE = "2026-11-03"
 
 # 职业 → 该职业下的「目的」→ 推荐的本地 skill 路径（相对仓库根）
 # 路径必须存在于 manifest 的 files 列表内，否则生成时告警。
@@ -54,6 +54,7 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/developer/quality/code-reviewer/SKILL.md",
             "skills/developer/quality/agents/code-reviewer.md",
             "skills/developer/quality/security-review/SKILL.md",
+            "skills/developer/quality/security-audit/SKILL.md",
         ]),
         ("API 与后端骨架", [
             "skills/developer/quality/api-designer/SKILL.md",
@@ -64,11 +65,18 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/developer/context/context-engineering/SKILL.md",
             "skills/developer/context/strategic-compact/SKILL.md",
             "skills/developer/context/claude-md-improver/SKILL.md",
+            "skills/developer/context/context-degradation/SKILL.md",
+            "skills/developer/context/long-horizon-prompting/SKILL.md",
         ]),
         ("多 Agent 编排与自主学习", [
             "skills/developer/context/autonomous-loops/SKILL.md",
             "skills/developer/context/hivemind/SKILL.md",
             "skills/developer/context/continuous-learning-v2/SKILL.md",
+        ]),
+        ("网页动画（GSAP 官方）", [
+            "skills/developer/framework/gsap-core/SKILL.md",
+            "skills/developer/framework/gsap-scrolltrigger/SKILL.md",
+            "skills/developer/framework/gsap-react/SKILL.md",
         ]),
         ("省 token 与输出可读性", [
             "skills/developer/efficiency/caveman/SKILL.md",
@@ -95,6 +103,14 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ("确立 UI 美学方向", [
             "skills/designer/design/frontend-design/SKILL.md",
             "skills/designer/design/taste-skill/SKILL.md",
+            "skills/designer/design/ui-ux-pro-max/SKILL.md",
+            "skills/designer/design/impeccable/SKILL.md",
+        ]),
+        ("反 AI 味的设计与品牌判断", [
+            "skills/designer/design/hallmark/SKILL.md",
+        ]),
+        ("等距技术插画", [
+            "skills/designer/design/anatomy/SKILL.md",
         ]),
         ("风格化视觉与创意落地页", [
             "skills/designer/design/creative/SKILL.md",
@@ -160,6 +176,9 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ("做电影级产品视频", [
             "skills/creator/video/video-shotcraft/SKILL.md",
         ]),
+        ("做网页幻灯片", [
+            "skills/creator/slides/frontend-slides/SKILL.md",
+        ]),
     ],
     "🏢 Corporate Functions（企业职能岗）": [
         ("财务/投资分析（投资人方法论）", [
@@ -214,6 +233,17 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ("受治理的 vibe coding 运行时", [
             "skills/toolbox/framework/vibe-skills/SKILL.md",
         ]),
+        ("Obsidian 知识库操作（官方）", [
+            "skills/toolbox/obsidian/obsidian-cli/SKILL.md",
+            "skills/toolbox/obsidian/obsidian-markdown/SKILL.md",
+            "skills/toolbox/obsidian/obsidian-bases/SKILL.md",
+            "skills/toolbox/obsidian/json-canvas/SKILL.md",
+            "skills/toolbox/obsidian/defuddle/SKILL.md",
+            "skills/toolbox/obsidian/knap/SKILL.md",
+        ]),
+        ("GCP gcloud 命令护栏（官方）", [
+            "skills/toolbox/cloud/gcloud/SKILL.md",
+        ]),
     ],
 }
 
@@ -244,6 +274,8 @@ def upstream_table() -> str:
     def star_of(up: dict) -> int:
         """取最新快照 star 数；取不到按 -1 排到末尾。"""
         v = up.get(f"stars_snapshot_{STAR_SNAPSHOT_DATE}")
+        if not isinstance(v, int):
+            v = up.get("stars_snapshot_2026-10-25")
         if not isinstance(v, int):
             v = up.get("stars_snapshot_2026-10-24")
         return v if isinstance(v, int) else -1

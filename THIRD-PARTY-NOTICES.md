@@ -391,6 +391,76 @@ SOFTWARE.
 - License：MIT（条款摘要同第一批各上游节；完整原文见上游仓库根 LICENSE）
 - 收录：skills/corporate/sales/{sales-icp,sales-outreach,sales-qualify,sales-proposal,sales-research}/
 
+## 2026-11-03 检索新增上游（第六批 · 10 个新上游）
+
+### nextlevelbuilder/ui-ux-pro-max-skill（MIT）
+
+- 上游：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill （星标快照 2026-11-03：144,260）
+- License：MIT（条款摘要同第一批各上游节；完整原文见上游仓库根 LICENSE）
+- Copyright (c) 2024 Next Level Builder
+- 收录：skills/designer/design/ui-ux-pro-max/（SKILL.md 译 + data/、references/ 原样）
+
+### pbakaus/impeccable（Apache-2.0）
+
+- 上游：https://github.com/pbakaus/impeccable （星标快照 2026-11-03：100,404）
+- License：Apache-2.0（条款摘要同 caveman 节；完整原文见上游仓库根 LICENSE）
+- 收录：skills/designer/design/impeccable/（SKILL.md 译 + reference/ 原样）
+
+### cloudflare/security-audit-skill（MIT）
+
+- 上游：https://github.com/cloudflare/security-audit-skill （星标快照 2026-11-03：57,337）
+- License：MIT
+- Copyright (c) 2025-2026 Cloudflare, Inc.
+- 收录：skills/developer/quality/security-audit/（SKILL.md 译 + 19 个审计伴生文档原样）
+
+### kepano/obsidian-skills（MIT）
+
+- 上游：https://github.com/kepano/obsidian-skills （星标快照 2026-11-03：50,642）
+- License：MIT
+- Copyright (c) 2026 Steph Ango (@kepano)
+- 收录：skills/toolbox/obsidian/{obsidian-cli,obsidian-markdown,obsidian-bases,json-canvas,defuddle,knap}/（6 个 SKILL.md 译 + references/ 原样）
+
+### Nutlope/hallmark（MIT）
+
+- 上游：https://github.com/Nutlope/hallmark （星标快照 2026-11-03：45,939）
+- License：MIT
+- Copyright (c) 2026 Hallmark contributors
+- 收录：skills/designer/design/hallmark/（SKILL.md 译 + references/、scripts/、agents/ 原样）
+
+### zarazhangrui/frontend-slides（MIT）
+
+- 上游：https://github.com/zarazhangrui/frontend-slides （星标快照 2026-11-03：31,756）
+- License：MIT
+- Copyright (c) 2025 Zara Zhang
+- 收录：skills/creator/slides/frontend-slides/（SKILL.md 译 + 模板包/scripts/assets 原样，以 plugins/frontend-slides/skills/ 目录为准）
+
+### wheresryan22/anatomy（MIT）
+
+- 上游：https://github.com/wheresryan22/anatomy （星标快照 2026-11-03：24,097）
+- License：MIT（SKILL.md frontmatter 与仓库根 LICENSE 双重声明）
+- Copyright (c) 2026 Ryan
+- 收录：skills/designer/design/anatomy/（SKILL.md 译 + references/、kit/、examples/ 原样）
+
+### google/skills（Apache-2.0）
+
+- 上游：https://github.com/google/skills （星标快照 2026-11-03：21,799）
+- License：Apache-2.0（条款摘要同 caveman 节；完整原文见上游仓库根 LICENSE）
+- 收录：skills/toolbox/cloud/gcloud/（SKILL.md 译 + references/ 原样，旗舰抽取）
+
+### muratcankoylan/Agent-Skills-for-Context-Engineering（MIT）
+
+- 上游：https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering （星标快照 2026-11-03：18,288）
+- License：MIT
+- Copyright (c) 2025 Context Engineering Agent Skills Contributors
+- 收录：skills/developer/context/{context-degradation,long-horizon-prompting}/（SKILL.md 译 + references/ 原样，旗舰抽取）
+
+### greensock/gsap-skills（MIT）
+
+- 上游：https://github.com/greensock/gsap-skills （星标快照 2026-11-03：17,747）
+- License：MIT
+- Copyright (c) 2026 GreenSock
+- 收录：skills/developer/framework/{gsap-core,gsap-scrolltrigger,gsap-react}/（3 个单文件 SKILL.md 译，旗舰抽取）
+
 ## 明确排除
 
 - `multica-ai/andrej-karpathy-skills`（223,159 星）：**无 License 文件，默认保留所有权利，本仓库不翻译、不分发其任何内容**（PRINCIPLES.md 原则 #2）。
@@ -400,5 +470,17 @@ SOFTWARE.
 
 - `garrytan/gstack`（137,471 星，MIT）：License 合规，但其 skill 与仓库根部 `bin/` 工具链强耦合（旗舰 skill 引用根 bin/ 30+ 处），上游安装形态为整仓克隆；单 skill 目录收录必然产生悬空引用，推迟至第三批以"整仓收录"模式单独处理。
 - `JuliusBrussee/caveman` 的 proxy/CLI/SDK 等非 skill 部分：仅为工具代码，本仓库只收录 skill 文档（skills/caveman/）。
+
+### 2026-11-03 检索排除
+
+- `mukul975/Anthropic-Cybersecurity-Skills`（35,456 星，Apache-2.0）：**内容政策排除**——817 件安全技能中含大量攻击性技术（凭证访问、权限提升等），超出合规汉化范围（同 SnailSploit/Claude-Red 先例）。
+- `zhaoxuya520/reverse-skill`（43,995 星，MIT）：**内容政策排除**——逆向工程/渗透测试攻击路由包，同上。
+- `feder-cr/invisible_dots`（32,357 星，MIT）：**内容政策排除**——反反爬虫检测规避工具，同上。
+- `tanweai/pua`（19,789 星）：**无 License**，原则 #2 排除。
+- `calesthio/OpenMontage`（75,247 星）、`op7418/guizang-ppt-skill`（29,155 星）：**AGPL-3.0**，非宽松许可，原则 #2 排除。
+- `nexu-io/open-design`（105,531 星）、`citrolabs/ego-lite`（21,338 星）、`vercel-labs/skills`（37,797 星）、`microsoft/SkillOpt`（18,824 星）、`NVIDIA/SkillSpector`（23,996 星）：App/CLI 工具/研究框架/安全扫描器，非 drop-in Skill 文件。
+- `sickn33/agentic-awesome-skills`（49,292 星，MIT）、`VoltAgent/awesome-openclaw-skills`（53,508 星）：2,884+ 件大合集/榜单，按"宁缺毋滥"暂不批量抽取，后续按热度评估。
+- `agentskills/agentskills`（26,886 星）：Skill 规范与文档，非 Skill 本体。
+- `op7418/Humanizer-zh`（21,778 星，MIT）：**中文原生**（humanizer 的既有汉化版），无需翻译，可作互链参考。
 
 > 注：各上游 LICENSE 原文以对应仓库当前版本为准，同步时如发现 License 变更，立即停止收录并在 issue 中评估影响。

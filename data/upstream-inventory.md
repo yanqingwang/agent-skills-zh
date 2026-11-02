@@ -215,3 +215,48 @@
 | affaan-m/ECC（追加） | 旗舰抽取 | strategic-compact（上下文压缩，第二批上游追加） |
 
 **合计：45 上游 / 72 翻译件 / 3984 原样件。**
+
+## 九、2026-11-03 第五次全量检索与新上游收录（第六批 · 10 个新上游 / 18 翻译件 / 542 原样件）
+
+**检索方式**：GitHub Search API，五路查询——`topic:claude-skills` / `topic:agent-skills` / `topic:ai-skills`（stars:>1500）、`claude skills in:name,description`（stars:>2500）、`agent skills in:name,description`（stars:>1500），另补 `created:>2026-10-25` 新仓榜；合计 411 个去重后 367 个新候选，逐一按 License / SKILL.md 有无 / 正文语言 / skill 与工具性质实核（gh api trees + 正文抽验）。
+
+**收录口径不变**：宽松 License；产出可 drop-in 的 Skill 文件（工具/App/榜单/规范文档除外）；英文正文（中文原生仓不译）；多 Harness 发行副本只取一份。
+
+### 本批收录（10 个新上游，按星标降序）
+
+| # | 仓库 | 星标 | License | 模式 | 收录件 |
+|:-:|---|---:|---|---|---|
+| 1 | nextlevelbuilder/ui-ux-pro-max-skill | 144,260 | MIT | 旗舰抽取（单 skill 整目录） | ui-ux-pro-max（SKILL.md + data 73 件，含 google-fonts/phosphor 数据） |
+| 2 | pbakaus/impeccable | 100,404 | Apache-2.0 | 单 skill 整目录 | impeccable（SKILL.md + reference/ 57 件；仅取 .claude 副本，其余 7 个 Harness 副本排除） |
+| 3 | cloudflare/security-audit-skill | 57,337 | MIT | 单 skill 整目录 | security-audit（SKILL.md + 19 审计伴生文档；**防御性**安全审计，合规） |
+| 4 | kepano/obsidian-skills | 50,642 | MIT | 整仓（全 6 skill） | obsidian-cli / obsidian-markdown / obsidian-bases / json-canvas / defuddle / knap（Obsidian 官方，CEO 出品） |
+| 5 | Nutlope/hallmark | 45,939 | MIT | 单 skill 整目录 | hallmark（SKILL.md + references/ 151 + scripts/ 29 + agents/） |
+| 6 | zarazhangrui/frontend-slides | 31,756 | MIT | 整目录 | frontend-slides（SKILL.md + 模板包 78 件；根目录与 plugins/ 副本字节一致，取 plugins 路径） |
+| 7 | wheresryan22/anatomy | 24,097 | MIT | 整目录 | anatomy（SKILL.md + references/kit/examples 118 件；scripts/evals/tests 排除） |
+| 8 | google/skills | 21,799 | Apache-2.0 | 旗舰抽取 | gcloud（CLI 安全护栏 + references 3 件） |
+| 9 | muratcankoylan/Agent-Skills-for-Context-Engineering | 18,288 | MIT | 旗舰抽取 | context-degradation + long-horizon-prompting（避开与既有 context-engineering/strategic-compact 重叠者） |
+| 10 | greensock/gsap-skills | 17,747 | MIT | 旗舰抽取（单文件） | gsap-core / gsap-scrolltrigger / gsap-react |
+
+**目录新增子类别**：`toolbox/obsidian/`、`toolbox/cloud/`、`developer/framework/`、`creator/slides/`。
+
+### 本轮排除（新证据）
+
+| 仓库 | 星标 | 排除理由 |
+|---|---:|---|
+| mukul975/Anthropic-Cybersecurity-Skills | 35,456 | **内容政策**：含大量攻击性技术件（凭证访问/提权），同 SnailSploit 先例 |
+| zhaoxuya520/reverse-skill | 43,995 | **内容政策**：渗透测试攻击路由包 |
+| feder-cr/invisible_dots | 32,357 | **内容政策**：反爬检测规避 |
+| tanweai/pua | 19,789 | 无 License |
+| calesthio/OpenMontage / op7418/guizang-ppt-skill | 75,247 / 29,155 | AGPL-3.0 非宽松许可 |
+| nexu-io/open-design / citrolabs/ego-lite / vercel-labs/skills / microsoft/SkillOpt / NVIDIA/SkillSpector | — | App / 浏览器工具 / npx CLI / 研究框架 / 扫描器，非 Skill 文件 |
+| sickn33/agentic-awesome-skills / VoltAgent/awesome-openclaw-skills | 49,292 / 53,508 | 大合集/榜单，暂不批量抽取 |
+| agentskills/agentskills | 26,886 | 规范文档，非 Skill 本体 |
+| op7418/Humanizer-zh | 21,778 | 中文原生（humanizer 既有汉化版），无需翻译 |
+| Shubhamsaboo/awesome-llm-apps / ComposioHQ/awesome-claude-skills / hesreallyhim/awesome-claude-code / github/awesome-copilot | — | 榜单/示例合集 |
+| created:>2026-10-25 新仓榜（patch-gg/pixelfx 3,445 等） | — | 仅 pixelfx 达此前 3k 门槛且 MIT，列下批候选；其余 <1.5k 不够格 |
+
+### 文件级 License 核验说明
+
+18 个 SKILL.md 翻译前逐件核验 frontmatter：anatomy 源文件含 `license: MIT`（与仓库一致，如实保留）；impeccable 源文件为 `license: Apache 2.0`（非 SPDX 写法，同一许可）；其余 16 件无文件级 license 字段，按仓库级 License（MIT/Apache-2.0）收录。吸取第六批校验教训（ECC osint CC BY-SA 事件），未发现仓库级与文件级不一致情形。
+
+**累计：60 上游 / 156 翻译件 / 4661 原样件（2026-11-03）。**

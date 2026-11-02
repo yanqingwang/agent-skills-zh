@@ -656,13 +656,13 @@ I want the model imagining the production incident before it happens.
 
 When something is broken and you don't know why, `/investigate` is your systematic debugger. It follows the Iron Law: **no fixes without root cause investigation first.**
 
-Instead of guessing and patching, it traces data flow, matches against known bug patterns, and tests hypotheses one at a time. If three fix attempts fail, it stops and questions the architecture instead of thrashing. This prevents the "let me try one more thing" spiral that wastes hours.
+It leaves the order and tools to the model, keeps a few guards (stop and ask after three failed hypotheses, ask before a fix touches more than five files, lock edits to the affected module), reads a recipe for flakes, order-dependent failures, races and eval regressions, and ends with a structured debug report. It used to walk a five-phase procedure; Opus 5.5 followed none of it in 46 recorded sessions, so the procedure was dropped (GST-938).
 
 ---
 
 ## `/verify`
 
-`/verify` is the loop you run while you build: change something, run the repo's checks, fix what broke, run again. `gstack-checks detect` finds the checks the repo already declares (a `gstack:verify:` line or a `## Health Stack` section in CLAUDE.md, else package.json scripts, tsconfig, eslint or biome, pyproject, Cargo.toml, go.mod) and never makes one up. `gstack-checks run` runs them plus the tests `/ship`'s pre-gate selects for your change, using pregate's own selector, so a green `/verify` predicts a green pre-gate.
+`/verify` is the loop you run while you build: change something, run the repo's checks, fix what broke, run again. `gstack-checks detect` finds the checks the repo already declares (a `gstack:verify:` line or a `## Health Stack` section in CLAUDE.md, else package.json scripts, tsconfig, eslint or biome, pyproject, Cargo.toml, go.mod) and never makes one up. `gstack-checks run` runs them plus the tests `/ship`'s pre-gate selects for your change, using pregate's own selector, so a green `/verify` predicts a green pre-gate. `/health` finds its tools with the same detector (`gstack-checks detect --for health`), which adds its test, knip, shellcheck and gbrain dimensions.
 
 It asks once before running any repo command (`gstack-checks trust`) and asks again when a command changes. A touched file no test covers is `UNMAPPED`, a selection that ran zero tests is `ZERO_RUN`, and neither counts as green. A missing tool or service is reported, not worked around. It stops after five runs or when the same failure comes back twice, and sends a stubborn red to `/investigate`. When everything passes, `gstack-checks status` prints `READY_FOR_SHIP tree=<tree>` without rerunning anything, and you run `/ship`. It never reviews, bumps versions, pushes or opens a PR.
 
@@ -961,7 +961,10 @@ arms, decoys, stop rules, cap) and `--check` refuses to continue while a field i
 blank (`PREREG_INCOMPLETE`). `arms` resolves the `eval-arms` model role against
 `lib/pricing.ts` and stops on an unpriced model (`EVAL_PRICE_MISSING`); `dry-run`
 runs every row through the stub model for $0 and flags malformed rows
-(`EVAL_DRY_RUN_FAILED`); `pilot start|settle|release|report` runs three priced
+(`EVAL_DRY_RUN_FAILED`), and refuses a plan whose every arm is Haiku or Sonnet
+unless `--tier-question` names what it asks about that tier, re-costing it on
+frontier models ([frontier models under test](TESTING_INTERNALS.md#frontier-models-under-test));
+`pilot start|settle|release|report` runs three priced
 items, records actual spend, extrapolates each priced arm to the full set against
 the cap (`EVAL_BUDGET_EXHAUSTED`) and prints the spend table the approval question
 shows. An arm on a subscription with no extra charge is declared with
@@ -1119,7 +1122,7 @@ Claude: Week of Mar 1: 47 commits (3 contributors), 3.2k LOC, 38% tests, 12 PRs,
         [Top 3 team wins, 3 things to improve, 3 habits for next week]
 ```
 
-It saves a JSON snapshot to `.context/retros/` so the next run can show trends.
+It saves a JSON snapshot under `~/.gstack/projects/<slug>/retros/`, shared by every worktree of the repository, so the next run can show trends from any checkout. An older `.context/retros/` is moved there on the first run.
 
 ---
 

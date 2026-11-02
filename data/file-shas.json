@@ -83,19 +83,19 @@
     "SKILL.md": "742deafaf4222f9f0e9d9410e72483dad64fe716"
   },
   "garrytan/gstack": {
-    "office-hours/SKILL.md": "9bc0af744558834bab5d7c1218528250f8c9599b",
-    "plan-ceo-review/SKILL.md": "c804a37a5b35b94eb43b834d7325b5ba46eda859",
-    "qa/SKILL.md": "cdb56114f2e05273c3940f6fb581d78a628f72a5",
-    "design-review/SKILL.md": "47100ca3198f5a00b9eafc22f8e4bdb1e5b7c4b9",
-    "health/SKILL.md": "b6c84d87d3cb442608c8cadeb026e1d634cb2376",
-    "review/SKILL.md": "8ae90451443897b3e68c796ab0c75960d5f48553",
-    "learn/SKILL.md": "bd368ee9db3912be4f8aa1f569d58d0371fcc551",
-    "ship/SKILL.md": "de5eaa6718ab0b3e89d5ac5f4e931fa7e50ab66f",
-    "investigate/SKILL.md": "64a9e825449173961bd379e85c373145c8089dcc",
-    "retro/SKILL.md": "0b71c2dfda64cb03d3c5c118ac3cdb015f0f5f07",
-    "land-and-deploy/SKILL.md": "491ba0521578ad007123ec3b3db687177c6fac24",
-    "plan-eng-review/SKILL.md": "46dc6e36b9688dd05e52bf2d6e804274bb20d68f",
-    "spec/SKILL.md": "8d94a32c83368e44b0d2d863b96c8b15ff2742f9"
+    "office-hours/SKILL.md": "571f62648f4aa60a0753b98501b8ffc55e2576fc",
+    "plan-ceo-review/SKILL.md": "e64c876ece927762722794bf4fad0d8c55b1a292",
+    "qa/SKILL.md": "5a348f9c7c1931415e0eb352ce298f327251a0df",
+    "design-review/SKILL.md": "42e47d2515578b1e7ea44653c4adb4ad9628374b",
+    "health/SKILL.md": "ecde9b5f2aba48ff8e8371d5774ef417f7249e65",
+    "review/SKILL.md": "f98b7ca7a0669b3c38acf7e7be3854bec9a0c9bf",
+    "learn/SKILL.md": "0d9f456c09ec9e7764a4eefc72e4d95afe3064f7",
+    "ship/SKILL.md": "43ec62eab9261ed4b1b9256572f68b844e96980f",
+    "investigate/SKILL.md": "cb6a50df2db4951e81ab798492967584e7fd0cfa",
+    "retro/SKILL.md": "0e85fb8a15f7435b20aa72fd116aa5d0be719b8a",
+    "land-and-deploy/SKILL.md": "57e64a21aa542a8350882a778085ea4fcb2f098c",
+    "plan-eng-review/SKILL.md": "4061ac83ba2683e7fa18c9235a9658a719fddd48",
+    "spec/SKILL.md": "722483a88de4726c06ab357236f3e319ae98858b"
   },
   "Vincentwei1021/video-shotcraft": {
     "SKILL.md": "5e474675e53aac4fa9449f242241f92cc8b6f7bb"
@@ -230,5 +230,43 @@
     "skills/sales-qualify/SKILL.md": "cda3613207c7f2932579b0fa6881c4801ed31b19",
     "skills/sales-proposal/SKILL.md": "78eb7142fe5f0b912ae9c58063bef04d8ac56187",
     "skills/sales-research/SKILL.md": "78b59f7eef7258076d8e47c98baec476a3efcae4"
+  },
+  "nextlevelbuilder/ui-ux-pro-max-skill": {
+    ".claude/skills/ui-ux-pro-max/SKILL.md": "2b13d3d9c36b9dc34ee474e4473b710f59ec5b34"
+  },
+  "pbakaus/impeccable": {
+    ".claude/skills/impeccable/SKILL.md": "ff0426b809d4d028b2183495665dd252f86a95e1"
+  },
+  "cloudflare/security-audit-skill": {
+    "skills/security-audit/SKILL.md": "92178dad304d3f63e37582a297026a7874e12c62"
+  },
+  "kepano/obsidian-skills": {
+    "skills/obsidian-cli/SKILL.md": "0046c45abc11cbba48cee538e9cce9993a62747b",
+    "skills/obsidian-markdown/SKILL.md": "bca51a429c020a4cb6740a917517116e66d428b1",
+    "skills/obsidian-bases/SKILL.md": "e857041265fb8ac9f6f7c6606f2dbc762c45a91d",
+    "skills/json-canvas/SKILL.md": "8fb2c9de2bbba52b53ca243fbfdab650ee61711c",
+    "skills/defuddle/SKILL.md": "c1c9b1ba572cb725cb616ccd2d36f1737c65f18e",
+    "skills/knap/SKILL.md": "c27139dcb94c45d49d5fb0b5ff82148c83799496"
+  },
+  "Nutlope/hallmark": {
+    "skills/hallmark/SKILL.md": "d27771723e827baa5e2b34d01492783a42df9174"
+  },
+  "zarazhangrui/frontend-slides": {
+    "plugins/frontend-slides/skills/frontend-slides/SKILL.md": "9b8374bf128db6d5c18921d170bdc6a230808f82"
+  },
+  "wheresryan22/anatomy": {
+    "SKILL.md": "36f22e400814d84e41fa6c0568928d9d5620c47a"
+  },
+  "google/skills": {
+    "plugins/cloud/google-cloud-developer/skills/gcloud/SKILL.md": "c9b7cfb87f3b41c221c120d8dfb85d0fcb2e8f84"
+  },
+  "muratcankoylan/Agent-Skills-for-Context-Engineering": {
+    "skills/context-degradation/SKILL.md": "1a6d079940045d5ff6d0058f50d3cc11a6f9610b",
+    "skills/long-horizon-prompting/SKILL.md": "a36ec67d53a00fbefc78d82650f0e5af37ffdc71"
+  },
+  "greensock/gsap-skills": {
+    "skills/gsap-core/SKILL.md": "98639432f4112b664aa5e53cf5d8ea1a4697eff9",
+    "skills/gsap-scrolltrigger/SKILL.md": "6d8c09f2136c108595c9e0db859c4a39460e99cf",
+    "skills/gsap-react/SKILL.md": "e2e51805457943cd4982fe792b858c14fa2c3c8f"
   }
 }

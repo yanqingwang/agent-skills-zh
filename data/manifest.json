@@ -103,7 +103,8 @@
           "upstream": "skills/systematic-debugging/test-pressure-3.md",
           "reason": "上游 QA 测试件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 311201
     },
     {
       "repo": "mattpocock/skills",
@@ -130,7 +131,8 @@
           "upstream": "skills/engineering/to-spec/agents/openai.yaml",
           "local": "skills/developer/engineering/to-spec/agents/openai.yaml"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 310169
     },
     {
       "repo": "addyosmani/agent-skills",
@@ -169,7 +171,8 @@
           "upstream": "skills/idea-refine/scripts/idea-refine.sh",
           "local": "skills/developer/engineering/idea-refine/scripts/idea-refine.sh"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 112815
     },
     {
       "repo": "Leonxlnx/taste-skill",
@@ -334,7 +337,8 @@
           "upstream": "skills/taste-skill/README.md",
           "reason": "上游仓库级说明（含安装方式），本仓库 README 已覆盖使用说明"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 108664
     },
     {
       "repo": "multica-ai/andrej-karpathy-skills",
@@ -342,7 +346,8 @@
       "license": "NONE (excluded)",
       "stars_snapshot_2026-10-24": 223159,
       "stars_snapshot_2026-10-25": 223425,
-      "files": []
+      "files": [],
+      "stars_snapshot_2026-11-03": 228516
     },
     {
       "repo": "morluto/rea",
@@ -404,7 +409,8 @@
           "upstream": ".agents/skills/rea-tool-design/",
           "reason": "兄弟辅助 skill，第二批未收录（第三批候选）"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 422686
     },
     {
       "repo": "DietrichGebert/ponytail",
@@ -441,7 +447,8 @@
           "upstream": ".openclaw/skills/ponytail-review/",
           "reason": "兄弟变体 skill（audit/debt/gain/help/review），第二批未收录（第三批候选）"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 182852
     },
     {
       "repo": "JuliusBrussee/caveman",
@@ -462,7 +469,8 @@
           "local": "skills/developer/efficiency/caveman/README.md"
         }
       ],
-      "verbatim_excluded": []
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 116925
     },
     {
       "repo": "tt-a1i/archify",
@@ -1305,7 +1313,8 @@
           "reason": "兄弟辅助 skill，第二批未收录（第三批候选）"
         }
       ],
-      "note": "上游 2026-10-25 起整体转为 Apache-2.0（保留历史 MIT 授权）；本仓收录期间（2026-10-24 快照）原文为 MIT，译文已同步新许可标注"
+      "note": "上游 2026-10-25 起整体转为 Apache-2.0（保留历史 MIT 授权）；本仓收录期间（2026-10-24 快照）原文为 MIT，译文已同步新许可标注",
+      "stars_snapshot_2026-11-03": 92717
     },
     {
       "repo": "Egonex-AI/Understand-Anything",
@@ -1538,7 +1547,8 @@
           "local": "skills/researcher/analysis/understand/validate-incremental-symbols.mjs"
         }
       ],
-      "verbatim_excluded": []
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 89877
     },
     {
       "repo": "mvanhorn/last30days-skill",
@@ -2184,7 +2194,8 @@
           "upstream": "skills/last30days/assets/swimmom-mockup.jpeg",
           "reason": "上游展示素材（示例图片/音频，共14MB），未被 SKILL.md、references、scripts、agents 任何文件引用（全目录 grep 验证）；为控制仓库体积不收录，不影响 drop-in 功能"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 66360
     },
     {
       "repo": "cathrynlavery/diagram-design",
@@ -3345,7 +3356,8 @@
           "local": "skills/designer/design/diagram-design/scripts/self_check.py"
         }
       ],
-      "verbatim_excluded": []
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 64335
     },
     {
       "repo": "blader/humanizer",
@@ -3386,7 +3398,8 @@
           "upstream": "AGENTS.md",
           "reason": "仓库级文档，不随 skill 分发"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 63995
     },
     {
       "repo": "ayghri/i-have-adhd",
@@ -3419,7 +3432,8 @@
           "upstream": "agents/",
           "reason": "Harness 适配文件（gemini.toml/openai.yaml），SKILL.md 未引用，原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 59825
     },
     {
       "repo": "coreyhaines31/marketingskills",
@@ -3473,7 +3487,8 @@
           "upstream": "skills/product-marketing/evals/",
           "reason": "上游自身 QA 产物，原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 58091
     },
     {
       "repo": "K-Dense-AI/scientific-agent-skills",
@@ -3686,7 +3701,8 @@
           "local": "skills/researcher/info/citation-management/scripts/validate_citations.py"
         }
       ],
-      "verbatim_excluded": []
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 55827
     },
     {
       "repo": "affaan-m/ECC",
@@ -3792,7 +3808,8 @@
           "upstream": "skills/osint-investigation/",
           "reason": "文件级 License 为 CC BY-SA 4.0（继承上游 shoyann/RZK-The-Hunter，非本仓 MIT 口径），原则 #2 排除；ECC 仓库整体 MIT 不受影响"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 295608
     },
     {
       "repo": "virgiliojr94/book-to-skill",
@@ -3922,7 +3939,8 @@
           "upstream": "evals/",
           "reason": "上游自身 QA 产物，原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 36785
     },
     {
       "repo": "OthmanAdi/planning-with-files",
@@ -4063,7 +4081,8 @@
           "local": "skills/developer/engineering/planning-with-files/templates/task_plan_autonomous.md"
         }
       ],
-      "verbatim_excluded": []
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 27837
     },
     {
       "repo": "titanwings/distilly",
@@ -4325,7 +4344,8 @@
           "upstream": "tests/",
           "reason": "上游自身 QA 产物，原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 26310
     },
     {
       "repo": "latent-spaces/brag",
@@ -5499,7 +5519,8 @@
           "upstream": "skills/brag-slim/",
           "reason": "兄弟精简版 skill，第二批未收录（第三批候选）"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 20061
     },
     {
       "repo": "nidhinjs/prompt-master",
@@ -5524,7 +5545,8 @@
           "local": "skills/writer/prompting/prompt-master/references/templates.md"
         }
       ],
-      "verbatim_excluded": []
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 15428
     },
     {
       "repo": "garrytan/gstack",
@@ -10702,7 +10724,8 @@
           "upstream": "test/*",
           "reason": "上游自身 QA 产物（40MB），原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 138676
     },
     {
       "repo": "Vincentwei1021/video-shotcraft",
@@ -16145,7 +16168,8 @@
           "reason": "上游 2026-10-30 重构删除该资产（本地按 2026-10-25 快照保留，drop-in 仍自洽）"
         }
       ],
-      "note": "上游 SKILL.md 正文本身即中文（中欧双语定位），中文原生收录，逐字节保留"
+      "note": "上游 SKILL.md 正文本身即中文（中欧双语定位），中文原生收录，逐字节保留",
+      "stars_snapshot_2026-11-03": 16160
     },
     {
       "repo": "teng-lin/notebooklm-py",
@@ -16166,7 +16190,8 @@
           "upstream": "*",
           "reason": "Python 包经 pip 安装（SKILL.md 仅引用包名与 CLI，不引用仓库内文件）；examples/docs/deploy/desktop-extension/tests/src 等仓库级内容不收录"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 20073
     },
     {
       "repo": "foryourhealth111-pixel/Vibe-Skills",
@@ -16344,7 +16369,8 @@
           "upstream": "references/ templates/ schemas/ config/ adapters/ agents/ commands/ rules/ packages/ vgo_cli/",
           "reason": "未被根 SKILL.md 引用（引用集仅 core/ + protocols/）"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 3788
     },
     {
       "repo": "yusufkaraaslan/Skill_Seekers",
@@ -16365,7 +16391,8 @@
           "upstream": "*",
           "reason": "skill 目录仅含 SKILL.md 单文件；仓库其余（distribution/ tests/ docs/）为仓库级内容"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 15266
     },
     {
       "repo": "Orchestra-Research/AI-Research-SKILLs",
@@ -16423,7 +16450,8 @@
           "upstream": "01~06 领域件",
           "reason": "兄弟领域 skill，未收录（后续候选）"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 14204
     },
     {
       "repo": "alirezarezvani/claude-skills",
@@ -16593,7 +16621,8 @@
           "upstream": "其余 378 件",
           "reason": "380 件大合集，本批只抽旗舰"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 29179
     },
     {
       "repo": "phuryn/pm-skills",
@@ -16626,7 +16655,8 @@
           "upstream": "其余 pm-* 组",
           "reason": "5 组 PM 技能市场，本批抽 2 件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 27633
     },
     {
       "repo": "AgriciDaniel/claude-seo",
@@ -16688,7 +16718,8 @@
           "upstream": "其余 seo-* 子 skill",
           "reason": "26 件，本批抽 2 件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 25971
     },
     {
       "repo": "wanshuiyin/Auto-claude-code-research-in-sleep",
@@ -16713,7 +16744,8 @@
           "upstream": "其余 skills/*",
           "reason": "科研自动化合集，本批抽 2 件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 18504
     },
     {
       "repo": "Jeffallan/claude-skills",
@@ -16831,7 +16863,8 @@
           "upstream": "其余 65 件",
           "reason": "67 件全栈合集，本批抽 2 件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 12183
     },
     {
       "repo": "MengTo/Skills",
@@ -16897,7 +16930,8 @@
           "upstream": "agent-skills 其余",
           "reason": "3d/illustration/media/ui 等目录，本批抽 1 件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 7200
     },
     {
       "repo": "czlonkowski/n8n-skills",
@@ -16975,7 +17009,8 @@
           "upstream": "其余 n8n-* skills",
           "reason": "本批抽 2 件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 6573
     },
     {
       "repo": "anthropics/claude-plugins-official",
@@ -17121,7 +17156,8 @@
           "upstream": "example-plugin",
           "reason": "上游示例模板，非功能 skill"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 45841
     },
     {
       "repo": "wshobson/agents",
@@ -17207,7 +17243,8 @@
           "upstream": "其余 plugins",
           "reason": "100+ 插件，本批抽 2 个含 SKILL.md 的旗舰；agent-orchestration 等旧式插件无 SKILL.md，暂不适配"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 42114
     },
     {
       "repo": "Donchitos/Claude-Code-Game-Studios",
@@ -17236,7 +17273,8 @@
           "upstream": "hooks/ rules/ scripts/ settings.json",
           "reason": "仓库级配置，原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 33478
     },
     {
       "repo": "tw93/Waza",
@@ -17466,7 +17504,8 @@
           "upstream": "其余 rules（chinese/english/durable-context/waza-routing）",
           "reason": "本批抽 2 件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 7496
     },
     {
       "repo": "NVIDIA/skills",
@@ -17653,7 +17692,8 @@
           "reason": "保留在收录目录内（skill 自带元信息）；skill.oms.sig 签名件一并原样保留"
         }
       ],
-      "note": "SKILL 文件 frontmatter 标注 License: CC-BY-4.0 AND Apache-2.0 双许可，声明块按实际标注"
+      "note": "SKILL 文件 frontmatter 标注 License: CC-BY-4.0 AND Apache-2.0 双许可，声明块按实际标注",
+      "stars_snapshot_2026-11-03": 3830
     },
     {
       "repo": "gamedev-skills/awesome-gamedev-agent-skills",
@@ -17715,7 +17755,8 @@
           "upstream": "其余 70+ 引擎/品类 skills",
           "reason": "本批抽三大引擎语言核心各 1 件"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 6582
     },
     {
       "repo": "bergside/awesome-design-skills",
@@ -17757,7 +17798,8 @@
           "upstream": "其余 60+ 风格（DESIGN.md+SKILL.md 各一套）",
           "reason": "本批抽 1 件；DESIGN.md 随目录原样收录"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 3450
     },
     {
       "repo": "tradermonty/claude-trading-skills",
@@ -17879,7 +17921,8 @@
           "upstream": "其余 40+ skills",
           "reason": "本批抽 2 件；金融内容已加风险提示，见 README"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 3558
     },
     {
       "repo": "browser-act/skills",
@@ -17904,7 +17947,8 @@
           "upstream": "solutions/ docs/",
           "reason": "仓库级内容"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 6311
     },
     {
       "repo": "iOfficeAI/OfficeCLI",
@@ -18378,7 +18422,8 @@
           "upstream": "src/ npm/ build 等",
           "reason": "CLI 工具本体，原则 #11 排除（skill 经 npm/pip 安装 officecli 使用）"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 32952
     },
     {
       "repo": "questflowai/investorskills",
@@ -18432,7 +18477,8 @@
           "upstream": "README.md、references/",
           "reason": "仓库级说明文档，原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 1907
     },
     {
       "repo": "RKiding/Awesome-finance-skills",
@@ -18506,7 +18552,8 @@
           "upstream": "tests/ figs/",
           "reason": "上游 QA 产物与图示，原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 3096
     },
     {
       "repo": "muxuuu/serenity-skill",
@@ -18596,7 +18643,8 @@
           "upstream": "evals/、agents/openai.yaml、scripts/validate_skill.py",
           "reason": "上游 QA 与工具脚本，原则 #11 排除"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 4154
     },
     {
       "repo": "nexscope-ai/eCommerce-Skills",
@@ -18625,7 +18673,8 @@
           "upstream": "其余 159 个电商 skill",
           "reason": "后续候选（brand-protection 系列、ebay 系列、amazon 系列等）"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 1316
     },
     {
       "repo": "zubair-trabzada/ai-sales-team-claude",
@@ -18666,7 +18715,2327 @@
           "upstream": "sales/SKILL.md",
           "reason": "编排器入口，与子 skill 内容重叠"
         }
-      ]
+      ],
+      "stars_snapshot_2026-11-03": 1500
+    },
+    {
+      "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "shortname": "ui-ux-pro-max-skill",
+      "license": "MIT",
+      "batch": 6,
+      "mode": "整目录",
+      "files": [
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/SKILL.md",
+          "local": "skills/designer/design/ui-ux-pro-max/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/app-interface.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/app-interface.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/catalog-summary.json",
+          "local": "skills/designer/design/ui-ux-pro-max/data/catalog-summary.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/charts.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/charts.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/colors.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/colors.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/data-provenance.json",
+          "local": "skills/designer/design/ui-ux-pro-max/data/data-provenance.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/google-font-licenses.json",
+          "local": "skills/designer/design/ui-ux-pro-max/data/google-font-licenses.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/google-fonts.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/google-fonts.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/icons.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/icons.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/landing.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/landing.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/motion.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/motion.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/phosphor-icons-upstream.json",
+          "local": "skills/designer/design/ui-ux-pro-max/data/phosphor-icons-upstream.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/products.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/products.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/react-performance.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/react-performance.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/angular.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/angular.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/astro.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/astro.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/avalonia.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/avalonia.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/flutter.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/flutter.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/html-tailwind.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/html-tailwind.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/javafx.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/javafx.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/jetpack-compose.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/jetpack-compose.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/laravel.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/laravel.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/nextjs.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/nextjs.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/nuxt-ui.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/nuxt-ui.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/nuxtjs.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/nuxtjs.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/react-native.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/react-native.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/react.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/react.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/shadcn.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/shadcn.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/svelte.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/svelte.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/swiftui.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/swiftui.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/threejs.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/threejs.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/uno.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/uno.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/uwp.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/uwp.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/vue.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/vue.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/winui.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/winui.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/stacks/wpf.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/stacks/wpf.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/styles.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/styles.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/typography.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/typography.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/ui-reasoning.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/ui-reasoning.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/data/ux-guidelines.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/data/ux-guidelines.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/references/pro-rules.md",
+          "local": "skills/designer/design/ui-ux-pro-max/references/pro-rules.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/references/quick-reference.md",
+          "local": "skills/designer/design/ui-ux-pro-max/references/quick-reference.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/core.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/core.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/design_system.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/design_system.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/reasoning_contract.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/reasoning_contract.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/search.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/search.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-api.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-api.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-catalog.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-catalog.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-existing.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-existing.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-metadata.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-metadata.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-overrides.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-overrides.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/icons-curated.csv",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/icons-curated.csv"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-core.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-core.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-package.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-package.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-exports.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-exports.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-package.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-package.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/relevance-baseline.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/relevance-baseline.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/relevance-cases.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/relevance-cases.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/fixtures/relevance-thresholds.json",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/fixtures/relevance-thresholds.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_catalog_refresh.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_catalog_refresh.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_catalog_summary_line_endings.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_catalog_summary_line_endings.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_core.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_core.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_core_data_quality.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_core_data_quality.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_data_contracts.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_data_contracts.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_design_system_mode.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_design_system_mode.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_design_system_stack.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_design_system_stack.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_native_desktop_stack_freshness.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_native_desktop_stack_freshness.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_relevance_evaluator.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_relevance_evaluator.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_rtl_support.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_rtl_support.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_skill_script_paths.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_skill_script_paths.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_style_taxonomy.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_style_taxonomy.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_text_layout_resilience.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_text_layout_resilience.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/tests/test_web_stack_freshness.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/tests/test_web_stack_freshness.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-ux-pro-max/scripts/validate_data.py",
+          "local": "skills/designer/design/ui-ux-pro-max/scripts/validate_data.py"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": ".claude/skills/ 其余 6 个 skill（banner-design/brand/design-system/design/slides/ui-styling）",
+          "reason": "同仓姊妹 skill，后续候选"
+        },
+        {
+          "upstream": "cli/ 与 cli/assets/skills/",
+          "reason": "CLI 发行形态的第二份同内容拷贝，不重复收录"
+        },
+        {
+          "upstream": "根 README、CLAUDE.md 等",
+          "reason": "仓库级文档，原则 #11 排除"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 144260
+    },
+    {
+      "repo": "pbakaus/impeccable",
+      "shortname": "impeccable",
+      "license": "Apache-2.0",
+      "batch": 6,
+      "mode": "整目录",
+      "files": [
+        {
+          "upstream": ".claude/skills/impeccable/SKILL.md",
+          "local": "skills/designer/design/impeccable/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": ".claude/skills/impeccable/reference/adapt.md",
+          "local": "skills/designer/design/impeccable/reference/adapt.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/adapt.native.md",
+          "local": "skills/designer/design/impeccable/reference/adapt.native.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/android.md",
+          "local": "skills/designer/design/impeccable/reference/android.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/animate.md",
+          "local": "skills/designer/design/impeccable/reference/animate.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/audit.md",
+          "local": "skills/designer/design/impeccable/reference/audit.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/audit.native.md",
+          "local": "skills/designer/design/impeccable/reference/audit.native.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/bolder.md",
+          "local": "skills/designer/design/impeccable/reference/bolder.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/clarify.md",
+          "local": "skills/designer/design/impeccable/reference/clarify.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/colorize.md",
+          "local": "skills/designer/design/impeccable/reference/colorize.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/component-review.md",
+          "local": "skills/designer/design/impeccable/reference/component-review.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/craft-floor.md",
+          "local": "skills/designer/design/impeccable/reference/craft-floor.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/craft.md",
+          "local": "skills/designer/design/impeccable/reference/craft.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/critique.md",
+          "local": "skills/designer/design/impeccable/reference/critique.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/degraded/asset-producer.md",
+          "local": "skills/designer/design/impeccable/reference/degraded/asset-producer.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/degraded/documenter.md",
+          "local": "skills/designer/design/impeccable/reference/degraded/documenter.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/degraded/finish-reviewer.md",
+          "local": "skills/designer/design/impeccable/reference/degraded/finish-reviewer.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/degraded/manual-edit-applier.md",
+          "local": "skills/designer/design/impeccable/reference/degraded/manual-edit-applier.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/delight.md",
+          "local": "skills/designer/design/impeccable/reference/delight.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/distill.md",
+          "local": "skills/designer/design/impeccable/reference/distill.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/doctor.md",
+          "local": "skills/designer/design/impeccable/reference/doctor.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/document.md",
+          "local": "skills/designer/design/impeccable/reference/document.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/extract.md",
+          "local": "skills/designer/design/impeccable/reference/extract.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/generate.md",
+          "local": "skills/designer/design/impeccable/reference/generate.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/harden.md",
+          "local": "skills/designer/design/impeccable/reference/harden.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/hooks.md",
+          "local": "skills/designer/design/impeccable/reference/hooks.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/init.md",
+          "local": "skills/designer/design/impeccable/reference/init.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/ios.md",
+          "local": "skills/designer/design/impeccable/reference/ios.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/layout.md",
+          "local": "skills/designer/design/impeccable/reference/layout.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/live-setup.md",
+          "local": "skills/designer/design/impeccable/reference/live-setup.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/live.md",
+          "local": "skills/designer/design/impeccable/reference/live.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/mode-operate.md",
+          "local": "skills/designer/design/impeccable/reference/mode-operate.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/mode-persuade.md",
+          "local": "skills/designer/design/impeccable/reference/mode-persuade.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/mode-read.md",
+          "local": "skills/designer/design/impeccable/reference/mode-read.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/new-work.md",
+          "local": "skills/designer/design/impeccable/reference/new-work.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/onboard.md",
+          "local": "skills/designer/design/impeccable/reference/onboard.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/operate.md",
+          "local": "skills/designer/design/impeccable/reference/operate.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/optimize.md",
+          "local": "skills/designer/design/impeccable/reference/optimize.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/overdrive.md",
+          "local": "skills/designer/design/impeccable/reference/overdrive.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/polish.md",
+          "local": "skills/designer/design/impeccable/reference/polish.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/quieter.md",
+          "local": "skills/designer/design/impeccable/reference/quieter.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/region-map.md",
+          "local": "skills/designer/design/impeccable/reference/region-map.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/routing.md",
+          "local": "skills/designer/design/impeccable/reference/routing.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/shape.md",
+          "local": "skills/designer/design/impeccable/reference/shape.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/typeset.md",
+          "local": "skills/designer/design/impeccable/reference/typeset.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/reference/visualize.md",
+          "local": "skills/designer/design/impeccable/reference/visualize.md"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/VERSION",
+          "local": "skills/designer/design/impeccable/scripts/VERSION"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/command-metadata.json",
+          "local": "skills/designer/design/impeccable/scripts/command-metadata.json"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/data/font-index-failures.json",
+          "local": "skills/designer/design/impeccable/scripts/data/font-index-failures.json"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/data/font-index.json",
+          "local": "skills/designer/design/impeccable/scripts/data/font-index.json"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/engine-checksums.txt",
+          "local": "skills/designer/design/impeccable/scripts/engine-checksums.txt"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/impeccable",
+          "local": "skills/designer/design/impeccable/scripts/impeccable"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/impeccable.cmd",
+          "local": "skills/designer/design/impeccable/scripts/impeccable.cmd"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/live-browser-dom.js",
+          "local": "skills/designer/design/impeccable/scripts/live-browser-dom.js"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/live-browser-ignores.js",
+          "local": "skills/designer/design/impeccable/scripts/live-browser-ignores.js"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/live-browser-session.js",
+          "local": "skills/designer/design/impeccable/scripts/live-browser-session.js"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/live-browser.js",
+          "local": "skills/designer/design/impeccable/scripts/live-browser.js"
+        },
+        {
+          "upstream": ".claude/skills/impeccable/scripts/modern-screenshot.umd.js",
+          "local": "skills/designer/design/impeccable/scripts/modern-screenshot.umd.js"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": ".agent/.agents/.cursor/.devin/.dsh/.gemini/.github 等其余 Harness 目录副本",
+          "reason": "同一技能的多 Harness 发行副本，内容同源"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 100404
+    },
+    {
+      "repo": "cloudflare/security-audit-skill",
+      "shortname": "security-audit-skill",
+      "license": "MIT",
+      "batch": 6,
+      "mode": "整目录",
+      "files": [
+        {
+          "upstream": "skills/security-audit/SKILL.md",
+          "local": "skills/developer/quality/security-audit/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/security-audit/AI-AND-LLM.md",
+          "local": "skills/developer/quality/security-audit/AI-AND-LLM.md"
+        },
+        {
+          "upstream": "skills/security-audit/ATTACK-CLASSES.md",
+          "local": "skills/developer/quality/security-audit/ATTACK-CLASSES.md"
+        },
+        {
+          "upstream": "skills/security-audit/CLIENT-SIDE.md",
+          "local": "skills/developer/quality/security-audit/CLIENT-SIDE.md"
+        },
+        {
+          "upstream": "skills/security-audit/CLOUD-AND-DEPLOYMENT.md",
+          "local": "skills/developer/quality/security-audit/CLOUD-AND-DEPLOYMENT.md"
+        },
+        {
+          "upstream": "skills/security-audit/DATA-ISOLATION-AND-LIFECYCLE.md",
+          "local": "skills/developer/quality/security-audit/DATA-ISOLATION-AND-LIFECYCLE.md"
+        },
+        {
+          "upstream": "skills/security-audit/DESKTOP-MOBILE-AND-LOCAL-IPC.md",
+          "local": "skills/developer/quality/security-audit/DESKTOP-MOBILE-AND-LOCAL-IPC.md"
+        },
+        {
+          "upstream": "skills/security-audit/HUNTING.md",
+          "local": "skills/developer/quality/security-audit/HUNTING.md"
+        },
+        {
+          "upstream": "skills/security-audit/MEMORY-SAFETY-AND-BINARY.md",
+          "local": "skills/developer/quality/security-audit/MEMORY-SAFETY-AND-BINARY.md"
+        },
+        {
+          "upstream": "skills/security-audit/PROTOCOLS-RPC-AND-MESSAGING.md",
+          "local": "skills/developer/quality/security-audit/PROTOCOLS-RPC-AND-MESSAGING.md"
+        },
+        {
+          "upstream": "skills/security-audit/RECONNAISSANCE.md",
+          "local": "skills/developer/quality/security-audit/RECONNAISSANCE.md"
+        },
+        {
+          "upstream": "skills/security-audit/RESOURCE-EXHAUSTION-AND-AVAILABILITY.md",
+          "local": "skills/developer/quality/security-audit/RESOURCE-EXHAUSTION-AND-AVAILABILITY.md"
+        },
+        {
+          "upstream": "skills/security-audit/SUPPLY-CHAIN-AND-RELEASE.md",
+          "local": "skills/developer/quality/security-audit/SUPPLY-CHAIN-AND-RELEASE.md"
+        },
+        {
+          "upstream": "skills/security-audit/VALIDATION-AND-REPORTING.md",
+          "local": "skills/developer/quality/security-audit/VALIDATION-AND-REPORTING.md"
+        },
+        {
+          "upstream": "skills/security-audit/WEB-PROTOCOL-AND-AUTH.md",
+          "local": "skills/developer/quality/security-audit/WEB-PROTOCOL-AND-AUTH.md"
+        },
+        {
+          "upstream": "skills/security-audit/report-schema.json",
+          "local": "skills/developer/quality/security-audit/report-schema.json"
+        },
+        {
+          "upstream": "skills/security-audit/validate-coverage-ledger.cjs",
+          "local": "skills/developer/quality/security-audit/validate-coverage-ledger.cjs"
+        },
+        {
+          "upstream": "skills/security-audit/validate-coverage-ledger.test.cjs",
+          "local": "skills/developer/quality/security-audit/validate-coverage-ledger.test.cjs"
+        },
+        {
+          "upstream": "skills/security-audit/validate-findings.cjs",
+          "local": "skills/developer/quality/security-audit/validate-findings.cjs"
+        },
+        {
+          "upstream": "skills/security-audit/validate-findings.test.cjs",
+          "local": "skills/developer/quality/security-audit/validate-findings.test.cjs"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "根 README 等",
+          "reason": "仓库级文档"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 57337
+    },
+    {
+      "repo": "kepano/obsidian-skills",
+      "shortname": "obsidian-skills",
+      "license": "MIT",
+      "batch": 6,
+      "mode": "整仓",
+      "files": [
+        {
+          "upstream": "skills/obsidian-cli/SKILL.md",
+          "local": "skills/toolbox/obsidian/obsidian-cli/SKILL.md"
+        },
+        {
+          "upstream": "skills/obsidian-markdown/SKILL.md",
+          "local": "skills/toolbox/obsidian/obsidian-markdown/SKILL.md"
+        },
+        {
+          "upstream": "skills/obsidian-bases/SKILL.md",
+          "local": "skills/toolbox/obsidian/obsidian-bases/SKILL.md"
+        },
+        {
+          "upstream": "skills/json-canvas/SKILL.md",
+          "local": "skills/toolbox/obsidian/json-canvas/SKILL.md"
+        },
+        {
+          "upstream": "skills/defuddle/SKILL.md",
+          "local": "skills/toolbox/obsidian/defuddle/SKILL.md"
+        },
+        {
+          "upstream": "skills/knap/SKILL.md",
+          "local": "skills/toolbox/obsidian/knap/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/obsidian-markdown/references/CALLOUTS.md",
+          "local": "skills/toolbox/obsidian/obsidian-markdown/references/CALLOUTS.md"
+        },
+        {
+          "upstream": "skills/obsidian-markdown/references/EMBEDS.md",
+          "local": "skills/toolbox/obsidian/obsidian-markdown/references/EMBEDS.md"
+        },
+        {
+          "upstream": "skills/obsidian-markdown/references/PROPERTIES.md",
+          "local": "skills/toolbox/obsidian/obsidian-markdown/references/PROPERTIES.md"
+        },
+        {
+          "upstream": "skills/obsidian-bases/references/FUNCTIONS_REFERENCE.md",
+          "local": "skills/toolbox/obsidian/obsidian-bases/references/FUNCTIONS_REFERENCE.md"
+        },
+        {
+          "upstream": "skills/json-canvas/references/EXAMPLES.md",
+          "local": "skills/toolbox/obsidian/json-canvas/references/EXAMPLES.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "根 README、LICENSE",
+          "reason": "仓库级文档；License 原文保留于 THIRD-PARTY-NOTICES.md"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 50642
+    },
+    {
+      "repo": "Nutlope/hallmark",
+      "shortname": "hallmark",
+      "license": "MIT",
+      "batch": 6,
+      "mode": "整目录",
+      "files": [
+        {
+          "upstream": "skills/hallmark/SKILL.md",
+          "local": "skills/designer/design/hallmark/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/hallmark/LICENSE",
+          "local": "skills/designer/design/hallmark/LICENSE"
+        },
+        {
+          "upstream": "skills/hallmark/agents/openai.yaml",
+          "local": "skills/designer/design/hallmark/agents/openai.yaml"
+        },
+        {
+          "upstream": "skills/hallmark/references/anatomy.md",
+          "local": "skills/designer/design/hallmark/references/anatomy.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/brand-truth.md",
+          "local": "skills/designer/design/hallmark/references/brand-truth.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/comp.md",
+          "local": "skills/designer/design/hallmark/references/comp.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/craft.md",
+          "local": "skills/designer/design/hallmark/references/craft.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/dark-mode.md",
+          "local": "skills/designer/design/hallmark/references/dark-mode.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/data-viz.md",
+          "local": "skills/designer/design/hallmark/references/data-viz.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/design-md.md",
+          "local": "skills/designer/design/hallmark/references/design-md.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/direction.md",
+          "local": "skills/designer/design/hallmark/references/direction.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/export-formats.md",
+          "local": "skills/designer/design/hallmark/references/export-formats.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/flow.md",
+          "local": "skills/designer/design/hallmark/references/flow.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/fonts.md",
+          "local": "skills/designer/design/hallmark/references/fonts.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/gates.md",
+          "local": "skills/designer/design/hallmark/references/gates.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/genres/atmospheric.md",
+          "local": "skills/designer/design/hallmark/references/genres/atmospheric.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/genres/editorial.md",
+          "local": "skills/designer/design/hallmark/references/genres/editorial.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/genres/modern-minimal.md",
+          "local": "skills/designer/design/hallmark/references/genres/modern-minimal.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/genres/playful.md",
+          "local": "skills/designer/design/hallmark/references/genres/playful.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/imagery.md",
+          "local": "skills/designer/design/hallmark/references/imagery.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/interaction-and-states.md",
+          "local": "skills/designer/design/hallmark/references/interaction-and-states.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/layout.md",
+          "local": "skills/designer/design/hallmark/references/layout.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/01-bento-grid.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/01-bento-grid.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/02-long-document.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/02-long-document.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/03-marquee-hero.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/03-marquee-hero.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/04-stat-led.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/04-stat-led.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/05-workbench.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/05-workbench.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/06-conversational-faq.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/06-conversational-faq.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/07-manifesto.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/07-manifesto.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/08-photographic.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/08-photographic.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/09-quote-led.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/09-quote-led.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/10-specimen.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/10-specimen.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/11-catalogue.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/11-catalogue.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/12-letter.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/12-letter.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/13-index-first.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/13-index-first.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/14-narrative-workflow.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/14-narrative-workflow.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/15-split-studio.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/15-split-studio.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/16-feature-stack.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/16-feature-stack.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/17-type-specimen.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/17-type-specimen.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/18-portfolio-grid.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/18-portfolio-grid.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/19-map-diagram.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/19-map-diagram.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/20-ecosystem-index.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/20-ecosystem-index.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures/21-component-playground.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures/21-component-playground.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/macrostructures.md",
+          "local": "skills/designer/design/hallmark/references/macrostructures.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/microinteractions.md",
+          "local": "skills/designer/design/hallmark/references/microinteractions.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/patterns.md",
+          "local": "skills/designer/design/hallmark/references/patterns.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/redesign.md",
+          "local": "skills/designer/design/hallmark/references/redesign.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/responsive.md",
+          "local": "skills/designer/design/hallmark/references/responsive.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/review-finish.md",
+          "local": "skills/designer/design/hallmark/references/review-finish.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/review-hero.md",
+          "local": "skills/designer/design/hallmark/references/review-hero.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/scroll-choreography.md",
+          "local": "skills/designer/design/hallmark/references/scroll-choreography.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/texture.md",
+          "local": "skills/designer/design/hallmark/references/texture.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/README.md",
+          "local": "skills/designer/design/hallmark/references/themes/README.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/almanac.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/almanac.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/almanac.md",
+          "local": "skills/designer/design/hallmark/references/themes/almanac.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/arcade.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/arcade.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/arcade.md",
+          "local": "skills/designer/design/hallmark/references/themes/arcade.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/atelier.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/atelier.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/atelier.md",
+          "local": "skills/designer/design/hallmark/references/themes/atelier.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/bloom.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/bloom.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/bloom.md",
+          "local": "skills/designer/design/hallmark/references/themes/bloom.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/blueprint.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/blueprint.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/blueprint.md",
+          "local": "skills/designer/design/hallmark/references/themes/blueprint.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/broadside.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/broadside.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/broadside.md",
+          "local": "skills/designer/design/hallmark/references/themes/broadside.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/brutal.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/brutal.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/brutal.md",
+          "local": "skills/designer/design/hallmark/references/themes/brutal.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/carnival.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/carnival.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/carnival.md",
+          "local": "skills/designer/design/hallmark/references/themes/carnival.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/cobalt.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/cobalt.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/cobalt.md",
+          "local": "skills/designer/design/hallmark/references/themes/cobalt.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/console.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/console.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/console.md",
+          "local": "skills/designer/design/hallmark/references/themes/console.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/coral.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/coral.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/coral.md",
+          "local": "skills/designer/design/hallmark/references/themes/coral.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/darkroom.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/darkroom.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/darkroom.md",
+          "local": "skills/designer/design/hallmark/references/themes/darkroom.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/dose.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/dose.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/dose.md",
+          "local": "skills/designer/design/hallmark/references/themes/dose.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/dusk.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/dusk.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/dusk.md",
+          "local": "skills/designer/design/hallmark/references/themes/dusk.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/editorial.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/editorial.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/editorial.md",
+          "local": "skills/designer/design/hallmark/references/themes/editorial.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/formwork.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/formwork.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/formwork.md",
+          "local": "skills/designer/design/hallmark/references/themes/formwork.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/furrow.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/furrow.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/furrow.md",
+          "local": "skills/designer/design/hallmark/references/themes/furrow.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/garden.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/garden.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/garden.md",
+          "local": "skills/designer/design/hallmark/references/themes/garden.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/grid.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/grid.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/grid.md",
+          "local": "skills/designer/design/hallmark/references/themes/grid.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/halftone.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/halftone.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/halftone.md",
+          "local": "skills/designer/design/hallmark/references/themes/halftone.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/hedgerow.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/hedgerow.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/hedgerow.md",
+          "local": "skills/designer/design/hallmark/references/themes/hedgerow.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/hum.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/hum.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/hum.md",
+          "local": "skills/designer/design/hallmark/references/themes/hum.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/index.json",
+          "local": "skills/designer/design/hallmark/references/themes/index.json"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/ink.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/ink.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/ink.md",
+          "local": "skills/designer/design/hallmark/references/themes/ink.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/kiln.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/kiln.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/kiln.md",
+          "local": "skills/designer/design/hallmark/references/themes/kiln.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/loom.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/loom.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/loom.md",
+          "local": "skills/designer/design/hallmark/references/themes/loom.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/lumen.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/lumen.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/lumen.md",
+          "local": "skills/designer/design/hallmark/references/themes/lumen.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/manifesto.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/manifesto.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/manifesto.md",
+          "local": "skills/designer/design/hallmark/references/themes/manifesto.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/midnight.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/midnight.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/midnight.md",
+          "local": "skills/designer/design/hallmark/references/themes/midnight.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/newsprint.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/newsprint.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/newsprint.md",
+          "local": "skills/designer/design/hallmark/references/themes/newsprint.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/overprint.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/overprint.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/overprint.md",
+          "local": "skills/designer/design/hallmark/references/themes/overprint.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/pasteup.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/pasteup.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/pasteup.md",
+          "local": "skills/designer/design/hallmark/references/themes/pasteup.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/piste.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/piste.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/piste.md",
+          "local": "skills/designer/design/hallmark/references/themes/piste.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/refract.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/refract.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/refract.md",
+          "local": "skills/designer/design/hallmark/references/themes/refract.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/ribbon.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/ribbon.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/ribbon.md",
+          "local": "skills/designer/design/hallmark/references/themes/ribbon.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/rim.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/rim.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/rim.md",
+          "local": "skills/designer/design/hallmark/references/themes/rim.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/riso.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/riso.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/riso.md",
+          "local": "skills/designer/design/hallmark/references/themes/riso.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/solstice.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/solstice.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/solstice.md",
+          "local": "skills/designer/design/hallmark/references/themes/solstice.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/specimen.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/specimen.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/specimen.md",
+          "local": "skills/designer/design/hallmark/references/themes/specimen.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/spore.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/spore.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/spore.md",
+          "local": "skills/designer/design/hallmark/references/themes/spore.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/sport.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/sport.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/sport.md",
+          "local": "skills/designer/design/hallmark/references/themes/sport.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/squeeze.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/squeeze.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/squeeze.md",
+          "local": "skills/designer/design/hallmark/references/themes/squeeze.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/sticker.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/sticker.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/sticker.md",
+          "local": "skills/designer/design/hallmark/references/themes/sticker.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/studio.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/studio.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/studio.md",
+          "local": "skills/designer/design/hallmark/references/themes/studio.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/terminal.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/terminal.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/terminal.md",
+          "local": "skills/designer/design/hallmark/references/themes/terminal.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/terrazzo.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/terrazzo.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/terrazzo.md",
+          "local": "skills/designer/design/hallmark/references/themes/terrazzo.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/ultraviolet.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/ultraviolet.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/ultraviolet.md",
+          "local": "skills/designer/design/hallmark/references/themes/ultraviolet.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/vantage.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/vantage.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/vantage.md",
+          "local": "skills/designer/design/hallmark/references/themes/vantage.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/vellum.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/vellum.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/vellum.md",
+          "local": "skills/designer/design/hallmark/references/themes/vellum.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/wayfind.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/wayfind.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/wayfind.md",
+          "local": "skills/designer/design/hallmark/references/themes/wayfind.md"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/werkstatt.jpg",
+          "local": "skills/designer/design/hallmark/references/themes/werkstatt.jpg"
+        },
+        {
+          "upstream": "skills/hallmark/references/themes/werkstatt.md",
+          "local": "skills/designer/design/hallmark/references/themes/werkstatt.md"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/capture.mjs",
+          "local": "skills/designer/design/hallmark/scripts/capture.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/exemplars/atmospheric.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/exemplars/atmospheric.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/exemplars/editorial.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/exemplars/editorial.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/exemplars/modern-minimal.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/exemplars/modern-minimal.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/exemplars/playful.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/exemplars/playful.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/eyebrow-fail/index.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/eyebrow-fail/index.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/eyebrow-pass/index.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/eyebrow-pass/index.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/kept/after.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/kept/after.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/kept/before.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/kept/before.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/slopped.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/slopped.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/tailwind-fail/Feature.vue",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/tailwind-fail/Feature.vue"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/tailwind-fail/Hero.tsx",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/tailwind-fail/Hero.tsx"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/tailwind-fail/index.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/tailwind-fail/index.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/tailwind-fail/style.css",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/tailwind-fail/style.css"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/tailwind-pass/Hero.tsx",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/tailwind-pass/Hero.tsx"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/tailwind-pass/index.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/tailwind-pass/index.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/tailwind-pass/style.css",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/tailwind-pass/style.css"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/fixtures/waiver/index.html",
+          "local": "skills/designer/design/hallmark/scripts/fixtures/waiver/index.html"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/imagegen.mjs",
+          "local": "skills/designer/design/hallmark/scripts/imagegen.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/install-hook.mjs",
+          "local": "skills/designer/design/hallmark/scripts/install-hook.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/install.mjs",
+          "local": "skills/designer/design/hallmark/scripts/install.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/lint-hook.mjs",
+          "local": "skills/designer/design/hallmark/scripts/lint-hook.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/photos.json",
+          "local": "skills/designer/design/hallmark/scripts/photos.json"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/picture.mjs",
+          "local": "skills/designer/design/hallmark/scripts/picture.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/refcheck.mjs",
+          "local": "skills/designer/design/hallmark/scripts/refcheck.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/sloplint-render.mjs",
+          "local": "skills/designer/design/hallmark/scripts/sloplint-render.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/sloplint.mjs",
+          "local": "skills/designer/design/hallmark/scripts/sloplint.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/theme.mjs",
+          "local": "skills/designer/design/hallmark/scripts/theme.mjs"
+        },
+        {
+          "upstream": "skills/hallmark/scripts/theme.test.mjs",
+          "local": "skills/designer/design/hallmark/scripts/theme.test.mjs"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "根网站/演示文件",
+          "reason": "非技能运行所需"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 45939
+    },
+    {
+      "repo": "zarazhangrui/frontend-slides",
+      "shortname": "frontend-slides",
+      "license": "MIT",
+      "batch": 6,
+      "mode": "整目录",
+      "files": [
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/SKILL.md",
+          "local": "skills/creator/slides/frontend-slides/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/STYLE_PRESETS.md",
+          "local": "skills/creator/slides/frontend-slides/STYLE_PRESETS.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/animation-patterns.md",
+          "local": "skills/creator/slides/frontend-slides/animation-patterns.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/README.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/README.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/deck-stage.js",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/deck-stage.js"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/selection-index.json",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/selection-index.json"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/8-bit-orbit/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/8-bit-orbit/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/8-bit-orbit/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/8-bit-orbit/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/biennale-yellow/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/biennale-yellow/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/biennale-yellow/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/biennale-yellow/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/block-frame/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/block-frame/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/block-frame/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/block-frame/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/blue-professional/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/blue-professional/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/blue-professional/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/blue-professional/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/bold-poster/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/bold-poster/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/bold-poster/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/bold-poster/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/broadside/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/broadside/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/broadside/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/broadside/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/capsule/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/capsule/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/capsule/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/capsule/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/cartesian/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/cartesian/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/cartesian/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/cartesian/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/cobalt-grid/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/cobalt-grid/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/cobalt-grid/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/cobalt-grid/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/coral/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/coral/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/coral/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/coral/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/creative-mode/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/creative-mode/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/creative-mode/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/creative-mode/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/daisy-days/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/daisy-days/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/daisy-days/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/daisy-days/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/editorial-forest/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/editorial-forest/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/editorial-forest/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/editorial-forest/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/editorial-tri-tone/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/editorial-tri-tone/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/editorial-tri-tone/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/editorial-tri-tone/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/emerald-editorial/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/emerald-editorial/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/emerald-editorial/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/emerald-editorial/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/grove/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/grove/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/grove/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/grove/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/long-table/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/long-table/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/long-table/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/long-table/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/mat/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/mat/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/mat/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/mat/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/monochrome/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/monochrome/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/monochrome/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/monochrome/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/neo-grid-bold/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/neo-grid-bold/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/neo-grid-bold/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/neo-grid-bold/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/peoples-platform/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/peoples-platform/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/peoples-platform/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/peoples-platform/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/pin-and-paper/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/pin-and-paper/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/pin-and-paper/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/pin-and-paper/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/pink-script/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/pink-script/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/pink-script/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/pink-script/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/playful/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/playful/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/playful/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/playful/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/raw-grid/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/raw-grid/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/raw-grid/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/raw-grid/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/retro-windows/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/retro-windows/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/retro-windows/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/retro-windows/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/retro-zine/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/retro-zine/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/retro-zine/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/retro-zine/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/sakura-chroma/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/sakura-chroma/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/sakura-chroma/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/sakura-chroma/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/scatterbrain/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/scatterbrain/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/scatterbrain/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/scatterbrain/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/signal/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/signal/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/signal/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/signal/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/soft-editorial/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/soft-editorial/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/soft-editorial/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/soft-editorial/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/stencil-tablet/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/stencil-tablet/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/stencil-tablet/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/stencil-tablet/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/studio/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/studio/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/studio/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/studio/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/vellum/design.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/vellum/design.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/vellum/preview.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/vellum/preview.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/html-template.md",
+          "local": "skills/creator/slides/frontend-slides/html-template.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/scripts/deploy.sh",
+          "local": "skills/creator/slides/frontend-slides/scripts/deploy.sh"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/scripts/export-pdf.sh",
+          "local": "skills/creator/slides/frontend-slides/scripts/export-pdf.sh"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/scripts/extract-pptx.py",
+          "local": "skills/creator/slides/frontend-slides/scripts/extract-pptx.py"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/viewport-base.css",
+          "local": "skills/creator/slides/frontend-slides/viewport-base.css"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "根 SKILL.md 与根级支持文件",
+          "reason": "与 plugins/ 目录内同一技能（字节一致），以插件目录为准收录"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 31756
+    },
+    {
+      "repo": "wheresryan22/anatomy",
+      "shortname": "anatomy",
+      "license": "MIT",
+      "batch": 6,
+      "mode": "整目录",
+      "files": [
+        {
+          "upstream": "SKILL.md",
+          "local": "skills/designer/design/anatomy/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "examples/arcade-cabinet/arcade-cabinet-detailed-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/arcade-cabinet-detailed-a4.pdf"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/arcade-cabinet-drawing-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/arcade-cabinet-drawing-a4.pdf"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/arcade-cabinet-light.html",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/arcade-cabinet-light.html"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/arcade-cabinet-poster-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/arcade-cabinet-poster-a4.pdf"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/arcade-cabinet.css",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/arcade-cabinet.css"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/arcade-cabinet.html",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/arcade-cabinet.html"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/build.mjs",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/build.mjs"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/live.js",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/live.js"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/parts.mjs",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/parts.mjs"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/screen.mjs",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/screen.mjs"
+        },
+        {
+          "upstream": "examples/arcade-cabinet/sheet.mjs",
+          "local": "skills/designer/design/anatomy/examples/arcade-cabinet/sheet.mjs"
+        },
+        {
+          "upstream": "examples/desk-computer/build.mjs",
+          "local": "skills/designer/design/anatomy/examples/desk-computer/build.mjs"
+        },
+        {
+          "upstream": "examples/desk-computer/desk-computer-light.html",
+          "local": "skills/designer/design/anatomy/examples/desk-computer/desk-computer-light.html"
+        },
+        {
+          "upstream": "examples/desk-computer/desk-computer.html",
+          "local": "skills/designer/design/anatomy/examples/desk-computer/desk-computer.html"
+        },
+        {
+          "upstream": "examples/dial-indicator/build.mjs",
+          "local": "skills/designer/design/anatomy/examples/dial-indicator/build.mjs"
+        },
+        {
+          "upstream": "examples/dial-indicator/dial-indicator-light.html",
+          "local": "skills/designer/design/anatomy/examples/dial-indicator/dial-indicator-light.html"
+        },
+        {
+          "upstream": "examples/dial-indicator/dial-indicator.html",
+          "local": "skills/designer/design/anatomy/examples/dial-indicator/dial-indicator.html"
+        },
+        {
+          "upstream": "examples/push-button/build.mjs",
+          "local": "skills/designer/design/anatomy/examples/push-button/build.mjs"
+        },
+        {
+          "upstream": "examples/push-button/push-button-detailed-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/push-button/push-button-detailed-a4.pdf"
+        },
+        {
+          "upstream": "examples/push-button/push-button-drawing-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/push-button/push-button-drawing-a4.pdf"
+        },
+        {
+          "upstream": "examples/push-button/push-button-light.html",
+          "local": "skills/designer/design/anatomy/examples/push-button/push-button-light.html"
+        },
+        {
+          "upstream": "examples/push-button/push-button-poster-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/push-button/push-button-poster-a4.pdf"
+        },
+        {
+          "upstream": "examples/push-button/push-button.html",
+          "local": "skills/designer/design/anatomy/examples/push-button/push-button.html"
+        },
+        {
+          "upstream": "examples/push-button/sheet.mjs",
+          "local": "skills/designer/design/anatomy/examples/push-button/sheet.mjs"
+        },
+        {
+          "upstream": "examples/raptor-engine/build.mjs",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/build.mjs"
+        },
+        {
+          "upstream": "examples/raptor-engine/live.js",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/live.js"
+        },
+        {
+          "upstream": "examples/raptor-engine/raptor-engine-detailed-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/raptor-engine-detailed-a4.pdf"
+        },
+        {
+          "upstream": "examples/raptor-engine/raptor-engine-drawing-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/raptor-engine-drawing-a4.pdf"
+        },
+        {
+          "upstream": "examples/raptor-engine/raptor-engine-light.html",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/raptor-engine-light.html"
+        },
+        {
+          "upstream": "examples/raptor-engine/raptor-engine-poster-a4.pdf",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/raptor-engine-poster-a4.pdf"
+        },
+        {
+          "upstream": "examples/raptor-engine/raptor-engine.html",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/raptor-engine.html"
+        },
+        {
+          "upstream": "examples/raptor-engine/raptor.css",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/raptor.css"
+        },
+        {
+          "upstream": "examples/raptor-engine/sheet.mjs",
+          "local": "skills/designer/design/anatomy/examples/raptor-engine/sheet.mjs"
+        },
+        {
+          "upstream": "examples/ripple-tank/build.mjs",
+          "local": "skills/designer/design/anatomy/examples/ripple-tank/build.mjs"
+        },
+        {
+          "upstream": "examples/ripple-tank/live.js",
+          "local": "skills/designer/design/anatomy/examples/ripple-tank/live.js"
+        },
+        {
+          "upstream": "examples/ripple-tank/model.mjs",
+          "local": "skills/designer/design/anatomy/examples/ripple-tank/model.mjs"
+        },
+        {
+          "upstream": "examples/ripple-tank/ripple-tank-light.html",
+          "local": "skills/designer/design/anatomy/examples/ripple-tank/ripple-tank-light.html"
+        },
+        {
+          "upstream": "examples/ripple-tank/ripple-tank.html",
+          "local": "skills/designer/design/anatomy/examples/ripple-tank/ripple-tank.html"
+        },
+        {
+          "upstream": "examples/ripple-tank/ripple.css",
+          "local": "skills/designer/design/anatomy/examples/ripple-tank/ripple.css"
+        },
+        {
+          "upstream": "examples/spot-plate/art.tsx",
+          "local": "skills/designer/design/anatomy/examples/spot-plate/art.tsx"
+        },
+        {
+          "upstream": "examples/spot-plate/drops.ts",
+          "local": "skills/designer/design/anatomy/examples/spot-plate/drops.ts"
+        },
+        {
+          "upstream": "examples/spot-plate/fan.ts",
+          "local": "skills/designer/design/anatomy/examples/spot-plate/fan.ts"
+        },
+        {
+          "upstream": "examples/spot-plate/figure.tsx",
+          "local": "skills/designer/design/anatomy/examples/spot-plate/figure.tsx"
+        },
+        {
+          "upstream": "examples/spot-plate/geometry.ts",
+          "local": "skills/designer/design/anatomy/examples/spot-plate/geometry.ts"
+        },
+        {
+          "upstream": "examples/spot-plate/live.tsx",
+          "local": "skills/designer/design/anatomy/examples/spot-plate/live.tsx"
+        },
+        {
+          "upstream": "examples/spot-plate/rig.ts",
+          "local": "skills/designer/design/anatomy/examples/spot-plate/rig.ts"
+        },
+        {
+          "upstream": "examples/spot-plate/spot-plate.css",
+          "local": "skills/designer/design/anatomy/examples/spot-plate/spot-plate.css"
+        },
+        {
+          "upstream": "examples/test-rig/art.tsx",
+          "local": "skills/designer/design/anatomy/examples/test-rig/art.tsx"
+        },
+        {
+          "upstream": "examples/test-rig/figure.tsx",
+          "local": "skills/designer/design/anatomy/examples/test-rig/figure.tsx"
+        },
+        {
+          "upstream": "examples/test-rig/geometry.ts",
+          "local": "skills/designer/design/anatomy/examples/test-rig/geometry.ts"
+        },
+        {
+          "upstream": "examples/test-rig/live.tsx",
+          "local": "skills/designer/design/anatomy/examples/test-rig/live.tsx"
+        },
+        {
+          "upstream": "examples/test-rig/pose.ts",
+          "local": "skills/designer/design/anatomy/examples/test-rig/pose.ts"
+        },
+        {
+          "upstream": "examples/test-rig/rig.ts",
+          "local": "skills/designer/design/anatomy/examples/test-rig/rig.ts"
+        },
+        {
+          "upstream": "examples/test-rig/stretch.css",
+          "local": "skills/designer/design/anatomy/examples/test-rig/stretch.css"
+        },
+        {
+          "upstream": "examples/test-rig/view.ts",
+          "local": "skills/designer/design/anatomy/examples/test-rig/view.ts"
+        },
+        {
+          "upstream": "examples/turning-dial/build.mjs",
+          "local": "skills/designer/design/anatomy/examples/turning-dial/build.mjs"
+        },
+        {
+          "upstream": "examples/turning-dial/dial.css",
+          "local": "skills/designer/design/anatomy/examples/turning-dial/dial.css"
+        },
+        {
+          "upstream": "examples/turning-dial/live.js",
+          "local": "skills/designer/design/anatomy/examples/turning-dial/live.js"
+        },
+        {
+          "upstream": "examples/turning-dial/stress.mjs",
+          "local": "skills/designer/design/anatomy/examples/turning-dial/stress.mjs"
+        },
+        {
+          "upstream": "examples/turning-dial/turning-dial-light.html",
+          "local": "skills/designer/design/anatomy/examples/turning-dial/turning-dial-light.html"
+        },
+        {
+          "upstream": "examples/turning-dial/turning-dial-verify-light.html",
+          "local": "skills/designer/design/anatomy/examples/turning-dial/turning-dial-verify-light.html"
+        },
+        {
+          "upstream": "examples/turning-dial/turning-dial.html",
+          "local": "skills/designer/design/anatomy/examples/turning-dial/turning-dial.html"
+        },
+        {
+          "upstream": "examples/turning-dial/turning-stress-light.html",
+          "local": "skills/designer/design/anatomy/examples/turning-dial/turning-stress-light.html"
+        },
+        {
+          "upstream": "kit/audit.mjs",
+          "local": "skills/designer/design/anatomy/kit/audit.mjs"
+        },
+        {
+          "upstream": "kit/canvas-painter.mjs",
+          "local": "skills/designer/design/anatomy/kit/canvas-painter.mjs"
+        },
+        {
+          "upstream": "kit/gl-shared.mjs",
+          "local": "skills/designer/design/anatomy/kit/gl-shared.mjs"
+        },
+        {
+          "upstream": "kit/gl.mjs",
+          "local": "skills/designer/design/anatomy/kit/gl.mjs"
+        },
+        {
+          "upstream": "kit/iso-kit.mjs",
+          "local": "skills/designer/design/anatomy/kit/iso-kit.mjs"
+        },
+        {
+          "upstream": "kit/iso-kit.ts",
+          "local": "skills/designer/design/anatomy/kit/iso-kit.ts"
+        },
+        {
+          "upstream": "kit/iso.css",
+          "local": "skills/designer/design/anatomy/kit/iso.css"
+        },
+        {
+          "upstream": "kit/lathe.mjs",
+          "local": "skills/designer/design/anatomy/kit/lathe.mjs"
+        },
+        {
+          "upstream": "kit/pdf-button.mjs",
+          "local": "skills/designer/design/anatomy/kit/pdf-button.mjs"
+        },
+        {
+          "upstream": "kit/react/draw.tsx",
+          "local": "skills/designer/design/anatomy/kit/react/draw.tsx"
+        },
+        {
+          "upstream": "kit/react/live.tsx",
+          "local": "skills/designer/design/anatomy/kit/react/live.tsx"
+        },
+        {
+          "upstream": "kit/tube.mjs",
+          "local": "skills/designer/design/anatomy/kit/tube.mjs"
+        },
+        {
+          "upstream": "kit/turn-audit.mjs",
+          "local": "skills/designer/design/anatomy/kit/turn-audit.mjs"
+        },
+        {
+          "upstream": "kit/turn-build.mjs",
+          "local": "skills/designer/design/anatomy/kit/turn-build.mjs"
+        },
+        {
+          "upstream": "kit/turn-fixed.mjs",
+          "local": "skills/designer/design/anatomy/kit/turn-fixed.mjs"
+        },
+        {
+          "upstream": "kit/turn.mjs",
+          "local": "skills/designer/design/anatomy/kit/turn.mjs"
+        },
+        {
+          "upstream": "references/3d.md",
+          "local": "skills/designer/design/anatomy/references/3d.md"
+        },
+        {
+          "upstream": "references/craft.md",
+          "local": "skills/designer/design/anatomy/references/craft.md"
+        },
+        {
+          "upstream": "references/kit.md",
+          "local": "skills/designer/design/anatomy/references/kit.md"
+        },
+        {
+          "upstream": "references/motion.md",
+          "local": "skills/designer/design/anatomy/references/motion.md"
+        },
+        {
+          "upstream": "references/print.md",
+          "local": "skills/designer/design/anatomy/references/print.md"
+        },
+        {
+          "upstream": "references/publish.md",
+          "local": "skills/designer/design/anatomy/references/publish.md"
+        },
+        {
+          "upstream": "references/react.md",
+          "local": "skills/designer/design/anatomy/references/react.md"
+        },
+        {
+          "upstream": "references/verify.md",
+          "local": "skills/designer/design/anatomy/references/verify.md"
+        },
+        {
+          "upstream": "references/walkthrough.md",
+          "local": "skills/designer/design/anatomy/references/walkthrough.md"
+        },
+        {
+          "upstream": "references/webgl.md",
+          "local": "skills/designer/design/anatomy/references/webgl.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "scripts/ agents/ evals/ tests/",
+          "reason": "仓库开发/QA 产物，SKILL.md 未引用"
+        },
+        {
+          "upstream": "根 README/CHANGELOG/CONTRIBUTING/CODE_OF_CONDUCT/SECURITY/LICENSE、.github/",
+          "reason": "仓库级文档与 CI；License 原文保留于 THIRD-PARTY-NOTICES.md"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 24097
+    },
+    {
+      "repo": "google/skills",
+      "shortname": "google-skills",
+      "license": "Apache-2.0",
+      "batch": 6,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "plugins/cloud/google-cloud-developer/skills/gcloud/SKILL.md",
+          "local": "skills/toolbox/cloud/gcloud/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "plugins/cloud/google-cloud-developer/skills/gcloud/references/attribution.md",
+          "local": "skills/toolbox/cloud/gcloud/references/attribution.md"
+        },
+        {
+          "upstream": "plugins/cloud/google-cloud-developer/skills/gcloud/references/cli-usage.md",
+          "local": "skills/toolbox/cloud/gcloud/references/cli-usage.md"
+        },
+        {
+          "upstream": "plugins/cloud/google-cloud-developer/skills/gcloud/references/mcp-usage.md",
+          "local": "skills/toolbox/cloud/gcloud/references/mcp-usage.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/（ads 等产品 API skills）与其余 plugins/",
+          "reason": "产品 API 专用件，按需后续评估"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 21799
+    },
+    {
+      "repo": "muratcankoylan/Agent-Skills-for-Context-Engineering",
+      "shortname": "context-engineering-skills",
+      "license": "MIT",
+      "batch": 6,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "skills/context-degradation/SKILL.md",
+          "local": "skills/developer/context/context-degradation/SKILL.md"
+        },
+        {
+          "upstream": "skills/long-horizon-prompting/SKILL.md",
+          "local": "skills/developer/context/long-horizon-prompting/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/context-degradation/references/patterns.md",
+          "local": "skills/developer/context/context-degradation/references/patterns.md"
+        },
+        {
+          "upstream": "skills/context-degradation/scripts/degradation_detector.py",
+          "local": "skills/developer/context/context-degradation/scripts/degradation_detector.py"
+        },
+        {
+          "upstream": "skills/long-horizon-prompting/references/cdc-prompt-annotated.md",
+          "local": "skills/developer/context/long-horizon-prompting/references/cdc-prompt-annotated.md"
+        },
+        {
+          "upstream": "skills/long-horizon-prompting/references/mass-handoff-contracts.md",
+          "local": "skills/developer/context/long-horizon-prompting/references/mass-handoff-contracts.md"
+        },
+        {
+          "upstream": "skills/long-horizon-prompting/references/research-evidence.md",
+          "local": "skills/developer/context/long-horizon-prompting/references/research-evidence.md"
+        },
+        {
+          "upstream": "skills/long-horizon-prompting/references/task-brief-template.md",
+          "local": "skills/developer/context/long-horizon-prompting/references/task-brief-template.md"
+        },
+        {
+          "upstream": "skills/long-horizon-prompting/references/vendor-guidance.md",
+          "local": "skills/developer/context/long-horizon-prompting/references/vendor-guidance.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/ 其余 16 个 skill",
+          "reason": "与既有收录（context-engineering/strategic-compact 等）主题重叠，按需后续评估"
+        },
+        {
+          "upstream": "examples/",
+          "reason": "示例产物，非技能运行所需"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 18288
+    },
+    {
+      "repo": "greensock/gsap-skills",
+      "shortname": "gsap-skills",
+      "license": "MIT",
+      "batch": 6,
+      "mode": "旗舰抽取",
+      "files": [
+        {
+          "upstream": "skills/gsap-core/SKILL.md",
+          "local": "skills/developer/framework/gsap-core/SKILL.md"
+        },
+        {
+          "upstream": "skills/gsap-scrolltrigger/SKILL.md",
+          "local": "skills/developer/framework/gsap-scrolltrigger/SKILL.md"
+        },
+        {
+          "upstream": "skills/gsap-react/SKILL.md",
+          "local": "skills/developer/framework/gsap-react/SKILL.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": [
+        {
+          "upstream": "skills/ 其余 5 个（gsap-frameworks/plugins/performance/timeline/utils）",
+          "reason": "单文件小件，后续候选"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 17747
     }
   ]
 }

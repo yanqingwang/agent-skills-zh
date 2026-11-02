@@ -59,6 +59,10 @@
 - [content-engine](skills/writer/writing/content-engine/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
 - [去 AI 腔（humanizer）](skills/writer/writing/humanizer/SKILL.md) — 上游 [blader/humanizer](https://github.com/blader/humanizer)
 
+## 创作者 · slides
+
+- [网页幻灯片（frontend-slides）](skills/creator/slides/frontend-slides/SKILL.md) — 上游 [zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides)
+
 ## 创作者 · video
 
 - [video-shotcraft](skills/creator/video/video-shotcraft/SKILL.md) — 上游 [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft)
@@ -67,9 +71,11 @@
 
 - [自主循环（autonomous-loops）](skills/developer/context/autonomous-loops/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
 - [claude-md-improver](skills/developer/context/claude-md-improver/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
+- [上下文退化诊治（context-degradation）](skills/developer/context/context-degradation/SKILL.md) — 上游 [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
 - [上下文工程](skills/developer/context/context-engineering/SKILL.md) — 上游 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
 - [持续学习 v2（instinct）](skills/developer/context/continuous-learning-v2/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
 - [hivemind](skills/developer/context/hivemind/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
+- [长程启动提示词（long-horizon-prompting）](skills/developer/context/long-horizon-prompting/SKILL.md) — 上游 [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
 - [strategic-compact](skills/developer/context/strategic-compact/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
 - [task-coordination-strategies](skills/developer/context/task-coordination-strategies/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 
@@ -104,6 +110,12 @@
 - [写计划](skills/developer/engineering/writing-plans/SKILL.md) — 上游 [obra/superpowers](https://github.com/obra/superpowers)
 - [writing-rules](skills/developer/engineering/writing-rules/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 
+## 开发者 · framework
+
+- [GSAP 核心（gsap-core）](skills/developer/framework/gsap-core/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
+- [GSAP React 集成（gsap-react）](skills/developer/framework/gsap-react/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
+- [GSAP ScrollTrigger（gsap-scrolltrigger）](skills/developer/framework/gsap-scrolltrigger/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
+
 ## 开发者 · gstack
 
 - [design-review](skills/developer/gstack/design-review/SKILL.md) — 上游 [garrytan/gstack](https://github.com/garrytan/gstack)
@@ -135,6 +147,7 @@
 - [hunt](skills/developer/quality/hunt/SKILL.md) — 上游 [tw93/Waza](https://github.com/tw93/Waza)
 - [multi-reviewer-patterns](skills/developer/quality/multi-reviewer-patterns/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [secrets-management](skills/developer/quality/secrets-management/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
+- [多阶段安全审计（security-audit）](skills/developer/quality/security-audit/SKILL.md) — 上游 [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill)
 - [安全审查清单（security-review）](skills/developer/quality/security-review/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
 - [wcag-audit-patterns](skills/developer/quality/wcag-audit-patterns/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 
@@ -191,13 +204,17 @@
 ## 设计师 · design
 
 - [add-shader-cursor-trail](skills/designer/design/add-shader-cursor-trail/SKILL.md) — 上游 [MengTo/Skills](https://github.com/MengTo/Skills)
+- [等距技术插画（anatomy）](skills/designer/design/anatomy/SKILL.md) — 上游 [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy)
 - [交互图表生成（archify）](skills/designer/design/archify/SKILL.md) — 上游 [tt-a1i/archify](https://github.com/tt-a1i/archify)
 - [brutalism](skills/designer/design/brutalism/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
 - [creative](skills/designer/design/creative/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
 - [图表设计（diagram-design）](skills/designer/design/diagram-design/SKILL.md) — 上游 [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design)
 - [dramatic](skills/designer/design/dramatic/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
 - [frontend-design](skills/designer/design/frontend-design/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
+- [反 AI 味设计（hallmark）](skills/designer/design/hallmark/SKILL.md) — 上游 [Nutlope/hallmark](https://github.com/Nutlope/hallmark)
+- [无可挑剔前端（impeccable）](skills/designer/design/impeccable/SKILL.md) — 上游 [pbakaus/impeccable](https://github.com/pbakaus/impeccable)
 - [设计品味（taste）](skills/designer/design/taste-skill/SKILL.md) — 上游 [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)
+- [UI/UX 专业设计（ui-ux-pro-max）](skills/designer/design/ui-ux-pro-max/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 
 ## 通用工具箱 · automation
 
@@ -206,6 +223,10 @@
 - [n8n-code-python](skills/toolbox/automation/n8n-code-python/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
 - [n8n-error-handling](skills/toolbox/automation/n8n-error-handling/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
 - [notebooklm](skills/toolbox/automation/notebooklm/SKILL.md) — 上游 [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py)
+
+## 通用工具箱 · cloud
+
+- [gcloud CLI 安全护栏（gcloud）](skills/toolbox/cloud/gcloud/SKILL.md) — 上游 [google/skills](https://github.com/google/skills)
 
 ## 通用工具箱 · compute
 
@@ -219,6 +240,15 @@
 
 - [nvidia-skill-finder](skills/toolbox/meta/nvidia-skill-finder/SKILL.md) — 上游 [NVIDIA/skills](https://github.com/NVIDIA/skills)
 - [skill-seekers](skills/toolbox/meta/skill-seekers/SKILL.md) — 上游 [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers)
+
+## 通用工具箱 · obsidian
+
+- [网页正文抽取（defuddle）](skills/toolbox/obsidian/defuddle/SKILL.md) — 上游 [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills)
+- [JSON Canvas 格式（json-canvas）](skills/toolbox/obsidian/json-canvas/SKILL.md) — 上游 [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills)
+- [仓库格式体检（knap）](skills/toolbox/obsidian/knap/SKILL.md) — 上游 [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills)
+- [Obsidian Bases（obsidian-bases）](skills/toolbox/obsidian/obsidian-bases/SKILL.md) — 上游 [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills)
+- [Obsidian CLI（obsidian-cli）](skills/toolbox/obsidian/obsidian-cli/SKILL.md) — 上游 [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills)
+- [Obsidian Markdown 方言（obsidian-markdown）](skills/toolbox/obsidian/obsidian-markdown/SKILL.md) — 上游 [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills)
 
 ## 通用工具箱 · office
 
