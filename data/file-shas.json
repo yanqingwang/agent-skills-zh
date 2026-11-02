@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "fd0fcfe3f57286f38e5cdd52e6700573a439a06f"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "2bafebfe53bff8962389ae40b685b53af42f99b9"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -34,7 +34,7 @@
     "understand-anything-plugin/skills/understand/SKILL.md": "778b800c1d770ae6401ae86245def77dd220900c"
   },
   "mvanhorn/last30days-skill": {
-    "skills/last30days/SKILL.md": "2eeff5f15fb4cb5c2760276d771c918bd5e68feb"
+    "skills/last30days/SKILL.md": "0e6a3d7d30286a64a521b0493eb77775cea8a711"
   },
   "cathrynlavery/diagram-design": {
     "skills/diagram-design/SKILL.md": "6eb03013afab77fb1d67b9f40d0880b95649b357"
@@ -90,9 +90,9 @@
     "health/SKILL.md": "b6c84d87d3cb442608c8cadeb026e1d634cb2376",
     "review/SKILL.md": "8ae90451443897b3e68c796ab0c75960d5f48553",
     "learn/SKILL.md": "bd368ee9db3912be4f8aa1f569d58d0371fcc551",
-    "ship/SKILL.md": "76c60c15c813f3054b207bec8d4e2a3340d3fe55",
+    "ship/SKILL.md": "de5eaa6718ab0b3e89d5ac5f4e931fa7e50ab66f",
     "investigate/SKILL.md": "64a9e825449173961bd379e85c373145c8089dcc",
-    "retro/SKILL.md": "625f93ea4839651179c40b67545487f2e6be2b60",
+    "retro/SKILL.md": "0b71c2dfda64cb03d3c5c118ac3cdb015f0f5f07",
     "land-and-deploy/SKILL.md": "491ba0521578ad007123ec3b3db687177c6fac24",
     "plan-eng-review/SKILL.md": "46dc6e36b9688dd05e52bf2d6e804274bb20d68f",
     "spec/SKILL.md": "8d94a32c83368e44b0d2d863b96c8b15ff2742f9"
@@ -175,7 +175,7 @@
     "skills/hunt/SKILL.md": "4b1c77a5a530aec3f51f70be3e28a1b2a82f69be",
     "skills/health/SKILL.md": "80a0d631e3a49a25f796f3d140099563fb3fb10a",
     "plugins/waza/rules/durable-context.md": "ac9aa5dc92f958f1785dce99aee6c941d71f0144",
-    "skills/check/SKILL.md": "585247af560600118f3ed50600118e13f1895534",
+    "skills/check/SKILL.md": "fa9a08c54d11f0e85948fd088532c8dba9b9f5d1",
     "skills/read/SKILL.md": "7ddbcf9f8586f9f31777530655456268c283f0b5"
   },
   "NVIDIA/skills": {
