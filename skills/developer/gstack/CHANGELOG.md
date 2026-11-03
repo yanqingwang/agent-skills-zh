@@ -1,5 +1,47 @@
 # Changelog
 
+## [1.93.27.0] - 2026-11-02
+
+**A test can keep an old value on purpose without turning off `literals` (#3490).** When a minimum version goes up, the test that checks the old version is refused has to keep the old value, and pregate failed it with `PREGATE_LITERALS`. The only way out was `warn: ["literals"]`, which turns the check off for every constant. Now that one line can carry `// pregate-literal: NAME=<old value> <reason>`.
+
+### Added
+- **`pregate-literal:` markers.** A marker on the flagged line, or on the comment line directly above it, waives that line when it names the changed constant and its old value and gives a reason. Every other line in the file is still checked, and text inside a string is not a marker. The policy has no waiver key, so neither a base nor a pushed `pregate.json` can widen it.
+- **Waivers are listed.** `literals` prints each waived line as `waived: <file>:<line>: <NAME> <old> (<reason>)` and adds `marker added on this branch` when the merge-base file lacks the marker, so a reviewer sees every new waiver.
+
+### Changed
+- **docs/pregate.md** and **docs/troubleshooting.md** (`PREGATE_LITERALS`) describe the marker.
+
+## [1.93.26.0] - 2026-11-02
+
+**Editing the GBrain setup guide no longer runs every paid eval case on a PR screen.** The PR eval selector didn't recognize `USING_GBRAIN_WITH_GSTACK.md`, so it treated the file as an unknown dependency and fell back to the full suite. Two screens, #3727 and #3802, paid about $67 for it. No skill prompt or paid case reads the guide (only the README, `docs/gbrain-quick-tour.md` and free tests do), so it now selects nothing. A root doc that a paid prompt quotes, such as `ETHOS.md`, still selects its cases. The train gate's full census still runs every case, so coverage is unchanged (GST-1027).
+
+## [1.93.25.0] - 2026-11-02
+
+**/setup-browser-cookies now warns that the fallback browser still trusts the compromised eMudhra intermediates (#3338).** BROWSER.md carried this warning since v1.91.239.0, but the cookie import skill did not, so an agent importing signed-in cookies into the bundled Chromium never told the user.
+
+### Changed
+- **`setup-browser-cookies/SKILL.md.tmpl`**: before the import, the agent tells the user once that gstack's bundled Chromium still accepts certificates from those intermediates, says not to use the imported sessions on a network they do not trust until the Playwright bump, and points to `BROWSER.md`, **TLS trust: the bundled Chromium's root store**.
+
+## [1.93.24.0] - 2026-11-02
+
+**The /ship workflow judge loses the contradiction it cited in every recorded red sample.**
+
+### Fixed
+- **`ship/SKILL.md` Steps 12 and 15**: Step 15 no longer tells the agent to make the VERSION/CHANGELOG commit by hand while Step 16's `gstack-ship-release finish` makes the same commit. Feature work is committed in Step 15, and `finish` commits the release files last with the co-author trailer. Step 12 now says what a `VERSION: skipped` (stamp-at-merge or changelog fragments) or `VERSION: <v> kept` result leaves for Steps 13, 18 and 20. All six judge samples in the two recorded reds (E2E Evals 41429095451, 41445571955) named the commit conflict, and three named the undefined skipped/kept result. Three focused judge runs on the fix passed (actionability median 4 each), and none of their nine samples cited either one.
+
+## [1.93.23.0] - 2026-11-02
+
+**Four tests from the 2026-11-02 flaky pass stop failing correct runs, and one more names its cause when it fails.**
+
+### Fixed
+- **`test/skill-e2e-plan-design-with-ui.test.ts`**: the Step 0D focus detector accepts the native question header "Focus" with the design rating and an all-7 option, instead of needing one more label spelling. Train gate 41414111284 offered "Full review, all 7 (recommended)", which the old label rule missed. All ten captured focus questions carry that header, and no other captured question does. The capture is saved as a fixture, and eight negative controls cover a wrong header, a missing rating, a 4/7 rating, issue-numbered options, a single option and no all-7 option.
+- **`test/skill-e2e-shared-libs.test.ts`**: the `shared-libs-review-revalidation` callback passes the advisory's source files to the checker, so a batched read that exits nonzero but prints the whole file counts, as the checker already allows elsewhere. Train screen 40737741454 failed this way: its one read of `src/retry-worker.ts` was `cat …; echo ===ROUTE; …`, which exited 1 after printing the file. A truncated output and a single-command errored read still fail.
+- **`test/helpers/git-fixture-template.ts`**: the template leak scan skips every `.capy` directory, not only `.capy/git-shim.log`. Capy's git shim creates `$HOME/.capy` in whatever home it runs under, so a fixture home that ran git holds the machine's files, not gstack's. A file named `.capy` and look-alike directories (`.capy-old`, `capy`) are still scanned.
+- **`test/helpers/restamp-fixture.ts`, `test/helpers/pregate-fixture.ts`**: fixture repositories pin `GSTACK_STATE_ROOT` to their own home, so a value exported by the gstack launch file no longer redirects their state when bun runs without the test preload (`--config=/dev/null`). `test/review-targeted.test.ts`'s end-to-end case failed every time under that setup and passes with the fix.
+
+### Changed
+- `test/plan-reality-receipts.test.ts` checks each git step's exit status and prints its stderr, so a red like Free Tests 41316085384 and 41375226438 (an empty commit sha) names the git step that failed.
+
 ## [1.93.22.0] - 2026-11-02
 
 ### Fixed

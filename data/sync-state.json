@@ -22,7 +22,7 @@
     "titanwings/distilly": "0afc45c29c360ba7bc8260f1bb0bf34e9155f4fa",
     "latent-spaces/brag": "669ab9286aa28b6c3ee30e75f181ee74319d012a",
     "nidhinjs/prompt-master": "49b3a72469b1e7287d66387004ccfcca90e5968a",
-    "garrytan/gstack": "82db89ab3ea3c64185538b8af33da2ffd1a18b57",
+    "garrytan/gstack": "e85005482addbd902d2557a3deb964b29b0335bb",
     "Vincentwei1021/video-shotcraft": "1266a3ec4831289c4d893d42dd5102723658039a",
     "teng-lin/notebooklm-py": "7db1000b516c3f3a7d3afe7c4c572924ee7a5264",
     "foryourhealth111-pixel/Vibe-Skills": "d881d9cd6b4a37186c447f7758e802d70c2b27ef",
@@ -39,7 +39,7 @@
     "wshobson/agents": "7e2fb559cf4b824b27f1fec49fe88f7511066d26",
     "Donchitos/Claude-Code-Game-Studios": "05ad7c8a5b8aa2aa86bbd3439ae7cf7295cac418",
     "tw93/Waza": "58217546cd94fcf5ddcde4265c00a9377ed3192c",
-    "NVIDIA/skills": "7c653c43167d9035dc4287c6b19925e79848ed52",
+    "NVIDIA/skills": "40af08da3d4f52325cfa030775e26705d5f0ba78",
     "gamedev-skills/awesome-gamedev-agent-skills": "19d93f97c9c1ea0f8b306e77aa81e0d3e352d3e9",
     "bergside/awesome-design-skills": "f631a09b4fcc0166f2e2c1a8c81906ef680c57e8",
     "tradermonty/claude-trading-skills": "d8e71ce2f0b069eb5b6fca352857c168c35e6c46",
@@ -57,7 +57,7 @@
     "Nutlope/hallmark": "4f6a46c6dc325d40ab268c93e25c7b96676ebccd",
     "zarazhangrui/frontend-slides": "9906a34d640d2111f724544cbc50f7f130569ae1",
     "wheresryan22/anatomy": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
-    "google/skills": "8d65fc35b9b486ce1b126c0f8c41098bbc6f0614",
+    "google/skills": "0c369ce1c8ab5f93b1d28752b8bea622b2eedcdc",
     "muratcankoylan/Agent-Skills-for-Context-Engineering": "9ff0c99108b36d3b886defd825d8ac1f47dba374",
     "greensock/gsap-skills": "aed9cfd3277740755f6bfc1155c7aa645403b760"
   }
