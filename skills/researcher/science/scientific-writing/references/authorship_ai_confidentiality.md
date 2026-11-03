@@ -1,28 +1,30 @@
-# Authorship, CRediT, AI, and Confidentiality
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/authorship_ai_confidentiality.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Human authorship and accountability
+# 署名、CRediT、AI 与保密
 
-Use the current target-journal authorship policy. For biomedical work, ICMJE's four
-criteria require substantial contribution, drafting or critical revision, final
-approval, and accountability for all aspects of the work [SW-S01].
+## 人类署名与问责
 
-AI systems and other nonhuman tools are not authors. They cannot approve the work,
-accept accountability, disclose conflicts, or manage copyright and license agreements
-[SW-S01, SW-S03].
+采用目标期刊当前的署名政策。对于生物医学研究，ICMJE 的四项标准要求实质性
+贡献、起草或批判性修改、最终批准，以及对工作各方面的问责 [SW-S01]。
 
-Do not:
+AI 系统与其他非人类工具不是作者。它们不能批准工作、承担问责、披露利益冲
+突，也不能管理版权与许可协议 [SW-S01, SW-S03]。
 
-- add or remove an author without all required human approvals;
-- infer contributions from author order, affiliations, or email;
-- generate an author-contribution statement from incomplete records;
-- use CRediT roles as a substitute for the venue's authorship criteria.
+不要：
+
+- 未经全部必需的人类批准就增删作者；
+- 从作者排序、机构或邮箱推断贡献；
+- 用不完整的记录生成作者贡献声明；
+- 把 CRediT 角色当作发表载体署名标准的替代品。
 
 ## CRediT
 
-CRediT is the ANSI/NISO Z39.104-2022 taxonomy of 14 contributor roles. The standard
-explicitly describes contributions and does not define authorship [SW-S19].
+CRediT 是 ANSI/NISO Z39.104-2022 定义的 14 项贡献者角色分类法。该标准明
+确描述各项贡献，并不定义作者署名 [SW-S19]。
 
-Record only roles confirmed by the contributor and accountable author team:
+只记录经贡献者本人与承担责任的作者团队确认的角色：
 
 - Conceptualization
 - Data curation
@@ -39,80 +41,69 @@ Record only roles confirmed by the contributor and accountable author team:
 - Writing – original draft
 - Writing – review & editing
 
-One person may have multiple roles; a project need not use every role. Non-author
-contributors may also receive appropriate credit and acknowledgment subject to consent
-and journal policy.
+一个人可以承担多个角色；一个项目也不必用满所有角色。非作者贡献者同样可以
+获得适当的署名与致谢，但须以知情同意与期刊政策为前提。
 
-## AI-use disclosure
+## AI 使用披露
 
-The January 2026 ICMJE Recommendations call for disclosure of the AI tool and purpose
-in the cover letter and appropriate manuscript section. Writing assistance belongs
-in acknowledgments; use for data collection, analysis, or figure generation belongs
-in Methods as applicable
-[SW-S01, SW-S02]. COPE's formal position likewise requires disclosure and keeps full
-responsibility with human authors [SW-S03].
+2026 年 1 月的 ICMJE 建议要求在投稿附信与稿件的相应章节中披露所用 AI 工
+具及其用途。写作辅助应归入致谢；用于数据收集、分析或图生成，则视情况归入
+方法部分 [SW-S01, SW-S02]。COPE 的正式立场同样要求披露，并把全部责任留给
+人类作者 [SW-S03]。
 
-Journal and publisher rules differ and evolve. Check them at the time of use and again
-before submission. Record:
+期刊与出版方的规则各不相同且不断演变。在使用时以及投稿前各查阅一次。记录：
 
-- tool, provider, and version or access date;
-- purpose and affected stage;
-- whether output entered text, code, analysis, tables, or figures;
-- human verification performed;
-- disclosure locations required by the venue;
-- what material, if any, was sent outside the approved environment;
-- authorization and policy review for any restricted transfer.
+- 工具、提供方，以及版本或访问日期；
+- 用途与所影响的环节；
+- 输出是否进入正文、代码、分析、表格或图；
+- 所执行的人工核验；
+- 发表载体要求披露的位置；
+- 是否有任何材料被发往批准的环境之外；
+- 任何受限传输的授权与政策审查结果。
 
-Do not fabricate an AI-use statement or claim that no AI was used. Obtain confirmation
-from the human authors.
+不要编造 AI 使用声明，也不要声称没有使用 AI。向人类作者取得确认。
 
-## Confidentiality boundary
+## 保密边界
 
-Do not send any of the following to an external service without explicit authorization
-and a documented policy review:
+未经明确授权与有据可查的政策审查，不要把下列任何内容发送给外部服务：
 
-- unpublished manuscripts or drafts;
-- peer-review or editorial material;
-- sensitive or restricted data;
-- protected health information or other personal data;
-- proprietary or contract-restricted content;
-- source documents, including full articles, reports, protocols, and datasets.
+- 未发表的稿件或草稿；
+- 同行评审或编辑材料；
+- 敏感或受限数据；
+- 受保护的健康信息或其他个人数据；
+- 专有内容或受合同限制的内容；
+- 来源文档，包括全文文章、报告、方案与数据集。
 
-Authorization must come from a person or body empowered to grant it and must be
-consistent with journal policy, consent, ethics approval, contracts, law, institutional
-policy, and data-use terms. Removing obvious names does not by itself make content safe.
+授权必须来自有权授予它的人或机构，并且要与期刊政策、知情同意、伦理审批、
+合同、法律、机构政策与数据使用条款保持一致。仅删掉明显的姓名，本身并不能
+让内容变得安全。
 
-When authorization is absent or unclear, keep processing local and use only minimal
-metadata. This skill's bundled tools make no network calls and do not read environment
-variables or `.env` files.
+当授权缺失或不明确时，在本地处理，只使用最小必要的元数据。本 skill 随附
+的工具不发起网络调用，也不读取环境变量或 `.env` 文件。
 
-ICMJE treats submitted manuscripts as privileged communications and warns editors and
-reviewers not to upload them to AI systems where confidentiality cannot be assured
-without author permission [SW-S01]. JAMA provides a journal-policy example with the same
-confidentiality concern [SW-S24].
+ICMJE 把已投稿件视为受保护的通信，并提醒编辑与审稿人：在无法保证保密且未
+获作者许可时，不要把稿件上传到 AI 系统 [SW-S01]。JAMA 提供了一份期刊政策
+示例，指出同样的保密顾虑 [SW-S24]。
 
-## COPE status as of the research date
+## COPE 截至调研日期的状态
 
-COPE's 2017 Core Practices were retired in 2024. The Code of Conduct for COPE
-Members was published on 21 July 2026, with 12 months from first publication for
-implementation. It sits alongside the 2026 Core Principles [SW-S04, SW-S05]. Use
-current topic-specific guidance; distinguish formal positions from discussion
-documents, webinars, comments, and case advice.
+COPE 2017 年的 Core Practices 已于 2024 年废止。《COPE 成员行为准则》发
+布于 2026 年 7 月 21 日，自首次发布起有 12 个月的实施期。它与 2026 年的
+Core Principles 并列 [SW-S04, SW-S05]。请使用当前针对具体主题的指导；把
+正式立场与讨论文件、网络研讨会、评论和个案建议区分开来。
 
-## Validation
+## 校验
 
-Populate `authorship.json`, then run:
+填写 `authorship.json`，然后运行：
 
 ```bash
 python3 scripts/validate_authorship.py authorship.json
 ```
 
-The validator checks human authorship gates, exact CRediT role names, guarantors, final
-approval, declaration-hash syntax, AI disclosure, and restricted external-transfer
-gates. It does not compare declaration hashes against manuscript statements.
-These are ICMJE-style local gates, not a universal authorship standard. For example,
-Nature Portfolio uses a different contribution criterion [SW-S23]. The guarantor
-record is a local accountability convention, not a claim that all journals require
-one. Do not falsely attest to a gate to pass the tool; document the actual venue
-criteria and any local-validator limitation. The tool cannot adjudicate contribution
-disputes or determine who deserves authorship.
+校验器检查人类署名关卡、CRediT 角色名称是否精确、担保人、最终批准、声明
+哈希语法、AI 披露，以及受限外部传输关卡。它不把声明哈希与稿件中的陈述作
+比对。这些是 ICMJE 式的本地关卡，不是通用的署名标准。例如， Nature
+Portfolio 采用的是另一套贡献判定标准 [SW-S23]。担保人记录是一种本地问责
+约定，并不意味着所有期刊都要求设置担保人。不要为了让工具通过而虚假确认某
+个关卡；请记录实际的发表载体标准以及本地校验器的任何局限。该工具无法裁定
+贡献争议，也无法判定谁应当署名。

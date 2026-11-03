@@ -1,10 +1,14 @@
-# Category-peer expansion
+> **中文汉化版** · 上游：[mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) · 原文件：`skills/last30days/references/category-peers.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Read for an identifiable product in a recognizable category during Step 0.55. Eligibility and the requirement to expand remain in the research runbook.
+# 同类社区扩展
 
-Canonical category peers (single source of truth; `scripts/lib/categories.py` mirrors this for the `--auto-resolve` engine path):
+在 Step 0.55 阶段，针对可识别产品所属的可识别类别阅读本文件。适用条件与是否必须扩展，仍以研究运行手册为准。
 
-| Category | Trigger keywords | Peer subs (priority order) |
+规范同类社区（唯一事实来源；`scripts/lib/categories.py` 为 `--auto-resolve` 引擎路径镜像了这份清单）：
+
+| 类别 | 触发关键词 | 同类社区（按优先级排序） |
 |----------|------------------|---------------------------|
 | `ai_image_generation` | image generation, text to image, GPT Image, Nano Banana, Midjourney, Stable Diffusion, DALL-E, Flux.1, Imagen, Seedance, Ideogram, Recraft | `StableDiffusion, midjourney, dalle2, aiArt, PromptEngineering, MediaSynthesis` |
 | `ai_video_generation` | video generation, text to video, Sora, Veo 3, Runway Gen, Kling, Pika Labs, Luma Dream Machine, Hailuo | `aivideo, StableDiffusion, runwayml, singularity, MediaSynthesis` |
@@ -17,22 +21,22 @@ Canonical category peers (single source of truth; `scripts/lib/categories.py` mi
 | `prediction_markets` | Polymarket, Kalshi, prediction market, event contracts, Manifold Markets | `Polymarket, Kalshi, predictionmarkets` |
 | `crypto_defi` | DeFi protocol, yield farming, liquidity pool, stablecoin, layer 2, L2 rollup | `defi, ethfinance, CryptoCurrency, ethereum` |
 
-**Merging rule.** Start with WebSearch-returned subs. Append 2-3 category peers in the priority order shown. Dedupe case-insensitively (don't list `midjourney` twice if WebSearch already returned it). Cap total at 10: if adding all peers would exceed the cap, keep every WebSearch-returned sub (they are the freshest signal) and drop peers from the end of the priority list.
+**合并规则。** 以 WebSearch 返回的社区为起点，按上表优先级顺序追加 2-3 个同类社区。忽略大小写去重（如果 WebSearch 已返回 `midjourney`，就不要重复列出）。总数上限为 10：若加上全部同类社区会超限，则保留每一个 WebSearch 返回的社区（它们是最新鲜的信号），并从优先级列表末尾开始丢弃同类社区。
 
-**Extrapolation.** If the topic is a product in a category NOT listed in the table (new AI tool, niche SaaS), use the same spirit: pick the 2-3 most active cross-product communities where technique discussion happens. A new image-gen tool still gets `r/StableDiffusion, r/midjourney, r/aiArt`. A new code editor still gets `r/ChatGPTCoding, r/LocalLLaMA`.
+**外推。** 若主题所属类别不在表中（新的 AI 工具、小众 SaaS），沿用同样的思路：挑选 2-3 个技术讨论最活跃的跨产品社区。新的图像生成工具仍然对应 `r/StableDiffusion, r/midjourney, r/aiArt`。新的代码编辑器仍然对应 `r/ChatGPTCoding, r/LocalLLaMA`。
 
-**Worked example — the failing query.** Topic: `Prompting GPT Image 2`.
+**实例——出错的检索式。** 主题：`Prompting GPT Image 2`。
 
-Before (the 2026-04-22 failure mode):
+之前（2026-04-22 的失败形态）：
 ```
 Resolved:
 - Reddit: r/OpenAI, r/ChatGPT, r/singularity, r/ChatGPTpromptengineering, r/artificial
 ```
 
-After (with category-peer expansion):
+之后（加入同类社区扩展）：
 ```
 Resolved:
 - Reddit: r/OpenAI, r/ChatGPT, r/singularity, r/ChatGPTpromptengineering, r/StableDiffusion, r/midjourney, r/dalle2, r/aiArt (+ ai_image_generation peers)
 ```
 
-The parenthetical `(+ ai_image_generation peers)` is the observable contract of the new Resolved block format. See the Step 0.55 category-peer self-check in the research runbook.
+括号中的 `(+ ai_image_generation peers)` 是新版 Resolved 块格式的可观测约定。Step 0.55 的同类社区自检见研究运行手册。

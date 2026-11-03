@@ -1,92 +1,90 @@
-# Citation Integrity and Reference Formatting
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/citation_styles.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Verification before style
+# 引用完整性与参考文献格式
 
-Formatting cannot repair an unverified reference. For every cited source:
+## 先核验，后排版
 
-1. Open the source or authoritative bibliographic record.
-2. Confirm the cited proposition at a precise locator.
-3. Confirm authors or organization, title, publication state, venue, year, and version.
-4. Copy identifiers exactly from the verified record.
-5. Record corrections, retractions, expressions of concern, updates, and preprint status.
-6. Assign an evidence ID and human verification record.
+排版无法修补一条未经核验的参考文献。对每一个被引来源：
 
-Do not cite a source that was not read for the proposition. Do not copy a DOI, PMID,
-quotation, or reference from generated text, a search snippet, or another article
-without verification. ICMJE assigns authors responsibility for reference accuracy and
-rejects AI-generated material as a primary source [SW-S01].
+1. 打开该来源或权威的文献记录。
+2. 在精确的定位符处确认所引命题。
+3. 确认作者或机构、标题、出版状态、发表载体、年份与版本。
+4. 从已核验的记录中原样抄录标识符。
+5. 记录勘误、撤稿、关注声明、修订与预印本状态。
+6. 指派证据 ID 与人工核验记录。
 
-## Quotations and paraphrases
+不要引用未经阅读即用于支撑某个命题的来源。不要在未核验的情况下，从生成的
+文本、搜索片段或另一篇文章中抄录 DOI、PMID、引文或参考文献。ICMJE 规定作
+者对参考文献准确性负责，并拒斥把 AI 生成的材料当作原始来源 [SW-S01]。
 
-- Verify every quotation character-for-character and record a stable locator.
-- Preserve context, qualifications, and negation.
-- Mark changes, omissions, or translations according to venue policy.
-- Paraphrase from understanding, not by superficial word substitution.
-- Obtain permissions where copyright or license terms require them.
-- For personal communications or unpublished information, obtain required permission
-  and follow current journal policy [SW-S01].
+## 引文与转述
 
-## Source choice
+- 逐字核验每一处引文，并记录一个稳定的定位符。
+- 保留上下文、限定条件与否定表述。
+- 按发表载体政策标注改动、删节或翻译。
+- 依据理解进行转述，而不是靠表面的词语替换。
+- 在版权或许可条款要求时取得许可。
+- 对私人通信或未公开信息，取得所需许可并遵循期刊当前政策 [SW-S01]。
 
-Prefer the original source for a reported method, dataset, result, policy, or guideline.
-Use a review for synthesis when it actually supports the synthesized claim. Clearly
-identify preprints and other non-peer-reviewed versions. Check that a later correction
-or published version does not supersede the cited record.
+## 来源选择
 
-Do not use citation counts, venue prestige, recency, or a target percentage of recent
-references as a substitute for relevance and evidentiary fit.
+对于所报告的方法、数据集、结果、政策或指南，优先采用原始来源。只有当综述
+确实支撑该综合结论时才用它。清楚标明预印本与其他未经同行评议的版本。检查
+后续的勘误或正式发表版本没有取代所引记录。
 
-## Identifiers
+不要用引用次数、发表载体的声望、新近程度或近期参考文献的目标比例
+来替代相关性与证据适配性。
 
-The local checker validates syntax and duplicates only. It does not resolve identifiers
-and cannot establish that an identifier belongs to the recorded work.
+## 标识符
 
-Supported local checks include:
+本地检查器只校验语法与重复项。它不解析标识符，也无法确立某个标识符确实属
+于所记录的那项工作。
 
-- DOI;
-- PMID;
-- PMCID;
-- ISBN checksum;
-- HTTP or HTTPS URL shape;
-- duplicate normalized titles and identifiers.
+本地支持的检查包括：
 
-After the local check, a human must compare each identifier with the opened source.
+- DOI；
+- PMID；
+- PMCID；
+- ISBN 校验位；
+- HTTP 或 HTTPS URL 的形状；
+- 重复的规范化标题与标识符。
 
-## NLM and journal styles
+本地检查之后，必须由人工把每一个标识符与打开的来源逐一比对。
 
-For biomedical references, use *Citing Medicine* and NLM's sample references for the
-relevant source type [SW-S20, SW-S21]. These cover articles, books, datasets, software,
-and online material. The current target journal's instructions override generic style
-examples. JAMA currently advises against using AI/LLMs to generate or format
-references; use a standard reference manager and manually verify its output for that
-venue [SW-S25].
+## NLM 与期刊体例
 
-For APA, AMA, Chicago, IEEE, ACS, Vancouver-derived, or publisher-specific styles:
+生物医学参考文献请使用 *Citing Medicine* 与 NLM 针对相应来源类型的示例参
+考文献 [SW-S20, SW-S21]。它们覆盖文章、图书、数据集、软件与在线材料。目
+标期刊当前的须知优先于通用的体例示例。JAMA 目前不建议用 AI/LLM
+生成或排版参考文献；请使用标准的文献管理软件，并针对该发表载体人工核验其
+输出 [SW-S25]。
 
-- use the current official manual or journal style;
-- render from verified structured metadata;
-- check author truncation, title case, journal abbreviation, version, date, locator,
-  and identifier rules;
-- inspect the rendered list manually after conversion.
+对于 APA、AMA、Chicago、IEEE、ACS、源自 Vancouver 或出版方自有的体例：
 
-Do not invent a complete-looking example reference. Templates should use explicit
-fields or evidence IDs until verified metadata exists.
+- 使用当前的官方手册或期刊体例；
+- 从已核验的结构化元数据渲染；
+- 检查作者截断、标题大小写、期刊缩写、版本、日期、定位符与标识符规则；
+- 转换之后人工查看渲染出的文献列表。
 
-## Citation audit
+不要编造看起来完整的示例参考文献。在获得已核验的元数据之前，模板应当使用
+明确的字段或证据 ID。
 
-Before submission:
+## 引用审计
 
-- every factual or numeric claim maps to verified evidence IDs;
-- each in-text citation maps to a source-manifest record;
-- every reference-list entry is cited unless the venue explicitly permits a
-  bibliography;
-- citation ordering and repeated citation behavior match the target style;
-- reused figures, tables, datasets, software, protocols, and standards are attributed;
-- direct quotations have locators and permissions where needed;
-- duplicate and malformed identifiers are resolved;
-- no retracted or corrected status is concealed.
+投稿之前：
 
-Run:
+- 每一处事实性或数值性主张都能映射到已核验的证据 ID；
+- 每一处正文引用都能映射到来源清单记录；
+- 除非发表载体明确允许一份纯书目清单，否则参考文献表中的每个条目都被引用；
+- 引用顺序与重复引用的处理符合目标体例；
+- 复用的图、表、数据集、软件、方案与标准都已标注归属；
+- 直接引文配有定位符，必要时配有许可；
+- 重复与格式错误的标识符都已解决；
+- 没有隐瞒撤稿或勘误状态。
+
+运行：
 
 ```bash
 python3 scripts/audit_claims.py manuscript.md claims.csv source_manifest.json

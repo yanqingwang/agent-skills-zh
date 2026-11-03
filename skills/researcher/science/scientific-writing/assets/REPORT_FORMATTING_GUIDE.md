@@ -1,60 +1,62 @@
-# Fail-Closed Report Formatting Guide
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/assets/REPORT_FORMATTING_GUIDE.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This asset replaces the former LaTeX package and example report. The former template
-contained plausible-looking placeholder findings that could compile into a polished but
-unverified document. Use the Markdown scaffold and structured registries instead.
+# 失败即停的报告排版指南
 
-## Safe default
+本资源取代了此前那套 LaTeX 模板包与示例报告。旧模板里含有看似合理的占位
+性发现，可以编译成一份精美却未经核验的文档。请改用 Markdown 脚手架与结构
+化登记簿。
 
-1. Generate a workspace with `scripts/scaffold_manuscript.py`.
-2. Keep the `DRAFT — NOT FOR SUBMISSION` banner while any placeholder or verification
-   gate remains.
-3. Draft in plain Markdown. Apply publisher formatting only after content verification.
-4. Treat the target journal's current author instructions and supplied template as
-   controlling.
-5. Re-run every local audit after formatting because conversion can change citations,
-   symbols, tables, and references.
+## 安全默认值
 
-## Hierarchy
+1. 用 `scripts/scaffold_manuscript.py` 生成一个工作区。
+2. 只要还存在任何占位符或未完成的核验关卡，就保留
+  `DRAFT — NOT FOR SUBMISSION` 横幅。
+3. 先用纯 Markdown 起草。内容核验完成之后才套用出版方的排版格式。
+4. 以目标期刊当前的作者须知与所提供的模板为准。
+5. 排版之后重新运行全部本地审计，因为格式转换可能改变引用、符号、表格与参考
+  文献。
 
-- Use one document title and a predictable heading hierarchy.
-- Do not encode scientific meaning only with typography or color.
-- Keep terminology, abbreviations, units, and statistical notation consistent.
-- Preserve machine-readable identifiers and evidence markers until final rendering.
-- Never replace a missing value with an aesthetically plausible value.
+## 层级结构
 
-## Tables
+- 使用一个文档标题与可预期的标题层级。
+- 不要只用排版或颜色来编码科学含义。
+- 保持术语、缩写、单位与统计记法一致。
+- 在最终渲染之前，保留机器可读的标识符与证据标记。
+- 绝不用一个看起来合理的值去填补缺失值。
 
-- Every cell must derive from a named evidence record.
-- Include units, analysis population, numerator and denominator where relevant.
-- Distinguish missing, not measured, not applicable, and zero.
-- Keep exact values consistent with prose and the numeric registry.
-- Use editable tables unless the venue explicitly requires another format.
+## 表格
 
-## Figures
+- 每个单元格都必须来自一条有名字的证据记录。
+- 在相关处给出单位、分析人群、分子与分母。
+- 区分缺失、未测量、不适用与零。
+- 保持精确数值在正文与数值登记簿之间一致。
+- 除非发表载体明确要求其他格式，否则使用可编辑的表格。
 
-Figures are optional. This skill does not generate images. A retained figure must have:
+## 图
 
-- a provenance record linking it to data, code, or a licensed source;
-- a caption that identifies the analysis population, units, uncertainty, and panels;
-- alt text that communicates the figure's purpose and principal pattern without adding
-  unsupported interpretation;
-- labels or patterns in addition to color;
-- a manual check at the final display size;
-- documented permissions and transformations for reused or adapted material.
+图是可选的。本 skill 不生成图像。保留的每一张图都必须具备：
 
-Never invent a figure, image, diagram, graphical abstract, or missing visual result.
+- 一条把它与数据、代码或获得许可的来源关联起来的溯源记录；
+- 一条说明分析人群、单位、不确定性与分面板情况的图注；
+- 传达该图用途与主要模式的替代文本，且不添加缺乏支撑的解释；
+- 除颜色之外的标签或图案；
+- 在最终显示尺寸下的人工检查；
+- 对复用或改编材料所获许可与所做转换的记录。
 
-## Conversion gate
+绝不虚构图、图像、示意图、图文摘要或缺失的可视化结果。
 
-Before producing a submission format, confirm:
+## 转换关卡
 
-- placeholders are absent;
-- factual and numeric claims map to verified evidence IDs;
-- citations and reference identifiers pass local checks;
-- methods, results, units, denominators, and sample sizes agree;
-- authorship, CRediT roles, declarations, and AI use are human-approved;
-- confidentiality and target-journal policy reviews are complete;
-- reporting-guideline coverage was reviewed without treating it as a quality score.
+产出投稿格式之前，确认：
 
-Formatting quality cannot make incomplete evidence submission-ready.
+- 占位符已全部消除；
+- 事实性与数值性主张都能映射到已核验的证据 ID；
+- 引用与参考文献标识符通过本地检查；
+- 方法、结果、单位、分母与样本量彼此吻合；
+- 作者署名、CRediT 角色、各项声明与 AI 使用均已获人工批准；
+- 保密审查与目标期刊政策审查均已完成；
+- 报告指南的覆盖度已经过复核，且未被当作质量评分。
+
+排版质量无法把不完整的证据变成可投稿状态。

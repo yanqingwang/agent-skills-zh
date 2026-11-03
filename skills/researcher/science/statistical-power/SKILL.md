@@ -23,8 +23,8 @@ metadata:
 对于任一给定的检验，有四个量彼此锁定：**样本量 (n)**、**效应量**、**显著性水平 (α)** 与**功效 (1 − β)**。在设计、分析方法与干扰参数固定的前提下，只要存在解，固定其中三个即可解出第四个。本 Skill 中的每一次计算都是对这一关系的某种改写。
 
 本 Skill 涵盖进行功效分析的两种方式：
-- **解析法（Analytical）**功效计算（在某些标准检验假设下为精确解，其他情形下为渐近近似）——参见 `references/closed_form_recipes.md`。
-- **模拟 / 蒙特卡洛（Simulation / Monte Carlo）**（需要可信的数据生成过程与经过校准的预定分析方案）——参见 `references/simulation_based_power.md`。
+- **解析法（Analytical）**功效计算（在某些标准检验假设下为精确解，其他情形下为渐近近似）：参见 `references/closed_form_recipes.md`。
+- **模拟 / 蒙特卡洛（Simulation / Monte Carlo）**（需要可信的数据生成过程与经过校准的预定分析方案）：参见 `references/simulation_based_power.md`。
 
 关于效应量的选择与换算——通常是最难的一步——参见 `references/effect_sizes.md`。
 
@@ -62,7 +62,7 @@ statsmodels 中。请随输出一并记录版本号与随机种子；数值冒�
 
 功效计算的可信度，完全取决于你喂给它的效应量。**不要凭空编造一个数字。** 按大致优先顺序选用：
 
-1. **最小重要效应（minimally important effect）**——真正能够改变某个决策、或在科学/临床上具有意义的最小效应（即"最小关注效应量"，SESOI）。这是最站得住脚的依据：你做功效分析是为了检出真正重要的东西，而不是你希望看到的东西。
+1. **最小重要效应（minimally important effect）**：真正能够改变某个决策、或在科学/临床上具有意义的最小效应（即"最小关注效应量"，SESOI）。这是最站得住脚的依据：你做功效分析是为了检出真正重要的东西，而不是你希望看到的东西。
 2. **预试验或既往研究的估计值**，并考虑其不确定性与选择偏倚。小样本预试验的估计并不精确；基于发表或显著性进行的筛选会夸大效应。请使用有依据的不确定性模型或敏感性区间，而不是随意的收缩系数。
 3. **惯例值**（Cohen 的小/中/大效应）仅作为最后手段，且必须明确说明这一点。
 
@@ -180,30 +180,30 @@ d = 0.40–0.60 (Figure X).
 
 1. **编造效应量**或照搬被夸大的预试验估计——这是功效分析出错的最常见原因。
 2. **只报告单一的 n**，而不是敏感性区间 / 功效曲线。
-3. **事后 / 观测功效**——循环论证且没有信息量；请改用敏感性分析或效应量的置信区间。
-4. **忽略聚类**（伪重复）——把孔位/测量值当作彼此独立的受试者来计数。
-5. **忘记脱落**——按分析样本量做功效分析，却按同样的人数入组。
+3. **事后 / 观测功效**：循环论证且没有信息量；请改用敏感性分析或效应量的置信区间。
+4. **忽略聚类**（伪重复）：把孔位/测量值当作彼此独立的受试者来计数。
+5. **忘记脱落**：按分析样本量做功效分析，却按同样的人数入组。
 6. **混淆 α 与功效**，或混淆单侧与双侧。
 7. **只为主要终点做功效分析**，却报告需要大得多 n 的次要/交互作用检验。
-8. **用 t 检验公式去处理你其实并不会拟合的模型**（例如计划做 logistic 回归，却用基于均值的计算）——功效方法必须与预定分析相匹配。
+8. **用 t 检验公式去处理你其实并不会拟合的模型**（例如计划做 logistic 回归，却用基于均值的计算）：功效方法必须与预定分析相匹配。
 
 ---
 
 ## 资源
 
 ### 脚本
-- `scripts/power.py`——基于 statsmodels/SciPy、面向所有标准检验的统一解析式接口（`sample_size`、`power`、`mde`、`power_curve`）。
-- `scripts/simulate_power.py`——蒙特卡洛功效运行框架，包含 `simulate_power()` 与 `find_sample_size()`，并附完整示例（两组比较、logistic 回归、整群随机化、线性混合模型）。
+- `scripts/power.py`：基于 statsmodels/SciPy、面向所有标准检验的统一解析式接口（`sample_size`、`power`、`mde`、`power_curve`）。
+- `scripts/simulate_power.py`：蒙特卡洛功效运行框架，包含 `simulate_power()` 与 `find_sample_size()`，并附完整示例（两组比较、logistic 回归、整群随机化、线性混合模型）。
 
 ### 参考文件
-- `references/closed_form_recipes.md`——按检验划分的参数约定与经过测试的 statsmodels/Pingouin 调用，涵盖比例、卡方与回归。
-- `references/simulation_based_power.md`——面向 GLM、混合模型、簇设计、生存分析与脱落的完整模拟模式。
-- `references/effect_sizes.md`——效应量的选择（SESOI）、Cohen 基准值，以及 d、f、r、η²/f²、OR、h 与 w 之间的换算。
+- `references/closed_form_recipes.md`：按检验划分的参数约定与经过测试的 statsmodels/Pingouin 调用，涵盖比例、卡方与回归。
+- `references/simulation_based_power.md`：面向 GLM、混合模型、簇设计、生存分析与脱落的完整模拟模式。
+- `references/effect_sizes.md`：效应量的选择（SESOI）、Cohen 基准值，以及 d、f、r、η²/f²、OR、h 与 w 之间的换算。
 
 ### 相关 Skill
-- **experimental-design**——确定 n 之后，据此布局实际的研究（随机化、区组化、析因/DOE、交叉、序贯设计）。
-- **statistical-analysis**——数据收集完成后的假设检验、运行检验、效应量与 APA 格式报告。
-- **statsmodels** / **pymc**——拟合此处提到的模型。
+- **experimental-design**：确定 n 之后，据此布局实际的研究（随机化、区组化、析因/DOE、交叉、序贯设计）。
+- **statistical-analysis**：数据收集完成后的假设检验、运行检验、效应量与 APA 格式报告。
+- **statsmodels** / **pymc**：拟合此处提到的模型。
 
 ### 关键文献
 - Cohen, J. (1988). *Statistical Power Analysis for the Behavioral Sciences* (2nd ed.).

@@ -1,75 +1,79 @@
-# Citation Quality Checklist
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/citation-management/assets/citation_checklist.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this checklist to ensure your citations are accurate, complete, and properly formatted before final submission.
+# 引文质量检查清单
 
-## Pre-Submission Checklist
+使用本清单，确保最终提交前你的引文准确、完整且格式规范。
 
-### ✓ Metadata Accuracy
+## 提交前检查清单
 
-- [ ] All author names are correct and properly formatted
-- [ ] Article titles match the actual publication
-- [ ] Journal/conference names are complete (not abbreviated unless required)
-- [ ] Publication years are accurate
-- [ ] Volume and issue numbers are correct
-- [ ] Page ranges are accurate
+### ✓ 元数据准确性
 
-### ✓ Required Fields
+- [ ] 所有作者姓名正确且格式规范
+- [ ] 文章标题与实际发表版本一致
+- [ ] 期刊/会议名称完整（除非必要，否则不缩写）
+- [ ] 发表年份准确
+- [ ] 卷号与期号正确
+- [ ] 页码范围准确
 
-- [ ] All @article entries have: author, title, journal, year
-- [ ] All @book entries have: author/editor, title, publisher, year
-- [ ] All @inproceedings entries have: author, title, booktitle, year
-- [ ] Modern papers (2000+) include DOI when available
-- [ ] All entries have unique citation keys
+### ✓ 必填字段
 
-### ✓ DOI Verification
+- [ ] 所有 @article 条目都有：author、title、journal、year
+- [ ] 所有 @book 条目都有：author/editor、title、publisher、year
+- [ ] 所有 @inproceedings 条目都有：author、title、booktitle、year
+- [ ] 现代论文（2000 年以后）在可获得时包含 DOI
+- [ ] 所有条目都有唯一的引文键
 
-- [ ] All DOIs are properly formatted (10.XXXX/...)
-- [ ] DOIs resolve correctly to the article
-- [ ] No DOI prefix in the BibTeX field (no "doi:" or "https://doi.org/")
-- [ ] Metadata from CrossRef matches your BibTeX entry
-- [ ] Run: `python scripts/validate_citations.py references.bib --check-dois`
+### ✓ DOI 验证
 
-### ✓ Formatting Consistency
+- [ ] 所有 DOI 格式规范（10.XXXX/...）
+- [ ] DOI 能正确解析到对应文章
+- [ ] BibTeX 字段中没有 DOI 前缀（没有 "doi:" 或 "https://doi.org/"）
+- [ ] 来自 CrossRef 的元数据与你的 BibTeX 条目一致
+- [ ] 运行：`python scripts/validate_citations.py references.bib --check-dois`
 
-- [ ] Page ranges use double hyphen (--) not single (-)
-- [ ] No "pp." prefix in pages field
-- [ ] Author names use "and" separator (not semicolon or ampersand)
-- [ ] Capitalization protected in titles ({AlphaFold}, {CRISPR}, etc.)
-- [ ] Month names use standard abbreviations if included
-- [ ] Citation keys follow consistent format
+### ✓ 格式一致性
 
-### ✓ Duplicate Detection
+- [ ] 页码范围使用双连字符（--）而非单连字符（-）
+- [ ] pages 字段中没有 "pp." 前缀
+- [ ] 作者姓名使用 "and" 分隔（不用分号或 &）
+- [ ] 标题中的大小写被保护（{AlphaFold}、{CRISPR} 等）
+- [ ] 若包含月份，使用标准缩写
+- [ ] 引文键遵循一致的格式
 
-- [ ] No duplicate DOIs in bibliography
-- [ ] No duplicate citation keys
-- [ ] No near-duplicate titles
-- [ ] Preprints updated to published versions when available
-- [ ] Run: `python scripts/validate_citations.py references.bib`
+### ✓ 重复检测
 
-### ✓ Special Characters
+- [ ] 参考文献中没有重复的 DOI
+- [ ] 没有重复的引文键
+- [ ] 没有近似重复的标题
+- [ ] 预印本在有正式发表版本时已更新为正式版本
+- [ ] 运行：`python scripts/validate_citations.py references.bib`
 
-- [ ] Accented characters properly formatted (e.g., {\"u} for ü)
-- [ ] Mathematical symbols use LaTeX commands
-- [ ] Chemical formulas properly formatted
-- [ ] No unescaped special characters (%, &, $, #, etc.)
+### ✓ 特殊字符
 
-### ✓ BibTeX Syntax
+- [ ] 带变音符号的字符格式规范（例如用 {\"u} 表示 ü）
+- [ ] 数学符号使用 LaTeX 命令
+- [ ] 化学式格式规范
+- [ ] 没有未转义的特殊字符（%、&、$、# 等）
 
-- [ ] All entries have balanced braces {}
-- [ ] Fields are separated by commas (a trailing comma is valid)
-- [ ] Valid entry types (@article, @book, etc.)
-- [ ] Run: `python scripts/validate_citations.py references.bib`
+### ✓ BibTeX 语法
 
-### ✓ File Organization
+- [ ] 所有条目的花括号 {} 平衡
+- [ ] 字段以逗号分隔（末尾逗号是合法的）
+- [ ] 条目类型合法（@article、@book 等）
+- [ ] 运行：`python scripts/validate_citations.py references.bib`
 
-- [ ] Bibliography sorted in logical order (by year, author, or key)
-- [ ] Consistent formatting throughout
-- [ ] No formatting inconsistencies between entries
-- [ ] Run: `python scripts/format_bibtex.py references.bib --sort year`
+### ✓ 文件组织
 
-## Automated Validation
+- [ ] 参考文献按逻辑顺序排序（按年份、作者或键）
+- [ ] 全文格式一致
+- [ ] 条目之间没有格式不一致之处
+- [ ] 运行：`python scripts/format_bibtex.py references.bib --sort year`
 
-### Step 1: Format and Clean
+## 自动化校验
+
+### 第 1 步：格式化与清理
 
 ```bash
 python scripts/format_bibtex.py references.bib \
@@ -79,13 +83,13 @@ python scripts/format_bibtex.py references.bib \
   --output clean_references.bib
 ```
 
-**What this does**:
-- Removes duplicates
-- Standardizes formatting
-- Fixes common issues (page ranges, DOI format, etc.)
-- Sorts by year (newest first)
+**这一步做了什么**：
+- 移除重复项
+- 统一格式
+- 修复常见问题（页码范围、DOI 格式等）
+- 按年份排序（最新在前）
 
-### Step 2: Validate
+### 第 2 步：校验
 
 ```bash
 python scripts/validate_citations.py clean_references.bib \
@@ -94,157 +98,157 @@ python scripts/validate_citations.py clean_references.bib \
   --verbose
 ```
 
-**What this does**:
-- Checks required fields
-- Checks DOI registration; investigate `doi_unverified` warnings separately
-- Detects duplicates
-- Validates syntax
-- Generates detailed report
+**这一步做了什么**：
+- 检查必填字段
+- 检查 DOI 注册情况；`doi_unverified` 警告需单独排查
+- 检测重复项
+- 校验语法
+- 生成详细报告
 
-### Step 3: Review Report
+### 第 3 步：审阅报告
 
 ```bash
 cat validation_report.json
 ```
 
-**Address any**:
-- **Errors**: Must fix (missing fields, broken DOIs, syntax errors)
-- **Warnings**: Should fix (missing recommended fields, formatting issues)
-- **Duplicates**: Remove or consolidate
+**需要处理**：
+- **错误**：必须修复（字段缺失、DOI 失效、语法错误）
+- **警告**：应当修复（推荐的字段缺失、格式问题）
+- **重复项**：移除或合并
 
-### Step 4: Final Check
+### 第 4 步：最终检查
 
 ```bash
 python scripts/validate_citations.py clean_references.bib --verbose
 ```
 
-**Goal**: Zero errors, minimal warnings
+**目标**：零错误、警告最少
 
-## Manual Review Checklist
+## 人工审阅检查清单
 
-### Critical Citations (Top 10-20 Most Important)
+### 关键引文（最重要的 10-20 篇）
 
-For your most important citations, manually verify:
+对你最重要的引文，人工核实：
 
-- [ ] Visit DOI link and confirm it's the correct article
-- [ ] Check author names against the actual publication
-- [ ] Verify year matches publication date
-- [ ] Confirm journal/conference name is correct
-- [ ] Check that volume/pages match
+- [ ] 访问 DOI 链接，确认是对应的正确文章
+- [ ] 对照实际发表版本核查作者姓名
+- [ ] 核实年份与发表日期一致
+- [ ] 确认期刊/会议名称正确
+- [ ] 检查卷号/页码一致
 
-### Common Issues to Watch For
+### 常见问题清单
 
-**Missing Information**:
-- [ ] No DOI for papers published after 2000
-- [ ] Missing volume or page numbers for journal articles
-- [ ] Missing publisher for books
-- [ ] Missing conference location for proceedings
+**信息缺失**：
+- [ ] 2000 年以后发表的论文没有 DOI
+- [ ] 期刊文章缺卷号或页码
+- [ ] 图书缺出版商
+- [ ] 会议论文缺会议地点
 
-**Formatting Errors**:
-- [ ] Single hyphen in page ranges (123-145 → 123--145)
-- [ ] Ampersands in author lists (Smith & Jones → Smith and Jones)
-- [ ] Unprotected acronyms in titles (DNA → {DNA})
-- [ ] DOI includes URL prefix (https://doi.org/10.xxx → 10.xxx)
+**格式错误**：
+- [ ] 页码范围用了单连字符（123-145 → 123--145）
+- [ ] 作者列表中用了 &（Smith & Jones → Smith and Jones）
+- [ ] 标题中缩写词未加保护（DNA → {DNA}）
+- [ ] DOI 带有 URL 前缀（https://doi.org/10.xxx → 10.xxx）
 
-**Metadata Mismatches**:
-- [ ] Author names differ from publication
-- [ ] Year is online-first instead of print publication
-- [ ] Journal name abbreviated when it should be full
-- [ ] Volume/issue numbers swapped
+**元数据不匹配**：
+- [ ] 作者姓名与发表版本不符
+- [ ] 年份填的是 online-first 而非印刷版发表年份
+- [ ] 期刊名称用了缩写而非全称
+- [ ] 卷号/期号写反
 
-**Duplicates**:
-- [ ] Same paper cited with different citation keys
-- [ ] Preprint and published version both cited
-- [ ] Conference paper and journal version both cited
+**重复项**：
+- [ ] 同一篇论文用了不同的引文键
+- [ ] 预印本与正式发表版本同时被引用
+- [ ] 会议版本与期刊版本同时被引用
 
-## Field-Specific Checks
+## 领域专项检查
 
-### Biomedical Sciences
+### 生物医学科学
 
-- [ ] PubMed Central ID (PMCID) included when available
-- [ ] MeSH terms appropriate (if using)
-- [ ] Clinical trial registration number included (if applicable)
-- [ ] All references to treatments/drugs accurately cited
+- [ ] 可获得时包含 PubMed Central ID（PMCID）
+- [ ] MeSH 词使用得当（若使用 MeSH）
+- [ ] 包含临床试验注册号（若适用）
+- [ ] 所有涉及治疗/药物的引用都准确无误
 
-### Computer Science
+### 计算机科学
 
-- [ ] arXiv ID included for preprints
-- [ ] Conference proceedings properly cited (not just "NeurIPS")
-- [ ] Software/dataset citations include version numbers
-- [ ] GitHub links stable and permanent
+- [ ] 预印本包含 arXiv ID
+- [ ] 会议论文集引用规范（不只是写 "NeurIPS"）
+- [ ] 软件/数据集引用包含版本号
+- [ ] GitHub 链接稳定且为永久链接
 
-### General Sciences
+### 通用科学
 
-- [ ] Data availability statements properly cited
-- [ ] Retracted papers identified and removed
-- [ ] Preprints checked for published versions
-- [ ] Supplementary materials referenced if critical
+- [ ] 数据可用性声明引用规范
+- [ ] 已撤稿论文被识别并移除
+- [ ] 预印本已检查是否有正式发表版本
+- [ ] 关键补充材料已引用
 
-## Final Pre-Submission Steps
+## 最终提交前的步骤
 
-### 1 Week Before Submission
+### 提交前 1 周
 
-- [ ] Run full validation with DOI checking
-- [ ] Fix all errors and critical warnings
-- [ ] Manually verify top 10-20 most important citations
-- [ ] Check for any retracted papers
+- [ ] 运行带 DOI 检查的完整校验
+- [ ] 修复所有错误与严重警告
+- [ ] 人工核实最重要的 10-20 篇引文
+- [ ] 检查是否有撤稿论文
 
-### 3 Days Before Submission
+### 提交前 3 天
 
-- [ ] Re-run validation after any manual edits
-- [ ] Ensure all in-text citations have corresponding bibliography entries
-- [ ] Ensure all bibliography entries are cited in text
-- [ ] Check citation style matches journal requirements
+- [ ] 任何人工编辑之后重新运行校验
+- [ ] 确保所有正文引文都有对应的参考文献条目
+- [ ] 确保所有参考文献条目都在正文中被引用
+- [ ] 检查引文格式是否符合期刊要求
 
-### 1 Day Before Submission
+### 提交前 1 天
 
-- [ ] Final validation check
-- [ ] LaTeX compilation successful with no warnings
-- [ ] PDF renders all citations correctly
-- [ ] Bibliography appears in correct format
-- [ ] No placeholder citations (Smith et al. XXXX)
+- [ ] 最终校验
+- [ ] LaTeX 编译成功且没有警告
+- [ ] PDF 中所有引文渲染正确
+- [ ] 参考文献以正确格式呈现
+- [ ] 没有占位引文（Smith et al. XXXX）
 
-### Submission Day
+### 提交当天
 
-- [ ] One final validation run
-- [ ] No last-minute edits without re-validation
-- [ ] Bibliography file included in submission package
-- [ ] Figures/tables referenced in text match bibliography
+- [ ] 最后再跑一次校验
+- [ ] 没有未重新校验的临时改动
+- [ ] 参考文献文件已包含在提交包中
+- [ ] 正文提到的图表与参考文献一致
 
-## Quality Metrics
+## 质量指标
 
-### Excellent Bibliography
+### 优秀的参考文献
 
-- ✓ Assigned DOIs included; DOI-less publications explicitly verified
-- ✓ Zero validation errors
-- ✓ Zero missing required fields
-- ✓ Zero broken DOIs
-- ✓ Zero duplicates
-- ✓ Consistent formatting throughout
-- ✓ All citations manually spot-checked
+- ✓ 已分配 DOI 的都包含 DOI；无 DOI 的出版物已显式核实
+- ✓ 零校验错误
+- ✓ 零必填字段缺失
+- ✓ 零失效 DOI
+- ✓ 零重复项
+- ✓ 全文格式一致
+- ✓ 所有引文都经过人工抽查
 
-### Acceptable Bibliography
+### 可接受的参考文献
 
-- ✓ Available DOI metadata checked against authoritative records
-- ✓ Zero high-severity errors
-- ✓ Minor warnings only (e.g., missing recommended fields)
-- ✓ Key citations manually verified
-- ✓ Compilation succeeds without errors
+- ✓ 可获得的 DOI 元数据已对照权威记录核实
+- ✓ 零高严重性错误
+- ✓ 只有轻微警告（例如推荐的字段缺失）
+- ✓ 关键引文经过人工核实
+- ✓ 编译无错误通过
 
-### Needs Improvement
+### 需要改进
 
-- ✗ Missing DOIs for recent papers
-- ✗ High-severity validation errors
-- ✗ Broken or incorrect DOIs
-- ✗ Duplicate entries
-- ✗ Inconsistent formatting
-- ✗ Compilation warnings or errors
+- ✗ 近期论文缺 DOI
+- ✗ 存在高严重性的校验错误
+- ✗ DOI 失效或不正确
+- ✗ 存在重复条目
+- ✗ 格式不一致
+- ✗ 编译有警告或错误
 
-## Emergency Fixes
+## 紧急修复
 
-If you discover issues at the last minute:
+如果你在最后关头发现问题：
 
-### Broken DOI
+### DOI 失效
 
 ```bash
 # Find correct DOI
@@ -258,7 +262,7 @@ If you discover issues at the last minute:
 python scripts/extract_metadata.py --doi CORRECT_DOI
 ```
 
-### Missing Information
+### 信息缺失
 
 ```bash
 # Extract from DOI
@@ -271,7 +275,7 @@ python scripts/extract_metadata.py --pmid 12345678
 python scripts/extract_metadata.py --arxiv 2103.12345
 ```
 
-### Duplicate Entries
+### 重复条目
 
 ```bash
 # Auto-remove duplicates
@@ -280,7 +284,7 @@ python scripts/format_bibtex.py references.bib \
   --output fixed_references.bib
 ```
 
-### Formatting Errors
+### 格式错误
 
 ```bash
 # Auto-fix common issues
@@ -291,32 +295,32 @@ python scripts/format_bibtex.py references.bib \
 python scripts/validate_citations.py fixed_references.bib
 ```
 
-## Long-Term Best Practices
+## 长期最佳实践
 
-### During Research
+### 研究阶段
 
-- [ ] Add citations to bibliography file as you find them
-- [ ] Extract metadata immediately using DOI
-- [ ] Validate after every 10-20 additions
-- [ ] Keep bibliography file under version control
+- [ ] 发现一篇就往参考文献文件里加一条
+- [ ] 立即用 DOI 提取元数据
+- [ ] 每增加 10-20 条就校验一次
+- [ ] 把参考文献文件纳入版本控制
 
-### During Writing
+### 写作阶段
 
-- [ ] Cite as you write
-- [ ] Use consistent citation keys
-- [ ] Don't delay adding references
-- [ ] Validate weekly
+- [ ] 边写边引用
+- [ ] 使用一致的引文键
+- [ ] 不要拖延添加参考文献
+- [ ] 每周校验
 
-### Before Submission
+### 提交前
 
-- [ ] Allow 2-3 days for citation cleanup
-- [ ] Don't wait until the last day
-- [ ] Automate what you can
-- [ ] Manually verify critical citations
+- [ ] 为引文清理预留 2-3 天
+- [ ] 不要等到最后一天
+- [ ] 能自动化的都自动化
+- [ ] 人工核实关键引文
 
-## Tool Quick Reference
+## 工具速查
 
-### Extract Metadata
+### 提取元数据
 
 ```bash
 # From DOI
@@ -330,7 +334,7 @@ python scripts/extract_metadata.py \
   --output references.bib
 ```
 
-### Validate
+### 校验
 
 ```bash
 # Basic validation
@@ -345,7 +349,7 @@ python scripts/validate_citations.py references.bib \
   --verbose
 ```
 
-### Format and Clean
+### 格式化与清理
 
 ```bash
 # Format and fix issues
@@ -359,27 +363,26 @@ python scripts/format_bibtex.py references.bib \
   --output clean_refs.bib
 ```
 
-## Summary
+## 摘要
 
-**Minimum Requirements**:
-1. Run `format_bibtex.py --deduplicate`
-2. Run `validate_citations.py`
-3. Fix all errors
-4. Compile successfully
+**最低要求**：
+1. 运行 `format_bibtex.py --deduplicate`
+2. 运行 `validate_citations.py`
+3. 修复所有错误
+4. 编译成功
 
-**Recommended**:
-1. Format, deduplicate, and sort
-2. Validate with `--check-dois`
-3. Fix all errors and warnings
-4. Manually verify top citations
-5. Re-validate after fixes
+**推荐做法**：
+1. 格式化、去重并排序
+2. 用 `--check-dois` 校验
+3. 修复所有错误与警告
+4. 人工核实重点引文
+5. 修复后重新校验
 
-**Best Practice**:
-1. Validate throughout research process
-2. Use automated tools consistently
-3. Keep bibliography clean and organized
-4. Document any special cases
-5. Final validation 1-3 days before submission
+**最佳实践**：
+1. 在研究全程中做校验
+2. 持续一致地使用自动化工具
+3. 保持参考文献整洁有序
+4. 记录任何特殊情况
+5. 提交前 1-3 天做最终校验
 
-**Remember**: Citation errors reflect poorly on your scholarship. Taking time to ensure accuracy is worthwhile!
-
+**记住**：引文错误会让你的学术声誉受损。花时间确保准确是值得的！

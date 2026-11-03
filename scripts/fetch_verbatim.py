@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """按 manifest.json 的 verbatim 清单，从上游原样抓取非翻译文件（代码/样式/数据/未译散文）。
 
+注：已译散文（references/*.md 等）登记在 translated_prose 清单，不在本脚本处理范围，
+不会被自动覆盖；其上游变更由 sync_daily.py 转重译工单。
+
 原则（PRINCIPLES #11）：收录一个 Skill = SKILL.md（翻译）+ 目录内被引用文件（原样复制，逐字节一致）。
 代码、样式、数据文件永不翻译。同步时重跑本脚本即可刷新所有 verbatim 文件。
 

@@ -1,156 +1,138 @@
-# Factorial and Design-of-Experiments (DOE)
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/experimental-design/references/factorial_and_doe.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When several factors might affect a response, testing them **one factor at a time
-(OFAT)** is both wasteful and blind to interactions. Factorial designs vary factors
-*together*, so the appropriate full design separates main effects and interactions;
-reduced designs trade some of that information for fewer runs. This file covers the family of DOE designs and the
-concepts (resolution, aliasing) needed to read them. Generate them with
-`scripts/doe_designs.py`.
+# 析因设计与实验设计（DOE）
 
-## Table of contents
-- [Why factorial beats OFAT](#why-factorial-beats-ofat)
-- [Full factorial (2^k)](#full-factorial)
-- [Fractional factorial (2^(k-p))](#fractional-factorial)
-- [Resolution and aliasing](#resolution-and-aliasing)
-- [Screening designs (Plackett-Burman)](#screening-designs)
-- [Response-surface designs](#response-surface-designs)
-- [Space-filling designs](#space-filling-designs)
-- [Choosing a design](#choosing-a-design)
+当多个因素可能影响某个响应时，**每次只测一个因素（OFAT）**既浪费又对交互作用
+视而不见。析因设计让因素*同时*变化，因此相应的完整设计能分离主效应与交互作用；
+缩减设计则用部分信息换取更少的运行次数。本文件覆盖 DOE 设计这一族，以及读懂它们
+所需的概念（分辨度、混杂）。用 `scripts/doe_designs.py` 生成这些设计。
 
-## Why factorial beats OFAT
+## 目录
+- [析因为何胜过 OFAT](#析因为何胜过-ofat)
+- [完全析因（2^k）](#完全析因)
+- [部分析因（2^(k-p)）](#部分析因)
+- [分辨度与混杂](#分辨度与混杂)
+- [筛选设计（Plackett-Burman）](#筛选设计)
+- [响应曲面设计](#响应曲面设计)
+- [空间填充设计](#空间填充设计)
+- [如何选择设计](#如何选择设计)
 
-Vary one factor while holding others fixed and you (1) spend runs inefficiently and
-(2) can never see **interactions** — cases where the effect of A depends on the level
-of B, which are the rule, not the exception, in real systems. A factorial varies all
-factors simultaneously across runs; each effect is estimated using *all* the data, so
-a 2^k factorial is more precise than k separate OFAT studies of the same size.
+## 析因为何胜过 OFAT
 
-## Full factorial
+固定其他因素、只变一个，你会 (1) 低效地消耗运行次数，(2) 永远看不到**交互作用** —
+即 A 的效应取决于 B 的水平的情形，而在真实系统中这是常态而非例外。析因设计让所有
+因素在运行之间同时变化；每个效应都借助*全部*数据估计，所以规模相同的 2^k 析因
+比 k 次独立的 OFAT 研究更精确。
 
-A **2^k** design runs every combination of k factors at two levels (low/high, coded
-−1/+1). It estimates all k main effects and all 2^k − k − 1 interactions. With one observation per combination, the
-model containing every effect plus an intercept is saturated: it has zero residual
-degrees of freedom. Replicate independently or pre-specify a defensible reduced
-model before claiming standard errors or significance.
+## 完全析因
 
-- Runs = 2^k: 8 for 3 factors, 16 for 4, 32 for 5. Practical to ~5 factors.
-- Use when you have a handful of factors and want a full picture including
-  interactions.
-- `two_level_factorial({"temp": (20,60), "conc": (1,10), "pH": (6,8)})` → 8 runs.
-- For factors with more than two levels, use `full_factorial` with explicit level
-  lists (runs = product of level counts — grows fast).
+**2^k** 设计运行 k 个因素在两个水平（低/高，编码为 −1/+1）上的全部组合。它估计
+全部 k 个主效应和全部 2^k − k − 1 个交互作用。每个组合只有一个观测时，包含所有
+效应加截距的模型是饱和的：残差自由度为零。在宣称标准误或显著性之前，要么做
+独立重复，要么预先指定一个站得住脚的缩减模型。
 
-Add **center points** (all factors at their midpoint) to a two-level design to get a
-cheap check for curvature: if the center response departs from the factorial average,
-a linear model is inadequate and you need a response-surface design.
+- 运行数 = 2^k：3 因素 8 次，4 因素 16 次，5 因素 32 次。到约 5 个因素都还算实际。
+- 当你有若干因素、且希望得到包含交互作用的完整图景时使用。
+- `two_level_factorial({"temp": (20,60), "conc": (1,10), "pH": (6,8)})` → 8 次运行。
+- 对超过两个水平的因素，用 `full_factorial` 并显式给出水平列表（运行数 = 各水平数
+  的乘积 — 增长很快）。
 
-## Fractional factorial
+给两水平设计加上**中心点**（所有因素取中点），可以低成本检查曲率：如果中心响应
+偏离析因平均值，说明线性模型不够用，需要改用响应曲面设计。
 
-When k is large, 2^k is too many runs — but most high-order interactions are
-negligible (the *sparsity-of-effects* principle). A **2^(k−p)** fractional factorial
-runs a carefully chosen fraction (1/2, 1/4, ...) of the full design, trading the
-ability to estimate some interactions for far fewer runs.
+## 部分析因
 
-- `fractional_factorial(factors, generator="a b c abc")` builds a half-fraction of 4
-  factors in 8 runs. The generator string (Yates notation) assigns each factor to a
-  column; a multi-letter token aliases that factor with an interaction.
-- The price is **aliasing**: some effects become indistinguishable. You must know
-  which.
+k 较大时 2^k 的运行次数太多 — 但多数高阶交互作用可以忽略（*效应稀疏* 原则）。
+**2^(k−p)** 部分析因只运行精心挑选的一部分（1/2、1/4、…）完整设计，用牺牲
+部分交互作用的可估计性换取大幅减少的运行次数。
 
-## Resolution and aliasing
+- `fractional_factorial(factors, generator="a b c abc")` 构建 4 因素的半分数设计，
+  共 8 次运行。生成元字符串（Yates 记法）把每个因素分配到一列；多字母记号表示
+  该因素与一个交互作用混杂。
+- 代价是**混杂**：有些效应变得无法区分。你必须知道是哪些。
 
-**Aliasing** (confounding) means two effects are estimated by the same contrast — the
-data cannot separate them. Which effects are aliased is summarized by the design's
-**resolution**:
+## 分辨度与混杂
 
-| Resolution | Aliasing | Interpretation |
+**混杂**指两个效应由同一个对比量估计 — 数据无法把它们分开。哪些效应被混杂，
+由设计的**分辨度**概括：
+
+| 分辨度 | 混杂情况 | 解读 |
 |------------|----------|----------------|
-| **III** | main effects aliased with 2-factor interactions | Screening only; a "significant" main effect might be an interaction |
-| **IV** | main effects clear of 2FI, but 2FIs aliased with each other | Main effects require negligible aliased 3FI+ |
-| **V** | main effects and 2FIs all clear of each other (aliased with 3FI+) | Main/2FI separation assumes negligible aliased higher effects |
+| **III** | 主效应与二阶交互作用混杂 | 仅用于筛选；一个"显著"的主效应可能其实是交互作用 |
+| **IV** | 主效应不受二阶交互作用混杂，但二阶交互作用彼此混杂 | 主效应的解读以被混杂的三阶及以上交互作用可忽略为前提 |
+| **V** | 主效应与二阶交互作用彼此都不混杂（仅与三阶及以上混杂） | 主效应 / 二阶交互作用的分离以被混杂的更高阶效应可忽略为前提 |
 
-Always state the resolution and inspect the alias structure before interpreting a
-fractional design. Concluding "factor C has no effect" is unsafe if C is aliased with
-a real interaction (it could cancel out). When in doubt, choose a higher-resolution
-generator (more runs) or add runs to **de-alias** (fold-over / augment the design).
+解读部分析因设计前，务必说明分辨度并检查混杂结构。若 C 与某个真实交互作用混杂
+（可能被抵消掉），断言"因素 C 没有效应"就不安全。拿不准时，选更高分辨度的
+生成元（更多运行），或追加运行来做**去混杂**（折叠 / 扩充设计）。
 
-## Screening designs
+## 筛选设计
 
-When the goal is to **find the vital few** factors out of many (5, 10, 20+), use a
-screening design that estimates main effects only, as cheaply as possible:
-- **Plackett-Burman** (`plackett_burman`): runs = the next multiple of 4 above k
-  (e.g. 12 runs for up to 11 factors). Resolution III — two-factor interactions are
-  often confounded with main effects. Use for triage: run it, keep the few
-  factors with large effects, then study those with a full or higher-resolution
-  factorial.
-- Resolution III fractional factorials serve the same purpose.
+目标是**从众多因素（5 个、10 个、20+ 个）中找出关键少数**时，用只估计主效应、
+且成本尽可能低的筛选设计：
+- **Plackett-Burman**（`plackett_burman`）：运行数 = 大于 k 的下一个 4 的倍数
+  （例如 11 个因素用 12 次运行）。分辨度 III — 二阶交互作用常与主效应混杂。
+  用于分诊：先跑一遍，留下效应大的少数因素，再用完全析因或更高分辨度的析因
+  研究这些因素。
+- 分辨度 III 的部分析因起同样作用。
 
-The current `pydoe==1.5.0` implementation supports run counts in the families
-`2^a`, `12*2^a`, and `20*2^a`. It can reject a requested factor count whose next
-multiple of four is unsupported (25 factors require 28 runs and raise
-`ValueError`). Inspect the actual matrix before budgeting; choose a supported
-design or a suitable fractional factorial. Reduced subsets may have better
-aliasing properties than the full saturated design, so inspect actual aliases.
-See the [current factorial API](https://pydoe.github.io/pydoe/reference/factorial/).
+当前 `pydoe==1.5.0` 实现支持的运行次数族为 `2^a`、`12*2^a` 和 `20*2^a`。
+若请求的因素数对应的下一个 4 的倍数不在支持范围内，它会报错（25 个因素需要
+28 次运行，会抛出 `ValueError`）。做预算前先检查实际矩阵；选一个受支持的设计，
+或改用合适的部分析因。缩减子集可能有比完整饱和设计更好的混杂性质，所以要看
+实际的混杂关系。参见
+[当前的析因 API](https://pydoe.github.io/pydoe/reference/factorial/)。
 
-Screen first, optimize later — don't try to learn interactions and find the optimum
-in one cheap design.
+先筛选，后优化 — 不要指望在一个廉价设计里同时摸清交互作用并找到最优点。
 
-## Response-surface designs
+## 响应曲面设计
 
-Two-level designs fit only a flat (linear + interaction) model; they cannot locate an
-interior optimum or describe **curvature**. To fit a quadratic and optimize, use a
-response-surface methodology (RSM) design over continuous factors:
+两水平设计只能拟合平面型（线性 + 交互）模型；它无法定位内部最优点，也无法描述
+**曲率**。要拟合二次模型并做优化，就对连续因素使用响应曲面方法（RSM）设计：
 
-- **Central composite design (CCD)** (`central_composite`): a 2^k factorial + center
-  points + axial ("star") points. The axial points add the levels needed to estimate
-  quadratic terms. With `face="circumscribed"` (default) the axial points sit
-  *outside* the factorial box (so actual factor levels exceed your stated low/high);
-  use `face="inscribed"` or `"faced"` to keep everything within the original range.
-- **Box-Behnken** (`box_behnken`, needs ≥3 factors): a quadratic design that avoids
-  the extreme all-low/all-high corners — useful when those corners are unsafe,
-  expensive, or infeasible. Compare actual run counts and the same center-point
-  replication: Box-Behnken is not always smaller (for five factors, its 40
-  non-center runs exceed a half-fraction CCD with 26). The bundled CCD wrapper
-  uses the full factorial and does not build that half-fraction.
-  See [NIST response-surface comparisons](https://www.itl.nist.gov/div898/handbook/pri/section3/pri3363.htm).
+- **中心复合设计（CCD）**（`central_composite`）：2^k 析因 + 中心点 + 轴向
+  （"星形"）点。轴向点补上了估计二次项所需的水平。`face="circumscribed"`（默认）
+  时轴向点位于析因盒*之外*（实际因素水平会超出你声明的低/高值）；用
+  `face="inscribed"` 或 `"faced"` 可把所有点留在原范围内。
+- **Box-Behnken**（`box_behnken`，需 ≥3 个因素）：一种避免全低/全高极端角点的
+  二次设计 — 当那些角点不安全、昂贵或不可行时有用。要比较实际运行次数以及
+  中心点的重复方式：Box-Behnken 未必更小（五个因素时，它的 40 次非中心运行
+  多于 26 次运行的半分数 CCD）。随附的 CCD 包装器使用完全析因，并不构建那种
+  半分数设计。
+  参见 [NIST 响应曲面比较](https://www.itl.nist.gov/div898/handbook/pri/section3/pri3363.htm)。
 
-The wrappers default to a single center run (`center=(0, 1)` for CCD;
-`center=1` for Box-Behnken). That supplies no pure-error replication. Pre-plan
-independent replicate runs, inspect quadratic-model rank, and budget lack-of-fit
-assessment. CCD `center` counts refer to factorial and axial construction blocks;
-the wrapper returns a globally shuffled table without block IDs. Preserve or
-construct those IDs before using a physically blocked experiment.
+这些包装器默认只有一次中心运行（CCD 为 `center=(0, 1)`；Box-Behnken 为 `center=1`），
+不提供纯误差重复。要预先规划独立重复运行，检查二次模型的秩，并为失拟评估
+留出预算。CCD 的 `center` 计数指的是析因与轴向构造块；包装器返回的是全局
+打乱后的表格，不含块 ID。在用于物理区组实验前，保留或自行构造这些 ID。
 
-Workflow: screen → factorial (find important factors & rough region) → response
-surface (model curvature, locate optimum), often moving the experimental region
-between steps (path of steepest ascent).
+工作流：筛选 → 析因（找出重要因素和大致区域）→ 响应曲面（建模曲率、定位最优点），
+各步之间常常还会移动实验区域（最速上升路径）。
 
-## Space-filling designs
+## 空间填充设计
 
-For **computer experiments / simulations** (deterministic or expensive models) where
-space coverage may be the main objective, you want even coverage of a
-high-dimensional input space:
-- **Latin hypercube** (`latin_hypercube`): each factor's range is divided into
-  n_samples equal bins, sampled once each, arranged to spread points apart
-  (`criterion="maximin"`). Gives good coverage with relatively few points and is the
-  common input design for surrogate/emulator modeling. A generic LHS alone is not
-  a Saltelli/Sobol sensitivity estimator design. Stochastic simulations may still
-  need replicated random seeds; experimental batches may still need blocking.
+做**计算机实验 / 模拟**（确定性模型或昂贵模型）时，若空间覆盖是主要目标，
+你需要对高维输入空间做均匀覆盖：
+- **拉丁超立方**（`latin_hypercube`）：每个因素的范围被分成 n_samples 个等分箱，
+  各取样一次，再排布成使各点尽量分散（`criterion="maximin"`）。用相对少的点
+  就能获得良好覆盖，是代理模型 / 仿真器建模常用的输入设计。通用的 LHS 本身
+  不是 Saltelli/Sobol 灵敏度估计器的设计。随机模拟仍可能需要重复随机种子；
+  试验批次仍可能需要区组化。
 
-## Choosing a design
+## 如何选择设计
 
-| Goal | Factors | Design | Script function |
+| 目标 | 因素数 | 设计 | 脚本函数 |
 |------|---------|--------|-----------------|
-| Screen many factors | 5–20+ | Plackett-Burman / Res III | `plackett_burman` |
-| Main effects, some interactions, few runs | 4–8 | Res IV/V fractional | `fractional_factorial` |
-| All effects + interactions | 2–5 | Full 2^k factorial | `two_level_factorial` |
-| Multi-level categorical | few | Full factorial | `full_factorial` |
-| Optimize a response (curvature) | 2–5 | Central composite / Box-Behnken | `central_composite`, `box_behnken` |
-| Cover a simulation input space | any | Latin hypercube | `latin_hypercube` |
+| 筛选众多因素 | 5–20+ | Plackett-Burman / 分辨度 III | `plackett_burman` |
+| 主效应 + 少量交互作用，运行次数少 | 4–8 | 分辨度 IV/V 部分析因 | `fractional_factorial` |
+| 全部效应 + 交互作用 | 2–5 | 完全 2^k 析因 | `two_level_factorial` |
+| 多水平分类因素 | 少量 | 完全析因 | `full_factorial` |
+| 优化某个响应（含曲率） | 2–5 | 中心复合 / Box-Behnken | `central_composite`, `box_behnken` |
+| 覆盖模拟的输入空间 | 任意 | 拉丁超立方 | `latin_hypercube` |
 
-For physical experiments, **randomize run order within the allowed blocks** to
-avoid systematic alignment with drift. DOE wrappers default to a global shuffle;
-Latin hypercube defaults to `randomize=False` and already has stochastic sample
-placement. Add replicated center points to two-level continuous designs for an
-aggregate curvature check; they cannot separate all pure quadratic coefficients.
+对于物理实验，要在**允许的区组内部随机化运行顺序**，避免与漂移形成系统性对齐。
+DOE 包装器默认全局打乱；拉丁超立方默认 `randomize=False`，本身已带随机化的
+样本布点。给两水平连续设计加上重复的中心点，可做整体曲率检查；但它们无法分离
+所有纯二次项系数。

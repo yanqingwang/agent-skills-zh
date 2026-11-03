@@ -1,93 +1,87 @@
-# Evidence and Provenance Workflow
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/evidence_workflow.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Core separation
+# 证据与溯源工作流
 
-Drafting and evidence verification are different activities.
+## 核心区分
 
-- **Drafting** organizes language from already recorded evidence IDs. A draft may remain
-  incomplete and uncertain.
-- **Verification** requires an accountable human to open the source, confirm the exact
-  support and locator, check bibliographic metadata, and record who verified it and
-  when.
-- A fluent sentence is not evidence. Search snippets, generated summaries, memory, and
-  another paper's reference list are discovery aids, not verified support.
+起草与证据核验是两种不同的活动。
 
-## Registries
+- **起草**依据已经登记在案的证据 ID 组织文字。草稿允许保持不完整与不确定。
+- **核验**要求有可问责的人亲自打开来源，确认确切的支撑内容与定位符，核对文献元数据，
+  并记录由谁在何时完成了核验。
+- 语句通顺不等于证据。搜索片段、生成的摘要、记忆以及他人论文的参考文献表属于
+  发现线索的辅助手段，不能充当已核验的支撑。
 
-The scaffold creates five linked records:
+## 登记簿
 
-1. `source_manifest.json` assigns each source an `E` ID and records identifiers,
-   location, confidentiality class, and verification state.
-2. `claims.csv` assigns each claim a `C` ID, stores a hash rather than raw claim text,
-   and maps the claim to one or more verified `E` IDs.
-3. `consistency_manifest.json` binds numeric facts, methods, outcomes, analysis intent,
-   units, denominators, sample sizes, and result locations.
-4. `authorship.json` records human authorship criteria, CRediT roles, accountability,
-   declarations, and AI use.
-5. `reporting_coverage.json` records high-level coverage without scoring or certifying
-   the manuscript.
+脚手架会创建五条互相链接的记录：
 
-These registries contain metadata, not full source documents. Do not paste unpublished
-manuscripts, peer-review files, PHI, sensitive datasets, proprietary content, or source
-documents into them.
+1. `source_manifest.json` 为每个来源分配一个 `E` ID，并记录标识符、位置、
+   保密分级与核验状态。
+2. `claims.csv` 为每条主张分配一个 `C` ID，存储哈希而非主张原文，
+   并把该主张映射到一个或多个已核验的 `E` ID。
+3. `consistency_manifest.json` 把数值事实、方法、结局、分析意图、单位、分母、
+   样本量与结果位置绑定在一起。
+4. `authorship.json` 记录人类署名标准、CRediT 角色、问责关系、各项声明与 AI 使用情况。
+5. `reporting_coverage.json` 记录高层次的覆盖情况，不作评分，也不为稿件背书。
 
-## Claim markers
+这些登记簿保存的是元数据，不是完整的来源文档。不要把未发表的稿件、
+同行评审文件、PHI、敏感数据集、专有内容或来源文档粘贴进去。
 
-Append machine-readable markers to every factual or numeric assertion while drafting:
+## 主张标记
+
+起草期间，请为每一条事实性或数值性的断言追加机器可读的标记：
 
 ```text
 [claim:C001] [evidence:E001,E002]
 ```
 
-An alternative citation marker is `[@E001]`. Keep the claim and evidence markers on the
-same physical line until the audit passes. Use exactly one claim marker per line.
-Each line can express a composite claim only when its evidence supports every part.
-A final publisher conversion may replace evidence IDs with rendered citations only
-after preserving an auditable mapping.
+另一种引文标记写法是 `[@E001]`。在审计通过之前，请让主张标记与证据标记
+保持在同一个物理行上。每行只放一个主张标记。
+只有当证据支撑复合主张的每一部分时，一行才可以表达复合主张。
+最终的出版方格式转换只有在保留了可审计的映射关系之后，才可以把证据 ID
+替换为排版后的引文。
 
-## Verification procedure
+## 核验流程
 
-For each source:
+对每个来源：
 
-1. Open the authoritative source or record.
-2. Confirm title, author or organization, publication state, year, and identifiers.
-3. Record the exact supporting location, such as section, page, table, figure, or
-   registry field.
-4. Confirm that the source supports the claim's direction, population, intervention or
-   exposure, outcome, time point, and uncertainty.
-5. Record caveats, retractions, corrections, expressions of concern, or version status.
-6. Mark the source verified only after a named human completes the check.
+1. 打开权威来源或权威记录。
+2. 确认标题、作者或机构、发表状态、年份与各类标识符。
+3. 记录确切的支撑位置，例如章节、页码、表格、图或登记簿字段。
+4. 确认来源在方向、人群、干预或暴露、结局、时间点与不确定性上支撑该主张。
+5. 记录注意事项、撤稿、勘误、关切声明或版本状态。
+6. 只有在具名的人完成检查之后，才把该来源标记为已核验。
 
-For each claim:
+对每条主张：
 
-1. Classify it as factual, numeric, method, result, interpretive, or declaration.
-2. Remove `[claim:C...]`, `[evidence:E...]`, and `[@E...]` markers from the
-   entire physical line, collapse whitespace with `" ".join(text.split())`, then
-   SHA-256 the UTF-8 bytes and store the lowercase hexadecimal digest in
-   `claims.csv`. Preserve case, punctuation, and other Markdown syntax. The bundled
-   `audit_claims.claim_text_hash` function implements this exact normalization.
-3. Map it to verified evidence IDs.
-4. Record uncertainty and whether the analysis was confirmatory, exploratory,
-   descriptive, or not applicable.
-5. Keep unsupported or conflicting claims out of submission-ready prose. If useful,
-   retain them in a clearly marked unresolved-issues log.
+1. 把它归类为事实性、数值性、方法、结果、解释性或声明类。
+2. 从整个物理行中移除 `[claim:C...]`、`[evidence:E...]` 与 `[@E...]` 标记，
+   用 `" ".join(text.split())` 折叠空白，对 UTF-8 字节计算 SHA-256，
+   并把小写十六进制摘要存入 `claims.csv`。大小写、标点与其他 Markdown 语法均予保留。
+   随附的 `audit_claims.claim_text_hash` 函数实现的正是这套归一化逻辑。
+3. 把它映射到已核验的证据 ID。
+4. 记录不确定性，并说明该分析属于确证性、探索性、描述性还是不适用。
+5. 把缺乏支撑或相互冲突的主张排除在可投稿的正文之外。如果有必要，
+   请把它们保留在明确标注的未解决问题日志中。
 
-## Drafting gates
+## 起草关卡
 
-Do not infer or complete missing:
+不要推断或补全下列缺失内容：
 
-- citations, identifiers, quotations, or source locators;
-- data values, denominators, units, sample sizes, or statistical results;
-- methods, protocol details, analysis decisions, or deviations;
-- approvals, consent, registrations, author contributions, conflicts, funding, or
-  availability statements.
+- 引文、标识符、引语或来源定位符；
+- 数据值、分母、单位、样本量或统计结果；
+- 方法、方案细节、分析决策或偏离之处；
+- 审批、知情同意、注册、作者贡献、利益冲突、资助或可用性声明。
 
-Use explicit missing states. Preserve negative, null, adverse, unexpected, and
-inconclusive findings. Never convert absence of evidence into evidence of no effect.
+使用明确的缺失状态。保留阴性、零结果、不良、意外与不确定的发现。
+绝不把「没有证据」改写成「证明没有效应」。
 
-## Final audit
+## 最终审计
 
-Run:
+运行：
 
 ```bash
 python3 scripts/validate_manifest.py source_manifest.json --kind source --require-verified
@@ -96,15 +90,14 @@ python3 scripts/check_consistency.py consistency_manifest.json
 python3 scripts/check_references.py source_manifest.json
 ```
 
-Tool output contains IDs and line numbers, not manuscript or source text. A passing
-machine audit supports review; it does not replace human scientific judgment.
+工具输出包含 ID 与行号，不含稿件原文或来源文本。机器审计通过可以为人工复核
+提供支持，但不能替代人类的科学判断。
 
-The claim audit compares that digest with the current manuscript line and rejects
-changed text or multiple claim markers on a line. Re-verify the evidence fit before
-replacing an old digest. A matching hash detects text changes; it proves neither
-scientific truth nor that a human performed the recorded verification. Hashes are
-not encryption and do not anonymize predictable sensitive statements.
+主张审计会把该摘要与当前稿件行比对，并拒绝文本已变动或一行含多个主张标记的情况。
+替换旧摘要之前，请重新核验证据是否仍然匹配。摘要一致只能检出文本变动，
+既不能证明科学真实性，也不能证明确实有人执行了所记录的核验。
+哈希不是加密手段，也无法为可预测的敏感陈述提供匿名化保护。
 
-The lightweight audit skips headings, comment-start lines, and fenced code; numeric
-text outside these regions must be tagged. It cannot identify every untagged
-non-numeric assertion or inspect the contents of linked files. Review those manually.
+轻量审计会跳过标题、以注释符号开头的行以及围栏代码块；这些区域之外的数值文本
+必须带标记。它无法识别每一处未加标记的非数值断言，也无法检查被链接文件的内容。
+这些部分需要人工复核。

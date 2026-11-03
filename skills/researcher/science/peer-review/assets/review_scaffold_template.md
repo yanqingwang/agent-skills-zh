@@ -1,68 +1,72 @@
-# Peer-review working draft — {{REVIEW_ID}}
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/peer-review/assets/review_scaffold_template.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-> Private working document. Human review, policy checks, and factual verification are required. Do not submit this scaffold with unresolved placeholders. Do not make or announce an editorial decision.
+# 同行评议工作稿 — {{REVIEW_ID}}
 
-## Intake record
+> 私密工作文档。必须经过人工评审、政策核查与事实核验。不要在占位符尚未替换的情况下提交本模板。不要作出或宣布任何编辑决定。
 
-- Reviewer capacity: `{{REVIEWER_CAPACITY}}`
-- Peer-review model: `{{PEER_REVIEW_MODEL}}`
-- Declared processing plan: `{{AI_PLAN}}`
-- Manuscript text is not embedded by the generator.
-- Reconfirm conflicts, competence limits, tool use, confidentiality, and deletion or retention obligations before submission.
+## 受理记录
 
-# Comments to authors
+- 评审人承担能力：`{{REVIEWER_CAPACITY}}`
+- 同行评议模式：`{{PEER_REVIEW_MODEL}}`
+- 已声明的处理方案：`{{AI_PLAN}}`
+- 生成器不会内嵌稿件正文。
+- 提交之前，请再次确认利益冲突、能力边界、工具使用、保密要求，以及删除或留存义务。
 
-## Evidence-bounded summary
+# 给作者的评语
 
-[Write a neutral summary of the question, design, and principal claims. Do not invent findings or imply that unperformed analyses were run.]
+## 有证据支撑的摘要
 
-## Strengths
+[客观地概述问题、设计与主要主张。不要编造发现，也不要暗示做过实际并未开展的分析。]
 
-[Identify specific strengths supported by a manuscript location or supplied material.]
+## 优点
 
-## Major comments
+[指出有稿件位置或所提供材料支撑的具体优点。]
 
-### Major comment M1
+## 主要意见
 
-- Location: [Section, page, line, figure, table, or claim ID]
-- Observation: [State what is reported, missing, inconsistent, or unsupported]
-- Evidence or criterion: [Cite manuscript evidence, a method principle, venue policy, or reporting item]
-- Why it matters: [Explain the consequence for validity, interpretation, reproducibility, ethics, or reporting]
-- Requested action: [Request clarification, correction, analysis, evidence, or a bounded revision]
+### 主要意见 M1
 
-## Minor comments
+- 位置：[章节、页码、行号、图、表或主张 ID]
+- 观察：[说明报告了什么、缺少什么、存在什么不一致或缺乏支撑]
+- 证据或依据：[引用稿件中的证据、方法学原则、出版方政策或报告条目]
+- 为何重要：[说明对有效性、解释、可复现性、伦理或报告质量的影响]
+- 要求的动作：[要求澄清、更正、分析、补充证据或作有限幅度的修改]
 
-### Minor comment m1
+## 次要意见
 
-- Location: [Section, page, line, figure, table, or reference ID]
-- Observation: [State the local clarity, consistency, citation, figure, or reporting issue]
-- Evidence or criterion: [Identify the relevant evidence or criterion]
-- Why it matters: [Explain the reader-facing consequence]
-- Requested action: [Request a specific correction or clarification]
+### 次要意见 m1
 
-## Methods, statistics, and reproducibility
+- 位置：[章节、页码、行号、图、表或参考文献 ID]
+- 观察：[说明在清晰度、一致性、引用、图表或报告方面的问题]
+- 证据或依据：[指明相关的证据或依据]
+- 为何重要：[说明对读者造成的影响]
+- 要求的动作：[要求具体更正或澄清]
 
-[Summarize only assessed issues. Distinguish reporting gaps from design or analysis concerns and state where specialist review is needed.]
+## 方法、统计与可复现性
 
-## Ethics, transparency, figures, tables, and citations
+[只总结确实评估过的问题。区分报告层面的缺口与设计或分析层面的隐患，并指出哪些地方需要专项评审。]
 
-[Record specific, evidence-backed issues. Do not allege misconduct; route credible integrity concerns through the journal process.]
+## 伦理、透明度、图表与引用
 
-## Limitations of this review
+[记录具体且有证据支撑的问题。不要指控学术不端；有可信度的诚信问题应走期刊的既定流程。]
 
-[State competence limits, unavailable materials, analyses not independently reproduced, and unresolved uncertainty.]
+## 本次评审的局限
 
-# Confidential comments to editor
+[说明能力边界、无法获取的材料、未独立复现的分析，以及尚未解决的疑点。]
 
-> Keep this channel separate from comments to authors. Follow the venue policy. Do not place ordinary scientific criticism only here.
+# 给编辑的保密意见
 
-## Reviewer disclosures
+> 本渠道须与给作者的评语分开。遵循出版方政策。不要把常规的学术批评只写在这里。
 
-- Conflicts and editor clearance: [State the disclosed status without unnecessary personal detail]
-- Competence limits or specialist review needed: [State areas]
-- Assistance or tools used and required disclosure: [State policy-compliant details]
-- Confidentiality or retention issue: [State any unresolved process concern]
+## 评审人声明
 
-## Editorial-process or integrity concerns
+- 利益冲突与编辑许可：[说明已披露的状态，不带不必要的个人信息]
+- 能力边界或需要专项评审之处：[说明相关领域]
+- 使用的协助或工具以及必须披露的事项：[说明符合政策要求的细节]
+- 保密或留存方面的问题：[说明任何尚未解决的流程隐患]
 
-[Describe only substantiated process, ethics, confidentiality, or integrity concerns and their evidence locations. Avoid accusations and avoid an editorial outcome.]
+## 编辑流程或诚信方面的疑虑
+
+[只描述有实据支撑的流程、伦理、保密或诚信问题及其证据位置。避免指控，也不要预设编辑结果。]

@@ -75,7 +75,8 @@ def main() -> int:
     m = json.loads((ROOT / "data/manifest.json").read_text(encoding="utf-8"))
     rows = []
     for up in m["upstreams"]:
-        for e in up.get("files", []):
+        # 翻译件 = SKILL.md/Agent 定义 + 已译散文（references/*.md 等）
+        for e in up.get("files", []) + up.get("translated_prose", []):
             p = ROOT / e["local"]
             if not p.exists():
                 continue

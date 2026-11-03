@@ -1,184 +1,187 @@
-# Chemistry and Molecular Formats
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/exploratory-data-analysis/references/chemistry_molecular_formats.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Reviewed:** 2026-09-30
-**Executable scope:** No chemistry-native format has a bundled parser. This file
-is a reference-only routing guide, not a support claim.
+# 化学与分子格式
 
-## Capability boundary
+**审阅时间：** 2026-09-30
+**可执行范围：** 仓库内未捆绑任何化学原生格式的解析器。本文件
+只是一份仅作参考的路由指南，不代表支持声明。
 
-| Format family | Bundled chemistry inspection | Required approach |
+## 能力边界
+
+| 格式族 | 仓库内自带化学检查 | 所需做法 |
 |---|---|---|
-| PDB, PDBx/mmCIF/CIF | No | Dictionary/version-aware structural tooling |
-| Molfile/SDF, SMILES, XYZ | No | Chemistry-aware parser with explicit sanitization policy |
-| DCD/XTC/TRR and topology files | No | Topology-aware trajectory tooling |
-| Gaussian/QM outputs, cube grids | No | Program/version-aware parser |
-| Pickle/joblib/dill molecule/model files | **Never** | Obtain a non-executable interchange export |
-| Genuine CSV/TSV/JSON/NPY/NPZ/HDF5 exports | General inspector only | Apply the exact general-format capability; no chemical semantics are inferred |
+| PDB、PDBx/mmCIF/CIF | 不支持 | 区分字典/版本的结构工具链 |
+| Molfile/SDF、SMILES、XYZ | 不支持 | 带显式净化策略的化学感知解析器 |
+| DCD/XTC/TRR 与拓扑文件 | 不支持 | 感知拓扑的轨迹工具链 |
+| Gaussian/QM 输出、cube 网格 | 不支持 | 区分程序/版本的解析器 |
+| Pickle/joblib/dill 分子/模型文件 | **绝不** | 改用不可执行的交换格式导出 |
+| 真正的 CSV/TSV/JSON/NPY/NPZ/HDF5 导出 | 仅通用检查器 | 套用通用格式能力；不推断任何化学语义 |
 
-The `.cif`, `.log`, `.out`, `.raw`, and `.dat` suffixes are ambiguous. The
-capability manifest registers `.cif` and `.raw` as reference-only; unregistered
-`.log`, `.out`, and `.dat` fail closed. It does not sniff content or guess a producer.
+`.cif`、`.log`、`.out`、`.raw` 与 `.dat` 后缀含义不明确。能力
+清单把 `.cif` 与 `.raw` 登记为仅作参考；未登记的
+`.log`、`.out` 与 `.dat` 一律失败关闭。它不嗅探内容，也不猜测生产者。
 
-## PDB and PDBx/mmCIF
+## PDB 与 PDBx/mmCIF
 
-wwPDB states that PDBx/mmCIF is its official working and archive format.
-Legacy PDB format 3.30 remains distributed where representable but has field
-and size limitations.
+wwPDB 声明 PDBx/mmCIF 是其官方工作格式与归档格式。
+遗留的 PDB 格式 3.30 在可表示时仍继续分发，但存在字段
+与体积限制。
 
-Use a pinned parser such as Gemmi, Biopython's `Bio.PDB`, or official wwPDB
-validation services/tools in a separately reviewed environment. Confirm:
+请在单独评审过的环境中使用版本钉住的解析器，例如 Gemmi、Biopython 的
+`Bio.PDB`，或官方 wwPDB 校验服务/工具。确认：
 
-- file/dictionary version and experimental method;
-- model count, chain/entity mapping, assemblies, alternate locations,
-  insertion codes, occupancy, B factors, and missing residues/atoms;
-- unit cell, symmetry, resolution, R factors, validation metrics, and
-  biological versus crystallographic assembly;
-- ligand/component definitions, covalent links, protonation/charge assumptions,
-  and coordinate units; and
-- whether multiple models are alternatives, an ensemble, or time/order data.
+- 文件/字典版本与实验方法；
+- 模型数量、链/实体映射、装配体、交替位置、
+  插入码、占有率、B 因子与缺失的残基/原子；
+- 晶胞、对称性、分辨率、R 因子、校验指标，以及
+  生物学装配体与晶体学装配体的区分；
+- 配体/组分定义、共价连接、质子化/电荷假设，
+  以及坐标单位；以及
+- 多个模型究竟是备选构象、集合（ensemble），还是时间/顺序数据。
 
-Do not interpret a low B factor, occupancy, model score, or missing atom as a
-quality verdict without experimental context. Do not claim binding, stability,
-function, or causality from a coordinate inventory.
+不要在没有实验语境的情况下，把偏低的 B 因子、占有率、模型评分或
+缺失原子解读为质量判定。不要从坐标清单推断结合、稳定性、
+功能或因果关系。
 
-## Molfile, SDF, and line notations
+## Molfile、SDF 与线性表示法
 
-Molfile/SDF records can represent atoms, bonds, coordinates, charges,
-stereochemistry, query features, and arbitrary property blocks. SMILES is a
-line notation whose interpretation depends on aromaticity, valence,
-stereochemistry, isotope, charge, and sanitization rules.
+Molfile/SDF 记录可以表示原子、键、坐标、电荷、
+立体化学、查询特征以及任意属性块。SMILES 是一种
+线性表示法，其解释取决于芳香性、价态、
+立体化学、同位素、电荷与净化规则。
 
-Before EDA:
+在 EDA 之前：
 
-1. Identify CTfile/version and producer.
-2. Parse with errors preserved; count invalid records rather than silently
-   dropping them.
-3. Keep the original string/record and a separate standardized representation.
-4. Record sanitization, aromaticity, tautomer, protonation, salt/fragment,
-   stereochemistry, isotope, and charge policies.
-5. Distinguish 2-D drawing coordinates from experimentally or computationally
-   meaningful 3-D conformers.
-6. Treat property names/values as untrusted metadata and redact identifiers.
+1. 确认 CTfile/版本与生产者。
+2. 带错误地解析；统计无效记录，而不是悄悄
+   丢弃它们。
+3. 保留原始字符串/记录，并另存一份标准化表示。
+4. 记录净化、芳香性、互变异构体、质子化、盐/片段、
+   立体化学、同位素与电荷策略。
+5. 区分二维绘图坐标与实验或计算上有意义的
+   三维构象。
+6. 把属性名/值当作不可信元数据，并对标识符脱敏。
 
-Descriptor distributions are conditional on these choices. Do not automatically
-neutralize, desalinate, canonicalize, deduplicate, generate conformers, or
-discard parser failures.
+描述符分布取决于这些选择。不要自动
+中和、脱盐、规范化、去重、生成构象，或
+丢弃解析失败的记录。
 
-## XYZ and coordinate text
+## XYZ 与坐标文本
 
-XYZ commonly starts each frame with atom count and a comment line, followed by
-element and Cartesian coordinates. Variants can contain trajectories,
-additional columns, or nonstandard units. Confirm:
+XYZ 通常以原子数与一行注释开始每一帧，
+随后是元素与直角坐标。变体可能包含轨迹、
+额外列或非标准单位。确认：
 
-- atom-count/frame boundaries;
-- element/isotope labels and units (often Å, but not guaranteed);
-- periodic cell/charge/spin information stored elsewhere;
-- whether frames are independent molecules, optimization steps, or dynamics;
-  and
-- topology/bond inference policy.
+- 原子数/帧的边界；
+- 元素/同位素标签与单位（常用 Å，但没有保证）；
+- 存放在别处的周期晶胞/电荷/自旋信息；
+- 各帧是彼此独立的分子、优化步骤还是动力学轨迹；
+  以及
+- 拓扑/键的推断策略。
 
-The generic tabular scanner is not an XYZ parser.
+通用表格扫描器不是 XYZ 解析器。
 
-## Molecular dynamics trajectories
+## 分子动力学轨迹
 
-DCD, XTC, TRR, NetCDF trajectories, and related files usually need a matching
-topology and sometimes unit-cell/time metadata. A suffix does not supply these.
-With MDAnalysis/MDTraj or another pinned reader, inspect:
+DCD、XTC、TRR、NetCDF 轨迹及相关文件通常需要匹配的
+拓扑，有时还需要晶胞/时间元数据。后缀不提供这些信息。
+配合 MDAnalysis/MDTraj 或其他版本钉住的读取器，检查：
 
-- topology/trajectory atom count and ordering;
-- frame count, time step, units, coordinates, velocities/forces, and box;
-- periodic-boundary and imaging/unwrapping choices;
-- equilibration, sampling interval, restraints, thermostat/barostat, and
-  replica identity; and
-- corrupted/truncated frames before calculating RMSD/RMSF or contacts.
+- 拓扑/轨迹的原子数与顺序；
+- 帧数、时间步长、单位、坐标、速度/力与盒子；
+- 周期边界条件与镜像/去卷绕的选择；
+- 平衡、采样间隔、约束、热浴/压浴，以及
+  副本标识；以及
+- 在计算 RMSD/RMSF 或接触之前排查损坏/截断的帧。
 
-Frames are temporally dependent. Do not treat frames as independent replicates
-or split adjacent frames randomly across train/test.
+帧在时间上彼此相关。不要把帧当作独立重复，
+也不要随机把相邻帧拆到训练集/测试集两边。
 
-## Quantum chemistry outputs and grids
+## 量子化学输出与网格
 
-`.log`/`.out` files are program- and version-specific; use cclib or a
-producer-specific parser only after confirming the producer. Check:
+`.log`/`.out` 文件与程序和版本强相关；请在确认生产者之后
+再使用 cclib 或针对特定生产者的解析器。检查：
 
-- method, basis set, charge, multiplicity, units, software/version, and job
-  termination;
-- optimization/frequency convergence and imaginary modes;
-- geometry/energy step count and whether the final structure is intended;
-- SCF convergence, warnings, symmetry, solvation, and corrections; and
-- whether values are raw, relative, thermal-corrected, or post-processed.
+- 方法、基组、电荷、多重度、单位、软件/版本与作业
+  终止方式；
+- 优化/频率收敛与虚频模式；
+- 几何/能量步数，以及最终结构是否为有意保留的结果；
+- SCF 收敛、警告、对称性、溶剂化与校正；以及
+- 数值是原始的、相对的、热校正的还是后处理的。
 
-Cube and similar volumetric grids require origin, axis vectors, shape, units,
-orbital/density identity, and integration conventions. Bound grid reads and do
-not eagerly load an unverified declared shape.
+Cube 及类似的体数据网格需要原点、轴向量、形状、单位、
+轨道/密度标识与积分约定。要给网格读取设上界，不要
+急切地载入未经核实的声明形状。
 
-## HDF5, NumPy, and tabular chemistry exports
+## HDF5、NumPy 与表格类化学导出
 
-If the file is genuinely `.npy`, `.npz`, `.h5`, `.hdf5`, `.csv`, `.tsv`, or
-strict `.json`, the general inspector can report container structure and
-aggregate numeric properties. It cannot infer:
+如果文件确实是 `.npy`、`.npz`、`.h5`、`.hdf5`、`.csv`、`.tsv` 或
+严格的 `.json`，通用检查器可以报告容器结构与
+聚合数值属性。它无法推断：
 
-- atom/molecule/conformer axes;
-- coordinate or energy units;
-- descriptor definitions;
-- train/test compound grouping;
-- assay censoring or detection limits; or
-- chemical identity from field names.
+- 原子/分子/构象轴；
+- 坐标或能量单位；
+- 描述符定义；
+- 训练/测试的化合物分组；
+- 检测的删失或检出限；或
+- 依据字段名判定化学身份。
 
-HDF5 object names/attributes are redacted, external/soft links are not followed,
-and dataset values are not read. NumPy object arrays are rejected. Pickled
-models or RDKit objects are never deserialized.
+HDF5 对象名/属性会被脱敏，外部链接/软链接不会被跟随，
+数据集的值也不会被读取。NumPy 对象数组一律拒绝。
+被 pickle 的模型或 RDKit 对象绝不反序列化。
 
-## Chemistry EDA rigor
+## 化学 EDA 严谨性
 
-1. Define the independent unit: compound, batch, conformer, frame, calculation,
-   assay plate, specimen, or replicate.
-2. Preserve raw structures and measured values; record standardization as a
-   derived transformation.
-3. Create a data dictionary with units, assay endpoints, bounds, censoring,
-   LOD/LOQ, qualifiers, and provenance.
-4. Distinguish missing, failed, inactive, below detection, above quantitation,
-   and structurally invalid records.
-5. Split related analogues, scaffolds, batches, time, sites, or subjects before
-   learned preprocessing to prevent leakage. Random row splits can be
-   misleading.
-6. Compare robust/classical summaries and investigate outliers against
-   measurement and structure; do not delete automatically.
-7. Treat transformations (for example log concentration) as scientifically
-   defined and retain units/inverse interpretation.
-8. Label descriptor/property screening as exploratory and define multiplicity
-   control for inferential follow-up.
-9. Do not infer binding, efficacy, toxicity, mechanism, or causal effects from
-   EDA alone.
+1. 定义独立单元：化合物、批次、构象、帧、计算、
+    assay 板（检测板）、标本或重复。
+2. 保留原始结构与实测数值；把标准化记作
+   派生变换。
+3. 建立数据字典，写明单位、检测终点、界限、删失、
+   LOD/LOQ、限定符与来源。
+4. 区分缺失、失败、无活性、低于检出限、高于定量限
+   与结构无效的记录。
+5. 在基于学习的预处理之前，先按相关的类似物、骨架、批次、时间、场地或受试者
+   划分，以防止泄漏。随机按行划分可能产生
+   误导。
+6. 比较稳健/经典汇总，并结合测量与结构排查离群值；
+   不要自动删除。
+7. 把变换（例如 log 浓度）视为有科学定义的，
+   并保留单位/逆变换解释。
+8. 把描述符/属性筛查标注为探索性，并为推断性后续分析
+   定义多重性控制。
+9. 不要仅凭 EDA 就推断结合、效力、毒性、机理或因果效应。
 
-## Recommended reference-only tooling
+## 推荐的仅作参考的工具链
 
-Pin and validate tooling per project rather than treating this list as bundled
-support:
+请按项目钉住并验证工具链，而不是把这份清单当成内置
+支持：
 
-- Gemmi or Biopython for PDBx/mmCIF/PDB;
-- RDKit or Open Babel for Molfile/SDF/SMILES;
-- ASE for XYZ and computational structures;
-- MDAnalysis or MDTraj for topology/trajectory pairs; and
-- cclib for supported quantum-chemistry outputs.
+- Gemmi 或 Biopython 用于 PDBx/mmCIF/PDB；
+- RDKit 或 Open Babel 用于 Molfile/SDF/SMILES；
+- ASE 用于 XYZ 与计算结构；
+- MDAnalysis 或 MDTraj 用于拓扑/轨迹配对；以及
+- cclib 用于受支持的量子化学输出。
 
-Check each parser's current format table and release notes. Never pass untrusted
-property text to shell commands or dynamic evaluation.
+请核对每个解析器当前的格式支持表与发布说明。绝不把不可信的
+属性文本传给 shell 命令或动态求值。
 
-## Authoritative sources
+## 权威来源
 
-Current parser APIs and format guidance reviewed 2026-09-30. Historical
-methodology citations are retained as source context.
+当前解析器 API 与格式指南审阅于 2026-09-30。历史方法学
+引用保留下来作为来源背景。
 
-- wwPDB, [File Formats and the PDB](https://www.wwpdb.org/documentation/file-formats-and-the-pdb)
-  (PDBx/mmCIF is the official archive/working format; legacy PDB format 3.30
-  where representable).
-- wwPDB, [PDBx/mmCIF Dictionary Resources](https://mmcif.wwpdb.org/) and
-  [current user guide](https://mmcif.wwpdb.org/docs/user-guide/guide.html).
-- wwPDB, [legacy PDB format 3.30](https://www.wwpdb.org/documentation/file-format-content/format33/v3.3.html).
-- IUCr, [CIF format specifications](https://www.iucr.org/resources/cif/spec)
-  (links to CIF 1.1 and 2.0 syntax).
-- RDKit, [current file parsing API](https://www.rdkit.org/docs/GettingStartedInPython.html#reading-and-writing-molecules).
-- MDAnalysis, [supported topology and trajectory formats](https://userguide.mdanalysis.org/stable/formats/index.html).
-- cclib, [supported programs and data](https://cclib.github.io/data.html).
-- NIST/SEMATECH, [Exploratory Data Analysis](https://www.itl.nist.gov/div898/handbook/eda/eda.htm).
-- scikit-learn, [data leakage guidance](https://scikit-learn.org/stable/common_pitfalls.html).
+- wwPDB，[文件格式与 PDB](https://www.wwpdb.org/documentation/file-formats-and-the-pdb)
+  （PDBx/mmCIF 是官方归档/工作格式；可表示时也提供遗留的
+  PDB 格式 3.30）。
+- wwPDB，[PDBx/mmCIF 字典资源](https://mmcif.wwpdb.org/) 与
+  [当前用户指南](https://mmcif.wwpdb.org/docs/user-guide/guide.html)。
+- wwPDB，[遗留 PDB 格式 3.30](https://www.wwpdb.org/documentation/file-format-content/format33/v3.3.html)。
+- IUCr，[CIF 格式规范](https://www.iucr.org/resources/cif/spec)
+  （指向 CIF 1.1 与 2.0 语法）。
+- RDKit，[当前文件解析 API](https://www.rdkit.org/docs/GettingStartedInPython.html#reading-and-writing-molecules)。
+- MDAnalysis，[受支持的拓扑与轨迹格式](https://userguide.mdanalysis.org/stable/formats/index.html)。
+- cclib，[受支持的程序与数据](https://cclib.github.io/data.html)。
+- NIST/SEMATECH，[探索性数据分析](https://www.itl.nist.gov/div898/handbook/eda/eda.htm)。
+- scikit-learn，[数据泄漏指南](https://scikit-learn.org/stable/common_pitfalls.html)。

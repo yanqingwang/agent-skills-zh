@@ -34,8 +34,9 @@ GitHub Actions 每日比对上游 HEAD，变更即开待翻译 issue；翻译文
 宁缺毋滥：第一批只收 11 个高价值文件，人工校对后发布；机器直翻不直接入库。
 
 ## 11. 目录完整性（drop-in replacement）原则
-收录一个 Skill = 其 `SKILL.md`（翻译）+ **其运行所引用的目录内全部文件（原样复制，逐字节一致）**。用户把本地目录放进技能库后必须开箱即用，不得出现"指向不存在文件"的悬空引用。文件分三类：
-- **翻译件**：SKILL.md（含 frontmatter description）
-- **原样复制件**：脚本（.sh/.py/.mjs/.cjs/.ts）、样式（.css）、数据（.json/.yaml）、HTML 模板、上游散文引用文件（*.md）——前四类永不翻译；*.md 散文引用件先原样复制保证可用，翻译排入第二批 issue
+收录一个 Skill = 其 `SKILL.md`（翻译）+ **其运行所引用的目录内全部文件（原样复制，逐字节一致）**。用户把本地目录放进技能库后必须开箱即用，不得出现"指向不存在文件"的悬空引用。文件分四类：
+- **翻译件**（`files`）：SKILL.md（含 frontmatter description）、Agent 定义、规则型文件
+- **已译散文**（`translated_prose`，2026-11-03 新增）：`references/*.md` 等**人读的行为规范**——流程说明、检查清单、写作指南。判定与译法见 [PROSE_TRANSLATION.md](PROSE_TRANSLATION.md)。与 SKILL.md 同等对待：上游变更 → 重译工单，不被自动覆盖
+- **原样复制件**（`verbatim`）：脚本（.sh/.py/.mjs/.cjs/.ts）、样式（.css）、数据（.json/.yaml）、HTML 模板、**机器解析用的散文**（语法词表、locale 词条、素材数据）——永不翻译，逐字节一致
 - **排除件**：上游仓库级工具（install.sh、各 Harness 的 plugin manifest、CI）与上游自身 QA 产物（test-*.md、CREATION-LOG.md）不收录；排除清单记录在 data/manifest.json 的 verbatim_excluded
-同步时重跑 `scripts/fetch_verbatim.py` 刷新原样件，`--check` 模式供校验逐字节一致性。
+同步时重跑 `scripts/fetch_verbatim.py` 刷新原样件（不触碰已译散文），`--check` 模式供校验逐字节一致性；`scripts/sync_daily.py` 对 `files` 与 `translated_prose` 一视同仁地开重译工单。

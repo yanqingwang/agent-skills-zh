@@ -1,94 +1,93 @@
-# Optional Figures and Tables
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/figures_tables.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Figures and tables are optional. Include a display only when it communicates verified
-evidence more clearly than prose and the target venue permits it. This skill does not
-generate images, schematics, graphical abstracts, or synthetic scientific visuals.
+# 图与表（可选）
 
-## Provenance gate
+图与表都是可选的。只有当某个展示对象比文字更清楚地传达了已核验的证据，
+并且目标投稿载体允许时，才把它纳入。本 skill 不生成图像、示意图、
+图文摘要或合成的科学视觉内容。
 
-Each display needs a record containing:
+## 溯源关卡
 
-- stable display ID and version;
-- source data or evidence IDs;
-- code, query, or manual transformation used;
-- accountable creator and reviewer;
-- date generated or revised;
-- analysis population, exclusions, and sample size;
-- units, scales, denominators, and uncertainty definitions;
-- license, attribution, and permission status for reused material;
-- documented adjustments, cropping, compositing, or preprocessing.
+每个展示对象都需要一份记录，其中包含：
 
-Do not recreate missing source data from a screenshot or published graphic. Do not
-alter an image in a way that hides, removes, duplicates, or misrepresents information.
-Retain original files and an audit trail.
+- 稳定的展示 ID 与版本号；
+- 来源数据或证据 ID；
+- 所使用的代码、查询或人工转换方式；
+- 可问责的创作者与复核者；
+- 生成或修订的日期；
+- 分析人群、排除标准与样本量；
+- 单位、量表、分母与不确定性的定义；
+- 复用材料的许可、署名与授权状态；
+- 已记录的调整、裁剪、合成或预处理。
 
-## Choosing a form
+不要根据截图或已发表的图形去重建缺失的源数据。不要以隐藏、删除、复制或歪曲信息的方式
+改动图像。保留原始文件与审计轨迹。
 
-Use:
+## 选择形式
 
-- prose for a small number of directly relevant values;
-- a table when exact values and multidimensional comparison matter;
-- a figure when pattern, distribution, relationship, sequence, or spatial information
-  matters.
+使用：
 
-Avoid duplicating the same information in prose, a table, and a figure. There is no
-universal minimum, maximum, or display-per-word rule.
+- 文字：用于数量不多且直接相关的数值；
+- 表格：当你关心精确数值与多维度比较时；
+- 图：当你关心模式、分布、关系、顺序或空间信息时。
 
-## Tables
+避免在文字、表格与图中重复同一信息。不存在通用的最少数量、最多数量或
+每多少字配一张图的规则。
 
-Check:
+## 表格
 
-- title and notes define population, time point, analysis set, units, and abbreviations;
-- rows and columns preserve denominators and distinguish missing from zero;
-- percentages can be recomputed from the recorded numerator and denominator;
-- precision is consistent with the measurement and analysis;
-- uncertainty and statistical quantities are named, not implied by symbols alone;
-- values match the abstract, prose, figures, supplements, and consistency registry;
-- cells remain accessible as text rather than an image when the venue allows.
+检查：
 
-## Figures
+- 标题与注释定义了人群、时间点、分析集、单位与缩写；
+- 行与列保留分母，并把缺失与零区分开；
+- 百分比可以由记录的分子与分母重新算出；
+- 精度与测量方式和分析方法相匹配；
+- 不确定性与统计量是明确命名的，而不是仅靠符号暗示；
+- 数值与摘要、正文、图、补充材料以及一致性登记簿相符；
+- 在载体允许的情况下，单元格保持为可访问的文本而非图像。
 
-Check:
+## 图
 
-- axes, scales, transformations, units, and reference lines are explicit;
-- truncated or nonlinear scales are visible and justified;
-- individual observations or distributions are shown when scientifically appropriate;
-- uncertainty is defined;
-- group sizes and exclusions are available;
-- legends identify all encodings;
-- colors, shapes, line styles, labels, or patterns provide redundant cues;
-- image panels include scale and orientation information where relevant;
-- the final exported file matches current journal format and size instructions.
+检查：
 
-Do not add significance stars or trend lines unless they map to a verified analysis.
+- 坐标轴、量表、变换、单位与参考线都是明确的；
+- 截断的或非线性的量表看得见且有理由说明；
+- 在科学上合适时，展示单个观测值或分布；
+- 不确定性有明确定义；
+- 各组规模与排除标准可以获取；
+- 图例标明所有视觉编码；
+- 颜色、形状、线型、标签或纹理提供冗余提示；
+- 图像分栏在相关处包含比例尺与方位信息；
+- 最终导出的文件符合目标期刊当前的格式与尺寸要求。
 
-## Captions and alt text
+除非显著性星号或趋势线对应一次已核验的分析，否则不要添加。
 
-A caption should state what is shown, define panels and encodings, identify the analysis
-population, units, uncertainty, and relevant methods, and link to evidence IDs during
-drafting.
+## 图注与替代文本
 
-Alt text should:
+图注应说明展示了什么，定义分栏与视觉编码，指明分析人群、单位、不确定性与相关方法，
+并在起草阶段关联到证据 ID。
 
-- identify the display type and purpose;
-- summarize the principal visible pattern without adding a new conclusion;
-- describe axes, groups, direction, and uncertainty needed to understand the display;
-- avoid repeating the full caption or listing every data point;
-- be reviewed manually with the final display.
+替代文本应当：
 
-Automated accessibility checks do not verify scientific correctness. Inspect contrast,
-color independence, reading order, label size, keyboard or screen-reader behavior where
-applicable, and legibility at final size.
+- 指明展示类型与用途；
+- 概括主要可见模式，不引入新的结论；
+- 描述理解该展示所需的坐标轴、分组、方向与不确定性；
+- 避免重复完整图注或逐一罗列每个数据点；
+- 与最终展示对象一起经过人工复核。
 
-## Flow diagrams
+自动化无障碍检查不能验证科学正确性。请人工检查对比度、是否只依赖颜色、
+阅读顺序、标签字号、键盘或读屏行为（在适用时），以及最终尺寸下的可读性。
 
-Use the current official flow-diagram resource for the selected guideline, such as
-CONSORT 2025 or PRISMA 2020 [SW-S07, SW-S10]. Populate it only from verified counts.
-Reconcile every branch and denominator with the methods, results, and registry.
+## 流程图
 
-## Final manual review
+使用所选指南对应的当前官方流程图资源，例如 CONSORT 2025 或 PRISMA 2020
+[SW-S07, SW-S10]。只允许用已核验的计数填充它。
+请把每一个分支和分母与方法、结果及登记簿核对一致。
 
-An accountable human should compare each display against source data and analysis
-output, inspect permissions and confidentiality, verify captions and alt text, and
-confirm the rendered export. Passing a file-format or consistency check does not certify
-the display.
+## 最终人工复核
+
+可问责的人应当把每个展示对象与源数据和分析输出逐项比对，检查授权与保密情况，
+核实图注与替代文本，并确认渲染后的导出文件。通过文件格式或一致性检查
+并不能为展示对象背书。

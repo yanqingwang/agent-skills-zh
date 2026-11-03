@@ -1,11 +1,14 @@
-# Example Workflows
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/citation-management/references/example_workflows.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Four end-to-end worked examples: building a bibliography for a paper, converting a
-list of DOIs, cleaning an existing BibTeX file, and finding and citing seminal papers.
+# 示例工作流
 
-## Example Workflows
+四个端到端的完整示例：为论文构建参考文献、转换 DOI 列表、清理已有 BibTeX 文件，以及查找并引用奠基性论文。
 
-### Example 1: Building a Bibliography for a Paper
+## 示例工作流
+
+### 示例 1：为论文构建参考文献
 
 ```bash
 # Step 1: Find key papers on your topic
@@ -53,7 +56,7 @@ cat validation.json | grep -A 3 '"errors"'
 # \bibliography{final_references}
 ```
 
-### Example 2: Converting a List of DOIs
+### 示例 2：转换 DOI 列表
 
 ```bash
 # You have a text file with DOIs (one per line)
@@ -69,7 +72,7 @@ python scripts/doi_to_bibtex.py --input dois.txt --output references.bib
 python scripts/validate_citations.py references.bib --verbose
 ```
 
-### Example 3: Cleaning an Existing BibTeX File
+### 示例 3：清理已有 BibTeX 文件
 
 ```bash
 # You have a messy BibTeX file from various sources
@@ -103,7 +106,7 @@ python scripts/validate_citations.py clean_references.bib \
 cat final_validation.json
 ```
 
-### Example 4: Finding and Citing Seminal Papers
+### 示例 4：查找并引用奠基性论文
 
 ```bash
 # Find highly cited papers on a topic

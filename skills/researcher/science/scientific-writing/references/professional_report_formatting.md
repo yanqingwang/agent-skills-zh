@@ -1,82 +1,85 @@
-# Safe Formatting for Reports and Manuscripts
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/professional_report_formatting.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Content before presentation
+# 报告与稿件的安全排版
 
-The former LaTeX style and demonstration report were removed. They could turn
-plausible-looking placeholder findings into a polished PDF. This version uses
-format-neutral Markdown and JSON/CSV registries so incompleteness remains visible.
+## 内容先于呈现
 
-Do not format a draft as submission-ready while any verification gate is incomplete.
-Visual polish is not evidence.
+此前那套 LaTeX 样式与演示报告已被移除。它们可能把看似合理的占位性发现
+变成一份精美的 PDF。本版本使用与格式无关的 Markdown 以及 JSON/CSV 登记簿，
+让不完整之处始终保持可见。
 
-## Workflow
+在任何一个核验关卡尚未完成时，不要把草稿排版成可投稿状态。
+视觉上的精致不是证据。
 
-1. Create a local scaffold.
-2. Draft and verify content in Markdown.
-3. Run manifest, claim, reference, consistency, authorship, coverage, and lint checks.
-4. Obtain accountable human approval.
-5. Copy the verified content into the current venue template.
-6. Re-run checks that remain applicable and inspect the rendered output manually.
+## 工作流
 
-For a journal or conference, use its current author instructions and official template.
-For an institutional report or thesis, use the institution's controlled template.
+1. 在本地创建脚手架。
+2. 在 Markdown 中起草并核验内容。
+3. 运行清单、主张、参考文献、一致性、署名、覆盖度与 lint 检查。
+4. 取得可问责的人的批准。
+5. 把已核验的内容复制到当前的投稿载体模板中。
+6. 重新运行仍然适用的检查，并人工查看渲染结果。
 
-## Fail-closed placeholder policy
+面向期刊或会议时，使用其当前的作者须知与官方模板。
+面向机构报告或学位论文时，使用该机构的受控模板。
 
-Permitted draft markers are intentionally conspicuous, such as `[[TODO:...]]`. The
-language linter treats them as errors. Never replace an unresolved marker with generic
-boilerplate, a guessed number, a fabricated statement, or an invented citation.
+## 失败即停的占位符策略
 
-Keep:
+允许使用的草稿标记刻意做得显眼，例如 `[[TODO:...]]`。语言 linter 会把它们
+视为错误。绝不要用通用样板内容、猜测的数值、编造的陈述或杜撰的引文
+替换掉未解决的标记。
 
-- `submission_ready` false;
-- the draft banner visible;
-- missing declaration statuses explicit;
-- human and confidentiality gates incomplete;
+请保持：
 
-until the underlying records are verified.
+- `submission_ready` 为 false；
+- 草稿横幅可见；
+- 缺失的声明状态明确标注；
+- 人工关卡与保密关卡处于未完成状态；
 
-## Headings and navigation
+以上各项应保持不变，直到底层的相关记录完成核验。
 
-- Use a single title and logical heading levels.
-- Preserve heading order when converting formats.
-- Include lists of tables or figures only when useful or required.
-- Use stable internal labels for tables, figures, appendices, and supplements.
-- Ensure generated bookmarks and reading order match the visible structure.
+## 标题层级与导航
 
-## Typography and layout
+- 使用单一标题与有逻辑的标题层级。
+- 转换格式时保持标题顺序不变。
+- 只在有用或被要求时才附上表格目录或图目录。
+- 为表格、图、附录与补充材料使用稳定的内部标签。
+- 确认生成的书签与阅读顺序和可见结构一致。
 
-- Use the venue's prescribed font, spacing, margins, page size, and line numbering.
-- Do not use color, weight, or position as the only carrier of meaning.
-- Keep equations, symbols, units, subscripts, and superscripts intact through
-  conversion.
-- Check widows, orphans, clipped content, broken links, and misplaced floats manually.
+## 排版与版面
 
-## Tables, figures, and accessibility
+- 使用投稿载体规定的字体、间距、页边距、页面尺寸与行号。
+- 不要把颜色、字重或位置当作含义的唯一载体。
+- 在转换过程中保持公式、符号、单位、下标与上标完好。
+- 人工检查孤行寡行、内容截断、失效链接与错位的浮动对象。
 
-Follow `figures_tables.md`. Verify alt text, captions, provenance, permissions, color
-independence, reading order, label legibility, and final-size rendering. Do not create a
-decorative visual simply to make a report appear complete.
+## 表格、图与无障碍
 
-## References and declarations
+遵循 `figures_tables.md`。核验替代文本、图注、溯源信息、授权情况、
+不依赖颜色的表达、阅读顺序、标签可读性与最终尺寸下的渲染效果。
+不要仅仅为了让报告看起来完整而制作装饰性的视觉内容。
 
-References must render from verified metadata. After conversion, inspect identifier
-links, special characters, author order, and citation order.
+## 参考文献与声明
 
-Declarations must come from validated records. A style template must never supply a
-default ethics approval, consent statement, funding source, conflict statement, author
-contribution, data or code promise, or AI disclosure.
+参考文献必须由已核验的元数据渲染而来。转换之后，检查标识符链接、
+特殊字符、作者顺序与引文顺序。
 
-## Archival handoff
+声明必须来自通过校验的记录。样式模板绝不能提供默认的伦理审批、
+知情同意声明、资助来源、利益冲突声明、作者贡献、数据或代码承诺，
+以及 AI 披露。
 
-Retain:
+## 归档交接
 
-- the verified Markdown source;
-- the structured registries;
-- the exact venue template version;
-- conversion instructions and software versions;
-- the final rendered file;
-- validator outputs and human approval record.
+请保留：
 
-Do not archive sensitive source documents alongside a public manuscript package unless
-authorization, consent, law, contracts, and policy permit it.
+- 已核验的 Markdown 源文件；
+- 结构化登记簿；
+- 准确的投稿载体模板版本；
+- 转换说明与软件版本；
+- 最终渲染文件；
+- 校验器输出与人工批准记录。
+
+除非授权、知情同意、法律、合同与政策都允许，不要在公开的稿件包旁边
+同时归档敏感的来源文档。

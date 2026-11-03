@@ -1,30 +1,34 @@
-# Feynman Comprehension Loop
+> **中文汉化版** · 上游：[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) · 原文件：`research/deepread/references/feynman.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this reference for `feynman` mode. The objective is to expose and repair understanding gaps through retrieval, not to produce childlike wording for its own sake.
+# 费曼理解回路
 
-## Procedure
+本参考用于 `feynman` 模式。目标是通过检索暴露并修复理解上的缺口，而不是为了幼稚化措辞本身。
 
-1. **Set the target** — name the idea, mechanism, or chapter-level claim to learn.
-2. **Read for structure** — identify the central claim, key terms, mechanism, and evidence.
-3. **Close the source** — do not look at the text or analysis notes.
-4. **Explain from memory** — use plain language and preserve causal or logical links.
-5. **Mark uncertainty** — tag every vague phrase, skipped step, undefined term, or appeal to jargon.
-6. **Locate the first broken link** — find the earliest point where the explanation stops being justified.
-7. **Return narrowly** — reread only the material needed to repair that gap.
-8. **Rewrite the explanation** — replace jargon with a mechanism, concrete example, or boundary condition.
-9. **Test transfer** — apply the idea to a new case and predict what should happen.
-10. **Test contrast** — explain a case where the idea should not apply.
-11. **Schedule retrieval** — create short recall prompts for later review.
+## 流程
 
-## Gap Types
+1. **设定目标** — 指明要学的想法、机制或章节级主张。
+2. **读结构** — 找出中心主张、关键术语、机制与证据。
+3. **合上原文** — 不看正文或分析笔记。
+4. **凭记忆讲解** — 用平实语言，保留因果或逻辑链条。
+5. **标注不确定处** — 标出每一个含糊说法、跳过的步骤、未定义的术语，或对行话的依赖。
+6. **定位第一处断裂的环节** — 找出解释开始失去依据的最早一点。
+7. **窄范围回读** — 只重读修补该缺口所需的部分。
+8. **重写解释** — 用机制、具体例子或边界条件替换行话。
+9. **检验迁移** — 把该想法应用到新案例上，并预测应当出现什么结果。
+10. **检验反例** — 解释一个该想法不应当适用的案例。
+11. **安排检索** — 编写简短的回忆提示词，供日后复习。
 
-- **Definition gap** — a term cannot be explained without repeating itself.
-- **Mechanism gap** — steps are listed but causality or logic is missing.
-- **Evidence gap** — the claim is remembered but its support is not.
-- **Boundary gap** — the learner cannot say when the claim fails.
-- **Transfer gap** — the learner repeats the source but cannot use the idea elsewhere.
+## 缺口类型
 
-## Output Template
+- **定义缺口** — 一个术语无法被解释，只能重复自身。
+- **机制缺口** — 步骤罗列出来了，但因果关系或逻辑缺失。
+- **证据缺口** — 主张记住了，但它的支撑没有记住。
+- **边界缺口** — 学习者说不出该主张在什么条件下失效。
+- **迁移缺口** — 学习者能复述原文，却无法在别处使用这个想法。
+
+## 输出模板
 
 ```markdown
 ## Learning target
@@ -51,19 +55,19 @@ Use this reference for `feynman` mode. The objective is to expose and repair und
 3. [Question that retrieves a limitation]
 ```
 
-## Quality Rules
+## 质量规则
 
-- Simplicity must not delete an essential condition.
-- An analogy must identify where the analogy breaks.
-- Reopening the source before attempting retrieval invalidates the gap test.
-- Recognition (`this looks familiar`) is not recall (`I can reconstruct it`).
-- Review questions should retrieve relationships and mechanisms, not isolated vocabulary.
+- 简化不得删掉必要条件。
+- 类比必须指出它在何处失效。
+- 在尝试检索之前重开原文，会让缺口检验失效。
+- 认得出（`this looks familiar`）不等于记得住（`I can reconstruct it`）。
+- 复习问题应当检索关系与机制，而不是孤立的词汇。
 
-## Sources
+## 参考资料
 
-1. Adler, M. J. & Van Doren, C. — *How to Read a Book* (rev. ed., 1972) — the analytical-reading stages this workflow's deep mode follows.
-2. Gleick, J. — *Genius: The Life and Science of Richard Feynman* (1992) — primary biographical account of Feynman's learn-by-teaching notebook practice.
-3. Farnam Street — "The Feynman Technique: The Best Way to Learn Anything" (fs.blog/feynman-technique) — the canonical four-step formulation used here.
-4. Karpicke, J. D. & Roediger, H. L. — "The Critical Importance of Retrieval for Learning", *Science* 319 (2008) — evidence that recall attempts, not re-reading, drive retention.
-5. Dunlosky, J. et al. — "Improving Students' Learning With Effective Learning Techniques", *Psychological Science in the Public Interest* 14 (2013) — rates practice testing and self-explanation as highest-utility techniques, re-reading as low-utility.
-6. Chi, M. T. H. et al. — "Self-Explanations: How Students Study and Use Examples", *Cognitive Science* 13 (1989) — the self-explanation effect behind the teach-back step.
+1. Adler, M. J. & Van Doren, C. — *How to Read a Book*（修订版，1972）— 本工作流的深读模式所遵循的分析性阅读阶段。
+2. Gleick, J. — *Genius: The Life and Science of Richard Feynman*（1992）— 费曼以教代学笔记本实践的第一手传记记述。
+3. Farnam Street — “The Feynman Technique: The Best Way to Learn Anything”（fs.blog/feynman-technique）— 此处采用的四步经典表述。
+4. Karpicke, J. D. & Roediger, H. L. — “The Critical Importance of Retrieval for Learning”，*Science* 319（2008）— 证明是回忆尝试而非重读驱动长期保持的证据。
+5. Dunlosky, J. 等 — “Improving Students' Learning With Effective Learning Techniques”，*Psychological Science in the Public Interest* 14（2013）— 把练习测试与自我解释评为效用最高的技术，把重读评为效用最低。
+6. Chi, M. T. H. 等 — “Self-Explanations: How Students Study and Use Examples”，*Cognitive Science* 13（1989）— 教回（teach-back）步骤背后的自我解释效应。

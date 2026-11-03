@@ -1,62 +1,62 @@
-# Journal and Publisher Policy Review
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/journal_policies.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Generic guidance never overrides the target journal's current instructions.
+# 期刊与出版方政策审查
 
-## Capture a dated policy record
+通用指南永远不能凌驾于目标期刊当前的要求之上。
 
-Before drafting and again before submission, record:
+## 记录一份带日期的政策记录
 
-- journal, article type, and policy URL;
-- date accessed;
-- word, abstract, reference, table, figure, and supplement limits;
-- required structure and reporting guideline;
-- registration, protocol, and analysis-plan requirements;
-- ethics, consent, participant privacy, and image requirements;
-- authorship, contributor, acknowledgment, and change-of-authorship rules;
-- funding, conflicts, and sponsor-role disclosures;
-- data, code, materials, and repository policies;
-- preprint, prior dissemination, duplicate submission, and copyright policies;
-- AI use by authors and any restrictions on external tools;
-- peer-review model and confidentiality;
-- file, accessibility, and submission-system requirements.
+在起草之前、以及投稿之前各做一次，记录：
 
-Do not guess an absent policy. Ask the journal or leave the decision unresolved.
+- 期刊、文章类型与政策 URL；
+- 访问日期；
+- 字数、摘要、参考文献、表格、图与补充材料的限制；
+- 必需的结构与报告指南；
+- 注册、方案与分析计划的要求；
+- 伦理、知情同意、受试者隐私与图像方面的要求；
+- 署名、贡献者、致谢与作者变更的规则；
+- 资助、利益冲突与资助方角色的披露要求；
+- 数据、代码、材料与存储库政策；
+- 预印本、既往传播、一稿多投与版权政策；
+- 作者使用 AI 的规定，以及对外部工具的任何限制；
+- 同行评审模式与保密要求；
+- 文件、无障碍与投稿系统的要求。
 
-## Official examples
+不要猜测缺失的政策。向期刊询问，或把该决定标为未解决。
 
-- JAMA's current Instructions for Authors illustrate article-type-specific requirements
-  and should be consulted directly for a JAMA submission [SW-S25].
-- JAMA's AI guidance illustrates author disclosure, human responsibility, and
-  confidentiality limits for peer review [SW-S24].
-- Nature Portfolio's reporting and availability policy illustrates venue requirements
-  for data, materials, code, protocols, restrictions, and access [SW-S22].
-- Nature Portfolio's authorship policy illustrates publisher-specific accountability
-  and contribution statements [SW-S23].
-- PLOS Biology's data policy illustrates how sharing expectations interact with
-  consent, privacy, legal, ethical, and sensitive-data restrictions [SW-S26].
+## 官方示例
 
-JAMA's live instructions prohibit AI/LLM drafting of Opinion manuscripts, Letters to
-the Editor, and Online Comments, and advise against AI generation or formatting of
-references; standard reference managers may be used [SW-S25]. A disclosure does not
-make a prohibited use permissible. Check article-type restrictions at intake, before
-drafting. These restrictions are not universal publisher rules.
+- JAMA 当前的《作者须知》展示了按文章类型区分的要求，投稿 JAMA 时应直接查阅
+  原文 [SW-S25]。
+- JAMA 的 AI 指南展示了作者披露、同行评审中的责任归属与保密边界 [SW-S24]。
+- Nature Portfolio 的报告与可用性政策展示了投稿载体在数据、材料、代码、方案、
+  限制条件与获取方式上的要求 [SW-S22]。
+- Nature Portfolio 的署名政策展示了出版方特有的问责与贡献声明要求 [SW-S23]。
+- PLOS Biology 的数据政策展示了共享要求如何与知情同意、隐私、法律、伦理
+  以及敏感数据限制相互作用 [SW-S26]。
 
-These are examples, not defaults for other journals. Publisher-level policy and
-journal-level instructions may both apply.
+JAMA 的现行须知禁止使用 AI/LLM 代写 Opinion 类稿件、给编辑的来信（Letters to the
+Editor）与在线评论（Online Comments），并建议不要用 AI 生成或排版参考文献；
+标准文献管理软件可以使用 [SW-S25]。做出披露并不能让被禁止的用法变得合规。
+请在收稿阶段、起草之前核查文章类型的限制。这些限制并非出版方通用的普遍规则。
 
-## Submission review
+以上只是示例，不是其他期刊的默认做法。出版方层面的政策与期刊层面的要求
+可能同时适用。
 
-Perform a manual comparison against the live instructions:
+## 投稿前审查
 
-1. Select the exact article type.
-2. Confirm the latest reporting guideline and extensions.
-3. Verify every required statement from source records.
-4. Confirm whether checklists or flow diagrams must be uploaded.
-5. Confirm data, code, and materials deposits actually exist and are accessible as
-   stated.
-6. Confirm author order, corresponding author, CRediT roles, and approvals.
-7. Confirm AI-use disclosure wording and location with the human authors.
-8. Verify files, anonymization, accessibility, permissions, and metadata.
-9. Save the access date and policy URLs in the submission record.
+对照现行须知做人工比对：
 
-Passing local tools does not establish venue compliance.
+1. 确定准确的文章类型。
+2. 确认最新的报告指南及其扩展。
+3. 从来源记录核验每一项必需声明。
+4. 确认是否必须上传核对清单或流程图。
+5. 确认数据、代码与材料的存放确实存在，并且与所述一致、可获取。
+6. 确认作者排序、通讯作者、CRediT 角色与审批情况。
+7. 与人类作者确认 AI 使用披露的措辞与位置。
+8. 核验文件、匿名化处理、无障碍、授权与元数据。
+9. 把访问日期与政策 URL 保存到投稿记录中。
+
+本地工具通过并不能证明已符合投稿载体的要求。

@@ -1,134 +1,62 @@
-# Runtime observation
+> **中文汉化版** · 上游：[morluto/rea](https://github.com/morluto/rea) · 原文件：`.agents/skills/reverse-engineer-anything/references/runtime-observation.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Native runtime questions
+# 运行时观察
 
-Start from the requested observation. State the selected target, input, expected
-result, failure signal and stopping condition before a run. Reuse static Evidence
-to choose a function or hypothesis; `trace_native_values` follows recovered
-static value dependencies and does not measure runtime values. Prefer static
-inspection or existing capture comparison when it already answers the question.
+<a id="native-runtime-questions"></a>
+## 原生运行时问题
 
-| Question                                                                               | Existing workflow                                                                                                                            | Host and effects                                                                                                                                                                                                                                                                                                                                      |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Which selected native entry is reached, with which integer argument registers?         | `observe_native_calls` on the active Mach-O, with exact function/Objective-C breakpoints and a duration/event bound                          | macOS with LLDB and required debugger access. Launches a new owned process, stops at entries, records and continues; target execution may write files, show UI or use the network. It never attaches to an existing process. Inspect termination and partial coverage after the run.                                                                  |
-| What does caller-authored instrumentation observe?                                     | `list_frida_devices` / `list_frida_processes` when discovery is needed; `start_frida_session`, `load_frida_script`, then status/unload/close | Requires compatible installed Frida bindings and selected device access; the real REA verifier covers Linux. Attach selects an existing PID; spawn selects a program and starts it paused until `resume_frida_session`. Scripts execute in the target and can change memory, files, network activity and behavior. This is not passive inspection.    |
-| Which debugger state or controlled execution explains the behavior?                    | `start_gdb_session` and `gdb_console`, or `start_rizin_debug_session` and `rizin_debug_command`                                              | Persistent debugger workflows are Linux-only. GDB starts a debugger; console commands choose/load/attach/run targets. Rizin debug start launches the selected target and requires a durable `inferior_tty`. Both consoles are unrestricted and can change target memory/registers, run shell commands, write files and use the network.               |
-| How do terminal output, process lifetime and selected files differ between runs?       | `capture_process_scenario`, then `compare_process_captures` with compatible recorded inputs                                                  | New captures require Linux or macOS and a working native PTY backend; macOS also needs `xcrun`/Swift for ownership inspection. Capture launches an owned command with ordinary user permissions. Observation paths select snapshots, not a filesystem sandbox. Comparing retained captures does not execute targets and is also available on Windows. |
-| What does an existing desktop window show, or what changes after a declared UI action? | `observe_native_ui`; use `capture_native_ui_scenario` only for requested actions                                                             | macOS 14+ with required Screen Recording/Accessibility access. Select an existing PID/window. Observation does not launch or own the app; scenario actions can change its data or trigger network activity, and leave its state as-is.                                                                                                                |
+从被请求的观察入手。运行之前先说明选定的目标、输入、预期结果、失败信号与停止条件。复用静态证据来选定函数或假设；`trace_native_values` 追踪的是恢复出来的静态值依赖，并不测量运行时值。当静态检查或既有捕获比较已经回答了问题时，优先用它们。
 
-Close each persistent session with its matching tool. `close_frida_session`
-unloads scripts and detaches; it does not kill the target. A still-paused spawn
-is resumed only after instrumentation cleanup is confirmed. GDB and Rizin close
-can detach a live inferior and let it continue only after verifying its durable
-output terminal. When disposition or cleanup is unresolved, preserve the owned
-session and reported recovery; do not assume that closing the debugger terminated
-the target. Process capture and LLDB call observation instead own their launched
-processes and report their termination/cleanup outcome. Cancellation is not proof
-that cleanup completed.
+| 问题 | 既有工作流 | 主机与副作用 |
+|---|---|---|
+| 哪个选定的原生入口被到达，以及带着哪些整数参数寄存器？ | 在活动的 Mach-O 上用 `observe_native_calls`，配以精确的函数/Objective-C 断点与时长/事件上限 | macOS，需 LLDB 与相应的调试器权限。会启动一个新的自有进程，在入口处停下、记录并继续；目标执行可能写文件、显示界面或使用网络。它绝不附加到已有进程。运行后要检查终止情况与部分覆盖范围。 |
+| 调用方自己编写的插桩能观察到什么？ | 需要发现设备时用 `list_frida_devices` / `list_frida_processes`；然后 `start_frida_session`、`load_frida_script`，再查状态/卸载/关闭 | 需要兼容且已安装的 Frida 绑定与所选设备的访问权限；真正的 REA 验证器覆盖 Linux。attach 选择一个已有 PID；spawn 选择一个程序并让它以暂停状态启动，直到 `resume_frida_session`。脚本在目标内执行，可以改变内存、文件、网络活动与行为。这不是被动检查。 |
+| 哪种调试器状态或受控执行能解释该行为？ | `start_gdb_session` 与 `gdb_console`，或 `start_rizin_debug_session` 与 `rizin_debug_command` | 持久调试器工作流仅支持 Linux。GDB 启动一个调试器；console 命令用于选择/加载/附加/运行目标。Rizin 调试启动会拉起选定目标，并需要一个持久的 `inferior_tty`。两个 console 都不受限制，可以改变目标内存/寄存器、运行 shell 命令、写文件并使用网络。 |
+| 不同运行之间，终端输出、进程生命周期与选定文件有何差异？ | `capture_process_scenario`，然后用兼容的已录制输入做 `compare_process_captures` | 新的捕获需要 Linux 或 macOS 以及可用的原生 PTY 后端；macOS 还需要 `xcrun`/Swift 来做所有权检查。捕获以普通用户权限启动一个自有命令。观察路径用于选择快照，不是文件系统沙箱。比较已保留的捕获不会执行目标，在 Windows 上同样可用。 |
+| 已有桌面窗口显示了什么，或在声明的 UI 动作之后发生了什么变化？ | `observe_native_ui`；只在请求执行动作时才用 `capture_native_ui_scenario` | macOS 14+，需屏幕录制/辅助功能访问权限。选择一个已有的 PID/窗口。观察不会启动也不接管该应用；场景动作可以改变其数据或触发网络活动，并让其状态保持原样。 |
 
-Unrestricted GDB/Rizin commands and relevant start/close operations retire an
-active binary-analysis session in the same MCP server. Close an active Ghidra
-session explicitly first; after target effects settle, reopen the artifact before
-new static analysis. A Cutter bridge command is likewise unrestricted and may
-affect its GUI/target; it is not a passive native observation substitute.
+用各自对应的工具关闭每个持久会话。`close_frida_session` 卸载脚本并分离；它不会杀掉目标。一个仍处于暂停状态的 spawn 只有在插桩清理被确认之后才会恢复。GDB 与 Rizin 的关闭操作可以从仍存活的 inferior 分离并让它继续运行，但前提是已核实其持久输出终端。当处置或清理尚不确定时，保留自有会话与报告的恢复情况；不要假定关闭调试器就终止了目标。进程捕获与 LLDB 调用观察则相反，它们接管自己启动的进程，并报告其终止/清理结果。取消并不是清理已完成的证明。
 
-To test a static hypothesis across two builds, retain compatible static
-comparison Evidence and `compare_process_captures` Evidence. Supply explicit
-finding/dimension mappings to `correlate_static_and_runtime`. It does not ingest
-arbitrary Frida, LLDB or debugger traces, auto-match names, or prove causality
-from cochange. Preserve those traces as their own Evidence and leave unobserved
-behavior unknown. Record truncation, unmatched breakpoints, changed target
-identity and cleanup uncertainty as limitations, rather than treating no retained
-event as proof that the behavior never occurs.
+不受限制的 GDB/Rizin 命令，以及相关的启动/关闭操作，会让同一 MCP 服务器中活动的二进制分析会话退役。请先显式关闭活动的 Ghidra 会话；待目标副作用落定后，再重新打开该产物以开始新的静态分析。Cutter 的 bridge 命令同样不受限制，可能影响其 GUI/目标；它不是原生被动观察的替代方案。
 
-Detailed contracts and prerequisites: [Frida](https://github.com/morluto/rea/blob/main/docs/frida-instrumentation.md),
-[GDB/Rizin/Cutter](https://github.com/morluto/rea/blob/main/docs/reverse-engineering-tools.md),
-[process capture](https://github.com/morluto/rea/blob/main/docs/process-capture.md),
-and [native calls/UI](https://github.com/morluto/rea/blob/main/docs/native-investigation.md#native-desktop-observation).
+要在两个构建之间检验一个静态假设，请保留兼容的静态比较证据与 `compare_process_captures` 证据。向 `correlate_static_and_runtime` 提供明确的发现/维度映射。它不会摄入任意的 Frida、LLDB 或调试器跟踪，不会自动匹配名称，也无法从共同变更证明因果关系。把那些跟踪作为它们各自的证据保留下来，未观察到的行为保持未知。请把截断、未匹配的断点、目标身份变化与清理不确定性记录为局限，而不是把"没有保留到事件"当作该行为从未发生的证明。
 
-## Browser and Electron
+详细契约与前置条件：[Frida](https://github.com/morluto/rea/blob/main/docs/frida-instrumentation.md)、
+[GDB/Rizin/Cutter](https://github.com/morluto/rea/blob/main/docs/reverse-engineering-tools.md)、
+[进程捕获](https://github.com/morluto/rea/blob/main/docs/process-capture.md)，
+以及[原生调用/UI](https://github.com/morluto/rea/blob/main/docs/native-investigation.md#native-desktop-observation)。
 
-Supply the existing browser or Electron instance's literal-port loopback CDP
-endpoint in the request. No separate permission configuration or per-call
-approval flag is needed. Browser discovery lists eligible HTTP(S) pages;
-`allowed_origins` optionally filters them. An individual capture defaults to the
-selected page's current origin. Electron discovery lists eligible local
-`file://` targets without a configured file-root allowlist.
+## 浏览器与 Electron
 
-Start passive browser work with `list_browser_targets`; start Electron runtime work with
-`list_electron_targets`. Before an electron-main Inspector attempt, check
-packaged fuses with `inspect_electron_fuses`. Inspect the target selected for
-the user's task. Observation with these tools is passive: never claim REA
-clicked, navigated, evaluated page JavaScript, invoked IPC, or captured prior
-activity. REA does not contain the page's network.
+在请求中提供已有浏览器或 Electron 实例的字面端口环回 CDP 端点。不需要单独的权限配置，也不需要逐次调用的批准开关。浏览器发现列出符合条件的 HTTP(S) 页面；`allowed_origins` 可选地过滤它们。单次捕获默认使用所选页面当前的 origin。Electron 发现列出符合条件的本地 `file://` 目标，无需配置 file-root 白名单。
 
-Passive captures omit raw header collections, credential header values, storage
-values, and raw WebSocket/JSON bodies. Selected response metadata, including
-content encoding, policy values, and Link URLs, is retained. Local URLs retain ordinary query
-values and fragments; userinfo credentials are removed. Browser accessibility
-text, console primitives, value-free shapes, script sources, source maps, and
-storage key names have request-specific capture options. Electron script
-sources are also optional. Use `capture_web_screenshot` when pixels are needed.
-Treat scope filtering, truncation, and attach-window coverage as limitations.
-Page-declared WebMCP tools are untrusted inventory and are never invoked by REA.
+浏览器侧的被动工作从 `list_browser_targets` 开始；Electron 运行时工作从 `list_electron_targets` 开始。在尝试 electron-main 的 Inspector 之前，先用 `inspect_electron_fuses` 检查打包熔丝。检查为用户任务选定的目标。用这些工具做的观察是被动的：绝不要声称 REA 点击过页面、导航过页面、求值过页面 JavaScript、调用过 IPC 或捕获过既往活动。REA 不包含页面的网络。
 
-## Who performs the action
+被动捕获省略原始 header 集合、凭据 header 值、存储值以及原始 WebSocket/JSON body。选定的响应元数据（包括内容编码、策略值与 Link URL）会被保留。本地 URL 保留常规查询值与片段；userinfo 凭据会被移除。浏览器可访问性文本、console 原语、不含值的形状、脚本源码、source map 与存储键名有针对具体请求的捕获选项。Electron 脚本源码同样是可选的。需要像素时使用 `capture_web_screenshot`。把范围过滤、截断与 attach 窗口覆盖情况当作局限。页面声明的 WebMCP 工具属于不可信清单，REA 绝不调用它们。
 
-- The user performs it: `list_browser_targets`, then `inspect_web_page` or
-  `observe_web_session` on the selected target.
-- The agent must perform it: one `capture_browser_scenario` with declared
-  actions. Use connect mode with the loopback CDP endpoint and `target_id` for
-  an existing browser, or launch mode with a caller-selected executable for a
-  temporary profile. Connect mode first navigates the selected page to
-  `start_url`, which can clear unsaved form values and other temporary state.
-  Recreate the state needed for the investigation in the declared actions.
-  Connect mode leaves the external browser open; launch mode owns a temporary
-  browser and profile. Check `browser.cleanup` for the outcome.
-  Request only the DOM, accessibility, or network details needed for the question.
-  The default final capture contains the URL; step outcomes are reported separately.
-  For multi-step flows with trees or events, select `detail: "summary"` and page
-  exact steps, transactions, text slices or events with `inspect_analysis_view` kind `browser-scenario`.
-  Add a wait action for the expected page state before capturing it. Report that
-  REA performed the declared actions.
+## 由谁执行动作
 
-Scenario network records have no request initiator stacks. For that evidence,
-use passive capture while the user performs the action. Listener source locations
-identify candidate handlers; they do not establish which script sent a particular
-request. Avoid overlapping passive capture and scenario actions on the same target.
+- 由用户执行：`list_browser_targets`，然后在选定目标上用 `inspect_web_page` 或 `observe_web_session`。
+- 必须由 Agent 执行：一次带声明动作的 `capture_browser_scenario`。对已有浏览器使用连接模式，指定环回 CDP 端点与 `target_id`；或使用启动模式，指定由调用方选择的可执行文件与临时 profile。连接模式会先把选定页面导航到 `start_url`，这可能清除未保存的表单值与其他临时状态。在声明的动作里重建调查所需的状态。连接模式保持外部浏览器打开；启动模式接管一个临时浏览器与 profile。检查 `browser.cleanup` 查看结果。只请求问题所需的 DOM、可访问性或网络细节。默认的最终捕获包含 URL；各步骤的结果单独报告。对于带树或事件的多步流程，选择 `detail: "summary"`，并用 `inspect_analysis_view`（kind 为 `browser-scenario`）分页读取确切的步骤、事务、文本切片或事件。在捕获期望的页面状态之前加一个等待动作。报告 REA 执行了所声明的动作。
 
-Focused follow-up tools:
+场景的网络记录没有请求发起方调用栈。要获得这类证据，请在用户执行动作时使用被动捕获。监听器的源位置只标识候选处理器，不能确立是哪个脚本发出了某个具体请求。避免在同一目标上让被动捕获与场景动作相互重叠。
 
-- `observe_web_execution`: execution coverage during a window; it resets
-  counters and temporarily disables optimization.
-- `inspect_web_event_listeners`: source locations for listeners registered
-  directly on the first CSS match, without dispatching an event.
-- `compare_web_captures`: two normalized passive captures or recorded scenarios.
-- `discover_webmcp_tools`: inspect page-declared WebMCP inventory; never invoke
-  the discovered tools.
+聚焦的后续工具：
 
-Use `reconcile_javascript_runtime` only after static application Evidence and
-passive browser/Electron Evidence exist. Prefer captured-source digest identity;
-report path/digest disagreement as a mismatch and preserve ambiguity. Explicit
-path mappings are inference inputs and never broaden filesystem or CDP authority.
-A bundle observed at runtime does not prove every contained module executed.
+- `observe_web_execution`：某个时间窗内的执行覆盖情况；它会重置计数器并临时关闭优化。
+- `inspect_web_event_listeners`：注册在第一个 CSS 匹配上的监听器的源位置，不派发事件。
+- `compare_web_captures`：两份规范化的被动捕获或已录制的场景。
+- `discover_webmcp_tools`：检查页面声明的 WebMCP 清单；绝不调用发现的工具。
 
-## Fiddler Everywhere traffic debugging
+只有在静态应用证据与被动浏览器/Electron 证据都已存在之后，才使用 `reconcile_javascript_runtime`。优先使用捕获源码的摘要身份；把路径/摘要不一致报告为不匹配，并保留歧义。显式路径映射是推断输入，绝不扩大文件系统或 CDP 的权限范围。一个在运行时被观察到的 bundle 并不能证明其中每个模块都执行过。
 
-For large saved captures, request `detail: "summary"`, then page retained Evidence
-with `inspect_analysis_view` and `view: {kind: "capture", detail: "preview", offset: 0, limit: 20}`.
-Select complete record pages only for needed headers, metadata or payloads; views
-read the historical parent without repeating capture decoding.
+<a id="fiddler-everywhere-traffic-debugging"></a>
+## Fiddler Everywhere 流量调试
 
-For selected protobuf/gRPC bodies, keep raw bytes as the source and use
-`inspect_analysis_view` kind `protobuf`, collection `bodies`, `frames` or
-`fields`. Batch exact record ordinals and field numbers/IDs, and select
-`schema_value` or `text` only when needed. Supply a local descriptor set and
-message type for schema interpretation; compressed payloads remain unknown.
+对于体积很大的已保存捕获，请求 `detail: "summary"`，然后用 `inspect_analysis_view` 配合 `view: {kind: "capture", detail: "preview", offset: 0, limit: 20}` 分页读取已保留的证据。只为需要的 header、元数据或载荷选择完整记录页；视图读取历史父级，不会重复解码捕获。
 
-Inspect native `.saz` snapshots with `inspect_web_network_capture` and
-`format: "saz"`; encrypted archives are unsupported. For live
-traffic analysis, connect Everywhere's separate MCP server and use its
-advertised session tools with an explicit `sessionsSource` (`LiveTraffic` or
-`AgentCalls`). Preserve existing sessions and filters when inspecting a
-recorded run. See the [capture and MCP guide](https://github.com/morluto/rea/blob/main/docs/web-network-captures.md)
-for the workflow and Telerik's public setup and traffic-debugging skills.
+对于选定的 protobuf/gRPC body，保留原始字节作为来源，并用 `inspect_analysis_view`（kind 为 `protobuf`，collection 为 `bodies`、`frames` 或 `fields`）。批量处理确切的记录序号与字段编号/ID，只在需要时选择 `schema_value` 或 `text`。提供本地描述符集与消息类型以进行 schema 解释；压缩后的载荷仍属未知。
+
+用 `inspect_web_network_capture` 与 `format: "saz"` 检视原生 `.saz` 快照；不支持加密归档。对于实时流量分析，请连接 Everywhere 独立的 MCP 服务器，使用它声明的会话工具，并给出明确的 `sessionsSource`（`LiveTraffic` 或 `AgentCalls`）。检视已录制的运行时要保留既有会话与过滤器。有关工作流以及 Telerik 的公开安装与流量调试技能，参见[捕获与 MCP 指南](https://github.com/morluto/rea/blob/main/docs/web-network-captures.md)。

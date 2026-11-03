@@ -1,10 +1,16 @@
-# Example Workflow
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/literature-review/references/example_workflow.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Illustrative end-to-end recipe, not an executed review. Run from the skill directory; populate the protocol, normalized search records, bibliography, and CSL file before the dependent commands. Dates below are a deliberately historical 2015-2024 interval.
+# 示例工作流
 
-## Example Workflow
+这是一份端到端的示意性操作手册，不是真实执行过的综述。请在本 skill 目录下运行；
+在执行后续命令之前，先准备好方案（protocol）、规范化的检索记录、参考文献库与 CSL 文件。
+下文的日期刻意采用 2015-2024 这一历史区间。
 
-Complete workflow for a biomedical literature review:
+## 示例工作流
+
+一份生物医学文献综述的完整工作流：
 
 ```bash
 # 1. Create review document from template

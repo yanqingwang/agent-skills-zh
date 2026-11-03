@@ -1,133 +1,118 @@
-# Randomization, Blocking, Stratification, and Controls
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/experimental-design/references/randomization_and_blocking.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-These are the tools of *local control*: removing or balancing nuisance variation so
-the comparison you care about is clean. Randomization handles the unknown
-confounders; blocking and stratification handle the known ones; controls and
-blinding handle the systematic biases.
+# 随机化、区组化、分层与对照
 
-## Randomization — why and how
+这些是*局部控制*的工具：消除或平衡干扰变异，让你真正关心的比较保持干净。
+随机化处理未知的混杂因素；区组化与分层处理已知的混杂因素；对照与盲法处理
+系统性偏倚。
 
-Randomization assigns treatments to units by chance, so that in expectation every
-confounder (measured or not, known or unknown) is balanced across arms. This is the
-foundation of causal inference: without it, an observed difference could always be
-due to some variable that happened to track the grouping.
+## 随机化 — 为什么做，怎么做
 
-Use a **seeded, reproducible** schedule (see `scripts/randomization.py`) and follow
-it exactly. Record the seed. "I randomized somehow" is neither auditable nor
-reproducible.
+随机化靠偶然把处理分配给单元，使得在期望意义上，每个混杂因素（无论测没测、
+知不知道）都在各臂之间保持平衡。这是因果推断的基础：没有随机化，观察到的差异
+总有可能只是某个恰好与分组相关的变量造成的。
 
-### Methods (and when each is right)
+使用**设定种子、可复现**的排程（见 `scripts/randomization.py`）并严格照它执行。
+记录种子。"我随机化了 somehow"既不可审计也不可复现。
 
-| Method | What it does | Use when |
+### 各种方法（以及各自适用的场景）
+
+| 方法 | 做什么 | 何时使用 |
 |--------|--------------|----------|
-| **Simple** | Independent random assignment per unit | Independent allocation is appropriate; imbalance is tolerable |
-| **Permuted block** | Within each block, arms appear in fixed ratio; order shuffled | You need balance at completed-block boundaries during sequential intake |
-| **Stratified block** | Separate blocks within each level of a prognostic factor | A known covariate (site, sex, stage) must be balanced across arms |
-| **Cluster** | Whole groups (clinics, classes) assigned to arms | The intervention is delivered at a group level |
-| **Minimization** | Adaptively assign to minimize imbalance across several covariates | Many prognostic factors and small n (specialized; not in the script) |
+| **简单随机化** | 每个单元独立随机分配 | 独立分配是合适的，且可以容忍不平衡 |
+| **区组随机化** | 每个区组内各臂按固定比例出现；顺序打乱 | 序贯入组期间需要在完整区组的边界上保持平衡 |
+| **分层区组** | 在每个预后因素的各水平内分别设区组 | 某个已知协变量（中心、性别、分期）必须在各臂之间平衡 |
+| **整群随机化** | 整组（诊所、班级）分配到各臂 | 干预是在组层面实施的 |
+| **最小化法** | 自适应分配，把多个协变量的不平衡降到最低 | 预后因素多且样本量小（专门方法；脚本里没有） |
 
-**Simple randomization caveat:** with small n it behaves like flipping a few coins —
-you can easily get 12 vs. 8 instead of 10 vs. 10, and worse for subgroups. Blocking
-controls this at complete-block boundaries; a partial block can remain imbalanced.
+**简单随机化的注意事项：** 样本量小时它就像抛几枚硬币 — 你很容易得到 12 比 8 而不是
+10 比 10，亚组上更糟。区组能在完整区组的边界上控制这一点；不完整的区组仍可能
+不平衡。
 
-**Block size:** must be a multiple of the ratio unit (e.g. for 1:1, sizes 2, 4, 6).
-Smaller blocks balance more tightly but are more predictable in unblinded trials
-(a clinician who knows the block size can guess the last allocation). Vary block
-size with an appropriate allocation system when predictability matters. The bundled
-helper supports a fixed size only; it does not implement concealment or variable
-block sizes. Never give recruiting staff the seed or future schedule.
+**区组大小：** 必须是分配比单位的倍数（例如 1:1 配比时取 2、4、6）。区组越小
+平衡越紧，但在非盲试验中越容易被猜到（知道区组大小的临床医生能猜出下一次分配）。
+可预测性成为问题时，用合适的分配系统变换区组大小。随附的辅助函数只支持固定
+区组大小；它不实现分配隐藏，也不支持可变区组大小。绝不要把种子或后续排程
+交给招募人员。
 
-## Blocking — removing known nuisance variation
+## 区组化 — 消除已知的干扰变异
 
-A **block** is a group of units expected to be similar (same day, batch, litter,
-plate, instrument run). You randomize treatments *within* each block. The nuisance
-variation between blocks is then removed from the error term, so the treatment
-comparison is more precise — often dramatically so.
+**区组**是一组预期相似的单元（同一天、同一批次、同一窝、同一块板、同一仪器
+运行）。你在每个区组*内部*对处理做随机化。区组之间的干扰变异随后从误差项中
+被剔除，因此处理比较更精确 — 有时精确度提升相当可观。
 
-Block on anything that (a) you can identify before the experiment and (b) you
-expect to affect the response but isn't of interest itself:
-- **Time:** day, week, session, processing batch.
-- **Space:** plate, plate position/edge, shelf, cage rack, field plot.
-- **Material:** reagent lot, animal litter, cell passage, donor.
-- **People/instruments:** technician, machine, sequencing run.
+对满足以下两条的因素做区组化：(a) 实验前你就能识别它，(b) 你预期它会影响
+响应但本身不是研究对象：
+- **时间：** 天、周、批次、处理批次。
+- **空间：** 板、板上的位置/边缘、货架、笼架、田块小区。
+- **材料：** 试剂批号、动物窝、细胞传代数、供体。
+- **人员/仪器：** 技术员、机器、测序运行。
 
-Rule of thumb: *"Block what you can, randomize what you cannot."* If you suspect a
-factor matters but can't block it, at least randomize across it and record it as a
-covariate.
+经验法则：*"能区组的就区组，不能区组的就随机化。"* 如果你怀疑某个因素重要但
+无法区组，至少在它上面做随机化，并把它记为协变量。
 
-**Randomized complete block design (RCBD):** every treatment appears once in every
-block. This is the workhorse design — analyze with treatment + block in the model.
+**随机完全区组设计（RCBD）：** 每个处理在每个区组中出现一次。这是主力设计 —
+分析时在模型中放入 treatment + block。
 
-## Stratification vs. blocking vs. covariate adjustment
+## 分层、区组化与协变量调整的区别
 
-These overlap; the distinction is about *when* you control the variable:
-- **Stratify / block at design time** when the factor is known before assignment and
-  you want treatment-count balance within completed blocks in its levels. This
-  does not guarantee balance on all covariates or within incomplete blocks.
-- **Adjust as a covariate at analysis time** (ANCOVA, regression) when the factor is
-  a pre-specified **baseline** variable, including a continuous prognostic factor.
-  Often you both stratify and adjust. Do not automatically adjust for a variable
-  measured after assignment: treatment may affect it, changing the estimand or
-  introducing bias. See the [FDA covariate guidance](https://www.fda.gov/media/148910/download).
+三者有重叠；区别在于你*何时*控制这个变量：
+- **在设计阶段分层 / 区组化** — 当该因素在分配前已知，且你希望在其各水平内、
+  在完整区组的边界上实现处理数平衡。这并不保证所有协变量上或在不完整区组内的
+  平衡。
+- **在分析阶段作为协变量调整**（ANCOVA、回归）— 当该因素是预先指定的
+  **基线**变量时，包括连续的预后因素。分层与调整常常同时使用。不要自动去调整
+  分配之后才测量的变量：处理可能影响它，从而改变估计目标或引入偏倚。见
+  [FDA 协变量指南](https://www.fda.gov/media/148910/download)。
 
-A few strata are better than many: stratifying on too many factors at once leaves
-strata with too few units to block effectively. For many covariates and small n,
-minimization is the alternative.
+少数几个分层优于大量分层：一次按太多因素分层，会让每个分层剩下的单元太少，
+无法有效区组化。协变量多而样本量小时，替代方案是最小化法。
 
-## Controls
+## 对照
 
-A comparison needs a concurrent baseline. Match the control to the threat you're
-ruling out:
-- **Untreated / standard-of-care control** — isolates the treatment effect from time.
-- **Vehicle / sham control** — isolates the active ingredient from the delivery
-  (injection stress, vehicle solvent, sham surgery).
-- **Positive control** — a treatment known to produce the effect, to confirm the
-  assay can detect one at all.
-- **Concurrent, not historical** — controls run at the same time as the treatment;
-  historical controls reintroduce time confounding.
+任何比较都需要一个同期基线。让对照对应你要排除的威胁：
+- **未治疗 / 标准治疗对照** — 把处理效应与时间效应分离开。
+- **安慰剂 / 假处理对照** — 把活性成分与给药方式（注射应激、溶剂、假手术）
+  分离开。
+- **阳性对照** — 用已知能产生该效应的处理，确认检测体系本身至少能检出它。
+- **同期而非历史** — 对照与处理同时运行；历史对照会重新引入时间混杂。
 
-## Blinding
+## 盲法
 
-Blinding prevents expectation from biasing measurement and behavior:
-- **Single-blind:** the subject doesn't know the assignment.
-- **Double-blind:** neither subject nor experimenter/assessor knows.
-- **Blinded outcome assessment:** at minimum, whoever measures the outcome shouldn't
-  know the group — cheap and high-value even in animal/bench work.
-Allocation concealment (the person enrolling can't foresee the next assignment) is
-distinct from blinding. A seed or CSV alone does not provide concealment: an
-independent allocator or access-controlled assignment system must release only
-the next allocation after eligibility/enrollment is irrevocably recorded. See
-[CONSORT 2025 allocation concealment](https://www.consort-spirit.org/item18-allocationconcealment).
+盲法防止期望影响测量和行为：
+- **单盲：** 受试者不知道分组。
+- **双盲：** 受试者和实验者/评估者都不知道。
+- **盲态结局评估：** 至少测量结局的人不该知道分组 — 即使在动物实验或台架工作
+  中，这项做法也成本低、价值高。
+分配隐藏（入组的人无法预判下一次分配）与盲法是两回事。仅靠一个种子或 CSV
+并不构成分配隐藏：必须由独立分配者或带访问控制的分配系统，在资格/入组被不可
+撤销地记录之后，才释放下一次分配。见
+[CONSORT 2025 分配隐藏](https://www.consort-spirit.org/item18-allocationconcealment)。
 
-## Batch effects and plate layout (especially omics / HTS)
+## 批次效应与板布局（尤其组学 / 高通量场景）
 
-Batch effects are systematic technical differences between processing groups and are
-a leading cause of irreproducible high-throughput results.
-- **Never let batch align with the biological condition.** If all cases are in batch
-  1 and all controls in batch 2, condition and batch are perfectly confounded and
-  no normalization can separate them.
-- **Randomize or block sample-to-batch and position-within-plate.** Spread each
-  condition across all batches and across plate positions.
-- **Avoid edge effects:** evaporation and thermal gradients make outer wells differ;
-  don't load all controls into edge columns. Randomize positions, or include
-  replicates spanning edge and interior.
-- **Include anchor/reference samples** in every batch to estimate and correct batch
-  shifts.
-- `assign_factorial_runs()` shuffles an existing table; it does not design a plate
-  map or preserve blocks automatically. Build and validate the plate/block/position
-  columns first, then apply randomization only within permitted groups. A whole-table
-  shuffle is unsuitable for a split-plot or other restricted randomization.
+批次效应是处理组之间的系统性技术差异，是高通量结果难以复现的首要原因。
+- **绝不能让批次与生物学条件对齐。** 如果所有病例在批次 1、所有对照在批次 2，
+  条件与批次就完全混杂，任何归一化都分不开。
+- **随机化或区组化样本到批次、位置到板内的分配。** 让每个条件散布到所有批次
+  和所有板位。
+- **避免边缘效应：** 蒸发和热梯度让外圈孔位有别；不要把所有对照都装在边缘列。
+  随机化位置，或让重复样本同时覆盖边缘与内部。
+- **每个批次都放入锚定/参考样本**，用于估计和校正批次漂移。
+- `assign_factorial_runs()` 只打乱已有表格；它不设计板图，也不自动保留区组。
+  先构建并校验板/区组/位置列，然后只在允许的组内做随机化。整表打乱不适用于
+  裂区设计或其他受限随机化。
 
-## Documentation
+## 文档记录
 
-Record, and ideally pre-register: the randomization method, the seed, block sizes,
-stratification factors, package/script versions, the schedule itself, and the planned analysis (which must
-include block/stratum/cluster terms). This is what makes the study auditable and the
-primary analysis confirmatory rather than exploratory.
+记录并最好预注册：随机化方法、种子、区组大小、分层因素、软件包/脚本版本、
+排程本身，以及计划好的分析（其中必须包含区组/分层/整群项）。这些记录让研究
+可被审计，也让主分析是确证性的而非探索性的。
 
-For sequence inputs to `stratified_block_randomization`, `unit_id` is the original
-one-based position; preserve the subject-ID mapping before joining. Dict inputs
-represent grouped future slots. Check complete-block counts separately from overall
-counts and examine the incomplete final block in each stratum. Zero is a valid
-cohort size; negative/fractional counts, zero block sizes, missing strata, duplicate
-arms, and duplicate cluster IDs are invalid.
+对于 `stratified_block_randomization` 的序列输入，`unit_id` 是原始的从 1 开始
+的位置；合并前请保留受试者 ID 的映射。字典输入表示分组的未来槽位。完整区组
+的计数要与总计数分开检查，并逐一查看每个分层中不完整的最后一个区组。0 是合法的
+队列规模；负数/小数计数、零区组大小、缺失分层、重复的臂和重复的整群 ID 都是
+非法输入。

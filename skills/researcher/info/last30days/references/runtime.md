@@ -1,12 +1,16 @@
-# Runtime and configuration
+> **中文汉化版** · 上游：[mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) · 原文件：`skills/last30days/references/runtime.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Read before any engine command. Bind `SKILL_DIR` to the loaded root SKILL.md before running these snippets. A reference directory is never an install root.
+# 运行时与配置
 
-# STEP 0: STALE-CLONE SELF-CHECK — RUN BEFORE READING BELOW
+在任何引擎命令之前阅读本文件。运行这些片段前，把 `SKILL_DIR` 绑定到已加载的根 SKILL.md。参考目录永远不是安装根。
 
-Before reading anything else in this file, check whether you loaded SKILL.md from the one known stale-clone location: Claude Code's marketplaces directory.
+# 第 0 步：陈旧克隆自检 — 阅读下文之前先运行
 
-**Run this check:**
+在阅读本文件的其他任何内容之前，先检查你是否从唯一已知的陈旧克隆位置加载了 SKILL.md：Claude Code 的 marketplaces 目录。
+
+**运行这项检查：**
 
 ```bash
 CLAUDE_CACHE_LATEST=$(find "$HOME/.claude/plugins/cache/last30days-skill/last30days" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort -V | tail -1)
@@ -23,16 +27,16 @@ fi
 echo "CLAUDE_CACHE_SKILL_MD=$CLAUDE_CACHE_SKILL_MD"
 ```
 
-If the loaded root SKILL.md path contains `/.claude/plugins/marketplaces/` AND `$CLAUDE_CACHE_SKILL_MD` is non-empty, STOP and re-read `$CLAUDE_CACHE_SKILL_MD` before proceeding. Otherwise the SKILL.md you have is fine — continue.
+如果已加载的根 SKILL.md 路径包含 `/.claude/plugins/marketplaces/`，且 `$CLAUDE_CACHE_SKILL_MD` 非空，就停止并重新阅读 `$CLAUDE_CACHE_SKILL_MD` 再继续。否则你手上的 SKILL.md 没问题，继续即可。
 
-**Other install paths are fine:** `~/.codex/skills/`, `~/.agents/skills/`, an `npx skills add` install dir, or a repo checkout are all valid load points - the root `SKILL_DIR` binding picks them up. Do NOT abort or hop on those paths.
+**其他安装路径都没问题：** `~/.codex/skills/`、`~/.agents/skills/`、`npx skills add` 的安装目录或仓库检出都是有效的加载点，根 `SKILL_DIR` 绑定会自动识别它们。在这些路径上不要中止或跳转。
 
 ---
 
 
-## Runtime Preflight
+## 运行时预检
 
-Before running any `last30days.py` command in this skill, resolve a Python 3.12+ interpreter once and keep it in `LAST30DAYS_PYTHON`:
+在本 Skill 中运行任何 `last30days.py` 命令之前，一次性解析出 Python 3.12+ 解释器并把它保存在 `LAST30DAYS_PYTHON` 中：
 
 ```bash
 try_last30days_python() {
@@ -120,46 +124,46 @@ export LAST30DAYS_PYTHON
 
 ```
 
-**PYTHON VERSION GATE — when the Runtime Preflight Bash block above exits with a Python version error:**
+**PYTHON 版本门槛 — 当上面的运行时预检 Bash 块因 Python 版本错误而退出时：**
 
-If the preflight script (including the uv fallback above) emits `ERROR: last30days v3 requires Python 3.12+` (or `LAST30DAYS_PYTHON must point to Python 3.12+`) and exits, you MUST:
+如果预检脚本（包括上面的 uv 回退）输出 `ERROR: last30days v3 requires Python 3.12+`（或 `LAST30DAYS_PYTHON must point to Python 3.12+`）并退出，你必须：
 
-1. Display this message to the user:
+1. 向用户显示这条消息：
    > "The last30days engine needs Python 3.12+. Your system has an older version. Install it with one command:
    > - **Mac:** `brew install python@3.12`
    > - **Windows:** `winget install Python.Python.3.12`
    > - **Linux:** `sudo apt install python3.12` (or `pyenv install 3.12`)
    >
    > Then re-run `/last30days <your topic>` and the setup wizard will configure everything automatically."
-2. **Stop.** Do not attempt research. Do not fall back to WebSearch-only synthesis.
+2. **停止。** 不要尝试研究。不要退回到只用 WebSearch 的综合。
 
-WebSearch-only synthesis is not equivalent to running the engine — it misses Reddit community data, X/Twitter timelines, YouTube transcripts, TikTok, and Polymarket. Presenting it without disclosure misleads the user about what was actually searched. This is the same category of failure as a WebSearch-only run with no engine footer.
+只用 WebSearch 的综合并不等同于运行引擎 — 它会漏掉 Reddit 社区数据、X/Twitter 时间线、YouTube 转录、TikTok 与 Polymarket。不加说明就呈现它，会误导用户以为实际检索过的东西就是这些。这与不带引擎页脚的纯 WebSearch 运行属于同一类失败。
 
-**Native-search signal (web coverage).** If you (the hosting model) have your own web-search tool available, export `LAST30DAYS_NATIVE_SEARCH=1` in the same shell before invoking the engine:
+**原生搜索信号（web 覆盖面）。** 如果你（承载模型）自带 web 搜索工具，在调用引擎前先在同一个 shell 中导出 `LAST30DAYS_NATIVE_SEARCH=1`：
 
 ```bash
 export LAST30DAYS_NATIVE_SEARCH=1   # ONLY when you have a native web-search tool
 ```
 
-Your host search is better than the engine's keyless web fallback, so this tells the engine to skip that fallback and leave general web to you (you already run web-search supplements in Step 2). If you have NO web-search tool in the agent session, do **not** set this: the engine's keyless web floor supplies general-web coverage automatically. The rule is capability-based, not host-name-based — set it only when you genuinely have a better search, never to suppress the floor on a host that has nothing else.
+你所在的宿主搜索强于引擎的免密 web 回退，所以这会告诉引擎跳过那个回退，把通用 web 检索留给你（你本来就在第 2 步跑 web 搜索补充）。如果 Agent 会话里没有任何 web 搜索工具，就**不要**设置它：引擎的免密 web 下限会自动提供通用 web 覆盖面。这条规则基于能力，而不是宿主名称，只有在你确实有更好的搜索时才设置，绝不要在什么都没有的宿主上为了压掉这个下限而设置。
 
-## Save-directory resolution
+## 保存目录解析
 
-After interpreter bootstrap, resolve the save directory once before the first engine operation that needs it. If the user supplied a one-off directory, add `--save-dir="<requested directory>"` to the resolver command below before running it. Remove any duplicate save-directory flag from the later research arguments. Never source a `.env` file.
+解释器引导之后，在第一次需要保存目录的引擎操作之前，一次性解析出保存目录。如果用户提供了一次性目录，在运行下面的解析命令之前，先加上 `--save-dir="<requested directory>"`。从后面的研究参数中去掉重复的保存目录参数。绝不 source `.env` 文件。
 
 ```bash
 LAST30DAYS_MEMORY_DIR="$("${LAST30DAYS_PYTHON}" "${SKILL_DIR}/scripts/last30days.py" --resolve-save-dir)" || exit
 printf 'Resolved save directory: <%s>\n' "$LAST30DAYS_MEMORY_DIR" >&2
 ```
 
-Capture that exact value, including an empty string. Later library, discovery, and research recipes use this captured value and do not resolve it again. When shell calls do not share variables, restore the captured value explicitly. All discovery legs use the same value even if configuration or working directory changes.
+捕获那个确切值，包括空字符串。后续的 library、discovery 与 research 配方都使用这个捕获值，不再重新解析。当各次 shell 调用之间不共享变量时，显式恢复捕获到的值。所有 discovery 阶段都使用同一个值，即使配置或工作目录发生变化。
 
-## Configuration
+## 配置
 
-Set `LAST30DAYS_MEMORY_DIR` in the process environment, trusted project config, or global `~/.config/last30days/.env` to choose where raw research files are saved. Resolution follows that order after an explicit `--save-dir`. Only an absent setting defaults the skill to `~/Documents/Last30Days`; an explicitly empty value disables research file saves. The engine creates a nonempty directory on first save.
+在进程环境、可信项目配置或全局 `~/.config/last30days/.env` 中设置 `LAST30DAYS_MEMORY_DIR`，以决定原始研究文件保存在哪里。在显式的 `--save-dir` 之后，解析顺序遵循该优先级。只有完全未设置时才让 Skill 默认为 `~/Documents/Last30Days`；显式留空则禁用研究文件保存。引擎在首次保存时创建非空目录。
 
-The engine reads `LAST30DAYS_MEMORY_DIR` from either the process env or `~/.config/last30days/.env`, so direct CLI invocations (`python3 scripts/last30days.py ...`) without `--save-dir` will still save when the env var is set. Mirrors the `LAST30DAYS_STORE` env-or-flag convention. Explicit `--save-dir` always wins.
+引擎从进程环境或 `~/.config/last30days/.env` 读取 `LAST30DAYS_MEMORY_DIR`，因此在环境变量已设置时，不带 `--save-dir` 的直接 CLI 调用（`python3 scripts/last30days.py ...`）同样会保存。这与 `LAST30DAYS_STORE` 的环境变量或参数约定一致。显式的 `--save-dir` 始终优先。
 
-When both `LAST30DAYS_API_KEY` and `LAST30DAYS_API_BASE` are set, the engine runs the research through that configured remote API instead of local sources (unless `--mock` is passed); `LAST30DAYS_API_BASE` is the endpoint and has no built-in default, so leaving either variable unset runs local sources normally. A configured `--corpus` / `LAST30DAYS_CORPUS_DIRS` is the privacy exception: the engine bypasses the hosted backend and runs locally so no file-derived input is forwarded. An explicit `--perplexity-search-type` flag also runs locally when a direct `PERPLEXITY_API_KEY` exists, because the hosted backend cannot apply it; the engine prints one stderr notice. Without a direct key the run stays hosted and prints a note that the flag was not applied. A `LAST30DAYS_PERPLEXITY_SEARCH_TYPE` value set only in the environment keeps hosted routing and prints a note that it was not applied. The invocation is otherwise unchanged: same flags, `--quick`/`--deep` map to search depth, a non-default `--register` is forwarded for server-side synthesis, progress lines still stream on stderr (`[narrate] step=...` plus a compact elapsed/eta line), and the report prints on stdout and saves to the memory dir as usual, so Steps 1-4 proceed normally on the output. The exception is research JSON: the remote endpoint does not return the local `Report` needed for the versioned agent profile, so use `--emit=json --json-profile=raw` for its existing server-response JSON contract. No per-source keys or setup-wizard credentials are needed for the search itself in this mode. Two engine exits need specific handling: exit code 3 means the API asked a clarifying question first - the engine prints the question and options on stderr; present them to the user and re-run with the chosen angle folded into the topic. An insufficient-credits failure (HTTP 402) prints the account's balance, the amount needed, and a billing link - relay those lines to the user verbatim; do not fall back to WebSearch-only synthesis.
+当 `LAST30DAYS_API_KEY` 与 `LAST30DAYS_API_BASE` 同时设置时，引擎会通过该配置的远程 API 而不是本地来源来运行研究（除非传入 `--mock`）；`LAST30DAYS_API_BASE` 是端点，没有内置默认值，因此任一变量未设置都会照常运行本地来源。配置了 `--corpus` / `LAST30DAYS_CORPUS_DIRS` 属于隐私例外：引擎绕过托管后端、改为本地运行，这样任何源自文件的输入都不会被转发。显式的 `--perplexity-search-type` 参数在存在直连 `PERPLEXITY_API_KEY` 时也会本地运行，因为托管后端无法应用它；引擎会打印一条 stderr 提示。没有直连密钥时，运行仍走托管路径，并打印一条说明该参数未被应用的提示。仅在环境变量中设置的 `LAST30DAYS_PERPLEXITY_SEARCH_TYPE` 值仍会保持托管路由，并打印一条说明它未被应用的提示。除此之外调用方式不变：参数相同，`--quick`/`--deep` 映射到搜索深度，非默认的 `--register` 会转发给服务端做综合，进度行仍流式输出到 stderr（`[narrate] step=...` 加一行紧凑的耗时/剩余时间），报告照常打印到 stdout 并保存到记忆目录，因此第 1-4 步在输出上照常进行。例外是研究 JSON：远程端点不返回版本化 Agent 画像所需的本地 `Report`，因此请用 `--emit=json --json-profile=raw` 以获取其既有的服务端响应 JSON 契约。在此模式下，搜索本身不需要任何按来源的密钥或设置向导凭证。有两种引擎退出需要特别处理：退出码 3 表示 API 先提出了一个澄清问题，引擎会把问题和选项打印到 stderr；把它们呈现给用户，并把选定的角度折进话题后重新运行。额度不足的失败（HTTP 402）会打印账户余额、所需金额与账单链接，原样把这些行转达给用户；不要退回到只用 WebSearch 的综合。
 
-**Developer-only eval capture:** `--record-fixtures <dir>` is a hidden direct-engine flag for maintaining the deterministic research-quality suite. It records scrubbed HTTP and CLI-adapter responses to `<dir>/http.json`; it is never part of the user-facing slash-command invocation. Follow `docs/reference/eval.md` for fixture review, replay, and baseline rules.
+**仅开发者用的评测采集：** `--record-fixtures <dir>` 是维护确定性研究质量测试套件用的隐藏直连引擎参数。它把脱敏后的 HTTP 与 CLI 适配器响应记录到 `<dir>/http.json`；它绝不属于面向用户的斜杠命令调用。夹具评审、回放与基线规则见 `docs/reference/eval.md`。

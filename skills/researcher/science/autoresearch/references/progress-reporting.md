@@ -1,71 +1,75 @@
-# Progress Reporting: Research Presentations
+> **中文汉化版** · 上游：[Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) · 原文件：`0-autoresearch-skill/references/progress-reporting.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When the research produces something worth sharing, create a compelling presentation — not a status dump, but a research story with visuals.
+# 进度报告：研究演示
 
-## When to Report
+当研究产出值得分享的东西时，做一份有说服力的演示 — 不是状态倾倒，而是一个配有可视化的研究故事。
 
-You decide when progress is meaningful enough to report. Consider reporting:
+## 何时报告
 
-- After an outer loop reflection that identified a significant pattern
-- When the optimization trajectory shows clear, sustained improvement
-- After a pivot — explain why the direction changed
-- Before requesting human input on a major decision
-- When concluding the research, before paper writing
+由你判断进度是否重要到值得报告。考虑在以下时机报告：
 
-Maximum frequency: once per /loop tick or heartbeat cycle. Minimum: whenever you have something a human would find interesting.
+- 一次外循环反思之后，发现了显著的模式
+- 优化轨迹显示出清晰且持续的改善
+- 一次转向之后 — 解释方向为什么改变
+- 就重大决策请求人工介入之前
+- 研究收尾、写论文之前
 
-## What Makes a Good Research Presentation
+最高频率：每个 /loop tick 或心跳周期一次。最低标准：只要你手上有让人感兴趣的东西。
 
-A good progress report reads like a research talk, not a database query. It should:
+## 什么是好的研究演示
 
-1. **Tell a story**: why we started, what we tried, what we found, what it means
-2. **Show, don't just tell**: include plots, tables, comparisons — not just text
-3. **Be selective**: highlight the interesting findings, don't exhaustively list every experiment
-4. **End with direction**: what happens next and why
+好的进度报告读起来像一场研究讲座，而不是一条数据库查询。它应该：
 
-## Recommended Sections
+1. **讲一个故事**：我们为什么开始、尝试了什么、发现了什么、这意味着什么
+2. **展示，而不只是讲述**：包含图表、表格、对比 — 而不只是文字
+3. **有取舍**：突出有意思的发现，不要事无巨细地罗列每一次实验
+4. **以方向收尾**：接下来会发生什么，为什么
 
-Adapt these to what's compelling from your current research. Skip sections that aren't relevant. Add sections the research demands.
+## 推荐章节
 
-### 1. Research Question and Motivation
-- What are we investigating and why does it matter?
-- One paragraph, accessible to someone unfamiliar with the project
+按当前研究中真正有说服力的内容来调整。跳过不相关的章节。补上研究所需的章节。
 
-### 2. Approach
-- What's our method? What are we optimizing?
-- The two-loop architecture in one sentence
+### 1. 研究问题与动机
+- 我们在研究什么，它为什么重要？
+- 一段话，写给不熟悉这个项目的人看
 
-### 3. Optimization Trajectory (The Karpathy Plot)
-- X-axis: experiment number or wall-clock time
-- Y-axis: proxy metric value
-- Show baseline as a horizontal line
-- Annotate significant jumps with what change caused them
-- This is often the most compelling visual — include it whenever possible
+### 2. 方法
+- 我们的方法是什么？我们在优化什么？
+- 一句话讲清双循环架构
 
-### 4. Key Findings
-- The 2-3 most significant results with supporting evidence
-- Include plots, metric tables, comparison charts
-- Explain WHY results are significant, not just WHAT they are
+### 3. 优化轨迹（Karpathy 图）
+- X 轴：实验序号或墙钟时间
+- Y 轴：代理指标数值
+- 用一条水平线显示基线
+- 标注显著跃升，以及是什么改动引发的
+- 这通常是最有说服力的一张图 — 尽可能总是带上它
 
-### 5. What We Tried (Decision Map)
-- A selective view of the hypothesis tree
-- Focus on the reasoning: why each direction was chosen, what it taught us
-- Include both successes and informative failures
+### 4. 关键发现
+- 2-3 个最重要的结果，附支撑证据
+- 包含图表、指标表、对比图
+- 解释结果为何重要（WHY），而不只是结果是什么（WHAT）
 
-### 6. Current Understanding
-- The findings.md narrative, but presented compellingly
-- What's our best explanation for the patterns we see?
+### 5. 我们尝试过什么（决策地图）
+- 对假设树的有取舍的呈现
+- 聚焦推理过程：为什么选这个方向，它教会了我们什么
+- 成功与有信息量的失败都要有
 
-### 7. Next Steps
-- What experiments are planned and why
-- What questions remain open
-- Any decisions that need human input
+### 6. 当前理解
+- findings.md 的叙述，但要有说服力地呈现
+- 对我们看到的模式，最好的解释是什么？
 
-## The Optimization Trajectory Plot
+### 7. 下一步
+- 计划了哪些实验，为什么
+- 还有哪些悬而未决的问题
+- 哪些决策需要人工介入
 
-This is the signature visual of autoresearch — a chart showing metric improvement over experiments.
+## 优化轨迹图
 
-Minimal implementation (SVG-based, no dependencies):
+这是 autoresearch 的标志性视觉元素 — 一张展示指标随实验改进的图表。
+
+最小实现（基于 SVG，无依赖）：
 
 ```python
 def generate_trajectory_svg(trajectory_data, width=800, height=400):
@@ -125,22 +129,22 @@ def generate_trajectory_svg(trajectory_data, width=800, height=400):
     return svg
 ```
 
-Embed the SVG output directly in the HTML report. Annotate significant jumps with brief labels.
+把 SVG 输出直接嵌入 HTML 报告。用简短标注标出显著的跃升点。
 
-## HTML Presentation Template
+## HTML 演示模板
 
-Use [templates/progress-presentation.html](../templates/progress-presentation.html) as a starting point. It provides:
+以 [templates/progress-presentation.html](../templates/progress-presentation.html) 为起点。它提供了：
 
-- Clean, dark-themed styling suitable for research presentations
-- Responsive layout
-- Section scaffolding matching the recommended structure
-- Placeholder for the trajectory chart
+- 干净的暗色主题样式，适合研究演示
+- 响应式布局
+- 与推荐结构相匹配的章节骨架
+- 轨迹图的占位
 
-Replace placeholder content with your actual research data. Add, remove, or rearrange sections as the research demands. The template is a scaffold, not a constraint.
+用你的实际研究数据替换占位内容。按研究需要增删或重排章节。模板是脚手架，不是限制。
 
 ### Claude Code
 
-Generate the HTML, then show it to the human:
+生成 HTML，然后展示给人看：
 
 ```bash
 open to_human/progress-001.html
@@ -148,18 +152,18 @@ open to_human/progress-001.html
 
 ### OpenClaw
 
-Generate a PDF version. Options:
-- Use Python `weasyprint` to convert HTML to PDF
-- Use `matplotlib` to generate plots directly as PDF
-- Create a simple markdown → PDF pipeline
+生成 PDF 版本。可选方案：
+- 用 Python 的 `weasyprint` 把 HTML 转成 PDF
+- 用 `matplotlib` 直接把图表生成为 PDF
+- 搭一条简单的 markdown → PDF 流水线
 
-Note the PDF path in HEARTBEAT.md so the human knows to look at it.
+在 HEARTBEAT.md 里记下 PDF 路径，让人知道去哪里看。
 
-## Presentation Quality Tips
+## 演示质量要点
 
-- **One insight per section** — don't overload
-- **Label axes and units** on all plots
-- **Use color consistently** — one color for improvements, another for baselines
-- **Include confidence intervals** or error bars where meaningful
-- **Show the trajectory early** — it's the hook that tells the reader "this is working"
-- **End with a clear next step** — the human should know what happens next without asking
+- **每节一个洞察** — 不要堆叠
+- **所有图表都要标注坐标轴与单位**
+- **颜色保持一致** — 改进用一种颜色，基线用另一种
+- **有意义的地方加上置信区间或误差棒**
+- **尽早展示轨迹** — 它是那个让读者相信“这在起作用”的钩子
+- **以清晰的下一步收尾** — 让人不用问就知道接下来会发生什么

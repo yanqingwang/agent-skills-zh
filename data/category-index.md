@@ -210,7 +210,6 @@
 - [arxiv](skills/researcher/science/arxiv/SKILL.md) — 上游 [wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep)
 - [auto-paper-improvement-loop](skills/researcher/science/auto-paper-improvement-loop/SKILL.md) — 上游 [wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep)
 - [autoresearch](skills/researcher/science/autoresearch/SKILL.md) — 上游 [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs)
-- [autoresearch](skills/researcher/science/autoresearch/SKILL.md) — 上游 [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs)
 - [实验设计（experimental-design）](skills/researcher/science/experimental-design/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
 - [exploratory-data-analysis](skills/researcher/science/exploratory-data-analysis/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
 - [文献综述（literature-review）](skills/researcher/science/literature-review/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)

@@ -1,235 +1,271 @@
-# Ethical and Confidential Peer Review
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/peer-review/references/ethical_review_practice.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Reviewed on **2026-10-01** against COPE, ICMJE, and illustrative publisher policies listed in `assets/source_ledger.csv`. Source-specific access limits and dates are recorded there.
+# 伦理与保密的同行评审
 
-COPE’s current membership framework is its [Code of Conduct](https://publicationethics.org/membership/code-of-conduct), published 21 July 2026 with a 12-month implementation transition. It replaces the 2017 Core Practices, which were [retired in 2024](https://publicationethics.org/about/what-we-do/our-story/history-code-conduct). This membership framework is distinct from the still-current reviewer-specific **Ethical Guidelines for Peer Reviewers, version 2 (2017)** used below. The target journal’s published process controls the individual assignment.
+于 **2026-10-01** 对照 COPE、ICMJE 以及 `assets/source_ledger.csv` 中列
+出的示例性出版方政策完成审阅。各来源特有的访问限制与日期记录在该文件中。
 
-## Role boundary
+COPE 当前的会员框架是其
+[《成员行为准则》](https://publicationethics.org/membership/code-of-conduct)，
+发布于 2026 年 7 月 21 日，并设有 12 个月的实施过渡期。它取代了 2017 年
+的 Core Practices，后者已
+[于 2024 年废止](https://publicationethics.org/about/what-we-do/our-story/history-code-conduct)。
+这一会员框架与下文所用、仍然有效的、面向审稿人的
+**《同行评审伦理指南》第 2 版（2017）** 并不相同。目标期刊公布的流程对具
+体指派具有约束力。
 
-This skill supports an accountable human preparing a review draft or structured assessment. It must not:
+## 角色边界
 
-- Claim to be the assigned reviewer, editor, journal, funder, or decision-maker
-- Submit a review or contact authors, editors, institutions, or third parties without authorization
-- Invent manuscript content, experiments, analyses, citations, reviewer identity, or editorial outcomes
-- Present generated text as an independently completed review
-- Investigate authors or search unpublished content outside the authorized process
+本 skill 支持一位负责任的人类准备评审草稿或结构化评估。它不得：
 
-The editor decides the editorial outcome. The reviewer provides evidence-bounded advice within the requested scope.
+- 声称自己是被指派的审稿人、编辑、期刊、资助方或决策者
+- 未经授权提交评审，或联系作者、编辑、机构或第三方
+- 编造稿件内容、实验、分析、引用、审稿人身份或编辑处理结果
+- 把生成的文本当作独立完成的评审来呈现
+- 在授权流程之外调查作者或检索未发表内容
 
-## Before accepting or starting
+编辑决定编辑处理结果。审稿人在请求的范围内提供有证据边界的建议。
 
-COPE’s Ethical Guidelines for Peer Reviewers and ICMJE recommendations require reviewers to consider:
+## 接受或开始之前
 
-### Competence
+COPE 的《同行评审伦理指南》与 ICMJE 的建议要求审稿人考虑：
 
-- Accept only work for which the reviewer can provide a useful assessment.
-- State material subject-matter, methods, statistics, ethics, language, or domain limits.
-- Ask the editor for a specialist reviewer when a central issue exceeds competence.
-- Do not conceal limits by producing confident generic criticism.
+### 胜任力
 
-### Conflicts
+- 只接受自己能够给出有用评估的工作
+- 说明在专业方向、方法、统计、伦理、语言或领域上的实质性局限
+- 当某个核心问题超出自身能力时，向编辑请求安排专家审稿人
+- 不要用自信而泛泛的批评来掩盖局限
 
-Disclose actual, potential, or perceived conflicts before proceeding. They can be:
+### 利益冲突
 
-- Financial or commercial
-- Personal or family
-- Institutional
-- Recent collaboration, supervision, mentorship, or competition
-- Intellectual commitments or directly competing work
-- Political, religious, advocacy, or legal interests
+继续之前披露实际存在、可能存在或被认为存在的利益冲突。它们可能是：
 
-The journal decides whether a disclosed conflict permits review. If unresolved, stop. In the intake, `disclosed_to_editor` remains blocked; record `editor_cleared` only after clearance. Do not accept merely to gain access to unpublished work.
+- 财务或商业方面的
+- 个人或家庭方面的
+- 机构方面的
+- 近期合作、指导、师生关系或竞争关系
+- 学术信念或直接竞争的工作
+- 政治、宗教、倡导或法律利益方面的
 
-### Capacity and timeliness
+是否允许在披露了利益冲突的情况下继续评审，由期刊决定。如果冲突未解决，就
+停止。在受理记录中，`disclosed_to_editor` 保持为阻断状态；只有在获得放行
+之后才记录 `editor_cleared`。不要仅仅为了获取未发表材料而接受评审。
 
-Accept only if the review can be completed within the agreed time. Tell the editor promptly if scope or timing changes.
+### 工作量与时限
 
-### Journal policy
+只有在能在约定时间内完成评审时才接受。若范围或时间安排发生变化，及时告知
+编辑。
 
-Record:
+### 期刊政策
 
-- Review model and anonymity expectations
-- Whether co-review is allowed and how contributors are named
-- Confidentiality and retention requirements
-- Required author-facing and editor-only fields
-- AI and tool policy
-- Citation, image-integrity, data, ethics, and reporting expectations
+记录：
 
-Journal practices differ. A policy from another publisher is an example, not authority for the target venue.
+- 评审模式与匿名要求
+- 是否允许协同评审，以及贡献者如何署名
+- 保密与留存要求
+- 面向作者与仅面向编辑的必填字段
+- AI 与工具使用政策
+- 引用、图像完整性、数据、伦理与报告方面的要求
 
-Use `scripts/validate_review_intake.py` before substantive review.
+各期刊的实践不同。另一家出版方的政策只是示例，不是目标发表载体的依据。
 
-## Confidentiality and data handling
+在进入实质性评审之前，运行 `scripts/validate_review_intake.py`。
 
-An unpublished manuscript, its supplements, review comments, and editorial correspondence are privileged confidential material.
+## 保密与数据处理
 
-### Default rule
+未发表的稿件、其补充材料、评审意见和编辑通信都属于受保护的机密材料。
 
-Keep processing local. Do not send, paste, upload, transcribe, summarize, or expose unpublished manuscript or review text to:
+### 默认规则
 
-- Public or external generative-AI systems
-- Search engines or web research tools
-- Citation, plagiarism, grammar, translation, or image services
-- Unapproved collaborators
-- Cloud storage or telemetry outside the authorized environment
+在本地处理。不要把未发表的稿件或评审文本发送、粘贴、上传、转录、总结或暴
+露给：
 
-unless the publisher or author has authorized that specific use, the target venue permits it, and applicable privacy, contract, intellectual-property, and data-governance requirements are satisfied.
+- 公开或外部的生成式 AI 系统
+- 搜索引擎或网络检索工具
+- 引用查重、语法、翻译或图像处理服务
+- 未经批准的协作者
+- 授权环境之外的云存储或遥测服务
 
-Authorization to review is not automatically authorization to disclose material to a service. A tool’s promise not to train on data is not, by itself, authorization.
+除非出版方或作者授权了该项具体用途、目标发表载体允许该用途，并且适用的隐
+私、合同、知识产权与数据治理要求都得到满足。
 
-A hosted assistant reading a file is external processing even when its shell or bundled validator executes locally. Do not confuse the CLI's local-only behavior with the assistant platform's handling of content.
+获得评审授权并不等于自动获得把材料透露给某个服务的授权。工具承诺不使用数据
+做训练，本身并不构成授权。
 
-The bundled CLIs:
+托管式助手读取文件也属于外部处理，即使它的 shell 或随附的校验
+器在本地执行。不要把 CLI 的仅本地行为与助手平台对内容的处理方式混为一谈。
 
-- Use only Python’s standard library
-- Read bounded local JSON, CSV, or Markdown
-- Make no network, model, image, subprocess, environment-variable, or dynamic-code calls
-- Emit identifiers, counts, rule codes, and line numbers rather than raw manuscript or review text
-- Refuse symlink inputs and implicit output overwrite
+随附的 CLI：
 
-They do not make an external service safe and do not authorize its use.
+- 只使用 Python 标准库
+- 读取有大小上限的本地 JSON、CSV 或 Markdown
+- 不发起网络、模型、图像、子进程、环境变量或动态代码调用
+- 输出标识符、计数、规则代码与行号，而不是原始稿件或评审文本
+- 拒绝符号链接输入与隐式覆盖输出
 
-### Assistance and co-review
+它们不会让某个外部服务变得安全，也不会授权使用该服务。
 
-Obtain journal permission before sharing with a trainee or colleague. Record the contributor and acknowledge the contribution to the editor as required. The invited reviewer remains responsible for confidentiality and the submitted report.
+### 协助与协同评审
 
-### No reuse
+在与实习人员或同事共享之前，先取得期刊许可。记录贡献者，并按要求向编辑致
+谢其贡献。被邀请的审稿人仍对保密义务和所提交的评审报告负责。
 
-Do not:
+### 不得再利用
 
-- Appropriate ideas, methods, code, data, or language before publication
-- Use the material for model training, benchmarking, product improvement, or unrelated research
-- Build a private corpus of manuscripts or reviews
-- Retain content for convenience beyond policy
+不要：
 
-### Retention and deletion
+- 在发表前挪用想法、方法、代码、数据或措辞
+- 把材料用于模型训练、基准测试、产品改进或无关研究
+- 建立私有的稿件或评审语料库
+- 为图方便而超出政策留存内容
 
-After submitting or ending the review:
+### 留存与删除
 
-1. Follow the target venue’s retention rule.
-2. Delete local manuscript and review copies when required.
-3. Empty derivative exports and temporary files within the authorized workspace.
-4. Retain only what policy requires.
-5. Record deletion or authorized retention without copying confidential content into the record.
+提交评审或评审结束之后：
 
-ICMJE recommends that reviewers not retain manuscripts for personal use and delete copies after review. Local law, publisher policy, or a documented investigation may impose a different rule; follow the controlling requirement.
+1. 遵循目标发表载体的留存规则。
+2. 在有要求时删除本地的稿件与评审副本。
+3. 清空授权工作区内的派生产出与临时文件。
+4. 只保留政策要求保留的内容。
+5. 记录删除或经授权的留存，不要把机密内容复制进记录。
 
-## AI and automated assistance
+ICMJE 建议审稿人不要为个人用途留存稿件，并在评审后删除副本。当地法律、出
+版方政策或已有记录的调查可能规定不同规则；以适用要求为准。
 
-ICMJE says reviewers must follow the journal’s AI policy or request permission before using AI, maintain confidentiality, disclose use, and remain responsible for output that may be incorrect, incomplete, or biased.
+## AI 与自动化协助
 
-For any permitted assistance:
+ICMJE 指出审稿人必须遵循期刊的 AI 政策，或在使用 AI 之前请求许可，同时维
+持保密、披露使用情况，并对可能不正确、不完整或有偏倚的输出负责。
 
-- Identify the tool, version, purpose, and material exposed
-- Use only the minimum necessary content
-- Keep an accountable human in control
-- Verify every statement, citation, calculation, and proposed comment
-- Disclose use exactly as the journal requires
-- Do not let a model create an autonomous review or editorial outcome
+对于任何被允许的协助：
 
-If permission is absent, the policy is unclear, or confidentiality cannot be assured, do not use AI on the material. Local deterministic checks may still be possible if policy and authorization permit local file processing.
+- 标明工具、版本、用途以及所暴露的材料
+- 只使用最小必要范围的内容
+- 保持一位负责任的人类掌舵
+- 核实每一处陈述、引用、计算与拟提出的意见
+- 完全按期刊要求披露使用情况
+- 不要让模型生成自主的评审或编辑处理结果
 
-Illustrative policies, not universal rules:
+如果没有许可、政策不明确，或无法保证保密，就不要在该材料上使用 AI。若政
+策与授权允许本地文件处理，本地的确定性检查仍然可以做。
 
-- [Nature Portfolio's current AI policy](https://www.nature.com/nature-portfolio/editorial-policies/ai) permits support under human accountability and disclosure, prohibits sharing manuscript content with unsecured/public AI tools, and prohibits delegating critique or judgment. Some [reviewer instructions](https://www.nature.com/nature/for-referees/policies-and-processes) still state a broader no-upload rule. Check the instructions for the actual journal and assignment; seek editor clarification when policies conflict.
-- [BMJ](https://authors.bmj.com/policies/ai-use) requires declaration of AI used for review-language assistance and prohibits placing unpublished material into publicly available tools when confidentiality cannot be guaranteed.
-- [JAMA Network's 2023 published guidance](https://jamanetwork.com/journals/jama/fullarticle/2807956) states that entering manuscript, abstract, or review text into a chatbot or language model violates its confidentiality agreement and requires disclosure of other AI resource use. This dated article is an example; verify the current invitation and reviewer instructions.
+以下为示例性政策，不是通用规则：
 
-Always check the current target-venue policy.
+- [Nature Portfolio 当前的 AI 政策](https://www.nature.com/nature-portfolio/editorial-policies/ai)
+  允许在有人类问责与披露的前提下提供支持，禁止与不安全或公开的 AI 工具共享
+  稿件内容，也禁止把批评或判断委托出去。部分
+  [审稿说明](https://www.nature.com/nature/for-referees/policies-and-processes)
+  仍表述更宽泛的禁止上传规则。请查阅实际期刊与具体指派的说明；政策冲突时向
+  编辑求证。
+- [BMJ](https://authors.bmj.com/policies/ai-use)要求声明使用 AI 协助润色评
+  审语言，并在无法保证保密时禁止把未发表材料放入公开可用的工具。
+- [JAMA Network 2023 年公布的指南](https://jamanetwork.com/journals/jama/fullarticle/2807956)
+  指出，把稿件、摘要或评审文本输入聊天机器人或语言模型违反其保密协议，
+  并要求披露其他 AI 资源的使用情况。这篇有日期的文章只是一个示例；须核实当前的
+  征稿说明与审稿说明。
 
-## Preparing the report
+始终查阅目标发表载体当前的政策。
 
-COPE and ICMJE emphasize constructive, honest, polite, fair, and timely comments.
+## 准备评审报告
 
-### Evidence and proportionality
+COPE 与 ICMJE 强调意见应当有建设性、诚实、礼貌、公正、及时。
 
-- Anchor every consequential criticism to a location and reason.
-- Distinguish missing reporting from demonstrated methodological error.
-- Explain why the issue changes validity, interpretation, reproducibility, ethics, or reader understanding.
-- Request the least burdensome adequate remedy.
-- Label optional suggestions as optional.
-- Do not expand the study beyond its stated scope merely to satisfy reviewer preference.
-- Do not request citations to benefit the reviewer or associates.
+### 证据与相称性
 
-### Tone
+- 每一处重要批评都要锚定到具体位置与具体理由。
+- 区分"未报告"与"已证实的方法学错误"。
+- 说明该问题为何会影响有效性、解释、可复现性、伦理或读者的理解。
+- 提出负担最小且足够的补救措施。
+- 把可选建议明确标为可选。
+- 不要仅仅为了迎合审稿人的偏好就把研究扩展到既定范围之外。
+- 不要为了让自己或同事受益而索要引用。
 
-Critique the work, not the people. Avoid:
+### 语气
 
-- Insults, sarcasm, ridicule, threats, or speculation about competence or motives
-- Language policing unrelated to scientific clarity
-- Bias based on identity, institution, location, seniority, language, or reputation
-- Accusations when the evidence supports only a question or discrepancy
-- Vague commands such as “redo the statistics” or “needs more work”
+批评工作，不要批评人。避免：
 
-Use direct language without hostility:
+- 侮辱、讽刺、嘲笑、威胁，或对能力与动机的臆测
+- 与科学表述无关的用词纠察
+- 基于身份、机构、地域、资历、语言或声誉的偏见
+- 在证据只支持提出疑问或指出差异时给出指控
+- "重做统计"或"还需要更多工作"这类含糊的命令
 
-> “The analysis appears to treat three observations per participant as independent. Please define the analysis unit and account for within-participant dependence, or explain why independence is justified.”
+直接表达，但不要带敌意：
 
-### Requests for additional work
+> "分析似乎把每位参与者的三个观测当作彼此独立。请界定分析单位，并处理参与者内部的依赖关系，或者说明为什么独立性是合理的。"
 
-Request a new experiment or analysis only when it is necessary and proportionate to evaluate or support a central claim. State:
+### 要求补充工作
 
-- Which claim depends on it
-- Why existing evidence is insufficient
-- Whether a narrower claim, correction, sensitivity analysis, or limitation would be an adequate alternative
+只有在评估或支撑某项核心主张确有必要且相称时，才要求新的实验或分析。
+请说明：
 
-Do not turn review into an opportunity to redesign the authors’ research program.
+- 哪一项主张依赖于此
+- 现有证据为何不足
+- 更窄的主张、更正、敏感性分析或局限性说明是否可作为充分替代
 
-## Separate communication channels
+不要把评审变成重新设计作者研究计划的机会。
 
-### Comments to authors
+## 分开的沟通通道
 
-Include:
+### 致作者的意见
 
-- Neutral summary of the work actually reviewed
-- Specific strengths
-- Major comments affecting validity, interpretation, reproducibility, ethics, or central claims
-- Minor comments affecting clarity, consistency, figures, tables, citations, or reporting
-- Review limitations and unavailable materials when useful
+包含：
 
-Do not include:
+- 对实际评审之工作的中立概述
+- 具体优点
+- 影响有效性、解释、可复现性、伦理或核心主张的主要意见
+- 影响清晰度、一致性、图、表、引用或报告的次要意见
+- 评审的局限与无法获得的材料（当有助于判断时）
 
-- Reviewer identity when policy requires anonymity
-- Unnecessary personal information
-- Editor-only conflict details
-- Accusations or investigative instructions
-- An editorial outcome presented as decided
+不要包含：
 
-### Confidential comments to editor
+- 政策要求匿名时的审稿人身份
+- 不必要的个人信息
+- 仅供编辑查看的冲突细节
+- 指控或调查指示
+- 已被当作定论呈现的编辑处理结果
 
-Use only for matters that require a separate channel:
+### 致编辑的保密意见
 
-- Reviewer conflicts or competence limits
-- Permission, confidentiality, or AI-use disclosures
-- Credible ethics, integrity, duplicate-publication, image, or security concerns
-- Reasons an issue cannot safely be raised directly with authors
-- Requests for specialist review
+只用于需要单独通道的事项：
 
-Ordinary scientific criticism should not appear only in the editor channel. Do not write a harsher private review that contradicts the author-facing report. The bundled scaffold keeps these channels visibly separate.
+- 审稿人的利益冲突或能力局限
+- 许可、保密或 AI 使用的披露
+- 有实据的伦理、诚信、一稿多投、图像或安全方面的疑虑
+- 某问题无法安全地直接向作者提出的理由
+- 请求专家评审
 
-## Suspected integrity problems
+常规的科学批评不应只出现在编辑通道中。不要写一份更严厉却与致作者报告相矛
+盾的私下评审。随附的脚手架让这两个通道在形式上保持分离。
 
-Reviewers identify concerns; they do not adjudicate misconduct.
+## 疑似诚信问题
 
-1. Preserve confidentiality.
-2. Record the exact location and observable discrepancy.
-3. Describe uncertainty and plausible benign explanations.
-4. Notify the editor through the designated confidential route.
-5. Do not contact authors, institutions, journals, funders, or media independently.
-6. Do not run external similarity, face-recognition, image, or data-search services on confidential material without authorization.
-7. Follow editor instructions and retain or delete evidence according to policy.
+审稿人负责识别疑虑，不负责裁定 misconduct。
 
-Use “Figure 3 appears similar to Figure 5 after rotation; please assess under the journal’s image-integrity process,” not “the authors fabricated the data.”
+1. 维持保密。
+2. 记录确切位置与可观察到的差异。
+3. 描述不确定性以及可能的良性解释。
+4. 通过指定的保密渠道通知编辑。
+5. 不要擅自联系作者、机构、期刊、资助方或媒体。
+6. 不要在未经授权的情况下，对机密材料运行外部相似度、人脸识别、图像或数据检
+  索服务。
+7. 遵循编辑指示，并按政策留存或删除证据。
 
-## Final ethical check
+应写"图 3 旋转后看起来与图 5 相似，请按该期刊的图像完整性流程评估"，而不
+是"作者伪造了数据"。
 
-- Authorization and role are documented.
-- Conflicts are resolved or disclosed.
-- Competence limits and specialist needs are stated.
-- Target-venue policy and review model are known.
-- No unauthorized person or service received confidential material.
-- AI or other assistance is permitted and disclosed.
-- Author and editor channels are separate.
-- Every criticism is specific, evidence-backed, proportionate, and professional.
-- No invented citation, analysis, experiment, or editorial outcome appears.
-- Deletion or authorized retention is planned.
+## 最终伦理自查
+
+- 授权与角色已记录在案
+- 利益冲突已解决或已披露
+- 能力局限与专家评审需求已说明
+- 已知晓目标发表载体的政策与评审模式
+- 没有任何未经授权的个人或服务收到机密材料
+- AI 或其他协助已获许可并已披露
+- 作者通道与编辑通道相互分离
+- 每一处批评都具体、有证据支撑、相称且专业
+- 没有出现编造的引用、分析、实验或编辑处理结果
+- 已制定删除或经授权留存的计划

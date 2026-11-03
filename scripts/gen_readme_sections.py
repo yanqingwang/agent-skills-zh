@@ -323,7 +323,8 @@ def upstream_table() -> str:
         head_cell = (
             f"[`{head[:7]}`](https://github.com/{repo}/commit/{head})" if head else "—"
         )
-        n_t = len(up.get("files", []))
+        # 翻译件 = SKILL.md/Agent 定义 + 已译散文（references/*.md 等）
+        n_t = len(up.get("files", [])) + len(up.get("translated_prose", []))
         n_v = len(up.get("verbatim", []))
         mode = MODE_ZH.get(up.get("mode", ""), up.get("mode", "") or "?")
         lines.append(

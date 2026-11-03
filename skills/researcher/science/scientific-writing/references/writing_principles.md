@@ -1,97 +1,95 @@
-# Evidence-Bound Scientific Writing Principles
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/writing_principles.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Accuracy before fluency
+# 以证据为界的科学写作原则
 
-The accountable human authors are responsible for accuracy, integrity, originality,
-attribution, and disclosure, including material prepared with AI assistance
-[SW-S01, SW-S03]. Do not improve prose by changing scientific meaning.
+## 准确性优先于流畅性
 
-Apply these rules:
+承担责任的作者是人类本人；准确性、诚信、原创性、归属标注与披露都由他们负责，
+包括借助 AI 辅助准备的内容 [SW-S01, SW-S03]。不要通过改变科学含义来润色文字。
 
-- Preserve the distinction between observation, estimate, interpretation, and
-  speculation.
-- Match the strength of each verb to the design and evidence.
-- Do not turn association into causation.
-- Do not turn statistical non-significance into equivalence or proof of no effect.
-- Report uncertainty with the estimate and keep its interpretation proportional.
-- Preserve conflicting evidence and credible alternative explanations.
-- State what is unknown instead of filling a gap.
+适用以下规则：
 
-## Confirmatory and exploratory work
+- 保持观察、估计、解释与推测之间的区分。
+- 让每个动词的强度与设计和证据相匹配。
+- 不要把关联变成因果。
+- 不要把统计上的不显著变成等效，或变成"无效应"的证明。
+- 报告不确定性时同时给出估计值，并让解释的力度与之相称。
+- 保留相互冲突的证据与可信的其他解释。
+- 说明哪些是未知的，而不是把空缺填满。
 
-Label analyses according to their actual provenance.
+## 验证性研究与探索性研究
 
-- **Confirmatory**: prespecified before the relevant analysis or unblinding threshold,
-  with deviations recorded.
-- **Exploratory**: generated or materially changed after examining relevant data.
-- **Descriptive**: summarizes observed data without a confirmatory inferential claim.
+按分析的真实来源给它贴标签。
 
-Do not relabel a post hoc analysis as prespecified. Explain amendments, timing, and
-rationale. Keep exploratory results useful but visibly exploratory.
+- **验证性**：在相关分析或揭盲阈值之前预先设定，且偏离之处有记录。
+- **探索性**：在查看相关数据之后才生成或作了实质性改动。
+- **描述性**：只总结观察到的数据，不作验证性的推断主张。
 
-## Complete reporting
+不要把事后分析重新贴上"预先设定"的标签。说明修改、时点与理由。
+让探索性结果仍然可用，但明确标出它是探索性的。
 
-Retain findings regardless of direction:
+## 完整报告
 
-- primary and secondary outcomes;
-- negative, null, adverse, and unexpected findings;
-- missing data and attrition;
-- sensitivity and subgroup analyses with their status;
-- protocol or analysis-plan deviations;
-- failed or inconclusive experiments when relevant to interpretation.
+无论方向如何都保留结果：
 
-Selective omission can distort the record. Corrections should be prompt, transparent,
-and linked to the affected version [SW-S01, SW-S27].
+- 主要与次要结局；
+- 阴性、零结果、不良与出人意料的发现；
+- 缺失数据与失访；
+- 敏感性与亚组分析及其定性；
+- 方案或分析计划的偏离；
+- 与解读相关时，失败或结论不确定的实验。
 
-## Numbers and units
+选择性省略会扭曲记录。勘误应当迅速、透明，并链接到受影响的版本
+[SW-S01, SW-S27]。
 
-Every reported number needs:
+## 数字与单位
 
-- a stable concept name;
-- unit and scale;
-- numerator and denominator when applicable;
-- analysis population and sample size;
-- time point;
-- estimate and uncertainty where applicable;
-- method or result ID;
-- evidence ID.
+每个报告的数字都需要：
 
-Keep precision justified by measurement and analysis. Distinguish zero from missing,
-below detection, not measured, and not applicable. Run the consistency checker after
-every substantive edit.
+- 稳定的概念名称；
+- 单位与量纲；
+- 适用时的分子与分母；
+- 分析人群与样本量；
+- 时间点；
+- 适用时的估计值与不确定性；
+- 方法 ID 或结果 ID；
+- 证据 ID。
 
-## Methods and results
+精度应以测量和分析所能支撑的为准。区分零与缺失、低于检出限、未测量以及不适用。
+每次实质性修改之后都要运行一致性检查器。
 
-Methods describe what was actually done, not what would have been ideal. Results must
-not introduce an undeclared method. For each result, verify:
+## 方法与结果
 
-- the outcome was defined;
-- the analysis method exists in the methods registry;
-- the analysis intent agrees;
-- exclusions and analysis populations agree;
-- transformations, covariates, multiplicity handling, and missing-data methods agree;
-- the reported value, unit, denominator, sample size, and uncertainty agree everywhere.
+方法描述的是实际做了什么，而不是理想情况下应该做什么。结果不得引入未声明的
+方法。对每一项结果，都要核实：
 
-## Limitations and generalizability
+- 结局已被定义；
+- 分析方法存在于方法注册表中；
+- 分析意图一致；
+- 排除标准与分析人群一致；
+- 变换、协变量、多重性处理与缺失数据方法一致；
+- 报告的数值、单位、分母、样本量与不确定性在各处都一致。
 
-Name concrete sources of bias, imprecision, missingness, measurement error, model
-limitations, multiplicity, and limited transportability. Explain likely direction or
-consequence when evidence supports that explanation. Do not add a generic limitations
-paragraph merely to satisfy form.
+## 局限性与可推广性
 
-## Language review
+指出偏倚、不精确性、缺失、测量误差、模型局限、多重性与可推广性受限的
+具体来源。当证据支持某种解释时，说明可能的方向或后果。不要只是为了
+满足格式要求而添加一段泛泛的局限性。
 
-Prefer direct, precise prose, but do not impose arbitrary sentence length, citation
-density, recency percentage, figure count, or reference count. Those heuristics can
-encourage unsupported content and vary by field and venue.
+## 语言审校
 
-Use person-centered or identity-affirming language according to community preference,
-study context, and current venue policy. Preserve participant self-description when
-appropriate. Define abbreviations and use one term for one concept.
+优先使用直接、精确的文字，但不要强加任意的句长、引用密度、近年文献比例、
+图的数量或参考文献数量。这类经验法则可能助长没有支撑的内容，且在不同
+领域与投稿载体之间差别很大。
 
-## Draft status
+按社群偏好、研究情境与当前投稿载体的政策，使用以人为中心的语言或
+肯定身份的表述。在适当时保留参与者的自我描述。缩写要给出定义，
+一个概念只用一个术语。
 
-Bullets, notes, and placeholders are acceptable in an internal outline. They are not
-submission-ready. Final structure may include lists when the target venue or content
-benefits from them; there is no universal rule that every scientific section must be
-continuous prose.
+## 草稿状态
+
+在内部提纲中，要点、笔记与占位符都是可以接受的。它们不是可直接投稿的成品。
+最终结构在目标载体或内容需要时可以包含列表；并不存在"每个科学章节都必须
+是连续散文"这样的普遍规则。

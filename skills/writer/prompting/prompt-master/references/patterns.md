@@ -1,82 +1,87 @@
-# Credit-Killing Patterns Reference
+> **中文汉化版** · 上游：[nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) · 原文件：`references/patterns.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-37 patterns that waste tokens and cause re-prompts. Read this file when the user pastes a bad prompt and asks you to fix it, or when diagnosing why a prompt is underperforming.
+# 烧额度的模式参考
 
----
-
-## Task Patterns
-
-| # | Pattern | Bad Example | Fixed |
-|---|---------|------------|-------|
-| 1 | **Vague task verb** | "help me with my code" | "Refactor `getUserData()` to use async/await and handle null returns" |
-| 2 | **Unrelated tasks in one prompt** | "fix login and write a sales email" | Split unrelated outcomes; combine related work with shared acceptance criteria |
-| 3 | **No success criteria** | "make it better" | "Done when the function passes existing unit tests and handles null input without throwing" |
-| 4 | **Over-permissive agent** | "do whatever it takes" | Explicit allowed actions list + explicit forbidden actions list |
-| 5 | **Emotional task description** | "it's totally broken, fix everything" | "Throws uncaught TypeError on line 43 when `user` is null" |
-| 6 | **Build-the-whole-thing** | "build my entire app" | Break into Prompt 1 (scaffold), Prompt 2 (core feature), Prompt 3 (polish) |
-| 7 | **Implicit reference** | "now add the other thing we discussed" | Always restate the full task — never reference "the thing we discussed" |
+37 种浪费 token 并导致重复提示的模式。当用户粘贴了一段糟糕的提示词并要求你修复，
+或你在诊断某个提示词为什么表现不佳时，请阅读本文件。
 
 ---
 
-## Context Patterns
+## 任务类模式
 
-| # | Pattern | Bad Example | Fixed |
+| # | 模式 | 糟糕示例 | 修正后 |
 |---|---------|------------|-------|
-| 8 | **Assumed prior knowledge** | "continue where we left off" | Include Memory Block with all prior decisions |
-| 9 | **No project context** | "write a cover letter" | "PM role at B2B fintech, 2yr SWE experience transitioning to product, shipped 3 features as tech lead" |
-| 10 | **Forgotten stack** | New prompt contradicts prior tech choice | Always include Memory Block with established stack |
-| 11 | **Hallucination invite** | "what do experts say about X?" | "Cite only sources you are certain of. If uncertain, say so explicitly rather than guessing." |
-| 12 | **Undefined audience** | "write something for users" | "Non-technical B2B buyers, no coding knowledge, decision-maker level" |
-| 13 | **No mention of prior failures** | (blank) | "I already tried X and it didn't work because Y. Do not suggest X." |
+| 1 | **模糊的任务动词** | "帮我处理一下我的代码" | "把 `getUserData()` 重构为使用 async/await，并处理 null 返回值" |
+| 2 | **一个提示词里塞入无关任务** | "修复登录并写一封销售邮件" | 拆开互不相干的结果；有共同验收标准的相关工作则合并在一起 |
+| 3 | **没有成功标准** | "让它更好" | "完成的判定：该函数通过现有单元测试，且在处理 null 输入时不抛异常" |
+| 4 | **过度放任的 agent** | "不择手段" | 明确列出允许的动作 + 明确列出禁止的动作 |
+| 5 | **情绪化的任务描述** | "它彻底坏了，全修一下" | "当 `user` 为 null 时，第 43 行抛出未捕获的 TypeError" |
+| 6 | **一次性构建全部** | "帮我把整个应用做出来" | 拆成提示词 1（脚手架）、提示词 2（核心功能）、提示词 3（打磨） |
+| 7 | **隐式指代** | "现在把刚才讨论的那个东西加上" | 永远把完整任务重述一遍 — 绝不引用"刚才讨论的那个东西" |
 
 ---
 
-## Format Patterns
+## 上下文类模式
 
-| # | Pattern | Bad Example | Fixed |
+| # | 模式 | 糟糕示例 | 修正后 |
 |---|---------|------------|-------|
-| 14 | **Missing output format** | "explain this concept" | "3 bullet points, each under 20 words, with a one-sentence summary at top" |
-| 15 | **Implicit length** | "write a summary" | "Write a summary in exactly 3 sentences" |
-| 16 | **Missing domain perspective** | Specialized task without domain context | Add an expert role only when it changes the result |
-| 17 | **Vague aesthetic adjectives** | "make it look professional" | "Monochrome palette, 16px base font, 24px line height, no decorative elements" |
-| 18 | **No negative prompts for image AI** | "a portrait of a woman" | Add: "no watermark, no blur, no extra fingers, no distortion, no text overlay" |
-| 19 | **Prose prompt for Midjourney** | Full descriptive sentence | "subject, style, mood, lighting, composition, --ar 16:9 --v 6" |
+| 8 | **假设了先验知识** | "从我们上次的地方继续" | 附上记忆块，包含全部先前决策 |
+| 9 | **缺少项目上下文** | "写一封求职信" | "B2B 金融科技公司的 PM 岗位，2 年 SWE 经验转产品，以技术负责人身份交付过 3 个功能" |
+| 10 | **忘记已有技术栈** | 新提示词与先前的技术选型矛盾 | 永远附上记忆块，写明已确定的技术栈 |
+| 11 | **诱发幻觉的说法** | "专家们怎么看 X？" | "只引用你确定无误的来源。若不确定，请明确说明，不要猜测。" |
+| 12 | **未定义的受众** | "给用户写点东西" | "不懂技术的 B2B 采购方，决策者层级" |
+| 13 | **未提及先前失败** | （空白） | "我已经试过 X，没用，原因是 Y。不要再建议 X。" |
 
 ---
 
-## Scope Patterns
+## 格式类模式
 
-| # | Pattern | Bad Example | Fixed |
+| # | 模式 | 糟糕示例 | 修正后 |
 |---|---------|------------|-------|
-| 20 | **No scope boundary** | "fix my app" | "Fix only the login form validation in `src/auth.js`. Touch nothing else." |
-| 21 | **No stack constraints** | "build a React component" | "React 18, TypeScript strict, no external libraries, Tailwind only" |
-| 22 | **No stop condition for agents** | "build the whole feature" | Explicit stop conditions + meaningful milestones and verification evidence |
-| 23 | **No file path for IDE AI** | "update the login function" | "Update `handleLogin()` in `src/pages/Login.tsx` only" |
-| 24 | **Wrong template for tool** | GPT-style prose prompt used in Cursor | Adapt to File-Scope Template (Template G) |
-| 25 | **Pasting entire codebase** | Full repo context every prompt | Scope to only the relevant function and file |
+| 14 | **缺少输出格式** | "解释一下这个概念" | "3 个要点，每个不超过 20 个字，顶部加一句话总结" |
+| 15 | **隐含长度** | "写个摘要" | "用正好 3 句话写摘要" |
+| 16 | **缺少领域视角** | 专业任务却没有领域上下文 | 只在专家角色会改变结果时才加上它 |
+| 17 | **模糊的审美形容词** | "弄得专业一点" | "单色调色板，16px 基础字号，24px 行高，无装饰元素" |
+| 18 | **图像 AI 没有负面提示词** | "一位女性的肖像" | 加上："无水印、无模糊、无多余手指、无畸变、无文字叠加" |
+| 19 | **给 Midjourney 用了散文式提示词** | 完整的描述性句子 | "主体、风格、氛围、光照、构图、--ar 16:9 --v 6" |
 
 ---
 
-## Reasoning Patterns
+## 范围类模式
 
-| # | Pattern | Bad Example | Fixed |
+| # | 模式 | 糟糕示例 | 修正后 |
 |---|---------|------------|-------|
-| 26 | **No audit contract for logic task** | "which approach is better?" | Request the recommendation, assumptions, decision criteria, evidence, and verification checks |
-| 27 | **Requesting hidden reasoning** | "show your chain of thought" | Remove it—ask for a concise rationale, evidence, and checks instead |
-| 28 | **Expecting inter-session memory** | "you already know my project" | Always re-provide the Memory Block in every new session |
-| 29 | **Contradicting prior work** | New prompt ignores earlier architecture | Include Memory Block with all established decisions |
-| 30 | **No grounding rule for factual tasks** | "summarize what experts say about X" | "Use only information you are highly confident is accurate. Say [uncertain] if not." |
+| 20 | **没有范围边界** | "把我的应用修好" | "只修复 `src/auth.js` 里的登录表单校验。别动其他任何东西。" |
+| 21 | **没有技术栈约束** | "写一个 React 组件" | "React 18，TypeScript strict，不使用外部库，只用 Tailwind" |
+| 22 | **agent 没有停止条件** | "把整个功能做完" | 显式的停止条件 + 有意义的里程碑与验证证据 |
+| 23 | **IDE AI 没有文件路径** | "更新登录函数" | "只更新 `src/pages/Login.tsx` 中的 `handleLogin()`" |
+| 24 | **用错了工具模板** | 在 Cursor 里用了 GPT 式的散文提示词 | 改用文件范围模板（模板 G） |
+| 25 | **粘贴整个代码库** | 每个提示词都带上整个仓库的上下文 | 只限定到相关的函数与文件 |
 
 ---
 
-## Agentic Patterns
+## 推理类模式
 
-| # | Pattern | Bad Example | Fixed |
+| # | 模式 | 糟糕示例 | 修正后 |
 |---|---------|------------|-------|
-| 31 | **No starting state** | "build me a REST API" | "Empty Node.js project, Express installed, `src/app.js` exists" |
-| 32 | **No target state** | "add authentication" | "`/src/middleware/auth.js` with JWT verify. `POST /login` and `POST /register` in `/src/routes/auth.js`" |
-| 33 | **Silent agent** | No progress output | "Report meaningful milestones, blockers, and final verification results" |
-| 34 | **Unlocked filesystem** | No file restrictions | "Only edit files inside `src/`. Do not touch `package.json`, `.env`, or any config file." |
-| 35 | **No human review trigger** | Agent decides everything autonomously | "Stop and ask before: deleting any file, adding any dependency, or changing the database schema" |
-| 36 | **Vague first turn for an agentic model** | "fix the auth bug" with no scope, files, or criteria | Use Template M for Claude or Template N for OpenAI tasks. Front-load the outcome, relevant context, file scope, constraints, action boundaries, and acceptance criteria. |
-| 37 | **Context rot on long sessions** | Repeats corrections while stale assumptions remain in context | Start a new session for unrelated work; otherwise compact around current decisions, constraints, failures, and target state. Delegate only independent, sizeable investigation. |
+| 26 | **逻辑类任务没有审计契约** | "哪种做法更好？" | 索要建议、假设、决策标准、证据与验证检查 |
+| 27 | **索要隐藏推理** | "展示你的思维链" | 移除它 — 改为索要简明的理由、证据与检查 |
+| 28 | **期待跨会话记忆** | "你已经知道我的项目了" | 每个新会话都重新附上记忆块 |
+| 29 | **与先前工作矛盾** | 新提示词无视先前的架构决策 | 附上记忆块，包含全部已确定的决策 |
+| 30 | **事实类任务没有接地规则** | "总结一下专家们对 X 的看法" | "只使用你高度确信准确的信息。不确定就标注 [uncertain]。" |
+
+---
+
+## Agentic 类模式
+
+| # | 模式 | 糟糕示例 | 修正后 |
+|---|---------|------------|-------|
+| 31 | **没有起始状态** | "帮我写个 REST API" | "空的 Node.js 项目，已安装 Express，`src/app.js` 存在" |
+| 32 | **没有目标状态** | "加上认证" | "`/src/middleware/auth.js`，带 JWT 校验。在 `/src/routes/auth.js` 中实现 `POST /login` 与 `POST /register`" |
+| 33 | **沉默的 agent** | 没有任何进度输出 | "报告有意义的里程碑、阻塞项与最终验证结果" |
+| 34 | **未设限的文件系统** | 没有文件限制 | "只编辑 `src/` 内的文件。不要碰 `package.json`、`.env` 或任何配置文件。" |
+| 35 | **没有人工审查触发器** | agent 自主决定一切 | "在以下操作之前停下来询问：删除任何文件、添加任何依赖，或更改数据库 schema" |
+| 36 | **给 agentic 模型的第一轮过于含糊** | "修复认证 bug"，没有范围、文件或验收标准 | Claude 任务用模板 M，OpenAI 任务用模板 N。把结果、相关上下文、文件范围、约束、行动边界与验收标准放在最前面。 |
+| 37 | **长会话中的上下文腐化** | 反复重复纠正，而过时的假设仍留在上下文中 | 为不相关的工作另开一个会话；否则围绕当前决策、约束、失败与目标状态做压缩。只委派独立且体量可观的调查。 |

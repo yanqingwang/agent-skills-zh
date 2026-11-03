@@ -1,91 +1,95 @@
-# Best Practices
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/citation-management/references/best_practices.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Search strategy, metadata extraction, BibTeX quality, and validation practices.
+# 最佳实践
 
-## Best Practices
+检索策略、元数据提取、BibTeX 质量与校验实践。
 
-### Search Strategy
+## 最佳实践
 
-1. **Start broad, then narrow**:
-   - Begin with general terms to understand the field
-   - Refine with specific keywords and filters
-   - Use synonyms and related terms
+### 检索策略
 
-2. **Use multiple sources**:
-   - Google Scholar for comprehensive coverage
-   - PubMed for biomedical focus
-   - arXiv for preprints
-   - Combine results for completeness
+1. **先宽后窄**：
+   - 从通用术语入手，了解该领域
+   - 用具体关键词与过滤器收窄
+   - 使用同义词与相关词
 
-3. **Leverage citations**:
-   - Check "Cited by" for seminal papers
-   - Review references from key papers
-   - Use citation networks to discover related work
+2. **利用多个来源**：
+   - Google Scholar 用于全面覆盖
+   - PubMed 用于生物医学方向
+   - arXiv 用于预印本
+   - 合并结果以保证完整性
 
-4. **Document your searches**:
-   - Save search queries and dates
-   - Record number of results
-   - Note any filters or restrictions applied
+3. **利用引文网络**：
+   - 对奠基性论文查看 "Cited by"
+   - 回顾关键论文的参考文献
+   - 用引文网络发现相关工作
 
-### Metadata Extraction
+4. **记录你的检索过程**：
+   - 保存检索式与日期
+   - 记录结果数量
+   - 注明施加过的任何过滤器或限制
 
-1. **Always use DOIs when available**:
-   - Most reliable identifier
-   - Permanent link to the publication
-   - Best metadata source via CrossRef
+### 元数据提取
 
-2. **Verify extracted metadata**:
-   - Check author names are correct
-   - Verify journal/conference names
-   - Confirm publication year
-   - Validate page numbers and volume
+1. **只要有 DOI 就用 DOI**：
+   - 最可靠的标识符
+   - 指向出版物的永久链接
+   - 通过 CrossRef 获取最佳元数据来源
 
-3. **Handle edge cases**:
-   - Preprints: Include repository and ID
-   - Preprints later published: Use published version
-   - Conference papers: Include conference name and location
-   - Book chapters: Include book title and editors
+2. **验证提取到的元数据**：
+   - 检查作者姓名是否正确
+   - 核实期刊/会议名称
+   - 确认出版年份
+   - 校验页码与卷号
 
-4. **Maintain consistency**:
-   - Use consistent author name format
-   - Standardize journal abbreviations
-   - Use a bare identifier in the BibTeX `doi` field; use the resolver URL in prose
+3. **处理边界情况**：
+   - 预印本：包含仓储与 ID
+   - 预印本后来正式发表：使用正式发表版本
+   - 会议论文：包含会议名称与地点
+   - 书籍章节：包含书名与编者
 
-### BibTeX Quality
+4. **保持一致性**：
+   - 使用一致的作者姓名格式
+   - 统一期刊缩写
+   - 在 BibTeX 的 `doi` 字段中只放裸标识符；在正文中使用解析器 URL
 
-1. **Follow conventions**:
-   - Use meaningful citation keys (FirstAuthor2024keyword)
-   - Protect capitalization in titles with {}
-   - Use -- for page ranges (not single dash)
-   - Include the DOI field when a DOI has been assigned
+### BibTeX 质量
 
-2. **Keep it clean**:
-   - Remove unnecessary fields
-   - No redundant information
-   - Consistent formatting
-   - Validate syntax regularly
+1. **遵循惯例**：
+   - 使用有意义的引文键（FirstAuthor2024keyword）
+   - 用 {} 保护标题中的大小写
+   - 页码范围用 --（不用单连字符）
+   - 已分配 DOI 时包含 DOI 字段
 
-3. **Organize systematically**:
-   - Sort by year or topic
-   - Group related papers
-   - Use separate files for different projects
-   - Merge carefully to avoid duplicates
+2. **保持整洁**：
+   - 移除不必要的字段
+   - 不保留冗余信息
+   - 格式一致
+   - 定期校验语法
 
-### Validation
+3. **系统化组织**：
+   - 按年份或主题排序
+   - 把相关论文归到一起
+   - 不同项目使用不同的文件
+   - 合并时小心，避免重复
 
-1. **Validate early and often**:
-   - Check citations when adding them
-   - Validate complete bibliography before submission
-   - Re-validate after any manual edits
+### 校验
 
-2. **Fix issues promptly**:
-   - Broken DOIs: Find correct identifier
-   - Missing fields: Extract from original source
-   - Duplicates: Choose best version, remove others
-   - Format errors: Use auto-fix when safe
+1. **尽早且频繁地校验**：
+   - 添加引文时就检查
+   - 提交前校验完整的参考文献
+   - 任何人工编辑之后重新校验
 
-3. **Manual review for critical citations**:
-   - Verify key papers cited correctly
-   - Check author names match publication
-   - Confirm page numbers and volume
-   - Ensure URLs are current
+2. **及时修复问题**：
+   - DOI 失效：找到正确标识符
+   - 字段缺失：从原始来源提取
+   - 重复项：挑选最佳版本，删除其余
+   - 格式错误：安全时使用自动修复
+
+3. **关键引文做人工复核**：
+   - 核实关键论文被正确引用
+   - 检查作者姓名与出版物一致
+   - 确认页码与卷号
+   - 确保 URL 仍然有效

@@ -81,9 +81,9 @@ def gen_status() -> None:
     """重生成 data/STATUS.md（工作状态：规模 / 监控 / 待重译 / 目录分布）。"""
     from datetime import datetime, timezone
     m = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    n_t = sum(len(u.get("files", [])) for u in m["upstreams"])
+    n_t = sum(len(u.get("files", [])) + len(u.get("translated_prose", [])) for u in m["upstreams"])
     n_v = sum(len(u.get("verbatim", [])) for u in m["upstreams"])
-    n_up = sum(1 for u in m["upstreams"] if u.get("files") or u.get("verbatim"))
+    n_up = sum(1 for u in m["upstreams"] if u.get("files") or u.get("verbatim") or u.get("translated_prose"))
     cats: dict[str, int] = {}
     for u in m["upstreams"]:
         for e in u.get("files", []):
@@ -120,7 +120,9 @@ def main() -> int:
     for up in manifest["upstreams"]:
         repo = up["repo"]
         verbatim = up.get("verbatim", [])
-        translated = up.get("files", [])
+        # 翻译件 = SKILL.md/Agent 定义 + 已译散文（references/*.md 等）：
+        # 已译散文与译文一样不能用字节比对，走"上游变更 → 重译工单"路径。
+        translated = up.get("files", []) + up.get("translated_prose", [])
         if not verbatim and not translated:
             log_lines.append(f"- ⏭️ `{repo}` — 无收录文件（排除占位），跳过")
             skipped += 1
@@ -221,8 +223,14 @@ def main() -> int:
             fp = ROOT / loc
             if not fp.exists():
                 continue  # 文件被移除，视为已解决
-            m_date = re.search(r"同步状态：上游 HEAD（(\d{4}-\d{2}-\d{2}) 快照）", fp.read_text(encoding="utf-8", errors="ignore"))
-            decl_date = m_date.group(1) if m_date else ""
+            raw = fp.read_text(encoding="utf-8", errors="ignore")
+            m_date = re.search(r"同步状态：上游 HEAD（(\d{4}-\d{2}-\d{2}) 快照）", raw)
+            if m_date:
+                decl_date = m_date.group(1)
+            else:
+                # 已译散文：声明块在文件头部，格式同 SKILL.md
+                m2 = re.search(r"同步日期：(\d{4}-\d{2}-\d{2})", raw)
+                decl_date = m2.group(1) if m2 else ""
             if entry.get("first_seen", "") > decl_date:
                 live[loc] = entry  # 译文未跟上，继续挂单
         PENDING_STATE.write_text(json.dumps(live, ensure_ascii=False, indent=2) + "\n")

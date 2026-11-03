@@ -1,324 +1,343 @@
-# Statistical, Methods, and Reproducibility Review
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/peer-review/references/statistical_reproducibility.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This guide supports structured questions; it does not replace a statistician, methodologist, domain expert, or independent reanalysis. Sources reviewed on **2026-10-01**, with source-specific verification limits, are recorded in `assets/source_ledger.csv`.
+# 统计、方法与可复现性评审
 
-## Evidence hierarchy for the review
+本指南用于支持结构化的提问，不能取代统计学家、方法学家、领域专家或独立的
+重新分析。来源审阅于 **2026-10-01** 完成，各来源特有的核验限制记录在
+`assets/source_ledger.csv` 中。
 
-Use, in order:
+## 评审的证据层级
 
-1. The stated research question and target population
-2. Protocol, registration, analysis plan, and amendments
-3. Reported design and data-generating process
-4. Methods, code, tables, figures, supplements, and repository records
-5. Applicable primary method or regulatory guidance
-6. Current reporting guidance
-7. Target venue policy
+按以下顺序使用：
 
-Do not reject a method merely because another method is more familiar. Explain the estimand, assumption, error, or interpretation at stake.
+1. 所陈述的研究问题与目标人群
+2. 方案（protocol）、注册、分析计划及其修订
+3. 报告的设计与数据生成过程
+4. 方法、代码、表、图、补充材料与仓库记录
+5. 适用的原始方法指南或监管指南
+6. 当前的报告指南
+7. 目标发表载体的政策
 
-## Core review sequence
+不要仅仅因为另一种方法更熟悉就否定一种方法。要说明所涉的估计目标
+（estimand）、假设、误差或解释。
 
-### 1. Define what is being estimated
+## 核心评审序列
 
-Write down:
+### 1. 界定被估计的对象
 
-- Unit of inference
-- Population
-- Intervention, exposure, test, or predictors
-- Comparator or reference condition
-- Outcome and time horizon
-- Target effect, association, accuracy, or predictive performance
-- Intercurrent events, censoring, and missing observations where relevant
+写下来：
 
-Then trace whether design, data collection, analysis, result, and claim target the same quantity.
+- 推断单位
+- 人群
+- 干预、暴露、检验或预测因子
+- 对照条件或参照条件
+- 结局与时间跨度
+- 目标效应、关联、准确度或预测性能
+- 相关情形下的间歇事件、删失与缺失观测
 
-For applicable clinical trials, ICH E9(R1) provides a framework for estimands and sensitivity analyses. It is not a universal rule for every study.
+随后追溯设计、数据收集、分析、结果与主张是否指向同一个量。
 
-### 2. Reconstruct the design
+对适用的临床试验，ICH E9(R1) 提供了估计目标与敏感性分析的框架。它不是适
+用于每项研究的通用规则。
 
-Identify:
+### 2. 重建设计
 
-- Prospective, retrospective, cross-sectional, longitudinal, experimental, or observational structure
-- Recruitment or sampling frame
-- Experimental/observational unit
-- Pairing, nesting, clustering, repeated measures, sites, batches, and time
-- Allocation, concealment, blinding, matching, or weighting
-- Primary and secondary outcomes
-- Prespecified versus exploratory analyses
+确定：
 
-If the design cannot be reconstructed, first request missing reporting. Do not label the design invalid solely because details are absent.
+- 前瞻性、回顾性、横断面、纵向、实验性或观察性结构
+- 招募或抽样框
+- 实验/观察单位
+- 配对、嵌套、整群、重复测量、中心、批次与时间
+- 分配、隐藏、盲法、配对匹配或加权
+- 主要与次要结局
+- 预先设定分析与探索性分析
 
-### 3. Trace every denominator
+如果设计无法重建，先要求补充报告内容。不要仅仅因为细节缺失就判定设计无效。
 
-Reconcile:
+### 3. 追溯每一个分母
 
-- Eligible, enrolled, assigned, treated/exposed, followed, measured, and analyzed units
-- Outcome-specific denominators
-- Exclusions before and after allocation or measurement
-- Missing values and reasons
-- Complete-case, imputed, weighted, or model-based analysis populations
-- Figure, table, abstract, text, and supplement totals
+核对：
 
-Report the exact mismatch and locations; do not infer why counts differ.
+- 合格、入组、分配、接受治疗/暴露、随访、测量与被分析的各类单位
+- 特定结局的分母
+- 分配或测量之前的排除与之后的排除
+- 缺失值及其原因
+- 完全个案、插补、加权或基于模型的分析人群
+- 图、表、摘要、正文与补充材料中的合计数
 
-### 4. Assess analysis–design alignment
+报告确切的不一致之处及其位置；不要推断计数为何不同。
 
-Ask whether the method accounts for:
+### 4. 评估分析与设计的匹配度
 
-- Outcome scale and distribution
-- Pairing and repeated measures
-- Clustering and multilevel structure
-- Unequal follow-up, censoring, or competing events
-- Sampling weights or matched designs
-- Baseline adjustment and prespecified covariates
-- Multiplicity and outcome hierarchy
-- Model tuning and validation
-- Missingness assumptions
+问方法是否处理了：
 
-The name of a statistical test is not enough. The report should state inputs, model form, uncertainty method, software/version, and relevant diagnostics.
+- 结局的量表与分布
+- 配对与重复测量
+- 整群与多层次结构
+- 随访时长不等、删失或竞争事件
+- 抽样权重或匹配设计
+- 基线调整与预先设定的协变量
+- 多重性与结局层级
+- 模型调优与验证
+- 缺失机制假设
 
-### 5. Assess estimates and interpretation
+仅有统计检验的名称是不够的。报告应当说明输入、模型形式、不确定性处理方法、
+软件/版本，以及相关诊断。
 
-Prefer:
+### 5. 评估估计与解释
 
-- Effect or performance estimates with units
-- Compatible uncertainty intervals
-- Absolute as well as relative quantities when decision-relevant
-- Exact denominators and analysis sets
-- Assumption and sensitivity context
-- Clinical, biological, policy, or practical relevance distinct from statistical compatibility
+优先采用：
 
-The ASA’s six p-value principles include:
+- 带单位的效果或性能估计
+- 相互兼容的不确定区间
+- 与决策相关时，同时给出绝对量与相对量
+- 确切的分母与分析集
+- 假设与敏感性背景
+- 与统计兼容性相区分的临床、生物、政策或实践相关性
 
-- A p-value is about incompatibility with a specified model, not the probability a hypothesis is true.
-- Threshold crossing alone should not determine scientific conclusions.
-- Transparent reporting of all relevant analyses is required.
-- Statistical significance does not measure effect size or importance.
-- A p-value alone is not a good measure of evidence.
+ASA 的六条 p 值原则包括：
 
-SAMPL provides concise biomedical statistical reporting guidance. Apply it as reporting guidance, not a universal analysis recipe.
+- p 值关乎与某个特定模型的不兼容性，而不是某个假设为真的概率。
+- 单凭是否跨过阈值不应决定科学结论。
+- 必须透明地报告所有相关分析。
+- 统计显著性并不衡量效应量或重要性。
+- p 值单独并不是衡量证据的好指标。
+
+SAMPL 提供简明的生物医学统计报告指南。把它当作报告指南来用，而不是通用的
+分析配方。
+
+## 分主题检查
 
-## Topic-specific checks
+### 样本量与精确度
 
-### Sample size and precision
+查找：
 
-Look for:
+- 前瞻性计算或精确度依据
+- 目标效应或区间宽度
+- 方差、事件率、患病率或准确度假设
+- 适用时的第一类错误、功效、单双侧性与多重性
+- 设计效应、整群、失访、不依从与缺失
+- 模型复杂度与有效样本量
+- 复杂设计的模拟细节
 
-- Prospective calculation or precision rationale
-- Target effect or interval width
-- Variance, event rate, prevalence, or accuracy assumptions
-- Type I error, power, sidedness, and multiplicity when applicable
-- Design effect, clustering, attrition, noncompliance, and missingness
-- Model complexity and effective sample size
-- Simulation details for complex designs
+不要把观察到的/事后的功效当作弥补结果不精确的手段。应审视估计值与不确定
+性。
 
-Do not request observed/post hoc power as a remedy for an imprecise result. Examine the estimate and uncertainty.
+### 随机对照试验
 
-### Randomized trials
+检查：
 
-Check:
+- 分配序列与分配隐藏
+- 预先设定的估计目标与分析人群
+- 方案/注册库/结局的一致性
+- 基线调整与分层因素
+- 间歇事件、依从性、治疗转换与缺失数据
+- 危害与非预期效应
+- 敏感性与补充分析
+- 相关时的非劣效/等效界值及其解释
 
-- Allocation sequence and concealment
-- Prespecified estimand and analysis population
-- Protocol/registry/outcome consistency
-- Baseline adjustment and stratification factors
-- Intercurrent events, adherence, treatment switching, and missing data
-- Harms and unintended effects
-- Sensitivity and supplementary analyses
-- Non-inferiority/equivalence margin and interpretation if relevant
+报告使用 CONSORT 2025 与 SPIRIT 2025。只有在范围与
+决策情境都契合时才使用ICH E9/E9(R1)。
 
-Use CONSORT 2025 and SPIRIT 2025 for reporting. Use ICH E9/E9(R1) only when its scope and decision context fit.
+### 观察性因果分析
 
-### Observational causal analyses
+检查：
 
-Check:
+- 因果问题与目标对比
+- 时间零点、合格性、治疗/暴露分配、随访与结局时序
+- 混杂因素依据与测量时点
+- 正值性/重叠性
+- 可交换性与一致性假设
+- 缺失、删失、选择与测量误差
+- 模型设定与平衡性诊断
+- 对未测混杂或替代设定的敏感性
 
-- Causal question and target contrast
-- Time zero, eligibility, treatment/exposure assignment, follow-up, and outcome timing
-- Confounder rationale and measurement timing
-- Positivity/overlap
-- Exchangeability and consistency assumptions
-- Missingness, censoring, selection, and measurement error
-- Model specification and balance diagnostics
-- Sensitivity to unmeasured confounding or alternative specifications
+避免用调整后与未调整的 p 值来判断因果识别。
 
-Avoid judging causal identification from adjusted versus unadjusted p-values.
+### 诊断准确性
 
-### Diagnostic accuracy
+检查：
 
-Check:
+- 预期用途、应用场景与受试者谱系
+- 索引检验与参考标准
+- 阈值的预先设定
+- 盲法与时点
+- 不确定或缺失的结果
+- 验证偏倚与纳入偏倚
+- 二乘二表的分母与不确定性
+- 外部适用性
 
-- Intended use, setting, and participant spectrum
-- Index test and reference standard
-- Threshold prespecification
-- Blinding and timing
-- Indeterminate/missing results
-- Verification and incorporation bias
-- Two-by-two denominators and uncertainty
-- External applicability
+STARD/STARD-AI 描述的是报告要求；请另行使用合适的偏倚风险框架。
 
-STARD/STARD-AI describe reporting; use an appropriate risk-of-bias framework separately.
+### 预测模型
 
-### Prediction models
+检查：
 
-Check:
+- 预期用途、预测时点、结局与目标人群
+- 数据来源与受试者流向
+- 预测因子在预期使用场景下是否可获得
+- 缺失数据与预处理造成的泄漏
+- 相对于结局信息量与复杂度的样本量
+- 内部验证与乐观度校正
+- 独立评估与数据集漂移
+- 校准、区分度、决策效用与不确定性
+- 与评估相分离的超参数调优
+- 可复现的模型设定与预处理
+- 与合理用途及危害相联系的亚组表现
 
-- Intended use, prediction time, outcome, and target population
-- Data source and participant flow
-- Predictor availability at intended use
-- Missing-data and preprocessing leakage
-- Sample size relative to outcome information and complexity
-- Internal validation and optimism correction
-- Independent evaluation and dataset shift
-- Calibration, discrimination, decision utility, and uncertainty
-- Hyperparameter tuning separated from evaluation
-- Reproducible model specification and preprocessing
-- Subgroup performance tied to plausible use and harms
+在回归与机器学习预测模型的报告方面，TRIPOD+AI 取代了 TRIPOD 2015。当索引
+检验的诊断准确性是主要目的时，STARD-AI 更合适。
 
-TRIPOD+AI replaces TRIPOD 2015 for regression and machine-learning prediction model reporting. STARD-AI is more appropriate when diagnostic accuracy of an index test is the primary aim.
+### 系统综述与 Meta 分析
 
-### Systematic reviews and meta-analyses
+检查：
 
-Check:
+- 方案与注册
+- 合格标准与信息来源
+- 可复现的检索日期与检索式
+- 重复筛选/抽取流程，或有正当理由的替代做法
+- 偏倚风险评估
+- 效应量度与合并模型
+- 适用时的异质性与预测区间
+- 估计值之间的依赖性
+- 小样本偏倚与报告偏倚
+- 若作出结论性表述，则需确定性评估
+- 透明的偏离说明与不可得数据
 
-- Protocol and registration
-- Eligibility criteria and information sources
-- Reproducible search dates and strategies
-- Duplicate screening/extraction processes or justified alternatives
-- Risk-of-bias assessment
-- Effect measure and synthesis model
-- Heterogeneity and prediction intervals when appropriate
-- Dependence among estimates
-- Small-study and reporting biases
-- Certainty assessment, if claimed
-- Transparent deviations and unavailable data
+PRISMA 2020 评估的是报告质量。不要用 PRISMA 的覆盖度替代对综述实施质量的
+评价。
 
-PRISMA 2020 assesses reporting. Do not substitute PRISMA coverage for review-conduct appraisal.
+### 整群与纵向数据
 
-### Clustered and longitudinal data
+检查：
 
-Check:
+- 分配、测量与推断的层次
+- 群内或受试者内的相关性
+- 整群的数量与分布
+- 必要时的整群校正
+- 时间结构、非线性变化与不规则测量
+- 信息性访视、脱落或删失过程
+- 整群层面的协变量与个体层面的协变量
 
-- Level of assignment, measurement, and inference
-- Within-cluster/subject correlation
-- Number and distribution of clusters
-- Small-cluster corrections where needed
-- Time structure, nonlinear change, and irregular measurement
-- Informative visit, dropout, or censoring processes
-- Cluster-level versus individual-level covariates
+重复观测不会一对一地增加独立样本量。
 
-Repeated observations do not increase independent sample size one-for-one.
+### 多重性
 
-### Multiplicity
+在建议校正之前先确定推断族：
 
-Identify the inferential family before recommending adjustment:
+- 多个主要结局
+- 多个干预组或对比
+- 重复的时间点
+- 亚组与交互作用
+- 期中分析
+- 高维特征
+- 模型选择
 
-- Multiple primary outcomes
-- Multiple intervention arms or contrasts
-- Repeated time points
-- Subgroups and interactions
-- Interim analyses
-- High-dimensional features
-- Model selection
+可行的应对方式包括分层检验、家族错误率控制、错误发现率控制、多层次建模、
+透明的探索性标注，或强调估计值与不确定性。补救方式取决于所主张的内容与决
+策规则。
 
-Possible responses include hierarchical testing, family-wise control, false-discovery control, multilevel modeling, transparent exploratory labeling, or emphasis on estimates and uncertainty. The remedy depends on the claim and decision rule.
+### 缺失数据
 
-### Missing data
+检查：
 
-Check:
+- 按组、变量、结局与时间划分的缺失情况
+- 缺失原因及其与间歇事件的关系
+- 插补或加权所使用的信息
+- 适用时的插补次数与合并方式
+- 插补模型与分析模型的兼容性
+- 不确定性的传播
+- 对合理偏离假设情形的敏感性
 
-- Missingness by group, variable, outcome, and time
-- Reasons and relation to intercurrent events
-- Information used by imputation or weighting
-- Number of imputations and pooling when applicable
-- Compatibility of imputation and analysis models
-- Uncertainty propagation
-- Sensitivity to plausible departures from assumptions
+不要在不考量估计目标与缺失过程的情况下，就要求采用某一种偏好的技术。
 
-Avoid demanding one preferred technique without considering the estimand and missingness process.
+## 可复现性评审
 
-## Reproducibility review
+### 材料与溯源
 
-### Materials and provenance
+检查：
 
-Check:
+- 数据集、样本、模型、方案与材料的稳定标识符
+- 从原始到加工后数据的溯源
+- 排除与转换记录
+- 带版本的分析输入与输出
+- 仓库登录号
+- 数据字典、单位与编码
+- 适用时的领域元数据标准
 
-- Stable identifiers for datasets, samples, models, protocols, and materials
-- Raw-to-processed provenance
-- Exclusion and transformation records
-- Versioned analysis inputs and outputs
-- Repository accession numbers
-- Data dictionary, units, and coding
-- Domain metadata standard where applicable
+遗留的领域标准及其当前状态汇总在 `references/reporting_standards.md` 中。
 
-Legacy domain standards and their current status are summarized in `references/reporting_standards.md`.
+### 代码与计算环境
 
-### Code and computational environment
+检查：
 
-Check:
+- 允许共享时，核心分析对应的可执行代码
+- 依赖版本或 lock 文件/环境文件
+- 影响结果的操作系统或硬件要求
+- 随机种子与非确定性
+- 参数、配置与模型检查点
+- 运行顺序与说明
+- 自定义代码的测试或验证
+- 许可与访问限制
 
-- Executable code for central analyses when sharing is permitted
-- Dependency versions or lock/environment file
-- Operating-system or hardware requirements that affect results
-- Random seeds and nondeterminism
-- Parameter, configuration, and model checkpoints
-- Run order and instructions
-- Tests or validation of custom code
-- License and access restrictions
+代码可获得并不能证明代码生成了所报告的结果。溯源与可复现的运行记录是两项
+独立的证据。
 
-Code availability does not prove that the code generated the reported result. Provenance and a reproducible run record are separate evidence.
+### 数据与访问
 
-### Data and access
+开放共享可能受知情同意、隐私、原住民/社群治理、安全、合同或许可的限制。
+有用的说明应当交代：
 
-Open sharing may be limited by consent, privacy, indigenous/community governance, security, contracts, or licensing. A useful statement should identify:
+- 存在哪些材料
+- 保存在哪里
+- 谁可以申请访问
+- 标准与流程
+- 预期时间
+- 限制及其理由
+- 是否提供代码或合成/汇总的替代方案
 
-- What exists
-- Where it is held
-- Who can request access
-- Criteria and process
-- Expected timeline
-- Restrictions and rationale
-- Whether code or synthetic/aggregate alternatives are available
+不要要求披露会违反伦理、法律、知情同意或治理规定的内容。
 
-Do not request disclosure that would violate ethics, law, consent, or governance.
+### 独立复现
 
-### Independent reproduction
+只有在审稿人确实做到以下几点时，才能声称独立复现：
 
-Claim independent reproduction only if the reviewer actually:
+1. 获得了授权的输入。
+2. 记录了版本与环境。
+3. 运行了有文档记录的命令。
+4. 保存了内容哈希或等效的溯源信息。
+5. 比对了预先设定的输出。
+6. 记录了偏离与失败之处。
 
-1. Obtained authorized inputs.
-2. Recorded versions and environment.
-3. Ran documented commands.
-4. Preserved content hashes or equivalent provenance.
-5. Compared prespecified outputs.
-6. Recorded deviations and failures.
+静态的一致性核查不等于复现。
 
-A static consistency audit is not reproduction.
+## 何时请求专家评审
 
-## When to request specialist review
+当核心结论依赖于自身能力之外的方法时上报，包括：
 
-Escalate when a central conclusion depends on methods outside competence, including:
+- 复杂的适应性、贝叶斯、因果、生存、多层次、空间或纵向方法
+- 高维组学或多重检验流程
+- 诊断、预测或 AI 评估
+- 调查加权或复杂抽样
+- 经济学建模
+- 含依赖效应或网络结构的 Meta 分析
+- 不熟悉的定性或混合方法学
+- 图像取证、生物安全、隐私或领域特有的伦理问题
 
-- Complex adaptive, Bayesian, causal, survival, multilevel, spatial, or longitudinal methods
-- High-dimensional omics or multiple-testing procedures
-- Diagnostic, prediction, or AI evaluation
-- Survey weighting or complex sampling
-- Economic modeling
-- Meta-analysis with dependent effects or network structure
-- Unfamiliar qualitative or mixed-methods methodology
-- Image forensics, biosecurity, privacy, or domain-specific ethics
+说明需要何种专长，以及哪一项主张依赖它。不要用自动化评分来掩盖不确定性。
 
-Say what expertise is needed and which claim depends on it. Do not mask uncertainty with an automated score.
+## 使用本地检查清单
 
-## Using the local checklist
-
-Copy `assets/statistical_reproducibility_template.json`, record evidence locations without pasting manuscript prose into report fields, and run:
+复制 `assets/statistical_reproducibility_template.json`，在报告
+字段中记录证据位置而不要粘贴稿件正文，然后运行：
 
 ```bash
 python3 scripts/audit_statistics_reproducibility.py local-checklist.json
 ```
 
-Statuses:
+状态取值：
 
 - `verified_present`
 - `partly_documented`
@@ -326,4 +345,4 @@ Statuses:
 - `not_assessed`
 - `not_applicable` with rationale
 
-The tool reports item IDs and counts. It does not calculate merit, rerun analyses, or certify reproducibility.
+该工具报告条目 ID 与计数。它不评价价值、不重跑分析，也不认证可复现性。

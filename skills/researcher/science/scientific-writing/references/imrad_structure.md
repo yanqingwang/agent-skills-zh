@@ -1,114 +1,113 @@
-# Manuscript Structure and Consistency
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/imrad_structure.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-IMRAD is a useful default for many original-research reports, but the study design,
-reporting guideline, article type, and current journal instructions control the final
-structure [SW-S01, SW-S06].
+# 稿件结构与一致性
 
-## Title and abstract
+IMRAD 对许多原创研究报告而言是有用的默认结构，但最终结构由研究设计、
+报告指南、文章类型与目标期刊的当前要求决定 [SW-S01, SW-S06]。
 
-The title should identify the work accurately without adding novelty, causality, design,
-or population claims that the manuscript does not support.
+## 标题与摘要
 
-Draft the abstract after the main text. Mirror, do not reinterpret:
+标题应当准确标识这项工作，不要加入稿件并不支持的新颖性、因果性、设计或
+人群方面的宣称。
 
-- objective or question;
-- design, setting, population or material, and key methods;
-- analysis population and prespecified primary result;
-- estimate, uncertainty, denominator, and harms where relevant;
-- conclusion limited to the reported evidence.
+在正文完成后再起草摘要。只做对应，不要重新诠释：
 
-Structured versus unstructured format is a venue decision. Do not apply a universal
-format. Any number in the abstract must match the same concept and analysis set in the
-main text and consistency registry.
+- 目标或问题；
+- 设计、场景、人群或材料，以及关键方法；
+- 分析人群与预设的主要结果；
+- 估计值、不确定性、分母，以及在相关时的伤害；
+- 结论限定在所报告的证据范围内。
 
-## Introduction
+结构式摘要与非结构式摘要的选择属于投稿载体层面的决定。不要套用一种
+通用格式。摘要中的任何数值都必须与正文和一致性登记簿中相同的概念、
+相同的分析集相符。
 
-Build a short evidence chain:
+## 引言
 
-1. verified context;
-2. what is known and uncertain;
-3. the specific gap;
-4. the objective, question, or prespecified hypothesis.
+搭建一条简短的证据链：
 
-Do not claim that no prior work exists unless a suitable search verifies that claim.
-Avoid previewing unsupported results or inflating significance.
+1. 已核验的背景；
+2. 已知与不确定的部分；
+3. 具体缺口；
+4. 目标、问题或预设假设。
 
-## Methods
+除非有合适的检索能够证实「此前不存在相关工作」这一说法，否则不要宣称
+此前没有工作。避免预告没有支撑的结果，也不要夸大显著性。
 
-Methods should permit evaluation and, where feasible, reproduction. Cover the elements
-applicable to the design:
+## 方法
 
-- design, setting, dates, and protocol or registration;
-- participants, specimens, datasets, or source population;
-- eligibility, selection, sampling, exclusions, and analysis populations;
-- interventions, exposures, comparators, materials, instruments, and versions;
-- outcomes, predictors, thresholds, time points, and measurement methods;
-- bias controls, randomization, allocation, and masking where applicable;
-- sample-size rationale;
-- missing data, transformations, covariates, multiplicity, sensitivity analyses, and
-  statistical or computational methods;
-- confirmatory, exploratory, and descriptive status;
-- ethics, consent, privacy, data governance, and approvals only when verified;
-- data, code, materials, and protocol access conditions.
+方法应当允许评估，并在可行时允许复现。覆盖与该设计相关的要素：
 
-Record deviations and timing. Never reconstruct a method from a result merely to make
-the paper appear consistent.
+- 设计、场景、时间范围，以及方案或注册信息；
+- 受试者、样本、数据集或来源人群；
+- 纳入条件、选择流程、抽样、排除标准与分析人群；
+- 干预、暴露、对照、材料、仪器及其版本；
+- 结局、预测因子、阈值、时间点与测量方法；
+- 偏倚控制、随机化、分配与盲法（在适用时）；
+- 样本量依据；
+- 缺失数据、变换、协变量、多重性、敏感性分析，以及统计或计算方法；
+- 确证性、探索性与描述性定位；
+- 伦理、知情同意、隐私、数据治理与审批（仅在已核验时）；
+- 数据、代码、材料与方案的获取条件。
 
-## Results
+记录偏离之处及其时间。绝不为了让论文看起来前后一致而从结果反推方法。
 
-Follow the declared objectives and outcomes. Report:
+## 结果
 
-- participant, sample, or record flow;
-- exclusions, missingness, attrition, and analysis populations;
-- descriptive information needed for interpretation;
-- prespecified primary and secondary results;
-- estimates with units, denominators, sample sizes, and uncertainty;
-- exploratory, sensitivity, subgroup, negative, null, adverse, unexpected, and
-  inconclusive findings with correct labels;
-- protocol or analysis deviations that affect interpretation.
+遵循已声明的目标与结局。报告：
 
-Describe results before interpretation unless the venue combines Results and
-Discussion. Do not equate a threshold crossing with scientific or practical importance.
+- 受试者、样本或记录的流转情况；
+- 排除标准、缺失、脱落与分析人群；
+- 解释结果所需的描述性信息；
+- 预设的主要与次要结果；
+- 带单位、分母、样本量与不确定性的估计值；
+- 探索性、敏感性、亚组、阴性、零结果、不良、意外与不确定的发现，并使用正确的标签；
+- 影响解释的方案或分析偏离之处。
 
-## Discussion
+除非投稿载体把结果与讨论合并，否则先描述结果再作解释。
+不要把跨越某个阈值等同于科学上或实践上的重要。
 
-Start from the verified findings, then:
+## 讨论
 
-- answer the objective at the supported level of certainty;
-- compare with verified prior evidence;
-- consider alternative explanations;
-- distinguish statistical, scientific, clinical, and practical interpretation;
-- explain limitations and likely consequences;
-- bound generalizability to the studied population, material, setting, and period;
-- identify implications without prescribing action beyond the evidence.
+从已核验的发现出发，然后：
 
-Do not introduce new results, methods, approvals, or citations that bypass verification.
+- 在证据支持的确定性水平上回答目标；
+- 与已核验的既往证据比较；
+- 考虑替代解释；
+- 区分统计、科学、临床与实践层面的解释；
+- 说明局限性及其可能后果；
+- 把可推广性限定在所研究的人群、材料、场景与时间范围内；
+- 指出意义，但不要提出超出证据范围的行动建议。
 
-## Declarations and end matter
+不要引入任何绕过核验的新结果、新方法、新审批或新引文。
 
-Treat each statement as data, not boilerplate:
+## 声明与文末材料
 
-- author contributions and accountability;
-- acknowledgments and permissions;
-- funding and the funder's role;
-- competing interests;
-- ethics, consent, and registration;
-- data, code, materials, and protocol availability;
-- AI-use disclosure;
-- references, figure legends, tables, and supplements.
+把每一条声明都当作数据，而不是样板内容：
 
-Use verified or explicit not-applicable states. Never generate an approval identifier,
-grant number, registration, author role, conflict declaration, or availability promise.
+- 作者贡献与问责关系；
+- 致谢与授权许可；
+- 资助情况与资助方的角色；
+- 利益冲突；
+- 伦理、知情同意与注册；
+- 数据、代码、材料与方案的可用性；
+- AI 使用披露；
+- 参考文献、图注、表格与补充材料。
 
-## Cross-section audit
+使用已核验的状态或明确标注「不适用」的状态。绝不生成审批编号、
+项目资助编号、注册号、作者角色、利益冲突声明或可用性承诺。
 
-Before submission, compare:
+## 跨章节审计
 
-- objective ↔ outcome ↔ result ↔ conclusion;
-- methods ↔ results;
-- abstract ↔ main text ↔ tables ↔ figures ↔ supplement;
-- units, denominators, sample sizes, labels, and time points;
-- registration and protocol ↔ manuscript;
-- in-text citations ↔ source manifest ↔ reference list.
+投稿之前，比对下列各项：
 
-Run `scripts/check_consistency.py` and complete a manual scientific review.
+- 目标 ↔ 结局 ↔ 结果 ↔ 结论；
+- 方法 ↔ 结果；
+- 摘要 ↔ 正文 ↔ 表格 ↔ 图 ↔ 补充材料；
+- 单位、分母、样本量、标签与时间点；
+- 注册信息与方案 ↔ 稿件；
+- 正文引文 ↔ 来源清单 ↔ 参考文献表。
+
+运行 `scripts/check_consistency.py` 并完成人工科学复核。

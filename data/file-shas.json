@@ -1,6 +1,9 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "2bafebfe53bff8962389ae40b685b53af42f99b9"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "2bafebfe53bff8962389ae40b685b53af42f99b9",
+    ".agents/skills/reverse-engineer-anything/references/android-applications.md": "cc51e22afe7ec34bdd88f0d8ba6275b26d3adda1",
+    ".agents/skills/reverse-engineer-anything/references/evidence-workflows.md": "0a83d37e79ee0a2239b1c89d1b67b63856a6ea18",
+    ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "8f5303cc9dbc426f9ebbbe8e7acdb3dbcbde2a6d"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -53,7 +56,13 @@
   "K-Dense-AI/scientific-agent-skills": {
     "skills/experimental-design/SKILL.md": "ee14f9ed795c791ac80e3ea946858d97d09c3e50",
     "skills/exploratory-data-analysis/SKILL.md": "c461f99dea057872298ce6f04e7c090a83d80d01",
-    "skills/citation-management/SKILL.md": "b63b589d4d423969a63e032e62c2b74969147c1c"
+    "skills/citation-management/SKILL.md": "b63b589d4d423969a63e032e62c2b74969147c1c",
+    "skills/citation-management/assets/citation_checklist.md": "d321768a3b4520f9981a6ac9ae90c1d8c570b00e",
+    "skills/citation-management/references/api_contracts.md": "99e5b1bcf3d181a22ebcf57f8b5387847dfab352",
+    "skills/citation-management/references/best_practices.md": "bc4ed3b0f1f3a6f751c4376b5caf0929ea53ca07",
+    "skills/citation-management/references/example_workflows.md": "8685e5bd11c05cdd6649d478429173c05c0823a2",
+    "skills/citation-management/references/script_reference.md": "ea8df755381fe63d90ddd5da6600c44d98d7ca0b",
+    "skills/citation-management/references/search_strategies.md": "5e1d501e01daace93a9896a48c206301019d8545"
   },
   "affaan-m/ECC": {
     "skills/search-first/SKILL.md": "3d2669e71ba54afba95defb05080253058190600",
@@ -71,7 +80,7 @@
     "SKILL.md": "aebe394108e76bebdf7b8848eceddc756e844ec4"
   },
   "OthmanAdi/planning-with-files": {
-    ".agents/skills/planning-with-files/SKILL.md": "71502bbe26aff1c1e6af15697b846247ac1690e4"
+    ".agents/skills/planning-with-files/SKILL.md": "a84f1a244ccf46ce62747709369a59982cf54835"
   },
   "titanwings/distilly": {
     "SKILL.md": "d2a76e7a9475d870fbce3e4abc8a6495d33582c9"
@@ -88,11 +97,11 @@
     "qa/SKILL.md": "5a348f9c7c1931415e0eb352ce298f327251a0df",
     "design-review/SKILL.md": "42e47d2515578b1e7ea44653c4adb4ad9628374b",
     "health/SKILL.md": "ecde9b5f2aba48ff8e8371d5774ef417f7249e65",
-    "review/SKILL.md": "f98b7ca7a0669b3c38acf7e7be3854bec9a0c9bf",
+    "review/SKILL.md": "369f3730a6724c6dec025565464c35ab1cc6a514",
     "learn/SKILL.md": "0d9f456c09ec9e7764a4eefc72e4d95afe3064f7",
-    "ship/SKILL.md": "4970033c09cbe79ef819b6eb19e7b5be059fd38c",
+    "ship/SKILL.md": "125947cba51e3ddcf1ff6744fd2ccda269d79bf5",
     "investigate/SKILL.md": "cb6a50df2db4951e81ab798492967584e7fd0cfa",
-    "retro/SKILL.md": "0e85fb8a15f7435b20aa72fd116aa5d0be719b8a",
+    "retro/SKILL.md": "336dee5137f4ed6ea67e013d987f922f5eb8b1e7",
     "land-and-deploy/SKILL.md": "57e64a21aa542a8350882a778085ea4fcb2f098c",
     "plan-eng-review/SKILL.md": "4061ac83ba2683e7fa18c9235a9658a719fddd48",
     "spec/SKILL.md": "722483a88de4726c06ab357236f3e319ae98858b"

@@ -1,97 +1,93 @@
-# Research Integrity and Responsible Open Science
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/references/research_integrity_open_science.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Integrity principles
+# 研究诚信与负责任的开放科学
 
-The ALLEA 2023 Code frames research integrity around reliability, honesty, respect, and
-accountability across disciplines and research settings [SW-S27]. Apply those principles
-throughout drafting, not only at submission.
+## 诚信原则
 
-- Preserve the original record and an audit trail.
-- Report methods, deviations, uncertainty, and findings honestly.
-- Correct material errors promptly and transparently.
-- Respect participants, communities, collaborators, animals, the environment, and
-  legitimate rights in knowledge and data.
-- Assign credit fairly and accept accountability.
-- Do not fabricate, falsify, plagiarize, selectively omit, or conceal provenance.
+ALLEA 2023《欧洲科研诚信准则》把研究诚信围绕可靠性、诚实、尊重与问责
+这几个方面来界定，跨越各个学科与研究场景 [SW-S27]。在整个起草过程中
+都应践行这些原则，而不只是在投稿时。
 
-If potential misconduct or a material error appears, preserve records and follow the
-institutional, funder, journal, and legal process. Do not investigate by exposing
-sensitive material to unapproved systems.
+- 保留原始记录与审计轨迹。
+- 如实报告方法、偏离之处、不确定性与发现。
+- 及时且透明地更正实质性错误。
+- 尊重受试者、社群、合作者、动物、环境，以及知识与数据中的合法权益。
+- 公平分配贡献，并承担问责。
+- 不伪造、不篡改、不抄袭，不做选择性省略，也不隐瞒来源。
 
-## Open science with safeguards
+如果出现潜在的不端行为或实质性错误，请保留记录并遵循所在机构、资助方、
+期刊与法律程序。不要通过把敏感材料暴露给未经批准的系统来开展调查。
 
-UNESCO's Recommendation supports accessible, inclusive, equitable, and sustainable open
-science while recognizing legitimate restrictions for confidentiality, personal
-information, intellectual property, threatened resources, and protected knowledge
-[SW-S28].
+## 有防护的开放科学
 
-For every data, code, materials, and protocol statement:
+UNESCO《关于开放科学的建议书》支持可及、包容、公平与可持续的开放科学，
+同时承认保密、个人信息、知识产权、濒危资源与受保护知识等方面存在
+正当的限制 [SW-S28]。
 
-1. Confirm ownership, consent, ethics terms, contracts, law, and repository policy.
-2. Identify what underlies the reported claims.
-3. Choose an appropriate repository and access model.
-4. Record versions, persistent identifiers, licenses, metadata, and retention.
-5. State restrictions and an actual access process.
-6. Verify that the deposited files match the analysis and do not expose restricted
-   information.
+对每一条关于数据、代码、材料与方案的陈述：
 
-Do not promise public availability merely because a template asks for it. "Available on
-request" must describe a real, authorized, sustainable process if the venue permits that
-form.
+1. 确认所有权、知情同意、伦理条款、合同、法律与存储库政策。
+2. 确认所报告主张的依据是什么。
+3. 选择合适的存储库与访问模式。
+4. 记录版本、持久标识符、许可、元数据与保存期限。
+5. 说明限制条件以及真实的访问流程。
+6. 核验所存放的文件与分析内容一致，且不会暴露受限信息。
 
-## Prospective transparency
+不要仅仅因为模板要求就承诺公开可用。如果投稿载体允许这种表述，
+「可按请求提供」必须描述一条真实、已获授权且可持续的流程。
 
-Where applicable, record:
+## 前瞻性透明度
 
-- study registration;
-- protocol and amendments;
-- analysis plan and timing;
-- outcome and model definitions;
-- data-management and sharing plan;
-- materials, software, environment, and versions;
-- departures from prespecification.
+在适用的情况下，记录：
 
-The Center for Open Science's TOP 2025 framework provides practices for registration,
-protocols, analysis plans, materials, data, code, reporting transparency, and
-verification [SW-S30]. These practices are flexible policy components, not a universal
-score for an individual manuscript.
+- 研究注册；
+- 方案及其修订；
+- 分析计划及其时间安排；
+- 结局与模型的定义；
+- 数据管理与共享计划；
+- 材料、软件、环境与版本；
+- 偏离预设之处。
 
-NIH's Data Management and Sharing Policy applies to covered NIH research and expects
-planning, budgeting, submission of a plan, and compliance with the approved plan
-[SW-S29]. Check the specific funder, award, institute, and effective requirements.
+开放科学中心（Center for Open Science）的 TOP 2025 框架为注册、方案、
+分析计划、材料、数据、代码、报告透明度与核验提供了实践做法 [SW-S30]。
+这些做法是灵活的政策组成部分，不是针对单篇稿件的通用评分。
 
-## Reproducibility package
+NIH 的《数据管理与共享政策》适用于受其管辖的 NIH 研究，并要求进行规划、
+预算编制、提交计划以及遵守获批的计划 [SW-S29]。请核对具体的资助方、
+项目、研究院所与生效日期要求。
 
-When policy and rights permit, preserve:
+## 可复现性材料包
 
-- immutable raw-data references rather than uncontrolled copies;
-- cleaned or analysis-ready data with provenance;
-- executable analysis code and environment information;
-- software and model versions;
-- randomization or seed handling where relevant;
-- machine-readable tables behind reported displays;
-- a mapping from outputs to manuscript claims;
-- checksums, releases, and persistent identifiers.
+在政策与权利允许的情况下，保留：
 
-Never share secrets, credentials, direct identifiers, restricted variables, proprietary
-source code, or licensed source documents in a public package.
+- 不可变的原始数据引用，而不是未受控制的副本；
+- 带溯源信息的清洗后数据或可直接分析的数据；
+- 可执行的分析代码与环境信息；
+- 软件与模型版本；
+- 随机化或随机种子的处理方式（在相关时）；
+- 展示对象背后的机器可读表格；
+- 从输出到稿件主张的映射关系；
+- 校验和、发布版本与持久标识符。
 
-## Corrections and versions
+绝不在公开材料包中分享机密信息、凭据、直接标识符、受限变量、专有源代码
+或受许可约束的来源文档。
 
-Before submission, check for corrected, retracted, superseded, or updated sources. After
-dissemination:
+## 更正与版本
 
-- preserve the original version where policy requires;
-- describe what changed and why;
-- link corrections to the affected record;
-- update downstream data, code, tables, and claims;
-- notify the appropriate journal, repository, collaborators, and oversight bodies.
+投稿之前，检查来源是否有勘误、撤稿、被取代或更新。传播之后：
 
-Do not silently edit a scientific record in a way that hides a material change.
+- 在政策要求的情况下保留原始版本；
+- 说明改了什么以及为什么改；
+- 把更正与受影响的记录关联起来；
+- 更新下游的数据、代码、表格与主张；
+- 通知相应的期刊、存储库、合作者与监管机构。
 
-## Negative and null findings
+不要以掩盖实质性改动的方式悄悄编辑科学记录。
 
-Open science includes an accurate record of outcomes that do not support the preferred
-narrative. Preserve negative, null, adverse, failed, and inconclusive results when they
-are part of the study record. Describe their uncertainty and limitations; do not
-reinterpret them as proof of absence.
+## 阴性与零结果
+
+开放科学也包括如实记录那些不支持既定叙事的结局。当阴性、零结果、不良、
+失败与不确定的结果属于研究记录的一部分时，请保留它们。说明它们的不确定性与
+局限性，不要把它们重新解释为「证明不存在」。

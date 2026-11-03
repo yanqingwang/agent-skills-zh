@@ -1,65 +1,65 @@
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/scientific-writing/assets/manuscript_scaffold.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # DRAFT — NOT FOR SUBMISSION
 
-This scaffold is intentionally incomplete. Remove this banner only after every local
-validator passes and accountable human authors approve the final document.
+本脚手架刻意保持不完整。只有在每个本地校验器都通过、
+且承担责任的作者批准最终文档之后，才能移除这条横幅。
 
-# [[TODO: verified title]]
+# [[TODO: 已核验的标题]]
 
-## Abstract
+## 摘要
 
-[[TODO: draft from verified methods and results only; preserve uncertainty and append
-claim and evidence markers to every factual or numeric assertion]]
+[[TODO: 只依据已核验的方法与结果起草；保留不确定性，
+并为每一处事实性或数值性断言附上主张与证据标记]]
 
-## Introduction
+## 引言
 
-[[TODO: establish context from verified sources, state the gap without exaggeration,
-and distinguish prior evidence from the present study]]
+[[TODO: 从已核验的来源确立背景，陈述缺口而不夸大，并区分既往证据与本研究]]
 
-## Methods
+## 方法
 
-[[TODO: report what was actually done, including design, materials or participants,
-outcomes, analysis intent, deviations, ethics status, and provenance]]
+[[TODO: 报告实际做了什么，包括设计、材料或参与者、
+结局、分析意图、偏离之处、伦理状态与溯源]]
 
-## Results
+## 结果
 
-[[TODO: report all prespecified, exploratory, negative, null, and adverse findings that
-are supported by the evidence registries; keep denominators, units, and sample sizes
-consistent]]
+[[TODO: 报告所有由证据登记簿支持的预先设定、探索性、
+阴性、零结果与不良发现；保持分母、单位与样本量一致]]
 
-## Discussion
+## 讨论
 
-[[TODO: interpret only supported results, compare with verified evidence, preserve
-alternative explanations, and state concrete limitations]]
+[[TODO: 只解释有证据支撑的结果，与已核验的证据比较，
+保留替代解释，并说明具体的局限性]]
 
-## Author contributions
+## 作者贡献
 
-[[TODO: insert only the human-approved statement generated from the validated CRediT
-record]]
+[[TODO: 只插入由通过校验的 CRediT 记录生成、且已获人工批准的声明]]
 
-## Funding
+## 资助
 
-[[TODO: insert a verified funding statement or a verified not-applicable statement]]
+[[TODO: 插入一句已核验的资助声明，或一句已核验的不适用声明]]
 
-## Competing interests
+## 利益冲突
 
-[[TODO: insert a verified disclosure or a verified not-applicable statement]]
+[[TODO: 插入一份已核验的披露声明，或一句已核验的不适用声明]]
 
-## Ethics and consent
+## 伦理与知情同意
 
-[[TODO: insert only verified approvals, identifiers, consent language, or a verified
-not-applicable statement]]
+[[TODO: 只插入已核验的审批信息、标识符、知情同意措辞，
+或一句已核验的不适用声明]]
 
-## Data and code availability
+## 数据与代码可用性
 
-[[TODO: state actual access conditions, restrictions, repositories, persistent
-identifiers, and applicable consent or policy limits]]
+[[TODO: 说明实际的获取条件、限制、存放库、持久化标识符，
+以及适用的知情同意或政策限制]]
 
-## AI-use disclosure
+## AI 使用披露
 
-[[TODO: follow the current target-journal policy; identify tools and purposes when
-required; AI is not an author and humans remain accountable]]
+[[TODO: 遵循目标期刊当前的政策；在需要时标明工具与用途；
+AI 不是作者，问责仍然由人承担]]
 
-## References
+## 参考文献
 
-[[TODO: render only entries whose metadata and identifiers were verified against the
-opened source]]
+[[TODO: 只呈现那些元数据与标识符已对照打开的来源核验过的条目]]

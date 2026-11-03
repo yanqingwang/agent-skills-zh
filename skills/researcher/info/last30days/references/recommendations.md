@@ -1,28 +1,32 @@
-# Recommendations
+> **中文汉化版** · 上游：[mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) · 原文件：`skills/last30days/references/recommendations.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Read for recommendation intent before ranking and rendering. The root citation and output laws take precedence over presentation examples.
+# 推荐
 
-### If QUERY_TYPE = RECOMMENDATIONS — Signal-weighted picks, not mention counts
+在排序与渲染之前，遇到推荐意图就阅读本文件。根文件的引用法则与输出法则优先于这里的展示示例。
 
-**The failure mode for RECOMMENDATIONS queries is "counting when you should have judged."** Mention count rewards whatever is already popular, which is rarely what is actually recommended. Rank by signal quality instead.
+### 当 QUERY_TYPE = RECOMMENDATIONS — 按信号加权挑选，而不是按提及次数
 
-**Signal weights (highest to lowest):**
-1. **Practitioner testimony** (weight 5) - first-person "I use X and here's why" with specific reasoning, version numbers, or workflow details
-2. **Expert defection / authority move** (weight 4) - a domain insider publicly switching, endorsing, or picking (e.g., Flask creator switching from Python to Go)
-3. **Measurable claim** (weight 4) - specific number, benchmark, production adoption proof (e.g., "43.7% latency win", "LinkedIn and Uber running it in prod")
-4. **Reasoned comparison** (weight 3) - side-by-side analysis with tradeoffs explicitly named
-5. **Pattern across independent sources** (weight 2) - multiple unaffiliated voices converging on the same pick
-6. **Descriptive mention** (weight 1) - "X is a Python framework" — existence, not recommendation
-7. **Promotional / bootcamp / course-caption** (weight 0) - "comment CODE for my course" — skip entirely, do not count
+**RECOMMENDATIONS 查询的失败模式是“本该判断时却在数数”。** 提及次数只会奖励本来就热门的东西，而这很少等于真正值得推荐的。改按信号质量排序。
 
-**Before ranking, separate "what EXISTS" from "what is RECOMMENDED":**
-- EXISTS = descriptive mentions, promotional content, training-data inertia, bootcamp curriculum, "learn X first" posts with no stakes attached
-- RECOMMENDED = reasoned picks from voices with stakes in the outcome (practitioners, experts, case studies, people who switched)
-- Only RECOMMENDED items drive the top of the ranking. Existing-but-not-recommended items go in "Also mentioned" at the bottom with a one-line note on why they are mentions not picks.
+**信号权重（从高到低）：**
+1. **从业者证言**（权重 5）- 第一人称“我在用 X，理由是……”，带具体理由、版本号或工作流细节
+2. **专家转向 / 权威动作**（权重 4）- 领域内部人士公开改用、背书或做出选择（例如 Flask 作者从 Python 转向 Go）
+3. **可度量的主张**（权重 4）- 具体数字、基准测试、生产环境采用证据（例如“延迟降低 43.7%”“LinkedIn 和 Uber 在生产环境运行它”）
+4. **有理由的比较**（权重 3）- 并排分析，并明确点出取舍
+5. **独立来源之间的一致模式**（权重 2）- 多个互不隶属的声音收敛到同一个选择
+6. **描述性提及**（权重 1）- “X 是一个 Python 框架”— 只说明存在，不是推荐
+7. **推广 / 训练营 / 课程标题**（权重 0）- “评论 CODE 领取我的课程”— 完全跳过，不计数
 
-**Lead with the 30-day DELTA, not the status-quo baseline.** What is the interesting movement? Who is switching? What is the contrarian signal? A status-quo leader with no movement is a footer item, not the headline. "Python has 15 mentions" is not a delta; "Flask creator switched to Go this month" is.
+**排序前，先把“存在什么”与“推荐什么”分开：**
+- EXISTS = 描述性提及、推广内容、训练数据惯性、训练营课程、“先学 X”一类不涉利害的帖子
+- RECOMMENDED = 来自与结果有利害关系的声音的有理由选择（从业者、专家、案例研究、实际改用的人）
+- 只有 RECOMMENDED 项驱动排序顶部。存在但未被推荐的项放在底部的“另外提到”里，并用一行说明它们为何只是提及而非首选。
 
-**Output shape:**
+**以 30 天 DELTA 开场，而不是以现状基线开场。** 有意思的变化是什么？谁在改用？反向信号是什么？一个毫无动静的现状领跑者是页脚条目，不是头条。“Python 有 15 次提及”不是 delta；“Flask 作者本月改用了 Go”才是。
+
+**输出形态：**
 
 ```
 🏆 Top recommendations (ranked by signal quality, not mention count):
@@ -39,17 +43,17 @@ Read for recommendation intent before ranking and rendering. The root citation a
 Also mentioned (exists, not recommended): [comma-separated list with one-line note on WHY each is a mention rather than a pick - e.g., "Python (status-quo default across bootcamp content; @javitm: 'agents have a strong bias for Python despite it probably not being the best')"]
 ```
 
-**Anti-patterns to avoid:**
-- Leading with the most-mentioned option because it appears most frequently ("Python has 15 mentions so it is #1"). That is counting, not judging.
-- Treating every mention equally. A Flask-creator switching to Go (expert defection, weight 4) outranks 10 bootcamp captions saying "learn Python first" (promotional, weight 0). The bootcamp captions do not belong in the ranking at all.
-- Collapsing "best for what?" into one leaderboard. RECOMMENDATIONS queries usually split into 2-4 sub-questions (best for production scale, best for agents to generate reliably, best for learning, best for benchmarks). Separate them if the research supports it.
-- Ignoring anti-signal quotes. If the corpus contains a quote like "@javitm: agents have a strong bias for Python despite it probably not being the best — they prioritize the strongest signal in training data over the right choice," that is telling you mention-count is a biased metric for this topic. Read it; surface it; do not ignore it.
-- Stress-test your top pick before emitting. Ask: "Would the research actually defend this claim to a skeptical expert?" If the answer is no, re-rank.
+**要避免的反模式：**
+- 因为某个选项出现得最频繁就让它领跑（“Python 有 15 次提及，所以它排第一”）。这是数数，不是判断。
+- 把每次提及等同看待。Flask 作者改用 Go（专家转向，权重 4）的排位高于 10 条“先学 Python”的训练营标题（推广，权重 0）。那些训练营标题根本不该进入排序。
+- 把“最适合什么？”压成一张总榜。RECOMMENDATIONS 查询通常会分成 2-4 个子问题（最适合生产规模、最适合让 Agent 可靠生成、最适合学习、最适合基准测试）。如果研究内容支持，就分开呈现。
+- 忽略反向信号引用。如果语料里有这样一条引用：“@javitm: agents have a strong bias for Python despite it probably not being the best — they prioritize the strongest signal in training data over the right choice,”，那是在告诉你：对本话题而言，提及次数是一个有偏的度量。读它、呈现它，不要无视它。
+- 输出前先压力测试你的首选。问自己：“研究真的能向持怀疑态度的专家证明这个主张吗？”如果不能，重新排序。
 
-**BAD RECOMMENDATIONS synthesis (counting):**
+**RECOMMENDATIONS 的糟糕综合（在数数）：**
 > "🏆 Most mentioned: Python (15 mentions), TypeScript (10x), Go (7x), Rust (5x)."
 
-**GOOD RECOMMENDATIONS synthesis (judging):**
+**RECOMMENDATIONS 的良好综合（在判断）：**
 > "🏆 Top recommendations (ranked by signal quality, not mention count):
 >
 > **Go** - Flask creator Miguel Grinberg publicly switched this month for a specific technical reason
@@ -69,18 +73,18 @@ Also mentioned (exists, not recommended): [comma-separated list with one-line no
 >
 > Also mentioned (exists, not recommended): Python (status-quo default across training data and bootcamp content; @javitm: 'agents have a crazy strong bias for Python despite it probably not being the best — they prioritize the strongest signal in training data over the right choice'), Java/Kotlin (enterprise mentions only, no practitioner testimony in the 30-day window)."
 
-Notice how the good version:
-- Leads with movement (Flask creator switched), not volume (Python has most mentions)
-- Cites specific evidence that would defend the ranking to a skeptic
-- Treats Python's volume as anti-signal (the @javitm quote) rather than support
-- Puts promotional / descriptive mentions in "Also mentioned" with explicit framing
+注意良好版本的特点：
+- 以变化开场（Flask 作者改用了），而不是以数量开场（Python 提及最多）
+- 引用具体证据，能对怀疑者站得住
+- 把 Python 的数量当作反向信号（@javitm 那条引用），而不是支持
+- 把推广与描述性提及放进“另外提到”，并明确交代其性质
 
 
-**Rendering:** use the signal-quality template above; mention counts do not determine ranking.
+**渲染：** 使用上面的信号质量模板；提及次数不决定排序。
 
-**CRITICAL for RECOMMENDATIONS:**
-- Each item MUST have a "Voices:" line with actual @handles from X posts (e.g., @LONGLIVE47, @ByDobson)
-- Include subreddit names (r/hiphopheads) and web sources (Complex, Variety)
-- Parse @handles from research output and include the highest-engagement ones
-- Format naturally - tables work well for wide terminals, stacked cards for narrow
-- **CRITICAL whitespace rule:** Never insert more than ONE blank line between any two content blocks. Comparison tables should immediately follow the preceding paragraph with exactly one blank line. Do NOT pad with 3-6 empty lines before tables.
+**RECOMMENDATIONS 的关键要求：**
+- 每一项都必须有一行 "Voices:"，填入来自 X 帖子的真实 @handle（例如 @LONGLIVE47、@ByDobson）
+- 包含 subreddit 名称（r/hiphopheads）与 web 来源（Complex、Variety）
+- 从研究输出中解析 @handle，并纳入互动量最高的那几个
+- 自然排版，宽终端适合表格，窄终端适合堆叠卡片
+- **关键的空白规则：** 任何两个内容块之间绝不超过一个空行。对比表格应紧跟在前一段之后，中间恰好一个空行。不要在表格前垫 3-6 个空行。

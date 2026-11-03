@@ -1,30 +1,33 @@
-# Bundled Script Reference
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/citation-management/references/script_reference.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Purpose, arguments, and usage examples for each script in `scripts/`:
-`search_openalex.py`, `search_pubmed.py`, `search_google_scholar.py`,
-`extract_metadata.py`, `validate_citations.py`, `format_bibtex.py`, and
-`doi_to_bibtex.py`.
+# 随附脚本参考
 
-`_common.py` is not a command. It holds the brace-aware BibTeX parser, the
-entry renderer, the page-range normaliser, and the citation-key scheme that
-every script above shares — which is what lets entries found through different
-databases deduplicate against each other.
+`scripts/` 中每个脚本的用途、参数与用法示例：
+`search_openalex.py`、`search_pubmed.py`、`search_google_scholar.py`、
+`extract_metadata.py`、`validate_citations.py`、`format_bibtex.py`，
+以及 `doi_to_bibtex.py`。
 
-## Tools and Scripts
+`_common.py` 不是命令。它保存了支持花括号嵌套的 BibTeX 解析器、条目渲染器、
+页码范围归一化器，以及上述每个脚本共享的引文键方案——正是这套共享机制
+让通过不同数据库找到的条目能够彼此去重。
+
+## 工具与脚本
 
 ### search_openalex.py
 
-Search OpenAlex across disciplines. Casual keyless use is supported; an optional account key raises the available budget.
+跨学科检索 OpenAlex。支持无密钥的日常使用；可选的账户 key 会提升可用额度。
 
-**Features**:
-- Keyless REST API with cursor pagination
-- Year range and work-type filtering
-- Sort by relevance or citation count
-- Abstracts reconstructed from OpenAlex's inverted index
-- Open-access status on every record
-- Export to JSON or BibTeX
+**特性**：
+- 无密钥 REST API，带 cursor 分页
+- 年份范围与作品类型过滤
+- 按相关性或被引次数排序
+- 从 OpenAlex 的倒排索引重建摘要
+- 每条记录都带有开放获取状态
+- 导出为 JSON 或 BibTeX
 
-**Usage**:
+**用法**：
 ```bash
 # Basic search
 python scripts/search_openalex.py "quantum computing"
@@ -45,20 +48,20 @@ python scripts/search_openalex.py "CRISPR gene editing" \
   --output crispr_reviews.bib
 ```
 
-Set `OPENALEX_API_KEY` for your account budget; it is sent in the Authorization header. `OPENALEX_EMAIL`/`--email` supplies optional contact information. The client uses the supported 100-record page limit and exits with an error if any requested page fails, preventing a partial bibliography from being reported as complete.
+设置 `OPENALEX_API_KEY` 以使用你的账户额度；它会通过 Authorization 头发送。`OPENALEX_EMAIL`/`--email` 提供可选的联系信息。客户端使用受支持的 100 条分页上限；若任何一页请求失败就报错退出，避免把不完整的参考文献当成完整的报告出来。
 
 ### search_google_scholar.py
 
-Search Google Scholar and export results.
+检索 Google Scholar 并导出结果。
 
-**Features**:
-- Optional unofficial `scholarly` scraper; Google offers no bulk API
-- Pagination support
-- Year range filtering
-- Export to JSON or BibTeX
-- Citation count information
+**特性**：
+- 可选的非官方 `scholarly` 抓取器；Google 不提供批量 API
+- 分页支持
+- 年份范围过滤
+- 导出为 JSON 或 BibTeX
+- 被引次数信息
 
-**Usage**:
+**用法**：
 ```bash
 # Basic search
 python scripts/search_google_scholar.py "quantum computing"
@@ -78,22 +81,20 @@ python scripts/search_google_scholar.py "machine learning" \
   --output ml_papers.bib
 ```
 
-`--sort-by citations` sorts only the retrieved sample; it is not a global
-Google Scholar sort. Year bounds are passed to `scholarly.search_pubs`.
-Blocked/failed searches return no bibliography.
+`--sort-by citations` 只对取回的样本排序；它不是 Google Scholar 的全局排序。年份边界会传给 `scholarly.search_pubs`。被封锁/失败的检索不会返回参考文献。
 
 ### search_pubmed.py
 
-Search PubMed using E-utilities API.
+用 E-utilities API 检索 PubMed。
 
-**Features**:
-- Complex query support (MeSH, field tags, Boolean)
-- Date range filtering
-- Publication type filtering
-- Batch retrieval with metadata
-- Export to JSON or BibTeX
+**特性**：
+- 复杂查询支持（MeSH、字段标签、布尔运算）
+- 日期范围过滤
+- 出版类型过滤
+- 批量检索并附带元数据
+- 导出为 JSON 或 BibTeX
 
-**Usage**:
+**用法**：
 ```bash
 # Simple keyword search
 python scripts/search_pubmed.py "CRISPR gene editing"
@@ -116,17 +117,16 @@ python scripts/search_pubmed.py "Alzheimer's disease" \
 
 ### extract_metadata.py
 
-Extract available metadata from paper identifiers. Search JSON records need a
-DOI, PMID, PMCID, arXiv ID, or article URL; raw OpenAlex IDs are not supported.
+从论文标识符中提取可获得的元数据。检索得到的 JSON 记录需要 DOI、PMID、PMCID、arXiv ID 或文章 URL；不支持原始 OpenAlex ID。
 
-**Features**:
-- Supports DOI, PMID, PMCID, arXiv ID, URL; identifier flags are repeatable
-- Queries CrossRef, PubMed, arXiv APIs
-- Handles multiple identifier types
-- Batch processing from newline identifiers or bundled search JSON (`results`/`entries`)
-- Outputs BibTeX or JSON; partial extraction exits 2 after explicitly reporting failures
+**特性**：
+- 支持 DOI、PMID、PMCID、arXiv ID、URL；标识符参数可重复使用
+- 查询 CrossRef、PubMed、arXiv API
+- 处理多种标识符类型
+- 从换行分隔的标识符或随附的检索 JSON（`results`/`entries`）批量处理
+- 输出 BibTeX 或 JSON；部分提取失败时在明确报告失败后以状态码 2 退出
 
-**Usage**:
+**用法**：
 ```bash
 # Single DOI
 python scripts/extract_metadata.py --doi 10.1038/s41586-021-03819-2
@@ -154,18 +154,18 @@ python scripts/extract_metadata.py \
 
 ### validate_citations.py
 
-Validate BibTeX entries for accuracy, completeness, citation count standard compliance, and manuscript integration.
+校验 BibTeX 条目的准确性、完整性、引文数量标准的符合度与手稿集成情况。
 
-**Features**:
-- DOI registration checks via Crossref, DataCite, and resolver fallback; inconclusive lookups are warnings
-- Required field checking
-- Duplicate detection
-- Format validation
-- **Heuristic citation-count warnings** for named venues; only an explicit `--min-count` is enforced.
-- **Mandatory post-writing checks** matching manuscript citations (Markdown or LaTeX) with defined BibTeX entries to detect unresolved/missing or unused references.
-- Detailed reporting
+**特性**：
+- 通过 Crossref、DataCite 与解析器回退做 DOI 注册检查；无法定论的查询记为警告
+- 必填字段检查
+- 重复项检测
+- 格式校验
+- 针对指定 venue 的**启发式引文数量警告**；只有显式传入的 `--min-count` 才会强制
+- **写作后必做检查**：把手稿中的引文（Markdown 或 LaTeX）与已定义的 BibTeX 条目对应，检测未解析/缺失或未被使用的参考文献
+- 详细报告
 
-**Usage**:
+**用法**：
 ```bash
 # Basic validation
 python scripts/validate_citations.py references.bib
@@ -191,17 +191,17 @@ python scripts/validate_citations.py references.bib \
 
 ### format_bibtex.py
 
-Format and clean BibTeX files.
+格式化并清理 BibTeX 文件。
 
-**Features**:
-- Standardize formatting
-- Sort entries (by key, year, author)
-- Remove duplicates
-- Validate syntax
-- Fix common errors
-- Enforce citation key conventions
+**特性**：
+- 统一格式
+- 排序条目（按键、年份、作者）
+- 移除重复项
+- 校验语法
+- 修复常见错误
+- 强制引文键命名惯例
 
-**Usage**:
+**用法**：
 ```bash
 # Basic formatting
 python scripts/format_bibtex.py references.bib
@@ -227,15 +227,15 @@ python scripts/format_bibtex.py references.bib \
 
 ### doi_to_bibtex.py
 
-Quick DOI to BibTeX conversion.
+快速把 DOI 转为 BibTeX。
 
-**Features**:
-- Fast single DOI conversion
-- Batch processing from newline identifiers or bundled search JSON (`results`/`entries`)
-- Outputs BibTeX or JSON; partial extraction exits 2 after explicitly reporting failures
-- Clipboard piping using a separate OS utility (for example `pbcopy`)
+**特性**：
+- 快速转换单个 DOI
+- 从换行分隔的标识符或随附的检索 JSON（`results`/`entries`）批量处理
+- 输出 BibTeX 或 JSON；部分提取失败时在明确报告失败后以状态码 2 退出
+- 使用独立的操作系统工具管道到剪贴板（例如 `pbcopy`）
 
-**Usage**:
+**用法**：
 ```bash
 # Single DOI
 python scripts/doi_to_bibtex.py 10.1038/s41586-021-03819-2

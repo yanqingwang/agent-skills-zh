@@ -85,27 +85,27 @@
 
 | 上游 | Star | License | 模式 | 翻译件 | 原样件 | 最近同步 |
 |---|--:|---|:-:|--:|--:|---|
-| [morluto/rea](https://github.com/morluto/rea) | 422,686 | MIT | ? | 1 | 7 | [`9bea563`](https://github.com/morluto/rea/commit/9bea563e30fd255d639d6877a91109ba9ff2eb00) |
+| [morluto/rea](https://github.com/morluto/rea) | 422,686 | MIT | ? | 4 | 4 | [`b912ec1`](https://github.com/morluto/rea/commit/b912ec184ca2ecbd5b59d046187be5b4a59ca3c1) |
 | [obra/superpowers](https://github.com/obra/superpowers) | 311,201 | MIT | ? | 5 | 13 | [`2ce8aa1`](https://github.com/obra/superpowers/commit/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b) |
 | [mattpocock/skills](https://github.com/mattpocock/skills) | 310,169 | MIT | ? | 2 | 2 | [`4ae2317`](https://github.com/mattpocock/skills/commit/4ae2317ddb22b046e26455e4f9c9b3aaaf62212d) |
 | [affaan-m/ECC](https://github.com/affaan-m/ECC) | 295,608 | MIT | ? | 10 | 11 | [`b38be6a`](https://github.com/affaan-m/ECC/commit/b38be6a7f6350964d59328b52f0624e1d1d552d1) |
 | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | 228,516 | NONE (excluded) | ? | 0 | 0 | — |
 | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 182,852 | MIT | ? | 1 | 0 | [`96608e0`](https://github.com/DietrichGebert/ponytail/commit/96608e078b2d5ea607c5c3b8b5a54d1c1fba6846) |
 | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 144,260 | MIT | 整目录（旗舰 + 6 姊妹件） | 7 | 256 | [`713eef5`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/commit/713eef51b04efc98d6fa565323b495f7c9c89fd4) |
-| [garrytan/gstack](https://github.com/garrytan/gstack) | 138,676 | MIT | 整仓 | 13 | 1275 | [`b257eff`](https://github.com/garrytan/gstack/commit/b257eff2ba0be3e97c5a0824c4a113569d93cc9f) |
+| [garrytan/gstack](https://github.com/garrytan/gstack) | 138,676 | MIT | 整仓 | 13 | 1275 | [`b42ad1e`](https://github.com/garrytan/gstack/commit/b42ad1e300fad1641ef1bc65c876701d235d921d) |
 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | 116,925 | Apache-2.0 | ? | 1 | 1 | [`2e068f7`](https://github.com/JuliusBrussee/caveman/commit/2e068f735253cce28256744804785f01887d9646) |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 112,815 | MIT | ? | 3 | 4 | [`301b02b`](https://github.com/addyosmani/agent-skills/commit/301b02b12bff98e4688e6984af6556802322bbde) |
 | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 108,664 | MIT | ? | 1 | 36 | [`12af471`](https://github.com/Leonxlnx/taste-skill/commit/12af471f627f866411b4bd785b19646d3672784c) |
 | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | 100,404 | Apache-2.0 | 整目录 | 1 | 57 | [`9fadc41`](https://github.com/pbakaus/impeccable/commit/9fadc41729c38fd47d7ae622b501558653f9d2e9) |
 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | 92,717 | Apache-2.0 | ? | 1 | 202 | [`a406594`](https://github.com/tt-a1i/archify/commit/a4065941f12be7967436261d9934784e381d423c) |
 | [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) | 89,877 | MIT | ? | 1 | 54 | [`4e6d329`](https://github.com/Egonex-AI/Understand-Anything/commit/4e6d3299017a7432da15957874992837a315c5b4) |
-| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 66,360 | MIT | ? | 1 | 152 | [`6894d44`](https://github.com/mvanhorn/last30days-skill/commit/6894d44e088c449ecdd7246a18763fddba1ff805) |
-| [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | 64,335 | MIT | ? | 1 | 286 | [`0cf73c3`](https://github.com/cathrynlavery/diagram-design/commit/0cf73c3fcc56667ad91a9a04c439ac6ccfabc9d1) |
+| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 66,360 | MIT | ? | 11 | 142 | [`6894d44`](https://github.com/mvanhorn/last30days-skill/commit/6894d44e088c449ecdd7246a18763fddba1ff805) |
+| [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | 64,335 | MIT | ? | 1 | 286 | [`3eb03b8`](https://github.com/cathrynlavery/diagram-design/commit/3eb03b8d2984e47ddd9b083db9abdcdaa3c69635) |
 | [blader/humanizer](https://github.com/blader/humanizer) | 63,995 | MIT | ? | 1 | 0 | [`0ef9fe5`](https://github.com/blader/humanizer/commit/0ef9fe5bc3572734fd3ae6c448fe00a30cd5dcf0) |
 | [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | 59,825 | MIT | ? | 1 | 0 | [`1ecea19`](https://github.com/ayghri/i-have-adhd/commit/1ecea1993b7fce257ffbd686c070948b5e07eda6) |
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 58,091 | MIT | ? | 3 | 6 | [`88c79f6`](https://github.com/coreyhaines31/marketingskills/commit/88c79f6528a9347420e57ceb1fff9a60de651768) |
 | [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) | 57,337 | MIT | 整目录 | 1 | 19 | [`c1c8a8c`](https://github.com/cloudflare/security-audit-skill/commit/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8) |
-| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 55,827 | MIT | 旗舰抽取（7 件） | 7 | 116 | [`a25cf9e`](https://github.com/K-Dense-AI/scientific-agent-skills/commit/a25cf9ec00e2745d03f8704acf6f6919694ccd9a) |
+| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 55,827 | MIT | 旗舰抽取（7 件） | 51 | 72 | [`a25cf9e`](https://github.com/K-Dense-AI/scientific-agent-skills/commit/a25cf9ec00e2745d03f8704acf6f6919694ccd9a) |
 | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | 50,642 | MIT | 整仓 | 6 | 5 | [`3ccff53`](https://github.com/kepano/obsidian-skills/commit/3ccff5338ea700537839b21900aa5358a0402c98) |
 | [Nutlope/hallmark](https://github.com/Nutlope/hallmark) | 45,939 | MIT | 整目录 | 1 | 182 | [`4f6a46c`](https://github.com/Nutlope/hallmark/commit/4f6a46c6dc325d40ab268c93e25c7b96676ebccd) |
 | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 45,841 | Apache-2.0 | 抽取 | 6 | 24 | [`a7ba5b9`](https://github.com/anthropics/claude-plugins-official/commit/a7ba5b93db0c7c8d17f3f1d25853adca79598a1a) |
@@ -114,22 +114,22 @@
 | [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) | 33,478 | MIT | Agent 定义 | 2 | 0 | [`05ad7c8`](https://github.com/Donchitos/Claude-Code-Game-Studios/commit/05ad7c8a5b8aa2aa86bbd3439ae7cf7295cac418) |
 | [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | 32,952 | Apache-2.0 | 抽取 | 3 | 110 | [`c56512c`](https://github.com/iOfficeAI/OfficeCLI/commit/c56512c8c7b76fe284f09940e4cd492470099d3e) |
 | [zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) | 31,756 | MIT | 整目录 | 1 | 78 | [`9906a34`](https://github.com/zarazhangrui/frontend-slides/commit/9906a34d640d2111f724544cbc50f7f130569ae1) |
-| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | 29,179 | MIT | 抽取 | 5 | 33 | [`9ef0c3c`](https://github.com/alirezarezvani/claude-skills/commit/9ef0c3c213932e645cc5cbeeb3c35c3a762a2437) |
-| [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | 27,837 | MIT | ? | 1 | 31 | [`b6580cd`](https://github.com/OthmanAdi/planning-with-files/commit/b6580cd24af1d8a95ab268794456e05608a1afd3) |
+| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | 29,179 | MIT | 抽取 | 7 | 31 | [`9ef0c3c`](https://github.com/alirezarezvani/claude-skills/commit/9ef0c3c213932e645cc5cbeeb3c35c3a762a2437) |
+| [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | 27,837 | MIT | ? | 1 | 31 | [`0fa6c79`](https://github.com/OthmanAdi/planning-with-files/commit/0fa6c79885e14534074cb7df8535e1efa3dc7149) |
 | [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | 27,633 | MIT | 抽取 | 4 | 0 | [`2a12295`](https://github.com/phuryn/pm-skills/commit/2a12295a7717569baa7be181b4cfebe3ca38a6bb) |
 | [titanwings/distilly](https://github.com/titanwings/distilly) | 26,310 | MIT | ? | 1 | 58 | [`0afc45c`](https://github.com/titanwings/distilly/commit/0afc45c29c360ba7bc8260f1bb0bf34e9155f4fa) |
 | [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | 25,971 | MIT | 抽取 | 2 | 8 | [`6be93f4`](https://github.com/AgriciDaniel/claude-seo/commit/6be93f45064ffbadced572b5d5c95f55fd263af0) |
 | [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) | 24,097 | MIT | 整目录 | 1 | 89 | [`1482e84`](https://github.com/wheresryan22/anatomy/commit/1482e8469b0a9e0d8cc18ea2740a01423d29ae80) |
 | [google/skills](https://github.com/google/skills) | 21,799 | Apache-2.0 | 抽取 | 1 | 3 | [`0c369ce`](https://github.com/google/skills/commit/0c369ce1c8ab5f93b1d28752b8bea622b2eedcdc) |
 | [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) | 20,073 | MIT | 单文件 | 1 | 0 | [`7db1000`](https://github.com/teng-lin/notebooklm-py/commit/7db1000b516c3f3a7d3afe7c4c572924ee7a5264) |
-| [latent-spaces/brag](https://github.com/latent-spaces/brag) | 20,061 | MIT | ? | 1 | 288 | [`669ab92`](https://github.com/latent-spaces/brag/commit/669ab9286aa28b6c3ee30e75f181ee74319d012a) |
+| [latent-spaces/brag](https://github.com/latent-spaces/brag) | 20,061 | MIT | ? | 4 | 285 | [`669ab92`](https://github.com/latent-spaces/brag/commit/669ab9286aa28b6c3ee30e75f181ee74319d012a) |
 | [wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep) | 18,504 | MIT | 抽取 | 2 | 0 | [`2927b40`](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/commit/2927b40b2ea37774de53763338c5e8f91a7601e6) |
 | [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) | 18,288 | MIT | 旗舰抽取（6 件） | 6 | 18 | [`9ff0c99`](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/commit/9ff0c99108b36d3b886defd825d8ac1f47dba374) |
 | [greensock/gsap-skills](https://github.com/greensock/gsap-skills) | 17,747 | MIT | 整仓（8 单文件 skill 全量） | 8 | 0 | [`aed9cfd`](https://github.com/greensock/gsap-skills/commit/aed9cfd3277740755f6bfc1155c7aa645403b760) |
 | [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | 16,160 | Apache-2.0 | 整目录 | 1 | 1204 | [`1266a3e`](https://github.com/Vincentwei1021/video-shotcraft/commit/1266a3ec4831289c4d893d42dd5102723658039a) |
-| [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 15,428 | MIT | ? | 1 | 2 | [`49b3a72`](https://github.com/nidhinjs/prompt-master/commit/49b3a72469b1e7287d66387004ccfcca90e5968a) |
+| [nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) | 15,428 | MIT | ? | 2 | 1 | [`49b3a72`](https://github.com/nidhinjs/prompt-master/commit/49b3a72469b1e7287d66387004ccfcca90e5968a) |
 | [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers) | 15,266 | MIT | 单文件 | 1 | 0 | [`5b5d8df`](https://github.com/yusufkaraaslan/Skill_Seekers/commit/5b5d8dfca263fa76e6daae9f292890b311ef36aa) |
-| [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) | 14,204 | MIT | 整目录 | 2 | 7 | [`773a529`](https://github.com/Orchestra-Research/AI-Research-SKILLs/commit/773a52944ba4747a18bd4ae9ade53fff041adcbc) |
+| [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) | 14,204 | MIT | 整目录 | 4 | 4 | [`773a529`](https://github.com/Orchestra-Research/AI-Research-SKILLs/commit/773a52944ba4747a18bd4ae9ade53fff041adcbc) |
 | [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) | 12,183 | MIT | 抽取 | 4 | 21 | [`078a25c`](https://github.com/Jeffallan/claude-skills/commit/078a25cc5bfd8011459be7b91d004e900c1d02d3) |
 | [tw93/Waza](https://github.com/tw93/Waza) | 7,496 | MIT | 规则型 | 7 | 45 | [`5821754`](https://github.com/tw93/Waza/commit/58217546cd94fcf5ddcde4265c00a9377ed3192c) |
 | [MengTo/Skills](https://github.com/MengTo/Skills) | 7,200 | MIT | 抽取 | 2 | 10 | [`aa0a995`](https://github.com/MengTo/Skills/commit/aa0a995a0ea33a2600b19ea7c9ff85f17e7ca0da) |

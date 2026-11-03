@@ -1,137 +1,119 @@
-# Design Types and the Replication Structure
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/experimental-design/references/design_types.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Choosing the right design structure is mostly about matching the *unit of
-randomization* and the *unit of replication* to your question, and respecting any
-nesting in the analysis. This file walks through the standard structures and then
-treats the single most common fatal error — pseudoreplication — in depth.
+# 设计类型与重复结构
 
-## Table of contents
-- [Completely randomized design](#completely-randomized-design)
-- [Randomized complete block design](#randomized-complete-block-design)
-- [Latin square](#latin-square)
-- [Repeated-measures and crossover](#repeated-measures-and-crossover)
-- [Split-plot designs](#split-plot-designs)
-- [Cluster / group-randomized designs](#cluster--group-randomized-designs)
-- [Nested designs and pseudoreplication](#nested-designs-and-pseudoreplication)
+选对设计结构，说到底是让*随机化单位*和*重复单位*与你的研究问题对齐，
+同时尊重分析中的嵌套关系。本文件先讲各类标准结构，再深入处理最常见也最致命的
+错误 — 伪重复。
 
-## Completely randomized design
+## 目录
+- [完全随机设计](#完全随机设计)
+- [随机完全区组设计](#随机完全区组设计)
+- [拉丁方](#拉丁方)
+- [重复测量与交叉设计](#重复测量与交叉设计)
+- [裂区设计](#裂区设计)
+- [整群 / 分组随机化设计](#整群--分组随机化设计)
+- [嵌套设计与伪重复](#嵌套设计与伪重复)
 
-Units are assigned to treatments purely at random, no blocking. Simplest design;
-appropriate when units are homogeneous and there's no identifiable nuisance factor.
-Analyze with one-way ANOVA / regression. If units are *not* homogeneous, the
-nuisance variation inflates error — block instead.
+## 完全随机设计
 
-## Randomized complete block design
+试验单元完全随机地分到各处理，不设区组。这是最简单的设计；适用于单元同质、
+且不存在可识别的干扰因素的情形。用单因素方差分析 / 回归分析。若单元*并不同质*，
+干扰变异会撑大误差 — 此时改用区组设计。
 
-Group units into **blocks** of similar units (day, batch, litter), and randomize all
-treatments *within* each block. Every treatment appears once per block. The
-between-block variation is removed from the error term, sharply increasing precision
-when blocks differ. Analyze with `treatment + block` in the model. This is the
-default upgrade over a completely randomized design whenever a nuisance factor exists.
+## 随机完全区组设计
 
-## Latin square
+把单元按相似程度分成若干**区组**（同一天、同一批次、同一窝），在每个区组*内部*
+对所有处理做随机化。每个处理在每个区组中出现一次。区组间的变异从误差项中
+被剔除，在区组差异大时能显著提升精度。分析时在模型中放入 `treatment + block`。
+只要存在干扰因素，这就是相对完全随机设计的默认升级方案。
 
-Controls **two** nuisance factors simultaneously with a square layout: each treatment
-appears exactly once in every row and every column. Classic uses: row = day, column =
-position/order, cell = treatment. Requires #treatments = #rows = #columns, and assumes
-no interactions between the blocking factors and treatment. Efficient when both
-nuisance dimensions matter and runs are limited. (Graeco-Latin squares extend this to
-three nuisance factors.)
+## 拉丁方
 
-## Repeated-measures and crossover
+用方形布局同时控制**两个**干扰因素：每个处理在每一行、每一列中恰好出现一次。
+经典用法：行 = 天，列 = 位置/顺序，格 = 处理。要求处理数 = 行数 = 列数，并假定
+区组因素与处理之间不存在交互作用。当两个干扰维度都重要且运行次数受限时，效率很高。
+（希腊-拉丁方把这一思路扩展到三个干扰因素。）
 
-Each subject receives more than one condition, serving as its own control. This
-removes between-subject variation — usually the largest noise source — so these
-designs can improve precision when within-subject correlation and carry-over
-assumptions support them; the benefit is not automatic.
+## 重复测量与交叉设计
 
-- **Repeated measures:** the same units measured under several conditions or over
-  time.
-- **Crossover:** each subject receives each treatment in sequence, with **washout**
-  periods between to clear carry-over. Subjects are randomized to treatment *orders*
-  (e.g. an AB/BA crossover; or a Williams square for ≥3 treatments to balance order).
+每个受试者接受多种条件，充当自己的对照。这消除了受试者间变异 — 通常是最大的
+噪声来源 — 因此当受试者内相关与携带效应假设成立时，这类设计能提升精度；
+收益并非自动获得。
 
-Watch for:
-- **Carry-over / residual effects** — an effect of the previous treatment persisting
-  into the next period. Adequate washout is essential; otherwise the design is biased.
-- **Period effects** — systematic change over time (learning, fatigue, disease
-  progression). Balanced orders let you separate period from treatment.
-- **Correlation within subject** — the repeated observations are not independent; the
-  analysis must model it (mixed model / repeated-measures ANOVA). Sample-size/power
-  for these depends on the within-subject correlation — use simulation in the
-  **statistical-power** skill.
+- **重复测量：** 同一批单元在若干条件下或随时间被反复测量。
+- **交叉设计：** 每个受试者依次接受各处理，期间用**洗脱期**清除携带效应。
+  受试者被随机分配到处理*顺序*（例如 AB/BA 交叉；处理数 ≥3 时可用 Williams
+  拉丁方来平衡顺序）。
 
-## Split-plot designs
+需要注意：
+- **携带效应 / 残留效应** — 上一个处理的效应延续到下一个阶段。充分洗脱是关键；
+  否则设计存在偏倚。
+- **阶段效应** — 随时间发生的系统性变化（学习、疲劳、疾病进展）。平衡顺序能让你
+  把阶段与处理区分开。
+- **受试者内相关** — 重复观测并不独立；分析必须对其建模（混合模型 / 重复测量
+  方差分析）。这类设计的样本量与功效取决于受试者内相关 — 用
+  **statistical-power** skill 里的模拟来做。
 
-Arises when some factors are **hard to change** (applied to large units) and others
-are **easy to change** (applied to sub-units). The hard-to-change factor is randomized
-to whole plots; the easy factor is randomized to subplots within each whole plot.
-Example: oven temperature (whole plot — you can't re-set it per sample) × coating type
-(subplot — applied per sample). Crucially there are **two different error terms** — one
-for whole-plot factors, one for subplot factors — and the analysis must use both.
-Treating a split-plot as a completely randomized factorial gives wrong (usually
-anticonservative) tests for the whole-plot factor. Industrial DOE and agricultural
-trials are full of accidental split-plots; recognize when a factor can't be reset per
-run.
+## 裂区设计
 
-## Cluster / group-randomized designs
+当某些因素**难以改变**（施加在大单元上），另一些**易于改变**（施加在子单元上）
+时，就会出现裂区设计。难改因素随机分配到整区，易改因素随机分配到各整区内的
+小区。例子：烘箱温度（整区 — 无法为每个样品重新设定）× 涂层类型
+（小区 — 按样品施加）。关键在于存在**两个不同的误差项** — 一个对应整区因素，
+一个对应小区因素 — 分析时两者都要用。把裂区设计当成完全随机析因设计来做，
+会给整区因素得出错误（通常是偏保守的）检验结果。工业 DOE 和农业试验中充斥着
+无意中做成裂区的情形；当某个因素无法在每次运行时重置，就要识别出这一点。
 
-When the intervention is delivered to a *group* (a clinic's protocol, a classroom
-curriculum, a village water supply), you can only randomize at the group level. The
-**cluster is the unit of randomization**, and because members of a cluster are
-correlated, it is effectively the unit of replication too.
+## 整群 / 分组随机化设计
 
-- Power depends on the number of **clusters** far more than the number of individuals,
-  and on the **intraclass correlation (ICC)**. Adding people to existing clusters
-  helps much less than adding clusters.
-- The **design effect** `DEFF = 1 + (m − 1)·ICC` (m = common cluster size) approximates the
-  variance inflation for an equal-size parallel design with exchangeable correlation;
-  unequal sizes or other designs require a suitable calculation. Even a small ICC
-  with large clusters costs dearly. Power these by simulation (see **statistical-power**).
-- Analyze with a method that accounts for clustering (mixed model with a cluster
-  random effect, or GEE). Analyzing individuals as independent is pseudoreplication.
+当干预是按*组*实施的（诊所的方案、课堂的课程、村里的供水），你就只能在组层面
+做随机化。**整群就是随机化单位**，而由于群内成员彼此相关，它实际上也是重复单位。
 
-## Nested designs and pseudoreplication
+- 功效更多取决于**整群**数量而非个体数量，也取决于**组内相关系数（ICC）**。
+  往已有整群里加人，远不如增加整群有效。
+- **设计效应** `DEFF = 1 + (m − 1)·ICC`（m = 常见整群规模）近似刻画了等规模
+  平行设计在相关可交换假设下的方差膨胀；规模不等或其他设计需要另行计算。
+  即便 ICC 不大，整群一大，代价也很可观。这类设计用模拟做功效分析
+  （见 **statistical-power**）。
+- 用能考虑整群效应的方法分析（带整群随机效应的混合模型，或 GEE）。把个体当独立
+  来分析就是伪重复。
 
-**Pseudoreplication** is treating non-independent measurements as independent
-replicates. It is a serious design and analysis error in experimental biology. Statistical
-modeling cannot create missing independent replication. If enough independent
-units were collected, a mistaken analysis can be corrected by respecting the
-nesting; no mixed model rescues one independently treated unit per arm.
+## 嵌套设计与伪重复
 
-The principle: **the replicate is whatever the treatment is independently applied
-and randomized to.** Measurements below that level can be biological subsamples (cells within mice)
-or technical repeated measurements. They characterize that unit but do **not**
-become independent treatment replicates.
+**伪重复**指把非独立的测量当成独立的重复。这是实验生物学中严重的设计与分析错误。
+统计建模无法凭空造出缺失的独立重复。如果本来收集到的独立单位就不足，
+错误的分析只能靠尊重嵌套关系来纠正；每臂只有一个独立处理单位的实验，
+再好的混合模型也救不回来。
 
-Worked examples:
-- **One dish per treatment, 50 cells imaged.** Treatment applied to the dish ⇒ n = 1
-  per treatment. The 50 cells describe that one dish; they are not 50 independent
-  tests of the treatment. You need multiple independently treated dishes.
-- **3 mice per group, 100 cells each.** n = 3 (mice) for a treatment given to the
-  mouse, not 300 (cells). Average within mouse, or use a mixed model with mouse as a
-  random effect.
-- **One tank of fish given a diet, every fish measured.** The tank is the unit (the
-  diet was randomized to the tank) ⇒ n = number of tanks, not number of fish. Shared
-  tank water, temperature, and social effects make fish within a tank correlated.
-- **Repeated measurements over time on the same subject** are nested within subject;
-  the subject is the replicate.
+原则是：**重复单位 = 被独立施加处理并随机分配的那个对象。** 低于这一层的测量
+可以是生物学子样本（小鼠体内的细胞），也可以是技术性重复测量。它们刻画那个单位，
+但**不构成**独立的处理重复。
 
-How to avoid it:
-1. **Identify the experimental unit** = the smallest physical entity to which a
-   treatment level is independently and randomly assigned.
-2. **Replicate at that level** — more independently treated units, not more
-   measurements per unit (though technical replicates can reduce measurement noise).
-3. **Analyze with the nesting respected** — average to the unit level, or fit a mixed
-   model with random effects for the nesting (cells in mice, fish in tanks, time in
-   subjects). Inference must still use a suitable covariance model and small-sample degrees
-   of freedom; few clusters can make routine asymptotic mixed-model or GEE tests
-   unreliable.
+实例：
+- **每个处理一个培养皿，拍了 50 个细胞。** 处理施加在培养皿上 ⇒ 每个处理 n = 1。
+  这 50 个细胞描述的是那一个培养皿，它们不是对该处理的 50 次独立检验。
+  你需要多个独立处理的培养皿。
+- **每组 3 只小鼠，各拍 100 个细胞。** 对小鼠施加的处理，n = 3（小鼠），不是
+  300（细胞）。可以在小鼠内取平均，或用小鼠作随机效应的混合模型。
+- **一缸鱼投喂某种饲料，每条鱼都测量。** 单位是缸（饲料是随机分配到缸的）
+  ⇒ n = 缸数，不是鱼数。共享的缸水、温度和社会效应让同缸的鱼彼此相关。
+- **同一受试者随时间的重复测量** 嵌套在受试者之内；受试者才是重复单位。
 
-Technical replicates are still worth taking — they sharpen each unit's estimate — but
-report and analyze them as what they are, never as independent biological replicates.
-For sample size of nested/clustered designs, use simulation in **statistical-power**.
+如何避免：
+1. **确定实验单位** = 能够被独立且随机地分配处理水平的最小实体。
+2. **在该层面做重复** — 多要独立处理的单位，而不是每个单位多测几次
+   （不过技术重复确实能降低测量噪声）。
+3. **分析时尊重嵌套关系** — 先聚合到单位层面，或拟合带嵌套随机效应的混合模型
+   （小鼠中的细胞、缸中的鱼、受试者中的时间）。推断仍需合适的协方差模型和
+   小样本自由度；整群数少时，常规的渐近混合模型或 GEE 检验可能不可靠。
 
-See the [NC3Rs experimental-unit guidance](https://eda.nc3rs.org.uk/experimental-design-unit)
-for animal, litter, cage, and split-plot examples. Different treatment factors can
-have different experimental units within one study.
+技术重复仍然值得做 — 它们能让每个单位的估计更精确 — 但要如实报告和分析，
+绝不能当成独立的生物学重复。嵌套 / 整群设计的样本量，用 **statistical-power**
+里的模拟来确定。
+
+动物、窝、笼和裂区的例子，见
+[NC3Rs 实验单位指南](https://eda.nc3rs.org.uk/experimental-design-unit)。
+同一研究中，不同的处理因素可以对应不同的实验单位。

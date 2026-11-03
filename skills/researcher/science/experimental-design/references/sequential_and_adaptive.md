@@ -1,109 +1,100 @@
-# Sequential and Adaptive Designs
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/experimental-design/references/sequential_and_adaptive.md` · License: MIT
+> 翻译日期：2026-11-03 · 同步状态：上游 HEAD（2026-11-03 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-A fixed design commits to a single sample size and one analysis at the end.
-**Sequential** and **adaptive** designs allow looks at the data *during* the study and
-let you stop early (for benefit, harm, or futility) or modify the design — saving
-participants, time, and money. The catch: every interim look at the data is another
-chance to cross the significance threshold by luck, so the error rate must be
-controlled explicitly. Peeking at accumulating data and stopping the first time
-p < 0.05 can inflate the Type I error rate; the amount depends on the number and timing
-of looks, test, and correlation. This is the core problem these methods solve.
+# 序贯设计与适应性设计
 
-## Why naive peeking fails
+固定设计一开始就锁定了一个样本量和一次终期分析。**序贯**设计和**适应性**设计
+允许在研究*进行中*查看数据，并让你提前终止（出于获益、伤害或无效）或修改设计
+— 从而省下受试者、时间和经费。代价是：每一次中期查看数据都是又一次靠运气跨过
+显著性门槛的机会，所以错误率必须被显式控制。偷看不断累积的数据、一见
+p < 0.05 就停，会推高第一类错误率；膨胀幅度取决于查看的次数与时机、检验方法
+以及相关性。这正是这些方法要解决的核心问题。
 
-If you test at α = 0.05 at each of K interim analyses and stop at the first
-significant result, the *overall* false-positive rate generally exceeds 0.05.
-There is no universal inflation value for K looks. Calibrate the joint procedure
-(e.g. alpha spending with its required assumptions) so the cumulative error is
-controlled, then verify it under realistic null scenarios.
+## 朴素偷看为什么行不通
 
-## Group-sequential designs
+在 K 次中期分析中都按 α = 0.05 检验、并在首次显著时停止，*整体*假阳性率通常
+会超过 0.05。对 K 次查看不存在通用的膨胀系数。要校准整个联合过程（例如用
+alpha spending 及其所需假设），使累积错误率受控，然后在符合实际的零假设情形下
+加以验证。
 
-Pre-plan a fixed number of interim analyses (e.g. at information fractions 25%, 50%, 75%, 100%)
-and use **adjusted, more stringent boundaries** at each look so the overall α is
-preserved. Common boundary families:
+## 成组序贯设计
 
-- **Pocock:** constant (equally stringent) nominal significance level at every look.
-  Easier to stop early, but pays a larger penalty at the final analysis.
-- **O'Brien–Fleming:** very stringent early (hard to stop in the first looks), relaxing
-  toward the planned final α. Most popular in confirmatory trials because the final
-  boundary is close to the unadjusted 0.05 and early stopping is reserved for dramatic
-  effects.
-- **Alpha-spending functions (Lan–DeMets):** generalize the above by defining how much
-  α is "spent" as a function of information accrued, so the number and timing of looks
-  can vary under a pre-specified, valid monitoring plan. Information fractions
-  represent statistical information, not automatically enrolled-patient fractions.
-  Do not choose extra looks because an unblinded effect is nearly significant;
-  spending alone does not license such outcome-dependent monitoring. See the
-  [FDA adaptive-design guidance](https://www.fda.gov/media/78495/download).
+预先规划固定次数的中期分析（例如在信息分数 25%、50%、75%、100% 处），并在
+每次查看时使用**经过调整、更严格的边界**，从而保持整体 α 不变。常见的边界族：
 
-You can stop for:
-- **Efficacy** — the effect crosses the upper boundary.
-- **Futility** — the effect is so small that continuing is unlikely to ever reach
-  significance (a non-binding or binding lower boundary / conditional power threshold).
-- **Harm** — safety boundary crossed.
+- **Pocock：** 每次查看都使用恒定（同样严格的名义显著性水平）。更容易提前停止，
+  但在终期分析要付出更大的代价。
+- **O'Brien–Fleming：** 早期非常严格（前几次查看很难停止），随后逐渐放宽到
+  计划的最终 α。在确证性试验中最受欢迎，因为终期边界接近未调整的 0.05，而提前
+  停止只留给幅度显著的效果。
+- **Alpha-spending 函数（Lan–DeMets）：** 通过定义"已累积信息"与"已花费 α"之间
+  的函数关系，把上述做法推广开，从而在预先指定且有效的监测计划下，看查的次数
+  与时机可以变化。信息分数代表的是统计信息，不自动等于入组受试者的比例。
+  不要因为某个未盲的效应接近显著就临时增加查看次数；仅靠 spending 并不允许
+  这种依赖结局的监测。见 [FDA 适应性设计指南](https://www.fda.gov/media/78495/download)。
 
-Group-sequential designs require a modestly larger maximum sample size than a fixed
-design (to pay for the looks), but the *expected* sample size is usually smaller
-under scenarios where trials often stop early; report it under both null and
-plausible alternatives.
+你可以因以下原因停止：
+- **获益** — 效应跨过上边界。
+- **无效** — 效应小到继续下去也不太可能达到显著（非约束性或约束性的下边界 /
+  条件功效阈值）。
+- **伤害** — 越过安全性边界。
 
-### Tooling
+在经常需要提前停止的情形下，成组序贯设计的最大样本量要比固定设计略大（这是
+为查看次数付出的代价），但*期望*样本量通常更小；请在零假设和合理备择假设两种
+情形下都报告它。
 
-Use purpose-built boundary calculations; the bundled Python helpers generate
-allocation/DOE layouts, not interim boundaries. Official current options are:
-- R [`gsDesign::gsDesign`](https://keaven.github.io/gsDesign/reference/gsDesign.html):
-  `k` includes the final analysis, `timing` specifies information fractions, and
-  `test.type` distinguishes one-sided, symmetric two-sided, and binding/nonbinding
-  futility designs. Do not assume the default `alpha=0.025` is a two-sided 0.05 test.
-- R [`rpact::getDesignGroupSequential`](https://docs.rpact.org/reference/getDesignGroupSequential.html):
-  configure `kMax`, `informationRates`, `sided`, `alpha`, `typeOfDesign`, and
-  futility explicitly. These are documentation-verified pointers; this skill does
-  not ship or runtime-test an R boundary calculation.
-- For custom rules, **simulate** the whole sequential procedure (generate data, apply
-  the boundaries look by look, repeat) to confirm the realized Type I error and to
-  estimate expected sample size and power. This mirrors the simulation approach in the
-  **statistical-power** skill and is the most flexible route.
+### 工具
 
-## Adaptive designs
+用专门做边界计算的库；随附的 Python 辅助函数生成的是分配/DOE 布局，不是中期
+边界。当前可靠的选项是：
+- R [`gsDesign::gsDesign`](https://keaven.github.io/gsDesign/reference/gsDesign.html)：
+  `k` 包含终期分析，`timing` 指定信息分数，`test.type` 区分单侧、对称双侧以及
+  约束性/非约束性无效设计。不要想当然地认为默认的 `alpha=0.025` 就是双侧
+  0.05 检验。
+- R [`rpact::getDesignGroupSequential`](https://docs.rpact.org/reference/getDesignGroupSequential.html)：
+  显式配置 `kMax`、`informationRates`、`sided`、`alpha`、`typeOfDesign` 和
+  无效性判定。这些是经文档核实的指针；本 skill 不附带、也不对 R 的边界计算做
+  运行时测试。
+- 自定义规则时，**模拟**整个序贯过程（生成数据、逐次套用边界、重复）以确认实际
+  达到的第一类错误率，并估计期望样本量与功效。这与 **statistical-power** skill
+  中的模拟思路一致，也是最灵活的做法。
 
-Broader than group-sequential: the design itself can change at an interim based on
-accumulating data, within a pre-specified plan that still controls error. Main types:
+## 适应性设计
 
-- **Sample-size re-estimation:** recompute the required n at an interim using the
-  observed nuisance parameter (e.g. the variance or control-arm rate), without
-  unblinding the treatment effect. Protects against a misjudged variance at planning.
-- **Adaptive randomization:** shift allocation probabilities toward the better-
-  performing arm as data accrue (response-adaptive), or to improve covariate balance.
-- **Drop-the-loser / arm selection:** start with several arms or doses and drop
-  inferior ones at interims (seamless phase II/III).
-- **Adaptive enrichment:** narrow enrollment to a subgroup that appears to benefit.
+比成组序贯更宽：设计本身可以在中期根据累积数据改变，同时仍处于预先指定且
+控制错误的计划之内。主要类型：
 
-Adaptive designs are powerful but easy to get wrong: any adaptation that uses the
-unblinded treatment effect can inflate Type I error and bias the final effect estimate
-unless the method explicitly corrects for it. Two non-negotiables:
-1. **Pre-specify** the adaptation rule and the error-control method before the study.
-2. **Validate by simulation** that the *entire* procedure preserves the Type I error
-   rate and yields acceptable power, estimator bias, confidence-interval coverage,
-   and expected/maximum sample sizes; report Monte Carlo uncertainty.
+- **样本量重估：** 在中期用观测到的干扰参数（如方差或对照组率）重新计算所需的
+  n，而不揭盲处理效应。可防范计划阶段对方差判断失误。
+- **适应性随机化：** 随数据累积，把分配概率向表现更好的臂倾斜（响应适应性），
+  或用来改善协变量平衡。
+- **淘汰劣方 / 臂选择：** 起步时设多个臂或多个剂量，在中期淘汰较差者
+  （无缝的 II/III 期设计）。
+- **适应性富集：** 把入组范围收窄到看起来获益的亚组。
 
-## When to use them
+适应性设计很有力，但也很容易做错：任何用到未盲处理效应的适应性调整，都可能
+推高第一类错误率并使最终效应估计产生偏倚，除非所用方法显式做了校正。两条
+不可协商的前提：
+1. **预先指定** 适应性规则和错误控制方法，在研究开始之前就定好。
+2. **用模拟验证** 整个过程保持了第一类错误率，并给出可接受的功效、估计量偏倚、
+   置信区间覆盖率以及期望/最大样本量；同时报告蒙特卡洛不确定度。
 
-- **Confirmatory trials, expensive or risky enrollment** — group-sequential with
-  O'Brien–Fleming boundaries to allow ethical early stopping.
-- **Uncertain nuisance parameters at planning** — blinded sample-size re-estimation.
-- **Many candidate doses/arms** — adaptive arm selection / seamless designs.
-- **Pure exploration / fixed cheap data** — usually not worth the overhead; a fixed
-  design is simpler and the analysis is unambiguous.
+## 何时使用
 
-## Practical checklist
+- **确证性试验、入组昂贵或有风险** — 用带 O'Brien–Fleming 边界的成组序贯设计，
+  以便在伦理上尽早停止。
+- **计划阶段的干扰参数不确定** — 盲态样本量重估。
+- **候选剂量/臂很多** — 适应性臂选择 / 无缝设计。
+- **纯探索 / 数据获取成本固定且低** — 通常不值得付这份额外代价；固定设计更简单，
+  分析也没有歧义。
 
-- Decide the **number and timing** of interim analyses (or the spending function).
-- Choose a **boundary family** matched to how eager you are to stop early.
-- Specify **futility** rules if you want to stop for lack of effect.
-- Inflate the **maximum** sample size to cover the looks; report the **expected**
-  sample size too.
-- Pre-register the full sequential/adaptive plan, including the stopping rules.
-- Have an independent **data monitoring committee** look at unblinded interims in
-  human trials, not the study team.
-- **Simulate** the design end to end to confirm error control before running it.
+## 实务清单
+
+- 确定中期分析的**次数与时机**（或 spending 函数）。
+- 选择与你"想多早停"相匹配的**边界族**。
+- 若想因无效而停止，明确写出**无效性**规则。
+- 把**最大**样本量放大以覆盖这些查看；同时也报告**期望**样本量。
+- 预注册完整的序贯/适应性计划，包括停止规则。
+- 在人体试验中，由独立的**数据监查委员会**而非研究团队查看未盲的中期数据。
+- **模拟**整个设计，端到端确认错误控制之后再实际开展。
