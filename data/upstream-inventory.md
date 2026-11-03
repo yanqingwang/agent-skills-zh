@@ -281,3 +281,16 @@
 - 新仓榜：patch-gg/pixelfx 之外均 <1.5k★ 或为工具/榜单。
 
 **累计：61 登记 / 60 监控 / 168 翻译件 / 5114 原样件（2026-11-03，第七批）。**
+
+## 十一、2026-11-03 第八批：存量合集追加（8 翻译件 / 80 原样件）
+
+**检索方式**：第六节缓收清单复核（两个大合集的"其余 skill"）+ `created:>2026-11-02` 新仓快扫（无过线新仓）。本批零新上游，全部为存量合集的高价值补全。
+
+| 上游 | 追加件 | 筛选依据 |
+|---|---|---|
+| muratcankoylan/Agent-Skills-for-Context-Engineering | memory-systems / tool-design / multi-agent-patterns / bdi-mental-states | 上下文工程四支柱（记忆、工具、多代理、心智状态），与既有 context-degradation / long-horizon-prompting 无重叠 |
+| K-Dense-AI/scientific-agent-skills | literature-review / peer-review / scientific-writing / statistical-power | 177 件中筛出跨领域方法论级可复用者（其余多为特定工具/包指南，如 anndata、astropy、diffdock，与本仓库"通用可用"定位不符） |
+
+**排除说明**：K-Dense 余量（anndata/biopython/statsmodels/scikit 等单库指南）依赖具体 Python 环境与领域流程，按"宁缺毋滥"继续缓收；sickn33/agentic-awesome-skills（2,884 件）与 alirezarezvani 余量同理。
+
+**累计：61 登记 / 60 监控 / 176 翻译件 / 5194 原样件（2026-11-03，第八批）。**

@@ -3509,6 +3509,22 @@
         {
           "upstream": "skills/citation-management/SKILL.md",
           "local": "skills/researcher/info/citation-management/SKILL.md"
+        },
+        {
+          "upstream": "skills/literature-review/SKILL.md",
+          "local": "skills/researcher/science/literature-review/SKILL.md"
+        },
+        {
+          "upstream": "skills/peer-review/SKILL.md",
+          "local": "skills/researcher/science/peer-review/SKILL.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/SKILL.md",
+          "local": "skills/researcher/science/scientific-writing/SKILL.md"
+        },
+        {
+          "upstream": "skills/statistical-power/SKILL.md",
+          "local": "skills/researcher/science/statistical-power/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3699,10 +3715,287 @@
         {
           "upstream": "skills/citation-management/scripts/validate_citations.py",
           "local": "skills/researcher/info/citation-management/scripts/validate_citations.py"
+        },
+        {
+          "upstream": "skills/literature-review/assets/review_template.md",
+          "local": "skills/researcher/science/literature-review/assets/review_template.md"
+        },
+        {
+          "upstream": "skills/literature-review/references/citation_styles.md",
+          "local": "skills/researcher/science/literature-review/references/citation_styles.md"
+        },
+        {
+          "upstream": "skills/literature-review/references/core_workflow.md",
+          "local": "skills/researcher/science/literature-review/references/core_workflow.md"
+        },
+        {
+          "upstream": "skills/literature-review/references/database_strategies.md",
+          "local": "skills/researcher/science/literature-review/references/database_strategies.md"
+        },
+        {
+          "upstream": "skills/literature-review/references/example_workflow.md",
+          "local": "skills/researcher/science/literature-review/references/example_workflow.md"
+        },
+        {
+          "upstream": "skills/literature-review/references/search_and_citation.md",
+          "local": "skills/researcher/science/literature-review/references/search_and_citation.md"
+        },
+        {
+          "upstream": "skills/literature-review/scripts/generate_pdf.py",
+          "local": "skills/researcher/science/literature-review/scripts/generate_pdf.py"
+        },
+        {
+          "upstream": "skills/literature-review/scripts/generate_schematic.py",
+          "local": "skills/researcher/science/literature-review/scripts/generate_schematic.py"
+        },
+        {
+          "upstream": "skills/literature-review/scripts/generate_schematic_ai.py",
+          "local": "skills/researcher/science/literature-review/scripts/generate_schematic_ai.py"
+        },
+        {
+          "upstream": "skills/literature-review/scripts/search_databases.py",
+          "local": "skills/researcher/science/literature-review/scripts/search_databases.py"
+        },
+        {
+          "upstream": "skills/literature-review/scripts/verify_citations.py",
+          "local": "skills/researcher/science/literature-review/scripts/verify_citations.py"
+        },
+        {
+          "upstream": "skills/peer-review/assets/citation_references_template.csv",
+          "local": "skills/researcher/science/peer-review/assets/citation_references_template.csv"
+        },
+        {
+          "upstream": "skills/peer-review/assets/claim_evidence_matrix_template.csv",
+          "local": "skills/researcher/science/peer-review/assets/claim_evidence_matrix_template.csv"
+        },
+        {
+          "upstream": "skills/peer-review/assets/reporting_checklist_template.csv",
+          "local": "skills/researcher/science/peer-review/assets/reporting_checklist_template.csv"
+        },
+        {
+          "upstream": "skills/peer-review/assets/reporting_guidelines.json",
+          "local": "skills/researcher/science/peer-review/assets/reporting_guidelines.json"
+        },
+        {
+          "upstream": "skills/peer-review/assets/review_intake_template.json",
+          "local": "skills/researcher/science/peer-review/assets/review_intake_template.json"
+        },
+        {
+          "upstream": "skills/peer-review/assets/review_scaffold_template.md",
+          "local": "skills/researcher/science/peer-review/assets/review_scaffold_template.md"
+        },
+        {
+          "upstream": "skills/peer-review/assets/source_ledger.csv",
+          "local": "skills/researcher/science/peer-review/assets/source_ledger.csv"
+        },
+        {
+          "upstream": "skills/peer-review/assets/statistical_reproducibility_template.json",
+          "local": "skills/researcher/science/peer-review/assets/statistical_reproducibility_template.json"
+        },
+        {
+          "upstream": "skills/peer-review/assets/study_profile_template.json",
+          "local": "skills/researcher/science/peer-review/assets/study_profile_template.json"
+        },
+        {
+          "upstream": "skills/peer-review/references/common_issues.md",
+          "local": "skills/researcher/science/peer-review/references/common_issues.md"
+        },
+        {
+          "upstream": "skills/peer-review/references/ethical_review_practice.md",
+          "local": "skills/researcher/science/peer-review/references/ethical_review_practice.md"
+        },
+        {
+          "upstream": "skills/peer-review/references/reporting_standards.md",
+          "local": "skills/researcher/science/peer-review/references/reporting_standards.md"
+        },
+        {
+          "upstream": "skills/peer-review/references/security_validation.md",
+          "local": "skills/researcher/science/peer-review/references/security_validation.md"
+        },
+        {
+          "upstream": "skills/peer-review/references/statistical_reproducibility.md",
+          "local": "skills/researcher/science/peer-review/references/statistical_reproducibility.md"
+        },
+        {
+          "upstream": "skills/peer-review/references/tool_reference.md",
+          "local": "skills/researcher/science/peer-review/references/tool_reference.md"
+        },
+        {
+          "upstream": "skills/peer-review/scripts/_common.py",
+          "local": "skills/researcher/science/peer-review/scripts/_common.py"
+        },
+        {
+          "upstream": "skills/peer-review/scripts/audit_citations.py",
+          "local": "skills/researcher/science/peer-review/scripts/audit_citations.py"
+        },
+        {
+          "upstream": "skills/peer-review/scripts/audit_statistics_reproducibility.py",
+          "local": "skills/researcher/science/peer-review/scripts/audit_statistics_reproducibility.py"
+        },
+        {
+          "upstream": "skills/peer-review/scripts/generate_review_scaffold.py",
+          "local": "skills/researcher/science/peer-review/scripts/generate_review_scaffold.py"
+        },
+        {
+          "upstream": "skills/peer-review/scripts/lint_review.py",
+          "local": "skills/researcher/science/peer-review/scripts/lint_review.py"
+        },
+        {
+          "upstream": "skills/peer-review/scripts/select_reporting_guidelines.py",
+          "local": "skills/researcher/science/peer-review/scripts/select_reporting_guidelines.py"
+        },
+        {
+          "upstream": "skills/peer-review/scripts/validate_claim_evidence.py",
+          "local": "skills/researcher/science/peer-review/scripts/validate_claim_evidence.py"
+        },
+        {
+          "upstream": "skills/peer-review/scripts/validate_review_intake.py",
+          "local": "skills/researcher/science/peer-review/scripts/validate_review_intake.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/REPORT_FORMATTING_GUIDE.md",
+          "local": "skills/researcher/science/scientific-writing/assets/REPORT_FORMATTING_GUIDE.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/authorship_template.json",
+          "local": "skills/researcher/science/scientific-writing/assets/authorship_template.json"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/claim_evidence_template.csv",
+          "local": "skills/researcher/science/scientific-writing/assets/claim_evidence_template.csv"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/consistency_manifest_template.json",
+          "local": "skills/researcher/science/scientific-writing/assets/consistency_manifest_template.json"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/manuscript_manifest_template.json",
+          "local": "skills/researcher/science/scientific-writing/assets/manuscript_manifest_template.json"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/manuscript_scaffold.md",
+          "local": "skills/researcher/science/scientific-writing/assets/manuscript_scaffold.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/reporting_coverage_template.json",
+          "local": "skills/researcher/science/scientific-writing/assets/reporting_coverage_template.json"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/reporting_guidelines.json",
+          "local": "skills/researcher/science/scientific-writing/assets/reporting_guidelines.json"
+        },
+        {
+          "upstream": "skills/scientific-writing/assets/source_manifest_template.json",
+          "local": "skills/researcher/science/scientific-writing/assets/source_manifest_template.json"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/authorship_ai_confidentiality.md",
+          "local": "skills/researcher/science/scientific-writing/references/authorship_ai_confidentiality.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/citation_styles.md",
+          "local": "skills/researcher/science/scientific-writing/references/citation_styles.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/cli_reference.md",
+          "local": "skills/researcher/science/scientific-writing/references/cli_reference.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/evidence_workflow.md",
+          "local": "skills/researcher/science/scientific-writing/references/evidence_workflow.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/figures_tables.md",
+          "local": "skills/researcher/science/scientific-writing/references/figures_tables.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/imrad_structure.md",
+          "local": "skills/researcher/science/scientific-writing/references/imrad_structure.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/journal_policies.md",
+          "local": "skills/researcher/science/scientific-writing/references/journal_policies.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/professional_report_formatting.md",
+          "local": "skills/researcher/science/scientific-writing/references/professional_report_formatting.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/reporting_guidelines.md",
+          "local": "skills/researcher/science/scientific-writing/references/reporting_guidelines.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/research_integrity_open_science.md",
+          "local": "skills/researcher/science/scientific-writing/references/research_integrity_open_science.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/source_ledger.md",
+          "local": "skills/researcher/science/scientific-writing/references/source_ledger.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/references/writing_principles.md",
+          "local": "skills/researcher/science/scientific-writing/references/writing_principles.md"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/_common.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/_common.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/audit_claims.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/audit_claims.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/check_consistency.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/check_consistency.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/check_references.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/check_references.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/lint_manuscript.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/lint_manuscript.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/scaffold_manuscript.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/scaffold_manuscript.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/select_reporting_guidelines.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/select_reporting_guidelines.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/validate_authorship.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/validate_authorship.py"
+        },
+        {
+          "upstream": "skills/scientific-writing/scripts/validate_manifest.py",
+          "local": "skills/researcher/science/scientific-writing/scripts/validate_manifest.py"
+        },
+        {
+          "upstream": "skills/statistical-power/references/closed_form_recipes.md",
+          "local": "skills/researcher/science/statistical-power/references/closed_form_recipes.md"
+        },
+        {
+          "upstream": "skills/statistical-power/references/effect_sizes.md",
+          "local": "skills/researcher/science/statistical-power/references/effect_sizes.md"
+        },
+        {
+          "upstream": "skills/statistical-power/references/simulation_based_power.md",
+          "local": "skills/researcher/science/statistical-power/references/simulation_based_power.md"
+        },
+        {
+          "upstream": "skills/statistical-power/scripts/power.py",
+          "local": "skills/researcher/science/statistical-power/scripts/power.py"
+        },
+        {
+          "upstream": "skills/statistical-power/scripts/simulate_power.py",
+          "local": "skills/researcher/science/statistical-power/scripts/simulate_power.py"
         }
       ],
       "verbatim_excluded": [],
-      "stars_snapshot_2026-11-03": 55827
+      "stars_snapshot_2026-11-03": 55827,
+      "mode": "旗舰抽取（7 件）"
     },
     {
       "repo": "affaan-m/ECC",
@@ -21715,7 +22008,7 @@
       "shortname": "context-engineering-skills",
       "license": "MIT",
       "batch": 6,
-      "mode": "旗舰抽取",
+      "mode": "旗舰抽取（6 件）",
       "files": [
         {
           "upstream": "skills/context-degradation/SKILL.md",
@@ -21724,6 +22017,22 @@
         {
           "upstream": "skills/long-horizon-prompting/SKILL.md",
           "local": "skills/developer/context/long-horizon-prompting/SKILL.md"
+        },
+        {
+          "upstream": "skills/memory-systems/SKILL.md",
+          "local": "skills/developer/context/memory-systems/SKILL.md"
+        },
+        {
+          "upstream": "skills/tool-design/SKILL.md",
+          "local": "skills/developer/context/tool-design/SKILL.md"
+        },
+        {
+          "upstream": "skills/multi-agent-patterns/SKILL.md",
+          "local": "skills/developer/context/multi-agent-patterns/SKILL.md"
+        },
+        {
+          "upstream": "skills/bdi-mental-states/SKILL.md",
+          "local": "skills/developer/context/bdi-mental-states/SKILL.md"
         }
       ],
       "verbatim": [
@@ -21754,6 +22063,50 @@
         {
           "upstream": "skills/long-horizon-prompting/references/vendor-guidance.md",
           "local": "skills/developer/context/long-horizon-prompting/references/vendor-guidance.md"
+        },
+        {
+          "upstream": "skills/memory-systems/references/implementation.md",
+          "local": "skills/developer/context/memory-systems/references/implementation.md"
+        },
+        {
+          "upstream": "skills/memory-systems/scripts/memory_store.py",
+          "local": "skills/developer/context/memory-systems/scripts/memory_store.py"
+        },
+        {
+          "upstream": "skills/tool-design/references/architectural_reduction.md",
+          "local": "skills/developer/context/tool-design/references/architectural_reduction.md"
+        },
+        {
+          "upstream": "skills/tool-design/references/best_practices.md",
+          "local": "skills/developer/context/tool-design/references/best_practices.md"
+        },
+        {
+          "upstream": "skills/tool-design/scripts/description_generator.py",
+          "local": "skills/developer/context/tool-design/scripts/description_generator.py"
+        },
+        {
+          "upstream": "skills/multi-agent-patterns/references/frameworks.md",
+          "local": "skills/developer/context/multi-agent-patterns/references/frameworks.md"
+        },
+        {
+          "upstream": "skills/multi-agent-patterns/scripts/coordination.py",
+          "local": "skills/developer/context/multi-agent-patterns/scripts/coordination.py"
+        },
+        {
+          "upstream": "skills/bdi-mental-states/references/bdi-ontology-core.md",
+          "local": "skills/developer/context/bdi-mental-states/references/bdi-ontology-core.md"
+        },
+        {
+          "upstream": "skills/bdi-mental-states/references/framework-integration.md",
+          "local": "skills/developer/context/bdi-mental-states/references/framework-integration.md"
+        },
+        {
+          "upstream": "skills/bdi-mental-states/references/rdf-examples.md",
+          "local": "skills/developer/context/bdi-mental-states/references/rdf-examples.md"
+        },
+        {
+          "upstream": "skills/bdi-mental-states/references/sparql-competency.md",
+          "local": "skills/developer/context/bdi-mental-states/references/sparql-competency.md"
         }
       ],
       "verbatim_excluded": [

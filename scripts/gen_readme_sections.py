@@ -67,6 +67,10 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/developer/context/claude-md-improver/SKILL.md",
             "skills/developer/context/context-degradation/SKILL.md",
             "skills/developer/context/long-horizon-prompting/SKILL.md",
+            "skills/developer/context/memory-systems/SKILL.md",
+            "skills/developer/context/tool-design/SKILL.md",
+            "skills/developer/context/multi-agent-patterns/SKILL.md",
+            "skills/developer/context/bdi-mental-states/SKILL.md",
         ]),
         ("多 Agent 编排与自主学习", [
             "skills/developer/context/autonomous-loops/SKILL.md",
@@ -152,6 +156,15 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("实验与研究设计", [
             "skills/researcher/science/experimental-design/SKILL.md",
+            "skills/researcher/science/statistical-power/SKILL.md",
+        ]),
+        ("文献调研与学术评审", [
+            "skills/researcher/science/literature-review/SKILL.md",
+            "skills/researcher/science/peer-review/SKILL.md",
+            "skills/researcher/info/citation-management/SKILL.md",
+        ]),
+        ("科学论文写作", [
+            "skills/researcher/science/scientific-writing/SKILL.md",
         ]),
         ("把书与文档变成 Skill / 摸清服务对象", [
             "skills/researcher/knowledge/book-to-skill/SKILL.md",

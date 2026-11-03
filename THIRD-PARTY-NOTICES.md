@@ -452,7 +452,7 @@ SOFTWARE.
 - 上游：https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering （星标快照 2026-11-03：18,288）
 - License：MIT
 - Copyright (c) 2025 Context Engineering Agent Skills Contributors
-- 收录：skills/developer/context/{context-degradation,long-horizon-prompting}/（SKILL.md 译 + references/ 原样，旗舰抽取）
+- 收录：skills/developer/context/{context-degradation,long-horizon-prompting,memory-systems,tool-design,multi-agent-patterns,bdi-mental-states}/（6 件 SKILL.md 译 + references/、scripts/ 原样，旗舰抽取）
 
 ### greensock/gsap-skills（MIT）
 

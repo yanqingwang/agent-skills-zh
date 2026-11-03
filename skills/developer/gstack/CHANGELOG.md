@@ -1,5 +1,43 @@
 # Changelog
 
+## [1.93.32.0] - 2026-11-03
+
+- **`bin/dev-setup` works in a fresh clone again.** It installed dependencies, then setup refused with "project-local Codex destination overlaps the source tree" and exited 1, because setup's overlap guard read gstack's own `.agents/skills` as a foreign project's skills directory pointing into the checkout. Setup now allows that one layout, where the project is the gstack checkout itself and its Codex skills directory is that checkout's own `.agents/skills`. Every other overlap is still refused. That includes a user project whose `.agents/skills` leads into a gstack checkout, a checkout whose `.agents/skills` points at its own root, and `--host codex` run from a dev checkout, which the Codex preflight still stops before any write. test/dev-setup-fresh-clone.test.ts covers the fresh clone and all three refusals (GST-768).
+
+## [1.93.31.0] - 2026-11-03
+
+**A CSO hardening test now fails at the Git step that broke instead of passing without testing anything.** `fixtureGit` in `test/cso-git-hardening.test.ts` threw only on a non-zero exit status. When Git was killed by its 30-second timeout or could not start, `spawnSync` returned a `null` status, and the helper treated that as success. If that happened to the `git replace` step, the test that checks a security snapshot ignores replaced history would pass without a replacement in place. The helper now throws on a spawn error or any status other than 0, and the message names the Git arguments, the status and the signal. The stricter helper showed that the file's warm-up step had been calling `/usr/bin/git` on Windows, where it doesn't exist, on every run. It was passing only because the error was swallowed. Every test in the file already skips on Windows, so the warm-up now skips there too.
+
+### Tests
+- `test/cso-git-hardening.test.ts`: `fixtureGit` throws on `result.error` or `status !== 0` (#3476), and the `beforeAll` warm-up returns early on Windows (Windows Free Tests run 41236157469 failed in it with `ENOENT … uv_spawn '/usr/bin/git'` once the error stopped being swallowed).
+
+## [1.93.30.0] - 2026-11-03
+
+**`browse` starts again when proxy credentials come from `BROWSE_PROXY_USER` and `BROWSE_PROXY_PASS`.** With those two variables set beside `--proxy`, `BROWSE_PROXY_URL` or a standard proxy variable such as `HTTPS_PROXY`, the daemon exited at startup with `proxy creds set in both env (BROWSE_PROXY_USER) and URL — pick one source`, and the CLI reported only `Server failed to start within 15s`. The CLI puts those credentials into the proxy URL it hands the daemon, and the daemon also inherited the two variables, so it saw the same credentials twice and refused them. The daemon now gets the variables blanked whenever the CLI passes it a resolved proxy URL, so it reads the credentials once, from the URL. Setting credentials both in the URL and in the variables is still refused, with the same message, before any daemon starts.
+
+### Fixed
+- **`browse/src/cli.ts`**: the daemon environment for a resolved proxy sets `BROWSE_PROXY_USER` and `BROWSE_PROXY_PASS` to empty. This covers a normal start, an auto-restart, a headed `connect` and its supervisor respawn, and the Windows launcher (#3457).
+
+### Tests
+- `browse/test/restart-env.test.ts`: for `--proxy`, `BROWSE_PROXY_URL` and `HTTPS_PROXY` with `BROWSE_PROXY_USER`/`PASS`, the restart and headed daemon environments parse the way `server.ts` parses them and yield the credentials once. All three failed before the fix with the "pick one source" error.
+- `browse/test/proxy-env-daemon.test.ts`: an end-to-end start with `HTTP_PROXY` and `BROWSE_PROXY_USER`/`PASS` against a local proxy that demands Basic auth loads the page through the proxy. It timed out at the 15 s start limit before the fix.
+- `browse/test/cli-supervisor.test.ts`: the expected headed respawn environment includes the two blanked variables.
+
+## [1.93.29.0] - 2026-11-03
+
+**A `gbrain serve --http` on this machine's loopback address now counts as a local brain, so transcripts get imported again.** gbrain recommends this setup for local agents on a Postgres brain (`gbrain bootstrap harness`). gstack treated every http MCP entry as a brain on another machine (Path 4). So `/sync-gbrain` staged transcripts for a brain admin who doesn't exist and never ran `gbrain import` (#3539). Ported from Willy Morin's #3552.
+
+### Fixed
+- **One locality rule** (`lib/gbrain-mcp-locality.ts`). An http, url or sse entry is local when its URL is http(s) on `localhost`, `127.0.0.0/8` or `::1`, and this machine's gbrain config names a Postgres engine (a `database_url`, not PGLite) with no `remote_mcp` marker. A loopback URL next to a local PGLite stays remote, so Path 4's split-engine setup through a tunnel is unchanged. A URL with userinfo or `${` is never local. Every other entry is classified as before.
+- **`gstack-memory-ingest`** imports through gbrain in that case. Pages an earlier run left `staged` / `remote-http` count as new and are imported on the next local run. Pages older than the 90-day window need one `gstack-memory-ingest --bulk --all-history` run.
+- **`gstack-gbrain-detect`** reports `local-stdio` for it in all three tiers, and `gbrain-local-status` and the `gstack-skill-start` banner use the same rule. A remote `(SSE)` line in `claude mcp list` no longer reads as local. With several gbrain servers, the exact `gbrain:` entry wins, as in the other tiers.
+
+### Docs
+- `USING_GBRAIN_WITH_GSTACK.md`: a loopback serve over this machine's Postgres brain is not Path 4; a loopback tunnel next to a local PGLite still is.
+
+### Tests
+- `test/gbrain-mcp-locality.test.ts` covers the rule, the list-line parser, and a check that the shipped jq copy never says local where the TypeScript rule says remote. The detect, local-status and memory-ingest tests add loopback and stuck-page cases. On main's code (the tests-first commit f3712618), 13 of the new cases fail and `test/gbrain-mcp-locality.test.ts` cannot load, because the module it tests is new.
+
 ## [1.93.28.0] - 2026-11-03
 
 **`test/cso-snapshot-state.test.ts` no longer hangs when a paused contender is resumed too early.**

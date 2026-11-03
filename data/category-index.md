@@ -70,14 +70,18 @@
 ## 开发者 · context
 
 - [自主循环（autonomous-loops）](skills/developer/context/autonomous-loops/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
+- [BDI 心智状态建模（bdi-mental-states）](skills/developer/context/bdi-mental-states/SKILL.md) — 上游 [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
 - [claude-md-improver](skills/developer/context/claude-md-improver/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 - [上下文退化诊治（context-degradation）](skills/developer/context/context-degradation/SKILL.md) — 上游 [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
 - [上下文工程](skills/developer/context/context-engineering/SKILL.md) — 上游 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
 - [持续学习 v2（instinct）](skills/developer/context/continuous-learning-v2/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
 - [hivemind](skills/developer/context/hivemind/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 - [长程启动提示词（long-horizon-prompting）](skills/developer/context/long-horizon-prompting/SKILL.md) — 上游 [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
+- [记忆系统设计（memory-systems）](skills/developer/context/memory-systems/SKILL.md) — 上游 [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
+- [多代理模式（multi-agent-patterns）](skills/developer/context/multi-agent-patterns/SKILL.md) — 上游 [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
 - [strategic-compact](skills/developer/context/strategic-compact/SKILL.md) — 上游 [affaan-m/ECC](https://github.com/affaan-m/ECC)
 - [task-coordination-strategies](skills/developer/context/task-coordination-strategies/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
+- [工具设计（tool-design）](skills/developer/context/tool-design/SKILL.md) — 上游 [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering)
 
 ## 开发者 · efficiency
 
@@ -209,6 +213,10 @@
 - [autoresearch](skills/researcher/science/autoresearch/SKILL.md) — 上游 [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs)
 - [实验设计（experimental-design）](skills/researcher/science/experimental-design/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
 - [exploratory-data-analysis](skills/researcher/science/exploratory-data-analysis/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
+- [文献综述（literature-review）](skills/researcher/science/literature-review/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
+- [同行评审（peer-review）](skills/researcher/science/peer-review/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
+- [科学论文写作（scientific-writing）](skills/researcher/science/scientific-writing/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
+- [统计功效分析（statistical-power）](skills/researcher/science/statistical-power/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
 
 ## 设计师 · design
 

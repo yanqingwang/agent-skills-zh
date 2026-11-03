@@ -107,6 +107,14 @@ def zh_title(path: str) -> str:
         "gsap-performance": "GSAP 性能（gsap-performance）",
         "gsap-timeline": "GSAP 时间线（gsap-timeline）",
         "gsap-utils": "GSAP 工具函数（gsap-utils）",
+        "memory-systems": "记忆系统设计（memory-systems）",
+        "tool-design": "工具设计（tool-design）",
+        "multi-agent-patterns": "多代理模式（multi-agent-patterns）",
+        "bdi-mental-states": "BDI 心智状态建模（bdi-mental-states）",
+        "literature-review": "文献综述（literature-review）",
+        "peer-review": "同行评审（peer-review）",
+        "scientific-writing": "科学论文写作（scientific-writing）",
+        "statistical-power": "统计功效分析（statistical-power）",
     }
     stem = pathlib.PurePosixPath(path).name
     parent = pathlib.PurePosixPath(path).parent.name

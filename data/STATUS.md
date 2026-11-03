@@ -1,6 +1,6 @@
-# 工作状态（自动生成于 2026-11-03 00:37 UTC，勿手改）
+# 工作状态（自动生成于 2026-11-03 01:11 UTC，勿手改）
 
-- **收录规模**：60 个上游 · 168 个翻译件 · 5114 个原样件
+- **收录规模**：60 个上游 · 176 个翻译件 · 5194 个原样件
 - **监控状态**：sync-check CI 每日 UTC 02:00 运行（HEAD 比对 → 原样件自动刷新 → 翻译件变更转重译工单）
 - **最近同步日志**：[data/sync-log/2026-11-03.md](sync-log/2026-11-03.md)
 - **待重译**：无（全部翻译件与上游一致）
@@ -15,7 +15,7 @@
 - `skills/creator/slides/` — 1 件
 - `skills/creator/video/` — 1 件
 - `skills/designer/design/` — 18 件
-- `skills/developer/context/` — 9 件
+- `skills/developer/context/` — 13 件
 - `skills/developer/efficiency/` — 2 件
 - `skills/developer/engineering/` — 23 件
 - `skills/developer/framework/` — 8 件
@@ -27,7 +27,7 @@
 - `skills/researcher/analysis/` — 2 件
 - `skills/researcher/info/` — 2 件
 - `skills/researcher/knowledge/` — 3 件
-- `skills/researcher/science/` — 6 件
+- `skills/researcher/science/` — 10 件
 - `skills/toolbox/automation/` — 5 件
 - `skills/toolbox/cloud/` — 1 件
 - `skills/toolbox/compute/` — 1 件
