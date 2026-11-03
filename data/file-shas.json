@@ -124,9 +124,11 @@
   "alirezarezvani/claude-skills": {
     "engineering/hivemind/SKILL.md": "0e68de3ca777b1ab5c6dbc254895931c3458781a",
     "product-team/skills/product-discovery/SKILL.md": "17265eec8bcc4c5e2b8554bfb8c7483c4fc3ab56",
-    "research/deepread/SKILL.md": "0501ad3de6032a712e1c7cfbeac26bdc349bae2b",
+    "research/deepread/SKILL.md": "2eeb128f82ea3ffee2381f462736a097259d9846",
     "product-team/skills/competitive-teardown/SKILL.md": "b7d04982478f0822941d3eddfdabace438650497",
-    "product-team/skills/spec-to-repo/SKILL.md": "c842e1d8dcf86fdfdf9ba7448600a7ecc1eb0c68"
+    "product-team/skills/spec-to-repo/SKILL.md": "c842e1d8dcf86fdfdf9ba7448600a7ecc1eb0c68",
+    "research/deepread/references/feynman.md": "6d13214bb950de5464fb670da3f5213ebc31e640",
+    "research/deepread/references/knowledge-map.md": "05bf805e8b9c7f9c584eae4076f77733c0f7ce5a"
   },
   "phuryn/pm-skills": {
     "pm-execution/skills/create-prd/SKILL.md": "9aa4b7a5a19af2fe4ade43da564dd607efdf0488",
