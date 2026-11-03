@@ -18723,11 +18723,35 @@
       "shortname": "ui-ux-pro-max-skill",
       "license": "MIT",
       "batch": 6,
-      "mode": "整目录",
+      "mode": "整目录（旗舰 + 6 姊妹件）",
       "files": [
         {
           "upstream": ".claude/skills/ui-ux-pro-max/SKILL.md",
           "local": "skills/designer/design/ui-ux-pro-max/SKILL.md"
+        },
+        {
+          "upstream": ".claude/skills/banner-design/SKILL.md",
+          "local": "skills/designer/design/banner-design/SKILL.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/SKILL.md",
+          "local": "skills/designer/design/brand/SKILL.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/SKILL.md",
+          "local": "skills/designer/design/design-system/SKILL.md"
+        },
+        {
+          "upstream": ".claude/skills/design/SKILL.md",
+          "local": "skills/designer/design/design/SKILL.md"
+        },
+        {
+          "upstream": ".claude/skills/slides/SKILL.md",
+          "local": "skills/designer/design/slides/SKILL.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/SKILL.md",
+          "local": "skills/designer/design/ui-styling/SKILL.md"
         }
       ],
       "verbatim": [
@@ -19022,6 +19046,738 @@
         {
           "upstream": ".claude/skills/ui-ux-pro-max/scripts/validate_data.py",
           "local": "skills/designer/design/ui-ux-pro-max/scripts/validate_data.py"
+        },
+        {
+          "upstream": ".claude/skills/banner-design/references/banner-sizes-and-styles.md",
+          "local": "skills/designer/design/banner-design/references/banner-sizes-and-styles.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/approval-checklist.md",
+          "local": "skills/designer/design/brand/references/approval-checklist.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/asset-organization.md",
+          "local": "skills/designer/design/brand/references/asset-organization.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/brand-guideline-template.md",
+          "local": "skills/designer/design/brand/references/brand-guideline-template.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/color-palette-management.md",
+          "local": "skills/designer/design/brand/references/color-palette-management.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/consistency-checklist.md",
+          "local": "skills/designer/design/brand/references/consistency-checklist.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/logo-usage-rules.md",
+          "local": "skills/designer/design/brand/references/logo-usage-rules.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/messaging-framework.md",
+          "local": "skills/designer/design/brand/references/messaging-framework.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/typography-specifications.md",
+          "local": "skills/designer/design/brand/references/typography-specifications.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/update.md",
+          "local": "skills/designer/design/brand/references/update.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/visual-identity.md",
+          "local": "skills/designer/design/brand/references/visual-identity.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/references/voice-framework.md",
+          "local": "skills/designer/design/brand/references/voice-framework.md"
+        },
+        {
+          "upstream": ".claude/skills/brand/scripts/extract-colors.cjs",
+          "local": "skills/designer/design/brand/scripts/extract-colors.cjs"
+        },
+        {
+          "upstream": ".claude/skills/brand/scripts/inject-brand-context.cjs",
+          "local": "skills/designer/design/brand/scripts/inject-brand-context.cjs"
+        },
+        {
+          "upstream": ".claude/skills/brand/scripts/sync-brand-to-tokens.cjs",
+          "local": "skills/designer/design/brand/scripts/sync-brand-to-tokens.cjs"
+        },
+        {
+          "upstream": ".claude/skills/brand/scripts/tests/test_sync_brand_to_tokens.py",
+          "local": "skills/designer/design/brand/scripts/tests/test_sync_brand_to_tokens.py"
+        },
+        {
+          "upstream": ".claude/skills/brand/scripts/validate-asset.cjs",
+          "local": "skills/designer/design/brand/scripts/validate-asset.cjs"
+        },
+        {
+          "upstream": ".claude/skills/brand/templates/brand-guidelines-starter.md",
+          "local": "skills/designer/design/brand/templates/brand-guidelines-starter.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/data/slide-backgrounds.csv",
+          "local": "skills/designer/design/design-system/data/slide-backgrounds.csv"
+        },
+        {
+          "upstream": ".claude/skills/design-system/data/slide-charts.csv",
+          "local": "skills/designer/design/design-system/data/slide-charts.csv"
+        },
+        {
+          "upstream": ".claude/skills/design-system/data/slide-color-logic.csv",
+          "local": "skills/designer/design/design-system/data/slide-color-logic.csv"
+        },
+        {
+          "upstream": ".claude/skills/design-system/data/slide-copy.csv",
+          "local": "skills/designer/design/design-system/data/slide-copy.csv"
+        },
+        {
+          "upstream": ".claude/skills/design-system/data/slide-layout-logic.csv",
+          "local": "skills/designer/design/design-system/data/slide-layout-logic.csv"
+        },
+        {
+          "upstream": ".claude/skills/design-system/data/slide-layouts.csv",
+          "local": "skills/designer/design/design-system/data/slide-layouts.csv"
+        },
+        {
+          "upstream": ".claude/skills/design-system/data/slide-strategies.csv",
+          "local": "skills/designer/design/design-system/data/slide-strategies.csv"
+        },
+        {
+          "upstream": ".claude/skills/design-system/data/slide-typography.csv",
+          "local": "skills/designer/design/design-system/data/slide-typography.csv"
+        },
+        {
+          "upstream": ".claude/skills/design-system/references/component-specs.md",
+          "local": "skills/designer/design/design-system/references/component-specs.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/references/component-tokens.md",
+          "local": "skills/designer/design/design-system/references/component-tokens.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/references/primitive-tokens.md",
+          "local": "skills/designer/design/design-system/references/primitive-tokens.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/references/semantic-tokens.md",
+          "local": "skills/designer/design/design-system/references/semantic-tokens.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/references/states-and-variants.md",
+          "local": "skills/designer/design/design-system/references/states-and-variants.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/references/tailwind-integration.md",
+          "local": "skills/designer/design/design-system/references/tailwind-integration.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/references/token-architecture.md",
+          "local": "skills/designer/design/design-system/references/token-architecture.md"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/embed-tokens.cjs",
+          "local": "skills/designer/design/design-system/scripts/embed-tokens.cjs"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/fetch-background.py",
+          "local": "skills/designer/design/design-system/scripts/fetch-background.py"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/generate-slide.py",
+          "local": "skills/designer/design/design-system/scripts/generate-slide.py"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/generate-tokens.cjs",
+          "local": "skills/designer/design/design-system/scripts/generate-tokens.cjs"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/html-token-validator.py",
+          "local": "skills/designer/design/design-system/scripts/html-token-validator.py"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/search-slides.py",
+          "local": "skills/designer/design/design-system/scripts/search-slides.py"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/slide-token-validator.py",
+          "local": "skills/designer/design/design-system/scripts/slide-token-validator.py"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/slide_search_core.py",
+          "local": "skills/designer/design/design-system/scripts/slide_search_core.py"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/tests/test_validate_tokens.py",
+          "local": "skills/designer/design/design-system/scripts/tests/test_validate_tokens.py"
+        },
+        {
+          "upstream": ".claude/skills/design-system/scripts/validate-tokens.cjs",
+          "local": "skills/designer/design/design-system/scripts/validate-tokens.cjs"
+        },
+        {
+          "upstream": ".claude/skills/design-system/templates/design-tokens-starter.json",
+          "local": "skills/designer/design/design-system/templates/design-tokens-starter.json"
+        },
+        {
+          "upstream": ".claude/skills/design/data/cip/deliverables.csv",
+          "local": "skills/designer/design/design/data/cip/deliverables.csv"
+        },
+        {
+          "upstream": ".claude/skills/design/data/cip/industries.csv",
+          "local": "skills/designer/design/design/data/cip/industries.csv"
+        },
+        {
+          "upstream": ".claude/skills/design/data/cip/mockup-contexts.csv",
+          "local": "skills/designer/design/design/data/cip/mockup-contexts.csv"
+        },
+        {
+          "upstream": ".claude/skills/design/data/cip/styles.csv",
+          "local": "skills/designer/design/design/data/cip/styles.csv"
+        },
+        {
+          "upstream": ".claude/skills/design/data/icon/styles.csv",
+          "local": "skills/designer/design/design/data/icon/styles.csv"
+        },
+        {
+          "upstream": ".claude/skills/design/data/logo/colors.csv",
+          "local": "skills/designer/design/design/data/logo/colors.csv"
+        },
+        {
+          "upstream": ".claude/skills/design/data/logo/industries.csv",
+          "local": "skills/designer/design/design/data/logo/industries.csv"
+        },
+        {
+          "upstream": ".claude/skills/design/data/logo/styles.csv",
+          "local": "skills/designer/design/design/data/logo/styles.csv"
+        },
+        {
+          "upstream": ".claude/skills/design/references/banner-sizes-and-styles.md",
+          "local": "skills/designer/design/design/references/banner-sizes-and-styles.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/cip-deliverable-guide.md",
+          "local": "skills/designer/design/design/references/cip-deliverable-guide.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/cip-design.md",
+          "local": "skills/designer/design/design/references/cip-design.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/cip-prompt-engineering.md",
+          "local": "skills/designer/design/design/references/cip-prompt-engineering.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/cip-style-guide.md",
+          "local": "skills/designer/design/design/references/cip-style-guide.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/design-routing.md",
+          "local": "skills/designer/design/design/references/design-routing.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/icon-design.md",
+          "local": "skills/designer/design/design/references/icon-design.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/logo-color-psychology.md",
+          "local": "skills/designer/design/design/references/logo-color-psychology.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/logo-design.md",
+          "local": "skills/designer/design/design/references/logo-design.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/logo-prompt-engineering.md",
+          "local": "skills/designer/design/design/references/logo-prompt-engineering.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/logo-style-guide.md",
+          "local": "skills/designer/design/design/references/logo-style-guide.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/slides-copywriting-formulas.md",
+          "local": "skills/designer/design/design/references/slides-copywriting-formulas.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/slides-create.md",
+          "local": "skills/designer/design/design/references/slides-create.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/slides-html-template.md",
+          "local": "skills/designer/design/design/references/slides-html-template.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/slides-layout-patterns.md",
+          "local": "skills/designer/design/design/references/slides-layout-patterns.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/slides-strategies.md",
+          "local": "skills/designer/design/design/references/slides-strategies.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/slides.md",
+          "local": "skills/designer/design/design/references/slides.md"
+        },
+        {
+          "upstream": ".claude/skills/design/references/social-photos-design.md",
+          "local": "skills/designer/design/design/references/social-photos-design.md"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/cip/core.py",
+          "local": "skills/designer/design/design/scripts/cip/core.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/cip/generate.py",
+          "local": "skills/designer/design/design/scripts/cip/generate.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/cip/render-html.py",
+          "local": "skills/designer/design/design/scripts/cip/render-html.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/cip/search.py",
+          "local": "skills/designer/design/design/scripts/cip/search.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/icon/generate.py",
+          "local": "skills/designer/design/design/scripts/icon/generate.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/logo/core.py",
+          "local": "skills/designer/design/design/scripts/logo/core.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/logo/generate.py",
+          "local": "skills/designer/design/design/scripts/logo/generate.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/logo/search.py",
+          "local": "skills/designer/design/design/scripts/logo/search.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/logo/tests/test_generate.py",
+          "local": "skills/designer/design/design/scripts/logo/tests/test_generate.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/tests/test_cip_generate.py",
+          "local": "skills/designer/design/design/scripts/tests/test_cip_generate.py"
+        },
+        {
+          "upstream": ".claude/skills/design/scripts/tests/test_icon_generate.py",
+          "local": "skills/designer/design/design/scripts/tests/test_icon_generate.py"
+        },
+        {
+          "upstream": ".claude/skills/slides/references/copywriting-formulas.md",
+          "local": "skills/designer/design/slides/references/copywriting-formulas.md"
+        },
+        {
+          "upstream": ".claude/skills/slides/references/create.md",
+          "local": "skills/designer/design/slides/references/create.md"
+        },
+        {
+          "upstream": ".claude/skills/slides/references/html-template.md",
+          "local": "skills/designer/design/slides/references/html-template.md"
+        },
+        {
+          "upstream": ".claude/skills/slides/references/layout-patterns.md",
+          "local": "skills/designer/design/slides/references/layout-patterns.md"
+        },
+        {
+          "upstream": ".claude/skills/slides/references/slide-strategies.md",
+          "local": "skills/designer/design/slides/references/slide-strategies.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/LICENSE.txt",
+          "local": "skills/designer/design/ui-styling/LICENSE.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/ArsenalSC-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/ArsenalSC-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/ArsenalSC-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/ArsenalSC-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/BigShoulders-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/BigShoulders-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/BigShoulders-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/BigShoulders-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/BigShoulders-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/BigShoulders-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Boldonse-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Boldonse-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Boldonse-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Boldonse-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/BricolageGrotesque-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/BricolageGrotesque-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/BricolageGrotesque-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/BricolageGrotesque-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/BricolageGrotesque-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/BricolageGrotesque-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/CrimsonPro-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/CrimsonPro-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/CrimsonPro-Italic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/CrimsonPro-Italic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/CrimsonPro-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/CrimsonPro-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/CrimsonPro-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/CrimsonPro-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/DMMono-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/DMMono-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/DMMono-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/DMMono-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/EricaOne-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/EricaOne-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/EricaOne-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/EricaOne-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/GeistMono-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/GeistMono-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/GeistMono-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/GeistMono-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/GeistMono-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/GeistMono-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Gloock-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Gloock-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Gloock-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Gloock-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/IBMPlexMono-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/IBMPlexMono-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/IBMPlexMono-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/IBMPlexMono-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/IBMPlexMono-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/IBMPlexMono-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/IBMPlexSerif-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/IBMPlexSerif-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/IBMPlexSerif-BoldItalic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/IBMPlexSerif-BoldItalic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/IBMPlexSerif-Italic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/IBMPlexSerif-Italic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/IBMPlexSerif-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/IBMPlexSerif-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/InstrumentSans-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/InstrumentSans-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/InstrumentSans-BoldItalic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/InstrumentSans-BoldItalic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/InstrumentSans-Italic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/InstrumentSans-Italic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/InstrumentSans-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/InstrumentSans-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/InstrumentSans-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/InstrumentSans-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/InstrumentSerif-Italic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/InstrumentSerif-Italic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/InstrumentSerif-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/InstrumentSerif-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Italiana-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Italiana-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Italiana-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Italiana-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/JetBrainsMono-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/JetBrainsMono-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/JetBrainsMono-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/JetBrainsMono-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/JetBrainsMono-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/JetBrainsMono-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Jura-Light.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Jura-Light.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Jura-Medium.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Jura-Medium.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Jura-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Jura-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/LibreBaskerville-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/LibreBaskerville-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/LibreBaskerville-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/LibreBaskerville-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Lora-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Lora-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Lora-BoldItalic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Lora-BoldItalic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Lora-Italic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Lora-Italic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Lora-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Lora-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Lora-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Lora-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/NationalPark-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/NationalPark-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/NationalPark-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/NationalPark-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/NationalPark-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/NationalPark-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/NothingYouCouldDo-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/NothingYouCouldDo-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/NothingYouCouldDo-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/NothingYouCouldDo-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Outfit-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Outfit-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Outfit-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Outfit-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Outfit-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Outfit-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/PixelifySans-Medium.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/PixelifySans-Medium.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/PixelifySans-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/PixelifySans-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/PoiretOne-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/PoiretOne-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/PoiretOne-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/PoiretOne-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/RedHatMono-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/RedHatMono-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/RedHatMono-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/RedHatMono-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/RedHatMono-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/RedHatMono-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Silkscreen-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Silkscreen-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Silkscreen-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Silkscreen-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/SmoochSans-Medium.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/SmoochSans-Medium.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/SmoochSans-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/SmoochSans-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Tektur-Medium.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Tektur-Medium.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Tektur-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Tektur-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/Tektur-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/Tektur-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/WorkSans-Bold.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/WorkSans-Bold.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/WorkSans-BoldItalic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/WorkSans-BoldItalic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/WorkSans-Italic.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/WorkSans-Italic.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/WorkSans-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/WorkSans-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/WorkSans-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/WorkSans-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/YoungSerif-OFL.txt",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/YoungSerif-OFL.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/canvas-fonts/YoungSerif-Regular.ttf",
+          "local": "skills/designer/design/ui-styling/canvas-fonts/YoungSerif-Regular.ttf"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/references/canvas-design-system.md",
+          "local": "skills/designer/design/ui-styling/references/canvas-design-system.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/references/shadcn-accessibility.md",
+          "local": "skills/designer/design/ui-styling/references/shadcn-accessibility.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/references/shadcn-components.md",
+          "local": "skills/designer/design/ui-styling/references/shadcn-components.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/references/shadcn-theming.md",
+          "local": "skills/designer/design/ui-styling/references/shadcn-theming.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/references/tailwind-customization.md",
+          "local": "skills/designer/design/ui-styling/references/tailwind-customization.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/references/tailwind-responsive.md",
+          "local": "skills/designer/design/ui-styling/references/tailwind-responsive.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/references/tailwind-utilities.md",
+          "local": "skills/designer/design/ui-styling/references/tailwind-utilities.md"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/scripts/.coverage",
+          "local": "skills/designer/design/ui-styling/scripts/.coverage"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/scripts/requirements.txt",
+          "local": "skills/designer/design/ui-styling/scripts/requirements.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/scripts/shadcn_add.py",
+          "local": "skills/designer/design/ui-styling/scripts/shadcn_add.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/scripts/tailwind_config_gen.py",
+          "local": "skills/designer/design/ui-styling/scripts/tailwind_config_gen.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/scripts/tests/coverage-ui.json",
+          "local": "skills/designer/design/ui-styling/scripts/tests/coverage-ui.json"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/scripts/tests/requirements.txt",
+          "local": "skills/designer/design/ui-styling/scripts/tests/requirements.txt"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/scripts/tests/test_shadcn_add.py",
+          "local": "skills/designer/design/ui-styling/scripts/tests/test_shadcn_add.py"
+        },
+        {
+          "upstream": ".claude/skills/ui-styling/scripts/tests/test_tailwind_config_gen.py",
+          "local": "skills/designer/design/ui-styling/scripts/tests/test_tailwind_config_gen.py"
         }
       ],
       "verbatim_excluded": [
@@ -19036,6 +19792,10 @@
         {
           "upstream": "根 README、CLAUDE.md 等",
           "reason": "仓库级文档，原则 #11 排除"
+        },
+        {
+          "upstream": ".claude/skills/ 其余（ui-ux-pro-max 已于第六批收录）",
+          "reason": "已收录，去重"
         }
       ],
       "stars_snapshot_2026-11-03": 144260
@@ -21013,7 +21773,7 @@
       "shortname": "gsap-skills",
       "license": "MIT",
       "batch": 6,
-      "mode": "旗舰抽取",
+      "mode": "整仓（8 单文件 skill 全量）",
       "files": [
         {
           "upstream": "skills/gsap-core/SKILL.md",
@@ -21026,16 +21786,1253 @@
         {
           "upstream": "skills/gsap-react/SKILL.md",
           "local": "skills/developer/framework/gsap-react/SKILL.md"
+        },
+        {
+          "upstream": "skills/gsap-frameworks/SKILL.md",
+          "local": "skills/developer/framework/gsap-frameworks/SKILL.md"
+        },
+        {
+          "upstream": "skills/gsap-plugins/SKILL.md",
+          "local": "skills/developer/framework/gsap-plugins/SKILL.md"
+        },
+        {
+          "upstream": "skills/gsap-performance/SKILL.md",
+          "local": "skills/developer/framework/gsap-performance/SKILL.md"
+        },
+        {
+          "upstream": "skills/gsap-timeline/SKILL.md",
+          "local": "skills/developer/framework/gsap-timeline/SKILL.md"
+        },
+        {
+          "upstream": "skills/gsap-utils/SKILL.md",
+          "local": "skills/developer/framework/gsap-utils/SKILL.md"
         }
       ],
       "verbatim": [],
-      "verbatim_excluded": [
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 17747
+    },
+    {
+      "repo": "patch-gg/pixelfx",
+      "shortname": "pixelfx",
+      "license": "MIT",
+      "batch": 7,
+      "mode": "整目录",
+      "files": [
         {
-          "upstream": "skills/ 其余 5 个（gsap-frameworks/plugins/performance/timeline/utils）",
-          "reason": "单文件小件，后续候选"
+          "upstream": "skills/pixelfx/SKILL.md",
+          "local": "skills/gamedev/art/pixelfx/SKILL.md"
         }
       ],
-      "stars_snapshot_2026-11-03": 17747
+      "verbatim": [
+        {
+          "upstream": "src/core/act.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/act.js"
+        },
+        {
+          "upstream": "src/core/actor.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/actor.js"
+        },
+        {
+          "upstream": "src/core/chain.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/chain.js"
+        },
+        {
+          "upstream": "src/core/color.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/color.js"
+        },
+        {
+          "upstream": "src/core/font.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/font.js"
+        },
+        {
+          "upstream": "src/core/fx.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/fx.js"
+        },
+        {
+          "upstream": "src/core/index.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/index.js"
+        },
+        {
+          "upstream": "src/core/math.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/math.js"
+        },
+        {
+          "upstream": "src/core/painter.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/painter.js"
+        },
+        {
+          "upstream": "src/core/particles.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/particles.js"
+        },
+        {
+          "upstream": "src/core/poses.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/poses.js"
+        },
+        {
+          "upstream": "src/core/rig.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/rig.js"
+        },
+        {
+          "upstream": "src/core/scene.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/scene.js"
+        },
+        {
+          "upstream": "src/core/shapes.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/shapes.js"
+        },
+        {
+          "upstream": "src/core/sim.js",
+          "local": "skills/gamedev/art/pixelfx/src/core/sim.js"
+        },
+        {
+          "upstream": "src/fx/arcane/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/_lib.js"
+        },
+        {
+          "upstream": "src/fx/arcane/arcane-beam.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/arcane-beam.js"
+        },
+        {
+          "upstream": "src/fx/arcane/arcane-missiles.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/arcane-missiles.js"
+        },
+        {
+          "upstream": "src/fx/arcane/arcane-orb.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/arcane-orb.js"
+        },
+        {
+          "upstream": "src/fx/arcane/blink-in.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/blink-in.js"
+        },
+        {
+          "upstream": "src/fx/arcane/blink-out.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/blink-out.js"
+        },
+        {
+          "upstream": "src/fx/arcane/magic-circle-cast.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/magic-circle-cast.js"
+        },
+        {
+          "upstream": "src/fx/arcane/mana-burst.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/mana-burst.js"
+        },
+        {
+          "upstream": "src/fx/arcane/portal.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/portal.js"
+        },
+        {
+          "upstream": "src/fx/arcane/rune-circle.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/rune-circle.js"
+        },
+        {
+          "upstream": "src/fx/arcane/spell-charge.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/spell-charge.js"
+        },
+        {
+          "upstream": "src/fx/arcane/star-fall.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/star-fall.js"
+        },
+        {
+          "upstream": "src/fx/arcane/time-stop.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/arcane/time-stop.js"
+        },
+        {
+          "upstream": "src/fx/categories.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/categories.js"
+        },
+        {
+          "upstream": "src/fx/critters/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/_lib.js"
+        },
+        {
+          "upstream": "src/fx/critters/bat.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/bat.js"
+        },
+        {
+          "upstream": "src/fx/critters/bird.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/bird.js"
+        },
+        {
+          "upstream": "src/fx/critters/butterfly.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/butterfly.js"
+        },
+        {
+          "upstream": "src/fx/critters/eyeball.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/eyeball.js"
+        },
+        {
+          "upstream": "src/fx/critters/fish-school.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/fish-school.js"
+        },
+        {
+          "upstream": "src/fx/critters/flying-skull.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/flying-skull.js"
+        },
+        {
+          "upstream": "src/fx/critters/frog.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/frog.js"
+        },
+        {
+          "upstream": "src/fx/critters/ghost.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/ghost.js"
+        },
+        {
+          "upstream": "src/fx/critters/jellyfish.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/jellyfish.js"
+        },
+        {
+          "upstream": "src/fx/critters/slime.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/slime.js"
+        },
+        {
+          "upstream": "src/fx/critters/snake.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/snake.js"
+        },
+        {
+          "upstream": "src/fx/critters/wisp.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/critters/wisp.js"
+        },
+        {
+          "upstream": "src/fx/explosions/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/_lib.js"
+        },
+        {
+          "upstream": "src/fx/explosions/barrel-explosion.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/barrel-explosion.js"
+        },
+        {
+          "upstream": "src/fx/explosions/big-explosion.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/big-explosion.js"
+        },
+        {
+          "upstream": "src/fx/explosions/cartoon-pow.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/cartoon-pow.js"
+        },
+        {
+          "upstream": "src/fx/explosions/dirt-explosion.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/dirt-explosion.js"
+        },
+        {
+          "upstream": "src/fx/explosions/firework-burst.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/firework-burst.js"
+        },
+        {
+          "upstream": "src/fx/explosions/firework-rocket.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/firework-rocket.js"
+        },
+        {
+          "upstream": "src/fx/explosions/grenade.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/grenade.js"
+        },
+        {
+          "upstream": "src/fx/explosions/implosion.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/implosion.js"
+        },
+        {
+          "upstream": "src/fx/explosions/nuke.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/nuke.js"
+        },
+        {
+          "upstream": "src/fx/explosions/plasma-explosion.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/plasma-explosion.js"
+        },
+        {
+          "upstream": "src/fx/explosions/small-explosion.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/small-explosion.js"
+        },
+        {
+          "upstream": "src/fx/explosions/smoke-bomb.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/explosions/smoke-bomb.js"
+        },
+        {
+          "upstream": "src/fx/fire/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/_lib.js"
+        },
+        {
+          "upstream": "src/fx/fire/brazier.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/brazier.js"
+        },
+        {
+          "upstream": "src/fx/fire/campfire.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/campfire.js"
+        },
+        {
+          "upstream": "src/fx/fire/candle.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/candle.js"
+        },
+        {
+          "upstream": "src/fx/fire/fire-breath.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/fire-breath.js"
+        },
+        {
+          "upstream": "src/fx/fire/fire-ring.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/fire-ring.js"
+        },
+        {
+          "upstream": "src/fx/fire/fire-tornado.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/fire-tornado.js"
+        },
+        {
+          "upstream": "src/fx/fire/fireball.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/fireball.js"
+        },
+        {
+          "upstream": "src/fx/fire/flame-pillar.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/flame-pillar.js"
+        },
+        {
+          "upstream": "src/fx/fire/flamethrower.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/flamethrower.js"
+        },
+        {
+          "upstream": "src/fx/fire/meteor.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/meteor.js"
+        },
+        {
+          "upstream": "src/fx/fire/spirit-flame.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/spirit-flame.js"
+        },
+        {
+          "upstream": "src/fx/fire/torch.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/fire/torch.js"
+        },
+        {
+          "upstream": "src/fx/holy/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/_lib.js"
+        },
+        {
+          "upstream": "src/fx/holy/blessing.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/blessing.js"
+        },
+        {
+          "upstream": "src/fx/holy/divine-shield.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/divine-shield.js"
+        },
+        {
+          "upstream": "src/fx/holy/feather-burst.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/feather-burst.js"
+        },
+        {
+          "upstream": "src/fx/holy/halo.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/halo.js"
+        },
+        {
+          "upstream": "src/fx/holy/heal-aoe.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/heal-aoe.js"
+        },
+        {
+          "upstream": "src/fx/holy/heal.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/heal.js"
+        },
+        {
+          "upstream": "src/fx/holy/holy-pillar.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/holy-pillar.js"
+        },
+        {
+          "upstream": "src/fx/holy/resurrection.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/resurrection.js"
+        },
+        {
+          "upstream": "src/fx/holy/smite.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/smite.js"
+        },
+        {
+          "upstream": "src/fx/holy/sunburst.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/holy/sunburst.js"
+        },
+        {
+          "upstream": "src/fx/ice/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/_lib.js"
+        },
+        {
+          "upstream": "src/fx/ice/blizzard-vortex.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/blizzard-vortex.js"
+        },
+        {
+          "upstream": "src/fx/ice/freeze.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/freeze.js"
+        },
+        {
+          "upstream": "src/fx/ice/frost-breath.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/frost-breath.js"
+        },
+        {
+          "upstream": "src/fx/ice/frost-nova.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/frost-nova.js"
+        },
+        {
+          "upstream": "src/fx/ice/ice-crystal.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/ice-crystal.js"
+        },
+        {
+          "upstream": "src/fx/ice/ice-lance.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/ice-lance.js"
+        },
+        {
+          "upstream": "src/fx/ice/ice-shatter.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/ice-shatter.js"
+        },
+        {
+          "upstream": "src/fx/ice/ice-spikes.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/ice-spikes.js"
+        },
+        {
+          "upstream": "src/fx/ice/icicle-fall.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/icicle-fall.js"
+        },
+        {
+          "upstream": "src/fx/ice/snowflake-burst.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ice/snowflake-burst.js"
+        },
+        {
+          "upstream": "src/fx/impacts/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/_lib.js"
+        },
+        {
+          "upstream": "src/fx/impacts/blunt-hit.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/blunt-hit.js"
+        },
+        {
+          "upstream": "src/fx/impacts/bullet-impact.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/bullet-impact.js"
+        },
+        {
+          "upstream": "src/fx/impacts/crit-hit.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/crit-hit.js"
+        },
+        {
+          "upstream": "src/fx/impacts/ground-slam.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/ground-slam.js"
+        },
+        {
+          "upstream": "src/fx/impacts/heavy-landing.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/heavy-landing.js"
+        },
+        {
+          "upstream": "src/fx/impacts/hit-flash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/hit-flash.js"
+        },
+        {
+          "upstream": "src/fx/impacts/hit-spark.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/hit-spark.js"
+        },
+        {
+          "upstream": "src/fx/impacts/impact-frame.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/impact-frame.js"
+        },
+        {
+          "upstream": "src/fx/impacts/parry.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/parry.js"
+        },
+        {
+          "upstream": "src/fx/impacts/ricochet.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/ricochet.js"
+        },
+        {
+          "upstream": "src/fx/impacts/shield-block.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/impacts/shield-block.js"
+        },
+        {
+          "upstream": "src/fx/index.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/index.js"
+        },
+        {
+          "upstream": "src/fx/lightning/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/_lib.js"
+        },
+        {
+          "upstream": "src/fx/lightning/ball-lightning.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/ball-lightning.js"
+        },
+        {
+          "upstream": "src/fx/lightning/chain-lightning.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/chain-lightning.js"
+        },
+        {
+          "upstream": "src/fx/lightning/charge-up.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/charge-up.js"
+        },
+        {
+          "upstream": "src/fx/lightning/electrified.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/electrified.js"
+        },
+        {
+          "upstream": "src/fx/lightning/lightning-strike.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/lightning-strike.js"
+        },
+        {
+          "upstream": "src/fx/lightning/plasma-ball.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/plasma-ball.js"
+        },
+        {
+          "upstream": "src/fx/lightning/spark-arc.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/spark-arc.js"
+        },
+        {
+          "upstream": "src/fx/lightning/storm-cloud.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/storm-cloud.js"
+        },
+        {
+          "upstream": "src/fx/lightning/tesla-coil.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/tesla-coil.js"
+        },
+        {
+          "upstream": "src/fx/lightning/thunderclap.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/thunderclap.js"
+        },
+        {
+          "upstream": "src/fx/lightning/zap-hit.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/lightning/zap-hit.js"
+        },
+        {
+          "upstream": "src/fx/melee/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/_lib.js"
+        },
+        {
+          "upstream": "src/fx/melee/claw-swipe.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/claw-swipe.js"
+        },
+        {
+          "upstream": "src/fx/melee/dagger-flurry.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/dagger-flurry.js"
+        },
+        {
+          "upstream": "src/fx/melee/double-slash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/double-slash.js"
+        },
+        {
+          "upstream": "src/fx/melee/hammer-smash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/hammer-smash.js"
+        },
+        {
+          "upstream": "src/fx/melee/heavy-cleave.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/heavy-cleave.js"
+        },
+        {
+          "upstream": "src/fx/melee/scythe-reap.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/scythe-reap.js"
+        },
+        {
+          "upstream": "src/fx/melee/spear-sweep.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/spear-sweep.js"
+        },
+        {
+          "upstream": "src/fx/melee/spin-slash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/spin-slash.js"
+        },
+        {
+          "upstream": "src/fx/melee/sword-slash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/sword-slash.js"
+        },
+        {
+          "upstream": "src/fx/melee/thrust.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/thrust.js"
+        },
+        {
+          "upstream": "src/fx/melee/uppercut.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/uppercut.js"
+        },
+        {
+          "upstream": "src/fx/melee/whip-crack.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/melee/whip-crack.js"
+        },
+        {
+          "upstream": "src/fx/moves/arrow-shot.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/arrow-shot.js"
+        },
+        {
+          "upstream": "src/fx/moves/dash-strike.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/dash-strike.js"
+        },
+        {
+          "upstream": "src/fx/moves/earth-stomp.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/earth-stomp.js"
+        },
+        {
+          "upstream": "src/fx/moves/fireball-throw.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/fireball-throw.js"
+        },
+        {
+          "upstream": "src/fx/moves/ground-pound.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/ground-pound.js"
+        },
+        {
+          "upstream": "src/fx/moves/holy-smite.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/holy-smite.js"
+        },
+        {
+          "upstream": "src/fx/moves/ice-lance-throw.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/ice-lance-throw.js"
+        },
+        {
+          "upstream": "src/fx/moves/lightning-call.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/lightning-call.js"
+        },
+        {
+          "upstream": "src/fx/moves/meteor-call.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/meteor-call.js"
+        },
+        {
+          "upstream": "src/fx/moves/pistol-shots.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/pistol-shots.js"
+        },
+        {
+          "upstream": "src/fx/moves/rocket-launcher.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/rocket-launcher.js"
+        },
+        {
+          "upstream": "src/fx/moves/sword-combo.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/moves/sword-combo.js"
+        },
+        {
+          "upstream": "src/fx/nature/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/_lib.js"
+        },
+        {
+          "upstream": "src/fx/nature/acid-splash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/acid-splash.js"
+        },
+        {
+          "upstream": "src/fx/nature/boulder.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/boulder.js"
+        },
+        {
+          "upstream": "src/fx/nature/earth-spike.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/earth-spike.js"
+        },
+        {
+          "upstream": "src/fx/nature/healing-bloom.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/healing-bloom.js"
+        },
+        {
+          "upstream": "src/fx/nature/leaf-storm.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/leaf-storm.js"
+        },
+        {
+          "upstream": "src/fx/nature/poison-cloud.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/poison-cloud.js"
+        },
+        {
+          "upstream": "src/fx/nature/quake.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/quake.js"
+        },
+        {
+          "upstream": "src/fx/nature/root-snare.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/root-snare.js"
+        },
+        {
+          "upstream": "src/fx/nature/spore-burst.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/spore-burst.js"
+        },
+        {
+          "upstream": "src/fx/nature/thorns.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/thorns.js"
+        },
+        {
+          "upstream": "src/fx/nature/tornado.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/tornado.js"
+        },
+        {
+          "upstream": "src/fx/nature/toxic-puddle.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/toxic-puddle.js"
+        },
+        {
+          "upstream": "src/fx/nature/vine-whip.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/nature/vine-whip.js"
+        },
+        {
+          "upstream": "src/fx/pickups/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/_lib.js"
+        },
+        {
+          "upstream": "src/fx/pickups/chest-open.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/chest-open.js"
+        },
+        {
+          "upstream": "src/fx/pickups/coin-spin.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/coin-spin.js"
+        },
+        {
+          "upstream": "src/fx/pickups/collect-burst.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/collect-burst.js"
+        },
+        {
+          "upstream": "src/fx/pickups/crystal-shard.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/crystal-shard.js"
+        },
+        {
+          "upstream": "src/fx/pickups/gem-spin.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/gem-spin.js"
+        },
+        {
+          "upstream": "src/fx/pickups/heart-pickup.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/heart-pickup.js"
+        },
+        {
+          "upstream": "src/fx/pickups/key-glint.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/key-glint.js"
+        },
+        {
+          "upstream": "src/fx/pickups/loot-beam.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/loot-beam.js"
+        },
+        {
+          "upstream": "src/fx/pickups/potion.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/potion.js"
+        },
+        {
+          "upstream": "src/fx/pickups/power-star.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/power-star.js"
+        },
+        {
+          "upstream": "src/fx/pickups/xp-orb.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/pickups/xp-orb.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/_lib.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/arrow.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/arrow.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/bullet-tracer.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/bullet-tracer.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/cannonball.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/cannonball.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/energy-disc.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/energy-disc.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/flare.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/flare.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/homing-missile.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/homing-missile.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/laser-bolt.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/laser-bolt.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/magic-missile.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/magic-missile.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/muzzle-pistol.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/muzzle-pistol.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/muzzle-shotgun.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/muzzle-shotgun.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/muzzle-smg.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/muzzle-smg.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/plasma-shot.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/plasma-shot.js"
+        },
+        {
+          "upstream": "src/fx/projectiles/rocket.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/projectiles/rocket.js"
+        },
+        {
+          "upstream": "src/fx/scifi/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/_lib.js"
+        },
+        {
+          "upstream": "src/fx/scifi/emp-blast.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/emp-blast.js"
+        },
+        {
+          "upstream": "src/fx/scifi/energy-core.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/energy-core.js"
+        },
+        {
+          "upstream": "src/fx/scifi/force-field.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/force-field.js"
+        },
+        {
+          "upstream": "src/fx/scifi/glitch.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/glitch.js"
+        },
+        {
+          "upstream": "src/fx/scifi/hologram.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/hologram.js"
+        },
+        {
+          "upstream": "src/fx/scifi/jetpack.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/jetpack.js"
+        },
+        {
+          "upstream": "src/fx/scifi/laser-grid.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/laser-grid.js"
+        },
+        {
+          "upstream": "src/fx/scifi/scanner.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/scanner.js"
+        },
+        {
+          "upstream": "src/fx/scifi/teleporter-pad.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/teleporter-pad.js"
+        },
+        {
+          "upstream": "src/fx/scifi/tractor-beam.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/tractor-beam.js"
+        },
+        {
+          "upstream": "src/fx/scifi/warp-in.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/warp-in.js"
+        },
+        {
+          "upstream": "src/fx/scifi/warp-out.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/scifi/warp-out.js"
+        },
+        {
+          "upstream": "src/fx/shadow/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/_lib.js"
+        },
+        {
+          "upstream": "src/fx/shadow/black-hole.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/black-hole.js"
+        },
+        {
+          "upstream": "src/fx/shadow/curse.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/curse.js"
+        },
+        {
+          "upstream": "src/fx/shadow/dark-explosion.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/dark-explosion.js"
+        },
+        {
+          "upstream": "src/fx/shadow/eclipse.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/eclipse.js"
+        },
+        {
+          "upstream": "src/fx/shadow/grasping-hands.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/grasping-hands.js"
+        },
+        {
+          "upstream": "src/fx/shadow/hex-sigil.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/hex-sigil.js"
+        },
+        {
+          "upstream": "src/fx/shadow/life-steal.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/life-steal.js"
+        },
+        {
+          "upstream": "src/fx/shadow/necro-skulls.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/necro-skulls.js"
+        },
+        {
+          "upstream": "src/fx/shadow/shadow-flames.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/shadow-flames.js"
+        },
+        {
+          "upstream": "src/fx/shadow/shadow-tendrils.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/shadow-tendrils.js"
+        },
+        {
+          "upstream": "src/fx/shadow/soul-drain.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/soul-drain.js"
+        },
+        {
+          "upstream": "src/fx/shadow/void-orb.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/shadow/void-orb.js"
+        },
+        {
+          "upstream": "src/fx/spawn/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/_lib.js"
+        },
+        {
+          "upstream": "src/fx/spawn/coin-drop.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/coin-drop.js"
+        },
+        {
+          "upstream": "src/fx/spawn/disintegrate.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/disintegrate.js"
+        },
+        {
+          "upstream": "src/fx/spawn/dissolve-burn.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/dissolve-burn.js"
+        },
+        {
+          "upstream": "src/fx/spawn/egg-hatch.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/egg-hatch.js"
+        },
+        {
+          "upstream": "src/fx/spawn/poof.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/poof.js"
+        },
+        {
+          "upstream": "src/fx/spawn/respawn-beam.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/respawn-beam.js"
+        },
+        {
+          "upstream": "src/fx/spawn/shatter-death.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/shatter-death.js"
+        },
+        {
+          "upstream": "src/fx/spawn/soul-rise.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/soul-rise.js"
+        },
+        {
+          "upstream": "src/fx/spawn/spawn-portal.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/spawn-portal.js"
+        },
+        {
+          "upstream": "src/fx/spawn/summon-rise.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/spawn/summon-rise.js"
+        },
+        {
+          "upstream": "src/fx/status/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/_lib.js"
+        },
+        {
+          "upstream": "src/fx/status/bleeding.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/bleeding.js"
+        },
+        {
+          "upstream": "src/fx/status/burning.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/burning.js"
+        },
+        {
+          "upstream": "src/fx/status/charmed.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/charmed.js"
+        },
+        {
+          "upstream": "src/fx/status/confused.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/confused.js"
+        },
+        {
+          "upstream": "src/fx/status/cursed.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/cursed.js"
+        },
+        {
+          "upstream": "src/fx/status/frozen.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/frozen.js"
+        },
+        {
+          "upstream": "src/fx/status/haste.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/haste.js"
+        },
+        {
+          "upstream": "src/fx/status/petrified.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/petrified.js"
+        },
+        {
+          "upstream": "src/fx/status/poisoned.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/poisoned.js"
+        },
+        {
+          "upstream": "src/fx/status/rage.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/rage.js"
+        },
+        {
+          "upstream": "src/fx/status/sleep.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/sleep.js"
+        },
+        {
+          "upstream": "src/fx/status/slowed.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/slowed.js"
+        },
+        {
+          "upstream": "src/fx/status/stunned.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/status/stunned.js"
+        },
+        {
+          "upstream": "src/fx/transitions/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/_lib.js"
+        },
+        {
+          "upstream": "src/fx/transitions/blinds.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/blinds.js"
+        },
+        {
+          "upstream": "src/fx/transitions/burn-away.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/burn-away.js"
+        },
+        {
+          "upstream": "src/fx/transitions/crt-off.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/crt-off.js"
+        },
+        {
+          "upstream": "src/fx/transitions/diamond-wipe.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/diamond-wipe.js"
+        },
+        {
+          "upstream": "src/fx/transitions/glitch-wipe.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/glitch-wipe.js"
+        },
+        {
+          "upstream": "src/fx/transitions/iris.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/iris.js"
+        },
+        {
+          "upstream": "src/fx/transitions/pixel-dissolve.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/pixel-dissolve.js"
+        },
+        {
+          "upstream": "src/fx/transitions/shatter-wipe.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/shatter-wipe.js"
+        },
+        {
+          "upstream": "src/fx/transitions/slash-wipe.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/slash-wipe.js"
+        },
+        {
+          "upstream": "src/fx/transitions/star-iris.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/transitions/star-iris.js"
+        },
+        {
+          "upstream": "src/fx/ui/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/_lib.js"
+        },
+        {
+          "upstream": "src/fx/ui/achievement.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/achievement.js"
+        },
+        {
+          "upstream": "src/fx/ui/coin-collect.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/coin-collect.js"
+        },
+        {
+          "upstream": "src/fx/ui/combo-counter.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/combo-counter.js"
+        },
+        {
+          "upstream": "src/fx/ui/confetti.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/confetti.js"
+        },
+        {
+          "upstream": "src/fx/ui/countdown.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/countdown.js"
+        },
+        {
+          "upstream": "src/fx/ui/crit-number.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/crit-number.js"
+        },
+        {
+          "upstream": "src/fx/ui/damage-number.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/damage-number.js"
+        },
+        {
+          "upstream": "src/fx/ui/exclamation.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/exclamation.js"
+        },
+        {
+          "upstream": "src/fx/ui/health-bar-hit.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/health-bar-hit.js"
+        },
+        {
+          "upstream": "src/fx/ui/heart-lost.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/heart-lost.js"
+        },
+        {
+          "upstream": "src/fx/ui/level-up.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/level-up.js"
+        },
+        {
+          "upstream": "src/fx/ui/quest-complete.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/ui/quest-complete.js"
+        },
+        {
+          "upstream": "src/fx/water/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/_lib.js"
+        },
+        {
+          "upstream": "src/fx/water/bubbles.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/bubbles.js"
+        },
+        {
+          "upstream": "src/fx/water/drip.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/drip.js"
+        },
+        {
+          "upstream": "src/fx/water/fountain.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/fountain.js"
+        },
+        {
+          "upstream": "src/fx/water/geyser.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/geyser.js"
+        },
+        {
+          "upstream": "src/fx/water/rain-splash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/rain-splash.js"
+        },
+        {
+          "upstream": "src/fx/water/ripples.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/ripples.js"
+        },
+        {
+          "upstream": "src/fx/water/splash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/splash.js"
+        },
+        {
+          "upstream": "src/fx/water/water-jet.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/water-jet.js"
+        },
+        {
+          "upstream": "src/fx/water/water-orb.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/water-orb.js"
+        },
+        {
+          "upstream": "src/fx/water/waterfall.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/waterfall.js"
+        },
+        {
+          "upstream": "src/fx/water/wave-crash.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/wave-crash.js"
+        },
+        {
+          "upstream": "src/fx/water/whirlpool.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/water/whirlpool.js"
+        },
+        {
+          "upstream": "src/fx/weather/_lib.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/_lib.js"
+        },
+        {
+          "upstream": "src/fx/weather/aurora.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/aurora.js"
+        },
+        {
+          "upstream": "src/fx/weather/blizzard.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/blizzard.js"
+        },
+        {
+          "upstream": "src/fx/weather/cherry-blossoms.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/cherry-blossoms.js"
+        },
+        {
+          "upstream": "src/fx/weather/clouds.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/clouds.js"
+        },
+        {
+          "upstream": "src/fx/weather/falling-leaves.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/falling-leaves.js"
+        },
+        {
+          "upstream": "src/fx/weather/fireflies.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/fireflies.js"
+        },
+        {
+          "upstream": "src/fx/weather/fog.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/fog.js"
+        },
+        {
+          "upstream": "src/fx/weather/god-rays.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/god-rays.js"
+        },
+        {
+          "upstream": "src/fx/weather/rain.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/rain.js"
+        },
+        {
+          "upstream": "src/fx/weather/shooting-stars.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/shooting-stars.js"
+        },
+        {
+          "upstream": "src/fx/weather/snow.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/snow.js"
+        },
+        {
+          "upstream": "src/fx/weather/storm.js",
+          "local": "skills/gamedev/art/pixelfx/src/fx/weather/storm.js"
+        },
+        {
+          "upstream": "tools/act.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/act.mjs"
+        },
+        {
+          "upstream": "tools/build-gallery.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/build-gallery.mjs"
+        },
+        {
+          "upstream": "tools/check.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/check.mjs"
+        },
+        {
+          "upstream": "tools/compare.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/compare.mjs"
+        },
+        {
+          "upstream": "tools/index.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/index.mjs"
+        },
+        {
+          "upstream": "tools/lib/fxlib.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/lib/fxlib.mjs"
+        },
+        {
+          "upstream": "tools/lib/png.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/lib/png.mjs"
+        },
+        {
+          "upstream": "tools/list.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/list.mjs"
+        },
+        {
+          "upstream": "tools/montage.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/montage.mjs"
+        },
+        {
+          "upstream": "tools/new.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/new.mjs"
+        },
+        {
+          "upstream": "tools/render.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/render.mjs"
+        },
+        {
+          "upstream": "tools/serve.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/serve.mjs"
+        },
+        {
+          "upstream": "tools/sheets.mjs",
+          "local": "skills/gamedev/art/pixelfx/tools/sheets.mjs"
+        },
+        {
+          "upstream": "docs/AUTHORING.md",
+          "local": "skills/gamedev/art/pixelfx/docs/AUTHORING.md"
+        },
+        {
+          "upstream": "docs/CATALOG.md",
+          "local": "skills/gamedev/art/pixelfx/docs/CATALOG.md"
+        },
+        {
+          "upstream": "docs/readme/acts.gif",
+          "local": "skills/gamedev/art/pixelfx/docs/readme/acts.gif"
+        },
+        {
+          "upstream": "docs/readme/montage.gif",
+          "local": "skills/gamedev/art/pixelfx/docs/readme/montage.gif"
+        },
+        {
+          "upstream": "NOTICE.md",
+          "local": "skills/gamedev/art/pixelfx/NOTICE.md"
+        }
+      ],
+      "verbatim_excluded": [
+        {
+          "upstream": "gallery/",
+          "reason": "演示画廊（含未随技能分发的字体资产，其 NOTICE 见上游）"
+        },
+        {
+          "upstream": "package.json/package-lock.json、.claude-plugin/、.github/、README.md、LICENSE、gallery/fonts/NOTICE.md",
+          "reason": "仓库级工具/插件清单/CI/文档；License 与第三方署名保留于 THIRD-PARTY-NOTICES.md 与技能目录内 NOTICE.md 原样件"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 3492
     }
   ]
 }

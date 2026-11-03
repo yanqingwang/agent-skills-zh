@@ -113,8 +113,13 @@
 ## 开发者 · framework
 
 - [GSAP 核心（gsap-core）](skills/developer/framework/gsap-core/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
+- [GSAP 框架集成（gsap-frameworks）](skills/developer/framework/gsap-frameworks/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
+- [GSAP 性能（gsap-performance）](skills/developer/framework/gsap-performance/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
+- [GSAP 插件（gsap-plugins）](skills/developer/framework/gsap-plugins/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
 - [GSAP React 集成（gsap-react）](skills/developer/framework/gsap-react/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
 - [GSAP ScrollTrigger（gsap-scrolltrigger）](skills/developer/framework/gsap-scrolltrigger/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
+- [GSAP 时间线（gsap-timeline）](skills/developer/framework/gsap-timeline/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
+- [GSAP 工具函数（gsap-utils）](skills/developer/framework/gsap-utils/SKILL.md) — 上游 [greensock/gsap-skills](https://github.com/greensock/gsap-skills)
 
 ## 开发者 · gstack
 
@@ -155,6 +160,10 @@
 
 - [agents](skills/gamedev/agents/creative-director.md) — 上游 [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios)
 - [agents](skills/gamedev/agents/game-designer.md) — 上游 [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios)
+
+## 游戏开发者 · art
+
+- [像素艺术特效（pixelfx）](skills/gamedev/art/pixelfx/SKILL.md) — 上游 [patch-gg/pixelfx](https://github.com/patch-gg/pixelfx)
 
 ## 游戏开发者 · godot-3d-essentials
 
@@ -206,14 +215,20 @@
 - [add-shader-cursor-trail](skills/designer/design/add-shader-cursor-trail/SKILL.md) — 上游 [MengTo/Skills](https://github.com/MengTo/Skills)
 - [等距技术插画（anatomy）](skills/designer/design/anatomy/SKILL.md) — 上游 [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy)
 - [交互图表生成（archify）](skills/designer/design/archify/SKILL.md) — 上游 [tt-a1i/archify](https://github.com/tt-a1i/archify)
+- [Banner 设计（banner-design）](skills/designer/design/banner-design/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+- [品牌规范（brand）](skills/designer/design/brand/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 - [brutalism](skills/designer/design/brutalism/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
 - [creative](skills/designer/design/creative/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
+- [设计系统（design-system）](skills/designer/design/design-system/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+- [UI 设计（design）](skills/designer/design/design/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 - [图表设计（diagram-design）](skills/designer/design/diagram-design/SKILL.md) — 上游 [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design)
 - [dramatic](skills/designer/design/dramatic/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
 - [frontend-design](skills/designer/design/frontend-design/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 - [反 AI 味设计（hallmark）](skills/designer/design/hallmark/SKILL.md) — 上游 [Nutlope/hallmark](https://github.com/Nutlope/hallmark)
 - [无可挑剔前端（impeccable）](skills/designer/design/impeccable/SKILL.md) — 上游 [pbakaus/impeccable](https://github.com/pbakaus/impeccable)
+- [幻灯片设计（slides）](skills/designer/design/slides/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 - [设计品味（taste）](skills/designer/design/taste-skill/SKILL.md) — 上游 [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)
+- [UI 样式落地（ui-styling）](skills/designer/design/ui-styling/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 - [UI/UX 专业设计（ui-ux-pro-max）](skills/designer/design/ui-ux-pro-max/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 
 ## 通用工具箱 · automation

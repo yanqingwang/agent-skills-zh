@@ -95,6 +95,18 @@ def zh_title(path: str) -> str:
         "gsap-scrolltrigger": "GSAP ScrollTrigger（gsap-scrolltrigger）",
         "gsap-react": "GSAP React 集成（gsap-react）",
         "frontend-slides": "网页幻灯片（frontend-slides）",
+        "pixelfx": "像素艺术特效（pixelfx）",
+        "banner-design": "Banner 设计（banner-design）",
+        "brand": "品牌规范（brand）",
+        "design-system": "设计系统（design-system）",
+        "design": "UI 设计（design）",
+        "slides": "幻灯片设计（slides）",
+        "ui-styling": "UI 样式落地（ui-styling）",
+        "gsap-frameworks": "GSAP 框架集成（gsap-frameworks）",
+        "gsap-plugins": "GSAP 插件（gsap-plugins）",
+        "gsap-performance": "GSAP 性能（gsap-performance）",
+        "gsap-timeline": "GSAP 时间线（gsap-timeline）",
+        "gsap-utils": "GSAP 工具函数（gsap-utils）",
     }
     stem = pathlib.PurePosixPath(path).name
     parent = pathlib.PurePosixPath(path).parent.name

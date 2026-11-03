@@ -77,6 +77,11 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/developer/framework/gsap-core/SKILL.md",
             "skills/developer/framework/gsap-scrolltrigger/SKILL.md",
             "skills/developer/framework/gsap-react/SKILL.md",
+            "skills/developer/framework/gsap-timeline/SKILL.md",
+            "skills/developer/framework/gsap-plugins/SKILL.md",
+            "skills/developer/framework/gsap-frameworks/SKILL.md",
+            "skills/developer/framework/gsap-performance/SKILL.md",
+            "skills/developer/framework/gsap-utils/SKILL.md",
         ]),
         ("省 token 与输出可读性", [
             "skills/developer/efficiency/caveman/SKILL.md",
@@ -111,6 +116,18 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("等距技术插画", [
             "skills/designer/design/anatomy/SKILL.md",
+        ]),
+        ("游戏像素艺术特效", [
+            "skills/gamedev/art/pixelfx/SKILL.md",
+        ]),
+        ("UI 设计全家桶（ui-ux-pro-max 系）", [
+            "skills/designer/design/ui-ux-pro-max/SKILL.md",
+            "skills/designer/design/design/SKILL.md",
+            "skills/designer/design/design-system/SKILL.md",
+            "skills/designer/design/ui-styling/SKILL.md",
+            "skills/designer/design/brand/SKILL.md",
+            "skills/designer/design/banner-design/SKILL.md",
+            "skills/designer/design/slides/SKILL.md",
         ]),
         ("风格化视觉与创意落地页", [
             "skills/designer/design/creative/SKILL.md",

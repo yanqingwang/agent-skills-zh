@@ -268,5 +268,8 @@
     "skills/gsap-core/SKILL.md": "98639432f4112b664aa5e53cf5d8ea1a4697eff9",
     "skills/gsap-scrolltrigger/SKILL.md": "6d8c09f2136c108595c9e0db859c4a39460e99cf",
     "skills/gsap-react/SKILL.md": "e2e51805457943cd4982fe792b858c14fa2c3c8f"
+  },
+  "patch-gg/pixelfx": {
+    "skills/pixelfx/SKILL.md": "c75d1e255339f43aa47035e570c36c54718ab307"
   }
 }

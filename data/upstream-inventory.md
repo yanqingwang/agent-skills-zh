@@ -260,3 +260,24 @@
 18 个 SKILL.md 翻译前逐件核验 frontmatter：anatomy 源文件含 `license: MIT`（与仓库一致，如实保留）；impeccable 源文件为 `license: Apache 2.0`（非 SPDX 写法，同一许可）；其余 16 件无文件级 license 字段，按仓库级 License（MIT/Apache-2.0）收录。吸取第六批校验教训（ECC osint CC BY-SA 事件），未发现仓库级与文件级不一致情形。
 
 **累计：60 上游 / 156 翻译件 / 4661 原样件（2026-11-03）。**
+
+
+## 十、2026-11-03 第七批：存量上游追加（6 + 5 翻译件）与新上游 pixelfx（299 原样件）
+
+**检索方式**：第五次全量检索（第九节）的缓收候选复核 + created:>2026-10-25 新仓榜快扫；无新过线仓库，本批以"补全高价值存量 + 收录唯一达标新仓"为主。
+
+### 收录
+
+| 上游 | 模式 | 收录 |
+|---|---|---|
+| patch-gg/pixelfx（3,492★，MIT，新上游） | 整目录 | pixelfx（SKILL.md 译 + src/ 281 件特效代码 + tools/ + docs/ + NOTICE.md 原样，共 299 件）→ `skills/gamedev/art/`（新子类别） |
+| nextlevelbuilder/ui-ux-pro-max-skill（追加） | 姊妹件补全 | banner-design / brand / design-system / design / slides / ui-styling（6 件 SKILL.md 译 + 183 原样件） |
+| greensock/gsap-skills（追加） | 全量补齐 | gsap-frameworks / plugins / performance / timeline / utils（5 个单文件，至此 8 件全量） |
+
+### 本批排除（存量遗留项收口）
+
+- **rtk-ai/rtk（84k★，Apache-2.0，第一批遗留"待查 License"项）**：License 本身合规（Apache-2.0），但其 `.claude/skills/` 8 件均为 rtk 代码库特定件（如 code-simplifier 明言 "Review RTK Rust code"），对本仓库用户无独立价值 → 关闭待查项，不收录。
+- sickn33/agentic-awesome-skills（49k★，2,884 件大合集）、K-Dense-AI 余量、muratcankoylan 余量、google/skills 其余产品线：继续按"宁缺毋滥"缓收。
+- 新仓榜：patch-gg/pixelfx 之外均 <1.5k★ 或为工具/榜单。
+
+**累计：61 登记 / 60 监控 / 168 翻译件 / 5114 原样件（2026-11-03，第七批）。**

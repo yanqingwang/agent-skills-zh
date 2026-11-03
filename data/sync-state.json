@@ -22,7 +22,7 @@
     "titanwings/distilly": "0afc45c29c360ba7bc8260f1bb0bf34e9155f4fa",
     "latent-spaces/brag": "669ab9286aa28b6c3ee30e75f181ee74319d012a",
     "nidhinjs/prompt-master": "49b3a72469b1e7287d66387004ccfcca90e5968a",
-    "garrytan/gstack": "e85005482addbd902d2557a3deb964b29b0335bb",
+    "garrytan/gstack": "14035cc0de70c05edc7c7e9baf0214bfa77a3044",
     "Vincentwei1021/video-shotcraft": "1266a3ec4831289c4d893d42dd5102723658039a",
     "teng-lin/notebooklm-py": "7db1000b516c3f3a7d3afe7c4c572924ee7a5264",
     "foryourhealth111-pixel/Vibe-Skills": "d881d9cd6b4a37186c447f7758e802d70c2b27ef",
@@ -33,7 +33,7 @@
     "AgriciDaniel/claude-seo": "6be93f45064ffbadced572b5d5c95f55fd263af0",
     "wanshuiyin/Auto-claude-code-research-in-sleep": "2927b40b2ea37774de53763338c5e8f91a7601e6",
     "Jeffallan/claude-skills": "078a25cc5bfd8011459be7b91d004e900c1d02d3",
-    "MengTo/Skills": "e0e38f7bd3b15ddc90815781e534cf4ca5b19567",
+    "MengTo/Skills": "aa0a995a0ea33a2600b19ea7c9ff85f17e7ca0da",
     "czlonkowski/n8n-skills": "e037563e101749e630e6688d121d04529fe6ee7b",
     "anthropics/claude-plugins-official": "a7ba5b93db0c7c8d17f3f1d25853adca79598a1a",
     "wshobson/agents": "7e2fb559cf4b824b27f1fec49fe88f7511066d26",
@@ -59,6 +59,7 @@
     "wheresryan22/anatomy": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
     "google/skills": "0c369ce1c8ab5f93b1d28752b8bea622b2eedcdc",
     "muratcankoylan/Agent-Skills-for-Context-Engineering": "9ff0c99108b36d3b886defd825d8ac1f47dba374",
-    "greensock/gsap-skills": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    "greensock/gsap-skills": "aed9cfd3277740755f6bfc1155c7aa645403b760",
+    "patch-gg/pixelfx": "a84159688af3ca37a4be05a0d422b94451b2e24e"
   }
 }

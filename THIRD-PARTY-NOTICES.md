@@ -398,7 +398,7 @@ SOFTWARE.
 - 上游：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill （星标快照 2026-11-03：144,260）
 - License：MIT（条款摘要同第一批各上游节；完整原文见上游仓库根 LICENSE）
 - Copyright (c) 2024 Next Level Builder
-- 收录：skills/designer/design/ui-ux-pro-max/（SKILL.md 译 + data/、references/ 原样）
+- 收录：skills/designer/design/{ui-ux-pro-max,banner-design,brand,design-system,design,slides,ui-styling}/（SKILL.md 译 + 各自 data/references/scripts/templates/canvas-fonts 原样）
 
 ### pbakaus/impeccable（Apache-2.0）
 
@@ -459,7 +459,14 @@ SOFTWARE.
 - 上游：https://github.com/greensock/gsap-skills （星标快照 2026-11-03：17,747）
 - License：MIT
 - Copyright (c) 2026 GreenSock
-- 收录：skills/developer/framework/{gsap-core,gsap-scrolltrigger,gsap-react}/（3 个单文件 SKILL.md 译，旗舰抽取）
+- 收录：skills/developer/framework/gsap-{core,scrolltrigger,react,frameworks,plugins,performance,timeline,utils}/（8 个单文件 SKILL.md 译，全量收录）
+
+### patch-gg/pixelfx（MIT）
+
+- 上游：https://github.com/patch-gg/pixelfx （星标快照 2026-11-03：3,492）
+- License：MIT
+- Copyright (c) 2026 Patch
+- 收录：skills/gamedev/art/pixelfx/（SKILL.md 译 + src/、tools/、docs/、NOTICE.md 原样；NOTICE.md 系上游第三方署名文件，按 MIT 条款随 src/ 分发保留，其中 Sprite Fusion 与 Hollow Crown 改编件各自 MIT）
 
 ## 明确排除
 
