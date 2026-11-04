@@ -10,7 +10,7 @@
     "skills/systematic-debugging/SKILL.md": "62fc752aaef59a8bbed5d305f4cadc60f8ae07ed",
     "skills/writing-plans/SKILL.md": "4cf0275d88d67aa4ef09f4bbca9970ed6ff74a00",
     "skills/verification-before-completion/SKILL.md": "7d45333cc4a49c57a80df6c1fe2fa777a207afbc",
-    "skills/brainstorming/SKILL.md": "7f5eef02f894c4f24cea313660c0465ce9c084ed"
+    "skills/brainstorming/SKILL.md": "9eb0edc7fedf26e1d3e2f3f223e5bcc5058aed6a"
   },
   "mattpocock/skills": {
     "skills/engineering/code-review/SKILL.md": "83183e0ad36fd0eef25d37c7e483284b7e34c1f0",
@@ -37,7 +37,17 @@
     "understand-anything-plugin/skills/understand/SKILL.md": "778b800c1d770ae6401ae86245def77dd220900c"
   },
   "mvanhorn/last30days-skill": {
-    "skills/last30days/SKILL.md": "0e6a3d7d30286a64a521b0493eb77775cea8a711"
+    "skills/last30days/SKILL.md": "0e6a3d7d30286a64a521b0493eb77775cea8a711",
+    "skills/last30days/references/agent-mode.md": "d619b025b0071f07f6dc5665baab2f96c6ec0af3",
+    "skills/last30days/references/category-peers.md": "bafdfc936ab28ae6b388d6d76da54460f6a40f21",
+    "skills/last30days/references/competitors.md": "d8b05ecc346ff82d709c45b4bba48158ceb1fa93",
+    "skills/last30days/references/discovery.md": "63a5ae577e90d458af42e97f01b5da63e6bc85e5",
+    "skills/last30days/references/followups.md": "dba19a8d952cd92ac006db6f90cfbd88ebbfd411",
+    "skills/last30days/references/grok-bot-x.md": "f8bd12b4714035be7aff4d4a8129d38d843effa2",
+    "skills/last30days/references/hiring-signals.md": "20624cc0a588518096cb6e6fdd877fed7aafd95d",
+    "skills/last30days/references/library-queue.md": "938b7c3c73160787b22ec5ddf46c310b29c733d2",
+    "skills/last30days/references/recommendations.md": "d242b5f4ae76a4078e16786a29aa858bf0347850",
+    "skills/last30days/references/runtime.md": "5a6087b99840508755d973c75d7a1e85fd382b91"
   },
   "cathrynlavery/diagram-design": {
     "skills/diagram-design/SKILL.md": "6eb03013afab77fb1d67b9f40d0880b95649b357"
@@ -77,7 +87,7 @@
     "skills/investor-materials/SKILL.md": "82eaba3a95a9d1eb79672addcffb17c1a18faead"
   },
   "virgiliojr94/book-to-skill": {
-    "SKILL.md": "aebe394108e76bebdf7b8848eceddc756e844ec4"
+    "SKILL.md": "0fc0ac4aa8d9456c6601e221b3d9a2094f1f060a"
   },
   "OthmanAdi/planning-with-files": {
     ".agents/skills/planning-with-files/SKILL.md": "a84f1a244ccf46ce62747709369a59982cf54835"
@@ -94,15 +104,15 @@
   "garrytan/gstack": {
     "office-hours/SKILL.md": "571f62648f4aa60a0753b98501b8ffc55e2576fc",
     "plan-ceo-review/SKILL.md": "e64c876ece927762722794bf4fad0d8c55b1a292",
-    "qa/SKILL.md": "5a348f9c7c1931415e0eb352ce298f327251a0df",
-    "design-review/SKILL.md": "42e47d2515578b1e7ea44653c4adb4ad9628374b",
+    "qa/SKILL.md": "5c8b6ab91da0285eb7d8d5d1b98d68fe28d428cd",
+    "design-review/SKILL.md": "784ec2f66aa50ba1e35d3f84366fedf908694c71",
     "health/SKILL.md": "ecde9b5f2aba48ff8e8371d5774ef417f7249e65",
-    "review/SKILL.md": "369f3730a6724c6dec025565464c35ab1cc6a514",
+    "review/SKILL.md": "9b560bd6f8349cf5cd355417031d3628237cc4a7",
     "learn/SKILL.md": "0d9f456c09ec9e7764a4eefc72e4d95afe3064f7",
-    "ship/SKILL.md": "125947cba51e3ddcf1ff6744fd2ccda269d79bf5",
-    "investigate/SKILL.md": "cb6a50df2db4951e81ab798492967584e7fd0cfa",
+    "ship/SKILL.md": "811b00bb7646b9c23776e7d8c778bc79dffd42b6",
+    "investigate/SKILL.md": "81e8e62cc8fd14943a291e63236769b8a31a1b70",
     "retro/SKILL.md": "336dee5137f4ed6ea67e013d987f922f5eb8b1e7",
-    "land-and-deploy/SKILL.md": "57e64a21aa542a8350882a778085ea4fcb2f098c",
+    "land-and-deploy/SKILL.md": "2243d514068ad8d94559394accc26d3604bd32a8",
     "plan-eng-review/SKILL.md": "4061ac83ba2683e7fa18c9235a9658a719fddd48",
     "spec/SKILL.md": "722483a88de4726c06ab357236f3e319ae98858b"
   },
@@ -113,7 +123,7 @@
     "SKILL.md": "0a231e307ff133793a6ce78d728c197f75e50fe6"
   },
   "foryourhealth111-pixel/Vibe-Skills": {
-    "SKILL.md": "83ca6de3fd7c8e214f1e6d95fad17ce91b331378"
+    "SKILL.md": "baaf9d6f6edc2c178126a3b01231b3b12df66a9b"
   },
   "yusufkaraaslan/Skill_Seekers": {
     "skills/skill-seekers/SKILL.md": "71b11d5aff88f480c4963b11495fc479bd6c02d7"
@@ -123,9 +133,9 @@
   },
   "alirezarezvani/claude-skills": {
     "engineering/hivemind/SKILL.md": "0e68de3ca777b1ab5c6dbc254895931c3458781a",
-    "product-team/skills/product-discovery/SKILL.md": "17265eec8bcc4c5e2b8554bfb8c7483c4fc3ab56",
+    "product-team/skills/product-discovery/SKILL.md": "f3650aeb16a9cba84a0d54e54938099a117000d5",
     "research/deepread/SKILL.md": "2eeb128f82ea3ffee2381f462736a097259d9846",
-    "product-team/skills/competitive-teardown/SKILL.md": "b7d04982478f0822941d3eddfdabace438650497",
+    "product-team/skills/competitive-teardown/SKILL.md": "46c4d26caa004f2a987c25c3a3bad8e9e42f458a",
     "product-team/skills/spec-to-repo/SKILL.md": "c842e1d8dcf86fdfdf9ba7448600a7ecc1eb0c68",
     "research/deepread/references/feynman.md": "6d13214bb950de5464fb670da3f5213ebc31e640",
     "research/deepread/references/knowledge-map.md": "05bf805e8b9c7f9c584eae4076f77733c0f7ce5a"
@@ -243,7 +253,13 @@
     "skills/sales-research/SKILL.md": "78b59f7eef7258076d8e47c98baec476a3efcae4"
   },
   "nextlevelbuilder/ui-ux-pro-max-skill": {
-    ".claude/skills/ui-ux-pro-max/SKILL.md": "2b13d3d9c36b9dc34ee474e4473b710f59ec5b34"
+    ".claude/skills/ui-ux-pro-max/SKILL.md": "2b13d3d9c36b9dc34ee474e4473b710f59ec5b34",
+    ".claude/skills/banner-design/SKILL.md": "79fa5ee1884ce1b9f76627a1bea073d3dd67ee7b",
+    ".claude/skills/brand/SKILL.md": "3eddf309084e6c4493fa19a6b31e755703ba5e86",
+    ".claude/skills/design-system/SKILL.md": "804e553325fedc49dd7e75c30c6cffeebaa6650b",
+    ".claude/skills/design/SKILL.md": "0dda90057cd5aa19b127c51ac1227fbf8a1465c2",
+    ".claude/skills/slides/SKILL.md": "52d345d1f4ab5fde70b38fdd0601ad42ef0449f1",
+    ".claude/skills/ui-styling/SKILL.md": "b5a9acb9643e10b3629c0b9cac7e616c1080b597"
   },
   "pbakaus/impeccable": {
     ".claude/skills/impeccable/SKILL.md": "ff0426b809d4d028b2183495665dd252f86a95e1"
