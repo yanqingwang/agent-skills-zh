@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "2bafebfe53bff8962389ae40b685b53af42f99b9",
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "4784bfeabba11d02bbf6596ed5ce02b8e377509f",
     ".agents/skills/reverse-engineer-anything/references/android-applications.md": "cc51e22afe7ec34bdd88f0d8ba6275b26d3adda1",
     ".agents/skills/reverse-engineer-anything/references/evidence-workflows.md": "0a83d37e79ee0a2239b1c89d1b67b63856a6ea18",
     ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "8f5303cc9dbc426f9ebbbe8e7acdb3dbcbde2a6d"
@@ -22,7 +22,7 @@
     "agents/code-reviewer.md": "ea267be01f2e16011d04b90dc234986384c4f7e0"
   },
   "Leonxlnx/taste-skill": {
-    "skills/taste-skill/SKILL.md": "d8444f13b76be100b3b088dfdae738e85288d6b6"
+    "skills/taste-skill/SKILL.md": "23cee4afe4e05db3522d21c3a84e5882a58678b5"
   },
   "DietrichGebert/ponytail": {
     ".openclaw/skills/ponytail/SKILL.md": "df5996b4953af9f8c67bb7a13bfe77659003ce4c"
@@ -109,7 +109,7 @@
     "health/SKILL.md": "ecde9b5f2aba48ff8e8371d5774ef417f7249e65",
     "review/SKILL.md": "9b560bd6f8349cf5cd355417031d3628237cc4a7",
     "learn/SKILL.md": "0d9f456c09ec9e7764a4eefc72e4d95afe3064f7",
-    "ship/SKILL.md": "811b00bb7646b9c23776e7d8c778bc79dffd42b6",
+    "ship/SKILL.md": "769833bd7e0248c84eeebd1172e9c83ec2b5b78f",
     "investigate/SKILL.md": "81e8e62cc8fd14943a291e63236769b8a31a1b70",
     "retro/SKILL.md": "336dee5137f4ed6ea67e013d987f922f5eb8b1e7",
     "land-and-deploy/SKILL.md": "2243d514068ad8d94559394accc26d3604bd32a8",
@@ -253,7 +253,7 @@
     "skills/sales-research/SKILL.md": "78b59f7eef7258076d8e47c98baec476a3efcae4"
   },
   "nextlevelbuilder/ui-ux-pro-max-skill": {
-    ".claude/skills/ui-ux-pro-max/SKILL.md": "2b13d3d9c36b9dc34ee474e4473b710f59ec5b34",
+    ".claude/skills/ui-ux-pro-max/SKILL.md": "23cdf0466e10ed460627ca9c0a68984b1a6bf98b",
     ".claude/skills/banner-design/SKILL.md": "79fa5ee1884ce1b9f76627a1bea073d3dd67ee7b",
     ".claude/skills/brand/SKILL.md": "3eddf309084e6c4493fa19a6b31e755703ba5e86",
     ".claude/skills/design-system/SKILL.md": "804e553325fedc49dd7e75c30c6cffeebaa6650b",
