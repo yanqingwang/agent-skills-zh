@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "4784bfeabba11d02bbf6596ed5ce02b8e377509f",
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "b98687ef390d7801a60a3804cf5cf726c44381d8",
     ".agents/skills/reverse-engineer-anything/references/android-applications.md": "cc51e22afe7ec34bdd88f0d8ba6275b26d3adda1",
     ".agents/skills/reverse-engineer-anything/references/evidence-workflows.md": "0a83d37e79ee0a2239b1c89d1b67b63856a6ea18",
     ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "8f5303cc9dbc426f9ebbbe8e7acdb3dbcbde2a6d"
@@ -109,7 +109,7 @@
     "health/SKILL.md": "ecde9b5f2aba48ff8e8371d5774ef417f7249e65",
     "review/SKILL.md": "9b560bd6f8349cf5cd355417031d3628237cc4a7",
     "learn/SKILL.md": "0d9f456c09ec9e7764a4eefc72e4d95afe3064f7",
-    "ship/SKILL.md": "769833bd7e0248c84eeebd1172e9c83ec2b5b78f",
+    "ship/SKILL.md": "847810c4e96a36f316aa1e07dc6d13bf26fa2136",
     "investigate/SKILL.md": "81e8e62cc8fd14943a291e63236769b8a31a1b70",
     "retro/SKILL.md": "336dee5137f4ed6ea67e013d987f922f5eb8b1e7",
     "land-and-deploy/SKILL.md": "2243d514068ad8d94559394accc26d3604bd32a8",
@@ -262,7 +262,7 @@
     ".claude/skills/ui-styling/SKILL.md": "b5a9acb9643e10b3629c0b9cac7e616c1080b597"
   },
   "pbakaus/impeccable": {
-    ".claude/skills/impeccable/SKILL.md": "ff0426b809d4d028b2183495665dd252f86a95e1"
+    ".claude/skills/impeccable/SKILL.md": "9da6f2e70173b379b2f1da1de74fa66241e775a9"
   },
   "cloudflare/security-audit-skill": {
     "skills/security-audit/SKILL.md": "92178dad304d3f63e37582a297026a7874e12c62"
