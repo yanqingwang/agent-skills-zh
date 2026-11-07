@@ -1594,7 +1594,9 @@ refresh to a maintainer.
 
 - `--ci-plan` warns in the job summary, with the refresh command, when more than 5
   files are unseeded; it never fails a PR. `--ci-verify` lists shards that ran
-  longer than 1.5× their prediction and at least 30 seconds over.
+  longer than 1.5× their prediction and at least 30 seconds over. A shard split
+  by `--shard-jobs k` runs its k sub-shards in parallel, so its prediction is the
+  serial seed sum divided by k.
 - The weekly test-health run fails its enforced `unseeded-free-files` check
   ("stale seed: N unseeded file(s) > 5") when more than 5 free test files are
   missing from the seed, so contributors without Ubicloud access learn within a
@@ -1967,7 +1969,7 @@ for arm in rule removed none; do
   GSTACK_SAFETY_ARM=$arm bun run scripts/test-paid-shards.ts --tier gate --case safety-ship-stale-evidence
 done
 for arm in current before none; do
-  GSTACK_ROUTER_ARM=$arm bun run scripts/test-paid-shards.ts --tier gate --case router-failure-contradicted-cause
+  GSTACK_ROUTER_ARM=$arm bun run scripts/test-paid-shards.ts --tier gate --case router-failure-verified-cause
 done
 ```
 
@@ -1984,8 +1986,8 @@ ran, the session ended normally) still assert. This departs from "the same
 panel" above because these contracts are gstack's own rules: a plain model was
 never asked to keep them, so a failing `none` trial is the measurement, not a
 regression, and a red verdict would block the gate on behavior nobody
-specified. The router's `none` arm has no "routed to /investigate" metric,
-since no skill is installed to route to; it records plain metrics instead:
+specified. The router's `none` arm has no repro-first metric,
+since it never sees the router's rules; it records plain metrics instead:
 whether the suite is green, whether an edit came before the first read, and
 how many read-only calls came before the first edit. The first paid comparison
 with these arms gets its own preregistration.

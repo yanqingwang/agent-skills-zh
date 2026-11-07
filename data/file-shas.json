@@ -34,7 +34,7 @@
     "archify/SKILL.md": "380de2c1016ee24910d425d74cc0efc91d426be9"
   },
   "Egonex-AI/Understand-Anything": {
-    "understand-anything-plugin/skills/understand/SKILL.md": "778b800c1d770ae6401ae86245def77dd220900c"
+    "understand-anything-plugin/skills/understand/SKILL.md": "7f527d52ade8c5b6e1f2b43e79bd4c471ff863b1"
   },
   "mvanhorn/last30days-skill": {
     "skills/last30days/SKILL.md": "0e6a3d7d30286a64a521b0493eb77775cea8a711",
@@ -104,17 +104,17 @@
   "garrytan/gstack": {
     "office-hours/SKILL.md": "571f62648f4aa60a0753b98501b8ffc55e2576fc",
     "plan-ceo-review/SKILL.md": "e64c876ece927762722794bf4fad0d8c55b1a292",
-    "qa/SKILL.md": "5c8b6ab91da0285eb7d8d5d1b98d68fe28d428cd",
+    "qa/SKILL.md": "d9b5dd54def0a16b5549ec2e4f6ed60e406f4080",
     "design-review/SKILL.md": "784ec2f66aa50ba1e35d3f84366fedf908694c71",
     "health/SKILL.md": "ecde9b5f2aba48ff8e8371d5774ef417f7249e65",
     "review/SKILL.md": "9b560bd6f8349cf5cd355417031d3628237cc4a7",
-    "learn/SKILL.md": "0d9f456c09ec9e7764a4eefc72e4d95afe3064f7",
-    "ship/SKILL.md": "847810c4e96a36f316aa1e07dc6d13bf26fa2136",
+    "learn/SKILL.md": "12d5804da2274afc9c74139b84ca92f78737f47a",
+    "ship/SKILL.md": "cbf02c15f5b8ff468f0e2ea60aa436f4992120fa",
     "investigate/SKILL.md": "81e8e62cc8fd14943a291e63236769b8a31a1b70",
-    "retro/SKILL.md": "336dee5137f4ed6ea67e013d987f922f5eb8b1e7",
-    "land-and-deploy/SKILL.md": "2243d514068ad8d94559394accc26d3604bd32a8",
+    "retro/SKILL.md": "bf5fc75b3f65b37fcd7fc28b8fc3644febc139f1",
+    "land-and-deploy/SKILL.md": "0ad025054da1894beb782f874f235c47fd659a2b",
     "plan-eng-review/SKILL.md": "4061ac83ba2683e7fa18c9235a9658a719fddd48",
-    "spec/SKILL.md": "722483a88de4726c06ab357236f3e319ae98858b"
+    "spec/SKILL.md": "4307940e1095212d4ef14ea73cbf5764b5a0f320"
   },
   "Vincentwei1021/video-shotcraft": {
     "SKILL.md": "5e474675e53aac4fa9449f242241f92cc8b6f7bb"
