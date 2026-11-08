@@ -338,6 +338,7 @@ gstack_result_anchor() {
     RECEIPT_CARRY_PRODUCT_CHANGED) printf '%s' 'receipt-carry-product-changed' ;;
     RECEIPT_CARRY_SCOPED_REVIEW) printf '%s' 'receipt-carry-scoped-review' ;;
     DOCS_AUDIT_BLOCKED) printf '%s' 'docs-audit-blocked' ;;
+    DOCS_RESULT_INVALID) printf '%s' 'docs-result-invalid' ;;
     RECEIPT_PROSE_MISMATCH) printf '%s' 'receipt-prose-mismatch' ;;
     RECEIPT_CARRY_PREGATE_STALE) printf '%s' 'receipt-carry-pregate-stale' ;;
     RECEIPT_GIT_TOO_OLD) printf '%s' 'receipt-git-too-old' ;;
@@ -383,6 +384,12 @@ gstack_result_anchor() {
     PROJECT_NODE_PIN_UNMET) printf '%s' 'project-node-pin-unmet' ;;
     PIN_UNREASONED) printf '%s' 'pin-unreasoned' ;;
     UPGRADE_SKIPPED) printf '%s' 'upgrade-skipped' ;;
+    PLAN_RECORD_MISSING) printf '%s' 'plan-record-missing' ;;
+    PLAN_UNRESOLVED) printf '%s' 'plan-unresolved' ;;
+    PLAN_NOT_APPROVED) printf '%s' 'plan-not-approved' ;;
+    PLAN_EXEMPT_UNKNOWN) printf '%s' 'plan-exempt-unknown' ;;
+    PLAN_STORE_UNAVAILABLE) printf '%s' 'plan-store-unavailable' ;;
+    QUEUE_PLAN_MISMATCH) printf '%s' 'queue-plan-mismatch' ;;
     BUDGET_CAP_REACHED) printf '%s' 'budget-cap-reached' ;;
     BUDGET_READING_MISSING) printf '%s' 'budget-reading-missing' ;;
     METER_SCOPE_PARENT) printf '%s' 'meter-scope-parent' ;;
@@ -416,6 +423,12 @@ gstack_result_anchor() {
     GSTACK_CLEAN_TARGET_REFUSED) printf '%s' 'gstack-clean-target-refused' ;;
     GSTACK_CLEAN_PARTIAL) printf '%s' 'gstack-clean-partial' ;;
     GSTACK_CLEAN_INTERNAL) printf '%s' 'gstack-clean-internal' ;;
+    PLAIN_TITLE_REFUSED) printf '%s' 'plain-title-refused' ;;
+    PLAIN_BRANCH_REFUSED) printf '%s' 'plain-branch-refused' ;;
+    PLAIN_OPENING_REFUSED) printf '%s' 'plain-opening-refused' ;;
+    PLAIN_CHANGELOG_REFUSED) printf '%s' 'plain-changelog-refused' ;;
+    PLAIN_COMMIT_REFUSED) printf '%s' 'plain-commit-refused' ;;
+    PLAIN_POLICY_INVALID) printf '%s' 'plain-policy-invalid' ;;
     *) return 1 ;;
   esac
 }

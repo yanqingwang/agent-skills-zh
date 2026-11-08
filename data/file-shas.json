@@ -1,9 +1,9 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "b98687ef390d7801a60a3804cf5cf726c44381d8",
-    ".agents/skills/reverse-engineer-anything/references/android-applications.md": "cc51e22afe7ec34bdd88f0d8ba6275b26d3adda1",
-    ".agents/skills/reverse-engineer-anything/references/evidence-workflows.md": "0a83d37e79ee0a2239b1c89d1b67b63856a6ea18",
-    ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "8f5303cc9dbc426f9ebbbe8e7acdb3dbcbde2a6d"
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "e5514ffc16fe05be9b55e03e6e576439c690a8f2",
+    ".agents/skills/reverse-engineer-anything/references/android-applications.md": "f02b8329cbc1393cb4dcb7d339f157c4c4e56249",
+    ".agents/skills/reverse-engineer-anything/references/evidence-workflows.md": "cf97a8bde753594d8b328d4908b22f8755f28361",
+    ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "d87fb3cae515f7088a79ffe0c950f1df96426d37"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -22,7 +22,7 @@
     "agents/code-reviewer.md": "ea267be01f2e16011d04b90dc234986384c4f7e0"
   },
   "Leonxlnx/taste-skill": {
-    "skills/taste-skill/SKILL.md": "23cee4afe4e05db3522d21c3a84e5882a58678b5"
+    "skills/taste-skill/SKILL.md": "7dc7a9fed097364515581a28ec45ef955620eede"
   },
   "DietrichGebert/ponytail": {
     ".openclaw/skills/ponytail/SKILL.md": "df5996b4953af9f8c67bb7a13bfe77659003ce4c"
@@ -90,7 +90,7 @@
     "SKILL.md": "0fc0ac4aa8d9456c6601e221b3d9a2094f1f060a"
   },
   "OthmanAdi/planning-with-files": {
-    ".agents/skills/planning-with-files/SKILL.md": "a84f1a244ccf46ce62747709369a59982cf54835"
+    ".agents/skills/planning-with-files/SKILL.md": "a128dbc4f5ac415f3a9963ac08a9413a899c37a6"
   },
   "titanwings/distilly": {
     "SKILL.md": "d2a76e7a9475d870fbce3e4abc8a6495d33582c9"
@@ -105,11 +105,11 @@
     "office-hours/SKILL.md": "571f62648f4aa60a0753b98501b8ffc55e2576fc",
     "plan-ceo-review/SKILL.md": "e64c876ece927762722794bf4fad0d8c55b1a292",
     "qa/SKILL.md": "d9b5dd54def0a16b5549ec2e4f6ed60e406f4080",
-    "design-review/SKILL.md": "784ec2f66aa50ba1e35d3f84366fedf908694c71",
+    "design-review/SKILL.md": "8c6e3537a13d4783623c8798516fd3bb6384b7ea",
     "health/SKILL.md": "ecde9b5f2aba48ff8e8371d5774ef417f7249e65",
     "review/SKILL.md": "9b560bd6f8349cf5cd355417031d3628237cc4a7",
     "learn/SKILL.md": "12d5804da2274afc9c74139b84ca92f78737f47a",
-    "ship/SKILL.md": "cbf02c15f5b8ff468f0e2ea60aa436f4992120fa",
+    "ship/SKILL.md": "c389dd07251c231f43146b71224085b5eb66aba9",
     "investigate/SKILL.md": "81e8e62cc8fd14943a291e63236769b8a31a1b70",
     "retro/SKILL.md": "bf5fc75b3f65b37fcd7fc28b8fc3644febc139f1",
     "land-and-deploy/SKILL.md": "0ad025054da1894beb782f874f235c47fd659a2b",
@@ -253,7 +253,7 @@
     "skills/sales-research/SKILL.md": "78b59f7eef7258076d8e47c98baec476a3efcae4"
   },
   "nextlevelbuilder/ui-ux-pro-max-skill": {
-    ".claude/skills/ui-ux-pro-max/SKILL.md": "23cdf0466e10ed460627ca9c0a68984b1a6bf98b",
+    ".claude/skills/ui-ux-pro-max/SKILL.md": "2cacc8756e816a1eb6bfa44307372f2aeb445902",
     ".claude/skills/banner-design/SKILL.md": "79fa5ee1884ce1b9f76627a1bea073d3dd67ee7b",
     ".claude/skills/brand/SKILL.md": "3eddf309084e6c4493fa19a6b31e755703ba5e86",
     ".claude/skills/design-system/SKILL.md": "804e553325fedc49dd7e75c30c6cffeebaa6650b",
@@ -262,7 +262,7 @@
     ".claude/skills/ui-styling/SKILL.md": "b5a9acb9643e10b3629c0b9cac7e616c1080b597"
   },
   "pbakaus/impeccable": {
-    ".claude/skills/impeccable/SKILL.md": "9da6f2e70173b379b2f1da1de74fa66241e775a9"
+    ".claude/skills/impeccable/SKILL.md": "fd353278ae26baa8da811367a8ea956b73c0d5c6"
   },
   "cloudflare/security-audit-skill": {
     "skills/security-audit/SKILL.md": "92178dad304d3f63e37582a297026a7874e12c62"

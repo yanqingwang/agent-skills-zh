@@ -1440,9 +1440,10 @@ fi
 # membership inline with "${_DISABLED_SKILLS:- }", so a linker extracted on its
 # own (tests) behaves as "nothing disabled".
 _USER_DISABLED_SKILLS="$(gstack_disabled_normalize "$("$GSTACK_CONFIG" get disabled_skills 2>/dev/null || true)")"
-# Retired skills (GSTACK_RETIRED_SKILLS) take the same no-entry path on every
-# host; only the user's own list is reported and passed to the router.
-_DISABLED_SKILLS="$(gstack_disabled_normalize "$GSTACK_RETIRED_SKILLS $_USER_DISABLED_SKILLS")"
+# Retired skills, and the crew skills off a Capy machine
+# (GSTACK_UNREGISTERED_SKILLS), take the same no-entry path on every host; only
+# the user's own list is reported and passed to the router.
+_DISABLED_SKILLS="$(gstack_disabled_normalize "$GSTACK_UNREGISTERED_SKILLS $_USER_DISABLED_SKILLS")"
 # Every render of the router (committed-path renders of env-var hosts and the
 # per-install renders) omits disabled skills (C8); the default Claude router is
 # rendered in place by gstack-relink.
@@ -5025,11 +5026,14 @@ _skill_hook_gate ceo_review_gate "$CEO_REVIEW_GATE_MODE" GSTACK_CEO_REVIEW_GATE 
   "after /plan-ceo-review loads, its final stop waits for ranked top risks in the output file" "" \
   SubagentStop "$CEO_REVIEW_GATE_SUBAGENT_STOP" ""
 # The /autoplan gate (GST-1666) holds the final stop of the session that
-# loaded /autoplan: Stop only, one shim.
+# loaded /autoplan (Stop), and refuses a phase's publish no-op until that phase
+# is due and its report is sent (PreToolUse on Bash, GST-1814): one shim each.
 AUTOPLAN_GATE_STOP="$(_hook_command_path hosts/claude/hooks/autoplan-stop-gate-stop || true)"
+AUTOPLAN_GATE_PUBLISH="$(_hook_command_path hosts/claude/hooks/autoplan-stop-gate-publish || true)"
 _skill_hook_gate autoplan_gate "$AUTOPLAN_GATE_MODE" GSTACK_AUTOPLAN_GATE Stop \
   "$AUTOPLAN_GATE_STOP" gstack-autoplan-gate "$SKILL_GATE_HOOK_TIMEOUT" \
-  "after /autoplan loads, its final stop waits until every applicable phase published and the gate is written" ""
+  "after /autoplan loads, each phase publishes in order after its report, and its final stop waits until every applicable phase published and the gate is written" "" \
+  PreToolUse "$AUTOPLAN_GATE_PUBLISH" Bash
 
 # Also tear down plan-tune + timeline hooks on --no-team (matches the existing pattern).
 # Tag-only remove-source misses untagged entries (Claude Code strips
