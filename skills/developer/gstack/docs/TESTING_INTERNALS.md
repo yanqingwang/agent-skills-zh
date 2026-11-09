@@ -323,7 +323,7 @@ changes are explicitly deferred, not counted as PR passes. Weekly/manual runs of
 `evals-periodic.yml` execute both complete censuses fresh; manual `evals.yml`
 runs the broad gate. This deliberately moves some defect detection later.
 
-`scripts/eval-input-cache.ts` accepts only complete, clean, first-attempt passes
+`crew/scripts/eval-input-cache.ts` accepts only complete, clean, first-attempt passes
 with matching before/after inputs. Missing/unknown inputs force execution. Receipts
 are scoped to the same repository and PR, expire after 24 hours, and contain
 public scores and provenance rather than prompts or secrets.
@@ -526,7 +526,7 @@ still reruns a case only once. A flaky GREEN binds as GREEN with its
 `flaky_cases` and is reusable by R2a and R2 (`reused_flaky`); a run still red
 after its rerun binds RED and is never reused. Train runs take the same
 `rerun-plan` path; a bisect reruns a VERDICT FAIL once on its prefix inside
-`scripts/train-gate.ts`, and a pass there is a flaky PASS naming both runs.
+`crew/scripts/train-gate.ts`, and a pass there is a flaky PASS naming both runs.
 
 ### Ship measure
 
@@ -1332,7 +1332,7 @@ trials recorded before PTY sessions were priced from their transcripts
 
 Passes and failures of single-trial shards are written as receipts at the
 execution boundary, so a cancelled run's finished work survives. The
-`recover-receipts` job runs `scripts/recover-receipts.ts` from the base ref with
+`recover-receipts` job runs `crew/scripts/recover-receipts.ts` from the base ref with
 `actions: read`: it merges the receipts of at most 5 completed, cancelled
 `evals.yml` runs of the same PR (oldest first, negatives before passes, so a newer
 FAIL blocks an older PASS) and hands the store to `plan-slices`, which keeps
@@ -1394,7 +1394,7 @@ reuse names its flaky cases. Then either:
 Finally this head's own plan must have the same selection fingerprint (cases,
 statuses, trial plans, profile), so a main move that changes what the PR gate
 selects runs the full gate. `recover-receipts` proposes the candidate from
-base-ref code (`scripts/gate-reuse.ts find`), `plan-slices` confirms the
+base-ref code (`crew/scripts/gate-reuse.ts find`), `plan-slices` confirms the
 selection, `eval-slices` is skipped, and the report and PR comment say
 `PASS (reused: restamp-only, R2a)` or `PASS (reused: main moved, R2)` with
 the reused run, its head, why, and the receipt digest or own-diff signature.
@@ -1413,7 +1413,7 @@ apply from the next push, because adding a label does not start `evals.yml`.
 
 ### Replay gate cost
 
-`bun run scripts/gate-cost-replay.ts --runs <id,...> [--since YYYY-MM-DD --until YYYY-MM-DD | --prs 3201,3202] [--json]`
+`bun run crew/scripts/gate-cost-replay.ts --runs <id,...> [--since YYYY-MM-DD --until YYYY-MM-DD | --prs 3201,3202] [--json]`
 measures the paid PR gate's bill from recorded artifacts, for free. `--runs`
 names complete full-gate runs; their `paid-slice-*` and `trial-outcomes`
 artifacts are downloaded read-only with `gh` into `.context/gate-cost-cache`
@@ -1442,7 +1442,7 @@ stay heuristic until T2 lands. A `package.json` change that only moves the
 version is neither selected nor a canary trigger.
 The selectors are this checkout's, so an old merge is replayed against today's
 maps. A shallow checkout says which `git fetch --shallow-since` to run. Logic:
-`lib/gate-cost.ts`; tests: `test/gate-cost.test.ts`.
+`crew/lib/gate-cost.ts`; tests: `crew/test/gate-cost.test.ts`.
 
 ## Free suite runner, judge reuse and engine skips
 
@@ -1738,8 +1738,9 @@ or commit disappears), the observer's own check reports failure, and
 `gstack-ship-queue ready` counts every check at the head. Rerun it once;
 if it fails again, delete the job. Fork pull requests, pushes and dispatches
 skip the job. A missing token skips only its step, so the job still fetches
-the action. Its only secret is `TRUNK_API_TOKEN` (in free-tests.yml it is
-the only job that sees any secret; evals.yml's other jobs hold their own), so
+the action. Its only secret is `TRUNK_API_TOKEN` (in free-tests.yml only it
+and the trunk-flaky-tests uploader, with `TRUNK_ORG_API_TOKEN`, see a secret;
+evals.yml's other jobs hold their own), so
 it checks out nothing and runs none of the pull request's code. It holds no GITHUB_TOKEN scopes (`permissions: {}`). At the
 pinned commit (`src/config.ts`, `src/changed-files.ts`), the action makes one
 network call: a request for verdicts to
@@ -1766,6 +1767,27 @@ not the jobs under it. But `free-tests` needs both jobs and every shard
 receipt, so discount that vote when you judge their would-skip rate. Any skip
 added there later also has to pass the aggregate's receipt check. Turning on
 skipping is a separate decision for Garry, made after that review.
+
+### Trunk Flaky Tests (detection only)
+
+Since GST-1859, every free-suite shard keeps bun's JUnit report from each of
+its children, the flaky retry included (`--junit-dir`), and the
+`trunk-flaky-tests` job uploads them, failures included, to the Trunk test
+collection `7yDVXXE3` ("gstack free suite") on same-repository pull requests
+and main pushes. Trunk flags a test as flaky when it fails and then passes on
+the same code, or keeps failing on main, and lists it under Flaky Tests at
+app.trunk.io/garry-tan. That job is detection only: quarantine is off in the
+uploader and in the collection, nothing skips a test, no job needs or reads it,
+and an upload failure can't turn a check red. A child killed at its wall
+timeout, or one that crashes, writes no report, so Trunk sees none of that
+child's results, its passing files included. Such a child also skips the
+flaky retry, so the flake ledger has no entry for it; the red shard result is
+the only record. The uploader job is the only one that sees
+`TRUNK_ORG_API_TOKEN` (Trunk's v1 organization token, which the uploader
+needs), and it checks out and runs nothing of the pull request's. The [flake
+ledger](#flake-ledger), its one-rerun rule and the daily flaky pass are
+unchanged and stay the source of record.
+`test/free-tests-workflow-wiring.test.ts` locks the job's shape.
 
 ### Windows free lane
 
@@ -1972,6 +1994,14 @@ drops the row has not reported its result. `gstack-eval-plan results --check
 <prereg> <results.md>` enforces it: one table in the results file must hold a
 filled row for every Arms identity (`EVAL_REPORT_NO_GSTACK_ROW` otherwise), and
 no number is published before it passes.
+
+**Writing it up.** A results file, findings file or investigation write-up
+opens with two or three plain takeaways ("We learned X. You should do X."),
+what works first and what didn't right after, with its number; a null becomes
+the lesson its data supports. Run ids, ledgers and gate details go last. Cost
+appears only when it is part of the lesson, and datasets or tools are opened
+only with a stated reason. The rules and their honesty bars are in
+[ETHOS.md, Explain the Number](../ETHOS.md#8-explain-the-number).
 
 **Safety-rule and router evals: a descriptive third arm.** The W1 safety-rule
 evals compare `GSTACK_SAFETY_ARM=rule` (the shipped rule) with `removed` (the
