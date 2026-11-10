@@ -1,9 +1,9 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "47b972543e247004a816d745f5d64310cf6d648f",
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "e956f88ce85ca26bfa33260b94c407778278a6c3",
     ".agents/skills/reverse-engineer-anything/references/android-applications.md": "f02b8329cbc1393cb4dcb7d339f157c4c4e56249",
     ".agents/skills/reverse-engineer-anything/references/evidence-workflows.md": "cf97a8bde753594d8b328d4908b22f8755f28361",
-    ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "d87fb3cae515f7088a79ffe0c950f1df96426d37"
+    ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "db73e4e880eb54b8ae624be47be3b8ec42bfd938"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -37,7 +37,7 @@
     "understand-anything-plugin/skills/understand/SKILL.md": "7f527d52ade8c5b6e1f2b43e79bd4c471ff863b1"
   },
   "mvanhorn/last30days-skill": {
-    "skills/last30days/SKILL.md": "9e18bfd29cc758bf952d94a24e813019e0ae747d",
+    "skills/last30days/SKILL.md": "4d254d34dd85d593e39c33c8855a4cbe965cc206",
     "skills/last30days/references/agent-mode.md": "d619b025b0071f07f6dc5665baab2f96c6ec0af3",
     "skills/last30days/references/category-peers.md": "bafdfc936ab28ae6b388d6d76da54460f6a40f21",
     "skills/last30days/references/competitors.md": "d8b05ecc346ff82d709c45b4bba48158ceb1fa93",
@@ -46,22 +46,22 @@
     "skills/last30days/references/grok-bot-x.md": "f8bd12b4714035be7aff4d4a8129d38d843effa2",
     "skills/last30days/references/hiring-signals.md": "20624cc0a588518096cb6e6fdd877fed7aafd95d",
     "skills/last30days/references/library-queue.md": "938b7c3c73160787b22ec5ddf46c310b29c733d2",
-    "skills/last30days/references/recommendations.md": "d242b5f4ae76a4078e16786a29aa858bf0347850",
+    "skills/last30days/references/recommendations.md": "931a1a1c760ec01f9203195846c209076324b5dc",
     "skills/last30days/references/runtime.md": "5a6087b99840508755d973c75d7a1e85fd382b91"
   },
   "cathrynlavery/diagram-design": {
-    "skills/diagram-design/SKILL.md": "7846c9a183be249afaab79595a873f394ff8a33b"
+    "skills/diagram-design/SKILL.md": "22544df735bf7eafef94db4863683a58c6933f7e"
   },
   "blader/humanizer": {
-    "SKILL.md": "19fc634208e8cc6ae55d4ff287152583216fd244"
+    "SKILL.md": "175bf05f45ae3bf566059a560467166d93a9599c"
   },
   "ayghri/i-have-adhd": {
     ".cursor/skills/i-have-adhd/SKILL.md": "6c42757ffae37e442adfb52fbba2a8609f1cff00"
   },
   "coreyhaines31/marketingskills": {
-    "skills/product-marketing/SKILL.md": "3af463a602aa0233c4d5fc98c23ba13224aa8f6b",
-    "skills/copywriting/SKILL.md": "2453731ab7a5e52535b7cf29beccbebe687d5a62",
-    "skills/cro/SKILL.md": "2b0a5bb9aa17ed83ff111dbfe6ea722610828a29"
+    "skills/product-marketing/SKILL.md": "a8197bddb8739b62c0e35504207d2565396d3915",
+    "skills/copywriting/SKILL.md": "2878e51b281038cd58afcb1cdf33de8d99437f4d",
+    "skills/cro/SKILL.md": "194df7e3b26a7ce523739053c06605cc22622a14"
   },
   "K-Dense-AI/scientific-agent-skills": {
     "skills/experimental-design/SKILL.md": "ee14f9ed795c791ac80e3ea946858d97d09c3e50",
@@ -72,7 +72,49 @@
     "skills/citation-management/references/best_practices.md": "bc4ed3b0f1f3a6f751c4376b5caf0929ea53ca07",
     "skills/citation-management/references/example_workflows.md": "8685e5bd11c05cdd6649d478429173c05c0823a2",
     "skills/citation-management/references/script_reference.md": "ea8df755381fe63d90ddd5da6600c44d98d7ca0b",
-    "skills/citation-management/references/search_strategies.md": "5e1d501e01daace93a9896a48c206301019d8545"
+    "skills/citation-management/references/search_strategies.md": "5e1d501e01daace93a9896a48c206301019d8545",
+    "skills/literature-review/SKILL.md": "5178dce6419cee412155e7b9dd523d5b2ef703f5",
+    "skills/peer-review/SKILL.md": "d4f3c3e3b5c19fec2518d569ded7e37ac96a964b",
+    "skills/scientific-writing/SKILL.md": "446993fcd4716ae54ab74bc2a91e3bc5af5235c7",
+    "skills/statistical-power/SKILL.md": "012cc67f7794ac280ad39383add39afda7ac719a",
+    "skills/experimental-design/references/design_types.md": "f4ff1908a6c0d967375abb5447e5c8e62ec7d628",
+    "skills/experimental-design/references/factorial_and_doe.md": "9e7558fcbfa301e1507b9779cc57e33749e2252b",
+    "skills/experimental-design/references/randomization_and_blocking.md": "1b0dd39fee22c4fd0347cd30e6163d8c9d1fa731",
+    "skills/experimental-design/references/sequential_and_adaptive.md": "ee93386737a996b34519932b62fd07a89b01682a",
+    "skills/exploratory-data-analysis/assets/report_template.md": "cf651d8d360f702230d03c124a2ff0f5b2e2e97c",
+    "skills/exploratory-data-analysis/references/bioinformatics_genomics_formats.md": "c82fb3679a4e7db3be07bf11c98666166e9b4605",
+    "skills/exploratory-data-analysis/references/chemistry_molecular_formats.md": "40d5dff9437c596e79bf53d98ce5135e8d1bec49",
+    "skills/exploratory-data-analysis/references/general_scientific_formats.md": "1fcfd35ac18b2caa932ca2009b987ae0b1261550",
+    "skills/exploratory-data-analysis/references/microscopy_imaging_formats.md": "4159a6bd6aaeddbc5147b9e71ade65359fce13b2",
+    "skills/exploratory-data-analysis/references/proteomics_metabolomics_formats.md": "f04246379bca90d2a8bf0e27633da55dfd276596",
+    "skills/exploratory-data-analysis/references/spectroscopy_analytical_formats.md": "429ddc84592a6deee21c13b69d6ae16eefa972d3",
+    "skills/literature-review/references/citation_styles.md": "a12c1f8a6dc1a93abfe3c7d74b198062176ce3cf",
+    "skills/literature-review/references/core_workflow.md": "6a0bab11cd67d05dd683576f512b2045d85c826b",
+    "skills/literature-review/references/database_strategies.md": "ed342f27145805ad585ba260c75d60678b60ac20",
+    "skills/literature-review/references/example_workflow.md": "521308758c8847254edb1d62ad242e982f00dbe5",
+    "skills/literature-review/references/search_and_citation.md": "ed27ee9d24c9cef3381cc414834dda7d69a4a019",
+    "skills/peer-review/assets/review_scaffold_template.md": "dfbae11925ae96be6d6106987435f9774a43eba2",
+    "skills/peer-review/references/ethical_review_practice.md": "aa8db828eaf6d5aec9583f2e4ed1eeb95e158d3d",
+    "skills/peer-review/references/security_validation.md": "8816f161e18beaafdf259d9bd0c11a2098611879",
+    "skills/peer-review/references/statistical_reproducibility.md": "e274a061d7d6e151ac7254bb3abf37de0bd94ba9",
+    "skills/peer-review/references/tool_reference.md": "fbd0d689d60c3097f89903957522ca8a84b3dad8",
+    "skills/scientific-writing/assets/REPORT_FORMATTING_GUIDE.md": "c8e67f3539929acd5c95e9926e9b730090322ef9",
+    "skills/scientific-writing/assets/manuscript_scaffold.md": "96cdd508ad5caed48bd97a504d3be98287b2250f",
+    "skills/scientific-writing/references/authorship_ai_confidentiality.md": "dcddcb4ecde28f93a1a5c23b9fac182d0716bc54",
+    "skills/scientific-writing/references/citation_styles.md": "7f82a625fa96c5abef58659a64c65070b4807c67",
+    "skills/scientific-writing/references/cli_reference.md": "05c1d113720af67cad6458e8bddadcdbcc49ebdd",
+    "skills/scientific-writing/references/evidence_workflow.md": "6a54eb95d87be854d38046851c87f2a08a487390",
+    "skills/scientific-writing/references/figures_tables.md": "7022338d438e439aa475b4ecacf6ba7314b26aed",
+    "skills/scientific-writing/references/imrad_structure.md": "c53506c127ee6f5feb9f6a262398dc85243e73bb",
+    "skills/scientific-writing/references/journal_policies.md": "6750fd916fcddc53077a1de5fbf50ca9015835b2",
+    "skills/scientific-writing/references/professional_report_formatting.md": "6238874aa69129b4f206d5b552325463a9b33653",
+    "skills/scientific-writing/references/reporting_guidelines.md": "fe55f07c153bd1e939f612247fc53ff836d34e35",
+    "skills/scientific-writing/references/research_integrity_open_science.md": "63eb73027c03d25170649a2d10a67c1eef365585",
+    "skills/scientific-writing/references/source_ledger.md": "f5cf28854c089fb9c7fd2afe30cd29312ee426ea",
+    "skills/scientific-writing/references/writing_principles.md": "5fcd5012957fe6670e1e31e103c51d8cfbefa048",
+    "skills/statistical-power/references/closed_form_recipes.md": "da665e2850ced4cfa1084672b5471d6a0bafb0d2",
+    "skills/statistical-power/references/effect_sizes.md": "38594287c2c10f933ee7344201f1b438ebb54a8c",
+    "skills/statistical-power/references/simulation_based_power.md": "857373f4173035068f4eb39d80900af7329718cd"
   },
   "affaan-m/ECC": {
     "skills/search-first/SKILL.md": "3d2669e71ba54afba95defb05080253058190600",
@@ -187,16 +229,16 @@
     "plugins/accessibility-compliance/skills/wcag-audit-patterns/SKILL.md": "c071acee41a2a2c7d4df04da7281d193215dfca7"
   },
   "Donchitos/Claude-Code-Game-Studios": {
-    ".claude/agents/game-designer.md": "a6fde98a81c720b86dd2fbc7b10b9af719709291",
-    ".claude/agents/creative-director.md": "e8aba2307844ed8fccdcf0c910da45b4d7139fdc"
+    ".claude/agents/game-designer.md": "f0a640c3a75fb06398d1367a00958e26cec7c7ab",
+    ".claude/agents/creative-director.md": "f86329f318cce5db308693566d2d84cda1fcc479"
   },
   "tw93/Waza": {
-    "plugins/waza/rules/anti-patterns.md": "8cb70972e19694c50805041f4f0dc05c35a0e95d",
+    "plugins/waza/rules/anti-patterns.md": "afcda2718e656bfc7184b1c15928b9fd17195dd4",
     "plugins/waza/rules/clarity.md": "56fedb402a45f2c4edb98bc3bf77fc4ee3855755",
     "skills/hunt/SKILL.md": "4b1c77a5a530aec3f51f70be3e28a1b2a82f69be",
-    "skills/health/SKILL.md": "80a0d631e3a49a25f796f3d140099563fb3fb10a",
+    "skills/health/SKILL.md": "565f28b09a18f5f10554f53cd8ae5c2e8dc9ed79",
     "plugins/waza/rules/durable-context.md": "ac9aa5dc92f958f1785dce99aee6c941d71f0144",
-    "skills/check/SKILL.md": "fa9a08c54d11f0e85948fd088532c8dba9b9f5d1",
+    "skills/check/SKILL.md": "c6a3774212fbf5301e031846cecb5d66db166489",
     "skills/read/SKILL.md": "7ddbcf9f8586f9f31777530655456268c283f0b5"
   },
   "NVIDIA/skills": {
@@ -205,7 +247,7 @@
   },
   "gamedev-skills/awesome-gamedev-agent-skills": {
     "skills/godot/godot-gdscript/SKILL.md": "44eb9f5b24bfe1c2354f153fc6e34148d8abb7a8",
-    "skills/unity/unity-csharp-scripting/SKILL.md": "0d81d5859ad5a0251b7d0b6f5d477cb913a4199c",
+    "skills/unity/unity-csharp-scripting/SKILL.md": "808547992767d753d7016bc7d809576d55b764d3",
     "skills/unreal/unreal-cpp-gameplay/SKILL.md": "75185238136c179a53fb47c3075c3528288947c9",
     "skills/godot/godot-3d-essentials/SKILL.md": "ccc739c0497bed0a114d3b0860d34ee0a8706cbc",
     "skills/unreal/unreal-behavior-trees/SKILL.md": "f552227677c47e712fe0a525757159e2680f0b8a"
@@ -262,7 +304,7 @@
     ".claude/skills/ui-styling/SKILL.md": "b5a9acb9643e10b3629c0b9cac7e616c1080b597"
   },
   "pbakaus/impeccable": {
-    ".claude/skills/impeccable/SKILL.md": "fd353278ae26baa8da811367a8ea956b73c0d5c6"
+    ".claude/skills/impeccable/SKILL.md": "d84acd41a9c1971d764576483e5fc9bff4d169cd"
   },
   "cloudflare/security-audit-skill": {
     "skills/security-audit/SKILL.md": "92178dad304d3f63e37582a297026a7874e12c62"
@@ -297,6 +339,6 @@
     "skills/gsap-react/SKILL.md": "e2e51805457943cd4982fe792b858c14fa2c3c8f"
   },
   "patch-gg/pixelfx": {
-    "skills/pixelfx/SKILL.md": "c75d1e255339f43aa47035e570c36c54718ab307"
+    "skills/pixelfx/SKILL.md": "35aabb8b6868dbb8451223e87837b4c39a4b6ae4"
   }
 }
