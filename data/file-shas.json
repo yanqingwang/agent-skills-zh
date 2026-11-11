@@ -1,6 +1,6 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "e956f88ce85ca26bfa33260b94c407778278a6c3",
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "4ee1acde1d93a439bbce079a9680d35021e1b573",
     ".agents/skills/reverse-engineer-anything/references/android-applications.md": "f02b8329cbc1393cb4dcb7d339f157c4c4e56249",
     ".agents/skills/reverse-engineer-anything/references/evidence-workflows.md": "cf97a8bde753594d8b328d4908b22f8755f28361",
     ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "db73e4e880eb54b8ae624be47be3b8ec42bfd938"
@@ -37,16 +37,16 @@
     "understand-anything-plugin/skills/understand/SKILL.md": "7f527d52ade8c5b6e1f2b43e79bd4c471ff863b1"
   },
   "mvanhorn/last30days-skill": {
-    "skills/last30days/SKILL.md": "4d254d34dd85d593e39c33c8855a4cbe965cc206",
+    "skills/last30days/SKILL.md": "36e8e8ae1845fe485e54a588ccb0f5f70def229e",
     "skills/last30days/references/agent-mode.md": "d619b025b0071f07f6dc5665baab2f96c6ec0af3",
     "skills/last30days/references/category-peers.md": "bafdfc936ab28ae6b388d6d76da54460f6a40f21",
     "skills/last30days/references/competitors.md": "d8b05ecc346ff82d709c45b4bba48158ceb1fa93",
     "skills/last30days/references/discovery.md": "63a5ae577e90d458af42e97f01b5da63e6bc85e5",
     "skills/last30days/references/followups.md": "dba19a8d952cd92ac006db6f90cfbd88ebbfd411",
     "skills/last30days/references/grok-bot-x.md": "f8bd12b4714035be7aff4d4a8129d38d843effa2",
-    "skills/last30days/references/hiring-signals.md": "20624cc0a588518096cb6e6fdd877fed7aafd95d",
+    "skills/last30days/references/hiring-signals.md": "c463cd874ef20e39ac39391e03de318311816bba",
     "skills/last30days/references/library-queue.md": "938b7c3c73160787b22ec5ddf46c310b29c733d2",
-    "skills/last30days/references/recommendations.md": "931a1a1c760ec01f9203195846c209076324b5dc",
+    "skills/last30days/references/recommendations.md": "ab74fdbdef9939e16cc4db15fb06abc15eaa5b6d",
     "skills/last30days/references/runtime.md": "5a6087b99840508755d973c75d7a1e85fd382b91"
   },
   "cathrynlavery/diagram-design": {
@@ -132,7 +132,7 @@
     "SKILL.md": "0fc0ac4aa8d9456c6601e221b3d9a2094f1f060a"
   },
   "OthmanAdi/planning-with-files": {
-    ".agents/skills/planning-with-files/SKILL.md": "a128dbc4f5ac415f3a9963ac08a9413a899c37a6"
+    ".agents/skills/planning-with-files/SKILL.md": "88009029b1ebf695671c8ca44c9d17c39a2397e2"
   },
   "titanwings/distilly": {
     "SKILL.md": "d2a76e7a9475d870fbce3e4abc8a6495d33582c9"
@@ -189,8 +189,8 @@
     "pm-data-analytics/skills/cohort-analysis/SKILL.md": "e2d7b0e9fb83e04d7ff584747efedd4d0701d6fd"
   },
   "AgriciDaniel/claude-seo": {
-    "skills/seo-agentic/SKILL.md": "fa6e62c913c674384b363ab5ecda4f290fbcbbdf",
-    "skills/seo-audit/SKILL.md": "45b957d746731cb50ed7195a3a122a4bbfd3a1b0"
+    "skills/seo-agentic/SKILL.md": "fd33ff9e4540e2c24b8aa9fc9ff1adf35f193abc",
+    "skills/seo-audit/SKILL.md": "6b3280247d79491a612a6802a8ac7f7e220e8729"
   },
   "wanshuiyin/Auto-claude-code-research-in-sleep": {
     "skills/auto-paper-improvement-loop/SKILL.md": "7c95613ff25e536315171a2680332dff74b69617",
@@ -242,7 +242,7 @@
     "skills/read/SKILL.md": "7ddbcf9f8586f9f31777530655456268c283f0b5"
   },
   "NVIDIA/skills": {
-    "plugins/nvidia-skills/skills/nvidia-skill-finder/SKILL.md": "e9aa2f88736041e0400f5ebdfab5de7febf191a2",
+    "plugins/nvidia-skills/skills/nvidia-skill-finder/SKILL.md": "3083c8e594708e0b1057cf1d45e3fab315bbe2c6",
     "skills/accelerated-computing-cudf/SKILL.md": "8245f13658d20a5fbd50d88e04143acb4291fb32"
   },
   "gamedev-skills/awesome-gamedev-agent-skills": {

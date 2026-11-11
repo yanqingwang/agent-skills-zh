@@ -54,7 +54,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
-from . import backends, brightdata, env, health, http, prescriptions, reddit_search, x_api
+from . import backends, brightdata, env, health, http, prescriptions, reddit_search, trustpilot, x_api
 from .backends import TIER_ERROR, TIER_OK, TIER_WARN
 
 # Rollup tiers (R1). ok/warn/error are U2's; only "off" is doctor's own.
@@ -165,6 +165,7 @@ SOURCE_ORDER = (
     "digg",
     "techmeme",
     "arxiv",
+    "yahoo_finance",
     "trustpilot",
     "amazon",
     "meta_ads",
@@ -192,6 +193,7 @@ CLI_DEPENDENCIES = {
     "digg": "digg-pp-cli",
     "techmeme": "techmeme-pp-cli",
     "arxiv": "arxiv-pp-cli",
+    "yahoo_finance": "yahoo-finance-pp-cli",
     "trustpilot": "trustpilot-pp-cli",
     # The only entry that also needs auth; _amazon_record reports the
     # installed-but-unauthenticated state the shared CLI helper cannot.
@@ -741,8 +743,41 @@ def _arxiv_record(config):
     return _cli_gated_record(config, "arxiv-pp-cli", "arxiv")
 
 
+def _yahoo_finance_record(config):
+    """The share-price line. Unlike a search source it runs only for a topic
+    that resolves to a listed company, so a working install records nothing on
+    most runs; the note says so, so that quiet is not read as a fault."""
+    record = _cli_gated_record(config, "yahoo-finance-pp-cli", "yahoo_finance")
+    if record["status"] == health.OK:
+        record["note"] = (
+            "share-price line for topics that resolve to a listed company; "
+            "no price line on other topics is expected"
+        )
+    return record
+
+
 def _trustpilot_record(config):
-    return _cli_gated_record(config, "trustpilot-pp-cli", "trustpilot")
+    """Installed is not the same as able to run: the lane needs a browser
+    session that lasts four minutes, or a cached company record."""
+    record = _cli_gated_record(config, "trustpilot-pp-cli", "trustpilot")
+    if record["status"] != health.OK:
+        return record
+    state = trustpilot.can_run_now(config)
+    if state["session_fresh"]:
+        record["note"] = "browser session is fresh; can run now"
+    elif state["cached_companies"]:
+        count = state["cached_companies"]
+        record["note"] = (
+            f"no fresh browser session; {count} cached company "
+            f"record{'s' if count != 1 else ''} can be read"
+        )
+    else:
+        record["note"] = (
+            "cannot run now: no fresh browser session and no cached company record "
+            "(a research run never opens a browser; `trustpilot-pp-cli auth login` "
+            "gives a session for about 3 minutes)"
+        )
+    return record
 
 
 def _amazon_record(config):
@@ -1001,6 +1036,7 @@ _SOURCE_BUILDERS: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
     "digg": _digg_record,
     "techmeme": _techmeme_record,
     "arxiv": _arxiv_record,
+    "yahoo_finance": _yahoo_finance_record,
     "trustpilot": _trustpilot_record,
     "amazon": _amazon_record,
     "meta_ads": _meta_ads_record,
@@ -1031,7 +1067,10 @@ _SOURCE_BUILDERS: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
 # doctor-cache block below already uses for its own schema stamp).
 # ---------------------------------------------------------------------------
 
-REPORT_CACHE_SCHEMA_VERSION = "last30days-report-cache/v1"
+# Must equal last30days.REPORT_CACHE_VERSION: a stamp the engine no longer
+# writes makes every run read as "No saved run found"
+# (tests/test_doctor_postmortem_after_run.py holds the two together).
+REPORT_CACHE_SCHEMA_VERSION = "last30days-report-cache/v2"
 REPORT_CACHE_FILENAME = "last-report.json"
 DEFAULT_REPORT_CACHE_TTL_SECONDS = 3600
 
