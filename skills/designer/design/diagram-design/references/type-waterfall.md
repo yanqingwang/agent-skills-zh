@@ -1,32 +1,36 @@
-# Waterfall Chart
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-waterfall.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** showing how a start total becomes an end total through signed contributions — a budget bridge (FY25 baseline → FY26 plan), headcount deltas (starting roster ± hires ± attrition), conversion leak/gain, P&L walk. Use when the running total is the story: every bar either anchors the total or bridges one running level to the next, and the reader traces the path from start to end.
+# 瀑布图
 
-**Not this type:**
+**适用场景：** 展示一个起始总量如何经过带符号的增减变成一个结束总量：预算桥接（FY25 基线 → FY26 计划）、人数增减（初始名册 ± 入职 ± 流失）、转化流失/增益、损益走查。当滚动总量是故事本身时使用：每根柱子要么锚定总量，要么把一个滚动水位桥接到下一个，读者沿着从起点到终点的路径走。
 
-- Two endpoints where only the *gap* matters → **dumbbell** (a Bar variant, `type-bar.md`). A dumbbell states two values and their distance; a waterfall states a path of signed steps that must reconcile. The types look adjacent but make opposite claims: the dumbbell hides what happened in between, the waterfall *is* what happened in between.
-- Independent category comparisons → **bar** (`type-bar.md`).
-- One quantity splitting and merging across stages → **Sankey** (`type-sankey.md`). A waterfall is strictly sequential and one-dimensional; the bars never branch.
-- Ordered drop-off through stages of one funnel → **pyramid / funnel** (`type-pyramid.md`).
+**不是这个类型：**
 
-## Layout conventions
+- 只有*差距*有意义的两个端点 → **哑铃图**（Bar 的变体，`type-bar.md`）。哑铃陈述两个值和它们的距离；瀑布图陈述一条必须能对账的带符号步骤路径。两类图看起来相邻但主张相反：哑铃把中间发生了什么藏起来，瀑布图*就是*中间发生了什么。
+- 独立的类别比较 → **柱状图**（`type-bar.md`）。
+- 一个数量跨阶段分裂与汇合 → **桑基图**（`type-sankey.md`）。瀑布图严格顺序且一维：柱子永不分支。
+- 一个漏斗各阶段的顺序流失 → **金字塔 / 漏斗**（`type-pyramid.md`）。
 
-- **Orientation:** vertical columns only, left → right in narrative order: start total, then each signed bridge, optional subtotal, end total. A horizontal waterfall reads as a Gantt.
-- **Plot area:** left 80px (y-axis labels), bottom 60px (category labels), top 40px, right 40px — inside a `0 0 1000 500` viewBox, same frame as the bar chart. Plot band x 80→960, y 40→420.
-- **Bar count:** 3–8 bars total, including both totals and at most one subtotal. More contributions than that → merge the tail into one named "Other" bridge (disclose what it contains) or split the walk into two charts.
-- **Bar width / pitch:** equal-width bars on an even pitch, bar ≥ 50% of the pitch. Six bars fit as width=96 on a 144px pitch starting at x=112.
-- **Totals anchor, bridges float.** The start total, any subtotal, and the end total are drawn from the domain floor (the x-axis baseline) up to their value. Bridge bars span exactly the running total before and after their contribution — an increase rises from the previous level, a decrease falls from it.
-- **Carry rules (the bridge grammar).** A horizontal connector line carries the running total across each gap between adjacent bars, drawn at the shared level: from the right edge of one bar to the left edge of the next, `ink @ 0.55` at 1px on light paper (`ink @ 0.40` on dark) — the dumbbell's connector weight, because the carry is load-bearing and must clear 3:1, not the 0.25 axis hairline. Each carry declares the running total it transports in `data-carry`.
-- **Machine-readable data contract.** Every bar rect declares `data-role` (`total`, `delta`, or `subtotal`), `data-value` (totals unsigned, deltas explicitly signed `+`/`-`), and `data-name`. `scripts/verify-waterfall.py` reads these and fails the build when the drawing and the declaration disagree — see the honesty rules below.
-- **Sign is encoded by fill weight, not hue.** Increases take the bar family's default tint (`muted @ 0.15` fill, `muted` stroke). Decreases are hollow — paper fill, same `muted` stroke — so the two directions survive greyscale and colour-vision deficiency without leaning on the accent. The geometry (which end of the bar meets the carry) and the signed printed value are the second and third encodings of the same fact.
-- **Totals are the heaviest marks:** `ink @ 0.08` fill with a 1px `ink` stroke. The reader's eye should land on the two anchors first, then walk the bridges.
-- **Focal bridge (≤1, optional):** the one contribution the chart exists to show gets the bar family's focal treatment — `accent @ 0.12` fill, `accent` stroke, accent value label. It replaces that bar's sign fill; the signed label and geometry still carry the direction.
-- **Value labels:** `arrow-label` role 8px. Totals and increases print above the bar top (baseline `top − 8`); decreases print below the bar bottom (baseline `bottom + 12`), because the space above a decrease is where its carry arrives. Deltas print with an explicit sign (`+64`, `−38`); totals print unsigned.
-- **Gridlines / axes:** identical to the bar chart — 4–6 faint horizontal gridlines `ink @ 0.08` 0.8px, y-axis line and x-axis baseline `ink @ 0.25` 1px, tick labels `arrow-label` role 8px `muted` right-aligned at x=72, rotated y-axis title `eyebrow` role 7px tracked.
-- **Category labels:** centered under each bar at y=440, `node-name` role 11px 600 `ink`; the focal bar's label may take accent.
-- **Legend:** horizontal bottom strip after a hairline rule, one key per treatment used: total, increase, decrease, focal.
+## 布局约定
 
-### Waterfall element pattern
+- **方向：** 只用竖直柱，按叙事顺序自左向右：起始总量，然后每个带符号的桥接柱，可选小计，结束总量。水平的瀑布图读起来像甘特图。
+- **绘图区：** 左 80px（y 轴标签）、下 60px（类别标签）、上 40px、右 40px：位于 `0 0 1000 500` viewBox 内，与柱状图同一画框。绘图带 x 80→960，y 40→420。
+- **柱数：** 共 3–8 根，含两个总量柱和至多一个小计柱。增减步数再多 → 把尾段合并成一个命名的"Other"桥接柱（写明它包含什么），或把走查拆成两张图。
+- **柱宽 / 节距：** 等宽柱，等节距，柱宽 ≥ 节距的 50%。六根柱在 x=112 起、144px 节距上正好排为宽 96。
+- **总量落地，桥接悬空。** 起始总量、任何小计和结束总量从域底（x 轴基线）画到各自的值。桥接柱恰好横跨其贡献前后的两个滚动总量：增量从前一水位升起，减量从它落下。
+- **衔接规则（桥接语法）。** 一条水平连接线把滚动总量跨过相邻柱之间的每个缺口传递下去，画在共享水位上：从一根柱的右缘到下一根柱的左缘，浅色纸面上用 `ink @ 0.55` 1px（深色下 `ink @ 0.40`）。用哑铃连接线的重量，因为衔接是承重的、必须过 3:1，而不是 0.25 的轴线发丝线。每条衔接线在 `data-carry` 中声明它所传递的滚动总量。
+- **机器可读数据契约。** 每根柱矩形声明 `data-role`（`total`、`delta` 或 `subtotal`）、`data-value`（总量无符号，增减显式带 `+`/`-`）和 `data-name`。`scripts/verify-waterfall.py` 读取它们，当绘制与声明不一致时构建失败：见下方诚实规则。
+- **符号由填充重量编码，不由色相编码。** 增量用柱族的默认浅色（`muted @ 0.15` 填充，`muted` 描边）。减量是空心的：paper 填充、同样的 `muted` 描边。这样两个方向在灰度和色觉缺陷下都成立，而不依赖 accent。几何（柱的哪一端接到衔接线）和带符号的打印值是同一事实的第二、第三重编码。
+- **总量是最重的标记：** `ink @ 0.08` 填充加 1px `ink` 描边。读者的目光应先落在两个锚点上，再走桥接柱。
+- **焦点桥接柱（≤1，可选）：** 图表为之存在的那个贡献拿到柱族的焦点处理：`accent @ 0.12` 填充、`accent` 描边、accent 数值标签。它替换该柱的符号填充；带符号的标签和几何仍然承载方向。
+- **数值标签：** `arrow-label` 角色 8px。总量和增量打印在柱顶上方（基线 `top − 8`）；减量打印在柱底下方（基线 `bottom + 12`），因为减量上方的空间正是它的衔接线到达之处。增减打印显式符号（`+64`、`−38`）；总量无符号打印。
+- **网格线 / 轴：** 与柱状图完全一致：4–6 条淡水平网格线 `ink @ 0.08` 0.8px，y 轴线和 x 轴基线 `ink @ 0.25` 1px，刻度标签 `arrow-label` 角色 8px `muted` 右对齐在 x=72，旋转的 y 轴标题 `eyebrow` 角色 7px 带字距。
+- **类别标签：** 每根柱下方 y=440 居中，`node-name` 角色 11px 600 `ink`；焦点柱的标签可以用 accent。
+- **图例：** 水平底条，之前一条发丝线，每个用到的处理一枚图例：总量、增量、减量、焦点。
+
+### 瀑布图元素模式
 
 ```svg
 <!-- Start total: anchored at the baseline (y=420), value 240 on a 0–400 domain, k=0.95 px/unit -->
@@ -45,31 +49,31 @@
 <text x="304" y="123" fill="{muted}" font-size="8" font-family="{arrow-label}" text-anchor="middle">+64</text>
 ```
 
-Endpoint positions round to the nearest integer pixel and never snap to the 4px grid — data coordinates are exempt, exactly as in the dumbbell. Bar x-positions and widths are layout, so they stay on the grid.
+端点位置取整到最近整数像素，绝不吸附到 4px 网格：数据坐标豁免，与哑铃图完全一致。柱的 x 位置和宽度属于布局，因此保持在网格上。
 
-## Anti-patterns
+## 反模式
 
-- **A floating bar with no carry.** The connector is the claim that the total is conserved across the gap; without it the chart is bars at odd heights.
-- **Sign by hue alone** (green up / red down, or accent on every decrease). Hue is the one channel that does not survive greyscale or CVD; fill weight and geometry carry the sign here, and the accent stays editorial.
-- **A truncated value axis.** The domain follows the data's range, never its observed extremes — the same rule, cases, and all-zero fallback as the dumbbell (`type-bar.md` § Dumbbell honesty rules). A waterfall on a clipped domain inflates every bridge.
-- **More than one subtotal.** A walk that needs several resting points is two walks; split it.
-- **Mixing units mid-walk.** Every bar is in the start total's unit or the reconciliation is fiction.
-- **3-D, shadows, rounded bridge bars** — same editorial rules as every chart here.
+- **没有衔接线的悬空柱。** 连接线是"总量跨过缺口守恒"这一主张本身；没有它，图就只是几根高度奇怪的柱子。
+- **仅靠色相编码符号**（绿升 / 红降，或每个减量都上 accent）。色相是唯一在灰度和色觉缺陷下都失效的通道；这里填充重量和几何承载符号，accent 保持编辑用途。
+- **截断的数值轴。** 域跟随数据的范围，而不是它的观测极值：与哑铃图同一规则、同类情况、同样的全零兜底（`type-bar.md` § Dumbbell honesty rules）。截断域上的瀑布图会夸大每一根桥接柱。
+- **小计超过一个。** 需要多个歇脚点的走查就是两次走查：拆开。
+- **走查中途换单位。** 每根柱都必须用起始总量的单位，否则对账就是虚构。
+- **3-D、阴影、圆角桥接柱**：与这里所有图表相同的编辑规则。
 
-## Waterfall honesty rules
+## 瀑布图诚实规则
 
-- **Decimal declarations conserve exactly.** Fractional budgets use exact decimal arithmetic for totals, carries, and printed-value identity; geometry retains its pixel-rounding allowance. A binary floating point accumulation error must not reject a reconciled dollar-and-cent walk, and an actual decimal discrepancy is still a failure.
-- **The running total must conserve.** Start + every signed bridge = each subtotal and the end total, exactly — the declared `data-value`s must reconcile before geometry is even considered. A waterfall that doesn't add up is not approximately right, it is wrong.
-- **Bridges span exactly their two running levels.** Each bar's drawn top and bottom must sit where the shared scale puts the running totals before and after it (±0.75px for integer rounding). Stretching one bridge "for legibility" moves money that doesn't exist.
-- **Every carry sits at the level it transports,** spanning its full gap, and declares that value. A carry drawn at the wrong height reconnects the walk to a different total.
-- **Every bar prints its value, deltas with an explicit sign.** An unsigned bridge asks the reader to infer direction from geometry alone; print `+`/`−`.
-- **Zero bridges are dropped, never drawn.** A zero-height bar is invisible ink that still occupies a column; state it in prose or the source line instead.
-- **A degenerate start (zero or negative total) is a named failure,** not a silently rescaled chart — the scale is derived from the start anchor.
+- **小数声明精确守恒。** 带小数的预算对总量、衔接线和打印值一致性使用精确十进制运算；几何仍保留像素取整余地。二进制浮点累积误差不得拒绝一笔对得上账的"元与分"走查，而真实的十进制差异仍然是失败。
+- **滚动总量必须守恒。** 起始量 + 每个带符号桥接柱 = 每个小计和结束总量，分毫不差：声明的 `data-value` 必须先对上账，然后才轮到几何。加不起来的瀑布图不是"大致正确"，而是错的。
+- **桥接柱恰好横跨它的两个滚动水位。** 每根柱绘制出的顶与底必须落在共享比例所给出的前后滚动总量处（整数取整允许 ±0.75px）。为了"可读性"拉伸一根桥接柱等于挪动了不存在的钱。
+- **每条衔接线都坐在它传递的水位上**，横跨完整的缺口，并声明该值。画在错误高度的衔接线把走查重新接到了另一个总量上。
+- **每根柱都打印自己的值，增减显式带符号。** 不带符号的桥接柱要求读者单凭几何推断方向：打印 `+`/`−`。
+- **零桥接柱直接丢弃，绝不绘制。** 零高度柱是占着一列的隐形墨水：改在正文或来源行里说明。
+- **退化的起点（零或负总量）是一个具名失败**，而不是被悄悄重新缩放的图表：比例是从起点锚推导的。
 
-These rules are executable: `scripts/verify-waterfall.py` reads each bar's declaration, recomputes the running totals, refits the shared scale from the start anchor, and fails on any conservation, geometry, carry, label, or sign-treatment drift. `scripts/test-verify-waterfall.py` proves both polarities — the shipped examples pass, and each mutation class above fails with a named finding.
+这些规则是可执行的：`scripts/verify-waterfall.py` 读取每根柱的声明，重算滚动总量，从起点锚重新拟合共享比例，在任何守恒、几何、衔接线、标签或符号处理漂移上失败。`scripts/test-verify-waterfall.py` 证明两种极性：随附示例通过，上述每个变异类别都以具名发现失败。
 
-## Examples
+## 示例
 
-- `assets/example-waterfall.html` — minimal light
-- `assets/example-waterfall-dark.html` — minimal dark
-- `assets/example-waterfall-full.html` — full editorial
+- `assets/example-waterfall.html` — 极简浅色
+- `assets/example-waterfall-dark.html` — 极简深色
+- `assets/example-waterfall-full.html` — 完整编辑排版

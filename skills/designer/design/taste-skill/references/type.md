@@ -1,48 +1,50 @@
-# Type
+> **中文汉化版** · 上游：[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · 原文件：`skills/taste-skill/references/type.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Typography is most of what a visitor sees and most of what makes a page look designed or assembled.
-The direction sheet deals you a type system (faces, weights, settings). This file is how to use it.
+# 字体排印
 
-## Contents
+访客看到的大部分是文字，一个页面看起来是"被设计的"还是"拼凑出来的"，也主要由文字决定。
+方向表会发给你一套字体系统（字族、字重、参数）。本文件讲的是如何使用它。
 
-1. What the study measured
-2. The scale: few sizes, far apart
-3. Setting display type
-4. Setting text
-5. Loading the fonts properly
-6. One family or two
-7. Details that separate set type from typed text
-8. Mistakes the inspector cannot see
+## 目录
 
-## 1. What the study measured
+1. 研究测了什么
+2. 字阶：字号很少，差距很大
+3. 排展示大字
+4. 排正文字
+5. 正确加载字体
+6. 一个字族还是两个
+7. 区分"排出来的字"与"打出来的字"的细节
+8. 检查器看不见的错误
 
-From 202 measurable sites out of the 247 studied (Chrome, 1440×900 and 390×844):
+## 1. 研究测了什么
 
-| | Median | Middle half | Note |
+在被研究的 247 个站点中，202 个可测量（Chrome，1440×900 与 390×844）：
+
+| | 中位数 | 中间一半 | 备注 |
 | --- | --- | --- | --- |
-| Hero headline size | 72px (5.0vw) | 43–109px | Top-scored sites: 6.0vw median |
-| Largest type on the page | 6.4vw | up to 10.4vw | Top-scored sites 8.4vw, weak sites 5.0vw |
-| Hero headline on a phone | 40px | 32–59px | |
-| Hero tracking | -0.01em | -0.03 to 0 | Tighter as size grows |
-| Hero leading | 1.0 | 0.95–1.1 | |
-| Body size | 16px | 14–18px | |
-| Headline ÷ body size | 4.3 | | Top-scored sites 4.7 |
-| Typefaces in real use | 2 | 31% use one, 45% two, 22% three | |
-| Hero weight | regular 48%, medium 18%, bold or heavier 22% | | Big type does not need to be bold |
-| Hero in capitals | 24% | | |
-| Hero centred | 39% | | 52% on the weak sites |
+| Hero 标题字号 | 72px（5.0vw） | 43–109px | 得分最高站点：中位数 6.0vw |
+| 页面最大字号 | 6.4vw | 最高 10.4vw | 得分最高站点 8.4vw，弱站 5.0vw |
+| 手机上的 hero 标题 | 40px | 32–59px | |
+| Hero 字距 | -0.01em | -0.03 至 0 | 字号越大收得越紧 |
+| Hero 行距 | 1.0 | 0.95–1.1 | |
+| 正文字号 | 16px | 14–18px | |
+| 标题÷正文字号 | 4.3 | | 得分最高站点 4.7 |
+| 实际使用的字族数 | 2 | 31% 用一个，45% 用两个，22% 用三个 | |
+| Hero 字重 | regular 48%，medium 18%，bold 或更重 22% | | 大字不需要加粗 |
+| Hero 全大写 | 24% | | |
+| Hero 居中 | 39% | | 弱站为 52% |
 
-Two things to take from it. First, size contrast is the main lever and the best sites pull it harder.
-Second, weight is not: half of the heroes are set in a regular weight. Scale and spacing make type
-confident; bold is one option among several.
+从中得出两件事。第一，字号对比是主要杠杆，最好的站点把它拉得更开。第二，字重不是：一半的
+hero 用 regular 字重。让文字显得自信的是字号与间距；加粗只是众多选项之一。
 
-## 2. The scale: few sizes, far apart
+## 2. 字阶：字号很少，差距很大
 
-The panel described about 30 of the 114 strongest sites as using two or three type sizes with nothing
-in between, and none as using a graded five- or six-step scale. So: one display size, one text size
-and a small size carry the page; a lead size and a heading size exist for when they are needed. Five
-is the ceiling. The common failure is nine sizes that are all near each other (16, 18, 20, 24, 28,
-32…), which reads as mush. Choose steps that are clearly different:
+评审团把 114 个最强站点中的约 30 个描述为只用两三个字号、中间没有任何过渡，没有一个被描述为
+使用分级的五六档字阶。所以：一个展示字号、一个正文字号加一个小字号撑起整个页面；lead 字号
+和标题字号备着，需要时才用。五档是上限。常见的失败是九个彼此接近的字号（16、18、20、24、28、
+32…），读起来像一团浆糊。选择明显不同的档位：
 
 ```css
 :root {
@@ -54,17 +56,15 @@ is the ceiling. The common failure is nine sizes that are all near each other (1
 }
 ```
 
-- `--step-display` belongs to the direction. A monument wordmark is 16–24vw; a quiet instrument's
-  headline is 28px. Use the size the hero blueprint gives, as a `clamp()` so it scales with the
-  viewport but is bounded on phones and very wide screens.
-- Keep the gap: the display size should be at least four times the body size on desktop, and nothing
-  should sit between `--step-lead` and `--step-head` unless the design truly needs a sixth size.
-- Resist a "subheading" size for every card and label. If two sizes look almost the same, make them
-  the same.
+- `--step-display` 属于方向本身。纪念碑式字标是 16–24vw；一件安静仪器的标题是 28px。使用
+  hero 蓝图给定的字号，写成 `clamp()`，让它随视口缩放，同时在手机和超宽屏上有边界。
+- 保持差距：桌面端展示字号至少是正文字号的四倍，`--step-lead` 与 `--step-head` 之间不应再
+  有字号，除非设计真的需要第六档。
+- 别给每张卡片和标签都配一个"副标题"字号。如果两个字号看起来几乎一样，就让它们成为同一个。
 
-## 3. Setting display type
+## 3. 排展示大字
 
-Large type exposes spacing that is invisible at text size. Apply all of these to anything over 40px:
+大字会暴露在小字号下看不见的间距问题。对超过 40px 的文字全部应用以下设置：
 
 ```css
 .display {
@@ -78,21 +78,19 @@ Large type exposes spacing that is invisible at text size. Apply all of these to
 }
 ```
 
-- **Tracking scales with size.** The larger the type, the tighter it needs to be; a value right for
-  120px will choke 32px. Set tracking per step, not once for all headings.
-- **Leading below 1.0 needs checking.** Look for collisions between descenders and the ascenders or
-  accents of the next line. Two-line headlines make this easy to verify by eye.
-- **All capitals** want slightly open tracking (0 to +0.03em) even at display size, and leading around
-  0.9.
-- **Optical alignment.** Big letters with round or diagonal left edges (O, C, A, T, W) look indented.
-  Pull the headline left by about 0.04–0.06em (`margin-left: -0.05em`) so it aligns optically with the
-  text beneath it.
-- **Viewport-wide type.** For a line that must span the screen, size it in `vw` and verify at 390 and
-  1440; set `white-space: nowrap` and let the container clip rather than wrap. Calculate the size from
-  the character count: `font-size ≈ container width ÷ (characters × k)` with k from `copy.md` §2.
-- Never add a text shadow, an outline stroke, or a gradient fill to display type.
+- **字距随字号缩放。** 字越大，字距要收得越紧；适合 120px 的值会让 32px 喘不过气。按档位
+  设置字距，不要对所有标题设一次了事。
+- **行距低于 1.0 需要检查。** 看看下一行的下行字母与上一行的上伸部或重音符号是否相撞。两行
+  标题最容易用肉眼验证这一点。
+- **全大写**即使在展示字号下也要稍开的字距（0 到 +0.03em），行距 0.9 左右。
+- **视觉对齐。** 左边缘为圆形或斜线的大字母（O、C、A、T、W）看起来像缩进了。把标题向左拉
+  约 0.04–0.06em（`margin-left: -0.05em`），让它与下方文字视觉对齐。
+- **横贯视口的大字。** 必须横跨整屏的一行字用 `vw` 定字号，并在 390 和 1440 下验证；设
+  `white-space: nowrap`，让容器裁切而不是换行。字号按字符数计算：
+  `font-size ≈ container width ÷ (characters × k)`，k 见 `copy.md` §2。
+- 永远不要给展示大字加文字阴影、描边或渐变填充。
 
-## 4. Setting text
+## 4. 排正文字
 
 ```css
 body { font-size: var(--step-body); line-height: 1.5; font-kerning: normal; text-rendering: optimizeLegibility; }
@@ -102,18 +100,15 @@ p + p { margin-top: 0.9em; }
 small, .caption { font-size: var(--step-small); line-height: 1.45; }
 ```
 
-- Measure: 45–75 characters. Wider than that and the eye loses the next line; the inspector warns
-  past about 88.
-- Leading: 1.45–1.6 for body, tighter (1.3–1.4) for the larger lead size, looser for long reading.
-- Secondary text is the same face in a softer ink (`--muted`), not a lighter weight and not smaller
-  than 13px.
-- Do not centre paragraphs longer than three lines. Do not justify.
-- Light text on a dark ground looks heavier: drop one weight step or add 0.01em tracking, and raise
-  leading slightly.
+- 每行字数：45–75 个字符。更宽眼睛就会找不到下一行；检查器在约 88 之后会发出警告。
+- 行距：正文 1.45–1.6，较大的 lead 字号更紧（1.3–1.4），长文阅读可更松。
+- 次要文字用同一字族配更淡的墨色（`--muted`），不是更轻的字重，也不小于 13px。
+- 不要居中超过三行的段落。不要两端对齐。
+- 深色底上的浅色字看起来更重：降一档字重或加 0.01em 字距，并把行距稍微调大。
 
-## 5. Loading the fonts properly
+## 5. 正确加载字体
 
-The sheet gives a `<link>` tag. Use it exactly; do not swap in a face you prefer.
+方向表会给一个 `<link>` 标签。原样使用；不要换成你偏好的字族。
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,43 +123,41 @@ The sheet gives a `<link>` tag. Use it exactly; do not swap in a face you prefer
 }
 ```
 
-- Request only the weights you use (usually two or three in total).
-- Always give a fallback stack of the same broad kind (sans for sans, serif for serif).
-- In a framework, use its font loader with the same family and weights (`next/font/google`, or a
-  self-hosted `@font-face` with `font-display: swap`). Fontshare faces load from the
-  `api.fontshare.com` stylesheet on the sheet.
-- After building, `inspect.mjs` reports the families that actually rendered. If it warns that a face
-  did not load, the screenshots show a fallback and nothing you judge from them is real. Fix the link
-  first.
+- 只请求你用到的字重（通常总共两三个）。
+- 总是提供同一大类（sans 配 sans，serif 配 serif）的回退字族栈。
+- 在框架里，用框架的字体加载器加载同一字族和字重（`next/font/google`，或自托管 `@font-face`
+  配 `font-display: swap`）。Fontshare 字族从方向表上的 `api.fontshare.com` 样式表加载。
+- 构建之后，`inspect.mjs` 会报告实际渲染的字族。如果它警告某个字族没有加载，截图里显示的
+  就是回退字体，你从截图判断出的一切都不作数。先修链接。
 
-## 6. One family or two
+## 6. 一个字族还是两个
 
-A third of the studied sites use a single family for everything, and it is the safest way to look
-coherent. When the dealt system has two faces:
+被研究站点中有三分之一对所有文字只用一个字族，这是显得统一的最稳妥方式。当发下的系统有
+两个字族时：
 
-- Give each a job and never swap them: one sets headlines, the other sets everything else.
-- Do not introduce a third face for labels, numbers or quotes.
-- Do not mix two faces inside one headline.
-- Italic is for titles of works and real emphasis inside paragraphs, never as decoration.
+- 给每个字族分配职责，绝不互换：一个排标题，另一个排其余一切。
+- 不要为标签、数字或引用引入第三个字族。
+- 不要在一个标题内混用两个字族。
+- 斜体用于作品名和段落内的真正强调，绝不用作装饰。
 
-## 7. Details that separate set type from typed text
+## 7. 区分"排出来的字"与"打出来的字"的细节
 
-- Curly quotes and apostrophes, real dashes, a real ellipsis (see `copy.md` §7).
-- `font-variant-numeric: tabular-nums` for prices, tables, dates in columns; `oldstyle-nums` suits
-  serif body text.
-- `text-underline-offset: 0.18em; text-decoration-thickness: 0.07em` on links, so underlines clear the
-  descenders.
-- `hyphens: none` on headings. `overflow-wrap: anywhere` only on long URLs or emails.
-- A heading belongs to the text after it: space above a heading is at least twice the space below.
-- `::selection { background: var(--accent); color: var(--accent-ink); }` and a visible
-  `:focus-visible` outline in the accent, so even the browser's own states belong to the design.
-- Do not change weight on hover; the line reflows.
+- 弯引号和弯撇号、真正的破折号、真正的省略号（见 `copy.md` §7）。
+- 价格、表格、成列的日期用 `font-variant-numeric: tabular-nums`；`oldstyle-nums` 适合 serif
+  正文。
+- 链接上加 `text-underline-offset: 0.18em; text-decoration-thickness: 0.07em`，让下划线避开
+  下行字母。
+- 标题上用 `hyphens: none`。`overflow-wrap: anywhere` 只用于长 URL 或邮箱。
+- 标题属于它后面的文字：标题上方的间距至少是下方的两倍。
+- `::selection { background: var(--accent); color: var(--accent-ink); }`，加上 accent 色的可见
+  `:focus-visible` 轮廓，让连浏览器自身的状态也属于设计。
+- 不要在 hover 时改变字重；整行会回流。
 
-## 8. Mistakes the inspector cannot see
+## 8. 检查器看不见的错误
 
-- A headline that passes the two-line rule but breaks badly: one orphan word on line two, or a break
-  that splits a phrase ("Stools for small / kitchens"). Author the break.
-- Display type so tight that letters touch, or so loose it falls apart.
-- A confident hero followed by section headings almost as large. Keep one size dominant per screen.
-- Body text set in the display face when that face was drawn for large sizes only.
-- Everything bold. If every line is emphasised, none is.
+- 通过了两行规则但断行很糟的标题：第二行只剩一个孤词，或断点拆散了词组（"Stools for small /
+  kitchens"）。亲手定断点。
+- 收得太紧以致字母相碰的展示大字，或松散到散架的展示大字。
+- 自信的 hero 之后跟着几乎一样大的分区标题。每屏只保持一个占主导的字号。
+- 用展示字族排正文，而这个字族本只为大字号设计。
+- 全部加粗。如果每一行都在强调，就没有一行被强调。

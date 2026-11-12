@@ -1,8 +1,12 @@
-# Hypothesis Testing Reference
+> **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/agent-teams/skills/parallel-debugging/references/hypothesis-testing.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Task templates, evidence formats, and arbitration decision trees for parallel debugging.
+# 假设检验参考
 
-## Hypothesis Task Template
+并行调试的任务模板、证据格式与仲裁决策树。
+
+## 假设任务模板
 
 ```markdown
 ## Hypothesis Investigation: {Hypothesis Title}
@@ -41,7 +45,7 @@ Task templates, evidence formats, and arbitration decision trees for parallel de
 - Recommended fix: if confirmed
 ```
 
-## Evidence Report Template
+## 证据报告模板
 
 ```markdown
 ## Investigation Report: {Hypothesis Title}
@@ -74,7 +78,7 @@ Task templates, evidence formats, and arbitration decision trees for parallel de
 {Anything discovered that may be relevant to other hypotheses}
 ```
 
-## Arbitration Decision Tree
+## 仲裁决策树
 
 ```
 All investigators reported?
@@ -93,28 +97,28 @@ All investigators reported?
                   └── NO → Rank by confidence, declare highest as primary
 ```
 
-## Common Hypothesis Patterns by Error Type
+## 按错误类型的常见假设模式
 
-### "500 Internal Server Error"
+### "500 内部服务器错误"（500 Internal Server Error）
 
-1. Unhandled exception in request handler (Logic Error)
-2. Database connection failure (Resource Issue)
-3. Missing environment variable (Environment)
+1. 请求处理器中存在未处理的异常（Logic Error）
+2. 数据库连接失败（Resource Issue）
+3. 环境变量缺失（Environment）
 
-### "Race condition / intermittent failure"
+### "竞态条件 / 间歇性失败"（Race condition / intermittent failure）
 
-1. Shared state mutation without locking (State Problem)
-2. Async operation ordering assumption (Logic Error)
-3. Cache staleness window (State Problem)
+1. 共享状态在无锁情况下被修改（State Problem）
+2. 对异步操作顺序的错误假设（Logic Error）
+3. 缓存陈旧窗口期（State Problem）
 
-### "Works locally, fails in production"
+### "本地正常，生产环境失败"（Works locally, fails in production）
 
-1. Environment variable mismatch (Environment)
-2. Different dependency version (Environment)
-3. Resource limits (memory, connections) (Resource Issue)
+1. 环境变量不一致（Environment）
+2. 依赖版本不同（Environment）
+3. 资源限制（内存、连接数）（Resource Issue）
 
-### "Regression after deploy"
+### "部署后出现回归"（Regression after deploy）
 
-1. New code introduced bug (Logic Error)
-2. Configuration change (Integration Failure)
-3. Database migration issue (Data Issue)
+1. 新代码引入了 bug（Logic Error）
+2. 配置变更（Integration Failure）
+3. 数据库迁移问题（Data Issue）

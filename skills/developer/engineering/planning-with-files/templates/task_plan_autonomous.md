@@ -1,98 +1,102 @@
-# Task Plan: [Brief Description]
+> **中文汉化版** · 上游：[OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) · 原文件：`.agents/skills/planning-with-files/templates/task_plan_autonomous.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this file as the durable roadmap for a long-running, autonomous, gated, or multi-agent task. Keep its goal, next step, and phase status current throughout the run.
+# 任务计划：[简述]
 
-## Runtime Behavior
+把本文件当作长时运行、自主、门控（gated）或多 Agent 任务的持久路线图。整个运行期间保持目标、下一步与阶段状态为最新。
 
-- **Mode source:** The `.mode` file next to this plan selects legacy, autonomous, or gated behavior. Text in this plan does not select the mode.
-- **Gate authority:** The executable gate reads `.mode`, phase state, Stop hook state, the stop block cap, and ledger progress.
-- **Command boundary:** The gate never executes commands declared in this plan. Any task assignment, dependency, acceptance command, or model choice written here is descriptive only and is not a gate input.
-- **Attestation:** Autonomous and gated initialization attest this file. Re-attest after an intentional edit so hooks can inject the approved version.
-- **Coordination:** Keep one orchestrator responsible for plan status. Workers should report results through their own ledgers or findings instead of editing this file concurrently.
+## 运行时行为
+
+- **模式来源：** 本计划旁边的 `.mode` 文件决定 legacy、autonomous 还是 gated 行为。本计划中的文字不选择模式。
+- **闸门权威：** 可执行闸门读取 `.mode`、阶段状态、Stop hook 状态、stop block 上限与台账（ledger）进度。
+- **命令边界：** 闸门绝不执行本计划中声明的命令。这里写的任何任务指派、依赖、验收命令或模型选择都只是描述性内容，不作为闸门输入。
+- **证明（Attestation）：** autonomous 与 gated 初始化会对本文件做证明。有意编辑之后需重新证明，Hook 才能注入已批准的版本。
+- **协调：** 保持只有一个编排者（orchestrator）负责计划状态。Worker 应通过各自的台账或 findings 汇报结果，不要并发编辑本文件。
 
 ## Goal
 
-State the intended end result in one clear sentence.
+用一句清楚的话说明期望的最终结果。
 
-[One sentence describing the end state]
+[一句话描述最终状态]
 
 ## Next Step
 
-Record the single action that should happen next. Update it whenever the active phase or immediate action changes.
+记录接下来应该发生的单个动作。活跃阶段或当前动作一变就更新。
 
-[The single next action. Update whenever phase status changes.]
+[下一个单独动作。阶段状态一变就更新。]
 
 ## Current Phase
 
-Name the phase currently being worked on.
+写出当前正在进行的阶段。
 
 Phase 1
 
 ## Phases
 
-Break the task into three to seven verifiable phases. Use only `pending`, `in_progress`, or `complete` for each status and update the value when work advances. In gated mode, an `in_progress` phase is one of the gate inputs.
+把任务拆成三到七个可验证的阶段。每个状态只使用 `pending`、`in_progress` 或 `complete`，工作推进时更新对应值。在 gated 模式下，`in_progress` 阶段是闸门输入之一。
 
-### Phase 1: Requirements & Discovery
+### Phase 1: 需求与调研
 
-- [ ] Understand user intent
-- [ ] Identify constraints and requirements
-- [ ] Document findings in findings.md
+- [ ] 理解用户意图
+- [ ] 识别约束与需求
+- [ ] 把发现记录到 findings.md
 - **Status:** in_progress
 
-### Phase 2: Planning & Structure
+### Phase 2: 规划与结构
 
-- [ ] Define technical approach
-- [ ] Create project structure if needed
-- [ ] Document decisions with rationale
+- [ ] 确定技术方案
+- [ ] 需要时创建项目结构
+- [ ] 记录决策及其理由
 - **Status:** pending
 
-### Phase 3: Implementation
+### Phase 3: 实现
 
-- [ ] Execute the plan step by step
-- [ ] Write code to files before executing
-- [ ] Test incrementally
+- [ ] 按计划逐步执行
+- [ ] 执行前先把代码写入文件
+- [ ] 增量测试
 - **Status:** pending
 
-### Phase 4: Testing & Verification
+### Phase 4: 测试与验证
 
-- [ ] Verify all requirements met
-- [ ] Document test results in progress.md
-- [ ] Fix any issues found
+- [ ] 核对所有需求已满足
+- [ ] 把测试结果记录到 progress.md
+- [ ] 修复发现的问题
 - **Status:** pending
 
-### Phase 5: Delivery
+### Phase 5: 交付
 
-- [ ] Review all output files
-- [ ] Ensure deliverables are complete
-- [ ] Deliver to user
+- [ ] 检查所有输出文件
+- [ ] 确保交付物完整
+- [ ] 交付给用户
 - **Status:** pending
 
-## Key Questions
+## 关键问题
 
-Record important questions and replace them with answers as they are resolved.
+记录重要问题，问题解决后用答案替换。
 
-1. [Question to answer]
-2. [Question to answer]
+1. [待回答的问题]
+2. [待回答的问题]
 
 ## Decisions Made
 
-Record significant choices and the reason for each one.
+记录重要选择及每项选择的理由。
 
-| Decision | Rationale |
-|----------|-----------|
-|          |           |
+| 决策 | 理由 |
+|------|------|
+|      |      |
 
-## Errors Encountered
+## 遇到的错误
 
-Record each distinct error, the attempt number, and the resolution. Change the approach before retrying a failed action.
+记录每个不同的错误、尝试次数与解决方式。重试失败的动作之前先换方法。
 
-| Error | Attempt | Resolution |
-|-------|---------|------------|
-|       | 1       |            |
+| 错误 | 尝试次数 | 解决方式 |
+|------|----------|----------|
+|      | 1        |          |
 
-## Notes
+## 备注
 
-- Update phase status as work progresses: `pending` to `in_progress` to `complete`.
-- Re-read the goal and next step before major decisions.
-- Log errors promptly so failed approaches are not repeated.
-- Keep plan edits serialized when multiple agents are active.
+- 工作推进时更新阶段状态：`pending` 到 `in_progress` 再到 `complete`。
+- 重大决策前重读 Goal 与 Next Step。
+- 及时记录错误，避免重复走失败的路。
+- 多个 Agent 同时活跃时，计划编辑保持串行。

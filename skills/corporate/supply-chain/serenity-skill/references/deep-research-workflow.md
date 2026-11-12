@@ -1,67 +1,71 @@
-# Supply-chain research workflow
+> **中文汉化版** · 上游：[muxuuu/serenity-skill](https://github.com/muxuuu/serenity-skill) · 原文件：`references/deep-research-workflow.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use for a theme scan or a company challenge. The purpose is to decide what deserves the user's next research effort and explain why.
+# 供应链研究工作流
 
-## Start with the actual question
+用于主题扫描或公司论断挑战。目的：决定什么值得用户投入下一步研究，并说明原因。
 
-Identify the market, theme or company, research date, and requested horizon. If the user means “now,” use current disclosures; do not confuse a 3–12 month research horizon with a promise about the timing of returns. Ask for clarification only when it materially changes the research.
+## 从真实问题出发
 
-For a company challenge, make the thesis testable. “CPO core supplier” could mean several different things:
+先确定市场、主题或公司、研究日期，以及要求的时间跨度。当用户说的是"现在"时，使用当前披露；不要把 3–12 个月的研究跨度混同于对回报时点的承诺。只有当澄清会实质改变研究内容时才追问。
 
-- sells a component used in a CPO design;
-- has completed customer qualification;
-- delivers it in volume;
-- is a named platform supplier;
-- has meaningful CPO revenue or pricing power;
-- is the only qualified supplier.
+做公司论断挑战时，把论断变成可检验的命题。"CPO 核心供应商"可能指好几种不同的事：
 
-Evidence supporting one claim need not support the others. Research the claims implied by the user's question and return a clear verdict on each material one.
+- 卖出用于 CPO 设计的某个部件；
+- 已完成客户认证；
+- 已批量交付；
+- 是具名的平台供应商；
+- 有可观的 CPO 收入或定价权；
+- 是唯一通过认证的供应商。
 
-## Map the system before selecting companies
+支持其中一个论断的证据未必支持其他论断。研究用户问题所隐含的各项论断，并对每个实质论断给出明确结论。
 
-Translate the theme into demand, the system change, and the constrained input. For example, an optical-interconnect question can lead to lasers, coupling, packaging, testing, and materials; it does not predetermine which one is scarce or investable.
+## 先画出系统，再选公司
 
-Compare the relevant layers: end demand, system integration, modules, chips/devices, process and packaging, equipment, materials, and infrastructure. Split companies whose economics differ. A compute designer, an equipment vendor, and a chemical supplier can all have AI exposure without sharing the same demand cycle.
+把主题拆解为需求、系统变化与受约束的投入要素。例如，光互连问题可以引向激光器、耦合、封装、测试与材料；它并不预先决定哪一环稀缺、哪一环值得投资。
 
-Include obvious leaders, plausible upstream suppliers, and alternative technical routes. Look for concrete constraints such as qualification lead time, yield, expansion difficulty, supplier concentration, or capacity reservations. Check whether the proposed constraint is temporary, expanding, or already easing.
+比较相关层级：终端需求、系统集成、模块、芯片/器件、工艺与封装、设备、材料与基础设施。把经济性不同的公司分开对待。一个算力设计公司、一个设备厂商和一个化学品供应商可以都有 AI 暴露，却不共享同一个需求周期。
 
-Use global supply-chain evidence even when the final candidates are A-share companies. A market preference changes which securities the user studies, not where demand or competition comes from.
+纳入明显的龙头、可能的上游供应商与替代技术路线。寻找具体的约束，例如认证周期、良率、扩产难度、供应商集中度或产能预订。检查所谓约束究竟是暂时的、还在扩张，还是已经缓解。
 
-## Trace the company to earnings
+即使最终候选是 A 股公司，也要使用全球供应链证据。市场偏好只改变用户研究哪些证券，不改变需求或竞争来自哪里。
 
-Work through the links that matter for this company:
+## 把公司追溯到盈利
 
-| Question | Evidence that can help | Interpretation to avoid |
+逐环过一遍对这家公司重要的链条：
+
+| 问题 | 可能有帮助的证据 | 要避免的解读 |
 |---|---|---|
-| What does it sell? | Product disclosures, segment information, technical documentation | Treating a theme label as a precise product |
-| Can it supply customers? | Qualification, production, delivery or order disclosures | Turning a patent or sample into a volume order |
-| Is the business material? | Product or segment revenue, disclosed order size | Assigning all company growth to the new theme |
-| Does scarcity benefit shareholders? | Pricing, margin, utilization, cash flow, capex and financing | Assuming technical importance guarantees profit |
-| Is the expectation already priced in? | Dated price/market cap and comparable earnings or sales | Calling a company cheap without a valuation basis |
+| 它卖什么？ | 产品披露、分部信息、技术文档 | 把主题标签当成精确的产品 |
+| 它能给客户供货吗？ | 认证、生产、交付或订单披露 | 把专利或样品当成批量订单 |
+| 这门生意重要吗？ | 产品或分部收入、已披露订单规模 | 把公司全部增长归因于新主题 |
+| 稀缺能否惠及股东？ | 定价、利润率、产能利用率、现金流、资本开支与融资 | 以为技术重要性必然带来利润 |
+| 预期是否已被价格计入？ | 带日期的价格/市值与可比盈利或销售额 | 没有估值依据就说公司便宜 |
 
-Read the financial notes when headline profit growth changes the conclusion. Investment income, fair-value gains, grants, share-based compensation, acquisitions, and currency effects can make earnings growth differ from operating progress. Keep reported and adjusted measures labeled, and compare like periods.
+当表观利润增长会改变结论时，去读财务附注。投资收益、公允价值变动收益、补贴、股权激励、并购与汇率影响，都会让盈利增长偏离经营进展。报告值与调整值要分别标注，并比较同期。
 
-For cash flow, inventory and receivables, explain the plausible cause and what needs follow-up. A single period's divergence is a question to investigate, not an automatic fraud claim or a reason to discard the business.
+对现金流、存货与应收账款，解释说得通的原因以及需要跟进什么。单期背离是需要调查的问题，不是自动的造假指控，也不是否定这门生意的理由。
 
-When a company does not disclose customer identity or theme-specific revenue, keep that field unknown. Distinguish ecosystem partners, direct sales customers and end users. A named partnership or a supplier list must be supported by a source that actually identifies the relationship. Several articles repeating one disclosure do not provide independent confirmation.
+当公司不披露客户身份或主题相关收入时，该项就保持"未知"。区分生态伙伴、直销客户与最终用户。具名合作或供应商名单，必须有真正指明该关系的来源支撑。多篇文章转述同一份披露，不构成独立确认。
 
-## Seek the best competing explanation
+## 寻找最强的替代解释
 
-Test the thesis with the most relevant alternative:
+用最相关的替代情形检验论断：
 
-- customers can qualify another supplier or redesign around the component;
-- supply expands or yields improve enough to ease the bottleneck;
-- orders reflect stockpiling rather than durable end demand;
-- an important product contributes little to this company's earnings;
-- revenue grows but customer bargaining power limits margins;
-- the current valuation already assumes a successful ramp.
+- 客户可以认证另一家供应商，或绕开该部件重新设计；
+- 供给扩张或良率提升，足以缓解瓶颈；
+- 订单反映的是备货，而不是持久的终端需求；
+- 某个重要产品对这家公司的盈利贡献很小；
+- 收入在增长，但客户议价能力限制了利润率；
+- 当前估值已经假设放量成功。
 
-Follow evidence that supports the company as seriously as evidence that weakens it. Do not force an unpopular conclusion or downgrade a market leader merely to appear contrarian.
+支持该公司的证据，要与削弱它的证据同等认真地对待。不要为了让观点显得反共识，就强推不受欢迎的结论或刻意下调市场龙头。
 
-## Compare and close
+## 对比与收尾
 
-Present the most relevant layers first, then explain the company priorities using the evidence rules in [evidence-ladder.md](evidence-ladder.md). Keep economic importance, evidence confidence, and stock valuation distinct.
+先讲最相关的层级，再用 [evidence-ladder.md](evidence-ladder.md) 中的证据规则解释公司优先级。经济重要性、证据置信度与股票估值，三者分开。
 
-If material evidence remains unavailable after checking the relevant disclosures, report what was checked, what remains unknown, and which future disclosure could resolve it. For a company challenge, distinguish a contradicted claim from a plausible but unverified one.
+查完相关披露后重要证据仍不可得时，报告查过什么、还有什么未知、哪份未来披露能解决它。做公司论断挑战时，区分"被推翻的论断"与"合理但未核实的论断"。
 
-End with specific next checks. “Read more reports” is too vague; “check whether the next report separates this product's revenue and whether gross margin improves as output ramps” gives the user a useful research task.
+以具体的下一步核查收尾。"多读几份报告"太含糊；"查下一份报告是否单独披露该产品收入、毛利率是否随产量爬坡改善"才给用户一个有用的研究任务。

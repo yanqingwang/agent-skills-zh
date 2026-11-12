@@ -1,67 +1,71 @@
-# Task Decomposition Examples
+> **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/agent-teams/skills/task-coordination-strategies/references/task-decomposition.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Practical examples of decomposing features into parallelizable tasks with clear ownership.
+# 任务分解示例
 
-## Example 1: User Authentication Feature
+把功能分解为可并行执行、归属清晰的任务的实战示例。
 
-### Feature Description
+## 示例 1：用户认证功能
 
-Add email/password authentication with login, registration, and profile pages.
+### 功能描述
 
-### Decomposition (Vertical Slices)
+添加邮箱/密码认证，包含登录、注册和个人资料页面。
 
-**Stream 1: Login Flow** (implementer-1)
+### 分解方式（垂直切片）
 
-- Owned files: `src/pages/login.tsx`, `src/api/login.ts`, `tests/login.test.ts`
-- Requirements: Login form, API endpoint, input validation, error handling
-- Interface: Imports `AuthResponse` from `src/types/auth.ts`
+**任务流 1：登录流程**（实现者 1）
 
-**Stream 2: Registration Flow** (implementer-2)
+- 所属文件：`src/pages/login.tsx`、`src/api/login.ts`、`tests/login.test.ts`
+- 需求：登录表单、API 端点、输入校验、错误处理
+- 接口：从 `src/types/auth.ts` 导入 `AuthResponse`
 
-- Owned files: `src/pages/register.tsx`, `src/api/register.ts`, `tests/register.test.ts`
-- Requirements: Registration form, API endpoint, email validation, password strength
-- Interface: Imports `AuthResponse` from `src/types/auth.ts`
+**任务流 2：注册流程**（实现者 2）
 
-**Stream 3: Shared Infrastructure** (implementer-3)
+- 所属文件：`src/pages/register.tsx`、`src/api/register.ts`、`tests/register.test.ts`
+- 需求：注册表单、API 端点、邮箱校验、密码强度
+- 接口：从 `src/types/auth.ts` 导入 `AuthResponse`
 
-- Owned files: `src/types/auth.ts`, `src/middleware/auth.ts`, `src/utils/jwt.ts`
-- Requirements: Type definitions, JWT middleware, token utilities
-- Dependencies: None (other streams depend on this)
+**任务流 3：共享基础设施**（实现者 3）
 
-### Dependency Graph
+- 所属文件：`src/types/auth.ts`、`src/middleware/auth.ts`、`src/utils/jwt.ts`
+- 需求：类型定义、JWT 中间件、token 工具函数
+- 依赖：无（其他任务流都依赖它）
+
+### 依赖图
 
 ```
 Stream 3 (types/middleware) ──→ Stream 1 (login)
                              └→ Stream 2 (registration)
 ```
 
-## Example 2: REST API Endpoints
+## 示例 2：REST API 端点
 
-### Feature Description
+### 功能描述
 
-Add CRUD endpoints for a new "Projects" resource.
+为新的 "Projects" 资源添加 CRUD 端点。
 
-### Decomposition (By Layer)
+### 分解方式（按层）
 
-**Stream 1: Data Layer** (implementer-1)
+**任务流 1：数据层**（实现者 1）
 
-- Owned files: `src/models/project.ts`, `src/migrations/add-projects.ts`, `src/repositories/project-repo.ts`
-- Requirements: Schema definition, migration, repository pattern
-- Dependencies: None
+- 所属文件：`src/models/project.ts`、`src/migrations/add-projects.ts`、`src/repositories/project-repo.ts`
+- 需求：Schema 定义、迁移、Repository 模式
+- 依赖：无
 
-**Stream 2: Business Logic** (implementer-2)
+**任务流 2：业务逻辑**（实现者 2）
 
-- Owned files: `src/services/project-service.ts`, `src/validators/project-validator.ts`
-- Requirements: CRUD operations, validation rules, business logic
-- Dependencies: Blocked by Stream 1 (needs model/repository)
+- 所属文件：`src/services/project-service.ts`、`src/validators/project-validator.ts`
+- 需求：CRUD 操作、校验规则、业务逻辑
+- 依赖：被任务流 1 阻塞（需要模型/Repository）
 
-**Stream 3: API Layer** (implementer-3)
+**任务流 3：API 层**（实现者 3）
 
-- Owned files: `src/routes/projects.ts`, `src/controllers/project-controller.ts`
-- Requirements: REST endpoints, request parsing, response formatting
-- Dependencies: Blocked by Stream 2 (needs service layer)
+- 所属文件：`src/routes/projects.ts`、`src/controllers/project-controller.ts`
+- 需求：REST 端点、请求解析、响应格式化
+- 依赖：被任务流 2 阻塞（需要服务层）
 
-## Task Template
+## 任务模板
 
 ```markdown
 ## Task: {Stream Name}

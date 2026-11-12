@@ -1,22 +1,26 @@
-# Radar / Spider
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-radar.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** comparing 3–5 entities across 3–5 quantitative criteria on a single normalized 0–N scale. Capability matrices, product or backend evaluations, framework/team scorecards. Where a comparison table starts running out of horizontal room, radar makes the shape of each option legible at a glance.
+# 雷达图 / 蜘蛛图
 
-## Layout conventions
+**适用场景：** 在单一归一化的 0–N 刻度上，比较 3–5 个实体在 3–5 项量化标准上的表现。能力矩阵、产品或后端选型评估、框架/团队记分卡。当对比表开始横向放不下时，雷达图让每个选项的形状一眼可读。
 
-- **N axes (3–5).** Equally spaced on a regular polygon-N. First axis at the top (`-90°`), going clockwise. **Above 5 → split or use a comparison table.**
-- **Five concentric grid rings** at fractions `0.2 / 0.4 / 0.6 / 0.8 / 1.0` of the radius. Drawn as closed polygons connecting the axis vertices at that fraction. Inner four at `rule` 0.10 opacity, outer ring at `rule-solid` 0.20 (a hint stronger to anchor the chart).
-- **Axis spokes** from center to each outer vertex. `rule-solid` 0.20 opacity. **No arrowheads.**
-- **Axis labels:** one word per spoke (Jobs-minimal). `node-name` role 11px weight 600. Place 16px outside the outer ring along the axis vector. Top/bottom = `text-anchor="middle"`; right side = `start`; left side = `end`.
-- **Scale ticks** (e.g. `2 4 6 8 10`) only on the **first (top) axis** — putting numbers on every spoke clutters the chart fast. `arrow-label` role 8px, `muted`, anchored end at `cx − 6`.
-- **Series polygon:** stroke 1.5px at the series color, fill the same color at `0.18` opacity (`0.22` in dark). Stroke 1.8px on the focal series — a subtle weight bump.
-- **Vertex dots:** **only on the focal series**, `r=4` filled with the series color. Non-focal series are stroke-and-fill only. This is the load-bearing rule that keeps the chart readable at 4–5 series.
-- **Drawing order:** dots-pattern bg → grid rings → axis spokes → axis labels → scale ticks → non-focal series (smallest area first) → focal series → focal vertex dots → legend.
-- **Legend:** horizontal strip at the bottom (per the global rule). Swatch is a 16×8 rectangle (matches the polygon stroke+fill, not a circle), then the entity name. ~140px between entries. Optional italic tail on the right with the rationale (`"One coral. Position is the signal — color reserved for the recommended option."`).
+## 布局约定
 
-## Math
+- **N 条轴（3–5 条）。** 在正 N 边形上等距分布。第一条轴朝上（`-90°`），顺时针排列。**超过 5 条 → 拆分或改用对比表。**
+- **五圈同心网格环**，分别位于半径的 `0.2 / 0.4 / 0.6 / 0.8 / 1.0` 处。画成连接该比例处各轴顶点的闭合多边形。内四圈用 `rule` 0.10 透明度，最外圈用 `rule-solid` 0.20（略强一点，用来锚住图表）。
+- **轴辐线**从中心连到每个外顶点，`rule-solid` 0.20 透明度。**不带箭头。**
+- **轴标签：** 每条辐线一个词（Jobs 式极简）。`node-name` 角色 11px，字重 600。沿轴向量的方向放在外环之外 16px 处。上/下用 `text-anchor="middle"`；右侧用 `start`；左侧用 `end`。
+- **刻度数值**（如 `2 4 6 8 10`）只放在**第一条（顶部）轴**上，每条辐线都标数字会很快弄脏图表。`arrow-label` 角色 8px，`muted`，锚定端在 `cx − 6`。
+- **序列多边形：** 描边 1.5px，用序列色；填充同色，透明度 `0.18`（深色下 `0.22`）。焦点序列描边 1.8px，一个细微的加粗。
+- **顶点点：** **只放在焦点序列上**，`r=4`，填充序列色。非焦点序列只有描边和填充。这是让图表在 4–5 个序列下仍可读的关键规则。
+- **绘制顺序：** 点纹背景 → 网格环 → 轴辐线 → 轴标签 → 刻度数值 → 非焦点序列（面积小的先画）→ 焦点序列 → 焦点顶点点 → 图例。
+- **图例：** 底部横向条（按全局规则）。色块是 16×8 矩形（对应多边形的描边+填充，不是圆形），后接实体名。条目间距约 140px。右侧可选斜体尾注说明取舍（`"One coral. Position is the signal — color reserved for the recommended option."`）。
 
-For axis `i` (0-indexed) of `N`, value `v` on scale `S`, center `(cx, cy)`, outer radius `R`:
+## 数学
+
+对 `N` 条轴中第 `i` 条（0 起始），刻度 `S` 上的值 `v`，中心 `(cx, cy)`，外半径 `R`：
 
 ```
 angle = -π/2 + 2π · i / N
@@ -24,11 +28,11 @@ x = cx + (v / S) · R · cos(angle)
 y = cy + (v / S) · R · sin(angle)
 ```
 
-A series with values `[v0, v1, ..., v(N-1)]` becomes a `<polygon>` with `points="x0,y0 x1,y1 ..."`.
+值为 `[v0, v1, ..., v(N-1)]` 的序列变成一个 `<polygon>`，`points="x0,y0 x1,y1 ..."`。
 
-### Pre-computed reference (N=5, cx=500, cy=240, R=160, S=10, integer-rounded)
+### 预计算参考（N=5，cx=500，cy=240，R=160，S=10，整数取整）
 
-| Fraction `f` | i=0 (top) | i=1 | i=2 | i=3 | i=4 |
+| 比例 `f` | i=0（顶部） | i=1 | i=2 | i=3 | i=4 |
 |---|---|---|---|---|---|
 | 0.2 | 500,208 | 530,230 | 519,266 | 481,266 | 470,230 |
 | 0.4 | 500,176 | 561,220 | 538,292 | 462,292 | 439,220 |
@@ -36,47 +40,47 @@ A series with values `[v0, v1, ..., v(N-1)]` becomes a `<polygon>` with `points=
 | 0.8 | 500,112 | 622,201 | 575,343 | 425,343 | 378,201 |
 | 1.0 | 500,80  | 652,191 | 594,369 | 406,369 | 348,191 |
 
-For an arbitrary value `v` on axis `i`, take the unit offset from the row above for that axis (e.g. axis 1: offset `(152, -49)` from center) and scale by `v/S`. **Drop coords as integers — fractional pixels in SVG render fine, but integers keep the file scannable.**
+对轴 `i` 上的任意值 `v`，取上表中该轴的单位偏移（如轴 1：相对中心的偏移 `(152, -49)`），再按 `v/S` 缩放。**坐标按整数输出：SVG 里小数像素也能渲染，但整数能让文件更易扫读。**
 
-### Worked example (N=5)
+### 完整算例（N=5）
 
-Series `[9, 8, 9, 9, 9]` on a 0–10 scale becomes:
+0–10 刻度上的序列 `[9, 8, 9, 9, 9]` 变为：
 
 ```svg
 <polygon points="500,96 622,201 585,356 415,356 363,196"
          fill="{accent @ 0.18}" stroke="{accent}" stroke-width="1.8"/>
 ```
 
-Each vertex: `center + (v/10) · (outer_i − center)`, rounded to the nearest pixel.
+每个顶点 = `center + (v/10) · (outer_i − center)`，四舍五入到最近像素。
 
-## Series palette
+## 序列配色
 
-The skill's "1-focal" rule still holds: `accent` is reserved for the focal series, and a small editorial palette (`series-1` through `series-5`, defined in [`style-guide.md`](style-guide.md)) covers the non-focal series. Don't reach for free-form colors.
+本 Skill 的"1 个焦点"规则依然成立：`accent` 保留给焦点序列，非焦点序列用一套小的编辑配色（`series-1` 到 `series-5`，定义在 [`style-guide.md`](style-guide.md)）。不要随手取色。
 
-| Slot | Token | Hue |
+| 槽位 | Token | 色相 |
 |---|---|---|
-| Focal | `accent` | the skin's accent |
-| 1 | `series-1` | sage |
-| 2 | `series-2` | dusty-blue |
-| 3 | `series-3` | mustard |
-| 4 | `series-4` | rust-brown |
-| 5 | `series-5` | slate |
+| 焦点 | `accent` | 皮肤的主题色 |
+| 1 | `series-1` | sage（灰绿） |
+| 2 | `series-2` | dusty-blue（灰蓝） |
+| 3 | `series-3` | mustard（芥末黄） |
+| 4 | `series-4` | rust-brown（铁锈棕） |
+| 5 | `series-5` | slate（石板灰） |
 
-Light and dark values for every slot live in [`style-guide.md` § Series palette](style-guide.md#series-palette-multi-series-chart-types-only).
+每个槽位的浅色与深色值见 [`style-guide.md` § Series palette](style-guide.md#series-palette-multi-series-chart-types-only)。
 
-## Anti-patterns
+## 反模式
 
-- **More than 5 series** → mush. Split into two charts (e.g. "best by latency" + "best by ops") or switch to a comparison table.
-- **Axes on inconsistent native scales** (one 0–100, another 0–1) without normalization. **Always normalize to 0–N first** — radar polygons compare *shapes*, not absolute values.
-- **Zero-baseline tricks** — starting the inner ring at v=5 to amplify differences. The grid starts at 0; if differences look small, that's the truthful reading.
-- **Dots on every series.** Only the focal carries dots. Adding them to all 4–5 series turns the chart into a bead curtain.
-- **Radar with 2 series** — a comparison bar chart or a 2-row table is clearer.
-- **Non-quantitative axes.** All axes must be measurable on the same normalized scale. "Speed" + "color" + "year" mixes don't belong on a radar.
-- **Mono-font axis labels.** Names go in the `node-name` sans family (the global rule). Mono is for technical sublabels only.
-- **Rainbow palette.** Even with the new `series-*` tokens, you don't need all 5 in one chart — use only as many as you have non-focal entities.
+- **超过 5 个序列** → 一团糊。拆成两张图（如"延迟最优" + "运维最优"）或改用对比表。
+- **各轴原始刻度不一致**（一个 0–100，另一个 0–1）却不做归一化。**必须先统一归一化到 0–N**：雷达多边形比较的是*形状*，不是绝对值。
+- **零基线花招**，比如让内环从 v=5 起始以放大差异。网格必须从 0 开始；差异看起来小，那就是真实的读数。
+- **每个序列都带点。** 只有焦点序列带点。给全部 4–5 个序列都加顶点点，图表就变成珠帘。
+- **只有 2 个序列的雷达图**：对比柱状图或两行表格更清楚。
+- **非量化轴。** 所有轴必须在同一归一化刻度上可测。"速度"+"颜色"+"年份"这类混合不该上雷达图。
+- **等宽字体轴标签。** 名称放进 `node-name` 无衬线字族（全局规则）。等宽字体只用于技术副标签。
+- **彩虹配色。** 即使有了新的 `series-*` token，一张图也用不到全部 5 个：有几个非焦点实体就用几个。
 
-## Examples
+## 示例
 
-- `assets/example-radar.html` — minimal light. 4 storage backends × 5 workload dimensions, MinIO focal.
-- `assets/example-radar-dark.html` — minimal dark, same data.
-- `assets/example-radar-full.html` — full editorial: container framing + 4 cards (one per backend) with varied widths + footer.
+- `assets/example-radar.html` — 极简浅色。4 个存储后端 × 5 个工作负载维度，MinIO 为焦点。
+- `assets/example-radar-dark.html` — 极简深色，同一数据。
+- `assets/example-radar-full.html` — 完整编辑排版：容器框 + 4 张卡（每个后端一张）宽度不均 + 页脚。

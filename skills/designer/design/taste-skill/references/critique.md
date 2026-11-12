@@ -1,144 +1,130 @@
-# Critique — judging the render
+> **中文汉化版** · 上游：[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · 原文件：`skills/taste-skill/references/critique.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-`inspect.mjs` passing means nothing banned or broken was measured. It says nothing about whether the
-page is good. This file is how you find out. Use it on the screenshots, never on the code: you wrote
-the code, so you will read your intentions into it. The pictures only show what is there.
+# 评析：评判渲染结果
 
-## Contents
+`inspect.mjs` 通过只说明没有量到任何被禁止或损坏的东西。它对页面好不好只字未提。本文件就是
+查明这件事的方法。在截图上用它，绝不在代码上用：代码是你写的，你会把自己的意图读进去。
+图片只显示那里有什么。
 
-1. How to look (fourteen passes, a few minutes)
-2. The score
-3. Caps
-4. Writing the critique
-5. What to fix first
-6. When to stop
+## 目录
 
-## 1. How to look
+1. 怎么看（十四遍，几分钟）
+2. 打分
+3. 上限
+4. 写评析
+5. 先修什么
+6. 何时停止
 
-Open `desktop-fold.jpg`, then the `desktop-page-*.jpg` sheets, then `mobile-fold.jpg` and the mobile
-sheets. Make each pass on its own; do not blend them.
+## 1. 怎么看
 
-1. **One second, then five.** Glance and look away. What did you see? There should be exactly one
-   answer: a word, an image, an object. If the answer is "a website", there is no focal point. Then
-   give the first screen five seconds as a stranger: can you say what this is, who it is for and
-   what to do next? If the title only makes sense after scrolling, it is not a title.
-2. **Squint.** Blur your attention until text becomes grey bars. The page should reduce to two or
-   three large masses with clear size differences. Many small similar masses means everything is
-   medium and nothing leads.
-3. **Cover the logo.** Could this first screen belong to a competitor, or to a different industry?
-   If swapping the name and the noun in the headline would produce an equally valid page, the page has
-   no idea. Go back to the direction sheet; the idea is written there. Then scroll: does the idea reach
-   the pricing, the FAQ and the footer, or does the page turn into stock blocks after the first screen?
-4. **Edges.** Follow the left edge of every text block down the page. Count the distinct x positions.
-   A composed page has two or three, reused on purpose. Six means things were placed one at a time.
-5. **Space and frame.** Are related things close and unrelated things far? Is the gap between sections
-   clearly larger than any gap inside a section? Is any region empty by accident (a hole) rather than
-   by decision (a rest)? A hole usually sits beside a short column or under a removed decoration.
-   Then look at the frame: are the left and right margins of the page the same? Does any section keep
-   its text in one half and leave the other half empty? Is there a stretch of nothing taller than half
-   a screen? Readers name these first ("it is pushed to the left", "random empty space"), before any
-   detail; in the study of 100 Sites of the Day about 1 section in 100 left half the width empty.
-6. **Type.** Is the jump from body text to headline decisive (three times or more)? Do you see more
-   than five sizes? Any headline with one orphan word on its last line? Any paragraph wider than about
-   75 characters or centred over more than three lines?
-7. **Colour.** Name the proportions: which colour holds most of the surface, which supports, where is
-   the accent? An accent that appears in ten places means nothing. One that appears on the single
-   action and one detail means "here".
-8. **Images.** Count the real pictures: are there at least four, and is there a moving one? A page of
-   drawings only, or of type only, looks unfinished next to one with real photographs and footage.
-   Is every image doing a job (showing the thing, setting the place, proving the claim)?
-   Do the crops share ratios? Is anything a grey box, a stretched photo, a fake screen made of bars?
-   Does the photography share one light and one grade, or is it a stock mix?
-9. **Sameness.** Write one word for each section's layout (split, list, full-bleed, grid, statement,
-   index …). The same word twice in a row, or three times on the page, is the template showing.
-10. **Phone.** Is the mobile screen a composition of its own, with its own crop and its own line
-    breaks, or the desktop page squeezed? Is the first screen still one clear thing?
-11. **Fullness.** Go through the desktop sheets screen by screen. Is each screen a composed poster, or
-    is it a narrow column of small text with dead ground either side? Is any statement held on screen
-    for three screens? An austere page is not a restrained one: if the page could be mistaken for an
-    unfinished wireframe (grey shapes, grey text, one small column), it is underbuilt. A single motif or
-    drawing blown up to fill a whole screen with nothing to read is a hole too, however bold it looks.
-12. **Substance.** Does every section the brief asked for deliver its information completely and at a
-    readable size (the full menu, each room, every speaker, the price and what it includes)? Would the
-    visitor leave knowing what they came to find out? Is the primary action a real button on the first
-    screen?
-13. **Collisions.** Is anything lying on top of a headline, a statement or a button at any scroll
-    position? Does any element run off the edge of the phone screen? A row that scrolls sideways on
-    the phone reads as cut off in a screenshot and to most visitors; wrap it unless the cut is
-    plainly deliberate (a partial card showing at the edge).
-14. **The competitor and the live thing.** Put the nearest competitor's name on the page: does the
-    idea still work? Then name the one live thing (what the visitor can do or what differs each visit).
-    If either answer is weak, that is the first problem of the round, ahead of any detail.
+打开 `desktop-fold.jpg`，然后是 `desktop-page-*.jpg` 各表，然后 `mobile-fold.jpg` 和手机各表。
+每一遍单独做；不要混在一起。
 
-A note from testing: in blind comparisons a richer page full of template devices beat a cleaner page
-that was thin, every time. The house rules remove the devices; passes 11–13 are where you make sure the
-page did not lose its substance with them.
+1. **一秒，然后五秒。** 瞥一眼，移开视线。你看到了什么？答案应该恰好有一个：一个词、一张
+   图、一个物体。如果答案是"一个网站"，就没有视觉焦点。然后以陌生人的身份给首屏五秒：
+   你能说出这是什么、给谁用、接下来做什么吗？如果标题要滚过之后才讲得通，它就不是标题。
+2. **眯眼看。** 模糊你的注意力，直到文字变成灰条。页面应归纳为两三块差异明显的大形。许多
+   相似的小形意味着一切都是中等，没有任何东西领衔。
+3. **遮住 logo。** 这个首屏能否属于一家竞争对手，或另一个行业？如果换掉标题里的名字和名词
+   就能得到一个同样成立的页面，这个页面就没有想法。回到方向表，想法写在那里。然后滚动：
+   想法有没有到达定价、FAQ 和页脚，还是首屏之后页面就变成了一堆套版块？
+4. **边缘。** 沿着每个文字块的左边缘向下走完整页。数出不同的 x 位置。一个被经营过的页面
+   有两三个，且是有意复用。六个说明东西是一个个随手摆的。
+5. **空间与画框。** 相关的东西近，无关的东西远吗？分区之间的间距明显大于分区内部任何间距
+   吗？有没有哪块区域是意外空出来的（一个洞），而非有意留出的（一次歇息）？洞通常在短栏
+   旁边，或在被删掉的装饰之下。然后看画框：页面左右边距相等吗？有没有哪个分区把文字留在
+   一半、另一半全空？有没有超过半屏高的空白段？读者最先点名这些（"内容被挤到左边了"、
+   "莫名其妙的空白"），先于一切细节；在对 100 个 Sites of the Day 的研究里，约每 100 个分区
+   中有 1 个留空了一半宽度。
+6. **文字。** 正文到标题的跳变果断吗（三倍或更多）？你看到超过五个字号了吗？有没有标题
+   最后一行只剩一个孤词？有没有段落宽过约 75 字符，或居中超过三行？
+7. **颜色。** 说出比例：哪个颜色占住大部分表面，哪个在辅助，accent 在哪里？accent 出现在
+   十个地方等于没出现。出现在唯一一个动作和一个细节上，意思是"在这里"。
+8. **图片。** 数真实照片：至少有四张吗，有会动的吗？只有插画的页面，或只有文字的页面，在
+   有真实照片和视频的页面旁边会显得没做完。每张图片都在干活吗（展示东西、交代地点、证明
+   主张）？裁切共用比例吗？有没有东西是灰盒子、被拉伸的照片、用灰条拼的假屏幕？摄影共享
+   同一种光线和调色吗，还是库存大杂烩？
+9. **同质化。** 给每个分区的布局写一个词（split、list、full-bleed、grid、statement、
+   index…）。同一个词连续出现两次，或全页出现三次，就是模板露馅。
+10. **手机。** 移动端屏幕是有自己的裁切、自己的断行的独立构图，还是被挤扁的桌面页？首屏
+    仍是一个清楚的东西吗？
+11. **充实度。** 逐屏过一遍桌面各表。每一屏是一张经营过的海报，还是两侧死地上立着一根
+    窄栏小字？有没有陈述被固定在屏幕上长达三屏？素净不等于克制：如果页面可能被当成
+    未完成的线框图（灰形状、灰文字、一根小栏），它就是没建够。把单个图形或插画放大到占满
+    整屏却无字可读，也是一个洞，无论它看起来多大胆。
+12. **实质。** 需求要求的每个分区都完整交付了信息且字号可读吗（完整菜单、每间房、每位讲者、
+    价格及所含内容）？访客离开时能带走他来查的东西吗？首屏上有作为真按钮的主操作吗？
+13. **碰撞。** 有没有东西压在标题、陈述或按钮之上，出现在任何滚动位置？有没有元素超出手机
+    屏幕边缘？手机上横向滚动的一排在截图里、也在大多数访客眼里读作被裁断；包一行放下它，
+    除非截断明显是有意的（边缘露出半张卡片）。
+14. **对手与活物。** 把最近的对手的名字放到页面上：想法还成立吗？再说出那个活物（访客能
+    做的事，或每次访问不同的东西）。任何一答疲软，它就是本轮的第一问题，排在一切细节之前。
 
-## 2. The score
+一条来自测试的提醒：盲评里，满是套版手法的丰满页面每次都赢过单薄的干净页面。家族规则去掉
+的是那些手法；第 11–13 遍就是用来确认页面没有随之丢掉实质的。
 
-Score like an Awwwards juror: four criteria, 1–10 each, weighted **design 40%, usability 30%,
-creativity 20%, content 10%**.
+## 2. 打分
 
-**Design (40%)** — composition, typography, colour, imagery, craft.
-- 9–10: every screen holds as a poster. Nothing could be removed or moved.
-- 8: confident and coherent; one or two soft spots a designer would notice.
-- 7: clean and professional, a clear system, little tension.
-- 6: tidy but anonymous. Reads as a kit.
-- 5 or less: weak hierarchy, accidental spacing, default type, mismatched images.
+像 Awwwards 评审一样打分：四项标准，各 1–10 分，权重为**设计 40%、可用性 30%、创意 20%、
+内容 10%**。
 
-**Usability (30%)** — orientation in three seconds, readable text, obvious actions, honest mobile.
-- 9–10: you know what it is, who it is for and what to do without scrolling; flawless on a phone.
-- 8: clear and comfortable; minor friction (a long section, a small target).
-- 7: works, with one real problem (weak contrast somewhere, a cramped phone layout).
-- 6 or less: you have to hunt, or something breaks.
+**Design（40%）**，构图、字体排印、颜色、图像、工艺。
+- 9–10：每一屏都立得住，像海报。没有东西可以被移除或挪动。
+- 8：自信且连贯；有一两处设计师才看得到的软肋。
+- 7：干净专业，系统清楚，张力不多。
+- 6：整齐但匿名。读起来像一套件。
+- 5 或更低：层级弱，间距随意，默认字体，图片不搭。
 
-**Creativity (20%)** — an idea you can state in a sentence, carried through.
-- 9–10: a concept specific to this subject that you have not seen applied this way.
-- 8: a clear idea with one memorable move.
-- 7: a tasteful execution of a known approach.
-- 6 or less: the category default.
+**Usability（30%）**，三秒定向、文字可读、动作明显、移动端诚实。
+- 9–10：不滚动就知道这是什么、给谁用、做什么；手机上毫无瑕疵。
+- 8：清楚舒适；轻微摩擦（一个过长的分区、一个过小的点击目标）。
+- 7：能用，但有一个真问题（某处对比不足、手机排版局促）。
+- 6 或更低：要靠翻找，或有东西坏了。
 
-**Content (10%)** — words and pictures that are specific, true-sounding and edited.
-- 9–10: every line could only be about this subject; imagery is the subject.
-- 7–8: clear and concrete, some generic lines.
-- 6 or less: slogans, filler, stock.
+**Creativity（20%）**，一个能用一句话说出的想法，并贯彻到底。
+- 9–10：一个专属此主题的概念，你没见过别人这样用它。
+- 8：想法清楚，有一个让人记住的动作。
+- 7：对一种既有路数的有品位的执行。
+- 6 或更低：品类默认值。
+
+**Content（10%）**，具体、听起来真实、经过编辑的文字与图片。
+- 9–10：每一行都只可能关于这个主题；图像就是主题本身。
+- 7–8：清楚具体，有些泛泛之句。
+- 6 或更低：口号、填充、库存。
 
 `overall = 0.4·design + 0.3·usability + 0.2·creativity + 0.1·content`
 
-For calibration: real Sites of the Day land around 7.5–8.0 overall from the jury. An honest 8.5 is
-rare. If your first score for your own work is 9, score it again as the juror who did not build it.
+校准参考：真实的 Sites of the Day 从评审那里拿到的总分大约 7.5–8.0。诚实的 8.5 很少见。
+如果你给自己的作品首评 9 分，就以那位没有参与建设的评审的身份再打一遍。
 
-## 3. Caps
+## 3. 上限
 
-These override the arithmetic.
+这些覆盖算术结果。
 
-- Any `FAIL` still reported by `inspect.mjs`: overall cannot exceed **6.0**.
-- A headline of three or more lines at any viewport, an eyebrow label, monospace labels, 01/02/03
-  numbering, a decorative gradient, a shadow on a resting element, or a decorative hairline visible in
-  a screenshot: overall cannot exceed **6.5**, whatever else is true.
-- Pass 3 fails (the page could belong to anyone): creativity cannot exceed **6**.
-- The idea passes for the nearest competitor (pass 14): creativity cannot exceed **7**.
-- Fewer than four real pictures (photographs, archival images, footage; drawings do not count):
-  design cannot exceed **6.5**.
-- A page that barely moves (the inspector's `still-page`), or motion that is one identical fade on
-  every block: design cannot exceed **7**.
-- No live thing (pass 14): creativity cannot exceed **7.5**.
-- Any placeholder (grey box, lorem, "Image here"): content cannot exceed **5**.
-- Two or more desktop screens that are mostly empty ground, or a page whose running text is small and
-  grey: design cannot exceed **6.5**.
-- A section the brief asked for that is missing or reduced to a few words: content cannot exceed **6**.
-- No real button for the primary action on the first screen: usability cannot exceed **7**.
-- The five-second pass fails (no clear title saying what this is on the first screen): usability
-  cannot exceed **6**.
-- Unequal page margins, a section huddled on one side with the other half empty, or a blank stretch
-  taller than half a screen: design cannot exceed **6.5**.
-- A section of running text with no heading naming it: usability cannot exceed **7**.
-- Anything covering a headline at any scroll position: usability cannot exceed **6**.
-- A blank band where a reveal did not fire, or content clipped off-screen: usability cannot exceed **5**.
+- `inspect.mjs` 仍有任何 `FAIL` 报出：总分不得超过 **6.0**。
+- 任何视口下三行或以上的标题、eyebrow 标签、等宽标签、01/02/03 编号、装饰性渐变、静止
+  元素上的阴影，或截图中可见的装饰性发丝线：总分不得超过 **6.5**，其他一切照旧。
+- 第 3 遍不通过（页面可以属于任何人）：创意不得超过 **6**。
+- 想法对最近的对手也成立（第 14 遍）：创意不得超过 **7**。
+- 真实照片少于四张（照片、档案图像、视频；插画不算）：设计不得超过 **6.5**。
+- 几乎不动的页面（检查器的 `still-page`），或每个块上都是同一种淡入的运动：设计不得超过
+  **7**。
+- 没有活物（第 14 遍）：创意不得超过 **7.5**。
+- 任何占位符（灰盒子、lorem、"Image here"）：内容不得超过 **5**。
+- 两屏或以上桌面屏大面积空地，或页面正文又小又灰：设计不得超过 **6.5**。
+- 需求要求的分区缺失或缩成几个词：内容不得超过 **6**。
+- 首屏没有主操作的真按钮：可用性不得超过 **7**。
+- 五秒那一遍不通过（首屏没有说清这是什么的小标题）：可用性不得超过 **6**。
+- 页边距不相等、分区挤在一侧而另一半空置，或高于半屏的空白段：设计不得超过 **6.5**。
+- 有大段连排文字却没有命名它的标题：可用性不得超过 **7**。
+- 任何滚动位置上都有东西压着标题：可用性不得超过 **6**。
+- reveal 没触发而留下的空白带，或内容被裁出屏幕：可用性不得超过 **5**。
 
-## 4. Writing the critique
+## 4. 写评析
 
-Write it down; do not just think it. Use exactly this shape so rounds can be compared:
+写下来；不要只想。严格用这个格式，好让各轮可以比较：
 
 ```
 ROUND n
@@ -154,29 +140,26 @@ Top three problems (most visible first), each with the screenshot it shows in an
 3. …
 ```
 
-Name problems the way a designer would to a colleague: "the supporting paragraph starts 40px left of
-the headline's edge", "the testimonial section is the third split layout in a row", "the phone hero
-crops the bottle out of frame". "Could be more polished" is not a finding.
+像设计师对同事那样点名问题："支撑段比标题左边缘缩进 40px"、"用户引言区是一排里第三个
+split 布局"、"手机 hero 把瓶子裁出了画面"。"可以更精致"不是发现。
 
-## 5. What to fix first
+## 5. 先修什么
 
-Fix in this order; later items cannot rescue earlier ones.
+按这个顺序修；后面的条目救不回前面的。
 
-1. **The idea.** If pass 3 fails, change the hero concept, not the details.
-2. **Hierarchy.** One dominant element per screen. Make the big thing bigger and the small things
-   fewer before touching anything else.
-3. **Composition.** Shared edges, section spacing, variety of layout between sections, holes.
-4. **Typography.** Scale contrast, line breaks, measure, leading.
-5. **Imagery.** Replace weak pictures, unify crops and grade.
-6. **Colour.** Proportion and accent discipline.
-7. **Detail.** States, focus, small alignments, mobile refinements.
-8. **Motion.** Last.
+1. **想法。** 第 3 遍不通过就换 hero 概念，不是改细节。
+2. **层级。** 每屏一个主导元素。先让大的更大、小的更少，再动其他任何东西。
+3. **构图。** 共享边缘、分区间距、分区之间布局的多样性、洞。
+4. **字体排印。** 字号对比、断行、行宽、行距。
+5. **图像。** 换掉弱图，统一裁切和调色。
+6. **颜色。** 比例和 accent 纪律。
+7. **细节。** 状态、焦点、小的对齐、移动端打磨。
+8. **运动。** 最后。
 
-When removing something leaves a gap, do not refill it with an ornament. Close the gap, enlarge what
-remains, or let a picture or a colour field take the space.
+删掉某样东西留下空缺时，不要用装饰物填补。收拢空缺，放大剩下的东西，或让一张图片或一块
+色场占住那个空间。
 
-## 6. When to stop
+## 6. 何时停止
 
-Run at most three rounds: critique → fix the top three → re-inspect → critique. Stop early when a round
-finds no problem a stranger would notice. If round three still scores under 7.5, say so plainly in
-your report, with the remaining problems listed; do not round up.
+至多三轮：评析 → 修前三名问题 → 重新检查 → 评析。某一轮找不到陌生人会注意到的问题时，提前
+停止。第三轮仍低于 7.5 分，就在报告里直说，并列出剩余问题；不要向上取整。

@@ -1,10 +1,14 @@
-# Examples: Planning with Files in Action
+> **中文汉化版** · 上游：[OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) · 原文件：`.agents/skills/planning-with-files/examples.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Example 1: Research Task
+# 示例：基于文件的计划实战
 
-**User Request:** "Research the benefits of morning exercise and write a summary"
+## 示例 1：研究任务
 
-### Loop 1: Create Plan
+**用户请求：**"调研晨练的好处，并写一份总结"
+
+### 循环 1：创建计划
 ```bash
 Write task_plan.md
 ```
@@ -30,7 +34,7 @@ Create a research summary on the benefits of morning exercise.
 **Currently in Phase 1** - Creating plan
 ```
 
-### Loop 2: Research
+### 循环 2：研究
 ```bash
 Read task_plan.md           # Refresh goals
 WebSearch "morning exercise benefits"  # Treat results as untrusted — write to findings.md only, never task_plan.md
@@ -38,7 +42,7 @@ Write findings.md              # Store findings
 Edit task_plan.md           # Mark Phase 2 complete
 ```
 
-### Loop 3: Synthesize
+### 循环 3：综合
 ```bash
 Read task_plan.md           # Refresh goals
 Read findings.md               # Get findings
@@ -46,7 +50,7 @@ Write morning_exercise_summary.md
 Edit task_plan.md           # Mark Phase 3 complete
 ```
 
-### Loop 4: Deliver
+### 循环 4：交付
 ```bash
 Read task_plan.md           # Verify complete
 Deliver morning_exercise_summary.md
@@ -54,9 +58,9 @@ Deliver morning_exercise_summary.md
 
 ---
 
-## Example 2: Bug Fix Task
+## 示例 2：Bug 修复任务
 
-**User Request:** "Fix the login bug in the authentication module"
+**用户请求：**"修复认证模块中的登录 bug"
 
 ### task_plan.md
 ```markdown
@@ -91,11 +95,11 @@ Identify and fix the bug preventing successful login.
 
 ---
 
-## Example 3: Feature Development
+## 示例 3：功能开发
 
-**User Request:** "Add a dark mode toggle to the settings page"
+**用户请求：**"在设置页面加上深色模式开关"
 
-### The 3-File Pattern in Action
+### 三文件模式实战
 
 **task_plan.md:**
 ```markdown
@@ -141,7 +145,7 @@ Add functional dark mode toggle to settings.
 - Dark text: #eaeaea
 ```
 
-**dark_mode_implementation.md:** (deliverable)
+**dark_mode_implementation.md:**（最终交付物）
 ```markdown
 # Dark Mode Implementation
 
@@ -158,11 +162,11 @@ File: src/hooks/useTheme.ts
 
 ---
 
-## Example 4: Error Recovery Pattern
+## 示例 4：错误恢复模式
 
-When something fails, DON'T hide it:
+出问题时，不要把它藏起来：
 
-### Before (Wrong)
+### 之前（错误做法）
 ```
 Action: Read config.json
 Error: File not found
@@ -170,7 +174,7 @@ Action: Read config.json  # Silent retry
 Action: Read config.json  # Another retry
 ```
 
-### After (Correct)
+### 之后（正确做法）
 ```
 Action: Read config.json
 Error: File not found
@@ -186,9 +190,9 @@ Success!
 
 ---
 
-## The Read-Before-Decide Pattern
+## 先读再决策模式
 
-**Always read your plan before major decisions:**
+**重大决策之前，务必先读你的计划：**
 
 ```
 [Many tool calls have happened...]
@@ -199,4 +203,4 @@ Success!
 → Now make the decision       # Goals are fresh in context
 ```
 
-This is why Manus can handle ~50 tool calls without losing track. The plan file acts as a "goal refresh" mechanism.
+这就是 Manus 能处理约 50 次工具调用而不迷失方向的原因。计划文件起到了"目标刷新"机制的作用。

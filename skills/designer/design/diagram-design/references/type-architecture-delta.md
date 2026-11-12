@@ -1,96 +1,100 @@
-# Architecture delta
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-architecture-delta.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** explaining a system migration, service extraction, infrastructure redesign, or integration change through two synchronized topology snapshots. Show which components and relationships survive, appear, disappear, change their properties, move, or reconnect.
+# 架构增量图
 
-**Not this type:**
+**适用场景：** 用两张同步的拓扑快照，解释系统迁移、服务抽取、基础设施重构或集成变更。展示哪些组件与关系存续、出现、消失、属性变化、移动或重新连接。
 
-- One system snapshot → **Architecture** (`type-architecture.md`).
-- Attribute-only differences without a topology story → a **comparison table**. Two versions of a configuration do not need two node maps.
-- Requests over time → **Sequence** (`type-sequence.md`); deployment phases → **Timeline** (`type-timeline.md`). A delta has exactly two states and does not establish migration order, downtime, or causality.
-- Host/container placement in one environment → **Deployment** (`type-deployment.md`).
+**不适合本类型：**
 
-## Layout conventions
+- 单一系统的快照 → **架构图**（`type-architecture.md`）。
+- 只有属性差异、没有拓扑故事 → **对比表**。两版配置不需要两张节点图。
+- 随时间变化的请求 → **时序图**（`type-sequence.md`）；部署阶段 → **时间线**（`type-timeline.md`）。增量图只有两个状态，不建立迁移顺序、停机或因果。
+- 单一环境内的主机/容器放置 → **部署图**（`type-deployment.md`）。
 
-- **Three panels, one reading order: Before · Changes · After.** Both topology panels use the same width, height, and internal grid pitch. The center panel is a short change ledger, not a third topology. Name the two snapshots with meaningful versions or dates.
-- **Keep the mental map stable.** Start by copying the Before coordinates into After. Move a retained component only when its movement is part of the story and receives a `MOVED` entry. Do not independently run a layout algorithm on each panel.
-- **Panel positions are not component positions.** Put each snapshot in one SVG `<g transform="translate(x y)">`; write component bounds and relationship paths in local coordinates. The Before and After origins share one y-coordinate, with the ledger occupying the horizontal gap.
-- **Shared grid:** use a 4px pitch by default. Every component's local x, y, width, and height is a multiple of that pitch. The shipped example uses two `336 480 4` grids; scale the overall SVG responsively without changing their local geometry.
-- **Budget:** at most **8 unique components**, **10 unique relationships**, and **8 ledger entries** across the complete comparison. A retained ID counts once, not once per snapshot. A component that is both changed and moved consumes two ledger entries. Split larger migrations into named subsystems or phases; never drop edges to fit.
-- **Connectors:** use Architecture's rounded orthogonal routing and port rules. In this type, even straight connectors are `<path>` elements so relationship identity and endpoints have one grammar. Draw paths before components. A stable relationship may take a different route to meet a moved component without becoming `REWIRED`.
-- **Nodes:** print the same stable ID in both states along with the human-readable name. Treat names, responsibilities, implementation versions, and protocols as semantic attributes; identities survive a rename when the underlying object survives.
-- **Ledger:** one brief entry per `(object ID, change)` pair. Begin with the uppercase change word, name the object, and state the actual difference. Do not describe unchanged objects in the ledger. Keep a readable text measure, with wrapped `<tspan>` lines when needed.
-- **Responsive presentation:** preserve the three-panel comparison on small screens with an accessible horizontal scroll region and a visible scroll hint. Do not compress labels until they become illegible or stack snapshots into independently scaled pictures. Print and export keep the whole comparison.
+## 版式约定
 
-## Change vocabulary and redundant encoding
+- **三栏，一个阅读顺序：Before · Changes · After。** 两张拓扑栏同宽、同高、同内部网格间距。中栏是简短的变更台账，不是第三张拓扑。用有意义的版本号或日期为两张快照命名。
+- **保持心理地图稳定。** 先把 Before 的坐标复制进 After。仅当某个留存组件的移动本身是故事的一部分、且获得 `MOVED` 条目时才移动它。不要对每一栏独立跑布局算法。
+- **栏位位置不是组件位置。** 每张快照放进一个 SVG `<g transform="translate(x y)">`；组件边界与关系路径写在局部坐标中。Before 与 After 的原点共享一个 y 坐标，台账占据水平间隙。
+- **共享网格：** 默认 4px 间距。每个组件的局部 x、y、宽、高都是该间距的倍数。随附示例使用两个 `336 480 4` 网格；整体 SVG 响应式缩放时不改变它们的局部几何。
+- **预算：** 整个对比最多 **8 个唯一组件**、**10 条唯一关系**、**8 条台账条目**。一个留存 ID 只计一次，不是每张快照各计一次。既 changed 又 moved 的组件消耗两条台账条目。更大的迁移拆成命名的子系统或阶段；绝不为了塞下而删边。
+- **连接线：** 使用架构图的圆角正交路由与挂点规则。本类型中，连直线连接线也是 `<path>` 元素，让关系身份与端点共用一套语法。路径先于组件绘制。一条稳定关系可以改道去接一个移动过的组件，而不算 `REWIRED`。
+- **节点：** 两个状态中都打印同一个稳定 ID 与人类可读名称。把名称、职责、实现版本与协议当作语义属性；底层对象存续时，改名不断绝身份。
+- **台账：** 每个 `(object ID, change)` 对一条简短条目。以大写变更词开头，点名对象，陈述实际差异。台账中不描述未变化的对象。保持可读的文字宽度，需要时用换行的 `<tspan>`。
+- **响应式呈现：** 小屏幕上保留三栏对比，提供可访问的水平滚动区域与可见的滚动提示。不要把标签压缩到无法辨认，也不要把两张快照堆成各自缩放的图。打印与导出保留完整对比。
 
-Color is secondary. Every change is readable from text plus a shape or line treatment; unchanged objects remain quiet context. Use the existing skin tokens and reserve the accent for the editorial focus, rather than assigning five status colors.
+## 变更词汇与冗余编码
 
-| State | Meaning | Non-color treatment |
+颜色是次要的。每个变更都能从文字加形状或线型处理读出；未变化的对象保持安静的背景。使用既有皮肤 token，把 accent 留给编辑焦点，而不是分配五种状态色。
+
+| 状态 | 含义 | 非颜色处理 |
 |---|---|---|
-| `unchanged` | Same identity, semantics, position, and endpoints | Plain solid outline; no ledger entry |
-| `added` / **ADDED** | Present only in After | `+` badge or plus-shaped marker; solid outline |
-| `removed` / **REMOVED** | Present only in Before | `−` badge and dashed outline/path |
-| `changed` / **CHANGED** | Retained object whose semantic signature differs | `Δ` badge or inset rule, plus an explicit old → new ledger description |
-| `moved` / **MOVED** | Retained component whose local x or y differs | Direction/position marker and a ledger entry naming the relocation |
-| `rewired` / **REWIRED** | Retained relationship whose ordered source/target IDs differ | Distinct dash treatment or endpoint marker, with old → new endpoints written in the ledger |
+| `unchanged` | 同一身份、语义、位置与端点 | 普通实线轮廓；无台账条目 |
+| `added` / **ADDED** | 仅在 After 中出现 | `+` 徽章或加号形标记；实线轮廓 |
+| `removed` / **REMOVED** | 仅在 Before 中出现 | `−` 徽章加虚线轮廓/路径 |
+| `changed` / **CHANGED** | 语义签名不同的留存对象 | `Δ` 徽章或内嵌线，外加显式的旧 → 新台账描述 |
+| `moved` / **MOVED** | 局部 x 或 y 不同的留存组件 | 方向/位置标记，加一条点明迁移的台账条目 |
+| `rewired` / **REWIRED** | 有序 source/target ID 不同的留存关系 | 不同的虚线处理或端点标记，旧 → 新端点写入台账 |
 
-Do not use a missing After node to stand for a removal without a `REMOVED` entry. Do not substitute an `ADDED` edge for a `REWIRED` edge just to avoid explaining endpoint identity. A replacement component gets a new stable ID and separate removal/addition entries; its location alone cannot establish continuity.
+不要用 After 中缺失的节点代替一条没有 `REMOVED` 条目的删除。不要为了回避解释端点身份，就用 `ADDED` 边顶替 `REWIRED` 边。被替换的组件获得新的稳定 ID 与独立的删除/新增条目；仅凭位置无法确立连续性。
 
-## Public HTML metadata contract
+## 公开的 HTML 元数据契约
 
-This is the authoring and validation surface, not a serialization inferred from visible labels. All attributes below are required where applicable; empty, boolean, duplicate, or malformed declarations are findings. IDs are case-sensitive and match `[A-Za-z][A-Za-z0-9_.:-]*`; they contain no whitespace.
+这是编写与校验面，不是从可见标签反推的序列化。以下属性在适用处全部必需；空的、布尔式的、重复的或畸形的声明都算 finding。ID 区分大小写，匹配 `[A-Za-z][A-Za-z0-9_.:-]*`；不含空白。
 
-### Diagram and snapshots
+### 图与快照
 
-The file has exactly one `<svg data-diagram="architecture-delta">`. Keep the standard accessible SVG title/description contract. Two direct child `<g>` elements declare `data-snapshot="before"` and `data-snapshot="after"`. Each has:
+文件恰好有一个 `<svg data-diagram="architecture-delta">`。保留标准的可访问 SVG title/description 契约。两个直接子 `<g>` 元素声明 `data-snapshot="before"` 与 `data-snapshot="after"`。各自具备：
 
-- `data-grid="<width> <height> <pitch>"`: the same three positive finite numbers in both panels. Width and height are multiples of pitch.
-- `transform="translate(<x> <y>)"`: exactly one finite two-number translation, solely for the panel origin. Comma-separated translations are also accepted.
+- `data-grid="<width> <height> <pitch>"`：两张栏中相同的三个正有限数。宽与高必须是间距的倍数。
+- `transform="translate(<x> <y>)"`：恰好一个有限的两数平移，仅用于栏位原点。也接受逗号分隔的平移。
 
-Snapshot membership is inherited from the enclosing group. An object cannot be outside both snapshots, in nested snapshots, or nested inside another object. Other geometry transforms, nested SVG viewports, SVG animation, `<use>`, and foreign objects are outside this static grammar. Do not put objects or ledger entries in `<defs>`, `<symbol>`, templates, or other nonrendering containers.
+对象归属从外层分组继承。对象不能同时在两张快照之外、处于嵌套快照中、或嵌套在另一个对象内部。其他几何变换、嵌套 SVG 视口、SVG 动画、`<use>` 与外来对象都在此静态语法之外。不要把对象或台账条目放进 `<defs>`、`<symbol>`、模板或其他不渲染的容器。
 
-### Components
+### 组件
 
-Each component is a `<g>` declaring:
+每个组件是一个 `<g>`，声明：
 
-| Attribute | Contract |
+| 属性 | 契约 |
 |---|---|
-| `data-kind="component"` | Identifies a component group |
-| `data-object-id` | Stable object identity, unique within each snapshot |
-| `data-status` | One lowercase state or the space-separated combination `changed moved` |
-| `data-signature` | Nonempty semantic signature; see the signature rules below |
+| `data-kind="component"` | 标识组件分组 |
+| `data-object-id` | 稳定对象身份，在各快照内唯一 |
+| `data-status` | 一个小写状态，或空格分隔的组合 `changed moved` |
+| `data-signature` | 非空语义签名；见下方签名规则 |
 
-The group contains exactly one **direct** `<rect data-role="bounds">` with explicit finite numeric `x`, `y`, `width`, and `height`. Position is nonnegative, size is positive, and the rectangle stays inside its local grid. All four values align with grid pitch. These are the actual drawn node bounds, not a hidden proxy rectangle.
+分组内恰好包含一个**直接**的 `<rect data-role="bounds">`，带显式的有限数值 `x`、`y`、`width`、`height`。位置非负，尺寸为正，矩形落在其局部网格之内。四个值全部对齐网格间距。这些就是实际绘制的节点边界，不是隐藏的代理矩形。
 
-### Relationships
+### 关系
 
-Each relationship is a `<path>` with `data-kind="relationship"`, `data-object-id`, `data-status`, `data-signature`, and `data-from` / `data-to`. Its stable ID is separate from component IDs. Both endpoints resolve to component IDs in the **same snapshot**. Endpoint order is directional: swapping source and target is a rewire.
+每条关系是一个 `<path>`，带 `data-kind="relationship"`、`data-object-id`、`data-status`、`data-signature` 与 `data-from` / `data-to`。其稳定 ID 与组件 ID 相互独立。两个端点都解析为**同一张快照**内的组件 ID。端点顺序有方向：交换 source 与 target 就是一次 rewire。
 
-Every path inside a snapshot and outside a component is a relationship and must carry the complete metadata. Decorative paths belong inside their component, or outside the snapshot for panel rules and ledger separators. Deleting all metadata from a connector must not make it disappear from validation.
+快照之内、组件之外的每条 path 都是关系，必须携带完整元数据。装饰性路径属于组件内部，或位于快照之外（如栏位规则线与台账分隔线）。把连接线上的元数据全部删掉，它也不能从校验中消失。
 
-Relationship statuses are `unchanged`, `added`, `removed`, `changed`, `rewired`, or the combination `changed rewired`. `moved` applies to components only; `rewired` applies to relationships only. `unchanged`, `added`, and `removed` cannot be combined with any other token.
+关系状态为 `unchanged`、`added`、`removed`、`changed`、`rewired`，或组合 `changed rewired`。`moved` 只适用于组件；`rewired` 只适用于关系。`unchanged`、`added`、`removed` 不得与任何其他 token 组合。
 
-The `d` attribute is one absolute `M` followed by absolute `L`, `H`, `V`, `Q`, or `C` segments. Implicit repeated coordinate groups are accepted. Relative commands, additional subpaths, closed paths, arcs, missing coordinates, and non-finite coordinates fail closed. Use orthogonal lines and quadratic corners for the standard layout; cubic segments are available for a small crossing bridge. Endpoints and control points remain inside the local grid. The path's start meets the source rectangle's perimeter and its end meets the target's perimeter, within 2px for stroke/arrow-cap rounding.
+`d` 属性是一个绝对 `M` 后接绝对 `L`、`H`、`V`、`Q` 或 `C` 段。接受隐式重复坐标组。相对命令、额外子路径、闭合路径、弧、缺失坐标与非有限坐标一律判负（fail closed）。标准版式用正交线与二次曲线拐角；三次段留给小型的跨越桥。端点与控制点保持在局部网格之内。路径起点贴到源矩形的周长，终点贴到目标的周长，描边/箭头圆角容许 2px。
 
-### Status and signature rules
+### 状态与签名规则
 
-- An ID present only in Before is exactly `removed`; an ID present only in After is exactly `added`.
-- A retained ID keeps its kind and the same status set in both snapshots. Never recycle a component ID for a relationship or vice versa.
-- A signature differs **if and only if** the retained object is `changed`. Construct it deterministically from the semantic attributes you want to compare, such as `orders-api:v2;mode=enqueue` or `protocol=https;operation=create-order`. Include a changed display name if renaming is part of the story. Preserve attribute order and spelling when values are unchanged.
-- Signatures exclude the object ID, snapshot, status, coordinates, visual styles, and relationship endpoints. These have their own checks. A movement or rewire alone must not change the signature.
-- A retained component's local `(x,y)` differs **if and only if** it is `moved`. A width/height change additionally requires `changed` and a changed signature. A changed signature alone does not require different bounds.
-- A retained relationship's ordered `(data-from,data-to)` pair differs **if and only if** it is `rewired`. Its path may reroute while that pair stays the same, for example when an endpoint component moves.
-- Numeric declarations are finite and have absolute values no larger than 10,000,000; unit suffixes, percentages, and CSS calculations are not coordinate declarations.
+- 只出现在 Before 的 ID 恰好为 `removed`；只出现在 After 的 ID 恰好为 `added`。
+- 留存 ID 保持其 kind 与两张快照中相同的状态集合。绝不用组件 ID 循环充当关系，反之亦然。
+- 语义签名不同**当且仅当**留存对象为 `changed`。用你想比较的语义属性确定性构造，例如 `orders-api:v2;mode=enqueue` 或 `protocol=https;operation=create-order`。改名属于故事的一部分时，把新显示名包含进来。值未变化时保持属性顺序与拼写。
+- 签名排除对象 ID、快照、状态、坐标、视觉样式与关系端点。这些各有自己的检查。单纯移动或 rewire 不得改变签名。
+- 留存组件的局部 `(x,y)` 不同**当且仅当**它是 `moved`。宽/高变化额外要求 `changed` 与变化的签名。签名变化本身不要求边界不同。
+- 留存关系的有序 `(data-from,data-to)` 对不同**当且仅当**它是 `rewired`。该对保持相同时路径可以改道，例如端点组件移动时。
+- 数值声明是有限的，绝对值不超过 10,000,000；单位后缀、百分比与 CSS 计算不算坐标声明。
 
-### Ledger
+### 台账
 
-Each entry is a visible SVG `<text>` outside both snapshots, with `data-change="ADDED|REMOVED|CHANGED|MOVED|REWIRED"` and `data-target="<one object ID>"`. Its rendered text begins with the same uppercase word and continues with an explanation. Descendant `<tspan>` text is included when checking the wording; put the metadata on the outer `<text>` only.
+每条条目是两张快照之外的一个可见 SVG `<text>`，带 `data-change="ADDED|REMOVED|CHANGED|MOVED|REWIRED"` 与 `data-target="<一个对象 ID>"`。其渲染文字以同一个大写词开头，后接解释。检查措辞时会包含后代的 `<tspan>` 文字；元数据只放外层 `<text>` 上。
 
-The ledger is an exact set of `(target, change)` pairs implied by object statuses. There are no missing entries, duplicate pairs, unknown targets, or entries for unchanged objects. The same target can have two entries only when it declares two changes. Every diagram contains at least one ledger entry, at least one component in each snapshot, and at least one relationship overall.
+台账是由对象状态推出的 `(target, change)` 对的精确集合。没有缺失条目、重复对、未知目标，也没有未变化对象的条目。同一目标只在声明两个变更时才有两条条目。每张图至少一条台账条目、每张快照至少一个组件、整体至少一条关系。
 
-### Worked metadata pattern
+### 元数据示例
 
-This excerpt shows one changed component; a complete diagram also needs its other components, relationships, and accessible SVG title/description.
+以下摘录展示一个 changed 组件；完整图还需要其余组件、关系与可访问的 SVG title/description。
 
 ```svg
 <svg data-diagram="architecture-delta" viewBox="0 0 1000 400">
@@ -115,29 +119,29 @@ This excerpt shows one changed component; a complete diagram also needs its othe
 </svg>
 ```
 
-## Verification and its boundaries
+## 校验及其边界
 
-Run `python3 scripts/verify-architecture-delta.py --all` (or pass explicit HTML paths) and `python3 scripts/test-verify-architecture-delta.py`. No arguments also checks shipped examples. The stdlib HTML parser reads real attributes, including unquoted values and entities, ignores comments, and rejects malformed SVG nesting. Synthetic fixtures prove both legal cases and adversarial changes independently of the shipped coordinates; the light, dark, and full variants are checked too.
+运行 `python3 scripts/verify-architecture-delta.py --all`（或传入显式 HTML 路径）与 `python3 scripts/test-verify-architecture-delta.py`。无参数时也检查随附示例。标准库 HTML 解析器读取真实属性（含未加引号的值与实体），忽略注释，并拒绝畸形的 SVG 嵌套。合成 fixture 独立于随附坐标，同时证明合法情形与对抗性变更；light、dark、full 三个变体都会检查。
 
-The verifier enforces the declared structure, differential semantics, grid/bounds geometry, drawn relationship endpoints, budgets, and exact ledger coverage. It rejects CSS transforms/position overrides, CSS sizing that could change bounds, escaped CSS declarations, explicit hidden objects/ledger, and common CSS hiding rules. Ordinary responsive sizing of the outer SVG remains legal.
+校验器强制执行声明的结构、差分语义、网格/边界几何、绘制的关系端点、预算与精确的台账覆盖。它拒绝 CSS transform/位置覆盖、可能改变边界的 CSS 尺寸、转义的 CSS 声明、显式隐藏的对象/台账，以及常见的 CSS 隐藏规则。外层 SVG 的普通响应式缩放仍然合法。
 
-It is **not** a browser renderer or a proof of the source system. Authors remain responsible for honest signatures, labels matching those signatures, readable shape/dash treatments, and an accurate migration story. Exotic CSS cascade/variable effects, clipping and occlusion, connector crossings, intermediate segment clearance, ledger placement, and screen-reader quality still require the normal skin, accessibility, geometry, and rendered-layout gates plus desktop/mobile visual review. Keep semantic geometry in the SVG attributes instead of making CSS part of the data model.
+它**不是**浏览器渲染器，也不是对源系统的证明。诚实的签名、与签名一致的标签、可读的形状/虚线处理、准确的迁移故事，仍是作者的责任。花哨的 CSS 级联/变量效果、裁切与遮挡、连接线交叉、中间线段净空、台账摆放与屏幕阅读器质量，仍需要常规的皮肤、可访问性、几何与渲染版式闸门，加上桌面/移动目视审查。把语义几何留在 SVG 属性里，不要让 CSS 成为数据模型的一部分。
 
-## Anti-patterns
+## 反模式
 
-- Two independently arranged snapshots that manufacture apparent movement.
-- A center ledger that says only “updated” without naming the object and difference.
-- Color-only statuses or a separate bright color for every kind of change.
-- Unchanged node positions drifting to make room, with no `MOVED` entry.
-- Semantic edits hidden behind an unchanged signature, or all signatures regenerated just because the snapshot changed.
-- Redrawing an edge to a different component while keeping its endpoint metadata unchanged.
-- Counting retained objects twice to justify dropping other objects from the comparison.
-- Treating this comparison as an executable migration plan. Ordering, rollback, availability, and data consistency need their own explanation.
+- 两张各自独立排布的快照，制造出虚假的移动。
+- 中间台账只写"更新了"，不点名对象与差异。
+- 只用颜色的状态，或每种变更各配一种亮色。
+- 未变化的节点位置为了腾地方而漂移，却没有 `MOVED` 条目。
+- 语义修改藏在未变的签名后面，或只因快照变了就把所有签名重新生成一遍。
+- 把边重画到另一个组件，端点元数据却保持不变。
+- 把留存对象计两次，用来给对比中丢弃其他对象找理由。
+- 把这张对比当作可执行的迁移计划。排序、回滚、可用性与数据一致性需要各自的解释。
 
-## Examples
+## 示例
 
-- `assets/example-architecture-delta.html` — minimal light order-fulfilment migration; all five change kinds.
-- `assets/example-architecture-delta-dark.html` — minimal dark, identical IDs, signatures, topology, and coordinates.
-- `assets/example-architecture-delta-full.html` — full editorial treatment of the same migration.
+- `assets/example-architecture-delta.html`：极简 light，订单履约迁移；涵盖全部五种变更。
+- `assets/example-architecture-delta-dark.html`：极简 dark，ID、签名、拓扑与坐标完全相同。
+- `assets/example-architecture-delta-full.html`：同一次迁移的完整编辑版处理。
 
-The example retains the storefront and order store, changes the order API to enqueue work, removes the legacy dispatcher, adds a durable order queue, moves the fulfilment worker, and rewires order submission. Stable relationships follow the worker's new location while preserving their IDs and endpoint semantics.
+示例保留了 storefront 与 order store，把订单 API 改为入队，移除遗留 dispatcher，新增持久订单队列，移动履约 worker，并重连订单提交。稳定关系跟随 worker 的新位置，同时保持其 ID 与端点语义。

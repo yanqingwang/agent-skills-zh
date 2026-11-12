@@ -1,126 +1,119 @@
-# Repository-backed authoring
+> **中文汉化版** · 上游：[tt-a1i/archify](https://github.com/tt-a1i/archify) · 原文件：`archify/references/repository-authoring.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this reference when a diagram of any type must explain a real repository. The source is
-the authority for responsibilities, calls, boundaries, and persistence. The
-diagram is complete when the requested meaning is covered and every asserted
-fact has supporting source evidence.
+# 基于仓库的绘制（Repository-backed authoring）
 
-## Explore on demand
+任何类型的图需要解释真实仓库时使用本参考。源码是职责、
+调用、边界和持久化的权威。当所请求的含义被覆盖、且每条
+断言都有源码证据支撑时，图即完整。
 
-1. **Freeze identity.** From the target repository, record `git rev-parse
-   HEAD`, `git remote get-url origin`, and `git status --short`. Remove HTTP(S)
-   userinfo (including usernames, passwords, and tokens) before recording the
-   origin or placing it in the candidate. Preserve its transport, port, path and
-   `.git` suffix; do not rewrite an internal SSH origin as HTTPS. Pin the credential-free URL and
-   forty-character revision in `meta.repository`. Use `link_mode: "local-only"`
-   for an SSH origin, unsupported forge, intentionally local-only source links,
-   or a local fixture whose HTTPS URL is only a repository identity; retain the
-   URL and revision. Web links require a supported GitHub, Gitee, or GitLab HTTPS
-   origin; GitHub, Gitee, gitlab.com, and a self-managed GitLab host declared with
-   `provider: "gitlab"` match their SSH origin on the same host. If the
-   worktree is dirty, note the changed paths in your reply; the candidate has no field for them. Repository evidence is verified
-   against committed bytes at the pinned revision, not working-tree edits:
-   inspect a clean checkout at that revision for any cited changed path. Do not
-   present uncommitted bytes as evidence for `HEAD`; `local-only` does not record
-   a verifiable snapshot of those bytes.
+## 按需探索（Explore on demand）
 
-2. **Map the slice.** Use project instructions, manifests, entry points,
-   registrations, and deployment configuration to locate candidate runtime
-   units. Read the entry, configuration, and modules relevant to the request.
-   Follow imports and call sites
-   until the requested responsibility reaches its actual input, output, or
-   side effect. Read a small connected slice instead of scanning the repository
-   for a convenient label.
+1. **冻结身份。** 在目标仓库记录 `git rev-parse HEAD`、
+`git remote get-url origin` 和 `git status --short`。在
+记录 origin 或把它放进候选文件之前，去掉 HTTP(S) userin
+fo（包括用户名、密码和令牌）。保留其传输协议、端口、路
+径和 `.git` 后缀；不要把内部 SSH origin 改写成 HTTPS。
+把无凭证 URL 和 40 位 revision 钉定在 `meta.repository`
+。SSH origin、不受支持的 forge、有意仅本地的来源链接、
+或其 HTTPS URL 只是仓库身份的本地 fixture，用
+`link_mode: "local-only"`；URL 与 revision 照常保留。We
+b 链接需要受支持的 GitHub、Gitee 或 GitLab HTTPS origin
+；GitHub、Gitee、gitlab.com 以及用 `provider: "gitlab"`
+声明的自管 GitLab 主机，会在同一主机上匹配其 SSH origi
+n。工作树脏时，在回复中列出变更路径；候选文件没有存放它
+们的字段。仓库证据对照钉定 revision 上已提交的字节验证
+，不对照工作树改动：对任何被引用的变更路径，要在该 revi
+sion 的干净检出中检查。不要把未提交的字节当作 `HEAD` 的
+证据；`local-only` 也不会为那些字节记录可验证快照。
 
-3. **Trace ownership.** Derive runtime and I/O relationships from the observed
-   actor, operation, and target at their call sites; deployment and trust
-   relationships use the corresponding configuration or enforcement evidence. Distinguish the controller requesting
-   an operation from the runtime that executes it and the store receiving bytes.
-   For a file or database edge, the source must identify its actual reader or
-   writer; a responsibility statement such as “maintains tasks” does not prove
-   direct I/O. Keep these facts with the source locations while reading, without
-   a separate planning artifact. Choose which distinctions need separate
-   nodes using [Composition and meaning](authoring-defaults.md#composition-and-meaning);
-   discovering an implementation role does not automatically add it to the overview.
-   A configured provider, an injected adapter, a local stub, and a durable
-   service are different claims; label the one the source supports.
+2. **绘制切片。** 用项目说明、manifest、入口点、注册处
+和部署配置定位候选运行时单元。阅读与请求相关的入口、配
+置和模块。沿 import 和调用点追查，直到所请求的职责到达
+其实际输入、输出或副作用。读一小块连通的切片，而不是为
+了一个顺手的标签扫全仓库。
 
-4. **Record evidence while reading.** Keep exact repository-relative paths and
-   inclusive line ranges for each component and meaningful relationship. Follow
-   actual branches, retries, fallbacks, and error handling. A function that is
-   exported or configured but never called by the normal path is an optional
-   capability, not a required runtime edge. For a claim about authoritative
-   state change or control ownership, trace to the actual write or execution
-   site and the conditions that permit it; an upstream caller alone does not
-   establish those conditions.
+3. **追查归属。** 运行时与 I/O 关系从调用点观察到的执行
+者、操作和目标推导；部署与信任关系用对应的配置或执行证
+据。区分请求操作的控制器、执行操作的运行时和接收字节的
+存储。对文件或数据库边，其来源必须指明实际的读取方或写
+入方；"维护任务"这类职责陈述不能证明直接 I/O。阅读时把
+这些事实连同源码位置一起记下，不需要单独的规划产物。哪
+些区分需要独立节点，用 [构成与语义
+](authoring-defaults.md#composition-and-meaning) 决定；
+发现一个实现角色并不自动把它加进总览。配置的 provider、
+注入的 adapter、本地 stub 和持久服务是四种不同的断言；
+标注源码支持的那一个。
 
-5. **Name uncertainty.** Write unresolved questions beside the claim they
-   affect: for example, “`writeFile` is called here; durability is unknown.”
-   Resolve a question by reading the next relevant source range or preserve it
-   as an explicit unknown. Never turn a label, package description, or config
-   value into an unobserved service or behavior.
+4. **边读边记证据。** 为每个组件和重要关系记下精确的仓
+库相对路径和闭区间行号。沿真实的分支、重试、回退和错误
+处理追查。被导出或配置过、但正常路径从不调用的函数是可
+选能力，不是必需运行时边。关于权威状态变更或控制归属的
+断言，要追到实际的写入或执行位置以及允许它的条件；仅有
+上游调用方不能确立这些条件。
 
-Stop exploring when every requested responsibility, relationship, and boundary
-has supporting source entailment and the remaining unknowns cannot change that
-coverage. There is no node, edge, citation, view, card, or boundary count to
-hit. Do not add a summary step merely to signal completion.
+5. **写明不确定。** 未决问题写在受影响的断言旁：例如"
+`writeFile` 在这里被调用；持久性未知"。通过读下一段相关
+源码解决，或作为显式未知保留。绝不把标签、包描述或配置
+值变成未观察到的服务或行为。
 
-Batch independent relevant files when known. Read source excerpts with their original
-line numbers (for example, `nl -ba <file> | sed -n '40,90p'`). Copy citation
-start and end lines from the displayed source, including the actual final line
-when an excerpt reaches EOF. Each additional read should answer
-an unresolved question that can change the diagram. Reuse concise facts and
-their source ranges already verified in this task; across revisions, recheck
-the affected entry points, configuration, dependencies, and evidence.
+当每条被请求的职责、关系和边界都有源码依据支撑、且剩余
+未知无法改变这一覆盖时，停止探索。节点、边、引用、视图
+、卡片或边界都没有要凑的数量。不要为了示意完成而加一个
+总结步骤。
 
-## Evidence by diagram type
+已知相互独立的相关文件可以批量读。阅读源码摘录时保留原
+始行号（例如 `nl -ba <file> | sed -n '40,90p'`）。引用
+的起止行从显示的源码复制；摘录到达 EOF 时包含实际最后一
+行。每一次额外阅读都应回答一个可能改变图的未决问题。复
+用本任务中已验证的简明事实及其来源区间；跨 revision 时
+，重查受影响的入口点、配置、依赖和证据。
 
-Only the primary elements carry `sources`, at most three ranges each:
-Architecture components, Workflow, Dataflow and Tree nodes, Sequence
-participants, Lifecycle states, ERD entities, Class types, Timeline events and
-Waterfall spans. Relationships, messages, flows and transitions have none: cite
-the call, write or transition site on the element that owns it (the caller, the
-writer, the state being left) and keep further evidence in a note or card. A
-folder node cites its own README or entry file, or else the file that defines
-or runs it. A Timeline event cites a file at the pinned revision that records
-it, such as a changelog entry, and takes its time from a tag or commit in that
-history, or noon local time for a date-only record. A tag or commit outside
-that history is not citable. Say either in a card. A Waterfall without a
-recorded trace uses `meta.evidence: "illustrative"` and keeps its durations
-labelled as such; do not run the project only to time it.
+## 按图型分证据（Evidence by diagram type）
 
-## Choose an example by structure
+只有主要元素携带 `sources`，每个最多三段区间：Architect
+ure 组件、Workflow、Dataflow 和 Tree 节点、Sequence 参
+与者、Lifecycle 状态、ERD 实体、Class 类型、Timeline 事
+件和 Waterfall 区段。关系、消息、流和迁移没有 `sources`
+：在拥有它的元素（调用方、写入方、被离开的状态）上引用
+调用、写入或迁移位置，更多证据放注释或卡片。文件夹节点
+引用自己的 README 或入口文件，否则引用定义或运行它的文
+件。Timeline 事件引用钉定 revision 上记录它的文件（如 c
+hangelog 条目），时间取自该历史中的 tag 或 commit；纯日
+期记录取当地正午。该历史之外的 tag 或 commit 不可引用。
+两种情况都在卡片里说明。没有记录 trace 的 Waterfall 用
+`meta.evidence: "illustrative"`，并把其时长如实标注；不
+要为了计时而运行项目。
 
-Select the main example in the [Type router](../SKILL.md#type-router) before
-loading its content, using the request and repository metadata already needed
-for source inspection. Selection fits the existing read batch and needs no extra
-message, command, or repository-wide scan. For mixed or unclear tasks, use the
-requested responsibilities and entry points as they become known in normal
-inspection; keep their actual roles. Read another example when a necessary
-capability remains unexplained. Examples teach shape, not facts: a library need
-not acquire filesystem nodes, and finished showcases still follow the
-first-draft automatic-routing rule.
+## 按结构选示例（Choose an example by structure）
 
-## Author from evidence
+在加载内容之前，用检查源码本就需要的请求与仓库元数据，
+在 [类型路由](../SKILL.md#type-router) 里选主示例。选择
+配合现有的阅读批次，不需要额外的消息、命令或全仓库扫描
+。混合或含糊的任务，用检查过程中逐渐明确的所请求职责和
+入口点；保留它们的真实角色。某个必要能力仍未被解释时再
+读另一个示例。示例教形状，不教事实：库不必长出文件系统
+节点，完成态展示品同样遵守初稿自动布线规则。
 
-Use the mode's complete JSON shape, including repository identity,
-components, and connections; every repository-backed component needs supporting source
-references, while boundaries or cards are added only when they
-answer a real reader question. Let automatic routes and automatic
-viewBox sizing work first. Keep the primary path readable, put exception paths
-beside their owner, and leave filesystem stores outside a control boundary when
-the source shows a separate responsibility.
+## 从证据出发绘制（Author from evidence）
 
-An existing example teaches field shape, not facts or arbitrary values. It does
-not authorize a new boundary kind, a long note, a viewBox size, or a route
-control. Consult the specific mode schema and `schemas/common.schema.json`
-whether or not the selected example already contains the field; use the
-schema's enum, length, identifier, and repository rules. Architecture
-boundaries currently use `kind: "region"` or `kind: "security-group"`; source
-references use `path`, `line`, and optional `end_line`.
+用该模式的完整 JSON 形状，包括仓库身份、组件和连接；每
+个基于仓库的组件都要有源码引用支撑，边界或卡片只在回答
+真实的读者问题时才加。先让自动布线和自动 viewBox 尺寸起
+作用。保持主路径可读，异常路径放在其属主旁；源码显示职
+责分离时，文件系统存储留在控制边界之外。
 
-Repository-backed components need concise, truthful `sources` references. Preserve
-control ownership when summarizing filesystem I/O: the code that reads or writes
-a file owns that action, while a pure in-memory transform receives and returns
-values. This fact-check does not require a separate overview node for every helper. Use the existing examples for valid field shape, then replace all
-identifiers, wording, source paths, and claims with inspected repository facts.
+既有示例教的是字段形状，不是事实，也不是任意取值。它不
+授权新的边界种类、长注释、viewBox 尺寸或布线控制。无论
+选中的示例是否已含某字段，都要查该模式的 schema 和
+`schemas/common.schema.json`；使用 schema 的枚举、长度
+、标识符和仓库规则。Architecture 边界当前使用
+`kind: "region"` 或 `kind: "security-group"`；源码引用
+使用 `path`、`line` 和可选 `end_line`。
+
+基于仓库的组件需要简明、真实的 `sources` 引用。概括文件
+系统 I/O 时保留控制归属：读或写文件的代码拥有那个动作，
+纯内存转换只接收和返回值。这项核对不要求为每个辅助函数
+单独设总览节点。用既有示例确认合法字段形状，然后把全部
+标识符、措辞、来源路径和断言替换为检查过的仓库事实。

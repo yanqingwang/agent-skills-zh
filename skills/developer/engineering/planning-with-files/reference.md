@@ -1,51 +1,55 @@
-# Reference: Manus Context Engineering Principles
+> **中文汉化版** · 上游：[OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) · 原文件：`.agents/skills/planning-with-files/reference.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This skill is based on context engineering principles from Manus, the AI agent company acquired by Meta for $2 billion in December 2025.
+# 参考：Manus 上下文工程原则
 
-## The 6 Manus Principles
+本 Skill 基于 Manus 的上下文工程原则。Manus 是一家 AI Agent 公司，2025 年 12 月被 Meta 以 20 亿美元收购。
 
-### Principle 1: Design Around KV-Cache
+## Manus 的 6 条原则
 
-> "KV-cache hit rate is THE single most important metric for production AI agents."
+### 原则 1：围绕 KV-Cache 设计
 
-**Statistics:**
-- ~100:1 input-to-output token ratio
-- Cached tokens: $0.30/MTok vs Uncached: $3/MTok
-- 10x cost difference!
+> "KV-cache 命中率是生产级 AI Agent 唯一最重要的指标。"
 
-**Implementation:**
-- Keep prompt prefixes STABLE (single-token change invalidates cache)
-- NO timestamps in system prompts
-- Make context APPEND-ONLY with deterministic serialization
+**统计数据：**
+- 输入与输出 token 比例约为 100:1
+- 缓存命中 token：$0.30/MTok，未缓存：$3/MTok
+- 成本相差 10 倍！
 
-### Principle 2: Mask, Don't Remove
+**实现要点：**
+- 保持提示词前缀稳定（STABLE），改动一个 token 就会使缓存失效
+- 系统提示词中不要放时间戳
+- 让上下文只追加（APPEND-ONLY），并使用确定性序列化
 
-Don't dynamically remove tools (breaks KV-cache). Use logit masking instead.
+### 原则 2：掩蔽，而非移除
 
-**Best Practice:** Use consistent action prefixes (e.g., `browser_`, `shell_`, `file_`) for easier masking.
+不要动态移除工具（会破坏 KV-cache），改用 logit 掩蔽。
 
-### Principle 3: Filesystem as External Memory
+**最佳实践：** 使用一致的动作前缀（例如 `browser_`、`shell_`、`file_`），便于掩蔽。
 
-> "Markdown is my 'working memory' on disk."
+### 原则 3：文件系统即外部记忆
 
-**The Formula:**
+> "Markdown 就是我在磁盘上的'工作记忆'。"
+
+**公式：**
 ```
 Context Window = RAM (volatile, limited)
 Filesystem = Disk (persistent, unlimited)
 ```
 
-**Compression Must Be Restorable:**
-- Keep URLs even if web content is dropped
-- Keep file paths when dropping document contents
-- Never lose the pointer to full data
+**压缩必须可还原：**
+- 即使丢弃网页内容，也要保留 URL
+- 即使丢弃文档内容，也要保留文件路径
+- 永远不要丢失指向完整数据的指针
 
-### Principle 4: Manipulate Attention Through Recitation
+### 原则 4：通过背诵（Recitation）操纵注意力
 
-> "Creates and updates todo.md throughout tasks to push global plan into model's recent attention span."
+> "在整个任务过程中创建并更新 todo.md，把全局计划推到模型的近期注意力范围内。"
 
-**Problem:** After ~50 tool calls, models forget original goals ("lost in the middle" effect).
+**问题：** 约 50 次工具调用之后，模型会忘记最初目标（"lost in the middle"效应）。
 
-**Solution:** Re-read `task_plan.md` before each decision. Goals appear in the attention window.
+**解法：** 每次决策前重读 `task_plan.md`，目标就会出现在注意力窗口中。
 
 ```
 Start of context: [Original goal - far away, forgotten]
@@ -53,35 +57,35 @@ Start of context: [Original goal - far away, forgotten]
 End of context: [Recently read task_plan.md - gets ATTENTION!]
 ```
 
-### Principle 5: Keep the Wrong Stuff In
+### 原则 5：把错误内容留在上下文中
 
-> "Leave the wrong turns in the context."
+> "把走错的弯路留在上下文里。"
 
-**Why:**
-- Failed actions with stack traces let model implicitly update beliefs
-- Reduces mistake repetition
-- Error recovery is "one of the clearest signals of TRUE agentic behavior"
+**原因：**
+- 带堆栈跟踪的失败动作能让模型隐式更新自己的信念
+- 减少重复犯错
+- 错误恢复是"真正 agentic 行为最清晰的信号之一"
 
-### Principle 6: Don't Get Few-Shotted
+### 原则 6：不要被 Few-Shot 带偏
 
-> "Uniformity breeds fragility."
+> "千篇一律滋生脆弱。"
 
-**Problem:** Repetitive action-observation pairs cause drift and hallucination.
+**问题：** 重复的"动作-观察"对会导致漂移与幻觉。
 
-**Solution:** Introduce controlled variation:
-- Vary phrasings slightly
-- Don't copy-paste patterns blindly
-- Recalibrate on repetitive tasks
+**解法：** 引入受控的变化：
+- 措辞稍有变化
+- 不要盲目复制粘贴既有模式
+- 在重复性任务上重新校准
 
 ---
 
-## The 3 Context Engineering Strategies
+## 3 条上下文工程策略
 
-Based on Lance Martin's analysis of Manus architecture.
+基于 Lance Martin 对 Manus 架构的分析。
 
-### Strategy 1: Context Reduction
+### 策略 1：上下文缩减
 
-**Compaction:**
+**压缩（Compaction）：**
 ```
 Tool calls have TWO representations:
 ├── FULL: Raw tool content (stored in filesystem)
@@ -92,14 +96,14 @@ RULES:
 - Keep RECENT results FULL (to guide next decision)
 ```
 
-**Summarization:**
-- Applied when compaction reaches diminishing returns
-- Generated using full tool results
-- Creates standardized summary objects
+**摘要化（Summarization）：**
+- 当压缩的收益递减时应用
+- 使用完整工具结果生成
+- 生成标准化的摘要对象
 
-### Strategy 2: Context Isolation (Multi-Agent)
+### 策略 2：上下文隔离（多 Agent）
 
-**Architecture:**
+**架构：**
 ```
 ┌─────────────────────────────────┐
 │         PLANNER AGENT           │
@@ -115,21 +119,21 @@ RULES:
 └─────────────────────────────────┘
 ```
 
-**Key Insight:** Manus originally used `todo.md` for task planning but found ~33% of actions were spent updating it. Shifted to dedicated planner agent calling executor sub-agents.
+**关键洞察：** Manus 最初用 `todo.md` 做任务规划，后来发现约 33% 的动作都花在更新它上，于是改为由专职的规划 Agent 调用执行子代理。
 
-### Strategy 3: Context Offloading
+### 策略 3：上下文卸载
 
-**Tool Design:**
-- Use <20 atomic functions total
-- Store full results in filesystem, not context
-- Use `glob` and `grep` for searching
-- Progressive disclosure: load information only as needed
+**工具设计：**
+- 原子函数总数少于 20 个
+- 把完整结果存进文件系统，而不是上下文
+- 用 `glob` 和 `grep` 进行搜索
+- 渐进式披露：只在需要时才加载信息
 
 ---
 
-## The Agent Loop
+## Agent 循环
 
-Manus operates in a continuous 7-step loop:
+Manus 在一个连续的 7 步循环中运行：
 
 ```
 ┌─────────────────────────────────────────┐
@@ -165,54 +169,54 @@ Manus operates in a continuous 7-step loop:
 
 ---
 
-## File Types Manus Creates
+## Manus 创建的文件类型
 
-| File | Purpose | When Created | When Updated |
+| 文件 | 用途 | 何时创建 | 何时更新 |
 |------|---------|--------------|--------------|
-| `task_plan.md` | Phase tracking, progress | Task start | After completing phases |
-| `findings.md` | Discoveries, decisions | After ANY discovery | After viewing images/PDFs |
-| `progress.md` | Session log, what's done | At breakpoints | Throughout session |
-| Code files | Implementation | Before execution | After errors |
+| `task_plan.md` | 阶段跟踪、进度 | 任务开始时 | 完成阶段后 |
+| `findings.md` | 发现与决策 | 任何一次发现之后 | 查看图片/PDF 之后 |
+| `progress.md` | 会话日志、已完成内容 | 在检查点处 | 贯穿整个会话 |
+| 代码文件 | 实现 | 执行之前 | 出错之后 |
 
 ---
 
-## Critical Constraints
+## 关键约束
 
-- **Single-Action Execution (Manus 2025 original constraint):** ONE tool call per turn, no parallel execution. This documents Manus's 2025 sandbox practice. **2026 update:** modern hosts (Claude Code, Codex CLI) support parallel tool calls and subagents, so this constraint no longer applies as written. The plan file, not the one-call-per-turn rule, remains the coordination point: parallel calls and subagents share state through the durable markdown plan on disk.
-- **Plan is Required:** Agent must ALWAYS know: goal, current phase, remaining phases
-- **Files are Memory:** Context = volatile. Filesystem = persistent.
-- **Never Repeat Failures:** If action failed, next action MUST be different
-- **Communication is a Tool:** Message types: `info` (progress), `ask` (blocking), `result` (terminal)
+- **单动作执行（Single-Action Execution，Manus 2025 年的原始约束）：** 每轮只做一次工具调用，不并行执行。这记录的是 Manus 2025 年的沙箱实践。**2026 年更新：** 现代宿主（Claude Code、Codex CLI）已支持并行工具调用与子代理，这条约束不再按字面成立。协调点在于计划文件本身，而不是"每轮一次调用"的规则：并行调用与子代理通过磁盘上持久的 markdown 计划共享状态。
+- **必须有计划：** Agent 必须始终清楚：目标、当前阶段、剩余阶段
+- **文件即记忆：** 上下文是易失的。文件系统是持久的。
+- **绝不重复失败：** 如果某个动作失败了，下一个动作必须不同
+- **沟通即工具：** 消息类型：`info`（进度）、`ask`（阻塞）、`result`（终结）
 
 ---
 
-## Manus Statistics
+## Manus 数据统计
 
-| Metric | Value |
+| 指标 | 数值 |
 |--------|-------|
-| Average tool calls per task | ~50 |
-| Input-to-output token ratio | 100:1 |
-| Acquisition price | $2 billion |
-| Time to $100M revenue | 8 months |
-| Framework refactors since launch | 5 times |
+| 每个任务的平均工具调用次数 | ~50 |
+| 输入与输出 token 比例 | 100:1 |
+| 收购价格 | 20 亿美元 |
+| 达到 1 亿美元营收所用时间 | 8 个月 |
+| 自发布以来的框架重构次数 | 5 次 |
 
 ---
 
-## Key Quotes
+## 关键语录
 
-> "Context window = RAM (volatile, limited). Filesystem = Disk (persistent, unlimited). Anything important gets written to disk."
+> "context window = RAM（易失、有限）。文件系统 = 磁盘（持久、无限）。任何重要的东西都会写入磁盘。"
 
-> "if action_failed: next_action != same_action. Track what you tried. Mutate the approach."
+> "if action_failed: next_action != same_action. 记录你尝试过什么。改变方法。"
 
-> "Error recovery is one of the clearest signals of TRUE agentic behavior."
+> "错误恢复是真正 agentic 行为最清晰的信号之一。"
 
-> "KV-cache hit rate is the single most important metric for a production-stage AI agent."
+> "KV-cache 命中率是生产阶段 AI Agent 唯一最重要的指标。"
 
-> "Leave the wrong turns in the context."
+> "把走错的弯路留在上下文里。"
 
 ---
 
-## Source
+## 来源
 
-Based on Manus's official context engineering documentation:
+基于 Manus 官方上下文工程文档：
 https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus

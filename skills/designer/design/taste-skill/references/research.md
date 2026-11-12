@@ -1,356 +1,325 @@
-# The study
+> **中文汉化版** · 上游：[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · 原文件：`skills/taste-skill/references/research.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Everything numeric in this skill comes from here. Cite these figures; do not round them up or invent
-others.
+# 研究报告
 
-## Contents
+本 skill 中一切数字都出自这里。引用这些数字；不要向上取整，也不要编造别的。
 
-1. Method and its limits
-2. Scores
-3. Where the idea comes from
-4. Headlines
-5. Type
-6. Devices: what separates strong from weak, and what does not
-7. Colour and shape
-8. Imagery and page structure
-9. What the inspector says about the gallery itself
-10. The 25 highest-scored sites and their ideas
-11. How the skill was tested
-12. The October 2026 study: 100 Sites of the Day
-13. The app-screen study
+## 目录
 
-## 1. Method and its limits
+1. 方法与其局限
+2. 得分
+3. 想法从哪里来
+4. 标题
+5. 字体
+6. 手法：什么区分强与弱，什么不区分
+7. 颜色与形状
+8. 图像与页面结构
+9. 检查器对画廊本身怎么说
+10. 得分最高的 25 个站点及其想法
+11. 本 skill 如何被测试
+12. 2026 年 10 月研究：100 个 Sites of the Day
+13. 应用界面研究
 
-- **Sample.** 248 sites collected on 5 October 2026: 156 from One Page Love (the latest gallery pages
-  and the category listings) and 92 Awwwards Sites of the Day (the three most recent listing pages).
-  247 loaded; 246 were re-measured with the final probe.
-- **Capture.** Headless Chrome at 1440×900 and 390×844. For each site: the first viewport, five more
-  frames while scrolling with real wheel input, the mobile first viewport, and a measurement pass in
-  the page (computed styles, text geometry, colours, fonts actually loaded).
-- **Panel.** 21 model reviewers each studied about 12 sites from the screenshots and the measurements,
-  described them (idea, hero, type, colour, imagery, layout, sections) and scored them the Awwwards
-  way: design 40%, usability 30%, creativity 20%, content 10%. These are model judgements from still
-  frames, not human jurors and not the real Awwwards scores. Batches mixed both sources so each
-  reviewer saw a spread.
-- **Usable sets.** 235 sites were usable for the panel (12 showed only a preloader, an entry gate or a
-  bot wall). 202 were measurable for typography (a page with at least 25 words and a detectable
-  headline). "Top" below means panel score 7.5 or higher (82 measurable sites); "weak" means under 6.5
-  (23 measurable sites).
-- **Limits.** One capture per site on one day. Some heroes were caught mid-animation or behind a cookie
-  notice. WebGL-heavy sites are under-described by text measurements. The eyebrow detector counts any
-  small short label directly above a large heading, so it over-counts against the panel's stricter
-  reading (60% measured against 35% observed). Motion was inferred from frames, not watched. The sample
-  is whatever the two galleries had recently featured; it is fashion as much as quality.
+## 1. 方法与其局限
 
-## 2. Scores
+- **样本。** 2026 年 10 月 5 日采集的 248 个站点：156 个来自 One Page Love（最新画廊页和品类
+  列表页），92 个来自 Awwwards Sites of the Day（最近三个列表页）。247 个成功加载；246 个用
+  最终版探针重新测量。
+- **采集。** Headless Chrome，1440×900 与 390×844。每个站点：首屏视口、滚动时用真实滚轮输入
+  采集的五帧、移动端首屏视口，以及一次页内测量（计算样式、文字几何、颜色、实际加载的字体）。
+- **评审团。** 21 个模型评审，每人研究约 12 个站点，依据截图和测量数据对它们进行描述（想法、
+  hero、字体、颜色、图像、布局、分区），并按 Awwwards 方式打分：设计 40%、可用性 30%、
+  创意 20%、内容 10%。这些是基于静止画面的模型判断，不是人类评审，也不是真实的 Awwwards
+  分数。批次混合了两个来源，让每位评审都看到不同的跨度。
+- **可用集合。** 235 个站点可进入评审（12 个只显示预加载器、入场闸门或机器人墙）。202 个
+  可测量字体排印（页面至少 25 个词且能检测到标题）。下文的"top"指评审得分 7.5 及以上
+  （82 个可测量站点）；"weak"指低于 6.5（23 个可测量站点）。
+- **局限。** 每个站点只在一天采集一次。一些 hero 被抓在动画中途，或被 cookie 提示挡住。
+  重 WebGL 的站点在文字测量下被低估。eyebrow 检测器会把大标题正上方任何短小的标签都算
+  进去，所以相对评审团更严格的判读它计数偏高（测量 60%，观察 35%）。运动是从帧推断的，
+  不是看出来的。样本就是两家画廊近期精选的东西；它是时尚，和是质量各占一半。
 
-| | All 235 | One Page Love (151) | Awwwards (84) |
+## 2. 得分
+
+| | 全部 235 | One Page Love（151） | Awwwards（84） |
 | --- | --- | --- | --- |
-| Median overall | 7.2 | 7.1 | 7.5 |
-| Middle half | 6.8–7.6 | | |
-| 8.0 or higher | 25 sites (11%) | | |
-| 7.5 or higher | 90 sites (38%) | | |
-| Under 6.5 | 29 sites | | |
+| 总分中位数 | 7.2 | 7.1 | 7.5 |
+| 中间一半 | 6.8–7.6 | | |
+| 8.0 及以上 | 25 个站点（11%） | | |
+| 7.5 及以上 | 90 个站点（38%） | | |
+| 低于 6.5 | 29 个站点 | | |
 
-Median by criterion: design 8, usability 7, creativity 7, content 7. Among the top 25: design 9,
-usability 7, creativity 8, content 8. Usability is the one line that does not rise with the rest: the
-best sites are no easier to use than the average one. Do not copy their gates, preloaders, tiny text
-or hidden navigation.
+按标准的分数中位数：设计 8，可用性 7，创意 7，内容 7。前 25 名之中：设计 9，可用性 7，
+创意 8，内容 8。可用性是唯一不随其余各项上升的一条线：最好的站点不比平均水平更易用。
+不要照抄它们的闸门、预加载器、小字和隐藏导航。
 
-## 3. Where the idea comes from
+## 3. 想法从哪里来
 
-The clearest pattern in the panel's notes: high scores go with a concept taken from the subject, and
-low scores go with its absence. The weakest entries' ideas were recorded in words like "none beyond the
-standard dark SaaS launch formula", "no visual idea beyond clarity", "no strong idea". The strongest
-were sentences only that subject could own (section 10).
+评审团笔记里最清楚的模式：高分伴随一个取自主题本身的概念，低分伴随它的缺席。最弱条目的
+想法被记录为"除标准的深色 SaaS 发布公式之外什么都没有"、"除了清楚之外没有视觉想法"、
+"没有强想法"这样的词。最强的则是只有那个主题才配拥有的句子（第 10 节）。
 
-Recurring engines among the 7.3+ sites, each the basis of a direction in the library:
+7.3+ 站点中反复出现的引擎，每一条都是资料库中一个方向的来源：
 
-- **The product demonstrates itself.** A colour picker's loupe reads the page's own background; a list
-  tool is sold with tiny working lists; a photo app's page is a wall of its own output.
-- **The page is an artefact from the subject's world.** A wedding site that is the invitation; an
-  archive as tabbed folders; a coupon with a cut line; a portfolio as a contact sheet.
-- **The name is the hero.** Wordmarks as wide as the screen, a photograph set inside the name like a
-  letter, a name split to opposite corners with the page between.
-- **One motif from the subject drives everything.** A tool's octagonal section as button, mask and
-  loader; two circles for two accounts; a café's stripes.
-- **Dressed as another category.** A money app as a streetwear drop; an industrial roaster as a design
-  object; a parcel service as a fairground.
-- **The place carries it.** One full-bleed view and a name along the bottom edge.
-- **A fixed stage.** A title or object stays put while content swaps beneath it.
-- **One section, one colour.** Flat fields as chapters.
-- **Radical understatement.** A 27px headline and tiny live demonstrations, carried through completely.
+- **产品自我演示。** 取色器的放大镜读出页面自己的背景色；一个列表工具配上几个真的能用的
+  小列表来卖；一个照片应用的页面就是一面它自己输出的墙。
+- **页面是主题世界中的一件器物。** 一个婚礼站点就是那张请柬；一个档案做成带标签页的
+  文件夹；一张带裁切线的优惠券；一份作品集做成联络图底片。
+- **名字就是 hero。** 与屏幕同宽的字标，一张照片嵌进名字里像一个字母，名字拆到对角、页面
+  居中其间。
+- **主题的一个母题驱动一切。** 一把工具的八角截面同时是按钮、遮罩和加载器；两个账户配两个
+  圆；一家咖啡馆的条纹。
+- **装扮成另一个品类。** 一款理财应用扮成街头潮牌上新；一台工业烘焙机扮成设计对象；一家
+  快递公司扮成游乐场。
+- **地点扛起一切。** 一幅满幅景观，名字沿下缘排开。
+- **一个固定的舞台。** 标题或物体不动，内容在它下方轮换。
+- **一个分区一种颜色。** 平色场当作章节。
+- **极度克制。** 一个 27px 的标题和几个极小的真实演示，从头到尾贯彻到底。
 
-Hero types, by the panel's classification (top sites against weak sites): full-bleed media with type
-over it 16% / 10%; giant wordmark 14% / 0%; typographic poster 13% / 7%; text beside media 10% / 3%;
-**centred statement with media below 7% / 24%**. The centred headline over a screenshot is the weak
-sites' signature layout.
+Hero 类型，按评审团分类（强站对弱站）：满幅媒体上加文字 16% / 10%；巨型字标 14% / 0%；
+文字海报 13% / 7%；文字与媒体并排 10% / 3%；**居中陈述、媒体在下方 7% / 24%**。截图上压
+一行居中标题，是弱站的招牌布局。
 
-## 4. Headlines
+## 4. 标题
 
-| Hero headline | All | Top | Weak |
+| Hero 标题 | 全部 | Top | Weak |
 | --- | --- | --- | --- |
-| Words, median | 5 | 5 | 5 |
-| Words, middle half | 3–9 | 2–8 | 3–8 |
-| Characters, median | 32 | | |
-| One line at 1440 | 47% | | |
-| Two lines or fewer at 1440 | 70% | 71% | 83% |
-| Two lines or fewer at 390 | 57% | | |
-| Three lines or fewer at 390 | 82% | | |
+| 词数，中位数 | 5 | 5 | 5 |
+| 词数，中间一半 | 3–9 | 2–8 | 3–8 |
+| 字符数，中位数 | 32 | | |
+| 1440 下一行 | 47% | | |
+| 1440 下两行以内 | 70% | 71% | 83% |
+| 390 下两行以内 | 57% | | |
+| 390 下三行以内 | 82% | | |
 
-Awwwards heroes are shorter (median 4 words, 76% within two lines) than One Page Love's (6 words, 66%).
-Section headings have a median of 3 words. Length does not separate strong from weak; nearly everyone
-in the gallery writes short headlines. The two-line limit in this skill is a house rule that most of
-the gallery already meets on desktop and that takes care to meet on a phone.
+Awwwards 的 hero 更短（中位数 4 个词，76% 在两行内），One Page Love 的更长（6 个词，66%）。
+分区标题中位数 3 个词。长度区分不了强弱；画廊里几乎人人都写短标题。本 skill 的两行上限是
+一条家族规则：画廊的大多数在桌面端已经达标，在手机上则需要花心思才能达标。
 
-## 5. Type
+## 5. 字体
 
-| | All | Top | Weak |
+| | 全部 | Top | Weak |
 | --- | --- | --- | --- |
-| Hero size, median | 72px (5.0vw) | 6.0vw | 4.7vw |
-| Hero size, middle half | 3.0–7.6vw | 2.5–9.7vw | 2.7–6.1vw |
-| Largest text on the page, median | 6.4vw | 8.4vw | 5.0vw |
-| Largest text, upper quarter starts at | 10.4vw | 12.5vw | 6.7vw |
-| Hero on a phone, median | 40px | | |
-| Hero tracking, median (middle half) | -0.01em (-0.03 to 0) | | |
-| Hero leading, median (middle half) | 1.0 (0.95–1.1) | | |
-| Body size, median (middle half) | 16px (14–18) | | |
-| Headline ÷ body, median | 4.3 | 4.7 | 4.0 |
-| Typefaces carrying 3%+ of text | one 31%, two 45%, three 22% | | |
-| Distinct font sizes, median | 8 | | |
+| Hero 字号，中位数 | 72px（5.0vw） | 6.0vw | 4.7vw |
+| Hero 字号，中间一半 | 3.0–7.6vw | 2.5–9.7vw | 2.7–6.1vw |
+| 页面最大文字，中位数 | 6.4vw | 8.4vw | 5.0vw |
+| 最大文字，上四分之一起点 | 10.4vw | 12.5vw | 6.7vw |
+| 手机上的 hero，中位数 | 40px | | |
+| Hero 字距，中位数（中间一半） | -0.01em（-0.03 至 0） | | |
+| Hero 行距，中位数（中间一半） | 1.0（0.95–1.1） | | |
+| 正文字号，中位数（中间一半） | 16px（14–18） | | |
+| 标题÷正文，中位数 | 4.3 | 4.7 | 4.0 |
+| 承载 3% 以上文字的字族 | 一个 31%，两个 45%，三个 22% | | |
+| 不同字号数，中位数 | 8 | | |
 
-Hero weight: regular 48%, medium 18%, semibold 6%, bold or heavier 22%, light 6%. Capitals 24%.
-Centred 39% overall, 52% on weak sites. Display classes by the panel: neo-grotesk 48%, transitional
-serif 11%, geometric sans 10%, condensed 6%, extended 6%, old-style serif 4%, custom lettering 4%.
+Hero 字重：regular 48%，medium 18%，semibold 6%，bold 或更重 22%，light 6%。大写 24%。
+居中：总体 39%，弱站 52%。展示字体按评审团分类：neo-grotesk 48%，transitional serif 11%，
+geometric sans 10%，condensed 6%，extended 6%，old-style serif 4%，custom lettering 4%。
 
-Strong sites push the extremes: their biggest type is bigger and their range is wider. Weak sites
-cluster in the middle.
+强站点推向两极：它们最大的字更大，跨度更宽。弱站点挤在中间。
 
-## 6. Devices: what separates strong from weak, and what does not
+## 6. 手法：什么区分强与弱，什么不区分
 
-Measured in the page unless marked (panel).
+除标注（评审团）外均为页内测量。
 
-**More common on weak sites (the data supports avoiding them):**
+**弱站点上更常见（数据支持避开它们）：**
 
-| Device | Top | Weak |
+| 手法 | Top | Weak |
 | --- | --- | --- |
-| Icon-topped feature cards (panel) | 1% | 28% |
-| Rows of identical cards with a small icon (measured) | 7% | 26% |
-| Pill badges (panel) | 14% | 34% |
-| Pill-shaped label above a heading (measured) | 5% | 26% |
-| Tiny uppercase letter-spaced labels, any | 16% | 57% |
-| Tiny uppercase letter-spaced labels, three or more | 6% | 43% |
-| Gradient fills (not counting scrims) | 22% | 52% |
-| Gradient text | 2% | 13% |
-| Shadows on resting elements, any | 24% | 48% |
-| Shadows, five or more | 10% | 30% |
-| Emoji in the page | 10% | 26% |
-| Eyebrow labels (panel) | 32% | 45% |
+| 图标打顶的特性卡片（评审团） | 1% | 28% |
+| 带小图标的同款卡片排（测量） | 7% | 26% |
+| 药丸徽章（评审团） | 14% | 34% |
+| 标题上方的药丸形标签（测量） | 5% | 26% |
+| 小号大写加字距标签，任意 | 16% | 57% |
+| 小号大写加字距标签，三个或更多 | 6% | 43% |
+| 渐变填充（不计 scrim） | 22% | 52% |
+| 渐变文字 | 2% | 13% |
+| 静止元素上的阴影，任意 | 24% | 48% |
+| 阴影，五个或更多 | 10% | 30% |
+| 页面中出现 emoji | 10% | 26% |
+| Eyebrow 标签（评审团） | 32% | 45% |
 
-**No real difference:**
+**没有实质差别：**
 
-| Device | Top | Weak |
+| 手法 | Top | Weak |
 | --- | --- | --- |
-| Backdrop blur anywhere | 32% | 39% |
-| Italic-serif accent word (panel) | 4% | 7% |
-| Thin rules, any | 61% | 52% |
+| 任意位置的背景模糊 | 32% | 39% |
+| 斜体 serif 强调词（评审团） | 4% | 7% |
+| 细分隔线，任意 | 61% | 52% |
 
-**More common on strong sites (banned here anyway, as house style):**
+**强站点上更常见（本库无论如何禁止，作为家族风格）：**
 
-| Device | Top | Weak |
+| 手法 | Top | Weak |
 | --- | --- | --- |
-| Monospace labels (panel) | 44% | 24% |
-| Monospace anywhere outside code (measured) | 45% | 26% |
-| Index numbering (panel) | 38% | 21% |
+| 等宽标签（评审团） | 44% | 24% |
+| 代码之外的等宽字体（测量） | 45% | 26% |
+| 索引编号（评审团） | 38% | 21% |
 
-Monospace captions, index numbers and ruled grids are the present fashion of award sites. They are
-excluded from this skill by the owner's choice, not by the data: they are the devices generators copy
-first, and a page that cannot lean on them has to find structure in space, tone and scale.
+等宽说明文字、索引编号和带网格线的表格是获奖站点当前的流行。它们被排除在本 skill 之外是
+所有者的选择，不是数据的结论：它们是生成器最先照抄的手法，一个不靠它们的页面必须在空间、
+色调和字号里找到结构。
 
-## 7. Colour and shape
+## 7. 颜色与形状
 
-- Dark page ground 41%; pure white 25%; pure black 12%; a warm off-white 13%.
-- Scheme (panel): monochrome plus one accent 23%, light neutral 22%, dark neutral 14%, several flat
-  colours 13%, two-tone 12%, photographic 9%, one colour field 6%.
-- Primary buttons are neutral (black, white, grey) on 52% of sites. One site in 246 has a terracotta
-  button; none has a violet one.
-- Median number of distinct section grounds: 2 on top sites, 1 on weak sites.
-- Button shape: top sites square (0–2px) 52%, fully round 23%, small radius 19%, medium (9–16px) 6%.
-  Weak sites fully round 59%, medium 24%, square 18%.
-- Media corners are square on 73% of sites; where rounded, the median radius is 12px.
-- Buttons in the first viewport: none on 55% of top sites and 39% of weak ones.
+- 深色页面底 41%；纯白 25%；纯黑 12%；暖调米白 13%。
+- 配色方案（评审团）：单色加一个 accent 23%，浅色中性 22%，深色中性 14%，多个平色 13%，
+  双色 12%，照片色 9%，单一色场 6%。
+- 主按钮为中性色（黑、白、灰）的站点占 52%。246 个站点里有一个用了陶土色按钮；没有一个用
+  紫罗兰色。
+- 不同分区底色数的中位数：强站 2 个，弱站 1 个。
+- 按钮形状：强站方角（0–2px）52%，全圆 23%，小圆角 19%，中等（9–16px）6%。弱站全圆 59%，
+  中等 24%，方角 18%。
+- 媒体为方角（直角）的站点占 73%；圆角处中位半径 12px。
+- 首屏视口中的按钮：强站 55% 没有，弱站 39% 没有。
 
-## 8. Imagery and page structure
+## 8. 图像与页面结构
 
-- Hero media covers at least half the first viewport on 60% of sites (top 68%, weak 48%) and nearly
-  all of it on 50% (top 56%, weak 39%). No hero media: 15%.
-- Video is present on 49% of sites and a canvas element on 49% (top 62%, weak 35%).
-- Images per page, median: 24 overall, 37 on top sites, 5 on weak ones.
-- Imagery kind (panel): mixed 32%, photography 14%, generative or WebGL 13%, product interface 12%,
-  3D render 11%, illustration 9%, video 6%, type only 3%. Median panel score is lowest for
-  illustration-led (6.9) and product-interface-led (7.1) pages and highest for video and type-only
-  (7.5).
-- Page length, median: 8.7 screens and 575 words (middle half 1.6–14.4 screens, 250–956 words). A
-  quarter of the sites are a single screen or two.
-- Navigation: a median of 3 links; fixed or sticky on 66%.
-- Density (panel): airy 46%, balanced 45%, dense 9%. Alignment: centred 33%, mixed 31%, left-anchored
-  17%, modular grid 13%, free 6%.
-- Asked to describe each site's most interesting sections, the panel picked a pricing, testimonial or
-  FAQ section only 7, 12 and 9 times across 235 sites. Where strong sites have them at all, they are
-  not where the design effort goes, and they avoid the stock form.
+- Hero 媒体至少盖住首屏一半的站点占 60%（强站 68%，弱站 48%），几乎盖满的占 50%（强站
+  56%，弱站 39%）。没有 hero 媒体：15%。
+- 49% 的站点有视频，49% 有 canvas 元素（强站 62%，弱站 35%）。
+- 每页图片数中位数：总体 24，强站 37，弱站 5。
+- 图像类型（评审团）：混合 32%，摄影 14%，生成式或 WebGL 13%，产品界面 12%，3D 渲染 11%，
+  插画 9%，视频 6%，纯文字 3%。评审分中位数最低的是插画主导（6.9）和产品界面主导（7.1）
+  的页面，最高的是视频（7.5）与纯文字（7.5）。
+- 页面长度中位数：8.7 屏、575 词（中间一半 1.6–14.4 屏、250–956 词）。四分之一的站点只有
+  一两屏。
+- 导航：链接数中位数 3；66% 固定或 sticky。
+- 密度（评审团）：疏朗 46%，均衡 45%，致密 9%。对齐：居中 33%，混合 31%，左锚定 17%，
+  模块网格 13%，自由 6%。
+- 被要求描述每个站点最有趣的分区时，评审团在 235 个站点中只点了 7 次定价区、12 次用户引言
+  区、9 次 FAQ。强站点即便有这些区，也不是设计投入的去处，而且它们避开了套版形态。
 
-**From the panel's written notes on the 114 sites scoring 7.3 or more** (hand tallies, approximate;
-`layout.md` turns these into practice):
+**评审团对 114 个 7.3 分及以上站点的书面笔记**（手工统计，约数；`layout.md` 把这些落成
+实践）：
 
-- Outer margins of 32px or less on about 45; 80px or more on about 8. A centred 700–1300px container
-  on about 15, several of them the pages the panel called stock.
-- Text anchored to a fixed off-centre line on about 22. Text docked in corners or at opposite ends of
-  a baseline on about 25 and 15.
-- Two or three type sizes with nothing between on about 30; no note describes a graded five-step
-  scale.
-- One thing per screen on about 20. A full background colour per section on about 20; alternating
-  light and dark on about 12.
-- Every section recomposed on about 14; one planned exception to the page's own system on about 14.
-- No conventional top navigation bar on about 45; small corner links on about 22; a single link or
-  button on about 10.
-- Endings: the name at full width about 18, the hero repeated inverted about 12, a closing scene of
-  its own about 14, no footer or a single line about 22. Link-column footers are mentioned only as
-  criticism.
-- Motion (inferred from frames): autoplaying video about 50; pinned or fixed stages about 40; text
-  reveals about 30 (blur-in 10, masked line rises 8, scroll-tied word colouring 7); horizontal strips
-  about 27; marquees about 26; media swapped behind a fixed element about 15; scroll-linked scaling
-  about 12. Rare: hover effects (4 mentions), parallax (6), accordions (5), bounce or spring motion
-  (none). About 10 strong sites show little or no motion at all.
-- How weak sites fail (54 sites under 6.8): the category's stock template about 20; centred headline,
-  pill badge, two buttons and a screenshot about 9; stock modules after a distinctive hero about 8,
-  plus about 17 in the middle band; a characterless default typeface about 13; text too small or too
-  faint about 13; never saying what the thing is about 12.
-- Faults of the best sites (90 at 7.5 or more), not to be copied: text at 9–13px about 24;
-  information hidden behind the concept about 20; the idea running out mid-page about 15; text over
-  footage with no scrim about 12; gates, preloaders and blank first paints about 12.
+- 32px 或更小的外边距约 45 个；80px 或更大约 8 个。居中的 700–1300px 容器约 15 个，其中
+  数个正是评审团称为"套版"的页面。
+- 文字锚定在固定的偏离中心的线上，约 22 个。文字停靠在角落或基线两端，分别约 25 和 15 个。
+- 两三个字号、中间无过渡，约 30 个；没有一条笔记描述过分级的五档字阶。
+- 每屏一件事，约 20 个。每个分区一种整幅背景色，约 20 个；明暗交替约 12 个。
+- 每个分区重新构图，约 14 个；对页面自身系统的一次计划内例外，约 14 个。
+- 没有常规顶部导航栏，约 45 个；角落小链接约 22 个；单个链接或按钮约 10 个。
+- 结尾：全宽名字约 18 个，反色重复的 hero 约 12 个，自成一体的收尾场景约 14 个，无页脚或
+  单行约 22 个。链接栏页脚只以批评的形式被提及。
+- 运动（从帧推断）：自动播放视频约 50 个；钉住或固定舞台约 40 个；文字 reveal 约 30 个
+  （模糊入场 10，遮罩行升起 8，随滚动的逐词变色 7）；横向条带约 27 个；跑马灯约 26 个；
+  固定元素背后换媒体约 15 个；随滚动缩放约 12 个。罕见：hover 效果（4 次）、视差（6）、
+  手风琴（5）、弹跳或弹簧运动（无）。约 10 个强站点几乎或完全不动。
+- 弱站点怎么失败（6.8 分以下 54 个）：品类套版模板约 20 个；居中标题、药丸徽章、两个按钮
+  加截图约 9 个；有辨识度的 hero 之后接套版模块约 8 个，中间分段另有约 17 个；无个性的
+  默认字体约 13 个；文字太小或太淡约 13 个；从不说清这个东西是什么约 12 个。
+- 最好站点的毛病（7.5 分及以上 90 个），不可效仿：9–13px 的文字约 24 个；藏在概念后面的
+  信息约 20 个；想法中途耗尽约 15 个；无 scrim 的文字压视频约 12 个；闸门、预加载器和
+  空白首屏约 12 个。
 
-## 9. What the inspector says about the gallery itself
+## 9. 检查器对画廊本身怎么说
 
-Running this skill's own `inspect.mjs` rules over the 202 measurable gallery sites: the median site
-has 4 `FAIL`s and only 4% have none. The rules that fire most: headline over two lines somewhere on
-the page 60%, eyebrow-like label 60%, thin rules 50%, monospace 37%, shadows 32%, gradients 29%, index
-numbering 29%.
+把本 skill 自己的 `inspect.mjs` 规则跑在 202 个可测量的画廊站点上：中位站点有 4 个 `FAIL`，
+完全没有的只有 4%。触发最多的规则：页面上某处标题超过两行 60%，eyebrow 式标签 60%，细分隔线
+50%，等宽字体 37%，阴影 32%，渐变 29%，索引编号 29%。
 
-So the house style is deliberately stricter than the gallery. It is not a description of award sites;
-it is a narrower target inside what they do: their scale, their ideas, their imagery and restraint,
-without the ornaments that have since become a uniform.
+所以家族风格刻意比画廊更严。它不是对获奖站点的描述；它是在它们所做之事内部的一个更窄的
+目标：它们的尺度、想法、图像和克制，不要那些后来变成制服的装饰。
 
-## 10. The 25 highest-scored sites and their ideas
+## 10. 得分最高的 25 个站点及其想法
 
-The panel's one-sentence reading of each. Notice that every one names something only that subject
-could own. (Several use devices this skill bans; take the idea, not the ornament.)
+评审团对每个站点的一句话解读。注意每一条都点名了只有那个主题才配拥有的东西。（其中数个
+使用了本 skill 禁止的手法；取它的想法，不取它的装饰。）
 
-| Site | Source | Score | Idea |
+| 站点 | 来源 | 分数 | 想法 |
 | --- | --- | --- | --- |
-| PP Neue Montreal | Awwwards | 8.6 | A typeface specimen dressed as a vintage city travel guide: the font named after Montreal is sold through guidebook titling, postcards and old tourist footage. |
-| Seasats | Awwwards | 8.4 | Calm, dusk-lit seascapes sell autonomous boats as serene instruments, and the navigation is a column of stacked colour swatches taken from that sea-and-sand palette. |
-| AI in Design Report 2026 | Awwwards | 8.4 | A research report laid out like a colour-blocked print annual: a video collage on top, an oversized tight grotesk title, and flat orange, lilac, sage and black blocks carrying stats, quotes and chapters. |
-| House of Honey | Awwwards | 8.4 | A block-heavy wordmark pierced by a fine script: the bold-against-delicate contrast is repeated at every scale, with giant pink script behind quiet serif statements. |
-| White Desert | Awwwards | 8.4 | One word, the destination, set a third of the screen tall over footage like a film title card; sheer scale stands in for remoteness. |
-| Applied Imagination | One Page Love | 8.3 | An essay conceived on a flight is read as a descent: an altimeter ticks from 30,000 ft to zero while you scroll down through clouds to mountains at ground level. |
-| Cursor Compile | One Page Love | 8.3 | The event name drawn as seven looping one-line curves in seven colours, more signature than logotype, on an otherwise whisper-quiet off-white page. |
-| The New Industrials | One Page Love | 8.3 | A long-read essay laid out inside a drafting grid, where colour fields shift as you read and machine parts drift through the margins and finally assemble into the publisher's initials. |
-| Wild | One Page Love | 8.3 | A studio essay in which everything decorative is drawn on one square-pixel grid: the hero heatmap, the icons, the diagrams, the lettering and the footer. |
-| Hildén & Kaira | Awwwards | 8.3 | The agency name is cast in liquid chrome across the full width, and the same chrome becomes the objects that float through the page, tying the pitch to one material. |
-| PX Push | Awwwards | 8.2 | A design subscription presented as a retro broadcast: the entire site is seen through a CRT screen, with a chrome logo token as its mascot. |
-| Illoca | Awwwards | 8.2 | Software for architects sold as a drafting table: a two-colour illustrated studio on graph paper that the scroll pushes into until the drawing fills the screen. |
-| Aspen Search | Awwwards | 8.2 | The page is a tile system with no margins: the two-word name is split across cells that alternate type, dithered image, black and one mint green. |
-| Dragonfly Redux | Awwwards | 8.2 | A crypto fund presented as a terminal artefact: every picture is rendered in characters, framed by four letters of the name pinned to the viewport corners. |
-| Monolog | Awwwards | 8.2 | A studio pitch run as an asymmetric sheet: a narrow left column carries the sales talk while a wide right column stacks a very heavy headline and the proof. |
-| The Queue | One Page Love | 8.1 | An essay on queueing where the queue is the ornament: a line of drawn figures stands along the bottom of the hero and returns between chapters in changing period dress. |
-| Paul Kalkbrenner | Awwwards | 8.1 | Swiss poster typography for a techno artist: the name as one black line with a photo set inside it like a glyph, then every chapter gets its own flat colour. |
-| Vero New York | Awwwards | 8.1 | A keepsake treated like couture: a slow close-up film opens, then a white sculpture of a dress stays pinned at centre while one sentence passes over it. |
-| Depo Luxe | Awwwards | 8.1 | A film production roster shown as a full-screen reel in which every step is one film with only a title, a director and a client, set like credits at body size. |
-| Longbow | Awwwards | 8.1 | The page is built on a visible four-column construction grid, and cars, cards and a giant condensed marquee are slotted into its cells like objects on an artboard. |
-| Mosby's Files | Awwwards | 8.0 | An archive of architects presented as a physical stack of coloured index-tab file folders that you flip through. |
-| Sarah & Matt Wedding | One Page Love | 8.0 | The site is the invitation: a letterpress-style card opens the page, and its ornaments and small typographic parts become the components for everything after it. |
-| Zara Webb | One Page Love | 8.0 | A one-woman newborn-care practice presented like a hand-made keepsake: a mascot rabbit, scalloped and flower-shaped cut-outs, candid film photographs. |
-| Noho | Awwwards | 8.0 | Furniture sold through people misusing it (wearing, balancing on, hiding behind chairs on flat colour backdrops) while the interface stays quiet. |
-| Juggle | One Page Love | 8.0 | The headline literally drowns: a flat blue field rises to half height and the lines below the waterline change colour. |
+| PP Neue Montreal | Awwwards | 8.6 | 一份字体的样张扮成一本复古城市旅行指南：以蒙特利尔命名的字体，靠指南书式的标题排版、明信片和老旅游影像来售卖。 |
+| Seasats | Awwwards | 8.4 | 暮光下平静的海景把自动驾驶船卖成安静的仪器，导航是一列从那片海与沙滩配色中取出的色卡。 |
+| AI in Design Report 2026 | Awwwards | 8.4 | 一份研究报告排成一本色块印刷年鉴：顶部是视频拼贴，一个超大紧字距 grotesk 标题，平涂的橙、丁香紫、鼠尾草绿与黑色块承载着数据、引言和章节。 |
+| House of Honey | Awwwards | 8.4 | 块状粗重的字标被一条纤细的手写体刺穿：粗与细的对比在每个尺度上重复，安静的 serif 陈述背后是巨大的粉色手写体。 |
+| White Desert | Awwwards | 8.4 | 一个词，目的地之名，以三分之一屏高排在影像之上，像电影片头字卡；纯粹的尺度代替了偏远感。 |
+| Applied Imagination | One Page Love | 8.3 | 一篇在航班上构思的随笔被排成一次下降：高度计从 30,000 英尺走到零，你向下滚动，穿过云层，落到地面高度的山。 |
+| Cursor Compile | One Page Love | 8.3 | 活动名被画成七条循环的单线曲线、七种颜色，与其说是标志不如说是签名，落在一个近乎耳语般安静的米白页面上。 |
+| The New Industrials | One Page Love | 8.3 | 一篇长文随笔被排进一张制图网格：阅读时色块随之推移，机器零件在页边漂移，最终拼装成出版方姓名的首字母。 |
+| Wild | One Page Love | 8.3 | 一间工作室的随笔，一切装饰都画在同一张方形像素网格上：hero 热力图、图标、图表、题字和页脚。 |
+| Hildén & Kaira | Awwwards | 8.3 | 事务所的名字被铸成贯穿全宽的液态铬，同样的铬又变成漂浮过页面的物件，把整个提案系在同一种材料上。 |
+| PX Push | Awwwards | 8.2 | 一项设计订阅被呈现为复古广播：整站透过一块 CRT 屏幕观看，一枚铬质 logo 徽标作吉祥物。 |
+| Illoca | Awwwards | 8.2 | 面向建筑师的软件被卖成一张绘图桌：方格纸上的双色插画工作室，滚动把你推进去，直到画面占满整屏。 |
+| Aspen Search | Awwwards | 8.2 | 页面是一套无边距的瓷砖系统：两个词的名字被拆进交替排布的格子里，依次是文字、抖动处理的图片、黑色和一种薄荷绿。 |
+| Dragonfly Redux | Awwwards | 8.2 | 一支加密基金被呈现为一台终端器物：每张图都用字符渲染，名字的四个字母钉在视口四角作边框。 |
+| Monolog | Awwwards | 8.2 | 一间工作室的提案排成一张不对称的纸张：窄左栏说着销售辞令，宽右栏叠着极重的标题和证据。 |
+| The Queue | One Page Love | 8.1 | 一篇关于排队的随笔，队伍本身就是装饰：一排画出来的人形立在 hero 底部，在章节之间换着时代装束一次次回来。 |
+| Paul Kalkbrenner | Awwwards | 8.1 | 为一位 techno 音乐人做的瑞士海报字体排印：名字是一条黑线，照片嵌在里面像一个字形，之后每个章节得到自己的平色。 |
+| Vero New York | Awwwards | 8.1 | 一件信物被当作高级定制对待：缓慢的特写影片开场，然后一件白色的裙装雕塑固定在画面中心，一句话从它上面经过。 |
+| Depo Luxe | Awwwards | 8.1 | 一份影片制作名录呈现为全屏 reel，每一步都是一部影片，只有标题、导演和客户，按正文字号排成片尾字幕的样子。 |
+| Longbow | Awwwards | 8.1 | 页面建在一张可见的四列结构网格上，汽车、卡片和一条巨型 condensed 跑马灯像画板上的物件一样嵌进它的格子里。 |
+| Mosby's Files | Awwwards | 8.0 | 一份建筑师档案被呈现为一叠彩色的索引标签文件夹，供你逐份翻阅。 |
+| Sarah & Matt Wedding | One Page Love | 8.0 | 网站就是请柬：一张凸版印刷风格的卡片开启页面，它的装饰和小型字体排印部件成为之后一切的组件。 |
+| Zara Webb | One Page Love | 8.0 | 一人经营的新生儿照护诊所被呈现得像一件手作纪念品：吉祥物兔子、扇贝形与花朵形的镂空、抓拍的胶片照片。 |
+| Noho | Awwwards | 8.0 | 家具靠人们对它的"误用"来卖（在纯色背景前穿着、踩着、藏在椅子后面），而界面保持安静。 |
+| Juggle | One Page Love | 8.0 | 标题字面上被淹没：一片平涂的蓝色涨到半屏高，水下线以下的行变了颜色。 |
 
-Full notes on any studied site: `node scripts/draw.mjs --site <id>` (ids appear on direction sheets).
+任何被研究站点的完整笔记：`node scripts/draw.mjs --site <id>`（id 出现在方向表上）。
 
-## 11. How the skill was tested
+## 11. 本 skill 如何被测试
 
-Six client briefs (an invoicing tool, a restaurant, a designer's portfolio, a ceramic product, a
-guesthouse, a design conference), each with no photographs. For every brief a fresh agent built the
-page three ways: with no skill (baseline), with another published design skill (atelier, three briefs)
-and with this skill. Every build was photographed by `inspect.mjs` in the same way and judged blind
-by a separate agent with the juror brief (Awwwards weights, anonymous A/B/C folders, screenshots
-only). The skill was revised after each round from the jurors' reasons and the builders' notes.
+六份客户需求（一个开票工具、一家餐厅、一位设计师的作品集、一件陶瓷产品、一家民宿、一场
+设计会议），每份都没有照片。每份需求由一个全新的 agent 按三种方式建页：不带 skill
+（baseline）、带另一款已发布的设计 skill（atelier，三份需求）、带本 skill。每次构建都用
+`inspect.mjs` 以相同方式拍照，由一个独立的 agent 按评审须知盲评（Awwwards 权重、匿名
+A/B/C 文件夹、只看截图）。每轮结束后依据评审给出的理由和建设者的笔记修订本 skill。
 
-| Round | Briefs | This skill | Baseline | Atelier | Wins |
+| 轮次 | 需求数 | 本 skill | Baseline | Atelier | 胜场 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 4 | 6.6 | 7.7 | 6.8 | 1 of 4 |
-| 2 | 3 | 7.1 | 8.0 | | 0 of 3 |
-| 3 | 3 | 7.5 | 7.5 | | 1 of 3 |
-| 4 (unseen briefs) | 3 | 6.9 | 7.9 | 7.5 | 0 of 3 |
-| 5 (same three) | 3 | 7.7 | 7.8 | 7.2 | 2 of 3 |
+| 1 | 4 | 6.6 | 7.7 | 6.8 | 1 / 4 |
+| 2 | 3 | 7.1 | 8.0 | | 0 / 3 |
+| 3 | 3 | 7.5 | 7.5 | | 1 / 3 |
+| 4（未见过的需求） | 3 | 6.9 | 7.9 | 7.5 | 0 / 3 |
+| 5（同样三份） | 3 | 7.7 | 7.8 | 7.2 | 2 / 3 |
 
-Under the inspector, the final builds measured 0 FAIL each; the baselines measured 8 to 13 FAIL each
-(eyebrows, monospace labels, 01/02/03 numbering, hairlines, gradients, shadows, three-line headlines,
-text under 13px).
+在检查器下，最终构建各测得 0 个 `FAIL`；baseline 各测得 8 到 13 个（eyebrow、等宽标签、
+01/02/03 编号、发丝线、渐变、阴影、三行标题、13px 以下文字）。
 
-What the jurors rewarded, in the order they named it: an idea that belongs to this client and not to
-the category (the competitor test); one live thing on the page; full content at a readable size; a
-first screen with one dominant element and a real button; drawings of the subject with detail. What
-they punished: a quiet page that read as empty, a small headline, text sliding over pictures or cut
-at the top, a page recoloured mid-section, rows cut at the right edge, a large sentence over three or
-more lines (read as a long headline whatever its markup), navigation that took over the first screen.
-Each of these is now a rule in SKILL.md or a check in the inspector.
+评审奖励的，按他们点名的顺序：一个属于这个客户而不属于这个品类的想法（对手测试）；页面
+上的一个活物；完整且字号可读的内容；首屏上有一个主导元素和一个真按钮；带细节的主题绘画。
+他们惩罚的：读起来像空置的安静页面、小标题、从图片上滑过或顶部被裁的文字、半路变色的
+页面、在右缘被裁断的行、排到三行以上的大字句子（无论标记如何都被读成长标题）、占据首屏的
+导航。这些每一条现在都是 SKILL.md 里的一条规则，或检查器里的一项检查。
 
-Limits: one juror per brief per round, so single scores carry about half a point of noise; the round-5
-briefs had been seen in round 4; jurors are models, not people.
+局限：每份需求每轮只有一位评审，所以单个分数带着约半分的噪声；第 5 轮的需求在第 4 轮已被
+见过；评审是模型，不是人。
 
-## 12. The October 2026 study: 100 Sites of the Day
+## 12. 2026 年 10 月研究：100 个 Sites of the Day
 
-A second study, made for v2.1, of the latest 100 Awwwards Sites of the Day (10 July to 17 October
-2026), with a different aim from the first: where the pictures and footage sit, how pages move, and
-the frame (margins, balance, empty space, titles). About three in four of these sites were also in
-the first study.
+第二项研究，为 v2.1 而做，对象是最近 100 个 Awwwards Sites of the Day（2026 年 7 月 10 日
+至 10 月 17 日），目的与第一项不同：图片和视频放在哪里、页面怎么动、画框（边距、均衡、
+空白、标题）。这些站点约四分之三也在第一项研究中。
 
-- **Capture.** Headless Chrome at 1440×900 and 390×844 on 18 October 2026: four frames of the first
-  4.5 seconds after load, every screen while scrolling with real wheel input (one frame at rest per
-  step; the mid-step frames were cut from the top of the document instead of the viewport, so they
-  were not used), five phone screens, and a measurement pass in the page: every picture and
-  clip with its box, ratio, fit and corners; every section's content edges and pictures; blank runs;
-  the CSS that loaded (curves, durations, keyframes, breakpoints, feature counts); the animations,
-  transitions and script-driven moves that actually ran; GSAP tweens and scroll triggers where the
-  page exposed them. Nothing a site owns (code, copy, pictures) is reproduced in the skill; only
-  measurements and descriptions in our own words.
-- **Panel.** One model reader per site studied its frames and measurements, described the idea, the
-  first screen, the frame, every section, where each picture sits, the motion and what not to copy,
-  and scored it the Awwwards way. 91 of 99 captures were usable (the rest showed a gate, a bot wall or
-  a firewall page). Scores ran 6.7 to 7.9 (median 7.45); "top" means 7.5 or more (36 sites), "lowest"
-  under 7.3 (16).
-- **What it changed.** Where pictures and footage go: `imagery.md` §12. What strong pages do with
-  motion, new tokens, recipes and the gimmicks to avoid: `motion.md` §2, §4–6 and §9–10. Empty space
-  and the frame: `layout.md` §4–5. New compositions in `library/heroes.json` and `sections.json` and
-  notes on media and motion in `library/sites.json` (`draw.mjs --site <id>`).
-- **Headline numbers.** Pictures fill a median 16% of a scrolled screen, but in whole screens: 42% of
-  screens hold none and 19% are 90% picture or more. The median page carries 7 pictures (top 8,
-  lowest 2) and 42% carry footage (half of the top sites, one of the 16 lowest). 94% of pictures have
-  square corners. Strong ease-outs are the curves that ran (expo and quint out); the median of all
-  that ran on a site is 420ms. 60 of 99 open on a loading screen, and a third of the usable pages were
-  still unreadable 4.5 seconds after load, with no gain in the design marks. About 1 text section in
-  100 leaves half the width empty; the outer margins of strong pages match to a few pixels; 82% of
-  text sections open with a heading; 15 of 97 first screens never say what the thing is, and those
-  lose usability points.
-- **Limits.** One capture per site on one day; a WebGL scene can render blank in a headless browser;
-  the scroll-linked frames are partly an artefact of smooth-scroll libraries; one reader per site, so
-  single scores carry about half a point of noise.
+- **采集。** 2026 年 10 月 18 日，Headless Chrome，1440×900 与 390×844：加载后前 4.5 秒的四帧、
+  真实滚轮输入下滚动时的每一屏（每步静止时一帧；步进中途的帧被裁到文档顶部而非视口，所以
+  未被采用）、五张手机屏，以及一次页内测量：每张图片和视频及其盒子、比例、填充方式与圆角；
+  每个分区的内容边缘和图片；空白段；加载的 CSS（曲线、时长、keyframes、断点、特性计数）；
+  实际运行过的动画、过渡和脚本驱动的移动；页面暴露的 GSAP tween 和 scroll trigger。任何
+  站点自有之物（代码、文案、图片）都不在本 skill 中复现；只有用我们自己的话写的测量与
+  描述。
+- **评审团。** 每个站点一位模型读者，研究其帧与测量，描述想法、首屏、画框、每个分区、每张
+  图片的位置、运动和不可效仿之处，并按 Awwwards 方式打分。99 次采集中 91 次可用（其余显示
+  闸门、机器人墙或防火墙页）。分数区间 6.7–7.9（中位数 7.45）；"top"指 7.5 及以上（36 个
+  站点），"lowest"指低于 7.3（16 个）。
+- **它改变了什么。** 图片和视频的去处：`imagery.md` §12。强页面对运动的处理、新 token、
+  配方与要避开的噱头：`motion.md` §2、§4–6 与 §9–10。空白与画框：`layout.md` §4–5。
+  `library/heroes.json` 与 `sections.json` 里的新构图，`library/sites.json` 里关于媒体与
+  运动的笔记（`draw.mjs --site <id>`）。
+- **头条数字。** 图片中位数填满滚过屏幕的 16%，但成整屏分布：42% 的屏一张图都没有，19% 的
+  屏 90% 或以上是图。页面中位数带 7 张图（强站 8，最弱 2），42% 带视频（强站一半，最弱的
+  16 个中只有 1 个）。94% 的图片是方角。跑起来的缓出曲线是 expo 和 quint out；单站所跑曲线
+  时长的中位数为 420ms。99 个里 60 个以加载屏开场，可用页面中三分之一在加载 4.5 秒后仍
+  读不了，而设计分并无增益。约每一百个文字分区中有一个留空一半宽度；强页面的外边距一致到
+  几个像素；82% 的文字分区以标题开场；97 个首屏里 15 个从不说清这是什么，它们丢了可用性分。
+- **局限。** 每个站点只在一天采集一次；WebGL 场景在 headless 浏览器里可能渲染成空白；
+  随滚动的帧部分是平滑滚动库的伪影；每站一位读者，所以单个分数带着约半分的噪声。
 
-## 13. The app-screen study
+## 13. 应用界面研究
 
-For dashboards and app screens (v2.1), a separate study of 23 real product screens chosen by the
-owner (17 products, 17 light and 6 dark, at 1440–1512px): each screen measured from its pixels by a
-reader with full-resolution crops, six cross-cutting reports (shell, data and charts, tables and
-forms, visual language, taste, styles), and a synthesis into `references/app-screens.md` and
-`library/app.json` (seven styles, five shells, screen patterns). The screenshots stay private; the
-skill carries only the measurements and the rules. Blind test rounds of app screens built with and
-without the skill then shaped the warnings at the top of that file.
+为仪表盘和应用界面（v2.1）另做的一项研究：由所有者挑选的 23 个真实产品界面（17 个产品，
+17 浅色 6 深色，1440–1512px）：每个界面由一位读者从像素级全分辨率裁切测量，六份横向报告
+（外壳、数据与图表、表格与表单、视觉语言、品味、样式），并综合成 `references/app-screens.md`
+与 `library/app.json`（七种风格、五种外壳、界面模式）。截图保持私有；本 skill 只承载测量
+结果与规则。随后进行的有无本 skill 的应用界面盲测轮次，塑造了该文件顶部的那些警告。

@@ -1,21 +1,25 @@
-# Bar / Column Chart
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-bar.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** comparing discrete quantities across categories or time intervals — sprint velocity, monthly revenue, feature adoption, cohort counts. Use when each category has a single numeric value and the comparison between bars is the primary message — or, in the dumbbell variant below, exactly two values whose difference is the message.
+# 柱状图 / 条形图（Bar / Column Chart）
 
-## Layout conventions
+**适用场景：** 跨类目或时间段比较离散数量：冲刺速率、月度营收、功能采用、同期群计数。每个类目只有一个数值、柱与柱的比较就是主信息时使用；或使用下方的哑铃（dumbbell）变体：恰好两个数值，其差值本身就是信息。
 
-- **Orientation:** Vertical bars (columns) are default. Horizontal bars are appropriate when category labels are long or you have more than 8 categories.
-- **Plot area margins:** left 80px (y-axis labels), bottom 60px (x-axis labels), top 40px, right 40px — inside a `0 0 1000 500` viewBox.
-- **Bar count cap:** 4–8 bars. More than 8 → group into periods or split into two charts.
-- **Bar width:** ≥ 50% of the column pitch (the gap should never exceed the bar). Typical: pitch=110px, bar=72px.
-- **Y-axis gridlines:** 4–6 horizontal lines at regular intervals. Stroke `ink @ 0.08` (very faint), 0.8px. X-axis baseline at `ink @ 0.25`, 1px.
-- **Y-axis labels:** right-aligned `arrow-label` role 8px in `muted`, at x=72 (8px left of the plot area).
-- **X-axis labels:** centered below each bar, `node-name` role 11px 600 for category names.
-- **Value labels:** `arrow-label` role 8px above each bar. Focal bar label in `accent`; others in `muted`.
-- **Focal bar:** 1 bar max in accent fill/stroke. All others in `muted @ 0.15` fill + `muted` stroke.
-- **Y-axis line:** thin vertical `<line>` at x=80 from y=40 to y=420.
+## 版式约定
 
-### Bar element pattern
+- **方向：** 竖直柱（column）为默认。类目标签很长、或类目超过 8 个时适合水平条（bar）。
+- **绘图区边距：** 左 80px（y 轴标签）、下 60px（x 轴标签）、上 40px、右 40px，位于 `0 0 1000 500` viewBox 内。
+- **柱数上限：** 4–8 根。超过 8 根 → 按周期归组，或拆成两张图。
+- **柱宽：** ≥ 列间距的 50%（间隙绝不能超过柱）。典型值：pitch=110px、bar=72px。
+- **Y 轴网格线：** 4–6 条等距水平线。描边 `ink @ 0.08`（极淡），0.8px。X 轴基线 `ink @ 0.25`，1px。
+- **Y 轴标签：** 右对齐，`arrow-label` 角色 8px，`muted`，在 x=72（绘图区左侧 8px）。
+- **X 轴标签：** 每根柱下方居中，类目名用 `node-name` 角色 11px 600。
+- **数值标签：** 每根柱上方，`arrow-label` 角色 8px。焦点柱标签用 `accent`；其余用 `muted`。
+- **焦点柱：** accent 填充/描边的柱最多 1 根。其余为 `muted @ 0.15` 填充 + `muted` 描边。
+- **Y 轴线：** 细竖 `<line>`，x=80，从 y=40 到 y=420。
+
+### 柱元素模式
 
 ```svg
 <!-- Opaque paper mask prevents bleed from background -->
@@ -26,29 +30,29 @@
 <text x="X+W/2" y="Y-8" fill="{muted}" font-size="8" font-family="{arrow-label}" text-anchor="middle">VALUE</text>
 ```
 
-Focal bar: replace fill with `accent @ 0.12`, stroke with `accent`, label fill with `accent`.
+焦点柱：填充换 `accent @ 0.12`，描边换 `accent`，标签填充换 `accent`。
 
-## Anti-patterns
+## 反模式
 
-- More than 8 bars without grouping (illegible at normal scale).
-- Truncated y-axis (not starting at 0) — distorts the magnitude comparison.
-- Accent on more than 1 bar ("everything is important" = nothing is).
-- 3-D bar extrusion — no shadows, no depth.
-- Category labels rotated more than 45°; prefer short labels or horizontal chart instead.
+- 超过 8 根又不归组（正常尺度下无法辨认）。
+- 截断 y 轴（不从 0 开始）：扭曲量级比较。
+- accent 用在不止 1 根柱上（"样样重要"等于样样不重要）。
+- 3D 柱体拉伸：不要阴影，不要纵深。
+- 类目标签旋转超过 45°：宁可缩短标签或改用水平图。
 
-## Variants
+## 变体
 
-- **Grouped bars:** two bars per category, side by side. Use `accent` for the primary series and `series-1` for the secondary. Max 2 groups.
-- **Stacked bars:** segments stacked to total. Use `accent` for the focal segment; muted tints for others. Document the total at the top of each stack.
-- **Dumbbell:** one row per category, two dots on a single shared horizontal scale joined by a hairline. Use it for a two-state comparison where the *distance* between the ends is the message — before/after, two cohorts, target vs actual. Two series only; a third dot makes the connector meaningless and the figure is a dot plot.
+- **分组柱（Grouped bars）：** 每类目两根柱并排。主系列用 `accent`，次系列用 `series-1`。最多 2 组。
+- **堆叠柱（Stacked bars）：** 段叠到总量。焦点段用 `accent`；其余用 muted 浅色。在每叠顶部标注总量。
+- **哑铃（Dumbbell）：** 每类目一行，两个点落在同一条共享水平刻度上，中间以发丝线相连。用于两点*距离*即信息的两态对比：前后对比、两个同期群、目标 vs 实际。只允许两个系列；第三个点会让连接线失去意义，图也就成了点图。
 
-### Dumbbell layout
+### 哑铃版式
 
-- **Orientation:** horizontal only. Rows stack downward and the value axis runs left → right; a vertical dumbbell forces rotated category labels.
-- **Plot area:** left margin 200px for row labels — this replaces the 80px margin above — so `x` 200→960, `y` 40→420 inside `0 0 1000 500`. Row labels right-aligned at x=188, `node-name` role 11px 600 `ink` (the category-label size this type already uses).
-- **Rows:** the 4–8 bar count cap applies. Pitch and origin are fixed per row count so the block stays inside the plot band — a 64px pitch from y=96 overflows y=420 at seven rows:
+- **方向：** 仅水平。行自上而下堆叠，值轴从左到右；竖直哑铃会逼出旋转的类目标签。
+- **绘图区：** 行标签左侧边距 200px（取代上文的 80px），即 `0 0 1000 500` 内 `x` 200→960、`y` 40→420。行标签在 x=188 右对齐，`node-name` 角色 11px 600 `ink`（该类型类目标签既有的大小）。
+- **行数：** 适用 4–8 根柱的上限。间距与起点按行数固定，保证整个块留在绘图带内：64px 间距从 y=96 起，到第 7 行会越过 y=420：
 
-  | rows | pitch | first row `y` | last row `y` |
+  | 行数 | 间距 | 首行 `y` | 末行 `y` |
   | --- | --- | --- | --- |
   | 4 | 88 | 96 | 360 |
   | 5 | 64 | 96 | 352 |
@@ -56,24 +60,24 @@ Focal bar: replace fill with `accent @ 0.12`, stroke with `accent`, label fill w
   | 7 | 52 | 72 | 384 |
   | 8 | 48 | 68 | 404 |
 
-- **Gridlines:** vertical at each tick, `ink @ 0.08` 0.8px, spanning y 56→408. At the domain floor the axis line replaces the gridline rather than doubling it: `ink @ 0.25` 1px, y 40→420.
-- **Tick labels:** centered under each gridline at y=440, `arrow-label` role 8px `muted`.
-- **Axis title:** the value axis carries the family's axis label — `eyebrow` role 7px `muted`, `letter-spacing="0.14em"`, centered at x=580, y=456, below the tick labels and clear of the legend rule. A horizontal axis takes the un-rotated form the scatter x-axis uses, not the `rotate(-90 24 230)` form the column charts apply to their y-axis. The category axis needs no title: the row labels name themselves.
-- **Dots:** r=6, positioned by value. Style by *series*: the reference end hollow (paper fill, `muted` stroke 1.5px), the focal end solid `accent` with a 1px `ink` stroke. Both marks therefore have a boundary above 3:1 even though the accent fill is not — see below. Fill weight, not hue, carries the pairing.
-- **Accent marks the series, not a focal row.** The solid dot repeats on every row — the one place this variant departs from the one-accent rule above, because the two ends must be told apart in each pair. Do not additionally accent a "most changed" row; the sort order already carries rank.
-- **Connector:** `ink @ 0.55` 1px (`rgba(45,49,66,0.55)` under the default light skin, the value `scripts/verify-dumbbell.py` checks), declared before both dots so the dots cap it. It is not the axis hairline: the connector is what says *these two dots are one row*, so it has to clear 3:1 (0.55 gives 3.19:1; the 0.25 the axis uses gives 1.60:1).
-- **Endpoint positions round, they never snap.** `x = 200 + (v − floor) ÷ (ceil − floor) × 760`, with `floor` and `ceil` set by the axis rule below, rounded to the nearest integer pixel — at most 0.5px, below one rendered pixel. Data coordinates are exempt from the 4px grid; snapping them moves the data.
-- **Value labels sit outside the pair, placed by geometry rather than by series.** A focal value *below* its reference reverses the dots, so derive `x_left = min(x_ref, x_focal)` and `x_right = max(x_ref, x_focal)`: left label right-anchored at `x_left − 12`, right label left-anchored at `x_right + 12`, both baseline `y + 4`, `arrow-label` role 8px `muted`, each still carrying its own series' value. Keying the offsets to start/end instead puts both labels *inside* the pair on every decreasing row.
-- **Floor exception.** A value sitting on the domain floor lands its label at x=188, right-anchored on baseline `y + 4` — exactly the category label's anchor and baseline, so the two texts overlap. When `x_left − 12 < 200`, centre that label above its dot at baseline `y − 10` instead.
-- **Legend:** two keys on the legend row — hollow dot, then solid dot, each with its series name. Circular keys centre at `cy=493`, the centre of the bar legend's 10px key rect at y=488, so both sit on the 497 text baseline. The row order goes in the legend or the source line, right-aligned on the same row.
+- **网格线：** 每个刻度一条竖线，`ink @ 0.08` 0.8px，纵向 y 56→408。值域下限处由轴线取代网格线而不重复：`ink @ 0.25` 1px，y 40→420。
+- **刻度标签：** 每条网格线下方居中，y=440，`arrow-label` 角色 8px `muted`。
+- **轴标题：** 值轴沿用该系列的轴标签：`eyebrow` 角色 7px `muted`、`letter-spacing="0.14em"`，居中于 x=580、y=456，在刻度标签之下、避开图例分隔线。水平轴用散点图 x 轴那种不旋转的形式，不用柱状图 y 轴的 `rotate(-90 24 230)` 形式。类目轴不需要标题：行标签自报家门。
+- **点：** r=6，按值定位。按*系列*定样式：参照端空心（`paper` 填充、`muted` 描边 1.5px），焦点端实心 `accent` 带 1px `ink` 描边。两个标记因此都靠边界过 3:1，即使 accent 填充本身过不了（见下）。承载配对的是填充重量，不是色相。
+- **accent 标记的是系列，不是焦点行。** 实心点在每一行重复：这是本变体唯一背离上文单 accent 规则之处，因为每对的两端必须区分得开。不要再给"变化最大"的行额外加 accent；排序已经承载了排名。
+- **连接线：** `ink @ 0.55` 1px（默认浅色皮肤下即 `rgba(45,49,66,0.55)`，`scripts/verify-dumbbell.py` 检查的值），声明在两个点之前，让点压住它的端头。它不是轴线发丝线：连接线宣告的是*这两个点属于同一行*，所以必须过 3:1（0.55 给 3.19:1；轴用的 0.25 只给 1.60:1）。
+- **端点位置四舍五入，绝不吸附。** `x = 200 + (v − floor) ÷ (ceil − floor) × 760`，`floor` 与 `ceil` 按下方轴规则设定，舍入到最近整数像素：至多 0.5px，低于一个渲染像素。数据坐标豁免于 4px 网格；吸附它们就是在挪动数据。
+- **数值标签放在点对外侧，按几何放置而不是按系列放置。** 焦点值*低于*参照值时会翻转两点的左右，所以推导 `x_left = min(x_ref, x_focal)` 与 `x_right = max(x_ref, x_focal)`：左标签在 `x_left − 12` 处右锚定，右标签在 `x_right + 12` 处左锚定，两者基线 `y + 4`，`arrow-label` 角色 8px `muted`，各自仍带自己系列的值。若改按起点/终点定偏移，每个下降的行上两个标签都会落进点对*内侧*。
+- **下限例外。** 落在值域下限上的值，标签放在 x=188、右锚定、基线 `y + 4`，恰好与类目标签同锚点同基线，两段文字会重叠。当 `x_left − 12 < 200` 时，改为把该标签居中放在其点上方、基线 `y − 10`。
+- **图例：** 图例行上两个键：空心点、实心点，各带系列名。圆形键中心在 `cy=493`，即柱图例 10px 键矩形（y=488）的中心，两者都落在 497 文字基线上。行序写在图例或 source line，右对齐于同一行。
 
-**Why the dots differ by fill, not hue.** The focal bar pattern above (12% tint + accent stroke) does not transfer to a 6px dot: the 12% tint across a 6px-radius disc contributes roughly 14 square pixels of colour, so the mark reads as its stroke alone and the pair separates by hue only. A solid accent dot against a hollow one separates by shape, survives greyscale and colour-vision deficiency, and leaves hue as redundant encoding.
+**为什么两点靠填充而不是色相区分。** 上文的焦点柱模式（12% 浅色 + accent 描边）迁移不到 6px 的点上：12% 浅色铺在半径 6px 的圆片上大约只贡献 14 个平方像素的颜色，标记读起来只剩描边，点对就只靠色相区分了。实心 accent 点对空心点按形状区分，在灰度与色觉障碍下都成立，把色相留作冗余编码。
 
-**Non-text contrast: the boundary carries it, not the fill.** The default accent clears the 3:1 WCAG 1.4.11 asks of a graphical object (4.71:1 on light paper, 5.21:1 on dark), but an onboarded accent may not, and shape redundancy does not waive that floor, because the reader still has to see the mark's edge and the line joining the pair. So neither is left to the accent: the solid endpoint takes a 1px `ink` stroke (11.82:1 against paper) and the connector takes 55% ink on light, 40% on dark (3.19:1 and 3.24:1). The hollow end already cleared it via its `muted` stroke at 6.11:1 light and 7.07:1 dark. `scripts/verify-dumbbell.py` asserts all four, so a later tint change cannot quietly drop one under the line. The hollow/solid shape difference stays as redundant encoding for greyscale and colour-vision deficiency — do not collapse the two dots to a single fill.
+**非文字对比：靠边界承载，不靠填充。** 默认 accent 满足 WCAG 1.4.11 对图形对象要求的 3:1（浅纸 4.71:1、深色 5.21:1），但 onboarding 之后的 accent 未必满足，而且形状冗余不豁免这条下限：读者仍要看得见标记的边缘和连接点对的线。所以两者都不押在 accent 上：实心端点加 1px `ink` 描边（对纸 11.82:1），连接线浅色用 55% ink、深色用 40%（3.19:1 与 3.24:1）。空心一端凭 `muted` 描边早已达标：浅色 6.11:1、深色 7.07:1。`scripts/verify-dumbbell.py` 断言全部四项，后来的浅色调整不可能悄悄跌破。空心/实心的形状差异保留为灰度与色觉障碍下的冗余编码——不要把两个点合并成同一种填充。
 
-**Minimum drawn gap — never clamp it.** Both dots carry `r="6"`; the hollow one paints out to 6.75 because its 1.5px stroke straddles the path, so the marks touch at 12.75px of centre separation and below about 16px the pair reads as one blob — on a 0–100 domain across 760px, a data gap of 2.1 units. Do **not** widen the separation to clear it: moving a dot off its scaled position breaks the shared-scale rule below. Keep the true positions and shrink both marks (r=4 touches at 8.75px), or print the two values and mark the row as too close to resolve.
+**最小绘制间隙：绝不钳制。** 两个点都是 `r="6"`；空心那个涂到 6.75，因为 1.5px 描边跨在路径上，所以点在圆心距 12.75px 时相触，16px 以下点对读成一个团：在跨 760px 的 0–100 域上对应 2.1 个单位的数据间隙。**不要**为清出间隙而拉大两点距离：把点挪离按比例的位置会破坏下方的共享刻度规则。保持真实位置、缩小两个标记（r=4 时 8.75px 相触），或印出两个值并标注该行过于接近、无法分辨。
 
-### Dumbbell element pattern
+### 哑铃元素模式
 
 ```svg
 <!-- One row. Connector first so the dots cap it; labels outside the pair. -->
@@ -85,24 +89,24 @@ Focal bar: replace fill with `accent @ 0.12`, stroke with `accent`, label fill w
 <text x="188" y="100" fill="{ink}" font-size="11" font-weight="600" font-family="{node-name}" text-anchor="end">Platform</text>
 ```
 
-Values 34 and 71 on a 0–100 domain compute to 458.4 and 739.6, rounded to 458 and 740. Had this row fallen instead, the accent dot would sit on the left; the two anchors stay tied to left and right, and each label carries its own series' value.
+0–100 域上的值 34 与 71 算出 458.4 与 739.6，舍入为 458 与 740。假如这一行是下降的，accent 点会落在左侧；两个锚点仍分别绑定左与右，每个标签带自己系列的值。
 
-**Dark theme.** Dots and labels keep their roles and take the dark column of [`style-guide.md`](style-guide.md): hollow `paper` fill with a `muted` stroke, solid `accent` with an `ink` stroke, labels `muted`. **The hairline opacities change too:** gridlines `ink @ 0.08`, axis `ink @ 0.20`, connector `ink @ 0.40` (`rgba(245,245,245,0.40)` under the default dark skin). The connector stays heavier than the axis, for the same 3:1 reason. Resolve `ink` against the dark column, never the light one: in the default skin light `ink` *is* dark `paper`, so a connector, gridline, or axis carried over from light composites to exactly 1.000:1 and the gap encoding and the scale both vanish.
+**深色主题。** 点与标签保持各自角色、取 [`style-guide.md`](style-guide.md) 深色列：空心 `paper` 填充加 `muted` 描边，实心 `accent` 加 `ink` 描边，标签 `muted`。**发丝线的透明度也变：** 网格线 `ink @ 0.08`、轴线 `ink @ 0.20`、连接线 `ink @ 0.40`（默认深色皮肤下即 `rgba(245,245,245,0.40)`）。连接线仍比轴线重，还是那个 3:1 的理由。`ink` 一律对照深色列解析，绝不对照浅色：默认皮肤里浅色的 `ink` *就是*深色的 `paper`，从浅色照搬的连接线、网格线或轴线会合成出恰好 1.000:1，间隙编码与刻度一起消失。
 
-### Dumbbell honesty rules
+### 哑铃诚实规则
 
-- **Never truncate the value axis.** `floor` and `ceil` follow the data's range, never its observed extremes — taking `min` and `max` as the bounds *is* the truncation. With `lo` and `hi` the smallest and largest values, the four cases are exhaustive: `lo >= 0` anchors `floor = 0` and rounds `ceil` up past `hi` (including fractional data smaller than a fixed absolute tolerance); `hi <= 0` anchors `ceil = 0` and rounds `floor` down past `lo`; `lo < 0 < hi` brackets both sides, and zero then falls inside the plot — give it a line at its scaled position in the axis-line weight, since it is what every gap is read against. The fourth case is the one a sign-based rule drops: **when every value is zero**, `lo == hi == 0` would make `ceil - floor` zero and the position formula divide by zero, so take a finite fallback span (`floor = 0`, `ceil = 1` in the data's unit) and let every dot sit on the floor, which is the truth. Data that merely *touches* zero is covered by the first two cases, not a special one. `scripts/verify-dumbbell.py` implements this and proves finite coordinates for all four. The plot width is fixed, so narrowing the domain raises px-per-unit and draws every gap wider: across the same 760px, an 8-point gap is 61px on a 0–100 axis and 152px on a 40–80 axis. Ratios *between* rows survive the zoom — what inflates is each gap's size against the frame, which is how a reader judges whether a gap is large. The gap is the entire claim, which makes this the most common way a dumbbell lies.
-- **Both dots share one scale and one unit.** Label both endpoints with their real values. Labelling only the focal end asks the reader to take the geometry on trust.
-- **The connector is a gap, not a trajectory.** It encodes the distance between two values and nothing about what lies between them — no intermediate points, no rate, no guarantee the change was monotonic. Do not narrate it as movement.
-- **State the row order** in the legend or source line: by one endpoint, by signed change, by absolute change, or by an order the subject supplies (chronological, geographic, ordinal). "By gap" alone is ambiguous — say signed or absolute. What is not allowed is an unstated order, which reads as arbitrary.
-- **A row missing an endpoint is disclosed, never imputed and never silently dropped.** Removing incomplete categories without saying so changes the population being compared. Either draw the known end and name the missing value, or drop the row *and* record which rows went and why — a lone dot is otherwise indistinguishable from two coincident dots, which is to say from a genuine zero gap.
+- **绝不截断值轴。** `floor` 与 `ceil` 跟随数据的范围，不跟随观测到的极值：拿 `min` 和 `max` 当边界*就是*截断。设 `lo` 与 `hi` 为最小值与最大值，四种情形穷尽：`lo >= 0` 时锚定 `floor = 0` 并把 `ceil` 向上取整越过 `hi`（含小于固定绝对容差的小数数据）；`hi <= 0` 时锚定 `ceil = 0` 并把 `floor` 向下取整越过 `lo`；`lo < 0 < hi` 时两侧都包住，零落在绘图区内：在轴线的线宽下给零画一条线，因为每个间隙都是对着它读的。第四种情形是按符号写的规则会漏掉的：**当所有值都是零**，`lo == hi == 0` 会让 `ceil - floor` 为零、位置公式除零，所以取一个有限的回退跨度（数据单位下 `floor = 0`、`ceil = 1`），让每个点都落在下限上，这就是事实。只是*触到*零的数据由前两种情形覆盖，不是特例。`scripts/verify-dumbbell.py` 实现了它，并证明四种情形的坐标都是有限的。绘图区宽度固定，收窄值域会抬高每单位像素数、把每个间隙画得更宽：同样 760px，8 个单位的间隙在 0–100 轴上是 61px，在 40–80 轴上是 152px。行*之间*的比例在缩放下不变：膨胀的是每个间隙相对画框的大小，而读者正是据此判断间隙大不大。间隙就是全部论断，这让截断成为哑铃最常撒的谎。
+- **两个点共享一个刻度与一个单位。** 两个端点都用真实值标注。只标焦点端是让读者对几何凭信任签收。
+- **连接线是间隙，不是轨迹。** 它编码两个值之间的距离，对两者之间发生了什么不作任何断言：没有中间点、没有速率、不保证变化单调。不要把它叙述成运动。
+- **在图例或 source line 声明行序**：按某一端点、按带符号变化、按绝对变化，或按主题自带的顺序（时间、地理、等级）。只写"按间隙"有歧义：说清是带符号还是绝对。不允许的是不声明的顺序，那读起来就是随意的。
+- **缺端点的行要披露，绝不插补，也绝不静默丢弃。** 不加说明地剔除不完整类目，改变的是被比较的总体。要么画出已知端并点名缺失值，要么丢弃该行*并*记录哪些行没了、为什么：不然，孤点与两个重合的点无从区分，也就与一个真实的零间隙无从区分。
 
-Two of these rules live in a formula rather than a drawing, so they are executable: `scripts/verify-dumbbell.py` resolves the domain over every sign case and asserts finite coordinates and 3:1 marks, and `scripts/test-verify-dumbbell.py` exercises both polarities — including all-zero and zero-touching data, and the sub-3:1 treatments this replaced. The checker reads the tokens out of this file, so prose and thresholds cannot drift apart. A shipped dumbbell example would additionally owe a check of drawn positions against the values printed at them.
+这些规则中有两条活在公式里而非图画里，因此可执行：`scripts/verify-dumbbell.py` 在每个符号情形下解析值域，断言坐标有限与 3:1 标记；`scripts/test-verify-dumbbell.py` 在两种极性下演练，包括全零与触零数据，以及被本规则取代的低于 3:1 的处理。检查器从本文件读取 token，所以散文与阈值不会各自漂移。若出货哑铃示例，还欠一项检查：绘出的位置与印在其上的数值互相核对。
 
-## Examples
+## 示例
 
-- `assets/example-bar.html` — minimal light
-- `assets/example-bar-dark.html` — minimal dark
-- `assets/example-bar-full.html` — full editorial
+- `assets/example-bar.html`：极简 light
+- `assets/example-bar-dark.html`：极简 dark
+- `assets/example-bar-full.html`：完整编辑版
 
-Dumbbell domain resolution retains finite bounds for representable subnormal and extreme values. If the next nice ladder step would overflow, the finite extreme is used; opposite-sign extreme domains are scaled without overflowing their span.
+哑铃值域解析对可表示的次正规与极值保持有限边界。下一个取整阶梯会溢出时，使用有限的极值；异号极值域在不越过其跨度的情况下缩放。

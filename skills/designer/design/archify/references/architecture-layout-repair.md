@@ -1,18 +1,22 @@
-# Architecture layout repair
+> **中文汉化版** · 上游：[tt-a1i/archify](https://github.com/tt-a1i/archify) · 原文件：`archify/references/architecture-layout-repair.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this after actual visual review finds several tangled routes. A successful machine receipt does not settle composition. Work on the existing candidate, retaining all required components, relationships, labels, evidence, boundaries, and node sizes.
+# 架构布局修复（Architecture layout repair）
 
-## Choose the repair scope
+在实际目视检查发现多条线路缠绕后使用本文件。一次成功的机器回执不能替你拍板构图。在现有候选文件上工作，保留全部必需的组件、关系、标签、证据、边界和节点尺寸。
 
-If the main and secondary chains already read clearly, repair the isolated defect locally. If a main chain is blocked, several routes tangle, or a local fix moves the defect onto another route, reflow the connected scene in one edit. Preserve all semantics and user-fixed geometry; agent-generated positions and route controls may change. After moving nodes, remove stale generated route overrides so automatic routing can use the new placement.
+## 选择修复范围
 
-The receipt's `directCorridorBlockers`, when present, names nodes between an edge's aligned endpoints. This is geometric evidence, not proof that the edge is the main path or a new validation failure. Trace the reader's actual main path first. When a listed blocker interrupts that path, reposition the connected group instead of adding another detour.
+若主链与次链已经读得清楚，就局部修复孤立缺陷。若主链被堵、多条线路缠绕，或局部修复把缺陷挤到另一条线路上，就在一次编辑中重排整个连通场景。保留全部语义和用户固定的几何；代理生成的位置与线路控制可以改动。移动节点后，删除过期的生成线路覆盖项，让自动布线用上新的摆位。
 
-## One coherent repair
+回执中的 `directCorridorBlockers`（如存在）列出一条边对齐端点之间的节点。这只是几何证据，不能证明该边是主路径，也不是新的验证失败。先描出读者实际的主路径。当列出的阻挡节点打断主路径时，重新摆放连通群组，而不是再加一条绕行线。
 
-1. Trace the affected relationships and their endpoints in the JSON. Before choosing coordinates, write the reader’s main path as an ordered list of existing edges, then identify shared state and real feedback cycles. Every neighboring pair in that main path must have the relationship being explained; place other components on branches beside their actual owner. Use `validate architecture <candidate.json> --layout-json --repo-root <root>` once if the compact receipt and screenshot do not reveal the needed route or label geometry; omit `--repo-root` only for a design without repository evidence. Do not guess repeated waypoint coordinates.
-2. Place those connected main-path neighbors in reading order. Put shared state between its readers/writers, on an adjacent row if necessary, so one writer does not need a line across the whole execution area. Arrange a feedback cycle in its actual edge order around an open rectangle, with other consumers beside their owner. For example, if the edges are `client → API → dispatcher → worker → collector → runner → dispatcher`, put the first four on the upper row, collector below worker, and runner below dispatcher: the return then uses the lower row and a short upward edge. This illustrates adjacency, not a graph or set of coordinates to copy; use only relationships present in the candidate. Preserve every edge and its actual direction.
-3. Keep automatic endpoints for the new placement. Constrain a side only when a branch or return needs a specific corridor; check that corridor against every affected relationship, including storage branches. If that local constraint introduces another conflict, return to the connected placement instead of cycling through side combinations. Only use detailed `via` or label coordinates for a remaining measured defect. Keep external actors outside the resolved boundary rectangle, including its padding; not listing a node in `wraps` does not visually exclude it. Keep an internal relationship and its label inside the shared boundary unless crossing it conveys a real fact; do not imply an external hop merely to avoid another route.
-4. When `composition/label-gap` reports a measured minimum, enlarge that clear gap or move the connected group onto another readable row. Keep the full label beside its own route; placing it in distant empty space does not repair the relationship. Compact unused gaps while preserving measured label space and the previous text size. Keep the main interaction and all required nodes readable in the default desktop view; do not trade crossings for a large blank canvas, tiny text, or a chain that doubles back without a semantic reason.
+## 一次连贯的修复
 
-Run the complete `finalize` once after the edit, then `visual-check` on the successful artifact and inspect its desktop captures. When replacing an already reviewed artifact, use one fresh `--out-dir` for both commands as described in [the delivery contract](delivery-contract.md#a-new-candidate-at-an-existing-output-path). Trace the main path, each secondary chain, and every affected arrow and label. A bounded second repair may address a remaining specific defect. If it still fails visual acceptance, retain the candidate and report the concrete gap; do not count it as a successful repair or continue blind coordinate changes.
+1. 在 JSON 中描出受影响的关系及其端点。在选定坐标之前，先把读者的主路径写成一份由现有边构成的有序清单，再识别共享状态和真实的反馈回路。主路径上每对相邻节点之间必须有正在解释的那条关系；其余组件放在其真正属主旁边的分支上。若紧凑回执和截图没有暴露所需的线路或标签几何，用一次 `validate architecture <candidate.json> --layout-json --repo-root <root>`；仅当设计没有仓库证据时才省略 `--repo-root`。不要凭空猜重复的拐点坐标。
+2. 把主路径上相连的相邻节点按阅读顺序摆放。共享状态放在其读写方之间，必要时放在相邻一行，避免某个写入方拉一条横穿整个执行区的线。反馈回路按其实际的边序排在一个开口矩形周围，其他消费方放在各自属主旁。例如，若边是 `client → API → dispatcher → worker → collector → runner → dispatcher`，把前四个放在上排，collector 放在 worker 下方，runner 放在 dispatcher 下方：返回线走下排，再加一条短的向上边。这只是说明相邻关系，不是可照抄的图或坐标；只用候选文件中实际存在的关系。保留每一条边及其实际方向。
+3. 新摆位下保持自动端点。只有分支或返回需要特定走廊时才约束某一侧；并把该走廊与每条受影响关系核对，包括存储分支。若这个局部约束引入新的冲突，回到连通摆法，而不是在侧向组合里循环。仅对剩下的、已量测的缺陷使用详细的 `via` 或标签坐标。外部参与者保持在已解析边界矩形（含内边距）之外；`wraps` 里没列某个节点并不表示它在视觉上被排除。内部关系及其标签保持在共享边界之内，除非跨越边界本身传达一个真实事实；不要为了避开另一条线路就暗示一次外部跳转。
+4. 当 `composition/label-gap` 报告量测出的最小间距时，扩大那段明确间隙，或把连通群组挪到另一行可读的位置。完整标签放在自己的线路旁；放到远处空白处修不了这条关系。压缩未使用的空隙，同时保留量测出的标签空间和原有字号。默认桌面视图下保持主交互和全部必需节点可读；不要用大片空白画布、过小文字或没有语义理由的回折链路去换更少的交叉。
+
+编辑完成后完整重跑一次 `finalize`，再对成功的产物运行 `visual-check` 并检查其桌面捕获图。替换已审查过的产物时，按[交付契约](delivery-contract.md#a-new-candidate-at-an-existing-output-path)所述，为两条命令使用一个全新的 `--out-dir`。描出主路径、每条次链、以及每条受影响的箭头和标签。有边界的一次二次修复可以处理剩余的具体缺陷。若仍未通过视觉验收，保留候选文件并报告具体差距；不要算作修复成功，也不要继续盲改坐标。

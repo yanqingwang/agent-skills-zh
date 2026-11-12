@@ -1,29 +1,33 @@
-# Resources & Prompts — the other two primitives
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/mcp-server-dev/skills/build-mcp-server/references/resources-and-prompts.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-MCP defines three server-side primitives. Tools are model-controlled (Claude decides when to call them). The other two are different:
+# Resources 与 Prompts — 另外两个原语
 
-- **Resources** are application-controlled — the host decides what to pull into context
-- **Prompts** are user-controlled — surfaced as slash commands or menu items
+MCP 定义了三个 server 侧原语。Tools 是模型控制的（由 Claude 决定何时调用）。另外两个不同：
 
-Most servers only need tools. Reach for these when the shape of your integration doesn't fit "Claude calls a function."
+- **Resources** 是应用控制的，由 host 决定把什么拉进上下文
+- **Prompts** 是用户控制的，以斜杠命令或菜单项的形式呈现
+
+多数 server 只需要 tools。当你的集成形态不适合“Claude 调用函数”时，再来用这两个。
 
 ---
 
 ## Resources
 
-A resource is data identified by a URI. Unlike a tool, it's not *called* — it's *read*. The host browses available resources and decides which to load into context.
+resource 是用 URI 标识的数据。与 tool 不同，它不是被*调用*的，而是被*读取*的。host 浏览可用的 resources，决定把哪些载入上下文。
 
-**When a resource beats a tool:**
-- Large reference data (docs, schemas, configs) that Claude should be able to browse
-- Content that changes independently of conversation (log files, live data)
-- Anything where "Claude decides to fetch" is the wrong mental model
+**resource 优于 tool 的情形：**
+- 大体量参考数据（文档、schema、配置），Claude 应能浏览
+- 内容独立于对话而变化（日志文件、实时数据）
+- 任何“由 Claude 决定去取”都是错误心智模型的场景
 
-**When a tool is better:**
-- The operation has side effects
-- The result depends on parameters Claude chooses
-- You want Claude (not the host UI) to decide when to pull it in
+**tool 更合适的情形：**
+- 操作有副作用
+- 结果取决于 Claude 选定的参数
+- 你希望由 Claude（而不是 host UI）决定何时拉取
 
-### Static resources
+### 静态 resources
 
 ```typescript
 // TypeScript SDK
@@ -45,9 +49,9 @@ def get_settings() -> str:
     return json.dumps(config)
 ```
 
-### Dynamic resources (URI templates)
+### 动态 resources（URI 模板）
 
-RFC 6570 templates let one registration serve many URIs:
+RFC 6570 模板让一次注册服务多个 URI：
 
 ```typescript
 import { ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -68,17 +72,17 @@ def read_file(path: str) -> str:
     return Path(path).read_text()
 ```
 
-### Subscriptions
+### 订阅
 
-Resources can notify the client when they change. Declare `subscribe: true` in capabilities, then emit `notifications/resources/updated`. The host re-reads. Useful for log tails, live dashboards, watched files.
+Resource 变化时可以通知客户端。在 capabilities 里声明 `subscribe: true`，然后发出 `notifications/resources/updated`。host 会重新读取。适合日志尾随、实时仪表盘、被监听的文件。
 
 ---
 
 ## Prompts
 
-A prompt is a parameterized message template. The host surfaces it as a slash command or menu item. The user picks it, fills in arguments, and the resulting messages land in the conversation.
+prompt 是参数化的消息模板。host 把它呈现为斜杠命令或菜单项。用户选中、填入参数，生成的消息进入对话。
 
-**When to use:** canned workflows users run repeatedly — `/summarize-thread`, `/draft-reply`, `/explain-error`. Near-zero code, high UX leverage.
+**何时使用：** 用户会反复运行的固化工作流，如 `/summarize-thread`、`/draft-reply`、`/explain-error`。代码量近乎为零，UX 杠杆很高。
 
 ```typescript
 server.registerPrompt(
@@ -104,19 +108,19 @@ def summarize(text: str, max_words: str = "100") -> str:
     return f"Summarize in {max_words} words:\n\n{text}"
 ```
 
-**Constraints:**
-- Arguments are **string-only** (no numbers, booleans, objects) — convert inside the handler
-- Returns a `messages[]` array — can include embedded resources/images, not just text
-- No side effects — the handler just builds a message, it doesn't *do* anything
+**约束：**
+- 参数**只能是字符串**（没有数字、布尔、对象），在 handler 内自行转换
+- 返回 `messages[]` 数组，可以内嵌 resources/图片，不限于文本
+- 无副作用，handler 只是构建消息，不*执行*任何动作
 
 ---
 
-## Quick decision table
+## 快速决策表
 
-| You want to... | Use |
+| 你想… | 选用 |
 |---|---|
-| Let Claude fetch something on demand, with parameters | **Tool** |
-| Expose browsable context (files, docs, schemas) | **Resource** |
-| Expose a dynamic family of things (`db://{table}`) | **Resource template** |
-| Give users a one-click workflow | **Prompt** |
-| Ask the user something mid-tool | **Elicitation** (see `elicitation.md`) |
+| 让 Claude 按需带参数地取数据 | **Tool** |
+| 暴露可浏览的上下文（文件、文档、schema） | **Resource** |
+| 暴露一族动态资源（`db://{table}`） | **Resource template** |
+| 给用户一个一键式工作流 | **Prompt** |
+| 在 tool 中途问用户一个问题 | **Elicitation**（见 `elicitation.md`） |

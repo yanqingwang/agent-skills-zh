@@ -1,32 +1,26 @@
-# Payload budgeting
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/mcp-server-dev/skills/build-mcp-app/references/payload-budgeting.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Hosts cap tool-result text. claude.ai and Claude Desktop truncate at roughly
-**150,000 characters**; Claude Code at ~25k tokens. When a tool result exceeds
-the cap, the host substitutes a file-pointer string in place of your JSON. The
-widget then receives non-JSON in `ontoolresult`, `JSON.parse` throws, and the
-user sees something like *"Bad payload: SyntaxError: Unexpected token 'E'"* —
-with no hint that size was the cause.
+# 载荷预算
 
-## Symptom → cause
+宿主会限制工具结果文本的大小。claude.ai 与 Claude Desktop 大约在 **150,000 字符**处截断；Claude Code 约 25k token。工具结果超过上限时，宿主会用一个文件指针字符串替换你的 JSON。widget 随后在 `ontoolresult` 里收到非 JSON 内容，`JSON.parse` 抛错，用户看到类似 *"Bad payload: SyntaxError: Unexpected token 'E'"* 的报错，完全看不出大小才是原因。
 
-| Symptom | Likely cause |
+## 症状 → 原因
+
+| 症状 | 可能原因 |
 |---|---|
-| Widget shows a JSON parse error on `content[0].text` | Result over the host cap; host swapped in a file-pointer string |
-| Works for one query, breaks for "all of X" | Row count × column count crossed the cap |
-| Works in MCP Inspector, breaks in Desktop | Inspector has no cap; Desktop does |
+| widget 在 `content[0].text` 上报 JSON 解析错误 | 结果超过宿主上限；宿主换成了文件指针字符串 |
+| 单个查询正常，"所有 X"就坏 | 行数 × 列数越过了上限 |
+| MCP Inspector 里正常，Desktop 里坏 | Inspector 没有上限；Desktop 有 |
 
-## Strategy
+## 策略
 
-Cap your own payload at ~130KB and degrade in order:
+把自己的载荷控制在约 130KB 内，按顺序降级：
 
-1. **Ship full rows** when `JSON.stringify(rows).length` is under the cap.
-2. **Prune columns** to those the rendering spec actually references. Walk the
-   spec for both `field: "..."` keys *and* `datum.X` / `datum['X']` inside
-   expression strings — if the spec aliases a column via a `calculate`
-   transform, the alias appears as `field:` but the source column only appears
-   as `datum.X`, and dropping it leaves the widget with NaN.
-3. **Truncate rows** as a last resort and include `{ truncated: N }` in the
-   payload so the widget can label it.
+1. `JSON.stringify(rows).length` 未超上限时，**整行返回**。
+2. **裁剪列**，只留渲染规格实际引用的列。遍历规格时既找 `field: "..."` 键，也找表达式字符串里的 `datum.X` / `datum['X']`：如果规格通过 `calculate` transform 给某列起了别名，别名以 `field:` 出现，但源列只以 `datum.X` 出现，删掉它 widget 就会拿到 NaN。
+3. **截断行**是最后手段，载荷里带上 `{ truncated: N }`，让 widget 能标注出来。
 
 ```ts
 const MAX = 130_000;
@@ -41,14 +35,12 @@ if (JSON.stringify(out).length > MAX) {
 }
 ```
 
-## Heavy assets go via `callServerTool`, not the result
+## 大体积资源走 `callServerTool`，不走结果
 
-Geometry, image bytes, or any blob the widget needs but Claude doesn't should
-be served by a separate tool the widget calls after mount:
+几何数据、图片字节，或任何 widget 需要、Claude 不需要的大块数据，应由单独的工具提供，widget 挂载后再调用：
 
 ```js
 const topo = await app.callServerTool({ name: "get-topojson", arguments: { level } });
 ```
 
-Mark that helper tool with `_meta.ui.visibility: ["app"]` so it doesn't appear
-in Claude's tool list.
+给这个辅助工具标上 `_meta.ui.visibility: ["app"]`，它就不会出现在 Claude 的工具列表里。

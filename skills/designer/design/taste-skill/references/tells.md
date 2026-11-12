@@ -1,115 +1,100 @@
-# Tells — the dated registry
+> **中文汉化版** · 上游：[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · 原文件：`skills/taste-skill/references/tells.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-A tell is a device that makes a page read as generated. Tells are not bad design in themselves; most
-began as good ideas on good sites. They became tells by being produced by default, everywhere, without
-a reason. That is why this registry is dated, and why it never names a replacement font, colour or
-component: every published "use this instead" list has become the next wave of tells within months.
-Replacements here are procedures (draw from the library, derive from the subject), not products.
+# 破绽（Tells）：一份带日期的登记册
 
-`scripts/inspect.mjs` and `scripts/lint.mjs` detect most entries. Status: **banned** means the
-inspector fails the page; **warned** means it flags it and you need a reason.
+破绽（tell）是指让一个页面读起来像批量生成的手法。破绽本身并不是坏设计；它们大多起源于优秀站点上的好点子。它们之所以成为破绽，是因为被不加思索地默认产出、到处出现、毫无理由。这正是这份登记册带日期的原因，也是它从不出指名道姓的替代字体、颜色或组件的原因：每一份公开发布的"改用这个"清单，几个月内都会变成下一波破绽。这里的替代方案是流程（从资料库抽牌、从主题推导），不是具体产品。
 
-## Contents
+`scripts/inspect.mjs` 与 `scripts/lint.mjs` 能检测其中大多数条目。状态说明：**banned** 表示检查器判该页不合格；**warned** 表示检查器会标记它，你需要给出理由。
 
-1. First wave (2023–2024)
-2. Second wave (2025)
-3. Third wave (2025–2026): the "fix" that became the look
-4. Gallery fashion, banned as house style
-5. Structural tells
-6. Copy tells
-7. Motion tells
-8. Why removal is not enough
+## 目录
 
-## 1. First wave (2023–2024)
+1. 第一波（2023–2024）
+2. 第二波（2025）
+3. 第三波（2025–2026）："修正"本身成了套路外观
+4. 画廊风尚，作为自家风格被禁
+5. 结构性破绽
+6. 文案破绽
+7. 动效破绽
+8. 为什么只做减法还不够
 
-| Tell | Status | Do instead |
+## 1. 第一波（2023–2024）
+
+| 破绽 | 状态 | 替代做法 |
 | --- | --- | --- |
-| Violet / indigo gradients on hero, buttons and glows | banned | The dealt palette; flat colour |
-| Gradient-filled headline text | banned | Solid ink |
-| Glass panels: backdrop blur, translucent cards | warned (2 or more) | Opaque surfaces one tone step from the ground |
-| Glowing or gradient "Get started" button | banned | Flat button named for its action |
-| Soft grey drop shadow under every card | banned | Tone step, or no box |
-| Three identical feature cards, each with an icon in a rounded square | banned | The dealt section blueprint |
-| Emoji as icons or bullets | banned | Words, or a real picture |
-| Centred headline, subtitle, two buttons, screenshot below | no rule; the draw avoids it | The dealt hero |
-| The same typeface on every generated page | warned (lint: default-font) | The dealt type system |
+| hero 区、按钮和发光上的紫罗兰/靛蓝渐变 | banned | 抽到的调色板；纯色 |
+| 用渐变填充的标题文字 | banned | 实色墨色 |
+| 玻璃面板：背景模糊、半透明卡片 | warned（2 个及以上） | 距底色一个色阶的不透明表面 |
+| 发光或渐变的 "Get started" 按钮 | banned | 以动作命名的纯色按钮 |
+| 每张卡片下面垫一道柔和灰色投影 | banned | 色阶，或不加框 |
+| 三张一模一样的功能卡片，各配一个圆角方块里的图标 | banned | 抽到的分区蓝图 |
+| 把 emoji 当图标或项目符号用 | banned | 文字，或一张真实图片 |
+| 居中标题、副标题、两个按钮、下面一张截图 | no rule；抽牌会避开它 | 抽到的 hero |
+| 所有生成页面都用同一款字体 | warned（lint: default-font） | 抽到的字体系统 |
 
-## 2. Second wave (2025)
+## 2. 第二波（2025）
 
-| Tell | Status | Do instead |
+| 破绽 | 状态 | 替代做法 |
 | --- | --- | --- |
-| Eyebrow / kicker: tiny tracked uppercase label above every heading | banned | Fold it into the heading, or delete |
-| Pill badge above the hero headline ("New", "Beta", "Introducing") | banned | Say it in the supporting sentence |
-| One word of the headline in italic serif, colour or underline | warned | One face, one colour |
-| Bento grid of rounded tiles as the feature section | warned as card rows | A composed section; tiles only in the dense-tiles direction, filled, strict sizes |
-| Near-black ground with one neon accent and a glow | banned via shadow, gradient | A dealt dark palette, no glow |
-| Floating rounded pill navigation with blur | warned | A plain bar |
-| Fake dashboard hero built from grey bars and donut charts | no rule; see imagery.md §7 | A real interface fragment, or no image |
-| Decorative status dot ("Available for work", pulsing "live") | lint: bounce | Remove |
-| Fade-and-rise on every section | no rule; see motion.md | One signature move |
+| 眉题/kicker：每个标题上方都有的小号加字距大写标签 | banned | 并进标题，或直接删掉 |
+| hero 标题上方的胶囊徽章（"New"、"Beta"、"Introducing"） | banned | 放进辅助句里说 |
+| 标题里挑一个词用意大利体衬线、变色或加下划线 | warned | 一种字体，一种颜色 |
+| 功能分区用圆角磁贴拼成的 Bento 网格 | warned（按卡片行判） | 一个经过构图的分区；磁贴只用于 dense-tiles 方向，填满内容、尺寸严格 |
+| 近黑底色加一个霓虹强调色和一圈发光 | banned（经 shadow、gradient 规则） | 抽到的暗色调色板，不要发光 |
+| 带模糊的悬浮圆角胶囊导航 | warned | 一条朴素的横条 |
+| 用灰色条块和环形图拼出来的假仪表盘 hero | no rule；见 imagery.md §7 | 一块真实的界面碎片，或不放图 |
+| 装饰性状态圆点（"Available for work"、脉动的 "live"） | lint: bounce | 删除 |
+| 每个分区都淡入上浮 | no rule；见 motion.md | 一个招牌动作 |
 
-## 3. Third wave (2025–2026): the "fix" that became the look
+## 3. 第三波（2025–2026）："修正"本身成了套路外观
 
-The remedy published for the first two waves was "warm it up and make it editorial". Models adopted
-the remedy wholesale and it is now the most recognisable generated look of all.
+针对前两波公开的药方是"调暖、做出编辑感"。模型把这张药方整个吞了下去，它如今成了所有生成外观里最容易被认出来的一种。
 
-| Tell | Status | Do instead |
+| 破绽 | 状态 | 替代做法 |
 | --- | --- | --- |
-| Yellow-cream ground + terracotta / rust / clay accent | banned together; terracotta banned alone; cream warned | The dealt palette. Warmth from a low-chroma stone, a deep ink, a photograph, or a full warm field |
-| High-contrast or soft serif display as the shortcut to "premium" | no rule | The dealt type system, whatever class it is |
-| Oversized italic serif headline | no rule | As dealt |
-| Broadsheet cosplay: hairline rules everywhere, zero radius, dense columns | banned via hairline | Structure from space and tone |
-| "Field notes", "Quietly trusted by", "On our desks": performative labels | lint: copy | Plain section names |
+| 黄奶油底色 + 陶土/铁锈/黏土色强调 | 两者并用 banned；陶土色单独出现也 banned；奶油底色单独出现则 warned | 抽到的调色板。暖意来自低饱和的石色、一种深墨色、一张照片，或一整片暖色场 |
+| 拿高对比或柔和的衬线展示字体当作"高级感"的捷径 | no rule | 抽到的字体系统，无论它属于哪一类 |
+| 超大号意大利体衬线标题 | no rule | 按抽到的来 |
+| 大报风扮演：到处都是发丝线、零圆角、密排多栏 | banned（经 hairline 规则） | 结构来自空间与色阶 |
+| "Field notes"、"Quietly trusted by"、"On our desks"：表演性的标签 | lint: copy | 朴素的分区名 |
 
-## 4. Gallery fashion, banned as house style
+## 4. 画廊风尚，作为自家风格被禁
 
-These are common on award sites right now. In the study they appear *more* often on the top-scored
-sites than on the weak ones (panel observations: monospace labels 44% against 24%, index numbering 38%
-against 21%; measured thin rules 61% against 52%). They are banned here regardless, by the owner's
-decision: they are the first things a generator copies from the gallery, they carry no information,
-and a page built without them has to find real structure.
+这些手法眼下在获奖站点上很常见。在本研究中，它们出现在高分站点上的频率*更*高（评委观察：等宽字体标签 44% 对 24%，序号编排 38% 对 21%；实测细线 61% 对 52%）。尽管如此，这里仍一律禁用，这是上游作者的决定：它们是生成器从画廊里最先抄走的东西，不携带任何信息，而不靠它们搭起来的页面必须找到真正的结构。
 
-| Tell | Status | Do instead |
+| 破绽 | 状态 | 替代做法 |
 | --- | --- | --- |
-| Monospace micro-labels, mono as a "technical" voice, mono captions | banned | The text face; tabular figures for data |
-| Index numbering: 01 / 02 / 03, (001), "Step 02", numbered section markers | banned | Order by position, scale, or the words; `<ol>` when it is truly a list |
-| Thin rules: hairline dividers, ruled grids, 1px outlined boxes and tiles | banned (boxes: 3 or more) | Space, tone steps, filled shapes, a thick bar if a bar is the idea |
-| Design-tool chrome as ornament: crosshairs, crop marks, selection handles, dashed guides, rulers | banned via hairline, dashed | Remove |
-| Agency micro-meta: local time, coordinates, weather, version stamps, "©2026 — Scroll", middle-dot strings | lint: copy; micro-label | Remove |
-| Tiny uppercase letter-spaced captions scattered around the viewport | banned (3 or more) | Sentence case at readable size, placed with the content it describes |
+| 等宽微标签、拿等宽字体当"技术感"腔调、等宽图注 | banned | 正文字体；数据用等宽数字（tabular figures） |
+| 序号编排：01 / 02 / 03、(001)、"Step 02"、编号分区标记 | banned | 靠位置、字号或文字本身表达顺序；真正是列表时用 `<ol>` |
+| 细线：发丝分隔线、划线网格、1px 描边方块和磁贴 | banned（方块：3 个及以上） | 空间、色阶、实心色块；如果粗条本身就是创意，就用粗条 |
+| 把设计工具界面当装饰：十字准星、裁切标记、选择手柄、虚线参考线、标尺 | banned（经 hairline、dashed 规则） | 删除 |
+| 工作室微元数据：当地时间、坐标、天气、版本戳、"©2026 — Scroll"、间隔号字符串 | lint: copy; micro-label | 删除 |
+| 散落在视口各处的小号加字距大写图注 | banned（3 处及以上） | 用可读字号的句子式大小写，放在它所描述的内容旁边 |
 
-Tiny tracked capitals are the one item in this group the data condemns as well: 16% of top sites
-against 57% of weak ones.
+加字距的小号大写字是这一组里唯一同时被数据定罪的：高分站点 16%，弱站点 57%。
 
-## 5. Structural tells
+## 5. 结构性破绽
 
-| Tell | Status | Do instead |
+| 破绽 | 状态 | 替代做法 |
 | --- | --- | --- |
-| Headline as a full sentence at display size, three or four lines | banned (over two lines) | A title of about five words; the rest goes below |
-| Stock section order: hero, logos, features, testimonial, pricing, CTA | no rule; see copy.md §1 | The order of the argument |
-| Every section the same layout family | critique.md pass 9 | Different composition per section, from the sheet |
-| Everything centred | warned over 72% | Left-anchored, one centred moment |
-| One medium border radius (12–16px) on everything | none | Square or fully round, chosen once |
-| Nine nearly equal font sizes | warned over 9 | Five sizes, far apart |
-| Invented social proof: logos, quotes, star rows, "10,000+ teams" | copy.md §5 | Real proof, or none |
-| Text or a CSS box where a picture belongs | critique.md cap | A real picture, or a design that needs none |
+| 把完整句子当展示级标题，一口气三四行 | banned（超过两行） | 约五个词的标题；其余放到下方 |
+| 模板化分区顺序：hero、logo 墙、功能、用户评价、定价、CTA | no rule；见 copy.md §1 | 论证本身的顺序 |
+| 每个分区都是同一种版式 | critique.md pass 9 | 每个分区用不同的构图，取自方向表 |
+| 所有东西都居中 | warned（超过 72%） | 左侧锚定，只留一个居中时刻 |
+| 所有东西都用同一个中等圆角（12–16px） | none | 直角或全圆角，一次选定 |
+| 九个几乎一样大的字号 | warned（超过 9 个） | 五个字号，彼此拉开差距 |
+| 编造的社会证明：logo 墙、引言、星级、"10,000+ teams" | copy.md §5 | 真实的证明，或干脆没有 |
+| 该放图片的地方放了文字或 CSS 方块 | critique.md cap | 一张真实图片，或一种根本不需要图片的设计 |
 
-## 6. Copy tells
+## 6. 文案破绽
 
-Flagged by `lint.mjs`: the genre's verbs and adjectives (unlock, supercharge, seamless, elevate,
-effortless, cutting-edge, all-in-one …); the correction ("not just X, it's Y"); tricolon headlines;
-"Get started" and "Learn more" as labels; more than a handful of em dashes; lorem ipsum. See
-`copy.md` §6.
+由 `lint.mjs` 标记：该品类的动词与形容词（unlock、supercharge、seamless、elevate、effortless、cutting-edge、all-in-one …）；"纠正句式"（"not just X, it's Y"）；三段排比标题；拿 "Get started" 和 "Learn more" 当按钮标签；成把的破折号；lorem ipsum。见 `copy.md` §6。
 
-## 7. Motion tells
+## 7. 动效破绽
 
-Identical fade-up on every block; a dozen staggered hero entrances; hover lift on every card; bounce
-easing; infinite loops that mean nothing; reveals that fail and leave a blank band. See `motion.md` §9.
+每个区块都一样的淡入上浮；十几个依次登场的 hero 入场动画；每张卡片悬停上浮；回弹缓动；毫无意义的无限循环；触发失败后留下一整条空白的揭示动画。见 `motion.md` §9。
 
-## 8. Why removal is not enough
+## 8. 为什么只做减法还不够
 
-A page with every tell removed and nothing put in their place is an empty page with good manners, and
-that is a tell too (the "avoidance aesthetic": anyone could guess it from the category plus the list of
-things to avoid). The tells were filling a gap where an idea should have been. The order of work in
-`SKILL.md` exists to fill that gap first: the idea from the subject, the dealt composition, real
-pictures or committed type, and only then the checks.
+把破绽全部去掉、却没有在任何地方补偿的页面，是一副好教养的空页面，而这也是一种破绽（"回避式美学"：只凭品类加上一份"该避什么"的清单，谁都能猜出来）。破绽原本填补的，正是创意本该在的位置。`SKILL.md` 里的工作顺序就是为了先把这个空补上：创意来自主题，构图来自抽牌，配上真实图片或笃定的字体排印，然后才轮到检查。

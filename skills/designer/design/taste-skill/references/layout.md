@@ -1,44 +1,45 @@
-# Layout
+> **中文汉化版** · 上游：[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · 原文件：`skills/taste-skill/references/layout.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-How the page is put together: margins, the grid, where text sits, how sections differ, navigation,
-endings and the phone. The direction sheet gives the specific compositions; this file gives the habits
-behind them, taken from the panel's notes on the 114 studied sites that scored 7.3 or higher (counts
-below are hand tallies from those notes, so read them as "about").
+# 布局
 
-## Contents
+页面是怎么拼起来的：边距、网格、文字放在哪里、分区如何彼此区分、导航、结尾和手机。方向表
+给出具体的构图；本文件给出这些构图背后的习惯，提炼自评审团对 114 个得分 7.3 及以上站点的
+笔记（下文的计数是对这些笔记的手工统计，请按"约"来读）。
 
-1. What strong pages do
-2. Margins and the grid
-3. Where text sits
-4. Empty space
-5. The frame: margins, balance and titles
-6. Sections: carry the idea, vary the arrangement
-7. Navigation
-8. Endings
-9. The phone is a second composition
-10. How pages fail
+## 目录
 
-## 1. What strong pages do
+1. 强页面做什么
+2. 边距与网格
+3. 文字放在哪里
+4. 空白
+5. 画框：边距、均衡与标题
+6. 分区：延续想法，变化排布
+7. 导航
+8. 结尾
+9. 手机是第二套构图
+10. 页面怎么失败
 
-- **Tight margins, content to the edges.** About 45 of 114 use outer margins of 32px or less; only
-  about 8 use 80px or more. The centred 1100–1300px container is the minority among strong sites and
-  the usual frame of the ones the panel called stock.
-- **Text hangs from an off-centre line.** About 22 anchor text to one fixed line that is neither the
-  centre nor the margin: a third across, 42%, the midpoint.
-- **Two or three type sizes with nothing between** (about 30): one very large with one small, or
-  everything small with the scale given to the image.
-- **One thing per screen** (about 20): one statement, one object, one project.
-- **Sections told apart by their ground.** About 20 change the whole background colour at each
-  section; about 12 alternate light and dark; about 10 never change and separate by space alone.
-- **Sections recomposed, not repeated.** About 14 rearrange every section; about 12 alternate a
-  full-bleed image screen with a near-empty type screen.
-- **The system broken once, on purpose** (about 14): one centred line on a split page, one paper card
-  on a dark page, colour held back until the last screen.
-- **Often no navigation bar** (about 45), and endings that are a designed scene rather than link
-  columns.
-- **Few words.** Median 575 on the whole study; some of the best carry under 200.
+## 1. 强页面做什么
 
-## 2. Margins and the grid
+- **紧边距，内容到边。** 114 个中约 45 个使用 32px 或更小的外边距；只有约 8 个用到 80px 或
+  更大。居中的 1100–1300px 容器在强站点中是少数，却是评审团称为"套版"的那些站点的常见画框。
+- **文字挂在一根偏离中心的线上。** 约 22 个把文字锚定在一根既非中心也非边距的固定线上：
+  三分之一处、42%、中点。
+- **两三个字号，中间没有过渡**（约 30 个）：一个大得惊人的配一个小，或全部偏小、把量级
+  让给图片。
+- **每屏一件事**（约 20 个）：一句陈述、一个物件、一个项目。
+- **分区靠底色区分。** 约 20 个在每个分区整体更换背景色；约 12 个明暗交替；约 10 个从不
+  更换，只靠间距分隔。
+- **分区重新构图，而非重复。** 约 14 个每个分区都重新排布；约 12 个让满幅图片屏与近乎
+  空置的文字屏交替。
+- **系统被打破一次，且是有意的**（约 14 个）：split 页面上的一行居中文字，深色页面上的一张
+  纸质卡片，颜色一直留到最后一个屏。
+- **常常没有导航栏**（约 45 个），结尾是一个被设计的场景，而不是一列列链接。
+- **字少。** 整项研究中位数为 575 词；一些最好的站点不到 200 词。
+
+## 2. 边距与网格
 
 ```css
 :root {
@@ -49,244 +50,200 @@ below are hand tallies from those notes, so read them as "about").
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
 ```
 
-- One pair of margins and one grid for the whole page. Every left edge is a column line.
-- Do not wrap the page in a `max-width: 1200px; margin: auto` container by reflex. Let large things
-  (type, images, colour fields) run the full width, and constrain only the measure of running text
-  (`max-width` in `ch` on the paragraph, not on the page).
-- On very wide screens cap the layout at about 1760–1920px, or let type sized in `vw` stop growing with
-  a `clamp()`.
-- Directions that call for wide margins (uneven photographs, the quiet instrument) say so on the
-  sheet; follow the sheet.
-- Never draw the grid. Column lines, crosshairs and guides are banned ornaments here even though they
-  are fashionable; the grid is felt through alignment.
+- 整页一对边距、一张网格。每个左边缘都是一根列线。
+- 不要条件反射地把页面包进 `max-width: 1200px; margin: auto` 的容器。让大的东西（文字、
+  图片、色场）跑满全宽，只约束连排文字的行宽（在段落上设 `max-width` 的 `ch` 值，不是在
+  页面上）。
+- 在超宽屏上把布局封顶在约 1760–1920px，或让以 `vw` 定字号的文字用 `clamp()` 停止增长。
+- 要求宽边距的方向（不匀称的照片、安静的仪器）会在方向表上写明；照方向表做。
+- 绝不画出网格。列线、十字线和参考线在这里属于被禁的装饰，尽管它们正流行；网格要靠对齐
+  来被感知。
 
-## 3. Where text sits
+## 3. 文字放在哪里
 
-- **Pick the anchor line and reuse it.** If the hero headline starts at column 5, the section
-  headings, the pricing figure and the footer links start there too. Two or three anchor lines on a
-  whole page; six means nothing was decided.
-- **Off-centre beats centred.** A heading in the left third with its paragraph in the far-right
-  column on the same baseline and nothing between; a headline in the bottom third under a deliberate
-  void; text docked in corners with the middle given to the picture.
-- **Opposite ends.** Two short texts at opposite ends of one baseline (name left, one-line description
-  right) is the commonest alternative to the centred stack.
-- **Centred is a decision.** When a strong page centres, it uses one axis with wide empty flanks and a
-  single element per screen, not a centred stack of heading, paragraph and two buttons.
-- **Rows for long copy:** heading in the left third, body in the right two-thirds, the same split for
-  every row on the page.
-- Stagger sparingly: a second line indented by a third so a two-line headline steps across the screen.
+- **选定锚线并复用它。** 如果 hero 标题从第 5 列开始，分区标题、价格数字和页脚链接也从那里
+  开始。整页两三根锚线；六根意味着什么都没决定过。
+- **偏离中心胜过居中。** 标题在左三分之一、它的段落在同一基线的最右列、中间空无一物；
+  标题在下一三分之一的刻意留白之下；文字停靠在角落，中间让给图片。
+- **两端对置。** 两段短文字放在同一基线的两端（名字在左，一行描述在右），是居中堆叠之外
+  最常见的替代。
+- **居中是一种决定。** 强页面居中时，用的是一条轴线、两侧宽绰的空地、每屏单个元素，而不是
+  标题、段落加两个按钮的居中堆叠。
+- **长文案用行式：** 标题在左三分之一，正文在右三分之二，页面每一行式都采用同一分法。
+- 交错要省着用：第二行缩进三分之一，让两行标题在屏幕上阶梯式跨过去。
 
-## 4. Empty space
+## 4. 空白
 
-Empty space is placed, not left over. In the study of 97 Sites of the Day captured in October 2026,
-readers judged every large empty area either a rest, which something closes, or a hole, which nothing
-closes. Strong sites have plenty of rests. About half of them still leave at least one hole, and the
-holes are what visitors name ("big random blank spaces").
+空白是被放置的，不是剩下的。在 2026 年 10 月对 97 个 Sites of the Day 的研究中，读者把每块
+大空区判为两种之一：歇息（有东西收住它），或洞（没有任何东西收住它）。强站点歇息很多。
+其中约一半仍会留下至少一个洞，而洞正是访客会点名的（"大片随机的空白"）。
 
-**A void is placed when something closes it.** In the readers' notes the closer is, most often:
+**留白之下有收束者，它才是被放置的。** 在读者的笔记里，收束者最常是：
 
-- the picture itself (sky, ground, the object, the film) with the type docked at its edge;
-- a picture across the void: the photograph at the far side of an empty band, the full-width row
-  rising under a statement, the opposite picture in a stagger;
-- the type: a headline large enough to span the space, or two short texts at the two ends of one
-  baseline;
-- on a one-screen page, the wordmark, the navigation and one fact in the corners, like a mount around
-  a print.
+- 图片本身（天空、地面、物体、影片），文字停靠在它的边缘；
+- 横过留白的图片：空白带远端的照片、从陈述下方升起的全宽行、交错排版中的对面那张图；
+- 文字：大到能跨过空间的标题，或同一基线两端的两组短文字；
+- 在单屏页面上，字标、导航和一个事实分踞四角，像印张四周的装裱边。
 
-About one closer in five in the study is a hairline or grid line. That device is banned here; close the
-void with the picture, the type, a step in ground tone or a field of flat colour.
+研究里约五分之一的收束者是一根发丝线或网格线。这个手法在这里被禁；用图片、文字、底色的
+一个台阶或一块平色来收住留白。
 
-**Where holes come from.** In order of frequency in the study:
+**洞从哪里来。** 按研究中的出现频率排序：
 
-1. A gap between sections stretched too far: bands of 250–760px of plain ground.
-2. Text in one half of a section and nothing in the other.
-3. Content that arrives late: a reveal not yet fired, so the visitor scrolls onto bare ground while the
-   words fade in.
-4. A short block stretched to a full screen: a footer padded to the viewport height, a section title
-   alone on a whole screen.
-5. A pinned scene that holds almost nothing for several screens.
-6. Pictures of different heights top-aligned in a row, leaving a hole under the short one.
+1. 分区之间的间距拉得太远：250–760px 的素底横带。
+2. 文字在分区的一半，另一半空无一物。
+3. 迟到的内容：reveal 尚未触发，访客滚到光秃秃的底上，文字还在淡入。
+4. 短块被拉满一屏：被撑到视口高度的页脚，独自占满一屏的分区标题。
+5. 钉住的场景连着几屏几乎什么都没固定住。
+6. 一行中不同高度的图片顶对齐，矮的那张下面留下一个洞。
 
-**Rules**
+**规则**
 
-- Decide where the void is and name what closes it. If nothing does, it is a hole: move the section's
-  picture into it, make the main element bigger, or take the space out.
-- Keep the void clean: no stray caption, no decorative shape, no faint watermark, no grid lines.
-- Sections sit 120–240px apart on desktop, counted from the last line of one to the first line of the
-  next (the median in the study is about 230–250px), and 72–112px on a phone. A change of ground
-  colour lets the gap be a little smaller. More than about 40% of a screen of plain ground between two
-  sections is a hole.
-- The gap between sections is clearly larger than any gap inside one. Related things sit close and
-  unrelated things far; a heading has at least twice as much space above it as below.
-- No stretch of the page taller than about half a screen holds nothing at all. In the study, runs of a
-  screen or more with nothing in the page were almost always scroll distance for a pinned scene; the
-  pinned stage must then hold something at every scroll position.
-- Content is in place on the first paint. An entrance moves what is already there (see `motion.md`);
-  it never leaves a screen of bare ground while the words arrive.
-- Size a section to its content. `min-height: 100vh` belongs to a section that fills the screen, not
-  to a footer or a lone heading.
-- In a row of pictures of different heights, align the bottoms or put something under the short one,
-  or crop the row to one ratio.
-- A rest is one thing on a screen: a single line, one object, one picture or a field of colour. Once
-  per page at most. A screen of nothing is never a rest, and the inspector fails two near-empty screens.
-- When a section looks empty, the answer is almost never "add something". Make the main element
-  bigger, or cut the section.
+- 决定留白在哪里，并说出收住它的东西。没有的话，它就是一个洞：把分区的图片挪进去，把主
+  元素放大，或把这段空间拿掉。
+- 保持留白干净：没有游荡的说明文字，没有装饰形状，没有隐约的水印，没有网格线。
+- 桌面端分区相距 120–240px，从上一分区的最后一行数到下一分区的第一行（研究中的中位数约
+  230–250px）；手机上 72–112px。底色一换，间距可以略小。两个分区之间超过约 40% 屏高的
+  素底就是一个洞。
+- 分区之间的间距明显大于分区内部的任何间距。相关的靠近，无关的远离；标题上方的空间至少
+  是下方的两倍。
+- 页面上任何高于约半屏的段落不允许空无一物。研究里，一屏或更长的空段几乎都是钉住场景的
+  滚动距离；那么钉住的舞台就必须在每个滚动位置都固定着东西。
+- 内容在首次绘制时就位。入场动画移动的是已经在那里的东西（见 `motion.md`）；它绝不在文字
+  到来之前留出一屏光底。
+- 分区按其内容定尺寸。`min-height: 100vh` 属于要占满一屏的分区，不属于页脚或孤零零的标题。
+- 一行里图片高度不一时，底对齐，或在矮的那张下面放点东西，或把整行裁成同一比例。
+- 歇息是一屏上的一件事：一行字、一个物体、一张图片或一块色场。每页至多一次。空无一物的
+  一屏永远不是歇息，检查器会让两个近乎空置的屏不通过。
+- 当一个分区显得空，答案几乎从不是"加点东西"。把主元素放大，或砍掉这个分区。
 
-## 5. The frame: margins, balance and titles
+## 5. 画框：边距、均衡与标题
 
-The frame is what readers judge before any detail: "no good margin", "everything is shifted to one
-side", "no clear title", "random unclear sections". The inspector measures each of these. The numbers
-are from the study of 97 Sites of the Day (October 2026).
+画框是读者在任何细节之前就评判的东西："边距不行"、"全都偏到一边了"、"没有清楚的标题"、
+"分区莫名其妙"。检查器逐项测量这些。数字来自对 97 个 Sites of the Day 的研究（2026 年
+10 月）。
 
-**One pair of equal margins.**
+**一对相等的边距。**
 
-- The left and right margins are the same, at every width. On the studied sites with scrolling
-  sections the two sides match to a few pixels: 16 and 16, 20 and 21, 32 and 32, 140 and 137. No
-  strong page in the study was pushed to one side.
-- The usual margin is tight: median about 28px at 1440, half the sites between about 18 and 45px, a
-  few at 80px or more. Here it is 16–32px (section 2), and never under 16px at any width, on the phone
-  included. About one award site in seven sets text 8–15px from the edge; that studio habit is
-  excluded here.
-- The navigation sits on the same margins as the content. The commonest small fault in the study is a
-  header on one inset and the page on another (40px against 20px, or 34px on the left against 10px on
-  the right).
-- A bleed is deliberate and starts from the margin: a row of pictures that runs off the right edge
-  begins on the left margin; a display line that bleeds starts or ends on one. A bleed never moves the
-  margin.
-- Asymmetry belongs inside the frame: an off-centre anchor line (a third across, 42%, the centre line)
-  on symmetric margins.
+- 左右边距相同，在任何宽度。被研究的带滚动分区的站点两侧一致到几个像素：16 和 16、20 和
+  21、32 和 32、140 和 137。研究里没有任何强页面被挤向一边。
+- 常见的边距是紧的：1440 下中位数约 28px，一半站点在约 18 到 45px 之间，少数 80px 或更大。
+  这里取 16–32px（第 2 节），且任何宽度下绝不小于 16px，手机也一样。约七分之一的获奖站点
+  把文字放到距边 8–15px；那门工作室的手艺在这里被排除。
+- 导航与内容共用同一对边距。研究里最常见的小毛病是头部用一个内缩值、页面用另一个（40px
+  对 20px，或左 34px 对右 10px）。
+- 出血是有意的，且从边距出发：向右边缘跑出去的一行图片，起点在左边距上；一条出血的展示
+  大字，起止都落在一根边距线上。出血从不移动边距。
+- 不对称属于画框之内：对称边距上的一根偏离中心的锚线（三分之一处、42%、中心线）。
 
-**Use the width the page has set up.**
+**用页面已经立起来的宽度。**
 
-- In the study about one text section in a hundred leaves half the width empty. Text that sits in one
-  half is common, in roughly one site in three, but the other half then holds the section's own
-  picture (most often), a full-bleed picture behind the text, a second column, a list or a figure.
-- When the text takes one side, put the picture, the second column, the list or the large number on
-  the other. Never leave the other half to plain ground.
-- The middle counts too: a card at the left edge and a lone button at the right with the middle third
-  empty is the same hole.
-- The first screen counts too. When the sentence and the button take the left third above a name
-  docked at the foot, the upper right holds something (the picture or film, one fact, the action) or
-  the name grows up to meet them; in testing, 60% of a first screen left as plain ground under the
-  navigation read as a hole, and the inspector now warns when one empty block takes 28% of the first
-  screen or more.
-- A display line fitted to the width is fitted by measurement (a small script that sets its size from
-  the content box, or SVG text with `textLength`), never by a size guessed for one face: a name that
-  starts on the margin and runs a few pixels off the other edge reads as a mistake.
-- A centred composition has one axis, equal flanks and one thing on it, not a stack of heading,
-  paragraph and two buttons.
+- 研究里约每一百个文字分区中有一个留空一半宽度。文字偏居一侧很常见，约三分之一的站点
+  如此，但另一半会放着分区自己的图片（最常见）、衬在文字后面的满幅图、第二栏、列表或
+  一个图形。
+- 文字占一侧时，把图片、第二栏、列表或大数字放到另一侧。绝不让另一半只剩素底。
+- 中段也算数：左边缘一张卡片、右侧孤零零一个按钮、中间三分之一全空，是同一种洞。
+- 首屏也算数。当句子和按钮占住左三分之一、名字停靠在页脚时，右上方要放东西（图片或影片、
+  一个事实、动作），或者名字向上长高去够它们；测试中，首屏 60% 的素底在导航之下被读作
+  洞，检查器现在会在单个空块占首屏 28% 或更多时发出警告。
+- 按宽度配适的展示大字要靠测量配适（一个小脚本按内容盒定字号，或 SVG 文字用
+  `textLength`），绝不为某个字族猜一个字号：一个从左边距开始、在另一侧差几像素收不住的
+  名字，读起来就是失误。
+- 居中构图有一条轴线、相等的两翼、轴上一个东西，不是标题、段落加两个按钮的堆叠。
 
-**A title that says what this is, on the first screen.**
+**首屏上有一个说出"这是什么"的标题。**
 
-- Asked whether a stranger could say what the page is within five seconds, readers found that 40 of
-  the 97 first screens say it in words, 42 say it only through pictures, small print or a bare name,
-  and 15 do not say it at all. The last group lost usability and content points, not design points.
-- Size alone does not do it: 66 of the 97 first screens carry a display-size line, but 26 of those are
-  a name, a slogan or a place with nothing saying what is offered.
-- The first screen has one `h1`, at display size (32px or more on desktop; on the clear first
-  screens in the study mostly 50–150px), two lines at most, that says what this is: the name with
-  what it does, the product with what it is for, the event with its date and place. If the `h1` is
-  the name, the line under it, at 18px or more, says what the thing is.
-- It is there on the first paint. About a third of the studied pages still showed a loader or nothing readable 4.5
-  seconds.
+- 被问"一个陌生人能否在五秒内说出这个页面是什么"时，读者发现 97 个首屏里 40 个用文字说出
+  了它，42 个只靠图片、小字或光秃秃的名字，15 个完全没说。最后一组丢的是可用性和内容分，
+  不是设计分。
+- 只靠尺寸不够：97 个首屏里 66 个有一条展示级大字，但其中 26 个是名字、口号或地名，没有任何
+  东西说明提供的是什么。
+- 首屏有一个 `h1`，展示字号（桌面 32px 或以上；研究中清楚的首屏大多在 50–150px），至多两行，
+  说出这是什么：名字加它做的事，产品加它给谁用，活动加日期和地点。如果 `h1` 是名字，它
+  下面那一行，18px 或以上，说出这个东西是什么。
+- 它在首次绘制时就在。研究中约三分之一的页面在加载 4.5 秒后仍显示着加载动画或任何读不到的
+  东西。
 
-**A heading on every section.**
+**每个分区有一个标题。**
 
-- 82% of the text sections on the studied sites open with a heading: median 57px (40–96px for the
-  middle half), about three and a half times the body size, one or two lines.
-- Headings start on the outer margin or on the page's inner anchor line (in the study about a third
-  each) and in the same place for every section. About a quarter of the headings in the study are
-  centred; centre one moment per page here.
-- Where a studied section has no heading, the usual stand-in is a small label: caps, mono or a number
-  in brackets. All three are banned here. Put the label's words in a heading in the heading face at the
-  section size ("The rooms", "How it works", "Prices"), set them on the anchor line, and let the first
-  sentence carry the rest.
-- A statement can open a section as its heading only when it names what the section holds.
+- 被研究站点上 82% 的文字分区以标题开场：中位数 57px（中间一半 40–96px），约为正文字号的
+  三倍半，一到两行。
+- 标题从外边距或页面内侧的锚线起（研究里各约三分之一），且每个分区都在同一位置。研究里约
+  四分之一的标题居中；这里每页居中一个时刻。
+- 研究里没有标题的分区，常见的替身是一个小标签：大写字母、等宽字体或括号里的数字。三者
+  在这里都被禁。把标签的文字放进一个标题字族的标题里，用分区字号（"The rooms"、"How it
+  works"、"Prices"），放在锚线上，让第一句承载其余。
+- 一句陈述可以作为分区的开场标题，仅当它说出了这个分区装着什么。
 
-## 6. Sections: carry the idea, vary the arrangement
+## 6. 分区：延续想法，变化排布
 
-The most common failure in every score band is a distinctive first screen followed by stock blocks:
-icon cards, a three-up row, an accordion, a link-column footer. About 25 of the studied sites lose
-points this way, including several above 7.5.
+每个分数段最常见的失败，都是一个有辨识度的首屏后面跟着套版块：图标卡片、三联排、手风琴、
+链接栏页脚。被研究站点里约 25 个这样丢分，包括几个高于 7.5 的。
 
-- **The idea survives to the last pixel.** Ask of each section, pricing and FAQ included: what does
-  the page's idea do here? If the page is a menu, the prices are menu lines. If the name is a
-  monument, the footer is the name again. If the object's shape is the motif, the button and the image
-  masks carry it.
-- **No two neighbours share a layout.** Use the shape of each dealt blueprint (list, split, statement,
-  full-bleed, mosaic, table, strip, pinned …). Count them in the screenshot; a shape used three times
-  is the template showing.
-- **Alternate dense and empty, image and type, light and dark** so the scroll has rhythm.
-- **A repeated module is for archives only** (a work index, a menu, a schedule). Anywhere else,
-  repetition reads as a kit.
-- **Break the system once.** After the page has established its rule, one planned exception (a single
-  centred line, one inverted section, one image at a different scale) is what makes the rule visible.
-- **Short pages are fine.** A quarter of the studied sites are one or two screens. Do not add sections
-  to seem complete; each one must carry a claim (see `copy.md` §1).
+- **想法活到最后一个像素。** 对每个分区（定价和 FAQ 也在内）问：页面的想法在这里做了什么？
+  如果页面是一份菜单，价格就是菜单行。如果名字是纪念碑，页脚就再写一遍名字。如果物体的
+  形状是母题，按钮和图片遮罩就带着它。
+- **没有两个相邻的分区共享布局。** 使用每张发下的蓝图的形状（list、split、statement、
+  full-bleed、mosaic、table、strip、pinned…）。在截图里数一数；同一个形状用了三次，就是
+  模板露馅。
+- **密与空、图与字、明与暗交替**，让滚动有节奏。
+- **重复模块只属于档案**（作品索引、菜单、日程表）。其他任何地方，重复读起来都像一套件。
+- **打破系统一次。** 页面立起自己的规则之后，一个计划内的例外（单独一行居中文字、一个
+  反色分区、一张换了尺度的图片）恰恰让规则显形。
+- **短页面没问题。** 被研究站点中四分之一只有一两屏。不要为了显得完整而加分区；每个分区
+  都要承载一条主张（见 `copy.md` §1）。
 
-## 7. Navigation
+## 7. 导航
 
-- The plain form: the wordmark at one end, three to five text links, one action, all at text size on
-  the page ground with no bar, border or background. Median link count in the study is 3.
-- It is also normal to have less: small links in the corners, a single action, or the navigation
-  folded into the content (a list of section titles that is itself the index).
-- If it stays fixed, it must never sit on top of content: check every scroll position in the
-  screenshots, especially on the phone. Floating pill bars are where the panel most often recorded a
-  nav covering text.
-- On a phone: wordmark and one action in view; the links go in a simple full-screen sheet opened by a
-  text button ("Menu"), or move to the footer when there are only three.
-- Navigation is small furniture, however it is drawn. On desktop it takes no more than about a tenth
-  of the first screen; on a phone it is one row. A blueprint that builds the navigation as a column of
-  colour blocks or a stack of tabs gets that treatment on desktop only, and collapses to one row on
-  the phone so the headline, the supporting sentence and the action stay in the first screen. In
-  blind tests a nav that ate the hero cost a whole point of usability.
+- 朴素形态：一端是字标，三到五个文字链接，一个动作，全部是正文字号，直接放在页面底色上，
+  没有栏、边框或背景。研究里链接数中位数为 3。
+- 更少也正常：角落里的小链接、单个动作，或导航折进内容里（一列分区标题，本身就是索引）。
+- 如果它固定，就绝不能压在内容上：在截图里检查每个滚动位置，手机上尤其如此。悬浮药丸栏
+  是评审团记录到导航盖字最多的地方。
+- 手机上：视口内是字标和一个动作；链接放进一个由文字按钮（"Menu"）打开的简单全屏抽屉，
+  或只有三个链接时移到页脚。
+- 导航是小家具，无论怎么画。桌面端它至多占首屏约十分之一；手机上是一行。把导航建成一列
+  色块或一叠标签页的蓝图，只允许在桌面端成立，手机上收成一行，让标题、支撑句和动作留在
+  首屏。盲测里，一个吃掉 hero 的导航整整丢了一分可用性。
 
-## 8. Endings
+## 8. 结尾
 
-- The page should end on a designed scene. In the study: the name at full width (about 18 of 114), the
-  hero repeated in inverted colours (about 12), a closing scene of its own such as the one contact
-  fact set as a headline (about 14), or simply one quiet line (about 22). Link-column footers appear
-  in the panel's notes only as criticism.
-- The full-width name is strong but already a studio habit; use it when the direction is name-led,
-  otherwise prefer the blueprint dealt for the footer.
-- Put the practical facts (address, hours, email, legal line) in the text face at a readable size, on
-  the same anchor lines as the rest of the page.
+- 页面应在一个被设计的场景上结束。研究里：全宽的名字（约 18/114）、反色重复的 hero（约
+  12）、自成一体的收尾场景如唯一的联系方式排成标题（约 14），或干脆一行安静的话（约 22）。
+  链接栏页脚在评审团的笔记里只以批评的形式出现。
+- 全宽名字很强，但已是一门工作室手艺；方向以名字为主导时用它，否则优先用发给页脚的蓝图。
+- 把实际信息（地址、营业时间、邮箱、法律声明）放进正文字族、可读的字号，与页面其余部分
+  共用同一批锚线。
 
-## 9. The phone is a second composition
+## 9. 手机是第二套构图
 
-Design the 390px screen as its own page, not the desktop page squeezed. Strong sites that neglect this
-lose usability points; weak ones are often just broken.
+把 390px 的屏幕当作它自己的页面来设计，不是被挤扁的桌面页。忽视这一点的强站点丢可用性分；
+弱的那些常常干脆是坏的。
 
-- Each blueprint on the sheet has its own phone paragraph. Build it.
-- Keep one dominant thing on the first screen. A wordmark that was 20vw wide on desktop might stack on
-  two lines at 26vw on the phone and be even stronger.
-- Re-author line breaks; re-crop images to portrait (`object-position` per breakpoint, or a different
-  crop size in the image URL); keep unevenness with alternating widths rather than making everything
-  full width.
-- Margins 16–20px. Body text 16–18px. Touch targets at least 44px high.
-- Check 390px in the inspector's screenshots for every round: sideways scroll and three-line headlines
-  usually appear here first.
+- 方向表上每个蓝图都有自己的手机段落。照着建。
+- 首屏保持一件主导的东西。桌面上 20vw 宽的字标，在手机上可以按 26vw 叠成两行，反而更强。
+- 重新编排断行；重新裁切图片为竖幅（按断点设 `object-position`，或在图片 URL 里换裁切
+  尺寸）；用交替的宽度保留不均匀感，而不是把一切都做成满宽。
+- 边距 16–20px。正文 16–18px。触控目标至少 44px 高。
+- 每一轮都检查检查器截图里的 390px：横向滚动和三行标题通常最先出现在这里。
 
-## 10. How pages fail
+## 10. 页面怎么失败
 
-From the panel's notes on the 54 sites scoring under 6.8 (counts out of 54):
+来自评审团对 54 个得分低于 6.8 站点的笔记（计数以 54 为分母）：
 
-- The whole page is the category's stock template; swap the logo and it could be any competitor
-  (about 20).
-- Centred headline, pill badge, two buttons, screenshot or tile grid below (about 9).
-- A distinctive hero, then stock modules in the usual order (about 8, and about 17 more in the middle
-  band).
-- A default typeface with no character (about 13).
-- Text too small or too low in contrast (about 13); legibility lost over busy photographs (about 9).
-- An undersized headline and no focal point (about 9).
-- The page never says what the thing is, or shows no work (about 12 and 7).
-- Thin content stretched over many screens, or a single gag (about 11).
-- Gates, preloaders and entry pop-ups before any content (about 9).
-- A phone layout that is the desktop shrunk, or broken (about 8).
-- Fixed elements sitting on content; careless details such as colliding lines (about 7 and 5).
+- 整页就是这个品类的套版模板；换掉 logo 它可以是任何一家对手（约 20）。
+- 居中标题、药丸徽章、两个按钮、下方一张截图或一块平铺网格（约 9）。
+- 有辨识度的 hero，之后是按惯例顺序排列的套版模块（约 8，中间分段里还有约 17 个）。
+- 毫无个性的默认字体（约 13）。
+- 文字太小或对比太低（约 13）；在繁忙的照片上失去可读性（约 9）。
+- 标题过小且没有视觉焦点（约 9）。
+- 页面从不说清这个东西是什么，或不展示任何作品（约 12 和 7）。
+- 单薄的内容摊满许多屏，或只有一个笑点（约 11）。
+- 任何内容之前的闸门、预加载器和入场弹窗（约 9）。
+- 手机布局就是桌面缩小版，或干脆是坏的（约 8）。
+- 固定元素压在内容上；粗心的细节如线条相撞（约 7 和 5）。
 
-And the faults of the best sites, which are not to be copied: body text at 9–13px (about 24 of the 90
-sites at 7.5 or more), information hidden behind the concept (about 20), the idea running out
-mid-page (about 15), text over footage with no scrim (about 12), gates and blank first paints (about
-12), floating elements colliding with content (about 11), and a first screen with no statement of what
-this is and no action (about 9). Say what the thing is, and offer the action, on the first screen.
+以及最好那些站点的毛病，不可效仿：9–13px 的正文（90 个 7.5 分及以上站点中约 24 个）、藏在
+概念后面的信息（约 20）、想法中途耗尽（约 15）、无 scrim 的文字压在视频上（约 12）、闸门和
+空白的首次绘制（约 12）、浮动元素与内容相撞（约 11），以及既不说清这是什么也没有动作的
+首屏（约 9）。在首屏上说出这是什么，并把动作递出去。

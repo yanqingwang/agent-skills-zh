@@ -1,8 +1,12 @@
-# ext-apps messaging — widget ↔ host ↔ server
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/mcp-server-dev/skills/build-mcp-app/references/apps-sdk-messages.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The `@modelcontextprotocol/ext-apps` package provides the `App` class (browser side) and `registerAppTool`/`registerAppResource` helpers (server side). Messaging is bidirectional and persistent.
+# ext-apps 消息机制：widget ↔ 宿主 ↔ 服务器
 
-## Construction
+`@modelcontextprotocol/ext-apps` 包提供 `App` 类（浏览器侧）和 `registerAppTool`/`registerAppResource` 辅助函数（服务器侧）。消息是双向且持久的。
+
+## 构造
 
 ```js
 const app = new App(
@@ -12,15 +16,15 @@ const app = new App(
 );
 ```
 
-`autoResize: true` wires a `ResizeObserver` that emits `ui/notifications/size-changed` so the host iframe height tracks your rendered content. Without it the frame is fixed-height and tall renders get clipped — set it for any widget whose height depends on data.
+`autoResize: true` 会接线一个 `ResizeObserver`，发出 `ui/notifications/size-changed`，让宿主 iframe 的高度跟随渲染内容。不设的话 frame 是固定高度，过高的渲染会被裁切：高度依赖数据的 widget 都应设置它。
 
 ---
 
-## Widget → Host
+## Widget → 宿主
 
 ### `app.sendMessage({ role, content })`
 
-Inject a visible message into the conversation. This is how user actions become conversation turns.
+向对话注入一条可见消息。用户动作就是这样变成对话轮次的。
 
 ```js
 app.sendMessage({
@@ -29,11 +33,11 @@ app.sendMessage({
 });
 ```
 
-The message appears in chat and Claude responds to it. Use `role: "user"` — the widget speaks on the user's behalf.
+消息会出现在聊天里，Claude 会回应它。用 `role: "user"`：widget 是替用户说话的。
 
 ### `app.updateModelContext({ content })`
 
-Update Claude's context **silently** — no visible message. Use for state that informs but doesn't warrant a chat bubble.
+**静默**更新 Claude 的上下文，不产生可见消息。用于需要告知但不值得冒出聊天气泡的状态。
 
 ```js
 app.updateModelContext({
@@ -43,7 +47,7 @@ app.updateModelContext({
 
 ### `app.callServerTool({ name, arguments })`
 
-Call a tool on your MCP server directly, bypassing Claude. Returns the tool result.
+直接调用你 MCP 服务器上的工具，绕过 Claude。返回工具结果。
 
 ```js
 const result = await app.callServerTool({
@@ -52,17 +56,17 @@ const result = await app.callServerTool({
 });
 ```
 
-Use for data fetches that don't need Claude's reasoning — pagination, detail lookups, refreshes.
+适合不需要 Claude 推理的数据拉取：分页、详情查询、刷新。
 
 ### `app.openLink({ url })`
 
-Open a URL in a new browser tab, host-mediated. **Required** for any outbound navigation — the iframe sandbox blocks `window.open()` and `<a target="_blank">`.
+在新浏览器标签页打开 URL，由宿主中转。任何外发导航都**必须**用它：iframe 沙箱会拦截 `window.open()` 和 `<a target="_blank">`。
 
 ```js
 await app.openLink({ url: "https://example.com/cart" });
 ```
 
-For anchors in rendered HTML, intercept the click:
+对渲染 HTML 里的锚点，拦截点击：
 
 ```js
 card.querySelector("a").addEventListener("click", (e) => {
@@ -73,7 +77,7 @@ card.querySelector("a").addEventListener("click", (e) => {
 
 ### `app.downloadFile({ name, mimeType, content })`
 
-Host-mediated download (sandbox blocks direct `<a download>`). `content` is a base64 string.
+由宿主中转的下载（沙箱会拦截直接的 `<a download>`）。`content` 是 base64 字符串。
 
 ```js
 const csv = rows.map((r) => Object.values(r).join(",")).join("\n");
@@ -86,7 +90,7 @@ app.downloadFile({
 
 ### `app.requestDisplayMode({ mode })`
 
-Ask the host to switch the widget between `"inline"`, `"pip"`, or `"fullscreen"`. Check `getHostContext().availableDisplayModes` first; hide the control if the mode isn't offered. The host responds by firing `onhostcontextchanged` with new `displayMode` and `containerDimensions` — re-render at the new size.
+请求宿主把 widget 在 `"inline"`、`"pip"` 或 `"fullscreen"` 之间切换。先检查 `getHostContext().availableDisplayModes`；未提供的模式就隐藏对应控件。宿主会以新的 `displayMode` 和 `containerDimensions` 触发 `onhostcontextchanged` 作为响应：按新尺寸重新渲染。
 
 ```js
 if (app.getHostContext()?.availableDisplayModes?.includes("fullscreen")) {
@@ -97,11 +101,11 @@ if (app.getHostContext()?.availableDisplayModes?.includes("fullscreen")) {
 
 ---
 
-## Host → Widget
+## 宿主 → Widget
 
 ### `app.ontoolresult = ({ content }) => {...}`
 
-Fires when the tool handler's return value is piped to the widget. This is the primary data-in path.
+工具处理器的返回值被投递给 widget 时触发。这是主要的数据入口。
 
 ```js
 app.ontoolresult = ({ content }) => {
@@ -110,28 +114,28 @@ app.ontoolresult = ({ content }) => {
 };
 ```
 
-**Set this BEFORE `await app.connect()`** — the result may arrive immediately after connection.
+**务必在 `await app.connect()` 之前设置**：结果可能在连接完成后立即到达。
 
 ### `app.ontoolinput = ({ arguments }) => {...}`
 
-Fires with the arguments Claude passed to the tool. Useful if the widget needs to know what was asked for (e.g., highlight the search term).
+携带 Claude 传给工具的参数触发。widget 需要知道请求内容时有用（例如高亮搜索词）。
 
 ### `app.ontoolinputpartial = ({ arguments }) => {...}` / `app.ontoolcancelled = () => {...}`
 
-`ontoolinputpartial` fires while Claude is still streaming arguments — use it to show a skeleton ("Preparing: <title>…") before the result lands. `ontoolcancelled` fires if the call is aborted; clear the skeleton.
+`ontoolinputpartial` 在 Claude 还在流式输出参数时触发：趁结果未落地先显示骨架屏（"Preparing: <title>…"）。调用被中止时触发 `ontoolcancelled`：清除骨架屏。
 
 ### `app.getHostContext()` / `app.onhostcontextchanged = (ctx) => {...}`
 
-Read and subscribe to host context. Call `getHostContext()` **after** `connect()`. Subscribe for live updates (user toggles dark mode, expands to fullscreen).
+读取并订阅宿主上下文。`getHostContext()` 要在 `connect()` **之后**调用。订阅以获得实时更新（用户切换深色模式、展开为全屏）。
 
-| `ctx.` field | Use |
+| `ctx.` 字段 | 用途 |
 |---|---|
-| `theme` | `"light"` / `"dark"` — toggle a `.dark` class |
-| `styles.variables` | Host CSS tokens — pass to `applyHostStyleVariables()` so colors/fonts match host chrome |
-| `displayMode` / `availableDisplayModes` | Current mode and which `requestDisplayMode` targets are valid |
-| `containerDimensions.{maxHeight,width}` | Size your render to this instead of hard-coded px |
-| `deviceCapabilities.touch` | Switch hover-only affordances to tap (`pointerdown`) |
-| `safeAreaInsets` | Padding for notches / composer overlay |
+| `theme` | `"light"` / `"dark"`：切换 `.dark` 类 |
+| `styles.variables` | 宿主 CSS token：传给 `applyHostStyleVariables()`，让颜色/字体与宿主外观一致 |
+| `displayMode` / `availableDisplayModes` | 当前模式，以及哪些 `requestDisplayMode` 目标可用 |
+| `containerDimensions.{maxHeight,width}` | 按此尺寸渲染，不要写死 px |
+| `deviceCapabilities.touch` | 把仅悬停的交互改为点按（`pointerdown`） |
+| `safeAreaInsets` | 为刘海 / 输入框遮挡留 padding |
 
 ```js
 const applyTheme = (t) =>
@@ -142,13 +146,13 @@ await app.connect();
 applyTheme(app.getHostContext()?.theme);
 ```
 
-Keep colors in CSS custom props with a `:root.dark {}` override block and set `color-scheme: light | dark` so native form controls follow.
+颜色放在 CSS 自定义属性里，配一个 `:root.dark {}` 覆盖块，并设置 `color-scheme: light | dark`，让原生表单控件跟随主题。
 
 ---
 
-## Server → Widget (progress)
+## 服务器 → Widget（进度）
 
-For long-running operations, emit progress notifications. The client sends a `progressToken` in the request's `_meta`; the server emits against it.
+长任务应发送进度通知。客户端在请求的 `_meta` 里带上 `progressToken`；服务器对着它发送进度。
 
 ```typescript
 // In the tool handler
@@ -167,25 +171,25 @@ async ({ query }, extra) => {
 }
 ```
 
-No `{ notify }` destructure — `extra` is `RequestHandlerExtra`; progress goes through `sendNotification`.
+没有 `{ notify }` 解构这回事：`extra` 是 `RequestHandlerExtra`，进度走 `sendNotification`。
 
 ---
 
-## Lifecycle
+## 生命周期
 
-1. Claude calls a tool with `_meta.ui.resourceUri` declared
-2. Host fetches the resource (your HTML) and mounts a **fresh iframe** for this call
-3. Widget script runs, sets handlers, calls `await app.connect()`
-4. Host pipes the tool's return value → `ontoolresult` fires
-5. Widget renders, user interacts
-6. Widget calls `sendMessage` / `updateModelContext` / `callServerTool` as needed
-7. Iframe persists in the transcript; **the next call to the same tool mounts another iframe** alongside it
+1. Claude 调用声明了 `_meta.ui.resourceUri` 的工具
+2. 宿主拉取资源（你的 HTML），为本次调用挂载一个**全新 iframe**
+3. widget 脚本运行、设置处理器、调用 `await app.connect()`
+4. 宿主把工具返回值接进来 → `ontoolresult` 触发
+5. widget 渲染，用户交互
+6. widget 按需调用 `sendMessage` / `updateModelContext` / `callServerTool`
+7. iframe 留存在会话记录里；**下一次调用同一工具会在旁边再挂载一个 iframe**
 
-There's no explicit "submit and close" — each instance is long-lived, but instances are not reused across calls.
+没有显式的"提交并关闭"：每个实例都是长驻的，但实例不会跨调用复用。
 
-### Supersession
+### 被取代（supersession）
 
-Because earlier instances stay mounted, a click on a stale widget can `sendMessage` after a newer one has rendered. Detect this with a `BroadcastChannel` and make older instances inert:
+早期实例保持挂载，所以较新的实例渲染后，旧 widget 上的一次点击仍可能 `sendMessage`。用 `BroadcastChannel` 检测这种情况，让旧实例失效：
 
 ```js
 let superseded = false;
@@ -207,21 +211,21 @@ function safeSend(msg) {
 
 ---
 
-## Sandbox & CSP gotchas
+## 沙箱与 CSP 陷阱
 
-The iframe runs under both an HTML `sandbox` attribute **and** a restrictive Content-Security-Policy. The practical effect is that almost nothing external is allowed — widgets should be self-contained.
+iframe 同时受 HTML `sandbox` 属性**和**严格 Content-Security-Policy 约束。实际效果就是几乎不允许任何外部内容：widget 应当自包含。
 
-| Symptom | Cause | Fix |
+| 症状 | 原因 | 修复 |
 |---|---|---|
-| Widget is a blank rectangle, nothing renders | CDN `import` of ext-apps blocked (transitive SDK fetches) | **Inline** the `ext-apps/app-with-deps` bundle — see `iframe-sandbox.md` |
-| Widget renders but JS doesn't run | Inline event handlers blocked | Use `addEventListener` — never `onclick="..."` in HTML |
-| `eval` / `new Function` errors | Script-src restriction | Don't use them; use JSON.parse for data |
-| `fetch()` to your API fails | Cross-origin blocked | Route through `app.callServerTool()` instead |
-| External CSS doesn't load | `style-src` restriction | Inline styles in a `<style>` tag |
-| Fonts don't load | `font-src` restriction | Use system fonts (`font: 14px system-ui`) |
-| External `<img src>` broken | CSP `img-src` + referrer hotlink blocking | Fetch server-side, inline as `data:` URL in the tool result payload |
-| `window.open()` does nothing | Sandbox lacks `allow-popups` | Use `app.openLink({url})` |
-| `<a target="_blank">` does nothing | Same | Intercept click → `preventDefault()` → `app.openLink` |
-| Edited HTML doesn't appear in Desktop | Desktop caches UI resources | Fully quit (⌘Q) + relaunch, not just window-close |
+| widget 是一块空白矩形，什么都不渲染 | CDN `import` ext-apps 被拦（传递性 SDK 拉取） | **内联** `ext-apps/app-with-deps` bundle，参见 `iframe-sandbox.md` |
+| widget 渲染了但 JS 不跑 | 内联事件处理器被拦 | 用 `addEventListener`：HTML 里绝不写 `onclick="..."` |
+| `eval` / `new Function` 报错 | script-src 限制 | 别用它们；数据解析用 JSON.parse |
+| 对你的 API `fetch()` 失败 | 跨域被拦 | 改走 `app.callServerTool()` |
+| 外部 CSS 加载不了 | `style-src` 限制 | 样式内联在 `<style>` 标签里 |
+| 字体加载不了 | `font-src` 限制 | 用系统字体（`font: 14px system-ui`） |
+| 外部 `<img src>` 挂掉 | CSP `img-src` + referrer 防盗链 | 服务端抓取，以 `data:` URL 内联进工具结果载荷 |
+| `window.open()` 没反应 | 沙箱缺少 `allow-popups` | 用 `app.openLink({url})` |
+| `<a target="_blank">` 没反应 | 同上 | 拦截点击 → `preventDefault()` → `app.openLink` |
+| 改过的 HTML 在 Desktop 里不出现 | Desktop 缓存 UI 资源 | 完全退出（⌘Q）再重启，不能只关窗口 |
 
-When in doubt, open the **iframe's own** devtools console (not the main app's) — CSP violations log there. See `iframe-sandbox.md` for the bundle-inlining pattern.
+拿不准时，打开 **iframe 自己的** devtools 控制台（不是主应用的）：CSP 违规会记录在那里。bundle 内联模式参见 `iframe-sandbox.md`。

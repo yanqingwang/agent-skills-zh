@@ -1,109 +1,113 @@
-# CLAUDE.md Quality Criteria
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/claude-md-management/skills/claude-md-improver/references/quality-criteria.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Scoring Rubric
+# CLAUDE.md 质量标准
 
-### 1. Commands/Workflows (20 points)
+## 评分细则
 
-**20 points**: All essential commands documented with context
-- Build, test, lint, deploy commands present
-- Development workflow clear
-- Common operations documented
+### 1. 命令/工作流（20 分）
 
-**15 points**: Most commands present, some missing context
+**20 分**：所有核心命令都已记录，且附有上下文
+- 包含构建、测试、lint、部署命令
+- 开发工作流清晰
+- 常见操作已记录
 
-**10 points**: Basic commands only, no workflow
+**15 分**：命令大部分齐全，部分缺少上下文
 
-**5 points**: Few commands, many missing
+**10 分**：仅有基础命令，没有工作流
 
-**0 points**: No commands documented
+**5 分**：命令很少，缺了很多
 
-### 2. Architecture Clarity (20 points)
+**0 分**：未记录任何命令
 
-**20 points**: Clear codebase map
-- Key directories explained
-- Module relationships documented
-- Entry points identified
-- Data flow described where relevant
+### 2. 架构清晰度（20 分）
 
-**15 points**: Good structure overview, minor gaps
+**20 分**：代码库地图清晰
+- 关键目录都有说明
+- 模块关系已记录
+- 入口已标明
+- 相关之处的数据流向已有描述
 
-**10 points**: Basic directory listing only
+**15 分**：结构概览良好，存在小缺口
 
-**5 points**: Vague or incomplete
+**10 分**：仅有基础的目录列表
 
-**0 points**: No architecture info
+**5 分**：含糊或不完整
 
-### 3. Non-Obvious Patterns (15 points)
+**0 分**：没有任何架构信息
 
-**15 points**: Gotchas and quirks captured
-- Known issues documented
-- Workarounds explained
-- Edge cases noted
-- "Why we do it this way" for unusual patterns
+### 3. 非显而易见的模式（15 分）
 
-**10 points**: Some patterns documented
+**15 分**：坑点与怪癖都有记录
+- 已知问题已记录
+- 变通办法有说明
+- 边界情况有标注
+- 对不寻常的模式写明"为什么这么做"
 
-**5 points**: Minimal pattern documentation
+**10 分**：部分模式有记录
 
-**0 points**: No patterns or gotchas
+**5 分**：模式记录极少
 
-### 4. Conciseness (15 points)
+**0 分**：没有任何模式或坑点记录
 
-**15 points**: Dense, valuable content
-- No filler or obvious info
-- Each line adds value
-- No redundancy with code comments
+### 4. 简洁性（15 分）
 
-**10 points**: Mostly concise, some padding
+**15 分**：内容密集、有价值
+- 没有凑数内容或显而易见的信息
+- 每一行都在增加价值
+- 与代码注释不重复
 
-**5 points**: Verbose in places
+**10 分**：整体精炼，略有凑数内容
 
-**0 points**: Mostly filler or restates obvious code
+**5 分**：部分地方啰嗦
 
-### 5. Currency (15 points)
+**0 分**：大多是凑数内容，或复述代码中显而易见的东西
 
-**15 points**: Reflects current codebase
-- Commands work as documented
-- File references accurate
-- Tech stack current
+### 5. 时效性（15 分）
 
-**10 points**: Mostly current, minor staleness
+**15 分**：反映代码库当前状态
+- 命令按记录的那样可用
+- 文件引用准确
+- 技术栈信息是最新的
 
-**5 points**: Several outdated references
+**10 分**：大体上是最新的，略有陈旧
 
-**0 points**: Severely outdated
+**5 分**：多处引用已过时
 
-### 6. Actionability (15 points)
+**0 分**：严重过时
 
-**15 points**: Instructions are executable
-- Commands can be copy-pasted
-- Steps are concrete
-- Paths are real
+### 6. 可执行性（15 分）
 
-**10 points**: Mostly actionable
+**15 分**：指令可直接执行
+- 命令可直接复制粘贴
+- 步骤具体
+- 路径真实存在
 
-**5 points**: Some vague instructions
+**10 分**：大部分可执行
 
-**0 points**: Vague or theoretical
+**5 分**：部分指令含糊
 
-## Assessment Process
+**0 分**：含糊或停留在理论层面
 
-1. Read the CLAUDE.md file completely
-2. Cross-reference with actual codebase:
-   - Run documented commands (mentally or actually)
-   - Check if referenced files exist
-   - Verify architecture descriptions
-3. Score each criterion
-4. Calculate total and assign grade
-5. List specific issues found
-6. Propose concrete improvements
+## 评估流程
 
-## Red Flags
+1. 通读 CLAUDE.md 文件
+2. 与实际代码库交叉核对：
+   - 运行已记录的命令（在脑中或实际执行）
+   - 检查引用的文件是否存在
+   - 核实架构描述
+3. 逐项评分
+4. 计算总分并评定等级
+5. 列出发现的具体问题
+6. 提出具体的改进建议
 
-- Commands that would fail (wrong paths, missing deps)
-- References to deleted files/folders
-- Outdated tech versions
-- Copy-paste from templates without customization
-- Generic advice not specific to the project
-- "TODO" items never completed
-- Duplicate info across multiple CLAUDE.md files
+## 危险信号
+
+- 跑不通的命令（路径错误、缺少依赖）
+- 引用了已删除的文件/文件夹
+- 技术版本过时
+- 直接从模板复制粘贴，未经定制
+- 与项目无关的泛泛建议
+- 从未完成的 "TODO" 条目
+- 多个 CLAUDE.md 文件之间信息重复

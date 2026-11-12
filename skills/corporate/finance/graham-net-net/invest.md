@@ -6,7 +6,7 @@ aliases:
   - Benjamin Graham
   - Net-Net
   - Intelligent Investor
-description: Net-current-asset value, statistical deep value, margin of safety, and balance-sheet-first investing
+description: 净流动资产价值、统计型深度价值、安全边际与资产负债表优先的投资
 investor: Benjamin Graham
 style: value+deep-value
 timeHorizon: 1-3 years
@@ -36,7 +36,7 @@ signals:
       weight: high
       frequency: quarterly
       source: model-specific data
-      description: Main edge of the investor model
+      description: 投资人模型的主要优势
 filters:
   inUniverse: required
   evidenceSufficient: required
@@ -73,125 +73,128 @@ sources:
   - Graham-Newman partnership history
 ---
 
-# Graham Net-Net Value
+> **中文汉化版** · 上游：[questflowai/investorskills](https://github.com/questflowai/investorskills) · 原文件：`skills/graham-net-net/invest.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Buy assets for less than they are worth, with a margin of safety large enough that imperfect analysis still protects capital.
+# 格雷厄姆净净资产价值
 
-## Philosophy
+以低于资产价值的价格买入，并留出足够大的安全边际，让不完美的分析仍能保护本金。
 
-Buy assets for less than they are worth, with a margin of safety large enough that imperfect analysis still protects capital.
+## 投资哲学
 
-## Universe & Regime
+以低于资产价值的价格买入，并留出足够大的安全边际，让不完美的分析仍能保护本金。
 
-- **Asset classes**: public equities.
-- **Universe**: Opportunities inside the circle of competence listed above.
-- **Preferred regime**: Where the model's edge is active.
-- **Avoid**: Outside competence, missing data, or fatal risk structure.
-- **Posture**: Risk-aware and evidence-driven.
+## 选股范围与市场环境
 
-## Signals
+- **资产类别**：公开市场股票。
+- **选股范围**：上列能力圈范围内的机会。
+- **偏好环境**：模型优势生效的市场条件。
+- **回避**：能力圈之外、数据缺失，或致命的风险结构。
+- **姿态**：风险感知且由证据驱动。
 
-- **ncavDiscount** (high): Price vs net current asset value.
-- **balanceSheetProtection** (high): Cash, working capital, low debt.
-- **earningsStabilitySecondary** (medium): Helpful but not required for pure net-nets.
-- **diversification** (high): Basket approach for statistical bargains.
+## 信号
 
-## Filters
+- **ncavDiscount**（高）：价格相对净流动资产价值的折价。
+- **balanceSheetProtection**（高）：现金、营运资本与低负债。
+- **earningsStabilitySecondary**（中）：对纯 net-net 有帮助，但并非必需。
+- **diversification**（高）：以一篮子方式捕捉统计意义上的便宜货。
 
-- **discountToNCAVOrAssets** (required)
-- **debtNotFatal** (required)
-- **fraudRiskHigh** (disqualifier)
-- **assetsIllusory** (disqualifier)
+## 过滤条件
 
-## Analysis
+- **discountToNCAVOrAssets**（必需）
+- **debtNotFatal**（必需）
+- **fraudRiskHigh**（否决项）
+- **assetsIllusory**（否决项）
 
-1. Calculate NCAV / tangible asset value.
-2. Haircut dubious assets and check liabilities.
-3. Prefer a basket of discounts rather than one story stock.
-4. Exit when price converges to value or assets impair.
+## 分析
 
-## Position Sizing
+1. 计算 NCAV / 有形资产价值。
+2. 对可疑资产打折，并核查负债。
+3. 优先选择一篮子折价标的，而非单只"故事股"。
+4. 当价格向价值收敛或资产发生减值时退出。
 
-- **Initial size**: Only after filters pass and risk is defined.
-- **Add rule**: Add as evidence improves and risk/reward remains attractive.
-- **Max size**: Constrained by model style and portfolio risk.
-- **Cash rule**: Cash or neutrality is valid when no setup clears the bar.
+## 仓位管理
 
-## Risk Management
+- **初始仓位**：先通过全部筛选条件且风险已定义，再建初始仓位。
+- **加仓规则**：证据改善且风险/回报仍有吸引力时加仓。
+- **最大仓位**：受模型风格与组合风险约束。
+- **现金规则**：当没有机会达到标准时，持有现金或中性仓位完全成立。
 
-- **Primary risk**: Applying the model outside its edge or without evidence.
-- **Stop / invalidation**: Thesis, structure, or risk-budget based.
-- **Correlation**: Avoid hidden concentration in one factor.
-- **Leverage**: Limited unless the model explicitly supports it.
+## 风险管理
 
-## Execution
+- **主要风险**：在优势范围之外、或没有证据支撑的情况下套用本模型。
+- **止损/失效**：基于论断、结构或风险预算。
+- **相关性**：避免对单一因素的隐藏集中。
+- **杠杆**：除非模型明确支持，否则仅限有限使用。
 
-### Entry Rules
+## 执行
 
-1. Setup is inside universe.
-2. Core signals support action.
-3. Filters pass.
-4. Risk and invalidation are defined.
+### 买入规则
 
-### Exit Rules
+1. 机会在选股范围之内。
+2. 核心信号支持行动。
+3. 筛选条件通过。
+4. 风险与失效条件已定义。
 
-1. Thesis breaks.
-2. Evidence reverses.
-3. Risk budget is breached.
-4. Better opportunity appears inside the model.
+### 卖出规则
 
-## Monitoring
+1. 论断被打破。
+2. 证据反转。
+3. 风险预算被突破。
+4. 模型范围内出现更好的机会。
 
-- **Cadence**: quarterly.
-- **Metrics**: Core evidence, risk budget, valuation/regime/context as relevant.
-- **Alerts**: Invalidation triggers and missing critical data.
+## 监控
 
-## Playbooks
+- **节奏**：季度。
+- **指标**：核心证据、风险预算，以及相关的估值/环境/背景。
+- **警报**：论断失效触发条件与关键数据缺失。
 
-### Decision Memo
+## 操作手册
 
-Return one of: Buy Basket / Buy Single / Watch / Asset Trap / Pass. Include thesis, evidence, risks, action plan, and invalidation.
+### 投资备忘录
 
-## Canonical Cases
+返回以下之一：Buy Basket / Buy Single / Watch / Asset Trap / Pass。内容需包含论断、证据、风险、行动计划与失效条件。
 
-- **Net-current-asset value bargains**: buying below liquidation-style working capital value.
-- **Diversified cheap stock baskets**: Graham's statistical approach reduces single-name risk.
-- **Margin of safety doctrine**: price protection as the first principle of value investing.
+## 经典案例
 
-## Do's and Don'ts
+- **净流动资产价值便宜货**：以低于清算式营运资本价值的价格买入。
+- **分散的便宜股组合**：格雷厄姆的统计化方法降低单一个股风险。
+- **安全边际原则**：把价格保护当作价值投资的第一原则。
 
-- Do stay inside the model's edge.
-- Do demand evidence before sizing.
-- Do define invalidation.
-- Don't force trades.
-- Don't ignore risk structure.
-- Don't confuse narrative with proof.
+## 该做与不该做
+
+- 要留在模型的优势范围之内。
+- 要在决定仓位之前先拿到证据。
+- 要预先定义失效条件。
+- 不要强行交易。
+- 不要忽视风险结构。
+- 不要把叙事当成证据。
 
 
 
+## 播客
 
-## Podcasts
-
-- Shared podcast list with Spotify links: ../../docs/podcast-list.md
+- 共享播客清单（含 Spotify 链接）：../../docs/podcast-list.md
 
 
 ## YouTube
 
-- Shared YouTube list: ../../docs/youtube-list.md
+- 共享 YouTube 清单：../../docs/youtube-list.md
 
-## Reading List
+## 阅读清单
 
-- The Intelligent Investor: https://www.amazon.com/Intelligent-Investor-Definitive-Investing-Essentials/dp/0060555661
-- Security Analysis: https://www.amazon.com/Security-Analysis-Sixth-Foreword-Buffett/dp/0071592539
-- Superinvestors essay: https://www8.gsb.columbia.edu/articles/columbia-business/superinvestors
-- Shared reading list: ../../docs/reading-list.md
+- 《聪明的投资者》：https://www.amazon.com/Intelligent-Investor-Definitive-Investing-Essentials/dp/0060555661
+- 《证券分析》：https://www.amazon.com/Security-Analysis-Sixth-Foreword-Buffett/dp/0071592539
+- 《超级投资者》文章：https://www8.gsb.columbia.edu/articles/columbia-business/superinvestors
+- 共享阅读清单：../../docs/reading-list.md
 
-## Source Notes
+## 来源说明
 
-This model is distilled from:
+本模型蒸馏自：
 
-- Benjamin Graham, The Intelligent Investor
-- Security Analysis
-- Graham-Newman partnership history
+- 本杰明·格雷厄姆《聪明的投资者》（The Intelligent Investor）
+- 《证券分析》（Security Analysis）
+- 格雷厄姆-纽曼合伙基金历史（Graham-Newman partnership history）
 
-Use primary sources when possible. This is a judgment framework, not financial advice.
+尽量使用一手资料。这是一个判断框架，不构成投资建议。

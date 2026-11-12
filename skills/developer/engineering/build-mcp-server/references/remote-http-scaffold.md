@@ -1,10 +1,14 @@
-# Remote Streamable-HTTP MCP Server — Scaffold
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/mcp-server-dev/skills/build-mcp-server/references/remote-http-scaffold.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Minimal working servers in both recommended frameworks. Start here, then add tools.
+# 远程 Streamable-HTTP MCP Server — 脚手架
+
+两个推荐框架下的最小可运行 server。从这里开始，然后再添加 tools。
 
 ---
 
-## TypeScript SDK (`@modelcontextprotocol/sdk`)
+## TypeScript SDK（`@modelcontextprotocol/sdk`）
 
 ```bash
 npm init -y
@@ -74,11 +78,11 @@ app.post("/mcp", async (req, res) => {
 app.listen(process.env.PORT ?? 3000);
 ```
 
-**Stateless vs stateful:** The snippet above creates a fresh transport per request (stateless). Fine for most API-wrapping servers. If tools need to share state across calls in a session (rare), use a session-keyed transport map — see the SDK's `examples/server/simpleStreamableHttp.ts`.
+**无状态 vs 有状态：** 上面的代码片段为每个请求新建一个 transport（无状态）。对多数封装 API 的 server 来说这就够了。如果 tools 确实需要在一个会话内跨调用共享状态（少见），使用按会话键索引的 transport 映射，参见 SDK 的 `examples/server/simpleStreamableHttp.ts`。
 
 ---
 
-## FastMCP 3.x (Python)
+## FastMCP 3.x（Python）
 
 ```bash
 pip install fastmcp
@@ -108,13 +112,13 @@ if __name__ == "__main__":
     mcp.run(transport="http", host="0.0.0.0", port=3000)
 ```
 
-FastMCP derives the JSON schema from type hints and the docstring becomes the tool description. Keep docstrings terse and action-oriented — they land in Claude's context window verbatim.
+FastMCP 从类型标注推导 JSON schema，docstring 则成为 tool 的 description。docstring 要简短、面向动作，它们会原封不动地进入 Claude 的 context window。
 
 ---
 
-## Search + execute pattern (large API surface)
+## Search + execute 模式（大型 API 表面）
 
-When wrapping 50+ endpoints, don't register them all. Two tools:
+封装 50 个以上端点时，不要全部注册成 tools。只用两个：
 
 ```typescript
 const CATALOG = loadActionCatalog(); // { id, description, paramSchema }[]
@@ -151,13 +155,13 @@ server.registerTool(
 );
 ```
 
-`rankActions` can be simple keyword matching to start. Upgrade to embeddings if precision matters.
+起步阶段 `rankActions` 用简单的关键词匹配即可。如果精度要求高，再升级到 embeddings。
 
 ---
 
-## Test it
+## 测试
 
-The MCP Inspector connects to any transport and lets you poke tools interactively.
+MCP Inspector 可以连接任何 transport，让你交互式地摆弄 tools。
 
 ```bash
 # Interactive — opens a UI on localhost:6274
@@ -165,7 +169,7 @@ npx @modelcontextprotocol/inspector
 # → select "Streamable HTTP", paste http://localhost:3000/mcp, Connect
 ```
 
-For scripted checks (CI, smoke tests):
+脚本化检查（CI、冒烟测试）：
 
 ```bash
 npx @modelcontextprotocol/inspector --cli http://localhost:3000/mcp \
@@ -177,35 +181,35 @@ npx @modelcontextprotocol/inspector --cli http://localhost:3000/mcp \
 
 ---
 
-## Connect users
+## 用户接入
 
-Once deployed, users add the URL directly — no install step.
+部署完成后，用户直接添加 URL 即可，没有安装步骤。
 
-| Surface | How |
+| 使用端 | 接入方式 |
 |---|---|
-| **Claude Code** | `claude mcp add --transport http <name> <url>` (add `--scope user` for global, `--header "Authorization: Bearer ..."` for auth) |
-| **Claude Desktop / Claude.ai** | Settings → Connectors → Add custom connector. **Not** `claude_desktop_config.json` — remote servers configured there are ignored. |
-| **Connector directory** | Anthropic maintains a submission guide for listing in the public connector directory. |
+| **Claude Code** | `claude mcp add --transport http <name> <url>`（全局加 `--scope user`，需要认证时加 `--header "Authorization: Bearer ..."`） |
+| **Claude Desktop / Claude.ai** | Settings → Connectors → Add custom connector。**不是** `claude_desktop_config.json`，配置在那里的 remote server 会被忽略。 |
+| **Connector directory** | Anthropic 提供提交指南，用于进入公开 connector 目录。 |
 
 ---
 
-## Deploy
+## 部署
 
-**Fastest path:** Cloudflare Workers — two commands from zero to a live `https://` URL on the free tier. Uses a Workers-native scaffold (not Express). → `deploy-cloudflare-workers.md`
+**最快路径：** Cloudflare Workers，免费档两条命令就能从零拿到可用的 `https://` URL。使用 Workers 原生脚手架（不是 Express）。→ `deploy-cloudflare-workers.md`
 
-**This Express scaffold** runs on any Node host — Render, Railway, Fly.io, a VPS. Containerize it (`node:20-slim`, copy, `npm ci`, `node dist/server.js`) and ship. FastMCP is the same story with a Python base image.
+**这套 Express 脚手架**可运行在任何 Node 主机上：Render、Railway、Fly.io、VPS。容器化（`node:20-slim`、复制、`npm ci`、`node dist/server.js`）后即可上线。FastMCP 同理，换用 Python 基础镜像。
 
 ---
 
-## Deployment checklist
+## 部署检查清单
 
-- [ ] `POST /mcp` responds to `initialize` with server capabilities
-- [ ] `tools/list` returns your tools with complete schemas
-- [ ] Errors return structured MCP errors, not HTTP 500s with HTML bodies
-- [ ] CORS headers set if browser clients will connect
-- [ ] `Origin` header validated on `/mcp` (spec MUST — DNS rebinding prevention)
-- [ ] `MCP-Protocol-Version` header honored (return 400 for unsupported versions)
-- [ ] `instructions` field set if tool-use needs hints
-- [ ] Health check endpoint separate from `/mcp` (hosts poll it)
-- [ ] Secrets from env vars, never hardcoded
-- [ ] If OAuth: CIMD or DCR endpoint implemented — see `auth.md`
+- [ ] `POST /mcp` 对 `initialize` 请求返回 server capabilities
+- [ ] `tools/list` 返回你的 tools，schema 完整
+- [ ] 错误返回结构化 MCP 错误，而不是带 HTML 正文的 HTTP 500
+- [ ] 如果会有浏览器客户端连接，设置好 CORS 头
+- [ ] 在 `/mcp` 上校验 `Origin` 头（规范强制要求，防 DNS rebinding）
+- [ ] 遵守 `MCP-Protocol-Version` 头（不支持的版本返回 400）
+- [ ] 如果 tool 使用需要提示，设置 `instructions` 字段
+- [ ] 健康检查端点与 `/mcp` 分开（主机会轮询它）
+- [ ] 密钥来自环境变量，绝不硬编码
+- [ ] 如果用 OAuth：实现 CIMD 或 DCR 端点，见 `auth.md`

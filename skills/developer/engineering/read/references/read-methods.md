@@ -1,8 +1,12 @@
-# Read Methods Reference
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/read/references/read-methods.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Helper Directory
+# Read 方法参考
 
-Resolve once for the built-in fetcher, Feishu, or WeChat helper. Replace `<skill-base-dir>` with the installed Read skill or Waza dispatcher directory:
+## 辅助脚本目录
+
+内置抓取器、飞书和微信辅助脚本共用同一目录,解析一次即可。把 `<skill-base-dir>` 替换为已安装的 Read Skill 或 Waza 调度器目录:
 
 ```bash
 READ_SCRIPT_DIR=""
@@ -20,36 +24,36 @@ if [ -z "$READ_SCRIPT_DIR" ]; then
 fi
 ```
 
-## Built-in Fetcher
+## 内置抓取器
 
 ```bash
 bash "$READ_SCRIPT_DIR/fetch.sh" "{url}"
 ```
 
-The script owns extraction order and content checks: request the source site and extract locally first. On failure, inspect its structured stderr. Only when the user has opted into third-party extraction for a public URL, run:
+提取顺序与内容检查都由该脚本负责:先请求源站点并在本地提取。失败时,查看它输出的结构化 stderr。仅当用户已选择加入第三方提取且 URL 为公开 URL 时,才运行:
 
 ```bash
 bash "$READ_SCRIPT_DIR/fetch.sh" --use-proxy "{url}"
 ```
 
-Do not send authenticated, internal, or otherwise sensitive URLs to third-party extraction services or reader plugins. An installed plugin is an optional reader under the same privacy boundary, not automatic permission to disclose a URL. If a reader returns JSON, extract its Markdown-bearing field before answering or saving.
+不要把需要认证、内部或其他敏感 URL 发给第三方提取服务或阅读器插件。已安装的插件只是同一隐私边界下的可选阅读器,不代表获得自动披露 URL 的许可。如果阅读器返回 JSON,先提取其中包含 Markdown 的字段,再回答或保存。
 
-## DeepSeek Search and Fetch
+## DeepSeek 搜索与抓取
 
-Needs `DEEPSEEK_API_KEY` from the DeepSeek platform, exported in the shell profile. Without it the script exits 2 and sends nothing.
+需要在 shell 配置文件中导出来自 DeepSeek 平台的 `DEEPSEEK_API_KEY`。没有它,脚本以退出码 2 退出,不发送任何内容。
 
 ```bash
 python3 "$READ_SCRIPT_DIR/deepseek.py" search "{query}" --count 10
 python3 "$READ_SCRIPT_DIR/deepseek.py" fetch "{url}"
 ```
 
-- `search` prints numbered results with URL, site, date, `authority` (0-4, 3+ is highly authoritative) and `score` (0-3, 1.5+ is a strong match), plus a 600-800 character summary. Summaries are DeepSeek's index-time snapshot, so read the page before quoting a fact from it.
-- The query is 1-128 characters and supports operators such as `site:`, `lang:` and `after:`. `--content` adds page bodies; `--json` returns the raw response.
-- Each successful request is billed; failed, empty and timed-out requests are not. Plan the query set before running a batch.
+- `search` 输出带编号的结果,包含 URL、站点、日期、`authority`(0-4,3 及以上为高度权威)和 `score`(0-3,1.5 及以上为强匹配),并附 600-800 字的摘要。摘要是 DeepSeek 建立索引时的快照,引用其中的事实前先读原页面。
+- 查询为 1-128 个字符,支持 `site:`、`lang:`、`after:` 等操作符。`--content` 附加页面正文;`--json` 返回原始响应。
+- 每个成功请求都会计费;失败、空结果和超时请求不计费。批量运行前先规划好查询集合。
 
-## GitHub URLs
+## GitHub URL
 
-GitHub file URLs (`github.com/user/repo/blob/...`) render heavy HTML. The proxy cascade often returns partial or nav-heavy content. Prefer:
+GitHub 文件 URL(`github.com/user/repo/blob/...`)会渲染出很重的 HTML。代理级联经常返回不完整或充满导航元素的内容。优先使用:
 
 ```bash
 # Raw file content (fastest)
@@ -59,13 +63,13 @@ curl -sL "https://raw.githubusercontent.com/{user}/{repo}/{branch}/{path}"
 gh api repos/{user}/{repo}/contents/{path} --jq '.content' | base64 -d
 ```
 
-Use the built-in fetcher only as a fallback for public GitHub pages that are not raw file views (e.g., issue threads, README renders). Keep private content on the authenticated `gh` path.
+内置抓取器只作为公开 GitHub 页面的兜底,且仅限非 raw 文件视图的情况(例如 issue 讨论、README 渲染页)。私有内容一律走带认证的 `gh` 路径。
 
-## PDF to Markdown
+## PDF 转 Markdown
 
-### Remote PDF URL
+### 远程 PDF URL
 
-Download from the source site into a session temp directory and extract locally:
+从源站点下载到会话临时目录,然后在本地提取:
 
 ```bash
 READ_PDF_DIR=$(mktemp -d)
@@ -73,9 +77,9 @@ curl -fL "{pdf_url}" -o "$READ_PDF_DIR/input.pdf"
 pdftotext -layout "$READ_PDF_DIR/input.pdf" -
 ```
 
-If local extraction fails, a third-party PDF reader may be used only for a public URL with user opt-in, under the same boundary as the built-in fetcher. Never treat failure as consent.
+本地提取失败时,第三方 PDF 阅读器只能用于用户已选择加入的公开 URL,且遵循与内置抓取器相同的边界。绝不把失败当作同意。
 
-### Local PDF file
+### 本地 PDF 文件
 
 ```bash
 # Best quality (requires: pip install marker-pdf)
@@ -92,13 +96,13 @@ print('\n\n'.join(p.extract_text() for p in r.pages))
 " /path/to/file.pdf
 ```
 
-Use `marker` when layout matters (papers, tables). Use `pdftotext` for speed.
+在意版式(论文、表格)时用 `marker`;追求速度时用 `pdftotext`。
 
-## Feishu / Lark Document
+## 飞书 / Lark 文档
 
-Use `READ_SCRIPT_DIR` from [Helper Directory](#helper-directory).
+使用[辅助脚本目录](#helper-directory)中的 `READ_SCRIPT_DIR`。
 
-Requires `requests` and Feishu app credentials:
+需要 `requests` 和飞书应用凭证:
 
 ```bash
 pip install requests  # one-time setup
@@ -107,10 +111,10 @@ export FEISHU_APP_SECRET=your_app_secret
 python3 "$READ_SCRIPT_DIR/fetch_feishu.py" "{url}"
 ```
 
-Supports: docx and wiki pages. Legacy `/docs/` pages are not supported by this script; convert them to docx first, or use a public-page fallback if the document is accessible without the API. App needs `docx:document:readonly` and `wiki:wiki:readonly` permissions.
-Output: YAML frontmatter (title, document_id, url) + Markdown body.
+支持:docx 和 wiki 页面。本脚本不支持旧版 `/docs/` 页面;先把它们转换为 docx,或者在不经 API 即可访问文档时使用公开页面兜底。应用需要 `docx:document:readonly` 和 `wiki:wiki:readonly` 权限。
+输出:YAML frontmatter(title, document_id, url)+ Markdown 正文。
 
-Do not tell every user to install `lark-cli` up front. Use it as the user-login fallback when the API helper fails because app credentials are missing, or when the user explicitly prefers OAuth login over `FEISHU_APP_ID` / `FEISHU_APP_SECRET`:
+不要一上来就让每个用户安装 `lark-cli`。当 API 辅助脚本因缺少应用凭证而失败,或用户明确偏好 OAuth 登录而非 `FEISHU_APP_ID` / `FEISHU_APP_SECRET` 时,把它作为用户登录的兜底:
 
 ```bash
 npm install -g @larksuite/cli  # one-time setup if lark-cli is absent
@@ -118,13 +122,13 @@ lark-cli auth login            # one-time login
 lark-cli docs +fetch --doc "{url}" --format json
 ```
 
-`lark-cli docs +fetch` returns structured document JSON, not final Markdown. Extract and convert the useful content before answering; do not return raw JSON.
+`lark-cli docs +fetch` 返回的是结构化文档 JSON,不是最终 Markdown。回答前先提取并转换有用内容;不要直接返回原始 JSON。
 
-## WeChat Public Account
+## 微信公众号
 
-Use [Built-in Fetcher](#built-in-fetcher) first, including its opt-in boundary for third-party extraction.
+先用[内置抓取器](#built-in-fetcher),包括其针对第三方提取的选择加入边界。
 
-If extraction fails, use the built-in Playwright script to read the source page in a local browser (requires ~300 MB one-time install):
+如果提取失败,用内置的 Playwright 脚本在本地浏览器中读取源页面(需一次性安装约 300 MB):
 
 ```bash
 pip install playwright beautifulsoup4 lxml && playwright install chromium

@@ -1,48 +1,52 @@
-# Evidence and what it proves
+> **中文汉化版** · 上游：[muxuuu/serenity-skill](https://github.com/muxuuu/serenity-skill) · 原文件：`references/evidence-ladder.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Grade a claim by how directly the material supports it, not just by the prestige of the website hosting it.
+# 证据及其能证明什么
 
-## Match the source to the claim
+给论断评级，看材料对它的支持有多直接，而不是只看托管它的网站多有名。
 
-| Material | What it can establish | What still needs separate evidence |
+## 让来源与论断匹配
+
+| 材料 | 能确立什么 | 仍需单独证据的是什么 |
 |---|---|---|
-| Financial report and notes | Reported financial results and business disclosures for a specific period | Which undisclosed customer or new product caused the results |
-| Official investor Q&A | What management stated on that date, including product stage | Independent customer confirmation, exclusivity, or an undisclosed revenue amount |
-| Customer disclosure or contract | The relationship, scope and commitments actually named | Other products, customers or contract extensions |
-| Patent or technical paper | A described invention, result or technical route | Commercial qualification, volume delivery, profitability |
-| Project approval or capex plan | Approval or intended investment | Completed capacity, yield, utilization or firm customer demand |
-| Product page or demonstration | Product positioning and claimed capability | Installed base, production volume or market share |
-| Industry research or media | The underlying observations, estimates and assumptions disclosed | Facts not supported by its own sources |
-| Social post | The author's published thesis or lead | Company facts, returns or supplier relationships asserted in it |
+| 财报及附注 | 特定报告期的财务结果与业务披露 | 是哪个未披露客户或新产品造成了这些结果 |
+| 官方投资者问答 | 管理层在该日期的陈述，包括产品阶段 | 独立的客户确认、独供地位，或未披露的收入金额 |
+| 客户披露或合同 | 实际点明的关系、范围与承诺 | 其他产品、客户或合同延展 |
+| 专利或技术论文 | 所描述的发明、结果或技术路线 | 商业化认证、批量交付、盈利能力 |
+| 项目批文或资本开支计划 | 已获批或拟投入的资金 | 已建成的产能、良率、利用率或确定的客户需求 |
+| 产品页面或演示 | 产品定位与宣称的能力 | 装机量、产量或市场份额 |
+| 行业研究或媒体 | 其披露的底层观察、估计与假设 | 其自身来源不支持的事实 |
+| 社交帖子 | 作者公开发表的论断或线索 | 帖中声称的公司事实、回报或供应商关系 |
 
-A report can contain both reported financial figures and management forecasts or commissioned market estimates. Identify which part you are using. Copying an estimate into an exchange filing does not turn it into an independently verified customer fact.
+一份报告可以同时包含财报数字与管理层预测或委托做出的市场估计。分清你在用哪一部分。把一个估计抄进交易所披露文件，不会让它变成经过独立验证的客户事实。
 
-## Record only what supports the judgment
+## 只记录支撑判断的内容
 
-For each material claim, retain:
+对每个实质论断，保留：
 
-- the claim and relevant product/business scope;
-- source title, publication date, clickable URL, and page or section;
-- the fact disclosed, its reporting period, and your interpretation;
-- what the source does not establish and what could contradict the claim.
+- 论断及其相关的产品/业务范围；
+- 来源标题、发布日期、可点击的 URL，以及页码或章节；
+- 披露的事实、其报告期，以及你的解读；
+- 来源不能确立什么，以及什么可能推翻该论断。
 
-Read the source before citing it. Use search snippets to locate documents, then verify the relevant passage. If you cannot retrieve it, mark the lead unverified and seek an accessible primary alternative.
+引用来源之前先读它。用搜索摘要定位文档，然后核验相关段落。无法取回时，把该线索标记为未核实，并寻找可访问的一手替代来源。
 
-Prefer the latest applicable disclosure, but keep older material when it establishes a change over time. Compare forecasts with later actual results. Keep consolidated and parent-only figures distinct, and distinguish year-on-year growth from balance-sheet changes since year-end. Use the source's reporting currency and units; identify restated comparatives and corporate actions when calculating changes or per-share values. Match price dates, share counts and earnings periods when calculating valuation; an unlabeled quote is not a verified closing price.
+优先用最新适用的披露，但当旧材料能确立随时间的变化时，保留它。把预测与之后的实际结果对比。合并口径与母公司口径的数字分开，区分同比增长与年末以来的资产负债表变化。使用来源的报告币种与单位；计算变化或每股数值时，识别重述后的可比数据与公司行动。计算估值时，价格日期、股本数与盈利期要匹配；没有标注的行情报价不是经过核实的收盘价。
 
-## Distinguish evidence confidence from research priority
+## 区分证据置信度与研究优先级
 
-- **Confirmed disclosure:** the opened material directly says the fact within the stated scope. Identify company statements as such when independent verification is absent.
-- **Supported inference:** the observed facts support an interpretation, but do not state it directly. Explain the reasoning and the most relevant alternative.
-- **Unverified lead:** important evidence is missing, inaccessible, or comes only from repetition or social discussion.
-- **Contradicted claim:** an applicable source directly conflicts with the claim. Show the conflict and date.
+- **已确认披露：**打开的材料在所述范围内直接说明了该事实。缺少独立验证时，要说明这是公司自己的说法。
+- **有依据的推断：**观察到的事实支持某个解读，但没有直接说明它。解释推理过程，并给出最相关的替代解释。
+- **未核实线索：**关键证据缺失、无法获取，或只来自转述与社交讨论。
+- **被反驳的论断：**某份适用来源与该论断直接冲突。展示冲突内容与日期。
 
-A company may deserve further research while one of its popular narratives remains unverified. Conversely, a well-established business fact does not establish that the stock is attractively priced.
+一家公司可能值得继续研究，同时它的某个流行叙事仍未核实。反过来，一个证据扎实的业务事实，也不等于股票定价有吸引力。
 
-## Commercial-stage distinctions
+## 商业化阶段区分
 
-Development, sampling, customer testing, qualification, volume production, orders, deliveries, and recognized revenue are related but distinct facts. Report the stage actually supported, without assuming an identical sequence for every business.
+研发、送样、客户测试、认证、量产、订单、交付与已确认收入，是相关但不同的事实。报告实际有支撑的阶段，不要假设每门生意都走同一条序列。
 
-For example, a dated Q&A confirming volume delivery supports that statement. It does not establish a particular customer's name, sole-supplier status, or a separate revenue amount unless the source also provides those details. Missing public disclosure is not evidence that there are no sales.
+例如，一份带日期的问答确认了批量交付，就支撑这句话本身。它不能确立某个具体客户的名称、独供地位或单独的收入金额，除非来源同时提供了这些细节。公开披露缺失，不等于没有销售。
 
-When giving a final priority, expose the missing link that could change it. A list of sources is useful only when the reader can see which claim each one supports.
+给出最终优先级时，把可能改变它的缺失环节摆出来。来源列表只有在读者能看清每条来源支撑哪个论断时才有用。

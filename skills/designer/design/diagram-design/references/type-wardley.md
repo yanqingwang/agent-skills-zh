@@ -1,39 +1,43 @@
-# Wardley Map
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-wardley.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** positioning the components of a value chain against how evolved (commoditised) each one is, so a reader can see what to build, what to buy, and what is about to move. A strategy artefact, not an architecture diagram — it says nothing about how components connect at runtime, only where each one sits on the genesis-to-commodity curve.
+# Wardley 图
 
-## Layout conventions
+**适用场景：** 把价值链的各组件对照其演化程度（商品化程度）定位，让读者看清该自建什么、该采购什么、什么即将发生移动。这是战略产物，不是架构图：它不谈组件在运行时如何连接，只谈每个组件坐在从创生到商品的曲线上哪个位置。
 
-- **Y axis — value chain.** `Visible to the user` at the top, down to `Invisible` at the bottom. Label the axis as stacked separate `<text>` lines flanking the axis endpoints — **never `writing-mode`** to rotate a label vertically. Axis line `rule-solid` at `0.20` opacity.
-- **X axis — evolution.** Four bands separated by three vertical hairlines: `Genesis | Custom-built | Product | Commodity`. Band separators are `rule` at `0.10` opacity, dashed `4,4`. Band labels sit along the bottom axis: `eyebrow` role 8px, uppercase, tracked, `muted`. Axis line `rule-solid` at `0.20` opacity.
-- **Components** are a small circle `r=6`, filled `paper` with an `ink` 1px stroke. Label in the `node-name` role, 12px, weight 600, placed 12px above the dot, `text-anchor="middle"`. An optional `sublabel`-role 9px `muted` sublabel can sit under the dot for a technical qualifier — use sparingly.
-- **Dependency links** are thin `muted` 0.8px straight lines from a component down to the component it depends on. **These are the one documented exemption from §6 rule 1 (mandatory orthogonal elbows) — dependency links only.** A component's y/x position on this map *is* the data; forcing it onto an axis to make an elbow route work would misplace it. No arrowhead — the line itself states the dependency.
-- **Movement** — a component that is evolving carries a short right-pointing arrow: `accent`, dashed `5,4`, `marker-end="url(#arrow-accent)"`, running from the dot's edge toward the next band. The arrow needs no on-arrow text label: the legend's "Evolving" swatch (accent dot + dashed accent arrow) already names what accent + dashes mean, and since arrows on this map can only ever point right (see Anti-patterns — a left-pointing movement arrow is a contradiction, not a design choice), the direction itself already says "toward commodity." A bare word like `COMMODITISING` restates what shape and color already signal — apply §1's remove test: can I remove this label, does color or shape already carry it? Here it does, so the label is the thing that goes, not its position.
-  An on-arrow label is legitimate only when it qualifies something the arrow *can't* express on its own — a timeframe (`BY Q3`), a driver (`VENDOR LOCK-IN`) — never a restatement of direction. If you add one, mask it, `arrow-label` role 8px, 6–10px clear of the stroke, same masking rule as any arrow label (§6 rule 2), and confirm there's runway for the mask first: the space directly around a component's dot is usually the most congested spot on the map, because that's also where its own dependency links fan out. Worked example — the moving component in `example-wardley.html` sits at `(420,156)` with links fanning to `(620,220)` and `(680,252)`; at the mandatory 6–10px gap band below the arrow (`y=164–176`), those two lines cross at `x=441.7–482.5` and `x=445–482.5` respectively — almost the full width of the arrow's own span (`x=428–504`), leaving no clear pocket wide enough for a label. Above the dot is no better: the component's own name label already occupies that band per the 12px-above-dot convention. Check both bands for interference before adding a movement label; if neither is clear, don't add one — the legend already covers it.
-- **Focal rule:** the 2 accent elements on this type are the moving component's dot (`accent-tint` fill, `accent` stroke) and its movement arrow — or two moving components sharing those 2 accent slots with no other accent anywhere else on the map.
-- **Legend:** horizontal strip at the bottom, hairline separator above it, viewBox extended ~60px — same as every other type.
+## 布局约定
 
-## Complexity budget
+- **Y 轴：价值链。** 顶部 `Visible to the user`，向下到底部 `Invisible`。把轴标签做成沿轴端点两侧堆叠的多行独立 `<text>`，**绝不用 `writing-mode`** 把标签转成竖排。轴线用 `rule-solid`，透明度 `0.20`。
+- **X 轴：演化。** 四个区带，由三条竖直发丝线分隔：`Genesis | Custom-built | Product | Commodity`。带分隔线用 `rule` 透明度 `0.10`，虚线 `4,4`。带标签沿底部轴线摆放：`eyebrow` 角色 8px，全大写，带字距，`muted`。轴线用 `rule-solid`，透明度 `0.20`。
+- **组件**是小圆 `r=6`，`paper` 填充加 `ink` 1px 描边。标签用 `node-name` 角色，12px，字重 600，放在点上方 12px，`text-anchor="middle"`。可选的 `sublabel` 角色 9px `muted` 副标签可以放在点下方，作技术限定词：节制使用。
+- **依赖连线**是从一个组件指向它所依赖组件的细 `muted` 0.8px 直线。**这是有文档记录的唯一一处对 §6 规则 1（强制正交拐弯）的豁免，且仅限依赖连线。** 组件在这张图上的 y/x 位置*就是*数据；为了凑出一条拐弯路径把它挪到轴线上，等于把它放错位置。无箭头：线本身就陈述了依赖。
+- **移动** — 正在演化的组件带一个短小的右向箭头：`accent`，虚线 `5,4`，`marker-end="url(#arrow-accent)"`，从点的边缘指向下一个区带。箭头上不需要文字标签：图例的 "Evolving" 色块（accent 点 + 虚线 accent 箭头）已经命名了 accent + 虚线是什么意思，而且这张图上的箭头只可能向右指（见反模式：向左的移动箭头是自相矛盾，不是设计选择），方向本身已经说出"朝商品化去"。像 `COMMODITISING` 这样的孤词只是复述形状和颜色已经给出的信号：套用 §1 的删除测试：我能删掉这个标签吗，颜色或形状是否已经承载了它？这里能，所以该删的是标签，不是它的位置。
+  箭头上的标签只有在一个箭头*自身*表达不了的东西上才是正当的：一个时间范围（`BY Q3`）、一个驱动因素（`VENDOR LOCK-IN`），绝不是方向的复述。若要加，加遮罩，`arrow-label` 角色 8px，距描边留 6–10px 净空，与任何箭头标签的遮罩规则一致（§6 规则 2），且先确认遮罩有落脚空间：组件点周围的正中区域通常是整张图最拥挤的地方，因为它的依赖连线也在那里扇出。实际算例：`example-wardley.html` 中那个移动组件位于 `(420,156)`，连线扇出到 `(620,220)` 和 `(680,252)`；在箭头下方强制的 6–10px 净空带（`y=164–176`）里，这两条线分别在 `x=441.7–482.5` 和 `x=445–482.5` 处穿过，几乎占满箭头自身的跨度（`x=428–504`），没有任何一个够宽的净口袋能放标签。点上方也好不到哪去：组件自己的名称标签按"点上 12px"的约定已经占住那条带。加移动标签前先检查两条带有没有干扰；两条都不净就别加：图例已经覆盖了它。
+- **焦点规则：** 这个类型的 2 个 accent 元素是移动组件的点（`accent-tint` 填充、`accent` 描边）和它的移动箭头；或者由两个移动组件分享这 2 个 accent 名额，图上其他任何地方都不出现 accent。
+- **图例：** 底部横条，上方一条发丝线，viewBox 加高约 60px：与其他所有类型一致。
 
-| Limit | Rule |
+## 复杂度预算
+
+| 限额 | 规则 |
 |---|---|
-| Max components | 9 |
-| Max dependency links | 12 |
-| Max movement arrows | 2 |
-| Max accent elements | 2 |
+| 组件上限 | 9 |
+| 依赖连线上限 | 12 |
+| 移动箭头上限 | 2 |
+| accent 元素上限 | 2 |
 
-## Anti-patterns
+## 反模式
 
-- **Treating the x axis as a maturity score.** Evolution is four qualitative bands (genesis / custom-built / product / commodity), not a 0–10 slider. Don't plot a component at "6.5" — place it in a band.
-- **A component with no dependency link.** If nothing in the value chain depends on it and it depends on nothing, it isn't part of the chain — delete it or wire it in.
-- **Arrows drawn right-to-left.** Evolution only moves toward commodity. A left-pointing movement arrow is a contradiction, not a design choice.
-- **Using the map as an architecture diagram.** No request/response direction, no protocols, no runtime topology — that's the architecture type. This type answers "what's worth building vs. buying," not "how does traffic flow."
-- **Numbering the y axis.** Value-chain visibility is ordinal (more visible to the user, less visible), not a quantity. Numeric ticks imply a measurement that doesn't exist.
-- **More than 2 movement arrows.** Beyond that the map stops making a single point and turns into a forecast nobody can act on.
-- **`writing-mode` vertical axis text.** Stack the words as separate horizontal `<text>` lines instead — see Layout conventions above.
+- **把 x 轴当成成熟度分数。** 演化是四个定性区带（genesis / custom-built / product / commodity），不是 0–10 的滑杆。不要把组件画在"6.5"上：放进一个区带。
+- **没有依赖连线的组件。** 如果价值链上没有东西依赖它、它也不依赖任何东西，它就不属于这条链：删掉，或接进来。
+- **从右向左画的箭头。** 演化只朝商品移动。向左的移动箭头是自相矛盾，不是设计选择。
+- **把这张图当架构图用。** 没有请求/响应方向、没有协议、没有运行时拓扑：那是架构类型。这个类型回答"自建还是采购值得"，不回答"流量怎么流"。
+- **给 y 轴编号。** 价值链可见性是有序的（对用户更可见、更不可见），不是数量。数字刻度暗示了一个不存在的度量。
+- **超过 2 条移动箭头。** 超过之后地图就不再表达一个论点，变成没人能据此行动的预测。
+- **`writing-mode` 竖排轴文字。** 改成多行独立横排 `<text>` 堆叠，见上方布局约定。
 
-## Examples
+## 示例
 
-- `assets/example-wardley.html` — minimal light. AI assistant product, agent orchestration commoditising toward Product.
-- `assets/example-wardley-dark.html` — minimal dark, same map.
-- `assets/example-wardley-full.html` — full editorial: framed container + 3 varied-width cards (the moving component, a genesis-stage build, and the commodity base).
+- `assets/example-wardley.html` — 极简浅色。AI 助手产品，agent orchestration 正向 Product 商品化移动。
+- `assets/example-wardley-dark.html` — 极简深色，同一张图。
+- `assets/example-wardley-full.html` — 完整编辑排版：带框容器 + 3 张宽度不均的卡（移动中的组件、一个 genesis 阶段的构建、商品底座）。

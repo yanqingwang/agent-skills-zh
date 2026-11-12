@@ -1,21 +1,25 @@
-# Heatmap
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-heatmap.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** cross-tabulated data where *which row × column combination stands out* is the story. Use when the reader needs to scan a full matrix at once — not compare individual bars or trace a trend line — and one cell (or a cluster of cells) is editorially distinct from the field. Common uses: CI failure rate by service and sprint, support ticket volume by team and week, confusion matrix for a classifier, correlation coefficients across many variables.
+# 热力图
 
-The CSS geometry guard ignores comments; active transform declarations still fail.
+**适用场景：** 交叉表数据，故事在于*哪个 行 × 列 组合最突出*。当读者需要一次扫完整个矩阵（而不是比较单根柱子或追一条趋势线），并且某个单元格（或一团单元格）在编辑意义上明显异于整体时使用。常见用途：按服务与冲刺统计的 CI 失败率、按团队与周统计的工单量、分类器的混淆矩阵、多变量相关系数。
 
-## Layout conventions
+CSS 几何护栏忽略注释；仍然生效的 transform 声明照样判失败。
 
-- **Plot area:** left 160px (row labels), top 64px (column labels), right 40px, bottom 120px (legend area); inside `0 0 1000 500` viewBox.
-- **Cell size:** 116px wide × 56px tall, gap 4px. Maximum grid: 6 columns × 5 rows within the viewBox; smaller grids scale the cells up to fill the space.
-- **Row count:** 3–7. Fewer → a table says it with less ink; more → the cells shrink below readability at the minimum viewBox width.
-- **Column count:** 3–8. Same constraint: 8 × 116 = 928px exceeds the available 800px at this viewBox, so either reduce columns or reduce cell width proportionally (minimum cell width 80px).
-- **Axes:** row labels right-aligned in the left gutter (`sublabel` role 9px, `text-anchor="end"`, x=148); column labels centered above each column (`sublabel` role 9px, `text-anchor="middle"`); axis titles in the `eyebrow` role 7px small-caps rotated/positioned in the margins.
-- **Value text (optional):** `arrow-label` role 8px centered inside each cell. Flip text color to paper when fill opacity ≥ 0.40 (the ink ramp becomes dark enough to carry white); keep ink text below that threshold.
+## 布局约定
 
-### Cell pattern
+- **绘图区：** 左 160px（行标签）、上 64px（列标签）、右 40px、下 120px（图例区）；位于 `0 0 1000 500` viewBox 内。
+- **单元格尺寸：** 116px 宽 × 56px 高，间隙 4px。最大网格：viewBox 内 6 列 × 5 行；更小的网格把单元格放大以填满空间。
+- **行数：** 3–7。更少 → 一张表格用更少的墨就能说清；更多 → 在最小 viewBox 宽度下单元格会缩到不可读。
+- **列数：** 3–8。同样的约束：8 × 116 = 928px 超过此 viewBox 下可用的 800px，所以要么减列，要么按比例缩窄单元格（单元格最小宽度 80px）。
+- **轴：** 行标签在左侧留白内右对齐（`sublabel` 角色 9px，`text-anchor="end"`，x=148）；列标签在各列上方居中（`sublabel` 角色 9px，`text-anchor="middle"`）；轴标题用 `eyebrow` 角色 7px 小型大写，旋转/摆放在边距里。
+- **数值文本（可选）：** `arrow-label` 角色 8px，在每个单元格内居中。当填充透明度 ≥ 0.40 时文字色翻转为 paper（此时 ink 色阶已深到可以承载白字）；低于该阈值保持 ink 色文字。
 
-Every cell is two overlapping `<rect>` elements: a paper-fill underlay (no data attributes, paints the background), then the data rect with all three data bindings.
+### 单元格模式
+
+每个单元格是两个重叠的 `<rect>`：先铺一个 paper 填充的底衬（无数据属性，只作背景），再画带全部三个数据绑定的数据矩形。
 
 ```svg
 <!-- Paper underlay — no data attributes, scenery only -->
@@ -33,48 +37,48 @@ Every cell is two overlapping `<rect>` elements: a paper-fill underlay (no data 
       fill="{accent @ 0.85}" stroke="{accent}" stroke-width="1.2"/>
 ```
 
-## The fill ramp
+## 填充色阶
 
-**One ink ramp, one accent.** Non-focal cells use a single tonal ramp: `rgba(INK, opacity)` where opacity is a non-decreasing function of the data value. The shipped example uses `opacity = max(0.07, value / max_non_focal × 0.65)`. Any monotone formula (linear, sqrt, log) passes the verifier as long as opacity never decreases with value.
+**一条 ink 色阶，一个 accent。** 非焦点单元格使用单色调色阶：`rgba(INK, opacity)`，opacity 是数据值的非递减函数。随附示例用 `opacity = max(0.07, value / max_non_focal × 0.65)`。任何单调公式（线性、sqrt、log）都能通过校验器，只要 opacity 不随值下降。
 
-**One focal cell only.** The accent marks the editorially focal cell — the one whose combination of row and column is the figure's argument. It is not the automatically highest value; choose the cell whose story the title is about. `data-focal="true"` is required; `scripts/verify-heatmap.py` counts all accent-fill and `data-focal` cells and fails if more than one is found.
+**只允许一个焦点单元格。** accent 标记的是编辑意义上的焦点单元格：行与列的组合正是整张图论点所在的那个。它不是自动取最高值；要选标题所讲的故事所在的单元格。`data-focal="true"` 是必需的；`scripts/verify-heatmap.py` 会统计所有 accent 填充和 `data-focal` 单元格，超过一个即失败。
 
-**Ramp bounds:** the lowest-value non-focal cell should land at ≥ 0.05 opacity (the cell must be visually distinct from the paper background) and the highest-value non-focal cell at ≤ 0.70 (the ramp must not bleed into the focal accent's territory).
+**色阶边界：** 值最低的非焦点单元格应落在 ≥ 0.05 透明度（单元格必须与纸面背景可区分），值最高的非焦点单元格 ≤ 0.70（色阶不能漫进焦点 accent 的领地）。
 
-## Anti-patterns
+## 反模式
 
-- A hue per row or per column — hue is not a continuous variable; it maps "which series" (slopegraph contract), not "how much". The ramp carries quantity; the label carries category identity.
-- A multi-hue diverging ramp (e.g. blue–white–red) — these read as two variables (negative and positive deviation from center) and are only honest when the data is signed and the center is meaningful. For unsigned rates or counts, the single ink ramp is the honest encoding.
-- Focal accent on more than one cell — if two cells are both focal the figure needs a different title; hue-coding two things is a palette decision masquerading as an editorial one.
-- A value axis (color bar with a continuous legend) instead of a discrete ramp strip — the ink ramp is not a gradient legend; it encodes comparative reading ("S4 is much darker than S3"), not precise magnitude retrieval. If readers need the exact value, the number printed inside the cell carries it.
-- Rows or columns dropped because they made the pattern less clean — omitted rows and columns are invisible to the reader and look like "the services that didn't have this problem". Name everything included and say in the footnote if anything is excluded.
-- A transform on a cell, its underlay, or an ancestor `<g>`. The verifier reads raw `x`/`y`/`width`/`height` attributes; a transform silently moves the rendered mark off the verified position.
+- 每行或每列一种色相：色相不是连续变量，它映射"哪个序列"（折线图的契约），不是"多少"。色阶承载数量；标签承载类别身份。
+- 多色相的发散色阶（如蓝–白–红）：这种配色会被读成两个变量（相对中心的正负偏移），只有数据带符号且中心有意义时才诚实。对无符号的比率或计数，单条 ink 色阶才是诚实的编码。
+- 焦点 accent 用在不止一个单元格上：两个单元格都算焦点的话，这张图需要换个标题；用色相编码两件事是拿调色决策冒充编辑决策。
+- 用数值轴（带连续图例的色条）代替离散色阶条：ink 色阶不是渐变图例，它编码的是比较性阅读（"S4 比 S3 深得多"），不是精确数值的读取。读者需要精确值时，印在单元格里的数字已经给出了。
+- 因为让图案变得不干净就删掉行列：被省略的行列对读者不可见，看起来就像"没有这个问题的那些服务"。列出所有纳入项，如有排除在脚注里说明。
+- 在单元格、其底衬或祖先 `<g>` 上加 transform。校验器读取的是原始 `x`/`y`/`width`/`height` 属性；transform 会悄悄把渲染出的标记移离被校验的位置。
 
-## Honest-data rule
+## 诚实数据规则
 
-**Row × column labels are complete and stated.** A heatmap that quietly drops a service with a high rate is a filtered view the reader cannot see. State every included row and column; note any exclusions in the footnote or source line.
+**行 × 列标签完整且明示。** 悄悄删掉一个高失败率服务的热力图，是读者看不见的过滤视图。写明每个纳入的行与列；任何排除项写进脚注或来源行。
 
-**The ramp scale is declared.** The legend strip shows the range the ramp covers for non-focal cells, stated as "LOW" to "HIGH" rather than a continuous scale — because the ramp's job is comparative, not absolute. If the footnote states bounds, those bounds must match the actual minimum and maximum non-focal values in the figure.
+**色阶刻度要声明。** 图例条展示色阶对非焦点单元格覆盖的范围，写为 "LOW" 到 "HIGH"，而不是连续刻度：色阶的职责是比较，不是绝对量。如果脚注写了边界，这些边界必须与图中实际非焦点的最小值和最大值一致。
 
-**The focal cell is excluded from the ramp's scale.** Its value (often an outlier) would collapse every other cell into near-identical opacity if included. The footnote must state the focal cell's value explicitly. `scripts/verify-heatmap.py` checks that the focal cell carries `data-focal="true"` and that no non-focal cell uses accent fill.
+**焦点单元格排除在色阶刻度之外。** 它的值（往往是离群值）一旦纳入，会让所有其他单元格的透明度挤成一团。脚注必须明确写出焦点单元格的值。`scripts/verify-heatmap.py` 检查焦点单元格带 `data-focal="true"`，且没有任何非焦点单元格使用 accent 填充。
 
-## Declaring the values
+## 声明数据值
 
-The verifier accepts either matching quote delimiter for SVG attributes.
+校验器对 SVG 属性接受任意一种相匹配的引号定界符。
 
-**Every drawn cell is bound to its row, column, and value.** Declared data values are finite and nonnegative; unsigned counts may exceed one billion. NaN, infinity, and negative values are rejected rather than weakening grid completeness. The paper underlay carries nothing. The data rect carries all three.
+**每个绘制的单元格都绑定其行、列与值。** 声明的数据值为有限且非负；无符号计数可以超过十亿。NaN、无穷和负值会被拒绝，而不是弱化网格完整性。paper 底衬不带任何东西。数据矩形带全部三个。
 
-| Binding | Without it |
+| 绑定 | 缺了会怎样 |
 |---|---|
-| `data-row` on the data rect | A row cannot be identified during verification; a swapped row passes silently. |
-| `data-col` on the data rect | A column cannot be identified; a shuffled column is invisible to the verifier. |
-| `data-value` on the data rect | The fill cannot be verified as monotone; any opacity passes. |
-| `data-focal="true"` on the focal rect | The focal cell is counted as a non-focal cell with an unexplained accent fill. |
+| 数据矩形上的 `data-row` | 校验时无法识别行；被调换的行会无声通过。 |
+| 数据矩形上的 `data-col` | 无法识别列；被调换的列对校验器不可见。 |
+| 数据矩形上的 `data-value` | 填充无法按单调性校验；任何透明度都能通过。 |
+| 焦点矩形上的 `data-focal="true"` | 焦点单元格被当作一个来历不明的 accent 填充的非焦点单元格计数。 |
 
-`scripts/verify-heatmap.py` enforces the complete `rows × cols` grid, the monotone fill ramp on non-focal cells, and at most one focal cell. It does **not** verify cell geometry (position, width, height) because both axes are categorical — position encodes "which row/column", and that is carried by the label, not by a scale the checker can measure against.
+`scripts/verify-heatmap.py` 强制完整的 `rows × cols` 网格、非焦点单元格的单调填充色阶，以及至多一个焦点单元格。它**不**校验单元格几何（位置、宽、高），因为两个轴都是类目：位置编码的是"哪一行/哪一列"，这由标签承载，而不是由一个可供检查器度量的刻度承载。
 
-Focal-text contrast measurement accepts finite unitless and explicit `px` coordinates. Unsupported relative units or malformed lengths produce a named measurement finding, never a traceback; this does not add a quantitative cell-geometry check.
+焦点文字对比度测量接受有限的无单位与显式 `px` 坐标。不支持的相对单位或畸形长度会产出一条具名的测量发现，而不是堆栈：这并没有增加定量的单元格几何检查。
 
-Focal-text contrast composites translucent foreground text against the resolved focal-cell fill before measuring WCAG AA. The 4.5:1 minimum applies to that foreground/background pair in both themes.
+焦点文字对比度在测量 WCAG AA 之前，先把半透明前景文字合成到解析出的焦点单元格填充之上。4.5:1 的下限对两种主题下的这对前景/背景组合都适用。
 
-**No `transform` on any verified element.** Bake any coordinate offsets directly into `x`/`y` attributes.
+**任何被校验的元素上不得有 `transform`。** 把坐标偏移直接烘焙进 `x`/`y` 属性。

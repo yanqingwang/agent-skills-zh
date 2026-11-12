@@ -1,37 +1,33 @@
-# Colour
+> **中文汉化版** · 上游：[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · 原文件：`skills/taste-skill/references/colour.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The direction sheet deals a palette with named roles. This file is how to apply it so the page looks
-decided rather than tinted.
+# 配色
 
-## Contents
+方向表发给你一套带命名角色的调色板。本文件讲如何应用它，让页面看起来是被决定出来的，而不是被染了点颜色。
 
-1. What the study measured
-2. The roles
-3. Proportion
-4. Surfaces without lines or shadows
-5. Colour fields
-6. Dark pages
-7. Colour and photographs
-8. Contrast
-9. Banned families, and what "warm" means here
+## 目录
 
-## 1. What the study measured
+1. 研究测了什么
+2. 各角色
+3. 比例
+4. 不靠线与阴影的表面
+5. 色场
+6. 暗色页面
+7. 颜色与照片
+8. 对比度
+9. 禁用的色系，以及"warm"在这里指什么
 
-- 41% of the studied pages are dark, 59% light. A quarter sit on pure white; 12% on pure black.
-- Schemes, as the panel classed them: monochrome plus one accent 23%, light neutral 22%, dark neutral
-  14%, several flat colours 13%, strictly two-tone 12%, colour carried by photographs 9%, one saturated
-  field 6%.
-- Buttons are neutral (black, white, grey) on 52% of sites. A coloured button is a choice, not a
-  requirement.
-- Gradient fills appear on 22% of the top-scored sites and 52% of the weak ones; gradient text on 2%
-  against 13%.
-- One site in 246 has a terracotta primary button and none has a violet one. Those are colours of
-  generated pages, not of the gallery. Warm off-white grounds do occur (32 sites), nearly always with
-  a dark or green ink rather than an orange accent.
-- Top-scored sites change the page's field colour between sections more often (a median of two section
-  grounds against one).
+## 1. 研究测了什么
 
-## 2. The roles
+- 研究的页面中 41% 是暗色，59% 是亮色。四分之一落在纯白上；12% 落在纯黑上。
+- 按评委的归类，配色方案分布：单色加一个强调色 23%，亮中性 22%，暗中性 14%，多个纯色 13%，严格双色 12%，颜色由照片承担 9%，单一大面积饱和色场 6%。
+- 52% 的站点按钮是中性的（黑、白、灰）。彩色按钮是一种选择，不是要求。
+- 渐变填充出现在 22% 的高分站点和 52% 的弱站点上；渐变文字则是 2% 对 13%。
+- 246 个站点里只有一个用了陶土色主按钮，没有一个用紫罗兰色。那些是生成页面的颜色，不是画廊的颜色。暖调米白底色确实存在（32 个站点），但几乎总是配深色或绿色墨色，而不是橙色强调色。
+- 高分站点更常在分区之间更换页面的色场颜色（分区底色的中位数是 2 对 1）。
+
+## 2. 各角色
 
 ```css
 :root {
@@ -45,28 +41,23 @@ decided rather than tinted.
 }
 ```
 
-Use the tokens for every colour in the build. A raw hex in a component is a second palette starting.
-Do not add greys between the roles: if you need a quieter text, it is `--muted`; if you need a quieter
-surface, it is `--surface`.
+构建里的每一处颜色都使用这些 token。组件里出现一个裸 hex 值，就是第二套调色板的开端。不要在角色之间再加灰阶：需要更安静的文字，用 `--muted`；需要更安静的表面，用 `--surface`。
 
-## 3. Proportion
+## 3. 比例
 
-Decide the shares before colouring anything and check them in the screenshot:
+在上任何颜色之前先定好各占多少，并在截图里核对：
 
-- **Ground:** 70–90% of the page.
-- **Ink:** text and perhaps one inverted section (ink as ground, ground as ink).
-- **Accent:** under 5% of any screen. It marks the action and at most one other recurring thing. The
-  moment it appears in five places it stops meaning "here".
+- **底色（ground）：** 占页面 70–90%。
+- **墨色（ink）：** 文字，或许再加一个反色分区（墨色当底色，底色当墨色）。
+- **强调色（accent）：** 任何一屏不超过 5%。它标记动作，至多再标记一个反复出现的东西。一旦出现在五个地方，它就不再表示"这里"。
 
-Palettes with fields (flat-loud, pastel) work differently: each section is one field at full strength
-and the proportion rule applies inside each section (field, its ink, nothing else).
+带色场的调色板（flat-loud、pastel）做法不同：每个分区就是一整片全强度的色场，比例规则在每个分区内部生效（色场、它的墨色，别无其他）。
 
-The accent is not for headings, icons, bullets, borders or underlines unless the direction sheet says
-so. A headline is ink.
+强调色不用于标题、图标、项目符号、边框或下划线，除非方向表点名要。标题是墨色。
 
-## 4. Surfaces without lines or shadows
+## 4. 不靠线与阴影的表面
 
-With rules and shadows banned, a surface is told apart from the ground by tone alone:
+线条与阴影都被禁了，表面与底色只能靠色阶来区分：
 
 ```css
 .panel { background: var(--surface); }          /* 2–6 lightness points from --bg */
@@ -74,68 +65,50 @@ With rules and shadows banned, a surface is told apart from the ground by tone a
 .field:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 ```
 
-- One step is enough. If a panel does not read, increase padding or separate with space before
-  reaching for a second tone.
-- Do not nest a panel inside a panel.
-- Images do not need a frame. If a light photograph melts into a light ground, change the crop or set
-  it on `--surface`, do not outline it.
-- A thick bar (4px or more) in ink or accent is a graphic element, allowed where the direction uses
-  it. A 1px line is not.
+- 一个色阶就够了。面板如果读不出来，先加大 padding 或用空间来分隔，然后再考虑加第二个色阶。
+- 不要把面板套在面板里。
+- 图片不需要框。浅色照片融进浅色底时，换裁切，或把它放在 `--surface` 上，不要描边。
+- 墨色或强调色的粗条（4px 及以上）是图形元素，方向表用到它的地方允许出现。1px 的线不是。
 
-## 5. Colour fields
+## 5. 色场
 
-A section that changes the whole ground colour is the strongest colour move available, and it replaces
-dividers, cards and background decoration at once.
+更换整屏底色的分区是可用的最强颜色手法，它一次性取代分隔线、卡片和背景装饰。
 
-- Fields meet edge to edge with a hard line. Nothing fades.
-- Every field has its own assigned ink from the palette. Never put `--muted` on a coloured field; use
-  the field's ink at full strength, or at 70% opacity for secondary text if it still passes contrast.
-- Neighbouring fields should differ in lightness, not only in hue, or the page vibrates.
-- Order them like chapters: open strong, rest, surprise, close dark or very light.
-- The page's meta theme colour and the navigation follow the first field.
+- 色场边缘相接，一条硬边。什么都不渐隐。
+- 每个色场都有调色板分给它的墨色。绝不把 `--muted` 放在有色色场上；要么全强度用该色场的墨色，要么在对比度仍然达标时用 70% 不透明度作次要文字。
+- 相邻色场要在明度上有差，不能只在色相上不同，否则页面会晃眼。
+- 像章节一样给它们排序：强开场，歇一段，来个意外，收尾用暗色或极浅色。
+- 页面的 meta theme 颜色和导航跟随第一个色场。
 
-## 6. Dark pages
+## 6. 暗色页面
 
-- Put `color-scheme: dark` on the root so form controls and scrollbars follow.
-- The ground is a deep tone with a slight tint from the palette, and the ink is a soft light, not
-  `#fff` on `#000`, unless the palette deals exactly that for a stark two-tone direction.
-- Secondary text is where dark pages fail: check `--muted` against the ground (4.5:1).
-- Depth on dark comes from a lighter surface step, never from glows or coloured light.
-- Use lighter font weights than you would on a light page.
+- 在根元素上放 `color-scheme: dark`，让表单控件和滚动条跟随。
+- 底色是带一点调色板色偏的深色调，墨色是柔和的浅色，不是 `#fff` 配 `#000`，除非调色板为某个硬朗双色方向发下来的恰好就是这一手。
+- 次要文字是暗色页面最容易翻车的地方：用 `--muted` 对照底色检查（4.5:1）。
+- 暗色页面上的纵深来自更亮一档的表面色，绝不来自发光或彩色光。
+- 字重要比亮色页面上用的更轻。
 
-## 7. Colour and photographs
+## 7. 颜色与照片
 
-- When photographs carry the colour, the interface stays neutral and takes its ink from the darkest
-  tone in the imagery.
-- Do not wash a photograph with the brand colour. Either leave it alone, or commit to a real treatment
-  for every image on the page (all greyscale, or all untouched).
-- Text over a photograph needs a calm region. If there is none, move the text off the image. A neutral
-  scrim (black or the ink colour, 30–55% opacity, flat or fading over the text area only) is the one
-  gradient the inspector allows.
-- A flat field sampled from a photograph (its sky, its shadow) makes a section sit with that image.
+- 当照片承担颜色时，界面保持中性，墨色取自图像中最深的色调。
+- 不要用品牌色去罩洗照片。要么不动它，要么对页面上每一张图都统一做同一种真正的处理（全部灰度，或全部原样）。
+- 照片上的文字需要一块平静区域。没有就把文字移出图片。中性遮罩（黑色或墨色，30–55% 不透明度，纯色或只在文字区域上方渐隐）是检查器唯一放行的渐变。
+- 从照片中取样的纯色色场（它的天空、它的阴影）能让一个分区与那张图归为一体。
 
-## 8. Contrast
+## 8. 对比度
 
-- Body text 4.5:1 or better; display type and large numerals 3:1 or better; the dealt palettes meet
-  7:1 for ink on ground.
-- `inspect.mjs` computes contrast for text on flat grounds and fails anything under 2.6:1. It cannot
-  see text over photographs: check those in the screenshots yourself.
-- Do not lower opacity on text to make it "soft" unless you have checked the resulting ratio.
-- Focus states and hover states increase contrast, never reduce it.
+- 正文 4.5:1 起步；展示字体和大数字 3:1 起步；抽到的调色板墨色对底色达到 7:1。
+- `inspect.mjs` 计算纯色底上文字的对比度，低于 2.6:1 一律判不合格。它看不见照片上的文字：那些要在截图里自己查。
+- 不要为了让文字"柔和"而降低不透明度，除非你核对过最终得到的比值。
+- 焦点态与悬停态提高对比度，绝不降低。
 
-## 9. Banned families, and what "warm" means here
+## 9. 禁用的色系，以及"warm"在这里指什么
 
-The inspector fails these:
+检查器判以下组合不合格：
 
-- **Cream with terracotta.** A yellow-cream ground (roughly hue 22–62, light and noticeably
-  saturated) with a rust, clay or burnt-orange accent is the house look of AI assistants and of the
-  pages they generate. Either half alone is suspect; together they are unmistakable.
-- **Violet and indigo.** The first wave of generated pages was purple; it still reads that way.
+- **奶油色配陶土色。** 黄奶油底色（大致色相 22–62，明亮且明显带饱和度）配上铁锈、黏土或焦橙色的强调色，是 AI 助手及其生成页面的招牌外观。两者单独任何一个都可疑；合在一起则无从错认。
+- **紫罗兰与靛蓝。** 第一波生成页面就是紫色的；现在读起来仍是那个味。
 
-If the brief wants warmth, get it from a low-chroma stone, bone or putty ground (saturation under
-about 15%), from a deep green, brown or oxblood ink, from photographs, or from a full warm field
-(mustard, tomato red, pink) used flat and with conviction. Warmth is not beige.
+如果简报要暖意，从这些地方拿：低饱和的石色、骨色或灰泥底色（饱和度约在 15% 以下），深绿、棕或牛血红的墨色，照片，或者一整片暖色场（芥末黄、番茄红、粉色），平铺着用、用得笃定。暖不等于米色。
 
-If the brand itself owns one of the banned colours, it is the brand's and you keep it: use
-`--keep palette`, pass `--allow palette-purple` (or the relevant rule) to the inspector, and note it in
-the report.
+如果品牌本身就拥有某个被禁颜色，那是品牌的，你保留它：使用 `--keep palette`，向检查器传入 `--allow palette-purple`（或相应规则），并在报告中注明。

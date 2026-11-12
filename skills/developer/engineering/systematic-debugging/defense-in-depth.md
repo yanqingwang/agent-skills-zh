@@ -1,26 +1,30 @@
-# Defense-in-Depth Validation
+> **中文汉化版** · 上游：[obra/superpowers](https://github.com/obra/superpowers) · 原文件：`skills/systematic-debugging/defense-in-depth.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Overview
+# 纵深防御式校验
 
-When you fix a bug caused by invalid data, adding validation at one place feels sufficient. But that single check can be bypassed by different code paths, refactoring, or mocks.
+## 概述
 
-**Core principle:** Validate at EVERY layer data passes through. Make the bug structurally impossible.
+修一个由无效数据引起的 bug 时，在一处加上校验就觉得够了。但这一处检查会被不同的代码路径、重构或 mock 绕过。
 
-## Why Multiple Layers
+**核心原则：** 在数据经过的每一层都做校验。让这个 bug 在结构上不可能发生。
 
-Single validation: "We fixed the bug"
-Multiple layers: "We made the bug impossible"
+## 为什么要多层
 
-Different layers catch different cases:
-- Entry validation catches most bugs
-- Business logic catches edge cases
-- Environment guards prevent context-specific dangers
-- Debug logging helps when other layers fail
+单点校验："我们修好了这个 bug"
+多层校验："我们让这个 bug 不可能发生"
 
-## The Four Layers
+不同的层抓住不同的情况：
+- 入口校验抓住大多数 bug
+- 业务逻辑抓住边界情况
+- 环境守卫防止特定上下文里的危险操作
+- 调试日志在其他层都失效时派上用场
 
-### Layer 1: Entry Point Validation
-**Purpose:** Reject obviously invalid input at API boundary
+## 四个层
+
+### 第 1 层：入口点校验
+**目的：** 在 API 边界拒绝明显无效的输入
 
 ```typescript
 function createProject(name: string, workingDirectory: string) {
@@ -37,8 +41,8 @@ function createProject(name: string, workingDirectory: string) {
 }
 ```
 
-### Layer 2: Business Logic Validation
-**Purpose:** Ensure data makes sense for this operation
+### 第 2 层：业务逻辑校验
+**目的：** 确保数据对这个操作来说说得通
 
 ```typescript
 function initializeWorkspace(projectDir: string, sessionId: string) {
@@ -49,8 +53,8 @@ function initializeWorkspace(projectDir: string, sessionId: string) {
 }
 ```
 
-### Layer 3: Environment Guards
-**Purpose:** Prevent dangerous operations in specific contexts
+### 第 3 层：环境守卫
+**目的：** 在特定上下文中阻止危险操作
 
 ```typescript
 async function gitInit(directory: string) {
@@ -69,8 +73,8 @@ async function gitInit(directory: string) {
 }
 ```
 
-### Layer 4: Debug Instrumentation
-**Purpose:** Capture context for forensics
+### 第 4 层：调试埋点
+**目的：** 捕获上下文，供事后取证
 
 ```typescript
 async function gitInit(directory: string) {
@@ -84,39 +88,39 @@ async function gitInit(directory: string) {
 }
 ```
 
-## Applying the Pattern
+## 套用这个模式
 
-When you find a bug:
+找到一个 bug 之后：
 
-1. **Trace the data flow** - Where does bad value originate? Where used?
-2. **Map all checkpoints** - List every point data passes through
-3. **Add validation at each layer** - Entry, business, environment, debug
-4. **Test each layer** - Try to bypass layer 1, verify layer 2 catches it
+1. **追踪数据流** - 坏值从哪里产生？在哪里被使用？
+2. **列出所有检查点** - 把数据经过的每个点都列出来
+3. **在每一层加校验** - 入口、业务、环境、调试
+4. **测试每一层** - 试着绕过第 1 层，验证第 2 层能接住
 
-## Example from Session
+## 来自调试会话的例子
 
-Bug: Empty `projectDir` caused `git init` in source code
+Bug：空的 `projectDir` 导致 `git init` 跑进了源代码目录
 
-**Data flow:**
-1. Test setup → empty string
+**数据流：**
+1. 测试 setup → 空字符串
 2. `Project.create(name, '')`
 3. `WorkspaceManager.createWorkspace('')`
-4. `git init` runs in `process.cwd()`
+4. `git init` 运行在 `process.cwd()`
 
-**Four layers added:**
-- Layer 1: `Project.create()` validates not empty/exists/writable
-- Layer 2: `WorkspaceManager` validates projectDir not empty
-- Layer 3: `WorktreeManager` refuses git init outside tmpdir in tests
-- Layer 4: Stack trace logging before git init
+**加上的四层：**
+- 第 1 层：`Project.create()` 校验非空/存在/可写
+- 第 2 层：`WorkspaceManager` 校验 projectDir 非空
+- 第 3 层：`WorktreeManager` 在测试中拒绝 tmpdir 之外的 git init
+- 第 4 层：git init 之前记录堆栈跟踪日志
 
-**Result:** All 1847 tests passed, bug impossible to reproduce
+**结果：** 1847 个测试全部通过，这个 bug 再也无法复现
 
-## Key Insight
+## 关键认识
 
-All four layers were necessary. During testing, each layer caught bugs the others missed:
-- Different code paths bypassed entry validation
-- Mocks bypassed business logic checks
-- Edge cases on different platforms needed environment guards
-- Debug logging identified structural misuse
+四层全都有必要。测试过程中，每一层都抓住了其他层漏掉的 bug：
+- 不同的代码路径绕过了入口校验
+- mock 绕过了业务逻辑检查
+- 不同平台上的边界情况需要环境守卫
+- 调试日志定位出了结构性误用
 
-**Don't stop at one validation point.** Add checks at every layer.
+**不要停在一个校验点上。** 每一层都加检查。

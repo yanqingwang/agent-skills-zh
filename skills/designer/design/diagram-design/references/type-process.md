@@ -1,14 +1,18 @@
-# Process
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-process.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** sequential business processes with multiple actors/divisions where the reader needs to see *who* does *what*, *what data* enters and leaves each step, and *which tools* are used — not just the step order. Covers responsibility audits, data-quality gate reviews, cross-divisional handoff maps, and end-to-end workflow documentation.
+# 过程图（Process）
 
-Prefer swimlane (simpler) when the data types and tools don't matter. Prefer process when each step's input/output payload and responsible team must be legible at a glance. Prefer **Service blueprint** (`type-service-blueprint.md`) when the claim is onstage vs offstage across stages — a line of visibility, not sequential handoffs.
+**最适用于：** 有多个参与者/部门的顺序业务流程，读者需要看清*谁*在*做什么*、每一步*进出什么数据*、*使用哪些工具*，而不只是步骤顺序。覆盖职责审计、数据质量门禁评审、跨部门交接图与端到端工作流文档。
 
-This type is **parametric** — the inputs schema in §1 drives every coordinate via the formulas in §2. Two generations from the same inputs must produce visually identical SVG. The rule shapes mirror `type-data-flow.md` so color override, IN/OUT chip semantic, and reproducibility checklist read identically across types.
+数据类型和工具不重要时，选更简单的泳道图。每一步的输入/输出载荷与责任团队需要一眼看清时，选过程图。核心论点是各阶段的台前与幕后之分（一条可视线，而非顺序交接）时，选**服务蓝图**（`type-service-blueprint.md`）。
+
+本类型是**参数化的**：§1 的输入模式经 §2 的公式驱动每一个坐标。相同输入生成两次，必须产出视觉上完全一致的 SVG。规则形态与 `type-data-flow.md` 一致，因此颜色覆盖、IN/OUT 标签片语义与可复现性检查清单在各类型间读法相同。
 
 ---
 
-## 1. Inputs — the parameter contract
+## 1. 输入：参数契约
 
 ```yaml
 lanes:                              # 1..6 horizontal swimlanes (top to bottom)
@@ -47,17 +51,17 @@ arrows:                             # explicit edges; styles bind to topology (s
 dark: false
 ```
 
-**Reserved field semantics:**
-- `lanes[k].key` — the 3-letter role badge text shown inside every node in that lane.
-- `lanes[k].name` — 1 or 2 line lane label; uppercase mono.
-- `steps[j].focal: true` — exactly **one** step may declare this. Header chip renders in accent.
-- `nodes[i].focal: true` — exactly **one** node may declare this. Renders with accent border (§5).
-- `nodes[i].chips` — `{in: "<CODE>", out: "<CODE>"}` object (either side `null` to omit). Codes from §8. **Skip** the input chip on the first step's nodes, **skip** the output chip on the last step's nodes (no upstream / downstream).
-- `nodes[i].color` — optional **per-node color override**. Any valid `"#hex"` string; the §4 palette is recommended for cross-diagram consistency.
+**保留字段语义：**
+- `lanes[k].key`：该泳道内每个节点里显示的 3 字母角色徽章文字。
+- `lanes[k].name`：1 或 2 行的泳道标签；大写等宽字体。
+- `steps[j].focal: true`：只允许**一个**步骤声明。头部标签片以 accent 渲染。
+- `nodes[i].focal: true`：只允许**一个**节点声明。以 accent 描边渲染（§5）。
+- `nodes[i].chips`：`{in: "<CODE>", out: "<CODE>"}` 对象（任一侧为 `null` 表示省略）。代码见 §8。第一步的节点**跳过**输入标签片，最后一步的节点**跳过**输出标签片（没有上游/下游）。
+- `nodes[i].color`：可选的**按节点颜色覆盖**。任何合法的 `"#hex"` 字符串；为了跨图一致性，推荐使用 §4 的调色板。
 
 ---
 
-## 2. Layout formulas — deterministic geometry
+## 2. 布局公式：确定性几何
 
 ```
 label_col_w      = 140
@@ -101,17 +105,17 @@ legend_row_y     = [legend_y_top + 16, legend_y_top + 37,
                     legend_y_top + 58, legend_y_top + 79]
 ```
 
-### 2.1 Background structure
+### 2.1 背景结构
 
-- Paper fill across full viewBox.
-- Dot pattern: 22×22 grid, `circle r=0.8`, `fill ink @ 0.10`. Opacity 0.55.
-- Alternating lane tints: odd-indexed lanes (0, 2, …) receive `ink @ 0.018` fill from `x=140` to `viewBox_w`.
-- Lane dividers: horizontal hairlines at every `lane_y_top(k)` and at `legend_y_top`; stroke `ink @ 0.12` width 0.8.
-- Label column right border: vertical hairline at `x = label_col_w`, stroke `ink @ 0.20` width 1, from `y = header_h` to `y = legend_y_top`.
+- 整个 viewBox 铺纸面填充。
+- 圆点纹理：22×22 网格，`circle r=0.8`，`fill ink @ 0.10`。不透明度 0.55。
+- 交替泳道底色：奇数序位泳道（0, 2, …）从 `x=140` 到 `viewBox_w` 接受 `ink @ 0.018` 填充。
+- 泳道分隔线：在每个 `lane_y_top(k)` 与 `legend_y_top` 处画水平发丝线；描边 `ink @ 0.12`，宽 0.8。
+- 标签列右边框：在 `x = label_col_w` 处画垂直发丝线，描边 `ink @ 0.20`，宽 1，从 `y = header_h` 到 `y = legend_y_top`。
 
-### 2.2 Step header chip + label
+### 2.2 步骤头部标签片与标签
 
-Per step `j`:
+对每个步骤 `j`：
 
 ```
 chip_w(j)        = 20 if len(step.number) >= 2 else 16
@@ -120,28 +124,28 @@ number_anchor    = (step_cx(j), chip_y + 11)
 label_anchor     = (step_cx(j), 32)              # 8-px gap below chip
 ```
 
-**Chip** (the numbered pill at the top of each column):
-- Default fill: `ink @ 0.12`, number text ink.
-- Focal fill: `accent @ 0.20`, number text accent (§5).
-- Per-step `color` override (§4): replaces the fill with `rgba(C, 0.20)` and the number fill with `C`.
+**标签片**（每列顶部的编号胶囊）：
+- 默认填充：`ink @ 0.12`，编号文字为 ink。
+- 焦点填充：`accent @ 0.20`，编号文字为 accent（§5）。
+- 按步骤 `color` 覆盖（§4）：把填充替换为 `rgba(C, 0.20)`，编号填充替换为 `C`。
 
-**Label** (the uppercase mono text below the chip):
-- Renders `steps[j].label` (uppercased), anchored at `label_anchor`.
-- Font: the `eyebrow` role's mono family at 6 px, weight 500, `letter-spacing="0.12em"`, `text-anchor="middle"`.
-- Default fill: `muted`.
-- Focal fill: `accent`.
-- Per-step `color` override: fill = `C` (matches the chip number color).
-- Keep labels short (≤ 9 chars). Long labels truncate; if you need more, abbreviate.
+**标签**（标签片下方的大写等宽文字）：
+- 渲染 `steps[j].label`（转大写），锚定在 `label_anchor`。
+- 字体：`eyebrow` 角色的等宽字族，6 px，weight 500，`letter-spacing="0.12em"`，`text-anchor="middle"`。
+- 默认填充：`muted`。
+- 焦点填充：`accent`。
+- 按步骤 `color` 覆盖：填充 = `C`（与标签片编号颜色一致）。
+- 标签要短（≤ 9 字符）。过长会截断；不够用就缩写。
 
-### 2.3 Lane labels
+### 2.3 泳道标签
 
-One or two-line mono label, all uppercase, letter-spacing 0.08em, font-size 8, fill muted. Centered at `(lane_label_x, lane_y_mid(k))`:
-- Single-line: anchored at `(lane_label_x, lane_y_mid(k) + 4)`
-- Two-line: lines at `(lane_label_x, lane_y_mid(k) - 4)` and `(lane_label_x, lane_y_mid(k) + 4)`
+一到两行的等宽标签，全大写，letter-spacing 0.08em，字号 8，填充 muted。居中于 `(lane_label_x, lane_y_mid(k))`：
+- 单行：锚定在 `(lane_label_x, lane_y_mid(k) + 4)`
+- 两行：分别位于 `(lane_label_x, lane_y_mid(k) - 4)` 与 `(lane_label_x, lane_y_mid(k) + 4)`
 
-Per-lane `color` override (§4): replaces the label fill with `C` and the lane stripe tint with `rgba(C, 0.04)`.
+按泳道 `color` 覆盖（§4）：把标签填充替换为 `C`，泳道条纹底色替换为 `rgba(C, 0.04)`。
 
-### 2.4 Node content layout (inside the 100×64 rect)
+### 2.4 节点内容布局（100×64 矩形内部）
 
 ```
 role_chip          rect 14×10 at (node_x+4, node_y+4),  rx=2
@@ -154,25 +158,25 @@ data chip IN       rect 16×8 at (node_x+4,   node_y+54), rx=2      # payload en
 data chip OUT      rect 16×8 at (node_x+80,  node_y+54), rx=2      # payload leaving
 ```
 
-**Role chip text rule:** the badge inside each node renders `lanes[k].key` where `k` is the node's lane index — **not** the step number (the step number already lives in the column header chip at the top, §2.2). Showing the lane key as the node badge gives each node a self-contained "who" identifier that survives when a single node is excerpted out of context. Mirrors the same rule in `type-data-flow.md` §2.4.
+**角色徽章文字规则：**每个节点内的徽章渲染 `lanes[k].key`，其中 `k` 是节点所在泳道的序号，**不是**步骤编号（步骤编号已在该列顶部的头部标签片里，见 §2.2）。用泳道 key 作节点徽章，让每个节点自带“谁”的标识，单个节点被摘出上下文后依然可读。与 `type-data-flow.md` §2.4 的规则一致。
 
-Empty cells (no node entry) render **nothing**. No placeholder rect, no role chip, no label.
+空单元格（无节点条目）**什么都不渲染**。没有占位矩形、没有角色徽章、没有标签。
 
-**Chip-vs-tool-text collision rule:** chips sit at `node_y + 54..62`; tool text baseline is at `node_y + 52`. If a node has a two-line title (rare), increase node_h to 72 OR omit the chips for that node. Default behaviour: omit chips on collision.
+**标签片与工具文字冲突规则：**标签片位于 `node_y + 54..62`；工具文字基线在 `node_y + 52`。若节点标题有两行（少见），把 node_h 加大到 72，或者省略该节点的标签片。默认行为：冲突时省略标签片。
 
 ---
 
-## 3. Connector rules (mandatory)
+## 3. 连线规则（强制）
 
-Three styles, bound to topology. Connectors drawn **before** all node rects (z-order rule).
+三种样式，与拓扑绑定。连线绘制在**所有**节点矩形**之前**（z-order 规则）。
 
-| `style` | Stroke | Width | Dash | Marker | When required |
+| `style` | 描边 | 宽度 | 虚线 | Marker | 何时必须使用 |
 |---|---|---|---|---|---|
-| `normal` | `muted` | 1.0 | — | `arrow` | Standard data hand-off between steps or actors. Unlabelled. |
-| `focal-in` / `focal-out` | `accent` | 1.2 | — | `arrow-accent` | Every edge whose endpoint is the focal node (`focal-in`) or origin is the focal node (`focal-out`). |
-| `trigger` | `muted` | 1.0 | `4,3` | `arrow-sm` | Orchestration trigger (scheduler → tool, manual override → upstream step). Unlabelled. |
+| `normal` | `muted` | 1.0 | — | `arrow` | 步骤之间或参与者之间的标准数据交接。不带标签。 |
+| `focal-in` / `focal-out` | `accent` | 1.2 | — | `arrow-accent` | 终点是焦点节点（`focal-in`）或起点是焦点节点（`focal-out`）的每条边。 |
+| `trigger` | `muted` | 1.0 | `4,3` | `arrow-sm` | 编排触发（调度器 → 工具，人工干预 → 上游步骤）。不带标签。 |
 
-**Defs block** (required, three markers):
+**Defs 块**（必需，三个 marker）：
 
 ```svg
 <defs>
@@ -185,17 +189,17 @@ Three styles, bound to topology. Connectors drawn **before** all node rects (z-o
 </defs>
 ```
 
-Resolve `{ink @ 0.10}`, `{muted}`, and `{accent}` against the active skin in [`style-guide.md`](style-guide.md) before emitting.
+输出前，先按 [`style-guide.md`](style-guide.md) 中当前皮肤解析 `{ink @ 0.10}`、`{muted}` 与 `{accent}`。
 
-### 3.1 Routing rules (non-negotiable)
+### 3.1 布线规则（不可妥协）
 
-**Single-bend right-angle:** exit RIGHT → corridor → enter TOP (↓ destination below) or BOTTOM (↑ destination above).
+**单折直角：**从右侧出 → 走廊 → 从顶部进入（↓ 目标在下方）或底部进入（↑ 目标在上方）。
 
-- Source-side: exit at `(node_x + 100, lane_y_mid(src_lane))` — node's right edge, vertical center.
-- Destination-side: enter at `(step_cx(dst_step), node_y(dst_lane))` for downward, or `(step_cx(dst_step), node_y(dst_lane) + 64)` for upward.
-- Corner radius: 8-px Q-bezier at the bend.
-- Same-lane edges (rare — same lane, adjacent steps): horizontal `<line>` from src right to dst left.
-- **No diagonals.** **No left-side entry.** **No exit from the top/bottom of a node.**
+- 起点侧：从 `(node_x + 100, lane_y_mid(src_lane))` 出发，即节点右边缘、垂直居中。
+- 终点侧：向下时进入 `(step_cx(dst_step), node_y(dst_lane))`，向上时进入 `(step_cx(dst_step), node_y(dst_lane) + 64)`。
+- 圆角：折弯处用 8px 的 Q 贝塞尔曲线。
+- 同泳道边（少见：同泳道、相邻步骤）：从源右侧到目标左侧的水平 `<line>`。
+- **不允许斜线。不允许从左侧进入。不允许从节点顶部/底部出发。**
 
 ```svg
 <!-- Downward (destination lane > source lane) -->
@@ -211,184 +215,184 @@ Resolve `{ink @ 0.10}`, `{muted}`, and `{accent}` against the active skin in [`s
       stroke="…" stroke-width="…" marker-end="…"/>
 ```
 
-- **Z-order:** all `<path>` and `<line>` connectors emitted **before** any node `<rect>`.
-- **Markers:** exactly one `marker-end` per path. Never `marker-start`.
-- **Labels:** all process arrows are unlabelled by default. The step number + the actor lane carry the semantic; a label on every arrow is noise. Only label an arrow if it represents a non-step concept (re-test loop, escalation) — then use a paper-masked rect behind 6.5-px mono text.
+- **Z-order：**所有 `<path>` 与 `<line>` 连线都先于任何节点 `<rect>` 输出。
+- **Marker：**每条 path 恰好一个 `marker-end`。绝不用 `marker-start`。
+- **标签：**所有过程箭头默认不带标签。步骤编号 + 参与者泳道已经承载语义，每条箭头都贴标签就是噪音。只有当箭头表示非步骤概念（复测循环、升级上报）时才加标签，此时用 6.5px 等宽文字，背后垫纸面色遮罩矩形。
 
-### 3.2 Crossings
+### 3.2 交叉
 
-Avoid. The corridor x position (8 px before destination node) is the only routing column — if two arrows would cross there, **swap step assignments** or **split into two diagrams** rather than introducing a bend-around. Crossings hide the underlying control flow.
+避免交叉。走廊的 x 位置（目标节点前 8px）是唯一的布线列：若两条箭头会在此交叉，**调换步骤分配**或**拆成两张图**，不要引入绕行折弯。交叉会掩盖底层的控制流。
 
 ---
 
-## 4. Component color override
+## 4. 组件颜色覆盖
 
-Any node, lane, or step accepts an optional `color: "#hex"`. Mirrors `type-data-flow.md` §4 and `type-high-level.md` §3.4 so the rule reads identically across types.
+任意节点、泳道或步骤都可接受可选的 `color: "#hex"`。规则与 `type-data-flow.md` §4、`type-high-level.md` §3.4 一致，各类型间读法相同。
 
-### 4.1 Per-node `color`
+### 4.1 按节点 `color`
 
-Applied to:
+应用于：
 
-| Element | Light | Dark |
+| 元素 | 浅色 | 深色 |
 |---|---|---|
-| Container fill (`rect`) | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
-| Container stroke | `rgba(C, 0.35)` (stroke-width 1) | `rgba(C_light, 0.45)` |
-| Role chip fill | `rgba(C, 0.18)` | `rgba(C_light, 0.22)` |
-| Role chip text | `C` | `C_light` |
-| Title text | `C` | `C_light` |
-| Sub-label (in → out) | **unchanged** (muted) | **unchanged** (muted) |
-| Tool label | **unchanged** (soft) | **unchanged** (soft) |
-| Data-type chips | **unchanged** | **unchanged** |
-| Arrows touching this node | **unchanged** — topology-driven | **unchanged** |
+| 容器填充（`rect`） | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
+| 容器描边 | `rgba(C, 0.35)`（stroke-width 1） | `rgba(C_light, 0.45)` |
+| 角色徽章填充 | `rgba(C, 0.18)` | `rgba(C_light, 0.22)` |
+| 角色徽章文字 | `C` | `C_light` |
+| 标题文字 | `C` | `C_light` |
+| 子标签（in → out） | **不变**（muted） | **不变**（muted） |
+| 工具标签 | **不变**（soft） | **不变**（soft） |
+| 数据类型标签片 | **不变** | **不变** |
+| 与该节点相连的箭头 | **不变**（由拓扑决定） | **不变** |
 
-`C_light` = the same hex lightened ~15% for dark-mode contrast (e.g., `#b85450` → `#d97a78`).
+`C_light` = 同一色值提亮约 15% 以保证深色模式对比度（例如 `#b85450` → `#d97a78`）。
 
-### 4.2 Per-step `color`
+### 4.2 按步骤 `color`
 
-Replaces the step header chip's fill with `rgba(C, 0.20)` and the chip's number text fill with `C`. The legend's matching step entry uses the same colors.
+把步骤头部标签片的填充替换为 `rgba(C, 0.20)`，编号文字填充替换为 `C`。图例中对应的步骤条目使用相同颜色。
 
-### 4.3 Per-lane `color`
+### 4.3 按泳道 `color`
 
-Replaces the lane stripe tint with `rgba(C, 0.04)` and the lane label text fill with `C`. Use sparingly — lane tints are easy to over-apply.
+把泳道条纹底色替换为 `rgba(C, 0.04)`，泳道标签文字填充替换为 `C`。克制使用：泳道底色很容易用过量。
 
-### 4.4 Rules
+### 4.4 规则
 
-- **Never on focal nodes / focal steps.** The accent already carries that signal. A `color` on a focal element is ignored.
-- **Never on arrows.** Arrows are topology-driven. If you want a colored edge, pick a different `style` from §3, not a color override.
-- **Cap at 3 custom-colored elements** per diagram (nodes + lanes + steps combined), in addition to the focal pair (focal node + focal step header). Above 3 the visual signal starts to fragment.
-- **Subtitle and tool labels stay muted** regardless of any component `color`.
+- **焦点节点/焦点步骤上绝不用。**accent 已经承载该信号；焦点元素上的 `color` 会被忽略。
+- **箭头上绝不用。**箭头由拓扑决定。想要彩色边，就从 §3 选另一种 `style`，不要用颜色覆盖。
+- 每张图**最多 3 个自定义配色元素**（节点 + 泳道 + 步骤合计），焦点对（焦点节点 + 焦点步骤头部）不计入。超过 3 个，视觉信号就开始碎片化。
+- 无论组件是什么 `color`，**副标题与工具标签保持 muted**。
 
-### 4.5 Semantic palette (recommended)
+### 4.5 语义调色板（推荐）
 
-Same palette as `type-high-level.md`, `type-dp-integration.md`, `type-data-flow.md`:
+与 `type-high-level.md`、`type-dp-integration.md`、`type-data-flow.md` 相同的调色板：
 
-- `#b85450` rust-red — Security / Identity / Governance (access control, training, approvals)
-- `#5a7d9a` slate-blue — Observability / Quality (data quality gates, validation, monitoring)
-- `#7a8c47` olive-green — Data Products / Publication (consumer-ready outputs, releases)
-- `#8c6d3f` warm-brown — Backup / DR / Archive
-
----
-
-## 5. Focal rule
-
-The process diagram has three focal slots, exactly one entry each:
-
-- **One focal step** (`steps[j].focal: true`) — typically the analytical or decision pivot (Test, Approve, Validate). Header chip and legend chip render in accent.
-- **One focal node** (`nodes[i].focal: true`) — the node that *receives* the critical handoff. Accent border + accent role chip + ink title (title text stays ink so it's still readable; only the border + role chip carry the accent).
-- **One focal arrow set** (`style: focal-in` and `focal-out`) — edges into and out of the focal node. Accent solid strokes.
-
-If zero or >1 of any focal slot are declared, halt and ask the user.
+- `#b85450` 铁锈红：安全 / 身份 / 治理（访问控制、培训、审批）
+- `#5a7d9a` 石板蓝：可观测性 / 质量（数据质量门禁、校验、监控）
+- `#7a8c47` 橄榄绿：数据产品 / 发布（可直接消费的产出、release）
+- `#8c6d3f` 暖棕：备份 / 灾备 / 归档
 
 ---
 
-## 6. Dark mode
+## 5. 焦点规则
 
-`paper`, `ink`, `muted`, `soft`, and `accent` invert with the skin: take their values from the dark column in [`style-guide.md`](style-guide.md). Every derived value in this reference is a **role at an opacity**, so most need no dark-mode handling: `ink @ 0.12` resolves to dark ink on light paper and light ink on dark paper.
+过程图有三个焦点槽位，每个恰好填一项：
 
-Only these differ between modes, and only in opacity:
+- **一个焦点步骤**（`steps[j].focal: true`）：通常是分析或决策的转折点（Test、Approve、Validate）。头部标签片与图例标签片以 accent 渲染。
+- **一个焦点节点**（`nodes[i].focal: true`）：*接收*关键交接的节点。accent 描边 + accent 角色徽章 + ink 标题（标题文字保持 ink 以保证可读；只有描边与角色徽章承载 accent）。
+- **一组焦点箭头**（`style: focal-in` 与 `focal-out`）：进出焦点节点的边。accent 实线描边。
 
-| Element | Light | Dark | Why it differs |
+任一焦点槽位声明了零个或超过一个，就停下来询问用户。
+
+---
+
+## 6. 深色模式
+
+`paper`、`ink`、`muted`、`soft` 与 `accent` 随皮肤反转：取值来自 [`style-guide.md`](style-guide.md) 的深色列。本参考中每个派生值都是**某个不透明度下的角色**，因此大多无需深色模式处理：`ink @ 0.12` 在浅色纸面上解析为深墨色，在深色纸面上解析为浅墨色。
+
+只有以下几项在两种模式间不同，且只差在不透明度：
+
+| 元素 | 浅色 | 深色 | 为何不同 |
 |---|---|---|---|
-| Lane tint | `ink @ 0.018` | `ink @ 0.025` | A wash needs slightly more presence on dark paper |
-| Label col divider | `ink @ 0.20` | `ink @ 0.22` | ditto |
-| Focal chip fill | `accent @ 0.20` | `accent @ 0.22` | ditto |
-| Focal node fill | `accent @ 0.08` | `accent @ 0.12` | ditto |
-| Default node fill | `#ffffff` (white) | `ink @ 0.04` | White is opaque; on dark paper the node lifts off the ground instead |
-| Default node stroke | `ink @ 0.25` | `ink @ 0.20` | Light ink on dark paper reads stronger at equal opacity |
+| 泳道底色 | `ink @ 0.018` | `ink @ 0.025` | 淡涂层在深色纸面上需要略高的存在感 |
+| 标签列分隔线 | `ink @ 0.20` | `ink @ 0.22` | 同上 |
+| 焦点标签片填充 | `accent @ 0.20` | `accent @ 0.22` | 同上 |
+| 焦点节点填充 | `accent @ 0.08` | `accent @ 0.12` | 同上 |
+| 默认节点填充 | `#ffffff`（白） | `ink @ 0.04` | 白色不透明；深色纸面上改为让节点从底面上浮起 |
+| 默认节点描边 | `ink @ 0.25` | `ink @ 0.20` | 同等不透明度下，浅墨在深色纸面上视觉更强 |
 
-Unchanged across modes: dot pattern `ink @ 0.10`, dividers `ink @ 0.12`, default chip fill `ink @ 0.12`, focal node stroke `accent`, and custom component colors (`C` light → `C_light`, lightened ~15%).
-
----
-
-## 7. Reproducibility checklist (taste gate)
-
-Before emitting SVG, verify **every** item:
-
-1. `viewBox = "0 0 {viewBox_w} {viewBox_h}"` derived via §2.
-2. Header strip at `y=0..36`; legend strip at `y=legend_y_top..viewBox_h` (`legend_y_top = 36 + n_lanes * 80`).
-3. Every node at `(step_cx(j) - 50, lane_y_top(k) + 8)` size `100×64`.
-4. Empty cells render nothing — no placeholder rect, no text.
-5. Exactly **one** focal step (`steps[j].focal: true`).
-6. Exactly **one** focal node (`nodes[i].focal: true`).
-7. Focal-touching arrows use `style: focal-in` / `focal-out` (accent).
-8. All other arrows `style: normal` (muted solid) or `style: trigger` (muted dashed). Unlabelled by default.
-9. All arrows emitted before any node rect (z-order rule).
-10. Single-bend right-angle routing only — exit right, enter top/bottom. No diagonals. Q-bezier `r=8` at each bend.
-11. Custom component colors ≤ 3 (in addition to the focal pair). Arrows never recolored by component `color`.
-12. Subtitle and tool labels stay muted regardless of any component `color`. Input chip skipped on first step's nodes, output chip skipped on last step's nodes.
+跨模式不变：圆点纹理 `ink @ 0.10`、分隔线 `ink @ 0.12`、默认标签片填充 `ink @ 0.12`、焦点节点描边 `accent`，以及自定义组件颜色（`C` 浅色 → `C_light`，提亮约 15%）。
 
 ---
 
-## 8. Data-type chips reference (input + output)
+## 7. 可复现性检查清单（品味门禁）
 
-Same catalog as `type-data-flow.md` §8.
+输出 SVG 前，逐条核对**每一项**：
 
-- **Input chip** at `(node_x+4, node_y+54)` — bottom-**left**. Payload entering the node.
-- **Output chip** at `(node_x+80, node_y+54)` — bottom-**right**. Payload leaving the node.
-- Either chip may be omitted (first/last step, unknown payload).
+1. `viewBox = "0 0 {viewBox_w} {viewBox_h}"` 按 §2 推导。
+2. 头部条带位于 `y=0..36`；图例条带位于 `y=legend_y_top..viewBox_h`（`legend_y_top = 36 + n_lanes * 80`）。
+3. 每个节点位于 `(step_cx(j) - 50, lane_y_top(k) + 8)`，尺寸 `100×64`。
+4. 空单元格不渲染任何内容：无占位矩形、无文字。
+5. 恰好**一个**焦点步骤（`steps[j].focal: true`）。
+6. 恰好**一个**焦点节点（`nodes[i].focal: true`）。
+7. 接触焦点的箭头使用 `style: focal-in` / `focal-out`（accent）。
+8. 其余箭头为 `style: normal`（muted 实线）或 `style: trigger`（muted 虚线）。默认不带标签。
+9. 所有箭头先于任何节点矩形输出（z-order 规则）。
+10. 只允许单折直角布线：右侧出、顶部/底部进。无斜线。每个折弯处 Q 贝塞尔 `r=8`。
+11. 自定义组件颜色 ≤ 3（焦点对不计入）。箭头绝不会被组件 `color` 改色。
+12. 无论组件是什么 `color`，副标题与工具标签保持 muted。第一步节点省略输入标签片，最后一步节点省略输出标签片。
 
-### Chip codes
+---
 
-| Code | Color (light) | Color (dark) | Meaning |
+## 8. 数据类型标签片参考（输入 + 输出）
+
+目录与 `type-data-flow.md` §8 相同。
+
+- **输入标签片**位于 `(node_x+4, node_y+54)`，即左**下**角。进入节点的载荷。
+- **输出标签片**位于 `(node_x+80, node_y+54)`，即右**下**角。离开节点的载荷。
+- 两个标签片都可以省略（第一步/最后一步、载荷未知）。
+
+### 标签片代码
+
+| 代码 | 颜色（浅色） | 颜色（深色） | 含义 |
 |------|---------------|--------------|---------|
-| `LS` | `#7c8f6f` sage | `#9caf8f` | List / assignment / task |
-| `DB` | `#5e7a9b` dusty-blue | `#82a0c0` | Dataset / tabular records |
-| `TB` | `#b8915a` mustard | `#d3ad7a` | Table (analysis-ready) |
-| `FL` | `#9c6b50` rust-brown | `#b88670` | File / document / report |
-| `WB` | `#6e6479` slate | `#8d8298` | Web / press / public release |
-| N/A | omit chip entirely | — | Unknown or not applicable |
+| `LS` | `#7c8f6f` 鼠尾草绿 | `#9caf8f` | 清单 / 分派 / 任务 |
+| `DB` | `#5e7a9b` 灰蓝 | `#82a0c0` | 数据集 / 表格记录 |
+| `TB` | `#b8915a` 芥末黄 | `#d3ad7a` | 表（可直接分析） |
+| `FL` | `#9c6b50` 锈棕 | `#b88670` | 文件 / 文档 / 报告 |
+| `WB` | `#6e6479` 石板灰 | `#8d8298` | 网页 / 新闻稿 / 公开发布 |
+| N/A | 完全省略标签片 | — | 未知或不适用 |
 
-Text inside chip: white, font-size 5, weight 700, mono.
+标签片内文字：白色，字号 5，weight 700，等宽。
 
-Data-type chip colors are a **separate semantic axis** from the per-node color override (§4). Chip colors describe *payload format*; node color describes *concern type*. A node can have both an `out: TB` mustard chip and a rust-red border simultaneously.
-
----
-
-## 9. Legend (3- or 4-row strip)
-
-Each row introduced by a category label at `x = label_col_w + 4` (= 144). The default legend has **3 rows** (`STEPS` / `DATA TYPE` / `FLOW`); when one or more nodes carry a `color` override (§4), add a 4th `CONCERN` row and grow `legend_h` to 100.
-
-- **Row 1 — `STEPS`** at `y = legend_y_top + 16`: repeat the header chips with their labels. Focal step keeps accent fill.
-- **Row 2 — `DATA TYPE`** at `y = legend_y_top + 37`: one swatch per chip type actually used in the diagram. Append a small sub-hint in muted mono: `left chip = input · right chip = output`.
-- **Row 3 — `CONCERN`** (only when color overrides are present) at `y = legend_y_top + 58`: one mini-rect per custom color used, with its semantic label.
-- **Row 4 — `FLOW`** (position depends on whether `CONCERN` row exists): one segment per arrow style actually used, with marker + label.
+数据类型标签片的颜色与按节点颜色覆盖（§4）是**两条独立的语义轴**。标签片颜色描述*载荷格式*；节点颜色描述*关注点类型*。一个节点可以同时有 `out: TB` 的芥末黄标签片和铁锈红描边。
 
 ---
 
-## 10. Complexity budget
+## 9. 图例（3 或 4 行条带）
 
-| Dimension | Max |
+每行由位于 `x = label_col_w + 4`（= 144）的类别标签开头。默认图例有 **3 行**（`STEPS` / `DATA TYPE` / `FLOW`）；当有一个或多个节点带 `color` 覆盖（§4）时，增加第 4 行 `CONCERN`，并把 `legend_h` 增至 100。
+
+- **第 1 行 `STEPS`**，位于 `y = legend_y_top + 16`：重复头部标签片及其标签。焦点步骤保持 accent 填充。
+- **第 2 行 `DATA TYPE`**，位于 `y = legend_y_top + 37`：图中实际用到的每种标签片类型各一个色块。用 muted 等宽小字补充提示：`left chip = input · right chip = output`。
+- **第 3 行 `CONCERN`**（仅当存在颜色覆盖时），位于 `y = legend_y_top + 58`：每个用到的自定义颜色一个 mini 矩形，附其语义标签。
+- **第 4 行 `FLOW`**（位置取决于是否存在 `CONCERN` 行）：实际用到的每种箭头样式一段示例，带 marker 与标签。
+
+---
+
+## 10. 复杂度预算
+
+| 维度 | 上限 |
 |---|---|
-| Lanes (actors) | 6 |
-| Steps | 12 |
-| Nodes per lane | Nodes = active steps only — empty cells are invisible |
-| Labelled arrows | 0 by default (label only for non-step concepts) |
-| Data-type chips per node | 2 (input + output) |
-| Custom-colored elements (§4) | 3 (in addition to focal node + focal step) |
+| 泳道（参与者） | 6 |
+| 步骤 | 12 |
+| 每泳道节点数 | 节点 = 仅有实际动作的步骤，空单元格不可见 |
+| 带标签的箭头 | 默认 0（仅为非步骤概念加标签） |
+| 每节点数据类型标签片 | 2（输入 + 输出） |
+| 自定义配色元素（§4） | 3（焦点节点 + 焦点步骤之外） |
 
-Above 6 lanes or 12 steps: split into two diagrams (overview + detail).
-
----
-
-## 11. Anti-patterns
-
-- **Placeholder empty cells** — if an actor doesn't participate in a step, leave the cell empty (no box, no text).
-- **Diagonal arrows** — every connector must have exactly one right-angle bend. No direct straight lines between nodes in different lanes.
-- **Left/right port entry on a vertical-dominant arrow** — always exit right, enter top or bottom.
-- **More than one focal step / focal node** — pick the single most critical operation.
-- **Unlabelled lanes** — every swimlane must identify its actor.
-- **All arrows the same style** — orchestration triggers must be dashed to distinguish them from data-flow connectors.
-- **`color` override on a focal element** — ignored. Accent always wins.
-- **Custom-colored arrows** — connectors are topology-driven; `color` on a node never spreads to its edges.
-- **Lane tints over-applied** — a tint on every lane reads as decoration, not signal. Apply to ≤1 lane.
-- **Data-type chips in a double-line-name node** — skip the chips or shorten the name to one line.
-- **More than 12 steps without splitting** — use an overview + detail pair.
+超过 6 条泳道或 12 个步骤：拆成两张图（总览 + 细节）。
 
 ---
 
-## 12. Worked example — full YAML for an extended process variant
+## 11. 反模式
 
-The following input block describes an extended process workflow with custom colors and lanes. Every coordinate in the rendered SVG is derivable from this block via §2 + §3 + §4, demonstrating the parametric layout contract end-to-end.
+- **给空单元格放占位**：参与者不参与某步骤时，让单元格留空（无框、无文字）。
+- **斜箭头**：每条连线必须恰好一个直角折弯。不同泳道节点之间不允许直线直连。
+- **纵向为主的箭头从左/右端口进入**：永远右侧出、顶部或底部进。
+- **多于一个焦点步骤/焦点节点**：只选最关键的那一个操作。
+- **泳道无标签**：每条泳道都必须标明其参与者。
+- **所有箭头一种样式**：编排触发必须是虚线，以区别于数据流连线。
+- **焦点元素上的 `color` 覆盖**：会被忽略。accent 永远优先。
+- **自定义配色的箭头**：连线由拓扑决定；节点上的 `color` 绝不会扩散到它的边。
+- **泳道底色滥用**：每条泳道都染色就成了装饰而非信号。最多染 1 条泳道。
+- **双行名称节点里放数据类型标签片**：省略标签片，或把名称缩到一行。
+- **超过 12 个步骤还不拆分**：使用总览 + 细节两张图。
+
+---
+
+## 12. 完整示例：扩展过程变体的完整 YAML
+
+以下输入块描述了一个带自定义颜色与泳道的扩展过程工作流。渲染出的 SVG 中每个坐标都可由该块经 §2 + §3 + §4 推导，端到端演示参数化布局契约。
 
 ```yaml
 # Quarterly survey — end-to-end workflow (extended variant)
@@ -454,37 +458,37 @@ arrows:
 dark: false
 ```
 
-### 12.1 What this YAML proves
+### 12.1 这份 YAML 验证了什么
 
-Run §2 of this reference with these inputs:
+用这些输入运行本参考的 §2：
 
-- `n_lanes = 6`, `n_steps = 11`, `has_color_row = true` (3 nodes carry `color`).
-- `viewBox_w = 140 + 11 * 112 + 28 = 1400`. ✓
-- `legend_h = 100`, `viewBox_h = 36 + 6 * 80 + 100 = 616`. ✓
-- Lane y_top = [36, 116, 196, 276, 356, 436]; lane mid = [76, 156, 236, 316, 396, 476]. ✓
-- Step cx = [198, 310, 422, 534, 646, 758, 870, 982, 1094, 1208, 1320] (the 8-px content-area gutter shifts every value by 8 from `140 + j*112 + 50`). ✓
-- Node 4 (HQ Review): step=3, lane="SVY" (k=3) → x = 534-50 = 484, y = 276+8 = 284. ✓
-- Node 5 (Error Checks): step=4, lane="IT" (k=1) → x = 646-50 = 596, y = 116+8 = 124. ✓
-- Node 10 (Public Release): step=9, lane="CMM" (k=5) → x = 1208-50 = 1158, y = 436+8 = 444. ✓
+- `n_lanes = 6`、`n_steps = 11`、`has_color_row = true`（3 个节点带 `color`）。
+- `viewBox_w = 140 + 11 * 112 + 28 = 1400`。✓
+- `legend_h = 100`，`viewBox_h = 36 + 6 * 80 + 100 = 616`。✓
+- 泳道 y_top = [36, 116, 196, 276, 356, 436]；泳道中点 = [76, 156, 236, 316, 396, 476]。✓
+- 步骤 cx = [198, 310, 422, 534, 646, 758, 870, 982, 1094, 1208, 1320]（内容区 8px 边距使每个值比 `140 + j*112 + 50` 偏移 8）。✓
+- 节点 4（HQ Review）：step=3，lane="SVY"（k=3）→ x = 534-50 = 484，y = 276+8 = 284。✓
+- 节点 5（Error Checks）：step=4，lane="IT"（k=1）→ x = 646-50 = 596，y = 116+8 = 124。✓
+- 节点 10（Public Release）：step=9，lane="CMM"（k=5）→ x = 1208-50 = 1158，y = 436+8 = 444。✓
 
-A fresh generation from this YAML produces deterministic coordinates directly from the formula without manual tweaking.
+从这份 YAML 重新生成时，坐标直接由公式得出，无需手动微调。
 
-### 12.2 Adapting this YAML to a different process
+### 12.2 把这份 YAML 改造成其他过程
 
-To document a different process, change only the value of these inputs:
+要记录另一个过程，只需修改以下输入的值：
 
-- **Lanes**: rename `lanes[k].name` to your team names; update each `nodes[i].lane` to match. Up to 6 lanes.
-- **Steps**: rename `steps[j].label`, move `focal: true` to the step that defines the diagram's central claim. Up to 12 steps.
-- **Nodes**: write one entry per `(lane, step)` cell that has work. Leave cells empty (no entry) to render nothing.
-- **Colors**: choose `color: "#hex"` on at most 3 nodes (§4 cap). Stick to the recommended palette unless brand demands otherwise.
-- **Arrows**: declare every edge explicitly with `style: normal | focal-in | focal-out | trigger`. The routing rule (§3.1) fills in the geometry.
+- **泳道**：把 `lanes[k].name` 改成你的团队名，并同步更新各 `nodes[i].lane`。最多 6 条泳道。
+- **步骤**：重命名 `steps[j].label`，把 `focal: true` 移到定义本图核心论点的那一步。最多 12 个步骤。
+- **节点**：每个有工作的 `(lane, step)` 单元格写一条条目。留空的单元格（不写条目）不渲染任何内容。
+- **颜色**：最多给 3 个节点选 `color: "#hex"`（§4 上限）。除非品牌要求，否则坚持推荐调色板。
+- **箭头**：每条边都显式声明，`style: normal | focal-in | focal-out | trigger`。布线规则（§3.1）负责补全几何。
 
-Everything else — viewBox sizing, chip positions, legend layout, dark-mode token swap — is derivable. The YAML is the **source of truth**; the SVG is one of many possible renderings of it (light/dark/full all derive from the same inputs with different style tokens).
+其余一切都是可推导的：viewBox 尺寸、标签片位置、图例布局、深色模式 token 切换。YAML 是**唯一事实来源**；SVG 只是它众多可能渲染中的一种（浅色/深色/full 都由相同输入配不同样式 token 推导）。
 
 ---
 
-## 13. Examples
+## 13. 示例
 
-- `assets/example-process.html` — minimal light (quarterly survey: 11 steps, 6 divisions, data-type chips). Gallery default.
-- `assets/example-process-dark.html` — same, dark skin.
-- `assets/example-process-full.html` — same, editorial-card frame.
+- `assets/example-process.html`：极简浅色版（季度调查：11 步、6 部门、数据类型标签片）。画廊默认。
+- `assets/example-process-dark.html`：同上，深色皮肤。
+- `assets/example-process-full.html`：同上，编辑卡片边框。

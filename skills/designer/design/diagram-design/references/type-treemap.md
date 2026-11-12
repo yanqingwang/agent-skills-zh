@@ -1,45 +1,49 @@
-# Treemap
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-treemap.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** part-of-whole where the *relative sizes are the story* — disk and bundle usage, budget or spend breakdowns, market share, population, time allocation. Use when a single total decomposes into parts and the reader's question is "what dominates, and by how much?"
+# 矩形树图（Treemap）
 
-Not for: ranked lists where exact values matter more than proportion (use a **bar chart**), containment or scope relationships with no quantity (use **nested**), or a hierarchy you need to trace parent-to-child (use a **tree**).
+**适用场景：** *相对大小本身就是故事*的部分与整体关系：磁盘与打包体积占用、预算或支出分解、市场份额、人口、时间分配。单一总量分解为若干部分，读者的问题是"谁占主导，大多少？"时使用。
 
-## Layout conventions
+不适用：精确数值比比例更重要的排名列表（用**柱状图**）、没有数量的包含或范围关系（用**嵌套**）、需要自上而下追查的层级（用**树**）。
 
-- **Plot area:** `x` 40 → 956, `y` 40 → 420 inside a `0 0 1000 500` viewBox — the same vertical rhythm as bar, line and scatter, so the legend block sits where a reader of those types already expects it (rule at `y=462`, `LEGEND` at `478`, keys at `488`).
-- **Squarified layout** (Bruls et al., 2000): sort descending, lay each row against the *shorter* side of the remaining rectangle. Aspect ratios stay near 1, which is what makes two areas comparable by eye. Never lay cells out in simple stripes — long thin cells cannot be compared.
-- **Cell count:** 4–8. Past 8, the tail becomes unlabelable slivers — group the tail into a single explicit "Other" cell and name what it contains in the source line.
-- **4px grid:** cell edges snap to the grid like everything else, with a 4px gutter between cells. Snapping and gutters both move area, so check the result — and check it as **relative** error (`(drawn − true) ÷ true`), not percentage points. A 0.1pp slip is nothing on a 59% cell and a quarter of a 0.5% cell; absolute error hides exactly the mistake you need to catch. Keep every cell within a few percent of its true share — the shipped example is within 2.7%, its worst case being the sliver, where the grid cannot do better — and state the encoding in the source line (`AREA = POPULATION`). `scripts/verify-treemap.py` gates this.
-- **Fill:** a rank-ordered `ink` opacity ramp (e.g. `0.16 → 0.04`), so the non-focal order survives greyscale printing and colour-blind readers. One accent cell only — the editorially focal one, not automatically the largest. Note what this does *not* buy you: the focal cell is painted off-ramp, so in greyscale it lands wherever its tint happens to fall, not at its rank. Identify it by the accent stroke, and never let tone carry meaning the area doesn't already carry. `ink` is a role, not a colour: it resolves near-black on light paper and near-white on dark, so one ramp of opacities composites *darker* as it strengthens in the light skin and *lighter* in the dark one. The opacities are identical in both; only their lightness flips.
-- **Stroke:** 1px `ink @ 0.30` hairline on every cell; the focal cell takes a 1.5px `accent` stroke.
-- **Labels sit inside the cell**, top-left, 16px in from the edge: name in the `node-name` role 12–14px 600, value in the `sublabel` role 9px on the next line. Three tiers by cell size:
-  - large — name + value + share (`4.78B · 59% of world`)
-  - medium — name + value
-  - small — a 3-letter mono abbreviation, if one reads honestly
-  - sliver — **no text.** When the cell is at least 12×12px, use a filled `ink` disc, `r=5`, centred in the cell, carrying a paper-coloured `i`, with the cell's name and share spelled out in the legend. Below 12px on either axis, omit the in-cell mark and identify the sliver by position in the legend; a fixed-size disc must never cross the cell boundary. `scripts/verify-treemap.py` checks marker containment. Resist rotating a label to make it fit: a single sideways word among five upright ones reads as a mistake before it reads as data, and its centring is a trap — `text-anchor="middle"` centres along the *baseline*, which a quarter-turn maps to the cell's long axis, leaving nothing centring the cap-height band across the narrow one.
-  - Never shrink a cell to fit its label. The cell size is the data; the label is commentary.
-- **Contrast:** compute the ceiling against the token you actually ship. The 9px value line is `muted`, not `ink`, and `muted` needs a lighter cell than `ink` does: measured against the composited fill, the top of the ramp can go to **0.16 on light paper and 0.14 on dark** before it drops under 4.5:1. (`ink` would tolerate 0.20 — which is exactly the number you will write down if you check the wrong token.) A mid-tone fill — solid accent, or 50% ink — fails against both light and dark text; use the tint-plus-stroke pattern instead. The source line takes `muted` too: `soft` measures 3.48:1 on paper and never reaches AA anywhere on this ramp.
-- **Legend:** the house block (rule, `LEGEND`, keys), naming the focal cell, the direction of the ink ramp, and any cell carrying an info mark. **Name that direction by contrast against the paper — `stronger contrast is larger` — never by lightness.** `darker is larger` is true only on light paper; ship it in the dark variant and the legend states the opposite of what the reader sees, because the ramp's lightness inverts with the skin while its opacity does not. Named by contrast, one sentence serves all three variants and cannot rot apart. `scripts/verify-skin-polarity.py` gates this, checking every directional tone claim against the ramp composited on that file's own paper. HTML comments are not visible legend copy, including comments between text fragments; contradictory or unverifiable visible wording still fails. Explicit `fill-opacity` and `opacity` presentation attributes multiply the fill color's alpha before that comparison; CSS rules and inherited/group opacity are not resolved by this source checker. Ranked cells with zero effective opacity remain in the comparison at paper contrast. The source line rides the same row as `LEGEND`, right-aligned in mono 8px, stating what area encodes plus the dataset and its date. Archived closing tags inside an inline comment cannot truncate the surrounding visible claim.
+## 版式约定
 
-Commented-out SVG geometry does not contribute to verified cell area or annotation containment.
+- **绘图区：** `0 0 1000 500` viewBox 内 `x` 40 → 956、`y` 40 → 420，与柱状图、折线图、散点图共用同一垂直节奏，图例块落在这几类读者已经习惯的位置（分隔线 `y=462`、`LEGEND` 在 `478`、键名在 `488`）。
+- **Squarified 布局**（Bruls et al., 2000）：降序排序，每行贴着剩余矩形的*较短*边铺设。长宽比保持在 1 附近，这正是肉眼可比面积的前提。绝不按简单条带排布：细长的格子没法比。
+- **格子数：** 4–8。超过 8，尾部会变成无法标注的细条：把尾部并成一个显式的 "Other" 格，并在 source line 里写明它包含什么。
+- **4px 网格：** 格子边像其他一切元素一样吸附网格，格间留 4px 沟槽。吸附与沟槽都会改变面积，所以要检查结果，而且按**相对**误差检查（`(drawn − true) ÷ true`），不是百分点。0.1pp 的偏差在 59% 的格子上不算什么，在 0.5% 的格子上却是四分之一；绝对误差恰好掩盖你需要抓住的错误。每个格子与其真实份额之差保持在几个百分点之内（随附示例在 2.7% 以内，最差恰是那条细条，网格已无能为力），并在 source line 声明编码方式（`AREA = POPULATION`）。`scripts/verify-treemap.py` 对此设闸。
+- **填充：** 按排名递减的 `ink` 不透明度阶梯（如 `0.16 → 0.04`），让非焦点的排序在灰度打印与色觉障碍读者面前仍然成立。accent 格只有一个：编辑上的焦点格，不自动等于最大的格。要明白这换不来什么：焦点格不按阶梯着色，灰度下它的色调落在哪就是哪，不对应它的排名。靠 accent 描边识别它，绝不让色调承载面积没有承载的含义。`ink` 是角色不是颜色：浅纸上是近黑，深色皮肤上是近白，所以同一组不透明度在浅色皮肤里越强越*深*，在深色皮肤里越强越*浅*。两种皮肤里不透明度完全相同，只是明暗翻转。
+- **描边：** 每格 1px `ink @ 0.30` 发丝线；焦点格用 1.5px `accent` 描边。
+- **标签放在格子内部**，左上角，距边 16px：名称用 `node-name` 角色 12–14px 600，数值用 `sublabel` 角色 9px 放在下一行。按格子大小分三档：
+  - large：名称 + 数值 + 份额（`4.78B · 59% of world`）
+  - medium：名称 + 数值
+  - small：一个 3 字母 mono 缩写，前提是读起来诚实
+  - sliver：**不放文字。** 格子至少 12×12px 时，放一个填充 `ink` 的圆点，`r=5`，居中于格子，内含纸色的 `i`，格名与份额在图例中写出。任一轴低于 12px 时，去掉格内标记，靠图例中的位置识别细条；固定尺寸的圆点绝不能越出格子边界。`scripts/verify-treemap.py` 检查标记包含。不要把标签转个方向硬塞：五个正立词中间夹一个横躺的词，先读起来像错误，再读起来才像数据；它的居中还是个陷阱：`text-anchor="middle"` 沿*基线*居中，转四分之一圈后对应格子的长轴，cap-height 一侧反而没有任何东西负责居中。
+  - 绝不缩小格子去迁就标签。格子大小是数据；标签是注解。
+- **对比度：** 对照你实际出货的 token 计算上限。9px 数值行是 `muted`，不是 `ink`，而 `muted` 需要比 `ink` 更浅的格子：对照合成后的填充，阶梯顶端在**浅纸上 0.16、深色 0.14** 之前还能保住 4.5:1。(`ink` 能容忍 0.20：如果你查错了 token，写下来的恰好就是那个数。) 中调填充（纯 accent，或 50% ink）对浅色与深色文字都过不了；改用浅色加描边的模式。source line 也用 `muted`：`soft` 在纸上只有 3.48:1，在这条阶梯的任何位置都够不到 AA。
+- **图例：** 标准图例块（分隔线、`LEGEND`、键名），点名焦点格、ink 阶梯的方向，以及任何带信息标记的格子。**方向要按对纸面的对比来命名："stronger contrast is larger"，绝不按明暗。** "darker is larger" 只在浅纸上成立；出货深色变体时，图例说的恰与读者所见相反，因为阶梯的明暗随皮肤翻转，不透明度不翻。按对比命名，一句话适用于全部三个变体，也不会各自烂掉。`scripts/verify-skin-polarity.py` 对此设闸，逐条核对每个方向性色调声明与其文件自身纸面上合成的阶梯。HTML 注释不算可见图例文案，包括文字片段之间的注释；可见措辞自相矛盾或无法核验仍然失败。显式的 `fill-opacity` 与 `opacity` 表现属性会在该比较之前乘进填充色的 alpha；CSS 规则与继承/分组 opacity 不被这个源检查器解析。有效不透明度为零的排名格子仍参与对比，按纸面对比度计。source line 与 `LEGEND` 同行，右对齐，mono 8px，写明面积编码什么，外加数据集及其日期。行内注释里的归档闭合标签不能截断周围的可见声明。
 
-Both matching SVG attribute quote delimiters are supported by the geometry verifier.
+被注释掉的 SVG 几何不计入已校验的格子面积或标注包含。
 
-Parseable numeric label positions and font sizes must be finite, and font sizes must be positive, so invalid annotations cannot bypass containment comparisons. Unsupported SVG length formats retain the existing conservative skip; they are not certified by this source checker.
+几何校验器支持成对匹配的 SVG 属性引号定界符。
 
-### Declaring the share
+可解析的数值标签位置与字号必须是有限的，字号必须为正，这样非法标注无法绕过包含性比较。不支持的 SVG 长度格式保留既有的保守跳过；它们不经由这个源检查器背书。
 
-Printed percentages are read as complete signed numbers, including leading decimals and scientific notation; `5.9e1%` means 59%, while `-59%` contradicts a positive share. Non-finite percentage claims are findings.
+### 声明份额
 
-**Every cell carries `data-share` — including cells too small to label.** It is the cell's percentage of the whole, and it is what makes the area checkable:
+打印出的百分比按完整的带符号数字读取，包括前导小数与科学记数法；`5.9e1%` 表示 59%，而 `-59%` 与正份额矛盾。非有限的百分比声明是 finding。
+
+**每个格子都带 `data-share`——包括小到无法标注的格子。** 它是格子占整体的百分比，正是它让面积可被校验：
 
 ```svg
 <rect x="X" y="Y" width="W" height="H" rx="2" data-share="18.29" fill="…" stroke="…"/>
 ```
 
-Without it, a verifier has to infer the intended share from the text inside the cell, which quietly exempts the one cell that has no text — and that is the sliver, the cell the 4px grid distorts most. A shipped treemap once had its smallest cell drawn 50% oversized with every gate green for exactly this reason. `scripts/verify-treemap.py` now fails closed on any cell without it, and cross-checks `data-share` against the percentage the label prints, because a label and the metadata are two statements of one fact.
+没有它，校验器只能从格内文字反推想要的份额，这会悄悄豁免唯一没有文字的格子：恰是那条细条，被 4px 网格扭曲得最厉害的格子。曾有一个出货的树图，最小格子画大了 50%，所有闸门全绿，原因正是这个。`scripts/verify-treemap.py` 现在对缺少它的格子一律判负，并把 `data-share` 与标签打印的百分比交叉核对，因为标签与元数据是同一事实的两次陈述。
 
-### Cell element pattern
+### 格子元素模式
 
 ```svg
 <!-- Opaque paper mask prevents the dot pattern showing through the tint -->
@@ -50,59 +54,59 @@ Without it, a verifier has to infer the intended share from the text inside the 
 <text x="X+16" y="Y+46" fill="{muted}" font-size="9" font-family="{sublabel}">VALUE · SHARE</text>
 ```
 
-Focal cell: replace the fill with `accent @ 0.16` and the stroke with `accent` at 1.5px.
+焦点格：填充换 `accent @ 0.16`，描边换 `accent` 1.5px。
 
-## Honest-data rule
+## 诚实数据规则
 
-**Area is the only encoding.** Never clip, floor, or log-scale a cell to make it visible, and never drop a cell because it is small — a treemap claims to show a whole, so an omitted part makes the picture a lie. A part too small to label gets a legend entry and, only when the cell can contain it, an info mark; parts too small to draw get merged into one honest, named "Other". If several cells are invisible at the target size, the data wants a bar chart.
+**面积是唯一的编码。** 绝不裁切、取底或用对数尺度让格子可见，也不因格子小就丢弃：树图宣称展示一个整体，省略一部分，图就成了谎言。小到无法标注的部分拿到一个图例条目，以及（仅当格子装得下时）一个信息标记；小到画不出来的部分合并为一个诚实、命名的 "Other"。若干格子连目标尺寸下都不可见时，数据要的是柱状图。
 
-Watch the smallest cell hardest: it is the one that grid snapping and gutters distort most, and the one nobody checks. Beware, too, the rounding you *display*: six values each rounded up can sum past the total you printed underneath them. Either carry enough precision that the parts reconcile, or say plainly in the source line that they don't (`PARTS ROUNDED, MAY NOT SUM`).
+盯最紧的就是最小格子：它被网格吸附与沟槽扭曲得最厉害，也最没人检查。还要当心你*展示*的舍入：六个各自向上取整的值加起来可以越过你印在下方的总量。要么携带足够的精度让部分对得上总，要么在 source line 里直说对不上（`PARTS ROUNDED, MAY NOT SUM`）。
 
-## Anti-patterns
+## 反模式
 
-- More than 8 cells without an "Other" bucket (unlabelable slivers).
-- A stated total the cells contradict by more than display rounding — or rounding that is never disclosed. Rounded parts that miss the total by a hair are honest once the source line says so; silently printing figures that don't reconcile is not.
-- Stripe layout instead of squarified — defeats area comparison.
-- Rainbow fills: one hue per cell destroys the rank reading and the one-accent rule.
-- Nesting more than two levels deep in a static diagram; a second level needs a heavier border and its own label tier, and a third is unreadable without interaction.
-- 3-D or shadowed cells — area is already the message.
+- 超过 8 格又没有 "Other" 桶（无法标注的细条）。
+- 声明的总量与格子差得超过展示舍入：或从未披露过舍入。舍入后的部分差总量一丝半毫，只要 source line 写明就是诚实的；静默印出对不上的数字不是。
+- 条带布局而不是 squarified：面积比较直接失效。
+- 彩虹填充：每格一色毁掉排名阅读，也毁掉单 accent 规则。
+- 静态图中嵌套超过两层；第二层需要更重的边框和自己的标签档，第三层没有交互就读不了。
+- 3D 或带阴影的格子：面积本身就是信息。
 
-## Variants
+## 变体
 
-- **Marimekko:** the same area encoding on a grid — column width is the category's share, segment height is the series' share within it, so area is the joint share. Full spec below.
+- **Marimekko：** 同样的面积编码放在网格上：列宽是类目的份额，段高是系列在其内的份额，面积即联合份额。完整规格见下。
 
 ### Marimekko
 
-**Best for:** a **two-way part-of-whole** where both splits matter and the reader's question is "which cell of the cross-tab dominates?" — CI minutes by pipeline × runner OS, bundle bytes by package × chunk, spend by team × vendor, incidents by service × severity. The treemap above answers one question (what dominates the whole); a marimekko answers three at once: read across for the category mix, down for the series mix within a category, and by area for the joint share. A stacked bar with equal-width bars shows the within-category mix and throws the category sizes away; a treemap shows the joint sizes and throws the grid away.
+**适用场景：** **双向的部分与整体**，两个切分都重要，读者的问题是"交叉表里哪个格子占主导？"：CI 分钟数按 pipeline × runner OS、打包字节按 package × chunk、支出按 team × vendor、事故按 service × severity。上面的树图回答一个问题（整体谁主导）；marimekko 一次回答三个：横向读类目构成，纵向读类目内系列构成，按面积读联合份额。等宽的堆叠柱保留类目内构成，却把类目大小丢掉了；树图保留联合大小，却把网格丢掉了。
 
-Not for: a one-way split (that is the parent treemap, and a marimekko with one series is a bar chart); more than ~5 series or ~8 categories, past which the small cells become unlabelable slivers in *both* directions; series measured in different units, which cannot share one column; or a comparison of the series' totals across categories, which the height encoding deliberately hides — if that is the reading, the data wants a grouped bar.
+不适用：单向切分（那是父级树图，单系列的 marimekko 就是柱状图）；超过约 5 个系列或约 8 个类目，再往后小格子会在*两个*方向上同时变成无法标注的细条；以不同单位计量的系列，它们无法共享一列；以及跨类目比较系列总量：高度编码刻意隐藏了它，要的是这个阅读，数据要的是分组柱状图。
 
-#### Layout conventions
+#### 版式约定
 
-- **Plot area:** the treemap's — `x` 40 → 956, `y` 40 → 420 inside a `0 0 1000 500` viewBox, legend block at `y=462`/`478`/`488`. Column captions sit under the plot at `y=438`, `sublabel` role 9px, centred on their column. The shipped example spends 900px of column width across five columns with four 4px gutters.
-- **Column width is category share** of the whole, over the sum of column widths. Column edges snap to the 4px grid, so the gutters do; keep the gutter constant — a widened gap reads as a narrower column.
-- **Every column is the full plot height**, and its segments tile it top to bottom with no gaps and no gutters, separated by the hairline stroke alone. **Segment height is the series' share within its column**, so the same height means the same within-category share whatever the column's width. Segment boundaries are data and land on whole pixels, exempt from the 4px grid as the waterfall's bar tops are.
-- **One series order, top to bottom, in every column** — the order of the series' overall totals, largest at the top. A series absent from a category is omitted from that column, never drawn at zero height; the rows do not align across columns and are not meant to, which is why every segment prints its own share.
-- **Column and series budgets:** 3–8 columns, 2–5 series. Widths under ~24px cannot hold a label in either direction and take the treemap's information mark instead.
-- **Labels sit inside the segment**, top-left, 16px in, in the treemap's tiers by height: 56px and above takes the name in the `node-name` role 12px 600 with the amount and within-column share in the `sublabel` role 9px on the next line (`2,140 min · 68%`); 32–55px takes the same pair at 11px/9px on a tighter pitch; below that, the mark or nothing. The focal segment may add what its share is *of* (`83% of mobile`) because that is the one number a reader is most likely to misread as a share of the whole. Never shrink or widen a segment to fit a label.
-- **Column captions** print the column's name and its share of the whole (`web · 31%`), so the width can be read as a number without a ruler.
-- **Hold the 760px canvas on narrow screens.** The SVG keeps `min-width: 760px` so its 9px labels stay readable, and sits inside a local `overflow-x: auto` wrapper (`.diagram-container`) so a phone scrolls the chart, not the page. `scripts/lint-render.py --all` renders every marimekko at 390px and fails on page-level overflow, a shrunken canvas, or a missing local scroller.
+- **绘图区：** 与树图相同：`0 0 1000 500` viewBox 内 `x` 40 → 956、`y` 40 → 420，图例块在 `y=462`/`478`/`488`。列标题在绘图区下方 `y=438`，`sublabel` 角色 9px，对列居中。随附示例把 900px 列宽摊在五列上，含四个 4px 沟槽。
+- **列宽即类目占整体的份额**，分母是各列宽之和。列边吸附 4px 网格，沟槽随之；保持沟槽恒定：变宽的间隙读起来就是变窄的列。
+- **每列都是整个绘图区的高度**，其段从上到下平铺，无空隙、无沟槽，仅靠发丝描边分隔。**段高是系列在其列内的份额**，因此同样的高度意味着同样的列内份额，无论列宽如何。段边界是数据，落在整数像素上，像瀑布图的柱顶一样豁免于 4px 网格。
+- **每列内的系列顺序统一，从上到下**：按系列整体总量的顺序，最大的在顶。某类目中缺席的系列在该列中省略，绝不画成零高度；各行不跨列对齐，也不该对齐，所以每段都要印出自己的份额。
+- **列与系列预算：** 3–8 列，2–5 系列。宽度不足约 24px 的列在两个方向上都装不下标签，改用树图的信息标记。
+- **标签放在段内部**，左上角，缩进 16px，按段高套用树图的档位：56px 及以上用 `node-name` 角色 12px 600 的名称，下一行是 `sublabel` 角色 9px 的数值与列内份额（`2,140 min · 68%`）；32–55px 用同样一对，按 11px/9px、更紧的行距；再往下，标记或什么都不放。焦点段可以额外说明它的份额*是相对于谁的*（`83% of mobile`），因为读者最可能把它误读成占整体的份额。绝不缩小或加宽段去迁就标签。
+- **列标题**打印列名与其占整体的份额（`web · 31%`），让宽度不用尺子也能读成数字。
+- **窄屏保持 760px 画布。** SVG 保持 `min-width: 760px` 让 9px 标签可读，并置于局部 `overflow-x: auto` 容器（`.diagram-container`）内，让手机滚动图表而非整页。`scripts/lint-render.py --all` 以 390px 渲染每一张 marimekko，页面级溢出、画布缩水或缺失局部滚动容器都会判负。
 
-#### Colour
+#### 颜色
 
-The treemap's colour section holds here with one change: the ramp runs **per series, not per cell**. Every segment of one series takes one `ink` opacity — strongest on the series with the largest overall total (`0.16 → 0.10 → 0.05` on light paper, `0.14 → 0.09 → 0.04` on dark) — so a row reads as one thing across the figure and the legend needs one key per series, not a direction word. One accent segment, marked by its `accent` stroke at 1.5px and the accent tint, on the editorially focal cell. Labels stay `ink` (names) and `muted` (amounts) everywhere, and the top of the ramp stays at the treemap's contrast ceiling for the same reason.
+树图的颜色一节在此成立，有一处改动：阶梯**按系列，不按格子**。同一系列的每一段取同一个 `ink` 不透明度——整体总量最大的系列用最强（浅纸上 `0.16 → 0.10 → 0.05`，深色上 `0.14 → 0.09 → 0.04`）——一行横读过去就是同一件事，图例每个系列一个键名即可，不需要方向词。accent 段只有一个，以 1.5px `accent` 描边与 accent 浅色标记，落在编辑上的焦点格。标签处处保持 `ink`（名称）与 `muted`（数值），阶梯顶端保持树图的对比上限，理由相同。
 
-#### Honest-data rule
+#### 诚实数据规则
 
-**Width, height and area are three statements of one table, and every one of them is checked.** A column widened to fit its label lies about the category; a segment padded for headroom lies about the series; either lies about the joint share, which is the reading the type exists to give. `scripts/verify-marimekko.py` recomputes all three from the amount every segment declares, as relative error, so the narrow column and the thin segment are held to the same standard as the giants.
+**宽、高、面积是同一张表的三次陈述，每一次都被检查。** 为容纳标签而加宽的列对类目撒谎；为留头部空间而垫高的段对系列撒谎；二者都对着联合份额撒谎，而这恰是该类型存在的意义。`scripts/verify-marimekko.py` 从每段声明的数值重算全部三项，按相对误差计，细列与窄段同巨人接受同一标准。
 
-- **Never drop a category or a series to tidy the grid.** A marimekko claims to show a whole; a missing column makes every other width a lie, and a missing segment makes every other height in its column one. Merge the tail into a named "Other" column or series instead.
-- **A series absent from a category is omitted, not drawn at zero.** A zero-height rect is a cell that claims to exist; an omitted one is a gap the legend can explain.
-- **Say what the amounts are** in the source line — the unit, the period, the total — and say when they are illustrative. The checker verifies internal consistency only; a figure wrong by the same factor everywhere is self-consistent.
+- **绝不为了图面整齐而丢弃类目或系列。** marimekko 宣称展示一个整体：缺一列，其余所有宽度都成了谎言；缺一段，该列其余所有高度都成了谎言。把尾部并成一个命名的 "Other" 列或系列。
+- **某类目中缺席的系列是省略，不是画成零。** 零高度 rect 是一个声称存在的格子；省略是一个图例能解释的空缺。
+- **在 source line 说明数值是什么**：单位、期间、总量；是示意数据也要说明。检查器只验内部一致；到处都错同一倍数的数字是自洽的。
 
-#### Declaring the values
+#### 声明数值
 
-Every segment is one `<rect>` (over its paper mask, as in the parent) carrying the category, the series and the amount. Every visible string is bound to what it describes.
+每段是一个 `<rect>`（衬在纸面遮罩上，同父级），携带类目、系列与数值。每个可见字符串都绑定到它所描述的对象。
 
 ```svg
 <rect x="580" y="106" width="216" height="314" rx="2" data-column="mobile" data-segment="macOS" data-amount="1980" fill="{accent @ 0.16}" stroke="{accent}" stroke-width="1.5"/>
@@ -112,26 +116,26 @@ Every segment is one `<rect>` (over its paper mask, as in the parent) carrying t
 <text data-segment="macOS" data-role="key" x="344" y="497" fill="{muted}" font-size="8.5" font-family="'Geist', sans-serif">macOS</text>
 ```
 
-`data-amount` is the basis of every geometric check, and `data-segment` on a `<rect>` is this contract's scope key: the parent binds `data-share` on a `<rect>` and reads only files named for it, slopegraph binds `data-series` on a `<line>`, bump `data-ranks` and ridgeline `data-bins` on a `<path>`, bubble `data-size` and beeswarm `data-value` on a `<circle>`. No two gates read one attribute, so no two gates claim one file. A label prints the segment's amount and its within-column share and nothing else numeric; a caption prints its column's name and share of the whole; a key names its series. `scripts/verify-marimekko.py` covers the shared plot, the constant gutter, the width, height and area shares, the tiling, the series order, the accent count, every binding and the marker fit; `scripts/test-verify-marimekko.py` proves each check in both polarities and pins the scope treaty with the parent and the sibling gates.
+`data-amount` 是全部几何检查的基础，`<rect>` 上的 `data-segment` 是本契约的辖域键：父级把 `data-share` 绑在 `<rect>` 上、只读以它命名的文件；slopegraph 把 `data-series` 绑在 `<line>` 上；bump 绑 `data-ranks`、ridgeline 绑 `data-bins` 于 `<path>`；bubble 绑 `data-size`、beeswarm 绑 `data-value` 于 `<circle>`。没有两道闸读同一个属性，因此没有两道闸认领同一个文件。label 只打印该段的数值与其列内份额，不带其他数字；caption 打印其列名与占整体的份额；key 命名其系列。`scripts/verify-marimekko.py` 覆盖共享绘图区、恒定沟槽、宽/高/面积三项份额、平铺、系列顺序、accent 计数、全部绑定与标记贴合；`scripts/test-verify-marimekko.py` 在两种极性下证明每项检查，并钉死与父级及兄弟闸门之间的辖域约定。
 
-**No `transform` on any of it**, by any carrier — the `transform` attribute, an inline `style`, or a `<style>` rule — on a segment, a bound label, or an ancestor `<g>`. The checker reads raw coordinates, and a transform moves the rendered mark away from the number that was verified.
+**以上任何元素都不许带 `transform`**，无论载体：`transform` 属性、行内 `style`，还是 `<style>` 规则，对象包括段、绑定标签或祖先 `<g>`。检查器读原始坐标，而 transform 会把渲染出的标记挪离被校验过的数字。
 
-#### Anti-patterns
+#### 反模式
 
-- Equal-width columns — that is a 100% stacked bar, and the category sizes are gone.
-- Columns of different heights, or a gutter between segments — height stops being a share of anything.
-- A series in a different order in one column, or one drawn at zero height where it is absent.
-- One hue per series instead of the ink ramp plus a single accent; a legend that names the ramp by tone instead of by series.
-- A column widened, or a segment padded, to fit its label.
-- A category or series silently dropped from the grid.
-- More than 5 series or 8 categories without an "Other".
-- A stated total the segments contradict by more than display rounding.
+- 等宽列：那是 100% 堆叠柱，类目大小没了。
+- 列高不齐，或段与段之间出现沟槽：高度不再是谁的份额。
+- 某列内系列顺序不同，或缺席系列被画成零高度。
+- 每系列一色，而不是 ink 阶梯加单个 accent；图例按色调而不是按系列命名阶梯。
+- 为容纳标签而加宽的列，或垫高的段。
+- 类目或系列被静默丢出网格。
+- 超过 5 个系列或 8 个类目又没有 "Other"。
+- 声明的总量与各段差得超过展示舍入。
 
-## Examples
+## 示例
 
-- `assets/example-treemap.html` — minimal light
-- `assets/example-treemap-dark.html` — minimal dark
-- `assets/example-treemap-full.html` — full editorial
-- `assets/example-marimekko.html` — marimekko, minimal light
-- `assets/example-marimekko-dark.html` — marimekko, minimal dark
-- `assets/example-marimekko-full.html` — marimekko, full editorial
+- `assets/example-treemap.html`：极简 light
+- `assets/example-treemap-dark.html`：极简 dark
+- `assets/example-treemap-full.html`：完整编辑版
+- `assets/example-marimekko.html`：marimekko，极简 light
+- `assets/example-marimekko-dark.html`：marimekko，极简 dark
+- `assets/example-marimekko-full.html`：marimekko，完整编辑版

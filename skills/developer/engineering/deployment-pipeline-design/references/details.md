@@ -1,8 +1,12 @@
-# deployment-pipeline-design — detailed patterns and worked examples
+> **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/cicd-automation/skills/deployment-pipeline-design/references/details.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Pipeline Stages
+# deployment-pipeline-design：详细模式与完整示例
 
-### Standard Pipeline Flow
+## 流水线阶段
+
+### 标准流水线流程
 
 ```
 ┌─────────┐   ┌──────┐   ┌─────────┐   ┌────────┐   ┌──────────┐
@@ -10,21 +14,21 @@
 └─────────┘   └──────┘   └─────────┘   └────────┘   └──────────┘
 ```
 
-### Detailed Stage Breakdown
+### 阶段详解
 
-1. **Source** - Code checkout, dependency graph resolution
-2. **Build** - Compile, package, containerize, sign artifacts
-3. **Test** - Unit, integration, SAST/SCA security scans
-4. **Staging Deploy** - Deploy to staging environment with smoke tests
-5. **Integration Tests** - E2E, contract tests, performance baselines
-6. **Approval Gate** - Manual or automated metric-based gate
-7. **Production Deploy** - Canary, blue-green, or rolling strategy
-8. **Verification** - Deep health checks, synthetic monitoring
-9. **Rollback** - Automated rollback on failure signals
+1. **Source**：代码检出，依赖图解析
+2. **Build**：编译、打包、容器化，并对产物签名
+3. **Test**：单元测试、集成测试、SAST/SCA 安全扫描
+4. **Staging Deploy**：部署到 Staging 环境并执行冒烟测试
+5. **Integration Tests**：E2E 测试、契约测试、性能基线
+6. **Approval Gate**：人工审批或基于指标的自动门禁
+7. **Production Deploy**：金丝雀、蓝绿或滚动策略
+8. **Verification**：深度健康检查、拨测（synthetic monitoring）
+9. **Rollback**：出现故障信号时自动回滚
 
-## Approval Gate Patterns
+## 审批门禁模式
 
-### Pattern 1: Manual Approval (GitHub Actions)
+### 模式 1：手动审批（GitHub Actions）
 
 ```yaml
 production-deploy:
@@ -38,9 +42,9 @@ production-deploy:
       run: kubectl apply -f k8s/production/
 ```
 
-Environment protection rules in GitHub enforce required reviewers before this job starts. Configure reviewers at **Settings → Environments → production → Required reviewers**.
+GitHub 的环境保护规则会在该 job 开始前强制要求指定审核人。审核人在 **Settings → Environments → production → Required reviewers** 中配置。
 
-### Pattern 2: Time-Based Approval (GitLab CI)
+### 模式 2：基于时间的审批（GitLab CI）
 
 ```yaml
 deploy:production:
@@ -55,7 +59,7 @@ deploy:production:
     - main
 ```
 
-### Pattern 3: Multi-Approver (Azure Pipelines)
+### 模式 3：多审批人（Azure Pipelines）
 
 ```yaml
 stages:
@@ -76,9 +80,9 @@ stages:
                     instructions: "Review staging metrics before approving"
 ```
 
-### Pattern 4: Automated Metric Gate
+### 模式 4：自动化指标门禁
 
-Use an AnalysisTemplate (Argo Rollouts) or a custom gate script to block promotion when error rates exceed a threshold:
+使用 AnalysisTemplate（Argo Rollouts）或自定义门禁脚本，在错误率超过阈值时阻断晋升：
 
 ```yaml
 # Argo Rollouts AnalysisTemplate — blocks canary promotion automatically
@@ -101,19 +105,19 @@ spec:
           / sum(rate(http_requests_total{job="my-app"}[2m]))
 ```
 
-## Deployment Strategies
+## 部署策略
 
-### Decision Table
+### 决策表
 
-| Strategy     | Downtime | Rollback Speed | Cost Impact     | Best For                        |
+| 策略 | 停机时间 | 回滚速度 | 成本影响 | 最适用场景 |
 |-------------|----------|----------------|-----------------|----------------------------------|
-| Rolling      | None     | ~minutes       | None            | Most stateless services          |
-| Blue-Green   | None     | Instant        | 2x infra (temp) | High-risk or database migrations |
-| Canary       | None     | Instant        | Minimal         | High-traffic, metric-driven      |
-| Recreate     | Yes      | Fast           | None            | Dev/test, batch jobs             |
-| Feature Flag | None     | Instant        | None            | Gradual feature exposure         |
+| 滚动（Rolling） | 无 | 约数分钟 | 无 | 大多数无状态服务 |
+| 蓝绿（Blue-Green） | 无 | 即时 | 2 倍基础设施（临时） | 高风险部署或数据库迁移 |
+| 金丝雀（Canary） | 无 | 即时 | 极小 | 高流量、指标驱动 |
+| 重建（Recreate） | 是 | 快 | 无 | 开发/测试、批处理任务 |
+| 功能开关（Feature Flag） | 无 | 即时 | 无 | 功能的渐进式暴露 |
 
-### 1. Rolling Deployment
+### 1. 滚动部署（Rolling Deployment）
 
 ```yaml
 apiVersion: apps/v1
@@ -129,9 +133,9 @@ spec:
       maxUnavailable: 1   # at least 9 pods always serving
 ```
 
-Characteristics: gradual rollout, zero downtime, easy rollback, best for most applications.
+特点：渐进式上线、零停机、回滚简单，适合大多数应用。
 
-### 2. Blue-Green Deployment
+### 2. 蓝绿部署（Blue-Green Deployment）
 
 ```bash
 # Switch traffic from blue to green
@@ -145,9 +149,9 @@ kubectl patch service my-app -p '{"spec":{"selector":{"version":"green"}}}'
 kubectl patch service my-app -p '{"spec":{"selector":{"version":"blue"}}}'
 ```
 
-Characteristics: instant switchover, easy rollback, doubles infrastructure cost temporarily, good for high-risk deployments with long warm-up times.
+特点：即时切换、回滚简单、基础设施成本暂时翻倍，适合预热时间长的高风险部署。
 
-### 3. Canary Deployment (Argo Rollouts)
+### 3. 金丝雀部署（Argo Rollouts）
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -172,9 +176,9 @@ spec:
         - setWeight: 100
 ```
 
-Characteristics: gradual traffic shift, real-user metric validation, automated promotion or rollback, requires Argo Rollouts or a service mesh.
+特点：流量渐进式迁移、以真实用户指标做验证、自动晋升或回滚；需要 Argo Rollouts 或服务网格。
 
-### 4. Feature Flags
+### 4. 功能开关（Feature Flags）
 
 ```python
 from flagsmith import Flagsmith
@@ -187,11 +191,11 @@ else:
     process_checkout_v1()
 ```
 
-Characteristics: deploy without releasing, A/B testing, instant rollback per user segment, granular control independent of deployment.
+特点：部署而不发布、A/B 测试、按用户分组即时回滚、独立于部署的细粒度控制。
 
-## Pipeline Orchestration
+## 流水线编排
 
-### Multi-Stage Pipeline Example (GitHub Actions)
+### 多阶段流水线示例（GitHub Actions）
 
 ```yaml
 name: Production Pipeline
@@ -269,11 +273,11 @@ jobs:
             -d '{"text":"Production deployment successful: ${{ github.sha }}"}'
 ```
 
-## Health Checks
+## 健康检查
 
-### Shallow vs Deep Health Endpoints
+### 浅层与深层健康端点
 
-A shallow `/ping` returns 200 even when downstream dependencies are broken. Use a deep readiness endpoint that verifies actual dependencies before promoting traffic.
+浅层的 `/ping` 在下游依赖已经故障时仍会返回 200。应使用深层的就绪（readiness）端点，在晋升流量之前先核实真实依赖。
 
 ```python
 # /health/ready — checks real dependencies, used by pipeline gate
@@ -289,7 +293,7 @@ async def readiness():
     return JSONResponse({"status": status, "checks": checks}, status_code=code)
 ```
 
-### Post-Deployment Verification Script
+### 部署后验证脚本
 
 ```bash
 #!/usr/bin/env bash
@@ -314,9 +318,9 @@ echo "Health check failed after $((MAX_ATTEMPTS * SLEEP_SECONDS))s"
 exit 1
 ```
 
-## Rollback Strategies
+## 回滚策略
 
-### Automated Rollback in Pipeline
+### 流水线中的自动回滚
 
 ```yaml
 deploy-and-verify:
@@ -338,7 +342,7 @@ deploy-and-verify:
         echo "Rolled back to previous revision"
 ```
 
-### Manual Rollback Commands
+### 手动回滚命令
 
 ```bash
 # List revision history with change-cause annotations
@@ -354,20 +358,20 @@ kubectl rollout undo deployment/my-app --to-revision=3
 kubectl rollout status deployment/my-app
 ```
 
-For advanced rollback strategies including database migration rollbacks and Argo Rollouts abort flows, see [`references/advanced-strategies.md`](references/advanced-strategies.md).
+更多高级回滚策略（含数据库迁移回滚与 Argo Rollouts 中止流程）见 [`references/advanced-strategies.md`](references/advanced-strategies.md)。
 
-## Monitoring and Metrics
+## 监控与指标
 
-### Key DORA Metrics to Track
+### 需要跟踪的关键 DORA 指标
 
-| Metric                    | Target (Elite) | How to Measure                           |
+| 指标 | 目标（精英） | 测量方式 |
 |--------------------------|----------------|------------------------------------------|
-| Deployment Frequency      | Multiple/day   | Pipeline run count per day               |
-| Lead Time for Changes     | < 1 hour       | Commit timestamp → production deploy     |
-| Change Failure Rate       | < 5%           | Failed deploys / total deploys           |
-| Mean Time to Recovery     | < 1 hour       | Incident open → service restored         |
+| 部署频率（Deployment Frequency） | 每天多次 | 每天流水线运行次数 |
+| 变更前置时间（Lead Time for Changes） | < 1 小时 | 提交时间戳 → 生产部署 |
+| 变更失败率（Change Failure Rate） | < 5% | 失败部署数 / 总部署数 |
+| 平均恢复时间（Mean Time to Recovery） | < 1 小时 | 事件开始 → 服务恢复 |
 
-### Post-Deployment Metric Verification
+### 部署后指标验证
 
 ```yaml
 - name: Verify error rate post-deployment
@@ -385,15 +389,15 @@ For advanced rollback strategies including database migration rollbacks and Argo
     fi
 ```
 
-## Pipeline Best Practices
+## 流水线最佳实践
 
-1. **Fail fast** — Run quick checks (lint, unit tests) before slow ones (E2E, security scans)
-2. **Parallel execution** — Run independent jobs concurrently to minimize total pipeline time
-3. **Caching** — Cache dependency layers and build artifacts between runs
-4. **Artifact promotion** — Build once, promote the same artifact through all environments
-5. **Environment parity** — Keep staging infrastructure as close to production as possible
-6. **Secrets management** — Use secret stores (Vault, AWS Secrets Manager, GitHub encrypted secrets) — never hardcode
-7. **Deployment windows** — Prefer low-traffic windows; enforce change freeze periods via gate policies
-8. **Idempotent deploys** — Ensure re-running a deploy produces the same result
-9. **Rollback automation** — Trigger rollback automatically on health check or metric threshold failure
-10. **Annotate deployments** — Send deployment markers to monitoring tools (Datadog, Grafana) for correlation
+1. **快速失败（Fail fast）**：先跑快的检查（lint、单元测试），再跑慢的（E2E、安全扫描）
+2. **并行执行**：并发运行相互独立的 job，尽量缩短流水线总耗时
+3. **缓存**：在多次运行之间缓存依赖层与构建产物
+4. **产物晋升**：只构建一次，让同一产物贯穿所有环境
+5. **环境对等**：让 Staging 基础设施尽量接近生产环境
+6. **密钥管理**：使用密钥存储（Vault、AWS Secrets Manager、GitHub 加密 secrets），绝不硬编码
+7. **部署窗口**：优先选择低流量时段；通过门禁策略强制执行变更冻结期
+8. **幂等部署**：确保重复执行部署产出相同结果
+9. **回滚自动化**：健康检查或指标阈值失败时自动触发回滚
+10. **部署标注**：向监控工具（Datadog、Grafana）发送部署标记以便关联分析

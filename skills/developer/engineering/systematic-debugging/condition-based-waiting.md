@@ -1,12 +1,16 @@
-# Condition-Based Waiting
+> **中文汉化版** · 上游：[obra/superpowers](https://github.com/obra/superpowers) · 原文件：`skills/systematic-debugging/condition-based-waiting.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Overview
+# 基于条件的等待
 
-Flaky tests often guess at timing with arbitrary delays. This creates race conditions where tests pass on fast machines but fail under load or in CI.
+## 概述
 
-**Core principle:** Wait for the actual condition you care about, not a guess about how long it takes.
+不稳定的测试（flaky tests）常常用随手定的延迟去猜时序。这会制造竞态条件：测试在快的机器上通过，在高负载下或 CI 里却失败。
 
-## When to Use
+**核心原则：** 等你真正关心的那个条件，而不是猜它要花多久。
+
+## 何时使用
 
 ```dot
 digraph when_to_use {
@@ -21,17 +25,17 @@ digraph when_to_use {
 }
 ```
 
-**Use when:**
-- Tests have arbitrary delays (`setTimeout`, `sleep`, `time.sleep()`)
-- Tests are flaky (pass sometimes, fail under load)
-- Tests timeout when run in parallel
-- Waiting for async operations to complete
+**适用情况：**
+- 测试里有随意的延迟（`setTimeout`、`sleep`、`time.sleep()`）
+- 测试不稳定（时过时不过，高负载下失败）
+- 测试并行运行时超时
+- 等待异步操作完成
 
-**Don't use when:**
-- Testing actual timing behavior (debounce, throttle intervals)
-- Always document WHY if using arbitrary timeout
+**不适用情况：**
+- 测试真实的时序行为（防抖、节流间隔）
+- 如果一定要用随意的超时，务必写明原因
 
-## Core Pattern
+## 核心模式
 
 ```typescript
 // ❌ BEFORE: Guessing at timing
@@ -45,19 +49,19 @@ const result = getResult();
 expect(result).toBeDefined();
 ```
 
-## Quick Patterns
+## 快速模式
 
-| Scenario | Pattern |
+| 场景 | 模式 |
 |----------|---------|
-| Wait for event | `waitFor(() => events.find(e => e.type === 'DONE'))` |
-| Wait for state | `waitFor(() => machine.state === 'ready')` |
-| Wait for count | `waitFor(() => items.length >= 5)` |
-| Wait for file | `waitFor(() => fs.existsSync(path))` |
-| Complex condition | `waitFor(() => obj.ready && obj.value > 10)` |
+| 等待事件 | `waitFor(() => events.find(e => e.type === 'DONE'))` |
+| 等待状态 | `waitFor(() => machine.state === 'ready')` |
+| 等待数量 | `waitFor(() => items.length >= 5)` |
+| 等待文件 | `waitFor(() => fs.existsSync(path))` |
+| 复杂条件 | `waitFor(() => obj.ready && obj.value > 10)` |
 
-## Implementation
+## 实现
 
-Generic polling function:
+通用的轮询函数：
 ```typescript
 async function waitFor<T>(
   condition: () => T | undefined | null | false,
@@ -79,20 +83,20 @@ async function waitFor<T>(
 }
 ```
 
-See `condition-based-waiting-example.ts` in this directory for complete implementation with domain-specific helpers (`waitForEvent`, `waitForEventCount`, `waitForEventMatch`) from actual debugging session.
+完整实现见本目录下的 `condition-based-waiting-example.ts`，包含来自实际调试会话的场景专用辅助函数（`waitForEvent`、`waitForEventCount`、`waitForEventMatch`）。
 
-## Common Mistakes
+## 常见错误
 
-**❌ Polling too fast:** `setTimeout(check, 1)` - wastes CPU
-**✅ Fix:** Poll every 10ms
+**❌ 轮询太快：** `setTimeout(check, 1)` - 浪费 CPU
+**✅ 修正：** 每 10ms 轮询一次
 
-**❌ No timeout:** Loop forever if condition never met
-**✅ Fix:** Always include timeout with clear error
+**❌ 没有超时：** 条件永远不满足就死循环
+**✅ 修正：** 永远带上超时和清晰的报错
 
-**❌ Stale data:** Cache state before loop
-**✅ Fix:** Call getter inside loop for fresh data
+**❌ 过期数据：** 在循环之前缓存状态
+**✅ 修正：** 在循环内调用 getter，拿到新鲜数据
 
-## When Arbitrary Timeout IS Correct
+## 什么时候随意的超时才是对的
 
 ```typescript
 // Tool ticks every 100ms - need 2 ticks to verify partial output
@@ -101,15 +105,15 @@ await new Promise(r => setTimeout(r, 200));   // Then: wait for timed behavior
 // 200ms = 2 ticks at 100ms intervals - documented and justified
 ```
 
-**Requirements:**
-1. First wait for triggering condition
-2. Based on known timing (not guessing)
-3. Comment explaining WHY
+**要求：**
+1. 先等到触发条件出现
+2. 基于已知的时序（不是猜的）
+3. 注释里说明为什么
 
-## Real-World Impact
+## 实战效果
 
-From debugging session (2025-10-03):
-- Fixed 15 flaky tests across 3 files
-- Pass rate: 60% → 100%
-- Execution time: 40% faster
-- No more race conditions
+来自一次调试会话（2025-10-03）：
+- 修好了 3 个文件里的 15 个不稳定测试
+- 通过率：60% → 100%
+- 执行时间快了 40%
+- 不再有竞态条件

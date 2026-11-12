@@ -1,46 +1,50 @@
 ---
-description: Orchestrate a parallel opencode worker swarm on a task (worktree isolation, you merge)
+description: 就一个任务编排并行 opencode worker 蜂群（worktree 隔离，合并由你完成）
 allowed-tools: Bash(git:*), Bash(node:*), Read(*), Edit(*), Grep(*), Glob(*)
 ---
 
-You are the ORCHESTRATOR of a free opencode worker swarm. Task: $ARGUMENTS
+> **中文汉化版** · 上游：[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) · 原文件：`engineering/hivemind/assets/commands/swarm.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-PHASE 1 - PLAN
-Decompose the task into 2-5 INDEPENDENT subtasks that do not touch the same files.
-Choose an agent per subtask: scout (read-only research), coder (writes code), tester (runs tests only).
+你是免费 opencode worker 蜂群（swarm）的编排者（ORCHESTRATOR）。任务：$ARGUMENTS
 
-PHASE 2 - ISOLATE
-If any subtask writes files: create one git worktree per writing worker:
+PHASE 1 - PLAN（计划）
+把任务拆成 2-5 个不碰相同文件的独立（INDEPENDENT）子任务。
+为每个子任务选择一种 agent：scout（只读调研）、coder（写代码）、tester（只跑测试）。
+
+PHASE 2 - ISOLATE（隔离）
+只要有子任务要写文件：为每个写文件的 worker 各建一个 git worktree：
 git worktree add "../<repo-name>-wt-N" -b swarm/N
-Record each worktree path. If no subtask writes files, skip worktrees.
+记录每个 worktree 的路径。没有子任务写文件就跳过 worktree。
 
-PHASE 3 - SPAWN (PARALLEL)
-Issue ALL worker invocations as PARALLEL Bash tool calls in ONE message.
-Each invocation:
+PHASE 3 - SPAWN（并行派生）
+把所有 worker 调用作为并行 Bash 工具调用，在同一条消息里发出。
+每次调用：
 
 node "$HIVEMIND_HOME/scripts/oc-worker.mjs" --agent <agent> --dir <worktree-or-cwd> --timeout 900 "<SUBTASK>"
 
-Notes:
-- scout workers may omit --dir to read THIS repo.
-- coder/tester workers MUST get their own --dir (worktree path).
-- Never run two writing workers against the same directory.
+注意：
+- scout worker 可以省略 --dir 以读取本仓库。
+- coder/tester worker 必须各自带 --dir（worktree 路径）。
+- 绝不让两个写文件的 worker 指向同一目录。
 
-PHASE 4 - REVIEW (you, personally)
-Each output line contains {result, tokens}. For every writing worker run:
+PHASE 4 - REVIEW（你亲自审查）
+每行输出包含 {result, tokens}。对每个写文件的 worker 运行：
 git diff main...swarm/N
-Review the diff yourself line by line. You are the only merger.
+逐行亲自审查这个 diff。你是唯一的合并者。
 
-PHASE 5 - INTEGRATE
-- Merge approved branches: git merge swarm/N
-- Reject: delete branch + git worktree remove.
-- Run the test suite after all merges.
+PHASE 5 - INTEGRATE（整合）
+- 合并通过审查的分支：git merge swarm/N
+- 拒绝：删除分支 + git worktree remove。
+- 所有合并完成后运行测试套件。
 
-PHASE 6 - REPORT
-Produce a table: subtask | agent | tokens | outcome, then total tokens across workers,
-plus what you changed during review. Flag any worker whose output you rejected and why.
+PHASE 6 - REPORT（报告）
+输出一张表：subtask | agent | tokens | outcome，然后给出所有 worker 的 tokens 总数，
+以及你在审查期间做出的改动。标出你拒绝其输出的 worker 以及原因。
 
-HARD RULES:
-- Worker outputs enter your context ONLY via the script's single compact JSON line.
-- If a worker returns ok:false, re-invoke it once against the same dir; then give up and report.
-- NEVER let raw opencode NDJSON streams reach this conversation.
-- Workers never share directories. You never delegate merging or reviewing.
+HARD RULES（硬性规则）：
+- worker 的输出只能通过脚本输出的单行紧凑 JSON 进入你的上下文。
+- worker 返回 ok:false 时，对同一目录重新调用一次；仍失败就放弃并报告。
+- 绝不让原始 opencode NDJSON 流进入本对话。
+- worker 之间永不共享目录。合并与审查永不委托他人。

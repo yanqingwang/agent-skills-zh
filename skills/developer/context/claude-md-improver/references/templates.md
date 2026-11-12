@@ -1,21 +1,25 @@
-# CLAUDE.md Templates
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/claude-md-management/skills/claude-md-improver/references/templates.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Key Principles
+# CLAUDE.md 模板
 
-- **Concise**: Dense, human-readable content; one line per concept when possible
-- **Actionable**: Commands should be copy-paste ready
-- **Project-specific**: Document patterns unique to this project, not generic advice
-- **Current**: All info should reflect actual codebase state
+## 关键原则
+
+- **简洁**：内容密集、人类可读；每个概念尽量一行
+- **可执行**：命令应可直接复制粘贴使用
+- **项目专属**：记录本项目独有的模式，而非泛泛的建议
+- **时效**：所有信息都应反映代码库的实际状态
 
 ---
 
-## Recommended Sections
+## 推荐章节
 
-Use only the sections relevant to the project. Not all sections are needed.
+只保留与项目相关的章节，并非所有章节都需要。
 
 ### Commands
 
-Document the essential commands for working with the project.
+记录使用该项目的核心命令。
 
 ```markdown
 ## Commands
@@ -31,7 +35,7 @@ Document the essential commands for working with the project.
 
 ### Architecture
 
-Describe the project structure so Claude understands where things live.
+描述项目结构，让 Claude 知道各类内容放在哪里。
 
 ```markdown
 ## Architecture
@@ -46,7 +50,7 @@ Describe the project structure so Claude understands where things live.
 
 ### Key Files
 
-List important files that Claude should know about.
+列出 Claude 应当了解的重要文件。
 
 ```markdown
 ## Key Files
@@ -57,7 +61,7 @@ List important files that Claude should know about.
 
 ### Code Style
 
-Document project-specific coding conventions.
+记录项目专属的编码约定。
 
 ```markdown
 ## Code Style
@@ -69,7 +73,7 @@ Document project-specific coding conventions.
 
 ### Environment
 
-Document required environment variables and setup.
+记录必需的环境变量与环境搭建步骤。
 
 ```markdown
 ## Environment
@@ -84,7 +88,7 @@ Setup:
 
 ### Testing
 
-Document testing approach and commands.
+记录测试方法与命令。
 
 ```markdown
 ## Testing
@@ -95,7 +99,7 @@ Document testing approach and commands.
 
 ### Gotchas
 
-Document non-obvious patterns, quirks, and warnings.
+记录非显而易见的模式、怪癖与警告。
 
 ```markdown
 ## Gotchas
@@ -107,7 +111,7 @@ Document non-obvious patterns, quirks, and warnings.
 
 ### Workflow
 
-Document development workflow patterns.
+记录开发工作流模式。
 
 ```markdown
 ## Workflow
@@ -118,7 +122,7 @@ Document development workflow patterns.
 
 ---
 
-## Template: Project Root (Minimal)
+## 模板：项目根目录（精简版）
 
 ```markdown
 # <Project Name>
@@ -144,7 +148,7 @@ Document development workflow patterns.
 
 ---
 
-## Template: Project Root (Comprehensive)
+## 模板：项目根目录（完整版）
 
 ```markdown
 # <Project Name>
@@ -186,9 +190,9 @@ Document development workflow patterns.
 
 ---
 
-## Template: Package/Module
+## 模板：包/模块
 
-For packages within a monorepo or distinct modules.
+适用于 monorepo 内的包或独立模块。
 
 ```markdown
 # <Package Name>
@@ -216,7 +220,7 @@ For packages within a monorepo or distinct modules.
 
 ---
 
-## Template: Monorepo Root
+## 模板：Monorepo 根目录
 
 ```markdown
 # <Monorepo Name>
@@ -243,11 +247,11 @@ For packages within a monorepo or distinct modules.
 
 ---
 
-## Update Principles
+## 更新原则
 
-When updating any CLAUDE.md:
+更新任何 CLAUDE.md 时：
 
-1. **Be specific**: Use actual file paths, real commands from this project
-2. **Be current**: Verify info against the actual codebase
-3. **Be brief**: One line per concept when possible
-4. **Be useful**: Would this help a new Claude session understand the project?
+1. **具体**：使用真实的文件路径与本项目实际使用的命令
+2. **时效**：对照实际代码库核实信息
+3. **简短**：每个概念尽量一行
+4. **有用**：它能否帮助新的 Claude 会话理解项目？

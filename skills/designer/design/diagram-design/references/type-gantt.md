@@ -1,18 +1,22 @@
-# Gantt Chart
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-gantt.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** project plans and roadmaps — tasks with explicit start and end dates, grouped into phases. Use when the reader needs to see temporal overlap, parallel tracks, and milestone sequencing at a glance.
+# 甘特图
 
-## Layout conventions
+**适用场景：** 项目计划与路线图：带明确开始和结束日期的任务，归入各阶段。当读者需要一眼看到时间重叠、并行轨道和里程碑顺序时使用。
 
-- **Left label column:** x=20–200 (180px). Task names in the `node-name` role at 11px 600. Phase labels as `eyebrow` 7px above each group.
-- **Timeline area:** x=200–960 (760px). Time axis runs left→right.
-- **Row height:** 40px per task. Each bar occupies h=24px centered in the row (8px top padding).
-- **Time axis:** `arrow-label` role 8px week/month labels at x=200+i×pitch, y=56 (just above first task row). A hairline separator at y=64.
-- **Phase grouping:** a subtle zone rect (same pattern as architecture zone) behind each phase's rows, with an eyebrow label in the top-left margin. Use `ink @ 0.02` fill, `ink @ 0.10` stroke.
-- **Focal task bar:** 1 bar in accent fill/stroke (the key deliverable or critical path task). All others: muted fill @ 0.15, muted stroke.
-- **Today / milestone marker:** optional vertical dashed line in `muted` at the current week x-position.
+## 布局约定
 
-### Task bar pattern
+- **左侧标签列：** x=20–200（180px）。任务名用 `node-name` 角色 11px 600。阶段标签用 `eyebrow` 7px，放在每组上方。
+- **时间轴区：** x=200–960（760px）。时间轴自左向右。
+- **行高：** 每个任务 40px。每根条占 h=24px，在行内居中（顶部留 8px）。
+- **时间轴：** `arrow-label` 角色 8px 的周/月标签放在 x=200+i×pitch、y=56（第一行任务正上方）。y=64 一条发丝线分隔。
+- **阶段分组：** 每个阶段的各行背后垫一个浅淡的区域矩形（与架构图区域同一模式），眉标放在左上边距。填充用 `ink @ 0.02`，描边用 `ink @ 0.10`。
+- **焦点任务条：** 1 根条用 accent 填充/描边（关键交付物或关键路径任务）。其余全部：muted 填充 @ 0.15，muted 描边。
+- **今天 / 里程碑标记：** 可选的竖直虚线，`muted`，放在当前周的 x 位置。
+
+### 任务条模式
 
 ```svg
 <!-- Non-focal task -->
@@ -28,18 +32,18 @@
       font-family="{node-name}">Key task</text>
 ```
 
-Duration in pixels: `(end_week - start_week) × pitch`. Pitch = timeline_width / total_weeks.
+像素时长：`(end_week - start_week) × pitch`。Pitch = timeline_width / total_weeks。
 
-## Anti-patterns
+## 反模式
 
-- More than 12 tasks (splits into sub-plans or collapses into phase-level view).
-- More than 5 parallel tracks per phase (illegible overlap).
-- Dependency arrows between tasks in v1 (add only when essential; use the annotation primitive for labels).
-- Start/end dates in the bar label (put them in the x-axis or tooltip comment instead).
-- Equal visual weight for all bars (the focal task must stand out).
+- 超过 12 个任务（拆成子计划，或收拢为阶段级视图）。
+- 每个阶段超过 5 条并行轨道（重叠不可读）。
+- v1 里任务之间画依赖箭头（只在确有必要时加；标签改用标注原语）。
+- 把开始/结束日期写进条标签（放到 x 轴或 tooltip 注释里）。
+- 所有条视觉重量相同（焦点任务必须跳出来）。
 
-## Examples
+## 示例
 
-- `assets/example-gantt.html` — minimal light
-- `assets/example-gantt-dark.html` — minimal dark
-- `assets/example-gantt-full.html` — full editorial
+- `assets/example-gantt.html` — 极简浅色
+- `assets/example-gantt-dark.html` — 极简深色
+- `assets/example-gantt-full.html` — 完整编辑排版

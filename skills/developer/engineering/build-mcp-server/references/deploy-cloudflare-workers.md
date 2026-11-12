@@ -1,12 +1,16 @@
-# Deploy to Cloudflare Workers
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/mcp-server-dev/skills/build-mcp-server/references/deploy-cloudflare-workers.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Fastest path from zero to a live `https://` MCP URL. Free tier, no credit card to start, two commands to deploy.
+# 部署到 Cloudflare Workers
 
-**Trade-off:** This is a Workers-native scaffold, not a deploy target for the Express scaffold in `remote-http-scaffold.md`. Different runtime. If you need portability across hosts, stick with Express. If you just want it live, start here.
+从零到可用的 `https://` MCP URL 的最快路径。免费档即可开始，无需信用卡，两条命令完成部署。
+
+**取舍：** 这是 Workers 原生脚手架，不是 `remote-http-scaffold.md` 中 Express 脚手架的部署目标，两者运行时不同。需要跨主机可移植就继续用 Express；只想尽快上线，就从这里开始。
 
 ---
 
-## Bootstrap
+## 初始化
 
 ```bash
 npm create cloudflare@latest -- my-mcp-server \
@@ -14,13 +18,13 @@ npm create cloudflare@latest -- my-mcp-server \
 cd my-mcp-server
 ```
 
-This pulls a minimal template with the right deps (`agents`, `zod`) and a working `wrangler.jsonc`.
+这会拉取一个最小模板，带齐依赖（`agents`、`zod`）和一份可用的 `wrangler.jsonc`。
 
 ---
 
 ## `src/index.ts`
 
-Replace the template's calculator example with your tools. Use `registerTool()` (same API as the Express scaffold — the `McpServer` instance is identical):
+把模板的计算器示例换成你的 tools。使用 `registerTool()`（与 Express 脚手架相同的 API，`McpServer` 实例完全一样）：
 
 ```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -63,13 +67,13 @@ export default {
 };
 ```
 
-`McpAgent` is Cloudflare's wrapper — it handles the streamable-HTTP transport, session routing, and Durable Object plumbing. Your code only touches `this.server`, which is the same `McpServer` class from the SDK. Everything in `tool-design.md` and `server-capabilities.md` applies unchanged.
+`McpAgent` 是 Cloudflare 的包装层，负责 streamable-HTTP transport、会话路由和 Durable Object 管道。你的代码只接触 `this.server`，它就是 SDK 里同一个 `McpServer` 类。`tool-design.md` 和 `server-capabilities.md` 中的内容原样适用。
 
 ---
 
 ## `wrangler.jsonc`
 
-The template ships this. The Durable Objects block is **boilerplate** — `McpAgent` uses DO for session state. You don't interact with it directly.
+模板自带这份配置。Durable Objects 块是**样板代码**，`McpAgent` 用 DO 存会话状态，你不需要直接操作它。
 
 ```jsonc
 {
@@ -84,23 +88,23 @@ The template ships this. The Durable Objects block is **boilerplate** — `McpAg
 }
 ```
 
-If you rename the `MyMCP` class, update both `new_sqlite_classes` and `class_name` to match.
+如果你重命名 `MyMCP` 类，把 `new_sqlite_classes` 和 `class_name` 一起改成一致。
 
 ---
 
-## Run and deploy
+## 运行与部署
 
 ```bash
 npx wrangler dev     # → http://localhost:8787/mcp
 npx wrangler deploy  # → https://my-mcp-server.<account>.workers.dev/mcp
 ```
 
-`wrangler deploy` prints the live URL. That's the URL users paste into Claude.
+`wrangler deploy` 会打印线上 URL。用户粘贴进 Claude 的就是它。
 
-Secrets (upstream API keys): `npx wrangler secret put UPSTREAM_API_KEY`, then read `env.UPSTREAM_API_KEY` inside `init()`.
+密钥（上游 API key）：`npx wrangler secret put UPSTREAM_API_KEY`，然后在 `init()` 里读 `env.UPSTREAM_API_KEY`。
 
 ---
 
 ## OAuth
 
-Cloudflare ships `@cloudflare/workers-oauth-provider` — a drop-in that handles the authorization server side (CIMD/DCR endpoints, token issuance, consent UI). It wraps your `McpAgent` and gates `/mcp` behind a token check. See `auth.md` for the protocol details; the CF template `cloudflare/ai/demos/remote-mcp-github-oauth` shows the wiring.
+Cloudflare 提供 `@cloudflare/workers-oauth-provider`，一个即插即用组件，处理授权服务器一侧（CIMD/DCR 端点、token 签发、同意界面）。它包装你的 `McpAgent`，把 `/mcp` 置于 token 检查之后。协议细节见 `auth.md`；CF 模板 `cloudflare/ai/demos/remote-mcp-github-oauth` 展示了接线方式。

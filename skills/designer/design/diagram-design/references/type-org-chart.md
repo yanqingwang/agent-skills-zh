@@ -1,44 +1,48 @@
-# Org Chart / Responsibility Map
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-org-chart.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** human teams, agent teams, support escalation maps, role ownership, routing maps, and any hierarchy where the reader needs to know *who owns what* rather than just parent → child structure.
+# 组织架构图 / 职责地图
 
-Use **Org Chart** instead of **Tree** when the nodes are people, agents, teams, roles, or accountable owners. A tree shows generic hierarchy. An org chart shows responsibility, invocation paths, and coverage gaps.
+**适用场景：** 人的团队、Agent 团队、支持升级链、角色所有权、路由图，以及任何读者需要知道*谁负责什么*而不只是父 → 子结构的层级。
 
-## Layout conventions
-- Root owner or front door at top center. Use one coral focal node for the person/team/agent that receives ambiguous work.
-- Tier 1 nodes are departments, pods, queues, or primary routing buckets. Keep them horizontally aligned.
-- Tier 2 nodes are responsible owners or specialists. If there are more than 8 specialists, group them under pod nodes instead of making one giant row.
-- Use orthogonal connectors: vertical drop from parent → horizontal bus → vertical drops to children. No diagonal lines.
-- Each node should answer three questions when space allows:
-  1. **Name** — human-readable role/person/agent in the `node-name` role.
-  2. **How to invoke** — Slack handle, queue, issue prefix, or trigger in the `sublabel` role.
-  3. **Scope** — 2–4 terse ownership words, not a paragraph.
-- Show non-Slack / not-yet-live owners with dashed optional styling rather than hiding them. Missing routes are operationally important.
-- Put escalation / approval rules in a small side callout or footer strip, not as extra org nodes.
+当节点是人、Agent、团队、角色或责任主体时，用 **Org Chart** 而不是 **Tree**。树展示的是一般层级；组织架构图展示的是责任、调用路径和覆盖缺口。
 
-## Node treatments
-- **Front door / command center:** focal treatment (`accent-tint` + `accent`).
-- **Team / pod / department:** backend treatment (white + `ink`).
-- **Individual agent / owner:** store or external treatment depending on whether it is active in the system.
-- **Gap / needs setup:** optional dashed treatment.
-- **Approval gate:** security treatment, separate from reporting hierarchy.
+## 布局约定
+- 根负责人或入口（front door）放在顶部中央。用 coral 焦点节点标出那个接收模糊工作的人/团队/Agent。
+- Tier 1 节点是部门、小组（pod）、队列或一级路由桶。保持水平对齐。
+- Tier 2 节点是责任人或专家。专家超过 8 个时，把它们归到 pod 节点之下，不要排成一整条巨长的行。
+- 使用正交连接线：从父节点竖直落下 → 水平总线 → 竖直落到各子节点。不用斜线。
+- 空间允许时，每个节点应回答三个问题：
+  1. **名称** — 可读的角色/人/Agent，用 `node-name` 角色。
+  2. **如何调用** — Slack 句柄、队列、工单前缀或触发器，用 `sublabel` 角色。
+  3. **职责范围** — 2–4 个简洁的所有权词，不是一段话。
+- 非 Slack / 尚未上线的负责人用虚线可选样式展示，而不是藏起来。缺失的路由在运营上很重要。
+- 升级 / 审批规则放进小的侧注气泡或页脚条，不是额外的组织节点。
 
-## Complexity budget
-- Max visible org nodes: 12. If more, create an overview org chart plus separate detail charts per pod.
-- Max depth: 4 tiers.
-- Max direct reports under one parent: 5. If there are more, introduce grouping nodes.
-- Max coral nodes: 1. The org chart's job is clarity, not highlighting everything.
-- Max side callouts: 2.
+## 节点处理
+- **入口 / 指挥中心：** 焦点处理（`accent-tint` + `accent`）。
+- **团队 / pod / 部门：** backend 处理（白 + `ink`）。
+- **个人 Agent / 负责人：** 按其是否在系统中活跃，用 store 或 external 处理。
+- **缺口 / 待搭建：** optional 虚线处理。
+- **审批关卡：** security 处理，与汇报层级分开。
 
-## Anti-patterns
-- Using a swimlane when the user's real question is "who does what?" Swimlanes explain process; org charts explain ownership.
-- Drawing every person/agent as an identical box. It hides the front door, specialists, gaps, and escalation paths.
-- Cramming full job descriptions into nodes. Keep scope phrases short and move detail to summary cards below.
-- Showing unavailable / not-yet-wired agents as normal active owners. Use dashed optional styling so gaps are visible.
-- Repeating Slack handles in body paragraphs when a node sublabel can carry the invocation path.
-- Floating legends in the org area. Use the standard bottom legend strip.
+## 复杂度预算
+- 可见组织节点上限：12。更多时，做一张总览组织架构图，加每个 pod 一张独立细节图。
+- 深度上限：4 层。
+- 单个父节点下的直接下属上限：5。更多时引入分组节点。
+- coral 节点上限：1。组织架构图的职责是清晰，不是把一切都高亮。
+- 侧注气泡上限：2。
 
-## Examples
-- `assets/example-org-chart.html` — minimal light
-- `assets/example-org-chart-dark.html` — minimal dark
-- `assets/example-org-chart-full.html` — full editorial
+## 反模式
+- 用户的真实问题是"谁做什么"时却用泳道图。泳道解释流程；组织架构图解释所有权。
+- 把每个人/Agent 都画成一模一样的盒子。它把入口、专家、缺口和升级路径全都藏掉了。
+- 把完整的职位描述塞进节点。范围短语保持简短，细节挪到下方的摘要卡。
+- 把不可用 / 尚未接线的 Agent 画成正常活跃的负责人。用虚线可选样式让缺口可见。
+- 在正文段落里重复 Slack 句柄，而一个节点副标签就能承载调用路径。
+- 图区里漂浮图例。用标准的底部图例条。
+
+## 示例
+- `assets/example-org-chart.html` — 极简浅色
+- `assets/example-org-chart-dark.html` — 极简深色
+- `assets/example-org-chart-full.html` — 完整编辑排版

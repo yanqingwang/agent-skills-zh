@@ -1,87 +1,91 @@
-# Task Plan: [Analytics Project Description]
+> **中文汉化版** · 上游：[OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) · 原文件：`.agents/skills/planning-with-files/templates/analytics_task_plan.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this file as the durable roadmap for a data analytics or exploration session. Keep phase status current as the analysis advances.
+# 任务计划：[数据分析项目简述]
+
+把本文件当作数据分析或探索会话的持久路线图。分析推进时保持阶段状态为最新。
 
 ## Goal
 
-State the analytical question or intended deliverable in one clear sentence.
+用一句清楚的话说明要回答的分析问题或要交付的成果。
 
-[One sentence describing the analytical objective]
+[一句话描述分析目标]
 
 ## Next Step
 
-Record the single analytical action that should happen next. Update it whenever the active phase or immediate action changes.
+记录接下来应该发生的单个分析动作。活跃阶段或当前动作一变就更新。
 
-[The single next analytical action. Update whenever phase status changes.]
+[下一个单独分析动作。阶段状态一变就更新。]
 
 ## Current Phase
 
-Name the phase currently being worked on.
+写出当前正在进行的阶段。
 
 Phase 1
 
 ## Phases
 
-Use only `pending`, `in_progress`, or `complete` for each status.
+每个状态只使用 `pending`、`in_progress` 或 `complete`。
 
-### Phase 1: Data Discovery
+### Phase 1: 数据摸底
 
-- [ ] Identify and connect to data sources
-- [ ] Document schemas and field descriptions in findings.md
-- [ ] Assess data quality (nulls, duplicates, outliers, date ranges)
-- [ ] Estimate dataset size and query performance
+- [ ] 识别数据源并建立连接
+- [ ] 把 schema 与字段说明记录到 findings.md
+- [ ] 评估数据质量（空值、重复、离群值、日期范围）
+- [ ] 估算数据集规模与查询性能
 - **Status:** in_progress
 
-### Phase 2: Exploratory Analysis
+### Phase 2: 探索性分析
 
-- [ ] Compute summary statistics for key variables
-- [ ] Visualize distributions and relationships
-- [ ] Identify outliers and anomalies
-- [ ] Document initial patterns in findings.md
+- [ ] 计算关键变量的汇总统计量
+- [ ] 可视化分布与关系
+- [ ] 识别离群值与异常
+- [ ] 把初步模式记录到 findings.md
 - **Status:** pending
 
-### Phase 3: Hypothesis Testing
+### Phase 3: 假设检验
 
-- [ ] Formalize hypotheses from exploratory phase
-- [ ] Select appropriate statistical tests
-- [ ] Run tests and record results in findings.md
-- [ ] Validate findings against holdout data or alternative methods
+- [ ] 把探索阶段的发现形式化为假设
+- [ ] 选择合适的统计检验
+- [ ] 运行检验并把结果记录到 findings.md
+- [ ] 用留出数据或其他方法交叉验证发现
 - **Status:** pending
 
-### Phase 4: Synthesis & Reporting
+### Phase 4: 综合与报告
 
-- [ ] Summarize key findings with supporting evidence
-- [ ] Create final visualizations
-- [ ] Document conclusions and recommendations
-- [ ] Note limitations and areas for further investigation
+- [ ] 带证据总结关键发现
+- [ ] 制作最终可视化
+- [ ] 记录结论与建议
+- [ ] 标注局限性与有待进一步研究的方向
 - **Status:** pending
 
-## Hypotheses
+## 假设
 
-Record the questions under investigation as testable hypotheses.
+把正在研究的问题记录为可检验的假设。
 
-1. [Hypothesis to test]
-2. [Hypothesis to test]
+1. [待检验的假设]
+2. [待检验的假设]
 
 ## Decisions Made
 
-Record analytical choices, including tests, filters, exclusions, and their rationale.
+记录分析选择，包括检验方法、过滤条件、排除项及其理由。
 
-| Decision | Rationale |
-|----------|-----------|
-|          |           |
+| 决策 | 理由 |
+|------|------|
+|      |      |
 
-## Errors Encountered
+## 遇到的错误
 
-Record each distinct error, the attempt number, and the resolution. Change the approach before retrying a failed action.
+记录每个不同的错误、尝试次数与解决方式。重试失败的动作之前先换方法。
 
-| Error | Attempt | Resolution |
-|-------|---------|------------|
-|       | 1       |            |
+| 错误 | 尝试次数 | 解决方式 |
+|------|----------|----------|
+|      | 1        |          |
 
-## Notes
+## 备注
 
-- Update phase status as work progresses: `pending` to `in_progress` to `complete`.
-- Re-read the goal, next step, and current phase before major analytical decisions.
-- Log errors promptly so failed approaches are not repeated.
-- Record query results and visual evidence in findings.md.
+- 工作推进时更新阶段状态：`pending` 到 `in_progress` 再到 `complete`。
+- 重大分析决策前重读 Goal、Next Step 与 Current Phase。
+- 及时记录错误，避免重复走失败的路。
+- 把查询结果与可视化证据记录到 findings.md。

@@ -1,55 +1,59 @@
-# User Journey Map
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-journey.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** what a person does across the stages of an experience and how it *feels* at each one. The sentiment curve is the load-bearing element — without it this is just a process diagram with extra rows, so if you can't name a sentiment for every stage, use **Process** or **Timeline** instead.
+# 用户旅程图
 
-**Not this type:** frontstage vs backstage on a shared stage grid, with a line of visibility → **Service blueprint** (`type-service-blueprint.md`). A blueprint is a census of what the customer can see versus what the service hides; it has no sentiment curve.
+**适用场景：** 一个人在一段体验的各阶段里做什么，以及每个阶段*感受如何*。情绪曲线是承重元素：没有它，这就只是一张多加了几行的流程图；所以如果无法为每个阶段命名一种情绪，改用 **Process** 或 **Timeline**。
 
-## Layout conventions
+**不是这个类型：** 在共享的舞台网格上区分前台与后台、带一条可见性线 → **服务蓝图**（`type-service-blueprint.md`）。蓝图是对"客户看得到什么 vs 服务藏了什么"的一次清点；它没有情绪曲线。
 
-Vertical stack, top to bottom, for one persona:
+## 布局约定
 
-- **Stage headers** — 5 equal columns, 200px wide, 24px gutters (max 6 stages). Each column: an `eyebrow`-role 8px uppercase tracked eyebrow (`STAGE 1` … `STAGE 5`) over the stage name in the `node-name` role, 12px, weight 600, both centered on the column.
-- **Sentiment band (the differentiator)** — a 160px-tall plot area directly under the headers. 3 horizontal reference hairlines at `rule` 0.10 opacity mark the levels `HIGH` / `NEUTRAL` / `LOW` — `eyebrow` role 8px `muted`, anchored `end` in a 64px left margin. **Never emoji, never `writing-mode` vertical text for these labels.** A smooth `muted` 1.5px polyline runs through one `r=5` dot per stage, each value snapped to one of five ordinal levels (`HIGH`, `MED-HIGH`, `NEUTRAL`, `MED-LOW`, `LOW`) — only the three that are actually used need a labeled hairline. The trough stage's dot and its incoming segment are `accent`; everything else on the curve is `muted`.
-- **Content rows** — up to 3 labelled bands below the sentiment band, each with an `eyebrow`-role 8px uppercase row label sitting in the left margin (same column as the sentiment level labels, never rotated):
-  - `ACTIONS` — what the user does, `node-name` family 12px, one short line per stage.
-  - `TOUCHPOINTS` — the surface the action happens on (email, app, docs…), `sublabel` role 9px `muted`.
-  - An optional third row for a metric or owner, same treatment as touchpoints.
-  Rows are separated by hairlines that span the full plot width (from the left margin edge to the last stage's right edge).
-- **Pain markers** — on stages where sentiment drops, a small dashed-stroke tag box (`rx=2`, `accent @ 0.50` stroke dashed `3,3`, no fill or a faint accent tint) sits under that stage's actions cell, with an `arrow-label`-role 8px label naming the friction. Max 2 per diagram, and only on the trough — tagging every stage erases the signal.
-- **Legend** — horizontal strip at the bottom per the global rule (hairline separator above, 160–180px between entries): three keys, in order — the sentiment line, the trough-stage highlight, and the pain-marker tag. The trough key is not optional: the dip is the finding, so the reader needs the highlight named.
+纵向堆叠，自上而下，针对一个画像（persona）：
 
-## Connector note
+- **阶段头** — 5 个等宽列，200px 宽，24px 侧沟（最多 6 个阶段）。每列：`eyebrow` 角色 8px 全大写带字距的眉标（`STAGE 1` … `STAGE 5`），压在 `node-name` 角色 12px、字重 600 的阶段名上方，两者都相对该列居中。
+- **情绪带（差异所在）** — 头部正下方一块 160px 高的绘图区。三条 `rule` 0.10 透明度的水平参考发丝线标出 `HIGH` / `NEUTRAL` / `LOW` 三档：`eyebrow` 角色 8px `muted`，锚定 `end`，落在 64px 左边距内。**绝不用 emoji，绝不用 `writing-mode` 竖排文字标这些档位。** 一条平滑的 `muted` 1.5px 折线穿过每阶段一个 `r=5` 的点，每个值吸附到五个有序档位之一（`HIGH`、`MED-HIGH`、`NEUTRAL`、`MED-LOW`、`LOW`）：只有实际用到的三档需要带标签的发丝线。谷底阶段的点及其入线段用 `accent`；曲线上其余一切都是 `muted`。
+- **内容行** — 情绪带之下至多 3 条带标签的行，每行有一个 `eyebrow` 角色 8px 全大写的行标签坐在左边距里（与情绪档位标签同列，绝不旋转）：
+  - `ACTIONS`：用户做什么，`node-name` 字族 12px，每阶段一行短句。
+  - `TOUCHPOINTS`：动作发生的界面（邮件、App、文档…），`sublabel` 角色 9px `muted`。
+  - 可选的第三行放指标或负责人，处理方式与 touchpoints 相同。
+  行与行之间用横贯整个绘图区宽度的发丝线分隔（从左边距边缘到最后一列的右缘）。
+- **痛点标记** — 在情绪下落的阶段，该阶段 actions 单元格下方放一个小号虚线描边的标签盒（`rx=2`，`accent @ 0.50` 描边虚线 `3,3`，无填充或淡淡的 accent 色调），配一个 `arrow-label` 角色 8px 的标签，点出摩擦点。每张图最多 2 个，且只放在谷底：每个阶段都标记会让信号消失。
+- **图例** — 按全局规则放在底部横条（上方一条发丝线分隔，条目间距 160–180px）：三个图例，按序：情绪线、谷底阶段高亮、痛点标记盒。谷底图例不可省略：下探就是发现本身，读者需要看到这个高亮被命名。
 
-The sentiment polyline is a **data curve**, not a connector between nodes — §6 rule 1 (mandatory orthogonal elbows) does not apply to it. This exemption covers the sentiment curve **only**; any other connector in a journey map (there normally are none) still follows the standard connector rules.
+## 连接线说明
 
-## Geometry
+情绪折线是一条**数据曲线**，不是节点之间的连接线：§6 规则 1（强制正交拐弯）不适用于它。这条豁免**只覆盖情绪曲线**；旅程图中任何其他连接线（正常情况下也没有）仍遵循标准连接线规则。
 
-- Stage grid: left margin 64px, then 5 columns of 200px with 24px gutters (`col_left = 64 + i·224`).
-- Sentiment band: 160px tall. Hairlines at the top (`HIGH`), middle (`NEUTRAL`), and bottom (`LOW`) of the band, 80px apart.
-- Dot x = the horizontal center of its stage column. Dot y = the snapped level's hairline y (or the interpolated position for an unlabeled level).
-- Row height: enough for one line of text plus, in the `ACTIONS` row only, up to two stacked 16px-tall pain-marker boxes.
+## 几何
 
-## Focal rule
+- 阶段网格：左边距 64px，然后 5 列各 200px、24px 侧沟（`col_left = 64 + i·224`）。
+- 情绪带：160px 高。发丝线在带的顶部（`HIGH`）、中部（`NEUTRAL`）、底部（`LOW`），彼此相距 80px。
+- 点的 x = 其阶段列的水平中心。点的 y = 吸附档位的发丝线 y（未带标签的档位则取插值位置）。
+- 行高：够放一行文字；仅 `ACTIONS` 行额外允许最多两个叠放的 16px 高痛点标记盒。
 
-Exactly 2 accent elements: the trough dot + its incoming curve segment (counts as one), and its pain marker(s) (counts as the other). Nothing else on the map is `accent`.
+## 焦点规则
 
-## Complexity budget
+恰好 2 个 accent 元素：谷底的点 + 它的入线段（算一个），以及它的痛点标记（算另一个）。图上其他任何东西都不是 `accent`。
 
-Max 6 stages · max 3 content rows · 5 sentiment levels (ordinal, named — never numeric) · max 2 pain markers · max 2 accent elements.
+## 复杂度预算
 
-## Anti-patterns
+最多 6 个阶段 · 最多 3 条内容行 · 5 个情绪档位（有序且命名，绝不用数字）· 最多 2 个痛点标记 · 最多 2 个 accent 元素。
 
-- **No sentiment curve.** If every stage feels the same, or you can't name a feeling, you're drawing a process — use **Process** or **Timeline**.
-- **More than 6 stages.** Split into two journeys (e.g. acquisition and retention) rather than cramming a wide funnel into one map.
-- **Numeric sentiment axis** (a 0–100 score). Sentiment here is ordinal — five named levels, not a chart of a continuous metric.
-- **Emoji as sentiment markers.** Use the named levels and hairlines; emoji don't localize, print, or hold up at small sizes.
-- **Multiple personas on one map.** Overlaying two sentiment curves erases both. One map per persona.
-- **Pain markers on every stage.** If nothing is un-marked, nothing is focal.
-- **`writing-mode` vertical row labels.** Horizontal only, in the left margin — same rule as every other type in this skill.
-- **Using it for an internal system flow with no human in it.** No person, no sentiment, no journey map — that's an architecture or data-flow diagram.
+## 反模式
 
-## Examples
+- **没有情绪曲线。** 如果每个阶段感受都一样，或你命名不出一种感受，你画的是流程：用 **Process** 或 **Timeline**。
+- **超过 6 个阶段。** 拆成两段旅程（如获取与留存），而不是把一条宽漏斗塞进一张图。
+- **数字化的情绪轴**（0–100 分）。这里的情绪是有序的：五个命名档位，不是连续指标的图表。
+- **emoji 当情绪标记。** 用命名的档位和发丝线：emoji 不能本地化、不能打印、小尺寸下也撑不住。
+- **一张图上叠多个画像。** 两条情绪曲线互相抹掉。一个画像一张图。
+- **每个阶段都放痛点标记。** 什么都没放过标记，就没有东西是焦点。
+- **`writing-mode` 竖排行标签。** 只用横排，放在左边距：与本 Skill 其他类型同一条规则。
+- **用于没有任何人参与的内部系统流程。** 没有人就没有情绪，也就没有旅程图：那是架构图或数据流图。
 
-- `assets/example-journey.html` — minimal light. *Trial to paid: the first week*, 5 stages, trough at "Hit the limit".
-- `assets/example-journey-dark.html` — minimal dark, same data.
-- `assets/example-journey-full.html` — full editorial: container framing + 3 varied-width summary cards + footer.
+## 示例
+
+- `assets/example-journey.html` — 极简浅色。*从试用到付费：第一周*，5 个阶段，谷底在"撞到限额"。
+- `assets/example-journey-dark.html` — 极简深色，同一数据。
+- `assets/example-journey-full.html` — 完整编辑排版：容器框 + 3 张宽度不均的摘要卡 + 页脚。

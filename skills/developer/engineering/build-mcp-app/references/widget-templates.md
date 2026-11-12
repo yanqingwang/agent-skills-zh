@@ -1,14 +1,18 @@
-# Widget Templates
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/mcp-server-dev/skills/build-mcp-app/references/widget-templates.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Minimal HTML scaffolds for the common widget shapes. Copy, fill in, ship.
+# Widget 模板
 
-All templates inline the `App` class from `@modelcontextprotocol/ext-apps` at build time — the iframe's CSP blocks CDN script imports. They're intentionally framework-free; widgets are small enough that React/Vue hydration cost usually isn't worth it.
+常见 widget 形态的最小 HTML 脚手架。复制、填内容、发布上线。
+
+所有模板在构建时内联 `@modelcontextprotocol/ext-apps` 的 `App` 类，因为 iframe 的 CSP 会拦截 CDN 脚本导入。刻意不依赖框架：widget 足够小，React/Vue 的 hydration 开销通常不值得。
 
 ---
 
-## Serving widget HTML
+## 提供 widget HTML
 
-Widgets are static HTML with one placeholder: `/*__EXT_APPS_BUNDLE__*/` gets replaced at server startup with the `ext-apps/app-with-deps` bundle (rewritten to expose `globalThis.ExtApps`).
+widget 是静态 HTML，只有一个占位符：`/*__EXT_APPS_BUNDLE__*/` 会在服务器启动时被替换为 `ext-apps/app-with-deps` bundle（改写后暴露 `globalThis.ExtApps`）。
 
 ```typescript
 import { readFileSync } from "node:fs";
@@ -37,11 +41,11 @@ registerAppResource(server, "Picker", "ui://widgets/picker.html", {},
 );
 ```
 
-Bundle once per server startup (or at build time); reuse the `bundle` string across all widget templates.
+每次服务器启动打一次 bundle（或在构建时完成）；`bundle` 字符串在所有 widget 模板间复用。
 
 ---
 
-## Picker (single-select list)
+## Picker（单选列表）
 
 ```html
 <!doctype html>
@@ -82,11 +86,11 @@ const { App } = globalThis.ExtApps;
 </script>
 ```
 
-**Tool returns:** `{ content: [{ type: "text", text: JSON.stringify({ items: [{ id, label, sub? }] }) }] }`
+**工具返回：** `{ content: [{ type: "text", text: JSON.stringify({ items: [{ id, label, sub? }] }) }] }`
 
 ---
 
-## Confirm dialog
+## 确认对话框
 
 ```html
 <!doctype html>
@@ -126,13 +130,13 @@ const { App } = globalThis.ExtApps;
 </script>
 ```
 
-**Tool returns:** `{ content: [{ type: "text", text: JSON.stringify({ message, confirmLabel? }) }] }`
+**工具返回：** `{ content: [{ type: "text", text: JSON.stringify({ message, confirmLabel? }) }] }`
 
-**Note:** For simple confirmation, prefer **elicitation** over a widget — see `../build-mcp-server/references/elicitation.md`. Use this widget when you need custom styling or context beyond what a native form offers.
+**注意：** 简单确认场景优先用 **elicitation** 而非 widget，参见 `../build-mcp-server/references/elicitation.md`。需要原生表单之外的自定义样式或上下文时，再使用本 widget。
 
 ---
 
-## Progress (long-running)
+## 进度（长任务）
 
 ```html
 <!doctype html>
@@ -171,13 +175,13 @@ const { App } = globalThis.ExtApps;
 </script>
 ```
 
-Server side, emit progress via `extra.sendNotification({ method: "notifications/progress", ... })` — see `apps-sdk-messages.md`.
+服务器端通过 `extra.sendNotification({ method: "notifications/progress", ... })` 发送进度，参见 `apps-sdk-messages.md`。
 
 ---
 
-## Display-only (chart / preview)
+## 纯展示（图表 / 预览）
 
-Display widgets don't call `sendMessage` — they render and sit there. The tool should return a text summary **alongside** the widget so Claude can keep reasoning while the user sees the visual:
+展示型 widget 不调用 `sendMessage`：只渲染，然后停在那里。工具应**随 widget 一起**返回文字摘要，让用户看可视化的同时 Claude 能继续推理：
 
 ```typescript
 registerAppTool(server, "show_chart", {
@@ -224,15 +228,15 @@ const { App } = globalThis.ExtApps;
 
 ---
 
-## Carousel (multi-item display with actions)
+## 轮播（多条目展示带操作）
 
-For presenting multiple items (product picks, search results) in a horizontal scroll rail. Patterns that tested well:
+用于在横向滚动栏里呈现多个条目（商品推荐、搜索结果）。实测有效的模式：
 
-- **Skip nav chevrons** — users know how to scroll. `scroll-snap-type` can cause a few-px-off-flush initial render; omit it and `scrollLeft = 0` after rendering.
-- **Layout-fork by item count** — `items.length === 1` → detail/PDP layout, `> 1` → carousel. Handle in widget JS, keep the tool schema flat.
-- **Put Claude's reasoning in each item** — a `note` field rendered as a small callout on the card gives users the "why" inline.
-- **Silent state via `updateModelContext`** — cart/selection changes should inform Claude without spamming the chat. Reserve `sendMessage` for terminal actions ("checkout", "done").
-- **Outbound links via `app.openLink`** — `window.open` and `<a target="_blank">` are blocked by the sandbox.
+- **省略导航箭头（chevron）**：用户本来就懂怎么滚动。`scroll-snap-type` 可能造成初始渲染偏移几像素、未贴齐；省略它，并在渲染后设 `scrollLeft = 0`。
+- **按条目数分叉布局**：`items.length === 1` 用详情/PDP 布局，`> 1` 用轮播。在 widget JS 里处理，工具 schema 保持扁平。
+- **把 Claude 的推理放进每个条目**：`note` 字段在卡片上渲染成小标注，让用户就地看到"为什么"。
+- **用 `updateModelContext` 静默同步状态**：购物车/选择变化应告知 Claude 但不刷屏。`sendMessage` 留给终态动作（"结账"、"完成"）。
+- **外链走 `app.openLink`**：`window.open` 和 `<a target="_blank">` 会被沙箱拦截。
 
 ```html
 <style>
@@ -246,4 +250,4 @@ For presenting multiple items (product picks, search results) in a horizontal sc
 <div class="rail" id="rail"></div>
 ```
 
-**Images:** the iframe CSP blocks remote `img-src`. Fetch thumbnails server-side in the tool handler, embed as `data:` URLs in the JSON payload, and render from those. Add `referrerpolicy="no-referrer"` as a fallback.
+**图片：** iframe 的 CSP 会拦截远程 `img-src`。在工具处理器里服务端抓取缩略图，以 `data:` URL 嵌入 JSON 载荷，再据此渲染。加 `referrerpolicy="no-referrer"` 作为兜底。

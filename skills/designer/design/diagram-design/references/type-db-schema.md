@@ -1,48 +1,52 @@
-# Database Schema
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-db-schema.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** the *physical* schema — real tables, real SQL types, real constraints, real indexes, and foreign keys that connect one column to another column. It's the DDL made legible: migrations, review of a real database, and anything where the column type or the `ON DELETE` behavior is the point.
+# 数据库模式图
 
-**Not for domain modeling.** [ER / data model](type-er.md) is entity-level: relationship lines join *boxes* and carry cardinality, fields are a plain list, and it's the right tool for a conceptual or domain conversation. Database schema is column-level: the FK connector anchors to the specific column row on both ends — the one capability ER doesn't have, and the reason this type exists. If you're discussing what an Order *is*, use ER. If you're discussing what happens when a row is deleted, use this.
+**适用场景：** *物理*模式：真实的表、真实的 SQL 类型、真实的约束、真实的索引，以及把一列连接到另一列的外键。它把 DDL 变得可读：迁移、真实数据库的评审，以及任何列类型或 `ON DELETE` 行为本身是论点的场合。
 
-## Layout conventions
+**不用于领域建模。** [ER / 数据模型](type-er.md)是实体层面的：关系线连接*盒子*并承载基数，字段只是一个平铺列表，它才是概念性或领域性对话的合适工具。数据库模式图是列层面的：外键连接线两端都锚定到具体的列行，这是 ER 做不到的能力，也是这个类型存在的理由。讨论一个 Order *是什么*，用 ER。讨论一行被删除时会发生什么，用这个。
 
-### Table box
+## 布局约定
 
-- **Header band** — `schema.table` (e.g. `public.orders`) in the `node-name` role, 12px, weight 600, with a rectangular type tag (`rx=2`, NOT a pill) reading `TABLE`. A hairline separates it from the body.
-- **Column rows** — fixed 24px row height so connectors can anchor predictably. Each row: column name in the `node-name` family at 12px anchored left, SQL type in the `sublabel` role 9px `muted` anchored right (`uuid`, `text`, `numeric(12,2)`, `timestamptz`), and constraint chips between them as small `rx=2` tags in the `eyebrow` role at 8px: `PK`, `FK`, `UQ`, `NN`. Alternate row background `ink @ 0.02` on even rows for scannability.
-- **Overflow row** — when a table has more columns than the budget allows, the last row is a `sublabel`-role 9px `muted` line: `+ N more columns`. Never silently truncate a table without saying so.
-- **Index compartment** — an optional final compartment separated by a hairline, labelled with an `eyebrow`-role 8px uppercase `INDEXES` eyebrow, listing index names in the `sublabel` role at 9px (`idx_orders_customer_id`, `uq_products_sku`). List only the indexes that matter to the story, not every index on the table.
+### 表盒
 
-### Foreign-key connectors — the defining rule
+- **头部带**：`schema.table`（如 `public.orders`）用 `node-name` 角色，12px，字重 600，配一个矩形类型标签（`rx=2`，不是胶囊），写 `TABLE`。与表体之间一条发丝线分隔。
+- **列行**：固定 24px 行高，让连接线可以可预期地锚定。每行：列名用 `node-name` 字族 12px 左对齐，SQL 类型用 `sublabel` 角色 9px `muted` 右对齐（`uuid`、`text`、`numeric(12,2)`、`timestamptz`），两者之间是小的 `rx=2` 标签形式、`eyebrow` 角色 8px 的约束芯片：`PK`、`FK`、`UQ`、`NN`。偶数行背景 `ink @ 0.02` 交替，便于扫读。
+- **溢出行**：当表的列数超过预算，最后一行是 `sublabel` 角色 9px `muted` 的一行：`+ N more columns`。绝不悄悄截断一张表而不说明。
+- **索引分栏**：可选的最后分栏，用一条发丝线分隔，顶部是 `eyebrow` 角色 8px 全大写的 `INDEXES` 眉标，索引用 `sublabel` 角色 9px 列出（`idx_orders_customer_id`、`uq_products_sku`）。只列出对故事有意义的索引，不是表上的每一个索引。
 
-Each FK edge starts at the **vertical centre of its source column row** and ends at the **vertical centre of the referenced column row**, routed with orthogonal rounded elbows (see SKILL.md §6 and [type-architecture.md](type-architecture.md) for the elbow formula and bridge/hop primitive). Label each edge in the `arrow-label` role at 8px with its referential action — `ON DELETE CASCADE`, `ON DELETE RESTRICT`, `ON DELETE SET NULL` — masked with the standard 6–10px gap. Fixed 24px row height guarantees ≥12px separation only when two FKs attach to *different* rows on the same table edge — the row spacing itself is the fan. When two or more FKs attach to the *same* row on the same edge (e.g. two child tables both referencing the same parent's primary key), anchoring all of them at the exact row centre would collide at a single point, which SKILL.md §6 rule 4 forbids. Offset each attach point symmetrically around the row's vertical centre instead — ±8px for two edges, keeping every point inside the row's 24px band and ≥12px from its neighbor — so each connector still reads as attaching to that row while remaining independently traceable.
+### 外键连接线：定义性规则
 
-### Schema grouping
+每条外键边从**源列行的垂直中心**出发，到**被引用列行的垂直中心**结束，走正交圆角拐弯（拐弯公式与跨线/跳线原语见 SKILL.md §6 和 [type-architecture.md](type-architecture.md)）。每条边用 `arrow-label` 角色 8px 标注其引用动作：`ON DELETE CASCADE`、`ON DELETE RESTRICT`、`ON DELETE SET NULL`，按标准 6–10px 间隙加遮罩。固定 24px 行高只在两条外键接到*同一张表边*的*不同行*时保证 ≥12px 间距：行距本身就是扇形展开。当两条或更多外键接到同一表边的*同一行*（例如两张子表都引用同一个父表主键），把所有附着点都钉在精确的行中心会在一个点上相撞，这是 SKILL.md §6 规则 4 所禁止的。应把每个附着点围绕该行的垂直中心对称偏移：两条边各 ±8px，保持每个点都在该行的 24px 带内、且与相邻点相距 ≥12px，这样每条连接线读起来仍然接在那个行上，同时各自可独立追溯。
 
-Tables in a non-default schema sit inside a containment rect (`rx=8`, `ink @ 0.02` fill, `ink @ 0.20` stroke dashed `4,4`) with an `eyebrow`-role 8px uppercase tracked schema label in its top-left corner. Draw the group rect first so tables paint over it.
+### 模式分组
 
-### Focal rule
+非默认 schema 中的表放在一个容纳矩形内（`rx=8`，`ink @ 0.02` 填充，`ink @ 0.20` 描边虚线 `4,4`），其左上角是 `eyebrow` 角色 8px 全大写带字距的 schema 标签。先画分组矩形，让表叠画在它之上。
 
-The 2 accent elements are: (1) the one destructive FK (`ON DELETE CASCADE`) — the edge and its label count together, since a labelled edge is one thing; and (2) the table that FK cascades into, carrying `accent-tint` on its **header band only**, never on the whole box. Nothing else on the diagram is `accent`.
+### 焦点规则
 
-If a schema has no destructive FK, it has no focal element. Leave it unaccented rather than promoting an arbitrary table.
+2 个 accent 元素是：(1) 唯一的破坏性外键（`ON DELETE CASCADE`），边与其标签算作一起，因为带标签的边就是一件事；(2) 该外键级联进入的表，只在**头部带**上带 `accent-tint`，绝不铺满整个盒。图上其他任何东西都不是 `accent`。
 
-## Complexity budget
+如果一个 schema 没有破坏性外键，它就没有焦点元素。宁可保持无强调，也不要提拔一张任意的表。
 
-Max 5 tables, max 8 column rows shown per table, max 6 FK edges, max 2 accent elements. Over budget → show the subsystem, not the database, and say so in a caption.
+## 复杂度预算
 
-## Anti-patterns
+最多 5 张表，每张表最多展示 8 行列，最多 6 条外键边，最多 2 个 accent 元素。超预算 → 展示那个子系统，而不是整个数据库，并在图注里说明。
 
-- Drawing every column of every table — a schema diagram is an argument about a subsystem, not a `\d+` dump.
-- FK lines that connect box to box instead of column to column — that's ER, use ER instead.
-- Missing SQL types — the type is half the content.
-- Unlabelled FK edges — the `ON DELETE` behavior is what a reviewer is looking for.
-- Constraint chips on every row until the chips are the noise.
-- Index compartments listing every index rather than the ones that matter to the story.
-- Mixing conceptual entity names with physical table names in one diagram.
+## 反模式
 
-## Examples
+- 把每张表的每一列都画出来：模式图是对一个子系统的论证，不是 `\d+` 转储。
+- 外键线盒连盒而不是列连列：那是 ER，改用 ER。
+- 缺 SQL 类型：类型是内容的一半。
+- 外键边无标签：`ON DELETE` 行为正是评审者要找的东西。
+- 每行都挂约束芯片，直到芯片本身成了噪音。
+- 索引分栏列出全部索引，而不是对故事有意义的那些。
+- 一张图里混用概念实体名与物理表名。
 
-- `assets/example-db-schema.html` — minimal light
-- `assets/example-db-schema-dark.html` — minimal dark
-- `assets/example-db-schema-full.html` — full editorial
+## 示例
+
+- `assets/example-db-schema.html` — 极简浅色
+- `assets/example-db-schema-dark.html` — 极简深色
+- `assets/example-db-schema-full.html` — 完整编辑排版

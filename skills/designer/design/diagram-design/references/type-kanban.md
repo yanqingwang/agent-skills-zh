@@ -1,49 +1,53 @@
-# Kanban Board
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-kanban.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** a snapshot of work-in-progress by state — what is queued, what is moving, what is stuck, and where the WIP limit is being breached. This is a *state census*, not a flow: a kanban board has **no connectors at all**. That is exactly what separates it from swimlane (lanes plus a flow crossing them, with handoffs as the load-bearing edges) and from process (ordered steps with directional handoffs). If the diagram needs an arrow anywhere, it isn't a kanban board anymore — reach for swimlane or process instead.
+# 看板
 
-## Layout conventions
+**适用场景：** 按状态给在制工作做快照：什么在排队，什么在推进，什么卡住了，哪里突破了 WIP 上限。这是一次*状态清点*，不是一条流：看板**完全没有连接线**。这正是它区别于泳道图（有泳道加一条穿过它们的流，交接是承重边）和流程图（有序步骤加方向性交接）的地方。如果图上任何地方需要箭头，它就不再是看板：改用泳道或流程。
 
-- **Up to 5 vertical columns of equal width (240px), 32px gutters.** Column background is `ink @ 0.02`; no column border.
-- **Header band per column:** column name in the `node-name` role, 12px, weight 600, anchored left. A right-anchored **WIP chip** — a rectangular tag (`rx=2`, **never** a pill) holding `n/limit` in the `eyebrow` role at 8px — or bare `n` on a queue or terminal column, which carries no limit. Every in-process column states one. A hairline `rule` separator sits directly under the header band, full column width.
-- **Cards:** the §6 node-box pattern ([primitives-core.md](primitives-core.md#node-box--full-pattern)) at `rx=6`, column width minus 16px padding on each side, 56px tall, 12px vertical gap between cards. Content: title in the `node-name` role, 12px, weight 600, and a `sublabel`-role 9px `muted` sublabel line for `TICKET-ID · owner` (e.g. `AVA-214 · nadia`).
-- **Drawing order:** background → column fills → header text + WIP chips → header rules → cards (each: box, then left accent bar if blocked, then title, then sublabel) → legend.
+## 布局约定
 
-## Card states — the type's semantic vocabulary
+- **至多 5 列等宽竖列（240px），32px 侧沟。** 列背景 `ink @ 0.02`；列无边框。
+- **每列的头部带：** 列名用 `node-name` 角色，12px，字重 600，左对齐。右侧对齐一个 **WIP 芯片**：矩形标签（`rx=2`，**绝不**做成胶囊），内放 `eyebrow` 角色 8px 的 `n/limit`；或在无上限的队列列/终结列上只放裸 `n`。每个在制列都必须写。头部带正下方一条横贯整列宽度的 `rule` 发丝线分隔。
+- **卡片：** §6 的节点盒模式（[primitives-core.md](primitives-core.md#node-box--full-pattern)），`rx=6`，宽度为列宽减去两侧各 16px 内边距，高 56px，卡片间纵向间距 12px。内容：标题用 `node-name` 角色，12px，字重 600；下面一行 `sublabel` 角色 9px `muted` 的副标签写 `TICKET-ID · owner`（如 `AVA-214 · nadia`）。
+- **绘制顺序：** 背景 → 列填充 → 头部文字 + WIP 芯片 → 头部细线 → 卡片（每张：盒、然后左 accent 条（若阻塞）、然后标题、然后副标签）→ 图例。
 
-Every card renders in exactly one of four states. Document and use all four when the board has enough cards to show them:
+## 卡片状态：这个类型的语义词汇
 
-| State | Fill | Stroke | Extra |
+每张卡片只以四种状态之一渲染。当看板上的卡片足以展示它们时，四种都要用上并写进文档：
+
+| 状态 | 填充 | 描边 | 附加 |
 |---|---|---|---|
 | `default` | white | `ink` | — |
-| `blocked` | `accent @ 0.05` | `accent` (full opacity) dashed `4,4` | 4px `accent` bar on the card's left edge |
-| `waiting / external` | `ink @ 0.02` | `ink @ 0.20` dashed `4,3` | — |
+| `blocked` | `accent @ 0.05` | `accent`（全透明度）虚线 `4,4` | 卡片左缘 4px `accent` 条 |
+| `waiting / external` | `ink @ 0.02` | `ink @ 0.20` 虚线 `4,3` | — |
 | `done` | `ink @ 0.05` | `muted` | — |
 
-These map directly onto the node-treatment table in [style-guide.md](style-guide.md#node-type--treatment) (`security` → blocked, `optional` → waiting/external, `store` → done) — the board reuses the system's existing semantic fills rather than inventing new ones.
+这些状态直接映射 [style-guide.md](style-guide.md#node-type--treatment) 的节点处理表（`security` → blocked，`optional` → waiting/external，`store` → done）：看板复用系统已有的语义填充，不发明新填充。
 
-## Over-limit column
+## 超限列
 
-When a column's card count `n` exceeds its stated `limit`, the WIP chip's stroke and text go `accent`. That plus one blocked card is the full 2-accent budget for the diagram — don't spend the budget anywhere else.
+当一列的卡片数 `n` 超过它声明的 `limit`，WIP 芯片的描边和文字改为 `accent`。它加上一张阻塞卡片，就是这张图全部 2 个 accent 预算：预算不要花在别处。
 
-## Complexity budget
+## 复杂度预算
 
-- Max 5 columns, max 4 cards per column, max 12 cards total.
-- Max 2 accent elements (the over-limit chip counts as one; a blocked card counts as one).
-- Over budget on a single column → aggregate the backlog into one count card (`+14 more`) rather than listing every item.
+- 最多 5 列，每列最多 4 张卡，总共最多 12 张。
+- 最多 2 个 accent 元素（超限芯片算一个；阻塞卡算一个）。
+- 单列超预算 → 把积压聚合成一张计数卡（`+14 more`），而不是逐项列出。
 
-## Anti-patterns
+## 反模式
 
-- **Drawing arrows between cards.** A board shows state, not flow — if the flow itself needs to be visible, use swimlane or process instead.
-- **More than 4 cards in a column.** Aggregate into a count card; don't let a column scroll off the canvas.
-- **One card per person.** That's an org chart wearing a kanban skin.
-- **In-process columns without WIP limits.** The limit is half the point of the type — a column work flows *through* with no stated limit can't show that it's over budget. The entry queue and the terminal column are the exception: nothing is constrained by holding more done work, so they show a bare count.
-- **Accenting every blocked card.** One or two blocked cards read as signal; a column full of accent reads as noise and erases the focal rule.
-- **A "Done" column that grows without bound.** Cap it and note the archive point in the sublabel or a footnote — an unbounded Done column just becomes a second Backlog.
-- **Pill-shaped WIP tags.** The chip is a rectangle at `rx=2`, matching the type-tag primitive in the §6 node box ([primitives-core.md](primitives-core.md#node-box--full-pattern)) — pills read as status badges from an unrelated design language.
+- **在卡片之间画箭头。** 看板展示状态，不是流：如果流本身需要可见，改用泳道或流程。
+- **一列超过 4 张卡。** 聚合成计数卡；不要让一列滚出画布。
+- **一人一张卡。** 那是披着看板皮肤的组织架构图。
+- **在制列不写 WIP 上限。** 上限是这个类型的半条命：一条工作流*穿过*的在制列若不写上限，就无法显示它已超限。入口队列和终结列是例外：容纳更多已完成的工作不受约束，所以它们显示裸计数。
+- **每张阻塞卡都上 accent。** 一两张阻塞卡读起来是信号；满列 accent 读起来是噪音，还抹掉了焦点规则。
+- **无上限增长的 "Done" 列。** 设个上限，在副标签或脚注里注明归档点：无界的 Done 列只会变成第二个 Backlog。
+- **胶囊形 WIP 标签。** 芯片是 `rx=2` 的矩形，与 §6 节点盒中的类型标签原语一致（[primitives-core.md](primitives-core.md#node-box--full-pattern)）：胶囊看起来像来自另一套设计语言的状态徽章。
 
-## Examples
+## 示例
 
-- `assets/example-kanban.html` — minimal light. Platform-team board: Backlog (3), In progress (4/3, over limit), Review (2/3), Done (2), one blocked card.
-- `assets/example-kanban-dark.html` — minimal dark, same data.
-- `assets/example-kanban-full.html` — full editorial: container framing + 3 summary cards of varied widths + footer.
+- `assets/example-kanban.html` — 极简浅色。平台团队看板：Backlog（3）、In progress（4/3，超限）、Review（2/3）、Done（2），一张阻塞卡。
+- `assets/example-kanban-dark.html` — 极简深色，同一数据。
+- `assets/example-kanban-full.html` — 完整编辑排版：容器框 + 3 张宽度不均的摘要卡 + 页脚。

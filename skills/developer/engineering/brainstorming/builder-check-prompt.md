@@ -1,7 +1,10 @@
-# Builder Check Prompt
+> **中文汉化版** · 上游：[obra/superpowers](https://github.com/obra/superpowers) · 原文件：`skills/brainstorming/builder-check-prompt.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Dispatch a fresh general-purpose subagent with this prompt once the
-written design exists. Fill in the domain and the document path.
+# 构建者检查提示词
+
+书面设计一旦成形，就用这段提示词派发一个全新的通用型（general-purpose）子代理。填入领域与文档路径。
 
 ```
 You are a talented [DOMAIN, e.g. "software engineer", "event planner",

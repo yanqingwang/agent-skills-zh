@@ -1,45 +1,49 @@
-# Risk Checklist
+> **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/before-you-build/skills/before-you-build/references/risk-checklist.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use these questions when the basic verdict is not obvious.
+# 风险清单
 
-## Demand
+当基础判定不明显时，使用这些问题。
 
-- Who has the painful problem today?
-- What workaround are they using now?
-- What behavior shows urgency: payment, repeated manual work, switching tools, or asking for the same outcome more than once?
+## 需求（Demand）
 
-## Positioning
+- 今天谁有这个痛点？
+- 他们现在用什么变通方法应对？
+- 哪些行为能表明紧迫性：付费、重复的手工操作、更换工具，还是不止一次地要求同一个结果？
 
-- Can the target user say what this is for without hearing the implementation details?
-- Is the promise tied to a concrete outcome rather than a broad category?
-- Does the idea have a clear alternative it must beat?
+## 定位（Positioning）
 
-## Monetization
+- 目标用户在没听到实现细节之前，能说出它是干什么用的吗？
+- 承诺是否绑定一个具体的结果，而不是一个宽泛的品类？
+- 这个想法是否有一个必须击败的明确替代方案？
 
-- Who controls the budget or time savings?
-- Is the value large enough to support the required build and maintenance cost?
-- Would the first useful version create enough value to justify payment, adoption, or internal sponsorship?
+## 变现（Monetization）
 
-## Retention
+- 谁掌握着预算或节省下来的时间？
+- 价值是否大到足以支撑所需的构建与维护成本？
+- 第一个可用版本创造的价值，是否足以让人愿意付费、采用，或给予内部支持？
 
-- What makes the product useful after the first session?
-- Does it create a saved workflow, history, collaboration loop, or recurring decision?
-- Would users remember to come back without reminders?
+## 留存（Retention）
 
-## Trust
+- 首次使用之后，是什么让产品继续有用？
+- 它是否沉淀了已保存的工作流、历史记录、协作循环，或周期性重复的决策？
+- 没有提醒的情况下，用户会记得回来吗？
 
-- What data, permissions, integrations, or behavior changes does this require?
-- What proof would make a cautious user comfortable trying it?
-- What failure would make the product feel unsafe or unserious?
+## 信任（Trust）
 
-## Distribution
+- 它需要哪些数据、权限、集成或行为改变？
+- 什么样的证明能让谨慎的用户放心试用？
+- 什么样的失败会让产品显得不安全或不严肃？
 
-- Where can the exact target user be reached repeatedly?
-- What existing channel, community, workflow, or integration can expose the product?
-- Is there a realistic path beyond one launch post?
+## 分发（Distribution）
 
-## Feature Adoption
+- 在哪里能反复触达确切的目标用户？
+- 哪些现有的渠道、社区、工作流或集成能让产品得到曝光？
+- 除了一次发布帖之外，是否还有现实的路径？
 
-- What existing user behavior will this feature change?
-- Is the feature tied to an active user pain or just a product idea?
-- Can adoption be measured with one clear event?
+## 功能采用（Feature Adoption）
+
+- 这个功能会改变哪些现有的用户行为？
+- 它是绑定用户当下真实的痛点，还是只是一个产品点子？
+- 采用情况能否用一个明确的事件来度量？

@@ -1,85 +1,78 @@
-# Imagery
+> **中文汉化版** · 上游：[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · 原文件：`skills/taste-skill/references/imagery.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Pictures are where generated pages most obviously give up: a grey box, an icon in a square, a fake
-dashboard, an abstract blob. This file is how to decide what the pictures are, where to find real ones,
-how to crop and place them, and what to do when there are none.
+# 图像
 
-## Contents
+图片是生成页面最容易露怯的地方：一个灰盒子、一个装在方块里的图标、一块假仪表盘、一团抽象
+色块。本文件讲的是如何决定图片是什么、到哪里找真实的图、如何裁切与安放，以及一张都没有时
+怎么办。
 
-1. What the study measured
-2. Decide what imagery exists
-3. Real pictures from the open collections
-4. The dealt photographs
-5. Cropping and placing
-6. Treatment
-7. Showing software
-8. Drawing the subject
-9. Type and colour alone
-10. Markup and credits
-11. Video
-12. Where pictures and footage go
+## 目录
 
-## 1. What the study measured
+1. 研究测了什么
+2. 决定存在哪些图像
+3. 来自开放图库的真实图片
+4. 发下的照片
+5. 裁切与安放
+6. 处理方式
+7. 展示软件
+8. 绘制主题
+9. 只用文字与颜色
+10. 标记与署名
+11. 视频
+12. 图片和视频的去处
 
-- On 60% of the studied sites one piece of media covers at least half of the first screen; on half of
-  them it covers nearly all of it. Top-scored sites: 68% and 56%. Weak sites: 48% and 39%.
-- Only 15% of heroes have no media at all, and those are deliberate typographic statements.
-- Media has square corners on 73% of sites. Where corners are rounded the usual radius is about 12px,
-  applied to every image alike.
-- Top-scored pages carry far more imagery (a median of 37 images against 5 on weak pages): the strong
-  sites show, the weak ones tell.
-- What the imagery is, by the panel's classification: a mix of kinds 32%, photography 14%, generative
-  or WebGL scenes 13%, real product interface 12%, 3D renders 11%, illustration 9%, video 6%, type only
-  3%.
-- Among the 54 sites the panel scored under 6.8, legibility (text lost over a busy image, or too
-  little contrast) was named as a weakness in 13.
-- In the October 2026 study of 91 Awwwards Sites of the Day (section 12), the median page carries 7
-  pictures (top sites 8, the lowest 2) and footage appears on 42% of sites (half of the top ones, one
-  of the 16 lowest).
-- Pictures come in whole screens: 42% of scrolled screens hold none and 19% are 90% picture or more.
-- 94% of pictures have square corners, and on a typical site two ratios hold three-quarters of them.
+## 1. 研究测了什么
 
-## 2. Decide what imagery exists
+- 60% 的被研究站点上，有一件媒体至少盖住首屏的一半；其中一半的站点上它几乎盖满。得分最高
+  站点：68% 和 56%。弱站：48% 和 39%。
+- 只有 15% 的 hero 完全没有媒体，那些是有意为之的纯文字陈述。
+- 73% 的站点媒体为方角。圆角处的常用半径约 12px，对所有图片一视同仁。
+- 得分最高的页面带多得多的图像（中位数 37 张，对弱站的 5 张）：强站点展示，弱站点讲述。
+- 图像是什么，按评审团分类：混合类型 32%，摄影 14%，生成式或 WebGL 场景 13%，真实产品界面
+  12%，3D 渲染 11%，插画 9%，视频 6%，纯文字 3%。
+- 在评审团打了 6.8 分以下的 54 个站点中，13 个被点名可读性（文字压在繁忙的图片上丢失，或
+  对比不足）是弱点。
+- 在 2026 年 10 月对 91 个 Awwwards Sites of the Day 的研究（第 12 节）中，页面中位数带
+  7 张图（强站 8，最低 2），42% 的站点有视频（强站一半，最弱的 16 个中 1 个）。
+- 图片成整屏出现：42% 的滚过屏幕一张图都没有，19% 的屏 90% 或以上是图。
+- 94% 的图片为方角，且在典型站点上两个比例就占住四分之三的图片。
 
-In order of preference:
+## 2. 决定存在哪些图像
 
-1. **The project's own images.** Product shots, the place, the people, the work. Even ordinary
-   photographs of the real thing beat beautiful photographs of something else. Ask what exists; look in
-   the repository.
-2. **Images you can generate** with an image tool in this session. Write prompts as a photographer's
-   brief: subject, angle, light, background, crop ratio, and "no text". Generate the hero first and
-   make the rest match its light.
-3. **Real pictures of the subject's world from the open collections** (section 3). Archives,
-   museums and photographers have published millions of pictures anyone may use with a credit: the
-   client's city and street in old postcards, maps of its neighbourhood, its materials, its trade in
-   engravings, museum objects of its kind. Whenever an honest one exists, it beats a drawing of the
-   same thing: it is real, it has detail no drawing in a page's budget reaches, and it carries history.
-   Honest means nobody could take it for the client's own product, room, dish, person or team.
-4. **Pictures you draw in code from the subject itself** (section 8), for what no honest picture
-   exists of: the product's own objects as flat shapes, the place's tiles and windows, a map of its
-   streets, the document a tool produces, the interface of a piece of software. In testing, pages that
-   drew their subject with care beat pages that borrowed unrelated photographs every time, and beat
-   pages that showed nothing.
-5. **The photographs dealt on the direction sheet.** Real photographs of places, light, texture and
-   weather. Use them only where an honestly generic picture fits (the open sea for a house on the sea,
-   fog for a quiet retreat). They cannot stand in for a specific product, dish, room, person or
-   screen: a foggy motorway on a restaurant page reads as stock at once, and jurors notice.
-6. **Type and colour alone,** done on purpose (section 9).
+按优先级排序：
 
-Tell `draw.mjs` the truth with `--have`. If you have no product photographs and no image tool, do not
-pass `product-photo`; the draw will avoid the directions that depend on showing the object. Pictures
-found in the open collections are not the project's own: do not pass `photography` for them.
+1. **项目自己的图片。** 产品照、场所、人物、作品。真实东西的普通照片，也胜过别的东西的
+   精美照片。问有什么；去仓库里找。
+2. **你能生成的图片**，用本次会话里的图像工具。提示词按摄影师委托单来写：主体、角度、
+   光线、背景、裁切比例，加一句"no text"。先生成 hero，再让其余的匹配它的光线。
+3. **来自开放图库的主体世界真实图片**（第 3 节）。档案馆、博物馆和摄影师公开了数百万张
+   注明出处即可使用的图片：客户的城市和街道在老明信片里、街区的地图、它的材料、它的行当
+   在版画里、同类物品的馆藏。只要存在一张诚实的，它就胜过同一主题的任何绘画：它是真的，
+   它有页面预算内的绘画够不着的细节，它带着历史。诚实意味着没人会把它当成客户自己的产品、
+   房间、菜品、人物或团队。
+4. **用代码从主题本身画出来的图**（第 8 节），用于没有诚实图片存在的东西：产品自己的物件
+   画成平涂形状，场所的瓷砖和窗，街道地图，工具产出的单据，一款软件的界面。测试中，认真
+   绘制自己主题的页面每次都赢过借用无关照片的页面，也赢过什么都不展示的页面。
+5. **方向表发下的照片。** 场所、光线、质感和天气的真实照片。只在一张诚实通用的图片合适时
+   使用（海上的房子配开阔海面，安静的度假地配雾）。它们不能冒充具体的产品、菜品、房间、
+   人物或屏幕：餐厅页面上一张雾蒙蒙的高速公路照片立刻读作库存图，评审看得到。
+6. **只用文字与颜色**，有意为之（第 9 节）。
 
-## 3. Real pictures from the open collections
+用 `--have` 告诉 `draw.mjs` 真相。如果你没有产品照片也没有图像工具，不要传 `product-photo`；
+抽牌会因此避开依赖展示物体的方向。在开放图库找到的图片不属于项目自有：不要为它们传
+`photography`。
 
-`scripts/assets.mjs` searches four open sources without keys and prints, for each find, a direct image
-URL, the page it comes from, its size, its creator, its licence and a credit line:
+## 3. 来自开放图库的真实图片
 
-- **Openverse**: one index over Flickr, Wikimedia Commons, museums and libraries.
-- **Wikimedia Commons**: archival photographs, old maps, scans of prints and books, places as they
-  look now.
-- **The Art Institute of Chicago** and **The Metropolitan Museum of Art**: public-domain paintings,
-  prints, drawings, photographs, textiles and objects, in large scans.
+`scripts/assets.mjs` 无需密钥即可搜索四个开放来源，并对每个结果打印直链图片 URL、来源页面、
+尺寸、创作者、许可协议和一行署名：
+
+- **Openverse**：覆盖 Flickr、Wikimedia Commons、博物馆和图书馆的一站式索引。
+- **Wikimedia Commons**：档案照片、老地图、版画与书籍扫描、如今模样的场所。
+- **The Art Institute of Chicago** 与 **The Metropolitan Museum of Art**：公有领域的绘画、
+  版画、素描、照片、织物与器物，大幅扫描。
 
 ```bash
 node <skill>/scripts/assets.mjs "ghent postcard"
@@ -89,245 +82,217 @@ node <skill>/scripts/assets.mjs --get commons:36649959,met:707892     # download
 node <skill>/scripts/assets.mjs --credits                             # footer line and report list
 ```
 
-By default it keeps only licences that allow commercial use (CC0, public domain, CC BY, CC BY-SA) and
-pictures at least 1000 pixels wide, and checks that every image it prints actually loads.
-`--license pd` keeps only pictures that need no credit; `--orientation`, `--min-width` and `--limit`
-narrow the list; `--source` picks the sources; `--json` gives the raw results. Each result has a ref
-(`commons:36649959`) that `--get` takes.
+默认只保留允许商业使用的许可（CC0、公有领域、CC BY、CC BY-SA）和至少 1000 像素宽的图片，
+并检查它打印的每张图确实能加载。`--license pd` 只保留无需署名的图片；`--orientation`、
+`--min-width` 和 `--limit` 收窄列表；`--source` 选择来源；`--json` 给出原始结果。每个结果
+有一个 ref（`commons:36649959`），供 `--get` 使用。
 
-**What to search for.** The inventory (SKILL.md step 1), not the category: "bakery" finds other
-people's bakeries. The subject's world is specific:
+**搜什么。** 按素材清单（SKILL.md 第 1 步）搜，不按品类搜："bakery" 找到的是别人的面包房。
+主题的世界是具体的：
 
-- **Its place:** the city, the street, the harbour, the valley, in old postcards and photographs
-  ("ghent postcard", "rotterdam harbour 1920") and as it looks today ("gent korenmarkt").
-- **Its maps:** the street plan, the chart of its bay, the geology of its valley ("ghent old map",
-  "nautical chart lisbon").
-- **Its materials,** close enough to read as a surface: the stone of its quay, the grain of its oak,
-  its glaze, its tiles ("azulejo tiles", "basalt cobblestones", "oak grain").
-- **Its trade's history:** the old tools, the craft in engravings and trade catalogues, patent
-  drawings ("bread oven engraving", "potter's wheel", "bicycle patent drawing").
-- **Museum objects of its kind,** with `--source museums`: a coffee set from about 1810 for a studio
-  that makes coffee sets, a woodblock print of a wave for a surf school, a porcelain plate painted
-  with figs for a fig orchard.
-- **Scientific imagery:** botanical and zoological plates ("botanical engraving fig"), star charts,
-  microscope photographs, satellite views of its coast, geological sections.
+- **它的地方：** 城市、街道、港湾、山谷，在老明信片和照片里（"ghent postcard"、"rotterdam
+  harbour 1920"），以及今天的模样（"gent korenmarkt"）。
+- **它的地图：** 街巷平面图、海湾海图、山谷地质图（"ghent old map"、"nautical chart lisbon"）。
+- **它的材料，** 近到能读成一块表面：码头的石头、橡木的纹理、它的釉、它的瓷砖（"azulejo
+  tiles"、"basalt cobblestones"、"oak grain"）。
+- **它的行当史：** 老工具、版画和行业目录里的手艺、专利图（"bread oven engraving"、"potter's
+  wheel"、"bicycle patent drawing"）。
+- **同类物品的馆藏**，用 `--source museums`：一间做咖啡器具的工作室配一套约 1810 年的咖啡
+  器具，一所冲浪学校配一幅浪的木刻版画，一座无花果园配一只画着无花果的瓷盘。
+- **科学图像：** 植物学与动物学图版（"botanical engraving fig"）、星图、显微照片、它海岸的
+  卫星视图、地质剖面。
 
-Search in the place's own words (azulejo, not "blue tile"; Korenmarkt, not "market square"), add a
-medium (postcard, engraving, old map, lithograph, aerial photograph) or a decade, and try two or three
-queries per idea. The museum sources match best on one or two words ("fig", "harbour", "teapot").
+用这个地方自己的词搜索（azulejo 而不是 "blue tile"；Korenmarkt 而不是 "market square"），
+加上一种媒介（明信片、版画、老地图、石版画、航拍照片）或一个年代，每个想法试两三个查询。
+博物馆来源对一两个词匹配最好（"fig"、"harbour"、"teapot"）。
 
-**What makes a good find.**
+**什么算好结果。**
 
-- It belongs to this subject's world and would not fit the nearest competitor's page.
-- It still reads at the crop the slot needs. Look at it before deciding: `--get` downloads it, then
-  open the file. A title is not a picture.
-- It is large enough: twice the width it is shown at for anything full-bleed (the script prints the
-  largest size available). A 1024-pixel Flickr photograph is a half-width picture at most.
-- It belongs to one family with the others on the page: all engravings, or all photographs from one
-  era, or all close surfaces in one light. A 1900 postcard beside a modern stock photograph beside a
-  botanical plate reads as a scrapbook.
-- No watermark, no burned-in text or logo, no frame or scanner edge you cannot crop away, and no
-  recognisable living person who could be taken for the client's staff or customers.
+- 它属于这个主题的世界，放在最近的竞争对手的页面上不合适。
+- 它在槽位需要的裁切下仍然成立。先看再定：`--get` 下载它，然后打开文件。一个标题不是一张
+  图。
+- 它足够大：满幅使用的图要达到显示宽度的两倍（脚本会打印可用的最大尺寸）。一张 1024 像素的
+  Flickr 照片至多算半宽图片。
+- 它与页面其他图片同属一个家族：全是版画，或全是同一时代的照片，或全是同一种光线下的近距
+  表面。一张 1900 年的明信片挨着一张现代库存照、再挨着一张植物图版，读起来像剪贴簿。
+- 没有水印，没有烧进画面的文字或 logo，没有裁不掉的相框或扫描仪边缘，也没有会被当成客户
+  员工或顾客的可辨识的活人。
 
-**Use it creatively.** Found pictures are material, not decoration:
+**创造性地使用。** 找到的图片是材料，不是装饰：
 
-- **One archival photograph as the hero,** full-bleed: the street as it was a century ago, behind the
-  name of the business that stands in it today, with the year in the caption.
-- **A museum engraving enlarged until its line becomes texture,** cropped tight and returning at
-  different scales as the page's one motif (the whole fig plate in the hero, a single leaf of it
-  beside the menu).
-- **An engraving or a map on white paper set with `mix-blend-mode: multiply` on the page's colour
-  field,** so the ink sits on the ground (section 6).
-- **The real map of the street as the contact section,** the door marked, the north and the scale
-  taken from the original.
-- **A material close-up as a whole field:** the quay's stone behind the opening hours.
-- **A run of old postcards or plates as the gallery,** one size, one treatment.
+- **一张档案照片作 hero，** 满幅：一个世纪前的街道，衬着今天立在那里的商号之名，说明文字
+  里带年份。
+- **一幅馆藏版画放大到它的线条变成纹理，** 紧裁，以不同尺度作为页面唯一的母题反复出现
+  （整幅无花果图版在 hero，它的单独一叶在菜单旁）。
+- **白纸上的版画或地图用 `mix-blend-mode: multiply` 放在页面的色场上，** 让墨落在底色上
+  （第 6 节）。
+- **街道的真实地图作联系分区，** 门被标出，正北和比例尺取自原图。
+- **一张材料特写作整幅场：** 码头的石头衬在营业时间后面。
+- **一列老明信片或图版作画廊，** 同一尺寸，同一种处理。
 
-Treatments stay within section 6: untouched, greyscale for the whole set, or multiply on a field.
+处理方式不出第 6 节：不处理、整套灰度、或 multiply 到色场上。
 
-**Stay honest.**
+**保持诚实。**
 
-- **A found picture is never the client's own.** It may show the client's city, its materials, its
-  history, the kind of thing it makes; it may never stand in for the client's product, room, dish,
-  person, team or customers. If a visitor could take it for the client's own (a bakery counter, a
-  plate of pasta, a smiling barista, a guest room), do not use it.
-- **Caption from the source** when a caption helps: what it is and when, as the archive describes it
-  ("Gand, unloading a steamer, 1905"). Never write a caption that ties it to the client.
-- **Record and credit every picture.** `--get` writes the source, creator, licence and page of each
-  download to `assets/credits.json`. CC BY and CC BY-SA require a credit with the title, the creator,
-  a link to the source and a link to the licence; `--credits` prints them as one line of HTML for
-  the footer (section 10). Public-domain pictures need no credit; give one anyway.
-- **Respect the licence.** CC BY-SA: an altered version (recoloured, combined with other pictures)
-  must be shared under the same licence. Non-commercial (NC) and no-derivatives (ND) licences are out
-  for a client's site, which is why the script leaves them out unless asked. Read the `note` lines:
-  some pictures carry personality rights or a trademark, are public domain only in the United States,
-  or come with an archive's statement instead of a licence.
-- **Download, do not hotlink.** Save what you use into the project: `--get` puts it in `assets/` at
-  1920 pixels wide (pass `--width 1280` for a picture shown at half the screen, `--width 3840` for a
-  very large hero where the source has it). The page then works offline, does not break when an
-  archive moves a file, and does not load from someone else's server. Every licence the script
-  allows by default permits copying.
-- **List them in the report:** file, title, creator, licence, source page, and where the credit sits.
-  `--credits` prints that list too.
+- **找到的图片永远不是客户自己的。** 它可以展示客户的城市、材料、历史、它做的那类东西；
+  它绝不能冒充客户的产品、房间、菜品、人物、团队或顾客。如果访客可能把它当成客户自己的
+  （面包房柜台、一盘意面、微笑的咖啡师、一间客房），不要用。
+- **说明文字照抄来源**，当说明有帮助时：它是什么、何时，按档案馆的描述（"Gand, unloading
+  a steamer, 1905"）。绝不写把它与客户绑在一起的说明。
+- **记录并署名每张图。** `--get` 把每次下载的来源、创作者、许可协议和页面写进
+  `assets/credits.json`。CC BY 和 CC BY-SA 要求署名，含标题、创作者、来源链接和许可链接；
+  `--credits` 把它们打印成一行 HTML 供页脚使用（第 10 节）。公有领域图片无需署名；也给。
+- **尊重许可协议。** CC BY-SA：改动版（重着色、与其他图组合）必须以同一协议共享。非商业
+  （NC）和禁止衍生（ND）协议不能用于客户站点，这正是脚本默认把它们排除在外的原因。读
+  `note` 行：一些图片带有人格权或商标，仅在美国属于公有领域，或附带的是档案馆的声明而非
+  许可协议。
+- **下载，不要外链。** 把用到的图存进项目：`--get` 以 1920 像素宽放入 `assets/`（半屏显示的
+  图传 `--width 1280`，来源允许且 hero 特别大时传 `--width 3840`）。这样页面离线可用，
+  不会在档案馆移动文件时挂掉，也不会从别人的服务器加载。脚本默认允许的每种协议都允许复制。
+- **在报告里列出它们：** 文件、标题、创作者、许可协议、来源页面，以及署名放在哪里。
+  `--credits` 也会打印这份清单。
 
-If two or three honest queries per idea find nothing that fits, draw (section 8). A drawing made for
-the subject is better than a found picture that is merely nearby. If the script cannot reach any
-source (no network), draw, and say so in the report. For moving pictures, the same script searches
-real footage with `--video` (section 11).
+每个想法试两三个诚实的查询仍一无所获，就画（第 8 节）。为主题定制的绘画胜过仅仅沾边的
+找到的图。脚本连不上任何来源（无网络）时，画，并在报告里说明。动态图片方面，同一个脚本
+用 `--video` 搜索真实视频（第 11 节）。
 
-## 4. The dealt photographs
+## 4. 发下的照片
 
-- The sheet lists eight from one set so they share a subject and a light. Use three to six.
-- Each line says where the calm area is. Put text there or keep text off the image.
-- More from the same or another set: `node scripts/draw.mjs --photos list`, `--photos <set>`, or
-  `--photos "fog coast"` to search descriptions.
-- URLs have the form `https://picsum.photos/id/<id>/<width>/<height>`. Request the exact pixel size you
-  render at twice the CSS size for sharpness, capped around 2400 wide. Add `?grayscale` for
-  black-and-white.
-- These are photographs from Unsplash served by Lorem Picsum under the Unsplash licence. List the ids
-  you used in your report; they are meant to be replaced by the project's own pictures.
+- 方向表列出同一套里的八张，让它们共享主体和光线。使用三到六张。
+- 每行说明平静区域在哪里。把文字放在那里，或让文字离开这张图。
+- 同一套或另一套的更多照片：`node scripts/draw.mjs --photos list`、`--photos <set>`，或
+  `--photos "fog coast"` 按描述搜索。
+- URL 形如 `https://picsum.photos/id/<id>/<width>/<height>`。按渲染尺寸的两倍 CSS 尺寸请求
+  精确像素以保证清晰，上限约 2400 宽。黑白加 `?grayscale`。
+- 这些是 Unsplash 的照片，由 Lorem Picsum 按 Unsplash 许可提供。在报告里列出你用过的 id；
+  它们本来就该被项目自己的图片替换。
 
-## 5. Cropping and placing
+## 5. 裁切与安放
 
-- **Choose a small set of ratios and stick to them:** for example 4:5 for portraits, 16:10 for
-  landscapes and 1:1 for details. Random ratios look like a stock dump.
-- **Go large.** A photograph at full width, or at half the screen and full height, has presence. Six
-  small ones in a grid have none. If the image is good, give it the room; if it is not, cut it.
-- **Crop with intent.** Use `object-fit: cover` with an `object-position` chosen per image so the
-  subject sits where the composition needs it (off-centre, on a third, against the text side).
-- **Let images touch edges.** Full-bleed, or bleeding off one side, reads as designed. An image
-  floating with equal margins on all sides reads as placed by default.
-- **Overlap sparingly and on purpose:** a headline whose last line runs over the top edge of the
-  picture, a small image overlapping a large one by a fixed 40–80px. One overlap per screen at most.
-- **Square corners** unless the direction or the one-motif shape says otherwise. If rounded, one radius
-  for every image on the page.
-- **No frames:** no borders, no shadows, no device mock-ups, no browser chrome around pictures.
-- **Captions** are one short line in the small size and soft ink under the image, left-aligned to its
-  edge. Most images need none.
-- Where each picture goes on the page, how large, and what the phone does with it: section 12.
+- **选定少数几个比例并坚持用：** 例如人像 4:5、风景 16:10、细节 1:1。随机的比例读起来像
+  库存倾倒。
+- **放大。** 一张全宽的照片，或半屏宽、全高的照片，有分量。网格里六个小的没有。图好，给它
+  空间；图不好，裁掉。
+- **带着意图裁切。** 用 `object-fit: cover` 配上按图选择的 `object-position`，让主体落在
+  构图需要的位置（偏离中心、在三分线上、靠着文字一侧）。
+- **让图片触碰边缘。** 满幅，或向一侧出血，读起来是被设计的。四周等边距悬浮的图片读起来
+  是默认摆放。
+- **少量、有意地重叠：** 标题的最后一行压过图片的上缘，一张小图按固定的 40–80px 压在大图
+  上。每屏至多一处重叠。
+- **方角**，除非方向或唯一母题形状另有要求。要圆角的话，页面每张图同一个半径。
+- **不要画框：** 图片周围不加边框、不加阴影、不加设备样机、不加浏览器外壳。
+- **说明文字**是图片下方小字号、淡墨色的一短行，与图片左缘对齐。大多数图片不需要。
+- 每张图在页面的哪个位置、多大、手机上如何处理：第 12 节。
 
-## 6. Treatment
+## 6. 处理方式
 
-One treatment for the whole page:
+整页一种处理方式：
 
-- **Untouched.** The default. Pick images whose light already agrees.
-- **Greyscale.** `filter: grayscale(1) contrast(1.05)`, or `?grayscale` on the URL. Unifies a mixed
-  set instantly and suits editorial and typographic directions. Apply to every image or none.
-- **Multiply on a field.** On a light flat ground, `mix-blend-mode: multiply` makes a white studio
-  background vanish so a product sits directly on the colour.
-- **Darkened for a dark page.** `filter: brightness(0.85) contrast(1.05)` so the image edges sink into
-  the ground.
+- **不处理。** 默认。挑光线本就一致的图片。
+- **灰度。** `filter: grayscale(1) contrast(1.05)`，或 URL 上加 `?grayscale`。立刻统一一套
+  混杂的图，适合编辑类和文字类方向。要么所有图都用，要么都不用。
+- **Multiply 到色场上。** 浅色平底上，`mix-blend-mode: multiply` 让白底摄影棚背景消失，
+  产品直接坐在颜色上。
+- **深色页面用压暗。** `filter: brightness(0.85) contrast(1.05)`，让图片边缘沉进底色。
 
-Not treatments: colour washes over photographs, duotone overlays, blur, grain overlays, vignettes,
-tilted "polaroid" frames with shadows.
+不算处理方式：照片上的色罩、双色调叠加、模糊、颗粒叠加、晕影，带阴影的倾斜"拍立得"相框。
 
-For text on a photograph, a neutral scrim covering only the text area: a solid block at 40–55% black,
-or a fade from 55% black to transparent over the lower third. Never a coloured overlay.
+照片上的文字，用只覆盖文字区域的中性 scrim：40–55% 黑的实心块，或下三分之一从 55% 黑到
+透明的渐隐。绝不用彩色叠加。
 
-## 7. Showing software
+## 7. 展示软件
 
-- Build a real fragment of the interface in HTML at its true size, with believable content, instead of
-  a shrunken screenshot or a decorative mock-up. Crop to the part that makes the point: one control,
-  one row, one panel.
-- Believable means real labels, real numbers that add up, one item hovered or selected, proper
-  alignment. Grey bars standing in for text are worse than no image.
-- Put the fragment directly on the page or on one flat stage colour. No laptop, no phone frame unless
-  the product is a phone app and the frame is a plain rounded rectangle.
-- Inside a fragment the product's own interface conventions apply (its small radii, its 1px control
-  borders, a shadow on its open menu). Put the attribute `data-ui` on the fragment's root element: the
-  inspector and the linter then leave what is inside alone, and hold the page around it to the house
-  rules. `data-ui` is for cropped fragments only; wrapping a heading or a whole section in it fails.
-  Write the fragment's CSS under a `[data-ui]` selector (`[data-ui] .row { … }`) so the linter can
-  tell it apart from page styles.
-- If the user supplies real screenshots, show them large and uncropped at least once.
+- 用 HTML 在真实尺寸下构建界面的一段真实片段，配上可信的内容，而不是缩小的截图或装饰性
+  样机。裁到能说明问题的那部分：一个控件、一行、一块面板。
+- 可信意味着真实的标签、加起来对得上的真实数字、一项处于 hover 或选中状态、正确的对齐。
+  用灰条顶替文字，比没有图更糟。
+- 把片段直接放在页面上，或放在一种平色舞台色上。不要笔记本、不要手机壳，除非产品是手机
+  应用且外壳是一个朴素的圆角矩形。
+- 片段内部适用产品自己的界面惯例（它的小圆角、它 1px 的控件描边、它打开的菜单上的阴影）。
+  在片段的根元素上加属性 `data-ui`：检查器和 linter 就会放过内部的东西，并仍按家族规则
+  要求片段周围的页面。`data-ui` 只用于裁出的片段；用它包住标题或整个分区会不通过。把片段的
+  CSS 写在 `[data-ui]` 选择器之下（`[data-ui] .row { … }`），让 linter 能把它与页面样式
+  区分开。
+- 如果用户提供了真实截图，至少有一次把它们大大地、不裁切地展示出来。
 
-## 8. Drawing the subject
+## 8. 绘制主题
 
-When nothing real can be photographed and the open collections hold no honest picture of it, draw it,
-and draw it well. Inline SVG and CSS are enough. Drawings and found pictures can share a page: the
-found ones show the world around the client, the drawings show the client's own things.
+当真实的东西无法拍摄、开放图库里又没有它的诚实图片时，画它，而且要画好。内联 SVG 和 CSS
+就够了。绘画和找到的图片可以同页：找到的展示客户周围的世界，绘画展示客户自己的东西。
 
-- **Draw the subject's own things,** not decoration: the stool's three legs and the grain of its seat,
-  the enamel sign over the bakery door, the hut's two windows and its stove pipe, the street plan, the
-  invoice the tool produces, the festival's stage. If you cannot name what a drawing depicts in the subject's world, it is decoration.
-- **One graphic language for the whole page:** flat filled shapes, no outlines or one consistent
-  stroke weight, the same corner and curve vocabulary everywhere, drawn in the palette's real colours
-  (fields and accent at full strength, not greys). A set of drawings that obviously belong together
-  reads as an identity; a mix of styles reads as clip art.
-- **Colour is the material.** A product sold on its finish is drawn in that finish's colours; a sea house in the
-  sea's blues and the sand; never a page of grey placeholders.
-- **Draw with three levels of detail.** Jurors called simple drawings "basic" every time. Give each
-  drawing big shapes that read at a glance, middle shapes that describe the thing (the handle, the
-  window frame, the step), and small details that reward a second look (the maker's mark, the house
-  number, the chipped tile, the hinge, a bird on the roof). Make light with flat tone steps (a lit face
-  and a shaded face of each volume), not gradients. A drawing that would pass as a placeholder icon at
-  full size is not finished.
-- **Draw large and let it work:** the drawing is the hero's dominant element, a full-width band, a set
-  of tiles, the footer mark. Small doodles scattered around read as filler.
-- **Let it carry the idea through the page,** the way a motif does: the same drawn object returns at
-  different scales, the tile grid becomes the opening hours, the map becomes the booking section.
-- **Honesty:** say plainly, in small text near the first drawing or in the footer, that the pictures
-  are drawn until photographs exist, if the client might otherwise be taken to be showing real
-  products. In your report, list which drawings are placeholders for photography.
-- **Not this:** gradient-shaded 3D-looking blobs, isometric clip art, generic line illustrations of
-  people at laptops, abstract floating shapes, icons in squares. Those are the generated look.
+- **画主题自己的东西，** 不是装饰：凳子的三条腿和凳面的纹理、面包房门上的搪瓷招牌、小屋的
+  两扇窗和它的烟囱、街道平面图、工具产出的单据、音乐节的舞台。如果你说不出一张画描绘的是
+  主题世界里的什么，它就是装饰。
+- **整页一种图形语言：** 平涂色块、无描边或统一的描边粗细、处处相同的圆角与曲线词汇、用
+  调色板里的真实颜色绘制（色场和 accent 用满强度，不用灰色）。一组显然属于一体的绘画读作
+  一种识别系统；风格混杂读作剪贴画。
+- **颜色就是材料。** 靠表面处理出售的产品就用那种表面处理的颜色画；海上的房子用海的蓝和
+  沙的颜色画；绝不要一页灰色占位符。
+- **用三个层级的细节来画。** 评审每次都把简单的绘画叫作"基础款"。给每张画一眼就能读出的
+  大形状、描述这个事物的中形状（把手、窗框、台阶），以及值得再看一眼的小细节（匠人印记、
+  门牌号、缺了角的瓷砖、合页、屋顶上的一只鸟）。用平色的明暗台阶做光（每个体积一个受光面
+  和一个背光面），不用渐变。一张全尺寸下能冒充占位图标的画，不算画完。
+- **画大，让它干活：** 绘画是 hero 的主导元素、一条全宽横带、一组瓷砖、页脚的印记。散落在
+  周围的小涂鸦读作填充物。
+- **让它把想法带过整页，** 像母题那样：同一个画出来的物体以不同尺度反复出现，瓷砖网格变成
+  营业时间，地图变成预订分区。
+- **诚实：** 在第一张画附近的小字里，或在页脚里，直说图片是绘制的、照片到位后会替换，如果
+  不然客户可能被当成在展示真实产品。在报告里列出哪些绘画是摄影的占位。
+- **不要这样：** 渐变阴影的伪 3D 色块、等轴测剪贴画、人坐在笔记本电脑前的通用线条插画、
+  抽象漂浮形状、装在方块里的图标。那些正是生成味。
 
-## 9. Type and colour alone
+## 9. 只用文字与颜色
 
-This is a legitimate design, not a gap to disguise. Only 7 of the studied sites use no imagery at all,
-and they hold their own: a median panel score of 7.5 against 7.2 for the whole set.
+这是一种正当的设计，不是要掩饰的缺口。被研究站点中只有 7 个完全不用图像，它们自成一格：
+评审分中位数 7.5，对全集的 7.2。
 
-- Make the typography the image: one statement at 10–14vw, a list set at 5vw, numerals at display size.
-- Use colour at scale: a full field, an inverted section, a two-field split.
-- Use the subject's own shape as one flat motif if the direction calls for it (a circle, an arc, a
-  notch), drawn in CSS, cropped by the viewport.
-- Do not add: icons in squares, abstract gradients, dot grids, wave dividers, floating shapes, emoji,
-  generic line illustrations, or an empty box where a picture "will go".
+- 让字体排印成为图像：一句 10–14vw 的陈述、一列 5vw 的清单、展示字号的数字。
+- 大尺度地用颜色：一整幅色场、一个反色分区、一个双色 split。
+- 方向要求时，用主题自己的形状作一个平涂母题（一个圆、一段弧、一个缺口），用 CSS 画，由
+  视口裁切。
+- 不要加：方块里的图标、抽象渐变、点阵网格、波浪分隔、漂浮形状、emoji、通用线条插画，或
+  一个写着图片"将放于此"的空盒子。
 
-## 10. Markup and credits
+## 10. 标记与署名
 
-A found picture, downloaded into the project with `--get`, used as the hero:
+一张找到的图片，用 `--get` 下载进项目，作 hero 使用：
 
 ```html
 <img src="assets/fig-engraving.jpg" width="1920" height="2807" fetchpriority="high" decoding="async"
      alt="Hand-coloured engraving of a fig cut open, with its flowers and seeds, in black, pink and green">
 ```
 
-A dealt photograph further down the page:
+页面下方的一张发下的照片：
 
 ```html
 <img src="https://picsum.photos/id/626/2400/1500" width="2400" height="1500"
      alt="Red and white lighthouse in a turquoise sea below a chalk cliff" loading="lazy" decoding="async">
 ```
 
-The credits, as `--credits` prints them, in the footer:
+`--credits` 打印出的署名，放在页脚：
 
 ```html
 <p class="credits">Pictures: <a href="https://commons.wikimedia.org/wiki/File:Fig_(Ficus_carica_L.);_57_segments_of_flowers_and_fruits_at_Wellcome_V0043000.jpg">“Fig (Ficus carica L.): 57 segments of flowers and fruits”</a>, <a href="https://creativecommons.org/publicdomain/mark/1.0/">public domain</a>, via Wikimedia Commons.</p>
 ```
 
-- Always `width` and `height` (or `aspect-ratio` in CSS) so nothing jumps while loading.
-- `loading="lazy"` on everything except the hero image, which gets `fetchpriority="high"`.
-- `alt` describes the picture in plain words. Decorative repeats get `alt=""`. The script's suggested
-  alt is the archive's title; rewrite it to say what the picture shows.
-- A coloured `background-color` on the image container (the ground or surface tone) so the layout is
-  whole before the image arrives.
-- The credit line is part of the footer's design, at full contrast, with its links. Set it at the body
-  size; one step smaller only on a page with plenty of running text, because a long credit line in
-  small type can become the page's most common text size and fail the inspector's body-size check.
-  One line for all pictures; no credit captions laid over the pictures themselves. Credit only the
-  pictures the page still uses.
-- A broken image fails the inspector. Check every picture in the screenshots.
+- 永远给 `width` 和 `height`（或在 CSS 里给 `aspect-ratio`），加载时不跳版。
+- 除 hero 图片用 `fetchpriority="high"` 外，其余全部 `loading="lazy"`。
+- `alt` 用平实的词描述图片。装饰性的重复图用 `alt=""`。脚本建议的 alt 是档案馆标题；改写成
+  图片实际展示的内容。
+- 图片容器上给一个带颜色的 `background-color`（底色或表面色），图片到达之前布局就是完整的。
+- 署名行是页脚设计的一部分，全对比度，带它的链接。按正文字号排；只有在一个连排文字本就
+  充足的页面上才缩小一档，因为一长行小字署名可能变成页面最常用的字号，通不过检查器的
+  正文字号检查。所有图片共用一行；不要把署名说明压在图片上面。只署名页面仍在使用的图片。
+- 坏图会让检查器不通过。在截图里检查每张图。
 
-## 11. Video
+## 11. 视频
 
-A moving picture of the subject's world can carry a section the way a photograph does: the river at
-the end of the street, the roaster's drum turning, a timber frame going up. `assets.mjs --video`
-searches real footage without keys: Wikimedia Commons (every video there comes with web-sized
-transcodes; the best source for short clips), the Internet Archive's Prelinger Archives (industrial,
-educational, city and home films from the 1920s to the 1970s, mostly public domain and mostly long)
-and NASA (the Earth from orbit, launches, aircraft, laboratories). The rest of the Internet Archive is
-left out: anyone can upload there, and the licence claims are unchecked.
+主题世界的一段动态画面可以像照片一样扛起一个分区：街尾的河、烘焙机的滚筒在转、一榀木构架
+正在立起。`assets.mjs --video` 无需密钥即可搜索真实视频：Wikimedia Commons（那里的每段
+视频都自带网页尺寸转码；短片最佳来源）、Internet Archive 的 Prelinger Archives（1920 至
+1970 年代的工业、教育、城市与家庭影片，多为公有领域且多半很长）、以及 NASA（轨道上的地球、
+发射、飞机、实验室）。Internet Archive 的其余部分不纳入：任何人都能上传，许可声明无人
+核查。
 
 ```bash
 node <skill>/scripts/assets.mjs "coffee roasting" --video
@@ -335,43 +300,37 @@ node <skill>/scripts/assets.mjs "river" --video --source commons,nasa --orientat
 node <skill>/scripts/assets.mjs --get commons:49769620        # the clip, a poster frame, the credit
 ```
 
-It takes a rendition of 720p or smaller (`--res` changes that), lists short clips first, prints each
-clip's length and file size, and flags anything over 25 MB or longer than a minute. `--get` refuses a
-clip over 25 MB unless you pass `--max-mb`, and saves the source's still frame beside it as the
-poster (Commons and NASA; the archive's own stills are too small). An archive film of ten minutes is
-too heavy as it stands: trim a few seconds from it with ffmpeg if it is installed, or choose a
-shorter clip. Licences, credits and honesty work exactly as for pictures (section 3).
+它取 720p 或更小的版本（`--res` 可改），把短片排在前面，打印每段的时长和文件大小，并标记
+超过 25 MB 或长于一分钟的东西。`--get` 拒绝超过 25 MB 的片段，除非传 `--max-mb`，并把来源
+的静帧存在视频旁作 poster（Commons 和 NASA；档案馆自己的静帧太小）。十分钟长的档案影片
+照原样太重：装了 ffmpeg 就从中剪出几秒，或选更短的片段。许可、署名和诚实规则与图片完全
+一致（第 3 节）。
 
-**Choosing a clip.**
+**挑选片段。**
 
-- **Short:** 5 to 20 seconds that loop without a visible jump: water, smoke, a turning drum, traffic,
-  leaves, a crowd from far away. Watch it to the end before choosing.
-- **Light:** under about 5 MB for a section and 10 MB for a hero. In the study sources are 1920×1080
-  (the commonest) or 1280×720, median length 10 s; 720p is plenty behind type. For a full-bleed hero,
-  cut a tall 720×1280 version for the phone, or set `object-position` on the subject.
-- **Clean:** no slate, title card, logo, watermark or burned-in caption. NASA and archive films often
-  open with a slate, and the source's poster frame may be that slate. No recognisable person who could
-  be taken for the client's staff or customers.
-- **Never the client's own:** a found clip of a roastery is not this roastery.
-- **Found clips: one per page, two at most.** A found clip shows the world around the client; a
-  third makes a theme of it. The project's own footage can carry more: in the study a site with
-  footage carries a median of three or four clips. Either way, **one moving picture per screen**;
-  two loops running side by side are noise.
+- **短：** 5 到 20 秒，循环起来没有可见跳变：水、烟、转动的滚筒、车流、树叶、远处的
+  人群。选之前看完整段。
+- **轻：** 分区用约 5 MB 以内，hero 用 10 MB 以内。研究中来源为 1920×1080（最常见）或
+  1280×720，时长中位数 10 秒；文字后面 720p 足够。满幅 hero 就为手机另剪一版竖幅
+  720×1280，或在主体上设 `object-position`。
+- **干净：** 没有场记板、片头卡、logo、水印或烧进画面的说明。NASA 和档案馆影片常以场记板
+  开场，来源的 poster 帧可能正是那块场记板。没有会被当成客户员工或顾客的可辨识人物。
+- **绝不用客户自己的：** 一段找到的烘焙坊视频不是这家烘焙坊。
+- **找到的视频：每页一段，至多两段。** 一段找到的视频展示客户周围的世界；第三段就让它成了
+  主题。项目自己的视频可以更多：研究里带视频的站点中位数带三四段。无论如何，
+  **每屏一段动态画面**；两个循环并排运行是噪音。
 
-**On the page.**
+**放进页面。**
 
-- Muted, looping, inline, with a poster and a fixed size, as `--get` prints it:
+- 静音、循环、内联，带 poster 和固定尺寸，按 `--get` 打印的样子：
   `<video autoplay muted loop playsinline preload="metadata" poster="assets/river-poster.jpg"
-  width="854" height="480" aria-hidden="true"><source src="assets/river.webm" type="video/webm"></video>`.
-  No sound and no controls on a decorative loop. `aria-hidden` because it is decoration: whatever the
-  clip says that matters belongs in the text beside it.
-- The poster shows before the clip plays, on slow connections and under reduced motion, so it must
-  work as a picture on its own. If the source's still is a slate or a blur, take a frame from the clip
-  yourself or use a found picture.
-- In the study only 31% of clips had a poster, and the panel recorded the blank and grey boxes
-  before they played as faults. Here every clip has one.
-- Play a clip only while it is in view, and none under `prefers-reduced-motion: reduce`, where the
-  poster shows instead:
+  width="854" height="480" aria-hidden="true"><source src="assets/river.webm" type="video/webm"></video>`。
+  装饰性循环不加声音、不加控件。`aria-hidden` 因为它是装饰：这段视频里任何重要的信息都
+  归旁边的文字。
+- poster 在片段播放前显示，在慢网络下和 reduced motion 下也显示，所以它必须能独立作为一张
+  图片成立。如果来源的静帧是场记板或一团糊，就自己从片段里取一帧，或改用一张找到的图。
+- 研究里只有 31% 的片段有 poster，评审把播放前的空白和灰盒子记为毛病。这里每段都有。
+- 片段只在进入视口时播放，且在 `prefers-reduced-motion: reduce` 下不播放、显示 poster：
 
   ```html
   <script>
@@ -400,392 +359,336 @@ shorter clip. Licences, credits and honesty work exactly as for pictures (sectio
   </script>
   ```
 
-- Crop and place it like a photograph (sections 5 and 6): `object-fit: cover`, one ratio, square
-  corners, no frame, a ground-coloured `background-color` while it loads.
-- Never under body text. On a clip put a headline, one line and one action at most, and check the
-  contrast where they sit across the whole loop, not only on the poster: footage that is dark at
-  one second can be bright at the next. If any frame drops below 4.5:1 (3:1 for 24px and up), use the
-  scrim in section 6 or move the text off the clip. Nothing lies on top of a headline or a statement.
-- It is motion: let it be the page's one moving thing, or sit in a section where nothing else moves.
-- Credit it with the pictures: `--credits` prints one footer line for both ("Pictures and footage:")
-  and the list for the report, with each clip's length.
-- Where footage goes (hero background, inline loop, the frame that grows, a docked card), and what
-  the study measured about it: section 12. Nothing that matters plays on hover only, and a full film
-  with sound sits behind a play button that opens a player with controls.
+- 像照片一样裁切和安放（第 5、6 节）：`object-fit: cover`、一个比例、方角、不画框，加载
+  期间用底色的 `background-color`。
+- 绝不放正文下方。片段上至多放一个标题、一行字和一个动作，并检查它们所在位置在整个循环
+  里的对比度，不只看 poster：一秒时还暗的视频下一秒可能亮起来。任何一帧低于 4.5:1
+  （24px 及以上为 3:1），就用第 6 节的 scrim 或把文字挪下片段。任何东西都不许压在标题或
+  陈述上。
+- 它是运动：让它成为页面唯一会动的东西，或放进一个别无他物的分区也在动的分区。
+- 与图片一起署名：`--credits` 为两者打印一行页脚（"Pictures and footage:"），并打印报告
+  清单，含每段的时长。
+- 视频的去处（hero 背景、内联循环、会生长的画框、停靠的卡片），以及研究对它的测量：第
+  12 节。任何重要的东西不许只在 hover 时播放，带声音的完整影片放在一个打开带控件播放器的
+  播放按钮后面。
 
-## 12. Where pictures and footage go
+## 12. 图片和视频的去处
 
-What strong pages do with their pictures, measured on the latest 100 Awwwards Sites of the Day
-(10 July to 17 October 2026, captured at 1440×900 and 390×844). 91 were usable. A panel described where
-every picture sat and scored each site the Awwwards way, and a script measured how much of each screen
-is picture. "Top" means a panel score of 7.5 or more (36 sites), "lowest" under 7.3 (16 sites). The
-scores sit close together (6.7 to 7.9) and a single score carries about half a point of noise, so read
-the links between a placement and the score as leanings, not laws.
+强页面如何处置它们的图片，测量对象是最近 100 个 Awwwards Sites of the Day（2026 年 7 月
+10 日至 10 月 17 日，采集于 1440×900 与 390×844）。91 个可用。一个评审团描述了每张图的
+位置并按 Awwwards 方式打分，一个脚本测量了每屏有多大比例是图。"Top"指评审分 7.5 及以上
+（36 个站点），"lowest"指低于 7.3（16 个站点）。分数挤在一起（6.7 到 7.9），单个分数带着
+约半分噪声，所以请把安放方式与分数之间的关联读作倾向，不是定律。
 
-### How much of each screen is picture
+### 每屏有多大比例是图
 
-- **All or nothing.** Counting photographs, footage and picture backgrounds (not canvases), the median
-  scrolled screen in the study is 16% picture, but few screens sit near it: 42% hold no picture and
-  19% are 90% picture or more. Only 19% fall between 20% and 60%. A picture either leads its screen or
-  stays out of it.
-- **About a third, with rests.** On the 67 sites that put pictures in the page, the average screen is
-  36% picture (middle half 18–69%). Top sites sit at 30% and leave 28% of their screens with no picture
-  at all: screens of type are the rests between picture screens.
-- **The first screen.** A picture covers at least half of it on 41% of the sites and nearly all of it
-  on 32%. A full-bleed photograph or film is the whole first screen on 29%; footage is the main hero
-  picture on about a quarter.
-- **A scene is not a picture.** 66 of the 91 keep a WebGL canvas over at least 30% of the screen, so
-  counting canvases the median screen is entirely covered. On the lowest-scored sites that canvas is
-  often all there is: the five lowest usable sites (6.7 to 7.0) draw everything in it and put two
-  pictures at most in the page.
-- **Text is small in area.** The median screen is 8% text. Type is set large and sparse around the
-  pictures, not packed beside them.
-- **Off-centre.** Measured per section across the crawled sites, pictures sit to the left or right
-  939 times, centred 273 times, and full-bleed or behind text 269 times.
-- **The phone carries more picture,** not less: 19% of a phone screen at the median, and 27% of the
-  first phone screen against 17% on desktop. Full-bleed pictures re-crop to portrait and fill the
-  screen; splits put the picture first at full width.
+- **要么全押，要么不押。** 计入照片、视频和图片背景（不计 canvas），研究中滚过屏幕的中位数
+  是 16% 的图，但很少有屏停在它附近：42% 一张图都没有，19% 是 90% 或以上。只有 19% 落在
+  20% 到 60% 之间。一张图要么领衔它的屏，要么不掺和。
+- **约三分之一，带歇息。** 在把图放进页面的 67 个站点上，平均每屏 36% 是图（中间一半
+  18–69%）。强站点停在 30%，并让 28% 的屏完全没有图：纯文字屏是图片屏之间的歇息。
+- **首屏。** 41% 的站点上一张图至少盖住首屏一半，32% 上几乎盖满。满幅照片或影片独占整个
+  首屏的占 29%；视频是 hero 主图的大约四分之一。
+- **场景不是图片。** 91 个里 66 个让一块 WebGL canvas 盖住至少 30% 的屏，所以把 canvas
+  算进来，中位屏是被完全盖住的。得分最低的站点上，那块 canvas 常常就是全部：最低的五个
+  可用站点（6.7 到 7.0）把一切都画在里面，页面里至多放两张图。
+- **文字占的面积很小。** 中位屏 8% 是文字。字排得大而疏落地围绕图片，不是挤在旁边。
+- **偏离中心。** 按分区计量全部爬取站点，图片偏左或偏右 939 次，居中 273 次，满幅或衬在
+  文字后 269 次。
+- **手机带的图更多，不是更少：** 手机屏中位数 19% 是图，手机首屏 27%，桌面 17%。满幅图
+  重裁成竖幅填满屏幕；split 把图放在前面、占满全宽。
 
-### How many
+### 数量
 
-- **Seven pictures per page** at the median (middle half 1–25). Top sites 8 (middle half 4–27), lowest
-  2 (0–4). The floor in SKILL.md step 6, four and usually six to twelve, is the strong half of the
-  study.
-- **Footage on 42% of sites:** on half of the top sites and half of the middle band, and on one of the
-  16 lowest. A site with footage carries a median of three or four clips.
-- **Three to five placements.** Sites that use two or fewer of the placements below average 7.31;
-  sites that use three or more average about 7.5. The median top site uses four, the median lowest
-  site one. Where the pictures go changes from section to section on a designed page.
+- **每页七张图**为中位数（中间一半 1–25）。强站 8（中间一半 4–27），最低 2（0–4）。
+  SKILL.md 第 6 步的下限，四张、通常六到十二张，是研究里强的一半。
+- **42% 的站点有视频：** 强站一半、中间段一半，最低的 16 个里 1 个。带视频的站点中位数带
+  三四段。
+- **三到五种安放。** 只用下文两种或更少安放方式的站点平均 7.31；三种或更多的约 7.5。
+  强站中位数用四种，最低站点中位数一种。在被人经营过的页面上，图片的去处随分区变化。
 
-### The placements, ranked
+### 安放方式，按排名
 
-| Placement | Sites (of 91) | Top (of 36) | Lowest (of 16) | Mean score with / without |
+| 安放方式 | 站点数（共 91） | Top（共 36） | Lowest（共 16） | 有 / 无时平均分 |
 | --- | --- | --- | --- | --- |
-| Split: picture in a half or two-thirds | 32 | 17 | 2 | 7.50 / 7.38 |
-| Horizontal gallery | 32 | 13 | 4 | 7.44 / 7.41 |
-| Full-bleed band between sections | 31 | 14 | 3 | 7.48 / 7.40 |
-| Full-bleed picture or film as the first screen | 26 | 10 | 3 | 7.45 / 7.41 |
-| Uneven mosaic | 25 | 11 | 1 | 7.49 / 7.40 |
-| Picture held while text scrolls | 23 | 12 | 1 | 7.52 / 7.39 |
-| Footage behind text | 22 | 8 | 2 | 7.46 / 7.41 |
-| Even grid | 20 | 11 | 2 | 7.48 / 7.41 |
-| Scattered collage | 19 | 6 | 3 | 7.47 / 7.41 |
-| Panel sliding over a held picture | 19 | 8 | 2 | 7.48 / 7.41 |
-| Inset frame that grows | 17 | 7 | 1 | 7.52 / 7.40 |
-| One picture centred on a field | 14 | 5 | 3 | 7.38 / 7.43 |
-| Cut-out object on a flat field | 13 | 7 | 1 | 7.57 / 7.40 |
-| Index with hover preview | 12 | 6 | 1 | 7.49 / 7.41 |
-| 3D gallery | 12 | 4 | 4 | 7.30 / 7.44 |
-| Small card docked in a corner | 11 | 5 | 1 | 7.47 / 7.42 |
-| Picture inside or in front of display type | 11 | 7 | 1 | 7.50 / 7.41 |
-| One small picture beside a statement | 8 | 5 | 0 | 7.56 / 7.41 |
-| Small pictures between words | 6 | 4 | 0 | 7.52 / 7.42 |
+| Split：图占一半或三分之二 | 32 | 17 | 2 | 7.50 / 7.38 |
+| 横向画廊 | 32 | 13 | 4 | 7.44 / 7.41 |
+| 分区之间的满幅横带 | 31 | 14 | 3 | 7.48 / 7.40 |
+| 满幅图片或影片作首屏 | 26 | 10 | 3 | 7.45 / 7.41 |
+| 不均匀拼贴 | 25 | 11 | 1 | 7.49 / 7.40 |
+| 图片固定、文字滚过 | 23 | 12 | 1 | 7.52 / 7.39 |
+| 文字后面的视频 | 22 | 8 | 2 | 7.46 / 7.41 |
+| 均匀网格 | 20 | 11 | 2 | 7.48 / 7.41 |
+| 散落拼贴 | 19 | 6 | 3 | 7.47 / 7.41 |
+| 面板滑过固定的图片 | 19 | 8 | 2 | 7.48 / 7.41 |
+| 生长的内嵌画框 | 17 | 7 | 1 | 7.52 / 7.40 |
+| 色场中央的单图 | 14 | 5 | 3 | 7.38 / 7.43 |
+| 平场上的抠底物件 | 13 | 7 | 1 | 7.57 / 7.40 |
+| 带 hover 预览的索引 | 12 | 6 | 1 | 7.49 / 7.41 |
+| 3D 画廊 | 12 | 4 | 4 | 7.30 / 7.44 |
+| 停在角落的小卡片 | 11 | 5 | 1 | 7.47 / 7.42 |
+| 图片在展示大字之内或之前 | 11 | 7 | 1 | 7.50 / 7.41 |
+| 陈述旁的一张小图 | 8 | 5 | 0 | 7.56 / 7.41 |
+| 词与词之间的小图 | 6 | 4 | 0 | 7.52 / 7.42 |
 
-- Found on top pages more than their share and almost never on the lowest: the split, the picture held
-  while text scrolls, the uneven mosaic, the inset frame that grows, the cut-out on a flat field, and
-  pictures set with the type (the last three rows together: 24 sites, 16 of them top, 1 lowest).
-- The horizontal gallery is common in every band and lifts nothing. Use it where browsing is the point.
-- The 3D gallery is the one placement that goes with lower scores, and with the lowest usability in the
-  table (5.9 against 6.35 for all sites).
+- 在强页面上超出其份额出现、在最低站点上几乎不出现的：split、图片固定文字滚过、不均匀
+  拼贴、生长的内嵌画框、平场上的抠底物件，以及与文字一起排的图（后三行合计：24 个站点，
+  16 个是强站，1 个最低）。
+- 横向画廊在每个分段都常见，却什么也不提升。浏览本身是目的时才用它。
+- 3D 画廊是唯一伴随更低分数的安放方式，且带上表中最低的可用性（5.9，对全站 6.35）。
 
-### Each placement
+### 各安放方式
 
-Each entry gives when to use it, the geometry at 1440×900, the phone version and how it fails.
+每条给出何时使用、1440×900 下的几何、手机版本，以及它怎么失败。
 
-**Split: picture in a half or two-thirds**
+**Split：图占一半或三分之二**
 
-- *When.* A claim and the picture that proves it. The commonest way strong pages pair words and a
-  picture.
-- *Geometry.* The picture takes 42% of the width at the median (middle half 33–49%), up to two-thirds,
-  at the full height of its section: 680×850 and 720×900 are typical. 38% of these pictures are
-  portrait, mostly 4:5 or 3:4. The text starts on the 50% line (x = 720) or on the line where the
-  picture ends, top-aligned or docked low, not centred in its half. Let the picture touch the viewport
-  on its outer side: only about 30% do in the study, and the ones with margin on every side read as
-  placed by default (section 5). Alternate sides only across three or more rows.
-- *Phone.* Picture first at full width (4:5, or 4:3 for a landscape), text under it.
-- *Fails.* The same split in three sections running; a picture floating in the middle of its half; a
-  text column narrower than about 30 characters.
+- *何时。* 一条主张加证明它的那张图。强页面把文字和图片配对的最常见方式。
+- *几何。* 图片占宽度的 42%（中间一半 33–49%），至多三分之二，占满所在分区的全高：
+  680×850 和 720×900 很典型。38% 的这类图片是竖幅，多为 4:5 或 3:4。文字从 50% 线（x =
+  720）或图片结束的那条线开始，顶部对齐或停靠低位，不在自己那半里居中。让图片在外侧贴住
+  视口：研究里只有约 30% 这样做，四周留边距的那些读作默认摆放（第 5 节）。只在三行或更多
+  行之间交替左右。
+- *手机。* 图先、全宽（4:5，横幅图用 4:3），文字在图下。
+- *失败。* 连续三个分区用同一个 split；图片悬在自己那半的中间；文字栏窄于约 30 字符。
 
-**Full-bleed band**
+**满幅横带**
 
-- *When.* One picture carries a whole screen between type screens: the place, the work, the object at
-  full size. One every three or four screens at most.
-- *Geometry.* 100% wide and one to one and a half screens tall (median 900px at 1440×900, middle half
-  890–1,170px; ratios 1.4 to 1.9). For a slow parallax the picture is oversized in its frame by 4–10%
-  (32–72px a side in the study) and travels no further than that. Text is a headline and one line, or
-  nothing, docked 32–64px in from a corner over the calm part of the picture.
-- *Phone.* A portrait re-crop that fills the screen, with `object-position` set on the subject; the
-  text moves to the bottom quarter.
-- *Fails.* 11–14px white text over a bright area; three bands with nothing between them; a band that
-  only decorates.
+- *何时。* 一张图在文字屏之间扛起整屏：地方、作品、物体的全尺寸。至多每三四屏一次。
+- *几何。* 100% 宽、一到一倍半屏高（1440×900 下中位数 900px，中间一半 890–1,170px；比例
+  1.4 到 1.9）。慢视差时图片在自己的框里超配 4–10%（研究中每侧 32–72px），位移不超过这个
+  量。文字是一个标题加一行，或没有，从一个角落向内停靠 32–64px，压在图片平静的部分上。
+- *手机。* 重裁成竖幅填满屏幕，主体上设 `object-position`；文字移到下面四分之一。
+- *失败。* 明亮区域上的 11–14px 白字；三条横带之间什么都没有；一条只作装饰的横带。
 
-**Picture held while text scrolls**
+**图片固定、文字滚过**
 
-- *When.* A list, steps or a long paragraph that all belong to one picture. If the picture changes for
-  each item, it is the index with a preview, below.
-- *Geometry.* A 100vh sticky stage inside a section two to six screens long (runways of 1,800–5,400px
-  are typical in the study). The picture holds one half (685×880 is a typical portrait), two-thirds, or
-  the whole screen with the text passing over it on a solid panel. Text rows about 150px apart, so two
-  or three are in view at once.
-- *Phone.* Release the stick: picture first, text under it. If the picture swaps per item, keep it as
-  a band in the top 40% of the screen.
-- *Fails.* Long runways where the text has faded out and the held picture is all that is left (the
-  panel recorded several empty stages on phones); body copy set on the held picture.
+- *何时。* 一个列表、若干步骤或一段长文，全都属于同一张图。如果每换一项图就换，那是下面
+  的带 hover 预览的索引。
+- *几何。* 分区长两到六屏（研究中 1,800–5,400px 的跑道很典型），内含一个 100vh 的 sticky
+  舞台。图片占一半（685×880 是典型的竖幅）、三分之二，或整个屏幕、文字从一块实心面板上
+  经过。文字行相距约 150px，所以同屏有两三行。
+- *手机。* 解除固定：图先、文字在下。如果图随条目切换，让它保持为屏幕上部 40% 的一条横带。
+- *失败。* 跑道太长，文字已经淡出，只剩固定的图（评审在手机上记录到几个空舞台）；正文排
+  在固定的图上。
 
-**Inset frame that grows**
+**生长的内嵌画框**
 
-- *When.* Once per page, for the film or picture the page is about, as the move from type into
-  picture.
-- *Geometry.* The frame starts centred at 35–50% of the width (549×366, 710×480 and 864×540 in the
-  study) or as a 16px inset round a full screen, and grows to the full width and height over
-  720–2,700px of scroll. Any corner radius goes to 0 as it reaches the edges. A headline sits above it
-  before it starts; nothing else on the screen moves while it grows.
-- *Phone.* Start at full width inside the 16px margins and grow to a full-bleed portrait, or skip the
-  growth.
-- *Fails.* The growth is the only thing on screen for three scrolls; a loading spinner or a blank box
-  in the first frame (give it a poster, start loading before it enters); used twice.
+- *何时。* 每页一次，用于页面所要讲的影片或图片，作为从文字进入图片的动作。
+- *几何。* 画框从居中的宽度 35–50% 起步（研究中 549×366、710×480 和 864×540），或作全屏
+  四周的 16px 内缩，然后在 720–2,700px 的滚动里长到全宽全高。任何圆角在触到边缘时归零。
+  它开始之前上方有一个标题；它生长时屏上没有别的东西在动。
+- *手机。* 从 16px 边距内的全宽起步，长成满幅竖幅，或跳过生长。
+- *失败。* 三次滚动里屏上只有生长这一件事；第一帧里有加载转圈或空盒子（给它 poster，在它
+  进入前就开始加载）；用了两次。
 
-**Uneven mosaic**
+**不均匀拼贴**
 
-- *When.* A body of work, or one place seen several ways: five to twelve pictures.
-- *Geometry.* Two columns, or rows of three on a 24-column grid. Two or three picture widths (for
-  example 32%, 48% and 65% of the width, or 5, 7 and 12 columns), neighbours offset vertically by
-  120–190px, 130–450px between rows, one or two ratios, a caption under each.
-- *Phone.* One column alternating full width and about 70% width, or two columns of 120–180px tiles
-  that keep the offsets.
-- *Fails.* Random ratios with random offsets, which read as a stock dump. Captions in 9–12px mono with
-  index numbers, the award-site habit: here the caption is one line in the text face at body size, with
-  no number.
+- *何时。* 一批作品，或一个地方的多种看法：五到十二张图。
+- *几何。* 两列，或 24 列网格上每行三张。两三个图片宽度（例如宽度的 32%、48% 和 65%，或
+  5、7、12 列），相邻图片垂直错开 120–190px，行间 130–450px，一两个比例，每张下面一条
+  说明。
+- *手机。* 一列，全宽与约 70% 宽交替，或两列 120–180px 的瓦片、保留错位。
+- *失败。* 随机比例配随机错位，读作库存倾倒。9–12px 等宽字体带编号的说明，获奖站点的
+  习惯：这里说明是正文字族的一行、正文字号，不带编号。
 
-**Horizontal gallery**
+**横向画廊**
 
-- *When.* A set people browse in any order: products, rooms, events, a team.
-- *Geometry.* Cards 25–35% of the width (435×326 with 20px gaps at 1440: three in full and a fourth
-  cut by the edge), or a strip at one fixed height with mixed widths (576px tall in the study), or a
-  slider whose centre slide is about 73% of the width with 170–180px of each neighbour showing. Always
-  cut by the right edge so it reads as more. A marquee of pictures moves slowly: 60–120s per loop.
-- *Phone.* One card at 75–80% of the width (290–300px of 390) with the next one showing; swipe.
-- *Fails.* Arrows and no drag or swipe; a marquee of things people need to read; a carousel holding the
-  page's one important picture.
+- *何时。* 一组按任意顺序浏览的东西：产品、房间、活动、团队。
+- *几何。* 卡片占宽度 25–35%（1440 下 435×326、间距 20px：三张全见、第四张被边缘裁断），或
+  固定高度、宽度混合的一条横带（研究中 576px 高），或一个中心卡片约 73% 宽、两侧各露出
+  170–180px 的滑块。始终在右缘被裁断，让人读出"还有更多"。图片跑马灯走得很慢：每圈
+  60–120 秒。
+- *手机。* 一张卡占宽度 75–80%（390 中的 290–300px），露出下一张；滑动切换。
+- *失败。* 只有箭头、不能拖拽或滑动；让人需要阅读的东西做成跑马灯；页面上唯一重要的图片
+  被放进轮播。
 
-**Panel sliding over a held picture**
+**面板滑过固定的图片**
 
-- *When.* A change of chapter: the picture holds, and the next section rises over it.
-- *Geometry.* The picture is sticky at 100vh; the next section's ground slides up over it at full width,
-  its top edge straight or shaped from the subject (the study has the arch of a building's windows).
-  Here it is a solid panel with square corners: no rounded sheet tops, no frosted glass.
-- *Phone.* Unchanged.
-- *Fails.* Decks of five or six cards whose earlier cards linger as slivers; stacking for its own sake.
+- *何时。* 换章：图片固定，下一个分区从它上面升起。
+- *几何。* 图片 sticky 在 100vh；下一个分区的底色以全宽从下方滑上来盖住它，上缘平直或取形
+  自主体（研究里有建筑窗拱的例子）。这里它是一块方角实心面板：不要圆角的板顶，不要磨砂
+  玻璃。
+- *手机。* 不变。
+- *失败。* 五六张卡片的叠层，先前的卡片留下细条残影；为叠而叠。
 
-**Even grid**
+**均匀网格**
 
-- *When.* An archive only (layout.md §5): a shop range, the team, a menu, the full list of work.
-- *Geometry.* Two, three or four across, equal cells, 8–16px gaps, one ratio (4:5 is the commonest),
-  the caption under each picture.
-- *Phone.* Two across for products, one for work and people.
-- *Fails.* Three equal cards as "features". Cards with a dark gradient at the foot so the label can sit
-  on the picture, common in the study: here the label goes under the picture.
+- *何时。* 只用于档案（layout.md §5）：一个商品系列、团队、菜单、作品全集。
+- *几何。* 两、三或四列，等大单元格，间距 8–16px，一个比例（4:5 最常见），每张图下一条
+  说明。
+- *手机。* 产品两列，作品和人物一列。
+- *失败。* 三张等大卡片充当"特性"。卡片底部加一块深色渐变好让标签坐在图片上，研究里常见：
+  这里标签放在图片下面。
 
-**Index with hover preview**
+**带 hover 预览的索引**
 
-- *When.* A list of eight or more projects or clients where the names matter as much as the pictures.
-- *Geometry.* Rows on a 45–80px pitch, names at 30–60px. One picture at a time, about a third of the
-  width at 16:9 or a portrait 300–450px tall, at a fixed place (the right half from the 50% line, or
-  the centre), swapped within 0.3s. A version that needs no mouse: the names scroll across a picture
-  fixed at the centre and the picture shows whichever name is crossing it. In the study the picture
-  sits on top of the names; here nothing lies on top of large type, so the names pass in front of it.
-- *Phone.* No hover. Give each row a thumbnail about 100px wide, or use the scroll version.
-- *Fails.* Pictures that never appear on a touch screen. Rows divided by hairlines, the award-site
-  habit: here rows are separated by space, and the active row by ink or a change of ground.
+- *何时。* 八个或更多的项目或客户名单，名字和图片同等重要。
+- *几何。* 行距 45–80px 的行，名字 30–60px。一次一张图，约三分之宽、16:9 或高 300–450px 的
+  竖幅，位置固定（从 50% 线起的右半，或居中），0.3 秒内切换。一个不需要鼠标的版本：名字
+  从固定在中央的图片上滚过，图片显示正经过它的那个名字。研究里图片压在名字上面；这里
+  大字上不压任何东西，所以名字从它前面经过。
+- *手机。* 没有 hover。给每行一个约 100px 宽的缩略图，或用滚动版本。
+- *失败。* 触屏上图片从不出现。行被发丝线分隔，获奖站点的习惯：这里行与行靠间距分隔，
+  当前行靠墨色或底色变化标记。
 
-**One picture on a field, or one small picture beside a statement**
+**色场上的单图，或陈述旁的一张小图**
 
-- *When.* A pause in the page: a single portrait or object. Or a small picture that gives a statement
-  a face.
-- *Geometry.* A single centred picture at 3:4 and 75% of the viewport height, on a ground taken from
-  the picture. Or a small picture 7–26% of the width (108–374px) beside, above or between the lines
-  of a 48–136px statement, aligned to one of its lines.
-- *Phone.* The picture above the statement at 60–100% of the width.
-- *Fails.* Used as the default for every picture: a picture with equal margins on all sides reads as
-  placed by default (section 5).
+- *何时。* 页面的一次停顿：单独一张人像或物件。或一张给陈述一张脸的小图。
+- *几何。* 单张居中图片，3:4、视口高度的 75%，底色取自图片本身。或一张占宽 7–26% 的
+  （108–374px）小图，放在 48–136px 陈述的旁边、上方或行间，与它的某一行对齐。
+- *手机。* 图在陈述上方，占宽 60–100%。
+- *失败。* 被当成每张图的默认：四周等边距的图片读作默认摆放（第 5 节）。
 
-**Small pictures between words**
+**词与词之间的小图**
 
-- *When.* A statement about the things themselves (materials, people, products), on a screen of its
-  own.
-- *Geometry.* Two to four chips in the statement, from the cap height to three-quarters of the type
-  size tall and one to one and a half times as wide (50×46px in a 60px line; 113×75px between the two
-  words of a 150px name), all from one shoot, square corners. Give them a width and height so the lines
-  do not jump while they load.
-- *Phone.* Keep them inline at the height of the text.
-- *Fails.* More than four; chips from different shoots; a chip that carries information the words do
-  not.
+- *何时。* 关于事物本身（材料、人物、产品）的陈述，独占一屏。
+- *几何。* 陈述里两到四枚内嵌小图，从大写字高到四分之三字号高、一到一倍半宽（60px 一行里
+  的 50×46px；150px 名字两个词之间的 113×75px），全部出自同一次拍摄，方角。给它们 width 和
+  height，加载时行不跳。
+- *手机。* 保持内联，与文字同高。
+- *失败。* 超过四枚；小图出自不同的拍摄；一枚小图承载了文字没有的信息。
 
-**Picture inside or behind display type**
+**图片在展示大字之内或其后**
 
-- *When.* The object is the subject: a product, a building, a person.
-- *Geometry.* A small picture window sits inside a block of 150–200px display type and later opens
-  into the next screen; or the object stands behind the type, showing between and around the letters;
-  or it touches the edge of the word without covering a letter. In the study the object more often
-  stands in front and covers one or two letters, or a line of type runs behind a square picture; here
-  nothing lies on top of a headline (the inspector fails large text a fifth or more hidden), so the
-  type stays in front.
-- *Phone.* Keep it, with the type at about 15vw, and check the word still reads.
-- *Fails.* An object over the letters; type displaced or glitched by the picture.
+- *何时。* 物件就是主题：一件产品、一栋建筑、一个人。
+- *几何。* 一个小的图片窗口嵌在 150–200px 的展示大字块里，之后打开进入下一屏；或物件站在
+  文字后面，在字母之间和四周露出；或它触碰词的边缘而不盖住一个字母。研究里物件更常站在
+  前面盖住一两个字母，或一行文字从一张方形图片后面经过；这里大字上不压任何东西（检查器
+  会让大字被遮五分之一或更多不通过），所以文字保持在前。
+- *手机。* 保留，文字约 15vw，检查词仍读得出来。
+- *失败。* 物件压在字母上；文字被图片挤歪或出故障。
 
-**Cut-out object on a flat field**
+**平场上的抠底物件**
 
-- *When.* Products and objects. The highest mean score in the table, on 7 of the 36 top sites.
-- *Geometry.* The object at 35–60% of the width on a flat ground taken from its own colours, standing
-  on the bottom edge or running off one side, with the type behind or beside it.
-- *Phone.* The object at 80–90% of the width under the headline.
-- *Fails.* A render floating in a void with no ground; a drop shadow added to a cut-out (no resting
-  shadows here; keep a contact shadow only if it was photographed).
+- *何时。* 产品和物件。全表最高平均分，36 个强站中的 7 个。
+- *几何。* 物件占宽 35–60%，放在取自它自身颜色的平场上，立在底缘或向一侧跑出，文字在它
+  后面或旁边。
+- *手机。* 物件占宽 80–90%，在标题下方。
+- *失败。* 悬在虚空里、没有地面的渲染图；给抠底物件加投影（这里不放落地阴影；除非拍摄时
+  就有，才保留接触阴影）。
 
-**Scattered collage**
+**散落拼贴**
 
-- *When.* Archives, ephemera, a festival of many small things. Sparingly: it is about as common on the
-  lowest pages as on the top ones.
-- *Geometry.* Six to sixteen pictures of 100–300px at a few sizes around a centred heading, never over
-  it.
-- *Phone.* Re-stack as overlapping pairs in one column.
-- *Fails.* Tilted prints and stickers with offset shadows, common in the study and not a treatment
-  here (section 6); pictures crossing the text.
+- *何时。* 档案、杂记、一场许多小东西的节日。省着用：它在最低页面上和在强页面上一样常见。
+- *几何。* 六到十六张 100–300px 的图片，几个尺寸，围绕一个居中标题，绝不压过它。
+- *手机。* 在一列里重新叠成互相搭着的成对。
+- *失败。* 带错位阴影的倾斜照片和贴纸，研究里常见、在这里不算处理方式（第 6 节）；图片
+  压过文字。
 
-**Small card docked in a corner**
+**停在角落的小卡片**
 
-- *When.* A standing pointer to the reel or to the next thing.
-- *Geometry.* About 216×144 to 240×140, 30–43px from the corner; one per page.
-- *Phone.* Drop it, or move it into the flow.
-- *Fails.* Content scrolling under it; a second one.
+- *何时。* 指向 reel 或下一件事的常驻指针。
+- *几何。* 约 216×144 到 240×140，距角落 30–43px；每页一个。
+- *手机。* 去掉，或挪进文档流。
+- *失败。* 内容从它下面滚过；出现第二个。
 
-**3D gallery**
+**3D 画廊**
 
-- *What.* Pictures on a ring, sphere, helix or tunnel in a WebGL scene, turned by the wheel or by
-  dragging.
-- *In the study.* 12 sites, 4 of them among the 16 lowest; mean score 7.30 against 7.44, usability 5.9
-  against 6.35.
-- *Here.* Do not build one. Show the same pictures as an index with previews or a horizontal gallery.
+- *是什么。* 图片排在 WebGL 场景里的圆环、球面、螺旋或隧道上，靠滚轮或拖拽转动。
+- *研究中。* 12 个站点，4 个落在最低的 16 个里；平均分 7.30 对 7.44，可用性 5.9 对 6.35。
+- *这里。* 不要建。用带预览的索引或横向画廊展示同样的图片。
 
-### Footage
+### 视频
 
-**What the study measured.**
+**研究测了什么。**
 
-- Footage on 38 of 91 sites (42%): 18 of the 36 top sites, 19 of the 39 in the middle, 1 of the 16
-  lowest. A site with footage carries a median of three or four clips (middle half 1–8).
-- Footage covers at least half of the first screen on about a quarter of the sites, and is full-bleed
-  on nearly all of them.
-- Clips are short: median 10s, middle half 5–14s; 61% run 10s or less and 88% 20s or less.
-- Every decorative clip is muted, loops, plays inline and has no controls. The autoplay attribute is on
-  44% of clips; the rest are started by script, mostly as they come into view.
-- Only 31% of clips have a poster (13 of the 38 sites). The rest show a blank or grey box until they
-  play, and the panel recorded those as blank first paints. Here a poster is required (section 11).
-- Sources: 1920×1080 is the commonest, then 1280×720; tall clips at 450×800 or 540×960 for phones and
-  portrait tiles. Median source width 1,080px.
-- On the page: 16:9 41%, square 19%, portrait (4:5 to 9:16) 25%, 4:3 or 3:2 12%. Corners square on 75%
-  (the rest 8px or less, or 20–32px). `object-fit: cover` on 84%, contain on 16% (product strips, letterboxed
-  films).
+- 91 个站点中 38 个（42%）有视频：36 个强站里 18 个，中间段 39 个里 19 个，最低的 16 个里
+  1 个。带视频的站点中位数带三四段（中间一半 1–8）。
+- 视频至少盖住首屏一半的站点约四分之一，其中几乎全部为满幅。
+- 片段很短：中位数 10 秒，中间一半 5–14 秒；61% 在 10 秒以内，88% 在 20 秒以内。
+- 每个装饰性片段都是静音、循环、内联、无控件。44% 的片段带 autoplay 属性；其余由脚本启动，
+  多在进入视口时。
+- 只有 31% 的片段有 poster（38 个站点中的 13 个）。其余在播放前显示空白或灰盒子，评审把
+  这些记为空白首绘。这里 poster 是必需的（第 11 节）。
+- 来源：1920×1080 最常见，其后 1280×720；450×800 或 540×960 的竖版用于手机和竖向瓦片。来源
+  宽度中位数 1,080px。
+- 页面上：16:9 占 41%，方形 19%，竖幅（4:5 到 9:16）25%，4:3 或 3:2 12%。75% 为方角（其余
+  8px 或更小，或 20–32px）。84% 用 `object-fit: cover`，16% 用 contain（产品条带、加黑边
+  的影片）。
 
-**Where it goes.**
+**它去哪里。**
 
-- **Hero background:** full-bleed, cover, often oversized by 1–25% so a drift or zoom never shows an
-  edge. Either one slow take or a montage cutting every second or two.
-- **Inline, as a picture:** in splits, tiles and cards, at about a third of the width (median 33%,
-  middle half 24–45%); a third of these clips are under a quarter of the width and fewer than one in
-  ten is full width. Slow, near-still subjects (water, skin, light, a turning object) read as living
-  photographs and sit well among stills.
-- **The frame that grows** (above), for a reel.
-- **A docked card** (above): one small clip in a corner.
-- **On hover:** only two or three sites play clips on hover, all of them in an index or list. Nothing
-  that matters should play on hover only; phones have no hover.
-- **Full films:** about ten sites offer a full film behind a play button that opens a player with
-  controls. None autoplays it.
-- **Sound:** six sites offer sound behind a toggle; no clip starts with sound.
+- **Hero 背景：** 满幅、cover，常超配 1–25%，让漂移或缩放永不露边。要么一个长镜头，要么
+  每一两秒切一刀的蒙太奇。
+- **内联，作图片用：** 在 split、瓦片和卡片里，约占宽度三分之一（中位数 33%，中间一半
+  24–45%）；这些片段里三分之一不到宽度的四分之一，不到十分之一是全宽。缓慢、近乎静止的
+  主体（水、皮肤、光线、转动的物件）读作活照片，放在静态图之间很合适。
+- **会生长的画框**（上文），用于 reel。
+- **停靠的卡片**（上文）：角落里的一小段。
+- **hover 上：** 只有两三个站点在 hover 时播放，全部在索引或列表里。任何重要的东西都不该
+  只在 hover 时播放；手机没有 hover。
+- **完整影片：** 约十个站点把完整影片放在播放按钮后面，点开一个带控件的播放器。没有一个
+  自动播放。
+- **声音：** 六个站点把声音放在开关后面；没有任何片段带着声音开场。
 
-**How text sits on it.**
+**文字怎么放在它上面。**
 
-- Of about 30 sites with a full-bleed picture or film behind text on the first screen, about 14 set the
-  type straight on it and rely on the footage being graded dark where the type sits; about 10 dim it
-  (to half brightness, under a 30–40% dark layer, or with a dark fade along the bottom 180–590px);
-  about 6 keep the text off the picture, above it or on a solid card.
-- What goes on footage in the study is the name or a headline at 47–136px and one short line, docked
-  bottom-left or centred. Where body text at 11–14px went on footage or a busy photograph, the panel
-  named it as a fault, on top-scored sites too.
-- Here: one headline, one line and one action on footage at most, and never body text. Check contrast
-  where the type sits across the whole loop, not only on the poster; if any frame drops below 4.5:1
-  (3:1 for type of 24px and up), use the scrim in section 6 or a solid band.
+- 在约 30 个首屏把满幅图片或影片衬在文字后面的站点里，约 14 个把文字直接排在上面、赌视频
+  在文字所在处调得够暗；约 10 个压暗它（压到一半亮度、加一层 30–40% 的暗层，或沿底部
+  180–590px 加一道暗色渐隐）；约 6 个让文字离开图片，排在上方或一块实心卡片上。
+- 研究里放到视频上的是名字或 47–136px 的标题加一行短句，停靠在左下或居中。凡 11–14px 的
+  正文排在视频或繁忙照片上，评审都点名为毛病，强站也不例外。
+- 这里：视频上至多一个标题、一行字和一个动作，绝无正文。在文字所在位置检查整个循环的对比
+  度，不只看 poster；任何一帧低于 4.5:1（24px 及以上为 3:1），就用第 6 节的 scrim 或一块
+  实心横带。
 
-**On the phone.** Footage re-crops to a full-screen portrait (a separate tall source, or
-`object-position` on the subject); inset frames go full-bleed. One site in the study adds a 40% scrim
-on the phone only, where the type covers more of the picture.
+**手机上。** 视频重裁成满屏竖幅（另备一个竖版来源，或在主体上设 `object-position`）；内嵌
+画框变满幅。研究里有一个站点只在手机上加 40% 的 scrim，因为文字在那里盖住了更多画面。
 
-### Crops and treatment
+### 裁切与处理
 
-- **Ratios.** Of 1,356 pictures and clips measured: 4:5 21%, 16:9 19%, 1:1 16%, 16:10 10%, 3:2 7%, 2:3
-  5%, 4:3 5%, 5:4 4%, 3:4 3%, wider than 2:1 6%, 9:16 or taller 3%. Landscape 52%, portrait 33%,
-  square 15%.
-- **Two ratios do most of the work.** On sites with four pictures or more, the two commonest ratios
-  hold 76% of the pictures. The others (five ratios in all at the median) are exceptions with a reason:
-  one tall portrait in a run of landscapes, one wide band.
-- **Square corners** on 94% of pictures; 62 of the 68 sites with pictures in the page keep at least 80%
-  of them square. Where corners are rounded, it is 5px or less on two-thirds of them, or 20–32px on
-  card interfaces, one value per site.
-- **Cover.** `object-fit: cover` on 78%, contain on 10% (a product on a tile, a letterboxed film).
-- **Untouched.** CSS filters touch pictures on only 9 sites, mostly for hover states. A handful use
-  black-and-white photography as a set; two multiply scanned paper onto the ground. Several keep the
-  interface black, white and grey and let the photographs carry all the colour.
-- **Common in the study, not treatments here** (section 6): a fixed grain layer over the whole page
-  (about a third of the sites), duotone or tinted photographs, blurred copies behind a picture as a
-  glow, tilted prints and stickers with offset shadows.
-- **Oversize only by the distance it moves.** 22 sites move pictures with the scroll, oversizing them by
-  1–25%. Oversize by the travel and no more, on one picture per screen.
-- **Resolution.** The study serves pictures at a median 1.9 times their CSS width, but 17% are served
-  smaller than they are shown and full-width pictures at a median of only 1,440px. Here: twice the CSS
-  width, capped at about 2,400px (section 4).
+- **比例。** 在测量的 1,356 张图片和片段中：4:5 占 21%，16:9 占 19%，1:1 占 16%，16:10 占
+  10%，3:2 占 7%，2:3 占 5%，4:3 占 5%，5:4 占 4%，3:4 占 3%，宽于 2:1 占 6%，9:16 或更窄占
+  3%。横幅 52%，竖幅 33%，方形 15%。
+- **两个比例干完了大部分活。** 在四张图以上的站点上，最常用的两个比例占住 76% 的图。其余的
+  （中位数共五个比例）是带着理由的例外：一列横幅里的一张竖幅人像，一条宽横带。
+- **94% 的图片为方角；** 页面里有图的 68 个站点中 62 个让至少 80% 的图保持方角。圆角处，
+  三分之二是 5px 或更小，或卡片界面上的 20–32px，一站一值。
+- **Cover。** 78% 用 `object-fit: cover`，10% 用 contain（瓦片上的一件产品、加黑边的影片）。
+- **不处理。** 只有 9 个站点用 CSS 滤镜碰图片，多为 hover 状态。少数把黑白摄影用作整套；
+  两个把扫描纸 multiply 到底色上。几个保持界面黑白灰，让照片扛起全部颜色。
+- **研究里常见、在这里不算处理方式**（第 6 节）：盖住整页的一层固定颗粒（约三分之一的
+  站点）、双色调或着色的照片、图片后面垫模糊副本当辉光、带错位阴影的倾斜照片和贴纸。
+- **超配只超它要移动的距离。** 22 个站点让图片随滚动移动，超配 1–25%。按位移超配，不多
+  超，每屏一张。
+- **分辨率。** 研究里图片按其 CSS 宽度的中位数 1.9 倍供图，但 17% 供得比显示的小，全宽图片
+  中位数只有 1,440px。这里：CSS 宽度的两倍，封顶约 2,400px（第 4 节）。
 
-### Text over pictures
+### 图片上的文字
 
-- In the study, text sits on pictures often and is checked rarely: about 28 notes record text set
-  straight on a picture with no scrim, and the faults of 16 sites include text lost over pictures: 8–14px
-  labels and body over photographs, and navigation in a difference blend or with no backing passing
-  over them.
-- Where it works, the text is display size and sits over the calm part (sky, a dark wall, the shadow
-  side), docked in a corner or along one edge. Two other forms in the study: a solid card in the
-  ground colour inset over the photograph and carrying the heading, and text on the white of a picture
-  that fades into the page.
-- Here: on a picture put only display text, one short line and one action. Body text, captions and
-  labels go beside or under it. Measure contrast at the text's own position (4.5:1, or 3:1 for 24px and
-  up). If it fails, move the text to a calmer part, put it on a solid card in the ground colour, or use
-  the scrim in section 6. A fixed navigation that passes over pictures gets a solid band, or hides
-  while scrolling down.
+- 研究里，文字常压在图片上，却很少被检查：约 28 条笔记记录了不加 scrim 直接排在图片上的
+  文字，16 个站点的毛病里包括压在图片上丢失的文字：照片上的 8–14px 标签和正文，以及用
+  difference 混合或无衬底、从图片上划过的导航。
+- 行得通的地方，文字是展示级大字，压在平静的部分上（天空、暗墙、背光面），停靠在角落或沿
+  一条边。研究里另外两种形式：一块衬在照片上的底色实心卡片，承载标题；以及排在照片留白处、
+  渐隐进页面的文字。
+- 这里：图片上只放展示级文字、一行短句和一个动作。正文、说明和标签排在旁边或下面。在文字
+  自己的位置测对比度（4.5:1，24px 及以上为 3:1）。不达标就把文字挪到更平静的地方，放到
+  底色实心卡片上，或用第 6 节的 scrim。划过图片的固定导航要么得到一块实心横带，要么在
+  下滚时隐藏。
 
-### Rules for a generator
+### 生成器规则
 
-1. **About a third of the page is picture.** Across the scrolled screens, pictures fill 30–40% of the
-   area, and at least one screen in four carries no picture (top sites: 30% and 28%).
-2. **A picture leads its screen or stays small.** A leading picture takes at least 60% of its screen;
-   an accent stays under 10% of it. Avoid screen after screen of pictures at 20–40%: in the study 42% of
-   screens are 0% and 19% are 90% or more.
-3. **Three to five placements per page,** and no two neighbouring sections with the same one. Sites
-   with two or fewer average 7.31, sites with three or more about 7.5.
-4. **Six to twelve pictures, never fewer than four.** Study median 7; top sites 4–27; lowest 2.
-5. **Two ratios for at least 75% of the pictures** (76% in the study), a third only for a deliberate
-   exception. Defaults: 4:5 for portraits, 16:9 or 3:2 for landscapes.
-6. **Square corners on every picture** (94% in the study). If the direction rounds them, one radius of
-   4px for every picture and clip.
-7. **Split pictures take 42–50% of the width, or two-thirds,** at the full height of the section and
-   touching the viewport on their outer side; the text starts on the 50% line. On the phone the
-   picture goes first, full width.
-8. **Full-bleed bands are 100% wide and 100–150vh tall,** one every three or four screens, oversized by
-   10% at most for parallax, with text only in one corner at least 32px in. On the phone, re-crop to a
-   full-screen portrait.
-9. **One inset frame that grows per page,** from 35–50% of the width to the full screen over
-   720–2,700px of scroll, with nothing else moving on that screen.
-10. **Horizontal galleries show three cards and a cut fourth:** cards 25–35% of the width with 16–20px
-    gaps; on the phone one card at 75–80% of the width with the next one showing.
-11. **One moving picture per screen.** Clips of 5–15s (median 10s), muted, looped, inline, with a
-    poster, paused out of view; a hero source of 1920×1080 under 10MB, inline clips at 1280×720 or
-    smaller under 5MB.
-12. **Only display text on a picture:** a headline, one line and one action at most, with contrast
-    measured at the text's position across the whole loop. Body text, 16px or more, goes beside or
-    under the picture, never on it.
+1. **页面约三分之一是图。** 滚过的屏幕上，图片填满 30–40% 的面积，且至少每四屏有一屏没有图
+   （强站：30% 和 28%）。
+2. **图片要么领衔它的屏，要么保持小。** 领衔的图至少占它那屏的 60%；点缀的图低于 10%。
+   避免一屏又一屏 20–40% 的图：研究里 42% 的屏是 0%，19% 是 90% 或以上。
+3. **每页三到五种安放方式，** 且相邻两个分区不用同一种。两种或更少的站点平均 7.31，三种或
+   更多的约 7.5。
+4. **六到十二张图，绝不少于四张。** 研究中位数 7；强站 4–27；最低 2。
+5. **至少 75% 的图共用两个比例**（研究中 76%），第三个比例只用于有意的例外。默认：人像
+   4:5，风景 16:9 或 3:2。
+6. **每张图都是方角**（研究中 94%）。方向要求圆角时，每张图和每段视频统一 4px 圆角。
+7. **Split 图片占宽 42–50%，或三分之二，** 占分区全高、外侧贴住视口；文字从 50% 线开始。
+   手机上图先、全宽。
+8. **满幅横带 100% 宽、100–150vh 高，** 每三四屏一条，视差超配至多 10%，文字只放在至少向内
+   32px 的一个角落。手机上重裁成满屏竖幅。
+9. **每页一个生长的内嵌画框，** 从宽度 35–50% 长到全屏，跨越 720–2,700px 的滚动，那一屏上
+   没有别的东西在动。
+10. **横向画廊展示三张卡加一张被裁的第四张：** 卡片占宽 25–35%、间距 16–20px；手机上一张
+    卡占宽 75–80%、露出下一张。
+11. **每屏一段动态画面。** 片段 5–15 秒（中位数 10 秒），静音、循环、内联、带 poster、离开
+    视口即暂停；hero 来源 1920×1080、10MB 以内，内联片段 1280×720 或更小、5MB 以内。
+12. **图片上只有展示级文字：** 至多一个标题、一行字和一个动作，在文字位置测量整个循环的
+    对比度。正文，16px 或以上，排在图片旁边或下面，绝不压在图上。

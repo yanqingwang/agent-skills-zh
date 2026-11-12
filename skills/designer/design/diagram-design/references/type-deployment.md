@@ -1,45 +1,49 @@
-# Deployment
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-deployment.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** where the software actually *runs* — hosts, VMs, pods, and managed services placed inside environment or network-boundary zones, with replica counts and versioned artifacts called out. Architecture answers "what talks to what"; deployment answers "what is installed on which host, in which environment, behind which network boundary, at how many replicas." If the diagram has no physical-placement decision to show — no zone boundary, no replica count, no version that matters — use `type-architecture.md` instead; redrawing the logical architecture with hostnames bolted on is the most common deployment anti-pattern.
+# 部署图
 
-## Layout conventions
+**适用场景：** 软件*实际运行在哪里*：主机、VM、pod 和托管服务，放进环境或网络边界区域，标出副本数与带版本的制品。架构图回答"什么和什么通信"；部署图回答"什么东西装在哪台主机上、在哪个环境里、在哪条网络边界之内、多少个副本"。如果图上没有物理放置决策可展示：没有区域边界、没有副本数、没有重要的版本：就用 `type-architecture.md`；把逻辑架构图重画一遍再钉上主机名，是最常见的部署图反模式。
 
-Three nesting levels, outermost to innermost — reuses the containment grammar from `type-nested.md`, specialized for infrastructure:
+## 布局约定
 
-1. **Zone** — an environment or network boundary (`edge`, `prod / eu-west-1`, `data`). A large rect, `rx=8`, fill `ink @ 0.02`, stroke `ink @ 0.20` dashed `4,4`. An `eyebrow`-role 8px (or 7px for tight layouts) uppercase tracked label sits inside the top-left corner, on a paper-colored mask over the border. Zones are drawn **first** — before arrows and nodes — so labels and boxes paint over them (z-order: bg → zones → arrows → labels → nodes).
-2. **Infrastructure node** — a host, VM, pod, or managed service inside a zone. The §6 node-box pattern (SKILL.md; markup in [primitives-core.md](primitives-core.md#node-box--full-pattern)) at `rx=6`, with a rectangular type tag (`rx=2`, **not** a pill) carrying `POD` / `VM` / `MANAGED` / `CDN` in the top-left corner.
-3. **Artifact chip** — what is deployed onto that node. A small 24px-tall rect `rx=4`, fill `ink @ 0.05`, stroke `muted`, holding the image or service name in the `node-name` family at 12px (left-aligned) plus a `sublabel`-role 9px version tag (right-aligned, e.g. `v2.4.1`). A node can carry more than one chip (stacked with an 8px gap) when more than one artifact is co-located (a sidecar, for example).
+三个嵌套层级，从最外到最内：复用 `type-nested.md` 的容纳语法，针对基础设施特化：
 
-**Replica badge.** A node running N copies carries a right-aligned `eyebrow`-role 8px badge (`x3`) inside its own small `rx=2` box in the node's top-right corner. A mask fully inside a node is a badge chip and is a legitimate exception to the "mask must not overlap a later node" rule (SKILL.md §6 rule 6) — it's part of that same node.
+1. **区域（Zone）** — 一个环境或网络边界（`edge`、`prod / eu-west-1`、`data`）。一个大矩形，`rx=8`，填充 `ink @ 0.02`，描边 `ink @ 0.20` 虚线 `4,4`。`eyebrow` 角色 8px（紧凑布局用 7px）全大写带字距的标签坐在左上角内侧，衬在压着边框的 paper 色遮罩上。区域**最先**绘制：先于箭头和节点，让标签和盒子叠画在它之上（z 序：背景 → 区域 → 箭头 → 标签 → 节点）。
+2. **基础设施节点** — 区域内的主机、VM、pod 或托管服务。§6 的节点盒模式（SKILL.md；标记见 [primitives-core.md](primitives-core.md#node-box--full-pattern)），`rx=6`，左上角一个矩形类型标签（`rx=2`，**不是**胶囊），写 `POD` / `VM` / `MANAGED` / `CDN`。
+3. **制品芯片** — 部署到该节点上的东西。小的 24px 高矩形 `rx=4`，填充 `ink @ 0.05`，描边 `muted`，内放 `node-name` 字族 12px 的镜像或服务名（左对齐）加一个 `sublabel` 角色 9px 的版本标签（右对齐，如 `v2.4.1`）。一个节点可以带多个芯片（纵向堆叠、8px 间距），当多个制品同置（例如一个 sidecar）。
 
-**Network paths.** Orthogonal elbows between nodes (SKILL.md §6, elbow formula and port-selection rules in `type-architecture.md`), labelled with protocol and port in the `arrow-label` role at 8px (`HTTPS:443`, `TLS:5432`). A path that crosses a zone boundary is `link`-blue; a path that stays inside one zone is `muted`. Async or replication paths are dashed `5,4`.
+**副本徽章。** 运行 N 份副本的节点带一个右对齐的 `eyebrow` 角色 8px 徽章（`x3`），装在节点右上角自己的小 `rx=2` 盒里。完全位于节点内部的遮罩是徽章芯片，是"遮罩不得与后绘节点重叠"规则（SKILL.md §6 规则 6）的正当例外：它是同一个节点的一部分。
 
-**Focal rule.** The 2 accent elements are the single-point-of-failure or the newly-introduced piece — never more than 2. In the canonical example: the RDS primary (accent-tint fill, accent stroke) and the replication path to its standby (accent, dashed).
+**网络路径。** 节点之间的正交拐弯（SKILL.md §6，拐弯公式与端口选择规则见 `type-architecture.md`），用 `arrow-label` 角色 8px 标注协议和端口（`HTTPS:443`、`TLS:5432`）。跨区域边界的路径用 `link` 蓝；留在同一区域内的路径用 `muted`。异步或复制路径用虚线 `5,4`。
 
-## Complexity budget
+**焦点规则。** 2 个 accent 元素是单点故障或新引入的那一件：绝不超过 2 个。规范示例中：RDS 主库（accent-tint 填充、accent 描边）与到其备库的复制路径（accent、虚线）。
 
-| Limit | Rule |
+## 复杂度预算
+
+| 限额 | 规则 |
 |---|---|
-| Max zones | 3 |
-| Max infrastructure nodes | 6 |
-| Max artifact chips | 9 |
-| Max network paths | 8 |
-| Max accent elements | 2 |
+| 区域上限 | 3 |
+| 基础设施节点上限 | 6 |
+| 制品芯片上限 | 9 |
+| 网络路径上限 | 8 |
+| accent 元素上限 | 2 |
 
-Over budget → split into one deployment diagram per environment.
+超预算 → 每个环境拆成一张部署图。
 
-## Anti-patterns
+## 反模式
 
-- Redrawing the logical architecture with hostnames bolted on. If no placement decision is visible (which host, which zone, how many replicas), use `type-architecture.md` instead.
-- Zones that are just visual grouping with no boundary meaning — a zone must be a real environment or network boundary, not a layout convenience.
-- Artifact chips without a version tag. The version is why the diagram exists; an unversioned chip is a wasted box.
-- One node drawn per replica instead of a single node with a replica badge.
-- Cloud-vendor icon soup standing in for named nodes — name the host or service, don't decorate it.
-- Unlabelled network paths. Protocol and port are the content of a deployment diagram, not decoration.
-- Mixing two environments in one diagram (e.g. staging and production nodes side by side without a zone boundary that actually separates them).
+- 把逻辑架构图重画一遍再钉上主机名。看不到任何放置决策（哪台主机、哪个区域、多少副本）时，改用 `type-architecture.md`。
+- 区域只是视觉分组、没有边界含义：区域必须是真实的环境或网络边界，不是排版上的便利。
+- 制品芯片不带版本标签。版本正是这张图存在的理由；没有版本的芯片是一个浪费的盒子。
+- 每个副本画一个节点，而不是一个节点加副本徽章。
+- 用云厂商图标汤代替命名节点：给主机或服务起名字，别给它贴花。
+- 网络路径无标签。协议和端口是部署图的内容，不是装饰。
+- 一张图里混两个环境（例如 staging 和生产节点并排摆着，却没有一条真正分开它们的区域边界）。
 
-## Examples
+## 示例
 
-- `assets/example-deployment.html` — minimal light
-- `assets/example-deployment-dark.html` — minimal dark
-- `assets/example-deployment-full.html` — full editorial
+- `assets/example-deployment.html` — 极简浅色
+- `assets/example-deployment-dark.html` — 极简深色
+- `assets/example-deployment-full.html` — 完整编辑排版

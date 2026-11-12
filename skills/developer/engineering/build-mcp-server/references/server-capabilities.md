@@ -1,12 +1,16 @@
-# Server capabilities — the rest of the spec
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/mcp-server-dev/skills/build-mcp-server/references/server-capabilities.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Features beyond the three core primitives. Most are optional, a few are near-free wins.
+# Server capabilities — 规范中的其余部分
+
+三大核心原语之外的特性。多数是可选的，有几个几乎是白捡的收益。
 
 ---
 
-## `instructions` — system prompt injection
+## `instructions` — system prompt 注入
 
-One line of config, lands directly in Claude's system prompt. Use it for tool-use hints that don't fit in individual tool descriptions.
+一行配置，直接落入 Claude 的 system prompt。用它来放那些放不进单个 tool description 的 tool 使用提示。
 
 ```typescript
 const server = new McpServer(
@@ -19,13 +23,13 @@ const server = new McpServer(
 mcp = FastMCP("my-server", instructions="Always call search_items before get_item — IDs aren't guessable.")
 ```
 
-This is the highest-leverage one-liner in the spec. If Claude keeps misusing your tools, put the fix here.
+这是规范里杠杆率最高的一行配置。如果 Claude 总是用错你的 tools，把修正写在这里。
 
 ---
 
-## Sampling — delegate LLM calls to the host
+## Sampling — 把 LLM 调用委托给 host
 
-If your tool logic needs LLM inference (summarize, classify, generate), don't ship your own model client. Ask the host to do it.
+如果你的 tool 逻辑需要 LLM 推理（摘要、分类、生成），不要自带模型客户端。让 host 来做。
 
 ```typescript
 // Inside a tool handler
@@ -43,13 +47,13 @@ const result = await extra.sendRequest({
 response = await ctx.sample("Summarize this document", context=doc)
 ```
 
-**Requires client support** — check `clientCapabilities.sampling` first. Model preference hints are substring-matched (`"claude-3-5"` matches any Claude 3.5 variant).
+**需要客户端支持**，先检查 `clientCapabilities.sampling`。模型偏好提示按子串匹配（`"claude-3-5"` 匹配任何 Claude 3.5 变体）。
 
 ---
 
-## Roots — query workspace boundaries
+## Roots — 查询工作区边界
 
-Instead of hardcoding a root directory, ask the host which directories the user approved.
+不要硬编码根目录，改为向 host 询问用户批准了哪些目录。
 
 ```typescript
 const caps = server.getClientCapabilities();
@@ -63,13 +67,13 @@ if (caps?.roots) {
 roots = await ctx.list_roots()
 ```
 
-Particularly relevant for MCPB local servers — see `build-mcpb/references/local-security.md`.
+对 MCPB 本地 server 尤其相关，见 `build-mcpb/references/local-security.md`。
 
 ---
 
-## Logging — structured, level-aware
+## Logging — 结构化、分级别
 
-Better than stderr for remote servers. Client can filter by level.
+对 remote server 而言比 stderr 更好。客户端可以按级别过滤。
 
 ```typescript
 // In a tool handler
@@ -83,13 +87,13 @@ await extra.sendNotification({
 await ctx.info("Processing", count=42)   # also: ctx.debug, ctx.warning, ctx.error
 ```
 
-Levels follow syslog: `debug`, `info`, `notice`, `warning`, `error`, `critical`, `alert`, `emergency`. Client sets minimum via `logging/setLevel`.
+级别遵循 syslog：`debug`、`info`、`notice`、`warning`、`error`、`critical`、`alert`、`emergency`。客户端通过 `logging/setLevel` 设置最低级别。
 
 ---
 
-## Progress — for long-running tools
+## Progress — 供长耗时 tools 使用
 
-Client sends a `progressToken` in request `_meta`. Server emits progress notifications against it.
+客户端在请求 `_meta` 里带上 `progressToken`。server 针对它发出进度通知。
 
 ```typescript
 async (args, extra) => {
@@ -117,9 +121,9 @@ async def long_task(ctx: Context) -> str:
 
 ---
 
-## Cancellation — honor the abort signal
+## Cancellation — 响应中止信号
 
-Long tools should check the SDK-provided `AbortSignal`:
+长耗时的 tool 应检查 SDK 提供的 `AbortSignal`：
 
 ```typescript
 async (args, extra) => {
@@ -130,13 +134,13 @@ async (args, extra) => {
 }
 ```
 
-fastmcp handles this via asyncio cancellation — no explicit check needed if your handler is properly async.
+fastmcp 通过 asyncio 取消机制处理这件事，只要你的 handler 是规范的 async 写法，就无需显式检查。
 
 ---
 
-## Completion — autocomplete for prompt args
+## Completion — 提示词参数的自动补全
 
-If you've registered prompts or resource templates with arguments, you can offer autocomplete:
+如果你注册的 prompts 或 resource 模板带参数，可以提供自动补全：
 
 ```typescript
 server.registerPrompt("query", {
@@ -146,19 +150,19 @@ server.registerPrompt("query", {
 }, ...);
 ```
 
-Low priority unless your prompts have many valid values.
+优先级不高，除非你的 prompts 有很多合法取值。
 
 ---
 
-## Which capabilities need client support?
+## 哪些能力需要客户端支持？
 
-| Feature | Server declares | Client must support | Fallback if not |
+| 特性 | Server 声明 | 客户端必须支持 | 不支持时的回退 |
 |---|---|---|---|
-| `instructions` | implicit | — | — (always works) |
+| `instructions` | 隐式 | — | —（始终可用） |
 | Logging | `logging: {}` | — | stderr |
-| Progress | — | sends `progressToken` | silently skip |
-| Sampling | — | `sampling: {}` | bring your own LLM |
-| Elicitation | — | `elicitation: {}` | return text, ask Claude to relay |
-| Roots | — | `roots: {}` | config env var |
+| Progress | — | 发送 `progressToken` | 静默跳过 |
+| Sampling | — | `sampling: {}` | 自备 LLM |
+| Elicitation | — | `elicitation: {}` | 返回文本，请 Claude 代为转问 |
+| Roots | — | `roots: {}` | 用配置环境变量 |
 
-Check client caps via `server.getClientCapabilities()` (TS) or `ctx.session.client_params.capabilities` (fastmcp) before using the bottom three.
+使用最后三项之前，先用 `server.getClientCapabilities()`（TS）或 `ctx.session.client_params.capabilities`（fastmcp）检查客户端能力。

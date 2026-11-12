@@ -1,58 +1,62 @@
-# Progress Log
+> **中文汉化版** · 上游：[OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) · 原文件：`.agents/skills/planning-with-files/templates/progress.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this file as the chronological record of work performed, files changed, validation results, and errors.
+# 进度日志
 
-## Session: [DATE]
+把本文件当作所做工作、所改文件、验证结果与错误的时序记录。
 
-Replace `[DATE]` with the date of this work session.
+## 会话：[DATE]
 
-### Phase 1: [Title]
+把 `[DATE]` 替换为本次工作会话的日期。
+
+### Phase 1: [标题]
 
 - **Status:** in_progress
-- **Started:** [timestamp]
-- Actions taken:
+- **开始时间：** [时间戳]
+- 所做动作：
   -
-- Files created/modified:
+- 创建/修改的文件：
   -
 
-Use the same status values as `task_plan.md`: `pending`, `in_progress`, or `complete`. Add concrete actions and paths as the phase advances.
+状态值与 `task_plan.md` 相同：`pending`、`in_progress` 或 `complete`。阶段推进时补充具体动作与路径。
 
-### Phase 2: [Title]
+### Phase 2: [标题]
 
 - **Status:** pending
-- Actions taken:
+- 所做动作：
   -
-- Files created/modified:
+- 创建/修改的文件：
   -
 
-## Test Results
+## 测试结果
 
-Record each validation command or scenario, its expected result, and the observed outcome.
+记录每条验证命令或场景、预期结果与实际观察到的结果。
 
-| Test | Input | Expected | Actual | Status |
-|------|-------|----------|--------|--------|
-|      |       |          |        |        |
+| 测试 | 输入 | 预期 | 实际 | 状态 |
+|------|------|------|------|------|
+|      |      |      |      |      |
 
-## Error Log
+## 错误日志
 
-Record errors promptly, including the attempt number and resolution. Change the approach before retrying a failed action.
+及时记录错误，包括尝试次数与解决方式。重试失败的动作之前先换方法。
 
-| Timestamp | Error | Attempt | Resolution |
-|-----------|-------|---------|------------|
-|           |       | 1       |            |
+| 时间戳 | 错误 | 尝试次数 | 解决方式 |
+|--------|------|----------|----------|
+|        |      | 1        |          |
 
-## 5-Question Reboot Check
+## 五问重启检查
 
-Use this table when resuming to confirm the current phase, destination, goal, findings, and completed work.
+恢复工作时用本表确认当前阶段、去向、目标、发现与已完成的工作。
 
-| Question | Answer |
-|----------|--------|
-| Where am I? | Phase X |
-| Where am I going? | Remaining phases |
-| What's the goal? | [goal statement] |
-| What have I learned? | See findings.md |
-| What have I done? | See above |
+| 问题 | 答案 |
+|------|------|
+| 我在哪里？ | Phase X |
+| 我要到哪里去？ | 剩余阶段 |
+| 目标是什么？ | [目标陈述] |
+| 我学到了什么？ | 见 findings.md |
+| 我做了什么？ | 见上文 |
 
 ---
 
-*Update this file after completing a phase, running validation, or encountering an error.*
+*完成一个阶段、运行验证或遇到错误后更新本文件。*

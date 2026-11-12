@@ -1,13 +1,17 @@
-# Advanced Deployment Strategies Reference
+> **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/cicd-automation/skills/deployment-pipeline-design/references/advanced-strategies.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Extended configurations, platform-specific patterns, and advanced rollback strategies.
-Core patterns and decision tables live in [`../SKILL.md`](../SKILL.md).
+# 高级部署策略参考
+
+扩展配置、平台特定模式与高级回滚策略。
+核心模式与决策表见 [`../SKILL.md`](../SKILL.md)。
 
 ---
 
-## Platform-Specific Pipeline Configurations
+## 平台特定流水线配置
 
-### GitHub Actions — Full Production Pipeline with Reusable Workflows
+### GitHub Actions：使用可复用 Workflow 的完整生产流水线
 
 ```yaml
 # .github/workflows/production.yml
@@ -158,7 +162,7 @@ jobs:
 
 ---
 
-### GitLab CI — Multi-Environment Pipeline with Dynamic Environments
+### GitLab CI：带动态环境的多环境流水线
 
 ```yaml
 # .gitlab-ci.yml
@@ -247,7 +251,7 @@ deploy:production:
 
 ---
 
-### Azure Pipelines — Multi-Stage with Approvals and Environments
+### Azure Pipelines：带审批与环境的多阶段流水线
 
 ```yaml
 # azure-pipelines.yml
@@ -345,9 +349,9 @@ stages:
 
 ---
 
-## Multi-Region Canary Promotion
+## 多区域金丝雀晋升
 
-Deploy to a pilot region first, validate, then promote to remaining regions in parallel:
+先部署到试点区域并完成验证，再并行晋升到其余区域：
 
 ```yaml
 # deploy-multiregion.yml (GitHub Actions)
@@ -380,9 +384,9 @@ jobs:
 
 ---
 
-## Advanced Argo Rollouts Patterns
+## 高级 Argo Rollouts 模式
 
-### Experiment-Based Canary (A/B Analysis)
+### 基于实验的金丝雀（A/B 分析）
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -425,7 +429,7 @@ spec:
         - setWeight: 100
 ```
 
-### Header-Based Canary (Internal Testing Before Traffic Split)
+### 基于请求头的金丝雀（流量切分前的内部测试）
 
 ```yaml
 # Route users with X-Canary: true header to canary pods
@@ -453,11 +457,11 @@ spec:
 
 ---
 
-## Database Migration Rollback Strategies
+## 数据库迁移回滚策略
 
-### Expand/Contract Pattern (Safe Schema Changes)
+### Expand/Contract 模式（安全的 Schema 变更）
 
-Never break backward compatibility within a single deployment cycle. Use the expand/contract pattern across three releases:
+不要在单个发布周期内破坏向后兼容性。把 expand/contract 模式分布在三个发布中执行：
 
 ```
 Release N:   Add nullable column (expand)
@@ -479,7 +483,7 @@ ALTER TABLE users RENAME COLUMN email_v2 TO email;
 EOF
 ```
 
-### Flyway with Undo Scripts
+### Flyway 与 Undo 脚本
 
 ```bash
 # Forward migration
@@ -492,9 +496,9 @@ flyway undo
 flyway undo -target=20240315
 ```
 
-Undo script naming convention: `U20240315__expand_add_email_v2.sql` (prefix `U` instead of `V`).
+Undo 脚本命名约定：`U20240315__expand_add_email_v2.sql`（前缀用 `U` 而非 `V`）。
 
-### Zero-Downtime Index Creation (PostgreSQL)
+### 零停机索引创建（PostgreSQL）
 
 ```sql
 -- Blocking (avoid in production):
@@ -504,11 +508,11 @@ CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX CONCURRENTLY idx_users_email ON users(email);
 ```
 
-Use `CREATE INDEX CONCURRENTLY` in all production migrations. Add it to a pre-deploy migration step that runs before the application update.
+所有生产迁移都应使用 `CREATE INDEX CONCURRENTLY`。将其加入应用更新之前执行的预部署迁移步骤。
 
 ---
 
-## Blue-Green with Database (Full Example)
+## 蓝绿部署与数据库（完整示例）
 
 ```yaml
 # blue-green-deploy.yml
@@ -549,9 +553,9 @@ steps:
 
 ---
 
-## Deployment Freeze Automation
+## 部署冻结自动化
 
-Automatically block production deployments during freeze windows:
+在冻结窗口期间自动阻断生产部署：
 
 ```python
 #!/usr/bin/env python3
@@ -580,7 +584,7 @@ for fm, d_start, d_end, label in FREEZE_WINDOWS:
 print("No active freeze window — deployment allowed.")
 ```
 
-Use in pipeline:
+在流水线中使用：
 
 ```yaml
 - name: Check deployment freeze window
@@ -591,9 +595,9 @@ Use in pipeline:
 
 ---
 
-## Notification Templates
+## 通知模板
 
-### Slack Deployment Notification
+### Slack 部署通知
 
 ```bash
 #!/usr/bin/env bash

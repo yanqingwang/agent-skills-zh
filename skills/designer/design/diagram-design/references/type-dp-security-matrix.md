@@ -1,14 +1,18 @@
-# DP security matrix
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-dp-security-matrix.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** documenting per-role / per-component access permissions for a data platform — a grid where each row is a platform component (Keycloak, MinIO bucket, Trino catalog, JupyterHub, NiFi, …) and each column is a role / AD group (Data Administrators, Data Engineers, Data Scientists, Data Consumers, …). Each intersection cell holds a permission value (Admin / Full / R/W / Read / SELECT / Login / No access) with a visual category that matches the permission level. One cell may be marked focal to flag a critical access rule (e.g., "Data Consumers can ONLY `SELECT` from the aggregated catalog — sole consumer access").
+# DP 安全矩阵（DP security matrix）
 
-Use when stakeholders need to audit *who can do what* across the platform. Prefer **DP integration** when the question is *who can talk to what* (topology/protocol) rather than *who can write/read what* (permissions).
+**最适用于：** 记录数据平台中按角色 / 按组件的访问权限：一个网格，每行是一个平台组件（Keycloak、MinIO 桶、Trino catalog、JupyterHub、NiFi 等），每列是一个角色 / AD 组（Data Administrators、Data Engineers、Data Scientists、Data Consumers 等）。每个交叉格里放一个权限值（Admin / Full / R/W / Read / SELECT / Login / 无访问），并带与权限级别匹配的视觉类别。一个格可标记为焦点，用来突出关键访问规则（如"Data Consumers 只能对 aggregated catalog 执行 `SELECT`，这是消费端唯一的访问途径"）。
 
-This type is **parametric** — the inputs schema in §1 drives every coordinate via the formulas in §2. The rule shape mirrors `type-medallion.md` / `type-process.md` / `type-data-flow.md` so the focal rule, color override, dark mode, and reproducibility checklist read identically across types.
+当利益相关方需要审计平台中*谁能做什么*时使用。问题若是*谁能和谁通信*（拓扑/协议）而非*谁能写/读什么*（权限），请选 **DP integration**。
+
+本类型是**参数化的**：§1 的输入 schema 通过 §2 的公式驱动每个坐标。规则形态与 `type-medallion.md` / `type-process.md` / `type-data-flow.md` 一致，因此焦点规则、颜色覆盖、暗色模式与可复现清单在各类型间读法相同。
 
 ---
 
-## 1. Inputs — the parameter contract
+## 1. 输入：参数契约
 
 ```yaml
 title:    "Platform Access Matrix"
@@ -59,19 +63,19 @@ none_label: "No access"                 # default text rendered when a cell is o
 dark: false
 ```
 
-**Reserved field semantics:**
-- `roles[j].name` — primary role label (`node-name` role at 11px, white text on the ink banner)
-- `roles[j].code` — secondary AD-group identifier (`sublabel` role, white text at 0.85 opacity)
-- `components[i].hint` — optional right-aligned `sublabel` text in the label cell (e.g., `"SSO"`, `"S3 API"`)
-- `cells[k].level` — closed vocabulary `full | rw | read | none`. Drives fill/stroke/text-color per §2.4.
-- `cells[k].value` — free-form display text. Domain-specific labels (`"R/W"`, `"SELECT"`, `"Login"`) work without inventing new levels.
-- `cells[k].focal: true` — exactly **one** cell may declare this. Overrides `level` to focal styling.
-- `cells[k].sub` — optional 2nd-line text (used with focal). Renders in the `sublabel` role at 8px below the primary value.
-- `cells[k].color: "#hex"` — optional per-cell color override (§4).
+**保留字段语义：**
+- `roles[j].name` — 主角色标签（`node-name` 角色，11px，ink 横幅上的白字）
+- `roles[j].code` — 次要 AD 组标识（`sublabel` 角色，白字，透明度 0.85）
+- `components[i].hint` — 可选，标签格内右对齐的 `sublabel` 文本（如 `"SSO"`、`"S3 API"`）
+- `cells[k].level` — 封闭词表 `full | rw | read | none`。按 §2.4 驱动填充/描边/文本颜色。
+- `cells[k].value` — 自由格式的显示文本。领域特定标签（`"R/W"`、`"SELECT"`、`"Login"`）无需发明新 level 即可使用。
+- `cells[k].focal: true` — 恰好**一个**格可声明此项。将 `level` 覆盖为焦点样式。
+- `cells[k].sub` — 可选的第二行文本（配合焦点使用）。以 `sublabel` 角色、8px 渲染在主值下方。
+- `cells[k].color: "#hex"` — 可选的逐格颜色覆盖（§4）。
 
 ---
 
-## 2. Layout formulas — deterministic geometry
+## 2. 布局公式：确定性几何
 
 ```
 # Constants
@@ -109,197 +113,197 @@ role_col_x(j)    = left_pad + comp_col_w + comp_role_gap
 role_col_cx(j)   = role_col_x(j) + role_col_w / 2                                 # 306, 470, 634, 798
 ```
 
-### 2.1 Background
+### 2.1 背景
 
-Solid paper fill across the full viewBox. No dot pattern.
+整个 viewBox 铺满纯色纸底。无点阵。
 
-### 2.2 Header row (`y = 72, h = 52`)
+### 2.2 表头行（`y = 72, h = 52`）
 
-**Component-column header cell:**
-- Rect: `(comp_col_x, header_y, comp_col_w, header_h)`, fill white, stroke `ink @ 0.12` 0.8, `rx=6`
-- Two-line label centered at `(comp_col_x + comp_col_w/2, header_y+24)` and `(…, header_y+40)`:
-  - Line 1: `"Component"` — `node-name` role at 11px, ink
-  - Line 2: `"vs. AD group"` — `sublabel` role, muted
+**组件列表头格：**
+- 矩形：`(comp_col_x, header_y, comp_col_w, header_h)`，白色填充，描边 `ink @ 0.12` 0.8，`rx=6`
+- 两行标签，居中于 `(comp_col_x + comp_col_w/2, header_y+24)` 与 `(…, header_y+40)`：
+  - 第 1 行：`"Component"` — `node-name` 角色，11px，ink
+  - 第 2 行：`"vs. AD group"` — `sublabel` 角色，muted
 
-**Role banners (one per role):**
-- Rect: `(role_col_x(j), header_y, role_col_w, header_h)`, fill `ink`, `rx=6`
-- Two-line label centered:
-  - Line 1 at `y=92`: `roles[j].name` — `node-name` role at 11px, white
-  - Line 2 at `y=108`: `roles[j].code` — `sublabel` role, white at opacity 0.85
+**角色横幅（每角色一个）：**
+- 矩形：`(role_col_x(j), header_y, role_col_w, header_h)`，填充 `ink`，`rx=6`
+- 两行标签居中：
+  - 第 1 行 `y=92`：`roles[j].name` — `node-name` 角色，11px，白色
+  - 第 2 行 `y=108`：`roles[j].code` — `sublabel` 角色，白色，透明度 0.85
 
-### 2.3 Data row (`y = row_y(k), h = 36`)
+### 2.3 数据行（`y = row_y(k), h = 36`）
 
-**Component label cell:**
-- Rect: `(comp_col_x, row_y(k), comp_col_w, row_h)`, fill white, stroke `ink @ 0.12` 0.8, `rx=4`
-- Name at `(comp_col_x + 12, row_y(k) + 22)`: `node-name` role at 11px, ink, left-aligned
-- Hint (if present) at `(comp_col_x + comp_col_w − 12, row_y(k) + 22)`: `sublabel` role, muted, right-aligned
+**组件标签格：**
+- 矩形：`(comp_col_x, row_y(k), comp_col_w, row_h)`，白色填充，描边 `ink @ 0.12` 0.8，`rx=4`
+- 名称在 `(comp_col_x + 12, row_y(k) + 22)`：`node-name` 角色，11px，ink，左对齐
+- hint（若有）在 `(comp_col_x + comp_col_w − 12, row_y(k) + 22)`：`sublabel` 角色，muted，右对齐
 
-**Value cells (one per role × component):**
-- Rect: `(role_col_x(j), row_y(k), role_col_w, row_h)`, `rx=4`, stroke `ink @ 0.12` 0.6
-- Fill and text-color depend on `level` (or focal flag) — see §2.4
-- Value text centered at `(role_col_cx(j), row_y(k) + 22)`: `node-name` role at 10px
-- Focal cell uses a slightly raised primary text at `y=18` and a sub-line at `y=30` (`sublabel` role at 8px)
+**值格（每对角色 × 组件一格）：**
+- 矩形：`(role_col_x(j), row_y(k), role_col_w, row_h)`，`rx=4`，描边 `ink @ 0.12` 0.6
+- 填充与文本颜色取决于 `level`（或焦点标记）：见 §2.4
+- 值文本居中于 `(role_col_cx(j), row_y(k) + 22)`：`node-name` 角色，10px
+- 焦点格的主文本略微上移至 `y=18`，副行在 `y=30`（`sublabel` 角色，8px）
 
-### 2.4 Cell style table
+### 2.4 格样式表
 
-| `level` | Fill | Stroke | Text color | Text weight |
+| `level` | 填充 | 描边 | 文本颜色 | 文本字重 |
 |---|---|---|---|---|
 | `full` | `ink @ 0.08` | `ink @ 0.12` | `ink` | 600 |
 | `rw` | `#FFFFFF` | `ink @ 0.12` | `ink` | 400 |
 | `read` | `muted @ 0.08` | `ink @ 0.12` | `muted` | 400 |
 | `none` | `paper` | `ink @ 0.12` | `soft` | 400 |
-| **focal** | `accent @ 0.07` | `accent` (1.4) | `accent` | 600 |
+| **focal** | `accent @ 0.07` | `accent`（1.4） | `accent` | 600 |
 
-The focal cell can carry a 2nd line (`sub:`) rendered in `accent` with the `sublabel` role at 8px and 0.85 opacity.
+焦点格可带第二行（`sub:`），以 `accent` 渲染，`sublabel` 角色，8px，透明度 0.85。
 
-### 2.5 Legend (`y_top = legend_y_top, h ≈ 30`)
+### 2.5 图例（`y_top = legend_y_top, h ≈ 30`）
 
-Hairline separator at `legend_y_top`. Below the separator, one row of style swatches with their labels — only the styles actually used in the diagram appear in the legend.
+`legend_y_top` 处一条发丝线分隔。分隔线之下是一行样式色样及其标签，只显示图中实际用到的样式。
 
-- "LEGEND" eyebrow at `(left_pad, legend_y_top + 20)`: `eyebrow` role, muted, letter-spacing 0.14em
-- Each style: swatch rect (14×12 `rx=2`) followed by a `sublabel` role label
-- Item x-positions are tabulated left-to-right with ~120-px stride; legend wraps onto a second visual row only if `n_roles ≥ 6` (otherwise fits in one line)
-
----
-
-## 3. Cells, not connectors
-
-A matrix diagram has **no connectors** — there are no arrows between cells, no flow lines. The diagram's information is entirely in the cell content + cell styling. The only "connector-like" element is the focal cell's accent border, which visually "calls out" a specific intersection.
-
-Cells emit **no edges**. Don't add arrows pointing into cells or between cells — they belong in a different diagram type.
+- `"LEGEND"` eyebrow 位于 `(left_pad, legend_y_top + 20)`：`eyebrow` 角色，muted，字距 0.14em
+- 每个样式：色样矩形（14×12 `rx=2`）后接一个 `sublabel` 角色标签
+- 条目 x 位置从左到右制表，步距约 120px；仅当 `n_roles ≥ 6` 时图例折到第二个视觉行（否则一行放得下）
 
 ---
 
-## 4. Color overrides
+## 3. 用格，不用连接线
 
-Three independent override axes — per-cell, per-component (row), per-role (column). All optional, all use the same `color: "#hex"` field, all draw from the same recommended palette. Mirrors §3.4 of `type-high-level.md`, §4 of `type-process.md`, §4 of `type-medallion.md`.
+矩阵图**没有连接线**：格与格之间没有箭头，没有流线。图的信息完全在格内容 + 格样式里。唯一"像连接线"的元素是焦点格的 accent 边框，它在视觉上"点名"一个特定交叉。
 
-### 4.1 Per-cell `color`
+格**不发出任何边**。不要添加指向格内或格间的箭头：那属于别的图类型。
 
-Tints a specific intersection cell. Applied to:
+---
 
-| Element | Light | Dark |
+## 4. 颜色覆盖
+
+三条相互独立的覆盖轴：逐格、逐组件（行）、逐角色（列）。全部可选，都用同一个 `color: "#hex"` 字段，都取自同一份推荐调色板。与 `type-high-level.md` §3.4、`type-process.md` §4、`type-medallion.md` §4 一致。
+
+### 4.1 逐格 `color`
+
+给一个特定的交叉格染色。施加于：
+
+| 元素 | 浅色 | 暗色 |
 |---|---|---|
-| Cell fill | `rgba(C, 0.08)` | `rgba(C_light, 0.12)` |
-| Cell stroke | `rgba(C, 0.45)` width 1.0 | `rgba(C_light, 0.55)` width 1.0 |
-| Value text | `C` | `C_light` |
-| Sub text (if present) | `rgba(C, 0.85)` | `rgba(C_light, 0.95)` |
+| 格填充 | `rgba(C, 0.08)` | `rgba(C_light, 0.12)` |
+| 格描边 | `rgba(C, 0.45)` 宽 1.0 | `rgba(C_light, 0.55)` 宽 1.0 |
+| 值文本 | `C` | `C_light` |
+| 副文本（若有） | `rgba(C, 0.85)` | `rgba(C_light, 0.95)` |
 
-`C_light` = the same hex lightened ~15% for dark-mode contrast.
+`C_light` = 同一十六进制色提亮约 15% 以保证暗色对比。
 
-### 4.2 Per-component `color`  (`components[i].color`)
+### 4.2 逐组件 `color`（`components[i].color`）
 
-Tints the row's **label cell only** (left column). The data cells in that row keep their per-cell `level` styling — the row color flags *what* this component is, not *what permissions live in it*.
+只给该行的**标签格**（左列）染色。该行的数据格保持各自的 `level` 样式。行颜色标记的是*这个组件是什么*，不是*它里面装着什么权限*。
 
-| Element | Light | Dark |
+| 元素 | 浅色 | 暗色 |
 |---|---|---|
-| Label cell fill | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
-| Label cell stroke | `rgba(C, 0.45)` width 0.8 | `rgba(C_light, 0.55)` width 0.8 |
-| Component name | `C` | `C_light` |
-| Hint text | unchanged (muted) | unchanged (muted) |
+| 标签格填充 | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
+| 标签格描边 | `rgba(C, 0.45)` 宽 0.8 | `rgba(C_light, 0.55)` 宽 0.8 |
+| 组件名称 | `C` | `C_light` |
+| hint 文本 | 不变（muted） | 不变（muted） |
 
-### 4.3 Per-role `color`  (`roles[j].color`)
+### 4.3 逐角色 `color`（`roles[j].color`）
 
-Tints the **column banner only** (top row). Cells underneath keep their `level` styling. Replaces the default navy banner fill with the chosen hex.
+只给**列横幅**（顶行）染色。其下的格保持各自的 `level` 样式。用所选十六进制色替换默认的深蓝横幅填充。
 
-| Element | Light & Dark (banner is the same in both modes) |
+| 元素 | 浅色与暗色（横幅在两种模式下相同） |
 |---|---|
-| Banner fill | `C` |
-| Role name + code text | `#FFFFFF` if `C` is dark (luminance ≤ 0.5), else `ink` |
+| 横幅填充 | `C` |
+| 角色名 + code 文本 | `C` 偏暗（亮度 ≤ 0.5）时为 `#FFFFFF`，否则 `ink` |
 
-If you pick a mid-luminance hex (e.g., yellow `#c9a23a`), the text auto-flips to ink for contrast. Pair `roles[j].text_color: "#hex"` to override this auto-pick.
+选了中等亮度的色值（如黄色 `#c9a23a`），文本会自动切换为 ink 以保证对比。可用 `roles[j].text_color: "#hex"` 覆盖这个自动选择。
 
-### 4.4 Rules
+### 4.4 规则
 
-- **Focal cell wins.** A focal cell ignores `color` overrides — accent always.
-- **Per-cell `color` overrides `level` styling** for that one cell.
-- **Per-component / per-role overrides are scoped:** component → row label only; role → banner only. They do **not** spread into the matrix body. To flag a specific intersection, use per-cell.
-- **Cap:** keep total custom-colored entities ≤ 5 per diagram (combining cells + components + roles). Above 5, the matrix reads as colored noise — split into multiple diagrams or rethink which color carries which concern.
+- **焦点格优先。** 焦点格忽略 `color` 覆盖：一定是 accent。
+- **逐格 `color` 覆盖该格的 `level` 样式。**
+- **逐组件 / 逐角色覆盖有作用域：** 组件 → 只影响行标签；角色 → 只影响横幅。它们**不会**扩散进矩阵主体。要突出特定交叉，用逐格。
+- **上限：** 每图自定义着色实体总数 ≤ 5（格 + 组件 + 角色合计）。超过 5，矩阵读起来就是彩色噪音：拆成多张图，或重新想想哪种颜色承载哪种关注。
 
-### 4.5 Recommended palette (same as the other parametric types)
+### 4.5 推荐调色板（与其他参数化类型相同）
 
-- `#b85450` rust-red — Security elevation / break-glass / SoX-flagged
-- `#5a7d9a` slate-blue — Quality / monitoring / observability gate
-- `#7a8c47` olive-green — Approved / governance-cleared / publication-ready
-- `#c9a23a` warm yellow — Working / sandbox / data-scientist zone
-- `#8c6d3f` warm-brown — Archive / cold / DR
-
----
-
-## 5. Focal rule
-
-Exactly **one** focal cell per diagram (or zero). The focal cell:
-- Uses focal styling (accent fill + accent stroke 1.4 + accent text bold)
-- May carry a 2-line content: primary `value` at `y = row_y(k) + 18`, `sub` at `y = row_y(k) + 30`
-- Calls out the diagram's central security claim — the *one* access rule that distinguishes this platform's posture from a generic permissions table
-
-If zero or >1 `focal: true` cells are declared, halt and ask the user.
+- `#b85450` 铁锈红 — 权限提升 / 破窗应急 / SoX 标记
+- `#5a7d9a` 石板蓝 — 质量 / 监控 / 可观测性门
+- `#7a8c47` 橄榄绿 — 已批准 / 治理通过 / 可发布
+- `#c9a23a` 暖黄 — 工作中 / 沙箱 / 数据科学家区
+- `#8c6d3f` 暖棕 — 归档 / 冷数据 / 灾备
 
 ---
 
-## 6. Dark mode
+## 5. 焦点规则
 
-| Token | Light | Dark |
+每图恰好**一个**焦点格（或零个）。焦点格：
+- 使用焦点样式（accent 填充 + accent 描边 1.4 + accent 文本加粗）
+- 可带两行内容：主 `value` 在 `y = row_y(k) + 18`，`sub` 在 `y = row_y(k) + 30`
+- 点出全图的核心安全主张：*那一条*把这个平台的安全姿态与普通权限表区分开的访问规则
+
+若声明了 0 个或多于 1 个 `focal: true` 格，停下询问用户。
+
+---
+
+## 6. 暗色模式
+
+| Token | 浅色 | 暗色 |
 |---|---|---|
 | Paper | `paper` | `ink` |
 | Ink | `ink` | `paper` |
 | Muted | `muted` | `soft` |
-| Soft (no-access text) | `soft` | `muted` |
+| Soft（无访问文本） | `soft` | `muted` |
 | Accent | `accent` | `accent` |
-| Role-banner fill | `ink` | `ink` |
-| Header / row stroke | `ink @ 0.12` | `paper @ 0.18` |
-| Full / Admin fill | `ink @ 0.08` | `paper @ 0.10` |
-| R/W fill | `#FFFFFF` | `paper @ 0.06` |
-| Read fill | `muted @ 0.08` | `soft @ 0.12` |
-| No-access fill | `paper` | `paper @ 0.02` |
-| Focal fill | `accent @ 0.07` | `accent @ 0.12` |
-| Focal stroke | `accent` | `accent` |
-| Custom component colors | `C` | `C_light` (lighten ~15%) |
+| 角色横幅填充 | `ink` | `ink` |
+| 表头 / 行描边 | `ink @ 0.12` | `paper @ 0.18` |
+| Full / Admin 填充 | `ink @ 0.08` | `paper @ 0.10` |
+| R/W 填充 | `#FFFFFF` | `paper @ 0.06` |
+| Read 填充 | `muted @ 0.08` | `soft @ 0.12` |
+| 无访问填充 | `paper` | `paper @ 0.02` |
+| 焦点填充 | `accent @ 0.07` | `accent @ 0.12` |
+| 焦点描边 | `accent` | `accent` |
+| 自定义组件颜色 | `C` | `C_light`（提亮约 15%） |
 
 ---
 
-## 7. Reproducibility checklist (taste gate)
+## 7. 可复现清单（品味门槛）
 
-Before emitting SVG, verify **every** item:
+输出 SVG 前，逐项核验：
 
-1. `viewBox = "0 0 {viewBox_w} {viewBox_h}"` derived via §2 (4 roles × 8 components → 920 × 520).
-2. Header row at `y=72 h=52`. Component header cell white-filled with two-line `Component / vs. AD group` label. Role banners filled `ink` with name + AD-group code in white.
-3. Data rows start at `y=140`, stride 40, height 36. `rows_bottom = 140 + (n_components−1)·40 + 36`.
-4. Component label cell `rx=4`, name left-aligned at `x=24`, optional `hint` right-aligned at `x = comp_col_x + comp_col_w − 12`.
-5. Every value cell `rx=4`, stroke `ink @ 0.12` 0.6, fill + text matching §2.4 for its `level`.
-6. Exactly **one** focal cell (or zero). Focal cell stroke `accent` width 1.4. Primary value at `y = row_y(k) + 18`; `sub` (if present) at `y = row_y(k) + 30`.
-7. Cells omitted from `cells:` render as `level: "none"` with `none_label` text (default `"No access"`).
-8. Custom-colored cells ≤ 2 (in addition to the focal cell).
-9. No connector elements anywhere in the SVG.
-10. Legend strip at `legend_y_top`, one swatch per `level` actually used, hairline separator above.
-11. `viewBox_h` grows with `n_components`; `viewBox_w` grows with `n_roles`.
-
----
-
-## 8. Anti-patterns
-
-- **More than one focal cell** — focal exists to mark *the* critical access rule; >1 erases the signal.
-- **Connectors anywhere** — matrix is value-driven; arrows belong in DP integration / process diagrams.
-- **Freeform `level` values** — closed vocabulary is `full | rw | read | none`. Use `value` for free-form displayed text + `color` override for arbitrary tinting.
-- **Per-row or per-column color tints** — apply `color` per cell only. Whole-row or whole-column highlighting tends to over-emphasize and collapses the matrix into a list.
-- **Using `none_label` as a placeholder for "TBD"** — `none` means *no access*. If the permission is unknown, leave the cell empty in inputs but document it elsewhere; don't render an ambiguous state.
-- **More than 6 roles** — split into two matrices (e.g., human roles vs service accounts) before exceeding 6 columns.
-- **More than 14 components** — split by domain (storage / compute / observability / governance) before exceeding 14 rows.
-- **Using the matrix to document *how* permissions are granted** — that belongs in a process or sequence diagram. The matrix shows *what* each role can do, not the grant flow.
+1. `viewBox = "0 0 {viewBox_w} {viewBox_h}"`，按 §2 推导（4 角色 × 8 组件 → 920 × 520）。
+2. 表头行在 `y=72 h=52`。组件表头格白底，两行标签 `Component / vs. AD group`。角色横幅填充 `ink`，名称与 AD 组 code 为白字。
+3. 数据行从 `y=140` 开始，步距 40，高 36。`rows_bottom = 140 + (n_components−1)·40 + 36`。
+4. 组件标签格 `rx=4`，名称左对齐于 `x=24`，可选 `hint` 右对齐于 `x = comp_col_x + comp_col_w − 12`。
+5. 每个值格 `rx=4`，描边 `ink @ 0.12` 0.6，填充与文本按其 `level` 匹配 §2.4。
+6. 恰好**一个**焦点格（或零个）。焦点格描边 `accent` 宽 1.4。主值在 `y = row_y(k) + 18`；`sub`（若有）在 `y = row_y(k) + 30`。
+7. 未出现在 `cells:` 中的格按 `level: "none"` 渲染，文本为 `none_label`（默认 `"No access"`）。
+8. 自定义着色格 ≤ 2（焦点格之外）。
+9. SVG 中任何位置都没有连接线元素。
+10. 图例条在 `legend_y_top`，每个实际用到的 `level` 一个色样，上方一条发丝线分隔。
+11. `viewBox_h` 随 `n_components` 增长；`viewBox_w` 随 `n_roles` 增长。
 
 ---
 
-## 9. Examples
+## 8. 反模式
 
-- `assets/example-dp-security-matrix.html` — minimal light (NatStat canonical: 4 roles × 8 components, focal at Data Consumers × Trino aggregated). Gallery default.
-- `assets/example-dp-security-matrix-dark.html` — same, dark skin.
-- `assets/example-dp-security-matrix-full.html` — same, editorial-card frame with subtitle + summary cards.
+- **焦点格超过一个** — 焦点存在的意义是标记*那一条*关键访问规则；>1 会抹掉信号。
+- **任何位置的连接线** — 矩阵由值驱动；箭头属于 DP integration / 过程图。
+- **自由发挥的 `level` 值** — 封闭词表是 `full | rw | read | none`。自由文本用 `value`，任意染色用 `color` 覆盖。
+- **整行或整列的颜色染色** — `color` 只按格施加。整行/整列高亮容易过度强调，把矩阵压扁成一个列表。
+- **把 `none_label` 当"TBD"占位符** — `none` 的意思是*无访问*。权限未知时，在输入中留空该格并在别处记录；不要渲染一个含糊状态。
+- **角色超过 6 个** — 超过 6 列之前拆成两张矩阵（如人类角色 vs 服务账号）。
+- **组件超过 14 个** — 超过 14 行之前按域拆分（存储 / 计算 / 可观测性 / 治理）。
+- **用矩阵记录权限*如何*授予** — 那属于过程图或时序图。矩阵展示每个角色*能做什么*，不是授予流程。
 
 ---
 
-## 10. Worked YAML — full inputs for `example-dp-security-matrix.html`
+## 9. 示例
 
-The complete inputs that map to the shipped canonical example. Every coordinate in that SVG is derivable from §2 applied to these inputs.
+- `assets/example-dp-security-matrix.html` — 极简浅色（NatStat 规范样例：4 角色 × 8 组件，焦点在 Data Consumers × Trino aggregated）。图库默认。
+- `assets/example-dp-security-matrix-dark.html` — 同一张，暗色皮肤。
+- `assets/example-dp-security-matrix-full.html` — 同一张，编辑卡片式外框 + 副标题 + 摘要卡片。
+
+---
+
+## 10. 完整 YAML：`example-dp-security-matrix.html` 的全部输入
+
+映射到随附规范样例的完整输入。该 SVG 中的每个坐标都可由 §2 的公式作用于这些输入推导得出。
 
 ```yaml
 title:    "Platform Access Matrix"
@@ -366,14 +370,14 @@ cells:
 dark: false
 ```
 
-### 10.1 What this YAML proves
+### 10.1 这份 YAML 证明了什么
 
-Run §2 with these inputs:
-- `n_roles = 4`, `n_components = 8`, no color overrides, one focal cell.
+用这些输入运行 §2：
+- `n_roles = 4`、`n_components = 8`，无颜色覆盖，一个焦点格。
 - `viewBox_w = 12 + 208 + 12 + 4·148 + 3·16 + 48 = 920` ✓
-- `row_y(k)` produces `140, 180, 220, 260, 300, 340, 380, 420` ✓
-- `rows_bottom = 420 + 36 = 456`; `legend_y_top = 476`; `viewBox_h = 520` ✓
+- `row_y(k)` 产出 `140, 180, 220, 260, 300, 340, 380, 420` ✓
+- `rows_bottom = 420 + 36 = 456`；`legend_y_top = 476`；`viewBox_h = 520` ✓
 - `role_col_x(j) = [232, 396, 560, 724]` ✓
-- Focal cell at `(row=5, col=3)` → rect `(724, 340, 148, 36)` with accent stroke 1.4 ✓
+- 焦点格在 `(row=5, col=3)` → 矩形 `(724, 340, 148, 36)`，accent 描边 1.4 ✓
 
-A fresh generation from this YAML produces a diagram visually indistinguishable from the shipped `example-dp-security-matrix.html`.
+由这份 YAML 新生成一次，产出的图与随附的 `example-dp-security-matrix.html` 在视觉上无法区分。

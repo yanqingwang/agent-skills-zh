@@ -30,36 +30,12 @@
       ],
       "verbatim": [
         {
-          "upstream": "skills/test-driven-development/writing-good-tests.md",
-          "local": "skills/developer/engineering/test-driven-development/writing-good-tests.md"
-        },
-        {
-          "upstream": "skills/systematic-debugging/root-cause-tracing.md",
-          "local": "skills/developer/engineering/systematic-debugging/root-cause-tracing.md"
-        },
-        {
-          "upstream": "skills/systematic-debugging/defense-in-depth.md",
-          "local": "skills/developer/engineering/systematic-debugging/defense-in-depth.md"
-        },
-        {
-          "upstream": "skills/systematic-debugging/condition-based-waiting.md",
-          "local": "skills/developer/engineering/systematic-debugging/condition-based-waiting.md"
-        },
-        {
           "upstream": "skills/systematic-debugging/condition-based-waiting-example.ts",
           "local": "skills/developer/engineering/systematic-debugging/condition-based-waiting-example.ts"
         },
         {
           "upstream": "skills/systematic-debugging/find-polluter.sh",
           "local": "skills/developer/engineering/systematic-debugging/find-polluter.sh"
-        },
-        {
-          "upstream": "skills/brainstorming/builder-check-prompt.md",
-          "local": "skills/developer/engineering/brainstorming/builder-check-prompt.md"
-        },
-        {
-          "upstream": "skills/brainstorming/visual-companion.md",
-          "local": "skills/developer/engineering/brainstorming/visual-companion.md"
         },
         {
           "upstream": "skills/brainstorming/scripts/frame-template.html",
@@ -105,7 +81,32 @@
         }
       ],
       "stars_snapshot_2026-11-03": 311201,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "skills/brainstorming/builder-check-prompt.md",
+          "local": "skills/developer/engineering/brainstorming/builder-check-prompt.md"
+        },
+        {
+          "upstream": "skills/brainstorming/visual-companion.md",
+          "local": "skills/developer/engineering/brainstorming/visual-companion.md"
+        },
+        {
+          "upstream": "skills/systematic-debugging/condition-based-waiting.md",
+          "local": "skills/developer/engineering/systematic-debugging/condition-based-waiting.md"
+        },
+        {
+          "upstream": "skills/systematic-debugging/defense-in-depth.md",
+          "local": "skills/developer/engineering/systematic-debugging/defense-in-depth.md"
+        },
+        {
+          "upstream": "skills/systematic-debugging/root-cause-tracing.md",
+          "local": "skills/developer/engineering/systematic-debugging/root-cause-tracing.md"
+        },
+        {
+          "upstream": "skills/test-driven-development/writing-good-tests.md",
+          "local": "skills/developer/engineering/test-driven-development/writing-good-tests.md"
+        }
+      ]
     },
     {
       "repo": "mattpocock/skills",
@@ -158,6 +159,13 @@
       ],
       "verbatim": [
         {
+          "upstream": "skills/idea-refine/scripts/idea-refine.sh",
+          "local": "skills/developer/engineering/idea-refine/scripts/idea-refine.sh"
+        }
+      ],
+      "stars_snapshot_2026-11-03": 112815,
+      "translated_prose": [
+        {
           "upstream": "skills/idea-refine/examples.md",
           "local": "skills/developer/engineering/idea-refine/examples.md"
         },
@@ -168,14 +176,8 @@
         {
           "upstream": "skills/idea-refine/refinement-criteria.md",
           "local": "skills/developer/engineering/idea-refine/refinement-criteria.md"
-        },
-        {
-          "upstream": "skills/idea-refine/scripts/idea-refine.sh",
-          "local": "skills/developer/engineering/idea-refine/scripts/idea-refine.sh"
         }
-      ],
-      "stars_snapshot_2026-11-03": 112815,
-      "translated_prose": []
+      ]
     },
     {
       "repo": "Leonxlnx/taste-skill",
@@ -259,44 +261,16 @@
           "local": "skills/designer/design/taste-skill/references/app-screens.md"
         },
         {
-          "upstream": "skills/taste-skill/references/colour.md",
-          "local": "skills/designer/design/taste-skill/references/colour.md"
-        },
-        {
           "upstream": "skills/taste-skill/references/copy.md",
           "local": "skills/designer/design/taste-skill/references/copy.md"
-        },
-        {
-          "upstream": "skills/taste-skill/references/critique.md",
-          "local": "skills/designer/design/taste-skill/references/critique.md"
-        },
-        {
-          "upstream": "skills/taste-skill/references/imagery.md",
-          "local": "skills/designer/design/taste-skill/references/imagery.md"
-        },
-        {
-          "upstream": "skills/taste-skill/references/layout.md",
-          "local": "skills/designer/design/taste-skill/references/layout.md"
         },
         {
           "upstream": "skills/taste-skill/references/motion.md",
           "local": "skills/designer/design/taste-skill/references/motion.md"
         },
         {
-          "upstream": "skills/taste-skill/references/research.md",
-          "local": "skills/designer/design/taste-skill/references/research.md"
-        },
-        {
           "upstream": "skills/taste-skill/references/scenes.md",
           "local": "skills/designer/design/taste-skill/references/scenes.md"
-        },
-        {
-          "upstream": "skills/taste-skill/references/tells.md",
-          "local": "skills/designer/design/taste-skill/references/tells.md"
-        },
-        {
-          "upstream": "skills/taste-skill/references/type.md",
-          "local": "skills/designer/design/taste-skill/references/type.md"
         },
         {
           "upstream": "skills/taste-skill/scripts/assets.mjs",
@@ -342,7 +316,36 @@
         }
       ],
       "stars_snapshot_2026-11-03": 108664,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "skills/taste-skill/references/colour.md",
+          "local": "skills/designer/design/taste-skill/references/colour.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/critique.md",
+          "local": "skills/designer/design/taste-skill/references/critique.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/imagery.md",
+          "local": "skills/designer/design/taste-skill/references/imagery.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/layout.md",
+          "local": "skills/designer/design/taste-skill/references/layout.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/research.md",
+          "local": "skills/designer/design/taste-skill/references/research.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/tells.md",
+          "local": "skills/designer/design/taste-skill/references/tells.md"
+        },
+        {
+          "upstream": "skills/taste-skill/references/type.md",
+          "local": "skills/designer/design/taste-skill/references/type.md"
+        }
+      ]
     },
     {
       "repo": "multica-ai/andrej-karpathy-skills",
@@ -957,20 +960,8 @@
           "local": "skills/designer/design/archify/recipes/scenarios.mjs"
         },
         {
-          "upstream": "archify/references/architecture-layout-repair.md",
-          "local": "skills/designer/design/archify/references/architecture-layout-repair.md"
-        },
-        {
           "upstream": "archify/references/authoring-contract.md",
           "local": "skills/designer/design/archify/references/authoring-contract.md"
-        },
-        {
-          "upstream": "archify/references/authoring-defaults.md",
-          "local": "skills/designer/design/archify/references/authoring-defaults.md"
-        },
-        {
-          "upstream": "archify/references/brand-marks.md",
-          "local": "skills/designer/design/archify/references/brand-marks.md"
         },
         {
           "upstream": "archify/references/delivery-contract.md",
@@ -981,16 +972,8 @@
           "local": "skills/designer/design/archify/references/explainer-authoring.md"
         },
         {
-          "upstream": "archify/references/repository-authoring.md",
-          "local": "skills/designer/design/archify/references/repository-authoring.md"
-        },
-        {
           "upstream": "archify/references/update-awareness.md",
           "local": "skills/designer/design/archify/references/update-awareness.md"
-        },
-        {
-          "upstream": "archify/references/viewer-runtime.md",
-          "local": "skills/designer/design/archify/references/viewer-runtime.md"
         },
         {
           "upstream": "archify/renderers/architecture/grid.mjs",
@@ -1325,7 +1308,28 @@
       ],
       "note": "上游 2026-10-25 起整体转为 Apache-2.0（保留历史 MIT 授权）；本仓收录期间（2026-10-24 快照）原文为 MIT，译文已同步新许可标注",
       "stars_snapshot_2026-11-03": 92717,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "archify/references/architecture-layout-repair.md",
+          "local": "skills/designer/design/archify/references/architecture-layout-repair.md"
+        },
+        {
+          "upstream": "archify/references/authoring-defaults.md",
+          "local": "skills/designer/design/archify/references/authoring-defaults.md"
+        },
+        {
+          "upstream": "archify/references/brand-marks.md",
+          "local": "skills/designer/design/archify/references/brand-marks.md"
+        },
+        {
+          "upstream": "archify/references/repository-authoring.md",
+          "local": "skills/designer/design/archify/references/repository-authoring.md"
+        },
+        {
+          "upstream": "archify/references/viewer-runtime.md",
+          "local": "skills/designer/design/archify/references/viewer-runtime.md"
+        }
+      ]
     },
     {
       "repo": "Egonex-AI/Understand-Anything",
@@ -3094,28 +3098,12 @@
           "local": "skills/designer/design/diagram-design/assets/template.html"
         },
         {
-          "upstream": "skills/diagram-design/references/animation.md",
-          "local": "skills/designer/design/diagram-design/references/animation.md"
-        },
-        {
           "upstream": "skills/diagram-design/references/doctor.md",
           "local": "skills/designer/design/diagram-design/references/doctor.md"
         },
         {
-          "upstream": "skills/diagram-design/references/export-registry.md",
-          "local": "skills/designer/design/diagram-design/references/export-registry.md"
-        },
-        {
           "upstream": "skills/diagram-design/references/export.md",
           "local": "skills/designer/design/diagram-design/references/export.md"
-        },
-        {
-          "upstream": "skills/diagram-design/references/import-drawio.md",
-          "local": "skills/designer/design/diagram-design/references/import-drawio.md"
-        },
-        {
-          "upstream": "skills/diagram-design/references/import-excalidraw.md",
-          "local": "skills/designer/design/diagram-design/references/import-excalidraw.md"
         },
         {
           "upstream": "skills/diagram-design/references/import-mermaid.md",
@@ -3126,12 +3114,72 @@
           "local": "skills/designer/design/diagram-design/references/layout-budget.md"
         },
         {
-          "upstream": "skills/diagram-design/references/onboarding.md",
-          "local": "skills/designer/design/diagram-design/references/onboarding.md"
-        },
-        {
           "upstream": "skills/diagram-design/references/output-spec.md",
           "local": "skills/designer/design/diagram-design/references/output-spec.md"
+        },
+        {
+          "upstream": "skills/diagram-design/references/primitives-core.md",
+          "local": "skills/designer/design/diagram-design/references/primitives-core.md"
+        },
+        {
+          "upstream": "skills/diagram-design/references/style-guide.md",
+          "local": "skills/designer/design/diagram-design/references/style-guide.md"
+        },
+        {
+          "upstream": "skills/diagram-design/references/type-dependency.md",
+          "local": "skills/designer/design/diagram-design/references/type-dependency.md"
+        },
+        {
+          "upstream": "skills/diagram-design/references/type-scatter.md",
+          "local": "skills/designer/design/diagram-design/references/type-scatter.md"
+        },
+        {
+          "upstream": "skills/diagram-design/scripts/drawio_extract.py",
+          "local": "skills/designer/design/diagram-design/scripts/drawio_extract.py"
+        },
+        {
+          "upstream": "skills/diagram-design/scripts/excalidraw_extract.py",
+          "local": "skills/designer/design/diagram-design/scripts/excalidraw_extract.py"
+        },
+        {
+          "upstream": "skills/diagram-design/scripts/export_png.py",
+          "local": "skills/designer/design/diagram-design/scripts/export_png.py"
+        },
+        {
+          "upstream": "skills/diagram-design/scripts/export_svg.py",
+          "local": "skills/designer/design/diagram-design/scripts/export_svg.py"
+        },
+        {
+          "upstream": "skills/diagram-design/scripts/mermaid_extract.py",
+          "local": "skills/designer/design/diagram-design/scripts/mermaid_extract.py"
+        },
+        {
+          "upstream": "skills/diagram-design/scripts/self_check.py",
+          "local": "skills/designer/design/diagram-design/scripts/self_check.py"
+        }
+      ],
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 64335,
+      "translated_prose": [
+        {
+          "upstream": "skills/diagram-design/references/animation.md",
+          "local": "skills/designer/design/diagram-design/references/animation.md"
+        },
+        {
+          "upstream": "skills/diagram-design/references/export-registry.md",
+          "local": "skills/designer/design/diagram-design/references/export-registry.md"
+        },
+        {
+          "upstream": "skills/diagram-design/references/import-drawio.md",
+          "local": "skills/designer/design/diagram-design/references/import-drawio.md"
+        },
+        {
+          "upstream": "skills/diagram-design/references/import-excalidraw.md",
+          "local": "skills/designer/design/diagram-design/references/import-excalidraw.md"
+        },
+        {
+          "upstream": "skills/diagram-design/references/onboarding.md",
+          "local": "skills/designer/design/diagram-design/references/onboarding.md"
         },
         {
           "upstream": "skills/diagram-design/references/primitive-annotation.md",
@@ -3150,20 +3198,12 @@
           "local": "skills/designer/design/diagram-design/references/primitive-terminal.md"
         },
         {
-          "upstream": "skills/diagram-design/references/primitives-core.md",
-          "local": "skills/designer/design/diagram-design/references/primitives-core.md"
-        },
-        {
           "upstream": "skills/diagram-design/references/profiles.md",
           "local": "skills/designer/design/diagram-design/references/profiles.md"
         },
         {
           "upstream": "skills/diagram-design/references/semantic-patterns.md",
           "local": "skills/designer/design/diagram-design/references/semantic-patterns.md"
-        },
-        {
-          "upstream": "skills/diagram-design/references/style-guide.md",
-          "local": "skills/designer/design/diagram-design/references/style-guide.md"
         },
         {
           "upstream": "skills/diagram-design/references/type-architecture-delta.md",
@@ -3188,10 +3228,6 @@
         {
           "upstream": "skills/diagram-design/references/type-db-schema.md",
           "local": "skills/designer/design/diagram-design/references/type-db-schema.md"
-        },
-        {
-          "upstream": "skills/diagram-design/references/type-dependency.md",
-          "local": "skills/designer/design/diagram-design/references/type-dependency.md"
         },
         {
           "upstream": "skills/diagram-design/references/type-deployment.md",
@@ -3294,10 +3330,6 @@
           "local": "skills/designer/design/diagram-design/references/type-sankey.md"
         },
         {
-          "upstream": "skills/diagram-design/references/type-scatter.md",
-          "local": "skills/designer/design/diagram-design/references/type-scatter.md"
-        },
-        {
           "upstream": "skills/diagram-design/references/type-sequence.md",
           "local": "skills/designer/design/diagram-design/references/type-sequence.md"
         },
@@ -3344,35 +3376,8 @@
         {
           "upstream": "skills/diagram-design/references/type-waterfall.md",
           "local": "skills/designer/design/diagram-design/references/type-waterfall.md"
-        },
-        {
-          "upstream": "skills/diagram-design/scripts/drawio_extract.py",
-          "local": "skills/designer/design/diagram-design/scripts/drawio_extract.py"
-        },
-        {
-          "upstream": "skills/diagram-design/scripts/excalidraw_extract.py",
-          "local": "skills/designer/design/diagram-design/scripts/excalidraw_extract.py"
-        },
-        {
-          "upstream": "skills/diagram-design/scripts/export_png.py",
-          "local": "skills/designer/design/diagram-design/scripts/export_png.py"
-        },
-        {
-          "upstream": "skills/diagram-design/scripts/export_svg.py",
-          "local": "skills/designer/design/diagram-design/scripts/export_svg.py"
-        },
-        {
-          "upstream": "skills/diagram-design/scripts/mermaid_extract.py",
-          "local": "skills/designer/design/diagram-design/scripts/mermaid_extract.py"
-        },
-        {
-          "upstream": "skills/diagram-design/scripts/self_check.py",
-          "local": "skills/designer/design/diagram-design/scripts/self_check.py"
         }
-      ],
-      "verbatim_excluded": [],
-      "stars_snapshot_2026-11-03": 64335,
-      "translated_prose": []
+      ]
     },
     {
       "repo": "blader/humanizer",
@@ -4212,10 +4217,6 @@
           "local": "skills/developer/context/continuous-learning-v2/agents/observer-loop.sh"
         },
         {
-          "upstream": "skills/continuous-learning-v2/agents/observer.md",
-          "local": "skills/developer/context/continuous-learning-v2/agents/observer.md"
-        },
-        {
           "upstream": "skills/continuous-learning-v2/agents/session-guardian.sh",
           "local": "skills/developer/context/continuous-learning-v2/agents/session-guardian.sh"
         },
@@ -4259,7 +4260,12 @@
         }
       ],
       "stars_snapshot_2026-11-03": 295608,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "skills/continuous-learning-v2/agents/observer.md",
+          "local": "skills/developer/context/continuous-learning-v2/agents/observer.md"
+        }
+      ]
     },
     {
       "repo": "virgiliojr94/book-to-skill",
@@ -4408,14 +4414,6 @@
       ],
       "verbatim": [
         {
-          "upstream": ".agents/skills/planning-with-files/examples.md",
-          "local": "skills/developer/engineering/planning-with-files/examples.md"
-        },
-        {
-          "upstream": ".agents/skills/planning-with-files/reference.md",
-          "local": "skills/developer/engineering/planning-with-files/reference.md"
-        },
-        {
           "upstream": ".agents/skills/planning-with-files/scripts/attest-plan.ps1",
           "local": "skills/developer/engineering/planning-with-files/scripts/attest-plan.ps1"
         },
@@ -4502,6 +4500,18 @@
         {
           "upstream": ".agents/skills/planning-with-files/scripts/skill-hook.sh",
           "local": "skills/developer/engineering/planning-with-files/scripts/skill-hook.sh"
+        }
+      ],
+      "verbatim_excluded": [],
+      "stars_snapshot_2026-11-03": 27837,
+      "translated_prose": [
+        {
+          "upstream": ".agents/skills/planning-with-files/examples.md",
+          "local": "skills/developer/engineering/planning-with-files/examples.md"
+        },
+        {
+          "upstream": ".agents/skills/planning-with-files/reference.md",
+          "local": "skills/developer/engineering/planning-with-files/reference.md"
         },
         {
           "upstream": ".agents/skills/planning-with-files/templates/analytics_findings.md",
@@ -4531,10 +4541,7 @@
           "upstream": ".agents/skills/planning-with-files/templates/task_plan_autonomous.md",
           "local": "skills/developer/engineering/planning-with-files/templates/task_plan_autonomous.md"
         }
-      ],
-      "verbatim_excluded": [],
-      "stars_snapshot_2026-11-03": 27837,
-      "translated_prose": []
+      ]
     },
     {
       "repo": "titanwings/distilly",
@@ -6286,10 +6293,6 @@
         {
           "upstream": "benchmark/SKILL.md.tmpl",
           "local": "skills/developer/gstack/benchmark/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "benchmark-models/SKILL.md",
-          "local": "skills/developer/gstack/benchmark-models/SKILL.md"
         },
         {
           "upstream": "benchmark-models/SKILL.md.tmpl",
@@ -11183,7 +11186,12 @@
         }
       ],
       "stars_snapshot_2026-11-03": 138676,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "benchmark-models/SKILL.md",
+          "local": "skills/developer/gstack/benchmark-models/SKILL.md"
+        }
+      ]
     },
     {
       "repo": "Vincentwei1021/video-shotcraft",
@@ -11374,10 +11382,6 @@
         {
           "upstream": "assets/readme/examples/ui-entrance.webp",
           "local": "skills/creator/video/video-shotcraft/assets/readme/examples/ui-entrance.webp"
-        },
-        {
-          "upstream": "assets/readme/sponsors/ATTRIBUTION.md",
-          "local": "skills/creator/video/video-shotcraft/assets/readme/sponsors/ATTRIBUTION.md"
         },
         {
           "upstream": "assets/readme/sponsors/apimart.png",
@@ -15680,10 +15684,6 @@
           "local": "skills/creator/video/video-shotcraft/videos/readme-workflow/.gitignore"
         },
         {
-          "upstream": "videos/readme-workflow/AGENTS.md",
-          "local": "skills/creator/video/video-shotcraft/videos/readme-workflow/AGENTS.md"
-        },
-        {
           "upstream": "videos/readme-workflow/BRIEF.md",
           "local": "skills/creator/video/video-shotcraft/videos/readme-workflow/BRIEF.md"
         },
@@ -16628,7 +16628,16 @@
       ],
       "note": "上游 SKILL.md 正文本身即中文（中欧双语定位），中文原生收录，逐字节保留",
       "stars_snapshot_2026-11-03": 16160,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "assets/readme/sponsors/ATTRIBUTION.md",
+          "local": "skills/creator/video/video-shotcraft/assets/readme/sponsors/ATTRIBUTION.md"
+        },
+        {
+          "upstream": "videos/readme-workflow/AGENTS.md",
+          "local": "skills/creator/video/video-shotcraft/videos/readme-workflow/AGENTS.md"
+        }
+      ]
     },
     {
       "repo": "teng-lin/notebooklm-py",
@@ -16984,54 +16993,6 @@
           "local": "skills/developer/context/hivemind/README.md"
         },
         {
-          "upstream": "engineering/hivemind/assets/agents/coder.md",
-          "local": "skills/developer/context/hivemind/assets/agents/coder.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/agents/scout.md",
-          "local": "skills/developer/context/hivemind/assets/agents/scout.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/agents/tester.md",
-          "local": "skills/developer/context/hivemind/assets/agents/tester.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/agents/verifier.md",
-          "local": "skills/developer/context/hivemind/assets/agents/verifier.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/commands/hive.md",
-          "local": "skills/developer/context/hivemind/assets/commands/hive.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/commands/migration.md",
-          "local": "skills/developer/context/hivemind/assets/commands/migration.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/commands/oc.md",
-          "local": "skills/developer/context/hivemind/assets/commands/oc.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/commands/research-sweep.md",
-          "local": "skills/developer/context/hivemind/assets/commands/research-sweep.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/commands/review-panel.md",
-          "local": "skills/developer/context/hivemind/assets/commands/review-panel.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/commands/swarm.md",
-          "local": "skills/developer/context/hivemind/assets/commands/swarm.md"
-        },
-        {
-          "upstream": "engineering/hivemind/assets/commands/test-fleet.md",
-          "local": "skills/developer/context/hivemind/assets/commands/test-fleet.md"
-        },
-        {
-          "upstream": "engineering/hivemind/scripts/bench/grader-prompt.md",
-          "local": "skills/developer/context/hivemind/scripts/bench/grader-prompt.md"
-        },
-        {
           "upstream": "engineering/hivemind/scripts/bench/run-bench.mjs",
           "local": "skills/developer/context/hivemind/scripts/bench/run-bench.mjs"
         },
@@ -17080,14 +17041,6 @@
           "local": "skills/growth/product/competitive-teardown/scripts/competitive_matrix_builder.py"
         },
         {
-          "upstream": "product-team/skills/spec-to-repo/references/spec-parsing-guide.md",
-          "local": "skills/developer/engineering/spec-to-repo/references/spec-parsing-guide.md"
-        },
-        {
-          "upstream": "product-team/skills/spec-to-repo/references/stack-templates.md",
-          "local": "skills/developer/engineering/spec-to-repo/references/stack-templates.md"
-        },
-        {
           "upstream": "product-team/skills/spec-to-repo/scripts/validate_project.py",
           "local": "skills/developer/engineering/spec-to-repo/scripts/validate_project.py"
         }
@@ -17107,6 +17060,62 @@
         {
           "upstream": "research/deepread/references/knowledge-map.md",
           "local": "skills/researcher/knowledge/deepread/references/knowledge-map.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/agents/coder.md",
+          "local": "skills/developer/context/hivemind/assets/agents/coder.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/agents/scout.md",
+          "local": "skills/developer/context/hivemind/assets/agents/scout.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/agents/tester.md",
+          "local": "skills/developer/context/hivemind/assets/agents/tester.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/agents/verifier.md",
+          "local": "skills/developer/context/hivemind/assets/agents/verifier.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/commands/hive.md",
+          "local": "skills/developer/context/hivemind/assets/commands/hive.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/commands/migration.md",
+          "local": "skills/developer/context/hivemind/assets/commands/migration.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/commands/oc.md",
+          "local": "skills/developer/context/hivemind/assets/commands/oc.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/commands/research-sweep.md",
+          "local": "skills/developer/context/hivemind/assets/commands/research-sweep.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/commands/review-panel.md",
+          "local": "skills/developer/context/hivemind/assets/commands/review-panel.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/commands/swarm.md",
+          "local": "skills/developer/context/hivemind/assets/commands/swarm.md"
+        },
+        {
+          "upstream": "engineering/hivemind/assets/commands/test-fleet.md",
+          "local": "skills/developer/context/hivemind/assets/commands/test-fleet.md"
+        },
+        {
+          "upstream": "engineering/hivemind/scripts/bench/grader-prompt.md",
+          "local": "skills/developer/context/hivemind/scripts/bench/grader-prompt.md"
+        },
+        {
+          "upstream": "product-team/skills/spec-to-repo/references/spec-parsing-guide.md",
+          "local": "skills/developer/engineering/spec-to-repo/references/spec-parsing-guide.md"
+        },
+        {
+          "upstream": "product-team/skills/spec-to-repo/references/stack-templates.md",
+          "local": "skills/developer/engineering/spec-to-repo/references/stack-templates.md"
         }
       ]
     },
@@ -17415,10 +17424,6 @@
           "local": "skills/designer/design/add-shader-cursor-trail/assets/react/cursor-trail.css"
         },
         {
-          "upstream": "agent-skills/web-design/add-shader-cursor-trail/references/implementation.md",
-          "local": "skills/designer/design/add-shader-cursor-trail/references/implementation.md"
-        },
-        {
           "upstream": "agent-skills/web-design/add-shader-cursor-trail/scripts/verify-cursor-trail.mjs",
           "local": "skills/designer/design/add-shader-cursor-trail/scripts/verify-cursor-trail.mjs"
         }
@@ -17430,7 +17435,12 @@
         }
       ],
       "stars_snapshot_2026-11-03": 7200,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "agent-skills/web-design/add-shader-cursor-trail/references/implementation.md",
+          "local": "skills/designer/design/add-shader-cursor-trail/references/implementation.md"
+        }
+      ]
     },
     {
       "repo": "czlonkowski/n8n-skills",
@@ -17595,50 +17605,6 @@
           "local": "skills/designer/design/frontend-design/LICENSE.txt"
         },
         {
-          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/quality-criteria.md",
-          "local": "skills/developer/context/claude-md-improver/references/quality-criteria.md"
-        },
-        {
-          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/templates.md",
-          "local": "skills/developer/context/claude-md-improver/references/templates.md"
-        },
-        {
-          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/update-guidelines.md",
-          "local": "skills/developer/context/claude-md-improver/references/update-guidelines.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/auth.md",
-          "local": "skills/developer/engineering/build-mcp-server/references/auth.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/deploy-cloudflare-workers.md",
-          "local": "skills/developer/engineering/build-mcp-server/references/deploy-cloudflare-workers.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/elicitation.md",
-          "local": "skills/developer/engineering/build-mcp-server/references/elicitation.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/remote-http-scaffold.md",
-          "local": "skills/developer/engineering/build-mcp-server/references/remote-http-scaffold.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/resources-and-prompts.md",
-          "local": "skills/developer/engineering/build-mcp-server/references/resources-and-prompts.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/server-capabilities.md",
-          "local": "skills/developer/engineering/build-mcp-server/references/server-capabilities.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/tool-design.md",
-          "local": "skills/developer/engineering/build-mcp-server/references/tool-design.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/versions.md",
-          "local": "skills/developer/engineering/build-mcp-server/references/versions.md"
-        },
-        {
           "upstream": "plugins/claude-security/skills/claude-security/jobs/scan-changes.md",
           "local": "skills/developer/quality/claude-security/jobs/scan-changes.md"
         },
@@ -17661,30 +17627,6 @@
         {
           "upstream": "plugins/claude-security/skills/claude-security/specs/report-spec.md",
           "local": "skills/developer/quality/claude-security/specs/report-spec.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/abuse-protection.md",
-          "local": "skills/developer/engineering/build-mcp-app/references/abuse-protection.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/apps-sdk-messages.md",
-          "local": "skills/developer/engineering/build-mcp-app/references/apps-sdk-messages.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/directory-checklist.md",
-          "local": "skills/developer/engineering/build-mcp-app/references/directory-checklist.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/iframe-sandbox.md",
-          "local": "skills/developer/engineering/build-mcp-app/references/iframe-sandbox.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/payload-budgeting.md",
-          "local": "skills/developer/engineering/build-mcp-app/references/payload-budgeting.md"
-        },
-        {
-          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/widget-templates.md",
-          "local": "skills/developer/engineering/build-mcp-app/references/widget-templates.md"
         },
         {
           "upstream": "plugins/plugin-dev/skills/skill-development/references/skill-creator-original.md",
@@ -17770,7 +17712,76 @@
         }
       ],
       "stars_snapshot_2026-11-03": 45841,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/quality-criteria.md",
+          "local": "skills/developer/context/claude-md-improver/references/quality-criteria.md"
+        },
+        {
+          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/templates.md",
+          "local": "skills/developer/context/claude-md-improver/references/templates.md"
+        },
+        {
+          "upstream": "plugins/claude-md-management/skills/claude-md-improver/references/update-guidelines.md",
+          "local": "skills/developer/context/claude-md-improver/references/update-guidelines.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/abuse-protection.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/abuse-protection.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/apps-sdk-messages.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/apps-sdk-messages.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/directory-checklist.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/directory-checklist.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/iframe-sandbox.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/iframe-sandbox.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/payload-budgeting.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/payload-budgeting.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/widget-templates.md",
+          "local": "skills/developer/engineering/build-mcp-app/references/widget-templates.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/auth.md",
+          "local": "skills/developer/engineering/build-mcp-server/references/auth.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/deploy-cloudflare-workers.md",
+          "local": "skills/developer/engineering/build-mcp-server/references/deploy-cloudflare-workers.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/elicitation.md",
+          "local": "skills/developer/engineering/build-mcp-server/references/elicitation.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/remote-http-scaffold.md",
+          "local": "skills/developer/engineering/build-mcp-server/references/remote-http-scaffold.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/resources-and-prompts.md",
+          "local": "skills/developer/engineering/build-mcp-server/references/resources-and-prompts.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/server-capabilities.md",
+          "local": "skills/developer/engineering/build-mcp-server/references/server-capabilities.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/tool-design.md",
+          "local": "skills/developer/engineering/build-mcp-server/references/tool-design.md"
+        },
+        {
+          "upstream": "plugins/mcp-server-dev/skills/build-mcp-server/references/versions.md",
+          "local": "skills/developer/engineering/build-mcp-server/references/versions.md"
+        }
+      ]
     },
     {
       "repo": "wshobson/agents",
@@ -17847,36 +17858,12 @@
       ],
       "verbatim": [
         {
-          "upstream": "plugins/before-you-build/skills/before-you-build/references/risk-checklist.md",
-          "local": "skills/developer/engineering/before-you-build/references/risk-checklist.md"
-        },
-        {
           "upstream": "plugins/api-scaffolding/skills/fastapi-templates/references/details.md",
           "local": "skills/developer/quality/fastapi-templates/references/details.md"
         },
         {
           "upstream": "plugins/agent-teams/skills/multi-reviewer-patterns/references/review-dimensions.md",
           "local": "skills/developer/quality/multi-reviewer-patterns/references/review-dimensions.md"
-        },
-        {
-          "upstream": "plugins/agent-teams/skills/parallel-debugging/references/hypothesis-testing.md",
-          "local": "skills/developer/engineering/parallel-debugging/references/hypothesis-testing.md"
-        },
-        {
-          "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/references/advanced-strategies.md",
-          "local": "skills/developer/engineering/deployment-pipeline-design/references/advanced-strategies.md"
-        },
-        {
-          "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/references/details.md",
-          "local": "skills/developer/engineering/deployment-pipeline-design/references/details.md"
-        },
-        {
-          "upstream": "plugins/agent-teams/skills/task-coordination-strategies/references/dependency-graphs.md",
-          "local": "skills/developer/context/task-coordination-strategies/references/dependency-graphs.md"
-        },
-        {
-          "upstream": "plugins/agent-teams/skills/task-coordination-strategies/references/task-decomposition.md",
-          "local": "skills/developer/context/task-coordination-strategies/references/task-decomposition.md"
         },
         {
           "upstream": "plugins/accessibility-compliance/skills/wcag-audit-patterns/references/details.md",
@@ -17890,7 +17877,32 @@
         }
       ],
       "stars_snapshot_2026-11-03": 42114,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "plugins/agent-teams/skills/task-coordination-strategies/references/dependency-graphs.md",
+          "local": "skills/developer/context/task-coordination-strategies/references/dependency-graphs.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/task-coordination-strategies/references/task-decomposition.md",
+          "local": "skills/developer/context/task-coordination-strategies/references/task-decomposition.md"
+        },
+        {
+          "upstream": "plugins/before-you-build/skills/before-you-build/references/risk-checklist.md",
+          "local": "skills/developer/engineering/before-you-build/references/risk-checklist.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/references/advanced-strategies.md",
+          "local": "skills/developer/engineering/deployment-pipeline-design/references/advanced-strategies.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/deployment-pipeline-design/references/details.md",
+          "local": "skills/developer/engineering/deployment-pipeline-design/references/details.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/parallel-debugging/references/hypothesis-testing.md",
+          "local": "skills/developer/engineering/parallel-debugging/references/hypothesis-testing.md"
+        }
+      ]
     },
     {
       "repo": "Donchitos/Claude-Code-Game-Studios",
@@ -18118,10 +18130,6 @@
           "local": "skills/developer/quality/check/scripts/run-tests.sh"
         },
         {
-          "upstream": "skills/read/references/read-methods.md",
-          "local": "skills/developer/engineering/read/references/read-methods.md"
-        },
-        {
           "upstream": "skills/read/scripts/deepseek.py",
           "local": "skills/developer/engineering/read/scripts/deepseek.py"
         },
@@ -18153,7 +18161,12 @@
         }
       ],
       "stars_snapshot_2026-11-03": 7496,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "skills/read/references/read-methods.md",
+          "local": "skills/developer/engineering/read/references/read-methods.md"
+        }
+      ]
     },
     {
       "repo": "NVIDIA/skills",
@@ -18483,18 +18496,6 @@
       ],
       "verbatim": [
         {
-          "upstream": "skills/creative/DESIGN.md",
-          "local": "skills/designer/design/creative/DESIGN.md"
-        },
-        {
-          "upstream": "skills/dramatic/DESIGN.md",
-          "local": "skills/designer/design/dramatic/DESIGN.md"
-        },
-        {
-          "upstream": "skills/brutalism/DESIGN.md",
-          "local": "skills/designer/design/brutalism/DESIGN.md"
-        },
-        {
           "upstream": "skills/minimal/DESIGN.md",
           "local": "skills/designer/design/minimal/DESIGN.md"
         },
@@ -18510,7 +18511,20 @@
         }
       ],
       "stars_snapshot_2026-11-03": 3450,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "skills/brutalism/DESIGN.md",
+          "local": "skills/designer/design/brutalism/DESIGN.md"
+        },
+        {
+          "upstream": "skills/creative/DESIGN.md",
+          "local": "skills/designer/design/creative/DESIGN.md"
+        },
+        {
+          "upstream": "skills/dramatic/DESIGN.md",
+          "local": "skills/designer/design/dramatic/DESIGN.md"
+        }
+      ]
     },
     {
       "repo": "tradermonty/claude-trading-skills",
@@ -19164,24 +19178,7 @@
           "local": "skills/corporate/finance/graham-net-net/SKILL.md"
         }
       ],
-      "verbatim": [
-        {
-          "upstream": "skills/buffett/invest.md",
-          "local": "skills/corporate/finance/buffett/invest.md"
-        },
-        {
-          "upstream": "skills/munger/invest.md",
-          "local": "skills/corporate/finance/munger/invest.md"
-        },
-        {
-          "upstream": "skills/dalio-principles-allweather/invest.md",
-          "local": "skills/corporate/finance/dalio-principles-allweather/invest.md"
-        },
-        {
-          "upstream": "skills/graham-net-net/invest.md",
-          "local": "skills/corporate/finance/graham-net-net/invest.md"
-        }
-      ],
+      "verbatim": [],
       "verbatim_excluded": [
         {
           "upstream": "skills/ 其余 59 个投资人 skill（a16z、ackman、druckenmiller 等）",
@@ -19193,7 +19190,24 @@
         }
       ],
       "stars_snapshot_2026-11-03": 1907,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "skills/buffett/invest.md",
+          "local": "skills/corporate/finance/buffett/invest.md"
+        },
+        {
+          "upstream": "skills/dalio-principles-allweather/invest.md",
+          "local": "skills/corporate/finance/dalio-principles-allweather/invest.md"
+        },
+        {
+          "upstream": "skills/graham-net-net/invest.md",
+          "local": "skills/corporate/finance/graham-net-net/invest.md"
+        },
+        {
+          "upstream": "skills/munger/invest.md",
+          "local": "skills/corporate/finance/munger/invest.md"
+        }
+      ]
     },
     {
       "repo": "RKiding/Awesome-finance-skills",
@@ -19298,28 +19312,12 @@
           "local": "skills/corporate/supply-chain/serenity-skill/LICENSE"
         },
         {
-          "upstream": "references/deep-research-workflow.md",
-          "local": "skills/corporate/supply-chain/serenity-skill/references/deep-research-workflow.md"
-        },
-        {
-          "upstream": "references/evidence-ladder.md",
-          "local": "skills/corporate/supply-chain/serenity-skill/references/evidence-ladder.md"
-        },
-        {
           "upstream": "references/market-source-playbook.md",
           "local": "skills/corporate/supply-chain/serenity-skill/references/market-source-playbook.md"
         },
         {
           "upstream": "references/output-style-and-language.md",
           "local": "skills/corporate/supply-chain/serenity-skill/references/output-style-and-language.md"
-        },
-        {
-          "upstream": "references/public-profile-and-evaluation.md",
-          "local": "skills/corporate/supply-chain/serenity-skill/references/public-profile-and-evaluation.md"
-        },
-        {
-          "upstream": "references/research-sources.md",
-          "local": "skills/corporate/supply-chain/serenity-skill/references/research-sources.md"
         },
         {
           "upstream": "references/risk-and-compliance.md",
@@ -19361,7 +19359,24 @@
         }
       ],
       "stars_snapshot_2026-11-03": 4154,
-      "translated_prose": []
+      "translated_prose": [
+        {
+          "upstream": "references/deep-research-workflow.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/deep-research-workflow.md"
+        },
+        {
+          "upstream": "references/evidence-ladder.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/evidence-ladder.md"
+        },
+        {
+          "upstream": "references/public-profile-and-evaluation.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/public-profile-and-evaluation.md"
+        },
+        {
+          "upstream": "references/research-sources.md",
+          "local": "skills/corporate/supply-chain/serenity-skill/references/research-sources.md"
+        }
+      ]
     },
     {
       "repo": "nexscope-ai/eCommerce-Skills",

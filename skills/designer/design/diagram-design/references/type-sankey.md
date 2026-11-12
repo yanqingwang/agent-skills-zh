@@ -1,38 +1,42 @@
-# Sankey / Flow-Quantity
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/type-sankey.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Best for:** showing where a *quantity* goes as it splits and merges across a small number of stages — CI compute budgets, funnel-adjacent volume flows, cost or headcount allocation. This is the one type where band **thickness carries data**; if the reader doesn't need to compare magnitudes, use process or pyramid instead.
+# 桑基图 / 流量图
 
-Printed node quantities preserve their complete numeric token, including finite decimal or scientific notation before the unit suffix. A quantity must be positive for a visible node bar; signs and exponents must not be discarded while checking its scale.
-The resulting pixels-per-unit scale and relative comparisons must also be finite; a quantity outside that arithmetic range is rejected rather than certified.
+**适用场景：** 展示一个*数量*如何在少数几个阶段间分裂与汇合：CI 算力预算、类漏斗的流量、成本或人力分配。这是唯一一个**带的粗细承载数据**的类型；如果读者不需要比较量级，改用流程图或金字塔图。
 
-## Layout conventions
+打印的节点数量保留完整的数字 token，包括单位后缀之前的有限小数或科学计数法。对一个可见节点柱而言，数量必须为正；在检查其比例时不得丢弃符号和指数。
+由此得到的每单位像素比例和相对比较也必须是有限值；数量若超出该算术范围会被拒绝，而不是被认证。
 
-- **Exactly 3 stage columns**, left → right. No more, no less — above 3 stages, split into two linked diagrams.
-- **Nodes are vertical bars**, `width=12`, solid `ink` fill, no stroke. Height is proportional to the quantity passing through, rounded to the nearest 4px so it stays on-grid — the rounding is a rendering step, not a data change; the true value still prints in the quantity sublabel.
-- **Flows are filled ribbons**, not stroked lines: a single closed `<path>` per flow. Top edge is a cubic Bézier from the source node's top-offset to the target node's top-offset; bottom edge is the same curve run in reverse from target-bottom back to source-bottom. **Both** control points sit at the horizontal midpoint between the two columns, each at the y of the end it belongs to: `C midX,y0 midX,y1 targetX,y1`. That is what makes the band leave and arrive **horizontally**, so it plugs into each bar square-on. Putting the second control on the target's x instead (`C midX,y0 targetX,y1 targetX,y1`) collapses it onto the endpoint, the arrival tangent degenerates, and every ribbon meets its bar at a visible slant — it looks like the band is not attached.
-- **No arrowheads, ever.** Direction is implied by the left-to-right column order. This is a deliberate, explicit exemption from SKILL.md §6's orthogonal-elbow-and-arrowhead rule: ribbons are area encodings, not connectors, and a marker on a filled band reads as clutter, not information.
-- **Ribbon fill:** `muted` at `0.18` opacity for ordinary flows. The one editorial focal path (see below) uses `accent` at `0.28` opacity. A focal path may span more than one ribbon segment (e.g. two flows that both feed the same downstream node as halves of one story) — accenting every ribbon that belongs to that single path still counts as **one** focal element, not one per ribbon. Never per-flow rainbow coloring — color is reserved for the one path that deserves attention.
-- **Node ordering minimizes crossings.** Order nodes within each column so that flows converging on (or diverging from) the same node stay in a consistent top-to-bottom sequence across columns. If two ribbons still cross more than once, reorder the nodes — don't let them tangle.
-- **Labels:** node name in the `node-name` role 12px 600, quantity directly under it in the `sublabel` role 9px `muted`. Placement is column-specific: column 1 sits outside the bar, `text-anchor="end"`; column 2 sits in the gutter above its bar, `text-anchor="middle"`, **vertically centred in that gutter** rather than flush to the top, or the cap line grazes the bar above; column 3 sits outside the bar, `text-anchor="start"`.
+## 布局约定
 
-  Centring the column-2 label in its gutter is what makes it legible: the gutter is the gap the bands themselves leave between two nodes, so a centred label sits on clean paper and needs no backing at all. Don't reach for a mask rect here — over a filled band it reads as a hole punched in the diagram, and if the label already sits on paper it is solving nothing. If a label genuinely has nowhere clear to sit, the column is over budget: drop a node or split the diagram.
-- **Column headers:** `eyebrow` role 8px, uppercase, tracked, centered above each column — "CI COMPUTE BUDGET / TEST STAGE / OUTCOME" style eyebrows, not full sentences.
-- **Drawing order:** background → column headers → ordinary ribbons → the accent path's ribbon(s) (painted last among ribbons so they read on top) → node bars → node labels → legend.
-- **Legend:** horizontal strip at the bottom per the global rule, viewBox extended ~60–100px to fit it (a Sankey's ribbons need more bottom clearance than a typical diagram because node stacks run tall). Swatches are 16×8 rectangles matching each ribbon treatment, plus an optional italic aside stating the editorial read.
+- **恰好 3 个阶段列**，自左向右。不多不少：超过 3 个阶段就拆成两张关联图。
+- **节点是竖直柱**，`width=12`，实心 `ink` 填充，无描边。高度与流经的数量成比例，取整到最近的 4px 以保持落在网格上：取整是渲染步骤，不改数据；真实值仍打印在数量的副标签里。
+- **流是填充的带（ribbon）**，不是描边线：每条流一个闭合 `<path>`。上边缘是从源节点顶部偏移到目标节点顶部偏移的三次贝塞尔曲线；下边缘是同一条曲线反向跑一遍，从目标底部回到源底部。**两个**控制点都放在两列之间的水平中点上，各自取所属端点的 y：`C midX,y0 midX,y1 targetX,y1`。正是这一点让带以**水平**姿态离开和到达，从而正对接到每根柱子上。若把第二个控制点放在目标的 x 上（`C midX,y0 targetX,y1 targetX,y1`），它会塌缩到端点上，到达切线退化，每条带都斜着碰到柱子：看起来就像带子没有接上。
+- **永远不用箭头。** 方向由自左向右的列顺序隐含。这是对 SKILL.md §6 正交拐弯加箭头规则的一次刻意、明确的豁免：带是面积编码，不是连接线；填充带上的标记读起来是杂讯，不是信息。
+- **带填充：** 普通流用 `muted` 透明度 `0.18`。唯一的编辑焦点路径（见下）用 `accent` 透明度 `0.28`。焦点路径可以横跨多条带段（例如两条流都汇入同一个下游节点，作为同一个故事的两半）：强调属于该单一路径的每一条带仍算**一个**焦点元素，不是每条带一个。绝不按流逐条彩虹配色：颜色保留给唯一值得注意的那条路径。
+- **节点排序最小化交叉。** 排列每列内的节点，使汇入（或散出）同一节点的流在各列之间保持一致的自上而下次序。如果两条带仍交叉超过一次，重排节点：别让它们缠住。
+- **标签：** 节点名用 `node-name` 角色 12px 600，数量直接写在下方，`sublabel` 角色 9px `muted`。放置随列而异：第 1 列放在柱外侧，`text-anchor="end"`；第 2 列放在柱上方的侧沟里，`text-anchor="middle"`，**在该侧沟内垂直居中**而不是贴顶，否则字帽会蹭到上面的柱子；第 3 列放在柱外侧，`text-anchor="start"`。
 
-## Scale rule
+  第 2 列标签在其侧沟内居中，正是它可读的原因：侧沟是带本身在两个节点之间留出的空隙，居中的标签坐在干净的纸面上，完全不需要底衬。不要在这里用遮罩矩形：压在填充带上读起来像在图上凿了个洞，而如果标签本来就坐在纸上，它什么也没解决。如果一个标签确实没有干净的位置可放，说明这一列超预算了：删一个节点或拆图。
+- **列头：** `eyebrow` 角色 8px，全大写，带字距，居中放在每列上方："CI COMPUTE BUDGET / TEST STAGE / OUTCOME" 式的眉标，不是完整句子。
+- **绘制顺序：** 背景 → 列头 → 普通带 → 焦点路径的带（在带中最后绘制，让它们读在顶层）→ 节点柱 → 节点标签 → 图例。
+- **图例：** 按全局规则放在底部横条，viewBox 加高约 60–100px 以容纳它（桑基的带需要比一般图更多的底部余量，因为节点堆会很高）。色块是与每条带处理一致的 16×8 矩形，外加一条可选的斜体旁注陈述编辑读法。
 
-Pick **one px-per-unit constant `k`** for the whole diagram and apply it to every node and ribbon thickness — never a different scale per column. Round each resulting thickness to the nearest 4px (grid compliance) and reconcile the rounding at the node level, not the flow level, so a node's outgoing ribbons still sum exactly to its (rounded) height.
+## 比例规则
 
-**When you control the numbers, choose ones that land on the grid.** At `k`, a 4px step is `4/k` units; pick quantities that are whole multiples of it and the drawn area is then exactly the printed number. Rounding is the fallback for real data you cannot choose, and it is a real cost: at `k = 0.02` a 4px step is 200 minutes, so a rounded bar can misstate its own label by up to 100. In a chart whose entire premise is that area encodes quantity, a bar that disagrees with the number printed beside it spends credibility to buy grid compliance. Never let the rounding exceed one 4px step, and never round a flow so far that a node's ribbons no longer sum to its bar.
+为整张图选定**一个每单位像素常数 `k`**，并应用到每个节点和每条带的粗细上：绝不允许每列用不同的比例。每个得到的厚度取整到最近的 4px（网格合规），并在节点层面（不是流层面）调和取整误差，使一个节点的出带仍然恰好加总到它的（取整后）高度。
 
-**Minimum rendered ribbon thickness: 4px.** Anything that would round to less gets folded into an "other" band rather than drawn as an invisible hairline — a Sankey ribbon the reader can't see isn't communicating anything.
+**当数字由你选择时，选落在网格上的数字。** 在 `k` 下，4px 一档等于 `4/k` 单位；选它的整数倍的数量，绘制面积就恰好等于打印的数字。取整是你无法选择真实数据时的兜底，而且有真实代价：在 `k = 0.02` 时 4px 一档是 200 分钟，一根取整后的柱最多能与自己标签差 100。在一整张图的前提就是"面积编码数量"的图表里，一根与旁边印的数字不符的柱子是在花可信度买网格合规。取整绝不超过一个 4px 档，也绝不把一条流取整到节点各带不再加总成柱子。
 
-### Worked reference (k = 0.02 px/unit, budget = 12,000 CI minutes)
+**带的最小绘制厚度：4px。** 任何会取整到更小值的东西都折进"其他"带，而不是画成看不见的发丝线：一条读者看不见的桑基带什么也没传达。
 
-| Node | Quantity | Height (px) |
+### 完整参考算例（k = 0.02 px/unit，预算 = 12,000 CI 分钟）
+
+| 节点 | 数量 | 高度（px） |
 |---|---|---|
-| CI minutes (col 1) | 12,000 | 240 |
+| CI minutes（第 1 列） | 12,000 | 240 |
 | Unit tests | 5,200 | 104 |
 | E2E | 4,000 | 80 |
 | Build | 2,000 | 40 |
@@ -41,35 +45,35 @@ Pick **one px-per-unit constant `k`** for the whole diagram and apply it to ever
 | Failed | 1,600 | 32 |
 | Flaked | 1,000 | 20 |
 
-Each column's node heights sum to the same 240px total — that invariant (total-in equals total-out) is what makes the diagram trustworthy at a glance. If your columns don't sum to the same total, the data has a leak or the layout has a bug.
+每列的节点高度加总都等于同一个 240px：正是这个不变量（流入等于流出）让图在一眼之间可信。如果各列加总不一致，要么数据有漏，要么布局有 bug。
 
-## Complexity budget
+## 复杂度预算
 
-| Limit | Rule |
+| 限额 | 规则 |
 |---|---|
-| Max stage columns | 3 |
-| Max nodes | 8 |
-| Max flows (ribbons) | 12 |
-| Max accent elements | 2 (a focal path's ribbons count as one, regardless of how many segments it spans) |
+| 阶段列上限 | 3 |
+| 节点上限 | 8 |
+| 流（带）上限 | 12 |
+| accent 元素上限 | 2（一个焦点路径的带算一个，无论它横跨多少段） |
 
-Over budget → split into two linked Sankeys (e.g. an overview stage-1→stage-2 diagram plus a detail stage-2→stage-3 diagram) rather than cramming a fourth column or a ninth node into one canvas.
+超预算 → 拆成两张关联的桑基图（如一张总览 stage-1→stage-2 加一张细节 stage-2→stage-3），而不是往一张画布里塞第四列或第九个节点。
 
-## Anti-patterns
+## 反模式
 
-- **Ribbons that meet the bar at a slant.** The single most common way to get this type wrong, and it is a control-point mistake, not a layout one: both controls belong on the midpoint x. A band arriving at an angle reads as detached from its node, which undermines the one thing the diagram is asserting — that this quantity flows into that node.
-- **An opaque mask rect behind a column-2 label.** Over a filled band it reads as a hole punched in the diagram, and it erases any bar it overlaps. Centre the label in the gutter instead, where it sits on clean paper and needs nothing behind it.
-- **Column-2 labels flush to the top of their gutter.** Centre them, or the cap line touches the bar above and the label looks like it belongs to the wrong node.
-- **A bar whose height disagrees with the number printed beside it.** See the scale rule: choose grid-friendly quantities when the data is yours to choose.
-- **Ribbons crossing more than once.** Reorder the nodes in the offending column; a Sankey with a tangle in the middle is unreadable.
-- **Ribbons thinner than 4px.** Merge them into an "other" band instead of drawing a sliver no one can see.
-- **Per-flow rainbow coloring.** One `muted` treatment for ordinary flows, one `accent` treatment for the flow that carries the editorial point — never a distinct hue per ribbon.
-- **Using Sankey for a simple funnel.** A single narrowing quantity with no splits or merges is a pyramid/funnel, not a Sankey.
-- **Using Sankey for a plain step sequence.** If nothing splits, merges, or varies in thickness, it's a process diagram — the whole point of Sankey is quantity that branches.
-- **Stacking two flows at the same node-edge offset.** Every flow gets its own offset range within the node's height, in a consistent top-to-bottom order — never two ribbons overlapping at the same attach point.
-- **Percentages or quantities that don't sum to the source total.** Every node's outgoing (or incoming) flows must sum to that node's own height. A Sankey that doesn't balance reads as an error, not a design choice.
+- **带斜着接到柱上。** 弄错这个类型最常见的方式，而且是控制点错误，不是布局错误：两个控制点都属于中点 x。一条斜着到达的带读起来像脱离了节点，这恰恰瓦解了图正在断言的那件事：这个数量流入了那个节点。
+- **在第 2 列标签后面放不透明遮罩矩形。** 压在填充带上读起来像在图上凿了个洞，还会抹掉它压住的任何柱子。改为把标签居中放在侧沟里，那里坐在干净纸面上，背后什么都不需要。
+- **第 2 列标签贴着侧沟顶。** 要居中，否则字帽碰到上面的柱子，标签看起来像属于错误的节点。
+- **柱子高度与旁边印的数字不符。** 见比例规则：数据由你选择时，选网格友好的数字。
+- **带交叉超过一次。** 重排出错列的节点；中间缠成一团的桑基图不可读。
+- **带薄于 4px。** 合并进"其他"带，不要画没人看得见的细条。
+- **按流逐条彩虹配色。** 普通流统一 `muted`，承载编辑论点的那条流用 `accent`：绝不每条带一个色相。
+- **把桑基图用于简单漏斗。** 只收窄、无分裂无汇合的数量是金字塔/漏斗，不是桑基。
+- **把桑基图用于单纯的步骤序列。** 如果什么也不分裂、什么也不汇合、粗细也不变，那是流程图：桑基的全部意义在于会分叉的数量。
+- **两条流叠在同一个节点边偏移上。** 每条流在节点高度内有自己的偏移区间，按一致的自上而下次序排列：绝不让两条带叠在同一个附着点。
+- **加起来不等于源总量的百分比或数量。** 每个节点的出流（或入流）必须加总到该节点自身的高度。不守恒的桑基读起来像错误，不像设计选择。
 
-## Examples
+## 示例
 
-- `assets/example-sankey.html` — minimal light. A month of CI compute (12,000 minutes) splitting into test/build/lint stages, merging into passed/failed/flaked outcomes; the flaky-rerun path is the one accent flow.
-- `assets/example-sankey-dark.html` — minimal dark, same data.
-- `assets/example-sankey-full.html` — full editorial: container framing + 3 summary cards of varied widths + footer.
+- `assets/example-sankey.html` — 极简浅色。一个月的 CI 算力（12,000 分钟）分裂成 test/build/lint 阶段，再汇合成 passed/failed/flaked 结局；flaky 重跑路径是唯一的 accent 流。
+- `assets/example-sankey-dark.html` — 极简深色，同一数据。
+- `assets/example-sankey-full.html` — 完整编辑排版：容器框 + 3 张宽度不均的摘要卡 + 页脚。

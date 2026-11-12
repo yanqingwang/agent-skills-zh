@@ -1,24 +1,28 @@
-# Elicitation — spec-native user input
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/mcp-server-dev/skills/build-mcp-server/references/elicitation.md` · License: Apache-2.0
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Elicitation lets a server pause mid-tool-call and ask the user for structured input. The client renders a native form (no iframe, no HTML). User fills it, server continues.
+# Elicitation — 规范原生的用户输入
 
-**This is the right answer for simple input.** Widgets (`build-mcp-app`) are for when you need rich UI — charts, searchable lists, visual previews. If you just need a confirmation, a picked option, or a few form fields, elicitation is simpler, spec-native, and works in any compliant host.
+Elicitation 让 server 在 tool 调用中途暂停，向用户请求结构化输入。客户端渲染原生表单（没有 iframe，没有 HTML）。用户填完，server 继续。
+
+**对简单输入而言，它就是正确答案。** Widgets（`build-mcp-app`）是为富 UI 准备的：图表、可搜索列表、可视化预览。如果你只需要一次确认、一个选中的选项或几个表单字段，elicitation 更简单、规范原生，且在任何合规 host 中都可用。
 
 ---
 
-## ⚠️ Check capability first — support is new
+## ⚠️ 先检查能力，支持还很新
 
-Host support is very recent:
+Host 的支持出现得很晚：
 
-| Host | Status |
+| Host | 状态 |
 |---|---|
-| Claude Code | ✅ since v2.1.76 (both `form` and `url` modes) |
-| Claude Desktop | Unconfirmed — likely not yet or very recent |
-| claude.ai | Unknown |
+| Claude Code | ✅ 自 v2.1.76 起（`form` 和 `url` 两种模式都支持） |
+| Claude Desktop | 未确认，大概率还没有，或非常新 |
+| claude.ai | 未知 |
 
-**The SDK throws `CapabilityNotSupported` if the client doesn't advertise elicitation.** There is no graceful degradation built in. You MUST check and have a fallback.
+**如果客户端没有声明 elicitation 能力，SDK 会抛出 `CapabilityNotSupported`。** SDK 内置没有优雅降级。你必须先检查并准备好回退方案。
 
-### The canonical pattern
+### 标准模式
 
 ```typescript
 server.registerTool("delete_all", {
@@ -66,34 +70,34 @@ async def delete_all(ctx: Context) -> str:
 
 ---
 
-## Schema constraints
+## Schema 约束
 
-Elicitation schemas are deliberately limited — keep forms simple:
+Elicitation schema 有意做了限制，表单要保持简单：
 
-- **Flat objects only** — no nesting, no arrays of objects
-- **Primitives only** — `string`, `number`, `integer`, `boolean`, `enum`
-- String formats limited to: `email`, `uri`, `date`, `date-time`
-- Use `title` and `description` on each property — they become form labels
+- **只允许扁平对象**，不支持嵌套，不支持对象数组
+- **只允许原始类型**：`string`、`number`、`integer`、`boolean`、`enum`
+- 字符串 format 限定为：`email`、`uri`、`date`、`date-time`
+- 每个 property 都要写 `title` 和 `description`，它们会成为表单标签
 
-If your data doesn't fit these constraints, that's the signal to escalate to a widget.
+如果你的数据塞不进这些约束，那就是该升级到 widget 的信号。
 
 ---
 
-## Three-state response
+## 三态响应
 
-| Action | Meaning | `content` present? |
+| Action | 含义 | 是否有 `content` |
 |---|---|---|
-| `accept` | User submitted the form | ✅ validated against your schema |
-| `decline` | User explicitly said no | ❌ |
-| `cancel` | User dismissed (escape, clicked away) | ❌ |
+| `accept` | 用户提交了表单 | ✅ 已按你的 schema 校验 |
+| `decline` | 用户明确拒绝 | ❌ |
+| `cancel` | 用户关闭了表单（按 Esc、点了别处） | ❌ |
 
-Treat `decline` and `cancel` differently if it matters — `decline` is intentional, `cancel` might be accidental.
+如果这个区别要紧，`decline` 和 `cancel` 要区别对待：`decline` 是有意拒绝，`cancel` 可能是误操作。
 
-The TS SDK's `server.elicitInput()` auto-validates `accept` responses against your schema via Ajv. fastmcp's `ctx.elicit()` returns a typed discriminated union (`AcceptedElicitation[T] | DeclinedElicitation | CancelledElicitation`).
+TS SDK 的 `server.elicitInput()` 通过 Ajv 按你的 schema 自动校验 `accept` 响应。fastmcp 的 `ctx.elicit()` 返回带类型的可辨识联合（`AcceptedElicitation[T] | DeclinedElicitation | CancelledElicitation`）。
 
 ---
 
-## fastmcp response_type shorthand
+## fastmcp 的 response_type 简写
 
 ```python
 await ctx.elicit("Pick a color", response_type=["red", "green", "blue"])  # enum
@@ -107,23 +111,23 @@ class ContactInfo:
 await ctx.elicit("Contact details", response_type=ContactInfo)             # flat dataclass
 ```
 
-Accepts: primitives, `list[str]` (becomes enum), dataclass, TypedDict, Pydantic BaseModel. All must be flat.
+可接受：原始类型、`list[str]`（转成 enum）、dataclass、TypedDict、Pydantic BaseModel。全部必须是扁平的。
 
 ---
 
-## Security
+## 安全
 
-**MUST NOT request passwords, API keys, or tokens via elicitation** — spec requirement. Those go through OAuth or `user_config` with `sensitive: true` (MCPB), not runtime forms.
+**绝不能通过 elicitation 请求密码、API key 或 token**，这是规范要求。这些信息应走 OAuth，或 MCPB 中带 `sensitive: true` 的 `user_config`，而不是运行时表单。
 
 ---
 
-## When to escalate to widgets
+## 什么时候升级到 widgets
 
-Elicitation handles: confirm dialogs, enum pickers, short flat forms.
+Elicitation 能应付：确认对话框、enum 选择器、简短的扁平表单。
 
-Reach for `build-mcp-app` widgets when you need:
-- Nested or complex data structures
-- Scrollable/searchable lists (100+ items)
-- Visual preview before choosing (image thumbnails, file tree)
-- Live-updating progress or streaming content
-- Custom layouts, charts, maps
+需要以下能力时改用 `build-mcp-app` widgets：
+- 嵌套或复杂的数据结构
+- 可滚动/可搜索的列表（100+ 项）
+- 选择前的可视化预览（图片缩略图、文件树）
+- 实时更新的进度或流式内容
+- 自定义布局、图表、地图
