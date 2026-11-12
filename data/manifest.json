@@ -193,72 +193,12 @@
       ],
       "verbatim": [
         {
-          "upstream": "skills/taste-skill/assets/app.css",
-          "local": "skills/designer/design/taste-skill/assets/app.css"
-        },
-        {
-          "upstream": "skills/taste-skill/assets/base.css",
-          "local": "skills/designer/design/taste-skill/assets/base.css"
-        },
-        {
-          "upstream": "skills/taste-skill/assets/base.js",
-          "local": "skills/designer/design/taste-skill/assets/base.js"
-        },
-        {
-          "upstream": "skills/taste-skill/assets/charts.js",
-          "local": "skills/designer/design/taste-skill/assets/charts.js"
-        },
-        {
-          "upstream": "skills/taste-skill/assets/scenes/stage.css",
-          "local": "skills/designer/design/taste-skill/assets/scenes/stage.css"
-        },
-        {
-          "upstream": "skills/taste-skill/assets/scenes/stage.js",
-          "local": "skills/designer/design/taste-skill/assets/scenes/stage.js"
-        },
-        {
-          "upstream": "skills/taste-skill/evals/evals.json",
-          "local": "skills/designer/design/taste-skill/evals/evals.json"
-        },
-        {
-          "upstream": "skills/taste-skill/library/app.json",
-          "local": "skills/designer/design/taste-skill/library/app.json"
-        },
-        {
-          "upstream": "skills/taste-skill/library/directions.json",
-          "local": "skills/designer/design/taste-skill/library/directions.json"
-        },
-        {
-          "upstream": "skills/taste-skill/library/heroes.json",
-          "local": "skills/designer/design/taste-skill/library/heroes.json"
-        },
-        {
-          "upstream": "skills/taste-skill/library/motions.json",
-          "local": "skills/designer/design/taste-skill/library/motions.json"
-        },
-        {
           "upstream": "skills/taste-skill/library/palettes.json",
           "local": "skills/designer/design/taste-skill/library/palettes.json"
         },
         {
-          "upstream": "skills/taste-skill/library/photos.json",
-          "local": "skills/designer/design/taste-skill/library/photos.json"
-        },
-        {
-          "upstream": "skills/taste-skill/library/sections.json",
-          "local": "skills/designer/design/taste-skill/library/sections.json"
-        },
-        {
-          "upstream": "skills/taste-skill/library/sites.json",
-          "local": "skills/designer/design/taste-skill/library/sites.json"
-        },
-        {
           "upstream": "skills/taste-skill/library/type.json",
           "local": "skills/designer/design/taste-skill/library/type.json"
-        },
-        {
-          "upstream": "skills/taste-skill/references/app-screens.md",
-          "local": "skills/designer/design/taste-skill/references/app-screens.md"
         },
         {
           "upstream": "skills/taste-skill/references/copy.md",
@@ -271,48 +211,108 @@
         {
           "upstream": "skills/taste-skill/references/scenes.md",
           "local": "skills/designer/design/taste-skill/references/scenes.md"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/assets.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/assets.mjs"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/draw.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/draw.mjs"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/inspect.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/inspect.mjs"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/lint.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/lint.mjs"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/scenes.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/scenes.mjs"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/lib/app-draw.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/lib/app-draw.mjs"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/lib/cdp.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/lib/cdp.mjs"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/lib/probe.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/lib/probe.mjs"
-        },
-        {
-          "upstream": "skills/taste-skill/scripts/lib/rules.mjs",
-          "local": "skills/designer/design/taste-skill/scripts/lib/rules.mjs"
         }
       ],
       "verbatim_excluded": [
         {
           "upstream": "skills/taste-skill/README.md",
           "reason": "上游仓库级说明（含安装方式），本仓库 README 已覆盖使用说明"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/app.css",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/base.css",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/base.js",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/charts.js",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/scenes/stage.css",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/assets/scenes/stage.js",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/evals/evals.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/library/app.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/library/directions.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/library/heroes.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/library/motions.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/library/photos.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/library/sections.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/library/sites.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/references/app-screens.md",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/assets.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/draw.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/inspect.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lint.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/scenes.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lib/app-draw.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lib/cdp.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lib/probe.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/taste-skill/scripts/lib/rules.mjs",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
         }
       ],
       "stars_snapshot_2026-11-03": 108664,
@@ -8931,34 +8931,6 @@
           "local": "skills/developer/gstack/hosts/slate.ts"
         },
         {
-          "upstream": "investigate/SKILL.md.tmpl",
-          "local": "skills/developer/gstack/investigate/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "investigate/sections/backlog.md.tmpl",
-          "local": "skills/developer/gstack/investigate/sections/backlog.md.tmpl"
-        },
-        {
-          "upstream": "investigate/sections/eval-bisect.md.tmpl",
-          "local": "skills/developer/gstack/investigate/sections/eval-bisect.md.tmpl"
-        },
-        {
-          "upstream": "investigate/sections/flake.md.tmpl",
-          "local": "skills/developer/gstack/investigate/sections/flake.md.tmpl"
-        },
-        {
-          "upstream": "investigate/sections/manifest.json",
-          "local": "skills/developer/gstack/investigate/sections/manifest.json"
-        },
-        {
-          "upstream": "investigate/sections/polluter.md.tmpl",
-          "local": "skills/developer/gstack/investigate/sections/polluter.md.tmpl"
-        },
-        {
-          "upstream": "investigate/sections/race.md.tmpl",
-          "local": "skills/developer/gstack/investigate/sections/race.md.tmpl"
-        },
-        {
           "upstream": "ios-clean/SKILL.md.tmpl",
           "local": "skills/developer/gstack/ios-clean/SKILL.md.tmpl"
         },
@@ -9591,14 +9563,6 @@
           "local": "skills/developer/gstack/lib/fs-utils.ts"
         },
         {
-          "upstream": "lib/gate-cost-history.ts",
-          "local": "skills/developer/gstack/lib/gate-cost-history.ts"
-        },
-        {
-          "upstream": "lib/gate-cost.ts",
-          "local": "skills/developer/gstack/lib/gate-cost.ts"
-        },
-        {
           "upstream": "lib/gate-diff/classify.ts",
           "local": "skills/developer/gstack/lib/gate-diff/classify.ts"
         },
@@ -9693,10 +9657,6 @@
         {
           "upstream": "lib/jsonl-store.ts",
           "local": "skills/developer/gstack/lib/jsonl-store.ts"
-        },
-        {
-          "upstream": "lib/lane-ownership.ts",
-          "local": "skills/developer/gstack/lib/lane-ownership.ts"
         },
         {
           "upstream": "lib/markdown-sections.ts",
@@ -9931,38 +9891,6 @@
           "local": "skills/developer/gstack/lib/ship-policy.ts"
         },
         {
-          "upstream": "lib/ship-queue-gate.ts",
-          "local": "skills/developer/gstack/lib/ship-queue-gate.ts"
-        },
-        {
-          "upstream": "lib/ship-queue-train-cli.ts",
-          "local": "skills/developer/gstack/lib/ship-queue-train-cli.ts"
-        },
-        {
-          "upstream": "lib/ship-queue-train-github.ts",
-          "local": "skills/developer/gstack/lib/ship-queue-train-github.ts"
-        },
-        {
-          "upstream": "lib/ship-queue-train-ready.ts",
-          "local": "skills/developer/gstack/lib/ship-queue-train-ready.ts"
-        },
-        {
-          "upstream": "lib/ship-queue-train-record.ts",
-          "local": "skills/developer/gstack/lib/ship-queue-train-record.ts"
-        },
-        {
-          "upstream": "lib/ship-queue-train-verdict.ts",
-          "local": "skills/developer/gstack/lib/ship-queue-train-verdict.ts"
-        },
-        {
-          "upstream": "lib/ship-queue-train-verify.ts",
-          "local": "skills/developer/gstack/lib/ship-queue-train-verify.ts"
-        },
-        {
-          "upstream": "lib/ship-queue-train.ts",
-          "local": "skills/developer/gstack/lib/ship-queue-train.ts"
-        },
-        {
           "upstream": "lib/ship-queue.ts",
           "local": "skills/developer/gstack/lib/ship-queue.ts"
         },
@@ -10005,10 +9933,6 @@
         {
           "upstream": "lib/tree-receipt.ts",
           "local": "skills/developer/gstack/lib/tree-receipt.ts"
-        },
-        {
-          "upstream": "lib/version-gate-train.ts",
-          "local": "skills/developer/gstack/lib/version-gate-train.ts"
         },
         {
           "upstream": "lib/version-source.ts",
@@ -10197,10 +10121,6 @@
         {
           "upstream": "pair-agent/SKILL.md.tmpl",
           "local": "skills/developer/gstack/pair-agent/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "patches/playwright-core@1.62.1.patch",
-          "local": "skills/developer/gstack/patches/playwright-core@1.62.1.patch"
         },
         {
           "upstream": "plan-ceo-review/SKILL.md.tmpl",
@@ -10487,10 +10407,6 @@
           "local": "skills/developer/gstack/scripts/capture-baseline.ts"
         },
         {
-          "upstream": "scripts/census-arms.ts",
-          "local": "skills/developer/gstack/scripts/census-arms.ts"
-        },
-        {
           "upstream": "scripts/compare-pr-version.ts",
           "local": "skills/developer/gstack/scripts/compare-pr-version.ts"
         },
@@ -10591,10 +10507,6 @@
           "local": "skills/developer/gstack/scripts/eval-flake-rank.ts"
         },
         {
-          "upstream": "scripts/eval-input-cache.ts",
-          "local": "skills/developer/gstack/scripts/eval-input-cache.ts"
-        },
-        {
           "upstream": "scripts/eval-list.ts",
           "local": "skills/developer/gstack/scripts/eval-list.ts"
         },
@@ -10639,18 +10551,6 @@
           "local": "skills/developer/gstack/scripts/garry-output-comparison.ts"
         },
         {
-          "upstream": "scripts/gate-cost-replay.ts",
-          "local": "skills/developer/gstack/scripts/gate-cost-replay.ts"
-        },
-        {
-          "upstream": "scripts/gate-diff-calibrate.ts",
-          "local": "skills/developer/gstack/scripts/gate-diff-calibrate.ts"
-        },
-        {
-          "upstream": "scripts/gate-reuse.ts",
-          "local": "skills/developer/gstack/scripts/gate-reuse.ts"
-        },
-        {
           "upstream": "scripts/gen-agents-digest.ts",
           "local": "skills/developer/gstack/scripts/gen-agents-digest.ts"
         },
@@ -10691,16 +10591,8 @@
           "local": "skills/developer/gstack/scripts/jargon-list.json"
         },
         {
-          "upstream": "scripts/judge-calibration-configs.ts",
-          "local": "skills/developer/gstack/scripts/judge-calibration-configs.ts"
-        },
-        {
           "upstream": "scripts/judge-calibration.ts",
           "local": "skills/developer/gstack/scripts/judge-calibration.ts"
-        },
-        {
-          "upstream": "scripts/judge-controls.ts",
-          "local": "skills/developer/gstack/scripts/judge-controls.ts"
         },
         {
           "upstream": "scripts/lib/ci-history.ts",
@@ -10759,10 +10651,6 @@
           "local": "skills/developer/gstack/scripts/lib/windows-curation.ts"
         },
         {
-          "upstream": "scripts/measure-journal-read.ts",
-          "local": "skills/developer/gstack/scripts/measure-journal-read.ts"
-        },
-        {
           "upstream": "scripts/model-policy-freshness.ts",
           "local": "skills/developer/gstack/scripts/model-policy-freshness.ts"
         },
@@ -10801,14 +10689,6 @@
         {
           "upstream": "scripts/question-registry.ts",
           "local": "skills/developer/gstack/scripts/question-registry.ts"
-        },
-        {
-          "upstream": "scripts/recover-receipts.ts",
-          "local": "skills/developer/gstack/scripts/recover-receipts.ts"
-        },
-        {
-          "upstream": "scripts/replay-pr-selection.ts",
-          "local": "skills/developer/gstack/scripts/replay-pr-selection.ts"
         },
         {
           "upstream": "scripts/resolve-codex-generation-model.ts",
@@ -11103,14 +10983,6 @@
           "local": "skills/developer/gstack/scripts/test-strict-output.ts"
         },
         {
-          "upstream": "scripts/train-backstop.ts",
-          "local": "skills/developer/gstack/scripts/train-backstop.ts"
-        },
-        {
-          "upstream": "scripts/train-gate.ts",
-          "local": "skills/developer/gstack/scripts/train-gate.ts"
-        },
-        {
           "upstream": "scripts/typecheck-test-baseline.json",
           "local": "skills/developer/gstack/scripts/typecheck-test-baseline.json"
         },
@@ -11343,6 +11215,134 @@
         {
           "upstream": "test/*",
           "reason": "上游自身 QA 产物（40MB），原则 #11 排除"
+        },
+        {
+          "upstream": "investigate/SKILL.md.tmpl",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "investigate/sections/backlog.md.tmpl",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "investigate/sections/eval-bisect.md.tmpl",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "investigate/sections/flake.md.tmpl",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "investigate/sections/manifest.json",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "investigate/sections/polluter.md.tmpl",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "investigate/sections/race.md.tmpl",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/gate-cost-history.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/gate-cost.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/lane-ownership.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/ship-queue-gate.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/ship-queue-train-cli.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/ship-queue-train-github.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/ship-queue-train-ready.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/ship-queue-train-record.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/ship-queue-train-verdict.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/ship-queue-train-verify.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/ship-queue-train.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "lib/version-gate-train.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "patches/playwright-core@1.62.1.patch",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/census-arms.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/eval-input-cache.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/gate-cost-replay.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/gate-diff-calibrate.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/gate-reuse.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/judge-calibration-configs.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/judge-controls.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/measure-journal-read.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/recover-receipts.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/replay-pr-selection.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/train-backstop.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "scripts/train-gate.ts",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
         }
       ],
       "stars_snapshot_2026-11-03": 138676,
@@ -21317,32 +21317,31 @@
           "local": "skills/toolbox/obsidian/knap/SKILL.md"
         }
       ],
-      "verbatim": [
-        {
-          "upstream": "skills/obsidian-markdown/references/CALLOUTS.md",
-          "local": "skills/toolbox/obsidian/obsidian-markdown/references/CALLOUTS.md"
-        },
-        {
-          "upstream": "skills/obsidian-markdown/references/EMBEDS.md",
-          "local": "skills/toolbox/obsidian/obsidian-markdown/references/EMBEDS.md"
-        },
-        {
-          "upstream": "skills/obsidian-markdown/references/PROPERTIES.md",
-          "local": "skills/toolbox/obsidian/obsidian-markdown/references/PROPERTIES.md"
-        },
-        {
-          "upstream": "skills/obsidian-bases/references/FUNCTIONS_REFERENCE.md",
-          "local": "skills/toolbox/obsidian/obsidian-bases/references/FUNCTIONS_REFERENCE.md"
-        },
-        {
-          "upstream": "skills/json-canvas/references/EXAMPLES.md",
-          "local": "skills/toolbox/obsidian/json-canvas/references/EXAMPLES.md"
-        }
-      ],
+      "verbatim": [],
       "verbatim_excluded": [
         {
           "upstream": "根 README、LICENSE",
           "reason": "仓库级文档；License 原文保留于 THIRD-PARTY-NOTICES.md"
+        },
+        {
+          "upstream": "skills/obsidian-markdown/references/CALLOUTS.md",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/obsidian-markdown/references/EMBEDS.md",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/obsidian-markdown/references/PROPERTIES.md",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/obsidian-bases/references/FUNCTIONS_REFERENCE.md",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
+        },
+        {
+          "upstream": "skills/json-canvas/references/EXAMPLES.md",
+          "reason": "上游 2026-11 前后重构/演进删除该路径（本地按收录快照保留，目录自洽不影响 drop-in）"
         }
       ],
       "stars_snapshot_2026-11-03": 50642,
