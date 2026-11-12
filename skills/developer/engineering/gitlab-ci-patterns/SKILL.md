@@ -1,6 +1,6 @@
 ---
 name: gitlab-ci-patterns
-description: 构建 GitLab CI/CD 流水线，涵盖多阶段工作流、缓存与分布式 runner，实现可扩展的自动化。在实现 GitLab CI/CD、优化流水线性能，或搭建自动化测试与部署时使用本 Skill。
+description: 用多阶段工作流、缓存与分布式 runner 构建可扩展的 GitLab CI/CD 流水线。实现 GitLab CI/CD、优化流水线性能或搭建自动化测试与部署时使用。
 ---
 
 > **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/cicd-automation/skills/gitlab-ci-patterns/SKILL.md` · License: MIT
@@ -9,11 +9,11 @@ description: 构建 GitLab CI/CD 流水线，涵盖多阶段工作流、缓存�
 
 # GitLab CI 模式
 
-面向自动化测试、构建与部署的完整 GitLab CI/CD 流水线模式。
+面向自动化测试、构建与部署的 GitLab CI/CD 流水线模式大全。
 
 ## 目的
 
-创建高效的 GitLab CI 流水线，具备合理的阶段组织、缓存与部署策略。
+通过合理的阶段组织、缓存与部署策略，构建高效的 GitLab CI 流水线。
 
 ## 何时使用
 
@@ -99,7 +99,10 @@ build-docker:
 
 ## 多环境部署
 
-将 `KUBE_CA_CERT_FILE` 设置为一个 GitLab 文件类型变量，内容为集群 CA 证书，并通过受保护、已遮蔽的 CI 变量提供 `KUBE_TOKEN`。该文件类型变量包含一个路径，kubectl 用它来校验 API 服务器证书。对 `develop` 和 `main` 都加以保护，以便部署作业能够读取受保护的令牌。
+将 `KUBE_CA_CERT_FILE` 设置为包含集群 CA 证书的 GitLab file 类型变量，
+并通过受保护、遮蔽（masked）的 CI 变量提供 `KUBE_TOKEN`。file 变量的值是一个路径，
+kubectl 用它校验 API server 证书。把 `develop` 和 `main` 都设为受保护分支，
+部署 job 才能读取受保护的 token。
 
 ```yaml
 .deploy_template: &deploy_template
@@ -252,22 +255,21 @@ trigger-child:
     strategy: depend
 ```
 
-
 ## 最佳实践
 
-1. **使用明确的镜像标签**（node:20，而非 node:latest）
+1. **使用具体的镜像标签**（node:20 而非 node:latest）
 2. **恰当地缓存依赖**
-3. **用 artifacts 承载构建产物**
-4. **为生产环境设置手动门禁**
-5. **用 environments 跟踪部署**
-6. **启用合并请求流水线**
-7. **用流水线计划任务运行周期性作业**
-8. **实施安全扫描**
-9. **用 CI/CD 变量管理密钥**
+3. **构建产物使用 artifacts**
+4. **生产部署加手动闸门**
+5. **用 environments 追踪部署**
+6. **启用 merge request 流水线**
+7. **周期性任务用 pipeline schedules**
+8. **落实安全扫描**
+9. **密钥用 CI/CD 变量**
 10. **监控流水线性能**
 
 ## 相关 Skill
 
 - `github-actions-templates` - 用于 GitHub Actions
-- `deployment-pipeline-design` - 用于架构设计
-- `secrets-management` - 用于密钥管理
+- `deployment-pipeline-design` - 用于流水线架构
+- `secrets-management` - 用于密钥处理

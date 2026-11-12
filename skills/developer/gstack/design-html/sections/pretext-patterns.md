@@ -1,11 +1,15 @@
 <!-- AUTO-GENERATED from pretext-patterns.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-### Pretext Wiring Patterns
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`design-html/sections/pretext-patterns.md` · License: MIT
+> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use these patterns based on the tier selected in Step 2. These are the correct
-Pretext API usage patterns. Follow them exactly.
+### Pretext 接线模式
 
-**Pattern 1: Basic height computation (Simple layout, Card/grid)**
+按 Step 2 选定的档位使用这些模式。它们是 Pretext API 的正确用法，
+逐字照做。
+
+**模式 1：基础高度计算（简单布局、卡片/网格）**
 ```js
 import { prepare, layout } from '@chenglou/pretext'
 // Vanilla HTML: omit the import; this code follows the inlined bundle in the same <script type="module">
@@ -45,7 +49,7 @@ for (const el of elements) {
 }
 ```
 
-**Pattern 2: Shrinkwrap / tight-fit containers (Chat bubbles)**
+**模式 2：紧贴容器（聊天气泡）**
 ```js
 import { prepareWithSegments, walkLineRanges } from '@chenglou/pretext'
 
@@ -60,7 +64,7 @@ function shrinkwrap(text, font, maxWidth) {
 }
 ```
 
-**Pattern 3: Text around obstacles (Editorial layout)**
+**模式 3：文字绕排障碍物（编辑排版）**
 ```js
 import { prepareWithSegments, layoutNextLine } from '@chenglou/pretext'
 
@@ -91,7 +95,7 @@ function layoutAroundObstacles(text, font, containerWidth, lineHeight, obstacles
 }
 ```
 
-**Pattern 4: Full line-by-line rendering (Complex editorial)**
+**模式 4：逐行完整渲染（复杂编辑排版）**
 ```js
 import { prepareWithSegments, layoutWithLines } from '@chenglou/pretext'
 
@@ -110,7 +114,7 @@ lines.forEach((line, i) => {
 })
 ```
 
-### Pretext API Reference
+### Pretext API 参考
 
 ```
 PRETEXT API CHEATSHEET:

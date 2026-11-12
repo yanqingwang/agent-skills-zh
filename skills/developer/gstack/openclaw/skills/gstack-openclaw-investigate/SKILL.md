@@ -1,134 +1,153 @@
 ---
 name: gstack-openclaw-investigate
-description: Use when asked to debug, fix a bug, investigate an error, or do root cause analysis, and when users report errors, stack traces, unexpected behavior, or say something stopped working.
+description: 当被要求调试、修复 bug、排查错误或做根因分析时使用；用户报告错误、堆栈跟踪、异常行为，或说某功能坏了时也适用。
 ---
 
-# Systematic Debugging
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`openclaw/skills/gstack-openclaw-investigate/SKILL.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Iron Law
+# 系统化调试
 
-**NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST.**
+## 铁律
 
-Fixing symptoms creates whack-a-mole debugging. Every fix that doesn't address root cause makes the next bug harder to find. Find the root cause, then fix it.
+**没有根因调查，就不许修复。**
+
+修症状只会带来打地鼠式调试。每一个不针对根因的修复都会让下一个 bug
+更难找。先找到根因，再修复。
 
 ---
 
-## Phase 1: Root Cause Investigation
+## Phase 1：根因调查
 
-Gather context before forming any hypothesis.
+在形成任何假设之前先收集上下文。
 
-1. **Collect symptoms:** Read the error messages, stack traces, and reproduction steps. If the user hasn't provided enough context, ask ONE question at a time. Don't ask five questions at once.
+1. **收集症状：** 读错误信息、堆栈跟踪和复现步骤。若用户提供的上下文
+   不够，一次只问一个问题。不要一口气问五个。
 
-2. **Read the code:** Trace the code path from the symptom back to potential causes. Search for all references, read the logic around the failure point.
+2. **读代码：** 从症状出发反向追踪代码路径，找到潜在成因。搜索所有
+   引用，读出错点附近的逻辑。
 
-3. **Check recent changes:**
+3. **检查近期变更：**
    ```bash
    git log --oneline -20 -- <affected-files>
    ```
-   Was this working before? What changed? A regression means the root cause is in the diff.
+   之前是好的吗？改了什么？出现回归意味着根因就在 diff 里。
 
-4. **Reproduce:** Can you trigger the bug deterministically? If not, gather more evidence before proceeding.
+4. **复现：** 能确定性地触发这个 bug 吗？不能的话，先收集更多证据再
+   往下走。
 
-5. **Check memory** for prior debugging sessions on the same area. Recurring bugs in the same files are an architectural smell.
+5. **查记忆** 中同一区域的既往调试会话。同一批文件里反复出现的 bug
+   是架构层面的坏味道。
 
-Output: **"Root cause hypothesis: ..."** ... a specific, testable claim about what is wrong and why.
-
----
-
-## Phase 2: Pattern Analysis
-
-Check if this bug matches a known pattern:
-
-**Race condition** ... Intermittent, timing-dependent. Look at concurrent access to shared state.
-
-**Nil/null propagation** ... NoMethodError, TypeError. Missing guards on optional values.
-
-**State corruption** ... Inconsistent data, partial updates. Check transactions, callbacks, hooks.
-
-**Integration failure** ... Timeout, unexpected response. External API calls, service boundaries.
-
-**Configuration drift** ... Works locally, fails in staging/prod. Env vars, feature flags, DB state.
-
-**Stale cache** ... Shows old data, fixes on cache clear. Redis, CDN, browser cache.
-
-Also check:
-- Known issues in the project for related problems
-- Git log for prior fixes in the same area. Recurring bugs in the same files are an architectural smell, not a coincidence.
-
-**External search:** If the bug doesn't match a known pattern, search for the error type online. **Sanitize first:** strip hostnames, IPs, file paths, SQL, customer data. Search the error category, not the raw message.
+输出：**"根因假设：……"** —— 一条具体、可检验的主张，说明哪里坏了、
+为什么。
 
 ---
 
-## Phase 3: Hypothesis Testing
+## Phase 2：模式分析
 
-Before writing ANY fix, verify your hypothesis.
+检查这个 bug 是否匹配已知模式：
 
-1. **Confirm the hypothesis:** Add a temporary log statement, assertion, or debug output at the suspected root cause. Run the reproduction. Does the evidence match?
+**竞态条件** …… 间歇性、依赖时序。看对共享状态的并发访问。
 
-2. **If the hypothesis is wrong:** Search for the error (sanitize sensitive data first). Return to Phase 1. Gather more evidence. Do not guess.
+**Nil/null 传播** …… NoMethodError、TypeError。可选值缺少守卫。
 
-3. **3-strike rule:** If 3 hypotheses fail, **STOP**. Tell the user:
+**状态损坏** …… 数据不一致、部分更新。查事务、回调、hook。
 
-   "3 hypotheses tested, none match. This may be an architectural issue rather than a simple bug."
+**集成失败** …… 超时、意外响应。外部 API 调用、服务边界。
 
-   Options:
-   - Continue investigating with a new hypothesis (describe it)
-   - Escalate for human review (needs someone who knows the system)
-   - Add logging and wait (instrument the area and catch it next time)
+**配置漂移** …… 本地正常，staging/prod 失败。环境变量、feature flag、
+数据库状态。
 
-**Red flags** ... if you see any of these, slow down:
-- "Quick fix for now" ... there is no "for now." Fix it right or escalate.
-- Proposing a fix before tracing data flow ... you're guessing.
-- Each fix reveals a new problem elsewhere ... wrong layer, not wrong code.
+**过期缓存** …… 展示旧数据，清缓存即恢复。Redis、CDN、浏览器缓存。
 
----
+另外检查：
+- 项目已知 issue 中是否有相关问题
+- git log 中同一区域的既往修复。同一批文件里反复出现的 bug 是架构层面
+  的坏味道，不是巧合。
 
-## Phase 4: Implementation
-
-Once root cause is confirmed:
-
-1. **Fix the root cause, not the symptom.** The smallest change that eliminates the actual problem.
-
-2. **Minimal diff:** Fewest files touched, fewest lines changed. Resist the urge to refactor adjacent code.
-
-3. **Write a regression test** that:
-   - **Fails** without the fix (proves the test is meaningful)
-   - **Passes** with the fix (proves the fix works)
-
-4. **Run the full test suite.** No regressions allowed.
-
-5. **If the fix touches >5 files:** Flag the blast radius to the user before proceeding. That's large for a bug fix.
+**外部搜索：** bug 不匹配任何已知模式时，上网搜该错误类型。**先脱敏：**
+去掉主机名、IP、文件路径、SQL、客户数据。搜索错误类别，不搜原始报文。
 
 ---
 
-## Phase 5: Verification & Report
+## Phase 3：假设检验
 
-**Fresh verification:** Reproduce the original bug scenario and confirm it's fixed. This is not optional.
+在写下任何修复之前，先验证你的假设。
 
-Run the test suite.
+1. **确认假设：** 在疑似根因处加一条临时日志、断言或调试输出。运行
+   复现。证据吻合吗？
 
-Output a structured debug report:
+2. **假设错了：** 搜索该错误（先脱敏敏感数据）。回到 Phase 1。收集
+   更多证据。不要瞎猜。
+
+3. **三振规则：** 3 个假设都失败时，**停下**。告诉用户：
+
+   "已检验 3 个假设，均不匹配。这可能是架构问题，而非简单 bug。"
+
+   选项：
+   - 用新假设继续调查（描述它）
+   - 升级给人工评审（需要熟悉该系统的人）
+   - 加日志等下次（在该区域埋点，下次抓个现行）
+
+**危险信号** …… 出现以下任何一条就减速：
+- "先临时修一下" …… 不存在"临时"。要么修对，要么升级。
+- 追踪数据流之前就提出修复方案 …… 你在猜。
+- 每修一处就冒出新问题 …… 层次错了，不是代码错了。
+
+---
+
+## Phase 4：实现
+
+根因确认之后：
+
+1. **修根因，不修症状。** 用消除实际问题的最小改动。
+
+2. **最小 diff：** 触及的文件最少、改动的行数最少。忍住不要顺手重构
+   相邻代码。
+
+3. **写回归测试**，要求：
+   - 没有修复时**失败**（证明测试有意义）
+   - 有修复时**通过**（证明修复有效）
+
+4. **跑全量测试套件。** 不允许任何回归。
+
+5. **修复触及 >5 个文件时：** 先向用户标示影响范围再动手。对 bug 修复
+   来说这太大了。
+
+---
+
+## Phase 5：验证与报告
+
+**全新验证：** 复现原始 bug 场景并确认已修复。这一步不可选。
+
+跑测试套件。
+
+输出一份结构化调试报告：
 
 **DEBUG REPORT**
-- **Symptom:** what the user observed
-- **Root cause:** what was actually wrong
-- **Fix:** what was changed, with file references
-- **Evidence:** test output, reproduction showing fix works
-- **Regression test:** location of the new test
-- **Related:** prior bugs in same area, architectural notes
-- **Status:** DONE | DONE_WITH_CONCERNS | BLOCKED
+- **Symptom：** 用户观察到的现象
+- **Root cause：** 实际哪里坏了
+- **Fix：** 改了什么，附文件引用
+- **Evidence：** 测试输出、证明修复有效的复现
+- **Regression test：** 新测试的位置
+- **Related：** 同区域的既往 bug、架构备注
+- **Status：** DONE | DONE_WITH_CONCERNS | BLOCKED
 
-Save the report to `memory/` with today's date so future sessions can reference it.
+把报告连同今天日期保存到 `memory/`，供未来会话引用。
 
 ---
 
-## Important Rules
+## 重要规则
 
-- **3+ failed fix attempts: STOP and question the architecture.** Wrong architecture, not failed hypothesis.
-- **Never apply a fix you cannot verify.** If you can't reproduce and confirm, don't ship it.
-- **Never say "this should fix it."** Verify and prove it. Run the tests.
-- **If fix touches >5 files:** Flag to user before proceeding.
-- **Completion status:**
-  - DONE ... root cause found, fix applied, regression test written, all tests pass
-  - DONE_WITH_CONCERNS ... fixed but cannot fully verify (e.g., intermittent bug, requires staging)
-  - BLOCKED ... root cause unclear after investigation, escalated
+- **修复尝试失败 3 次以上：停下，质疑架构。** 是架构错了，不是假设
+  没试够。
+- **绝不应用你无法验证的修复。** 不能复现并确认，就不要上线。
+- **绝不说"这应该能修好"。** 验证并证明它。跑测试。
+- **修复触及 >5 个文件：** 先向用户标示再动手。
+- **完成状态：**
+  - DONE …… 找到根因、已修复、已写回归测试、全部测试通过
+  - DONE_WITH_CONCERNS …… 已修复但无法完全验证（如间歇性 bug、
+    需要 staging 环境）
+  - BLOCKED …… 调查后根因仍不明朗，已升级上报

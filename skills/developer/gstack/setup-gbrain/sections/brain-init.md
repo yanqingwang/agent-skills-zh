@@ -1,11 +1,15 @@
 <!-- AUTO-GENERATED from brain-init.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-Path-specific. Run ONLY the sub-section below for the path picked in Step 2
-(or the Switch flow when Step 2 chose engine migration).
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`setup-gbrain/sections/brain-init.md` · License: MIT
+> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
 
-### Path 1 (Supabase, existing URL)
+按路径各不相同。只跑 Step 2 所选路径（或 Step 2 选了引擎迁移时的
+Switch 流程）对应的下方小节。
 
-Source the secret-read helper, collect URL with `read -s` + redacted preview:
+### Path 1（Supabase，已有 URL）
+
+source 密钥读取 helper，用 `read -s` 收集 URL 并做脱敏预览：
 
 ```bash
 . ~/.claude/skills/gstack/bin/gstack-gbrain-lib.sh
@@ -13,27 +17,27 @@ read_secret_to_env GBRAIN_POOLER_URL "Paste Session Pooler URL: " \
   --echo-redacted 's#://[^@]*@#://***@#'
 ```
 
-Then validate structurally:
+然后做结构校验：
 
 ```bash
 printf '%s' "$GBRAIN_POOLER_URL" | ~/.claude/skills/gstack/bin/gstack-gbrain-supabase-verify -
 ```
 
-If the verify exit code is 3 (direct-connection URL), the verifier's own
-message explains the fix; surface it and re-prompt for a Session Pooler URL.
+校验 exit 3（直连 URL）时，验证器自己的消息写明修法；转述它并重新
+索要 Session Pooler URL。
 
-On success, hand off to gbrain via env var (never argv):
+成功后经环境变量交给 gbrain（绝不走 argv）：
 
 ```bash
 GBRAIN_DATABASE_URL="$GBRAIN_POOLER_URL" gbrain init --non-interactive --json
 ```
 
-Then `unset GBRAIN_POOLER_URL GBRAIN_DATABASE_URL` immediately. The URL is
-now persisted in `~/.gbrain/config.json` at mode 0600 by gbrain itself.
+然后立即 `unset GBRAIN_POOLER_URL GBRAIN_DATABASE_URL`。URL 现已由
+gbrain 自己以 mode 0600 持久化在 `~/.gbrain/config.json`。
 
-### Path 2a (Supabase, auto-provision)
+### Path 2a（Supabase，自动开通）
 
-Show this PAT scope disclosure verbatim BEFORE collecting the token:
+收集 token 之前逐字展示这份 PAT 范围披露：
 
 > *This Supabase Personal Access Token grants full read/write/delete access
 > to every project in your Supabase account, not just the `gbrain` one we're
@@ -44,40 +48,38 @@ Show this PAT scope disclosure verbatim BEFORE collecting the token:
 > https://supabase.com/dashboard/account/tokens — we recommend revoking
 > immediately after setup completes.*
 
-Then:
+然后：
 
 ```bash
 . ~/.claude/skills/gstack/bin/gstack-gbrain-lib.sh
 read_secret_to_env SUPABASE_ACCESS_TOKEN "Paste PAT: "
 ```
 
-Ask the tier question via AskUserQuestion: "Which Supabase tier?" Present
-Free (2-project limit, pauses after 7d inactivity) vs Pro ($25/mo, no
-pauses, recommended for real use). Explain that tier is **org-level** (per
-the Management API contract) — user picks their org based on its current
-tier. Pro may require them to upgrade the org first at supabase.com.
+经 AskUserQuestion 问档位："选哪个 Supabase 档位？"给出 Free（2 项目
+上限、7 天不活动暂停）与 Pro（$25/月、不暂停、真实使用推荐）。说明
+档位是**组织级**的（按 Management API 契约）：用户按其组织当前档位
+选。Pro 可能需要他们先在 supabase.com 给组织升级。
 
-List orgs, pick one (AskUserQuestion if multiple):
+列出组织、选一个（多个时 AskUserQuestion）：
 
 ```bash
 orgs=$(~/.claude/skills/gstack/bin/gstack-gbrain-supabase-provision list-orgs --json)
 ```
 
-If the `.orgs` array is empty, surface: "Your Supabase account has no
-organizations. Create one at https://supabase.com/dashboard, then re-run
-`/setup-gbrain`." STOP.
+`.orgs` 数组为空时提示："你的 Supabase 账户没有组织。去
+https://supabase.com/dashboard 建一个，然后重跑 `/setup-gbrain`。"
+STOP。
 
-Ask the user for a region (default `us-east-1`; valid values are the 18
-enum values in the Supabase Management API — list a few common ones, let
-them pick "Other" for a full list).
+问用户选区域（默认 `us-east-1`；合法值是 Supabase Management API 的
+18 个枚举值：列几个常见的，让他们选"Other"看完整列表）。
 
-Generate the DB password (never shown to the user):
+生成数据库密码（绝不展示给用户）：
 
 ```bash
 export DB_PASS=$(openssl rand -base64 24)
 ```
 
-Set up a SIGINT trap so an interrupted provision can be resumed or deleted:
+设 SIGINT trap，让被打断的开通可恢复或可删除：
 
 ```bash
 trap 'echo ""; echo "gstack-gbrain: interrupted. In-flight ref: $INFLIGHT_REF"; \
@@ -86,7 +88,7 @@ trap 'echo ""; echo "gstack-gbrain: interrupted. In-flight ref: $INFLIGHT_REF"; 
       unset SUPABASE_ACCESS_TOKEN DB_PASS; exit 130' INT TERM
 ```
 
-Create + wait + fetch:
+创建 + 等待 + 取 URL：
 
 ```bash
 result=$(~/.claude/skills/gstack/bin/gstack-gbrain-supabase-provision \
@@ -102,27 +104,27 @@ unset SUPABASE_ACCESS_TOKEN DB_PASS GBRAIN_DATABASE_URL INFLIGHT_REF
 trap - INT TERM
 ```
 
-After success, emit the PAT revocation reminder:
+成功后发 PAT 吊销提醒：
 
 > "Setup complete. Revoke the PAT you pasted at
 > https://supabase.com/dashboard/account/tokens — we've already discarded
 > it from memory and don't need it again. The gbrain project will continue
 > working because it uses its own embedded database password."
 
-### Path 2b (Supabase, manual)
+### Path 2b（Supabase，手动）
 
-Walk the user through the supabase.com steps:
-1. Login at https://supabase.com/dashboard
-2. Click "New Project," name it `gbrain`, pick a region, and copy the
-   generated database password — the pooler URL in step 4 must carry it
-   (replace any `[YOUR-PASSWORD]` placeholder before pasting)
-3. Wait ~2 min for the project to initialize
-4. Settings → Database → Connection Pooler → Session → copy the URL (port
-   6543)
+陪用户走 supabase.com 的步骤：
+1. 在 https://supabase.com/dashboard 登录
+2. 点 "New Project"，命名为 `gbrain`，选区域，并复制生成的数据库
+   密码：第 4 步的 pooler URL 必须带上它（粘贴前替换任何
+   `[YOUR-PASSWORD]` 占位符）
+3. 等约 2 分钟让项目初始化
+4. Settings → Database → Connection Pooler → Session → 复制 URL
+   （端口 6543）
 
-Then follow the same secret-read + verify + init flow as Path 1.
+然后走与 Path 1 相同的 密钥读取 + 校验 + 初始化 流程。
 
-### Path 3 (PGLite local)
+### Path 3（PGLite 本地）
 
 ```bash
 # gstack default: voyage-code-3 (1024d) when VOYAGE_API_KEY is set — code
@@ -137,27 +139,26 @@ fi
 gbrain init --pglite --json "$@"
 ```
 
-Done. No network, no secrets (beyond Voyage embedding API calls during sync, if
-`VOYAGE_API_KEY` is set — ~$0.18 per 1M tokens, pennies per repo).
+完成。无网络、无密钥（设了 `VOYAGE_API_KEY` 时，同步期间的 Voyage
+embedding API 调用除外，约 $0.18/百万 token，每仓库几美分）。
 
-### Path 4 (Remote gbrain MCP — HTTP transport with bearer token)
+### Path 4（远程 gbrain MCP：带 bearer token 的 HTTP 传输）
 
-For users whose brain runs on another machine (Tailscale, ngrok, internal
-LAN, or a teammate's server). No local gbrain CLI install, no local DB.
-This skill registers the remote MCP and stops; ingestion + indexing happens
-on the brain host.
+适用于大脑跑在另一台机器上的用户（Tailscale、ngrok、内网或队友的服
+务器）。不装本地 gbrain CLI、无本地 DB。本 Skill 注册远程 MCP 后停
+止；摄取与索引发生在大脑宿主上。
 
-**4a. Collect MCP URL.** Prompt the user:
+**4a. 收集 MCP URL。**提示用户：
 
 ```
 Paste your gbrain MCP URL (e.g. https://wintermute.tail554574.ts.net:3131/mcp):
 ```
 
-Read with plain `read -r` (no secret hygiene needed — the URL alone isn't
-a credential). Validate it starts with `https://` (require TLS for any
-non-loopback host); refuse `http://` for non-localhost.
+用普通 `read -r` 读取（无需密钥级防护，URL 本身不是凭证）。校验以
+`https://` 开头（任何非回环主机都要求 TLS）；非 localhost 拒绝
+`http://`。
 
-**4b. Collect bearer token via the secret-read helper (never argv).**
+**4b. 经密钥读取 helper 收集 bearer token（绝不走 argv）。**
 
 ```bash
 . ~/.claude/skills/gstack/bin/gstack-gbrain-lib.sh
@@ -165,8 +166,8 @@ read_secret_to_env GBRAIN_MCP_TOKEN "Paste bearer token: " \
   --echo-redacted 's/.\{6\}$/***REDACTED***/'
 ```
 
-**4c. Verify via gstack-gbrain-mcp-verify.** Run the helper; capture the
-classified JSON output:
+**4c. 经 gstack-gbrain-mcp-verify 验证。**跑 helper，捕获分类后的
+JSON 输出：
 
 ```bash
 verify_json=$(GBRAIN_MCP_TOKEN="$GBRAIN_MCP_TOKEN" \
@@ -174,19 +175,17 @@ verify_json=$(GBRAIN_MCP_TOKEN="$GBRAIN_MCP_TOKEN" \
 status=$(echo "$verify_json" | jq -r .status)
 ```
 
-If `status != "success"`, the helper has already classified the failure
-into NETWORK / AUTH / MALFORMED and emitted a one-line remediation hint.
-Surface the hint above the raw error from `error_text` and **STOP** with
-a clear "fix and re-run /setup-gbrain" message. Do NOT continue to Step 5a
-on a failed verify — partial registration would leave the user with a
-half-broken state.
+`status != "success"` 时，helper 已把失败归类为 NETWORK / AUTH /
+MALFORMED 并输出一行修复提示。把提示放在 `error_text` 的原始错误之
+上呈现，并带着清晰的"修复后重跑 /setup-gbrain"消息 **STOP**。验证
+失败绝不继续 Step 5a：半截注册会让用户留在半坏状态。
 
-Capture two values from the verify output for downstream steps:
-- `SERVER_VERSION` (e.g., `0.27.1`) — written to the CLAUDE.md block in Step 8.
-- `URL_FORM_SUPPORTED` (`true|false`) — passed to `gstack-artifacts-init` in
-  Step 7 to control which form of the brain-admin hookup command is printed.
+从验证输出为后续步骤捕获两个值：
+- `SERVER_VERSION`（如 `0.27.1`）：写入 Step 8 的 CLAUDE.md 块。
+- `URL_FORM_SUPPORTED`（`true|false`）：传给 Step 7 的
+  `gstack-artifacts-init`，控制打印哪种形式的大脑管理员接线命令。
 
-**4d. (Path 4) Offer local PGLite for code search.** Ask:
+**4d.（Path 4）提议本地 PGLite 做代码搜索。**问：
 
 > D# — Want symbol-aware code search on this machine?
 > Project/branch/task: <one-sentence grounding using detected slug + branch>
@@ -208,7 +207,7 @@ Capture two values from the verify output for downstream steps:
 >   ❌ Symbol code queries fall back to Grep in this repo's worktrees
 > Net: A = full split-engine; B = remote-only.
 
-**If A (Yes)**: install + init local PGLite with rollback-safe semantics:
+**选 A（是）**：以可回滚语义安装并初始化本地 PGLite：
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-gbrain-install || exit $?
@@ -233,28 +232,27 @@ if ! gbrain init --pglite --json "$@"; then
 fi
 ```
 
-Then continue to Step 5a. The remote-http MCP registration in 5a runs
-unchanged; the local PGLite is independent of MCP registration (Claude Code talks
-to the remote brain via MCP for queries; `gbrain` CLI talks to local PGLite
-for code-def/refs/callers).
+然后继续 Step 5a。5a 的 remote-http MCP 注册原样运行；本地 PGLite
+与 MCP 注册相互独立（Claude Code 经 MCP 查询远程大脑；`gbrain` CLI
+对本地 PGLite 做 code-def/refs/callers）。
 
-**If B (No)**: skip the install + init. The local engine stays absent.
-`gbrain_local_status` will be `missing-config` (or `no-cli` if gbrain isn't
-installed). `/sync-gbrain` will SKIP the code stage cleanly.
+**选 B（否）**：跳过安装与初始化。本地引擎保持缺席。
+`gbrain_local_status` 将是 `missing-config`（或未装 gbrain 时的
+`no-cli`）。`/sync-gbrain` 会干净地 SKIP 代码阶段。
 
-**4e. Skip Steps 3, 4 (other paths) and 5 (local doctor) when B was picked.**
-When A was picked, Step 3 already ran (via gstack-gbrain-install) and Step 4
-already ran (via `gbrain init --pglite`); jump straight to Step 5a. When B
-was picked, Steps 3/4/5 are no-ops; also skip Step 7.5 (transcript ingest)
-since memory-stage routes through the artifacts pipeline in remote-http mode.
+**4e. 选 B 时跳过 Step 3、Step 4（其他路径）与 Step 5（本地
+doctor）。**选 A 时 Step 3 已跑（经 gstack-gbrain-install）、Step 4
+已跑（经 `gbrain init --pglite`）；直接跳到 Step 5a。选 B 时
+Step 3/4/5 是空操作；还要跳过 Step 7.5（transcript 摄取），因为
+remote-http 模式下记忆阶段走产物管道。
 
-The bearer token (`GBRAIN_MCP_TOKEN`) stays in process env until Step 5a's
-`claude mcp add --header` consumes it; then `unset GBRAIN_MCP_TOKEN`
-immediately. Token security trade-off documented in
-`setup-gbrain/memory.md`: brief argv exposure during `claude mcp add`,
-resting state in `~/.claude.json` mode 0600.
+bearer token（`GBRAIN_MCP_TOKEN`）留在进程环境里，直到 Step 5a 的
+`claude mcp add --header` 消费它；然后立即
+`unset GBRAIN_MCP_TOKEN`。token 安全权衡记录在
+`setup-gbrain/memory.md`：`claude mcp add` 期间短暂的 argv 暴露，静
+息状态在 `~/.claude.json` mode 0600。
 
-### Switch (from detect's existing-engine state)
+### Switch（从 detect 的既有引擎状态）
 
 ```bash
 # Going PGLite → Supabase, collect URL first (Path 1 flow), then:
@@ -263,7 +261,7 @@ timeout 180s gbrain migrate --to supabase --url "$URL" --json
 timeout 180s gbrain migrate --to pglite --json
 ```
 
-If `timeout` returns 124 (exit code for timeout): surface this message
-("Migration didn't complete in 3 minutes — another gstack session may be
-holding a lock on the source brain. Close other workspaces and re-run
-`/setup-gbrain --switch`. Your original brain is untouched."). STOP.
+`timeout` 返回 124（超时退出码）时，转述这条消息（"Migration
+didn't complete in 3 minutes — another gstack session may be holding a
+lock on the source brain. Close other workspaces and re-run
+`/setup-gbrain --switch`. Your original brain is untouched."）。STOP。

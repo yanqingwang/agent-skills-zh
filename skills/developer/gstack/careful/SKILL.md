@@ -1,7 +1,7 @@
 ---
 name: careful
 version: 0.1.0
-description: Safety guardrails for destructive commands. (gstack)
+description: 针对破坏性命令的安全护栏。（gstack）
 triggers:
   - be careful
   - warn before destructive
@@ -22,14 +22,20 @@ hooks:
           command: 'bash -c "exec bash \"$HOME/.claude/skills/gstack/careful/bin/check-careful.sh\""'
           statusMessage: "Checking for destructive commands..."
 ---
+
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`careful/SKILL.md` · License: MIT
+> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 <!-- AUTO-GENERATED from SKILL.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
 
-# /careful — Destructive Command Guardrails
+# /careful — 破坏性命令护栏
 
-Safety mode is now **active**. Every Bash and PowerShell command will be checked
-for destructive patterns before running. If a destructive command is detected, you'll be warned
-and can choose to proceed or cancel.
+安全模式现已**激活**。每条 Bash 和 PowerShell 命令在运行前
+都会被检查是否含破坏性模式。一旦检测到破坏性命令，
+你会收到警告，并可以选择继续
+或取消。
 
 ```bash
 GSTACK_STATE_ROOT=$(~/.claude/skills/gstack/bin/gstack-paths --get GSTACK_STATE_ROOT); : "${GSTACK_STATE_ROOT:?gstack-paths failed; reinstall with ./setup or /gstack-upgrade}"
@@ -37,67 +43,66 @@ mkdir -p "$GSTACK_STATE_ROOT"/analytics
 echo '{"skill":"careful","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "unknown")'"}'  >> "$GSTACK_STATE_ROOT"/analytics/skill-usage.jsonl 2>/dev/null || true
 ```
 
-## What's protected
+## 保护范围
 
-| Pattern | Example | Risk |
+| 模式 | 示例 | 风险 |
 |---------|---------|------|
-| `rm -rf` / `rm -r` / `rm --recursive` | `rm -rf /var/data` | Recursive delete |
-| `DROP TABLE` / `DROP DATABASE` | `DROP TABLE users;` | Data loss |
-| `TRUNCATE` | `TRUNCATE orders;` | Data loss |
-| `git push --force` / `-f` | `git push -f origin main` | History rewrite |
-| `git reset --hard` | `git reset --hard HEAD~3` | Uncommitted work loss |
-| `git checkout .` / `git restore .` | `git checkout .` | Uncommitted work loss |
-| `kubectl delete` | `kubectl delete pod` | Production impact |
-| `docker rm -f` / `docker system prune` | `docker system prune -a` | Container/image loss |
+| `rm -rf` / `rm -r` / `rm --recursive` | `rm -rf /var/data` | 递归删除 |
+| `DROP TABLE` / `DROP DATABASE` | `DROP TABLE users;` | 数据丢失 |
+| `TRUNCATE` | `TRUNCATE orders;` | 数据丢失 |
+| `git push --force` / `-f` | `git push -f origin main` | 改写历史 |
+| `git reset --hard` | `git reset --hard HEAD~3` | 丢失未提交的工作 |
+| `git checkout .` / `git restore .` | `git checkout .` | 丢失未提交的工作 |
+| `kubectl delete` | `kubectl delete pod` | 影响生产 |
+| `docker rm -f` / `docker system prune` | `docker system prune -a` | 丢失容器/镜像 |
 
-## PowerShell and cmd (Windows)
+## PowerShell 与 cmd（Windows）
 
-The hook also checks the PowerShell tool (Claude Code's main Windows shell)
-and any `pwsh`/`powershell`/`cmd` launched from Bash. Matching ignores case,
-covers aliases in command position, accepts parameter prefixes (`-r`, `-fo`)
-and strips cmd `^` escapes. All rows above apply there too.
+hook 同样检查 PowerShell 工具（Claude Code 在 Windows 上的主 shell）以及从
+Bash 启动的任何 `pwsh`/`powershell`/`cmd`。匹配不区分大小写，覆盖命令位置的
+别名，接受参数前缀（`-r`、`-fo`），并剥离 cmd 的 `^` 转义。上表的所有
+规则在那里同样适用。
 
-| Pattern | Example |
+| 模式 | 示例 |
 |---------|---------|
 | `Remove-Item`/`rm`/`ri`/`del`/`erase`/`rd`/`rmdir` + `-Recurse` or `-Force` | `gci \| ri -r -fo` |
 | cmd `rd /s`, `rmdir /s`, `del /s`, `erase /s` | `cmd /c rd /s /q C:\proj` |
 | `Format-Volume`, `Clear-Disk`, `Clear-Content`, `[IO.Directory]::Delete`, `[IO.File]::Delete` | `Clear-Disk -Number 1` |
 | `-EncodedCommand`, `iex`, `Start-Process` of a shell, `& $cmd` (can't be inspected) | `irm $url \| iex` |
 
-**Best-effort on PowerShell.** String matching can't see a command built at
-runtime. For a hard stop, add Claude Code permission deny rules, which parse
-PowerShell and its aliases: `"deny": ["PowerShell(Remove-Item *)"]` in
-`.claude/settings.json`. The hook runs through `bash`, so Windows needs Git Bash.
+**PowerShell 上是尽力而为。** 字符串匹配看不到运行时拼接的命令。要硬阻止，
+请添加 Claude Code 权限拒绝规则，它能解析 PowerShell 及其别名：在
+`.claude/settings.json` 中写 `"deny": ["PowerShell(Remove-Item *)"]`。hook
+通过 `bash` 运行，因此 Windows 需要 Git Bash。
 
-## Safe exceptions
+## 安全例外
 
-These patterns are allowed without warning:
+以下模式不加警告直接放行：
 - `rm -rf node_modules` / `.next` / `dist` / `__pycache__` / `.cache` / `build` / `.turbo` / `coverage`
 
-## How it works
+## 工作原理
 
-The hook reads `tool_name` and the command from the tool input JSON, checks it against the
-patterns above, and returns a `hookSpecificOutput` payload with
-`permissionDecision: "ask"` and a warning reason if a match is found (the
-decision must be nested under `hookSpecificOutput` — Claude Code ignores a
-top-level `permissionDecision`). You can always override a MEDIUM warning and
-proceed.
+hook 从工具输入 JSON 中读取 `tool_name` 和命令，对照
+上面的模式检查，命中时返回一个带 `permissionDecision: "ask"`
+与警告原因的 `hookSpecificOutput` 载荷（该决定必须嵌套在
+`hookSpecificOutput` 之下——Claude Code 会忽略顶层的
+`permissionDecision`）。你始终可以覆盖
+MEDIUM 警告并继续。
 
-## HIGH tier (hard deny)
+## HIGH 档（硬拒绝）
 
-Two catastrophic shapes are **denied**, not asked: `rm -r`/`-R` of exactly
-`/`, `~`, or `$HOME`, and force-push to the repo's **default branch**. SIMPLE
-commands only (no `;`, `&&`, `||`, `|`, newline) — compound shapes fall
-through to the MEDIUM ask; `--force-with-lease` is never HIGH. A best-effort
-advisory hard-stop, not a policy boundary: the escape hatch is ending the
-opt-in, session-scoped /careful session.
+两种灾难性形态会被**直接拒绝**而不是询问：对 `/`、`~` 或 `$HOME` 精确执行的
+`rm -r`/`-R`，以及向仓库**默认分支**的 force-push。仅限 SIMPLE 命令（不含
+`;`、`&&`、`||`、`|`、换行）——复合形态落入 MEDIUM 询问；
+`--force-with-lease` 永远不算 HIGH。这是尽力而为的建议性硬停止，不是
+策略边界：逃生口是结束这个自愿加入、会话级的 /careful 会话。
 
-## Project patterns (additive only)
+## 项目模式（只增不减）
 
-Add warn rules — one POSIX ERE per line, `#` comments OK — in
-`~/.gstack/careful-patterns.txt` (global) or
-`~/.gstack/projects/<slug>/careful-patterns.txt` (per-project). Consulted
-after the built-in families, so config can only ADD rules, never suppress a
-baseline warning. Invalid regex lines are skipped.
+在 `~/.gstack/careful-patterns.txt`（全局）或
+`~/.gstack/projects/<slug>/careful-patterns.txt`（按项目）中添加警告规则——每行
+一条 POSIX ERE，允许 `#` 注释。它们在内置模式族之后加载，因此配置
+只能增加规则，绝不能压制基线警告。
+无效的正则行会被跳过。
 
-To deactivate, end the conversation or start a new one. Hooks are session-scoped.
+要停用，结束当前对话或开启新对话。hook 只作用于会话范围。

@@ -3536,6 +3536,14 @@
         {
           "upstream": "skills/co-marketing/SKILL.md",
           "local": "skills/growth/product/co-marketing/SKILL.md"
+        },
+        {
+          "upstream": "skills/emails/SKILL.md",
+          "local": "skills/writer/writing/emails/SKILL.md"
+        },
+        {
+          "upstream": "skills/pricing/SKILL.md",
+          "local": "skills/growth/product/pricing/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3754,6 +3762,34 @@
         {
           "upstream": "skills/co-marketing/references/partnership-types.md",
           "local": "skills/growth/product/co-marketing/references/partnership-types.md"
+        },
+        {
+          "upstream": "skills/emails/references/copy-guidelines.md",
+          "local": "skills/writer/writing/emails/references/copy-guidelines.md"
+        },
+        {
+          "upstream": "skills/emails/references/email-types.md",
+          "local": "skills/writer/writing/emails/references/email-types.md"
+        },
+        {
+          "upstream": "skills/emails/references/sequence-templates.md",
+          "local": "skills/writer/writing/emails/references/sequence-templates.md"
+        },
+        {
+          "upstream": "skills/pricing/references/pricing-models.md",
+          "local": "skills/growth/product/pricing/references/pricing-models.md"
+        },
+        {
+          "upstream": "skills/pricing/references/pricing-page-teardown.md",
+          "local": "skills/growth/product/pricing/references/pricing-page-teardown.md"
+        },
+        {
+          "upstream": "skills/pricing/references/research-methods.md",
+          "local": "skills/growth/product/pricing/references/research-methods.md"
+        },
+        {
+          "upstream": "skills/pricing/references/tier-structure.md",
+          "local": "skills/growth/product/pricing/references/tier-structure.md"
         }
       ],
       "verbatim_excluded": [
@@ -6195,6 +6231,490 @@
         {
           "upstream": "spec/SKILL.md",
           "local": "skills/developer/gstack/spec/SKILL.md"
+        },
+        {
+          "upstream": "SKILL.md",
+          "local": "skills/developer/gstack/SKILL.md"
+        },
+        {
+          "upstream": "autoplan/SKILL.md",
+          "local": "skills/developer/gstack/autoplan/SKILL.md"
+        },
+        {
+          "upstream": "autoplan/sections/ceo-phase.md",
+          "local": "skills/developer/gstack/autoplan/sections/ceo-phase.md"
+        },
+        {
+          "upstream": "autoplan/sections/design-phase.md",
+          "local": "skills/developer/gstack/autoplan/sections/design-phase.md"
+        },
+        {
+          "upstream": "autoplan/sections/dx-phase.md",
+          "local": "skills/developer/gstack/autoplan/sections/dx-phase.md"
+        },
+        {
+          "upstream": "autoplan/sections/eng-phase.md",
+          "local": "skills/developer/gstack/autoplan/sections/eng-phase.md"
+        },
+        {
+          "upstream": "autoplan/sections/phase-close.md",
+          "local": "skills/developer/gstack/autoplan/sections/phase-close.md"
+        },
+        {
+          "upstream": "autoplan/sections/tasks-aggregator.md",
+          "local": "skills/developer/gstack/autoplan/sections/tasks-aggregator.md"
+        },
+        {
+          "upstream": "autoplan/sections/unattended.md",
+          "local": "skills/developer/gstack/autoplan/sections/unattended.md"
+        },
+        {
+          "upstream": "benchmark/SKILL.md",
+          "local": "skills/developer/gstack/benchmark/SKILL.md"
+        },
+        {
+          "upstream": "browse/SKILL.md",
+          "local": "skills/developer/gstack/browse/SKILL.md"
+        },
+        {
+          "upstream": "browse/sections/command-list.md",
+          "local": "skills/developer/gstack/browse/sections/command-list.md"
+        },
+        {
+          "upstream": "browser-skills/hackernews-frontpage/SKILL.md",
+          "local": "skills/developer/gstack/browser-skills/hackernews-frontpage/SKILL.md"
+        },
+        {
+          "upstream": "canary/SKILL.md",
+          "local": "skills/developer/gstack/canary/SKILL.md"
+        },
+        {
+          "upstream": "capy/skill/gstack/SKILL.md",
+          "local": "skills/developer/gstack/capy/skill/gstack/SKILL.md"
+        },
+        {
+          "upstream": "careful/SKILL.md",
+          "local": "skills/developer/gstack/careful/SKILL.md"
+        },
+        {
+          "upstream": "codex/SKILL.md",
+          "local": "skills/developer/gstack/codex/SKILL.md"
+        },
+        {
+          "upstream": "codex/sections/challenge-mode.md",
+          "local": "skills/developer/gstack/codex/sections/challenge-mode.md"
+        },
+        {
+          "upstream": "codex/sections/consult-mode.md",
+          "local": "skills/developer/gstack/codex/sections/consult-mode.md"
+        },
+        {
+          "upstream": "codex/sections/review-mode.md",
+          "local": "skills/developer/gstack/codex/sections/review-mode.md"
+        },
+        {
+          "upstream": "context-restore/SKILL.md",
+          "local": "skills/developer/gstack/context-restore/SKILL.md"
+        },
+        {
+          "upstream": "context-save/SKILL.md",
+          "local": "skills/developer/gstack/context-save/SKILL.md"
+        },
+        {
+          "upstream": "cso/SKILL.md",
+          "local": "skills/developer/gstack/cso/SKILL.md"
+        },
+        {
+          "upstream": "cso/sections/audit-phases.md",
+          "local": "skills/developer/gstack/cso/sections/audit-phases.md"
+        },
+        {
+          "upstream": "design-consultation/SKILL.md",
+          "local": "skills/developer/gstack/design-consultation/SKILL.md"
+        },
+        {
+          "upstream": "design-consultation/sections/proposal-and-preview.md",
+          "local": "skills/developer/gstack/design-consultation/sections/proposal-and-preview.md"
+        },
+        {
+          "upstream": "design-html/SKILL.md",
+          "local": "skills/developer/gstack/design-html/SKILL.md"
+        },
+        {
+          "upstream": "design-html/sections/detector-install-offer.md",
+          "local": "skills/developer/gstack/design-html/sections/detector-install-offer.md"
+        },
+        {
+          "upstream": "design-html/sections/doctrine.md",
+          "local": "skills/developer/gstack/design-html/sections/doctrine.md"
+        },
+        {
+          "upstream": "design-html/sections/pretext-patterns.md",
+          "local": "skills/developer/gstack/design-html/sections/pretext-patterns.md"
+        },
+        {
+          "upstream": "design-shotgun/SKILL.md",
+          "local": "skills/developer/gstack/design-shotgun/SKILL.md"
+        },
+        {
+          "upstream": "design-shotgun/sections/doctrine.md",
+          "local": "skills/developer/gstack/design-shotgun/sections/doctrine.md"
+        },
+        {
+          "upstream": "deslop-shared-libs/SKILL.md",
+          "local": "skills/developer/gstack/deslop-shared-libs/SKILL.md"
+        },
+        {
+          "upstream": "devex-review/SKILL.md",
+          "local": "skills/developer/gstack/devex-review/SKILL.md"
+        },
+        {
+          "upstream": "diagram/SKILL.md",
+          "local": "skills/developer/gstack/diagram/SKILL.md"
+        },
+        {
+          "upstream": "document-generate/SKILL.md",
+          "local": "skills/developer/gstack/document-generate/SKILL.md"
+        },
+        {
+          "upstream": "document-release/SKILL.md",
+          "local": "skills/developer/gstack/document-release/SKILL.md"
+        },
+        {
+          "upstream": "document-release/sections/audit-scope.md",
+          "local": "skills/developer/gstack/document-release/sections/audit-scope.md"
+        },
+        {
+          "upstream": "document-release/sections/release-body.md",
+          "local": "skills/developer/gstack/document-release/sections/release-body.md"
+        },
+        {
+          "upstream": "eval-plan/SKILL.md",
+          "local": "skills/developer/gstack/eval-plan/SKILL.md"
+        },
+        {
+          "upstream": "freeze/SKILL.md",
+          "local": "skills/developer/gstack/freeze/SKILL.md"
+        },
+        {
+          "upstream": "gstack-upgrade/SKILL.md",
+          "local": "skills/developer/gstack/gstack-upgrade/SKILL.md"
+        },
+        {
+          "upstream": "guard/SKILL.md",
+          "local": "skills/developer/gstack/guard/SKILL.md"
+        },
+        {
+          "upstream": "investigate/sections/backlog.md",
+          "local": "skills/developer/gstack/investigate/sections/backlog.md"
+        },
+        {
+          "upstream": "investigate/sections/eval-bisect.md",
+          "local": "skills/developer/gstack/investigate/sections/eval-bisect.md"
+        },
+        {
+          "upstream": "investigate/sections/flake.md",
+          "local": "skills/developer/gstack/investigate/sections/flake.md"
+        },
+        {
+          "upstream": "investigate/sections/polluter.md",
+          "local": "skills/developer/gstack/investigate/sections/polluter.md"
+        },
+        {
+          "upstream": "investigate/sections/race.md",
+          "local": "skills/developer/gstack/investigate/sections/race.md"
+        },
+        {
+          "upstream": "ios-clean/SKILL.md",
+          "local": "skills/developer/gstack/ios-clean/SKILL.md"
+        },
+        {
+          "upstream": "ios-design-review/SKILL.md",
+          "local": "skills/developer/gstack/ios-design-review/SKILL.md"
+        },
+        {
+          "upstream": "ios-fix/SKILL.md",
+          "local": "skills/developer/gstack/ios-fix/SKILL.md"
+        },
+        {
+          "upstream": "ios-qa/SKILL.md",
+          "local": "skills/developer/gstack/ios-qa/SKILL.md"
+        },
+        {
+          "upstream": "ios-sync/SKILL.md",
+          "local": "skills/developer/gstack/ios-sync/SKILL.md"
+        },
+        {
+          "upstream": "land-and-deploy/sections/first-run-validation.md",
+          "local": "skills/developer/gstack/land-and-deploy/sections/first-run-validation.md"
+        },
+        {
+          "upstream": "land-and-deploy/sections/merge-and-deploy.md",
+          "local": "skills/developer/gstack/land-and-deploy/sections/merge-and-deploy.md"
+        },
+        {
+          "upstream": "land-and-deploy/sections/readiness-gate.md",
+          "local": "skills/developer/gstack/land-and-deploy/sections/readiness-gate.md"
+        },
+        {
+          "upstream": "landing-report/SKILL.md",
+          "local": "skills/developer/gstack/landing-report/SKILL.md"
+        },
+        {
+          "upstream": "make-pdf/SKILL.md",
+          "local": "skills/developer/gstack/make-pdf/SKILL.md"
+        },
+        {
+          "upstream": "office-hours/sections/design-and-handoff.md",
+          "local": "skills/developer/gstack/office-hours/sections/design-and-handoff.md"
+        },
+        {
+          "upstream": "office-hours/sections/phase-2a-startup-diagnostic.md",
+          "local": "skills/developer/gstack/office-hours/sections/phase-2a-startup-diagnostic.md"
+        },
+        {
+          "upstream": "office-hours/sections/phase-2b-builder-brainstorm.md",
+          "local": "skills/developer/gstack/office-hours/sections/phase-2b-builder-brainstorm.md"
+        },
+        {
+          "upstream": "open-gstack-browser/SKILL.md",
+          "local": "skills/developer/gstack/open-gstack-browser/SKILL.md"
+        },
+        {
+          "upstream": "openclaw/skills/gstack-openclaw-ceo-review/SKILL.md",
+          "local": "skills/developer/gstack/openclaw/skills/gstack-openclaw-ceo-review/SKILL.md"
+        },
+        {
+          "upstream": "openclaw/skills/gstack-openclaw-investigate/SKILL.md",
+          "local": "skills/developer/gstack/openclaw/skills/gstack-openclaw-investigate/SKILL.md"
+        },
+        {
+          "upstream": "openclaw/skills/gstack-openclaw-office-hours/SKILL.md",
+          "local": "skills/developer/gstack/openclaw/skills/gstack-openclaw-office-hours/SKILL.md"
+        },
+        {
+          "upstream": "openclaw/skills/gstack-openclaw-retro/SKILL.md",
+          "local": "skills/developer/gstack/openclaw/skills/gstack-openclaw-retro/SKILL.md"
+        },
+        {
+          "upstream": "pair-agent/SKILL.md",
+          "local": "skills/developer/gstack/pair-agent/SKILL.md"
+        },
+        {
+          "upstream": "plan-ceo-review/sections/checklist.md",
+          "local": "skills/developer/gstack/plan-ceo-review/sections/checklist.md"
+        },
+        {
+          "upstream": "plan-ceo-review/sections/review-sections.md",
+          "local": "skills/developer/gstack/plan-ceo-review/sections/review-sections.md"
+        },
+        {
+          "upstream": "plan-design-review/SKILL.md",
+          "local": "skills/developer/gstack/plan-design-review/SKILL.md"
+        },
+        {
+          "upstream": "plan-design-review/sections/checklist.md",
+          "local": "skills/developer/gstack/plan-design-review/sections/checklist.md"
+        },
+        {
+          "upstream": "plan-design-review/sections/review-sections.md",
+          "local": "skills/developer/gstack/plan-design-review/sections/review-sections.md"
+        },
+        {
+          "upstream": "plan-devex-review/SKILL.md",
+          "local": "skills/developer/gstack/plan-devex-review/SKILL.md"
+        },
+        {
+          "upstream": "plan-devex-review/sections/checklist.md",
+          "local": "skills/developer/gstack/plan-devex-review/sections/checklist.md"
+        },
+        {
+          "upstream": "plan-devex-review/sections/review-sections.md",
+          "local": "skills/developer/gstack/plan-devex-review/sections/review-sections.md"
+        },
+        {
+          "upstream": "plan-eng-review/sections/checklist.md",
+          "local": "skills/developer/gstack/plan-eng-review/sections/checklist.md"
+        },
+        {
+          "upstream": "plan-eng-review/sections/review-sections.md",
+          "local": "skills/developer/gstack/plan-eng-review/sections/review-sections.md"
+        },
+        {
+          "upstream": "plan-tune/SKILL.md",
+          "local": "skills/developer/gstack/plan-tune/SKILL.md"
+        },
+        {
+          "upstream": "qa/sections/browser-setup.md",
+          "local": "skills/developer/gstack/qa/sections/browser-setup.md"
+        },
+        {
+          "upstream": "qa/sections/browser-verify.md",
+          "local": "skills/developer/gstack/qa/sections/browser-verify.md"
+        },
+        {
+          "upstream": "qa/sections/exploratory.md",
+          "local": "skills/developer/gstack/qa/sections/exploratory.md"
+        },
+        {
+          "upstream": "qa/sections/qa-patterns.md",
+          "local": "skills/developer/gstack/qa/sections/qa-patterns.md"
+        },
+        {
+          "upstream": "qa/sections/scope.md",
+          "local": "skills/developer/gstack/qa/sections/scope.md"
+        },
+        {
+          "upstream": "qa/sections/system-functional.md",
+          "local": "skills/developer/gstack/qa/sections/system-functional.md"
+        },
+        {
+          "upstream": "qa/sections/test-bootstrap.md",
+          "local": "skills/developer/gstack/qa/sections/test-bootstrap.md"
+        },
+        {
+          "upstream": "qa-only/SKILL.md",
+          "local": "skills/developer/gstack/qa-only/SKILL.md"
+        },
+        {
+          "upstream": "qa-only/sections/exploratory.md",
+          "local": "skills/developer/gstack/qa-only/sections/exploratory.md"
+        },
+        {
+          "upstream": "qa-only/sections/reporting.md",
+          "local": "skills/developer/gstack/qa-only/sections/reporting.md"
+        },
+        {
+          "upstream": "retro/sections/report-format.md",
+          "local": "skills/developer/gstack/retro/sections/report-format.md"
+        },
+        {
+          "upstream": "review/sections/adversarial.md",
+          "local": "skills/developer/gstack/review/sections/adversarial.md"
+        },
+        {
+          "upstream": "review/sections/plan-completion.md",
+          "local": "skills/developer/gstack/review/sections/plan-completion.md"
+        },
+        {
+          "upstream": "review/sections/review-army.md",
+          "local": "skills/developer/gstack/review/sections/review-army.md"
+        },
+        {
+          "upstream": "review/sections/shared-code-reuse.md",
+          "local": "skills/developer/gstack/review/sections/shared-code-reuse.md"
+        },
+        {
+          "upstream": "scrape/SKILL.md",
+          "local": "skills/developer/gstack/scrape/SKILL.md"
+        },
+        {
+          "upstream": "setup-browser-cookies/SKILL.md",
+          "local": "skills/developer/gstack/setup-browser-cookies/SKILL.md"
+        },
+        {
+          "upstream": "setup-deploy/SKILL.md",
+          "local": "skills/developer/gstack/setup-deploy/SKILL.md"
+        },
+        {
+          "upstream": "setup-gbrain/SKILL.md",
+          "local": "skills/developer/gstack/setup-gbrain/SKILL.md"
+        },
+        {
+          "upstream": "setup-gbrain/sections/brain-init.md",
+          "local": "skills/developer/gstack/setup-gbrain/sections/brain-init.md"
+        },
+        {
+          "upstream": "setup-gbrain/sections/claude-md-persist.md",
+          "local": "skills/developer/gstack/setup-gbrain/sections/claude-md-persist.md"
+        },
+        {
+          "upstream": "setup-gbrain/sections/engine-remediation.md",
+          "local": "skills/developer/gstack/setup-gbrain/sections/engine-remediation.md"
+        },
+        {
+          "upstream": "setup-gbrain/sections/transcript-gate.md",
+          "local": "skills/developer/gstack/setup-gbrain/sections/transcript-gate.md"
+        },
+        {
+          "upstream": "ship/sections/adversarial.md",
+          "local": "skills/developer/gstack/ship/sections/adversarial.md"
+        },
+        {
+          "upstream": "ship/sections/apple-release.md",
+          "local": "skills/developer/gstack/ship/sections/apple-release.md"
+        },
+        {
+          "upstream": "ship/sections/capy-pr.md",
+          "local": "skills/developer/gstack/ship/sections/capy-pr.md"
+        },
+        {
+          "upstream": "ship/sections/changelog.md",
+          "local": "skills/developer/gstack/ship/sections/changelog.md"
+        },
+        {
+          "upstream": "ship/sections/documentation.md",
+          "local": "skills/developer/gstack/ship/sections/documentation.md"
+        },
+        {
+          "upstream": "ship/sections/greptile-early.md",
+          "local": "skills/developer/gstack/ship/sections/greptile-early.md"
+        },
+        {
+          "upstream": "ship/sections/greptile.md",
+          "local": "skills/developer/gstack/ship/sections/greptile.md"
+        },
+        {
+          "upstream": "ship/sections/handoff.md",
+          "local": "skills/developer/gstack/ship/sections/handoff.md"
+        },
+        {
+          "upstream": "ship/sections/measure.md",
+          "local": "skills/developer/gstack/ship/sections/measure.md"
+        },
+        {
+          "upstream": "ship/sections/plan-completion.md",
+          "local": "skills/developer/gstack/ship/sections/plan-completion.md"
+        },
+        {
+          "upstream": "ship/sections/pr-body.md",
+          "local": "skills/developer/gstack/ship/sections/pr-body.md"
+        },
+        {
+          "upstream": "ship/sections/review-army.md",
+          "local": "skills/developer/gstack/ship/sections/review-army.md"
+        },
+        {
+          "upstream": "ship/sections/shared-code-reuse.md",
+          "local": "skills/developer/gstack/ship/sections/shared-code-reuse.md"
+        },
+        {
+          "upstream": "ship/sections/test-coverage.md",
+          "local": "skills/developer/gstack/ship/sections/test-coverage.md"
+        },
+        {
+          "upstream": "ship/sections/tests.md",
+          "local": "skills/developer/gstack/ship/sections/tests.md"
+        },
+        {
+          "upstream": "skillify/SKILL.md",
+          "local": "skills/developer/gstack/skillify/SKILL.md"
+        },
+        {
+          "upstream": "spec/sections/gate-and-file.md",
+          "local": "skills/developer/gstack/spec/sections/gate-and-file.md"
+        },
+        {
+          "upstream": "sync-gbrain/SKILL.md",
+          "local": "skills/developer/gstack/sync-gbrain/SKILL.md"
+        },
+        {
+          "upstream": "test-audit/SKILL.md",
+          "local": "skills/developer/gstack/test-audit/SKILL.md"
+        },
+        {
+          "upstream": "unfreeze/SKILL.md",
+          "local": "skills/developer/gstack/unfreeze/SKILL.md"
         }
       ],
       "verbatim": [
@@ -6283,10 +6803,6 @@
           "local": "skills/developer/gstack/SECURITY.md"
         },
         {
-          "upstream": "SKILL.md",
-          "local": "skills/developer/gstack/SKILL.md"
-        },
-        {
           "upstream": "SKILL.md.tmpl",
           "local": "skills/developer/gstack/SKILL.md.tmpl"
         },
@@ -6319,10 +6835,6 @@
           "local": "skills/developer/gstack/autoplan/DRIVER.md.tmpl"
         },
         {
-          "upstream": "autoplan/SKILL.md",
-          "local": "skills/developer/gstack/autoplan/SKILL.md"
-        },
-        {
           "upstream": "autoplan/SKILL.md.tmpl",
           "local": "skills/developer/gstack/autoplan/SKILL.md.tmpl"
         },
@@ -6351,32 +6863,16 @@
           "local": "skills/developer/gstack/autoplan/bin/phase-publication-hook.ts"
         },
         {
-          "upstream": "autoplan/sections/ceo-phase.md",
-          "local": "skills/developer/gstack/autoplan/sections/ceo-phase.md"
-        },
-        {
           "upstream": "autoplan/sections/ceo-phase.md.tmpl",
           "local": "skills/developer/gstack/autoplan/sections/ceo-phase.md.tmpl"
-        },
-        {
-          "upstream": "autoplan/sections/design-phase.md",
-          "local": "skills/developer/gstack/autoplan/sections/design-phase.md"
         },
         {
           "upstream": "autoplan/sections/design-phase.md.tmpl",
           "local": "skills/developer/gstack/autoplan/sections/design-phase.md.tmpl"
         },
         {
-          "upstream": "autoplan/sections/dx-phase.md",
-          "local": "skills/developer/gstack/autoplan/sections/dx-phase.md"
-        },
-        {
           "upstream": "autoplan/sections/dx-phase.md.tmpl",
           "local": "skills/developer/gstack/autoplan/sections/dx-phase.md.tmpl"
-        },
-        {
-          "upstream": "autoplan/sections/eng-phase.md",
-          "local": "skills/developer/gstack/autoplan/sections/eng-phase.md"
         },
         {
           "upstream": "autoplan/sections/eng-phase.md.tmpl",
@@ -6387,32 +6883,16 @@
           "local": "skills/developer/gstack/autoplan/sections/manifest.json"
         },
         {
-          "upstream": "autoplan/sections/phase-close.md",
-          "local": "skills/developer/gstack/autoplan/sections/phase-close.md"
-        },
-        {
           "upstream": "autoplan/sections/phase-close.md.tmpl",
           "local": "skills/developer/gstack/autoplan/sections/phase-close.md.tmpl"
-        },
-        {
-          "upstream": "autoplan/sections/tasks-aggregator.md",
-          "local": "skills/developer/gstack/autoplan/sections/tasks-aggregator.md"
         },
         {
           "upstream": "autoplan/sections/tasks-aggregator.md.tmpl",
           "local": "skills/developer/gstack/autoplan/sections/tasks-aggregator.md.tmpl"
         },
         {
-          "upstream": "autoplan/sections/unattended.md",
-          "local": "skills/developer/gstack/autoplan/sections/unattended.md"
-        },
-        {
           "upstream": "autoplan/sections/unattended.md.tmpl",
           "local": "skills/developer/gstack/autoplan/sections/unattended.md.tmpl"
-        },
-        {
-          "upstream": "benchmark/SKILL.md",
-          "local": "skills/developer/gstack/benchmark/SKILL.md"
         },
         {
           "upstream": "benchmark/SKILL.md.tmpl",
@@ -7063,10 +7543,6 @@
           "local": "skills/developer/gstack/browse/PLAN-snapshot-dropdown-interactive.md"
         },
         {
-          "upstream": "browse/SKILL.md",
-          "local": "skills/developer/gstack/browse/SKILL.md"
-        },
-        {
           "upstream": "browse/SKILL.md.tmpl",
           "local": "skills/developer/gstack/browse/SKILL.md.tmpl"
         },
@@ -7085,10 +7561,6 @@
         {
           "upstream": "browse/scripts/extension-id.ts",
           "local": "skills/developer/gstack/browse/scripts/extension-id.ts"
-        },
-        {
-          "upstream": "browse/sections/command-list.md",
-          "local": "skills/developer/gstack/browse/sections/command-list.md"
         },
         {
           "upstream": "browse/sections/command-list.md.tmpl",
@@ -7463,10 +7935,6 @@
           "local": "skills/developer/gstack/browse/src/xvfb.ts"
         },
         {
-          "upstream": "browser-skills/hackernews-frontpage/SKILL.md",
-          "local": "skills/developer/gstack/browser-skills/hackernews-frontpage/SKILL.md"
-        },
-        {
           "upstream": "browser-skills/hackernews-frontpage/_lib/browse-client.ts",
           "local": "skills/developer/gstack/browser-skills/hackernews-frontpage/_lib/browse-client.ts"
         },
@@ -7491,16 +7959,8 @@
           "local": "skills/developer/gstack/bunfig.toml"
         },
         {
-          "upstream": "canary/SKILL.md",
-          "local": "skills/developer/gstack/canary/SKILL.md"
-        },
-        {
           "upstream": "canary/SKILL.md.tmpl",
           "local": "skills/developer/gstack/canary/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "capy/skill/gstack/SKILL.md",
-          "local": "skills/developer/gstack/capy/skill/gstack/SKILL.md"
         },
         {
           "upstream": "capy/skill/gstack/captain.md",
@@ -7513,10 +7973,6 @@
         {
           "upstream": "capy/support.env",
           "local": "skills/developer/gstack/capy/support.env"
-        },
-        {
-          "upstream": "careful/SKILL.md",
-          "local": "skills/developer/gstack/careful/SKILL.md"
         },
         {
           "upstream": "careful/SKILL.md.tmpl",
@@ -7535,24 +7991,12 @@
           "local": "skills/developer/gstack/claude-code/SKILL.md.tmpl"
         },
         {
-          "upstream": "codex/SKILL.md",
-          "local": "skills/developer/gstack/codex/SKILL.md"
-        },
-        {
           "upstream": "codex/SKILL.md.tmpl",
           "local": "skills/developer/gstack/codex/SKILL.md.tmpl"
         },
         {
-          "upstream": "codex/sections/challenge-mode.md",
-          "local": "skills/developer/gstack/codex/sections/challenge-mode.md"
-        },
-        {
           "upstream": "codex/sections/challenge-mode.md.tmpl",
           "local": "skills/developer/gstack/codex/sections/challenge-mode.md.tmpl"
-        },
-        {
-          "upstream": "codex/sections/consult-mode.md",
-          "local": "skills/developer/gstack/codex/sections/consult-mode.md"
         },
         {
           "upstream": "codex/sections/consult-mode.md.tmpl",
@@ -7563,10 +8007,6 @@
           "local": "skills/developer/gstack/codex/sections/manifest.json"
         },
         {
-          "upstream": "codex/sections/review-mode.md",
-          "local": "skills/developer/gstack/codex/sections/review-mode.md"
-        },
-        {
           "upstream": "codex/sections/review-mode.md.tmpl",
           "local": "skills/developer/gstack/codex/sections/review-mode.md.tmpl"
         },
@@ -7575,16 +8015,8 @@
           "local": "skills/developer/gstack/conductor.json"
         },
         {
-          "upstream": "context-restore/SKILL.md",
-          "local": "skills/developer/gstack/context-restore/SKILL.md"
-        },
-        {
           "upstream": "context-restore/SKILL.md.tmpl",
           "local": "skills/developer/gstack/context-restore/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "context-save/SKILL.md",
-          "local": "skills/developer/gstack/context-save/SKILL.md"
         },
         {
           "upstream": "context-save/SKILL.md.tmpl",
@@ -7599,16 +8031,8 @@
           "local": "skills/developer/gstack/cso/ACKNOWLEDGEMENTS.md"
         },
         {
-          "upstream": "cso/SKILL.md",
-          "local": "skills/developer/gstack/cso/SKILL.md"
-        },
-        {
           "upstream": "cso/SKILL.md.tmpl",
           "local": "skills/developer/gstack/cso/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "cso/sections/audit-phases.md",
-          "local": "skills/developer/gstack/cso/sections/audit-phases.md"
         },
         {
           "upstream": "cso/sections/audit-phases.md.tmpl",
@@ -7727,10 +8151,6 @@
           "local": "skills/developer/gstack/design/src/variants.ts"
         },
         {
-          "upstream": "design-consultation/SKILL.md",
-          "local": "skills/developer/gstack/design-consultation/SKILL.md"
-        },
-        {
           "upstream": "design-consultation/SKILL.md.tmpl",
           "local": "skills/developer/gstack/design-consultation/SKILL.md.tmpl"
         },
@@ -7739,32 +8159,16 @@
           "local": "skills/developer/gstack/design-consultation/sections/manifest.json"
         },
         {
-          "upstream": "design-consultation/sections/proposal-and-preview.md",
-          "local": "skills/developer/gstack/design-consultation/sections/proposal-and-preview.md"
-        },
-        {
           "upstream": "design-consultation/sections/proposal-and-preview.md.tmpl",
           "local": "skills/developer/gstack/design-consultation/sections/proposal-and-preview.md.tmpl"
-        },
-        {
-          "upstream": "design-html/SKILL.md",
-          "local": "skills/developer/gstack/design-html/SKILL.md"
         },
         {
           "upstream": "design-html/SKILL.md.tmpl",
           "local": "skills/developer/gstack/design-html/SKILL.md.tmpl"
         },
         {
-          "upstream": "design-html/sections/detector-install-offer.md",
-          "local": "skills/developer/gstack/design-html/sections/detector-install-offer.md"
-        },
-        {
           "upstream": "design-html/sections/detector-install-offer.md.tmpl",
           "local": "skills/developer/gstack/design-html/sections/detector-install-offer.md.tmpl"
-        },
-        {
-          "upstream": "design-html/sections/doctrine.md",
-          "local": "skills/developer/gstack/design-html/sections/doctrine.md"
         },
         {
           "upstream": "design-html/sections/doctrine.md.tmpl",
@@ -7773,10 +8177,6 @@
         {
           "upstream": "design-html/sections/manifest.json",
           "local": "skills/developer/gstack/design-html/sections/manifest.json"
-        },
-        {
-          "upstream": "design-html/sections/pretext-patterns.md",
-          "local": "skills/developer/gstack/design-html/sections/pretext-patterns.md"
         },
         {
           "upstream": "design-html/sections/pretext-patterns.md.tmpl",
@@ -7791,16 +8191,8 @@
           "local": "skills/developer/gstack/design-review/SKILL.md.tmpl"
         },
         {
-          "upstream": "design-shotgun/SKILL.md",
-          "local": "skills/developer/gstack/design-shotgun/SKILL.md"
-        },
-        {
           "upstream": "design-shotgun/SKILL.md.tmpl",
           "local": "skills/developer/gstack/design-shotgun/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "design-shotgun/sections/doctrine.md",
-          "local": "skills/developer/gstack/design-shotgun/sections/doctrine.md"
         },
         {
           "upstream": "design-shotgun/sections/doctrine.md.tmpl",
@@ -7811,24 +8203,12 @@
           "local": "skills/developer/gstack/design-shotgun/sections/manifest.json"
         },
         {
-          "upstream": "deslop-shared-libs/SKILL.md",
-          "local": "skills/developer/gstack/deslop-shared-libs/SKILL.md"
-        },
-        {
           "upstream": "deslop-shared-libs/SKILL.md.tmpl",
           "local": "skills/developer/gstack/deslop-shared-libs/SKILL.md.tmpl"
         },
         {
-          "upstream": "devex-review/SKILL.md",
-          "local": "skills/developer/gstack/devex-review/SKILL.md"
-        },
-        {
           "upstream": "devex-review/SKILL.md.tmpl",
           "local": "skills/developer/gstack/devex-review/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "diagram/SKILL.md",
-          "local": "skills/developer/gstack/diagram/SKILL.md"
         },
         {
           "upstream": "diagram/SKILL.md.tmpl",
@@ -8263,24 +8643,12 @@
           "local": "skills/developer/gstack/docs/unattended.md"
         },
         {
-          "upstream": "document-generate/SKILL.md",
-          "local": "skills/developer/gstack/document-generate/SKILL.md"
-        },
-        {
           "upstream": "document-generate/SKILL.md.tmpl",
           "local": "skills/developer/gstack/document-generate/SKILL.md.tmpl"
         },
         {
-          "upstream": "document-release/SKILL.md",
-          "local": "skills/developer/gstack/document-release/SKILL.md"
-        },
-        {
           "upstream": "document-release/SKILL.md.tmpl",
           "local": "skills/developer/gstack/document-release/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "document-release/sections/audit-scope.md",
-          "local": "skills/developer/gstack/document-release/sections/audit-scope.md"
         },
         {
           "upstream": "document-release/sections/audit-scope.md.tmpl",
@@ -8291,16 +8659,8 @@
           "local": "skills/developer/gstack/document-release/sections/manifest.json"
         },
         {
-          "upstream": "document-release/sections/release-body.md",
-          "local": "skills/developer/gstack/document-release/sections/release-body.md"
-        },
-        {
           "upstream": "document-release/sections/release-body.md.tmpl",
           "local": "skills/developer/gstack/document-release/sections/release-body.md.tmpl"
-        },
-        {
-          "upstream": "eval-plan/SKILL.md",
-          "local": "skills/developer/gstack/eval-plan/SKILL.md"
         },
         {
           "upstream": "eval-plan/SKILL.md.tmpl",
@@ -8371,10 +8731,6 @@
           "local": "skills/developer/gstack/extension/sidepanel.js"
         },
         {
-          "upstream": "freeze/SKILL.md",
-          "local": "skills/developer/gstack/freeze/SKILL.md"
-        },
-        {
           "upstream": "freeze/SKILL.md.tmpl",
           "local": "skills/developer/gstack/freeze/SKILL.md.tmpl"
         },
@@ -8389,10 +8745,6 @@
         {
           "upstream": "gstack/llms.txt",
           "local": "skills/developer/gstack/gstack/llms.txt"
-        },
-        {
-          "upstream": "gstack-upgrade/SKILL.md",
-          "local": "skills/developer/gstack/gstack-upgrade/SKILL.md"
         },
         {
           "upstream": "gstack-upgrade/SKILL.md.tmpl",
@@ -8461,10 +8813,6 @@
         {
           "upstream": "gstack-upgrade/migrations/v1.91.65.0.sh",
           "local": "skills/developer/gstack/gstack-upgrade/migrations/v1.91.65.0.sh"
-        },
-        {
-          "upstream": "guard/SKILL.md",
-          "local": "skills/developer/gstack/guard/SKILL.md"
         },
         {
           "upstream": "guard/SKILL.md.tmpl",
@@ -8587,24 +8935,12 @@
           "local": "skills/developer/gstack/investigate/SKILL.md.tmpl"
         },
         {
-          "upstream": "investigate/sections/backlog.md",
-          "local": "skills/developer/gstack/investigate/sections/backlog.md"
-        },
-        {
           "upstream": "investigate/sections/backlog.md.tmpl",
           "local": "skills/developer/gstack/investigate/sections/backlog.md.tmpl"
         },
         {
-          "upstream": "investigate/sections/eval-bisect.md",
-          "local": "skills/developer/gstack/investigate/sections/eval-bisect.md"
-        },
-        {
           "upstream": "investigate/sections/eval-bisect.md.tmpl",
           "local": "skills/developer/gstack/investigate/sections/eval-bisect.md.tmpl"
-        },
-        {
-          "upstream": "investigate/sections/flake.md",
-          "local": "skills/developer/gstack/investigate/sections/flake.md"
         },
         {
           "upstream": "investigate/sections/flake.md.tmpl",
@@ -8615,48 +8951,24 @@
           "local": "skills/developer/gstack/investigate/sections/manifest.json"
         },
         {
-          "upstream": "investigate/sections/polluter.md",
-          "local": "skills/developer/gstack/investigate/sections/polluter.md"
-        },
-        {
           "upstream": "investigate/sections/polluter.md.tmpl",
           "local": "skills/developer/gstack/investigate/sections/polluter.md.tmpl"
-        },
-        {
-          "upstream": "investigate/sections/race.md",
-          "local": "skills/developer/gstack/investigate/sections/race.md"
         },
         {
           "upstream": "investigate/sections/race.md.tmpl",
           "local": "skills/developer/gstack/investigate/sections/race.md.tmpl"
         },
         {
-          "upstream": "ios-clean/SKILL.md",
-          "local": "skills/developer/gstack/ios-clean/SKILL.md"
-        },
-        {
           "upstream": "ios-clean/SKILL.md.tmpl",
           "local": "skills/developer/gstack/ios-clean/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "ios-design-review/SKILL.md",
-          "local": "skills/developer/gstack/ios-design-review/SKILL.md"
         },
         {
           "upstream": "ios-design-review/SKILL.md.tmpl",
           "local": "skills/developer/gstack/ios-design-review/SKILL.md.tmpl"
         },
         {
-          "upstream": "ios-fix/SKILL.md",
-          "local": "skills/developer/gstack/ios-fix/SKILL.md"
-        },
-        {
           "upstream": "ios-fix/SKILL.md.tmpl",
           "local": "skills/developer/gstack/ios-fix/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "ios-qa/SKILL.md",
-          "local": "skills/developer/gstack/ios-qa/SKILL.md"
         },
         {
           "upstream": "ios-qa/SKILL.md.tmpl",
@@ -8771,20 +9083,12 @@
           "local": "skills/developer/gstack/ios-qa/templates/StateServer.swift.template"
         },
         {
-          "upstream": "ios-sync/SKILL.md",
-          "local": "skills/developer/gstack/ios-sync/SKILL.md"
-        },
-        {
           "upstream": "ios-sync/SKILL.md.tmpl",
           "local": "skills/developer/gstack/ios-sync/SKILL.md.tmpl"
         },
         {
           "upstream": "land-and-deploy/SKILL.md.tmpl",
           "local": "skills/developer/gstack/land-and-deploy/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "land-and-deploy/sections/first-run-validation.md",
-          "local": "skills/developer/gstack/land-and-deploy/sections/first-run-validation.md"
         },
         {
           "upstream": "land-and-deploy/sections/first-run-validation.md.tmpl",
@@ -8795,24 +9099,12 @@
           "local": "skills/developer/gstack/land-and-deploy/sections/manifest.json"
         },
         {
-          "upstream": "land-and-deploy/sections/merge-and-deploy.md",
-          "local": "skills/developer/gstack/land-and-deploy/sections/merge-and-deploy.md"
-        },
-        {
           "upstream": "land-and-deploy/sections/merge-and-deploy.md.tmpl",
           "local": "skills/developer/gstack/land-and-deploy/sections/merge-and-deploy.md.tmpl"
         },
         {
-          "upstream": "land-and-deploy/sections/readiness-gate.md",
-          "local": "skills/developer/gstack/land-and-deploy/sections/readiness-gate.md"
-        },
-        {
           "upstream": "land-and-deploy/sections/readiness-gate.md.tmpl",
           "local": "skills/developer/gstack/land-and-deploy/sections/readiness-gate.md.tmpl"
-        },
-        {
-          "upstream": "landing-report/SKILL.md",
-          "local": "skills/developer/gstack/landing-report/SKILL.md"
         },
         {
           "upstream": "landing-report/SKILL.md.tmpl",
@@ -9731,10 +10023,6 @@
           "local": "skills/developer/gstack/licenses/Apache-2.0.txt"
         },
         {
-          "upstream": "make-pdf/SKILL.md",
-          "local": "skills/developer/gstack/make-pdf/SKILL.md"
-        },
-        {
           "upstream": "make-pdf/SKILL.md.tmpl",
           "local": "skills/developer/gstack/make-pdf/SKILL.md.tmpl"
         },
@@ -9855,10 +10143,6 @@
           "local": "skills/developer/gstack/office-hours/SKILL.md.tmpl"
         },
         {
-          "upstream": "office-hours/sections/design-and-handoff.md",
-          "local": "skills/developer/gstack/office-hours/sections/design-and-handoff.md"
-        },
-        {
           "upstream": "office-hours/sections/design-and-handoff.md.tmpl",
           "local": "skills/developer/gstack/office-hours/sections/design-and-handoff.md.tmpl"
         },
@@ -9867,24 +10151,12 @@
           "local": "skills/developer/gstack/office-hours/sections/manifest.json"
         },
         {
-          "upstream": "office-hours/sections/phase-2a-startup-diagnostic.md",
-          "local": "skills/developer/gstack/office-hours/sections/phase-2a-startup-diagnostic.md"
-        },
-        {
           "upstream": "office-hours/sections/phase-2a-startup-diagnostic.md.tmpl",
           "local": "skills/developer/gstack/office-hours/sections/phase-2a-startup-diagnostic.md.tmpl"
         },
         {
-          "upstream": "office-hours/sections/phase-2b-builder-brainstorm.md",
-          "local": "skills/developer/gstack/office-hours/sections/phase-2b-builder-brainstorm.md"
-        },
-        {
           "upstream": "office-hours/sections/phase-2b-builder-brainstorm.md.tmpl",
           "local": "skills/developer/gstack/office-hours/sections/phase-2b-builder-brainstorm.md.tmpl"
-        },
-        {
-          "upstream": "open-gstack-browser/SKILL.md",
-          "local": "skills/developer/gstack/open-gstack-browser/SKILL.md"
         },
         {
           "upstream": "open-gstack-browser/SKILL.md.tmpl",
@@ -9907,22 +10179,6 @@
           "local": "skills/developer/gstack/openclaw/gstack-plan-CLAUDE.md"
         },
         {
-          "upstream": "openclaw/skills/gstack-openclaw-ceo-review/SKILL.md",
-          "local": "skills/developer/gstack/openclaw/skills/gstack-openclaw-ceo-review/SKILL.md"
-        },
-        {
-          "upstream": "openclaw/skills/gstack-openclaw-investigate/SKILL.md",
-          "local": "skills/developer/gstack/openclaw/skills/gstack-openclaw-investigate/SKILL.md"
-        },
-        {
-          "upstream": "openclaw/skills/gstack-openclaw-office-hours/SKILL.md",
-          "local": "skills/developer/gstack/openclaw/skills/gstack-openclaw-office-hours/SKILL.md"
-        },
-        {
-          "upstream": "openclaw/skills/gstack-openclaw-retro/SKILL.md",
-          "local": "skills/developer/gstack/openclaw/skills/gstack-openclaw-retro/SKILL.md"
-        },
-        {
           "upstream": "openclaw/templates/gstack-full-CLAUDE.md",
           "local": "skills/developer/gstack/openclaw/templates/gstack-full-CLAUDE.md"
         },
@@ -9937,10 +10193,6 @@
         {
           "upstream": "package.json",
           "local": "skills/developer/gstack/package.json"
-        },
-        {
-          "upstream": "pair-agent/SKILL.md",
-          "local": "skills/developer/gstack/pair-agent/SKILL.md"
         },
         {
           "upstream": "pair-agent/SKILL.md.tmpl",
@@ -9963,10 +10215,6 @@
           "local": "skills/developer/gstack/plan-ceo-review/bin/mode-handoff-hook.ts"
         },
         {
-          "upstream": "plan-ceo-review/sections/checklist.md",
-          "local": "skills/developer/gstack/plan-ceo-review/sections/checklist.md"
-        },
-        {
           "upstream": "plan-ceo-review/sections/checklist.md.tmpl",
           "local": "skills/developer/gstack/plan-ceo-review/sections/checklist.md.tmpl"
         },
@@ -9975,24 +10223,12 @@
           "local": "skills/developer/gstack/plan-ceo-review/sections/manifest.json"
         },
         {
-          "upstream": "plan-ceo-review/sections/review-sections.md",
-          "local": "skills/developer/gstack/plan-ceo-review/sections/review-sections.md"
-        },
-        {
           "upstream": "plan-ceo-review/sections/review-sections.md.tmpl",
           "local": "skills/developer/gstack/plan-ceo-review/sections/review-sections.md.tmpl"
         },
         {
-          "upstream": "plan-design-review/SKILL.md",
-          "local": "skills/developer/gstack/plan-design-review/SKILL.md"
-        },
-        {
           "upstream": "plan-design-review/SKILL.md.tmpl",
           "local": "skills/developer/gstack/plan-design-review/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "plan-design-review/sections/checklist.md",
-          "local": "skills/developer/gstack/plan-design-review/sections/checklist.md"
         },
         {
           "upstream": "plan-design-review/sections/checklist.md.tmpl",
@@ -10003,16 +10239,8 @@
           "local": "skills/developer/gstack/plan-design-review/sections/manifest.json"
         },
         {
-          "upstream": "plan-design-review/sections/review-sections.md",
-          "local": "skills/developer/gstack/plan-design-review/sections/review-sections.md"
-        },
-        {
           "upstream": "plan-design-review/sections/review-sections.md.tmpl",
           "local": "skills/developer/gstack/plan-design-review/sections/review-sections.md.tmpl"
-        },
-        {
-          "upstream": "plan-devex-review/SKILL.md",
-          "local": "skills/developer/gstack/plan-devex-review/SKILL.md"
         },
         {
           "upstream": "plan-devex-review/SKILL.md.tmpl",
@@ -10023,20 +10251,12 @@
           "local": "skills/developer/gstack/plan-devex-review/dx-hall-of-fame.md"
         },
         {
-          "upstream": "plan-devex-review/sections/checklist.md",
-          "local": "skills/developer/gstack/plan-devex-review/sections/checklist.md"
-        },
-        {
           "upstream": "plan-devex-review/sections/checklist.md.tmpl",
           "local": "skills/developer/gstack/plan-devex-review/sections/checklist.md.tmpl"
         },
         {
           "upstream": "plan-devex-review/sections/manifest.json",
           "local": "skills/developer/gstack/plan-devex-review/sections/manifest.json"
-        },
-        {
-          "upstream": "plan-devex-review/sections/review-sections.md",
-          "local": "skills/developer/gstack/plan-devex-review/sections/review-sections.md"
         },
         {
           "upstream": "plan-devex-review/sections/review-sections.md.tmpl",
@@ -10047,10 +10267,6 @@
           "local": "skills/developer/gstack/plan-eng-review/SKILL.md.tmpl"
         },
         {
-          "upstream": "plan-eng-review/sections/checklist.md",
-          "local": "skills/developer/gstack/plan-eng-review/sections/checklist.md"
-        },
-        {
           "upstream": "plan-eng-review/sections/checklist.md.tmpl",
           "local": "skills/developer/gstack/plan-eng-review/sections/checklist.md.tmpl"
         },
@@ -10059,16 +10275,8 @@
           "local": "skills/developer/gstack/plan-eng-review/sections/manifest.json"
         },
         {
-          "upstream": "plan-eng-review/sections/review-sections.md",
-          "local": "skills/developer/gstack/plan-eng-review/sections/review-sections.md"
-        },
-        {
           "upstream": "plan-eng-review/sections/review-sections.md.tmpl",
           "local": "skills/developer/gstack/plan-eng-review/sections/review-sections.md.tmpl"
-        },
-        {
-          "upstream": "plan-tune/SKILL.md",
-          "local": "skills/developer/gstack/plan-tune/SKILL.md"
         },
         {
           "upstream": "plan-tune/SKILL.md.tmpl",
@@ -10083,24 +10291,12 @@
           "local": "skills/developer/gstack/qa/references/issue-taxonomy.md"
         },
         {
-          "upstream": "qa/sections/browser-setup.md",
-          "local": "skills/developer/gstack/qa/sections/browser-setup.md"
-        },
-        {
           "upstream": "qa/sections/browser-setup.md.tmpl",
           "local": "skills/developer/gstack/qa/sections/browser-setup.md.tmpl"
         },
         {
-          "upstream": "qa/sections/browser-verify.md",
-          "local": "skills/developer/gstack/qa/sections/browser-verify.md"
-        },
-        {
           "upstream": "qa/sections/browser-verify.md.tmpl",
           "local": "skills/developer/gstack/qa/sections/browser-verify.md.tmpl"
-        },
-        {
-          "upstream": "qa/sections/exploratory.md",
-          "local": "skills/developer/gstack/qa/sections/exploratory.md"
         },
         {
           "upstream": "qa/sections/exploratory.md.tmpl",
@@ -10111,32 +10307,16 @@
           "local": "skills/developer/gstack/qa/sections/manifest.json"
         },
         {
-          "upstream": "qa/sections/qa-patterns.md",
-          "local": "skills/developer/gstack/qa/sections/qa-patterns.md"
-        },
-        {
           "upstream": "qa/sections/qa-patterns.md.tmpl",
           "local": "skills/developer/gstack/qa/sections/qa-patterns.md.tmpl"
-        },
-        {
-          "upstream": "qa/sections/scope.md",
-          "local": "skills/developer/gstack/qa/sections/scope.md"
         },
         {
           "upstream": "qa/sections/scope.md.tmpl",
           "local": "skills/developer/gstack/qa/sections/scope.md.tmpl"
         },
         {
-          "upstream": "qa/sections/system-functional.md",
-          "local": "skills/developer/gstack/qa/sections/system-functional.md"
-        },
-        {
           "upstream": "qa/sections/system-functional.md.tmpl",
           "local": "skills/developer/gstack/qa/sections/system-functional.md.tmpl"
-        },
-        {
-          "upstream": "qa/sections/test-bootstrap.md",
-          "local": "skills/developer/gstack/qa/sections/test-bootstrap.md"
         },
         {
           "upstream": "qa/sections/test-bootstrap.md.tmpl",
@@ -10151,16 +10331,8 @@
           "local": "skills/developer/gstack/qa/templates/qa-report-template.md"
         },
         {
-          "upstream": "qa-only/SKILL.md",
-          "local": "skills/developer/gstack/qa-only/SKILL.md"
-        },
-        {
           "upstream": "qa-only/SKILL.md.tmpl",
           "local": "skills/developer/gstack/qa-only/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "qa-only/sections/exploratory.md",
-          "local": "skills/developer/gstack/qa-only/sections/exploratory.md"
         },
         {
           "upstream": "qa-only/sections/exploratory.md.tmpl",
@@ -10169,10 +10341,6 @@
         {
           "upstream": "qa-only/sections/manifest.json",
           "local": "skills/developer/gstack/qa-only/sections/manifest.json"
-        },
-        {
-          "upstream": "qa-only/sections/reporting.md",
-          "local": "skills/developer/gstack/qa-only/sections/reporting.md"
         },
         {
           "upstream": "qa-only/sections/reporting.md.tmpl",
@@ -10185,10 +10353,6 @@
         {
           "upstream": "retro/sections/manifest.json",
           "local": "skills/developer/gstack/retro/sections/manifest.json"
-        },
-        {
-          "upstream": "retro/sections/report-format.md",
-          "local": "skills/developer/gstack/retro/sections/report-format.md"
         },
         {
           "upstream": "retro/sections/report-format.md.tmpl",
@@ -10219,10 +10383,6 @@
           "local": "skills/developer/gstack/review/greptile-triage.md"
         },
         {
-          "upstream": "review/sections/adversarial.md",
-          "local": "skills/developer/gstack/review/sections/adversarial.md"
-        },
-        {
           "upstream": "review/sections/adversarial.md.tmpl",
           "local": "skills/developer/gstack/review/sections/adversarial.md.tmpl"
         },
@@ -10231,24 +10391,12 @@
           "local": "skills/developer/gstack/review/sections/manifest.json"
         },
         {
-          "upstream": "review/sections/plan-completion.md",
-          "local": "skills/developer/gstack/review/sections/plan-completion.md"
-        },
-        {
           "upstream": "review/sections/plan-completion.md.tmpl",
           "local": "skills/developer/gstack/review/sections/plan-completion.md.tmpl"
         },
         {
-          "upstream": "review/sections/review-army.md",
-          "local": "skills/developer/gstack/review/sections/review-army.md"
-        },
-        {
           "upstream": "review/sections/review-army.md.tmpl",
           "local": "skills/developer/gstack/review/sections/review-army.md.tmpl"
-        },
-        {
-          "upstream": "review/sections/shared-code-reuse.md",
-          "local": "skills/developer/gstack/review/sections/shared-code-reuse.md"
         },
         {
           "upstream": "review/sections/shared-code-reuse.md.tmpl",
@@ -10289,10 +10437,6 @@
         {
           "upstream": "review/specialists/testing.md",
           "local": "skills/developer/gstack/review/specialists/testing.md"
-        },
-        {
-          "upstream": "scrape/SKILL.md",
-          "local": "skills/developer/gstack/scrape/SKILL.md"
         },
         {
           "upstream": "scrape/SKILL.md.tmpl",
@@ -10999,24 +11143,12 @@
           "local": "skills/developer/gstack/setup"
         },
         {
-          "upstream": "setup-browser-cookies/SKILL.md",
-          "local": "skills/developer/gstack/setup-browser-cookies/SKILL.md"
-        },
-        {
           "upstream": "setup-browser-cookies/SKILL.md.tmpl",
           "local": "skills/developer/gstack/setup-browser-cookies/SKILL.md.tmpl"
         },
         {
-          "upstream": "setup-deploy/SKILL.md",
-          "local": "skills/developer/gstack/setup-deploy/SKILL.md"
-        },
-        {
           "upstream": "setup-deploy/SKILL.md.tmpl",
           "local": "skills/developer/gstack/setup-deploy/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "setup-gbrain/SKILL.md",
-          "local": "skills/developer/gstack/setup-gbrain/SKILL.md"
         },
         {
           "upstream": "setup-gbrain/SKILL.md.tmpl",
@@ -11027,24 +11159,12 @@
           "local": "skills/developer/gstack/setup-gbrain/memory.md"
         },
         {
-          "upstream": "setup-gbrain/sections/brain-init.md",
-          "local": "skills/developer/gstack/setup-gbrain/sections/brain-init.md"
-        },
-        {
           "upstream": "setup-gbrain/sections/brain-init.md.tmpl",
           "local": "skills/developer/gstack/setup-gbrain/sections/brain-init.md.tmpl"
         },
         {
-          "upstream": "setup-gbrain/sections/claude-md-persist.md",
-          "local": "skills/developer/gstack/setup-gbrain/sections/claude-md-persist.md"
-        },
-        {
           "upstream": "setup-gbrain/sections/claude-md-persist.md.tmpl",
           "local": "skills/developer/gstack/setup-gbrain/sections/claude-md-persist.md.tmpl"
-        },
-        {
-          "upstream": "setup-gbrain/sections/engine-remediation.md",
-          "local": "skills/developer/gstack/setup-gbrain/sections/engine-remediation.md"
         },
         {
           "upstream": "setup-gbrain/sections/engine-remediation.md.tmpl",
@@ -11053,10 +11173,6 @@
         {
           "upstream": "setup-gbrain/sections/manifest.json",
           "local": "skills/developer/gstack/setup-gbrain/sections/manifest.json"
-        },
-        {
-          "upstream": "setup-gbrain/sections/transcript-gate.md",
-          "local": "skills/developer/gstack/setup-gbrain/sections/transcript-gate.md"
         },
         {
           "upstream": "setup-gbrain/sections/transcript-gate.md.tmpl",
@@ -11071,64 +11187,32 @@
           "local": "skills/developer/gstack/ship/SKILL.md.tmpl"
         },
         {
-          "upstream": "ship/sections/adversarial.md",
-          "local": "skills/developer/gstack/ship/sections/adversarial.md"
-        },
-        {
           "upstream": "ship/sections/adversarial.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/adversarial.md.tmpl"
-        },
-        {
-          "upstream": "ship/sections/apple-release.md",
-          "local": "skills/developer/gstack/ship/sections/apple-release.md"
         },
         {
           "upstream": "ship/sections/apple-release.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/apple-release.md.tmpl"
         },
         {
-          "upstream": "ship/sections/capy-pr.md",
-          "local": "skills/developer/gstack/ship/sections/capy-pr.md"
-        },
-        {
           "upstream": "ship/sections/capy-pr.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/capy-pr.md.tmpl"
-        },
-        {
-          "upstream": "ship/sections/changelog.md",
-          "local": "skills/developer/gstack/ship/sections/changelog.md"
         },
         {
           "upstream": "ship/sections/changelog.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/changelog.md.tmpl"
         },
         {
-          "upstream": "ship/sections/documentation.md",
-          "local": "skills/developer/gstack/ship/sections/documentation.md"
-        },
-        {
           "upstream": "ship/sections/documentation.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/documentation.md.tmpl"
-        },
-        {
-          "upstream": "ship/sections/greptile-early.md",
-          "local": "skills/developer/gstack/ship/sections/greptile-early.md"
         },
         {
           "upstream": "ship/sections/greptile-early.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/greptile-early.md.tmpl"
         },
         {
-          "upstream": "ship/sections/greptile.md",
-          "local": "skills/developer/gstack/ship/sections/greptile.md"
-        },
-        {
           "upstream": "ship/sections/greptile.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/greptile.md.tmpl"
-        },
-        {
-          "upstream": "ship/sections/handoff.md",
-          "local": "skills/developer/gstack/ship/sections/handoff.md"
         },
         {
           "upstream": "ship/sections/handoff.md.tmpl",
@@ -11139,64 +11223,32 @@
           "local": "skills/developer/gstack/ship/sections/manifest.json"
         },
         {
-          "upstream": "ship/sections/measure.md",
-          "local": "skills/developer/gstack/ship/sections/measure.md"
-        },
-        {
           "upstream": "ship/sections/measure.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/measure.md.tmpl"
-        },
-        {
-          "upstream": "ship/sections/plan-completion.md",
-          "local": "skills/developer/gstack/ship/sections/plan-completion.md"
         },
         {
           "upstream": "ship/sections/plan-completion.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/plan-completion.md.tmpl"
         },
         {
-          "upstream": "ship/sections/pr-body.md",
-          "local": "skills/developer/gstack/ship/sections/pr-body.md"
-        },
-        {
           "upstream": "ship/sections/pr-body.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/pr-body.md.tmpl"
-        },
-        {
-          "upstream": "ship/sections/review-army.md",
-          "local": "skills/developer/gstack/ship/sections/review-army.md"
         },
         {
           "upstream": "ship/sections/review-army.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/review-army.md.tmpl"
         },
         {
-          "upstream": "ship/sections/shared-code-reuse.md",
-          "local": "skills/developer/gstack/ship/sections/shared-code-reuse.md"
-        },
-        {
           "upstream": "ship/sections/shared-code-reuse.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/shared-code-reuse.md.tmpl"
-        },
-        {
-          "upstream": "ship/sections/test-coverage.md",
-          "local": "skills/developer/gstack/ship/sections/test-coverage.md"
         },
         {
           "upstream": "ship/sections/test-coverage.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/test-coverage.md.tmpl"
         },
         {
-          "upstream": "ship/sections/tests.md",
-          "local": "skills/developer/gstack/ship/sections/tests.md"
-        },
-        {
           "upstream": "ship/sections/tests.md.tmpl",
           "local": "skills/developer/gstack/ship/sections/tests.md.tmpl"
-        },
-        {
-          "upstream": "skillify/SKILL.md",
-          "local": "skills/developer/gstack/skillify/SKILL.md"
         },
         {
           "upstream": "skillify/SKILL.md.tmpl",
@@ -11209,10 +11261,6 @@
         {
           "upstream": "spec/SKILL.md.tmpl",
           "local": "skills/developer/gstack/spec/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "spec/sections/gate-and-file.md",
-          "local": "skills/developer/gstack/spec/sections/gate-and-file.md"
         },
         {
           "upstream": "spec/sections/gate-and-file.md.tmpl",
@@ -11259,16 +11307,8 @@
           "local": "skills/developer/gstack/supabase/verify-rls.sh"
         },
         {
-          "upstream": "sync-gbrain/SKILL.md",
-          "local": "skills/developer/gstack/sync-gbrain/SKILL.md"
-        },
-        {
           "upstream": "sync-gbrain/SKILL.md.tmpl",
           "local": "skills/developer/gstack/sync-gbrain/SKILL.md.tmpl"
-        },
-        {
-          "upstream": "test-audit/SKILL.md",
-          "local": "skills/developer/gstack/test-audit/SKILL.md"
         },
         {
           "upstream": "test-audit/SKILL.md.tmpl",
@@ -11285,10 +11325,6 @@
         {
           "upstream": "tsconfig.test.json",
           "local": "skills/developer/gstack/tsconfig.test.json"
-        },
-        {
-          "upstream": "unfreeze/SKILL.md",
-          "local": "skills/developer/gstack/unfreeze/SKILL.md"
         },
         {
           "upstream": "unfreeze/SKILL.md.tmpl",
@@ -18126,6 +18162,10 @@
         {
           "upstream": "plugins/cloud-infrastructure/skills/istio-traffic-management/SKILL.md",
           "local": "skills/developer/engineering/istio-traffic-management/SKILL.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/gitlab-ci-patterns/SKILL.md",
+          "local": "skills/developer/engineering/gitlab-ci-patterns/SKILL.md"
         }
       ],
       "verbatim": [
@@ -24217,6 +24257,10 @@
         {
           "upstream": "skills/egm-review/SKILL.md",
           "local": "skills/developer/quality/egm-review/SKILL.md"
+        },
+        {
+          "upstream": "skills/egm-review-loop/SKILL.md",
+          "local": "skills/developer/quality/egm-review-loop/SKILL.md"
         }
       ],
       "verbatim": [
@@ -24271,6 +24315,18 @@
         {
           "upstream": "skills/egm-review/test_scenarios.yaml",
           "local": "skills/developer/quality/egm-review/test_scenarios.yaml"
+        },
+        {
+          "upstream": "skills/egm-review-loop/agents/openai.yaml",
+          "local": "skills/developer/quality/egm-review-loop/agents/openai.yaml"
+        },
+        {
+          "upstream": "skills/egm-review-loop/assets/icon.svg",
+          "local": "skills/developer/quality/egm-review-loop/assets/icon.svg"
+        },
+        {
+          "upstream": "skills/egm-review-loop/test_scenarios.yaml",
+          "local": "skills/developer/quality/egm-review-loop/test_scenarios.yaml"
         }
       ],
       "verbatim_excluded": []
@@ -24308,6 +24364,10 @@
         {
           "upstream": "design-templates/critique/SKILL.md",
           "local": "skills/designer/design/od-critique/SKILL.md"
+        },
+        {
+          "upstream": "design-templates/dashboard/SKILL.md",
+          "local": "skills/designer/design/od-dashboard/SKILL.md"
         }
       ],
       "verbatim": [
@@ -24318,6 +24378,10 @@
         {
           "upstream": "design-templates/critique/example.html",
           "local": "skills/designer/design/od-critique/example.html"
+        },
+        {
+          "upstream": "design-templates/dashboard/example.html",
+          "local": "skills/designer/design/od-dashboard/example.html"
         }
       ],
       "verbatim_excluded": []
@@ -24397,6 +24461,106 @@
         {
           "upstream": "skills/2slides-ppt-generator/scripts/search_themes.py",
           "local": "skills/toolbox/office/2slides-ppt-generator/scripts/search_themes.py"
+        }
+      ],
+      "verbatim_excluded": []
+    },
+    {
+      "repo": "emilkowalski/skills",
+      "shortname": "emilkowalski-skills",
+      "license": "MIT",
+      "stars_snapshot_2026-11-12": 56308,
+      "batch": 8,
+      "files": [
+        {
+          "upstream": "skills/emil-design-eng/SKILL.md",
+          "local": "skills/designer/design/emil-design-eng/SKILL.md"
+        },
+        {
+          "upstream": "skills/animate/SKILL.md",
+          "local": "skills/designer/design/animate/SKILL.md"
+        },
+        {
+          "upstream": "skills/choreograph/SKILL.md",
+          "local": "skills/designer/design/choreograph/SKILL.md"
+        },
+        {
+          "upstream": "skills/animation-vocabulary/SKILL.md",
+          "local": "skills/designer/design/animation-vocabulary/SKILL.md"
+        },
+        {
+          "upstream": "skills/animation-performance/SKILL.md",
+          "local": "skills/designer/design/animation-performance/SKILL.md"
+        },
+        {
+          "upstream": "skills/improve-animations/SKILL.md",
+          "local": "skills/designer/design/improve-animations/SKILL.md"
+        },
+        {
+          "upstream": "skills/review-animations/SKILL.md",
+          "local": "skills/designer/design/review-animations/SKILL.md"
+        },
+        {
+          "upstream": "skills/remove-animations/SKILL.md",
+          "local": "skills/designer/design/remove-animations/SKILL.md"
+        },
+        {
+          "upstream": "skills/find-animation-opportunities/SKILL.md",
+          "local": "skills/designer/design/find-animation-opportunities/SKILL.md"
+        },
+        {
+          "upstream": "skills/gestures/SKILL.md",
+          "local": "skills/designer/design/gestures/SKILL.md"
+        },
+        {
+          "upstream": "skills/apple-design/SKILL.md",
+          "local": "skills/designer/design/apple-design/SKILL.md"
+        },
+        {
+          "upstream": "skills/mobile-native/SKILL.md",
+          "local": "skills/designer/design/mobile-native/SKILL.md"
+        },
+        {
+          "upstream": "skills/prototype/SKILL.md",
+          "local": "skills/designer/design/prototype/SKILL.md"
+        },
+        {
+          "upstream": "skills/pick-ui-library/SKILL.md",
+          "local": "skills/designer/design/pick-ui-library/SKILL.md"
+        },
+        {
+          "upstream": "skills/learn-taste/SKILL.md",
+          "local": "skills/designer/design/learn-taste/SKILL.md"
+        },
+        {
+          "upstream": "skills/write-swift/SKILL.md",
+          "local": "skills/designer/design/write-swift/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/animate/RECIPES.md",
+          "local": "skills/designer/design/animate/RECIPES.md"
+        },
+        {
+          "upstream": "skills/choreograph/RECIPES.md",
+          "local": "skills/designer/design/choreograph/RECIPES.md"
+        },
+        {
+          "upstream": "skills/improve-animations/AUDIT.md",
+          "local": "skills/designer/design/improve-animations/AUDIT.md"
+        },
+        {
+          "upstream": "skills/improve-animations/PLAN-TEMPLATE.md",
+          "local": "skills/designer/design/improve-animations/PLAN-TEMPLATE.md"
+        },
+        {
+          "upstream": "skills/review-animations/STANDARDS.md",
+          "local": "skills/designer/design/review-animations/STANDARDS.md"
+        },
+        {
+          "upstream": "skills/prototype/PICKER.md",
+          "local": "skills/designer/design/prototype/PICKER.md"
         }
       ],
       "verbatim_excluded": []

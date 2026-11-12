@@ -1,9 +1,13 @@
 <!-- AUTO-GENERATED from engine-remediation.md.tmpl — do not edit directly -->
 <!-- Regenerate: bun run gen:skill-docs -->
-### Step 1.5 remediation: broken-engine AskUserQuestion + repair branches
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`setup-gbrain/sections/engine-remediation.md` · License: MIT
+> 翻译日期：2026-10-26 · 同步状态：上游 HEAD（2026-10-26 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与生成注释保持原文。本文件为翻译作品，非上游官方中文版。
 
-The user has a non-working local engine (for example, `~/.gbrain/config.json`
-points at a dead Postgres URL). Fire a targeted AskUserQuestion BEFORE Step 2:
+### Step 1.5 修复：损坏引擎的 AskUserQuestion 与修复分支
+
+用户的本地引擎不可用（例如 `~/.gbrain/config.json` 指向一个已死的
+Postgres URL）。在 Step 2 之前发一个有针对性的 AskUserQuestion：
 
 > D# — Your local gbrain engine isn't responding. How do you want to fix it?
 > Project/branch/task: <one-sentence grounding using detected slug + branch>
@@ -34,12 +38,12 @@ points at a dead Postgres URL). Fire a targeted AskUserQuestion BEFORE Step 2:
 >   ❌ N/A
 > Net: A is the right starting move; B/C are explicit destructive paths; D bails.
 
-**If A (Retry)**: re-run `~/.claude/skills/gstack/bin/gstack-gbrain-detect`
-with `GSTACK_DETECT_NO_CACHE=1` (busts the 60s cache). If the new
-`gbrain_local_status` is `ok`, continue to Step 2. If still `broken-db` or
-`broken-config`, fire the same AskUserQuestion again (the user picks again).
+**选 A（Retry）**：带 `GSTACK_DETECT_NO_CACHE=1`（击穿 60s 缓存）重跑
+`~/.claude/skills/gstack/bin/gstack-gbrain-detect`。新的
+`gbrain_local_status` 为 `ok` 时继续 Step 2。仍是 `broken-db` 或
+`broken-config` 时再次发同一个 AskUserQuestion（由用户再选）。
 
-**If B (Switch to PGLite)** — execute the rollback-safe init sequence:
+**选 B（切到 PGLite）**：执行可回滚的安全初始化序列：
 
 ```bash
 BACKUP="$HOME/.gbrain/config.json.gstack-bak-$(date +%s)"
@@ -63,9 +67,8 @@ fi
 echo "Switched to local PGLite. Previous config saved at $BACKUP — review before deleting."
 ```
 
-Then jump to Step 5a (MCP registration; the new PGLite engine is registered as
-local-stdio).
+然后跳到 Step 5a（MCP 注册；新的 PGLite 引擎按 local-stdio 注册）。
 
-**If C (Switch brain mode)**: continue to Step 2's normal path picker.
+**选 C（切换大脑模式）**：继续 Step 2 的常规路径选择。
 
-**If D (Quit)**: STOP the skill cleanly.
+**选 D（退出）**：干净地 STOP 本 Skill。
