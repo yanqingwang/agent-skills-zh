@@ -150,7 +150,8 @@
     "skills/signup/SKILL.md": "1a507f48103480b344b2a31dd70a951b122d0904",
     "skills/schema/SKILL.md": "a152e5e59496740caf18ba0f0c74f4ef0e383c39",
     "skills/programmatic-seo/SKILL.md": "09a87f78a6f86e30a4333a7f7623425588b13961",
-    "skills/free-tools/SKILL.md": "cfef9eaf83f07b1ace96f9e8726399703ad24e56"
+    "skills/free-tools/SKILL.md": "cfef9eaf83f07b1ace96f9e8726399703ad24e56",
+    "skills/co-marketing/SKILL.md": "cd31c0edb3e226d280ebb3393c076e4e5e5c1b7c"
   },
   "K-Dense-AI/scientific-agent-skills": {
     "skills/experimental-design/SKILL.md": "ee14f9ed795c791ac80e3ea946858d97d09c3e50",
@@ -315,7 +316,9 @@
     "engineering-team/skills/email-template-builder/SKILL.md": "e6e1e16ec1c960c954469e38ad44d675b57dd29c",
     "engineering-team/skills/stripe-integration-expert/SKILL.md": "d6cb8302b0c78023a80c29bc8beca57d8f3ada74",
     "project-management/skills/meeting-analyzer/SKILL.md": "31dd7d1a0981b027450103b7a8d9c9cd29a5794c",
-    "engineering/prompt-governance/skills/prompt-governance/SKILL.md": "bebfe7b4245c31a66b36576e7e9a9fbf72886296"
+    "engineering/prompt-governance/skills/prompt-governance/SKILL.md": "bebfe7b4245c31a66b36576e7e9a9fbf72886296",
+    "marketing-skill/video-content-strategist/skills/video-content-strategist/SKILL.md": "744d84cafe7dca7ef9b7da0e4fe0f0a9ff9e2d70",
+    "research-ops/skills/research-ops-skills/SKILL.md": "8b1391aa9912df5b3d1c08118a933600a0819201"
   },
   "phuryn/pm-skills": {
     "pm-execution/skills/create-prd/SKILL.md": "9aa4b7a5a19af2fe4ade43da564dd607efdf0488",
@@ -412,7 +415,9 @@
     "plugins/machine-learning-ops/skills/recsys-pipeline-architect/SKILL.md": "cbf287c2868061bfb85db723901bee54d75c7ffc",
     "plugins/cloud-infrastructure/skills/linkerd-patterns/SKILL.md": "ce8540a4829e9e5486365cac9eea9e5cb6daf07e",
     "plugins/framework-migration/skills/dependency-upgrade/SKILL.md": "88aa04a8df13e5382f79ab86364a2f219177d6a5",
-    "plugins/block-no-verify/skills/block-no-verify-hook/SKILL.md": "b3f592cd7468526e6cadc29246e274837880fd34"
+    "plugins/block-no-verify/skills/block-no-verify-hook/SKILL.md": "b3f592cd7468526e6cadc29246e274837880fd34",
+    "plugins/machine-learning-ops/skills/ml-pipeline-workflow/SKILL.md": "b7d73300293f07b673b312b27fe467193981ef59",
+    "plugins/cloud-infrastructure/skills/istio-traffic-management/SKILL.md": "2c090d27898b3a3ed0318e0c9eafe9a37b670e4b"
   },
   "Donchitos/Claude-Code-Game-Studios": {
     ".claude/agents/game-designer.md": "f0a640c3a75fb06398d1367a00958e26cec7c7ab",
@@ -449,7 +454,10 @@
     "skills/disciplines/performance-optimization/SKILL.md": "b3df7d779bb92e47e433451c0cf3d73eba0d7f09",
     "skills/disciplines/level-design/SKILL.md": "1dcab88bfed9a7aeb0bc7afa672b1e0c394261bb",
     "skills/disciplines/save-systems/SKILL.md": "f01f75fe536802f5093aa707b3115042b8d0a654",
-    "skills/web-engines/threejs-scene-setup/SKILL.md": "c8b42dfae3f4bd840ce9abaed3a7149340068bc3"
+    "skills/web-engines/threejs-scene-setup/SKILL.md": "c8b42dfae3f4bd840ce9abaed3a7149340068bc3",
+    "skills/unity/unity-tilemap-2d/SKILL.md": "b50dc0453b7aaf70c3696d7c997d50f7fdb7b88c",
+    "skills/unreal/unreal-niagara/SKILL.md": "78a50c6add05d5e35e3999e40f449e4d9a706a71",
+    "skills/disciplines/camera-systems/SKILL.md": "5f8a09963e006459c1ce559c6f5d3c9b24243d84"
   },
   "bergside/awesome-design-skills": {
     "skills/creative/SKILL.md": "8535915b704a4ac791027f47d4592a34e3d99560",
@@ -458,7 +466,9 @@
     "skills/brutalism/DESIGN.md": "cfea61ee944d18ac3043438110e80151061358db",
     "skills/creative/DESIGN.md": "6830d30362fc305a205f67431477d46713374373",
     "skills/dramatic/DESIGN.md": "6cab74202d34a0b94000c9e663103a1fe8f16cab",
-    "skills/bento/SKILL.md": "58758ab9d3572c790ca9541a3398ce1584dd3c55"
+    "skills/bento/SKILL.md": "58758ab9d3572c790ca9541a3398ce1584dd3c55",
+    "skills/glassmorphism/SKILL.md": "d15365b1abbc28fac595a56aa26ffb09c48076cc",
+    "skills/editorial/SKILL.md": "c11908636da72ad04df79144630b8454d5215f79"
   },
   "tradermonty/claude-trading-skills": {
     "skills/backtest-expert/SKILL.md": "ad39f2b6f04884768d1891b34309720cf4902b58",

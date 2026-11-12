@@ -362,3 +362,17 @@
 | czlonkowski/n8n-skills | n8n-expression-syntax |
 | gamedev-skills/awesome-gamedev-agent-skills | input-systems、performance-optimization、level-design、save-systems、threejs-scene-setup |
 | wshobson/agents | turborepo-caching、recsys-pipeline-architect、linkerd-patterns、dependency-upgrade、block-no-verify-hook |
+
+## 十六、2026-11-12 第十三批：10 件跨角色补充
+
+**结果**：从 5 个已登记上游补充 10 件自包含或轻配套 Skill，覆盖研究者、开发者、游戏开发者、设计师、创作者、产品与增长六类角色；正文取当前上游 HEAD，零新上游。
+
+| 上游 | 收录件 |
+|---|---|
+| alirezarezvani/claude-skills | video-content-strategist、research-ops-skills |
+| bergside/awesome-design-skills | glassmorphism、editorial |
+| coreyhaines31/marketingskills | co-marketing |
+| gamedev-skills/awesome-gamedev-agent-skills | unity-tilemap-2d、unreal-niagara、camera-systems |
+| wshobson/agents | ml-pipeline-workflow、istio-traffic-management |
+
+**累计：66 登记 / 65 监控 / 262 SKILL 译件 / 5,122 原样件（2026-11-12，第十三批）。**

@@ -37,6 +37,7 @@
 - [backtest-expert](skills/growth/product/backtest-expert/SKILL.md) — 上游 [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills)
 - [breakout-trade-planner](skills/growth/product/breakout-trade-planner/SKILL.md) — 上游 [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills)
 - [流失预防（churn-prevention）](skills/growth/product/churn-prevention/SKILL.md) — 上游 [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
+- [联合营销（co-marketing）](skills/growth/product/co-marketing/SKILL.md) — 上游 [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
 - [cohort-analysis](skills/growth/product/cohort-analysis/SKILL.md) — 上游 [phuryn/pm-skills](https://github.com/phuryn/pm-skills)
 - [competitive-teardown](skills/growth/product/competitive-teardown/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 - [内容简报（content-brief）](skills/growth/product/content-brief/SKILL.md) — 上游 [Ryze-AI-Adgent/open-seo-mcp-skills](https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills)
@@ -87,6 +88,7 @@
 
 ## 创作者 · video
 
+- [视频内容策略（video-content-strategist）](skills/creator/video/video-content-strategist/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 - [video-shotcraft](skills/creator/video/video-shotcraft/SKILL.md) — 上游 [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft)
 
 ## 开发者 · context
@@ -127,6 +129,7 @@
 - [GitHub Actions 模板（github-actions-templates）](skills/developer/engineering/github-actions-templates/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [GitLab CI 流水线（gitlab-ci-patterns）](skills/developer/engineering/gitlab-ci-patterns/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [想法精炼](skills/developer/engineering/idea-refine/SKILL.md) — 上游 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
+- [Istio 流量管理（istio-traffic-management）](skills/developer/engineering/istio-traffic-management/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [Linkerd 服务网格模式（linkerd-patterns）](skills/developer/engineering/linkerd-patterns/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [parallel-debugging](skills/developer/engineering/parallel-debugging/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [并行特性开发（parallel-feature-development）](skills/developer/engineering/parallel-feature-development/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
@@ -216,6 +219,10 @@
 
 - [像素艺术特效（pixelfx）](skills/gamedev/art/pixelfx/SKILL.md) — 上游 [patch-gg/pixelfx](https://github.com/patch-gg/pixelfx)
 
+## 游戏开发者 · camera-systems
+
+- [镜头系统（camera-systems）](skills/gamedev/camera-systems/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
+
 ## 游戏开发者 · game-feel
 
 - [游戏手感（game-feel）](skills/gamedev/game-feel/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
@@ -276,6 +283,10 @@
 
 - [Unity NavMesh 寻路（unity-navmesh）](skills/gamedev/unity-navmesh/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
 
+## 游戏开发者 · unity-tilemap-2d
+
+- [Unity 2D Tilemap（unity-tilemap-2d）](skills/gamedev/unity-tilemap-2d/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
+
 ## 游戏开发者 · unreal-behavior-trees
 
 - [unreal-behavior-trees](skills/gamedev/unreal-behavior-trees/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
@@ -283,6 +294,10 @@
 ## 游戏开发者 · unreal-cpp-gameplay
 
 - [unreal-cpp-gameplay](skills/gamedev/unreal-cpp-gameplay/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
+
+## 游戏开发者 · unreal-niagara
+
+- [Unreal Niagara 特效（unreal-niagara）](skills/gamedev/unreal-niagara/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
 
 ## 研究者 · analysis
 
@@ -299,6 +314,7 @@
 - [书籍转 Skill（book-to-skill）](skills/researcher/knowledge/book-to-skill/SKILL.md) — 上游 [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill)
 - [deepread](skills/researcher/knowledge/deepread/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 - [人物画像蒸馏（distilly）](skills/researcher/knowledge/distilly/SKILL.md) — 上游 [titanwings/distilly](https://github.com/titanwings/distilly)
+- [研究运营（research-ops-skills）](skills/researcher/knowledge/research-ops-skills/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 
 ## 研究者 · science
 
@@ -309,6 +325,7 @@
 - [实验设计（experimental-design）](skills/researcher/science/experimental-design/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
 - [exploratory-data-analysis](skills/researcher/science/exploratory-data-analysis/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
 - [文献综述（literature-review）](skills/researcher/science/literature-review/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
+- [ML 流水线工作流（ml-pipeline-workflow）](skills/researcher/science/ml-pipeline-workflow/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [同行评审（peer-review）](skills/researcher/science/peer-review/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
 - [科学论文写作（scientific-writing）](skills/researcher/science/scientific-writing/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
 - [统计功效分析（statistical-power）](skills/researcher/science/statistical-power/SKILL.md) — 上游 [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills)
@@ -327,7 +344,9 @@
 - [UI 设计（design）](skills/designer/design/design/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 - [图表设计（diagram-design）](skills/designer/design/diagram-design/SKILL.md) — 上游 [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design)
 - [dramatic](skills/designer/design/dramatic/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
+- [编辑排版风格（editorial）](skills/designer/design/editorial/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
 - [frontend-design](skills/designer/design/frontend-design/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
+- [玻璃拟态（glassmorphism）](skills/designer/design/glassmorphism/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
 - [反 AI 味设计（hallmark）](skills/designer/design/hallmark/SKILL.md) — 上游 [Nutlope/hallmark](https://github.com/Nutlope/hallmark)
 - [无可挑剔前端（impeccable）](skills/designer/design/impeccable/SKILL.md) — 上游 [pbakaus/impeccable](https://github.com/pbakaus/impeccable)
 - [极简风格（minimal）](skills/designer/design/minimal/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)

@@ -192,6 +192,16 @@ def zh_title(path: str) -> str:
         "meeting-analyzer": "会议分析（meeting-analyzer）",
         "prompt-governance": "提示词治理（prompt-governance）",
         "n8n-expression-syntax": "n8n 表达式语法（n8n-expression-syntax）",
+        "ml-pipeline-workflow": "ML 流水线工作流（ml-pipeline-workflow）",
+        "istio-traffic-management": "Istio 流量管理（istio-traffic-management）",
+        "unity-tilemap-2d": "Unity 2D Tilemap（unity-tilemap-2d）",
+        "unreal-niagara": "Unreal Niagara 特效（unreal-niagara）",
+        "camera-systems": "镜头系统（camera-systems）",
+        "glassmorphism": "玻璃拟态（glassmorphism）",
+        "editorial": "编辑排版风格（editorial）",
+        "video-content-strategist": "视频内容策略（video-content-strategist）",
+        "research-ops-skills": "研究运营（research-ops-skills）",
+        "co-marketing": "联合营销（co-marketing）",
     }
     stem = pathlib.PurePosixPath(path).name
     parent = pathlib.PurePosixPath(path).parent.name

@@ -3532,6 +3532,10 @@
         {
           "upstream": "skills/free-tools/SKILL.md",
           "local": "skills/growth/product/free-tools/SKILL.md"
+        },
+        {
+          "upstream": "skills/co-marketing/SKILL.md",
+          "local": "skills/growth/product/co-marketing/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3742,6 +3746,14 @@
         {
           "upstream": "skills/free-tools/references/tool-types.md",
           "local": "skills/growth/product/free-tools/references/tool-types.md"
+        },
+        {
+          "upstream": "skills/co-marketing/evals/evals.json",
+          "local": "skills/growth/product/co-marketing/evals/evals.json"
+        },
+        {
+          "upstream": "skills/co-marketing/references/partnership-types.md",
+          "local": "skills/growth/product/co-marketing/references/partnership-types.md"
         }
       ],
       "verbatim_excluded": [
@@ -17101,6 +17113,14 @@
         {
           "upstream": "engineering/prompt-governance/skills/prompt-governance/SKILL.md",
           "local": "skills/toolbox/meta/prompt-governance/SKILL.md"
+        },
+        {
+          "upstream": "marketing-skill/video-content-strategist/skills/video-content-strategist/SKILL.md",
+          "local": "skills/creator/video/video-content-strategist/SKILL.md"
+        },
+        {
+          "upstream": "research-ops/skills/research-ops-skills/SKILL.md",
+          "local": "skills/researcher/knowledge/research-ops-skills/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18098,6 +18118,14 @@
         {
           "upstream": "plugins/block-no-verify/skills/block-no-verify-hook/SKILL.md",
           "local": "skills/toolbox/meta/block-no-verify-hook/SKILL.md"
+        },
+        {
+          "upstream": "plugins/machine-learning-ops/skills/ml-pipeline-workflow/SKILL.md",
+          "local": "skills/researcher/science/ml-pipeline-workflow/SKILL.md"
+        },
+        {
+          "upstream": "plugins/cloud-infrastructure/skills/istio-traffic-management/SKILL.md",
+          "local": "skills/developer/engineering/istio-traffic-management/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18684,6 +18712,18 @@
         {
           "upstream": "skills/web-engines/threejs-scene-setup/SKILL.md",
           "local": "skills/gamedev/threejs-scene-setup/SKILL.md"
+        },
+        {
+          "upstream": "skills/unity/unity-tilemap-2d/SKILL.md",
+          "local": "skills/gamedev/unity-tilemap-2d/SKILL.md"
+        },
+        {
+          "upstream": "skills/unreal/unreal-niagara/SKILL.md",
+          "local": "skills/gamedev/unreal-niagara/SKILL.md"
+        },
+        {
+          "upstream": "skills/disciplines/camera-systems/SKILL.md",
+          "local": "skills/gamedev/camera-systems/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18746,6 +18786,10 @@
         {
           "upstream": "skills/web-engines/threejs-scene-setup/references/scene-graph.md",
           "local": "skills/gamedev/threejs-scene-setup/references/scene-graph.md"
+        },
+        {
+          "upstream": "skills/disciplines/camera-systems/references/follow-and-framing.md",
+          "local": "skills/gamedev/camera-systems/references/follow-and-framing.md"
         }
       ],
       "verbatim_excluded": [
@@ -18788,6 +18832,14 @@
         {
           "upstream": "skills/bento/SKILL.md",
           "local": "skills/designer/design/bento/SKILL.md"
+        },
+        {
+          "upstream": "skills/glassmorphism/SKILL.md",
+          "local": "skills/designer/design/glassmorphism/SKILL.md"
+        },
+        {
+          "upstream": "skills/editorial/SKILL.md",
+          "local": "skills/designer/design/editorial/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18802,6 +18854,14 @@
         {
           "upstream": "skills/bento/DESIGN.md",
           "local": "skills/designer/design/bento/DESIGN.md"
+        },
+        {
+          "upstream": "skills/glassmorphism/DESIGN.md",
+          "local": "skills/designer/design/glassmorphism/DESIGN.md"
+        },
+        {
+          "upstream": "skills/editorial/DESIGN.md",
+          "local": "skills/designer/design/editorial/DESIGN.md"
         }
       ],
       "verbatim_excluded": [

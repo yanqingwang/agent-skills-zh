@@ -137,6 +137,9 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/developer/engineering/dependency-upgrade/SKILL.md",
             "skills/developer/engineering/stripe-integration-expert/SKILL.md",
         ]),
+        ("服务网格流量治理", [
+            "skills/developer/engineering/istio-traffic-management/SKILL.md",
+        ]),
     ],
     "✍️ 写作者": [
         ("去掉 AI 腔、让文字像人写的", [
@@ -197,6 +200,10 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/designer/design/od-blog-post/SKILL.md",
             "skills/designer/design/od-critique/SKILL.md",
         ]),
+        ("玻璃拟态与编辑排版风格", [
+            "skills/designer/design/glassmorphism/SKILL.md",
+            "skills/designer/design/editorial/SKILL.md",
+        ]),
     ],
     "🔬 研究者": [
         ("摸清一个陌生代码库", [
@@ -229,6 +236,10 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("论文证据检索（BGPT）", [
             "skills/researcher/science/bgpt-paper-search/SKILL.md",
+        ]),
+        ("研究流水线与运营", [
+            "skills/researcher/science/ml-pipeline-workflow/SKILL.md",
+            "skills/researcher/knowledge/research-ops-skills/SKILL.md",
         ]),
     ],
     "📈 产品与增长": [
@@ -277,6 +288,9 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/growth/product/signup/SKILL.md",
             "skills/growth/product/free-tools/SKILL.md",
         ]),
+        ("联合营销", [
+            "skills/growth/product/co-marketing/SKILL.md",
+        ]),
     ],
     "🎮 游戏开发者": [
         ("引擎内脚本与玩法", [
@@ -308,6 +322,11 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/gamedev/save-systems/SKILL.md",
             "skills/gamedev/threejs-scene-setup/SKILL.md",
         ]),
+        ("引擎进阶：Tilemap / Niagara / 镜头", [
+            "skills/gamedev/unity-tilemap-2d/SKILL.md",
+            "skills/gamedev/unreal-niagara/SKILL.md",
+            "skills/gamedev/camera-systems/SKILL.md",
+        ]),
     ],
     "🎬 创作者": [
         ("做电影级产品视频", [
@@ -315,6 +334,9 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("做网页幻灯片", [
             "skills/creator/slides/frontend-slides/SKILL.md",
+        ]),
+        ("视频内容策略", [
+            "skills/creator/video/video-content-strategist/SKILL.md",
         ]),
     ],
     "🏢 Corporate Functions（企业职能岗）": [
