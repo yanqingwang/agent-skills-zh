@@ -3471,6 +3471,26 @@
         {
           "upstream": "skills/cro/SKILL.md",
           "local": "skills/growth/product/cro/SKILL.md"
+        },
+        {
+          "upstream": "skills/copy-editing/SKILL.md",
+          "local": "skills/writer/writing/copy-editing/SKILL.md"
+        },
+        {
+          "upstream": "skills/pricing/SKILL.md",
+          "local": "skills/growth/product/pricing/SKILL.md"
+        },
+        {
+          "upstream": "skills/launch/SKILL.md",
+          "local": "skills/growth/product/launch/SKILL.md"
+        },
+        {
+          "upstream": "skills/ab-testing/SKILL.md",
+          "local": "skills/growth/product/ab-testing/SKILL.md"
+        },
+        {
+          "upstream": "skills/marketing-psychology/SKILL.md",
+          "local": "skills/growth/product/marketing-psychology/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3497,6 +3517,70 @@
         {
           "upstream": "skills/cro/references/form.md",
           "local": "skills/growth/product/cro/references/form.md"
+        },
+        {
+          "upstream": "skills/copy-editing/evals/evals.json",
+          "local": "skills/writer/writing/copy-editing/evals/evals.json"
+        },
+        {
+          "upstream": "skills/copy-editing/references/checklist.md",
+          "local": "skills/writer/writing/copy-editing/references/checklist.md"
+        },
+        {
+          "upstream": "skills/copy-editing/references/content-refresh.md",
+          "local": "skills/writer/writing/copy-editing/references/content-refresh.md"
+        },
+        {
+          "upstream": "skills/copy-editing/references/plain-english-alternatives.md",
+          "local": "skills/writer/writing/copy-editing/references/plain-english-alternatives.md"
+        },
+        {
+          "upstream": "skills/pricing/evals/evals.json",
+          "local": "skills/growth/product/pricing/evals/evals.json"
+        },
+        {
+          "upstream": "skills/pricing/references/pricing-models.md",
+          "local": "skills/growth/product/pricing/references/pricing-models.md"
+        },
+        {
+          "upstream": "skills/pricing/references/pricing-page-teardown.md",
+          "local": "skills/growth/product/pricing/references/pricing-page-teardown.md"
+        },
+        {
+          "upstream": "skills/pricing/references/research-methods.md",
+          "local": "skills/growth/product/pricing/references/research-methods.md"
+        },
+        {
+          "upstream": "skills/pricing/references/tier-structure.md",
+          "local": "skills/growth/product/pricing/references/tier-structure.md"
+        },
+        {
+          "upstream": "skills/launch/evals/evals.json",
+          "local": "skills/growth/product/launch/evals/evals.json"
+        },
+        {
+          "upstream": "skills/launch/references/shipped-changes.md",
+          "local": "skills/growth/product/launch/references/shipped-changes.md"
+        },
+        {
+          "upstream": "skills/launch/references/site-launch-qa.md",
+          "local": "skills/growth/product/launch/references/site-launch-qa.md"
+        },
+        {
+          "upstream": "skills/ab-testing/evals/evals.json",
+          "local": "skills/growth/product/ab-testing/evals/evals.json"
+        },
+        {
+          "upstream": "skills/ab-testing/references/sample-size-guide.md",
+          "local": "skills/growth/product/ab-testing/references/sample-size-guide.md"
+        },
+        {
+          "upstream": "skills/ab-testing/references/test-templates.md",
+          "local": "skills/growth/product/ab-testing/references/test-templates.md"
+        },
+        {
+          "upstream": "skills/marketing-psychology/evals/evals.json",
+          "local": "skills/growth/product/marketing-psychology/evals/evals.json"
         }
       ],
       "verbatim_excluded": [
@@ -3543,6 +3627,10 @@
         {
           "upstream": "skills/statistical-power/SKILL.md",
           "local": "skills/researcher/science/statistical-power/SKILL.md"
+        },
+        {
+          "upstream": "skills/bgpt-paper-search/SKILL.md",
+          "local": "skills/researcher/science/bgpt-paper-search/SKILL.md"
         }
       ],
       "translated_prose": [
@@ -16973,6 +17061,14 @@
         {
           "upstream": "pm-data-analytics/skills/cohort-analysis/SKILL.md",
           "local": "skills/growth/product/cohort-analysis/SKILL.md"
+        },
+        {
+          "upstream": "pm-product-strategy/skills/product-vision/SKILL.md",
+          "local": "skills/growth/product/product-vision/SKILL.md"
+        },
+        {
+          "upstream": "pm-execution/skills/stakeholder-map/SKILL.md",
+          "local": "skills/growth/product/stakeholder-map/SKILL.md"
         }
       ],
       "verbatim": [],
@@ -17283,6 +17379,10 @@
         {
           "upstream": "skills/n8n-code-python/SKILL.md",
           "local": "skills/toolbox/automation/n8n-code-python/SKILL.md"
+        },
+        {
+          "upstream": "skills/n8n-code-tool/SKILL.md",
+          "local": "skills/toolbox/automation/n8n-code-tool/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17333,6 +17433,18 @@
         {
           "upstream": "skills/n8n-code-python/README.md",
           "local": "skills/toolbox/automation/n8n-code-python/README.md"
+        },
+        {
+          "upstream": "skills/n8n-code-tool/ERROR_PATTERNS.md",
+          "local": "skills/toolbox/automation/n8n-code-tool/ERROR_PATTERNS.md"
+        },
+        {
+          "upstream": "skills/n8n-code-tool/INPUT_SCHEMA.md",
+          "local": "skills/toolbox/automation/n8n-code-tool/INPUT_SCHEMA.md"
+        },
+        {
+          "upstream": "skills/n8n-code-tool/README.md",
+          "local": "skills/toolbox/automation/n8n-code-tool/README.md"
         }
       ],
       "verbatim_excluded": [
@@ -17375,6 +17487,18 @@
         {
           "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/SKILL.md",
           "local": "skills/developer/engineering/build-mcp-app/SKILL.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/skill-development/SKILL.md",
+          "local": "skills/toolbox/meta/skill-development/SKILL.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/SKILL.md",
+          "local": "skills/toolbox/meta/hook-development/SKILL.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/mcp-integration/SKILL.md",
+          "local": "skills/toolbox/meta/mcp-integration/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17473,6 +17597,74 @@
         {
           "upstream": "plugins/mcp-server-dev/skills/build-mcp-app/references/widget-templates.md",
           "local": "skills/developer/engineering/build-mcp-app/references/widget-templates.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/skill-development/references/skill-creator-original.md",
+          "local": "skills/toolbox/meta/skill-development/references/skill-creator-original.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/examples/load-context.sh",
+          "local": "skills/toolbox/meta/hook-development/examples/load-context.sh"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/examples/validate-bash.sh",
+          "local": "skills/toolbox/meta/hook-development/examples/validate-bash.sh"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/examples/validate-write.sh",
+          "local": "skills/toolbox/meta/hook-development/examples/validate-write.sh"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/references/advanced.md",
+          "local": "skills/toolbox/meta/hook-development/references/advanced.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/references/migration.md",
+          "local": "skills/toolbox/meta/hook-development/references/migration.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/references/patterns.md",
+          "local": "skills/toolbox/meta/hook-development/references/patterns.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/scripts/README.md",
+          "local": "skills/toolbox/meta/hook-development/scripts/README.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/scripts/hook-linter.sh",
+          "local": "skills/toolbox/meta/hook-development/scripts/hook-linter.sh"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/scripts/test-hook.sh",
+          "local": "skills/toolbox/meta/hook-development/scripts/test-hook.sh"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/hook-development/scripts/validate-hook-schema.sh",
+          "local": "skills/toolbox/meta/hook-development/scripts/validate-hook-schema.sh"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/mcp-integration/examples/http-server.json",
+          "local": "skills/toolbox/meta/mcp-integration/examples/http-server.json"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/mcp-integration/examples/sse-server.json",
+          "local": "skills/toolbox/meta/mcp-integration/examples/sse-server.json"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/mcp-integration/examples/stdio-server.json",
+          "local": "skills/toolbox/meta/mcp-integration/examples/stdio-server.json"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/mcp-integration/references/authentication.md",
+          "local": "skills/toolbox/meta/mcp-integration/references/authentication.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/mcp-integration/references/server-types.md",
+          "local": "skills/toolbox/meta/mcp-integration/references/server-types.md"
+        },
+        {
+          "upstream": "plugins/plugin-dev/skills/mcp-integration/references/tool-usage.md",
+          "local": "skills/toolbox/meta/mcp-integration/references/tool-usage.md"
         }
       ],
       "verbatim_excluded": [
@@ -17531,6 +17723,22 @@
         {
           "upstream": "plugins/accessibility-compliance/skills/wcag-audit-patterns/SKILL.md",
           "local": "skills/developer/quality/wcag-audit-patterns/SKILL.md"
+        },
+        {
+          "upstream": "plugins/python-development/skills/python-project-structure/SKILL.md",
+          "local": "skills/developer/engineering/python-project-structure/SKILL.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/gitlab-ci-patterns/SKILL.md",
+          "local": "skills/developer/engineering/gitlab-ci-patterns/SKILL.md"
+        },
+        {
+          "upstream": "plugins/security-scanning/skills/sast-configuration/SKILL.md",
+          "local": "skills/developer/quality/sast-configuration/SKILL.md"
+        },
+        {
+          "upstream": "plugins/review-agent-governance/skills/review-agent-setup/SKILL.md",
+          "local": "skills/developer/quality/review-agent-setup/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18059,6 +18267,22 @@
         {
           "upstream": "skills/unreal/unreal-behavior-trees/SKILL.md",
           "local": "skills/gamedev/unreal-behavior-trees/SKILL.md"
+        },
+        {
+          "upstream": "skills/disciplines/game-feel/SKILL.md",
+          "local": "skills/gamedev/game-feel/SKILL.md"
+        },
+        {
+          "upstream": "skills/godot/godot-signals-groups/SKILL.md",
+          "local": "skills/gamedev/godot-signals-groups/SKILL.md"
+        },
+        {
+          "upstream": "skills/godot/godot-shaders/SKILL.md",
+          "local": "skills/gamedev/godot-shaders/SKILL.md"
+        },
+        {
+          "upstream": "skills/unity/unity-animation/SKILL.md",
+          "local": "skills/gamedev/unity-animation/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18085,6 +18309,22 @@
         {
           "upstream": "skills/unreal/unreal-behavior-trees/references/custom-bttask.md",
           "local": "skills/gamedev/unreal-behavior-trees/references/custom-bttask.md"
+        },
+        {
+          "upstream": "skills/disciplines/game-feel/references/feedback-recipes.md",
+          "local": "skills/gamedev/game-feel/references/feedback-recipes.md"
+        },
+        {
+          "upstream": "skills/godot/godot-signals-groups/references/signal-patterns.md",
+          "local": "skills/gamedev/godot-signals-groups/references/signal-patterns.md"
+        },
+        {
+          "upstream": "skills/godot/godot-shaders/references/shading-language.md",
+          "local": "skills/gamedev/godot-shaders/references/shading-language.md"
+        },
+        {
+          "upstream": "skills/unity/unity-animation/references/blend-trees-and-ik.md",
+          "local": "skills/gamedev/unity-animation/references/blend-trees-and-ik.md"
         }
       ],
       "verbatim_excluded": [

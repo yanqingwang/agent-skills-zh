@@ -1,6 +1,6 @@
-# 工作状态（自动生成于 2026-11-11 08:37 UTC，勿手改）
+# 工作状态（自动生成于 2026-11-12 00:32 UTC，勿手改）
 
-- **收录规模**：60 个上游 · 241 个翻译件 · 5128 个原样件
+- **收录规模**：60 个上游 · 261 个翻译件 · 5168 个原样件
 - **监控状态**：sync-check CI 每日 UTC 02:00 运行（HEAD 比对 → 原样件自动刷新 → 翻译件变更转重译工单）
 - **最近同步日志**：[data/sync-log/2026-11-11.md](sync-log/2026-11-11.md)
 - **待重译**：无（全部翻译件与上游一致）
@@ -17,23 +17,23 @@
 - `skills/designer/design/` — 18 件
 - `skills/developer/context/` — 13 件
 - `skills/developer/efficiency/` — 2 件
-- `skills/developer/engineering/` — 23 件
+- `skills/developer/engineering/` — 25 件
 - `skills/developer/framework/` — 8 件
 - `skills/developer/gstack/` — 13 件
-- `skills/developer/quality/` — 16 件
-- `skills/gamedev/` — 7 件
+- `skills/developer/quality/` — 18 件
+- `skills/gamedev/` — 11 件
 - `skills/gamedev/art/` — 1 件
-- `skills/growth/product/` — 17 件
+- `skills/growth/product/` — 23 件
 - `skills/researcher/analysis/` — 2 件
 - `skills/researcher/info/` — 2 件
 - `skills/researcher/knowledge/` — 3 件
-- `skills/researcher/science/` — 9 件
-- `skills/toolbox/automation/` — 5 件
+- `skills/researcher/science/` — 10 件
+- `skills/toolbox/automation/` — 6 件
 - `skills/toolbox/cloud/` — 1 件
 - `skills/toolbox/compute/` — 1 件
 - `skills/toolbox/framework/` — 1 件
-- `skills/toolbox/meta/` — 2 件
+- `skills/toolbox/meta/` — 5 件
 - `skills/toolbox/obsidian/` — 6 件
 - `skills/toolbox/office/` — 3 件
 - `skills/writer/prompting/` — 1 件
-- `skills/writer/writing/` — 4 件
+- `skills/writer/writing/` — 5 件

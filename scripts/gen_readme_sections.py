@@ -96,6 +96,12 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/developer/gstack/qa/SKILL.md",
             "skills/developer/gstack/office-hours/SKILL.md",
         ]),
+        ("工程结构、CI 与安全扫描治理", [
+            "skills/developer/engineering/python-project-structure/SKILL.md",
+            "skills/developer/engineering/gitlab-ci-patterns/SKILL.md",
+            "skills/developer/quality/sast-configuration/SKILL.md",
+            "skills/developer/quality/review-agent-setup/SKILL.md",
+        ]),
     ],
     "✍️ 写作者": [
         ("去掉 AI 腔、让文字像人写的", [
@@ -106,6 +112,9 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("为具体 AI 工具写提示词", [
             "skills/writer/prompting/prompt-master/SKILL.md",
+        ]),
+        ("文案精修与去 AI 腔", [
+            "skills/writer/writing/copy-editing/SKILL.md",
         ]),
     ],
     "🎨 设计师": [
@@ -170,6 +179,9 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/researcher/knowledge/book-to-skill/SKILL.md",
             "skills/researcher/knowledge/distilly/SKILL.md",
         ]),
+        ("论文证据检索（BGPT）", [
+            "skills/researcher/science/bgpt-paper-search/SKILL.md",
+        ]),
     ],
     "📈 产品与增长": [
         ("验证机会与问题-方案契合", [
@@ -190,6 +202,16 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/growth/product/backtest-expert/SKILL.md",
             "skills/growth/product/data-quality-checker/SKILL.md",
         ]),
+        ("定价、发布与增长实验", [
+            "skills/growth/product/pricing/SKILL.md",
+            "skills/growth/product/launch/SKILL.md",
+            "skills/growth/product/ab-testing/SKILL.md",
+            "skills/growth/product/marketing-psychology/SKILL.md",
+        ]),
+        ("产品愿景与干系人对齐", [
+            "skills/growth/product/product-vision/SKILL.md",
+            "skills/growth/product/stakeholder-map/SKILL.md",
+        ]),
     ],
     "🎮 游戏开发者": [
         ("引擎内脚本与玩法", [
@@ -200,6 +222,14 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ("机制设计与创意方向", [
             "skills/gamedev/agents/game-designer.md",
             "skills/gamedev/agents/creative-director.md",
+        ]),
+        ("引擎进阶：信号、着色器与动画", [
+            "skills/gamedev/godot-signals-groups/SKILL.md",
+            "skills/gamedev/godot-shaders/SKILL.md",
+            "skills/gamedev/unity-animation/SKILL.md",
+        ]),
+        ("手感与反馈（game feel）", [
+            "skills/gamedev/game-feel/SKILL.md",
         ]),
     ],
     "🎬 创作者": [
@@ -246,6 +276,7 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ("n8n 工作流", [
             "skills/toolbox/automation/n8n-error-handling/SKILL.md",
             "skills/toolbox/automation/n8n-code-javascript/SKILL.md",
+            "skills/toolbox/automation/n8n-code-tool/SKILL.md",
         ]),
         ("Office 文档生成与校对", [
             "skills/toolbox/office/officecli/SKILL.md",
@@ -273,6 +304,11 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("GCP gcloud 命令护栏（官方）", [
             "skills/toolbox/cloud/gcloud/SKILL.md",
+        ]),
+        ("Claude Code 插件开发（官方）", [
+            "skills/toolbox/meta/skill-development/SKILL.md",
+            "skills/toolbox/meta/hook-development/SKILL.md",
+            "skills/toolbox/meta/mcp-integration/SKILL.md",
         ]),
     ],
 }

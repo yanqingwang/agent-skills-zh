@@ -61,7 +61,12 @@
   "coreyhaines31/marketingskills": {
     "skills/product-marketing/SKILL.md": "a8197bddb8739b62c0e35504207d2565396d3915",
     "skills/copywriting/SKILL.md": "2878e51b281038cd58afcb1cdf33de8d99437f4d",
-    "skills/cro/SKILL.md": "194df7e3b26a7ce523739053c06605cc22622a14"
+    "skills/cro/SKILL.md": "194df7e3b26a7ce523739053c06605cc22622a14",
+    "skills/copy-editing/SKILL.md": "2065709be9c2571fc34ad79a0f453fb040d8c1c0",
+    "skills/pricing/SKILL.md": "88fd2c3dd2cc4aafa0828920dc540ad04b184aab",
+    "skills/launch/SKILL.md": "cf94508ee5434065dc63f3c41e7fd5fae6cdf65d",
+    "skills/ab-testing/SKILL.md": "ca458508b02ae91f6dd2f724ac0095eafa0e2996",
+    "skills/marketing-psychology/SKILL.md": "2eef4a749a132bcfea440e2d7693c435abf08ab9"
   },
   "K-Dense-AI/scientific-agent-skills": {
     "skills/experimental-design/SKILL.md": "ee14f9ed795c791ac80e3ea946858d97d09c3e50",
@@ -114,7 +119,8 @@
     "skills/scientific-writing/references/writing_principles.md": "5fcd5012957fe6670e1e31e103c51d8cfbefa048",
     "skills/statistical-power/references/closed_form_recipes.md": "da665e2850ced4cfa1084672b5471d6a0bafb0d2",
     "skills/statistical-power/references/effect_sizes.md": "38594287c2c10f933ee7344201f1b438ebb54a8c",
-    "skills/statistical-power/references/simulation_based_power.md": "857373f4173035068f4eb39d80900af7329718cd"
+    "skills/statistical-power/references/simulation_based_power.md": "857373f4173035068f4eb39d80900af7329718cd",
+    "skills/bgpt-paper-search/SKILL.md": "a9c13151600fd910db786b79b08d4c2ebe4cab75"
   },
   "affaan-m/ECC": {
     "skills/search-first/SKILL.md": "3d2669e71ba54afba95defb05080253058190600",
@@ -186,7 +192,9 @@
     "pm-execution/skills/create-prd/SKILL.md": "9aa4b7a5a19af2fe4ade43da564dd607efdf0488",
     "pm-ai-shipping/skills/intended-vs-implemented/SKILL.md": "08ae3aba7a6ec0718ea3363754a48819ee678064",
     "pm-data-analytics/skills/ab-test-analysis/SKILL.md": "58c239714c0e20e19167fcde3d4cd3a608578754",
-    "pm-data-analytics/skills/cohort-analysis/SKILL.md": "e2d7b0e9fb83e04d7ff584747efedd4d0701d6fd"
+    "pm-data-analytics/skills/cohort-analysis/SKILL.md": "e2d7b0e9fb83e04d7ff584747efedd4d0701d6fd",
+    "pm-product-strategy/skills/product-vision/SKILL.md": "a6443edb2bf108e583ddb339a9163dc6de05b9da",
+    "pm-execution/skills/stakeholder-map/SKILL.md": "75e8572f996590f81e9fadd80cb57cf9572a504c"
   },
   "AgriciDaniel/claude-seo": {
     "skills/seo-agentic/SKILL.md": "fd33ff9e4540e2c24b8aa9fc9ff1adf35f193abc",
@@ -208,7 +216,8 @@
   },
   "czlonkowski/n8n-skills": {
     "skills/n8n-code-javascript/SKILL.md": "9471aaf5692808c4488be58a3f7682e72f98e1b8",
-    "skills/n8n-error-handling/SKILL.md": "287d0b2d2ac5460c1875503a6dd46f969a17f89f"
+    "skills/n8n-error-handling/SKILL.md": "287d0b2d2ac5460c1875503a6dd46f969a17f89f",
+    "skills/n8n-code-tool/SKILL.md": "a5dde15a6f59642a25bff6815c721c154b5ea20c"
   },
   "anthropics/claude-plugins-official": {
     "plugins/frontend-design/skills/frontend-design/SKILL.md": "a5333457c414d20d625f307df945842c0952ecc3",
@@ -216,7 +225,10 @@
     "plugins/mcp-server-dev/skills/build-mcp-server/SKILL.md": "5ab19c3ae3ee57d11f4cdd0a550f942207dc6a5c",
     "plugins/claude-security/skills/claude-security/SKILL.md": "00fb777430f2e7bc1199a48617acfbcf6b744003",
     "plugins/hookify/skills/writing-rules/SKILL.md": "58f9e6d1b4f37f52f936372ba0c65ab627fcf4e0",
-    "plugins/mcp-server-dev/skills/build-mcp-app/SKILL.md": "c400abdb126d392a2fbbf11539fa1bebf5b0146a"
+    "plugins/mcp-server-dev/skills/build-mcp-app/SKILL.md": "c400abdb126d392a2fbbf11539fa1bebf5b0146a",
+    "plugins/plugin-dev/skills/skill-development/SKILL.md": "1cb3bd90b29d0469d25c5df9ad72741ac1e2c4cd",
+    "plugins/plugin-dev/skills/hook-development/SKILL.md": "6317441bfe3fcb60ea0d611e3826c2c4147d65f0",
+    "plugins/plugin-dev/skills/mcp-integration/SKILL.md": "1a77a654b1bf43f5955a895434d92f049cbd8758"
   },
   "wshobson/agents": {
     "plugins/before-you-build/skills/before-you-build/SKILL.md": "6a2aac015556218e8c3c3ec4e775c1d42eea192e",
@@ -226,7 +238,11 @@
     "plugins/cicd-automation/skills/deployment-pipeline-design/SKILL.md": "af677b4ff576edd4bfc9db9d0b4326be3c81eeae",
     "plugins/cicd-automation/skills/secrets-management/SKILL.md": "c00863fdcda03aa8c7e7aef73ca12fff1d193d89",
     "plugins/agent-teams/skills/task-coordination-strategies/SKILL.md": "d1bb370779a10c6177f58453d67bb318c8b3705d",
-    "plugins/accessibility-compliance/skills/wcag-audit-patterns/SKILL.md": "c071acee41a2a2c7d4df04da7281d193215dfca7"
+    "plugins/accessibility-compliance/skills/wcag-audit-patterns/SKILL.md": "c071acee41a2a2c7d4df04da7281d193215dfca7",
+    "plugins/python-development/skills/python-project-structure/SKILL.md": "504df638b71a09c24f5e6f0a993a4e2f3eaf01f7",
+    "plugins/cicd-automation/skills/gitlab-ci-patterns/SKILL.md": "90afed065bf28f59485f6c8e617b10d307a63070",
+    "plugins/security-scanning/skills/sast-configuration/SKILL.md": "3dd02c74b2a4f1b7702c154213d79a7a04b1e720",
+    "plugins/review-agent-governance/skills/review-agent-setup/SKILL.md": "28b782508a70c4d0d66f7371b740fefa1efd974d"
   },
   "Donchitos/Claude-Code-Game-Studios": {
     ".claude/agents/game-designer.md": "f0a640c3a75fb06398d1367a00958e26cec7c7ab",
@@ -250,7 +266,11 @@
     "skills/unity/unity-csharp-scripting/SKILL.md": "808547992767d753d7016bc7d809576d55b764d3",
     "skills/unreal/unreal-cpp-gameplay/SKILL.md": "75185238136c179a53fb47c3075c3528288947c9",
     "skills/godot/godot-3d-essentials/SKILL.md": "ccc739c0497bed0a114d3b0860d34ee0a8706cbc",
-    "skills/unreal/unreal-behavior-trees/SKILL.md": "f552227677c47e712fe0a525757159e2680f0b8a"
+    "skills/unreal/unreal-behavior-trees/SKILL.md": "f552227677c47e712fe0a525757159e2680f0b8a",
+    "skills/disciplines/game-feel/SKILL.md": "821eacd2946f4baa7dbe87b77ed2daa58fe9fe2f",
+    "skills/godot/godot-signals-groups/SKILL.md": "7b94b0f4993748c74d57df0fe91d79d71c013704",
+    "skills/godot/godot-shaders/SKILL.md": "27c77e925e9e4bb13447daec60d2433f823bb50f",
+    "skills/unity/unity-animation/SKILL.md": "de8908fbd2d774f56a2b59cdbc4c3132b38a56e3"
   },
   "bergside/awesome-design-skills": {
     "skills/creative/SKILL.md": "8535915b704a4ac791027f47d4592a34e3d99560"

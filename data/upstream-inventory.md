@@ -294,3 +294,21 @@
 **排除说明**：K-Dense 余量（anndata/biopython/statsmodels/scikit 等单库指南）依赖具体 Python 环境与领域流程，按"宁缺毋滥"继续缓收；sickn33/agentic-awesome-skills（2,884 件）与 alirezarezvani 余量同理。
 
 **累计：61 登记 / 60 监控 / 176 翻译件 / 5194 原样件（2026-11-03，第八批）。**
+
+## 十二、2026-11-12 第九批：七个存量合集追加（20 翻译件 / 40 原样件）
+
+**检索方式**：枚举已登记上游的本地镜像（`.skills-tmp/`）全部 SKILL.md，剔除已收录件、机器生成/单库绑定件，按「跨项目可复用 + 自包含（配套件少）」筛出 20 件；正文一律取 GitHub 现时 HEAD 的 blob（本地克隆多为 2026-10-25 快照，已确认多数落后，故不直接沿用）。本批零新上游。
+
+| 上游 | 追加件 | 筛选依据 |
+|---|---|---|
+| coreyhaines31/marketingskills | copy-editing、pricing、launch、ab-testing、marketing-psychology | 营销技能体系中跨行业可复用的方法论件（文案精修/定价/发布/实验/心理），避开已收录的 product-marketing、seo-audit 等 |
+| wshobson/agents | python-project-structure、gitlab-ci-patterns、sast-configuration、review-agent-setup | 单文件自包含，工程结构 / CI / 安全扫描 / 审查 Agent 治理四条通用工程能力 |
+| gamedev-skills/awesome-gamedev-agent-skills | game-feel、godot-signals-groups、godot-shaders、unity-animation | 三大引擎进阶（信号 / 着色器 / 动画）与手感方法论，各仅 1 个配套引用件 |
+| anthropics/claude-plugins-official | skill-development、hook-development、mcp-integration | 官方插件开发三件套（Skill / Hook / MCP），与 toolbox/meta/ 定位契合 |
+| phuryn/pm-skills | product-vision、stakeholder-map | 产品战略与干系人沟通，自包含单文件 |
+| K-Dense-AI/scientific-agent-skills | bgpt-paper-search | 论文证据检索（BGPT），跨领域可复用；避开单库/单包指南 |
+| czlonkowski/n8n-skills | n8n-code-tool | n8n AI Agent Code Tool 编程，补齐既有 n8n 工作流件 |
+
+**排除说明**：sickn33/agentic-awesome-skills（数千件聚合）、affaan-m/ECC（多为 355B 桩件）、alirezarezvani 余量与 K-Dense 单库指南继续按「宁缺毋滥」缓收；iOfficeAI/OfficeCLI 单件 25–66KB 过大，留待专项批次。
+
+**累计：61 登记 / 60 监控 / 195 翻译件 / 5168 原样件（2026-11-12，第九批）。**
