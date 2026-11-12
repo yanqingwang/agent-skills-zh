@@ -1,39 +1,39 @@
-# 工作状态（自动生成于 2026-11-12 11:53 UTC，勿手改）
+# 工作状态（自动生成于 2026-11-12 12:36 UTC，勿手改）
 
-- **收录规模**：60 个上游 · 419 个翻译件 · 5043 个原样件
+- **收录规模**：65 个上游 · 456 个翻译件 · 5117 个原样件
 - **监控状态**：sync-check CI 每日 UTC 02:00 运行（HEAD 比对 → 原样件自动刷新 → 翻译件变更转重译工单）
 - **最近同步日志**：[data/sync-log/2026-11-12.md](sync-log/2026-11-12.md)
 - **待重译**：无（全部翻译件与上游一致）
-- **快照 HEAD 总数**：60 个上游已纳入监控
+- **快照 HEAD 总数**：65 个上游已纳入监控
 
 ## 按目录分布（翻译件）
 
 - `skills/corporate/ecommerce/` — 3 件
 - `skills/corporate/finance/` — 6 件
-- `skills/corporate/sales/` — 6 件
+- `skills/corporate/sales/` — 7 件
 - `skills/corporate/supply-chain/` — 1 件
 - `skills/creator/slides/` — 1 件
 - `skills/creator/video/` — 1 件
-- `skills/designer/design/` — 20 件
+- `skills/designer/design/` — 23 件
 - `skills/developer/context/` — 13 件
 - `skills/developer/efficiency/` — 3 件
-- `skills/developer/engineering/` — 29 件
+- `skills/developer/engineering/` — 39 件
 - `skills/developer/framework/` — 8 件
 - `skills/developer/gstack/` — 13 件
-- `skills/developer/quality/` — 21 件
-- `skills/gamedev/` — 14 件
+- `skills/developer/quality/` — 24 件
+- `skills/gamedev/` — 19 件
 - `skills/gamedev/art/` — 1 件
-- `skills/growth/product/` — 26 件
+- `skills/growth/product/` — 34 件
 - `skills/researcher/analysis/` — 2 件
 - `skills/researcher/info/` — 2 件
 - `skills/researcher/knowledge/` — 3 件
 - `skills/researcher/science/` — 10 件
-- `skills/toolbox/automation/` — 9 件
+- `skills/toolbox/automation/` — 11 件
 - `skills/toolbox/cloud/` — 1 件
 - `skills/toolbox/compute/` — 1 件
 - `skills/toolbox/framework/` — 1 件
-- `skills/toolbox/meta/` — 5 件
+- `skills/toolbox/meta/` — 7 件
 - `skills/toolbox/obsidian/` — 6 件
-- `skills/toolbox/office/` — 3 件
+- `skills/toolbox/office/` — 4 件
 - `skills/writer/prompting/` — 1 件
-- `skills/writer/writing/` — 5 件
+- `skills/writer/writing/` — 7 件

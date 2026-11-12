@@ -3508,6 +3508,30 @@
         {
           "upstream": "skills/customer-research/SKILL.md",
           "local": "skills/growth/product/customer-research/SKILL.md"
+        },
+        {
+          "upstream": "skills/cold-email/SKILL.md",
+          "local": "skills/writer/writing/cold-email/SKILL.md"
+        },
+        {
+          "upstream": "skills/popups/SKILL.md",
+          "local": "skills/growth/product/popups/SKILL.md"
+        },
+        {
+          "upstream": "skills/signup/SKILL.md",
+          "local": "skills/growth/product/signup/SKILL.md"
+        },
+        {
+          "upstream": "skills/schema/SKILL.md",
+          "local": "skills/growth/product/schema/SKILL.md"
+        },
+        {
+          "upstream": "skills/programmatic-seo/SKILL.md",
+          "local": "skills/growth/product/programmatic-seo/SKILL.md"
+        },
+        {
+          "upstream": "skills/free-tools/SKILL.md",
+          "local": "skills/growth/product/free-tools/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3634,6 +3658,90 @@
         {
           "upstream": "skills/customer-research/references/source-guides.md",
           "local": "skills/growth/product/customer-research/references/source-guides.md"
+        },
+        {
+          "upstream": "skills/cold-email/evals/evals.json",
+          "local": "skills/writer/writing/cold-email/evals/evals.json"
+        },
+        {
+          "upstream": "skills/cold-email/references/benchmarks.md",
+          "local": "skills/writer/writing/cold-email/references/benchmarks.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/deliverability.md",
+          "local": "skills/writer/writing/cold-email/references/deliverability.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/follow-up-sequences.md",
+          "local": "skills/writer/writing/cold-email/references/follow-up-sequences.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/frameworks.md",
+          "local": "skills/writer/writing/cold-email/references/frameworks.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/linkedin-outreach.md",
+          "local": "skills/writer/writing/cold-email/references/linkedin-outreach.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/multichannel-cadence.md",
+          "local": "skills/writer/writing/cold-email/references/multichannel-cadence.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/outbound-plays.md",
+          "local": "skills/writer/writing/cold-email/references/outbound-plays.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/personalization.md",
+          "local": "skills/writer/writing/cold-email/references/personalization.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/reply-handling.md",
+          "local": "skills/writer/writing/cold-email/references/reply-handling.md"
+        },
+        {
+          "upstream": "skills/cold-email/references/subject-lines.md",
+          "local": "skills/writer/writing/cold-email/references/subject-lines.md"
+        },
+        {
+          "upstream": "skills/popups/evals/evals.json",
+          "local": "skills/growth/product/popups/evals/evals.json"
+        },
+        {
+          "upstream": "skills/signup/evals/evals.json",
+          "local": "skills/growth/product/signup/evals/evals.json"
+        },
+        {
+          "upstream": "skills/schema/evals/evals.json",
+          "local": "skills/growth/product/schema/evals/evals.json"
+        },
+        {
+          "upstream": "skills/schema/references/schema-examples.md",
+          "local": "skills/growth/product/schema/references/schema-examples.md"
+        },
+        {
+          "upstream": "skills/programmatic-seo/evals/evals.json",
+          "local": "skills/growth/product/programmatic-seo/evals/evals.json"
+        },
+        {
+          "upstream": "skills/programmatic-seo/references/implementation-platforms.md",
+          "local": "skills/growth/product/programmatic-seo/references/implementation-platforms.md"
+        },
+        {
+          "upstream": "skills/programmatic-seo/references/playbooks.md",
+          "local": "skills/growth/product/programmatic-seo/references/playbooks.md"
+        },
+        {
+          "upstream": "skills/free-tools/evals/evals.json",
+          "local": "skills/growth/product/free-tools/evals/evals.json"
+        },
+        {
+          "upstream": "skills/free-tools/references/tool-benchmarks.md",
+          "local": "skills/growth/product/free-tools/references/tool-benchmarks.md"
+        },
+        {
+          "upstream": "skills/free-tools/references/tool-types.md",
+          "local": "skills/growth/product/free-tools/references/tool-types.md"
         }
       ],
       "verbatim_excluded": [
@@ -4205,6 +4313,10 @@
         {
           "upstream": "skills/investor-materials/SKILL.md",
           "local": "skills/growth/product/investor-materials/SKILL.md"
+        },
+        {
+          "upstream": "skills/frontend-patterns/SKILL.md",
+          "local": "skills/developer/engineering/frontend-patterns/SKILL.md"
         }
       ],
       "verbatim": [
@@ -16973,6 +17085,22 @@
         {
           "upstream": "business-growth/skills/contract-and-proposal-writer/SKILL.md",
           "local": "skills/corporate/sales/contract-and-proposal-writer/SKILL.md"
+        },
+        {
+          "upstream": "engineering-team/skills/email-template-builder/SKILL.md",
+          "local": "skills/writer/writing/email-template-builder/SKILL.md"
+        },
+        {
+          "upstream": "engineering-team/skills/stripe-integration-expert/SKILL.md",
+          "local": "skills/developer/engineering/stripe-integration-expert/SKILL.md"
+        },
+        {
+          "upstream": "project-management/skills/meeting-analyzer/SKILL.md",
+          "local": "skills/corporate/sales/meeting-analyzer/SKILL.md"
+        },
+        {
+          "upstream": "engineering/prompt-governance/skills/prompt-governance/SKILL.md",
+          "local": "skills/toolbox/meta/prompt-governance/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17150,6 +17278,10 @@
         {
           "upstream": "pm-execution/skills/stakeholder-map/SKILL.md",
           "local": "skills/growth/product/stakeholder-map/SKILL.md"
+        },
+        {
+          "upstream": "pm-data-analytics/skills/sql-queries/SKILL.md",
+          "local": "skills/growth/product/sql-queries/SKILL.md"
         }
       ],
       "verbatim": [],
@@ -17276,6 +17408,10 @@
         {
           "upstream": "skills/architecture-designer/SKILL.md",
           "local": "skills/developer/quality/architecture-designer/SKILL.md"
+        },
+        {
+          "upstream": "skills/chaos-engineer/SKILL.md",
+          "local": "skills/developer/quality/chaos-engineer/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17362,6 +17498,26 @@
         {
           "upstream": "skills/architecture-designer/references/system-design.md",
           "local": "skills/developer/quality/architecture-designer/references/system-design.md"
+        },
+        {
+          "upstream": "skills/chaos-engineer/references/chaos-tools.md",
+          "local": "skills/developer/quality/chaos-engineer/references/chaos-tools.md"
+        },
+        {
+          "upstream": "skills/chaos-engineer/references/experiment-design.md",
+          "local": "skills/developer/quality/chaos-engineer/references/experiment-design.md"
+        },
+        {
+          "upstream": "skills/chaos-engineer/references/game-days.md",
+          "local": "skills/developer/quality/chaos-engineer/references/game-days.md"
+        },
+        {
+          "upstream": "skills/chaos-engineer/references/infrastructure-chaos.md",
+          "local": "skills/developer/quality/chaos-engineer/references/infrastructure-chaos.md"
+        },
+        {
+          "upstream": "skills/chaos-engineer/references/kubernetes-chaos.md",
+          "local": "skills/developer/quality/chaos-engineer/references/kubernetes-chaos.md"
         }
       ],
       "verbatim_excluded": [
@@ -17473,6 +17629,14 @@
         {
           "upstream": "skills/n8n-multi-instance/SKILL.md",
           "local": "skills/toolbox/automation/n8n-multi-instance/SKILL.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/SKILL.md",
+          "local": "skills/toolbox/automation/n8n-agents/SKILL.md"
+        },
+        {
+          "upstream": "skills/n8n-expression-syntax/SKILL.md",
+          "local": "skills/toolbox/automation/n8n-expression-syntax/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17543,6 +17707,58 @@
         {
           "upstream": "skills/n8n-multi-instance/README.md",
           "local": "skills/toolbox/automation/n8n-multi-instance/README.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/CHAT_AGENT_PATTERNS.md",
+          "local": "skills/toolbox/automation/n8n-agents/CHAT_AGENT_PATTERNS.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/EXAMPLES.md",
+          "local": "skills/toolbox/automation/n8n-agents/EXAMPLES.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/HUMAN_REVIEW.md",
+          "local": "skills/toolbox/automation/n8n-agents/HUMAN_REVIEW.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/MEMORY.md",
+          "local": "skills/toolbox/automation/n8n-agents/MEMORY.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/RAG.md",
+          "local": "skills/toolbox/automation/n8n-agents/RAG.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/README.md",
+          "local": "skills/toolbox/automation/n8n-agents/README.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/STRUCTURED_OUTPUT.md",
+          "local": "skills/toolbox/automation/n8n-agents/STRUCTURED_OUTPUT.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/SUBWORKFLOW_AS_TOOL.md",
+          "local": "skills/toolbox/automation/n8n-agents/SUBWORKFLOW_AS_TOOL.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/SYSTEM_PROMPT.md",
+          "local": "skills/toolbox/automation/n8n-agents/SYSTEM_PROMPT.md"
+        },
+        {
+          "upstream": "skills/n8n-agents/TOOLS.md",
+          "local": "skills/toolbox/automation/n8n-agents/TOOLS.md"
+        },
+        {
+          "upstream": "skills/n8n-expression-syntax/COMMON_MISTAKES.md",
+          "local": "skills/toolbox/automation/n8n-expression-syntax/COMMON_MISTAKES.md"
+        },
+        {
+          "upstream": "skills/n8n-expression-syntax/EXAMPLES.md",
+          "local": "skills/toolbox/automation/n8n-expression-syntax/EXAMPLES.md"
+        },
+        {
+          "upstream": "skills/n8n-expression-syntax/README.md",
+          "local": "skills/toolbox/automation/n8n-expression-syntax/README.md"
         }
       ],
       "verbatim_excluded": [
@@ -17854,6 +18070,34 @@
         {
           "upstream": "plugins/observability-monitoring/skills/grafana-dashboards/SKILL.md",
           "local": "skills/developer/quality/grafana-dashboards/SKILL.md"
+        },
+        {
+          "upstream": "plugins/cicd-automation/skills/github-actions-templates/SKILL.md",
+          "local": "skills/developer/engineering/github-actions-templates/SKILL.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/parallel-feature-development/SKILL.md",
+          "local": "skills/developer/engineering/parallel-feature-development/SKILL.md"
+        },
+        {
+          "upstream": "plugins/developer-essentials/skills/turborepo-caching/SKILL.md",
+          "local": "skills/developer/engineering/turborepo-caching/SKILL.md"
+        },
+        {
+          "upstream": "plugins/machine-learning-ops/skills/recsys-pipeline-architect/SKILL.md",
+          "local": "skills/developer/engineering/recsys-pipeline-architect/SKILL.md"
+        },
+        {
+          "upstream": "plugins/cloud-infrastructure/skills/linkerd-patterns/SKILL.md",
+          "local": "skills/developer/engineering/linkerd-patterns/SKILL.md"
+        },
+        {
+          "upstream": "plugins/framework-migration/skills/dependency-upgrade/SKILL.md",
+          "local": "skills/developer/engineering/dependency-upgrade/SKILL.md"
+        },
+        {
+          "upstream": "plugins/block-no-verify/skills/block-no-verify-hook/SKILL.md",
+          "local": "skills/toolbox/meta/block-no-verify-hook/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17868,6 +18112,14 @@
         {
           "upstream": "plugins/accessibility-compliance/skills/wcag-audit-patterns/references/details.md",
           "local": "skills/developer/quality/wcag-audit-patterns/references/details.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/parallel-feature-development/references/file-ownership.md",
+          "local": "skills/developer/engineering/parallel-feature-development/references/file-ownership.md"
+        },
+        {
+          "upstream": "plugins/agent-teams/skills/parallel-feature-development/references/merge-strategies.md",
+          "local": "skills/developer/engineering/parallel-feature-development/references/merge-strategies.md"
         }
       ],
       "verbatim_excluded": [
@@ -18412,6 +18664,26 @@
         {
           "upstream": "skills/workflows/prototype-fast/SKILL.md",
           "local": "skills/gamedev/prototype-fast/SKILL.md"
+        },
+        {
+          "upstream": "skills/disciplines/input-systems/SKILL.md",
+          "local": "skills/gamedev/input-systems/SKILL.md"
+        },
+        {
+          "upstream": "skills/disciplines/performance-optimization/SKILL.md",
+          "local": "skills/gamedev/performance-optimization/SKILL.md"
+        },
+        {
+          "upstream": "skills/disciplines/level-design/SKILL.md",
+          "local": "skills/gamedev/level-design/SKILL.md"
+        },
+        {
+          "upstream": "skills/disciplines/save-systems/SKILL.md",
+          "local": "skills/gamedev/save-systems/SKILL.md"
+        },
+        {
+          "upstream": "skills/web-engines/threejs-scene-setup/SKILL.md",
+          "local": "skills/gamedev/threejs-scene-setup/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18454,6 +18726,26 @@
         {
           "upstream": "skills/unity/unity-animation/references/blend-trees-and-ik.md",
           "local": "skills/gamedev/unity-animation/references/blend-trees-and-ik.md"
+        },
+        {
+          "upstream": "skills/disciplines/input-systems/references/buffering-and-accessibility.md",
+          "local": "skills/gamedev/input-systems/references/buffering-and-accessibility.md"
+        },
+        {
+          "upstream": "skills/disciplines/performance-optimization/references/profiling-and-budgets.md",
+          "local": "skills/gamedev/performance-optimization/references/profiling-and-budgets.md"
+        },
+        {
+          "upstream": "skills/disciplines/level-design/references/pacing-and-flow.md",
+          "local": "skills/gamedev/level-design/references/pacing-and-flow.md"
+        },
+        {
+          "upstream": "skills/disciplines/save-systems/references/versioning-and-migration.md",
+          "local": "skills/gamedev/save-systems/references/versioning-and-migration.md"
+        },
+        {
+          "upstream": "skills/web-engines/threejs-scene-setup/references/scene-graph.md",
+          "local": "skills/gamedev/threejs-scene-setup/references/scene-graph.md"
         }
       ],
       "verbatim_excluded": [
@@ -18492,6 +18784,10 @@
         {
           "upstream": "skills/neobrutalism/SKILL.md",
           "local": "skills/designer/design/neobrutalism/SKILL.md"
+        },
+        {
+          "upstream": "skills/bento/SKILL.md",
+          "local": "skills/designer/design/bento/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18502,6 +18798,10 @@
         {
           "upstream": "skills/neobrutalism/DESIGN.md",
           "local": "skills/designer/design/neobrutalism/DESIGN.md"
+        },
+        {
+          "upstream": "skills/bento/DESIGN.md",
+          "local": "skills/designer/design/bento/DESIGN.md"
         }
       ],
       "verbatim_excluded": [
@@ -23838,6 +24138,208 @@
       ],
       "stars_snapshot_2026-11-03": 3492,
       "translated_prose": []
+    },
+    {
+      "repo": "google/elephant-goldfish-model",
+      "shortname": "elephant-goldfish-model",
+      "license": "Apache-2.0",
+      "stars_snapshot_2026-11-12": 17865,
+      "mode": "抽取",
+      "files": [
+        {
+          "upstream": "skills/egm-brainstorm/SKILL.md",
+          "local": "skills/developer/engineering/egm-brainstorm/SKILL.md"
+        },
+        {
+          "upstream": "skills/egm-draft/SKILL.md",
+          "local": "skills/developer/engineering/egm-draft/SKILL.md"
+        },
+        {
+          "upstream": "skills/egm-review/SKILL.md",
+          "local": "skills/developer/quality/egm-review/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/egm-brainstorm/TEST.md",
+          "local": "skills/developer/engineering/egm-brainstorm/TEST.md"
+        },
+        {
+          "upstream": "skills/egm-brainstorm/agents/openai.yaml",
+          "local": "skills/developer/engineering/egm-brainstorm/agents/openai.yaml"
+        },
+        {
+          "upstream": "skills/egm-brainstorm/assets/icon.svg",
+          "local": "skills/developer/engineering/egm-brainstorm/assets/icon.svg"
+        },
+        {
+          "upstream": "skills/egm-brainstorm/test_scenarios.yaml",
+          "local": "skills/developer/engineering/egm-brainstorm/test_scenarios.yaml"
+        },
+        {
+          "upstream": "skills/egm-draft/TEST.md",
+          "local": "skills/developer/engineering/egm-draft/TEST.md"
+        },
+        {
+          "upstream": "skills/egm-draft/agents/openai.yaml",
+          "local": "skills/developer/engineering/egm-draft/agents/openai.yaml"
+        },
+        {
+          "upstream": "skills/egm-draft/assets/icon.svg",
+          "local": "skills/developer/engineering/egm-draft/assets/icon.svg"
+        },
+        {
+          "upstream": "skills/egm-draft/references/design_doc.md",
+          "local": "skills/developer/engineering/egm-draft/references/design_doc.md"
+        },
+        {
+          "upstream": "skills/egm-draft/test_scenarios.yaml",
+          "local": "skills/developer/engineering/egm-draft/test_scenarios.yaml"
+        },
+        {
+          "upstream": "skills/egm-review/TEST.md",
+          "local": "skills/developer/quality/egm-review/TEST.md"
+        },
+        {
+          "upstream": "skills/egm-review/agents/openai.yaml",
+          "local": "skills/developer/quality/egm-review/agents/openai.yaml"
+        },
+        {
+          "upstream": "skills/egm-review/assets/icon.svg",
+          "local": "skills/developer/quality/egm-review/assets/icon.svg"
+        },
+        {
+          "upstream": "skills/egm-review/test_scenarios.yaml",
+          "local": "skills/developer/quality/egm-review/test_scenarios.yaml"
+        }
+      ],
+      "verbatim_excluded": []
+    },
+    {
+      "repo": "Ryze-AI-Adgent/open-seo-mcp-skills",
+      "shortname": "open-seo-mcp-skills",
+      "license": "MIT",
+      "stars_snapshot_2026-11-12": 9373,
+      "mode": "抽取",
+      "files": [
+        {
+          "upstream": "skills/content-brief/SKILL.md",
+          "local": "skills/growth/product/content-brief/SKILL.md"
+        },
+        {
+          "upstream": "skills/keyword-research/SKILL.md",
+          "local": "skills/growth/product/keyword-research/SKILL.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": []
+    },
+    {
+      "repo": "nexu-io/open-design",
+      "shortname": "open-design",
+      "license": "Apache-2.0",
+      "stars_snapshot_2026-11-12": 107310,
+      "mode": "抽取",
+      "files": [
+        {
+          "upstream": "design-templates/blog-post/SKILL.md",
+          "local": "skills/designer/design/od-blog-post/SKILL.md"
+        },
+        {
+          "upstream": "design-templates/critique/SKILL.md",
+          "local": "skills/designer/design/od-critique/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "design-templates/blog-post/example.html",
+          "local": "skills/designer/design/od-blog-post/example.html"
+        },
+        {
+          "upstream": "design-templates/critique/example.html",
+          "local": "skills/designer/design/od-critique/example.html"
+        }
+      ],
+      "verbatim_excluded": []
+    },
+    {
+      "repo": "alibaba/open-code-review",
+      "shortname": "open-code-review",
+      "license": "Apache-2.0",
+      "stars_snapshot_2026-11-12": 49928,
+      "mode": "抽取",
+      "files": [
+        {
+          "upstream": "skills/open-code-review/SKILL.md",
+          "local": "skills/developer/quality/open-code-review/SKILL.md"
+        }
+      ],
+      "verbatim": [],
+      "verbatim_excluded": []
+    },
+    {
+      "repo": "sickn33/agentic-awesome-skills",
+      "shortname": "agentic-awesome-skills",
+      "license": "MIT",
+      "stars_snapshot_2026-11-12": 49584,
+      "mode": "抽取",
+      "files": [
+        {
+          "upstream": "skills/2slides-ppt-generator/SKILL.md",
+          "local": "skills/toolbox/office/2slides-ppt-generator/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/2slides-ppt-generator/references/api-reference.md",
+          "local": "skills/toolbox/office/2slides-ppt-generator/references/api-reference.md"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/references/detailed-guide.md",
+          "local": "skills/toolbox/office/2slides-ppt-generator/references/detailed-guide.md"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/references/mcp-integration.md",
+          "local": "skills/toolbox/office/2slides-ppt-generator/references/mcp-integration.md"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/references/pricing.md",
+          "local": "skills/toolbox/office/2slides-ppt-generator/references/pricing.md"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/requirements.txt",
+          "local": "skills/toolbox/office/2slides-ppt-generator/requirements.txt"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/scripts/api_constants.py",
+          "local": "skills/toolbox/office/2slides-ppt-generator/scripts/api_constants.py"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/scripts/create_pdf_slides.py",
+          "local": "skills/toolbox/office/2slides-ppt-generator/scripts/create_pdf_slides.py"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/scripts/download_slides_pages_voices.py",
+          "local": "skills/toolbox/office/2slides-ppt-generator/scripts/download_slides_pages_voices.py"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/scripts/generate_narration.py",
+          "local": "skills/toolbox/office/2slides-ppt-generator/scripts/generate_narration.py"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/scripts/generate_slides.py",
+          "local": "skills/toolbox/office/2slides-ppt-generator/scripts/generate_slides.py"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/scripts/get_job_status.py",
+          "local": "skills/toolbox/office/2slides-ppt-generator/scripts/get_job_status.py"
+        },
+        {
+          "upstream": "skills/2slides-ppt-generator/scripts/search_themes.py",
+          "local": "skills/toolbox/office/2slides-ppt-generator/scripts/search_themes.py"
+        }
+      ],
+      "verbatim_excluded": []
     }
   ]
 }

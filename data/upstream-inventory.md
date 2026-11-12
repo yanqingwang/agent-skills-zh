@@ -329,3 +329,36 @@
 **排除说明**：tradermonty 余量仅存于 `examples/` 示例副本、iOfficeAI/OfficeCLI 单件 25–66KB、K-Dense 单库指南、affaan-m/ECC 桩件与 sickn33 聚合大合集继续按「宁缺毋滥」缓收。
 
 **累计：61 登记 / 60 监控 / 215 翻译件 / 5181 原样件（2026-11-12，第十批）。**
+
+## 十四、2026-11-12 第十一批：17 项待收录落地 + 5 个新上游
+
+**结果**：change.md 原「待收录清单」17 项全部收录；新登记 5 个上游（均已核实 License，见 THIRD-PARTY-NOTICES.md）。其中 nexu-io/open-design 与 sickn33/agentic-awesome-skills 此前分别按「非 drop-in Skill 文件」「大合集暂不批量抽取」缓收，本批复核后改为**单件抽取**，排除清单已同步修订。
+
+| 上游 | 收录件 |
+|---|---|
+| Jeffallan/claude-skills | chaos-engineer |
+| Ryze-AI-Adgent/open-seo-mcp-skills | content-brief、keyword-research |
+| affaan-m/ECC | frontend-patterns |
+| alibaba/open-code-review | open-code-review |
+| bergside/awesome-design-skills | bento |
+| coreyhaines31/marketingskills | cold-email |
+| czlonkowski/n8n-skills | n8n-agents |
+| google/elephant-goldfish-model | egm-brainstorm、egm-draft、egm-review |
+| nexu-io/open-design | od-blog-post、od-critique |
+| phuryn/pm-skills | sql-queries |
+| sickn33/agentic-awesome-skills | 2slides-ppt-generator |
+| wshobson/agents | github-actions-templates、parallel-feature-development |
+
+**累计：66 登记 / 65 监控 / 252 SKILL 译件 / 5,117 原样件（2026-11-12，第十一批末）。**
+
+## 十五、2026-11-12 第十二批：20 件存量合集追加
+
+**结果**：从 5 个已登记上游继续筛出跨项目可复用、自包含或配套件极少的 20 件，正文取当前上游 HEAD。
+
+| 上游 | 收录件 |
+|---|---|
+| alirezarezvani/claude-skills | email-template-builder、stripe-integration-expert、meeting-analyzer、prompt-governance |
+| coreyhaines31/marketingskills | popups、signup、schema、programmatic-seo、free-tools |
+| czlonkowski/n8n-skills | n8n-expression-syntax |
+| gamedev-skills/awesome-gamedev-agent-skills | input-systems、performance-optimization、level-design、save-systems、threejs-scene-setup |
+| wshobson/agents | turborepo-caching、recsys-pipeline-architect、linkerd-patterns、dependency-upgrade、block-no-verify-hook |

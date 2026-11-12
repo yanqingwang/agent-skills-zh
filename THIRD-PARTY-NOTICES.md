@@ -468,6 +468,44 @@ SOFTWARE.
 - Copyright (c) 2026 Patch
 - 收录：skills/gamedev/art/pixelfx/（SKILL.md 译 + src/、tools/、docs/、NOTICE.md 原样；NOTICE.md 系上游第三方署名文件，按 MIT 条款随 src/ 分发保留，其中 Sprite Fusion 与 Hollow Crown 改编件各自 MIT）
 
+## 2026-11-12 扩大范围新增上游（5 个）
+
+> 本批 5 个上游 License 均由 GitHub API 与仓库根 LICENSE 双向核实；MIT 全文见本文件开头 obra/superpowers 节，Apache-2.0 全文见 JuliusBrussee/caveman 节，以下仅列条款归属与版权声明。
+
+### google/elephant-goldfish-model（Apache-2.0）
+
+- 上游：https://github.com/google/elephant-goldfish-model （星标快照 2026-11-12：17,865）
+- License：Apache-2.0（条款全文见 caveman 节；完整原文见上游仓库根 LICENSE）
+- 收录：skills/developer/engineering/{egm-brainstorm, egm-draft}/、skills/developer/quality/egm-review/（SKILL.md 译 + 配套原样）
+
+### Ryze-AI-Adgent/open-seo-mcp-skills（MIT）
+
+- 上游：https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills （星标快照 2026-11-12：9,373）
+- License：MIT（条款全文见 obra/superpowers 节）
+- Copyright (c) 2026 Ryze AI
+- 收录：skills/growth/product/{content-brief, keyword-research}/（SKILL.md 译）
+
+### nexu-io/open-design（Apache-2.0）
+
+- 上游：https://github.com/nexu-io/open-design （星标快照 2026-11-12：107,310）
+- License：Apache-2.0（条款全文见 caveman 节；完整原文见上游仓库根 LICENSE）
+- 说明：此前按「App/CLI 工具，非 drop-in Skill 文件」整体排除；第十一批复核发现 `design-templates/{blog-post, critique}/SKILL.md` 为自包含 Skill 文件，改为**单件抽取收录**，不改变对仓库其余部分的排除。
+- 收录：skills/designer/design/{od-blog-post, od-critique}/（SKILL.md 译 + 配套原样）
+
+### alibaba/open-code-review（Apache-2.0）
+
+- 上游：https://github.com/alibaba/open-code-review （星标快照 2026-11-12：49,928）
+- License：Apache-2.0（条款全文见 caveman 节；完整原文见上游仓库根 LICENSE）
+- 收录：skills/developer/quality/open-code-review/（SKILL.md 译）
+
+### sickn33/agentic-awesome-skills（MIT）
+
+- 上游：https://github.com/sickn33/agentic-awesome-skills （星标快照 2026-11-12：49,584）
+- License：MIT（条款全文见 obra/superpowers 节）
+- Copyright (c) 2026 Antigravity User
+- 说明：此前按「2,884+ 件大合集，暂不批量抽取」缓收；第十一批按热度评估后**单件抽取** 2slides-ppt-generator，其余仍缓收。
+- 收录：skills/toolbox/office/2slides-ppt-generator/（SKILL.md 译 + 12 件原样）
+
 ## 明确排除
 
 - `multica-ai/andrej-karpathy-skills`（223,159 星）：**无 License 文件，默认保留所有权利，本仓库不翻译、不分发其任何内容**（PRINCIPLES.md 原则 #2）。
@@ -485,8 +523,8 @@ SOFTWARE.
 - `feder-cr/invisible_dots`（32,357 星，MIT）：**内容政策排除**——反反爬虫检测规避工具，同上。
 - `tanweai/pua`（19,789 星）：**无 License**，原则 #2 排除。
 - `calesthio/OpenMontage`（75,247 星）、`op7418/guizang-ppt-skill`（29,155 星）：**AGPL-3.0**，非宽松许可，原则 #2 排除。
-- `nexu-io/open-design`（105,531 星）、`citrolabs/ego-lite`（21,338 星）、`vercel-labs/skills`（37,797 星）、`microsoft/SkillOpt`（18,824 星）、`NVIDIA/SkillSpector`（23,996 星）：App/CLI 工具/研究框架/安全扫描器，非 drop-in Skill 文件。
-- `sickn33/agentic-awesome-skills`（49,292 星，MIT）、`VoltAgent/awesome-openclaw-skills`（53,508 星）：2,884+ 件大合集/榜单，按"宁缺毋滥"暂不批量抽取，后续按热度评估。
+- `citrolabs/ego-lite`（21,338 星）、`vercel-labs/skills`（37,797 星）、`microsoft/SkillOpt`（18,824 星）、`NVIDIA/SkillSpector`（23,996 星）：App/CLI 工具/研究框架/安全扫描器，非 drop-in Skill 文件。`nexu-io/open-design` 已于 2026-11-12 复核后单件抽取收录（见上节）。
+- `sickn33/agentic-awesome-skills`（49,584 星，MIT）、`VoltAgent/awesome-openclaw-skills`（53,508 星）：2,884+ 件大合集/榜单，按"宁缺毋滥"暂不批量抽取；sickn33 已于 2026-11-12 单件抽取 2slides-ppt-generator（见上节），其余仍缓收。
 - `agentskills/agentskills`（26,886 星）：Skill 规范与文档，非 Skill 本体。
 - `op7418/Humanizer-zh`（21,778 星，MIT）：**中文原生**（humanizer 的既有汉化版），无需翻译，可作互链参考。
 

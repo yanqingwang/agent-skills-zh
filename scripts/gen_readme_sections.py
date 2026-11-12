@@ -118,6 +118,25 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ("LLM 成本优化", [
             "skills/developer/efficiency/llm-cost-optimizer/SKILL.md",
         ]),
+        ("EGM 方法论与前端模式", [
+            "skills/developer/engineering/egm-brainstorm/SKILL.md",
+            "skills/developer/engineering/egm-draft/SKILL.md",
+            "skills/developer/quality/egm-review/SKILL.md",
+            "skills/developer/engineering/frontend-patterns/SKILL.md",
+        ]),
+        ("CI、并行开发与代码审查", [
+            "skills/developer/engineering/github-actions-templates/SKILL.md",
+            "skills/developer/engineering/parallel-feature-development/SKILL.md",
+            "skills/developer/quality/open-code-review/SKILL.md",
+            "skills/developer/quality/chaos-engineer/SKILL.md",
+        ]),
+        ("工程基建与第三方集成", [
+            "skills/developer/engineering/turborepo-caching/SKILL.md",
+            "skills/developer/engineering/recsys-pipeline-architect/SKILL.md",
+            "skills/developer/engineering/linkerd-patterns/SKILL.md",
+            "skills/developer/engineering/dependency-upgrade/SKILL.md",
+            "skills/developer/engineering/stripe-integration-expert/SKILL.md",
+        ]),
     ],
     "✍️ 写作者": [
         ("去掉 AI 腔、让文字像人写的", [
@@ -131,6 +150,10 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("文案精修与去 AI 腔", [
             "skills/writer/writing/copy-editing/SKILL.md",
+        ]),
+        ("邮件与模板文案", [
+            "skills/writer/writing/cold-email/SKILL.md",
+            "skills/writer/writing/email-template-builder/SKILL.md",
         ]),
     ],
     "🎨 设计师": [
@@ -168,6 +191,11 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ("极简与新粗野主义风格", [
             "skills/designer/design/minimal/SKILL.md",
             "skills/designer/design/neobrutalism/SKILL.md",
+        ]),
+        ("布局与设计模板", [
+            "skills/designer/design/bento/SKILL.md",
+            "skills/designer/design/od-blog-post/SKILL.md",
+            "skills/designer/design/od-critique/SKILL.md",
         ]),
     ],
     "🔬 研究者": [
@@ -237,6 +265,18 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/growth/product/churn-prevention/SKILL.md",
             "skills/growth/product/customer-research/SKILL.md",
         ]),
+        ("SEO、内容与数据", [
+            "skills/growth/product/content-brief/SKILL.md",
+            "skills/growth/product/keyword-research/SKILL.md",
+            "skills/growth/product/sql-queries/SKILL.md",
+            "skills/growth/product/schema/SKILL.md",
+            "skills/growth/product/programmatic-seo/SKILL.md",
+        ]),
+        ("转化与引流", [
+            "skills/growth/product/popups/SKILL.md",
+            "skills/growth/product/signup/SKILL.md",
+            "skills/growth/product/free-tools/SKILL.md",
+        ]),
     ],
     "🎮 游戏开发者": [
         ("引擎内脚本与玩法", [
@@ -260,6 +300,13 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/gamedev/unity-navmesh/SKILL.md",
             "skills/gamedev/game-jam/SKILL.md",
             "skills/gamedev/prototype-fast/SKILL.md",
+        ]),
+        ("系统与关卡设计", [
+            "skills/gamedev/input-systems/SKILL.md",
+            "skills/gamedev/performance-optimization/SKILL.md",
+            "skills/gamedev/level-design/SKILL.md",
+            "skills/gamedev/save-systems/SKILL.md",
+            "skills/gamedev/threejs-scene-setup/SKILL.md",
         ]),
     ],
     "🎬 创作者": [
@@ -300,6 +347,9 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("合同与提案撰写", [
             "skills/corporate/sales/contract-and-proposal-writer/SKILL.md",
+        ]),
+        ("会议分析", [
+            "skills/corporate/sales/meeting-analyzer/SKILL.md",
         ]),
     ],
     "🧰 通用工具（所有职业）": [
@@ -348,6 +398,15 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/toolbox/automation/using-n8n-mcp-skills/SKILL.md",
             "skills/toolbox/automation/n8n-multi-instance/SKILL.md",
         ]),
+        ("PPT 生成与 n8n 进阶", [
+            "skills/toolbox/office/2slides-ppt-generator/SKILL.md",
+            "skills/toolbox/automation/n8n-agents/SKILL.md",
+            "skills/toolbox/automation/n8n-expression-syntax/SKILL.md",
+        ]),
+        ("Hook 与提示词治理", [
+            "skills/toolbox/meta/block-no-verify-hook/SKILL.md",
+            "skills/toolbox/meta/prompt-governance/SKILL.md",
+        ]),
     ],
 }
 
@@ -382,7 +441,11 @@ def upstream_table() -> str:
             v = up.get("stars_snapshot_2026-10-25")
         if not isinstance(v, int):
             v = up.get("stars_snapshot_2026-10-24")
-        return v if isinstance(v, int) else -1
+        if not isinstance(v, int):
+            snaps = [val for k, val in up.items()
+                     if k.startswith("stars_snapshot_") and isinstance(val, int)]
+            v = snaps[-1] if snaps else -1
+        return v
 
     lines = [
         "| 上游 | Star | License | 模式 | 翻译件 | 原样件 | 最近同步 |",

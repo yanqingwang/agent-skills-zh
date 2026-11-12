@@ -60,6 +60,11 @@
     "google/skills": "e5250c8a02c28097b11a0c22d77143f4a0e5a408",
     "muratcankoylan/Agent-Skills-for-Context-Engineering": "9ff0c99108b36d3b886defd825d8ac1f47dba374",
     "greensock/gsap-skills": "aed9cfd3277740755f6bfc1155c7aa645403b760",
-    "patch-gg/pixelfx": "5294518ce7c72e48b6100a744596e0acf57f2826"
+    "patch-gg/pixelfx": "5294518ce7c72e48b6100a744596e0acf57f2826",
+    "google/elephant-goldfish-model": "84145300b9e0e3fadd21617da345c19445c74219",
+    "Ryze-AI-Adgent/open-seo-mcp-skills": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+    "nexu-io/open-design": "a37dc822b5ed7021c3a985290689c1111d0d056d",
+    "alibaba/open-code-review": "6386895e7cfac419bd7a9cf4795e8b824a6e3ced",
+    "sickn33/agentic-awesome-skills": "00f9c4077878be6ffcc093c099f05a6cccaf1b95"
   }
 }
