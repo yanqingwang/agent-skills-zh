@@ -66,7 +66,10 @@
     "skills/pricing/SKILL.md": "88fd2c3dd2cc4aafa0828920dc540ad04b184aab",
     "skills/launch/SKILL.md": "cf94508ee5434065dc63f3c41e7fd5fae6cdf65d",
     "skills/ab-testing/SKILL.md": "ca458508b02ae91f6dd2f724ac0095eafa0e2996",
-    "skills/marketing-psychology/SKILL.md": "2eef4a749a132bcfea440e2d7693c435abf08ab9"
+    "skills/marketing-psychology/SKILL.md": "2eef4a749a132bcfea440e2d7693c435abf08ab9",
+    "skills/content-strategy/SKILL.md": "61a9c7ad6dd9ec215d28f8bfe72820ab3f6a1023",
+    "skills/churn-prevention/SKILL.md": "ed1726d4618829bd3b2959840e31fc58d73f54c6",
+    "skills/customer-research/SKILL.md": "bc9f4aadd0431da8a718bc3b69c619950949a94b"
   },
   "K-Dense-AI/scientific-agent-skills": {
     "skills/experimental-design/SKILL.md": "ee14f9ed795c791ac80e3ea946858d97d09c3e50",
@@ -186,7 +189,13 @@
     "product-team/skills/competitive-teardown/SKILL.md": "46c4d26caa004f2a987c25c3a3bad8e9e42f458a",
     "product-team/skills/spec-to-repo/SKILL.md": "c842e1d8dcf86fdfdf9ba7448600a7ecc1eb0c68",
     "research/deepread/references/feynman.md": "6d13214bb950de5464fb670da3f5213ebc31e640",
-    "research/deepread/references/knowledge-map.md": "05bf805e8b9c7f9c584eae4076f77733c0f7ce5a"
+    "research/deepread/references/knowledge-map.md": "05bf805e8b9c7f9c584eae4076f77733c0f7ce5a",
+    "engineering/skills/focused-fix/SKILL.md": "4bbed40173517d876b146a8ffb5b46be19259b54",
+    "engineering/zero-hallucination-coder/skills/zero-hallucination-coder/SKILL.md": "128e06082f885c481765351cc4225a1eff2f7812",
+    "engineering/skills/pr-review-expert/SKILL.md": "ceb5a04b04b6b15b9a60535325f26967887ec388",
+    "engineering-team/skills/adversarial-reviewer/SKILL.md": "752be1eef9bab93e6d407a7dd5819e105042cc6c",
+    "engineering/llm-cost-optimizer/skills/llm-cost-optimizer/SKILL.md": "acc8b050a486897bcde7025153fc48e98c17cae0",
+    "business-growth/skills/contract-and-proposal-writer/SKILL.md": "bd438ebb7e6e160ab9a4a8dc3667809caed68132"
   },
   "phuryn/pm-skills": {
     "pm-execution/skills/create-prd/SKILL.md": "9aa4b7a5a19af2fe4ade43da564dd607efdf0488",
@@ -217,7 +226,9 @@
   "czlonkowski/n8n-skills": {
     "skills/n8n-code-javascript/SKILL.md": "9471aaf5692808c4488be58a3f7682e72f98e1b8",
     "skills/n8n-error-handling/SKILL.md": "287d0b2d2ac5460c1875503a6dd46f969a17f89f",
-    "skills/n8n-code-tool/SKILL.md": "a5dde15a6f59642a25bff6815c721c154b5ea20c"
+    "skills/n8n-code-tool/SKILL.md": "a5dde15a6f59642a25bff6815c721c154b5ea20c",
+    "skills/using-n8n-mcp-skills/SKILL.md": "e64d00b3748261e33d7b70b3e3a17b9df4d6842b",
+    "skills/n8n-multi-instance/SKILL.md": "820c86f6943e7a6e3504c0fd28bbd39de1f281f1"
   },
   "anthropics/claude-plugins-official": {
     "plugins/frontend-design/skills/frontend-design/SKILL.md": "a5333457c414d20d625f307df945842c0952ecc3",
@@ -242,7 +253,11 @@
     "plugins/python-development/skills/python-project-structure/SKILL.md": "504df638b71a09c24f5e6f0a993a4e2f3eaf01f7",
     "plugins/cicd-automation/skills/gitlab-ci-patterns/SKILL.md": "90afed065bf28f59485f6c8e617b10d307a63070",
     "plugins/security-scanning/skills/sast-configuration/SKILL.md": "3dd02c74b2a4f1b7702c154213d79a7a04b1e720",
-    "plugins/review-agent-governance/skills/review-agent-setup/SKILL.md": "28b782508a70c4d0d66f7371b740fefa1efd974d"
+    "plugins/review-agent-governance/skills/review-agent-setup/SKILL.md": "28b782508a70c4d0d66f7371b740fefa1efd974d",
+    "plugins/python-development/skills/python-anti-patterns/SKILL.md": "ee62f8c14f15fbcb5b83d9d0417ef72b53416d72",
+    "plugins/python-development/skills/python-code-style/SKILL.md": "61cf0ba92206bf23e916ad0dabdb434294e78792",
+    "plugins/file-conversion/skills/file-conversion/SKILL.md": "a9233089c55f33c51c921abb470d6077960df73c",
+    "plugins/observability-monitoring/skills/grafana-dashboards/SKILL.md": "0d67ccf0e7e28208378831cf38f969621b48c62d"
   },
   "Donchitos/Claude-Code-Game-Studios": {
     ".claude/agents/game-designer.md": "f0a640c3a75fb06398d1367a00958e26cec7c7ab",
@@ -270,10 +285,15 @@
     "skills/disciplines/game-feel/SKILL.md": "821eacd2946f4baa7dbe87b77ed2daa58fe9fe2f",
     "skills/godot/godot-signals-groups/SKILL.md": "7b94b0f4993748c74d57df0fe91d79d71c013704",
     "skills/godot/godot-shaders/SKILL.md": "27c77e925e9e4bb13447daec60d2433f823bb50f",
-    "skills/unity/unity-animation/SKILL.md": "de8908fbd2d774f56a2b59cdbc4c3132b38a56e3"
+    "skills/unity/unity-animation/SKILL.md": "de8908fbd2d774f56a2b59cdbc4c3132b38a56e3",
+    "skills/unity/unity-navmesh/SKILL.md": "eed085c42c362931ebdab46685388f599ef73991",
+    "skills/workflows/game-jam/SKILL.md": "60c875d3ea423d9770d266c445dc28c1728123e0",
+    "skills/workflows/prototype-fast/SKILL.md": "b552d85b0975a66f626a76ae3581480f5e57ed14"
   },
   "bergside/awesome-design-skills": {
-    "skills/creative/SKILL.md": "8535915b704a4ac791027f47d4592a34e3d99560"
+    "skills/creative/SKILL.md": "8535915b704a4ac791027f47d4592a34e3d99560",
+    "skills/minimal/SKILL.md": "1ffeadae3771b56358406bad4932464c2c24cf39",
+    "skills/neobrutalism/SKILL.md": "8b5d84479363a517ca450fefa7b2086123477ab1"
   },
   "tradermonty/claude-trading-skills": {
     "skills/backtest-expert/SKILL.md": "ad39f2b6f04884768d1891b34309720cf4902b58",

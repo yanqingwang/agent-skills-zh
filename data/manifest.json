@@ -3491,6 +3491,18 @@
         {
           "upstream": "skills/marketing-psychology/SKILL.md",
           "local": "skills/growth/product/marketing-psychology/SKILL.md"
+        },
+        {
+          "upstream": "skills/content-strategy/SKILL.md",
+          "local": "skills/growth/product/content-strategy/SKILL.md"
+        },
+        {
+          "upstream": "skills/churn-prevention/SKILL.md",
+          "local": "skills/growth/product/churn-prevention/SKILL.md"
+        },
+        {
+          "upstream": "skills/customer-research/SKILL.md",
+          "local": "skills/growth/product/customer-research/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3581,6 +3593,42 @@
         {
           "upstream": "skills/marketing-psychology/evals/evals.json",
           "local": "skills/growth/product/marketing-psychology/evals/evals.json"
+        },
+        {
+          "upstream": "skills/content-strategy/evals/evals.json",
+          "local": "skills/growth/product/content-strategy/evals/evals.json"
+        },
+        {
+          "upstream": "skills/content-strategy/references/content-distribution.md",
+          "local": "skills/growth/product/content-strategy/references/content-distribution.md"
+        },
+        {
+          "upstream": "skills/content-strategy/references/headless-cms.md",
+          "local": "skills/growth/product/content-strategy/references/headless-cms.md"
+        },
+        {
+          "upstream": "skills/churn-prevention/evals/evals.json",
+          "local": "skills/growth/product/churn-prevention/evals/evals.json"
+        },
+        {
+          "upstream": "skills/churn-prevention/references/cancel-flow-patterns.md",
+          "local": "skills/growth/product/churn-prevention/references/cancel-flow-patterns.md"
+        },
+        {
+          "upstream": "skills/churn-prevention/references/dunning-playbook.md",
+          "local": "skills/growth/product/churn-prevention/references/dunning-playbook.md"
+        },
+        {
+          "upstream": "skills/customer-research/evals/evals.json",
+          "local": "skills/growth/product/customer-research/evals/evals.json"
+        },
+        {
+          "upstream": "skills/customer-research/references/interviews-and-surveys.md",
+          "local": "skills/growth/product/customer-research/references/interviews-and-surveys.md"
+        },
+        {
+          "upstream": "skills/customer-research/references/source-guides.md",
+          "local": "skills/growth/product/customer-research/references/source-guides.md"
         }
       ],
       "verbatim_excluded": [
@@ -16892,6 +16940,30 @@
         {
           "upstream": "product-team/skills/spec-to-repo/SKILL.md",
           "local": "skills/developer/engineering/spec-to-repo/SKILL.md"
+        },
+        {
+          "upstream": "engineering/skills/focused-fix/SKILL.md",
+          "local": "skills/developer/engineering/focused-fix/SKILL.md"
+        },
+        {
+          "upstream": "engineering/zero-hallucination-coder/skills/zero-hallucination-coder/SKILL.md",
+          "local": "skills/developer/engineering/zero-hallucination-coder/SKILL.md"
+        },
+        {
+          "upstream": "engineering/skills/pr-review-expert/SKILL.md",
+          "local": "skills/developer/quality/pr-review-expert/SKILL.md"
+        },
+        {
+          "upstream": "engineering-team/skills/adversarial-reviewer/SKILL.md",
+          "local": "skills/developer/quality/adversarial-reviewer/SKILL.md"
+        },
+        {
+          "upstream": "engineering/llm-cost-optimizer/skills/llm-cost-optimizer/SKILL.md",
+          "local": "skills/developer/efficiency/llm-cost-optimizer/SKILL.md"
+        },
+        {
+          "upstream": "business-growth/skills/contract-and-proposal-writer/SKILL.md",
+          "local": "skills/corporate/sales/contract-and-proposal-writer/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17383,6 +17455,14 @@
         {
           "upstream": "skills/n8n-code-tool/SKILL.md",
           "local": "skills/toolbox/automation/n8n-code-tool/SKILL.md"
+        },
+        {
+          "upstream": "skills/using-n8n-mcp-skills/SKILL.md",
+          "local": "skills/toolbox/automation/using-n8n-mcp-skills/SKILL.md"
+        },
+        {
+          "upstream": "skills/n8n-multi-instance/SKILL.md",
+          "local": "skills/toolbox/automation/n8n-multi-instance/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17445,6 +17525,14 @@
         {
           "upstream": "skills/n8n-code-tool/README.md",
           "local": "skills/toolbox/automation/n8n-code-tool/README.md"
+        },
+        {
+          "upstream": "skills/using-n8n-mcp-skills/README.md",
+          "local": "skills/toolbox/automation/using-n8n-mcp-skills/README.md"
+        },
+        {
+          "upstream": "skills/n8n-multi-instance/README.md",
+          "local": "skills/toolbox/automation/n8n-multi-instance/README.md"
         }
       ],
       "verbatim_excluded": [
@@ -17739,6 +17827,22 @@
         {
           "upstream": "plugins/review-agent-governance/skills/review-agent-setup/SKILL.md",
           "local": "skills/developer/quality/review-agent-setup/SKILL.md"
+        },
+        {
+          "upstream": "plugins/python-development/skills/python-anti-patterns/SKILL.md",
+          "local": "skills/developer/engineering/python-anti-patterns/SKILL.md"
+        },
+        {
+          "upstream": "plugins/python-development/skills/python-code-style/SKILL.md",
+          "local": "skills/developer/engineering/python-code-style/SKILL.md"
+        },
+        {
+          "upstream": "plugins/file-conversion/skills/file-conversion/SKILL.md",
+          "local": "skills/toolbox/automation/file-conversion/SKILL.md"
+        },
+        {
+          "upstream": "plugins/observability-monitoring/skills/grafana-dashboards/SKILL.md",
+          "local": "skills/developer/quality/grafana-dashboards/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18283,6 +18387,18 @@
         {
           "upstream": "skills/unity/unity-animation/SKILL.md",
           "local": "skills/gamedev/unity-animation/SKILL.md"
+        },
+        {
+          "upstream": "skills/unity/unity-navmesh/SKILL.md",
+          "local": "skills/gamedev/unity-navmesh/SKILL.md"
+        },
+        {
+          "upstream": "skills/workflows/game-jam/SKILL.md",
+          "local": "skills/gamedev/game-jam/SKILL.md"
+        },
+        {
+          "upstream": "skills/workflows/prototype-fast/SKILL.md",
+          "local": "skills/gamedev/prototype-fast/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18355,6 +18471,14 @@
         {
           "upstream": "skills/brutalism/SKILL.md",
           "local": "skills/designer/design/brutalism/SKILL.md"
+        },
+        {
+          "upstream": "skills/minimal/SKILL.md",
+          "local": "skills/designer/design/minimal/SKILL.md"
+        },
+        {
+          "upstream": "skills/neobrutalism/SKILL.md",
+          "local": "skills/designer/design/neobrutalism/SKILL.md"
         }
       ],
       "verbatim": [
@@ -18369,6 +18493,14 @@
         {
           "upstream": "skills/brutalism/DESIGN.md",
           "local": "skills/designer/design/brutalism/DESIGN.md"
+        },
+        {
+          "upstream": "skills/minimal/DESIGN.md",
+          "local": "skills/designer/design/minimal/DESIGN.md"
+        },
+        {
+          "upstream": "skills/neobrutalism/DESIGN.md",
+          "local": "skills/designer/design/neobrutalism/DESIGN.md"
         }
       ],
       "verbatim_excluded": [

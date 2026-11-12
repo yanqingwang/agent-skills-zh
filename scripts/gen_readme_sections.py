@@ -102,6 +102,22 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/developer/quality/sast-configuration/SKILL.md",
             "skills/developer/quality/review-agent-setup/SKILL.md",
         ]),
+        ("端到端修复与零幻觉编码", [
+            "skills/developer/engineering/focused-fix/SKILL.md",
+            "skills/developer/engineering/zero-hallucination-coder/SKILL.md",
+        ]),
+        ("Python 代码质量与规范", [
+            "skills/developer/engineering/python-anti-patterns/SKILL.md",
+            "skills/developer/engineering/python-code-style/SKILL.md",
+        ]),
+        ("评审、对抗审查与可观测性", [
+            "skills/developer/quality/pr-review-expert/SKILL.md",
+            "skills/developer/quality/adversarial-reviewer/SKILL.md",
+            "skills/developer/quality/grafana-dashboards/SKILL.md",
+        ]),
+        ("LLM 成本优化", [
+            "skills/developer/efficiency/llm-cost-optimizer/SKILL.md",
+        ]),
     ],
     "✍️ 写作者": [
         ("去掉 AI 腔、让文字像人写的", [
@@ -148,6 +164,10 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ("画架构图 / 流程图 / 编辑级图表", [
             "skills/designer/design/diagram-design/SKILL.md",
             "skills/designer/design/archify/SKILL.md",
+        ]),
+        ("极简与新粗野主义风格", [
+            "skills/designer/design/minimal/SKILL.md",
+            "skills/designer/design/neobrutalism/SKILL.md",
         ]),
     ],
     "🔬 研究者": [
@@ -212,6 +232,11 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/growth/product/product-vision/SKILL.md",
             "skills/growth/product/stakeholder-map/SKILL.md",
         ]),
+        ("内容策略、留存与客户研究", [
+            "skills/growth/product/content-strategy/SKILL.md",
+            "skills/growth/product/churn-prevention/SKILL.md",
+            "skills/growth/product/customer-research/SKILL.md",
+        ]),
     ],
     "🎮 游戏开发者": [
         ("引擎内脚本与玩法", [
@@ -230,6 +255,11 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
         ]),
         ("手感与反馈（game feel）", [
             "skills/gamedev/game-feel/SKILL.md",
+        ]),
+        ("NavMesh、Game Jam 与快速原型", [
+            "skills/gamedev/unity-navmesh/SKILL.md",
+            "skills/gamedev/game-jam/SKILL.md",
+            "skills/gamedev/prototype-fast/SKILL.md",
         ]),
     ],
     "🎬 创作者": [
@@ -267,6 +297,9 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/corporate/ecommerce/dropshipping-product-research/SKILL.md",
             "skills/corporate/ecommerce/competitor-price-analysis/SKILL.md",
             "skills/corporate/ecommerce/customer-feedback-analysis/SKILL.md",
+        ]),
+        ("合同与提案撰写", [
+            "skills/corporate/sales/contract-and-proposal-writer/SKILL.md",
         ]),
     ],
     "🧰 通用工具（所有职业）": [
@@ -309,6 +342,11 @@ RECOMMENDATIONS: dict[str, list[tuple[str, list[str]]]] = {
             "skills/toolbox/meta/skill-development/SKILL.md",
             "skills/toolbox/meta/hook-development/SKILL.md",
             "skills/toolbox/meta/mcp-integration/SKILL.md",
+        ]),
+        ("文件格式转换与 n8n 进阶", [
+            "skills/toolbox/automation/file-conversion/SKILL.md",
+            "skills/toolbox/automation/using-n8n-mcp-skills/SKILL.md",
+            "skills/toolbox/automation/n8n-multi-instance/SKILL.md",
         ]),
     ],
 }

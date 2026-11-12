@@ -37,6 +37,10 @@
 - **省 token 与输出可读性** → [caveman](skills/developer/efficiency/caveman/SKILL.md) · [i-have-adhd](skills/developer/efficiency/i-have-adhd/SKILL.md)
 - **团队评审与 QA（gstack）** → [plan-ceo-review](skills/developer/gstack/plan-ceo-review/SKILL.md) · [qa](skills/developer/gstack/qa/SKILL.md) · [office-hours](skills/developer/gstack/office-hours/SKILL.md)
 - **工程结构、CI 与安全扫描治理** → [python-project-structure](skills/developer/engineering/python-project-structure/SKILL.md) · [gitlab-ci-patterns](skills/developer/engineering/gitlab-ci-patterns/SKILL.md) · [sast-configuration](skills/developer/quality/sast-configuration/SKILL.md) · [review-agent-setup](skills/developer/quality/review-agent-setup/SKILL.md)
+- **端到端修复与零幻觉编码** → ["focused-fix"](skills/developer/engineering/focused-fix/SKILL.md) · [zero-hallucination-coder](skills/developer/engineering/zero-hallucination-coder/SKILL.md)
+- **Python 代码质量与规范** → [python-anti-patterns](skills/developer/engineering/python-anti-patterns/SKILL.md) · [python-code-style](skills/developer/engineering/python-code-style/SKILL.md)
+- **评审、对抗审查与可观测性** → ["pr-review-expert"](skills/developer/quality/pr-review-expert/SKILL.md) · ["adversarial-reviewer"](skills/developer/quality/adversarial-reviewer/SKILL.md) · [grafana-dashboards](skills/developer/quality/grafana-dashboards/SKILL.md)
+- **LLM 成本优化** → [llm-cost-optimizer](skills/developer/efficiency/llm-cost-optimizer/SKILL.md)
 
 ### ✍️ 写作者
 
@@ -54,6 +58,7 @@
 - **UI 设计全家桶（ui-ux-pro-max 系）** → [ui-ux-pro-max](skills/designer/design/ui-ux-pro-max/SKILL.md) · [design](skills/designer/design/design/SKILL.md) · [design-system](skills/designer/design/design-system/SKILL.md) · [ui-styling](skills/designer/design/ui-styling/SKILL.md) · [brand](skills/designer/design/brand/SKILL.md) · [banner-design](skills/designer/design/banner-design/SKILL.md) · [slides](skills/designer/design/slides/SKILL.md)
 - **风格化视觉与创意落地页** → [creative](skills/designer/design/creative/SKILL.md)
 - **画架构图 / 流程图 / 编辑级图表** → [diagram-design](skills/designer/design/diagram-design/SKILL.md) · [archify](skills/designer/design/archify/SKILL.md)
+- **极简与新粗野主义风格** → [minimal](skills/designer/design/minimal/SKILL.md) · [neobrutalism](skills/designer/design/neobrutalism/SKILL.md)
 
 ### 🔬 研究者
 
@@ -75,6 +80,7 @@
 - **量化研究与数据把关** → [backtest-expert](skills/growth/product/backtest-expert/SKILL.md) · [data-quality-checker](skills/growth/product/data-quality-checker/SKILL.md)
 - **定价、发布与增长实验** → [pricing](skills/growth/product/pricing/SKILL.md) · [launch](skills/growth/product/launch/SKILL.md) · [ab-testing](skills/growth/product/ab-testing/SKILL.md) · [marketing-psychology](skills/growth/product/marketing-psychology/SKILL.md)
 - **产品愿景与干系人对齐** → [product-vision](skills/growth/product/product-vision/SKILL.md) · [stakeholder-map](skills/growth/product/stakeholder-map/SKILL.md)
+- **内容策略、留存与客户研究** → [content-strategy](skills/growth/product/content-strategy/SKILL.md) · [churn-prevention](skills/growth/product/churn-prevention/SKILL.md) · [customer-research](skills/growth/product/customer-research/SKILL.md)
 
 ### 🎮 游戏开发者
 
@@ -82,6 +88,7 @@
 - **机制设计与创意方向** → [game-designer Agent](skills/gamedev/agents/game-designer.md) · [creative-director Agent](skills/gamedev/agents/creative-director.md)
 - **引擎进阶：信号、着色器与动画** → [godot-signals-groups](skills/gamedev/godot-signals-groups/SKILL.md) · [godot-shaders](skills/gamedev/godot-shaders/SKILL.md) · [unity-animation](skills/gamedev/unity-animation/SKILL.md)
 - **手感与反馈（game feel）** → [game-feel](skills/gamedev/game-feel/SKILL.md)
+- **NavMesh、Game Jam 与快速原型** → [unity-navmesh](skills/gamedev/unity-navmesh/SKILL.md) · [game-jam](skills/gamedev/game-jam/SKILL.md) · [prototype-fast](skills/gamedev/prototype-fast/SKILL.md)
 
 ### 🎬 创作者
 
@@ -96,6 +103,7 @@
 - **销售：客户画像与线索资格** → [sales-icp](skills/corporate/sales/sales-icp/SKILL.md) · [sales-qualify](skills/corporate/sales/sales-qualify/SKILL.md) · [sales-research](skills/corporate/sales/sales-research/SKILL.md)
 - **销售：冷触达与方案赢单** → [sales-outreach](skills/corporate/sales/sales-outreach/SKILL.md) · [sales-proposal](skills/corporate/sales/sales-proposal/SKILL.md)
 - **电商：选品、定价与客户反馈** → [dropshipping-product-research](skills/corporate/ecommerce/dropshipping-product-research/SKILL.md) · [competitor-price-analysis](skills/corporate/ecommerce/competitor-price-analysis/SKILL.md) · [customer-feedback-analysis](skills/corporate/ecommerce/customer-feedback-analysis/SKILL.md)
+- **合同与提案撰写** → ["contract-and-proposal-writer"](skills/corporate/sales/contract-and-proposal-writer/SKILL.md)
 
 ### 🧰 通用工具（所有职业）
 
@@ -109,6 +117,7 @@
 - **Obsidian 知识库操作（官方）** → [obsidian-cli](skills/toolbox/obsidian/obsidian-cli/SKILL.md) · [obsidian-markdown](skills/toolbox/obsidian/obsidian-markdown/SKILL.md) · [obsidian-bases](skills/toolbox/obsidian/obsidian-bases/SKILL.md) · [json-canvas](skills/toolbox/obsidian/json-canvas/SKILL.md) · [defuddle](skills/toolbox/obsidian/defuddle/SKILL.md) · [knap](skills/toolbox/obsidian/knap/SKILL.md)
 - **GCP gcloud 命令护栏（官方）** → [gcloud](skills/toolbox/cloud/gcloud/SKILL.md)
 - **Claude Code 插件开发（官方）** → [skill-development](skills/toolbox/meta/skill-development/SKILL.md) · [hook-development](skills/toolbox/meta/hook-development/SKILL.md) · [mcp-integration](skills/toolbox/meta/mcp-integration/SKILL.md)
+- **文件格式转换与 n8n 进阶** → [file-conversion](skills/toolbox/automation/file-conversion/SKILL.md) · [using-n8n-mcp-skills](skills/toolbox/automation/using-n8n-mcp-skills/SKILL.md) · [n8n-multi-instance](skills/toolbox/automation/n8n-multi-instance/SKILL.md)
 
 ### 上游仓库登记（同步监控清单）
 
@@ -134,18 +143,18 @@
 | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | 64,335 | MIT | ? | 1 | 286 | [`3eb03b8`](https://github.com/cathrynlavery/diagram-design/commit/3eb03b8d2984e47ddd9b083db9abdcdaa3c69635) |
 | [blader/humanizer](https://github.com/blader/humanizer) | 63,995 | MIT | ? | 1 | 0 | [`0ef9fe5`](https://github.com/blader/humanizer/commit/0ef9fe5bc3572734fd3ae6c448fe00a30cd5dcf0) |
 | [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | 59,825 | MIT | ? | 1 | 0 | [`1ecea19`](https://github.com/ayghri/i-have-adhd/commit/1ecea1993b7fce257ffbd686c070948b5e07eda6) |
-| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 58,091 | MIT | ? | 8 | 22 | [`88c79f6`](https://github.com/coreyhaines31/marketingskills/commit/88c79f6528a9347420e57ceb1fff9a60de651768) |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 58,091 | MIT | ? | 11 | 31 | [`88c79f6`](https://github.com/coreyhaines31/marketingskills/commit/88c79f6528a9347420e57ceb1fff9a60de651768) |
 | [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) | 57,337 | MIT | 整目录 | 1 | 19 | [`c1c8a8c`](https://github.com/cloudflare/security-audit-skill/commit/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8) |
 | [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 55,827 | MIT | 旗舰抽取（7 件） | 52 | 72 | [`a25cf9e`](https://github.com/K-Dense-AI/scientific-agent-skills/commit/a25cf9ec00e2745d03f8704acf6f6919694ccd9a) |
 | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | 50,642 | MIT | 整仓 | 6 | 5 | [`3ccff53`](https://github.com/kepano/obsidian-skills/commit/3ccff5338ea700537839b21900aa5358a0402c98) |
 | [Nutlope/hallmark](https://github.com/Nutlope/hallmark) | 45,939 | MIT | 整目录 | 1 | 182 | [`4f6a46c`](https://github.com/Nutlope/hallmark/commit/4f6a46c6dc325d40ab268c93e25c7b96676ebccd) |
 | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 45,841 | Apache-2.0 | 抽取 | 9 | 41 | [`a7ba5b9`](https://github.com/anthropics/claude-plugins-official/commit/a7ba5b93db0c7c8d17f3f1d25853adca79598a1a) |
-| [wshobson/agents](https://github.com/wshobson/agents) | 42,114 | MIT | 抽取 | 12 | 9 | [`7e2fb55`](https://github.com/wshobson/agents/commit/7e2fb559cf4b824b27f1fec49fe88f7511066d26) |
+| [wshobson/agents](https://github.com/wshobson/agents) | 42,114 | MIT | 抽取 | 16 | 9 | [`7e2fb55`](https://github.com/wshobson/agents/commit/7e2fb559cf4b824b27f1fec49fe88f7511066d26) |
 | [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill) | 36,785 | MIT | ? | 1 | 25 | [`7540eef`](https://github.com/virgiliojr94/book-to-skill/commit/7540eefbe74933f5fc84c86becac52486b347778) |
 | [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) | 33,478 | MIT | Agent 定义 | 2 | 0 | [`05ad7c8`](https://github.com/Donchitos/Claude-Code-Game-Studios/commit/05ad7c8a5b8aa2aa86bbd3439ae7cf7295cac418) |
 | [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | 32,952 | Apache-2.0 | 抽取 | 3 | 110 | [`c56512c`](https://github.com/iOfficeAI/OfficeCLI/commit/c56512c8c7b76fe284f09940e4cd492470099d3e) |
 | [zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) | 31,756 | MIT | 整目录 | 1 | 78 | [`9906a34`](https://github.com/zarazhangrui/frontend-slides/commit/9906a34d640d2111f724544cbc50f7f130569ae1) |
-| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | 29,179 | MIT | 抽取 | 7 | 31 | [`9ef0c3c`](https://github.com/alirezarezvani/claude-skills/commit/9ef0c3c213932e645cc5cbeeb3c35c3a762a2437) |
+| [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) | 29,179 | MIT | 抽取 | 13 | 31 | [`9ef0c3c`](https://github.com/alirezarezvani/claude-skills/commit/9ef0c3c213932e645cc5cbeeb3c35c3a762a2437) |
 | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | 27,837 | MIT | ? | 1 | 31 | [`0fa6c79`](https://github.com/OthmanAdi/planning-with-files/commit/0fa6c79885e14534074cb7df8535e1efa3dc7149) |
 | [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | 27,633 | MIT | 抽取 | 6 | 0 | [`2a12295`](https://github.com/phuryn/pm-skills/commit/2a12295a7717569baa7be181b4cfebe3ca38a6bb) |
 | [titanwings/distilly](https://github.com/titanwings/distilly) | 26,310 | MIT | ? | 1 | 58 | [`0afc45c`](https://github.com/titanwings/distilly/commit/0afc45c29c360ba7bc8260f1bb0bf34e9155f4fa) |
@@ -164,15 +173,15 @@
 | [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) | 12,183 | MIT | 抽取 | 4 | 21 | [`078a25c`](https://github.com/Jeffallan/claude-skills/commit/078a25cc5bfd8011459be7b91d004e900c1d02d3) |
 | [tw93/Waza](https://github.com/tw93/Waza) | 7,496 | MIT | 规则型 | 7 | 45 | [`5821754`](https://github.com/tw93/Waza/commit/58217546cd94fcf5ddcde4265c00a9377ed3192c) |
 | [MengTo/Skills](https://github.com/MengTo/Skills) | 7,200 | MIT | 抽取 | 2 | 10 | [`aa0a995`](https://github.com/MengTo/Skills/commit/aa0a995a0ea33a2600b19ea7c9ff85f17e7ca0da) |
-| [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | 6,582 | Apache-2.0 | 抽取 | 9 | 10 | [`19d93f9`](https://github.com/gamedev-skills/awesome-gamedev-agent-skills/commit/19d93f97c9c1ea0f8b306e77aa81e0d3e352d3e9) |
-| [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | 6,573 | MIT | 抽取 | 4 | 15 | [`e037563`](https://github.com/czlonkowski/n8n-skills/commit/e037563e101749e630e6688d121d04529fe6ee7b) |
+| [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | 6,582 | Apache-2.0 | 抽取 | 12 | 10 | [`19d93f9`](https://github.com/gamedev-skills/awesome-gamedev-agent-skills/commit/19d93f97c9c1ea0f8b306e77aa81e0d3e352d3e9) |
+| [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | 6,573 | MIT | 抽取 | 6 | 17 | [`e037563`](https://github.com/czlonkowski/n8n-skills/commit/e037563e101749e630e6688d121d04529fe6ee7b) |
 | [browser-act/skills](https://github.com/browser-act/skills) | 6,311 | MIT | 抽取 | 1 | 0 | [`11c057b`](https://github.com/browser-act/skills/commit/11c057b03f92101642cadc9f840564574120d184) |
 | [muxuuu/serenity-skill](https://github.com/muxuuu/serenity-skill) | 4,154 | MIT | 整仓 | 1 | 16 | [`193e409`](https://github.com/muxuuu/serenity-skill/commit/193e409c6ec6acad8e52c29c0570470ed83e3eae) |
 | [NVIDIA/skills](https://github.com/NVIDIA/skills) | 3,830 | Apache-2.0 AND CC-BY-4.0 | 抽取 | 2 | 39 | [`40af08d`](https://github.com/NVIDIA/skills/commit/40af08da3d4f52325cfa030775e26705d5f0ba78) |
 | [foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills) | 3,788 | Apache-2.0 | 引用集 | 1 | 36 | [`d881d9c`](https://github.com/foryourhealth111-pixel/Vibe-Skills/commit/d881d9cd6b4a37186c447f7758e802d70c2b27ef) |
 | [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) | 3,558 | MIT | 抽取 | 4 | 21 | [`d8e71ce`](https://github.com/tradermonty/claude-trading-skills/commit/d8e71ce2f0b069eb5b6fca352857c168c35e6c46) |
 | [patch-gg/pixelfx](https://github.com/patch-gg/pixelfx) | 3,492 | MIT | 整目录 | 1 | 299 | [`a841596`](https://github.com/patch-gg/pixelfx/commit/a84159688af3ca37a4be05a0d422b94451b2e24e) |
-| [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills) | 3,450 | MIT | 抽取 | 3 | 3 | [`f631a09`](https://github.com/bergside/awesome-design-skills/commit/f631a09b4fcc0166f2e2c1a8c81906ef680c57e8) |
+| [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills) | 3,450 | MIT | 抽取 | 5 | 5 | [`f631a09`](https://github.com/bergside/awesome-design-skills/commit/f631a09b4fcc0166f2e2c1a8c81906ef680c57e8) |
 | [RKiding/Awesome-finance-skills](https://github.com/RKiding/Awesome-finance-skills) | 3,096 | Apache-2.0 | 抽取 | 2 | 11 | [`853f09b`](https://github.com/RKiding/Awesome-finance-skills/commit/853f09b4d0baae747759ed31e21ed5c5b2316a5f) |
 | [questflowai/investorskills](https://github.com/questflowai/investorskills) | 1,907 | MIT | 抽取 | 4 | 4 | [`2844d78`](https://github.com/questflowai/investorskills/commit/2844d7809a73c01e769c8c1c7ae8189788db4d9e) |
 | [zubair-trabzada/ai-sales-team-claude](https://github.com/zubair-trabzada/ai-sales-team-claude) | 1,500 | MIT | 抽取 | 5 | 0 | [`efef8b8`](https://github.com/zubair-trabzada/ai-sales-team-claude/commit/efef8b8a4ce8c93d8d6b4af9d1423db38f0de2ce) |

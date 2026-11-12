@@ -18,6 +18,7 @@
 
 ## corporate · sales
 
+- [合同与提案撰写（contract-and-proposal-writer）](skills/corporate/sales/contract-and-proposal-writer/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 - [sales-icp](skills/corporate/sales/sales-icp/SKILL.md) — 上游 [zubair-trabzada/ai-sales-team-claude](https://github.com/zubair-trabzada/ai-sales-team-claude)
 - [sales-outreach](skills/corporate/sales/sales-outreach/SKILL.md) — 上游 [zubair-trabzada/ai-sales-team-claude](https://github.com/zubair-trabzada/ai-sales-team-claude)
 - [sales-proposal](skills/corporate/sales/sales-proposal/SKILL.md) — 上游 [zubair-trabzada/ai-sales-team-claude](https://github.com/zubair-trabzada/ai-sales-team-claude)
@@ -34,11 +35,14 @@
 - [A/B 测试（ab-testing）](skills/growth/product/ab-testing/SKILL.md) — 上游 [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
 - [backtest-expert](skills/growth/product/backtest-expert/SKILL.md) — 上游 [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills)
 - [breakout-trade-planner](skills/growth/product/breakout-trade-planner/SKILL.md) — 上游 [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills)
+- [流失预防（churn-prevention）](skills/growth/product/churn-prevention/SKILL.md) — 上游 [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
 - [cohort-analysis](skills/growth/product/cohort-analysis/SKILL.md) — 上游 [phuryn/pm-skills](https://github.com/phuryn/pm-skills)
 - [competitive-teardown](skills/growth/product/competitive-teardown/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
+- [内容策略（content-strategy）](skills/growth/product/content-strategy/SKILL.md) — 上游 [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
 - [copywriting](skills/growth/product/copywriting/SKILL.md) — 上游 [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
 - [create-prd](skills/growth/product/create-prd/SKILL.md) — 上游 [phuryn/pm-skills](https://github.com/phuryn/pm-skills)
 - [cro](skills/growth/product/cro/SKILL.md) — 上游 [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
+- [客户研究（customer-research）](skills/growth/product/customer-research/SKILL.md) — 上游 [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
 - [data-quality-checker](skills/growth/product/data-quality-checker/SKILL.md) — 上游 [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills)
 - [drawdown-circuit-breaker](skills/growth/product/drawdown-circuit-breaker/SKILL.md) — 上游 [tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills)
 - [intended-vs-implemented](skills/growth/product/intended-vs-implemented/SKILL.md) — 上游 [phuryn/pm-skills](https://github.com/phuryn/pm-skills)
@@ -94,6 +98,7 @@
 
 - [省 token 电报体（caveman）](skills/developer/efficiency/caveman/SKILL.md) — 上游 [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman)
 - [答案前置输出（i-have-adhd）](skills/developer/efficiency/i-have-adhd/SKILL.md) — 上游 [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)
+- [LLM 成本优化（llm-cost-optimizer）](skills/developer/efficiency/llm-cost-optimizer/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 
 ## 开发者 · engineering
 
@@ -103,11 +108,14 @@
 - [build-mcp-app](skills/developer/engineering/build-mcp-app/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 - [build-mcp-server](skills/developer/engineering/build-mcp-server/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 - [deployment-pipeline-design](skills/developer/engineering/deployment-pipeline-design/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
+- [端到端修复（focused-fix）](skills/developer/engineering/focused-fix/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 - [GitLab CI 流水线（gitlab-ci-patterns）](skills/developer/engineering/gitlab-ci-patterns/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [想法精炼](skills/developer/engineering/idea-refine/SKILL.md) — 上游 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
 - [parallel-debugging](skills/developer/engineering/parallel-debugging/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [文件化计划（planning-with-files）](skills/developer/engineering/planning-with-files/SKILL.md) — 上游 [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files)
 - [最小改动（ponytail）](skills/developer/engineering/ponytail/SKILL.md) — 上游 [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)
+- [Python 反模式清单（python-anti-patterns）](skills/developer/engineering/python-anti-patterns/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
+- [Python 代码风格（python-code-style）](skills/developer/engineering/python-code-style/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [Python 工程结构（python-project-structure）](skills/developer/engineering/python-project-structure/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [read](skills/developer/engineering/read/SKILL.md) — 上游 [tw93/Waza](https://github.com/tw93/Waza)
 - [rules](skills/developer/engineering/rules/anti-patterns.md) — 上游 [tw93/Waza](https://github.com/tw93/Waza)
@@ -122,6 +130,7 @@
 - [workflow-ship-change](skills/developer/engineering/workflow-ship-change/SKILL.md) — 上游 [MengTo/Skills](https://github.com/MengTo/Skills)
 - [写计划](skills/developer/engineering/writing-plans/SKILL.md) — 上游 [obra/superpowers](https://github.com/obra/superpowers)
 - [writing-rules](skills/developer/engineering/writing-rules/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
+- [零幻觉编码（zero-hallucination-coder）](skills/developer/engineering/zero-hallucination-coder/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 
 ## 开发者 · framework
 
@@ -152,6 +161,7 @@
 
 ## 开发者 · quality
 
+- [对抗式审查（adversarial-reviewer）](skills/developer/quality/adversarial-reviewer/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 - [代码审查者 Agent](skills/developer/quality/agents/code-reviewer.md) — 上游 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
 - [api-designer](skills/developer/quality/api-designer/SKILL.md) — 上游 [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills)
 - [architecture-designer](skills/developer/quality/architecture-designer/SKILL.md) — 上游 [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills)
@@ -161,9 +171,11 @@
 - [代码审查](skills/developer/quality/code-review/SKILL.md) — 上游 [mattpocock/skills](https://github.com/mattpocock/skills)
 - [code-reviewer](skills/developer/quality/code-reviewer/SKILL.md) — 上游 [Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills)
 - [fastapi-templates](skills/developer/quality/fastapi-templates/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
+- [Grafana 仪表盘（grafana-dashboards）](skills/developer/quality/grafana-dashboards/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [health](skills/developer/quality/health/SKILL.md) — 上游 [tw93/Waza](https://github.com/tw93/Waza)
 - [hunt](skills/developer/quality/hunt/SKILL.md) — 上游 [tw93/Waza](https://github.com/tw93/Waza)
 - [multi-reviewer-patterns](skills/developer/quality/multi-reviewer-patterns/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
+- [PR 评审专家（pr-review-expert）](skills/developer/quality/pr-review-expert/SKILL.md) — 上游 [alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)
 - [审查 Agent 治理（review-agent-setup）](skills/developer/quality/review-agent-setup/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [SAST 静态安全扫描配置（sast-configuration）](skills/developer/quality/sast-configuration/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [secrets-management](skills/developer/quality/secrets-management/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
@@ -184,6 +196,10 @@
 
 - [游戏手感（game-feel）](skills/gamedev/game-feel/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
 
+## 游戏开发者 · game-jam
+
+- [Game Jam 快速开发（game-jam）](skills/gamedev/game-jam/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
+
 ## 游戏开发者 · godot-3d-essentials
 
 - [godot-3d-essentials](skills/gamedev/godot-3d-essentials/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
@@ -200,6 +216,10 @@
 
 - [Godot 信号与节点组（godot-signals-groups）](skills/gamedev/godot-signals-groups/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
 
+## 游戏开发者 · prototype-fast
+
+- [快速原型（prototype-fast）](skills/gamedev/prototype-fast/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
+
 ## 游戏开发者 · unity-animation
 
 - [Unity 角色动画（unity-animation）](skills/gamedev/unity-animation/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
@@ -207,6 +227,10 @@
 ## 游戏开发者 · unity-csharp-scripting
 
 - [unity-csharp-scripting](skills/gamedev/unity-csharp-scripting/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
+
+## 游戏开发者 · unity-navmesh
+
+- [Unity NavMesh 寻路（unity-navmesh）](skills/gamedev/unity-navmesh/SKILL.md) — 上游 [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills)
 
 ## 游戏开发者 · unreal-behavior-trees
 
@@ -261,6 +285,8 @@
 - [frontend-design](skills/designer/design/frontend-design/SKILL.md) — 上游 [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 - [反 AI 味设计（hallmark）](skills/designer/design/hallmark/SKILL.md) — 上游 [Nutlope/hallmark](https://github.com/Nutlope/hallmark)
 - [无可挑剔前端（impeccable）](skills/designer/design/impeccable/SKILL.md) — 上游 [pbakaus/impeccable](https://github.com/pbakaus/impeccable)
+- [极简风格（minimal）](skills/designer/design/minimal/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
+- [新粗野主义风格（neobrutalism）](skills/designer/design/neobrutalism/SKILL.md) — 上游 [bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills)
 - [幻灯片设计（slides）](skills/designer/design/slides/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 - [设计品味（taste）](skills/designer/design/taste-skill/SKILL.md) — 上游 [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)
 - [UI 样式落地（ui-styling）](skills/designer/design/ui-styling/SKILL.md) — 上游 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
@@ -269,11 +295,14 @@
 ## 通用工具箱 · automation
 
 - [browser-act](skills/toolbox/automation/browser-act/SKILL.md) — 上游 [browser-act/skills](https://github.com/browser-act/skills)
+- [文件格式转换（file-conversion）](skills/toolbox/automation/file-conversion/SKILL.md) — 上游 [wshobson/agents](https://github.com/wshobson/agents)
 - [n8n-code-javascript](skills/toolbox/automation/n8n-code-javascript/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
 - [n8n-code-python](skills/toolbox/automation/n8n-code-python/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
 - [n8n Code Tool 编程（n8n-code-tool）](skills/toolbox/automation/n8n-code-tool/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
 - [n8n-error-handling](skills/toolbox/automation/n8n-error-handling/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
+- [n8n 多实例管理（n8n-multi-instance）](skills/toolbox/automation/n8n-multi-instance/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
 - [notebooklm](skills/toolbox/automation/notebooklm/SKILL.md) — 上游 [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py)
+- [n8n MCP 技能使用指南（using-n8n-mcp-skills）](skills/toolbox/automation/using-n8n-mcp-skills/SKILL.md) — 上游 [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills)
 
 ## 通用工具箱 · cloud
 

@@ -312,3 +312,20 @@
 **排除说明**：sickn33/agentic-awesome-skills（数千件聚合）、affaan-m/ECC（多为 355B 桩件）、alirezarezvani 余量与 K-Dense 单库指南继续按「宁缺毋滥」缓收；iOfficeAI/OfficeCLI 单件 25–66KB 过大，留待专项批次。
 
 **累计：61 登记 / 60 监控 / 195 翻译件 / 5168 原样件（2026-11-12，第九批）。**
+
+## 十三、2026-11-12 第十批：六个存量合集追加（20 翻译件 / 13 原样件）
+
+**检索方式**：同第九批，逐仓枚举当前上游 HEAD 的 SKILL.md，剔除已收录件与单库绑定件；本批改用「prose-only 占位标记」流水线——译文只含散文与 ⟦CODE_k⟧ 标记，父脚本回填上游代码块，从根本上消除大文件代码块逐字节复制带来的输出超限风险。本批零新上游。
+
+| 上游 | 追加件 | 筛选依据 |
+|---|---|---|
+| alirezarezvani/claude-skills | focused-fix、zero-hallucination-coder、pr-review-expert、adversarial-reviewer、llm-cost-optimizer、contract-and-proposal-writer | 自包含单文件，端到端修复 / 零幻觉编码 / 评审对抗 / LLM 成本 / 合同提案，跨项目可复用的工程与商务方法论 |
+| wshobson/agents | python-anti-patterns、python-code-style、file-conversion、grafana-dashboards | Python 反模式与代码风格、文件格式转换、Grafana 仪表盘，均自包含单文件 |
+| gamedev-skills/awesome-gamedev-agent-skills | unity-navmesh、game-jam、prototype-fast | Unity NavMesh 寻路、Game Jam 与快速原型，补齐三大引擎与工作流 |
+| coreyhaines31/marketingskills | content-strategy、churn-prevention、customer-research | 内容策略、流失预防、客户研究，与第九批定价/发布/实验形成增长闭环 |
+| bergside/awesome-design-skills | minimal、neobrutalism | 极简、新粗野主义两种高频设计风格（各 1 个配套引用件） |
+| czlonkowski/n8n-skills | using-n8n-mcp-skills、n8n-multi-instance | n8n MCP 技能使用指南与多实例管理，补齐既有 n8n 工作流件 |
+
+**排除说明**：tradermonty 余量仅存于 `examples/` 示例副本、iOfficeAI/OfficeCLI 单件 25–66KB、K-Dense 单库指南、affaan-m/ECC 桩件与 sickn33 聚合大合集继续按「宁缺毋滥」缓收。
+
+**累计：61 登记 / 60 监控 / 215 翻译件 / 5181 原样件（2026-11-12，第十批）。**
