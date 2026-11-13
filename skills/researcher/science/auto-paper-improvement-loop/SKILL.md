@@ -2,11 +2,11 @@
 name: auto-paper-improvement-loop
 description: "通过 GPT-6-Astra xhigh 审查 → 实施修复 → 重新编译，自主改进一篇已生成的论文，共 2 轮。当用户说 \"改论文\"、\"improve paper\"、\"论文润色循环\"、\"auto improve\"，或希望迭代润色一篇已生成的论文时使用。"
 argument-hint: "[paper-directory] [— style-ref: <source>] [— edit-whitelist <path>]"
-allowed-tools: Bash(*), Read, Write, Edit, Grep, Glob, Skill, mcp__codex__codex, mcp__codex__codex-reply, mcp__antigravity__antigravity, mcp__antigravity__antigravity-reply, mcp__grok__grok, mcp__grok__grok-reply, mcp__claude-review__review, mcp__claude-review__review_reply, mcp__claude-review__review_start, mcp__claude-review__review_reply_start, mcp__claude-review__review_status
+allowed-tools: Bash(*), Read, Write, Edit, Grep, Glob, Skill, mcp__codex__codex, mcp__codex__codex-reply, mcp__antigravity__antigravity, mcp__antigravity__antigravity-reply, mcp__grok__grok, mcp__grok__grok-reply, mcp__claude-review__review, mcp__claude-review__review_reply, mcp__claude-review__review_start, mcp__claude-review__review_reply_start, mcp__claude-review__review_status, mcp__model-worker__worker, mcp__model-worker__worker_reply
 ---
 
 > **中文汉化版** · 上游：[wanshuiyin/Auto-claude-code-research-in-sleep](https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep) · 原文件：`skills/auto-paper-improvement-loop/SKILL.md` · License: MIT
-> 翻译日期：2026-10-25 · 同步状态：上游 HEAD（2026-10-25 快照）· AI 辅助翻译 + 人工校对
+> 翻译日期：2026-10-25（首译）· 2026-11-13 增量同步 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
 > 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
 # 论文自动改进循环：审查 → 修复 → 重新编译
