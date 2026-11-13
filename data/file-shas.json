@@ -55,7 +55,7 @@
     "archify/references/viewer-runtime.md": "ea150622eb057534c7ccc7608c8f661ddc13a378"
   },
   "Egonex-AI/Understand-Anything": {
-    "understand-anything-plugin/skills/understand/SKILL.md": "7f527d52ade8c5b6e1f2b43e79bd4c471ff863b1"
+    "understand-anything-plugin/skills/understand/SKILL.md": "a1e79d5c5332ac06da4de55a3997c272b825e17c"
   },
   "mvanhorn/last30days-skill": {
     "skills/last30days/SKILL.md": "01cbf44bacd6aa1a567f257908999c1dd84ff54e",
@@ -642,7 +642,7 @@
     ".claude/skills/ui-styling/SKILL.md": "b5a9acb9643e10b3629c0b9cac7e616c1080b597"
   },
   "pbakaus/impeccable": {
-    ".claude/skills/impeccable/SKILL.md": "d84acd41a9c1971d764576483e5fc9bff4d169cd"
+    ".claude/skills/impeccable/SKILL.md": "c211c73772fd65e4352894abf8d9803962d46045"
   },
   "cloudflare/security-audit-skill": {
     "skills/security-audit/SKILL.md": "92178dad304d3f63e37582a297026a7874e12c62"
