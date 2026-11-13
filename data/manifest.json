@@ -3544,6 +3544,18 @@
         {
           "upstream": "skills/pricing/SKILL.md",
           "local": "skills/growth/product/pricing/SKILL.md"
+        },
+        {
+          "upstream": "skills/launch/SKILL.md",
+          "local": "skills/growth/product/launch/SKILL.md"
+        },
+        {
+          "upstream": "skills/copy-editing/SKILL.md",
+          "local": "skills/writer/writing/copy-editing/SKILL.md"
+        },
+        {
+          "upstream": "skills/site-architecture/SKILL.md",
+          "local": "skills/growth/product/site-architecture/SKILL.md"
         }
       ],
       "verbatim": [
@@ -3790,6 +3802,42 @@
         {
           "upstream": "skills/pricing/references/tier-structure.md",
           "local": "skills/growth/product/pricing/references/tier-structure.md"
+        },
+        {
+          "upstream": "skills/launch/references/shipped-changes.md",
+          "local": "skills/growth/product/launch/references/shipped-changes.md"
+        },
+        {
+          "upstream": "skills/launch/references/site-launch-qa.md",
+          "local": "skills/growth/product/launch/references/site-launch-qa.md"
+        },
+        {
+          "upstream": "skills/copy-editing/references/checklist.md",
+          "local": "skills/writer/writing/copy-editing/references/checklist.md"
+        },
+        {
+          "upstream": "skills/copy-editing/references/content-refresh.md",
+          "local": "skills/writer/writing/copy-editing/references/content-refresh.md"
+        },
+        {
+          "upstream": "skills/copy-editing/references/plain-english-alternatives.md",
+          "local": "skills/writer/writing/copy-editing/references/plain-english-alternatives.md"
+        },
+        {
+          "upstream": "skills/site-architecture/references/mermaid-templates.md",
+          "local": "skills/growth/product/site-architecture/references/mermaid-templates.md"
+        },
+        {
+          "upstream": "skills/site-architecture/references/navigation-patterns.md",
+          "local": "skills/growth/product/site-architecture/references/navigation-patterns.md"
+        },
+        {
+          "upstream": "skills/site-architecture/references/platforms-and-migration.md",
+          "local": "skills/growth/product/site-architecture/references/platforms-and-migration.md"
+        },
+        {
+          "upstream": "skills/site-architecture/references/site-type-templates.md",
+          "local": "skills/growth/product/site-architecture/references/site-type-templates.md"
         }
       ],
       "verbatim_excluded": [
@@ -3840,6 +3888,10 @@
         {
           "upstream": "skills/bgpt-paper-search/SKILL.md",
           "local": "skills/researcher/science/bgpt-paper-search/SKILL.md"
+        },
+        {
+          "upstream": "skills/statsmodels/SKILL.md",
+          "local": "skills/researcher/science/statsmodels/SKILL.md"
         }
       ],
       "translated_prose": [
@@ -4308,6 +4360,42 @@
         {
           "upstream": "skills/statistical-power/scripts/simulate_power.py",
           "local": "skills/researcher/science/statistical-power/scripts/simulate_power.py"
+        },
+        {
+          "upstream": "skills/statsmodels/references/discrete_choice.md",
+          "local": "skills/researcher/science/statsmodels/references/discrete_choice.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/glm.md",
+          "local": "skills/researcher/science/statsmodels/references/glm.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/linear_models.md",
+          "local": "skills/researcher/science/statsmodels/references/linear_models.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/model_selection.md",
+          "local": "skills/researcher/science/statsmodels/references/model_selection.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/modeling_capabilities.md",
+          "local": "skills/researcher/science/statsmodels/references/modeling_capabilities.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/quick_start_guide.md",
+          "local": "skills/researcher/science/statsmodels/references/quick_start_guide.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/review.md",
+          "local": "skills/researcher/science/statsmodels/references/review.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/stats_diagnostics.md",
+          "local": "skills/researcher/science/statsmodels/references/stats_diagnostics.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/time_series.md",
+          "local": "skills/researcher/science/statsmodels/references/time_series.md"
         }
       ],
       "verbatim_excluded": [],
@@ -4365,6 +4453,10 @@
         {
           "upstream": "skills/frontend-patterns/SKILL.md",
           "local": "skills/developer/engineering/frontend-patterns/SKILL.md"
+        },
+        {
+          "upstream": "skills/docker-patterns/SKILL.md",
+          "local": "skills/developer/engineering/docker-patterns/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17468,6 +17560,18 @@
         {
           "upstream": "skills/chaos-engineer/SKILL.md",
           "local": "skills/developer/quality/chaos-engineer/SKILL.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/SKILL.md",
+          "local": "skills/developer/quality/kubernetes-specialist/SKILL.md"
+        },
+        {
+          "upstream": "skills/code-documenter/SKILL.md",
+          "local": "skills/developer/quality/code-documenter/SKILL.md"
+        },
+        {
+          "upstream": "skills/database-optimizer/SKILL.md",
+          "local": "skills/developer/quality/database-optimizer/SKILL.md"
         }
       ],
       "verbatim": [
@@ -17574,6 +17678,102 @@
         {
           "upstream": "skills/chaos-engineer/references/kubernetes-chaos.md",
           "local": "skills/developer/quality/chaos-engineer/references/kubernetes-chaos.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/configuration.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/configuration.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/cost-optimization.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/cost-optimization.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/custom-operators.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/custom-operators.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/gitops.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/gitops.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/helm-charts.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/helm-charts.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/multi-cluster.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/multi-cluster.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/networking.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/networking.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/service-mesh.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/service-mesh.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/storage.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/storage.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/troubleshooting.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/troubleshooting.md"
+        },
+        {
+          "upstream": "skills/kubernetes-specialist/references/workloads.md",
+          "local": "skills/developer/quality/kubernetes-specialist/references/workloads.md"
+        },
+        {
+          "upstream": "skills/code-documenter/references/api-docs-fastapi-django.md",
+          "local": "skills/developer/quality/code-documenter/references/api-docs-fastapi-django.md"
+        },
+        {
+          "upstream": "skills/code-documenter/references/api-docs-nestjs-express.md",
+          "local": "skills/developer/quality/code-documenter/references/api-docs-nestjs-express.md"
+        },
+        {
+          "upstream": "skills/code-documenter/references/coverage-reports.md",
+          "local": "skills/developer/quality/code-documenter/references/coverage-reports.md"
+        },
+        {
+          "upstream": "skills/code-documenter/references/documentation-systems.md",
+          "local": "skills/developer/quality/code-documenter/references/documentation-systems.md"
+        },
+        {
+          "upstream": "skills/code-documenter/references/interactive-api-docs.md",
+          "local": "skills/developer/quality/code-documenter/references/interactive-api-docs.md"
+        },
+        {
+          "upstream": "skills/code-documenter/references/python-docstrings.md",
+          "local": "skills/developer/quality/code-documenter/references/python-docstrings.md"
+        },
+        {
+          "upstream": "skills/code-documenter/references/typescript-jsdoc.md",
+          "local": "skills/developer/quality/code-documenter/references/typescript-jsdoc.md"
+        },
+        {
+          "upstream": "skills/code-documenter/references/user-guides-tutorials.md",
+          "local": "skills/developer/quality/code-documenter/references/user-guides-tutorials.md"
+        },
+        {
+          "upstream": "skills/database-optimizer/references/index-strategies.md",
+          "local": "skills/developer/quality/database-optimizer/references/index-strategies.md"
+        },
+        {
+          "upstream": "skills/database-optimizer/references/monitoring-analysis.md",
+          "local": "skills/developer/quality/database-optimizer/references/monitoring-analysis.md"
+        },
+        {
+          "upstream": "skills/database-optimizer/references/mysql-tuning.md",
+          "local": "skills/developer/quality/database-optimizer/references/mysql-tuning.md"
+        },
+        {
+          "upstream": "skills/database-optimizer/references/postgresql-tuning.md",
+          "local": "skills/developer/quality/database-optimizer/references/postgresql-tuning.md"
+        },
+        {
+          "upstream": "skills/database-optimizer/references/query-optimization.md",
+          "local": "skills/developer/quality/database-optimizer/references/query-optimization.md"
         }
       ],
       "verbatim_excluded": [
@@ -24563,6 +24763,235 @@
         }
       ],
       "verbatim_excluded": []
+    },
+    {
+      "repo": "caru-ini/stack-diagram",
+      "shortname": "stack-diagram",
+      "license": "MIT",
+      "stars_snapshot_2026-11-13": 2473,
+      "batch": 9,
+      "files": [
+        {
+          "upstream": "skills/stack-diagram/SKILL.md",
+          "local": "skills/designer/design/stack-diagram/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/stack-diagram/LICENSE",
+          "local": "skills/designer/design/stack-diagram/LICENSE"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/fonts/Geist.woff2",
+          "local": "skills/designer/design/stack-diagram/assets/fonts/Geist.woff2"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/fonts/JetBrainsMono.woff2",
+          "local": "skills/designer/design/stack-diagram/assets/fonts/JetBrainsMono.woff2"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/fonts/OFL-Geist.txt",
+          "local": "skills/designer/design/stack-diagram/assets/fonts/OFL-Geist.txt"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/fonts/OFL-JetBrainsMono.txt",
+          "local": "skills/designer/design/stack-diagram/assets/fonts/OFL-JetBrainsMono.txt"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/fonts/README.md",
+          "local": "skills/designer/design/stack-diagram/assets/fonts/README.md"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/generic/browser.svg",
+          "local": "skills/designer/design/stack-diagram/assets/generic/browser.svg"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/generic/device.svg",
+          "local": "skills/designer/design/stack-diagram/assets/generic/device.svg"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/generic/internet.svg",
+          "local": "skills/designer/design/stack-diagram/assets/generic/internet.svg"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/generic/server.svg",
+          "local": "skills/designer/design/stack-diagram/assets/generic/server.svg"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/generic/user.svg",
+          "local": "skills/designer/design/stack-diagram/assets/generic/user.svg"
+        },
+        {
+          "upstream": "skills/stack-diagram/assets/template.html",
+          "local": "skills/designer/design/stack-diagram/assets/template.html"
+        },
+        {
+          "upstream": "skills/stack-diagram/references/geometry.md",
+          "local": "skills/designer/design/stack-diagram/references/geometry.md"
+        },
+        {
+          "upstream": "skills/stack-diagram/references/tsx.md",
+          "local": "skills/designer/design/stack-diagram/references/tsx.md"
+        },
+        {
+          "upstream": "skills/stack-diagram/scripts/build.py",
+          "local": "skills/designer/design/stack-diagram/scripts/build.py"
+        },
+        {
+          "upstream": "skills/stack-diagram/scripts/fetch_icons.py",
+          "local": "skills/designer/design/stack-diagram/scripts/fetch_icons.py"
+        },
+        {
+          "upstream": "skills/stack-diagram/scripts/render_png.py",
+          "local": "skills/designer/design/stack-diagram/scripts/render_png.py"
+        },
+        {
+          "upstream": "skills/stack-diagram/scripts/share.py",
+          "local": "skills/designer/design/stack-diagram/scripts/share.py"
+        }
+      ],
+      "verbatim_excluded": []
+    },
+    {
+      "repo": "NiazMorshed2007/reanimate",
+      "shortname": "reanimate",
+      "license": "MIT",
+      "stars_snapshot_2026-11-13": 1609,
+      "batch": 9,
+      "files": [
+        {
+          "upstream": "skills/reanimate/SKILL.md",
+          "local": "skills/designer/design/reanimate/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/reanimate/LICENSE",
+          "local": "skills/designer/design/reanimate/LICENSE"
+        },
+        {
+          "upstream": "skills/reanimate/references/analysis.md",
+          "local": "skills/designer/design/reanimate/references/analysis.md"
+        },
+        {
+          "upstream": "skills/reanimate/references/capture.md",
+          "local": "skills/designer/design/reanimate/references/capture.md"
+        },
+        {
+          "upstream": "skills/reanimate/references/implementation.md",
+          "local": "skills/designer/design/reanimate/references/implementation.md"
+        },
+        {
+          "upstream": "skills/reanimate/references/verify.md",
+          "local": "skills/designer/design/reanimate/references/verify.md"
+        },
+        {
+          "upstream": "skills/reanimate/references/webgl.md",
+          "local": "skills/designer/design/reanimate/references/webgl.md"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/bun.lock",
+          "local": "skills/designer/design/reanimate/scripts/bun.lock"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/capture.ts",
+          "local": "skills/designer/design/reanimate/scripts/capture.ts"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/compare.ts",
+          "local": "skills/designer/design/reanimate/scripts/compare.ts"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/easing.ts",
+          "local": "skills/designer/design/reanimate/scripts/easing.ts"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/frames.ts",
+          "local": "skills/designer/design/reanimate/scripts/frames.ts"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/gl.ts",
+          "local": "skills/designer/design/reanimate/scripts/gl.ts"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/inpage/clock.js",
+          "local": "skills/designer/design/reanimate/scripts/inpage/clock.js"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/inpage/gl-hooks.js",
+          "local": "skills/designer/design/reanimate/scripts/inpage/gl-hooks.js"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/lib.ts",
+          "local": "skills/designer/design/reanimate/scripts/lib.ts"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/package.json",
+          "local": "skills/designer/design/reanimate/scripts/package.json"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/setup.sh",
+          "local": "skills/designer/design/reanimate/scripts/setup.sh"
+        },
+        {
+          "upstream": "skills/reanimate/scripts/sheet.ts",
+          "local": "skills/designer/design/reanimate/scripts/sheet.ts"
+        }
+      ],
+      "verbatim_excluded": []
+    },
+    {
+      "repo": "JuneYaooo/rea-video",
+      "shortname": "rea-video",
+      "license": "Apache-2.0",
+      "stars_snapshot_2026-11-13": 7810,
+      "batch": 9,
+      "files": [
+        {
+          "upstream": "skills/rea-video/SKILL.md",
+          "local": "skills/creator/video/rea-video/SKILL.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/rea-video/references/audio.md",
+          "local": "skills/creator/video/rea-video/references/audio.md"
+        },
+        {
+          "upstream": "skills/rea-video/references/materials.md",
+          "local": "skills/creator/video/rea-video/references/materials.md"
+        },
+        {
+          "upstream": "skills/rea-video/references/memory.md",
+          "local": "skills/creator/video/rea-video/references/memory.md"
+        },
+        {
+          "upstream": "skills/rea-video/references/output-template.md",
+          "local": "skills/creator/video/rea-video/references/output-template.md"
+        },
+        {
+          "upstream": "skills/rea-video/references/remake-tools.md",
+          "local": "skills/creator/video/rea-video/references/remake-tools.md"
+        },
+        {
+          "upstream": "skills/rea-video/references/remake.md",
+          "local": "skills/creator/video/rea-video/references/remake.md"
+        },
+        {
+          "upstream": "skills/rea-video/references/review.md",
+          "local": "skills/creator/video/rea-video/references/review.md"
+        },
+        {
+          "upstream": "skills/rea-video/references/setup.md",
+          "local": "skills/creator/video/rea-video/references/setup.md"
+        },
+        {
+          "upstream": "skills/rea-video/references/taxonomy.md",
+          "local": "skills/creator/video/rea-video/references/taxonomy.md"
+        }
+      ],
+      "verbatim_excluded": [],
+      "note": "SKILL.md description 正文即中文（中文原生，JuneYaooo 作者），按 video-shotcraft 先例中文原生收录"
     }
   ]
 }
