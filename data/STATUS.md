@@ -1,40 +1,55 @@
-# 工作状态（自动生成于 2026-11-14 08:18 UTC，勿手改）
+# 工作状态（自动生成于 2026-11-15 08:37 UTC，勿手改）
 
-- **收录规模**：69 个上游 · 619 个翻译件 · 5044 个原样件
+- **收录规模**：69 个上游 · 1322 个翻译件 · 4341 个原样件
 - **监控状态**：sync-check CI 每日 UTC 02:00 运行（HEAD 比对 → 原样件自动刷新 → 翻译件变更转重译工单）
-- **最近同步日志**：[data/sync-log/2026-11-14.md](sync-log/2026-11-14.md)
+- **最近同步日志**：[data/sync-log/2026-11-15.md](sync-log/2026-11-15.md)
 - **待重译**：无（全部翻译件与上游一致）
 - **快照 HEAD 总数**：69 个上游已纳入监控
 
 ## 按目录分布（翻译件）
 
 - `skills/corporate/ecommerce/` — 3 件
-- `skills/corporate/finance/` — 6 件
+- `skills/corporate/finance/` — 7 件
 - `skills/corporate/sales/` — 7 件
-- `skills/corporate/supply-chain/` — 1 件
-- `skills/creator/slides/` — 1 件
-- `skills/creator/video/` — 3 件
-- `skills/designer/design/` — 44 件
-- `skills/developer/` — 1 件
-- `skills/developer/context/` — 13 件
+- `skills/corporate/supply-chain/` — 4 件
+- `skills/creator/slides/` — 38 件
+- `skills/creator/video/` — 5 件
+- `skills/designer/design/` — 275 件
+- `skills/developer/` — 9 件
+- `skills/developer/context/` — 27 件
 - `skills/developer/efficiency/` — 3 件
-- `skills/developer/engineering/` — 42 件
+- `skills/developer/engineering/` — 47 件
 - `skills/developer/framework/` — 8 件
-- `skills/developer/gstack/` — 133 件
-- `skills/developer/quality/` — 28 件
+- `skills/developer/gstack/` — 174 件
+- `skills/developer/quality/` — 101 件
 - `skills/gamedev/` — 22 件
 - `skills/gamedev/art/` — 1 件
-- `skills/growth/product/` — 38 件
-- `skills/researcher/analysis/` — 2 件
-- `skills/researcher/info/` — 2 件
-- `skills/researcher/knowledge/` — 4 件
-- `skills/researcher/science/` — 12 件
-- `skills/toolbox/automation/` — 11 件
-- `skills/toolbox/cloud/` — 1 件
-- `skills/toolbox/compute/` — 1 件
-- `skills/toolbox/framework/` — 1 件
-- `skills/toolbox/meta/` — 7 件
+- `skills/gamedev/camera-systems/` — 1 件
+- `skills/gamedev/game-feel/` — 1 件
+- `skills/gamedev/godot-3d-essentials/` — 1 件
+- `skills/gamedev/godot-gdscript/` — 1 件
+- `skills/gamedev/godot-shaders/` — 1 件
+- `skills/gamedev/godot-signals-groups/` — 1 件
+- `skills/gamedev/input-systems/` — 1 件
+- `skills/gamedev/level-design/` — 1 件
+- `skills/gamedev/performance-optimization/` — 1 件
+- `skills/gamedev/save-systems/` — 1 件
+- `skills/gamedev/threejs-scene-setup/` — 1 件
+- `skills/gamedev/unity-animation/` — 1 件
+- `skills/gamedev/unity-csharp-scripting/` — 1 件
+- `skills/gamedev/unreal-behavior-trees/` — 1 件
+- `skills/gamedev/unreal-cpp-gameplay/` — 1 件
+- `skills/growth/product/` — 87 件
+- `skills/researcher/analysis/` — 44 件
+- `skills/researcher/info/` — 13 件
+- `skills/researcher/knowledge/` — 35 件
+- `skills/researcher/science/` — 17 件
+- `skills/toolbox/automation/` — 33 件
+- `skills/toolbox/cloud/` — 4 件
+- `skills/toolbox/compute/` — 6 件
+- `skills/toolbox/framework/` — 8 件
+- `skills/toolbox/meta/` — 17 件
 - `skills/toolbox/obsidian/` — 6 件
-- `skills/toolbox/office/` — 4 件
-- `skills/writer/prompting/` — 1 件
-- `skills/writer/writing/` — 9 件
+- `skills/toolbox/office/` — 62 件
+- `skills/writer/prompting/` — 2 件
+- `skills/writer/writing/` — 38 件
