@@ -322,341 +322,345 @@ components:
     description: "A three-line stacked title where each line is a Shrikhand display element at a slightly different size. Two of the three lines carry rotation transforms (-4deg, +2deg) and one is set in red. The composition is the system's signature opener."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/bold-poster/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Bold Poster is a **populist editorial poster system** that lifts its visual vocabulary from vintage Italian sports magazines, mid-century European brand annual reports, and wine-merchant catalogues. The premise is that every slide should feel printed — set in heavy display type, locked to one strong red accent, on a white or off-white sheet, with grids ruled in ink and decoration kept to a strict minimum.
+Bold Poster 是一套**平民化编辑海报系统**，视觉语汇取自老式意大利体育杂志、中世纪欧洲品牌年报与酒商目录。前提是每一页都该像印出来的：重磅展示字、锁死一种强红色强调、白或米白纸面、墨线打格、装饰压到最低。
 
-The type system is three faces working in tight roles. **Shrikhand** (Google Fonts) is the display face — a heavy slab/script hybrid with chunky italic terminals, narrow apertures, and a distinctly Italian-sports-script personality. Used at poster scale (often 100-320px) and almost always with playful rotation (-6° to +2°), Shrikhand carries every hero title, every section header, every stat figure, every card title. **Libre Baskerville** (Google Fonts) is the body face — a classical literary serif with strong stroke contrast that anchors the system in editorial register. Used at 11-16px with 1.5-1.75 line-height in deep ink, Libre Baskerville is what makes the system feel printed rather than digital. **Space Grotesk** (Google Fonts) is the chrome face — used exclusively for tiny uppercase labels (9-12px, 2-3px tracking), bullet body inside cards, slide counters, and footer links. The Space Grotesk treatment is the system's "metadata" voice.
+字体系统由三款字面严守角色构成。**Shrikhand**（Google Fonts）是展示字面，一款厚重的板衬/手写混合体，字端粗、开口窄，带着鲜明的意大利体育手书气质。以海报尺度（常 100-320px）出现，几乎总带俏皮旋转（-6° 到 +2°），承载每个英雄标题、每个分节标题、每个统计数字、每个卡片标题。**Libre Baskerville**（Google Fonts）是正文字面，一款笔画对比强的古典文学衬线，把系统锚在编辑语域里。以 11-16px、行高 1.5-1.75、深墨色呈现，正是它让系统读起来像印刷而非数字。**Space Grotesk**（Google Fonts）是外壳字面，只用于极小的大写标签（9-12px、2-3px 字距）、卡片内项目正文、页码与页脚链接。Space Grotesk 处理是系统的"元数据"声部。
 
-The color philosophy is **uncompromising restraint**: white canvas, deep brown-black ink (`{colors.dark}` — `#1C1410`), single saturated tomato red (`{colors.red}` — `#D8000F`), and a warm off-white (`{colors.light}` — `#F5F2EF`) for alternating panels. There are no secondary brand colors, no gradients (except the inside of the stacked text-shadow), no tints, no semantic state colors. Every numerical callout, every active rule, every CTA, every emphasis moment is red — and red is reserved for these moments only (it is never used as body text, never as fill on a card without text on top, never as a tint).
+色彩理念是**不留余地的克制**：白画布、深棕黑墨（`{colors.dark}` — `#1C1410`）、单一饱和番茄红（`{colors.red}` — `#D8000F`），以及供交替面板用的暖米白（`{colors.light}` — `#F5F2EF`）。没有次级品牌色，没有渐变（堆叠文字阴影内部除外），没有淡色，没有语义状态色。每个数字标注、每条激活线、每个 CTA、每个强调瞬间都是红色，而红色只留给这些瞬间（绝不用于正文，绝不作为没有文字压在上头的卡片填充，绝不作为淡色）。
 
-Depth is **structural, not atmospheric**. The system has no drop shadows except a single stacked text-shadow applied to red display text on red panels (three steps at 2/2, 4/4, 6/6 in decreasing-opacity ink). All other depth comes from heavy borders: 3px ink outlines on tabular grids, 1.5-2px ink borders on cells, 4px red left rules on editorial cards, 1px hairline rules between bullet items. The double-border treatment (3px outer + 1.5px inner) is the system's signature tabular pattern — it produces a printed-newsprint quality that defines the look.
+纵深是**结构性的，不是氛围性的**。系统除红面板上红展示文字所用的一枚堆叠文字阴影（2/2、4/4、6/6 三级递减墨色不透明度）外没有投影。其余纵深全来自重磅边框：表格网格 3px 墨轮廓、单元格 1.5-2px 墨边、编辑卡片 4px 红左线、项目之间 1px 细线。双线处理（3px 外 + 1.5px 内）是系统招牌的表格模式，造出定义整套外观的印刷新闻纸质感。
 
-**Density philosophy: high — populist and packed.** This system reads as authoritative when slides are dense and timid when sparse. Roadmap, pillar, and financial slides routinely carry 3-6 distinct cells with body paragraphs, bullet lists, and tabular data — and they read as energetic, not crowded. Conversely, hero, closing, and statement slides intentionally drop to one or two huge display elements with massive negative space — the very-low and very-high density polarities are both deliberate. A typical content slide carries a section header + a grid of 3-6 cells, each holding a red numerical/title + a Libre Baskerville body paragraph + 3-6 Space Grotesk mono bullets. A typical statement slide carries one rotated red Shrikhand element occupying half the canvas with a single tagline below.
+**密度取向：高，平民化且填满。** 这套系统在页面密集时显得权威，稀疏时显得怯。路线图、支柱、财务页常承载 3-6 个带正文段落、项目列表与表格数据的独立单元格，读起来有活力、不拥挤。反过来，英雄、收尾、陈述页刻意降到一两个巨大展示元素配大面积负空间，极低和极高两端都是刻意的。典型内容页承载一个分节标题 + 3-6 个单元格网格，每格装一个红色数字/标题 + 一段 Libre Baskerville 正文 + 3-6 条 Space Grotesk 等项目。典型陈述页承载一个旋转的红色 Shrikhand 元素占掉半张画布，下方一句标语。
 
-**Key Characteristics:**
-- White (`{colors.bg}`) canvas alternating with off-white (`{colors.light}`) panels for striping, plus dark (`{colors.dark}`) and red (`{colors.red}`) full-bleed panel surfaces for statement moments.
-- Single tomato red (`{colors.red}`) as the only accent — used for every numerical figure, every section rule, every label, every left-bar marker.
-- Three-face stack: Shrikhand (display + numerical), Libre Baskerville (body), Space Grotesk (mono labels + bullets + chrome).
-- Display Shrikhand is routinely tilted (-6° to +2°) — the rotation is the system's signature movement.
-- Heavy ink borders: 3px on tabular grid containers, 1.5-2px on cells, 4px red on editorial leftbar cards, 1px hairlines between bullet rows.
-- Stacked text-shadow (three steps at 2/2, 4/4, 6/6 in decreasing ink opacity) on red display elements — the only shadow in the system.
-- Persistent red progress bar (5px thick) at the bottom edge of every slide.
-- Em-dash and bullet glyphs in red as list markers — never default disc bullets.
-- Hero compositions stack three Shrikhand lines at varying sizes with at least one in red and at least one tilted.
-- Footer links use Space Grotesk uppercase with a 2px red underline.
+**关键特征：**
+- 白（`{colors.bg}`）画布与米白（`{colors.light}`）面板交替作条纹，另有深色（`{colors.dark}`）与红色（`{colors.red}`）满出血面板表面供陈述瞬间使用。
+- 单色番茄红（`{colors.red}`）作唯一强调，用于每个数字、每条分节线、每个标签、每个左线标记。
+- 三字面栈：Shrikhand（展示 + 数字）、Libre Baskerville（正文）、Space Grotesk（等宽标签 + 项目 + 外壳）。
+- 展示用 Shrikhand 常被倾斜（-6° 到 +2°），旋转是系统招牌的动态。
+- 重磅墨边：表格网格容器 3px、单元格 1.5-2px、编辑左线卡片 4px 红、项目行之间 1px 细线。
+- 红展示元素上的堆叠文字阴影（2/2、4/4、6/6 三级递减墨色不透明度），系统唯一阴影。
+- 每页底边常驻 5px 厚红色进度条。
+- 红色的破折号与圆点字形作列表标记，绝不用默认圆点。
+- 英雄构图把三行 Shrikhand 按不同尺寸叠起，至少一行红、至少一行倾斜。
+- 页脚链接用 Space Grotesk 大写配 2px 红色下划线。
 
-## Colors
+## 颜色
 
-### Palette
+### 调色板
 
-- **Bg** (`{colors.bg}` — `#FFFFFF`): Pure white canvas. The default ground for most surfaces. Reads as fresh newsprint paper.
-- **Dark** (`{colors.dark}` — `#1C1410`): A deep brown-black with warm bias — not pure black. Used for every line of body text, every border, every Space Grotesk label, every Libre Baskerville paragraph, and as a full-bleed panel ground on roadmap-class surfaces. The warmth distinguishes it from generic editorial black.
-- **Red** (`{colors.red}` — `#D8000F`): Saturated tomato red. The system's single accent. Used for every numerical figure (Shrikhand red numerals are the most common element), every section eyebrow label, every leftbar rule on editorial cards, every list bullet glyph, every footer link underline, the persistent progress bar, and as a full-bleed panel ground on statement-class surfaces. Never used as body text color, never as a tint, never as a card fill without overlaid text.
-- **Light** (`{colors.light}` — `#F5F2EF`): Warm off-white. Used for alternating panel backgrounds inside pillar layouts (every other pillar swaps to off-white for vertical striping) and as the background of the hint-pill chrome. Subtly warmer than the white canvas — creates surface differentiation without disrupting the printed-paper register.
+- **Bg**（`{colors.bg}` — `#FFFFFF`）：纯白画布。多数表面的默认底。读起来是干净的新闻纸。
+- **Dark**（`{colors.dark}` — `#1C1410`）：带暖偏的深棕黑，不是纯黑。用于每一行正文、每一条边、每个 Space Grotesk 标签、每段 Libre Baskerville 段落，并作路线图类表面的满出血面板底。这份暖意把它与通用编辑黑区分开。
+- **Red**（`{colors.red}` — `#D8000F`）：饱和番茄红。系统唯一强调。用于每个数字（红色 Shrikhand 数字是最常见的元素）、每个分节眉题标签、编辑卡片的每条左线、每个列表项目字形、每条页脚链接下划线、常驻进度条，以及陈述类表面的满出血面板底。绝不作为正文色，绝不作为淡色，绝不作为没有叠加文字的卡片填充。
+- **Light**（`{colors.light}` — `#F5F2EF`）：暖米白。用于支柱布局内的交替面板背景（每隔一根支柱换成米白作纵向条纹）以及 hint-pill 外壳的底。比白画布略暖，制造表面区隔而不破坏印刷纸语域。
 
-### Defaults
+### 默认值
 
-- **Default surface background**: `{colors.bg}` (white). For statement moments, switch to `{colors.red}` (full-bleed red panel). For roadmap-class moments, switch to `{colors.dark}`. For striping inside a pillar layout, alternate `{colors.bg}` and `{colors.light}`.
-- **Default headline / display color on white surfaces**: `{colors.dark}` for primary headlines, `{colors.red}` for numerical figures and stat-class display elements.
-- **Default headline color on red panels**: `{colors.bg}` (white) with the stacked text-shadow treatment.
-- **Default headline color on dark panels**: `{colors.bg}` (white). Numerical accents stay `{colors.red}`.
-- **Default body text color**: `{colors.dark}` on white/light surfaces, `{colors.bg}` (white) on dark/red surfaces with opacity 0.5-0.8 for tertiary content.
-- **Default eyebrow / label color**: `{colors.red}` on white surfaces (red Space Grotesk uppercase at 2-3px tracking), `{colors.dark}` for the smaller cell labels inside grids.
-- **Default leftbar rule color**: `{colors.red}`. The 4px (or 3px on dark surfaces) red left rule is the editorial card signature.
-- **Default border color for cells and grids**: `{colors.dark}`. There are no colored cell borders.
-- **Default bullet glyph color**: `{colors.red}`. Default disc bullets do not exist in this system; every list uses red em-dash or red round-bullet glyphs.
+- **默认表面背景**：`{colors.bg}`（白）。陈述瞬间换成 `{colors.red}`（满出血红面板）。路线图类瞬间换成 `{colors.dark}`。支柱布局内的条纹交替 `{colors.bg}` 与 `{colors.light}`。
+- **白表面上的默认标题 / 展示色**：主标题用 `{colors.dark}`，数字与统计类展示元素用 `{colors.red}`。
+- **红面板上的默认标题色**：`{colors.bg}`（白）配堆叠文字阴影处理。
+- **深面板上的默认标题色**：`{colors.bg}`（白）。数字强调仍是 `{colors.red}`。
+- **默认正文文字色**：白/浅表面上 `{colors.dark}`，深/红表面上 `{colors.bg}`（白），三级内容用 0.5-0.8 不透明度。
+- **默认眉题 / 标签色**：白表面上 `{colors.red}`（红色 Space Grotesk 大写、2-3px 字距），网格内较小的单元格标签用 `{colors.dark}`。
+- **默认左线色**：`{colors.red}`。4px（深表面上 3px）红色左线是编辑卡片签名。
+- **单元格与网格的默认边框色**：`{colors.dark}`。没有彩色单元格边框。
+- **默认项目字形色**：`{colors.red}`。系统里不存在默认圆点，每个列表都用红色破折号或红色圆点字形。
 
-The system commits **hard** to the four-color palette. Don't introduce a fifth color (green for positive, blue for info, yellow for highlight). All emphasis is achieved by red, all body is dark on light, all inversion is white on red or white on dark. Categorical differentiation comes from positioning, label, and tilt — never from color.
+系统**硬认**四色调色板。不要引入第五色（绿表正向、蓝表信息、黄表高亮）。所有强调靠红，所有正文是浅底深墨，所有反色是红底或深底白字。类别区分靠位置、标签、倾斜，绝不靠颜色。
 
-## Typography
+## 排印
 
-### Font Family Stack
-The system runs three faces, each tightly bound to its role.
+### 字族栈
+系统用三款字面，各严绑一个角色。
 
-**Shrikhand** (Google Fonts) is the display + numerical face. It's a single-weight (400) heavy slab-script with playful italic-leaning forms and narrow apertures — a face that reads as both old-world (postcard-script) and contemporary (variable-weight digital display). Used at every scale from 18px (inline stats) to 320px (the hero stat). Always weight 400 (the face has no other weights). Rotation is part of the face's voice — multiple Shrikhand elements per slide carry transforms ranging from -6° to +2°.
+**Shrikhand**（Google Fonts）是展示兼数字字面。单字重（400）的厚重板状手写体，字形带俏皮斜意、开口窄，读起来既旧世界（明信片手书）又当代（可变字重数字展示）。尺度从 18px（行内统计）到 320px（英雄统计）都用它。始终字重 400（这款字面没有别的字重）。旋转是字面声部的一部分：每页多个 Shrikhand 元素带 -6° 到 +2° 的 transform。
 
-**Libre Baskerville** (Google Fonts, 400 / 700 + italic) is the body face. A classical literary serif with high stroke contrast — used for every paragraph, every body cell, every metadata line, every cite, every close-sub. Set at 11-16px with 1.5-1.75 line-height, the face reads as comfortably editorial. The face's italic and bold weights are loaded but used sparingly — italic exists for inline emphasis, bold weight 700 is rarely needed since Shrikhand already handles all the heavy display work.
+**Libre Baskerville**（Google Fonts，400 / 700 + 斜体）是正文字面。笔画对比强的古典文学衬线，用于每个段落、每个正文单元格、每行元数据、每条引文出处、每个收尾副标题。以 11-16px、行高 1.5-1.75 排，读起来舒服地有编辑感。斜体与粗体字重都加载了，但用得省：斜体用于行内强调，字重 700 极少需要，因为所有重磅展示工作已由 Shrikhand 承担。
 
-**Space Grotesk** (Google Fonts, weights 400-700) is the metadata + chrome face. Used at 9-12px in uppercase with 2-3px letter-spacing for labels, eyebrows, slide counters, link text, card bullet bodies (when not using Libre Baskerville), and progress chrome. The wide-tracked uppercase treatment is the system's "stamped metadata" voice.
+**Space Grotesk**（Google Fonts，字重 400-700）是元数据兼外壳字面。以 9-12px 大写、2-3px 字距用于标签、眉题、页码、链接文字、卡片项目正文（不用 Libre Baskerville 时）以及进度外壳。宽字距大写处理是系统的"盖章元数据"声部。
 
-The roles are non-overlapping: Shrikhand handles every display moment and every numerical figure; Libre Baskerville handles every body paragraph and editorial text; Space Grotesk handles every uppercase label, bullet, and chrome element. Don't cross — Shrikhand body would be illegible; Libre Baskerville labels would look like book footnotes; Space Grotesk headlines would feel like a tech startup.
+三个角色不重叠：Shrikhand 管每个展示瞬间、每个数字；Libre Baskerville 管每个正文段落、每段编辑文字；Space Grotesk 管每个大写标签、项目、外壳元素。别越界：Shrikhand 排正文会不可读，Libre Baskerville 做标签像书脚注，Space Grotesk 做标题像科技创业公司。
 
-### Typography Scale
+### 排印比例
 
-| Token | Size (clamp / px) | Family | Weight | Use |
+| Token | 尺寸（clamp / px） | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.stat-big}` | 120–320px clamp | Shrikhand | 400 | Hero-class stat figure (always rotated -6°, always red) |
-| `{typography.hero-title-red}` | 84–260px clamp | Shrikhand | 400 | Red word in a multi-line hero stack (always rotated -4°) |
-| `{typography.close-big}` | 80–260px clamp | Shrikhand | 400 | Closing-statement title (always rotated -5°, always red) |
-| `{typography.hero-title}` | 72–220px clamp | Shrikhand | 400 | Top line of a hero stack (default no rotation) |
-| `{typography.hero-title-bottom}` | 64–200px clamp | Shrikhand | 400 | Bottom line of a hero stack (always rotated +2°) |
-| `{typography.section-header-lg}` | 36–72px clamp | Shrikhand | 400 | Large section header for financial / dense-data slides |
-| `{typography.section-header}` | 32–64px clamp | Shrikhand | 400 | Standard section header (summary, services, global, close) |
-| `{typography.pillar-num}` | 36–64px clamp | Shrikhand | 400 | Numeral atop a pillar panel (red) |
-| `{typography.cell-number-lg}` / `{typography.cell-number-md}` | 28–52px clamp | Shrikhand | 400 | Tabular cell numerical figure (always red) |
-| `{typography.stat-item-num}` | 28–56px clamp | Shrikhand | 400 | Inline supplementary stat numeral (dark color) |
-| `{typography.card-title}` | 22–36px clamp | Shrikhand | 400 | Service card title or global card title |
-| `{typography.card-title-sm}` | 20–32px clamp | Shrikhand | 400 | Smaller card title (global cards) |
-| `{typography.pillar-title}` | 18–28px clamp | Shrikhand | 400 | Pillar panel title |
-| `{typography.roadmap-title}` | 18–32px clamp | Shrikhand | 400 | Roadmap phase title (white on dark surface) |
-| `{typography.red-quote}` | 32–90px clamp | Shrikhand | 400 | Quote body on a red panel (white text + stacked shadow) |
-| `{typography.inline-stat}` | 18–28px clamp | Shrikhand | 400 | Inline mini-stat number (red) inside a body block |
-| `{typography.body}` | 13–16px clamp | Libre Baskerville | 400 | Standard body paragraph |
-| `{typography.body-card}` | 12–14px clamp | Libre Baskerville | 400 | Card body inside service/global cards |
-| `{typography.body-cell}` | 11–13px clamp | Libre Baskerville | 400 | Tabular cell body inside grids |
-| `{typography.body-small}` | 11–13px clamp | Libre Baskerville | 400 | Small body for summary highlights |
-| `{typography.hero-meta}` | 11–14px clamp | Libre Baskerville | 400 | Hero meta line above the title stack |
-| `{typography.red-cite}` | 13–16px clamp | Libre Baskerville | 400 | Citation under a red-panel quote (white text) |
-| `{typography.close-sub}` | 14–18px clamp | Libre Baskerville | 400 | Subtitle / contact line under a closing title |
-| `{typography.label-red}` / `{typography.tag-label}` | 10–12px | Space Grotesk | 600 | Section label (uppercase, 2-3px tracking, red) |
-| `{typography.label}` | 10px | Space Grotesk | 600 | Cell label inside grids (uppercase, 2px tracking, dark) |
-| `{typography.rm-label}` | 9px | Space Grotesk | 600 | Roadmap phase label (uppercase, 3px tracking, red) |
-| `{typography.bullet-body}` | 10–12px clamp | Space Grotesk | 400 | List bullet body inside cards and pillars |
-| `{typography.counter}` | 11px | Space Grotesk | 600 | Persistent slide counter |
-| `{typography.link}` | 10–12px clamp | Space Grotesk | 600 | Footer / closing link text (uppercase, 2px tracking) |
-| `{typography.fc-micro}` | 10px | Space Grotesk | 400 | Tiny micro-context line at the bottom of a tabular cell |
+| `{typography.stat-big}` | 120–320px clamp | Shrikhand | 400 | 英雄级统计数字（始终旋转 -6°、始终红） |
+| `{typography.hero-title-red}` | 84–260px clamp | Shrikhand | 400 | 多行英雄叠排里的红色词（始终旋转 -4°） |
+| `{typography.close-big}` | 80–260px clamp | Shrikhand | 400 | 收尾陈述标题（始终旋转 -5°、始终红） |
+| `{typography.hero-title}` | 72–220px clamp | Shrikhand | 400 | 英雄叠排顶行（默认不旋转） |
+| `{typography.hero-title-bottom}` | 64–200px clamp | Shrikhand | 400 | 英雄叠排底行（始终旋转 +2°） |
+| `{typography.section-header-lg}` | 36–72px clamp | Shrikhand | 400 | 财务 / 密集数据页的大分节标题 |
+| `{typography.section-header}` | 32–64px clamp | Shrikhand | 400 | 标准分节标题（摘要、服务、全球、收尾） |
+| `{typography.pillar-num}` | 36–64px clamp | Shrikhand | 400 | 支柱面板顶部的数字（红） |
+| `{typography.cell-number-lg}` / `{typography.cell-number-md}` | 28–52px clamp | Shrikhand | 400 | 表格单元格数字（始终红） |
+| `{typography.stat-item-num}` | 28–56px clamp | Shrikhand | 400 | 行内辅助统计数字（深色） |
+| `{typography.card-title}` | 22–36px clamp | Shrikhand | 400 | 服务卡片或全球卡片标题 |
+| `{typography.card-title-sm}` | 20–32px clamp | Shrikhand | 400 | 更小的卡片标题（全球卡片） |
+| `{typography.pillar-title}` | 18–28px clamp | Shrikhand | 400 | 支柱面板标题 |
+| `{typography.roadmap-title}` | 18–32px clamp | Shrikhand | 400 | 路线图阶段标题（深表面上白字） |
+| `{typography.red-quote}` | 32–90px clamp | Shrikhand | 400 | 红面板上的引文正文（白字 + 堆叠阴影） |
+| `{typography.inline-stat}` | 18–28px clamp | Shrikhand | 400 | 正文块里的行内迷你统计数（红） |
+| `{typography.body}` | 13–16px clamp | Libre Baskerville | 400 | 标准正文段落 |
+| `{typography.body-card}` | 12–14px clamp | Libre Baskerville | 400 | 服务/全球卡片内正文 |
+| `{typography.body-cell}` | 11–13px clamp | Libre Baskerville | 400 | 网格内表格单元格正文 |
+| `{typography.body-small}` | 11–13px clamp | Libre Baskerville | 400 | 摘要亮点用小正文 |
+| `{typography.hero-meta}` | 11–14px clamp | Libre Baskerville | 400 | 标题叠排上方的英雄元信息行 |
+| `{typography.red-cite}` | 13–16px clamp | Libre Baskerville | 400 | 红面板引文下的出处（白字） |
+| `{typography.close-sub}` | 14–18px clamp | Libre Baskerville | 400 | 收尾标题下的副标题 / 联系方式行 |
+| `{typography.label-red}` / `{typography.tag-label}` | 10–12px | Space Grotesk | 600 | 分节标签（大写、2-3px 字距、红） |
+| `{typography.label}` | 10px | Space Grotesk | 600 | 网格内单元格标签（大写、2px 字距、深） |
+| `{typography.rm-label}` | 9px | Space Grotesk | 600 | 路线图阶段标签（大写、3px 字距、红） |
+| `{typography.bullet-body}` | 10–12px clamp | Space Grotesk | 400 | 卡片与支柱内的列表项目正文 |
+| `{typography.counter}` | 11px | Space Grotesk | 600 | 常驻页码 |
+| `{typography.link}` | 10–12px clamp | Space Grotesk | 600 | 页脚 / 收尾链接文字（大写、2px 字距） |
+| `{typography.fc-micro}` | 10px | Space Grotesk | 400 | 表格单元格底部的极小上下文行 |
 
-### Defaults
+### 默认值
 
-- **Default size for a hero or cover title**: `{typography.hero-title}` (72–220px) at the top of a stack, paired with `{typography.hero-title-red}` (84–260px, red, rotated -4°) on a second line and `{typography.hero-title-bottom}` (64–200px, rotated +2°) on a third line. The three-line stacked composition is the system's standard hero pattern.
-- **Default size for a primary section headline**: `{typography.section-header}` (32–64px). Always Shrikhand.
-- **Default size for a hero-class statistic**: `{typography.stat-big}` (120–320px) rotated -6°, always red.
-- **Default size for a tabular cell numeral**: `{typography.cell-number-md}` (28–52px) in red.
-- **Default size for body**: `{typography.body}` (13–16px) Libre Baskerville at line-height 1.75.
-- **Default size for a card body**: `{typography.body-card}` (12–14px) at line-height 1.6.
-- **Default size for a section eyebrow label**: `{typography.tag-label}` (10–12px) Space Grotesk weight 600 in red, uppercase, with 2-3px letter-spacing.
-- **Default size for a list bullet body**: `{typography.bullet-body}` (10–12px) Space Grotesk weight 400.
-- **Default weight for Shrikhand**: 400 — the face has no other weights.
-- **Default weight for Libre Baskerville body**: 400. Bold (700) is used only for inline emphasis inside body paragraphs.
-- **Default weight for Space Grotesk labels**: 600. Wide tracking is the system's label voice; weight 400 is for bullet bodies only.
+- **英雄或封面标题默认尺寸**：叠排顶行用 `{typography.hero-title}`（72–220px），第二行配 `{typography.hero-title-red}`（84–260px，红，旋转 -4°），第三行配 `{typography.hero-title-bottom}`（64–200px，旋转 +2°）。三行叠排构图是系统标准英雄模式。
+- **分节主标题默认尺寸**：`{typography.section-header}`（32–64px）。始终 Shrikhand。
+- **英雄级统计默认尺寸**：`{typography.stat-big}`（120–320px）旋转 -6°、始终红。
+- **表格单元格数字默认尺寸**：`{typography.cell-number-md}`（28–52px）红。
+- **正文默认尺寸**：`{typography.body}`（13–16px）Libre Baskerville、行高 1.75。
+- **卡片正文默认尺寸**：`{typography.body-card}`（12–14px）、行高 1.6。
+- **分节眉题标签默认尺寸**：`{typography.tag-label}`（10–12px）Space Grotesk 字重 600、红、大写、2-3px 字距。
+- **列表项目正文默认尺寸**：`{typography.bullet-body}`（10–12px）Space Grotesk 字重 400。
+- **Shrikhand 默认字重**：400，这款字面没有别的字重。
+- **Libre Baskerville 正文默认字重**：400。粗体（700）只用于正文段落内的行内强调。
+- **Space Grotesk 标签默认字重**：600。宽字距是系统的标签声部，字重 400 只给项目正文。
 
-When unsure which display token to reach for, default to `{typography.section-header}` (32–64px) for a primary slide section opener. Reserve `{typography.stat-big}` for hero-stat moments and `{typography.hero-title}` triples for cover-class surfaces.
+拿不准该用哪个展示 token 时，页面分节开场默认取 `{typography.section-header}`（32–64px）。`{typography.stat-big}` 留给英雄统计瞬间，`{typography.hero-title}` 三连留给封面类表面。
 
-### Signature Treatments
+### 招牌处理
 
-These treatments are **non-optional whenever the corresponding element type is used**:
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every hero-class Shrikhand element is part of a multi-line stacked composition with at least one rotated line and at least one red line.** A single-line Shrikhand hero title without rotation or color contrast collapses into a generic display moment.
-- **Every tabular numerical cell figure is Shrikhand at the cell-number scale (28–52px) in `{colors.red}`.** Numerical cells in dark text break the system's hierarchy — red is the data signal.
-- **Every section eyebrow is Space Grotesk weight 600 in `{colors.red}`, uppercase, with 2-3px letter-spacing.** No exceptions. Eyebrows at any other tracking, weight, color, or case are not the system's eyebrow.
-- **Every statement-class Shrikhand element (stat-big, close-big) is rotated -5° to -6° in `{colors.red}`.** Untilted red Shrikhand at hero scale looks like a misplaced word — the tilt is the system's "movement" signal.
-- **Every red-panel display element carries the stacked text-shadow** (`2px 2px 0 rgba(28,20,16,0.25), 4px 4px 0 rgba(28,20,16,0.2), 6px 6px 0 rgba(28,20,16,0.15)`). Without the shadow, white Shrikhand on red reads as floating; with it, the text feels printed-and-pressed into the panel.
-- **Every list bullet uses a `{colors.red}` em-dash (—) or round-bullet (•) glyph** at position absolute left with a 12-14px padding-left on the body. Default disc bullets do not exist; the red marker is the system's list signal.
-- **Every Libre Baskerville body is at line-height ≥ 1.5 (preferably 1.6-1.75).** Tighter line-height collapses the editorial register.
-- **Every body strong (`<strong>`) inside a Libre Baskerville paragraph switches face to Space Grotesk weight 600.** The inline face-switch is the system's primary inline emphasis mechanism — a serif strong tag does not produce the same effect.
+- **每个英雄级 Shrikhand 元素都属于多行叠排构图，至少一行旋转、至少一行红。** 没有旋转或色彩反差的单行 Shrikhand 英雄标题会塌成通用展示瞬间。
+- **每个表格数字单元格数字都是 cell-number 尺度（28–52px）的 `{colors.red}` Shrikhand。** 深墨数字单元格会破掉系统层级，红是数据信号。
+- **每个分节眉题都是 `{colors.red}` 的 Space Grotesk 字重 600、大写、2-3px 字距。** 没有例外。字距、字重、颜色或大小写任一项不对的眉题，都不是系统的眉题。
+- **每个陈述类 Shrikhand 元素（stat-big、close-big）都旋转 -5° 到 -6°、用 `{colors.red}`。** 英雄尺度下不倾斜的红 Shrikhand 像个放错地方的词，倾斜是系统的"动势"信号。
+- **每个红面板展示元素都带堆叠文字阴影**（`2px 2px 0 rgba(28,20,16,0.25), 4px 4px 0 rgba(28,20,16,0.2), 6px 6px 0 rgba(28,20,16,0.15)`）。没有阴影，红底白 Shrikhand 读起来在飘；有了阴影，文字才像被压印进面板。
+- **每个列表项目都用 `{colors.red}` 破折号（—）或圆点（•）字形**，绝对定位在左，正文留 12-14px padding-left。默认圆点不存在，红标记是系统的列表信号。
+- **每段 Libre Baskerville 正文行高 ≥ 1.5（最好 1.6-1.75）。** 行高再紧会压塌编辑语域。
+- **Libre Baskerville 段落里的每个 body strong（`<strong>`）都切换字面到 Space Grotesk 字重 600。** 这种行内换字面是系统主要的行内强调机制，衬线 strong 标签达不到同样效果。
 
-### Typography Principles
+### 排印原则
 
-The voice contrast is **chunky tilted display Shrikhand ↔ literary serif body ↔ wide-tracked mono labels**. Italic is rare (Libre Baskerville italic exists but is used only for inline emphasis inside body); underline is reserved for the red-underline footer link treatment. Bold within Libre Baskerville body is replaced by an inline face-switch to Space Grotesk weight 600 — the change-of-face is the emphasis signal.
+声部对比是**粗壮倾斜的展示 Shrikhand ↔ 文学衬线正文 ↔ 宽字距等宽标签**。斜体罕见（Libre Baskerville 斜体存在，但只用于正文内的行内强调）；下划线只留给红下划线页脚链接处理。Libre Baskerville 正文里的加粗被行内换到 Space Grotesk 字重 600 取代，换字面本身就是强调信号。
 
-Numerical content (stat figures, financial values, percentage callouts, mini-stats) is always Shrikhand in red. Even small inline stats inside body cells become red Shrikhand. The numerical-as-display pattern is what gives the system its sports-magazine register.
+数字内容（统计数字、财务数值、百分比标注、迷你统计）始终是红色 Shrikhand。连正文单元格里很小的行内统计也变成红 Shrikhand。把数字当展示，正是这套系统体育杂志语域的来源。
 
-## Layout
+## 布局
 
-### Canvas System
-The system targets `100vw × 100vh` per slide. Slides are absolutely positioned and animate in via opacity + translateY (30px) + scale (0.98 → 1) on 550ms ease. Only one slide is `.active` at a time. Default slide padding is `48px 56px` with major variations:
-- Hero slides: `5vh 7vw` top-padding, alignment shifted to top-left.
-- Roadmap slides: `40px 48px` to accommodate the dense two-column grid.
-- Pillars slides: `0` (the pillar columns provide their own internal padding).
+### 画布系统
+系统以每页 `100vw × 100vh` 为目标。幻灯片绝对定位，以 opacity + translateY（30px）+ scale（0.98 → 1）在 550ms ease 内入场。同一时刻只有一页 `.active`。默认幻灯片内边距 `48px 56px`，主要有几种变化：
+- 英雄页：`5vh 7vw` 顶部内边距，对齐移到左上。
+- 路线图页：`40px 48px` 以容纳密集双栏网格。
+- 支柱页：`0`（支柱列自带内部内边距）。
 
-### Padding and Gap Scale
+### 内边距与间隙比例
 
-| Token | Value | Use |
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.pad-slide}` | 48px 56px | Default slide padding |
-| `{spacing.pad-cell}` | 22px 20px | Tabular cell internal padding (financial grid) |
-| `{spacing.pad-cell-sm}` | 20px 24px | Summary highlight cell padding |
-| `{spacing.pad-pillar}` | 32px 24px | Pillar column padding |
-| `{spacing.pad-card}` | 24px | Global card padding |
-| `{spacing.pad-roadmap}` | 40px 48px | Roadmap surface padding |
-| `{spacing.gap-grid-md}` | 24px 32px | Standard service/global grid gap (row × col) |
-| `{spacing.gap-grid-roadmap}` | 28px 36px | Roadmap two-column grid gap |
-| `{spacing.gap-grid-stats}` | 48px | Big stat row gap |
-| `{spacing.gap-stat-row}` | 20px | Vertical gap within a stat-item stack |
+| `{spacing.pad-slide}` | 48px 56px | 默认幻灯片内边距 |
+| `{spacing.pad-cell}` | 22px 20px | 表格单元格内部内边距（财务网格） |
+| `{spacing.pad-cell-sm}` | 20px 24px | 摘要亮点单元格内边距 |
+| `{spacing.pad-pillar}` | 32px 24px | 支柱列内边距 |
+| `{spacing.pad-card}` | 24px | 全球卡片内边距 |
+| `{spacing.pad-roadmap}` | 40px 48px | 路线图表面内边距 |
+| `{spacing.gap-grid-md}` | 24px 32px | 标准服务/全球网格间隙（行 × 列） |
+| `{spacing.gap-grid-roadmap}` | 28px 36px | 路线图双栏网格间隙 |
+| `{spacing.gap-grid-stats}` | 48px | 大统计行间隙 |
+| `{spacing.gap-stat-row}` | 20px | 统计项叠排内的纵向间隙 |
 
-### Persistent Chrome
-Three elements appear on every slide:
-- **Progress bar** at the bottom edge — a 5px thick `{colors.red}` strip that grows in width with slide index. The thickest, most visible piece of chrome; it functions as both progress indicator and bottom-edge poster trim.
-- **Slide counter** at bottom-right (`bottom: 18px right: 24px`) — Space Grotesk weight 600 uppercase NN / NN at 50% opacity.
-- **Hint pill** at bottom-center — Space Grotesk uppercase text in an off-white pill, opacity 0 by default, fading to 50% on `body:hover`.
+### 常驻外壳
+每页都出现三个元素：
+- **进度条**在底边：5px 厚 `{colors.red}` 条，宽度随页序号增长。最厚、最显眼的外壳，既作进度指示也作底边海报压边。
+- **页码**在右下（`bottom: 18px right: 24px`）：Space Grotesk 字重 600 大写 NN / NN、50% 不透明度。
+- **提示胶囊**在底部居中：米白胶囊里的 Space Grotesk 大写文字，默认不透明度 0，`body:hover` 淡到 50%。
 
-### Surface Variations
-The deck cycles through five surface treatments:
-- **White content surfaces** — default, most slides.
-- **Off-white striped panels** — inside pillar layouts, alternating columns get `{colors.light}` background for vertical striping.
-- **Full-bleed red panel** — statement / quote slides flood the canvas in `{colors.red}` with white display text and the stacked text-shadow.
-- **Full-bleed dark panel** — roadmap-class surfaces use `{colors.dark}` ground with white text and red accents.
-- **Bordered tabular grids** — financial-figure and summary-highlight grids carry a 3px ink outer border + 1.5px ink inner cell borders, producing the system's signature double-border tabular composition.
+### 表面变化
+文稿轮用五种表面处理：
+- **白色内容表面**：默认，多数页面。
+- **米白条纹面板**：支柱布局内，交替列取 `{colors.light}` 背景作纵向条纹。
+- **满出血红面板**：陈述 / 引文页把画布铺成 `{colors.red}`，配白展示文字与堆叠文字阴影。
+- **满出血深面板**：路线图类表面用 `{colors.dark}` 底、白字、红强调。
+- **带框表格网格**：财务数字与摘要亮点网格带 3px 墨外框 + 1.5px 墨内单元格边，造出系统招牌的双线表格构图。
 
-### Hero Stack Composition
-The standard cover/hero pattern is a **three-line Shrikhand stack** where each line carries a different size and at least one carries rotation and at least one is in red. The stack reads top-left → bottom-right, with the smallest line at the bottom and the boldest red rotation in the middle. The composition is the system's most distinctive opener.
+### 英雄叠排构图
+标准封面/英雄模式是**三行 Shrikhand 叠排**，每行尺寸不同，至少一行旋转、至少一行红。叠排从左上读到右下，最小一行在底，最重的红色旋转在中间。这是系统最鲜明的开场。
 
-## Depth and Elevation
+## 纵深与层级
 
-### No Cards, No Shadows (Mostly)
-The system uses **almost no box-shadows**. Cards do not float off the surface via shadow. Depth comes from:
-- **Heavy borders** (3px outer + 1.5px inner double-border on tabular grids; 2px solid borders on global cards; 4px red left rules on editorial leftbar cards).
-- **Surface inversion** (full-bleed red or dark panels switch the entire surface).
-- **Tilted display elements** that break the grid alignment.
+### 无卡片，基本无阴影
+系统**几乎不用 box-shadow**。卡片不靠阴影浮出表面。纵深来自：
+- **重磅边框**（表格网格 3px 外 + 1.5px 内双线；全球卡片 2px 实线边；编辑左线卡片 4px 红左线）。
+- **表面反色**（满出血红或深面板切换整片表面）。
+- **倾斜展示元素**破开网格对齐。
 
-### The Single Shadow Pattern (Stacked Text Shadow)
-The only shadow in the entire system is the **stacked text-shadow on red display text on red panels**: three steps at 2/2, 4/4, 6/6 with decreasing-opacity ink fill (0.25, 0.20, 0.15). The shadow is applied via `text-shadow:` not `box-shadow:`. The effect is a printed-press feel — the text reads as having been stamped slightly off-register, three times. This treatment appears only on the red-quote and certain rotated Shrikhand display moments on red panels.
+### 唯一阴影模式（堆叠文字阴影）
+整个系统唯一的阴影是**红面板上红展示文字的堆叠文字阴影**：2/2、4/4、6/6 三级，墨色填充不透明度递减（0.25、0.20、0.15）。阴影用 `text-shadow:` 而非 `box-shadow:`。效果是压印感：文字像被略微错版地盖了三次。这个处理只出现在 red-quote 和红面板上某些旋转的 Shrikhand 展示瞬间。
 
-### Border-as-Depth (Tabular Grid Signature)
-The financial-grid and summary-highlight-grid patterns use a **3px solid ink outer border** with **1.5px solid ink inner cell borders** — the two border weights touch at every cell intersection, producing a printed-newsprint quality. This is the system's primary structural depth mechanism on data-heavy surfaces.
+### 边框即纵深（表格网格签名）
+财务网格与摘要亮点网格模式用 **3px 实线墨外框**配 **1.5px 实线墨内单元格边**，两种边框粗细在每个单元格交点相接，造出印刷新闻纸质感。这是数据密集表面上系统主要的结构纵深机制。
 
-### Leftbar Rules
-Editorial cards (service cards, roadmap phases, global cards) are marked by a **4px (or 3px on dark surfaces) red solid left border** with 16-18px padding-left. The leftbar rule signals "this is a card" without enclosing it — the card reads as cantilevered off the red rule. This is the system's most common card pattern.
+### 左线
+编辑卡片（服务卡片、路线图阶段、全球卡片）以 **4px（深表面上 3px）红实线左边**配 16-18px padding-left 标记。左线发出"这是卡片"的信号而不把它框死，卡片读起来像从红线上悬挑出来。这是系统最常见的卡片模式。
 
-### Tilt as Depth
-Rotated Shrikhand display elements break the horizontal baseline and create perceived dimensionality without using perspective. The standard rotations are -6° (stat-big), -5° (close-big), -4° (hero-title-red), +2° (hero-title-bottom). These tilts are part of the system's spatial language.
+### 倾斜即纵深
+旋转的 Shrikhand 展示元素打破水平基线，不用透视就造出维度感。标准旋转是 -6°（stat-big）、-5°（close-big）、-4°（hero-title-red）、+2°（hero-title-bottom）。这些倾斜是系统空间语言的一部分。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
-- **0px** on everything except the hint-pill (4px) and the bar-track elements (none in this template, but if used should be 0px). Every card, every cell, every panel, every callout is a strict rectangle.
-- **4px** on the hint-pill only — a minor concession for the floating chrome.
+### 圆角
+- **0px**：除 hint-pill（4px）和条轨元素（本模板里没有，若用也该是 0px）外，一律为零。每张卡片、每个单元格、每块面板、每个标注都是严格矩形。
+- **4px**：只给 hint-pill，算是对浮动外壳的一点让步。
 
-The square-corner discipline is essential. Rounded cards immediately collapse the printed-poster feel into generic web aesthetic.
+方角纪律不可少。圆角卡片会立刻把印刷海报感压塌成通用网页美学。
 
-### Border Weights
-- **5px solid `{colors.red}`** — used only on the persistent progress bar.
-- **4px solid `{colors.red}`** — used on the editorial leftbar card (service cards on white surfaces).
-- **3px solid `{colors.dark}`** — used on the outer border of tabular grids (financial-grid, summary-highlights) and as the vertical pillar separator.
-- **3px solid `{colors.red}`** — used on the leftbar of roadmap phase cards (on dark surfaces).
-- **2px solid `{colors.red}`** — used as the underline rule on footer links.
-- **2px solid `{colors.dark}`** — used as the outline border on global cards.
-- **1.5px solid `{colors.dark}`** — used on inner cells of tabular grids.
-- **1px solid `rgba(28, 20, 16, 0.08)`** — hairline-soft separator between bullet rows inside pillar panels.
+### 边框粗细
+- **5px 实线 `{colors.red}`**：只用于常驻进度条。
+- **4px 实线 `{colors.red}`**：编辑左线卡片（白表面上的服务卡片）。
+- **3px 实线 `{colors.dark}`**：表格网格外框（财务网格、摘要亮点），以及支柱纵向分隔线。
+- **3px 实线 `{colors.red}`**：路线图阶段卡片左线（深表面上）。
+- **2px 实线 `{colors.red}`**：页脚链接下划线。
+- **2px 实线 `{colors.dark}`**：全球卡片轮廓边。
+- **1.5px 实线 `{colors.dark}`**：表格网格内单元格边。
+- **1px 实线 `rgba(28, 20, 16, 0.08)`**：支柱面板内项目行之间的柔和细线分隔。
 
-The border ladder (1px-soft / 1.5px / 2px / 3px / 4px / 5px) is fixed. Every border is solid; dashed and dotted borders do not exist.
+边框阶梯（1px 柔线 / 1.5px / 2px / 3px / 4px / 5px）固定。每条边都是实线，虚线与点线不存在。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Hero title stack** — A three-line Shrikhand composition at varying sizes with rotation and color contrast. The system's signature opener.
+**英雄标题叠排**：三行 Shrikhand 构图，尺寸各异，带旋转与色彩反差。系统招牌开场。
 
-**Red panel** — Full-bleed `{colors.red}` ground with white display text carrying the stacked text-shadow. Used for statement / quote moments.
+**红面板**：满出血 `{colors.red}` 底，配带堆叠文字阴影的白展示文字。用于陈述 / 引文瞬间。
 
-**Dark panel** — Full-bleed `{colors.dark}` ground with white text and red accents. Used for roadmap-class dense-data surfaces.
+**深面板**：满出血 `{colors.dark}` 底，配白字与红强调。用于路线图类密集数据表面。
 
-**Tabular bordered grid** — 3px ink outer border + 1.5px ink inner cell borders producing a double-border tabular composition. Each cell holds a Shrikhand red numeral + Space Grotesk uppercase label + Libre Baskerville body paragraph + optional Space Grotesk micro line at bottom.
+**带框表格网格**：3px 墨外框 + 1.5px 墨内单元格边，造出双线表格构图。每格装一个红色 Shrikhand 数字 + Space Grotesk 大写标签 + Libre Baskerville 正文段落 + 底部可选的 Space Grotesk 微型行。
 
-**Red leftbar card** — A 4px solid red left rule with 18px left padding holding a Shrikhand card title + Libre Baskerville body + Space Grotesk red-bullet list. The system's primary editorial card pattern.
+**红左线卡片**：4px 实线红左线配 18px 左内边距，装 Shrikhand 卡片标题 + Libre Baskerville 正文 + Space Grotesk 红项目列表。系统主要的编辑卡片模式。
 
-**Pillar panel** — A vertical column inside a multi-pillar layout, separated by 3px ink vertical rules and alternating between white and off-white backgrounds. Each pillar holds a Shrikhand red numeral, Shrikhand title, Libre Baskerville lead, and Space Grotesk bullets separated by 1px hairline-soft rules.
+**支柱面板**：多支柱布局里的一根纵向列，由 3px 墨竖线分隔，白与米白背景交替。每根装一个红色 Shrikhand 数字、Shrikhand 标题、Libre Baskerville 导语，以及由 1px 柔和细线分隔的 Space Grotesk 项目。
 
-**Global card** — A 2px solid ink-bordered card with 24px padding holding a Space Grotesk red label + Shrikhand title + Libre Baskerville body + inline gc-stats row. Used on the global-presence surface.
+**全球卡片**：2px 实线墨边、24px 内边距的卡片，装 Space Grotesk 红标签 + Shrikhand 标题 + Libre Baskerville 正文 + 行内 gc-stats 行。用于全球布局表面。
 
-**Em-dash bullet** — A red em-dash glyph at position absolute left with 14px padding-left on the body. The system's primary list marker.
+**破折号项目**：红色破折号字形，绝对定位在左，正文留 14px padding-left。系统主要列表标记。
 
-**Round bullet** — A red round-bullet glyph at position absolute left with 12px padding-left on the body. Secondary list marker, used in card and pillar bullets.
+**圆点项目**：红色圆点字形，绝对定位在左，正文留 12px padding-left。次级列表标记，用于卡片与支柱项目。
 
-**Footer link** — Space Grotesk uppercase text with a 2px red underline and 4px padding-bottom. Hover swaps text color to red.
+**页脚链接**：Space Grotesk 大写文字配 2px 红下划线、4px padding-bottom。悬停把文字色换成红。
 
-**Stacked text shadow** — Three-step decreasing-opacity ink shadow applied to red display text on red panels. The system's only shadow treatment.
+**堆叠文字阴影**：三级递减墨色不透明度阴影，用于红面板上的红展示文字。系统唯一的阴影处理。
 
-**Tilted display** — Shrikhand elements rotated -6° to +2°. Used on hero-title-red, stat-big, close-big, and hero-title-bottom.
+**倾斜展示**：旋转 -6° 到 +2° 的 Shrikhand 元素。用于 hero-title-red、stat-big、close-big、hero-title-bottom。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
+### 该做
 
-- Apply `{colors.bg}` (white) as the default canvas on most surfaces. Switch to `{colors.red}` for statement slides, `{colors.dark}` for dense-data slides, and alternate `{colors.bg}` / `{colors.light}` for vertical pillar striping.
-- Set every hero-class title as a multi-line Shrikhand stack with at least one rotated line and at least one red line. The composed-stack is the system's opener signature.
-- Use Shrikhand at every numerical-callout moment in `{colors.red}` — tabular cells, summary highlights, pillar numbers, inline mini-stats. Red Shrikhand numerals are the system's data voice.
-- Set every section eyebrow in Space Grotesk weight 600 uppercase with 2-3px letter-spacing in `{colors.red}`. The wide-tracked red label is the universal section opener.
-- Apply the stacked text-shadow to red display text on red panels. The three-step decreasing-opacity ink shadow is the system's only shadow and creates the printed-press feel.
-- Use the 4px red leftbar pattern (`{components.red-leftbar-card}`) for editorial cards. The cantilevered-off-the-rule treatment is the system's primary card pattern.
-- Build tabular grids with the double-border treatment: 3px ink outer border + 1.5px ink inner cell borders touching at intersections.
-- Render every list bullet with a red em-dash (`{components.bullet-em-dash}`) or red round-bullet (`{components.bullet-bullet}`) at position absolute left. Default disc bullets are forbidden.
-- Tilt Shrikhand statement elements (-5° to -6°) to create the system's signature movement. Untilted red statement display reads as misplaced.
-- Use Libre Baskerville at line-height 1.5-1.75 in `{colors.dark}` for every body paragraph. The literary editorial body is what makes the system feel printed.
+- 多数表面用 `{colors.bg}`（白）作默认画布。陈述页换 `{colors.red}`，密集数据页换 `{colors.dark}`，纵向支柱条纹交替 `{colors.bg}` / `{colors.light}`。
+- 把每个英雄级标题设成多行 Shrikhand 叠排，至少一行旋转、至少一行红。叠排构图是系统开场签名。
+- 每个数字标注瞬间（表格单元格、摘要亮点、支柱数字、行内迷你统计）都在 `{colors.red}` 用 Shrikhand。红色 Shrikhand 数字是系统的数据声部。
+- 每个分节眉题用 `{colors.red}` 的 Space Grotesk 字重 600 大写、2-3px 字距。宽字距红标签是通用分节开场。
+- 给红面板上的红展示文字套堆叠文字阴影。三级递减墨色不透明度阴影是系统唯一阴影，造出压印感。
+- 编辑卡片用 4px 红左线模式（`{components.red-leftbar-card}`）。从线上悬挑出的处理是系统主要卡片模式。
+- 表格网格用双线处理搭：3px 墨外框 + 1.5px 墨内单元格边在交点相接。
+- 每个列表项目都用红色破折号（`{components.bullet-em-dash}`）或红色圆点（`{components.bullet-bullet}`）绝对定位在左渲染。默认圆点禁用。
+- 把 Shrikhand 陈述元素倾斜（-5° 到 -6°）造出系统招牌的动势。不倾斜的红色陈述展示读起来像放错位置。
+- 每个正文段落用行高 1.5-1.75、`{colors.dark}` 的 Libre Baskerville。文学编辑正文是系统印刷感的来源。
 
-### Don't
+### 不该做
 
-- Don't introduce a second accent color. Red is the only accent — green for positive, blue for info, yellow for highlight all break the single-accent discipline.
-- Don't round any corner on cards, panels, cells, or callouts. Square corners are non-negotiable; the only exception is the 4px hint-pill chrome.
-- Don't add drop shadows or blurred shadows. The system has zero box-shadows; the only shadow is the stacked text-shadow on red display text.
-- Don't substitute fonts. Shrikhand + Libre Baskerville + Space Grotesk is the trio. Replacing Shrikhand with any other display face collapses the entire identity.
-- Don't use Shrikhand for body or Libre Baskerville for labels. The three-face role discipline is non-negotiable.
-- Don't use default bullet points or disc list markers. Lists always use red em-dash or red round-bullet glyphs at position absolute left.
-- Don't omit the tilt on hero-class red Shrikhand elements. The rotation is the system's signature movement; untilted red display reads as flat.
-- Don't render headlines in red on white surfaces (except for stat-big, close-big, hero-title-red — the rotated statement elements). Most section headers are `{colors.dark}` Shrikhand, not red.
-- Don't tighten Libre Baskerville body line-height below 1.5. Tight body line-height collapses the literary register into something cramped.
-- Don't crowd a statement slide with cards or structural content. Statement surfaces (red panel, stat slide, close slide) deliberately reserve massive negative space around a single rotated red display element.
+- 不要引入第二强调色。红是唯一强调，绿表正向、蓝表信息、黄表高亮都会破掉单一强调纪律。
+- 不要给卡片、面板、单元格、标注加圆角。方角不可商量，唯一例外是 4px 的 hint-pill 外壳。
+- 不要加投影或模糊阴影。系统零 box-shadow，唯一阴影是红展示文字上的堆叠文字阴影。
+- 不要替换字体。Shrikhand + Libre Baskerville + Space Grotesk 是三件套，换掉 Shrikhand 的任何展示字面都会压塌整个身份。
+- 不要用 Shrikhand 排正文，也不要用 Libre Baskerville 做标签。三字面角色纪律不可商量。
+- 不要用默认圆点或圆点列表标记。列表始终用绝对定位在左的红色破折号或红色圆点字形。
+- 不要省掉英雄级红 Shrikhand 元素上的倾斜。旋转是系统招牌动势，不倾斜的红展示显得平。
+- 不要在白表面上把标题渲染成红（stat-big、close-big、hero-title-red 这些旋转陈述元素除外）。多数分节标题是 `{colors.dark}` 的 Shrikhand，不是红。
+- 不要把 Libre Baskerville 正文行高收到 1.5 以下。正文行高过紧会把文学语域压成局促。
+- 不要用卡片或结构内容塞满陈述页。陈述表面（红面板、统计页、收尾页）刻意在单个旋转红展示元素周围留出大面积负空间。
 
-## Responsive Behavior
+## 响应式行为
 
-Bold Poster is designed as a **1920×1080 presentation system**. Sizing uses CSS `clamp()` with `vw`-based mid values for display type, fixed `px` for borders and chrome, and `rem`-adjacent fixed values for cell padding. The system has a single responsive breakpoint at 768px for narrow viewports.
+Bold Poster 设计为 **1920×1080 演示系统**。展示字用带 `vw` 中值的 CSS `clamp()`，边框与外壳用固定 `px`，单元格内边距用接近 rem 的固定值。系统为窄视口设了一个 768px 响应式断点。
 
-### Scaling Behavior
-- Hero stat scales 120px → 320px on viewport width.
-- Hero titles scale 64px → 260px.
-- Section headers scale 32px → 72px.
-- Body scales 11px → 16px.
-- Borders (1px-soft / 1.5px / 2px / 3px / 4px / 5px) and rotation transforms are fixed and do not scale.
+### 缩放行为
+- 英雄统计按视口宽度从 120px 缩放到 320px。
+- 英雄标题从 64px 缩放到 260px。
+- 分节标题从 32px 缩放到 72px。
+- 正文从 11px 缩放到 16px。
+- 边框（1px 柔线 / 1.5px / 2px / 3px / 4px / 5px）与旋转 transform 固定不缩放。
 
-### Mobile Breakpoint (max-width: 768px)
-A single `@media (max-width: 768px)` block restructures dense layouts for narrow viewports:
-- Slide padding shrinks from 48px × 56px to 32px × 24px.
-- Summary columns collapse from 2 → 1.
-- Summary highlights grid collapses from 3 → 1.
-- Financial grid collapses from 3 → 2.
-- Service grid collapses from 2 → 1.
-- Roadmap grid collapses from 2 → 1.
-- Pillars switch from horizontal flex-row to vertical flex-column; vertical separators become horizontal bottom borders.
-- Global grid collapses from 2 → 1.
-- Stat row stacks vertically.
-- Hero tagline shifts from absolute-positioned bottom-right to relative-positioned below the hero title stack.
+### 移动端断点（max-width: 768px）
+单独一个 `@media (max-width: 768px)` 块为窄视口重构密集布局：
+- 幻灯片内边距从 48px × 56px 收到 32px × 24px。
+- 摘要列由 2 收到 1。
+- 摘要亮点网格由 3 收到 1。
+- 财务网格由 3 收到 2。
+- 服务网格由 2 收到 1。
+- 路线图网格由 2 收到 1。
+- 支柱从横向 flex-row 换成纵向 flex-column，竖分隔线变成横向底边。
+- 全球网格由 2 收到 1。
+- 统计行纵向堆叠。
+- 英雄标语从绝对定位的右下移到英雄标题叠排下方的相对定位。
 
-The system is functional but not optimized for sub-768px portrait usage — it's designed for landscape presentation contexts.
+系统在 768px 以下纵向用法里能用，但没做优化，它为横向演示语境而生。
 
-### Presenter Behavior
-- Slides advance via `ArrowRight`, `ArrowDown`, `Space`, `Enter`, or `PageDown`.
-- Slides reverse via `ArrowLeft`, `ArrowUp`, or `PageUp`.
-- Click on the right half of the viewport advances; click on the left half reverses.
-- Horizontal touch swipe with a 50px threshold advances/reverses.
-- Slide transitions are 550ms cubic-bezier `(0.22, 1, 0.36, 1)` with combined opacity, translateY (30px), and scale (0.98 → 1).
-- Progress bar at bottom edge animates to current slide percentage with a 500ms cubic-bezier ease.
+### 放映行为
+- 用 `ArrowRight`、`ArrowDown`、`Space`、`Enter` 或 `PageDown` 前进。
+- 用 `ArrowLeft`、`ArrowUp` 或 `PageUp` 后退。
+- 点击视口右半前进，点击左半后退。
+- 横向触摸滑动，50px 阈值前进/后退。
+- 幻灯片过渡 550ms cubic-bezier `(0.22, 1, 0.36, 1)`，组合 opacity、translateY（30px）与 scale（0.98 → 1）。
+- 底边进度条以 500ms cubic-bezier ease 动画到当前页百分比。
 
-### Print Behavior
-The system has no `@media print` rule. The transition is screen-only. For static export, screenshots of each slide preserve all rotation transforms and the stacked text-shadow (both are pure CSS).
+### 打印行为
+系统没有 `@media print` 规则。过渡只用于屏幕。静态导出时，逐页截图能保留所有旋转 transform 与堆叠文字阴影（两者都是纯 CSS）。
 
-### Interactive States
-- Footer links swap text color from `{colors.dark}` to `{colors.red}` on hover.
-- The hint-pill fades from opacity 0 to 0.5 on `body:hover` via a 400ms ease.
+### 交互状态
+- 页脚链接悬停把文字色从 `{colors.dark}` 换成 `{colors.red}`。
+- hint-pill 在 `body:hover` 时经 400ms ease 从不透明度 0 淡到 0.5。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-When using this template for Chinese (or other CJK) content, swap the Latin typeface stack for an equivalent Chinese pairing and apply universal CJK adjustments. All recommended Chinese fonts load via CDN — no install required.
+用本模板承载中文（或其他 CJK）内容时，把拉丁字体栈换成对等的中文搭配，并套用通用 CJK 调整。所有推荐中文字体均通过 CDN 加载，无需安装。
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin (default) | Chinese counterpart |
+| 角色 | 拉丁（默认） | 中文对应 |
 |---|---|---|
-| Display / hero / stat / section header / numerical figures / card titles | Shrikhand 400 (heavy slab-script, rotated) | 思源宋体 Noto Serif SC 900 |
-| Body / body-card / body-cell / hero-meta / cite / close-sub | Libre Baskerville 400 (literary serif) | 思源宋体 Noto Serif SC 400 |
-| Label / bullet body / counter / link / micro chrome | Space Grotesk 400–600 (uppercase, 2–3px tracking) | 思源黑体 Noto Sans SC 500 (no transform, no tracking) |
+| 展示 / 英雄 / 统计 / 分节标题 / 数字 / 卡片标题 | Shrikhand 400（厚重板状手写、旋转） | 思源宋体 Noto Serif SC 900 |
+| 正文 / 卡片正文 / 单元格正文 / 英雄元信息 / 出处 / 收尾副标题 | Libre Baskerville 400（文学衬线） | 思源宋体 Noto Serif SC 400 |
+| 标签 / 项目正文 / 计数器 / 链接 / 微型外壳 | Space Grotesk 400–600（大写、2–3px 字距） | 思源黑体 Noto Sans SC 500（无变换、无字距） |
 
-### Mixed-Content Strategy
+### 混排策略
 
-**Strategy A** — single CJK family per role with Latin glyph coverage built in. Use **思源宋体 Noto Serif SC** for both display and body (weight 900 for display, weight 400 for body — visual hierarchy comes from weight, size, color, and rotation, not face contrast). Use **思源黑体 Noto Sans SC** weight 500 for the small uppercase chrome (labels, bullet bodies, counter, links). 思源宋体 ships Latin glyphs that pair cleanly with Chinese characters; for mixed display moments, 思源宋体 weight 900 will render both 中文 and Latin in the same heavy serif voice.
+**策略 A**：每个角色一款自带拉丁字形覆盖的 CJK 字族。展示与正文都用**思源宋体 Noto Serif SC**（展示字重 900、正文字重 400，视觉层级靠字重、尺寸、颜色、旋转，不靠字面对比）。小型大写外壳（标签、项目正文、计数器、链接）用**思源黑体 Noto Sans SC** 字重 500。思源宋体自带拉丁字形，与汉字并排也干净；混排展示瞬间里，思源宋体字重 900 会把中文和拉丁都渲染成同一种厚衬线声部。
 
-### Loading
+### 加载
 
-Add to the template's `<head>`:
+在模板 `<head>` 中加入：
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -664,50 +668,50 @@ Add to the template's `<head>`:
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- **Line-height**: increase by ~15–25% from the Latin spec. Body 1.75–1.85 (already close to Libre Baskerville 1.75; keep at 1.8 for CJK), display 1.1–1.25 (up from the very tight 0.82–0.9 used on Shrikhand). Display at 0.82 collides vertically in CJK; open to 1.0 minimum.
-- **Letter-spacing**: set to 0 on every CJK run. The template's 1px positive tracking on hero-title and the 2–3px tracking on Space Grotesk labels both read as gappy on square CJK glyphs.
-- **Text transform**: don't apply `uppercase` to Chinese text — CJK has no case. Every Space Grotesk label, tag-label, rm-label, counter, and link uses `text-transform: uppercase` in the Latin original; remove for CJK runs.
-- **Punctuation**: use full-width Chinese punctuation （，。：；！？「」（））.
-- **No period on display headlines**: Chinese typography convention omits trailing 。 on display-scale headlines.
-- **Space between CJK and Latin (盘古之白)**: insert an ASCII space between every Chinese character and adjacent Latin character or digit. Write `1970 米兰式海报` not `1970米兰式海报`.
-- **One font per sentence**: 思源宋体 covers both CJK and Latin glyphs in a unified serif style — let it handle mixed sentences in display and body. Don't let the browser fall back to Shrikhand or Libre Baskerville mid-word for ASCII characters.
+- **行高**：在拉丁规格上提高约 15–25%。正文 1.75–1.85（已接近 Libre Baskerville 的 1.75，CJK 保持 1.8），展示 1.1–1.25（从 Shrikhand 极紧的 0.82–0.9 上调）。展示在 0.82 会在 CJK 里纵向相撞，至少放到 1.0。
+- **字距**：每段 CJK 文本设为 0。模板里 hero-title 的 1px 正字距与 Space Grotesk 标签的 2–3px 字距，放到方正 CJK 字形上都显得松垮。
+- **文字变换**：不要对中文套 `uppercase`，CJK 没有大小写。拉丁原版里每个 Space Grotesk 标签、tag-label、rm-label、计数器、链接都用 `text-transform: uppercase`，CJK 文本要去掉。
+- **标点**：用全角中文标点（，。：；！？「」（））。
+- **展示标题不加句号**：中文排印惯例，展示级标题末尾不写 。
+- **中西文之间加空格（盘古之白）**：每个汉字与相邻的拉丁字符或数字之间插入一个 ASCII 空格。写 `1970 米兰式海报`，不要写 `1970米兰式海报`。
+- **一句一款字体**：思源宋体以统一衬线风格覆盖 CJK 与拉丁字形，展示与正文的混排句子交给它处理。不要让浏览器因 ASCII 字符在词中回退到 Shrikhand 或 Libre Baskerville。
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-The system's identity rests on **Shrikhand's chunky slab-script personality + rotation + saturated red**. Shrikhand is the most distinctive single decision in this template — and it has no Chinese equivalent. 思源宋体 weight 900 carries weight and editorial register but loses the playful italic-leaning slab character entirely. Compensate by **leaning harder on the non-typographic signatures**: keep all rotations intact (-6° on stat-big, -5° on close-big, -4° on hero-title-red, +2° on hero-title-bottom), keep the stacked text-shadow on red-panel display, keep the saturated tomato red as the only accent, keep the 3px + 1.5px double-border tabular grids, keep the red leftbar cards, keep the red em-dash bullet markers. The rotation, red, and printed-newsprint structural language survive the face swap.
+系统的身份建立在 **Shrikhand 粗壮板状手写性格 + 旋转 + 饱和红**上。Shrikhand 是本模板最鲜明的单项决策，却没有中文对应。思源宋体字重 900 有分量、有编辑语域，却把俏皮斜意的板状性格完全丢掉。补偿办法是更倚重**非排印签名**：保留所有旋转（stat-big -6°、close-big -5°、hero-title-red -4°、hero-title-bottom +2°）、保留红面板展示上的堆叠文字阴影、保留饱和番茄红作唯一强调、保留 3px + 1.5px 双线表格网格、保留红左线卡片、保留红色破折号项目标记。旋转、红色与印刷新闻纸的结构语言能在换字面后存活。
 
-The system's three-face role discipline (Shrikhand display / Libre Baskerville body / Space Grotesk chrome) collapses to a two-face system in CJK: 思源宋体 for everything Latin-serif, 思源黑体 for everything Latin-mono. The body-vs-display contrast becomes pure weight (400 vs 900) plus color (dark vs red). For inline `<strong>` emphasis inside body, switch from 思源宋体 400 to 思源黑体 600 — the change-of-face is what signals emphasis in the Latin original, and the serif-to-sans swap preserves the same logic in CJK.
+系统的三字面角色纪律（Shrikhand 展示 / Libre Baskerville 正文 / Space Grotesk 外壳）到了 CJK 收成两字面系统：一切拉丁衬线归思源宋体，一切拉丁等宽归思源黑体。正文与展示的反差变成纯字重（400 对 900）加颜色（深对红）。正文内的行内 `<strong>` 强调，从思源宋体 400 切到思源黑体 600：拉丁原版靠换字面提示强调，CJK 里衬线转无衬线保留了同样的逻辑。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-- **No exact online CJK match for Shrikhand's slab-script personality.** The face is Italian-sports-magazine display script with chunky terminals and playful italic forms — there is no Chinese equivalent on Google Fonts, Adobe Fonts, or cn-fontsource. 思源宋体 weight 900 gives heft and editorial register but reads as serious rather than playful. The rotation transforms and saturated red carry the playful-sports-magazine voice on their own; don't drop the tilts when translating to CJK.
-- **No CDN Chinese monospace face for the chrome voice.** Space Grotesk's role (uppercase tracked labels, slide counter, footer links with red underline) depends on the uppercase + 2–3px tracking treatment. 思源黑体 weight 500–600 at 0 tracking is the closest match but loses the "stamped metadata" signal. The red color and 1–2px border treatments on tags/links do most of the chrome-recognition work in a CJK build.
-- **Libre Baskerville's classical literary register has no exact Chinese counterpart.** 思源宋体 reads as institutional-modern rather than 19th-century-literary. For projects that need the literary-quarterly voice specifically (long body paragraphs in essays or manifestos), consider 霞鹜文楷 LXGW WenKai instead of 思源宋体 — it carries a hand-written/calligraphic warmth closer to Baskerville's editorial personality.
+- **Shrikhand 的板状手写性格没有精确的在线 CJK 对应。** 这款字面是意大利体育杂志展示手书，字端粗、字形带俏皮斜意，Google Fonts、Adobe Fonts、cn-fontsource 上都没有中文对应。思源宋体字重 900 有分量、有编辑语域，但读起来严肃而非俏皮。旋转 transform 与饱和红独自扛起俏皮体育杂志声部，汉化到 CJK 时别丢倾斜。
+- **没有可 CDN 加载的中文等宽字面给外壳声部。** Space Grotesk 的角色（大写宽字距标签、页码、带红下划线的页脚链接）依赖大写 + 2–3px 字距处理。思源黑体字重 500–600、0 字距是最接近的匹配，却丢掉"盖章元数据"信号。CJK 版本里，红色与标签/链接上的 1–2px 边框处理承担了大部分外壳识别工作。
+- **Libre Baskerville 的古典文学语域没有精确的中文对应。** 思源宋体读起来偏机构现代，而非 19 世纪文学。若项目特别需要文学季刊声部（随笔或宣言里的长正文段落），可考虑用霞鹜文楷 LXGW WenKai 代替思源宋体，它带手写/书法暖意，更接近 Baskerville 的编辑性格。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new content slide starts with a Shrikhand section header at `{typography.section-header}` (32–64px) in `{colors.dark}`, optionally preceded by a Space Grotesk red eyebrow label.
-2. Any new numerical callout (cell figure, pillar number, inline stat, summary highlight) is Shrikhand in `{colors.red}` at the appropriate cell-number scale.
-3. Any new body paragraph is Libre Baskerville weight 400 in `{colors.dark}` at line-height 1.5-1.75.
-4. Any new editorial card uses the `{components.red-leftbar-card}` pattern (4px red left rule + 18px padding-left), holding a Shrikhand title + Libre Baskerville body + Space Grotesk red-bullet list.
-5. Any new data-grid is wrapped in a 3px ink outer border with 1.5px ink inner cell borders. Each cell holds: Shrikhand red numeral + Space Grotesk uppercase label + Libre Baskerville body + optional Space Grotesk micro-context line at bottom.
-6. Any new statement slide uses a full-bleed `{colors.red}` panel with white Shrikhand display text carrying the stacked text-shadow, and white Libre Baskerville cite below.
-7. Any new dense-data slide uses a full-bleed `{colors.dark}` panel with white text, red Space Grotesk labels, red 3px leftbar rules on phase cards, and red round-bullet glyphs on lists.
-8. Any new list uses red em-dash or red round-bullet glyphs at position absolute left — never default disc bullets.
-9. Any new hero composition is a multi-line Shrikhand stack: at least three lines, at least one rotated, at least one in red. Don't collapse to a single horizontal title.
-10. If a surface feels too monotone, switch the surface ground (white → red / dark / off-white panel) — don't add a second accent color or a third typeface.
+1. 任何新内容页都以 `{colors.dark}` 的 `{typography.section-header}`（32–64px）Shrikhand 分节标题开头，前面可选配 Space Grotesk 红眉题标签。
+2. 任何新数字标注（单元格数字、支柱数字、行内统计、摘要亮点）都是相应 cell-number 尺度的 `{colors.red}` Shrikhand。
+3. 任何新正文段落都是 `{colors.dark}` 的 Libre Baskerville 字重 400、行高 1.5-1.75。
+4. 任何新编辑卡片都用 `{components.red-leftbar-card}` 模式（4px 红左线 + 18px padding-left），装 Shrikhand 标题 + Libre Baskerville 正文 + Space Grotesk 红项目列表。
+5. 任何新数据网格都包在 3px 墨外框配 1.5px 墨内单元格边里。每格装：红色 Shrikhand 数字 + Space Grotesk 大写标签 + Libre Baskerville 正文 + 底部可选的 Space Grotesk 微型上下文行。
+6. 任何新陈述页都用满出血 `{colors.red}` 面板，白带堆叠文字阴影的 Shrikhand 展示文字，下方白色 Libre Baskerville 出处。
+7. 任何新密集数据页都用满出血 `{colors.dark}` 面板，白字、红色 Space Grotesk 标签、阶段卡片上红色 3px 左线、列表上红色圆点字形。
+8. 任何新列表都用绝对定位在左的红色破折号或红色圆点字形，绝不用默认圆点。
+9. 任何新英雄构图都是多行 Shrikhand 叠排：至少三行、至少一行旋转、至少一行红。别塌成单行横标题。
+10. 表面若显得太单一，换表面底（白 → 红 / 深 / 米白面板），别加第二强调色或第三款字体。
 
-## Known Gaps
+## 已知缺口
 
-- **Shrikhand is a single-weight (400) display face** — there are no bolder or lighter weights available. Every Shrikhand element is the same weight; visual hierarchy comes from size, color, and rotation only.
-- **Shrikhand, Libre Baskerville, and Space Grotesk are loaded from Google Fonts** via a single `<link>` request. There are no system fallbacks beyond `cursive` / `serif` / `sans-serif` — in environments where Google Fonts fail, the system collapses to generic system fonts and loses its identity entirely.
-- **The stacked text-shadow is hardcoded for ink-on-red contexts.** Applying it to different color combinations (e.g., red text on a light ground) does not produce the same effect; the three-step shadow is specifically tuned for the red-panel surface.
-- **Rotation transforms are fixed per element type** (-6° on stat-big, -5° on close-big, -4° on hero-title-red, +2° on hero-title-bottom). Adjusting individual rotations requires per-instance style overrides.
-- **The financial-grid and summary-highlights grid use overlapping borders** (3px outer + 1.5px inner that physically overlap by half-pixel due to box-sizing). Browser rendering of this overlap is generally clean but can produce subtle 1-pixel artifacts at certain zoom levels.
-- **The pillars layout uses `overflow-y: auto`** on each pillar column. On surfaces with long content, this introduces visible scrollbars on certain operating systems — the system is designed for content that fits the viewport.
-- **The hero tagline on slide-hero is absolutely positioned at `bottom: 8vh; right: 7vw`** with a 300px max-width. On very wide aspect ratios or very narrow ones it may misalign with the hero title stack.
-- **The progress bar is a 5px height strip** that may visually overlap content on slides with bottom-edge text — the slide-close surface in particular places close-links at `bottom: 5vh` which clears the progress bar but only by a small margin.
-- **The click-to-advance interaction divides the viewport at 50% width** for next/prev. This may conflict with click-to-interact behaviors on links inside slides (the close-slide footer links). The system relies on link click events to stopPropagation, which they do not by default.
-- **The bullet-list class is defined globally** with em-dash glyphs but is not used in the demo template — the pillar bullets, service bullets, and roadmap bullets all redefine their own bullet styles inline. There's some inconsistency between the defined utility and the actual usage patterns.
+- **Shrikhand 是单字重（400）展示字面**，没有更粗或更细的字重可用。每个 Shrikhand 元素字重相同，视觉层级只靠尺寸、颜色、旋转。
+- **Shrikhand、Libre Baskerville、Space Grotesk 通过单个 `<link>` 请求从 Google Fonts 加载**。除 `cursive` / `serif` / `sans-serif` 外没有系统回退；在 Google Fonts 失效的环境里，系统会塌成通用系统字体，身份尽失。
+- **堆叠文字阴影为墨压红语境硬编码**。套到别的颜色组合（例如浅底红字）达不到同样效果，三级阴影是专为红面板表面调的。
+- **旋转 transform 按元素类型固定**（stat-big -6°、close-big -5°、hero-title-red -4°、hero-title-bottom +2°）。调整单个旋转要逐实例覆盖样式。
+- **财务网格与摘要亮点网格用重叠边框**（3px 外 + 1.5px 内，因 box-sizing 在物理上有半像素重叠）。浏览器渲染这个重叠通常干净，但某些缩放级别下可能产生细微的 1 像素瑕疵。
+- **支柱布局每列用 `overflow-y: auto`**。内容长的表面在某些操作系统上会出现可见滚动条，系统为内容塞得进视口而设计。
+- **slide-hero 上的英雄标语绝对定位在 `bottom: 8vh; right: 7vw`**，max-width 300px。宽高比极宽或极窄时可能与英雄标题叠排错位。
+- **进度条是 5px 高**，在底边有文字的页面上可能视觉压住内容，收尾页尤其把 close-links 放在 `bottom: 5vh`，刚好让开进度条但余量很小。
+- **点击前进交互按 50% 宽度把视口分成下一页/上一页**。这可能与页内链接的点击交互冲突（收尾页页脚链接）。系统依赖链接点击事件 stopPropagation，而默认并没有这么做。
+- **项目列表类全局定义了破折号字形**，但演示模板里没用：支柱项目、服务项目、路线图项目都在行内重定义了自己的项目样式。定义的工具类与实际用法模式之间有些不一致。

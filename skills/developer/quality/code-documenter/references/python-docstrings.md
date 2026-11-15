@@ -1,6 +1,10 @@
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/code-documenter/references/python-docstrings.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Python Docstrings
 
-## Google Style (Recommended)
+## Google 风格（推荐）
 
 ```python
 def calculate_total(items: list[Item], tax_rate: float = 0.0) -> float:
@@ -22,7 +26,7 @@ def calculate_total(items: list[Item], tax_rate: float = 0.0) -> float:
     """
 ```
 
-## NumPy Style
+## NumPy 风格
 
 ```python
 def calculate_total(items: list[Item], tax_rate: float = 0.0) -> float:
@@ -53,7 +57,7 @@ def calculate_total(items: list[Item], tax_rate: float = 0.0) -> float:
     """
 ```
 
-## Sphinx Style
+## Sphinx 风格
 
 ```python
 def calculate_total(items: list[Item], tax_rate: float = 0.0) -> float:
@@ -74,7 +78,7 @@ def calculate_total(items: list[Item], tax_rate: float = 0.0) -> float:
     """
 ```
 
-## Class Documentation
+## 类文档
 
 ```python
 class UserService:
@@ -101,21 +105,21 @@ class UserService:
         """
 ```
 
-## Quick Reference
+## 速查表
 
-| Style | Args Format | Returns Format |
+| 风格 | 参数格式 | 返回值格式 |
 |-------|-------------|----------------|
-| Google | `Args:` block | `Returns:` block |
-| NumPy | `Parameters` section | `Returns` section |
+| Google | `Args:` 块 | `Returns:` 块 |
+| NumPy | `Parameters` 段 | `Returns` 段 |
 | Sphinx | `:param name:` | `:returns:` |
 
-## Sections Available
+## 可用段落
 
-| Section | Google | NumPy | Sphinx |
+| 段落 | Google | NumPy | Sphinx |
 |---------|--------|-------|--------|
-| Parameters | `Args:` | `Parameters` | `:param:` |
-| Returns | `Returns:` | `Returns` | `:returns:` |
-| Raises | `Raises:` | `Raises` | `:raises:` |
-| Examples | `Example:` | `Examples` | `.. code-block::` |
-| Notes | `Note:` | `Notes` | `.. note::` |
-| Attributes | `Attributes:` | `Attributes` | `:ivar:` |
+| 参数 | `Args:` | `Parameters` | `:param:` |
+| 返回值 | `Returns:` | `Returns` | `:returns:` |
+| 异常 | `Raises:` | `Raises` | `:raises:` |
+| 示例 | `Example:` | `Examples` | `.. code-block::` |
+| 注释 | `Note:` | `Notes` | `.. note::` |
+| 属性 | `Attributes:` | `Attributes` | `:ivar:` |

@@ -1,8 +1,12 @@
-# MySQL Tuning
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/database-optimizer/references/mysql-tuning.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## InnoDB Memory Configuration
+# MySQL 调优
 
-### Buffer Pool
+## InnoDB 内存配置
+
+### 缓冲池
 
 ```sql
 -- Recommended: 70-80% of system RAM for dedicated MySQL server
@@ -33,7 +37,7 @@ FROM (
 SET GLOBAL innodb_buffer_pool_instances = 8;
 ```
 
-### Sort and Join Buffers
+### 排序与连接缓冲区
 
 ```sql
 -- Sort buffer per connection
@@ -50,7 +54,7 @@ SET GLOBAL max_heap_table_size = 67108864;  -- 64MB
 SHOW GLOBAL STATUS LIKE 'Created_tmp%';
 ```
 
-## Query Cache (Deprecated in 8.0)
+## 查询缓存（8.0 已废弃）
 
 ```sql
 -- MySQL 5.7 and earlier
@@ -76,9 +80,9 @@ FROM (
 ) selects;
 ```
 
-## InnoDB Performance Settings
+## InnoDB 性能设置
 
-### Log Files and Flushing
+### 日志文件与刷盘
 
 ```sql
 -- InnoDB log file size (larger = better write performance)
@@ -102,7 +106,7 @@ SET GLOBAL innodb_flush_log_at_trx_commit = 1;
 SET GLOBAL innodb_flush_log_at_trx_commit = 2;
 ```
 
-### I/O Configuration
+### I/O 配置
 
 ```sql
 -- Read I/O threads
@@ -122,7 +126,7 @@ innodb_flush_method = O_DIRECT
 innodb_flush_neighbors = 0  -- Disable for SSD
 ```
 
-### Thread Configuration
+### 线程配置
 
 ```sql
 -- Max connections
@@ -150,9 +154,9 @@ FROM (
 ) conns;
 ```
 
-## Query Optimization
+## 查询优化
 
-### Slow Query Log
+### 慢查询日志
 
 ```sql
 -- Enable slow query logging
@@ -206,9 +210,9 @@ ORDER BY SUM_TIMER_WAIT DESC
 LIMIT 10;
 ```
 
-## Index Optimization
+## 索引优化
 
-### Index Statistics
+### 索引统计
 
 ```sql
 -- Update index statistics
@@ -246,7 +250,7 @@ WHERE index_name IS NOT NULL
 ORDER BY object_schema, object_name;
 ```
 
-### Covering Indexes
+### 覆盖索引
 
 ```sql
 -- Create covering index
@@ -263,9 +267,9 @@ SELECT name FROM users FORCE INDEX (idx_users_email_name_created)
 WHERE email = 'user@example.com';
 ```
 
-## Partitioning
+## 分区
 
-### Range Partitioning
+### 范围分区
 
 ```sql
 -- Create partitioned table
@@ -296,7 +300,7 @@ ADD PARTITION (PARTITION p2026 VALUES LESS THAN (2027));
 ALTER TABLE events DROP PARTITION p2023;
 ```
 
-### List Partitioning
+### 列表分区
 
 ```sql
 -- Partition by discrete values
@@ -312,9 +316,9 @@ CREATE TABLE orders (
 );
 ```
 
-## Replication Optimization
+## 复制优化
 
-### Binary Log Settings
+### 二进制日志设置
 
 ```sql
 -- Binary log format
@@ -331,7 +335,7 @@ SET GLOBAL sync_binlog = 1;  -- Safest, sync after each commit
 SET GLOBAL binlog_expire_logs_seconds = 604800;  -- 7 days
 ```
 
-### Replication Lag Monitoring
+### 复制延迟监控
 
 ```sql
 -- On replica: Check replication lag
@@ -349,9 +353,9 @@ SET GLOBAL slave_parallel_workers = 4;
 SET GLOBAL slave_parallel_type = 'LOGICAL_CLOCK';
 ```
 
-## Table Optimization
+## 表优化
 
-### Table Maintenance
+### 表维护
 
 ```sql
 -- Optimize table (rebuilds, reclaims space)
@@ -379,7 +383,7 @@ WHERE table_schema NOT IN ('mysql', 'information_schema', 'performance_schema', 
 ORDER BY fragmentation_pct DESC;
 ```
 
-### Table Compression
+### 表压缩
 
 ```sql
 -- InnoDB compression (requires ROW_FORMAT=COMPRESSED)
@@ -400,7 +404,7 @@ FROM information_schema.tables
 WHERE row_format = 'Compressed';
 ```
 
-## Configuration File Example
+## 配置文件示例
 
 ```ini
 # my.cnf - Production optimized for 16GB RAM server

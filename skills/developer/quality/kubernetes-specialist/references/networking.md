@@ -1,8 +1,12 @@
-# Kubernetes Networking
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/networking.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Service Types
+# Kubernetes 网络
 
-### ClusterIP (Default)
+## Service 类型
+
+### ClusterIP（默认）
 
 ```yaml
 apiVersion: v1
@@ -32,7 +36,7 @@ spec:
       timeoutSeconds: 3600
 ```
 
-### Headless Service (StatefulSet)
+### Headless Service（StatefulSet）
 
 ```yaml
 apiVersion: v1
@@ -96,7 +100,7 @@ spec:
   - 203.0.113.0/24  # Restrict source IPs
 ```
 
-## Ingress Resources
+## Ingress 资源
 
 ### NGINX Ingress
 
@@ -150,7 +154,7 @@ spec:
               number: 8080
 ```
 
-### Path-Based Routing
+### 基于路径的路由
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -180,9 +184,9 @@ spec:
               number: 80
 ```
 
-## NetworkPolicy (Zero Trust)
+## NetworkPolicy（零信任）
 
-### Default Deny All
+### 默认拒绝全部
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -197,7 +201,7 @@ spec:
   - Egress
 ```
 
-### Allow Frontend to Backend
+### 允许前端访问后端
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -221,7 +225,7 @@ spec:
       port: 8080
 ```
 
-### Backend to Database
+### 后端访问数据库
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -248,7 +252,7 @@ spec:
       port: 5432
 ```
 
-### Allow DNS and External HTTPS
+### 允许 DNS 与外部 HTTPS
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -277,7 +281,7 @@ spec:
       port: 443
 ```
 
-### Cross-Namespace Communication
+### 跨命名空间通信
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -304,9 +308,9 @@ spec:
       port: 8080
 ```
 
-## DNS Configuration
+## DNS 配置
 
-### Service DNS Names
+### Service DNS 名称
 
 ```yaml
 # Within same namespace
@@ -321,7 +325,7 @@ postgres-1.postgres-headless.database.svc.cluster.local
 postgres-2.postgres-headless.database.svc.cluster.local
 ```
 
-### Custom DNS Policy
+### 自定义 DNS 策略
 
 ```yaml
 apiVersion: v1
@@ -346,7 +350,7 @@ spec:
     image: myapp:latest
 ```
 
-## Service Mesh (Istio Example)
+## Service Mesh（Istio 示例）
 
 ### VirtualService
 
@@ -407,7 +411,7 @@ spec:
       version: v2.0.0
 ```
 
-## EndpointSlice (Modern Alternative to Endpoints)
+## EndpointSlice（Endpoints 的现代替代）
 
 ```yaml
 apiVersion: discovery.k8s.io/v1
@@ -435,13 +439,13 @@ endpoints:
   nodeName: node-2
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Default Deny**: Start with deny-all NetworkPolicy, then allow specific traffic
-2. **Least Privilege**: Only open required ports and protocols
-3. **Service Selection**: Use ClusterIP by default, LoadBalancer sparingly
-4. **DNS Names**: Use service DNS names, avoid hardcoded IPs
-5. **TLS Termination**: Terminate TLS at Ingress when possible
-6. **Health Checks**: Configure proper health check paths
-7. **Rate Limiting**: Apply rate limits at Ingress level
-8. **Monitoring**: Expose metrics endpoints for Prometheus
+1. **默认拒绝**：先上 deny-all NetworkPolicy，再逐条放行
+2. **最小权限**：只开放必需的端口与协议
+3. **Service 选择**：默认用 ClusterIP，谨慎用 LoadBalancer
+4. **DNS 名称**：用 Service DNS 名，别硬编码 IP
+5. **TLS 终止**：尽量在 Ingress 层终止 TLS
+6. **健康检查**：配置正确的健康检查路径
+7. **限流**：在 Ingress 层做限流
+8. **监控**：暴露指标端点给 Prometheus

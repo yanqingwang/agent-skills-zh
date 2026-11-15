@@ -1,10 +1,14 @@
-# Cost Optimization
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/cost-optimization.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+# 成本优化
 
 ---
 
-## Resource Right-Sizing
+## 资源规格合理化
 
-### Analyze Current Usage
+### 分析当前用量
 
 ```bash
 # View resource requests vs actual usage
@@ -22,7 +26,7 @@ MEM_LIM:.spec.containers[*].resources.limits.memory"
 kubectl get vpa -n production -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{.status.recommendation.containerRecommendations[*]}{"\n\n"}{end}'
 ```
 
-### Right-Sized Resource Spec
+### 合理化后的资源规格
 
 ```yaml
 apiVersion: apps/v1
@@ -47,7 +51,7 @@ spec:
               memory: 256Mi
 ```
 
-## Vertical Pod Autoscaler (VPA)
+## Vertical Pod Autoscaler（VPA）
 
 ```yaml
 apiVersion: autoscaling.k8s.io/v1
@@ -78,7 +82,7 @@ spec:
         controlledValues: RequestsAndLimits
 ```
 
-### VPA Recommendation Only
+### 仅输出 VPA 建议
 
 ```yaml
 apiVersion: autoscaling.k8s.io/v1
@@ -95,7 +99,7 @@ spec:
     updateMode: "Off"
 ```
 
-## Horizontal Pod Autoscaler (HPA) Tuning
+## Horizontal Pod Autoscaler（HPA）调优
 
 ```yaml
 apiVersion: autoscaling/v2
@@ -159,9 +163,9 @@ spec:
       selectPolicy: Max
 ```
 
-## Spot/Preemptible Instances
+## Spot / 可抢占实例
 
-### Node Pool with Spot Instances (GKE)
+### 使用 Spot 实例的节点池（GKE）
 
 ```yaml
 apiVersion: container.google.com/v1
@@ -182,7 +186,7 @@ spec:
     maxNodeCount: 10
 ```
 
-### Workload Tolerating Spot Nodes
+### 容忍 Spot 节点的工作负载
 
 ```yaml
 apiVersion: apps/v1
@@ -216,7 +220,7 @@ spec:
           # ... container spec
 ```
 
-### Pod Disruption Budget for Spot
+### 面向 Spot 的 PodDisruptionBudget
 
 ```yaml
 apiVersion: policy/v1
@@ -232,7 +236,7 @@ spec:
       app: myapp
 ```
 
-## Namespace Quotas
+## 命名空间配额
 
 ```yaml
 apiVersion: v1
@@ -304,7 +308,7 @@ spec:
         storage: 100Gi
 ```
 
-## Cluster Autoscaler Configuration
+## Cluster Autoscaler 配置
 
 ```yaml
 apiVersion: v1
@@ -328,9 +332,9 @@ data:
     }
 ```
 
-## Cost Monitoring
+## 成本监控
 
-### Kubecost Deployment
+### Kubecost 部署
 
 ```bash
 # Install Kubecost
@@ -341,7 +345,7 @@ helm install kubecost kubecost/cost-analyzer \
   --set kubecostToken="<kubecost-token>"
 ```
 
-### Prometheus Cost Metrics
+### Prometheus 成本指标
 
 ```yaml
 # Pod cost label for attribution
@@ -361,7 +365,7 @@ spec:
         team: platform
 ```
 
-## Scheduled Scaling
+## 定时伸缩
 
 ```yaml
 # Scale down dev environments overnight
@@ -411,7 +415,7 @@ spec:
           restartPolicy: OnFailure
 ```
 
-## Priority Classes
+## 优先级类（PriorityClass）
 
 ```yaml
 apiVersion: scheduling.k8s.io/v1
@@ -442,17 +446,17 @@ spec:
       # ...
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Set resource requests** on all containers (enables efficient scheduling)
-2. **Use VPA recommendations** to right-size workloads
-3. **Tune HPA stabilization** to prevent thrashing
-4. **Leverage spot instances** for fault-tolerant workloads
-5. **Implement PDBs** to maintain availability during disruptions
-6. **Set namespace quotas** to prevent resource hogging
-7. **Use LimitRanges** to enforce sensible defaults
-8. **Label resources** for cost attribution
-9. **Schedule dev environments** to scale down off-hours
-10. **Monitor with Kubecost** or cloud cost tools
-11. **Use priority classes** to ensure critical workloads run
-12. **Review unused resources** regularly (idle deployments, orphaned PVCs)
+1. **设置资源 requests**：所有容器都设，便于高效调度
+2. **用 VPA 建议**：据此调整工作负载规格
+3. **调优 HPA 稳定窗口**：避免反复抖动
+4. **利用 Spot 实例**：用于可容错的工作负载
+5. **实施 PDB**：在中断期间维持可用性
+6. **设置命名空间配额**：防止资源被独占
+7. **用 LimitRange**：强制合理的默认值
+8. **给资源打标签**：便于成本归属
+9. **定时调度开发环境**：非工作时段缩容
+10. **用 Kubecost 或云成本工具监控**
+11. **用 PriorityClass**：确保关键工作负载运行
+12. **定期清理闲置资源**：空转的 Deployment、孤立的 PVC

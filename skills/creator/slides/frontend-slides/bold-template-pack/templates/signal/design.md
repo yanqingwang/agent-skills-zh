@@ -194,274 +194,278 @@ components:
     description: "Cycle/process step card with a 2px gold rule at top, gold numeral, serif title, sans body."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/signal/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Signal is a **literary editorial** presentation system — what a long-form intelligence briefing or a quarterly review from a serious magazine would look like if it ran as a deck. The visual premise is the marriage of two faces: a Scottish-roast editorial serif (Source Serif 4) carrying the voice, and a precision grotesque (DM Sans) carrying the substance, with a condensed monospace (IBM Plex Mono) for every timestamp, kicker, and piece of chrome metadata. The result reads like a quiet authority — the deck does not need to shout because the typography already telegraphs seriousness.
+Signal 是一套**文学编辑**演示系统，是一份长篇情报简报或严肃杂志的季度评述若以文稿形式呈现会有的样子。视觉前提是两款字面的联姻：一款苏格兰深烘调的编辑衬线（Source Serif 4）承载声音，一款精密怪诞体（DM Sans）承载实质，再配一款压缩等宽（IBM Plex Mono）承载每个时间戳、眉题、外壳元数据碎片。结果读作安静的权威，文稿无需呐喊，因为排印已经把郑重传达出来了。
 
-The system runs on a **dual-surface** model. The dark surface is `{colors.navy}` (#1C2644) — a deep editorial blue that sits warmer than navy and cooler than midnight. The light surface is `{colors.cream}` (#F0ECE3) — a warm aged-paper tone, never pure white. Both surfaces carry the same typographic vocabulary at the same scale; what changes is the foreground color. On dark surfaces, primary text is `{colors.text-warm}` (a warm off-white, never pure white). On cream, primary text is `{colors.ink}` (a near-black with a navy bias). The two surfaces are interchangeable from slide to slide — adjacent slides may alternate without any explanation, and the cream surface acts as a "reset" within a longer dark run.
+系统跑在**双表面**模型上。深色表面是 `{colors.navy}`（#1C2644），一种深编辑蓝，比海军蓝暖、比午夜蓝冷。浅色表面是 `{colors.cream}`（#F0ECE3），一种暖的旧纸调，绝非纯白。两个表面承载同一套同尺度的排印词汇，变的是前景色。深表面上主文字是 `{colors.text-warm}`（暖米白，绝非纯白）。奶油上主文字是 `{colors.ink}`（带蓝偏的近黑）。两个表面在页间可互换，相邻页可以无解释地交替，奶油表面在一段较长的深色连续里充当"重置"。
 
-There is exactly one accent color: **antique gold** (`{colors.gold}` — #C8A870). Gold appears only in three contexts: the short rule that separates a kicker from a headline; an `<em>` tag mixed into a roman serif headline (the "Signal moment"); and any numerical figure. Gold never carries a body paragraph and never fills a background. It is a precision tool, used sparingly so that when it appears, it carries weight.
+强调色恰好一种：**古金**（`{colors.gold}` — #C8A870）。金只出现在三处语境：隔开眉题与标题的短线，混进正体衬线标题里的 `<em>` 标签（"Signal 瞬间"），以及任何数字。金绝不承载正文段落，绝不填充背景。它是一件精密工具，省着用，好让出现时带分量。
 
-Depth is **flat plus hairline**. There are no drop shadows, no rounded card chrome, no elevation system. Regions separate via 1px hairline rules in `{colors.border-dark}` (or `{colors.border-light}` on cream). The only "texture" in the system is a near-invisible 80px grid overlay on dark slides at 3% white opacity — visible only to the eye that's looking for it. It is the system's fingerprint.
+纵深是**扁平加细线**。没有投影、没有圆角卡片外壳、没有抬升系统。区域靠 `{colors.border-dark}` 的 1px 细线（奶油上 `{colors.border-light}`）分隔。系统里唯一的"纹理"是深色页上一层几乎看不见的 80px 网格叠层，3% 白不透明度，只有刻意去找的眼睛才看得见。它是系统的指纹。
 
-**Density philosophy: medium-low and asymmetric.** Signal is an editorial system; it breathes. A typical slide uses a small fraction of its real estate — a kicker, a headline, a single sentence, a footer. The cover and chapter slides are the sparsest (one display headline against acres of cream or navy). The dense editorial layouts are the exception, not the rule, and even those leave generous interior padding. A slide that feels broken in Signal is one that fills the canvas edge-to-edge with content; the correct register is "I have one thing to say and I will say it carefully."
+**密度取向：中低且非对称。** Signal 是编辑系统，它呼吸。典型一页只用它一小部分面积，一个眉题、一个标题、一句话、一条页脚。封面与章节页最疏（一条展示标题对着大片奶油或海军蓝）。密集编辑布局是例外而非常态，连那些也留宽裕的内部内边距。在 Signal 里读着别扭的页，是把画布从边到边填满内容的页；对的语域是"我有一件事要说，我会说得仔细"。
 
-**Key Characteristics:**
-- Source Serif 4 carries every headline with a roman/italic mix mid-sentence; italics in headlines are always gold.
-- DM Sans for body and IBM Plex Mono for every timestamp, kicker, label, and chrome element.
-- Dual surfaces — `{colors.navy}` (dark) and `{colors.cream}` (light) — used interchangeably, never blended in the same slide except in special split layouts.
-- Antique gold (`{colors.gold}`) is the only accent. It marks rules, italic emphasis, and numerical figures, and appears nowhere else.
-- Hairline 1px borders in `{colors.border-dark}` / `{colors.border-light}` separate every region. No card chrome, no rounded panels.
-- A near-invisible 80px grid texture overlays every dark slide as a barely-perceived fingerprint.
-- Em-dash bullet markers in gold mono replace the standard list dot.
-- Mono uppercase chrome at the top of every standard slide carries a section label and a slide counter.
-- No drop shadows, no gradients (except the bottom-up scrim on fullbleed image slides), no rounded corners (except the donut chart).
+**关键特征：**
+- Source Serif 4 承载每个标题，句中混排正体 / 斜体，标题里的斜体始终是金。
+- DM Sans 作正文，IBM Plex Mono 作每个时间戳、眉题、标签、外壳元素。
+- 双表面，`{colors.navy}`（深）与 `{colors.cream}`（浅），可互换使用，除特殊分屏布局外不在同一页混用。
+- 古金（`{colors.gold}`）是唯一强调。它标线、斜体强调、数字，别处不出现。
+- `{colors.border-dark}` / `{colors.border-light}` 的 1px 细线分隔每个区域。无卡片外壳、无圆角面板。
+- 一层几乎看不见的 80px 网格纹理盖在每张深色页上，作几乎不可察觉的指纹。
+- 金色等宽的破折号项目标记取代标准圆点。
+- 每张标准页顶部的等宽全大写外壳承载分节标签与页码。
+- 无投影、无渐变（满幅图片页上自下而上的遮罩除外）、无圆角（环形图除外）。
 
-## Colors
+## 颜色
 
-### Palette
+### 调色板
 
-- **Navy** (`{colors.navy}` — #1C2644): The dark surface. A deep editorial blue, warmer than midnight, cooler than indigo. The "intelligence" color — authority without aggression.
-- **Navy Alt** (`{colors.navy-alt}` — #232F55): A slightly lifted navy reserved for secondary dark surfaces (placeholder panels, image fallbacks). Visually nearly identical to navy; only differs in close adjacency.
-- **Cream** (`{colors.cream}` — #F0ECE3): The light surface. A warm aged-paper tone, never neutral and never bright. Reads as "broadsheet" or "manuscript," not "screen white."
-- **Cream Alt** (`{colors.cream-alt}` — #E6E0D4): A slightly cooler cream for secondary light surfaces. Same role as navy alt but on the light side.
-- **Text Warm** (`{colors.text-warm}` — #E2DCD0): Warm off-white. The primary text color on navy surfaces. Never `#FFFFFF` — pure white would clash with the warm paper logic of the system.
-- **Text Muted Dark** (`{colors.text-muted-dark}` — #8A96A8): Muted blue-grey. Secondary text on navy — descriptions, lead paragraphs that want to recede.
-- **Text Hint Dark** (`{colors.text-hint-dark}` — #4E5A6E): Tertiary text on navy. Used for stat notes, mono captions, and elements that should be readable but quiet.
-- **Ink** (`{colors.ink}` — #1A2030): Near-black with a navy bias. Primary text on cream. Picks up the dark surface color rather than fighting it.
-- **Text Muted Light** (`{colors.text-muted-light}` — #5A6270): Secondary text on cream.
-- **Text Hint Light** (`{colors.text-hint-light}` — #9AA0A8): Tertiary text on cream.
-- **Gold** (`{colors.gold}` — #C8A870): Antique gold. The single accent color of the system. Appears on rules, italic emphasis inside headlines, statistical numerals, kicker labels, and bullet markers. Never used as a fill, never used on body text.
-- **Border Dark** (`{colors.border-dark}` — #2E3D5C): Hairline divider on navy surfaces. Visible but quiet.
-- **Border Light** (`{colors.border-light}` — #CAC4B4): Hairline divider on cream surfaces. Warm greige.
+- **海军蓝**（`{colors.navy}` — #1C2644）：深色表面。深编辑蓝，比午夜蓝暖、比靛蓝冷。是"情报"色，权威而不进攻。
+- **海军蓝 Alt**（`{colors.navy-alt}` — #232F55）：略抬起的海军蓝，预留给次级深色表面（占位面板、图片回退）。视觉上与海军蓝几近一致，只在紧贴相邻时才显差别。
+- **奶油**（`{colors.cream}` — #F0ECE3）：浅色表面。暖的旧纸调，绝不中性、绝不明亮。读作"大幅报纸"或"手稿"，不是"屏幕白"。
+- **奶油 Alt**（`{colors.cream-alt}` — #E6E0D4）：略冷的奶油，用于次级浅色表面。角色同 navy alt，但在浅侧。
+- **暖文字**（`{colors.text-warm}` — #E2DCD0）：暖米白。海军蓝表面上的主文字色。绝不用 `#FFFFFF`，纯白会与系统暖纸逻辑冲突。
+- **深色柔化文字**（`{colors.text-muted-dark}` — #8A96A8）：柔化蓝灰。海军蓝上次级文字，描述、想往后退的导语段。
+- **深色提示文字**（`{colors.text-hint-dark}` — #4E5A6E）：海军蓝上三级文字。用于统计注、等宽图注、以及该可读但安静的元素。
+- **墨**（`{colors.ink}` — #1A2030）：带蓝偏的近黑。奶油上的主文字。它拾起深色表面的颜色，而非与之对抗。
+- **浅色柔化文字**（`{colors.text-muted-light}` — #5A6270）：奶油上次级文字。
+- **浅色提示文字**（`{colors.text-hint-light}` — #9AA0A8）：奶油上三级文字。
+- **金**（`{colors.gold}` — #C8A870）：古金。系统唯一强调色。出现在线、标题内斜体强调、统计数字、眉题标签、项目标记上。绝不作为填充，绝不用于正文。
+- **深色边框**（`{colors.border-dark}` — #2E3D5C）：海军蓝表面上的细线分隔。可见但安静。
+- **浅色边框**（`{colors.border-light}` — #CAC4B4）：奶油表面上的细线分隔。暖灰米。
 
-### Defaults
+### 默认值
 
-- **Default surface**: alternate between `{colors.navy}` (dark) and `{colors.cream}` (light) across the deck. There is no "primary" surface — both are first-class. If unsure, reach for navy for chapter openers and statement slides, cream for dense editorial reads.
-- **Default primary text on navy**: `{colors.text-warm}`.
-- **Default primary text on cream**: `{colors.ink}`.
-- **Default secondary text on navy**: `{colors.text-muted-dark}`.
-- **Default secondary text on cream**: `{colors.text-muted-light}`.
-- **Default tertiary/hint text**: `{colors.text-hint-dark}` on navy, `{colors.text-hint-light}` on cream — for mono captions, stat notes, footnotes.
-- **Default accent**: `{colors.gold}` — applied to rules, italic emphasis inside headlines, statistical figures, kicker labels.
-- **Default border**: `{colors.border-dark}` on navy, `{colors.border-light}` on cream.
-- **Default kicker color**: `{colors.gold}`.
+- **默认表面**：整套文稿在 `{colors.navy}`（深）与 `{colors.cream}`（浅）间交替。没有"主"表面，两者都是一等。拿不准时，章节开场与陈述页取海军蓝，密集编辑阅读页取奶油。
+- **海军蓝上默认主文字**：`{colors.text-warm}`。
+- **奶油上默认主文字**：`{colors.ink}`。
+- **海军蓝上默认次级文字**：`{colors.text-muted-dark}`。
+- **奶油上默认次级文字**：`{colors.text-muted-light}`。
+- **默认三级 / 提示文字**：海军蓝上 `{colors.text-hint-dark}`、奶油上 `{colors.text-hint-light}`，用于等宽图注、统计注、脚注。
+- **默认强调**：`{colors.gold}`，施于线、标题内斜体强调、统计数字、眉题标签。
+- **默认边框**：海军蓝上 `{colors.border-dark}`、奶油上 `{colors.border-light}`。
+- **默认眉题色**：`{colors.gold}`。
 
-The two surfaces are interchangeable and carry the same gold accent — a gold rule on navy reads identically to a gold rule on cream. Body text never appears in gold. Gold never serves as a region fill.
+两个表面可互换、承载同一金色强调，海军蓝上的金线与奶油上的金线读起来一样。正文绝不出现在金色里。金绝不作区域填充。
 
-## Typography
+## 排印
 
-### Font Family
+### 字族
 
-Signal runs four font families in carefully separated roles:
+Signal 以精心分开的角色跑四款字族：
 
-- **Source Serif 4** (`{typography.display.fontFamily}`) — a Scottish-roast editorial serif. Carries every headline at every scale (display, h1, h2, h3, editorial-headline, dense-headline, quote-text, stat-value). The face has a full italic axis, and the system's most distinctive typographic move is **mixing roman and italic mid-sentence**: the roman type carries the sentence and an `<em>` tag inside switches to italic in `{colors.gold}`. This is the "Signal moment."
-- **DM Sans** (`{typography.body.fontFamily}`) — a humanist grotesque used for body, lead paragraphs, bullet items, and stat labels. DM Sans is the structural understudy — it never leads, it always supports. When `<em>` appears inside a sans `.lead` paragraph, the emphasis switches to **italic serif in gold** (a font-family change), not italic sans.
-- **IBM Plex Mono** (`{typography.label.fontFamily}`) — a condensed editorial monospace. Carries every label, every kicker, every chrome element (top bar, footer, slide counter), every chapter number, every mono caption, every stat note, every timeline date. Mono is the system's "metadata voice."
-- **Noto Serif SC / Noto Sans SC** — Chinese fallbacks for the serif and sans roles. Wired into every font-family stack so the system renders identically with Chinese content.
+- **Source Serif 4**（`{typography.display.fontFamily}`）：一款苏格兰深烘调的编辑衬线。承载每个尺度上的每个标题（display、h1、h2、h3、editorial-headline、dense-headline、quote-text、stat-value）。这款字面有完整斜体轴，系统最鲜明的排印动作是**句中混排正体与斜体**：正体承载句子，里面的 `<em>` 标签切到 `{colors.gold}` 斜体。这就是"Signal 瞬间"。
+- **DM Sans**（`{typography.body.fontFamily}`）：一款人文怪诞体，用于正文、导语段、项目项、统计标签。DM Sans 是结构性配角，它从不领衔，始终支撑。`<em>` 出现在无衬线 `.lead` 段里时，强调切到**金色斜体衬线**（换 font-family），而非斜体无衬线。
+- **IBM Plex Mono**（`{typography.label.fontFamily}`）：一款压缩编辑等宽。承载每个标签、每个眉题、每个外壳元素（顶条、页脚、页码）、每个章节号、每条等宽图注、每条统计注、每个时间轴日期。等宽是系统的"元数据声部"。
+- **Noto Serif SC / Noto Sans SC**：衬线与无衬线角色的中文回退。接进每条 font-family 栈，让系统带中文内容时渲染一致。
 
-The emotional contrast is: serif = voice, sans = substance, mono = timestamp. Mixing them in one sentence (a sans lead with an italic serif gold `<em>` inside) is the system's small choreography.
+情绪反差是：衬线 = 声音，无衬线 = 实质，等宽 = 时间戳。在一句里混用它们（无衬线 lead 里嵌一个金色斜体衬线 `<em>`）是系统的小段编排。
 
-### Type Scale
+### 排印比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.display}` | 9.5vw | Source Serif 4 | 700 | Hero cover headline at maximum scale |
-| `{typography.h1}` | 5.2vw | Source Serif 4 | 600 | Chapter title or single-statement headline |
-| `{typography.stat-value}` | 5.5vw | Source Serif 4 | 600 | Large statistical numeral in gold |
-| `{typography.quote-mark}` | 8vw | Source Serif 4 | 300 | Decorative opening quotation glyph in gold |
-| `{typography.quote-text}` | 3.6vw | Source Serif 4 | 400 | Pull-quote body |
-| `{typography.h2}` | 3vw | Source Serif 4 | 600 | Primary slide headline |
-| `{typography.editorial-headline}` | 2.75vw | Source Serif 4 | 600 | Headline for editorial / newsletter layouts |
-| `{typography.dense-headline}` | 2.4vw | Source Serif 4 | 600 | Headline for two-column dense text layouts |
-| `{typography.h3}` | 1.9vw | Source Serif 4 | 500 | Sub-headline, panel title, intra-region heading |
-| `{typography.lead}` | 1.4vw | DM Sans | 400 | Lead paragraph, intro sentence, list item body |
-| `{typography.body}` | 1.05vw | DM Sans | 400 | Paragraph body, bullet body |
-| `{typography.caption}` | 0.82vw | DM Sans | 400 | Caption, footnote, source attribution |
-| `{typography.label}` | 0.7vw | IBM Plex Mono | 500 | Mono uppercase chrome label, kicker, tag, mono metadata |
+| `{typography.display}` | 9.5vw | Source Serif 4 | 700 | 最大尺度的英雄封面标题 |
+| `{typography.h1}` | 5.2vw | Source Serif 4 | 600 | 章节标题或单句陈述标题 |
+| `{typography.stat-value}` | 5.5vw | Source Serif 4 | 600 | 金色大统计数字 |
+| `{typography.quote-mark}` | 8vw | Source Serif 4 | 300 | 金色装饰性起始引号字形 |
+| `{typography.quote-text}` | 3.6vw | Source Serif 4 | 400 | 引文正文 |
+| `{typography.h2}` | 3vw | Source Serif 4 | 600 | 页面主标题 |
+| `{typography.editorial-headline}` | 2.75vw | Source Serif 4 | 600 | 编辑 / 简报布局的标题 |
+| `{typography.dense-headline}` | 2.4vw | Source Serif 4 | 600 | 双栏密文布局的标题 |
+| `{typography.h3}` | 1.9vw | Source Serif 4 | 500 | 副标题、面板标题、区域内标题 |
+| `{typography.lead}` | 1.4vw | DM Sans | 400 | 导语段、开场句、列表项正文 |
+| `{typography.body}` | 1.05vw | DM Sans | 400 | 段落正文、项目正文 |
+| `{typography.caption}` | 0.82vw | DM Sans | 400 | 图注、脚注、来源归属 |
+| `{typography.label}` | 0.7vw | IBM Plex Mono | 500 | 等宽全大写外壳标签、眉题、标记、等宽元数据 |
 
-### Defaults
+### 默认值
 
-- **Default size for a primary section headline**: `{typography.h2}` (3vw).
-- **Default size for a chapter opener**: `{typography.h1}` (5.2vw).
-- **Default size for a cover hero**: `{typography.display}` (9.5vw).
-- **Default size for a paragraph**: `{typography.body}` (1.05vw).
-- **Default size for a lead sentence beneath a headline**: `{typography.lead}` (1.4vw).
-- **Default size for any chrome, kicker, or metadata label**: `{typography.label}` (0.7vw).
-- **Default size for a statistical numeral**: `{typography.stat-value}` (5.5vw), in `{colors.gold}`.
-- **Default headline color**: primary text color for the surface (`{colors.text-warm}` on navy, `{colors.ink}` on cream). Never gold.
+- **主分节标题默认尺寸**：`{typography.h2}`（3vw）。
+- **章节开场默认尺寸**：`{typography.h1}`（5.2vw）。
+- **封面英雄默认尺寸**：`{typography.display}`（9.5vw）。
+- **段落默认尺寸**：`{typography.body}`（1.05vw）。
+- **标题下导语句默认尺寸**：`{typography.lead}`（1.4vw）。
+- **任何外壳、眉题、元数据标签默认尺寸**：`{typography.label}`（0.7vw）。
+- **统计数字默认尺寸**：`{colors.gold}` 的 `{typography.stat-value}`（5.5vw）。
+- **默认标题色**：该表面的主文字色（海军蓝上 `{colors.text-warm}`、奶油上 `{colors.ink}`）。绝非金。
 
-When unsure between `{typography.h2}` and `{typography.h3}` for a primary moment, reach for `{typography.h2}` — `h3` is for sub-headlines within a region, not for the slide's main statement.
+主瞬间在 `{typography.h2}` 与 `{typography.h3}` 间拿不准时，取 `{typography.h2}`，h3 留给区域内的副标题，不留给页面主陈述。
 
-### Signature Treatments
+### 招牌处理
 
-These treatments are **non-optional whenever the corresponding element type is used**:
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **An `<em>` tag inside any serif headline (`display`, `h1`, `h2`, `h3`, `editorial-headline`, `dense-headline`) must render in italic Source Serif 4 in `{colors.gold}`.** This is the system's most distinctive typographic moment — mixing roman and italic mid-sentence with a color shift. A headline with an emphasized phrase without this treatment reads as a different design system.
-- **An `<em>` tag inside a sans `.lead` or body paragraph must switch font-family to Source Serif 4, italic, in `{colors.gold}`.** Emphasis in body never stays in DM Sans italic — the font switch is the emphasis.
-- **Every kicker is mono uppercase in `{colors.gold}` with at least 0.14em letter-spacing.** A kicker that is sans, lowercase, or not in gold is not a kicker.
-- **Every statistical numeral is in Source Serif 4 600 in `{colors.gold}` with -0.02em letter-spacing.** Stats in sans, or stats in primary text color, break the system.
-- **Every chrome bar carries a 1px hairline rule beneath it in `{colors.border-dark}` / `{colors.border-light}`.** The hairline is what makes the chrome read as chrome rather than as floating text.
-- **Every chapter slide carries a 36px gold rule between the chapter number and the chapter title.** The rule is the section break — no rule, no chapter.
-- **Bullet lists use an em-dash in mono gold as the marker.** Standard dot bullets do not exist in this system.
+- **任何衬线标题（`display`、`h1`、`h2`、`h3`、`editorial-headline`、`dense-headline`）里的 `<em>` 标签都必须渲染成 `{colors.gold}` 的斜体 Source Serif 4。** 这是系统最鲜明的排印瞬间，句中混排正体与斜体并换色。带强调短语却没这处理的标题读作另一套设计系统。
+- **无衬线 `.lead` 或正文段里的 `<em>` 标签必须把 font-family 切到 Source Serif 4、斜体、`{colors.gold}`。** 正文里的强调绝不留在 DM Sans 斜体，换字面才是强调。
+- **每个眉题都是 `{colors.gold}` 的等宽全大写、至少 0.14em 字距。** 无衬线、小写、或非金色的眉题不是眉题。
+- **每个统计数字都是 `{colors.gold}` 的 Source Serif 4 600、配 -0.02em 字距。** 无衬线统计、或主文字色的统计都会破掉系统。
+- **每条外壳条都在下方带一条 `{colors.border-dark}` / `{colors.border-light}` 的 1px 细线。** 细线才让外壳读作外壳，而非漂浮文字。
+- **每张章节页都在章节号与章节标题之间带一条 36px 金线。** 这条线就是分节断口，没线就没章节。
+- **项目列表用等宽金色的破折号作标记。** 本系统不存在标准圆点项目。
 
-### Typography Principles
+### 排印原则
 
-The font ladder is fixed: serif for voice (display through h3), sans for substance (lead through caption), mono for metadata (label only). Never use serif for body, never use sans for headlines, never use mono outside metadata roles. Crossing those rails breaks the editorial separation.
+字族阶梯固定：衬线作声音（display 到 h3）、无衬线作实质（lead 到 caption）、等宽作元数据（仅 label）。绝不用衬线排正文、绝不用无衬线做标题、绝不在元数据角色之外用等宽。跨过这些轨道会破掉编辑分离。
 
-Italic is structural, not decorative — it is the emphasis vehicle inside headlines and inside lead paragraphs. Underline does not exist. Bold within body does not exist; if body needs emphasis, switch to the italic serif gold `<em>` pattern.
+斜体是结构性的，不是装饰，它是标题内与导语段内的强调载体。下划线不存在。正文里粗体不存在，正文要强调就切到斜体衬线金色 `<em>` 式样。
 
-Line-height runs tight at display scale (0.96 on display, 1.08 on h1) and opens as size decreases (1.5–1.72 on caption and body). Letter-spacing is negative on display and h1 (–0.01 to –0.02em) and zero on body. Mono labels carry tracking of 0.14em to 0.22em — generous letter-spacing is how mono reads as editorial rather than as code.
+行高在展示尺度上紧（display 0.96、h1 1.08），随尺寸变小而放开（caption 与 body 1.5–1.72）。字距在 display 与 h1 上为负（–0.01 到 –0.02em）、正文为零。等宽标签带 0.14em 到 0.22em 字距，宽裕字距才是等宽读作编辑而非代码的方式。
 
-## Layout
+## 布局
 
-### Canvas System
+### 画布系统
 
-The system targets `100vw × 100vh` — full viewport. Each `.slide` flexes to fill the viewport exactly, and slides sit side-by-side in a horizontal strip that translates left/right on navigation. All sizes use viewport-relative units (`vw`, `vh`) so the layout scales with window size — there are no fixed pixel measurements except chrome dot/counter sizes.
+系统以 `100vw × 100vh` 满视口为目标。每张 `.slide` 以 flex 精确铺满视口，页并排坐在一条横向条里，导航时左右平移。所有尺寸用视口相对单位（`vw`、`vh`），布局随窗口大小缩放，除外壳圆点 / 计数器尺寸外没有固定像素度量。
 
-### Padding and Gap Scale
+### 内边距与间隙比例
 
-| Token | Value | Use |
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.pad-x}` | 7.5vw | Horizontal slide padding |
-| `{spacing.pad-y}` | 5.5vh | Vertical slide padding |
-| `{spacing.gap-lg}` | 4vh | Between major content sections |
-| `{spacing.gap-md}` | 2.5vh | Between related elements |
-| `{spacing.gap-sm}` | 1.2vh | Between tightly coupled elements |
+| `{spacing.pad-x}` | 7.5vw | 幻灯片横向内边距 |
+| `{spacing.pad-y}` | 5.5vh | 幻灯片纵向内边距 |
+| `{spacing.gap-lg}` | 4vh | 主内容分节之间 |
+| `{spacing.gap-md}` | 2.5vh | 相关元素之间 |
+| `{spacing.gap-sm}` | 1.2vh | 紧密耦合元素之间 |
 
-Quote slides increase pad-x to 1.1× and pad-y to 1.2× to give the pull-quote extra breathing room. Compare layouts use `pad-x * 0.55` as inset padding on each panel.
+引文页把 pad-x 提到 1.1×、pad-y 提到 1.2×，给引文多留呼吸。比较布局用 `pad-x * 0.55` 作每块面板的内缩内边距。
 
-### Chrome Frame
+### 外壳画框
 
-Standard slides carry a top chrome bar and a bottom foot bar — both are flex rows with a mono label left, mono counter right, separated from the body by a 1px hairline rule. The chrome and foot disappear on cover, chapter, statement, quote, and end slides — those layouts are chromeless and let the type breathe edge to edge.
+标准页带顶部外壳条与底部页脚条，两者都是 flex 行，左侧等宽标签、右侧等宽计数器，由 1px 细线与正文隔开。封面、章节、陈述、引文、收尾页隐去外壳与页脚，那些布局无外壳，让文字从边到边呼吸。
 
-Each slide is a CSS grid with `grid-template-rows: auto 1fr auto` — the chrome and foot are the auto rows, the body is the 1fr row that fills.
+每页是一个 `grid-template-rows: auto 1fr auto` 的 CSS 网格，外壳与页脚是 auto 行，正文是填满的 1fr 行。
 
-### Grid Texture
+### 网格纹理
 
-Every dark slide carries a near-invisible 80px × 80px grid overlay drawn with two linear-gradient backgrounds at 3% white opacity. The grid is the system's visual fingerprint — it is not meant to be consciously perceived, only sensed as "this slide has structure." Cream slides do not carry this overlay.
+每张深色页带一层几乎看不见的 80px × 80px 网格叠层，由两张 3% 白不透明度的线性渐变背景画出。网格是系统的视觉指纹，不该被有意识地看见，只被感知为"这页有结构"。奶油页不带这层叠层。
 
-## Depth and Elevation
+## 纵深与层级
 
-Signal is **flat by design**. There are no drop shadows. There are no rounded card elevations. There is no elevation system at all — every element sits flush with the surface.
+Signal **按设计是扁平的**。没有投影。没有圆角卡片抬升。根本没有抬升系统，每个元素都与表面齐平。
 
-What looks like depth is actually **hairline separation**. Regions separate via 1px solid borders in `{colors.border-dark}` (on navy) or `{colors.border-light}` (on cream). A stat tile, a chrome bar, an editorial column — all separated by hairlines, not by shadows or backgrounds.
+看着像纵深的东西其实是**细线分隔**。区域靠 `{colors.border-dark}`（海军蓝上）或 `{colors.border-light}`（奶油上）的 1px 实边分隔。统计块、外壳条、编辑栏，全由细线分隔，不由阴影或背景分隔。
 
-The single exception is the **fullbleed gradient scrim**: on fullbleed image slides, a linear gradient from transparent to `rgba(15, 20, 36, 0.9)` runs bottom-up across the lower portion of the slide so the type beneath remains legible against the image. This is the only gradient in the system; everywhere else, surfaces are solid.
+唯一例外是**满幅渐变遮罩**：满幅图片页上，一条从透明到 `rgba(15, 20, 36, 0.9)` 的线性渐变自下而上铺过页面下部，让压在图片上的文字仍可读。这是系统里唯一的渐变，别处表面都是实色。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
+### 圆角
 
-| Value | Use |
+| 值 | 用途 |
 |---|---|
-| 0 | Every shape in the system except donut charts and donut center wells |
-| 50% (circle) | Donut chart shapes, the 9px timeline dots, the 2px round-ended border on swatches |
-| 2px | Pie legend swatch (subtle softening only) |
+| 0 | 系统里除环形图与环形中心井外的每个形状 |
+| 50%（圆） | 环形图形状、9px 时间轴圆点、色样上 2px 圆端边框 |
+| 2px | 饼图图例色样（仅细微柔化） |
 
-Signal has effectively **no rounded chrome**. Stat tiles, chrome bars, compare panels, image frames — all rectangular with sharp corners.
+Signal 实际上**没有圆角外壳**。统计块、外壳条、比较面板、图片框，全是带尖角的矩形。
 
-### Border Weights
+### 边框粗细
 
-- **1px solid** — the universal hairline border. Used on every chrome bar, every stat tile top rule, every column divider, every compare panel divider, every editorial column boundary. Color follows the surface (`{colors.border-dark}` or `{colors.border-light}`).
-- **1px dashed** — used only inside the chart plot for grid lines (rgba transparency, very low opacity).
-- **2px solid `{colors.gold}`** — used on the top rule of a cycle/process step.
-- **3px solid `{colors.gold}`** — used as the left-border on pyramid bands.
+- **1px 实线**：通用细线边框。用在每条外壳条、每条统计块顶线、每条栏分隔、每条比较面板分隔、每条编辑栏边界。颜色随表面（`{colors.border-dark}` 或 `{colors.border-light}`）。
+- **1px 虚线**：只用在图表绘图区内的网格线（rgba 透明、极低不透明度）。
+- **2px 实 `{colors.gold}`**：用在循环 / 流程步骤的顶线。
+- **3px 实 `{colors.gold}`**：用作金字塔带的左边框。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Short gold rule** — a 36px × 1px solid gold horizontal bar. Sits between a kicker and a headline, or as a chapter accent mark. The smallest atomic decorative element in the system.
+**短金线**：36px × 1px 实金水平条。坐在眉题与标题之间，或作章节强调标记。系统里最小的原子装饰元素。
 
-**Full hairline rule** — a 100% × 1px horizontal rule in `{colors.border-dark}` / `{colors.border-light}`. Used as section dividers, chrome separators, stat-tile top edges, column boundaries.
+**满细线**：100% × 1px 的 `{colors.border-dark}` / `{colors.border-light}` 水平线。用作分节分隔、外壳分隔、统计块顶边、栏边界。
 
-**Outlined gold tag** — a small inline-block with a 1px gold border around mono uppercase gold text. The "pill" version of a kicker — same typographic spec, with an outline.
+**描边金标签**：小 inline-block，1px 金边框围住等宽全大写金文字。眉题的"胶囊"版，同一排印规格，带描边。
 
-**Editorial column divider** — a 1px hairline running floor-to-ceiling between two columns in editorial layouts. Padding inside the columns is `pad-x * 0.38`.
+**编辑栏分隔**：编辑布局里两栏之间通顶到地的 1px 细线。栏内内边距为 `pad-x * 0.38`。
 
-**Vertical timeline spine** — a 1px vertical hairline running the height of a vertical timeline, with 9px circular gold dots positioned at each entry along the spine.
+**竖向时间轴脊**：贯穿竖向时间轴全高的 1px 竖细线，沿脊每个条目处有 9px 金色圆点。
 
-**Pyramid band** — a horizontal band with a 3px solid gold left-border, filled with `color-mix(in srgb, gold N%, navy)` where N decreases from 70% at the top tier to 8% at the bottom tier. Each tier is also progressively wider (38% → 100%). This creates the visual pyramid through color saturation and width, without any actual triangular geometry.
+**金字塔带**：水平带，带 3px 实金左边框，以 `color-mix(in srgb, gold N%, navy)` 填充，N 从顶层的 70% 递减到底层的 8%。每层也逐级变宽（38% → 100%）。它靠色彩饱和度与宽度造出视觉金字塔，不用任何真实三角几何。
 
-**Donut center well** — the inner 22% inset of a pie donut is filled with the slide background color (navy or cream) to create the donut hole.
+**环形中心井**：饼环内侧 22% 内缩填页面背景色（海军蓝或奶油），造出环形孔。
 
-**Connector arrow** — in cycle and diagram layouts, a low-contrast arrow glyph in `{colors.border-dark}` (or `{colors.border-light}`) sits between sequential steps. The arrow is intentionally muted — the steps lead, the connector recedes.
+**连接箭头**：循环与图示布局里，一枚 `{colors.border-dark}`（或 `{colors.border-light}`）的低反差箭头字形坐在相邻步骤之间。箭头刻意柔化，步骤领衔，连接后退。
 
-**Mono dash bullet** — every list item carries an em-dash (`—`) in mono gold as the bullet marker, with a 1.2em column for the marker and 0.5em gap.
+**等宽破折号项目**：每个列表项带一个等宽金色破折号（`—`）作项目标记，标记列 1.2em、间隙 0.5em。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
+### 该做
 
-- Mix roman and italic Source Serif 4 inside the same headline, with the italic in `{colors.gold}` — this is the Signal moment, and the system depends on it appearing throughout the deck.
-- Use IBM Plex Mono for every kicker, label, tag, chrome element, slide counter, chapter number, and statistical note. Mono is the metadata voice.
-- Render every kicker in mono uppercase gold with at least 0.14em letter-spacing — the tracking is what makes mono read as editorial.
-- Set every chrome bar to carry a 1px hairline beneath it in the surface-appropriate border color. The hairline is non-negotiable; chrome without a rule reads as floating text.
-- Alternate navy and cream surfaces freely across a deck. Neither is "the" background — both are first-class.
-- Color every statistical numeral in `{colors.gold}` using Source Serif 4 600 with -0.02em tracking. Stats are the second most-recognizable element after the italic gold headline emphasis.
-- Replace standard bullet dots with em-dashes in mono gold. Standard dots break the editorial register.
-- Use the 36px gold rule as the chapter break and the kicker separator. It is the system's small punctuation.
-- Apply the 80px grid texture overlay to every dark slide via `::before`. It is the system's fingerprint and should never be removed.
-- Pad with `{spacing.pad-x}` 7.5vw / `{spacing.pad-y}` 5.5vh — Signal needs the breathing room; tight padding breaks the editorial restraint.
+- 在同一标题里混排正体与斜体 Source Serif 4，斜体着 `{colors.gold}`，这是 Signal 瞬间，系统依赖它在整份文稿里反复出现。
+- 每个眉题、标签、标记、外壳元素、页码、章节号、统计注都用 IBM Plex Mono。等宽是元数据声部。
+- 每个眉题都渲染成等宽全大写金、至少 0.14em 字距，字距才是等宽读作编辑的原因。
+- 每条外壳条都在下方带一条该表面合适边框色的 1px 细线。细线不可商量，没线的外壳读作漂浮文字。
+- 整套文稿里自由交替海军蓝与奶油表面。没有哪个"才是"背景，两者都是一等。
+- 每个统计数字都用 Source Serif 4 600、 -0.02em 字距着 `{colors.gold}`。统计是仅次于斜体金色标题强调的第二易认元素。
+- 用等宽金色破折号取代标准圆点项目。标准圆点会破掉编辑语域。
+- 用 36px 金线作章节断口与眉题分隔。它是系统的小标点。
+- 经 `::before` 给每张深色页套 80px 网格纹理叠层。它是系统指纹，绝不该去掉。
+- 用 `{spacing.pad-x}` 7.5vw / `{spacing.pad-y}` 5.5vh 留白，Signal 需要呼吸空间，紧内边距会破掉编辑克制。
 
-### Don't
+### 不该做
 
-- Don't use gold on body text or fill backgrounds with gold. Gold appears only on rules, italic emphasis, and numerical figures.
-- Don't use pure white (`#FFFFFF`) for text on navy. Always use `{colors.text-warm}` — the warm off-white is what keeps the system tied to its paper register.
-- Don't add drop shadows or rounded card chrome. The system is flat-plus-hairline; elevation breaks the editorial frame.
-- Don't put serif type on body or paragraph text. The serif/sans separation is structural — serif leads, sans supports.
-- Don't bold inside body text for emphasis. Use the italic serif gold `<em>` pattern instead — the font switch is the emphasis.
-- Don't round corners on chrome, panels, stat tiles, or image frames. The only round shapes in the system are the donut chart and the 9px timeline dots.
-- Don't introduce a second accent color. Antique gold is the only hot color; adding a second accent dilutes its weight.
-- Don't fill more than half a typical slide with content. The system reads as broken when crowded — restraint is the register.
-- Don't use mono outside metadata roles (label, kicker, chrome, counter, caption note). Mono in body or headline breaks the typographic ladder.
-- Don't omit the 1px hairline beneath chrome or above a stat tile. Hairlines are the system's depth substitute; without them the elements float.
+- 不要把金用在正文文字上，也不要用金填充背景。金只出现在线、斜体强调、数字上。
+- 不要在海军蓝上用纯白（`#FFFFFF`）作文字。始终用 `{colors.text-warm}`，暖米白才把系统系在纸语域上。
+- 不要加投影或圆角卡片外壳。系统是扁平加细线，抬升会破掉编辑画框。
+- 不要把衬线用在正文或段落文字上。衬线 / 无衬线分离是结构性的，衬线领衔，无衬线支撑。
+- 不要在正文里用粗体强调。改用斜体衬线金色 `<em>` 式样，换字面才是强调。
+- 不要给外壳、面板、统计块、图片框加圆角。系统里仅有的圆形是环形图与 9px 时间轴圆点。
+- 不要引入第二种强调色。古金是唯一的暖色，加第二强调会稀释它的分量。
+- 不要让内容填满典型一页超过一半。系统一挤就读作坏了，克制才是语域。
+- 不要在元数据角色（标签、眉题、外壳、计数器、图注注）之外用等宽。正文或标题里的等宽会破掉排印阶梯。
+- 不要省掉外壳下方或统计块上方的 1px 细线。细线是系统的纵深替代物，没它们元素就漂浮。
 
-## Responsive Behavior
+## 响应式行为
 
-Signal targets a 1920×1080 viewport but is implemented entirely in viewport-relative units (`vw`, `vh`), so it scales fluidly between 1280×720 and 2560×1440 without breakpoints. The 80px grid texture is the only fixed-pixel measurement that persists across viewport changes — it becomes proportionally finer at larger viewports.
+Signal 以 1920×1080 视口为目标，但完全用视口相对单位（`vw`、`vh`）实现，于是在 1280×720 与 2560×1440 间无需断点便流式缩放。80px 网格纹理是唯一跨视口变化仍保留的固定像素度量，视口越大它在比例上越细。
 
-### Scaling Behavior
+### 缩放行为
 
-- Display headline scales with viewport: at 1920px, 9.5vw renders as ~182px. At 1280px, ~122px.
-- Body text scales: 1.05vw → ~20px at 1920px, ~13px at 1280px.
-- Padding scales: pad-x 7.5vw → ~144px at 1920px, ~96px at 1280px.
+- 展示标题随视口缩放：1920px 下 9.5vw 渲染约 182px，1280px 下约 122px。
+- 正文缩放：1.05vw → 1920px 下约 20px，1280px 下约 13px。
+- 内边距缩放：pad-x 7.5vw → 1920px 下约 144px，1280px 下约 96px。
 
-### Presenter Behavior
+### 放映行为
 
-The deck is JS-driven. Slides advance via the navigation strip (translateX on the deck container), with nav dots and a slide counter fixed at the bottom. Each slide carries `is-active` when current; elements with `[data-anim]` attributes animate in via fade-up, fade-in, reveal-right, reveal-left, or scale-in keyframes with staggered `data-delay` (0–6). Animations are short (0.5–0.85s) and use a sharp `cubic-bezier(0.77, 0, 0.175, 1)` slide ease and a spring-y `cubic-bezier(0.16, 1, 0.3, 1)` entrance ease.
+文稿由 JS 驱动。页经导航条前进（在文稿容器上 translateX），导航点与页码固定在底部。当前页带 `is-active`，带 `[data-anim]` 属性的元素经 fade-up、fade-in、reveal-right、reveal-left、scale-in 关键帧配错峰 `data-delay`（0–6）入场。动画短（0.5–0.85s），用锐利的 `cubic-bezier(0.77, 0, 0.175, 1)` 平移缓动与带弹性的 `cubic-bezier(0.16, 1, 0.3, 1)` 入场缓动。
 
-### Print Behavior
+### 打印行为
 
-There is no dedicated print stylesheet. Static export should render each slide as a sequential page; the deck container's horizontal layout would need to be unwound for print fidelity.
+没有专用打印样式表。静态导出应把每页渲染成顺序的一页，文稿容器的横向布局需为打印保真而解开。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin | Chinese | Weight mapping |
+| 角色 | 拉丁 | 中文 | 字重映射 |
 |---|---|---|---|
-| Display / Headlines (h1, h2, h3) / Stat-value / Quote-text / Editorial-headline / Dense-headline | Source Serif 4 (500–700) | **思源黑体 Noto Sans SC** | 700 |
-| Lead / Body / Caption | DM Sans (400) | **思源黑体 Noto Sans SC** | 400 |
-| Label / Kicker / Chrome / Slide counter | IBM Plex Mono (500) | **思源黑体 Noto Sans SC** | 500 (uppercase + tracking removed) |
+| 展示 / 标题（h1、h2、h3）/ 统计值 / 引文文字 / 编辑标题 / 密集标题 | Source Serif 4（500–700） | **思源黑体 Noto Sans SC** | 700 |
+| 导语 / 正文 / 图注 | DM Sans（400） | **思源黑体 Noto Sans SC** | 400 |
+| 标签 / 眉题 / 外壳 / 页码 | IBM Plex Mono（500） | **思源黑体 Noto Sans SC** | 500（去掉全大写 + 字距） |
 
-### Mixed-Content Strategy
+### 混排策略
 
-**Strategy A — single CJK family (思源黑体 Noto Sans SC) across all roles.** Signal's Latin system already wires Noto Serif SC and Noto Sans SC into every font-family stack as fallbacks — the system was designed with CJK in mind. The recommended consolidation is to use **Noto Sans SC for every role** rather than mixing Noto Serif SC (display) + Noto Sans SC (body) — and the reason is the system's most distinctive treatment: the gold italic `<em>` emphasis inside headlines. Noto Serif SC does not ship an italic axis, which means the Signal moment (roman-to-italic mid-sentence color shift) cannot be reproduced in Chinese. Collapsing to Noto Sans SC across the system and reserving the color-only emphasis (gold without italic) for CJK `<em>` lands cleaner than fighting an italic-less serif. The serif vs sans contrast that defines the Latin ladder is lost in CJK, but the editorial restraint of the system — hairlines, mono kickers, antique gold accents, dual surfaces — carries through unaffected.
+**策略 A：所有角色用单一 CJK 字族（思源黑体 Noto Sans SC）。** Signal 的拉丁系统已经把 Noto Serif SC 与 Noto Sans SC 接进每条 font-family 栈作回退，系统在设计时就考虑了 CJK。推荐的归并是**每个角色都用 Noto Sans SC**，而非混用 Noto Serif SC（展示）+ Noto Sans SC（正文），理由正是系统最鲜明的处理：标题里的金色斜体 `<em>` 强调。Noto Serif SC 不提供斜体轴，意味着 Signal 瞬间（句中正体切斜体的换色）在中文里无法复现。全系统塌到 Noto Sans SC、给 CJK `<em>` 保留仅换色强调（金而不斜体），比跟一款没有斜体的衬线较劲更干净。定义拉丁阶梯的衬线对无衬线反差在 CJK 里会丢，但系统的编辑克制，细线、等宽眉题、古金点缀、双表面，不受影响地带过来。
 
-### Loading
+### 加载
 
-The system already loads Noto Sans SC via the existing font-family stacks. If using a CDN preconnect pattern:
+系统已经通过既有 font-family 栈加载 Noto Sans SC。若用 CDN preconnect 式样：
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -469,7 +473,7 @@ The system already loads Noto Sans SC via the existing font-family stacks. If us
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 ```
 
-The existing CSS variables already include Noto Sans SC and Noto Serif SC in every font stack. For a CJK-primary deck, swap the serif stacks to use Noto Sans SC as the active CJK face (rather than Noto Serif SC) so the entire system collapses to one Chinese family:
+既有 CSS 变量已经在每条字体栈里含 Noto Sans SC 与 Noto Serif SC。以中文为主的文稿，把衬线栈换成用 Noto Sans SC 作活跃 CJK 字面（而非 Noto Serif SC），让整套系统塌成一款中文字族：
 ```css
 /* Display / headline roles (CJK-primary) */
 font-family: 'Source Serif 4', 'Noto Sans SC', Georgia, serif;
@@ -479,50 +483,50 @@ font-family: 'DM Sans', 'Noto Sans SC', system-ui, sans-serif;
 font-family: 'IBM Plex Mono', 'Noto Sans SC', monospace;
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- Line-height: body 1.75–1.85, display 1.15–1.25
-- Letter-spacing: 0 on CJK
-- Text-transform: no uppercase on CJK
-- Full-width punctuation
-- No period on display headlines
-- Pangu spacing (盘古之白): `使用 Claude` not `使用Claude`
-- One font per sentence
+- 行高：正文 1.75–1.85，展示 1.15–1.25
+- 字距：CJK 设 0
+- 文字变换：CJK 不用 uppercase
+- 全角标点
+- 展示标题不加句号
+- 盘古之白（Pangu spacing）：`使用 Claude` 而非 `使用Claude`
+- 一句一款字体
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-- **The Signal moment (italic gold `<em>` mid-sentence) becomes color-only on CJK.** Noto Sans SC has no italic variant; even Noto Serif SC ships without italic. For Chinese headlines, render `<em>` as a color shift to `{colors.gold}` *without* italic — the emphasis still lands because gold is the system's most-loaded color. Treat this as a deliberate translation of the Signal moment to its color-only essence in CJK.
-- **Negative letter-spacing on display (-0.02em on display, -0.01em on h1/h2) must drop to 0 on CJK.** The system's tight tracking is a Latin-display convention that breaks CJK rendering.
-- **Mono kickers in IBM Plex Mono uppercase with 0.14–0.22em tracking are Latin-only.** For CJK kickers, drop tracking to 0 and rely on the gold color + small size to signal "this is a kicker." A mixed CJK + Latin kicker (`第一章 / CHAPTER ONE`) can keep the Latin half tracked and the CJK half at 0 tracking — the asymmetric mono voice reads as editorial bilingualism.
-- **Statistical numerals at Source Serif 4 600 in gold** remain Latin numerals (the Western-numeral convention for stats is universal in modern editorial design). Don't substitute Chinese numerals (一二三四) — they lose the catalogue-statistical voice.
-- **The em-dash bullet (`—` in mono gold) translates perfectly** — em-dash bullets are equally idiomatic in Chinese typography.
-- **The 80px grid texture, hairline borders, dual surface (navy + cream), gold rules, chapter slides, fullbleed image scrim, chromeless statement layouts** are all glyph-agnostic. The editorial restraint and intelligence-briefing register carry through unaffected.
-- **Line-height on CJK body should open from 1.58–1.72 to 1.75–1.85** — Chinese characters fill their em-box and need additional vertical breathing for readability at the system's body sizes (1.05vw, 1.4vw).
-- **Quote-mark glyph (the 8vw decorative opening quotation)** should switch to a Chinese opening guillemet (「) or curly quote (") — Latin opening-quote glyphs read as alien on Chinese pull-quotes.
+- **Signal 瞬间（句中斜体金色 `<em>`）在 CJK 里变成仅换色。** Noto Sans SC 没有斜体变体，连 Noto Serif SC 出厂也无斜体。中文标题里把 `<em>` 渲染成切到 `{colors.gold}` 的换色、*不带*斜体，强调仍成立，因为金是系统负载最重的颜色。把这看作 Signal 瞬间在 CJK 里被有意译到它仅换色的精髓。
+- **展示上的负字距（display -0.02em、h1/h2 -0.01em）在 CJK 上必须降到 0。** 系统的紧字距是拉丁展示惯例，会破掉 CJK 渲染。
+- **IBM Plex Mono 全大写、0.14–0.22em 字距的等宽眉题仅适用于拉丁。** CJK 眉题把字距降到 0，靠金色 + 小尺寸标示"这是眉题"。混排 CJK + 拉丁的眉题（`第一章 / CHAPTER ONE`）可让拉丁半边保留字距、CJK 半边字距为 0，这种非对称等宽声部读作编辑式双语。
+- **Source Serif 4 600 金色的统计数字**保持拉丁数字（现代编辑设计里西方数字表统计是通用惯例）。别换成中文数字（一二三四），它们会丢掉目录统计声部。
+- **破折号项目（等宽金色 `—`）完美迁移**，破折号项目在中文排印里同样地道。
+- **80px 网格纹理、细线边框、双表面（海军蓝 + 奶油）、金线、章节页、满幅图片遮罩、无外壳陈述布局**都与字形无关。编辑克制与情报简报语域不受影响地带过来。
+- **CJK 正文行高应从 1.58–1.72 放宽到 1.75–1.85**，汉字占满 em 框，在系统的正文尺寸（1.05vw、1.4vw）下需要额外纵向呼吸才易读。
+- **引号字形（8vw 装饰性起始引号）**应换成中文起始引号（「）或弯引号（"），拉丁起始引号字形落在中文引文上读作外来物。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-The system's most distinctive typographic treatment (roman + italic-gold mid-sentence inside Source Serif 4 headlines) is fundamentally a Latin-typographic move that does not translate. Neither Noto Serif SC nor Noto Sans SC ships an italic axis, and inventing one via CSS `font-style: italic` produces an oblique/slanted glyph that reads as broken rather than as emphasis. Collapsing CJK `<em>` to a color-only shift (gold without italic) is the cleanest workaround; mixed-language headlines where the emphasized phrase is Latin (and therefore can take italic gold) and the surrounding sentence is Chinese will land as the strongest CJK execution of the Signal moment.
+系统最鲜明的排印处理（Source Serif 4 标题里句中正体 + 斜体金）根本上是拉丁排印动作，迁移不过来。Noto Serif SC 与 Noto Sans SC 都没有斜体轴，靠 CSS `font-style: italic` 造一个会产出倾斜 / 斜切字形，读作坏了而非强调。把 CJK `<em>` 塌成仅换色（金而不斜体）是最干净的变通，强调短语为拉丁（因而能取斜体金）、周围句子为中文的混语标题，会是 Signal 瞬间在 CJK 里最有力的落地。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new headline uses Source Serif 4 and is eligible for an `<em>` mid-sentence in italic gold. If the headline has no emphasized phrase, consider whether it should — the Signal voice depends on the gold italic moment appearing.
-2. Any new region separator is a 1px hairline in `{colors.border-dark}` / `{colors.border-light}`. Never a thicker border, never a colored border, never a shadow.
-3. Any new label, kicker, or chrome element is mono uppercase in `{colors.gold}` (for kickers) or surface-appropriate muted color (for chrome). Letter-spacing at least 0.14em.
-4. Any new statistical figure uses Source Serif 4 600 in `{colors.gold}` at -0.02em tracking. Stats are always gold serif, regardless of surface.
-5. Any new accent treatment uses `{colors.gold}` — there is no second accent. If a slide needs more visual differentiation, vary the surface (navy vs. cream) rather than adding color.
-6. Any new bullet list uses the em-dash gold mono marker. Adding a different bullet style breaks the system.
-7. Cover, chapter, statement, quote, and end layouts are chromeless. Standard layouts carry chrome and foot. Don't mix — a chromeless statement is correct; a chromed statement reads as a different system.
-8. The 80px grid overlay is part of the dark-surface identity. Any new dark slide should inherit `.slide.dark` so the `::before` overlay applies automatically.
-9. New layouts should keep the editorial breathing room. If a layout requires content edge-to-edge, reconsider — Signal is a restrained system.
-10. Italic in body text always means font-family switch to Source Serif 4 italic in `{colors.gold}`. Italic DM Sans is not a system primitive.
+1. 任何新标题都用 Source Serif 4，且可在句中带一个斜体金色 `<em>`。标题若没有强调短语，想想它是否该有，Signal 声部依赖金色斜体瞬间出现。
+2. 任何新区域分隔都是 `{colors.border-dark}` / `{colors.border-light}` 的 1px 细线。绝不更粗、绝不上色、绝不用阴影。
+3. 任何新标签、眉题、外壳元素都是等宽全大写，眉题用 `{colors.gold}`、外壳用该表面合适的柔化色。字距至少 0.14em。
+4. 任何新统计数字都用 -0.02em 字距的 `{colors.gold}` Source Serif 4 600。统计始终是金色衬线，与表面无关。
+5. 任何新强调处理都用 `{colors.gold}`，没有第二强调。页需要更多视觉区分时，变表面（海军蓝对奶油），而非加颜色。
+6. 任何新项目列表都用等宽金色破折号标记。加别的项目样式会破掉系统。
+7. 封面、章节、陈述、引文、收尾布局无外壳，标准布局带外壳与页脚。别混，无外壳陈述是对的，带外壳陈述读作另一套系统。
+8. 80px 网格叠层属于深色表面身份。任何新深色页都应继承 `.slide.dark`，好让 `::before` 叠层自动生效。
+9. 新布局应保住编辑呼吸空间。布局若需要内容从边到边，重新想想，Signal 是克制系统。
+10. 正文里的斜体始终意味着把 font-family 切到 `{colors.gold}` 的斜体 Source Serif 4。斜体 DM Sans 不是系统基元。
 
-## Known Gaps
+## 已知缺口
 
-- The four font families load from Google Fonts at runtime. If fonts fail to load (network issues, ad blockers), fallbacks are Georgia (for serif), system-ui (for sans), and Courier-style monospace — the resulting rendering loses much of the editorial character but remains legible.
-- Chinese fallbacks (Noto Serif SC, Noto Sans SC) are wired into every font-family stack but render slightly different metrics from the Latin faces; pure Chinese decks will read slightly tighter.
-- The 80px grid texture is a magic number tied to viewport scale; at very large viewports (>2560px), the grid may begin to feel coarse rather than imperceptible.
-- The slide navigation is JavaScript-driven with hardcoded `transform: translateX(...)` on the deck container. The system depends on this engine; replacing it requires preserving the `is-active` class behavior for animations to fire.
-- The `--c-bg-alt`, `--c-bg-light-alt`, and several muted color tokens are defined but used sparingly — they exist as a reserve for adjacent-surface differentiation that the source template uses only occasionally.
-- The pyramid layout uses `color-mix(in srgb, ...)` which requires modern browser support; older browsers may render bands as flat fill rather than tiered.
-- The fullbleed slide gradient is hardcoded to `rgba(15, 20, 36, 0.9)` (close to navy but not parameterized via a token). Changing the navy color requires updating this gradient in parallel.
+- 四款字族在运行时从 Google Fonts 加载。字体加载失败（网络问题、广告拦截器）时，回退是 Georgia（衬线）、system-ui（无衬线）、Courier 式等宽，结果渲染会丢掉大量编辑性格，但仍可读。
+- 中文回退（Noto Serif SC、Noto Sans SC）接进了每条 font-family 栈，但度量与拉丁字面略有不同，纯中文文稿会读起来略紧。
+- 80px 网格纹理是个绑在视口尺度上的魔法数字，视口极大（>2560px）时，网格可能开始显得粗而非不可察觉。
+- 翻页由 JavaScript 驱动，在文稿容器上用硬编码的 `transform: translateX(...)`。系统依赖这套引擎，替换它必须保住 `is-active` 类行为，动画才会触发。
+- `--c-bg-alt`、`--c-bg-light-alt` 与若干柔化颜色 token 有定义但用得省，它们作为相邻表面区分的储备存在，源模板只是偶尔用到。
+- 金字塔布局用 `color-mix(in srgb, ...)`，要求现代浏览器支持，较旧浏览器可能把带渲染成平填充而非分层。
+- 满幅页渐变硬编码为 `rgba(15, 20, 36, 0.9)`（接近海军蓝但未参数化成 token）。改海军蓝色需同步更新这条渐变。

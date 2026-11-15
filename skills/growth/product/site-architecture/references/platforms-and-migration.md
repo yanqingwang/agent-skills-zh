@@ -1,86 +1,90 @@
-# Platforms and Migration
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/growth/product/site-architecture/references/platforms-and-migration.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Where the site gets built, how new pages join an existing site, and how to move platforms without losing search traffic. Load this when the user asks which builder or CMS to use, wants to add a section or landing pages to an existing site, or is planning a migration.
+# 平台与迁移
 
-The architecture (pages, hierarchy, URLs, internal links) comes first and doesn't depend on the platform. Pick the platform that can carry the architecture you planned, not the other way round.
+站点在哪里搭建、新页面如何并入已有站点，以及怎样迁平台而不丢搜索流量。当用户问该用哪个建站工具或 CMS、想给现有站点加板块或落地页、或正在计划迁移时，加载本文件。
 
-## Contents
-- Choosing Where to Build
-- The Options
-- Adding Pages to an Existing Site
-- Migrating Without Losing Traffic
+架构（页面、层级、URL、内链）先行，且不依赖平台。挑那个能承载你已规划架构的平台，别反过来。
+
+## 目录
+- 决定在哪里搭建
+- 可选方案
+- 给现有站点加页面
+- 迁移而不丢流量
 
 ---
 
-## Choosing Where to Build
+## 决定在哪里搭建
 
-Ask these before naming any platform. The answers usually narrow the field to two or three.
+在报出任何平台名字之前，先问这些。答案通常能把范围收窄到两三个。
 
-1. **Who edits the site after launch?** A designer, a marketer who never touches code, an engineer, or an AI agent? The best platform for a designer-owned site is rarely the best for an engineer-owned one.
-2. **What does the site have to do?** A marketing site, a blog or resource library, pages at scale from data, a store, logged-in product screens? Marketing builders handle the first three; stores and apps usually belong elsewhere and get linked or proxied.
-3. **How many pages, and from what data?** A few dozen hand-built pages suit almost anything. Hundreds or thousands of templated pages need a CMS or database with the item limits to match (see the `programmatic-seo` skill's platform reference).
-4. **What has to connect?** CRM, forms, analytics, scheduling, ad pixels, the product's own login. Check the integrations that matter before falling for the editor.
-5. **How much lock-in is acceptable?** Can you export the code and content and host it elsewhere? Hosted builders trade portability for convenience.
-6. **What does it cost at the real size?** Per-site, per-seat, per-CMS-item, and usage-based pricing diverge fast as a site grows. Price the plan you'll need in a year.
+1. **上线后谁来编辑站点？** 设计师、从不碰代码的营销人员、工程师，还是一个 AI agent？适合设计师主导的平台，很少也适合工程师主导的站点。
+2. **站点必须能做什么？** 营销站、博客或资源库、由数据批量生成的页面、商店、登录后的产品界面？营销建站工具能应付前三类；商店和应用通常另放别处，再链接或反向代理过来。
+3. **多少页面，数据从哪来？** 几十个手工搭建的页面几乎什么都能做。成百上千个模板化页面需要 CMS 或数据库，且条目上限要匹配（见 `programmatic-seo` skill 的平台参考）。
+4. **需要对接什么？** CRM、表单、分析、排期、广告像素、产品自身的登录。别被编辑器迷住，先查清楚你在意的集成。
+5. **能接受多大程度的锁定？** 代码和内容能否导出并托管到别处？托管式建站工具是用可移植性换便利。
+6. **按真实规模算要多少钱？** 按站点、按席位、按 CMS 条目和按用量的定价，随站点增长会迅速分化。按你一年后需要的套餐来算价。
 
-## The Options
+## 可选方案
 
-Characterizations as of 2026-10; check current plans and limits before committing.
+以下定性基于 2026-10，定下来之前请核对当前套餐与限额。
 
-| Option | What it is | Good fit | Watch out for |
+| 方案 | 是什么 | 适合 | 留意 |
 |---|---|---|---|
-| **Webflow** | Mature visual builder and CMS with hosting | Designer-owned marketing sites, rich CMS-driven content, sites that need fine visual control | CMS item limits by plan; ecommerce and localization are add-ons; designer skill needed to keep it clean |
-| **Framer** | Design-led visual builder with CMS and fast publishing | Polished marketing sites and launches owned by designers or marketers | CMS item limits vary by plan (higher tiers reach tens of thousands); check the integrations you need |
-| **WordPress** | Open-source CMS with the largest plugin ecosystem; self-hosted or managed | Content-heavy sites, full ownership, teams with WordPress experience, budgets that favor licensing over build time | Plugin sprawl, security and update upkeep, performance depends on hosting and theme |
-| **Wix Studio, Squarespace** | All-in-one templated builders with built-in business apps | Small businesses and agencies that want hosting, commerce, and booking in one place | Less control over code and structure; harder to migrate off |
-| **Landing-page tools** (Unbounce, Instapage, Leadpages) | Builders for campaign pages, usually with A/B testing; Leadpages also builds full multi-page small-business sites | Paid-traffic landing pages; small sites on Leadpages | Unbounce and Instapage pages usually live on a subdomain or separate system rather than hosting the whole site |
-| **AI-native site platforms** (Ploy ◆, Flint, and similar) | Hosted builders where an AI agent builds, edits, and operates the site through conversation | Teams that want an agent to build and keep improving marketing pages, often alongside an existing site via path routing | Young products; hosting tied to the vendor; check export and code access before committing |
-| **AI app builders** (Lovable, v0, Bolt) | Prompt-to-app generators that output code | Prototypes, product UIs, and interactive tools | Built for apps more than marketing sites; CMS, SEO, and editing by non-engineers need extra work |
-| **Hand-coded** (Next.js, Astro, and similar on Vercel, Netlify, or Cloudflare) | Your own codebase and hosting | Full control and portability, engineer-owned sites, sites tightly coupled to the product | Every change needs an engineer unless you add a headless CMS; you own performance and SEO basics |
-| **Headless CMS + framework** (Sanity, Contentful, Storyblok with a hand-coded front end) | Content in a CMS, presentation in code | Large content operations with engineering support and multiple front ends | Two systems to run; marketers depend on engineers for new page types |
+| **Webflow** | 成熟的可视化建站工具与 CMS，自带托管 | 设计师主导的营销站、CMS 驱动的丰富内容、需要精细视觉控制的站点 | CMS 条目数按套餐受限；电商与本地化是加购项；要保持整洁需要设计师功底 |
+| **Framer** | 以设计为导向的可视化建站工具，带 CMS，发布快 | 设计师或营销人员主导的精致营销站与发布页 | CMS 条目数按套餐不同（高档可达数万）；核对你要的集成 |
+| **WordPress** | 开源 CMS，插件生态最大；可自托管或托管 | 内容量大的站点、要完全掌控、有 WordPress 经验的团队、预算宁愿花在授权而非搭建时间的 | 插件泛滥、安全与更新维护、性能取决于主机和主题 |
+| **Wix Studio、Squarespace** | 一体化模板建站工具，内置商务应用 | 想把托管、电商、预约放在一处的小企业与代理商 | 对代码和结构控制较少；迁出更难 |
+| **落地页工具**（Unbounce、Instapage、Leadpages） | 面向活动页的建站工具，通常带 A/B 测试；Leadpages 也能搭完整的多页小企业站 | 付费流量落地页；Leadpages 上的小站点 | Unbounce 与 Instapage 页面通常放在子域或独立系统，而非托管整站 |
+| **AI 原生站点平台**（Ploy ◆、Flint 及同类） | 托管式建站工具，由 AI agent 通过对话搭建、编辑、运营站点 | 想让 agent 搭建并持续改进营销页的团队，常通过路径路由与现有站点并存 | 产品年轻；托管与厂商绑定；定下来前先确认导出与代码访问 |
+| **AI 应用搭建器**（Lovable、v0、Bolt） | 由提示词生成应用、输出代码的工具 | 原型、产品 UI、交互工具 | 更偏应用而非营销站；CMS、SEO 和非工程师编辑都要额外补工 |
+| **手写代码**（Next.js、Astro 等，部署在 Vercel、Netlify 或 Cloudflare） | 自己的代码库与托管 | 完全掌控与可移植、工程师主导的站点、与产品紧耦合的站点 | 除非加 headless CMS，否则每次改动都要工程师；性能与 SEO 基础都自己扛 |
+| **Headless CMS + 框架**（Sanity、Contentful、Storyblok 配手写前端） | 内容放 CMS，呈现放代码 | 有工程支持、多前端的大型内容运营 | 要维护两套系统；营销人员新增页面类型得靠工程师 |
 
-◆ marks a [Verified Partner](https://github.com/coreyhaines31/marketingskills/blob/main/tools/REGISTRY.md#verified-partners) of this repository: disclosure, not endorsement. When you name a ◆ tool in an answer, say it's a Verified Partner of the repository this skill comes from, and name an alternative alongside it. Details for Ploy are in its [integration guide](https://github.com/coreyhaines31/marketingskills/blob/main/tools/integrations/ploy.md).
+◆ 标记本仓库的 [Verified Partner](https://github.com/coreyhaines31/marketingskills/blob/main/tools/REGISTRY.md#verified-partners)：这是披露，不是背书。当你在回答里提到某个 ◆ 工具时，说明它是本 Skill 来源仓库的 Verified Partner，并同时报出一个替代方案。Ploy 的细节见它的 [集成指南](https://github.com/coreyhaines31/marketingskills/blob/main/tools/integrations/ploy.md)。
 
-**There's rarely one right answer.** Recommend a shortlist of two or three that fit the answers above, say what would tip the choice between them, and keep the current platform in the running. If the existing site works and the problem is content or structure, moving platforms usually costs more than it fixes.
+**很少有唯一正确答案。** 给出两三个契合上述答案的候选，说明什么因素会左右取舍，并让现有平台留在候选里。如果现有站点跑得好、问题出在内容或结构，迁平台的代价往往大于它修好的东西。
 
-## Adding Pages to an Existing Site
+## 给现有站点加页面
 
-Often the job isn't a new site; it's a new section (a blog, landing pages, a resource library, pages at scale) on a site that already exists. Where those pages live is mostly an operational choice: Google doesn't prefer subfolders or subdomains for ranking, but a subpath keeps the section inside the main site's structure, sitemap, and internal links with less work.
+活儿常常不是做新站，而是在已有站点上加新板块（博客、落地页、资源库、批量页面）。这些页面放在哪里主要是运维选择：Google 对子目录或子域名在排名上并无偏好，但子路径能用更少的功夫把板块留在主站的结构、站点地图和内链里。
 
-| Approach | How it works | SEO effect | When to use |
+| 做法 | 怎么运作 | SEO 影响 | 何时用 |
 |---|---|---|---|
-| **Same platform** | Build the section in the existing site's CMS | Best: shares the domain's authority and internal links | The existing platform can handle the page type and volume |
-| **Subpath via reverse proxy** | Serve `example.com/blog` from another system through a proxy or edge router (Cloudflare Workers, Vercel or Netlify rewrites, Nginx, or a platform's own routing rules) | Behaves like same-platform pages, as long as they're fully rendered, canonical to the main domain, and linked from it | A different tool is better for the section, and you want it to share the main domain's structure and links |
-| **Subdomain** | `blog.example.com` or `go.example.com` on another system | Google says it has no inherent ranking preference between subdomains and subfolders; in practice a subdomain needs its own internal links and sitemap, and links between the two matter more | Campaign landing pages, paid-traffic pages you don't want indexed, or when a proxy isn't worth the setup |
-| **Separate domain** | A new domain for the section | Starts from zero | Rarely, for a genuinely separate brand |
+| **同平台** | 在现有站点的 CMS 里搭这个板块 | 最好：共享域名权重与内链 | 现有平台撑得住该页面类型和数量 |
+| **反向代理子路径** | 通过代理或边缘路由（Cloudflare Workers、Vercel 或 Netlify rewrites、Nginx，或平台自带的路由规则）让 `example.com/blog` 由另一套系统提供 | 表现与同平台页面一致，前提是完整渲染、canonical 指向主域、且被主域链接 | 另一款工具更适合该板块，而你又想共享主域的结构与链接 |
+| **子域名** | 另一套系统上的 `blog.example.com` 或 `go.example.com` | Google 称对子域名与子目录没有固有排名偏好；实践中子域名需要自己的内链和站点地图，两者之间的链接更关键 | 活动落地页、不想被索引的付费流量页，或代理不值得搭时 |
+| **独立域名** | 给板块起一个新域名 | 从零开始 | 极少用，确有独立品牌时才考虑 |
 
-**Reverse-proxy checklist:**
-- The proxied pages return the main domain in their canonical tags, sitemap, and Open Graph URLs, not the origin's.
-- Asset paths (CSS, JS, images, fonts) are routed too, or the pages break.
-- The origin (for example `origin.example.com`) isn't indexed separately: protect it by hostname (a password, an IP allowlist, or an `X-Robots-Tag: noindex` header set only on the origin hostname). Then confirm the proxied production responses carry no `noindex` in their HTML or headers, because an origin-wide `noindex` can pass straight through the proxy and deindex production. A `robots.txt` block alone doesn't prevent indexing.
-- Analytics and consent run on both systems, configured for one domain.
-- Test on a staging subdomain before switching production routing.
+**反向代理检查清单：**
+- 被代理页面的 canonical 标签、站点地图和 Open Graph URL 都写主域名，不要写源站域名。
+- 资源路径（CSS、JS、图片、字体）也要路由过去，否则页面会坏。
+- 源站（例如 `origin.example.com`）不要被单独索引：按主机名保护它（密码、IP 白名单，或只在源站主机名上设 `X-Robots-Tag: noindex` 头）。然后确认代理后的生产响应在 HTML 和响应头里都不带 `noindex`，因为源站全局的 `noindex` 会直接穿过代理、把生产页去索引。单靠 `robots.txt` 拦截并不能阻止索引。
+- 分析与同意管理在两套系统上都跑，并按同一个域名配置。
+- 切换生产路由前，先在预发布子域名上测试。
 
-Some hosted platforms provide the router themselves. Ploy ◆, for example, routes by path prefix in front of your domain (up to 20 rules), so its pages can serve on a subpath while everything else proxies to your existing origin. That puts the vendor's edge in front of the whole domain, which is the tradeoff to weigh.
+有些托管平台自带这个路由。例如 Ploy ◆ 在你的域名前按路径前缀路由（最多 20 条规则），因此它的页面能跑在子路径上，其余流量代理回你现有的源站。这等于把厂商的边缘放在整个域名前面，是要权衡的代价。
 
-## Migrating Without Losing Traffic
+## 迁移而不丢流量
 
-A platform migration is an SEO event. Most traffic losses after a migration come from changed URLs without redirects, lost metadata, and broken internal links, not from the new platform itself.
+平台迁移是一次 SEO 事件。迁移后大多数流量损失来自改了 URL 却没做重定向、元数据丢失、内链断裂，而不是新平台本身。
 
-**Before:**
-1. **Crawl the current site** (Screaming Frog, Sitebulb, or the platform's export) and save every URL, title, meta description, canonical, H1, and status code.
-2. **Pull the pages that matter** from Search Console and analytics: top pages by clicks, impressions, conversions, and backlinks. These get the most care.
-3. **Keep URLs where you can.** The safest migration changes the platform and nothing else. If URLs must change, map every old URL to its new one.
-4. **Check what the import carries.** Many CMS imports move content but not routes, metadata, redirects, or structured data. Plan to rebuild what's missing.
-5. **Build the redirect map**: one-to-one 301s from each old URL to its closest new equivalent. Never redirect everything to the homepage.
+**事前：**
+1. **抓取现有站点**（Screaming Frog、Sitebulb，或平台导出），保存每个 URL、标题、meta description、canonical、H1 和状态码。
+2. **挑出要紧的页面**，从 Search Console 和分析里按点击、展示、转化和反向链接取头部页面。这些最花心思。
+3. **能不改 URL 就不改。** 最稳的迁移只换平台、别的不动。若 URL 必须改，把每个旧 URL 映射到新 URL。
+4. **核对导入会带上什么。** 很多 CMS 导入只搬内容，不搬路由、元数据、重定向或结构化数据。缺的都要计划重建。
+5. **建好重定向映射**：每个旧 URL 一对一 301 到最接近的新对应页。绝不把所有页面都重定向到首页。
 
-**At launch:**
-- Deploy redirects at the same moment as the switch.
-- Submit the new sitemap and keep the old one available briefly so search engines see the redirects.
-- Spot-check the top pages: content, title, meta, canonical, schema, and that they return 200.
-- Confirm analytics, conversion tracking, and forms work (see the `launch` skill's site launch QA).
+**上线时：**
+- 重定向与切换同一时刻部署。
+- 提交新站点地图，旧站点地图短暂保留，让搜索引擎看到重定向。
+- 抽查头部页面：内容、标题、meta、canonical、schema，以及是否返回 200。
+- 确认分析、转化追踪和表单正常（见 `launch` skill 的站点上线 QA）。
 
-**After:**
-- Watch Search Console for 404s and coverage drops daily for two weeks, then weekly. Fix missing redirects as they appear.
-- Compare traffic to the same period before, by page. A dip of a few weeks can be normal; a sustained drop on specific pages usually means a missing redirect or lost content.
-- Update internal links to the new URLs instead of relying on redirects.
+**事后：**
+- 两周内每天看 Search Console 的 404 和覆盖率下降，之后改为每周。发现漏掉的重定向就补。
+- 按页面对比迁移前同期流量。几周的下滑可能正常；特定页面持续下跌通常意味着漏了重定向或丢了内容。
+- 把内链更新到新 URL，别一直依赖重定向。

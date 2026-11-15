@@ -1,15 +1,19 @@
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/gitops.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # GitOps
 
 ---
 
-## GitOps Principles
+## GitOps 原则
 
-1. **Declarative** - Entire system described declaratively
-2. **Versioned and immutable** - Desired state stored in Git
-3. **Pulled automatically** - Agents pull state from Git
-4. **Continuously reconciled** - Agents ensure actual matches desired
+1. **声明式** - 整个系统以声明方式描述
+2. **版本化且不可变** - 期望状态存放在 Git
+3. **自动拉取** - Agent 从 Git 拉取状态
+4. **持续调谐** - Agent 确保实际状态与期望一致
 
-## ArgoCD Installation
+## ArgoCD 安装
 
 ```bash
 # Create namespace
@@ -110,7 +114,7 @@ spec:
           selfHeal: true
 ```
 
-## ArgoCD with Helm
+## ArgoCD 配合 Helm
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -176,7 +180,7 @@ spec:
         - developers
 ```
 
-## Flux Installation
+## Flux 安装
 
 ```bash
 # Install Flux CLI
@@ -342,7 +346,7 @@ spec:
     strategy: Setters
 ```
 
-## Progressive Delivery with Flagger
+## 用 Flagger 做渐进式交付
 
 ```yaml
 # Install Flagger
@@ -426,7 +430,7 @@ spec:
         app: myapp
 ```
 
-## SOPS with Age
+## SOPS 配合 Age
 
 ```bash
 # Install SOPS
@@ -467,9 +471,9 @@ spec:
   # ... rest of spec
 ```
 
-## Repository Strategies
+## 仓库策略
 
-### Mono-repo
+### 单仓库
 ```
 fleet-repo/
 ├── apps/
@@ -486,7 +490,7 @@ fleet-repo/
     └── production/
 ```
 
-### Multi-repo
+### 多仓库
 ```
 # App repos (one per app)
 myapp-manifests/
@@ -504,27 +508,27 @@ fleet-infra/
 └── infra.yaml     # Points to infra repo
 ```
 
-## ArgoCD vs Flux Comparison
+## ArgoCD 与 Flux 对比
 
-| Feature | ArgoCD | Flux |
+| 特性 | ArgoCD | Flux |
 |---------|--------|------|
-| UI | Built-in web UI | Third-party (Weave GitOps) |
-| Multi-tenancy | AppProject | Namespaced resources |
-| Helm | Native support | HelmController |
-| Image automation | ArgoCD Image Updater | Native ImagePolicy |
-| Notifications | ArgoCD Notifications | Alerts/Receivers |
-| RBAC | Built-in | Kubernetes RBAC |
-| Architecture | Centralized | Distributed |
+| 界面 | 自带 Web UI | 第三方（Weave GitOps） |
+| 多租户 | AppProject | 命名空间级资源 |
+| Helm | 原生支持 | HelmController |
+| 镜像自动化 | ArgoCD Image Updater | 原生 ImagePolicy |
+| 通知 | ArgoCD Notifications | Alerts/Receivers |
+| RBAC | 内置 | Kubernetes RBAC |
+| 架构 | 集中式 | 分布式 |
 
-## Best Practices
+## 最佳实践
 
-1. **Use separate repos** for app code and manifests
-2. **Protect main branch** with required reviews
-3. **Use sealed secrets or SOPS** for sensitive data
-4. **Enable auto-sync with prune** for drift correction
-5. **Set up notifications** for sync failures
-6. **Use ApplicationSets/Kustomizations** for multi-environment
-7. **Implement progressive delivery** for safe rollouts
-8. **Version your Helm charts** semantically
-9. **Keep manifests DRY** with Kustomize overlays
-10. **Monitor reconciliation metrics** and alerts
+1. **分仓**：应用代码与清单分开放
+2. **保护 main 分支**：要求评审
+3. **用 Sealed Secrets 或 SOPS**：处理敏感数据
+4. **启用自动同步加 prune**：纠正漂移
+5. **设置通知**：同步失败时告警
+6. **用 ApplicationSet/Kustomization**：管理多环境
+7. **实施渐进式交付**：安全发布
+8. **给 Helm chart 做语义化版本**
+9. **保持清单 DRY**：用 Kustomize overlay
+10. **监控调谐指标**并设告警

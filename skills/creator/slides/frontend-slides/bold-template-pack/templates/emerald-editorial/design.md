@@ -273,274 +273,277 @@ components:
     description: "A full-bleed inverse panel (ink background) holding a single oversized Bodoni numeral (~460px weight 900) centered. Used as a section-opener device. Topbar / footline strings sit absolutely positioned in the panel corners."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/emerald-editorial/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Emerald Editorial is a **bold display-serif editorial system** rooted in the visual language of fashion magazines and 19th-century theatrical playbills. The foundational premise is a single typographic face — **Bodoni Moda at weight 900** — used at unapologetic scale: 92px for routine headlines, 130–200px for statements and section openers, and 460px for hero numerals. The serif is loud, theatrical, and confident. Every slide leads with type, not with image.
+Emerald Editorial 是一套**大胆的展示衬线编辑系统**，扎根于时尚杂志与 19 世纪戏剧演出单的视觉语言。底层前提是单一排印字面 **Bodoni Moda 字重 900**，以毫不歉疚的尺度使用：常规标题 92px，陈述与分节开场 130–200px，英雄数字 460px。衬线响亮、戏剧化、自信。每页以文字领衔，不以图像领衔。
 
-The palette is a tight three-color editorial set: a **saturated emerald green** (`{colors.bg}` — #3CD896) as the dominant surface, a **deep navy ink** (`{colors.ink}` — #0F1A5C) as both the primary text color and the inverse-panel surface, and an **oat paper** (`{colors.paper}` — #F1E9D6) as the secondary surface for alternate tiles. The navy / emerald contrast is the system's chromatic identity; every body of text is navy-on-emerald or emerald-on-navy. Two near-duplicates of the emerald (`{colors.bg-2}`, `{colors.bg-3}`) and two of the navy (`{colors.ink-2}`, `{colors.ink-3}`) exist in the token system but are reserved — the published slides commit almost entirely to the three primaries.
+配色是紧凑的三色编辑组：**饱和翡翠绿**（`{colors.bg}` — #3CD896）作主导表面，**深海军墨**（`{colors.ink}` — #0F1A5C）既作主文字色也作反色面板表面，**燕麦纸**（`{colors.paper}` — #F1E9D6）作交替拼块的次级表面。海军 / 翡翠的对比是系统的色彩身份，每段文字不是海军压翡翠、就是翡翠压海军。token 系统里还有两组翡翠近重复色（`{colors.bg-2}`、`{colors.bg-3}`）和两组海军近重复色（`{colors.ink-2}`、`{colors.ink-3}`），但都被预留，已发布的页面几乎完全认准三种主色。
 
-The supporting typeface is **Manrope**, a humanist geometric sans, run at weight 500 for body paragraphs and weight 700–800 in uppercase with wide letter-spacing for every label, tag, eyebrow, caption, and footline. Manrope never crosses into display territory — it stops at 28px and stays in the chrome layer.
+辅助字面是 **Manrope**，人文几何无衬线，正文段落跑字重 500，每个标签、小片、眉题、图注、页脚线跑字重 700–800 的大写宽字距。Manrope 绝不跨进展示领地，它止步于 28px、待在外壳层。
 
-The signature treatment is the **double-rule ornament** — a centered serif word framed by two stacked 4px horizontal rules on each side, with 3px between the rules. This treatment appears as the cover's centerpiece and as a recurring statement bracket. It reads as a 19th-century playbill or vintage program — a "The [word] of [word]" framing device. The double-rule ornament is configurable to a single-rule or no-rule variant via a `:root[data-ornament]` attribute, but the double variant is the system's identity.
+招牌处理是**双线装饰**：一个居中的衬线词，两侧各由两条叠起的 4px 横线夹住，线与线间隔 3px。这个处理作封面核心，也作反复出现的陈述括号。读起来像 19 世纪演出单或老节目册，"The [word] of [word]" 式框定装置。双线装饰可经 `:root[data-ornament]` 属性配置成单线或无线变体，但双线变体才是系统身份。
 
-Depth is **flat and ink-based**. There are no drop shadows, no gradients, no blur, no glow. Every surface is solid emerald, solid navy, or solid paper. Elevation happens through color-block inversion (a navy tile on the emerald canvas is the "elevated" element) and 4px ink rules separating sections. The whole system reads as printed ink on paper, not as a digital interface.
+纵深是**平的、墨基的**。没有投影、没有渐变、没有模糊、没有辉光。每个表面都是实翡翠、实海军或实纸。抬升靠色块反色（翡翠画布上的海军拼块就是"抬起"的元素）和分隔分节的 4px 墨线发生。整套系统读起来像印在纸上的墨，不是数字界面。
 
-**Density philosophy: medium-full and centered.** Most slides carry one display headline at scale (92–200px) plus 3–4 supporting elements (a stat row, a kpi grid, a process flow, a chart card). The slide padding of 110px gives breathing room, and the masthead/footline chrome at top and bottom anchors the page. A slide that crams six small elements reads as broken; a slide with one giant headline plus three supporting tiles reads as authoritative. Reach for fewer, larger elements. The exception: the agenda-list pattern (a vertical list of large-numbered rows separated by 4px ink rules) is naturally dense and fills the canvas vertically — and it should, when used.
+**密度取向：中满、居中。** 多数页承载一个大尺度展示标题（92–200px）加 3–4 个辅助元素（统计行、kpi 网格、流程流、图表卡片）。110px 的幻灯片内边距留出呼吸，顶底的刊头/页脚外壳锚住页面。塞进六个小元素的页读起来像坏了，一个巨型标题加三张辅助拼块的页读起来才权威。宁可更少、更大。例外是议程列表模式（由 4px 墨线分隔的大编号行纵向列表）天然密集、纵向填满画布，用到时理应如此。
 
-**Key Characteristics:**
-- Bodoni Moda at weight 900 for every display moment; Manrope at weight 500/700/800 for every body and label moment.
-- Saturated emerald canvas (`{colors.bg}`) with deep navy ink (`{colors.ink}`) text and inverse panels.
-- Double-rule ornament with centered serif word is the signature decorative device.
-- 4px ink horizontal rules separate every stacked section, every list row, every chart border. The 4px weight is the system's default rule.
-- No corner radius anywhere. Every shape is a strict rectangle, except for the round logo/typographic glyphs themselves.
-- No shadows, no gradients, no blur. Depth is color-block inversion + 4px rules.
-- Display type scales aggressively — 184–460px for hero / section-opener / closing moments.
-- Manrope chrome (labels, tags, captions) is always uppercase with 0.05em–0.18em letter-spacing.
+**关键特征：**
+- Bodoni Moda 字重 900 用于每个展示瞬间，Manrope 字重 500/700/800 用于每个正文和标签瞬间。
+- 饱和翡翠画布（`{colors.bg}`）配深海军墨（`{colors.ink}`）文字与反色面板。
+- 带居中衬线词的双线装饰是招牌装饰装置。
+- 4px 墨色横线分隔每个叠起的分节、每个列表行、每条图表边。4px 粗细是系统的默认线。
+- 哪里都没有圆角，每个形状都是严格矩形，只有 logo/排印字形本身是圆的。
+- 无阴影、无渐变、无模糊。纵深靠色块反色 + 4px 线。
+- 展示字放得极开，英雄 / 分节开场 / 收尾瞬间 184–460px。
+- Manrope 外壳（标签、小片、图注）始终大写、0.05em–0.18em 字距。
 
-## Colors
+## 颜色
 
-### Palette
-- **BG / Emerald** (`{colors.bg}` — #3CD896): The dominant slide canvas. A saturated, slightly cool emerald — saturated enough to feel like printed ink, not like a CSS preset. The default slide background.
-- **BG-2** (`{colors.bg-2}` — #2DC684): A slightly darker emerald reserved for tonal variation; available in the token system but used sparingly. Reach for it only when two emerald surfaces sit adjacent and need separation.
-- **BG-3** (`{colors.bg-3}` — #25B377): The darkest emerald variant; similarly reserved.
-- **Ink / Navy** (`{colors.ink}` — #0F1A5C): The deep navy primary. The text color on emerald and paper surfaces; the inverse-panel background color; the rule color; the border color. The system's structural color.
-- **Ink-2** (`{colors.ink-2}` — #1B2774): A slightly lighter navy variant — available for tonal contrast inside ink-on-ink situations, but rarely used.
-- **Ink-3** (`{colors.ink-3}` — #3A4593): The lightest navy variant; reserved.
-- **Paper** (`{colors.paper}` — #F1E9D6): The oat-cream secondary surface. Used as the alt-tile fill in process / kpi rows, as the alt bar-chart series, and anywhere a third "warm" surface is needed to break a row of all-navy inverse tiles. Carries `{colors.ink}` text.
-- **Rule** (`{colors.rule}` — `rgba(15, 26, 92, 0.22)`): A semi-transparent navy used only for subtle internal grid lines (e.g., chart grid lines on a dark ground). Not a structural rule color.
-- **Rule Strong** (`{colors.rule-strong}` — `rgba(15, 26, 92, 0.85)`): An 85%-opacity navy, available as a near-solid rule alternative.
+### 调色板
+- **BG / Emerald**（`{colors.bg}` — #3CD896）：主导幻灯片画布。饱和、略冷的翡翠，饱和到像印出来的墨而非 CSS 预设。默认幻灯片背景。
+- **BG-2**（`{colors.bg-2}` — #2DC684）：略深的翡翠，留给色调变化，token 系统里有但用得省。只在两块翡翠表面相邻、需要分开时取用。
+- **BG-3**（`{colors.bg-3}` — #25B377）：最深的翡翠变体，同样预留。
+- **Ink / Navy**（`{colors.ink}` — #0F1A5C）：深海军主色。翡翠与纸表面上的文字色，反色面板背景色，线色，边框色。系统的结构色。
+- **Ink-2**（`{colors.ink-2}` — #1B2774）：略浅的海军变体，可供墨压墨情境里的色调反差，但很少用。
+- **Ink-3**（`{colors.ink-3}` — #3A4593）：最浅的海军变体，预留。
+- **Paper**（`{colors.paper}` — #F1E9D6）：燕麦奶油次级表面。用作流程 / kpi 行里的交替拼块填充、交替条形图系列，以及任何需要第三种"暖"表面来打破一整排海军反色拼块的地方。承载 `{colors.ink}` 文字。
+- **Rule**（`{colors.rule}` — `rgba(15, 26, 92, 0.22)`）：半透明海军，只用于微妙的内部网格线（例如深底上的图表网格线）。不是结构线色。
+- **Rule Strong**（`{colors.rule-strong}` — `rgba(15, 26, 92, 0.85)`）：85% 不透明度海军，可作近乎实线的替代。
 
-### Defaults
-- **Default slide background**: `{colors.bg}` (emerald). Reach for `{colors.ink}` (navy) as a full slide surface when the moment wants gravity (section opener, closing).
-- **Default headline color on emerald**: `{colors.ink}`.
-- **Default headline color on navy**: `{colors.bg}` — emerald-on-navy is the only color flip the system uses for display type.
-- **Default body color on emerald**: `{colors.ink}`.
-- **Default body color on navy**: `{colors.bg}`.
-- **Default body color on paper**: `{colors.ink}`.
-- **Default label / eyebrow / tag color**: `{colors.ink}` on emerald and paper surfaces, `{colors.bg}` on navy surfaces.
-- **Default rule color**: `{colors.ink}` at 4px solid. Always.
-- **Default inverse tile fill**: `{colors.ink}` with `{colors.bg}` text. The alt tile in a row uses `{colors.paper}` with `{colors.ink}` text.
-- **Default delta / pill fill** inside an ink tile: `{colors.bg}` background with `{colors.ink}` text. Inside a paper tile, invert to `{colors.ink}` background with `{colors.bg}` text.
+### 默认值
+- **默认幻灯片背景**：`{colors.bg}`（翡翠）。瞬间需要分量（分节开场、收尾）时取 `{colors.ink}`（海军）作整页表面。
+- **翡翠上默认标题色**：`{colors.ink}`。
+- **海军上默认标题色**：`{colors.bg}`，翡翠压海军是系统唯一给展示文字用的翻色。
+- **翡翠上默认正文色**：`{colors.ink}`。
+- **海军上默认正文色**：`{colors.bg}`。
+- **纸上默认正文色**：`{colors.ink}`。
+- **默认标签 / 眉题 / 小片色**：翡翠与纸表面 `{colors.ink}`，海军表面 `{colors.bg}`。
+- **默认线色**：`{colors.ink}` 4px 实线，始终如此。
+- **默认反色拼块填充**：`{colors.ink}` 配 `{colors.bg}` 文字。一行里的交替拼块用 `{colors.paper}` 配 `{colors.ink}` 文字。
+- **墨拼块内默认 delta / 胶囊填充**：`{colors.bg}` 底配 `{colors.ink}` 文字。纸拼块内反成 `{colors.ink}` 底配 `{colors.bg}` 文字。
 
-The palette is intentionally tight. Introducing a fourth chromatic family (red, yellow, orange, lavender) shatters the editorial commitment. Stay inside emerald / navy / paper. The bg-2/3 and ink-2/3 variants exist for tonal nuance but should rarely be needed.
+配色刻意收紧。引入第四色系（红、黄、橙、薰衣草）会击碎编辑承诺。守在翡翠 / 海军 / 纸里。bg-2/3 与 ink-2/3 变体供色调细微差别，但应极少需要。
 
-## Typography
+## 排印
 
-### Font Family
-The system loads several display serif families from Google Fonts (Bodoni Moda, Playfair Display, DM Serif Display, Rozha One, Yeseva One) plus Manrope as the supporting sans. **In practice, only Bodoni Moda is used for display** — the other serif families are loaded but dormant, reserved as future variants. Bodoni Moda is the canonical display face; the others are not part of the system's voice.
+### 字族
+系统从 Google Fonts 加载几款展示衬线字族（Bodoni Moda、Playfair Display、DM Serif Display、Rozha One、Yeseva One）加 Manrope 作辅助无衬线。**实际只有 Bodoni Moda 用于展示**，其余衬线字族加载了但休眠，预留作未来变体。Bodoni Moda 是规范展示字面，其余不属于系统声部。
 
-Bodoni Moda is run almost exclusively at **weight 900** — the heaviest cut. Weight 800 appears for small ornament words and tile titles (slightly less heavy so they don't compete with the primary headline). Weight 700 appears once or twice for the smallest ornament prepositions. There is no weight-500 Bodoni in the published system. The 900-weight commitment is what gives the system its theatrical-playbill voice.
+Bodoni Moda 几乎只跑**字重 900**，最重的一档。字重 800 出现在小装饰词和拼块标题（略轻，免得与主标题相争）。字重 700 在小装饰介词上出现一两次。已发布系统里没有字重 500 的 Bodoni。900 字重的承诺，正是系统戏剧演出单声部的来源。
 
-Manrope handles everything else: body paragraphs at weight 500, labels / eyebrows / tags / captions at weight 700 or 800 in uppercase with 0.05em–0.18em letter-spacing. Manrope never appears at display scale; Bodoni never appears at chrome scale.
+Manrope 承担其余一切：正文段落字重 500，标签 / 眉题 / 小片 / 图注字重 700 或 800 的大写、0.05em–0.18em 字距。Manrope 绝不出现在展示尺度，Bodoni 绝不出现在外壳尺度。
 
-### Display, Body, and Chrome Scale
+### 展示、正文、外壳比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.numeral-jumbo}` | 460px | Bodoni Moda | 900 | Hero numeral on an inverse section-opener panel |
-| `{typography.display-section}` | 200px | Bodoni Moda | 900 | Agenda / section-title hero |
-| `{typography.display-cover}` | 184px | Bodoni Moda | 900 | Cover masthead title |
-| `{typography.display}` | 130px | Bodoni Moda | 900 | Statement / pull-quote scale |
-| `{typography.display-md}` | 128px | Bodoni Moda | 900 | KPI-row introductory headline |
-| `{typography.display-sm}` | 120px | Bodoni Moda | 900 | Process-flow introductory headline |
-| `{typography.headline-xl}` | 104px | Bodoni Moda | 900 | Chart / data introductory headline |
-| `{typography.headline}` | 92px | Bodoni Moda | 900 | Routine slide headline |
-| `{typography.ornament-word-lg}` | 84px | Bodoni Moda | 800 | Large ornament-bracketed word (statement variant) |
-| `{typography.ornament-word}` | 76px | Bodoni Moda | 800 | Standard ornament-bracketed word (cover variant) |
-| `{typography.ornament-word-sm}` | 68px | Bodoni Moda | 800 | Cover preposition between the double-rule brackets |
-| `{typography.kpi-figure}` | 144px | Bodoni Moda | 900 | KPI-tile numeral |
-| `{typography.kpi-figure-unit}` | 60px | Bodoni Moda | 800 | Unit suffix on a KPI numeral |
-| `{typography.stat-figure}` | 92px | Bodoni Moda | 900 | Secondary stat numeral (in a side panel) |
-| `{typography.stat-figure-unit}` | 48px | Bodoni Moda | 900 | Unit suffix on a secondary stat |
-| `{typography.title-card-lg}` | 64px | Bodoni Moda | 800 | Title inside a large card / agenda-row name |
-| `{typography.title-card}` | 48px | Bodoni Moda | 800 | Chart-card take-away title |
-| `{typography.title-card-sm}` | 44px | Bodoni Moda | 800 | Statement-supporting cell title |
-| `{typography.step-numeral}` | 80px | Bodoni Moda | 900 | Process-step ordinal |
-| `{typography.step-title}` | 40px | Bodoni Moda | 800 | Process-step title (sits below a top rule) |
-| `{typography.body-lg}` | 28px | Manrope | 500 | Lede / subtitle paragraph |
-| `{typography.body}` | 26px | Manrope | 500 | Standard body paragraph |
-| `{typography.body-sm}` | 24px | Manrope | 500 | Compact body in a tile / chart side panel |
-| `{typography.eyebrow}` | 28px | Manrope | 800 / 0.18em | Section eyebrow above a headline |
-| `{typography.label}` | 26px | Manrope | 700 / 0.08em | Masthead / footline label |
-| `{typography.label-tight}` | 26px | Manrope | 700 / 0.05em | Cover top/bottom strings |
-| `{typography.tag}` | 24px | Manrope | 800 / 0.12em | Inverse pill / tag (mark, delta, side-tag) |
-| `{typography.caption}` | 24px | Manrope | 700 / 0.1em | Agenda-row kind label, chart x-axis, kpi label |
-| `{typography.credit}` | 28px | Manrope | 700 / 0.18em | Author / org credit row |
+| `{typography.numeral-jumbo}` | 460px | Bodoni Moda | 900 | 反色分节开场面板上的英雄数字 |
+| `{typography.display-section}` | 200px | Bodoni Moda | 900 | 议程 / 分节标题英雄 |
+| `{typography.display-cover}` | 184px | Bodoni Moda | 900 | 封面刊头标题 |
+| `{typography.display}` | 130px | Bodoni Moda | 900 | 陈述 / 拉页引文尺度 |
+| `{typography.display-md}` | 128px | Bodoni Moda | 900 | KPI 行引导标题 |
+| `{typography.display-sm}` | 120px | Bodoni Moda | 900 | 流程流引导标题 |
+| `{typography.headline-xl}` | 104px | Bodoni Moda | 900 | 图表 / 数据引导标题 |
+| `{typography.headline}` | 92px | Bodoni Moda | 900 | 常规页面标题 |
+| `{typography.ornament-word-lg}` | 84px | Bodoni Moda | 800 | 大装饰括号词（陈述变体） |
+| `{typography.ornament-word}` | 76px | Bodoni Moda | 800 | 标准装饰括号词（封面变体） |
+| `{typography.ornament-word-sm}` | 68px | Bodoni Moda | 800 | 双线括号之间的封面介词 |
+| `{typography.kpi-figure}` | 144px | Bodoni Moda | 900 | KPI 拼块数字 |
+| `{typography.kpi-figure-unit}` | 60px | Bodoni Moda | 800 | KPI 数字的单位后缀 |
+| `{typography.stat-figure}` | 92px | Bodoni Moda | 900 | 次级统计数字（在侧面板里） |
+| `{typography.stat-figure-unit}` | 48px | Bodoni Moda | 900 | 次级统计数字的单位后缀 |
+| `{typography.title-card-lg}` | 64px | Bodoni Moda | 800 | 大卡片 / 议程行名称内标题 |
+| `{typography.title-card}` | 48px | Bodoni Moda | 800 | 图表卡片结论标题 |
+| `{typography.title-card-sm}` | 44px | Bodoni Moda | 800 | 陈述辅助单元格标题 |
+| `{typography.step-numeral}` | 80px | Bodoni Moda | 900 | 流程步骤序数 |
+| `{typography.step-title}` | 40px | Bodoni Moda | 800 | 流程步骤标题（坐在顶线下） |
+| `{typography.body-lg}` | 28px | Manrope | 500 | 导语 / 副标题段落 |
+| `{typography.body}` | 26px | Manrope | 500 | 标准正文段落 |
+| `{typography.body-sm}` | 24px | Manrope | 500 | 拼块 / 图表侧面板内紧凑正文 |
+| `{typography.eyebrow}` | 28px | Manrope | 800 / 0.18em | 标题上方的分节眉题 |
+| `{typography.label}` | 26px | Manrope | 700 / 0.08em | 刊头 / 页脚线标签 |
+| `{typography.label-tight}` | 26px | Manrope | 700 / 0.05em | 封面顶/底串 |
+| `{typography.tag}` | 24px | Manrope | 800 / 0.12em | 反色胶囊 / 小片（标记、delta、侧小片） |
+| `{typography.caption}` | 24px | Manrope | 700 / 0.1em | 议程行类型标签、图表 x 轴、kpi 标签 |
+| `{typography.credit}` | 28px | Manrope | 700 / 0.18em | 作者 / 机构致谢行 |
 
-### Defaults
-- **Default size for a routine slide headline**: `{typography.headline}` (92px).
-- **Default size for a hero / cover-scale moment**: `{typography.display-cover}` (184px) or `{typography.display-section}` (200px).
-- **Default size for a body paragraph**: `{typography.body}` (26px) in Manrope weight 500.
-- **Default size for a body paragraph inside a tile**: `{typography.body-sm}` (24px).
-- **Default size for an eyebrow above a headline**: `{typography.eyebrow}` (28px) in Manrope 800 uppercase 0.18em.
-- **Default size for a tag / pill / chip**: `{typography.tag}` (24px) in Manrope 800 uppercase 0.12em.
-- **Default size for a KPI figure**: `{typography.kpi-figure}` (144px) with an optional 60px unit.
-- **Default weight for any Bodoni display moment**: 900. The 800 variant is reserved for ornament words and tile titles, never for primary headlines.
-- **Default weight for any Manrope body line**: 500.
+### 默认值
+- **常规页面标题默认尺寸**：`{typography.headline}`（92px）。
+- **英雄 / 封面级瞬间默认尺寸**：`{typography.display-cover}`（184px）或 `{typography.display-section}`（200px）。
+- **正文段落默认尺寸**：`{typography.body}`（26px），Manrope 字重 500。
+- **拼块内正文段落默认尺寸**：`{typography.body-sm}`（24px）。
+- **标题上方眉题默认尺寸**：`{typography.eyebrow}`（28px），Manrope 800 大写 0.18em。
+- **小片 / 胶囊 / 芯片默认尺寸**：`{typography.tag}`（24px），Manrope 800 大写 0.12em。
+- **KPI 数字默认尺寸**：`{typography.kpi-figure}`（144px），可选 60px 单位。
+- **任何 Bodoni 展示瞬间默认字重**：900。800 变体留给装饰词和拼块标题，绝不用于主标题。
+- **任何 Manrope 正文行默认字重**：500。
 
-When unsure, reach for `{typography.headline}` (92px) for the slide's primary headline. The 120–200px tier is reserved for section openers, statements, and KPI-row headlines — using it for routine headlines flattens the hierarchy.
+拿不准时，页面主标题取 `{typography.headline}`（92px）。120–200px 一档留给分节开场、陈述、KPI 行标题，拿它排常规标题会把层级压平。
 
-### Signature Treatments
-These treatments are **non-optional whenever the corresponding element type is used**:
+### 招牌处理
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every primary Bodoni headline runs at weight 900 with negative letter-spacing (-0.01em to -0.03em) and tight line-height (0.9–0.95).** A weight-700 or weight-800 Bodoni headline reads as a sub-headline, not a primary moment.
-- **Every Manrope label, eyebrow, tag, caption, footline, and credit element is UPPERCASE with letter-spacing of at least 0.05em.** Manrope in sentence case or with default tracking reads as web app body, not editorial chrome.
-- **The double-rule ornament, when used, is bilateral — rules on both sides of the centered word.** A one-sided ornament breaks the bracket symmetry. The ornament can be downgraded to a single-rule or no-rule variant via `:root[data-ornament]`, but the default and recommended form is double.
-- **Every section separator and tile divider is a 4px solid `{colors.ink}` rule.** Never 1px, never 2px, never colored beyond ink. The 4px weight is the system's structural rhythm.
-- **Inverse tiles always carry `{colors.ink}` background with `{colors.bg}` text.** The alt paper tile carries `{colors.paper}` background with `{colors.ink}` text. Color combinations outside these pairings break the system's printed-ink discipline.
-- **Bodoni numerals at jumbo scale (200px+) live on inverse navy panels.** Putting a 460px numeral on the emerald canvas is technically possible but visually breaks the panel-anchored playbill voice; the jumbo numerals belong inside ink panels.
+- **每个主 Bodoni 标题都跑字重 900、负字距（-0.01em 到 -0.03em）、紧行高（0.9–0.95）。** 字重 700 或 800 的 Bodoni 标题读成副标题，不是主瞬间。
+- **每个 Manrope 标签、眉题、小片、图注、页脚线、致谢元素都大写、至少 0.05em 字距。** 句首大写或默认字距的 Manrope 读成网页应用正文，不像编辑外壳。
+- **双线装饰一旦使用就是双边的，居中词两侧都有线。** 单边装饰会破掉括号对称。装饰可经 `:root[data-ornament]` 降成单线或无线变体，但默认且推荐的是双线。
+- **每个分节分隔与拼块分隔线都是 4px 实线 `{colors.ink}` 线。** 绝不 1px、绝不 2px、绝不墨色以外上色。4px 粗细是系统的结构节奏。
+- **反色拼块永远带 `{colors.ink}` 底配 `{colors.bg}` 文字。** 交替纸拼块带 `{colors.paper}` 底配 `{colors.ink}` 文字。这对搭配之外的颜色组合会破掉系统的印刷墨纪律。
+- **巨型尺度（200px+）的 Bodoni 数字活在反色海军面板上。** 把 460px 数字放在翡翠画布上技术上可行，但视觉上会破掉面板锚定的演出单声部，巨型数字属于墨面板内部。
 
-### Typography Principles
-The weight 900 + negative tracking + tight leading combination is the system's display voice. Switching any of those three properties (e.g., weight 700, or default tracking, or 1.2 leading) reads as a different design system. The serif/sans role split is strict: Bodoni never appears at body / label scale, Manrope never appears at display scale.
+### 排印原则
+字重 900 + 负字距 + 紧行距的组合是系统的展示声部，换掉三者中任一属性（例如字重 700、默认字距、1.2 行距）都会读成另一套设计系统。衬线/无衬线角色切分严格：Bodoni 绝不出现在正文 / 标签尺度，Manrope 绝不出现在展示尺度。
 
-Italics are loaded in the Bodoni font request but not used in the published system — keep them out unless intentionally introducing a new pattern. Underline is not used. Emphasis is communicated through size, color inversion, and ornamentation.
+Bodoni 字体请求里加载了斜体，但已发布系统不用，除非刻意引入新模式，否则挡在外面。不用下划线。强调靠尺寸、颜色反色、装饰传达。
 
-## Layout
+## 布局
 
-### Canvas System
-The system targets a fixed **1920×1080** canvas. Slides are `<section class="slide">` elements at exact width/height. Rendering relies on `deck-stage.js` to scale the canvas to fit the viewport. The canvas is paper-stock, not a viewport — designed for projector, printer, or PDF export at 16:9.
+### 画布系统
+系统以固定 **1920×1080** 画布为目标。幻灯片是精确宽高的 `<section class="slide">` 元素。渲染依赖 `deck-stage.js` 缩放画布适配视口。画布是纸料，不是视口，为投影、打印或 16:9 的 PDF 导出而设计。
 
-### Padding Scale
-| Token | Value | Use |
+### 内边距比例
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.pad-default}` | 110px 110px 70px | Standard content slide (asymmetric — slightly less bottom for footline) |
-| `{spacing.pad-cover}` | 56px 110px | Cover slide (less top padding to give masthead room) |
-| `{spacing.pad-closing}` | 80px 110px | Closing slide |
-| `{spacing.masthead-inset}` | 56px top, 80px sides | Absolute masthead / footline inset on cover and closing |
+| `{spacing.pad-default}` | 110px 110px 70px | 标准内容页（不对称，底部略少留给页脚线） |
+| `{spacing.pad-cover}` | 56px 110px | 封面页（顶部内边距少些，给刊头留位） |
+| `{spacing.pad-closing}` | 80px 110px | 收尾页 |
+| `{spacing.masthead-inset}` | 顶部 56px、左右 80px | 封面与收尾的刊头 / 页脚线绝对内缩 |
 
-### Chrome Anatomy
-The cover and closing carry a **masthead** at top (a Manrope flex row with two label strings on opposite sides) and a **footline** at bottom (a matching row). Content slides typically skip the masthead and footline, leaning on the 110px-top padding to give the headline space. When the masthead is used, it lives at `top: 56px, left/right: 80px`.
+### 外壳解剖
+封面与收尾顶部带**刊头**（两条 Manrope 标签串分列两侧的 flex 行），底部带**页脚线**（对应的一行）。内容页通常跳过刊头与页脚线，靠 110px 顶部内边距给标题空间。用刊头时，它位于 `top: 56px, left/right: 80px`。
 
-### Card and Tile Treatment
-The system has **no border-radius anywhere**. Cards, tiles, kpi panels, ornament rules, mark pills, tag pills — all strict rectangles. The only round shapes are the natural curves of the Bodoni glyphs themselves. The visual rhythm comes entirely from rectangle composition and 4px ink rules.
+### 卡片与拼块处理
+系统**哪里都没有 border-radius**。卡片、拼块、kpi 面板、装饰线、标记胶囊、小片胶囊全是严格矩形。唯一的圆是 Bodoni 字形本身的自然曲线。视觉节奏完全来自矩形构图与 4px 墨线。
 
-### Rule Weights
-| Weight | Use |
+### 线粗细
+| 粗细 | 用途 |
 |---|---|
-| 2px | Chart grid lines (subtle, semi-transparent) |
-| 4px | Universal structural rule — section separators, list-row borders, tile top rules |
-| 5px | Cover ornament rules (slightly heavier so they hold weight next to the 184px display headline) |
-| 18px height (with 4px rule top + 4px rule bottom) | Double-rule ornament span |
+| 2px | 图表网格线（微妙、半透明） |
+| 4px | 通用结构线，分节分隔、列表行边、拼块顶线 |
+| 5px | 封面装饰线（略重，好在 184px 展示标题旁压得住） |
+| 18px 高（顶 4px 线 + 底 4px 线） | 双线装饰跨度 |
 
-The 4px weight is the system's default; reach for it unless the moment specifically needs the cover's heavier 5px rules.
+4px 粗细是系统默认，除非瞬间明确需要封面更重的 5px 线。
 
-## Depth and Elevation
+## 纵深与层级
 
-### Flat, No Shadows
-The system uses **zero shadows**. No box-shadow, no text-shadow, no filter blur, no gradient. Elevation is communicated entirely through:
+### 平、无阴影
+系统**零阴影**。没有 box-shadow、没有 text-shadow、没有 filter 模糊、没有渐变。抬升完全靠：
+1. **色块反色**：翡翠画布上的海军拼块是系统"抬起"的元素。反色就是纵深语言。
+2. **4px 墨线**：分节由 4px 实线海军线分隔，读起来像区域之间的纸折痕。
+3. **无 border-radius 的实面板**：严格矩形处理配全反色填充，给拼块带来印刷墨块的分量。
 
-1. **Color-block inversion** — a navy tile on the emerald canvas is the system's "elevated" element. Inversion is the depth language.
-2. **4px ink rules** — sections are separated by 4px solid navy lines that read as paper-fold creases between regions.
-3. **Solid panels with no border-radius** — the strict-rectangle treatment combined with full inverse fill gives tiles the weight of printed ink blocks.
+没有柔辉光、没有玻璃、没有新拟态。加 box-shadow 会击碎印刷墨纪律。
 
-There is no soft-glow, no glass, no neumorphism. Adding box-shadow shatters the printed-ink discipline.
+### 分节开场面板
+一个招牌抬升装置：页面可切成满出血双栏网格，左侧是实 `{colors.ink}` 面板、装一个巨型 Bodoni 数字（`{typography.numeral-jumbo}` 460px），右侧是标准翡翠画布、装标题 + 导语 + 类别标记。面板读起来像杂志扉页开场，厚重、锚定、有仪式感。把这当开场模式，不是常规页面布局。
 
-### Section-Opener Panel
-A signature elevation device: a slide can be split into a full-bleed two-column grid where the left side is a solid `{colors.ink}` panel holding a jumbo Bodoni numeral (`{typography.numeral-jumbo}` at 460px) and the right side is the standard emerald canvas with headline + lede + category marks. The panel reads as a magazine title-page opening — heavy, anchored, ceremonial. Treat this as an opener pattern, not a routine slide layout.
+## 形状与处理
 
-## Shapes and Treatment
+### 圆角
+**零。** 每个形状都是严格矩形。胶囊、小片、拼块、面板、条、刊头、页脚线、装饰词全是方角。
 
-### Border Radius
-**Zero.** Every shape is a strict rectangle. Pills, tags, tiles, panels, bars, mastheads, footlines, ornament words — all square corners.
+### 边框 / 线样式
+- **4px 实线 `{colors.ink}`**：通用结构线。分节分隔、列表行边、拼块内部线。
+- **5px 实线 `{colors.ink}`**：封面装饰略重的线。
+- **4px 实线 `currentColor`**：用于拼块内线应跟随拼块文字色的场合（例如纸拼块的内部线是 `{colors.ink}`，墨拼块的内部线是 `{colors.bg}`）。
 
-### Border / Rule Style
-- **4px solid `{colors.ink}`** — universal structural rule. Section separators, list-row borders, tile internal rules.
-- **5px solid `{colors.ink}`** — the cover ornament's slightly heavier rule.
-- **4px solid `currentColor`** — used inside tiles where the rule should match the tile's text color (e.g., a paper tile's internal rule is `{colors.ink}`; an ink tile's internal rule is `{colors.bg}`).
+线从不用虚线、从不用点线、从不上墨 / currentColor 模式以外的颜色。
 
-Rules are never dashed, never dotted, never colored beyond the ink / currentColor pattern.
+### 装饰元素类型
 
-### Decorative Element Types
+**双线装饰**（`{components.ornament-double-rule}`）：系统签名。一个居中的衬线词，两侧各由两条叠起的 4px 横线夹住（间隔 3px）。用于封面（"The [word] of [word]" 框定）、陈述页（围住小连接词），以及任何排印瞬间需要戏剧括号的地方。可经 `:root[data-ornament]` 配成单线或无线。
 
-**Double-Rule Ornament** (`{components.ornament-double-rule}`) — The system's signature. A centered serif word framed by two stacked 4px horizontal rules on each side (3px between them). Used on the cover ("The [word] of [word]" framing), on statement slides (around a small connector word), and anywhere a typographic moment needs theatrical bracketing. Configurable to single-rule or no-rule via `:root[data-ornament]`.
+**竖向侧括号**（`{components.ornament-vertical}`）：较小的行内变体，一个小衬线介词左侧一对叠起的 4px 线、右侧一对对应的线。用于句中而非居中跨度。
 
-**Vertical Side-Bracket** (`{components.ornament-vertical}`) — A smaller inline variant: a pair of stacked 4px rules on the left and a matching pair on the right of a small serif preposition. Used inline within a sentence rather than as a centered span.
+**刊头 / 页脚线**（`{components.masthead}`、`{components.footline}`）：封面与收尾页顶/底绝对定位的 flex 行。两条 Manrope 大写串分列两侧（例如出版物名 + 日期、分节 + 页码）。确立杂志页身份。
 
-**Masthead / Footline** (`{components.masthead}`, `{components.footline}`) — Absolutely positioned flex rows at top/bottom of cover and closing slides. Two Manrope uppercase strings on opposite sides (e.g., publication name + date; section + page number). Establishes the magazine-page identity.
+**反色拼块**（`{components.inverse-tile}`）：实 `{colors.ink}` 矩形，装 `{colors.bg}` 文字。用作图表卡片容器、kpi 拼块、流程步骤、侧面板。无 border-radius、无阴影。
 
-**Inverse Tile** (`{components.inverse-tile}`) — A solid `{colors.ink}` rectangle holding `{colors.bg}` text. Used as a chart-card container, a kpi tile, a process step, a side panel. No border-radius, no shadow.
+**纸拼块**（`{components.paper-tile}`）：交替变体，实 `{colors.paper}` 配 `{colors.ink}` 文字。用于在一排反色拼块里轮转打破单调（例如四步流程流交替墨 → 纸 → 墨 → 纸）。
 
-**Paper Tile** (`{components.paper-tile}`) — The alt variant: solid `{colors.paper}` with `{colors.ink}` text. Used in rotation across a row of inverse tiles to break monotony (e.g., a four-step process flow alternates ink → paper → ink → paper).
+**标记胶囊**（`{components.mark-pill}`）：小的墨压翡翠胶囊，作分节开场底部空白里的类别标记或分节小片。严格矩形。
 
-**Mark Pill** (`{components.mark-pill}`) — A small ink-on-bg pill used as a category mark or section tag in the bottom margin of a section opener. Strict rectangle.
+**小片胶囊**（`{components.tag-pill}`）：略小的胶囊变体，用于图表侧与 kpi 拼块内标记结论或统计类型。
 
-**Tag Pill** (`{components.tag-pill}`) — Slightly smaller pill variant used inside chart sides and kpi tiles to mark a takeaway or stat type.
+**Delta 胶囊**（`{components.delta-pill}`）：翡翠压墨（或在纸拼块内反成墨压翡翠）的芯片，显示方向变化指示（例如 "↑ 12% YoY"）。位于 kpi 拼块角上。
 
-**Delta Pill** (`{components.delta-pill}`) — A bg-on-ink (or inverted ink-on-bg when inside a paper tile) chip showing a directional change indicator (e.g., "↑ 12% YoY"). Lives at the corner of a kpi tile.
+**议程行**（`{components.agenda-row}`）：三列网格行，上下由 4px 墨线分隔。左列衬线序数、中列衬线名称、右列 Manrope 类型标签。叠起的议程行构成系统的目录模式。
 
-**Agenda Row** (`{components.agenda-row}`) — A three-column grid row separated above and below by 4px ink rules. Holds a serif ordinal in the left column, a serif name in the middle, and a Manrope kind label in the right. Stacked agenda rows form the system's table-of-contents pattern.
+**图表卡片**（`{components.chart-card}`）：海军反色面板，装翡翠 + 纸条的条形图。Y 轴标签 Bodoni，x 轴标签 Manrope。网格线 2px、22% 不透明度翡翠压海军。面板读起来像杂志数据跨页。
 
-**Chart Card** (`{components.chart-card}`) — A navy inverse panel holding a bar chart on emerald + paper bars. Y-axis labels in Bodoni; x-axis labels in Manrope. Grid lines are 2px at 22% opacity emerald-on-navy. The panel reads as a magazine data-spread.
+**装饰数字面板**（`{components.ornament-numeral-panel}`）：满出血反色半页，装单个 460px 的 Bodoni 数字。顶栏 / 页脚线串坐在角落。只作分节开场装置。
 
-**Ornament Numeral Panel** (`{components.ornament-numeral-panel}`) — A full-bleed inverse half-slide holding a single Bodoni numeral at 460px. Topbar / footline strings sit in the corners. Used as a section-opener device only.
+## 该做与不该做
 
-## Do's and Don'ts
+### 该做
+- 每个 Bodoni 展示标题都跑字重 900、负字距（-0.01em 到 -0.03em）、紧行高（0.9–0.95）。这个组合就是系统的声部。
+- 每个 Manrope 标签 / 眉题 / 小片 / 图注 / 页脚线都大写、至少 0.05em 字距。句首大写的 Manrope 会丢掉编辑语域。
+- 把默认幻灯片背景设成 `{colors.bg}`（翡翠）。只有分节开场与收尾瞬间才取 `{colors.ink}` 作整页表面。
+- 每个分节分隔、列表边、拼块分隔线都用 4px 实线 `{colors.ink}` 线。4px 粗细是系统的结构节奏。
+- 排印瞬间需要戏剧框定时取双线装饰，尤其围住两个展示标题之间的小连接词（"of"、"in"、"for"）。
+- 反色拼块（`{colors.ink}` 底配 `{colors.bg}` 文字）作默认抬升元素。在一排里轮入纸拼块打破全反色填充。
+- 展示字放得极开，英雄、分节开场、陈述瞬间 130–460px。系统奖励尺度。
+- 把墨压翡翠与翡翠压墨配对作颜色翻转。没有明确语义理由，别引入第三种颜色翻转（纸压墨、墨压纸）。
+- 每个形状保持严格矩形。零半径承诺与双线装饰并列，是系统签名。
 
-### Do
-- Run every Bodoni display headline at weight 900 with negative letter-spacing (-0.01em to -0.03em) and tight line-height (0.9–0.95). The combination is the system's voice.
-- Run every Manrope label / eyebrow / tag / caption / footline in uppercase with at least 0.05em letter-spacing. Manrope in sentence case loses the editorial register.
-- Default slide background to `{colors.bg}` (emerald). Reach for `{colors.ink}` as a full slide surface only for section openers and closing moments.
-- Use 4px solid `{colors.ink}` rules for every section separator, list border, tile divider. The 4px weight is the system's structural rhythm.
-- Reach for the double-rule ornament when a typographic moment needs theatrical framing — especially around small connector words ("of", "in", "for") between two display headlines.
-- Use inverse tiles (`{colors.ink}` bg with `{colors.bg}` text) as the default elevated element. Rotate in paper tiles to break a row of all-inverse fills.
-- Scale display type aggressively — 130–460px for hero, section-opener, and statement moments. The system rewards scale.
-- Pair ink-on-bg with bg-on-ink for color flips. Do not introduce a third color flip (paper-on-ink, ink-on-paper) without a clear semantic reason.
-- Keep every shape a strict rectangle. The no-radius commitment is the system's signature alongside the double-rule ornament.
+### 不该做
+- 不要给任何元素加 box-shadow、text-shadow、渐变或模糊。系统只有平的印刷墨。
+- 不要引入 Bodoni Moda 与 Manrope 之外的第三款字体。Google Fonts 请求里其余衬线字族（Playfair、DM Serif、Rozha、Yeseva）加载了但不属于已发布声部，加入它们会击碎 Bodoni 承诺。
+- 不要把 Bodoni 跑在字重 500 或更轻。系统认准 900（默认）、800（装饰词、拼块标题）、700（仅小介词）。
+- 不要把 Manrope 渲染成句首大写或无字距。Manrope 始终是大写外壳。
+- 不要引入第四色系。翡翠 / 海军 / 纸三元组就是整个配色。
+- 不要给任何元素用 border-radius。零半径是系统签名。
+- 不要用 1px 或 2px 结构线。4px 粗细是结构默认，2px 只留给微妙的图表网格线。
+- 不要把 460px 数字放在翡翠画布上而没有墨面板锚定。巨型数字活在反色海军面板上。
+- 不要用六个小元素塞满一页。一个展示标题 + 3–4 张辅助拼块是节奏，更多元素需要更小尺度，会破掉编辑语域。
+- 不要省掉封面与收尾页的刊头 / 页脚线。正是外壳让它们读作杂志扉页。
 
-### Don't
-- Don't add box-shadow, text-shadow, gradient, or blur to any element. The system is flat printed-ink only.
-- Don't introduce a third typeface beyond Bodoni Moda and Manrope. The other serif families in the Google Fonts request (Playfair, DM Serif, Rozha, Yeseva) are loaded but not part of the published voice — adding them shatters the Bodoni commitment.
-- Don't run Bodoni at weight 500 or lighter. The system commits to 900 (default), 800 (ornament words, tile titles), and 700 (small prepositions only).
-- Don't render Manrope in sentence case or without letter-spacing. Manrope is always uppercase chrome.
-- Don't introduce a fourth chromatic family. The emerald / navy / paper triad is the entire palette.
-- Don't use border-radius on any element. Zero radius is the system's signature.
-- Don't use 1px or 2px structural rules. The 4px weight is the structural default; 2px is reserved for subtle chart grid lines.
-- Don't place a 460px numeral on the emerald canvas without an ink panel anchor. Jumbo numerals live on inverse navy panels.
-- Don't crowd a slide with six small elements. One display headline + 3–4 supporting tiles is the rhythm; more elements need a smaller scale and break the editorial register.
-- Don't omit the masthead / footline on cover and closing slides. The chrome is what makes them read as magazine title pages.
+## 响应式行为
 
-## Responsive Behavior
+这是一套**固定 1920×1080 演示系统**，经 `deck-stage.js` 渲染。画布不是 CSS 意义上的响应式，没有媒体查询、没有断点、没有流式尺寸。每处尺寸都是 1920×1080 下的固定像素。
 
-This is a **fixed 1920×1080 presentation system** rendered through `deck-stage.js`. The canvas is not responsive in the CSS sense — there are no media queries, no breakpoints, no fluid sizing. Every measurement is in fixed pixels at 1920×1080.
+### 缩放行为
+`deck-stage.js` 包裹每个 `<section class="slide">`，把 1920×1080 画布等比缩放适配浏览器视口，按需留黑边。文字、内边距、间隙、线粗细全是固定像素，随画布等比缩放。
 
-### Scaling Behavior
-`deck-stage.js` wraps each `<section class="slide">` and scales the 1920×1080 canvas uniformly to fit the browser viewport, letterboxing as needed. Type, padding, gaps, and rule weights are all fixed pixels and scale proportionally with the canvas.
+### 放映行为
+导航委托给 `deck-stage.js`。每个 `<section class="slide">` 是一帧，运行时处理过渡。
 
-### Presenter Behavior
-Navigation is delegated to `deck-stage.js`. Each `<section class="slide">` is one frame; the runtime handles transitions.
+### 打印 / 导出
+1920×1080 画布内的固定像素尺寸能干净地以 16:9 导出 PDF。Bodoni Moda 在打印分辨率下渲染良好，因为厚展示字重即便放到很大物理尺寸也压得住页面。
 
-### Print / Export
-Fixed-pixel measurements inside a 1920×1080 canvas export cleanly to PDF at 16:9. Bodoni Moda renders well at print resolution because the heavy display weight carries the page even at large physical sizes.
+### 装饰变体开关
+`:root[data-ornament]` 属性控制全局装饰风格：`"double"`（默认，两条叠起线）、`"single"`（一条居中线）、`"none"`（无线，词独自漂浮）。这是每套文稿的呈现层决策，不是逐页决策。
 
-### Ornament Variant Switch
-The `:root[data-ornament]` attribute controls a global ornament style: `"double"` (default, two stacked rules), `"single"` (one rule centered), or `"none"` (no rule, word floats alone). This is a presentation-level decision per deck, not per slide.
+## CJK 与国际化内容
 
-## CJK & International Content
+### 推荐中文搭配
 
-### Recommended Chinese Pairing
-
-| Role | Chinese Face | Weight | Why |
+| 角色 | 中文字面 | 字重 | 理由 |
 |---|---|---|---|
-| Display headline (92–460px) | 霞鹜文楷 LXGW WenKai (with Noto Serif SC fallback at 900) | 400 / 900 | LXGW WenKai's hand-lettered warmth is the closest Chinese analog to Bodoni Moda's theatrical-playbill voice; Noto Serif SC at weight 900 carries the structural mass at jumbo sizes |
-| Stat / KPI figure (144px+) | 思源宋体 Noto Serif SC | 900 | Mincho weight 900 provides the printed-ink mass Bodoni Moda achieves at 900 |
-| Body paragraph (24–28px) | 思源宋体 Noto Serif SC | 400 | Mincho body voice for warm magazine-spread reading |
-| Eyebrow / label / tag (24–28px) | 思源黑体 Noto Sans SC | 700–800 | Replaces Manrope for chrome-layer Chinese; geometric humanist quality |
-| Tile mark / pill / caption | 思源黑体 Noto Sans SC | 700 | Maintains the uppercase-tracked chrome feel for inverse pills and tags |
+| 展示标题（92–460px） | 霞鹜文楷 LXGW WenKai（思源宋体 Noto Serif SC 900 回退） | 400 / 900 | LXGW WenKai 的手写暖意是最接近 Bodoni Moda 戏剧演出单声部的中文类比，思源宋体字重 900 在巨型尺寸承载结构分量 |
+| 统计 / KPI 数字（144px+） | 思源宋体 Noto Serif SC | 900 | 明朝体字重 900 提供 Bodoni Moda 在 900 达到的印刷墨分量 |
+| 正文段落（24–28px） | 思源宋体 Noto Serif SC | 400 | 温暖杂志跨页阅读的明朝正文声部 |
+| 眉题 / 标签 / 小片（24–28px） | 思源黑体 Noto Sans SC | 700–800 | 替换 Manrope 作外壳层中文，几何人文质感 |
+| 拼块标记 / 胶囊 / 图注 | 思源黑体 Noto Sans SC | 700 | 为反色胶囊与小片维持大写宽字距外壳感 |
 
-### Mixed-Content Strategy
+### 混排策略
 
-Use **Strategy C** — keep Bodoni Moda as the Latin display face and let CJK glyphs fall through to LXGW WenKai (display) or Noto Serif SC (body). The Bodoni Moda commitment at weight 900 is the entire brand identity of Emerald Editorial; replacing it with a CJK family would break the fashion-magazine / 19th-century playbill register that defines the deck. Stack:
+用**策略 C**：保留 Bodoni Moda 作拉丁展示字面，让 CJK 字形回退到 LXGW WenKai（展示）或 Noto Serif SC（正文）。Bodoni Moda 字重 900 的承诺是 Emerald Editorial 的整个品牌身份，整体换成 CJK 字族会破掉定义整套文稿的时尚杂志 / 19 世纪演出单语域。栈：
 
 ```css
 /* Bodoni Moda roles (every display moment) */
@@ -549,11 +552,11 @@ font-family: 'Bodoni Moda', 'LXGW WenKai TC', 'Noto Serif SC', Georgia, serif;
 font-family: 'Manrope', 'Noto Sans SC', system-ui, sans-serif;
 ```
 
-The per-glyph fallback strategy lets Latin words render in Bodoni 900 (with the theatrical compression that gives the system its voice) and Chinese characters render in LXGW WenKai or Noto Serif SC. Baseline mismatch at jumbo sizes (200–460px) is the biggest watchpoint — Bodoni Moda at -0.03em tracking sits visually denser than LXGW WenKai, so a mixed-script numeral panel like `第 3 期` may show wobble. For section-opener panels with jumbo numerals, prefer all-numeric (Bodoni) or all-Chinese (LXGW WenKai) lines.
+逐字形回退策略让拉丁词渲染成 Bodoni 900（带着给系统声部的戏剧压缩），汉字渲染成 LXGW WenKai 或 Noto Serif SC。巨型尺寸（200–460px）的基线错位是最大留意点，Bodoni Moda 用 -0.03em 字距视觉上比 LXGW WenKai 更密，于是像 `第 3 期` 这样的混排数字面板可能晃动。带巨型数字的分节开场面板，优先用全数字（Bodoni）或全中文（LXGW WenKai）行。
 
-### Loading
+### 加载
 
-Add to the existing Google Fonts `<link>` (or as a second link tag):
+在既有 Google Fonts `<link>` 里追加（或作为第二条 link 标签）：
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -561,53 +564,53 @@ Add to the existing Google Fonts `<link>` (or as a second link tag):
 <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@500;700;800&display=swap" rel="stylesheet">
 ```
 
-LXGW WenKai TC is the version on Google Fonts (ships both traditional and simplified glyphs).
+LXGW WenKai TC 是 Google Fonts 上的版本（同时带繁体和简体字形）。
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-These adjustments apply to **every CJK block** in this system, regardless of size or role:
+以下调整适用于本系统**每一个 CJK 块**，无论尺寸或角色：
 
-- **Loosen line-height by 0.05–0.08.** CJK glyphs are full-width squares with more visual weight than Latin letterforms; line-heights tuned for Latin (0.9–0.95 on display, 1.45–1.5 on body) read as cramped in Chinese. Bump display to 1.0–1.1 and body to 1.55–1.65.
-- **Remove negative letter-spacing on CJK headlines.** Bodoni Moda display uses -0.01em to -0.03em tracking, which collides Chinese glyphs into each other. For CJK runs, set `letter-spacing: 0` — or a tiny positive `0.02em` if the headline feels visually packed.
-- **Never `text-transform: uppercase` on CJK text.** Chinese has no case; the CSS property does nothing on Han glyphs but will silently break any mixed-script line where the Manrope portion was meant to be capitalized. (This matters here — every Manrope label, eyebrow, tag, caption uses `text-transform: uppercase`.)
-- **Use Chinese full-width punctuation** (`，。：；！？「」『』（）`) inside Chinese sentences, not the Latin equivalents (`,.:;!?""''()`). Mixing punctuation systems within one sentence reads as a typesetting error.
-- **No period (。) at the end of CJK headlines.** Chinese headlines follow the same rule as Latin — title-style lines drop terminal punctuation. Body paragraphs keep their 。
-- **Apply Pangu spacing (盘古之白) at the boundary between CJK and Latin runs.** A space (or 0.25em margin) belongs between a Chinese character and an adjacent Latin word or digit, e.g. `2026 年 5 月` not `2026年5月`. Either type the spaces manually or use a `pangu.js`-style auto-spacer.
-- **One font per sentence.** Don't switch between LXGW WenKai and Noto Serif SC inside the same sentence — pick the face that matches the size tier (display = LXGW WenKai, body = Noto Serif SC) and commit to it for the whole run.
+- **行高放宽 0.05–0.08。** CJK 字形是全宽方块，视觉分量比拉丁字形重，为拉丁调的行高（展示 0.9–0.95、正文 1.45–1.5）在中文里读起来局促。展示放到 1.0–1.1，正文放到 1.55–1.65。
+- **去掉 CJK 标题的负字距。** Bodoni Moda 展示用 -0.01em 到 -0.03em 字距，会撞在一起。CJK 段设 `letter-spacing: 0`，标题看着挤时可用微小的正 `0.02em`。
+- **绝不对 CJK 文字用 `text-transform: uppercase`。** 中文没有大小写，CSS 属性对汉字无效，却会悄悄破坏混排行里本该大写的 Manrope 部分。（这里尤其要紧，每个 Manrope 标签、眉题、小片、图注都用 `text-transform: uppercase`。）
+- **中文句子里用中文全角标点**（`，。：；！？「」『』（）`），不用拉丁对应物（`,.:;!?""''()`）。同一句里混用标点系统读起来是排印错误。
+- **CJK 标题末尾不加句号（。）。** 中文标题与拉丁遵循同一规则，标题式行去掉末尾标点。正文段落保留 。
+- **在 CJK 与拉丁串交界处套用盘古之白。** 汉字与相邻拉丁词或数字之间应有一个空格（或 0.25em 外边距），例如 `2026 年 5 月` 而非 `2026年5月`。要么手打空格，要么用 `pangu.js` 式自动加空格器。
+- **一句一款字体。** 不要在同一句里切换 LXGW WenKai 与 Noto Serif SC，挑与尺寸档匹配的字面（展示 = LXGW WenKai，正文 = Noto Serif SC），整段从一而终。
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-Emerald Editorial's whole voice is "fashion masthead / 19th-century theatrical playbill" — Bodoni Moda weight 900 at extreme scale with the double-rule ornament bracketing centered words. The Chinese equivalent of that theatrical heaviness is **LXGW WenKai at large display sizes** (its brush-warmth replicates Bodoni's hand-set character) with **Noto Serif SC at weight 900 for jumbo numerals** (where pure mass matters more than warmth). Avoid Noto Sans SC for display — the geometric grotesque flattens the playbill voice into "modern corporate."
+Emerald Editorial 的整个声部是"时尚刊头 / 19 世纪戏剧演出单"，Bodoni Moda 字重 900 以极端尺度呈现，双线装饰夹住居中词。这种戏剧厚重感的中文对应是：大展示尺寸用 **LXGW WenKai**（笔意暖意复刻 Bodoni 的手工排性格），巨型数字用**思源宋体字重 900**（纯分量比暖意更要紧）。展示别用思源黑体，几何怪诞体会把演出单声部压平成"现代企业"。
 
-The double-rule ornament works in Chinese — bracket a single Chinese word (e.g., 「春」) between the 4px stacked rules and let LXGW WenKai's warmth carry the theatrical bracket. For the "The X of Y" cover convention, Chinese reads naturally as `「X」之「Y」` or `X 与 Y`, with the connector preposition (之 / 与 / 的) replacing the Latin "of" inside the small-prep slot. The connector word should use LXGW WenKai at weight 400 (matching the ornament-word-sm role in Latin).
+双线装饰在中文里成立，把单个汉字（例如「春」）夹在 4px 叠起线之间，让 LXGW WenKai 的暖意撑起戏剧括号。封面的 "The X of Y" 约定，中文自然读作 `「X」之「Y」` 或 `X 与 Y`，小介词槽里用连接介词（之 / 与 / 的）替换拉丁 "of"。连接词用 LXGW WenKai 字重 400（匹配拉丁的 ornament-word-sm 角色）。
 
-Manrope's role as the chrome layer (uppercase + 0.08em–0.18em tracking) translates to **思源黑体 Noto Sans SC weight 700–800 with 0.05em positive tracking** for Chinese. Don't try to fake uppercase — drop the `text-transform: uppercase` rule on CJK runs and let the geometric humanist quality of Noto Sans SC carry the chrome feel through weight and tracking alone.
+Manrope 作为外壳层（大写 + 0.08em–0.18em 字距）在中文里落到**思源黑体 Noto Sans SC 字重 700–800 配 0.05em 正字距**。别假装大写，在 CJK 段去掉 `text-transform: uppercase`，让思源黑体的几何人文质感靠字重和字距独自撑起外壳感。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-The system's commitment to Bodoni Moda weight 900 at 460px (jumbo numerals on inverse navy panels) is the hardest to translate — there is no Chinese face on the Google Fonts CDN that delivers Bodoni 900's optical heaviness at that scale. Noto Serif SC at weight 900 is the closest, but the contrast profile of Han glyphs at 460px reads visually heavier than Bodoni numerals, which can overwhelm the navy panel. For jumbo-numeral section openers in Chinese, consider: (1) using a Chinese numeral character (一二三四五六七八九十) which sits visually lighter than Western digits, or (2) keeping the numeral in Bodoni (Latin) and letting the panel label below it carry the Chinese context. The pure-Chinese jumbo numeral on this system is the riskiest moment and benefits from per-slide manual review.
+系统对 Bodoni Moda 字重 900、460px（反色海军面板上的巨型数字）的承诺最难汉化，Google Fonts CDN 上没有中文字面能在该尺度提供 Bodoni 900 的光学厚重感。思源宋体字重 900 最接近，但汉字在 460px 的对比剖面视觉上比 Bodoni 数字更重，可能压过海军面板。中文巨型数字分节开场可考虑：（1）用中文数字字符（一二三四五六七八九十），视觉上比西方数字轻，或（2）把数字保留为 Bodoni（拉丁），让面板下方的标签承载中文语境。本系统里纯中文巨型数字是最冒险的瞬间，值得逐页手动复核。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new display headline is Bodoni Moda at weight 900 with negative letter-spacing and tight leading. Pick the size from the display ladder (92 / 104 / 120 / 128 / 130 / 184 / 200) — do not invent a new size.
-2. Any new chrome line (label, eyebrow, tag, caption) is Manrope at weight 700 or 800 uppercase with 0.05em–0.18em letter-spacing. Pick the size from the chrome ladder (24 / 26 / 28).
-3. Any new section separator or list-row border is a 4px solid `{colors.ink}` rule. No 1px / 2px / 3px structural rules.
-4. Any new tile uses the inverse-fill pattern (`{colors.ink}` bg with `{colors.bg}` text) or the paper-fill pattern (`{colors.paper}` bg with `{colors.ink}` text). Mix the two in rotation across a row of tiles.
-5. Any new pill / tag / chip is a strict rectangle (no border-radius) in the inverse-fill or bg-fill color combination from `{components.tag-pill}` / `{components.delta-pill}`.
-6. Any new KPI figure is `{typography.kpi-figure}` (144px) with an optional `{typography.kpi-figure-unit}` (60px) suffix. Smaller KPI sizes are not in the system.
-7. Any new ornament moment uses the double-rule treatment by default. Switch to single or none only via the `:root[data-ornament]` global, not per-element.
-8. Any new section-opener uses the half-bleed inverse panel + jumbo numeral pattern. The numeral lives on the navy panel; the right half holds the eyebrow + headline + lede + marks.
-9. Any new color must come from `{colors.bg}` / `{colors.ink}` / `{colors.paper}` (or the reserved bg-2/3 / ink-2/3 variants if tonal nuance is needed). Do not introduce a yellow, red, or third accent.
-10. When the layout feels crowded, increase the display headline size rather than adding more elements. The system rewards bigger type, not more pieces.
+1. 任何新展示标题都是 Bodoni Moda 字重 900 配负字距、紧行距。从展示阶梯里挑尺寸（92 / 104 / 120 / 128 / 130 / 184 / 200），别自创尺寸。
+2. 任何新外壳行（标签、眉题、小片、图注）都是 Manrope 字重 700 或 800 大写、0.05em–0.18em 字距。从外壳阶梯里挑尺寸（24 / 26 / 28）。
+3. 任何新分节分隔或列表行边都是 4px 实线 `{colors.ink}` 线。不要 1px / 2px / 3px 结构线。
+4. 任何新拼块都用反色填充模式（`{colors.ink}` 底配 `{colors.bg}` 文字）或纸填充模式（`{colors.paper}` 底配 `{colors.ink}` 文字）。在一排拼块里轮用两者。
+5. 任何新胶囊 / 小片 / 芯片都是严格矩形（无 border-radius），取 `{components.tag-pill}` / `{components.delta-pill}` 的反色填充或翡翠填充颜色组合。
+6. 任何新 KPI 数字都是 `{typography.kpi-figure}`（144px）配可选 `{typography.kpi-figure-unit}`（60px）后缀。系统里没有更小的 KPI 尺寸。
+7. 任何新装饰瞬间默认用双线处理。只经 `:root[data-ornament]` 全局切到单线或无，不逐元素切。
+8. 任何新分节开场用半出血反色面板 + 巨型数字模式。数字住在海军面板上，右半装眉题 + 标题 + 导语 + 标记。
+9. 任何新色都必须来自 `{colors.bg}` / `{colors.ink}` / `{colors.paper}`（需要色调细微差别时可用预留的 bg-2/3 / ink-2/3 变体）。别引入黄、红或第三种强调。
+10. 布局显得挤时放大展示标题，别加更多元素。系统奖励更大的字，不是更多零件。
 
-## Known Gaps
+## 已知缺口
 
-- The Google Fonts request loads Bodoni Moda, Playfair Display, DM Serif Display, Rozha One, Yeseva One, and Manrope. **In practice only Bodoni Moda and Manrope are used.** The other four serif families are dormant — loaded but not referenced in the CSS. They are available as alternate display voices but must be wired in explicitly.
-- The system depends on `deck-stage.js` for canvas scaling and slide navigation. The script is not described in this design.md — treat it as a runtime dependency.
-- The `:root[data-ornament]` switch (`double` / `single` / `none`) is a global presentation setting. It cannot be applied per-slide or per-ornament — switching variants applies deck-wide.
-- The ink-2 / ink-3 and bg-2 / bg-3 color tokens are defined but not actively used in the published CSS. They are reserved for tonal variation but currently dormant.
-- The bar chart uses hand-set bar heights (CSS `%`). There is no data-binding layer — extending the chart requires manually computing percentages.
-- Offline rendering will fall back to system serif (likely Georgia) for Bodoni and system sans (likely SF/Segoe) for Manrope. The Bodoni fallback dramatically flattens the display voice; self-hosting recommended for offline / print reliability.
-- The 92px Bodoni headlines maintain WCAG AA contrast at navy-on-emerald and emerald-on-navy, but smaller text (24–28px Manrope) on the same color pairings approaches the contrast floor. Keep small text in navy-on-emerald (the more contrastful direction) when possible.
-- The masthead and footline strings are hardcoded placeholders in the source (publication name, date, page numbers). They must be edited per-deck.
-- The system has no `@media print` rule and no responsive breakpoints. It is fixed 1920×1080 and relies on `deck-stage.js` for any viewport adaptation.
+- Google Fonts 请求加载 Bodoni Moda、Playfair Display、DM Serif Display、Rozha One、Yeseva One 和 Manrope。**实际只用了 Bodoni Moda 与 Manrope**，其余四款衬线字族休眠，加载了但 CSS 里未引用。它们可作替代展示声部，但必须显式接进去。
+- 系统依赖 `deck-stage.js` 做画布缩放与幻灯片导航。脚本不在本 design.md 描述，视为运行时依赖。
+- `:root[data-ornament]` 开关（`double` / `single` / `none`）是全局呈现设置，不能逐页或逐装饰应用，切变体是全稿生效。
+- ink-2 / ink-3 与 bg-2 / bg-3 颜色 token 已定义但已发布 CSS 里未活跃使用，预留作色调变化，当前休眠。
+- 条形图用手设条高（CSS `%`），没有数据绑定层，扩展图表要手算百分比。
+- 离线渲染会把 Bodoni 回退到系统衬线（多半 Georgia）、Manrope 回退到系统无衬线（多半 SF/Segoe）。Bodoni 回退会大幅压平展示声部，离线 / 打印可靠性建议自托管。
+- 92px Bodoni 标题在海军压翡翠、翡翠压海军下维持 WCAG AA 对比，但同配色对上更小文字（24–28px Manrope）接近对比下限。小字尽量放在海军压翡翠（对比更强的方向）。
+- 刊头与页脚线串是源码里的硬编码占位（出版物名、日期、页码），每套文稿必须改。
+- 系统没有 `@media print` 规则，也没有响应式断点，固定 1920×1080，任何视口适配都依赖 `deck-stage.js`。

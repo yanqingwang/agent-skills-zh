@@ -1,6 +1,10 @@
-# Query Optimization
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/database-optimizer/references/query-optimization.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Execution Plan Analysis
+# 查询优化
+
+## 执行计划分析
 
 ### PostgreSQL EXPLAIN ANALYZE
 
@@ -44,9 +48,9 @@ ORDER BY price DESC
 LIMIT 10;
 ```
 
-## Query Rewriting Patterns
+## 查询改写模式
 
-### Eliminate Subqueries
+### 消除子查询
 
 ```sql
 -- BEFORE (Slow - executes subquery for each row)
@@ -70,7 +74,7 @@ INNER JOIN user_averages ua ON o.user_id = ua.user_id
 WHERE o.total > ua.avg_total;
 ```
 
-### Optimize JOIN Order
+### 优化 JOIN 顺序
 
 ```sql
 -- BEFORE (Cartesian product then filter)
@@ -88,7 +92,7 @@ INNER JOIN stock s ON s.product_id = p.id
 WHERE c.active = true;
 ```
 
-### Use EXISTS Instead of IN
+### 用 EXISTS 替代 IN
 
 ```sql
 -- BEFORE (Slow - materializes entire subquery)
@@ -108,7 +112,7 @@ WHERE EXISTS (
 );
 ```
 
-### Optimize DISTINCT
+### 优化 DISTINCT
 
 ```sql
 -- BEFORE (Sorts entire result set)
@@ -127,9 +131,9 @@ WHERE EXISTS (
 );
 ```
 
-## CTE Optimization
+## CTE 优化
 
-### Materialized vs Inline CTEs
+### 物化 CTE 与内联 CTE
 
 ```sql
 -- PostgreSQL: Force materialization for reuse
@@ -154,7 +158,7 @@ WITH recent_users AS NOT MATERIALIZED (
 SELECT * FROM recent_users;
 ```
 
-## Window Function Optimization
+## 窗口函数优化
 
 ```sql
 -- BEFORE (Multiple subqueries)
@@ -174,9 +178,9 @@ SELECT
 FROM orders;
 ```
 
-## Aggregation Strategies
+## 聚合策略
 
-### Partial Aggregation
+### 部分聚合
 
 ```sql
 -- For large cardinality groups, pre-aggregate
@@ -198,7 +202,7 @@ FROM daily_stats
 GROUP BY user_id;
 ```
 
-## Pagination Optimization
+## 分页优化
 
 ```sql
 -- BEFORE (Slow on large offsets)
@@ -218,18 +222,18 @@ CREATE INDEX idx_products_pagination
 ON products (created_at DESC, id DESC);
 ```
 
-## Query Pattern Red Flags
+## 查询模式危险信号
 
-| Pattern | Issue | Solution |
+| 模式 | 问题 | 解决方案 |
 |---------|-------|----------|
-| `SELECT *` | Fetches unnecessary columns | Select only needed columns |
-| `OR` conditions | Prevents index usage | Use UNION or separate queries |
-| `LIKE '%term%'` | Full table scan | Use full-text search or trigram indexes |
-| `WHERE DATE(column) = ...` | Function prevents index usage | Use range: `column >= '2024-01-01' AND column < '2024-01-02'` |
-| Large `IN` lists | Inefficient for >100 items | Use temporary table or JOIN |
-| Implicit type conversion | Prevents index usage | Match column data types exactly |
+| `SELECT *` | 取出多余列 | 只选需要的列 |
+| `OR` 条件 | 无法用索引 | 改用 UNION 或拆分查询 |
+| `LIKE '%term%'` | 全表扫描 | 用全文检索或 trigram 索引 |
+| `WHERE DATE(column) = ...` | 函数导致索引失效 | 改用范围：`column >= '2024-01-01' AND column < '2024-01-02'` |
+| 大型 `IN` 列表 | 超过 100 项时效率低 | 用临时表或 JOIN |
+| 隐式类型转换 | 无法用索引 | 严格匹配列数据类型 |
 
-## Performance Validation
+## 性能验证
 
 ```sql
 -- PostgreSQL: Compare query performance

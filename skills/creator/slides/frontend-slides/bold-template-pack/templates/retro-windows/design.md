@@ -237,287 +237,291 @@ components:
     description: "Custom webkit scrollbar styled as a beveled-raised gray thumb on a flat gray track. Width is fixed 16px to match Win9x default."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/retro-windows/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Retro Windows is a **Windows 95 / 98 desktop-OS aesthetic** rendered as a slide template. Every slide is structured as a `win-window` — a beveled rectangular chrome with a navy-gradient title bar, three button icons in the upper right (`_`, `[]`, `X`), and a body region containing application-style content. The composition is "this slide is software running on a 1995 desktop, and the content is what the software displays." The conceit is total: there are no slide titles in the modern presentation sense, only window titles styled as filenames (`README.DOC`, `DATAVIEW.CSV`, `METRICS.LOG`).
+Retro Windows 是一套**Windows 95 / 98 桌面操作系统美学**，被做成幻灯片模板。每页都构造成一个 `win-window`，带斜角矩形外壳、海军蓝渐变标题栏、右上角三个按钮图标（`_`、`[]`、`X`），以及装着应用式内容的正文区。构图是"这页是 1995 年桌面上跑的软件，内容是软件显示的东西"。这个设定是彻底的：没有现代演示意义上的幻灯片标题，只有按文件名样式排的窗口标题（`README.DOC`、`DATAVIEW.CSV`、`METRICS.LOG`）。
 
-The typeface stack is **MS Sans Serif** (and its modern fallbacks Segoe UI / Tahoma / Verdana) as the system font for nearly all content, with **Press Start 2P** (an 8-bit pixel display face) and **VT323** (a chunky CRT terminal monospace) reserved for nostalgic punctuation — splash-screen headings, navigation hints, marquee text. The body face is small by modern standards (16px default, with most working text at 14px) which is part of the OS-UI aesthetic: software UI of the era ran at fixed pixel sizes, and the deck inherits that constraint.
+字体栈以 **MS Sans Serif**（及其现代回退 Segoe UI / Tahoma / Verdana）作系统字体，承载几乎全部内容，**Press Start 2P**（8 位像素展示字面）与 **VT323**（粗壮 CRT 终端等宽）留给怀旧标点，开场屏标题、导航提示、跑马灯文字。按现代标准正文字面偏小（默认 16px，多数工作文字 14px），这是 OS-UI 美学的一部分：那个年代的软件 UI 跑在固定像素尺寸上，文稿继承了这份约束。
 
-The palette is the **original Win9x system color set**: button-face gray (`{colors.bg-light}` #d4d0c8), highlight white, shadow dark-gray, and a navy/blue gradient (`{colors.blue-navy}` → `{colors.blue-bright}`) reserved for active title bars and primary data fills. A second cluster of "retro accent" hues — DOS green (#008000), brick red (#800000), mustard yellow (#808000), teal cyan (#008080) — is the system's status palette: green for OK / success / live, red for warnings, yellow for "moderate" risk, cyan for tertiary chart data. Charts pull from this status palette plus the navy ladder. There are no modern saturated hues.
+配色是**原版 Win9x 系统色集**：按钮面灰（`{colors.bg-light}` #d4d0c8）、高光白、阴影深灰，以及预留给激活标题栏与主数据填充的海军蓝 / 蓝色渐变（`{colors.blue-navy}` → `{colors.blue-bright}`）。第二簇"复古强调"色相，DOS 绿（#008000）、砖红（#800000）、芥末黄（#808000）、青蓝（#008080），是系统的状态调色板：绿表 OK / 成功 / 在线，红表警告，黄表"中等"风险，青表三级图表数据。图表从这套状态调色板加海军蓝阶梯里取色。没有现代饱和色相。
 
-Depth is achieved through **bevel illusions** — every surface is either raised (highlight on top-left, shadow on bottom-right) or sunken (the inverse). The system uses no blurred drop-shadows; instead, two-tone asymmetric borders plus inset box-shadows create the illusion of bevels. This is the foundational depth grammar: buttons are raised, text inputs are sunken, group-boxes are sunken with a notch-mounted title, the active button-press state inverts the bevel.
+纵深靠**斜角错觉**达成，每个表面要么凸起（左上高光、右下阴影），要么凹陷（反过来）。系统不用模糊投影，而是用双色非对称边框加内嵌 box-shadow 造出斜角错觉。这是地基性的纵深语法：按钮凸起、文本输入凹陷、分组框凹陷且带一个嵌在缺口上的标题、按钮按下激活态把斜角反过来。
 
-**Density philosophy: high.** Win9x application UIs were dense — every pixel served a purpose, group-boxes were packed with controls, status bars carried multiple readouts, dialogs were tightly composed. The deck aesthetic depends on that density. A slide with one centered headline and lots of empty space reads as broken or unfinished. The correct density is the window body packed with stacked panels, group-boxes, tables, charts, button strips, and status footers — every slide should feel like an application screen with multiple regions doing concurrent work. The CRT scanline overlay reinforces this: the texture only reads when there is dense content underneath it.
+**密度取向：高。** Win9x 应用 UI 很密，每个像素都有用，分组框塞满控件，状态栏带多个读数，对话框排得紧。文稿美学就靠这份密度。一个居中标题加大片空白的页读作坏了或没做完。对的密度是窗口正文里塞满叠放的面板、分组框、表格、图表、按钮条、状态页脚，每页都该像一个应用屏幕，多个区域同时干活。CRT 扫描线叠层强化这一点：纹理只有底下有密集内容时才读得出来。
 
-**Key Characteristics:**
-- Every slide is a `{components.win-window}` — beveled chrome with navy-gradient title bar and three system buttons (`_`, `[]`, `X`).
-- A fixed 3px-period CRT scanline overlay (`{components.crt-overlay}`) sits above all content at 3% opacity.
-- Bevel-based depth: raised (`{components.panel-raised}`, `{components.btn-retro}`) and sunken (`{components.panel-sunken}`, `{components.group-box}`) — no blurred shadows.
-- The font stack is MS Sans Serif / Segoe UI / Tahoma fallback, with Press Start 2P and VT323 as nostalgic accents.
-- Status colors (green / red / yellow / cyan) carry semantic meaning: green = OK, red = warning, yellow = moderate, cyan = tertiary data.
-- Navy `{colors.blue-navy}` is the primary data color — progress bars, chart bars, key headlines, active nav dots.
-- Lists use a navy `>` chevron prefix; checkboxes use a literal `x` character; tree views use `📁` / `📄` emoji glyphs.
-- Window title text reads as filenames in uppercase with extensions (`AGENDA.TXT`, `METRICS.LOG`, `EXPLORER.EXE`).
+**关键特征：**
+- 每页都是一个 `{components.win-window}`，带斜角外壳、海军蓝渐变标题栏、三个系统按钮（`_`、`[]`、`X`）。
+- 固定 3px 周期的 CRT 扫描线叠层（`{components.crt-overlay}`）以 3% 不透明度盖在全部内容之上。
+- 基于斜角的纵深：凸起（`{components.panel-raised}`、`{components.btn-retro}`）与凹陷（`{components.panel-sunken}`、`{components.group-box}`），无模糊阴影。
+- 字体栈是 MS Sans Serif / Segoe UI / Tahoma 回退，Press Start 2P 与 VT323 作怀旧点缀。
+- 状态色（绿 / 红 / 黄 / 青）带语义：绿 = OK，红 = 警告，黄 = 中等，青 = 三级数据。
+- 海军蓝 `{colors.blue-navy}` 是主数据色，进度条、图表条、关键标题、激活导航点。
+- 列表用海军蓝 `>` 尖括号前缀，复选框用字面量 `x` 字符，树视图用 `📁` / `📄` emoji 字形。
+- 窗口标题文字读作带扩展名的全大写文件名（`AGENDA.TXT`、`METRICS.LOG`、`EXPLORER.EXE`）。
 
-## Colors
+## 颜色
 
-### Palette
-- **Button Face Light** (`{colors.bg-light}` — #d4d0c8): The base chrome color for windows, panels, group boxes, buttons. The Win9x "3D Objects" system color. Slightly warm gray. The default fill for any non-content region.
-- **Background Gray** (`{colors.bg-gray}` — #c0c0c0): Slightly darker gray. Used for table headers, scrollbar tracks, nav-dot inactive fills. The "Gray Background" system color.
-- **Background Dark** (`{colors.bg-dark}` — #808080): Dark gray for desktop fills outside windows and for inactive title bar starts. The "Inactive Title Bar" color.
-- **White** (`{colors.white}` — #ffffff): The content fill — used inside sunken panels, text inputs, table cells, progress bar wells, and as the title-bar text color. White signals "this is content, not chrome."
-- **Black** (`{colors.black}` — #000000): The deepest shadow color in bevel borders and the strongest text color. Also used as button border for raised-bevel right/bottom edges.
-- **Text Dark** (`{colors.text-dark}` — #222222): The default body text color. Slightly softer than pure black so body type doesn't compete with the bevel-dark shadow.
-- **Text Gray** (`{colors.text-gray}` — #555555): A muted gray for secondary text, captions, and status hints.
-- **Navy** (`{colors.blue-navy}` — #000080): The primary brand color — title bar starts, chart bars, progress fills, headline text, active nav dots, retro-list chevron markers. The system's "primary" color.
-- **Blue Bright** (`{colors.blue-bright}` — #0000a0): Title bar gradient end. Slightly brighter and bluer than navy. Used as the second chart-bar variant.
-- **Blue Light** (`{colors.blue-light}` — #1084d0): A lighter blue used as a tertiary chart-bar variant.
-- **Green Retro** (`{colors.green-retro}` — #008000): DOS green. Reserved for OK status, success messages, growth percentages, "READY" / "LIVE" badges, "On Track" labels.
-- **Red Retro** (`{colors.red-retro}` — #800000): Brick red. Reserved for error/warning text and the brick-red status family.
-- **Yellow Retro** (`{colors.yellow-retro}` — #808000): Mustard yellow. Reserved for "moderate" risk labels and warning chart segments.
-- **Cyan Retro** (`{colors.cyan-retro}` — #008080): Teal cyan. Reserved for tertiary chart segments and secondary status accents.
+### 调色板
+- **按钮面浅灰**（`{colors.bg-light}` — #d4d0c8）：窗口、面板、分组框、按钮的基础外壳色。Win9x 的"3D 对象"系统色。略暖的灰。任何非内容区域的默认填充。
+- **背景灰**（`{colors.bg-gray}` — #c0c0c0）：略深的灰。用于表头、滚动条轨道、导航点非激活填充。即"灰色背景"系统色。
+- **背景深灰**（`{colors.bg-dark}` — #808080）：深灰，用于窗口之外的桌面填充与非激活标题栏起点。即"非激活标题栏"色。
+- **白**（`{colors.white}` — #ffffff）：内容填充，用于凹陷面板内、文本输入、表格单元、进度条井，以及标题栏文字色。白标示"这是内容，不是外壳"。
+- **黑**（`{colors.black}` — #000000）：斜角边框里最深的阴影色，也是最强的文字色。也用作凸起斜角右 / 下边缘的按钮边框。
+- **文字深**（`{colors.text-dark}` — #222222）：默认正文色。比纯黑略柔，好让正文不与斜角暗阴影抢。
+- **文字灰**（`{colors.text-gray}` — #555555）：柔化灰，用于次级文字、图注、状态提示。
+- **海军蓝**（`{colors.blue-navy}` — #000080）：主品牌色，标题栏起点、图表条、进度填充、标题文字、激活导航点、复古列表尖括号标记。系统的"主"色。
+- **亮蓝**（`{colors.blue-bright}` — #0000a0）：标题栏渐变终点。比海军蓝略亮、略蓝。用作图表条第二变体。
+- **浅蓝**（`{colors.blue-light}` — #1084d0）：更浅的蓝，用作图表条第三变体。
+- **复古绿**（`{colors.green-retro}` — #008000）：DOS 绿。预留给 OK 状态、成功消息、增长百分比、`READY` / `LIVE` 徽章、`On Track` 标签。
+- **复古红**（`{colors.red-retro}` — #800000）：砖红。预留给错误 / 警告文字与砖红状态族。
+- **复古黄**（`{colors.yellow-retro}` — #808000）：芥末黄。预留给"中等"风险标签与警告图表分段。
+- **复古青**（`{colors.cyan-retro}` — #008080）：青蓝。预留给三级图表分段与次级状态点缀。
 
-### Defaults
-- **Default surface background**: `{colors.bg-dark}` for the desktop region behind a window, `{colors.bg-light}` for the window body.
-- **Default headline / primary text color**: `{colors.blue-navy}`. Headlines in this system are navy, not black — that is the dashboard / application-title voice.
-- **Default body text color**: `{colors.text-dark}` (#222222), not pure black.
-- **Default secondary / caption text color**: `{colors.text-gray}` (#555555).
-- **Default chart primary color**: `{colors.blue-navy}`. Secondary bars use `{colors.blue-bright}` and `{colors.blue-light}` first; categorical-segment charts then pull `{colors.green-retro}`, `{colors.cyan-retro}`, `{colors.yellow-retro}`.
-- **Default progress-bar fill color**: `{colors.blue-navy}` (solid, no gradient).
-- **Default status-OK color**: `{colors.green-retro}` — used on `READY`, `LIVE`, `Approved`, growth percentages, and any "things are good" badge.
-- **Default status-warning color**: `{colors.red-retro}` or `{colors.yellow-retro}` — red for hard errors, yellow for moderate concerns.
-- **Default title-bar background**: navy → blue-bright horizontal gradient on active windows; gray (`{colors.bg-dark}` → `#a0a0a0`) on inactive windows when the slide stacks multiple windows.
-- **Default text color inside a navy title bar**: `{colors.white}` — always white-on-navy in title bars.
-- **Default text color inside a sunken white panel**: `{colors.text-dark}` — dark-on-white for content text.
+### 默认值
+- **默认表面背景**：窗口之后的桌面区域用 `{colors.bg-dark}`，窗口正文用 `{colors.bg-light}`。
+- **默认标题 / 主文字色**：`{colors.blue-navy}`。本系统里标题是海军蓝而非黑，那是仪表盘 / 应用标题声部。
+- **默认正文色**：`{colors.text-dark}`（#222222），不是纯黑。
+- **默认次级 / 图注文字色**：`{colors.text-gray}`（#555555）。
+- **默认图表主色**：`{colors.blue-navy}`。次级条先取 `{colors.blue-bright}` 与 `{colors.blue-light}`，分类型分段图再取 `{colors.green-retro}`、`{colors.cyan-retro}`、`{colors.yellow-retro}`。
+- **默认进度条填充色**：`{colors.blue-navy}`（实色，无渐变）。
+- **默认状态 OK 色**：`{colors.green-retro}`，用于 `READY`、`LIVE`、`Approved`、增长百分比，以及任何"一切良好"徽章。
+- **默认状态警告色**：`{colors.red-retro}` 或 `{colors.yellow-retro}`，红给硬错误，黄给中等隐忧。
+- **默认标题栏背景**：激活窗口用海军蓝 → 亮蓝水平渐变；页里叠放多个窗口时，非激活窗口用灰（`{colors.bg-dark}` → `#a0a0a0`）。
+- **海军蓝标题栏内默认文字色**：`{colors.white}`，标题栏里始终白压海军蓝。
+- **凹陷白面板内默认文字色**：`{colors.text-dark}`，内容文字深压白。
 
-The accent palette (green / red / yellow / cyan) has fixed semantic meanings — do not use green for arbitrary decoration, do not use red for non-warning text. The accents are status signals, not paint.
+强调调色板（绿 / 红 / 黄 / 青）有固定语义，别把绿拿去随意装饰，别把红用在非警告文字上。强调是状态信号，不是颜料。
 
-## Typography
+## 排印
 
-### Font Family
-The system has three faces, each with a distinct role:
+### 字族
+系统有三款字面，各有分明角色：
 
-- **MS Sans Serif / Segoe UI / Tahoma / Geneva / Verdana stack** (system body): The default for nearly all text. The fallback chain works on any OS — macOS lands on Geneva or Verdana, Windows lands on Segoe UI or MS Sans Serif, Linux lands on a sans-serif fallback. The aesthetic is "what software UI looked like in 1995," and the system font stack is critical to that — never substitute a custom display sans.
-- **Press Start 2P** (pixel display): An 8-bit pixel display face used sparingly. Reserved for splash-screen titles, the closing slide's send-off message, and any oversized nostalgic title moment. Always rendered in `{colors.blue-navy}`, always center-aligned. Use it once or twice per deck, not on every slide.
-- **VT323** (CRT terminal monospace): A chunky monospace face that imitates a CRT terminal. Reserved for the bottom-edge navigation hint (`<-- ARROW KEYS to navigate -->`) and any "terminal output" body region. Optional — the deck functions without it.
+- **MS Sans Serif / Segoe UI / Tahoma / Geneva / Verdana 栈**（系统正文）：几乎全部文字的默认。回退链在任何 OS 上都成立，macOS 落到 Geneva 或 Verdana，Windows 落到 Segoe UI 或 MS Sans Serif，Linux 落到某个无衬线回退。美学是"1995 年软件 UI 长什么样"，系统字体栈对这点是关键，绝不要换成定制展示无衬线。
+- **Press Start 2P**（像素展示）：8 位像素展示字面，省着用。预留给开场屏标题、收尾页的送别语，以及任何超大怀旧标题瞬间。始终以 `{colors.blue-navy}` 渲染、始终居中。整套文稿用一两次，不是每页都用。
+- **VT323**（CRT 终端等宽）：粗壮等宽字面，模仿 CRT 终端。预留给底边导航提示（`<-- ARROW KEYS to navigate -->`）与任何"终端输出"正文区。可选，没有它文稿照样成立。
 
-Italic is not used. Underline is not used (interactive links can be underlined but no decorative underlining). Emphasis is achieved by weight (400 → 700) and by switching color (default → navy or default → green/red).
+斜体不用。下划线不用（交互链接可带下划线，但没有装饰性下划线）。强调靠字重（400 → 700）与换色（默认 → 海军蓝，或默认 → 绿 / 红）达成。
 
-### Type Scale
+### 排印比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.text-xl}` | 32px | MS Sans Serif | 700 | Primary slide headline inside a window body |
-| `{typography.metric-xl}` | 30px | MS Sans Serif | 700 | Hero metric value in a KPI tile |
-| `{typography.text-lg}` | 22px | MS Sans Serif | 700 | Section heading / subheading inside a window body |
-| `{typography.text-md}` | 18px | MS Sans Serif | 400 | Standard body paragraph |
-| `{typography.body}` | 16px | MS Sans Serif | 400 | Default working body |
-| `{typography.text-sm}` | 14px | MS Sans Serif | 400 | Captions, list items, button labels, table cells |
-| `{typography.text-xs}` | 12px | MS Sans Serif | 400 | Fine print, status hints, slide counter |
-| `{typography.title-bar}` | 14px | MS Sans Serif | 700 | Window title bar filename — always uppercase |
-| `{typography.group-box-title}` | 13px | MS Sans Serif | 700 | Notch-mounted group-box title label |
-| `{typography.pixel-display}` | 20–24px | Press Start 2P | 400 | Nostalgic splash-screen or closing display title |
-| `{typography.terminal}` | 22px | VT323 | 400 | Terminal-style body or marquee text |
-| `{typography.nav-hint}` | 16px | VT323 | 400 | Bottom-edge keyboard hint text |
+| `{typography.text-xl}` | 32px | MS Sans Serif | 700 | 窗口正文里的主幻灯片标题 |
+| `{typography.metric-xl}` | 30px | MS Sans Serif | 700 | KPI 块里的英雄指标值 |
+| `{typography.text-lg}` | 22px | MS Sans Serif | 700 | 窗口正文里的分节标题 / 副标题 |
+| `{typography.text-md}` | 18px | MS Sans Serif | 400 | 标准正文段落 |
+| `{typography.body}` | 16px | MS Sans Serif | 400 | 默认工作正文 |
+| `{typography.text-sm}` | 14px | MS Sans Serif | 400 | 图注、列表项、按钮标签、表格单元 |
+| `{typography.text-xs}` | 12px | MS Sans Serif | 400 | 细则、状态提示、页码 |
+| `{typography.title-bar}` | 14px | MS Sans Serif | 700 | 窗口标题栏文件名，始终全大写 |
+| `{typography.group-box-title}` | 13px | MS Sans Serif | 700 | 缺口嵌装的分组框标题标签 |
+| `{typography.pixel-display}` | 20–24px | Press Start 2P | 400 | 怀旧开场屏或收尾展示标题 |
+| `{typography.terminal}` | 22px | VT323 | 400 | 终端式正文或跑马灯文字 |
+| `{typography.nav-hint}` | 16px | VT323 | 400 | 底边键盘提示文字 |
 
-### Defaults
-- **Default size for a primary slide headline (inside window body)**: `{typography.text-lg}` (22px) in `{colors.blue-navy}` weight 700 — the application-title voice. For an oversized hero headline use `{typography.text-xl}` (32px).
-- **Default size for a body paragraph**: `{typography.text-md}` (18px) for prose paragraphs; `{typography.text-sm}` (14px) for working text and list rows.
-- **Default size for a window title bar filename**: `{typography.title-bar}` (14px weight 700), always uppercase, always in `{colors.white}`.
-- **Default size for a metric or hero number**: `{typography.metric-xl}` (30px weight 700) in `{colors.blue-navy}`.
-- **Default size for a section heading inside a window**: `{typography.text-lg}` (22px weight 700) in `{colors.blue-navy}`.
-- **Default size for any caption, fine print, or status hint**: `{typography.text-xs}` (12px) in `{colors.text-gray}`.
-- **Default weight for any headline or label that should command attention**: 700.
-- **Default weight for body text**: 400.
+### 默认值
+- **窗口正文内主幻灯片标题默认尺寸**：`{colors.blue-navy}` 字重 700 的 `{typography.text-lg}`（22px），应用标题声部。超大英雄标题用 `{typography.text-xl}`（32px）。
+- **正文段落默认尺寸**：散文段用 `{typography.text-md}`（18px），工作文字与列表行用 `{typography.text-sm}`（14px）。
+- **窗口标题栏文件名默认尺寸**：`{typography.title-bar}`（14px 字重 700），始终全大写、始终 `{colors.white}`。
+- **指标或英雄数字默认尺寸**：`{colors.blue-navy}` 的 `{typography.metric-xl}`（30px 字重 700）。
+- **窗口内分节标题默认尺寸**：`{colors.blue-navy}` 的 `{typography.text-lg}`（22px 字重 700）。
+- **任何图注、细则、状态提示默认尺寸**：`{colors.text-gray}` 的 `{typography.text-xs}`（12px）。
+- **任何该引人注意的标题或标签默认字重**：700。
+- **正文默认字重**：400。
 
-When a slide carries multiple stacked windows or panels, the primary slide message goes inside the first window's body at `{typography.text-lg}`-weight-700-navy. Do not reach for a larger size unless it's an explicit hero / splash moment.
+一页叠放多个窗口或面板时，页面主信息放在第一个窗口正文里，用 `{typography.text-lg}` 字重 700 海军蓝。除非是明确的英雄 / 开场瞬间，否则别取更大尺寸。
 
-### Signature Treatments
-These treatments are **non-optional whenever the corresponding element type is used**:
+### 招牌处理
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every window title bar text is uppercase and styled as a filename** (with extension): `PRESENTATION.EXE`, `README.DOC`, `METRICS.LOG`, `AGENDA.TXT`, `DATAVIEW.CSV`, `FEATURES.INI`, `EXPLORER.EXE`, `TIMELINE.PRJ`. The filename convention is part of the aesthetic — never use modern title-case window names.
-- **Every title bar carries the three-button cluster** (`_` minimize, `[]` maximize, `X` close) in the top-right. The buttons are decorative, not interactive, but they must always be present.
-- **Every title bar carries a `{components.win-icon}` lockup** on the left — an 18px white-with-black-border square containing a single navy letter that mnemonically identifies the window (P, A, R, D, F, G, M, E, T).
-- **Every window uses the beveled-raised chrome treatment** (white top/left + black bottom/right border + double inset shadow). Removing the bevel breaks the Windows aesthetic entirely.
-- **Every body headline inside a window is `{colors.blue-navy}` weight 700.** Navy is the application-title voice; black headlines read as "wrong era."
-- **Status text uses the assigned status color** with weight 700: green for OK/success/growth, red for errors, yellow for moderate. A green status word at default weight reads as incidental rather than as a label.
-- **Group-box titles sit in a 0–8px-padded notch over the upper border.** The title's background is painted in `{colors.bg-light}` (the parent fill) to mask the border behind it — never let the border run through the title.
+- **每个窗口标题栏文字都全大写、按文件名样式排**（带扩展名）：`PRESENTATION.EXE`、`README.DOC`、`METRICS.LOG`、`AGENDA.TXT`、`DATAVIEW.CSV`、`FEATURES.INI`、`EXPLORER.EXE`、`TIMELINE.PRJ`。文件名惯例是美学的一部分，绝不用现代标题式窗口名。
+- **每个标题栏都带右上角三按钮簇**（`_` 最小化、`[]` 最大化、`X` 关闭）。按钮是装饰、不可交互，但必须始终存在。
+- **每个标题栏左侧都带一个 `{components.win-icon}` 锁定**：18px 白底黑边方块，内含一个海军蓝单字母，以助记方式标识窗口（P、A、R、D、F、G、M、E、T）。
+- **每个窗口都用凸起斜角外壳处理**（白上 / 左 + 黑下 / 右边框 + 双重内嵌阴影）。去掉斜角会彻底破掉 Windows 美学。
+- **窗口内每个正文标题都是 `{colors.blue-navy}` 字重 700。** 海军蓝是应用标题声部，黑标题读作"年代不对"。
+- **状态文字用指定的状态色配字重 700**：绿给 OK / 成功 / 增长，红给错误，黄给中等。默认字重的绿色状态词读作顺带的，不像标签。
+- **分组框标题坐在上边框之上一个 0–8px 内边距的缺口里。** 标题背景涂成 `{colors.bg-light}`（父级填充）来遮住身后的边框，绝不让边框穿过标题。
 
-### Typography Principles
-The aesthetic depends on **fixed pixel sizes**, not fluid type. The system was designed for the Win9x 96-DPI rendering environment, and the deck preserves that feel by using integer pixel font-sizes (12, 13, 14, 16, 18, 22, 30, 32). Avoid `rem`/`em`/`clamp` for body type — the OS-UI illusion breaks at sub-pixel rendered sizes.
+### 排印原则
+美学依赖**固定像素尺寸**，而非流式文字。系统为 Win9x 96-DPI 渲染环境设计，文稿靠用整数像素字号（12、13、14、16、18、22、30、32）保住那份感觉。正文别用 `rem`/`em`/`clamp`，OS-UI 错觉在亚像素渲染尺寸下会破。
 
-The pixel-font (Press Start 2P) and terminal-font (VT323) are nostalgic accents, not workhorses. Using Press Start 2P for body text becomes illegible quickly; using VT323 for headlines reads as overproduced. Reserve each for one or two moments per deck.
+像素字体（Press Start 2P）与终端字体（VT323）是怀旧点缀，不是主力。Press Start 2P 排正文很快就读不了，VT323 做标题读作用力过猛。每款在整套文稿里各留一两个瞬间。
 
-## Layout
+## 布局
 
-### Canvas System
-The system targets `100vw × 100vh` with each slide positioned `position: fixed; top: 0; left: 0`. Only the `.active` slide is `display: flex`; others are `display: none`. Inside each slide, a single `{components.win-window}` (or a few stacked windows) provides the framing chrome. The window is `max-width: 1200px` and `max-height: calc(100vh - 68px)` so the desktop gray border is always visible around the chrome.
+### 画布系统
+系统以 `100vw × 100vh` 为目标，每页定位 `position: fixed; top: 0; left: 0`。只有 `.active` 页 `display: flex`，其余 `display: none`。每页内部由单个 `{components.win-window}`（或几个叠放窗口）提供画框外壳。窗口 `max-width: 1200px`、`max-height: calc(100vh - 68px)`，好让桌面灰边始终露在外壳四周。
 
-Slide outer padding is `24px 32px 44px 32px` — the extra bottom padding clears the persistent navigation chrome (nav-dots and slide-counter at the viewport's bottom edge).
+页面外内边距 `24px 32px 44px 32px`，多出来的底部内边距给常驻导航外壳（视口底边的导航点与页码）让位。
 
-### Window Anatomy
-Every window has three regions stacked vertically:
-1. **Title bar** (`{components.win-titlebar}`) — fixed 4px-8px padding, navy gradient, contains left icon-lockup + filename and right three-button cluster.
-2. **Body** (`{components.win-body}`) — 20px 24px 24px 24px padding, fills remaining height, contains the slide's content composition.
-3. **Optional status panel** at the body's bottom — a `{components.panel-raised}` or `{components.panel-sunken}` strip carrying meta info (data source, last updated, count, status badge).
+### 窗口解剖
+每个窗口有三个纵向叠放的区域：
+1. **标题栏**（`{components.win-titlebar}`）：固定 4px-8px 内边距、海军蓝渐变，内含左侧图标锁定 + 文件名与右侧三按钮簇。
+2. **正文**（`{components.win-body}`）：20px 24px 24px 24px 内边距，填满剩余高度，装页面内容构图。
+3. **正文底部可选状态面板**：一条 `{components.panel-raised}` 或 `{components.panel-sunken}`，承载元信息（数据来源、最后更新、计数、状态徽章）。
 
-A slide may contain multiple windows side-by-side (typically for timeline quarters or multi-screen comparisons). When multiple windows appear, only one carries the active navy title bar; the others carry the inactive gray gradient.
+一页可并排放多个窗口（典型用于时间轴季度或多屏比较）。出现多个窗口时，只有一个带激活海军蓝标题栏，其余带非激活灰渐变。
 
-### Padding Scale
-| Token | Value | Use |
+### 内边距比例
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.slide-pad}` | 24px 32px 44px 32px | Outer slide padding |
-| `{spacing.win-body-pad}` | 20px 24px 24px 24px | Inside a window body |
-| `{spacing.group-box-pad}` | 20px 18px 16px 18px | Inside a group-box (extra top to clear notched title) |
-| `{spacing.panel-pad}` | 16px | Inside a raised panel |
-| `{spacing.panel-sunken-pad}` | 12px | Inside a sunken white panel |
+| `{spacing.slide-pad}` | 24px 32px 44px 32px | 页面外内边距 |
+| `{spacing.win-body-pad}` | 20px 24px 24px 24px | 窗口正文内部 |
+| `{spacing.group-box-pad}` | 20px 18px 16px 18px | 分组框内部（多留顶部给缺口标题） |
+| `{spacing.panel-pad}` | 16px | 凸起面板内部 |
+| `{spacing.panel-sunken-pad}` | 12px | 凹陷白面板内部 |
 
-### Persistent Chrome
-Three persistent elements live outside the slide composition:
-- **Nav dots** at bottom-center — beveled square indicators, one per slide, with the active one filled navy and carrying a 4px white center square.
-- **Slide counter** at bottom-right — sunken-bevel chip with `N / TOTAL` text in 12px.
-- **Nav hint** at bottom-left — VT323 16px text reading `<-- ARROW KEYS to navigate -->`.
+### 常驻外壳
+三个常驻元素活在页面构图之外：
+- **导航点**：底部居中，斜角方形指示器，每页一个，激活的那个填海军蓝并带一个 4px 白色中心方块。
+- **页码**：右下，凹陷斜角小片，12px 的 `N / TOTAL` 文字。
+- **导航提示**：左下，VT323 16px 文字 `<-- ARROW KEYS to navigate -->`。
 
-The CRT scanline overlay sits above everything at z-index 9999 — every slide, every chrome element, every chart canvas is rendered beneath it.
+CRT 扫描线叠层以 z-index 9999 盖在一切之上，每页、每个外壳元素、每块图表画布都在它下面渲染。
 
-## Depth and Elevation
+## 纵深与层级
 
-### Bevel Illusion (Primary Technique)
-The system uses **two-tone asymmetric borders** plus **inset box-shadows** to simulate the Windows 95 beveled UI. There are two states:
+### 斜角错觉（主手法）
+系统用**双色非对称边框**加**内嵌 box-shadow** 模拟 Windows 95 斜角 UI。有两种状态：
 
-- **Raised**: 2px solid white on top + left, 2px solid black on right + bottom, plus `inset 1px 1px 0 white, inset -1px -1px 0 #404040`. Reads as a button or panel sitting up off the surface. Used on windows, raised panels, buttons, nav dots.
-- **Sunken**: 2px solid `#404040` on top + left, 2px solid white on right + bottom. Reads as a recessed input field or content well. Used on group-boxes, sunken panels, text inputs, progress-bar tracks, checkbox boxes, scrollbar tracks.
+- **凸起**：上 + 左 2px 实白，右 + 下 2px 实黑，再加 `inset 1px 1px 0 white, inset -1px -1px 0 #404040`。读作按钮或面板从表面立起。用于窗口、凸起面板、按钮、导航点。
+- **凹陷**：上 + 左 2px 实 `#404040`，右 + 下 2px 实白。读作凹陷的输入框或内容井。用于分组框、凹陷面板、文本输入、进度条轨道、复选框方框、滚动条轨道。
 
-The active button press state inverts the bevel — a button that is "pressed in" swaps the highlight/shadow border directions. Hover states are absent; the OS aesthetic predates universal hover affordances.
+按钮按下激活态把斜角反过来，"按进去"的按钮交换高光 / 阴影边框方向。没有悬停态，OS 美学早于普及的悬停提示。
 
-### No Modern Shadows
-The system uses **no blurred `box-shadow` values**, no `drop-shadow` filters, no rgba shadow tints. Every depth cue comes from the bevel-border technique. Adding a soft modern shadow to a window or button breaks the era immediately.
+### 无现代阴影
+系统用**零模糊 `box-shadow` 值**、零 `drop-shadow` 滤镜、零 rgba 着色阴影。每个纵深线索都来自斜角边框手法。给窗口或按钮加一道柔现代阴影会立刻破掉年代感。
 
-### Color-Block Depth
-Beyond the bevels, **white-vs-gray contrast** provides regional depth: white panels visually project as "content / data," gray panels recede as "chrome / structure." A slide's hierarchy emerges naturally from where the white wells sit.
+### 色块纵深
+斜角之外，**白对灰的反差**提供区域纵深：白面板在视觉上凸为"内容 / 数据"，灰面板退为"外壳 / 结构"。一页的层级自然从白井落在哪里浮现。
 
-### CRT Scanline Overlay
-The system carries one atmospheric layer: the CRT scanline overlay. A 3px-period horizontal repeating gradient at 3% black opacity sits over every slide. The overlay does not add depth, but it adds **texture** — every surface in the deck reads as "rendered on a 1995 CRT monitor" rather than "rendered on a flat screen." Removing the overlay is permissible but loses a meaningful slice of the aesthetic.
+### CRT 扫描线叠层
+系统带一层氛围：CRT 扫描线叠层。3px 周期的水平重复渐变、3% 黑不透明度盖在每页上。叠层不添纵深，但添**纹理**，文稿里每个表面都读作"渲在 1995 年 CRT 显示器上"，而非"渲在平屏上"。去掉叠层是允许的，但会丢掉美学里实在的一块。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
-The system has **no rounded corners anywhere**. Every box, button, panel, window, table cell, checkbox, nav-dot, progress-bar — strict rectangles. Border-radius is `0` system-wide.
+### 圆角
+系统**任何地方都没有圆角**。每个盒子、按钮、面板、窗口、表格单元、复选框、导航点、进度条，都是严格矩形。border-radius 全系统为 `0`。
 
-### Border Weights and Styles
-- **2px solid** — the universal bevel border weight on windows, panels, buttons, nav-dots. Used in the two-tone asymmetric pattern (white+black or darkgray+white) that creates the bevel illusion.
-- **1px solid** — used for thinner element borders (table cell borders, win-icon outline, hr-retro stacked lines).
-- **`1px inset`** — used on the marquee container border.
+### 边框粗细与样式
+- **2px 实线**：窗口、面板、按钮、导航点上的通用斜角边框粗细。以双色非对称式样（白 + 黑或深灰 + 白）使用，造出斜角错觉。
+- **1px 实线**：用于较细的元素边框（表格单元边框、win-icon 轮廓、hr-retro 叠线）。
+- **`1px inset`**：用于跑马灯容器边框。
 
-Borders are never colored (no navy borders, no green borders); the bevel two-tone pattern (white + black/darkgray) is the only border vocabulary.
+边框绝不上色（无海军蓝边框、无绿边框），斜角双色式样（白 + 黑 / 深灰）是唯一的边框词汇。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Window** (`{components.win-window}`) — The framing primitive. A beveled-raised rectangle with a navy title bar containing icon + filename + three system buttons, and a body region containing the content. Every slide is at least one window.
+**窗口（`{components.win-window}`）**：画框基元。凸起斜角矩形，带一个内含图标 + 文件名 + 三系统按钮的海军蓝标题栏，以及装内容的正文区。每页至少有一个窗口。
 
-**Group box** (`{components.group-box}`) — Sunken-bevel container with a notch-mounted title at the upper-left. The title sits in a 0–8px padded background-painted region that masks the border behind it, mimicking the `<fieldset><legend>` pattern of native HTML forms. Used to cluster related controls or content blocks inside a window.
+**分组框（`{components.group-box}`）**：凹陷斜角容器，左上角带一个缺口嵌装的标题。标题坐在一块 0–8px 内边距、涂了背景的区域里，遮住身后的边框，模仿原生 HTML 表单的 `<fieldset><legend>` 式样。用于把窗口内相关的控件或内容块聚成簇。
 
-**Raised panel** (`{components.panel-raised}`) — Beveled-raised gray panel. Used for tool palettes, button strips, status footers, and elevated content regions.
+**凸起面板（`{components.panel-raised}`）**：凸起斜角灰面板。用于工具面板、按钮条、状态页脚、抬升的内容区域。
 
-**Sunken panel** (`{components.panel-sunken}`) — Beveled-sunken white panel. Used for text inputs, KPI displays, status readouts, and read-only data. White interior is the cue.
+**凹陷面板（`{components.panel-sunken}`）**：凹陷斜角白面板。用于文本输入、KPI 显示、状态读数、只读数据。白内部就是线索。
 
-**Retro button** (`{components.btn-retro}`) — Beveled-raised gray button with 6px × 24px padding. Always carries text-md (14px) MS Sans Serif weight 400. Active state inverts the bevel.
+**复古按钮（`{components.btn-retro}`）**：凸起斜角灰按钮，6px × 24px 内边距。始终带 text-md（14px）MS Sans Serif 字重 400。激活态把斜角反过来。
 
-**Progress bar** (`{components.progress-bar}`) — Sunken white well containing a solid navy fill div. The fill width represents the value; no animation beyond width transition. Always 24px tall (or 16px when embedded inside a feature card).
+**进度条（`{components.progress-bar}`）**：凹陷白井，内含一块实海军蓝填充 div。填充宽度代表数值，除宽度过渡外无动画。始终 24px 高（嵌在特性卡里时 16px）。
 
-**Retro table** (`{components.retro-table}`) — Pixel-flat data table with gray headers, white cells, light-gray border lines, and a barely-different zebra fill on alternate rows. Cell padding is 6px × 10px.
+**复古表格（`{components.retro-table}`）**：像素扁平数据表，灰表头、白单元格、浅灰边线、交替行几乎看不出的斑马填充。单元格内边距 6px × 10px。
 
-**Retro list** (`{components.retro-list}`) — Unstyled list with a navy `>` chevron prefix on each row. The chevron is set via `::before`, never via list-style.
+**复古列表（`{components.retro-list}`）**：无样式列表，每行带一个海军蓝 `>` 尖括号前缀。尖括号经 `::before` 设定，绝不用 list-style。
 
-**Retro check** (`{components.retro-check}`) — A 16px sunken-bevel white square containing a literal lowercase `x` character when checked. The bevel is inverted relative to buttons (black on top/left, white on bottom/right).
+**复古复选（`{components.retro-check}`）**：16px 凹陷斜角白方块，勾选时装一个字面量小写 `x` 字符。斜角相对按钮是反的（上 / 左黑、下 / 右白）。
 
-**Tree view** (`{components.tree-item}`) — Explorer-style hierarchical list. Each row carries an expand marker (+/−), a folder (`📁`) or file (`📄`) emoji glyph, and the label. 24px indentation per nesting level.
+**树视图（`{components.tree-item}`）**：资源管理器式层级列表。每行带一个展开标记（+/−）、一个文件夹（`📁`）或文件（`📄`）emoji 字形，以及标签。每嵌套一层缩进 24px。
 
-**KPI tile (group-box variant)** — A square group-box with a title label (`Revenue`, `Customers`, `Retention`, `NPS Score`), a large 30px navy metric, a green delta line (`▲ +18.3%`), and a 12px gray context line (`vs previous quarter`). Used in 4-up rows for dashboards.
+**KPI 块（分组框变体）**：方形分组框，带一个标题标签（`Revenue`、`Customers`、`Retention`、`NPS Score`）、一个 30px 海军蓝大指标、一行绿色增量（`▲ +18.3%`）、一行 12px 灰色语境文字（`vs previous quarter`）。在仪表盘里四块一排使用。
 
-**Marquee** (`{components.marquee}`) — Sunken white well containing horizontally scrolling text. The animation runs 14s linear infinite; pause-on-hover is not implemented. Used on splash and closing slides.
+**跑马灯（`{components.marquee}`）**：凹陷白井，内含横向滚动文字。动画 14s linear infinite，未实现悬停暂停。用于开场与收尾页。
 
-**Win icon** (`{components.win-icon}`) — 18px square white-on-black-bordered miniature with a single navy letter glyph. Used in the title bar as a lockup mark.
+**Win 图标（`{components.win-icon}`）**：18px 方形，白底黑边微型标，内含一个海军蓝单字母字形。在标题栏里作锁定标记。
 
-**Separator** (vertical or hr-retro) — A beveled rule. Vertical: 2px dark-gray + 1px white-left border, 12px horizontal margin. Horizontal: stacked 1px dark-gray-on-top + 1px white-on-bottom lines, 14px vertical margin.
+**分隔线（竖向或 hr-retro）**：斜角线。竖向：2px 深灰 + 1px 左白边，12px 横向外边距。横向：叠放的 1px 上深灰 + 1px 下白线，14px 纵向外边距。
 
-**Hourglass / sleep glyph** (`⌛` or `💤`) — Used as a single oversized character (40–52px) on splash / closing slides as a nostalgic OS-feel cue.
+**沙漏 / 睡眠字形（`⌛` 或 `💤`）**：作为单个超大字符（40–52px）用在开场 / 收尾页，作怀旧 OS 感线索。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
-- Wrap every slide in a `{components.win-window}` with a navy title bar carrying a filename-style title (e.g., `METRICS.LOG`) and the three-button cluster (`_`, `[]`, `X`).
-- Use the bevel border technique (white top/left + black bottom/right + inset shadows for raised; the inverse for sunken) on every panel, button, and window. This is the system's identity.
-- Set primary headlines in `{colors.blue-navy}` weight 700. Navy is the application-title voice — black headlines read as wrong-era.
-- Pack each slide densely. Multiple group boxes, stacked panels, KPI strips, charts, and status footers should all coexist inside one window body. Empty space reads as broken.
-- Use the status colors semantically: green for OK / live / growth, red for warnings / errors, yellow for moderate concerns, cyan for tertiary data. Each color carries a meaning — do not redecorate with them.
-- Render charts with the navy ladder first (`{colors.blue-navy}`, `{colors.blue-bright}`, `{colors.blue-light}`), then pull from the status palette for categorical-segment differentiation.
-- Use the `>` chevron retro-list pattern for bullet lists and the literal-`x` retro-check for checkboxes. Native browser bullets and form controls break the aesthetic.
-- Apply integer pixel font sizes (12, 13, 14, 16, 18, 22, 30, 32). The fixed-pixel sizing is part of the OS-UI illusion.
-- Keep the CRT scanline overlay (`{components.crt-overlay}`) on every slide. It is the texture that ties the deck to its CRT-monitor metaphor.
-- Style window titles as uppercase filenames with extensions (`PRESENTATION.EXE`, `AGENDA.TXT`). Title-case window names break the conceit.
+### 该做
+- 每页都包进一个 `{components.win-window}`，带海军蓝标题栏、文件名式标题（如 `METRICS.LOG`）与三按钮簇（`_`、`[]`、`X`）。
+- 每个面板、按钮、窗口都用斜角边框手法（凸起用白上 / 左 + 黑下 / 右 + 内嵌阴影，凹陷反过来）。这是系统的身份。
+- 主标题设 `{colors.blue-navy}` 字重 700。海军蓝是应用标题声部，黑标题读作年代不对。
+- 把每页填密。多个分组框、叠放面板、KPI 条、图表、状态页脚都该在一个窗口正文里共存。空白读作坏了。
+- 状态色按语义用：绿给 OK / 在线 / 增长，红给警告 / 错误，黄给中等隐忧，青给三级数据。每个色都带含义，别拿它们重新装修。
+- 图表先用海军蓝阶梯（`{colors.blue-navy}`、`{colors.blue-bright}`、`{colors.blue-light}`）渲染，再从状态调色板取色做分类型分段区分。
+- 项目列表用 `>` 尖括号复古列表式样，复选框用字面量 `x` 复古复选。浏览器原生项目符号与表单控件会破掉美学。
+- 用整数像素字号（12、13、14、16、18、22、30、32）。固定像素定尺寸是 OS-UI 错觉的一部分。
+- 每页保留 CRT 扫描线叠层（`{components.crt-overlay}`）。它是把文稿系在 CRT 显示器隐喻上的纹理。
+- 窗口标题排成带扩展名的全大写文件名（`PRESENTATION.EXE`、`AGENDA.TXT`）。标题式窗口名会破掉设定。
 
-### Don't
-- Don't round any corner. Every shape is a strict rectangle. Border-radius is 0 system-wide except for tiny round details inside chart canvases.
-- Don't use blurred `box-shadow` or `drop-shadow`. All depth is bevel-based.
-- Don't introduce modern brand colors (saturated purples, oranges, magentas). The palette is limited to Win9x system grays, navy, and the four retro accents.
-- Don't use color on borders. Border two-tones are white + black or darkgray + white — never navy borders, never green borders.
-- Don't use `rem`/`em`/`clamp` for body type sizes. Fixed integer pixel sizes preserve the OS-UI illusion.
-- Don't use Press Start 2P or VT323 for body text. They are nostalgic accents — reserved for one or two moments per deck.
-- Don't use modern title-case or sentence-case window titles. Window titles are uppercase filenames with extensions.
-- Don't leave a window without its three-button cluster (`_`, `[]`, `X`). Even decorative, the cluster is part of every window's signature.
-- Don't introduce a hover-state visual change on buttons. The Win9x era predates universal hover; an active-state bevel inversion is the only state change.
-- Don't compose a sparse slide with one centered headline and lots of empty space. The system reads as broken when it does not feel like dense application UI.
+### 不该做
+- 不要给任何角加圆角。每个形状都是严格矩形。除图表画布内极小的圆细节外，border-radius 全系统为 0。
+- 不要用模糊 `box-shadow` 或 `drop-shadow`。纵深全基于斜角。
+- 不要引入现代品牌色（饱和紫、橙、洋红）。调色板限于 Win9x 系统灰、海军蓝与四种复古强调。
+- 不要给边框上色。边框双色是白 + 黑或深灰 + 白，绝不用海军蓝边框、绝不用绿边框。
+- 不要用 `rem`/`em`/`clamp` 定正文尺寸。固定整数像素尺寸保住 OS-UI 错觉。
+- 不要用 Press Start 2P 或 VT323 排正文。它们是怀旧点缀，整套文稿里各留一两个瞬间。
+- 不要用现代标题式或句式窗口标题。窗口标题是带扩展名的全大写文件名。
+- 不要让窗口缺了三按钮簇（`_`、`[]`、`X`）。哪怕是装饰，这簇也是每个窗口署名的一部分。
+- 不要给按钮引入悬停态视觉变化。Win9x 年代早于普及的悬停，激活态斜角反转是唯一的状态变化。
+- 不要排出一个居中标题加大片空白的稀疏页。系统不像密集应用 UI 时就读作坏了。
 
-## Responsive Behavior
+## 响应式行为
 
-The system is **viewport-fluid** but **fixed-pixel**: the window chrome and body sizes flex with the viewport (`max-width: 1200px`, `max-height: calc(100vh - 68px)`), but font-sizes are integer pixels, not clamped. A single media query at `max-width: 900px` reduces slide padding to 15px-20px and collapses 4-column grids to 2-column.
+系统是**视口流式**但**像素固定**：窗口外壳与正文尺寸随视口伸缩（`max-width: 1200px`、`max-height: calc(100vh - 68px)`），但字号是整数像素、不做 clamp。单条 `max-width: 900px` 媒体查询把页面内边距降到 15px-20px、把 4 列网格收成 2 列。
 
-### Scaling Behavior
-- The window grows to fill the viewport up to 1200×(100vh-68px), then stops scaling.
-- All font-sizes stay fixed: a 14px label is 14px on any screen size.
-- The CRT scanline overlay's 3px period is constant regardless of viewport.
+### 缩放行为
+- 窗口长大到填满视口，最多 1200×(100vh-68px)，之后停止缩放。
+- 所有字号保持固定：14px 标签在任何屏幕尺寸下都是 14px。
+- CRT 扫描线叠层的 3px 周期不随视口变化。
 
-### Presenter Behavior
-- Slides advance via `ArrowRight`, `ArrowDown`, or `Space`.
-- Slides reverse via `ArrowLeft` or `ArrowUp`.
-- `Home` jumps to the first slide, `End` to the last.
-- Nav dots at the bottom are clickable.
-- No touch swipe support is implemented by default.
+### 放映行为
+- `ArrowRight`、`ArrowDown`、`Space` 前进。
+- `ArrowLeft`、`ArrowUp` 后退。
+- `Home` 跳到首页，`End` 跳到末页。
+- 底部导航点可点击。
+- 默认未实现触屏滑动支持。
 
-### Print Behavior
-No `@media print` rule is defined. Printing will render the active slide only.
+### 打印行为
+没有定义 `@media print` 规则。打印只会渲染当前激活页。
 
-### Chart Rendering
-Charts use Chart.js loaded from a CDN. Chart colors map directly to system tokens (`{colors.blue-navy}`, `{colors.blue-bright}`, `{colors.blue-light}`, `{colors.green-retro}`, `{colors.cyan-retro}`, `{colors.yellow-retro}`). Axis labels use MS Sans Serif at 11–12px in `{colors.text-dark}`. Gridlines are 1px `{colors.bg-gray}`. Charts are rendered lazily when their slide becomes active.
+### 图表渲染
+图表用从 CDN 加载的 Chart.js。图表色直接映射到系统 token（`{colors.blue-navy}`、`{colors.blue-bright}`、`{colors.blue-light}`、`{colors.green-retro}`、`{colors.cyan-retro}`、`{colors.yellow-retro}`）。坐标轴标签用 11–12px `{colors.text-dark}` 的 MS Sans Serif。网格线是 1px `{colors.bg-gray}`。图表在其所在页变为激活时懒渲染。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin | Chinese | Weight mapping |
+| 角色 | 拉丁 | 中文 | 字重映射 |
 |---|---|---|---|
-| Title-bar / Headlines / Metric / Section heading | MS Sans Serif → Segoe UI (700) | **思源黑体 Noto Sans SC** | 700 |
-| Body / Caption / List / Table cell | MS Sans Serif → Segoe UI (400) | **思源黑体 Noto Sans SC** | 400 |
-| Pixel display (Press Start 2P) — Latin only | Press Start 2P | *(no CJK substitute)* | n/a |
-| Terminal / Nav hint (VT323) — Latin only | VT323 | *(no CJK substitute)* | n/a |
+| 标题栏 / 标题 / 指标 / 分节标题 | MS Sans Serif → Segoe UI（700） | **思源黑体 Noto Sans SC** | 700 |
+| 正文 / 图注 / 列表 / 表格单元 | MS Sans Serif → Segoe UI（400） | **思源黑体 Noto Sans SC** | 400 |
+| 像素展示（Press Start 2P），仅拉丁 | Press Start 2P | *（无 CJK 替代）* | 不适用 |
+| 终端 / 导航提示（VT323），仅拉丁 | VT323 | *（无 CJK 替代）* | 不适用 |
 
-### Mixed-Content Strategy
+### 混排策略
 
-**Strategy A — single CJK family for all Latin-system roles.** Retro Windows is a system-font deck (MS Sans Serif / Segoe UI / Tahoma). Pairing every Latin role with a single CJK family — Noto Sans SC — preserves the "this is software UI" register: a Win9x application would have rendered its Simplified Chinese localization in a single system CJK face (MS YaHei / SimSun), not in a multi-family display + body pairing. The two nostalgic accent fonts (Press Start 2P, VT323) are Latin-only by design; never attempt a pixel-font CJK substitute — there is no acceptable equivalent that maintains the era.
+**策略 A：所有拉丁系统角色用单一 CJK 字族。** Retro Windows 是系统字体文稿（MS Sans Serif / Segoe UI / Tahoma）。给每个拉丁角色配单一 CJK 字族 Noto Sans SC，保住"这是软件 UI"的语域：Win9x 应用的简体中文本地化会用单一系统 CJK 字面（MS YaHei / SimSun）渲染，而不是展示 + 正文多字族搭配。两款怀旧点缀字体（Press Start 2P、VT323）按设计仅拉丁，绝不要尝试像素字体的 CJK 替代，没有能维持年代感的可接受对应。
 
-### Loading
+### 加载
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -525,54 +529,54 @@ Charts use Chart.js loaded from a CDN. Chart colors map directly to system token
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 ```
 
-Then append `'Noto Sans SC'` to the body font stack:
+然后把 `'Noto Sans SC'` 追加到正文字体栈：
 ```css
 font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, Geneva, Verdana, 'Noto Sans SC', sans-serif;
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- Line-height: body 1.75–1.85, display 1.15–1.25
-- Letter-spacing: 0 on CJK
-- Text-transform: no uppercase on CJK
-- Full-width punctuation
-- No period on display headlines
-- Pangu spacing (盘古之白): `使用 Claude` not `使用Claude`
-- One font per sentence
+- 行高：正文 1.75–1.85，展示 1.15–1.25
+- 字距：CJK 设 0
+- 文字变换：CJK 不用 uppercase
+- 全角标点
+- 展示标题不加句号
+- 盘古之白（Pangu spacing）：`使用 Claude` 而非 `使用Claude`
+- 一句一款字体
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-- **Window title bars become a translation puzzle.** The `FILENAME.EXT` convention is Latin-only — `METRICS.LOG` has no idiomatic Chinese equivalent. Options: (1) keep filenames in Latin (`METRICS.LOG`, `AGENDA.TXT`) for the system-UI nostalgia, and let the slide body carry Chinese content; (2) use a Chinese descriptor + Latin extension (`季度指标.LOG`, `议程.TXT`) which reads as a localized application. Option (1) is more authentic to the Win9x era; option (2) is more readable for Chinese audiences.
-- **The 0.5px letter-spacing on `title-bar` typography must drop to 0** when the title bar contains CJK characters.
-- **Status badges (READY, LIVE, OK, WARNING)** translate cleanly to short CJK words (就绪, 在线, 通过, 警告) at weight 700 in the assigned status color — the semantic green/red/yellow/cyan signal carries through.
-- **Group-box notched titles work identically in Chinese** — `客户数据`, `销售指标`. The notch masking depends on background painting, not on glyph metrics.
-- **The CRT scanline overlay is glyph-agnostic** and adds the same nostalgic texture to Chinese type as to Latin.
-- **Charts axis labels and chip text** should drop to Noto Sans SC 400 at 11–12px; the fixed-pixel sizing convention applies equally to CJK.
+- **窗口标题栏成了一道翻译难题。** `FILENAME.EXT` 惯例仅适用于拉丁，`METRICS.LOG` 没有地道的中文对应。可选做法：（1）保留拉丁文件名（`METRICS.LOG`、`AGENDA.TXT`）求系统 UI 怀旧，让页面正文承载中文内容；（2）用中文描述词 + 拉丁扩展名（`季度指标.LOG`、`议程.TXT`），读作本地化应用。做法（1）对 Win9x 年代更本真，做法（2）对中文读者更易读。
+- **标题栏含 CJK 字符时，`title-bar` 排印的 0.5px 字距必须降到 0**。
+- **状态徽章（READY、LIVE、OK、WARNING）** 干净地译成短中文词（就绪、在线、通过、警告），字重 700、用指定状态色，绿 / 红 / 黄 / 青的语义信号能带过来。
+- **分组框缺口标题在中文里同样成立**，`客户数据`、`销售指标`。缺口遮罩依赖背景涂绘，不依赖字形度量。
+- **CRT 扫描线叠层与字形无关**，给中文文字添的怀旧纹理与给拉丁的一样。
+- **图表坐标轴标签与小片文字** 应降到 11–12px 的 Noto Sans SC 400，固定像素定尺寸的惯例对 CJK 同样适用。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-The two nostalgic accent fonts (Press Start 2P, VT323) are fundamentally Latin-only — they exist as 8-bit pixel and CRT terminal callbacks to an era when CJK rendering required specialized bitmap fonts that have no modern web equivalent. If a deck needs a pixel display moment in Chinese, the only honest option is to use Noto Sans SC at large size and let go of the pixel-font character; do not substitute another "pixel-style" Chinese font (which will read as wrong-era and broken). Reserve Press Start 2P / VT323 for Latin-only moments (a splash screen with `LOADING...`, a footer with `ARROW KEYS to navigate`), and let CJK slides use Noto Sans SC throughout.
+两款怀旧点缀字体（Press Start 2P、VT323）根本上仅适用于拉丁，它们作为 8 位像素与 CRT 终端的年代回指，存在于 CJK 渲染还需专用点阵字体、而现代网页没有对应物的年代。文稿若需要中文像素展示瞬间，唯一诚实的做法是用大尺寸 Noto Sans SC 并放弃像素字体性格；不要换另一款"像素风"中文字体（那会读作年代不对且坏掉）。把 Press Start 2P / VT323 留给纯拉丁瞬间（带 `LOADING...` 的开场屏、写 `ARROW KEYS to navigate` 的页脚），让 CJK 页通体用 Noto Sans SC。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new slide is wrapped in a `{components.win-window}` with a navy title bar containing a `{components.win-icon}` (single-letter glyph), an uppercase filename-style title (with extension like `.EXE`, `.DOC`, `.LOG`, `.TXT`, `.CSV`, `.INI`, `.PRJ`, `.BMP`), and the three-button cluster (`_`, `[]`, `X`).
-2. Any new content region inside a window uses a `{components.group-box}` (sunken with notched title) for clustered related items, a `{components.panel-raised}` for tool strips and dashboards, or a `{components.panel-sunken}` for white-well content displays.
-3. Any new primary headline uses `{typography.text-lg}` (22px) in `{colors.blue-navy}` weight 700. Hero / splash headlines use `{typography.text-xl}` (32px) or Press Start 2P (20–24px).
-4. Any new metric tile uses the `{components.group-box}` + `{typography.metric-xl}` navy-700 + green delta + 12px gray context pattern.
-5. Any new chart uses Chart.js with the navy ladder for primary data and the retro status colors for categorical segments. Always wrap the canvas in a `{components.panel-raised}`.
-6. Any new bullet list uses the `{components.retro-list}` chevron pattern; any checkbox uses the `{components.retro-check}` pattern; any hierarchical tree uses the `{components.tree-item}` folder/file emoji pattern.
-7. Any new button is a `{components.btn-retro}` — beveled gray, 6px × 24px padding, 14px MS Sans Serif. Buttons appear in clusters (OK / Cancel / Help, or Export / Print).
-8. Any new status badge uses `{colors.green-retro}` weight 700 for OK, `{colors.red-retro}` for error, `{colors.yellow-retro}` for moderate. Always weight 700; never decorative.
-9. Status footers (panel-raised strips at the bottom of a window body) carry three or four data points separated by `•` bullets — data source, last updated, count, classification.
-10. Every slide must be visually dense — multiple panels stacked, a status footer at the bottom, button strips or nav-cluster decoration where space allows. Spareness breaks the aesthetic.
+1. 任何新页都包进一个 `{components.win-window}`，带海军蓝标题栏，内含一个 `{components.win-icon}`（单字母字形）、一个带扩展名的全大写文件名式标题（`.EXE`、`.DOC`、`.LOG`、`.TXT`、`.CSV`、`.INI`、`.PRJ`、`.BMP` 之类）与三按钮簇（`_`、`[]`、`X`）。
+2. 窗口内任何新内容区域都用 `{components.group-box}`（凹陷带缺口标题）聚相关项、用 `{components.panel-raised}` 做工具条与仪表盘、或用 `{components.panel-sunken}` 做白井内容展示。
+3. 任何新主标题都用 `{colors.blue-navy}` 字重 700 的 `{typography.text-lg}`（22px）。英雄 / 开场标题用 `{typography.text-xl}`（32px）或 Press Start 2P（20–24px）。
+4. 任何新指标块都用 `{components.group-box}` + `{typography.metric-xl}` 海军蓝 700 + 绿色增量 + 12px 灰色语境的式样。
+5. 任何新图表都用 Chart.js，主数据取海军蓝阶梯、分类型分段取复古状态色。画布始终包在 `{components.panel-raised}` 里。
+6. 任何新项目列表都用 `{components.retro-list}` 尖括号式样，任何复选框用 `{components.retro-check}` 式样，任何层级树用 `{components.tree-item}` 文件夹 / 文件 emoji 式样。
+7. 任何新按钮都是 `{components.btn-retro}`，斜角灰、6px × 24px 内边距、14px MS Sans Serif。按钮成簇出现（OK / Cancel / Help，或 Export / Print）。
+8. 任何新状态徽章都用 OK 的 `{colors.green-retro}` 字重 700、错误的 `{colors.red-retro}`、中等的 `{colors.yellow-retro}`。始终字重 700，绝不装饰。
+9. 状态页脚（窗口正文底部的凸起面板条）承载三四个数据点，以 `•` 圆点分隔，数据来源、最后更新、计数、密级。
+10. 每页都必须视觉密集，多块面板叠放、底部一条状态页脚、空间允许处放按钮条或导航簇装饰。稀疏会破掉美学。
 
-## Known Gaps
+## 已知缺口
 
-- The system loads two Google Fonts (Press Start 2P, VT323) from a CDN. These are optional nostalgic accents; the body font stack (MS Sans Serif, Segoe UI, Tahoma, Geneva, Verdana, sans-serif) renders correctly without any external dependency, and the deck remains aesthetically coherent if both Google fonts fail to load.
-- Chart.js (4.4.7) loaded from a CDN provides the chart engine. Charts will not render if Chart.js fails to load. The slide will still render but with empty canvas regions.
-- The CRT scanline overlay is a stylistic choice that does not match presenter-projector output well — on actual projection screens, the overlay can read as image noise rather than as nostalgic texture. Consider toggling the overlay off when projecting.
-- The Win9x bevel illusion depends on rendering at the right zoom level — bevels are 1–2px wide and can appear as solid borders or disappear entirely at extreme zoom levels or on very high-DPI displays without browser sub-pixel rendering.
-- Hover states are absent by design (the aesthetic predates universal hover). Modern audiences expecting hover affordances may find the deck unresponsive-feeling on mouse interaction.
-- The retro-list `>` chevron, retro-check `x`, and tree-view emoji glyphs are character-based, not vector — they will render with whatever default font metrics the runtime provides for `>`, `x`, `📁`, `📄`.
-- The marquee animation runs continuously and cannot be paused. Some accessibility audits will flag this as a `prefers-reduced-motion` violation.
-- The `lib-cabinets` is set in `bgImage`-derived inline SVG noise / hatching patterns inside CSS — these are inlined data URIs and the rendered look will vary slightly across browsers.
+- 系统从 CDN 加载两款 Google Fonts（Press Start 2P、VT323）。它们是可选的怀旧点缀，正文字体栈（MS Sans Serif、Segoe UI、Tahoma、Geneva、Verdana、sans-serif）无任何外部依赖即可正确渲染，即便两款 Google 字体都加载失败，文稿美学仍连贯。
+- 从 CDN 加载的 Chart.js（4.4.7）提供图表引擎。Chart.js 加载失败时图表不渲染，页仍会渲染，但画布区为空。
+- CRT 扫描线叠层是风格选择，与放映投影输出并不相称，在真实投影幕上叠层可能读成图像噪声而非怀旧纹理。投影时可考虑关掉叠层。
+- Win9x 斜角错觉依赖在合适缩放级别下渲染，斜角 1–2px 宽，在极端缩放级别或没有浏览器亚像素渲染的超高 DPI 屏上，可能显成实边框或彻底消失。
+- 悬停态按设计缺席（美学早于普及的悬停）。期待悬停提示的现代观众，鼠标交互时可能觉得文稿没反应。
+- 复古列表 `>` 尖括号、复古复选 `x`、树视图 emoji 字形是基于字符的、非矢量，它们会按运行时为 `>`、`x`、`📁`、`📄` 提供的默认字体度量渲染。
+- 跑马灯动画持续运行、无法暂停。某些无障碍审计会把它标为违反 `prefers-reduced-motion`。
+- `lib-cabinets` 以 `bgImage` 派生的行内 SVG 噪声 / 斜线图案设在 CSS 里，这些是内联 data URI，渲染观感会随浏览器略有差别。

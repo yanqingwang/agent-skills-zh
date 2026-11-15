@@ -1,8 +1,12 @@
-# Interactive API Documentation
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/code-documenter/references/interactive-api-docs.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## OpenAPI 3.1 Advanced Features
+# 交互式 API 文档
 
-### Reusable Components
+## OpenAPI 3.1 进阶特性
+
+### 可复用组件
 
 ```yaml
 openapi: 3.1.0
@@ -129,9 +133,9 @@ paths:
                           $ref: '#/components/schemas/User'
 ```
 
-## Interactive Documentation Portals
+## 交互式文档门户
 
-### Swagger UI Customization
+### Swagger UI 定制
 
 ```javascript
 // Custom Swagger UI
@@ -157,7 +161,7 @@ const options = {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 ```
 
-### Redoc (Modern Alternative)
+### Redoc（现代替代方案）
 
 ```html
 <!DOCTYPE html>
@@ -206,9 +210,9 @@ function App() {
 }
 ```
 
-## Multi-Protocol Documentation
+## 多协议文档
 
-### GraphQL Schema Documentation
+### GraphQL Schema 文档
 
 ```graphql
 """
@@ -284,7 +288,7 @@ input CreateUserInput {
 }
 ```
 
-**GraphQL Playground:**
+**GraphQL Playground：**
 ```javascript
 const { ApolloServer } = require('apollo-server');
 
@@ -301,7 +305,7 @@ const server = new ApolloServer({
 });
 ```
 
-### WebSocket Protocol Documentation
+### WebSocket 协议文档
 
 ```yaml
 # AsyncAPI 2.0
@@ -357,7 +361,7 @@ components:
             type: string
 ```
 
-### gRPC Documentation
+### gRPC 文档
 
 ```protobuf
 syntax = "proto3";
@@ -399,9 +403,9 @@ message User {
 }
 ```
 
-## SDK Documentation Strategies
+## SDK 文档策略
 
-### Multi-Language Examples
+### 多语言示例
 
 ```markdown
 # Create User
@@ -458,7 +462,7 @@ puts user.id
 ```
 ```
 
-### SDK Reference Template
+### SDK 参考模板
 
 ```markdown
 # Users SDK
@@ -519,13 +523,13 @@ try {
 ```
 ```
 
-## Quick Reference
+## 速查表
 
-| Tool | Protocol | Features |
+| 工具 | 协议 | 特性 |
 |------|----------|----------|
-| Swagger UI | REST | Try-it-out, auth |
-| Redoc | REST | Clean, responsive |
-| Stoplight | REST | Modern, mock server |
-| GraphQL Playground | GraphQL | Explorer, history |
-| AsyncAPI Studio | WebSocket | Visual editor |
-| grpcui | gRPC | Interactive console |
+| Swagger UI | REST | 在线试用、认证 |
+| Redoc | REST | 界面清爽、响应式 |
+| Stoplight | REST | 现代、mock 服务器 |
+| GraphQL Playground | GraphQL | 浏览器、历史记录 |
+| AsyncAPI Studio | WebSocket | 可视化编辑器 |
+| grpcui | gRPC | 交互式控制台 |

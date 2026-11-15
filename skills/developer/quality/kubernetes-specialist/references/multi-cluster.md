@@ -1,10 +1,14 @@
-# Multi-Cluster Management
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/multi-cluster.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+# 多集群管理
 
 ---
 
 ## Cluster API
 
-### Installation
+### 安装
 
 ```bash
 # Install clusterctl CLI
@@ -21,7 +25,7 @@ clusterctl init \
   --bootstrap kubeadm
 ```
 
-### Cluster Definition
+### 集群定义
 
 ```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -64,7 +68,7 @@ spec:
         isPublic: true
 ```
 
-### Control Plane
+### 控制平面
 
 ```yaml
 apiVersion: controlplane.cluster.x-k8s.io/v1beta1
@@ -98,7 +102,7 @@ spec:
           cloud-provider: aws
 ```
 
-### Machine Deployment (Worker Nodes)
+### Machine Deployment（工作节点）
 
 ```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -142,9 +146,9 @@ spec:
         type: gp3
 ```
 
-## Cross-Cluster Networking
+## 跨集群网络
 
-### Submariner Installation
+### Submariner 安装
 
 ```bash
 # Install subctl
@@ -161,7 +165,7 @@ subctl join --kubeconfig kubeconfig-cluster2 broker-info.subm --clusterid cluste
 subctl show all
 ```
 
-### ServiceExport/ServiceImport
+### ServiceExport / ServiceImport
 
 ```yaml
 # Export service from cluster1
@@ -206,9 +210,9 @@ spec:
     - port: 80
 ```
 
-## Multi-Cluster DNS
+## 多集群 DNS
 
-### ExternalDNS with Route53
+### ExternalDNS 配合 Route53
 
 ```yaml
 apiVersion: apps/v1
@@ -232,7 +236,7 @@ spec:
             - --domain-filter=example.com
 ```
 
-### CoreDNS Federation
+### CoreDNS 联邦
 
 ```yaml
 # Forward queries for other clusters
@@ -264,7 +268,7 @@ data:
     }
 ```
 
-## Workload Distribution
+## 工作负载分发
 
 ### Kubernetes Federation v2
 
@@ -308,7 +312,7 @@ spec:
           value: 3
 ```
 
-### ArgoCD Multi-Cluster
+### ArgoCD 多集群
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -340,9 +344,9 @@ spec:
           selfHeal: true
 ```
 
-## Disaster Recovery
+## 灾难恢复
 
-### Velero Backup Configuration
+### Velero 备份配置
 
 ```bash
 # Install Velero with S3
@@ -389,7 +393,7 @@ spec:
   preserveNodePorts: true
 ```
 
-### Active-Passive Failover
+### 主备切换
 
 ```yaml
 # Primary cluster ingress
@@ -429,9 +433,9 @@ spec:
       # ... same backend config
 ```
 
-## Centralized Management Tools
+## 集中管理工具
 
-### Rancher Setup
+### Rancher 搭建
 
 ```bash
 # Install Rancher with Helm
@@ -443,7 +447,7 @@ helm install rancher rancher-stable/rancher \
   --set bootstrapPassword=<rancher-bootstrap-password>
 ```
 
-### Kubeconfig Management
+### Kubeconfig 管理
 
 ```yaml
 # Merge multiple kubeconfigs
@@ -493,17 +497,17 @@ kubectl --context=us-east get pods
 kubectx us-west
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Use Cluster API** for declarative cluster lifecycle management
-2. **Implement service mesh** for secure cross-cluster communication
-3. **Set up DNS-based routing** for global service discovery
-4. **Configure automated backups** with Velero across clusters
-5. **Use GitOps** (ArgoCD/Flux) for consistent multi-cluster deployments
-6. **Implement network policies** consistently across clusters
-7. **Centralize observability** with cross-cluster metrics and logs
-8. **Test failover procedures** regularly
-9. **Use namespaces consistently** across clusters
-10. **Document cluster topology** and dependencies
-11. **Implement RBAC** with cross-cluster access patterns
-12. **Monitor cluster health** from centralized dashboard
+1. **用 Cluster API**：声明式管理集群生命周期
+2. **实施 service mesh**：保障跨集群通信安全
+3. **设置基于 DNS 的路由**：实现全局服务发现
+4. **配置自动备份**：用 Velero 覆盖各集群
+5. **用 GitOps**（ArgoCD/Flux）：多集群部署保持一致
+6. **统一实施 NetworkPolicy**：跨集群一致
+7. **集中可观测性**：汇总跨集群指标与日志
+8. **定期演练切换流程**
+9. **跨集群统一使用命名空间**
+10. **记录集群拓扑**与依赖
+11. **实施 RBAC**：覆盖跨集群访问模式
+12. **从集中仪表盘监控集群健康**

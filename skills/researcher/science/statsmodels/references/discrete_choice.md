@@ -1,29 +1,33 @@
-# Discrete Choice Models Reference
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/researcher/science/statsmodels/references/discrete_choice.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document provides comprehensive guidance on discrete choice models in statsmodels, including binary, multinomial, count, and ordinal models.
+# 离散选择模型参考
 
-## Overview
+本文件全面介绍 statsmodels 中的离散选择模型，涵盖二值、多项、计数与有序模型。
 
-Discrete choice models handle outcomes that are:
-- **Binary**: 0/1, success/failure
-- **Multinomial**: Multiple unordered categories
-- **Ordinal**: Ordered categories
-- **Count**: Non-negative integers
+## 概览
 
-These models use likelihood-based estimation. Independence and sampling assumptions are model-specific: conditional models condition out group intercepts, while clustered sampling needs an appropriate covariance/design. Check finite estimates, design rank, convergence and separation; convergence alone does not establish identifiability.
+离散选择模型处理以下几类结果变量：
+- **二值**：0/1、成功/失败
+- **多项**：多个无序类别
+- **有序**：有序类别
+- **计数**：非负整数
 
-## Binary Models
+这类模型采用基于似然的估计。独立性与抽样假设依模型而异：条件模型把组截距条件掉，而整群抽样需要相应的协方差/设计。要检查估计值有限、设计矩阵满秩、收敛与分离；仅收敛并不能保证可识别。
 
-### Logit (Logistic Regression)
+## 二值模型
 
-Uses logistic distribution for binary outcomes.
+### Logit（逻辑回归）
 
-**When to use:**
-- Binary classification (yes/no, success/failure)
-- Probability estimation for binary outcomes
-- Interpretable odds ratios
+对二值结果使用 logistic 分布。
 
-**Model**: P(Y=1|X) = 1 / (1 + exp(-Xβ))
+**适用场景：**
+- 二值分类（是/否、成功/失败）
+- 二值结果的概率估计
+- 可解释的 odds ratio
+
+**模型**：P(Y=1|X) = 1 / (1 + exp(-Xβ))
 
 ```python
 import statsmodels.api as sm
@@ -39,7 +43,7 @@ results = model.fit()
 print(results.summary())
 ```
 
-**Interpretation:**
+**解读：**
 ```python
 import numpy as np
 
@@ -58,7 +62,7 @@ print("Odds ratio 95% CI:")
 print(odds_ci)
 ```
 
-**Marginal effects:**
+**边际效应：**
 ```python
 # Average marginal effects (AME)
 marginal_effects = results.get_margeff(at='overall')
@@ -72,7 +76,7 @@ marginal_effects_custom = results.get_margeff(at='mean',
                                               atexog={1: 1, 2: 5})  # Zero-based design-column indices
 ```
 
-**Predictions:**
+**预测：**
 ```python
 # Predicted probabilities
 probs = results.predict(X)
@@ -89,7 +93,7 @@ X_new = sm.add_constant(X_new_data, has_constant="add")
 new_probs = results.predict(X_new)
 ```
 
-**Model evaluation:**
+**模型评估：**
 ```python
 from sklearn.metrics import (classification_report, confusion_matrix,
                              roc_auc_score, roc_curve)
@@ -110,14 +114,14 @@ print(f"McFadden's Pseudo R²: {results.prsquared:.4f}")
 
 ### Probit
 
-Uses normal distribution for binary outcomes.
+对二值结果使用正态分布。
 
-**When to use:**
-- Binary outcomes
-- Prefer normal distribution assumption
-- Field convention (econometrics often uses probit)
+**适用场景：**
+- 二值结果
+- 倾向正态分布假设
+- 领域惯例（计量经济学常用 probit）
 
-**Model**: P(Y=1|X) = Φ(Xβ), where Φ is standard normal CDF
+**模型**：P(Y=1|X) = Φ(Xβ)，其中 Φ 为标准正态 CDF
 
 ```python
 from statsmodels.discrete.discrete_model import Probit
@@ -128,11 +132,11 @@ results = model.fit()
 print(results.summary())
 ```
 
-**Comparison with Logit:**
-- Probit and Logit usually give similar results
-- Probit: symmetric, based on normal distribution
-- Logit: slightly heavier tails, easier interpretation (odds ratios)
-- Coefficients not directly comparable (scale difference)
+**与 Logit 比较：**
+- Probit 与 Logit 结果通常相近
+- Probit：对称，基于正态分布
+- Logit：尾部略厚，更易解读（odds ratio）
+- 系数不可直接比较（尺度不同）
 
 ```python
 # Marginal effects are comparable
@@ -143,18 +147,18 @@ print("Logit marginal effects:", logit_me)
 print("Probit marginal effects:", probit_me)
 ```
 
-## Multinomial Models
+## 多项模型
 
-### MNLogit (Multinomial Logit)
+### MNLogit（多项 Logit）
 
-For unordered categorical outcomes with 3+ categories.
+用于含 3 个及以上类别的无序分类结果。
 
-**When to use:**
-- Multiple unordered categories (e.g., transportation mode, brand choice)
-- No natural ordering among categories
-- Need probabilities for each category
+**适用场景：**
+- 多个无序类别（如出行方式、品牌选择）
+- 类别之间没有自然顺序
+- 需要每个类别的概率
 
-**Model**: P(Y=j|X) = exp(Xβⱼ) / Σₖ exp(Xβₖ)
+**模型**：P(Y=j|X) = exp(Xβⱼ) / Σₖ exp(Xβₖ)
 
 ```python
 from statsmodels.discrete.discrete_model import MNLogit
@@ -166,7 +170,7 @@ results = model.fit()
 print(results.summary())
 ```
 
-**Interpretation:**
+**解读：**
 ```python
 # One category is reference (usually category 0)
 # Coefficients represent log-odds relative to reference
@@ -181,7 +185,7 @@ probs = results.predict(X)  # Shape: (n_samples, n_categories)
 predicted_categories = np.asarray(probs).argmax(axis=1)
 ```
 
-**Relative risk ratios:**
+**相对风险比：**
 ```python
 # Exponentiate coefficients for relative risk ratios
 import numpy as np
@@ -197,12 +201,12 @@ print(params_df)
 
 ### Conditional Logit
 
-For choice models where alternatives have characteristics.
+用于各备选方案带有自身特征的选择模型。
 
-**When to use:**
-- Alternative-specific regressors (vary across choices)
-- Panel data with choices
-- Discrete choice experiments
+**适用场景：**
+- 方案专属回归元（随选项变化）
+- 含选择行为的面板数据
+- 离散选择实验
 
 ```python
 from statsmodels.discrete.conditional_models import ConditionalLogit
@@ -213,18 +217,18 @@ model = ConditionalLogit(y_choice, X_alternatives, groups=choice_set_id)
 results = model.fit()
 ```
 
-## Count Models
+## 计数模型
 
 ### Poisson
 
-Standard model for count data.
+计数数据的标准模型。
 
-**When to use:**
-- Count outcomes (events, occurrences)
-- Rare events
-- Mean ≈ variance
+**适用场景：**
+- 计数结果（事件、发生次数）
+- 稀有事件
+- 均值 ≈ 方差
 
-**Model**: P(Y=k|X) = exp(-λ) λᵏ / k!, where log(λ) = Xβ
+**模型**：P(Y=k|X) = exp(-λ) λᵏ / k!，其中 log(λ) = Xβ
 
 ```python
 from statsmodels.discrete.discrete_model import Poisson
@@ -235,7 +239,7 @@ results = model.fit()
 print(results.summary())
 ```
 
-**Interpretation:**
+**解读：**
 ```python
 # Rate ratios (incident rate ratios)
 rate_ratios = np.exp(results.params)
@@ -244,7 +248,7 @@ print("Rate ratios:", rate_ratios)
 # For 1-unit increase in X, expected count multiplies by exp(β)
 ```
 
-**Check overdispersion:**
+**检查过度离散：**
 ```python
 # Dispersion concerns the conditional variance, not raw variance/mean.
 mu = results.predict(X)
@@ -253,7 +257,7 @@ print(f"Pearson dispersion: {pearson_dispersion:.2f}")
 # A screening statistic: inspect mean misspecification, exposure and dependence.
 ```
 
-**With offset (for rates):**
+**带 offset（用于率）：**
 ```python
 # When modeling rates with varying exposure
 # log(λ) = log(exposure) + Xβ
@@ -262,16 +266,16 @@ model = Poisson(y_counts, X, offset=np.log(exposure))
 results = model.fit()
 ```
 
-### Negative Binomial
+### 负二项
 
-For overdispersed count data (variance > mean).
+用于过度离散的计数数据（方差 > 均值）。
 
-**When to use:**
-- Count data with overdispersion
-- Excess variance not explained by Poisson
-- Heterogeneity in counts
+**适用场景：**
+- 存在过度离散的计数数据
+- Poisson 无法解释的多余方差
+- 计数存在异质性
 
-**Model**: Adds dispersion parameter α to account for overdispersion
+**模型**：加入离散参数 α 以刻画过度离散
 
 ```python
 from statsmodels.discrete.discrete_model import NegativeBinomial
@@ -283,7 +287,7 @@ print(results.summary())
 print(f"Dispersion parameter alpha: {np.asarray(results.params)[-1]:.4f}")
 ```
 
-**Compare with Poisson:**
+**与 Poisson 比较：**
 ```python
 # Fit both models
 poisson_results = Poisson(y_counts, X).fit()
@@ -300,16 +304,16 @@ lr_stat = 2 * (nb_results.llf - poisson_results.llf)
 print("Boundary LR statistic (no naive p-value):", lr_stat)
 ```
 
-### Zero-Inflated Models
+### 零膨胀模型
 
-For count data with excess zeros.
+用于零值过多的计数数据。
 
-**When to use:**
-- More zeros than expected from Poisson/NB
-- Two processes: one for zeros, one for counts
-- Examples: number of doctor visits, insurance claims
+**适用场景：**
+- 零值多于 Poisson/NB 的预期
+- 两个过程：一个产生零，一个产生计数
+- 例子：就诊次数、保险理赔
 
-**Models:**
+**模型：**
 - ZeroInflatedPoisson (ZIP)
 - ZeroInflatedNegativeBinomialP (ZINB)
 
@@ -328,7 +332,7 @@ zinb_results = zinb_model.fit()
 print(zip_results.summary())
 ```
 
-**Two parts of the model:**
+**模型的两部分：**
 ```python
 # 1. Inflation model: P(Y=0 due to inflation)
 # 2. Count model: distribution of counts
@@ -343,14 +347,14 @@ pmf = zip_results.predict(X, exog_infl=X_inflation, which='prob')
 predicted_counts = zip_results.predict(X, exog_infl=X_inflation, which='mean')
 ```
 
-### Hurdle Models
+### Hurdle 模型
 
-Two-stage model: whether any counts, then how many.
+两阶段模型：先判断是否有计数，再判断有多少。
 
-**When to use:**
-- Excess zeros
-- Different processes for zero vs positive counts
-- Zeros structurally different from positive values
+**适用场景：**
+- 零值过多
+- 零值与正计数来自不同过程
+- 零值与正值在结构上不同
 
 ```python
 from statsmodels.discrete.truncated_model import HurdleCountModel
@@ -364,18 +368,18 @@ results = model.fit()
 print(results.summary())
 ```
 
-## Ordinal Models
+## 有序模型
 
 ### Ordered Logit/Probit
 
-For ordered categorical outcomes.
+用于有序分类结果。
 
-**When to use:**
-- Ordered categories (e.g., low/medium/high, ratings 1-5)
-- Natural ordering matters
-- Want to respect ordinal structure
+**适用场景：**
+- 有序类别（如低/中/高、1-5 评分）
+- 自然顺序有意义
+- 希望保留有序结构
 
-**Model**: Cumulative probability model with cutpoints
+**模型**：带分界点的累积概率模型
 
 ```python
 from statsmodels.miscmodels.ordinal_model import OrderedModel
@@ -387,7 +391,7 @@ results = model.fit(method='bfgs')
 print(results.summary())
 ```
 
-**Interpretation:**
+**解读：**
 ```python
 # Cutpoints (thresholds between categories)
 cutpoints = results.model.transform_threshold_params(results.params)[1:-1]
@@ -404,20 +408,20 @@ probs = results.predict(X_data)  # Shape: (n_samples, n_categories)
 predicted_categories = np.asarray(probs).argmax(axis=1)
 ```
 
-**Proportional odds assumption:**
+**比例优势假设：**
 ```python
 # Separate binary fits can be exploratory, but comparing coefficients visually
 # is not a calibrated Brant test. A formal proportional-odds assessment needs
 # the covariance between cutpoint-specific estimates.
 ```
 
-The hurdle model uses the same exog for both processes; `zerodist` is a censored count distribution, not a logit keyword. Check identification of NB zero-process parameters. OrderedModel reports transformed increments after its first threshold; only `transform_threshold_params` gives actual cutpoints.
+Hurdle 模型对两个过程使用同一组 exog；`zerodist` 是删失计数分布，不是 logit 关键字。要检查 NB 零过程参数的可识别性。OrderedModel 在首个阈值之后报告的是变换后的增量；只有 `transform_threshold_params` 才给出真正的分界点。
 
-## Model Diagnostics
+## 模型诊断
 
-Select the matching result type for each fragment; pseudo-R²/null-likelihood and marginal-effect helpers are not universal across every count/ordinal result. Binary metrics below are in-sample diagnostics unless X/y are replaced by held-out data. Thresholds and tuning must be chosen without the test set.
+每段代码都要选对应的结果类型；pseudo-R²/零似然与边际效应辅助方法并非对所有计数/有序结果都通用。除非把 X/y 换成留出数据，下面的二值指标都是样本内诊断。阈值与调参必须在不用测试集的前提下确定。
 
-### Goodness of Fit
+### 拟合优度
 
 ```python
 # Pseudo R-squared (McFadden)
@@ -437,7 +441,7 @@ lr_pval = stats.chi2.sf(lr_stat, results.df_model)
 print(f"LR test p-value: {lr_pval}")
 ```
 
-### Classification Metrics (Binary)
+### 分类指标（二值）
 
 ```python
 from sklearn.metrics import (accuracy_score, precision_score, recall_score,
@@ -455,7 +459,7 @@ print(f"F1: {f1_score(y, predictions):.4f}")
 print(f"AUC: {roc_auc_score(y, probs):.4f}")
 ```
 
-### Classification Metrics (Multinomial)
+### 分类指标（多项）
 
 ```python
 from sklearn.metrics import accuracy_score, classification_report, log_loss
@@ -476,7 +480,7 @@ logloss = log_loss(y, probs)
 print(f"Log Loss: {logloss:.4f}")
 ```
 
-### Count Model Diagnostics
+### 计数模型诊断
 
 ```python
 # Expected frequencies require probabilities, not rounded conditional means.
@@ -493,7 +497,7 @@ plt.show()
 # Include/report the model tail beyond values[-1] when assessing total mass.
 ```
 
-### Influence and Outliers
+### 影响点与异常值
 
 ```python
 # Pearson residuals for an ordinary Poisson model only.
@@ -508,7 +512,7 @@ print(f"Number of outliers: {len(outliers)}")
 # from statsmodels.stats.outliers_influence
 ```
 
-## Hypothesis Testing
+## 假设检验
 
 ```python
 # Single parameter test (automatic in summary)
@@ -530,7 +534,7 @@ lr_pval = stats.chi2.sf(lr_stat, df_diff)
 print(f"LR test p-value: {lr_pval:.4f}")
 ```
 
-## Model Selection and Comparison
+## 模型选择与比较
 
 ```python
 # Fit multiple models
@@ -557,7 +561,7 @@ from sklearn.linear_model import LogisticRegression
 
 ## Formula API
 
-Use R-style formulas for easier specification.
+用 R 风格公式更便于设定模型。
 
 ```python
 import statsmodels.formula.api as smf
@@ -576,9 +580,9 @@ results = smf.poisson('count ~ x1 + x2', data=df).fit()
 results = smf.negativebinomial('count ~ x1 + x2', data=df).fit()
 ```
 
-## Common Applications
+## 常见应用
 
-### Binary Classification (Marketing Response)
+### 二值分类（营销响应）
 
 ```python
 # Predict customer purchase probability
@@ -591,7 +595,7 @@ probs = results.predict(X)
 top_20_pct_idx = np.argsort(probs)[-int(0.2*len(probs)):]
 ```
 
-### Multinomial Choice (Transportation Mode)
+### 多项选择（出行方式）
 
 ```python
 # Predict transportation mode choice
@@ -604,7 +608,7 @@ mode_probs = results.predict(new_commuter)
 predicted_mode = np.asarray(mode_probs).argmax(axis=1)
 ```
 
-### Count Data (Number of Doctor Visits)
+### 计数数据（就诊次数）
 
 ```python
 # Model healthcare utilization
@@ -615,7 +619,7 @@ results = model.fit()
 expected_visits = results.predict(new_patient_X)
 ```
 
-### Zero-Inflated (Insurance Claims)
+### 零膨胀（保险理赔）
 
 ```python
 # Many people have zero claims
@@ -633,28 +637,28 @@ structural_zero_prob = 1 - results.predict(
 expected_claims = results.predict(X_count, exog_infl=X_inflation, which='mean')
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Check data type**: Ensure response matches model (binary, counts, categories)
-2. **Specify intercept correctly**: Array Logit/Poisson usually need a constant; OrderedModel and ConditionalLogit forbid one
-3. **Scale continuous predictors**: For better convergence and interpretation
-4. **Check convergence**: Look for convergence warnings
-5. **Use formula API**: For categorical variables and interactions
-6. **Marginal effects**: Report marginal effects, not just coefficients
-7. **Model comparison**: Use AIC/BIC and cross-validation
-8. **Validate**: Holdout set or cross-validation for predictive models
-9. **Check overdispersion**: For count models, test Poisson assumption
-10. **Consider alternatives**: Zero-inflation, hurdle models for excess zeros
+1. **检查数据类型**：确保响应变量与模型匹配（二值、计数、类别）
+2. **正确设定截距**：数组版 Logit/Poisson 通常需要常数项；OrderedModel 与 ConditionalLogit 禁止加常数项
+3. **缩放连续预测变量**：利于收敛与解读
+4. **检查收敛**：留意收敛警告
+5. **使用 formula API**：处理分类变量与交互项
+6. **边际效应**：报告边际效应，不只是系数
+7. **模型比较**：用 AIC/BIC 与交叉验证
+8. **验证**：预测模型用留出集或交叉验证
+9. **检查过度离散**：计数模型要检验 Poisson 假设
+10. **考虑替代模型**：零值过多时用零膨胀或 Hurdle 模型
 
-## Common Pitfalls
+## 常见陷阱
 
-1. **Forgetting constant**: No intercept term
-2. **Perfect separation**: Logit/probit may not converge
-3. **Using Poisson with overdispersion**: Check and use Negative Binomial
-4. **Misinterpreting coefficients**: Remember they're on log-odds/log scale
-5. **Not checking convergence**: Optimization may fail silently
-6. **Wrong distribution**: Match model to data type (binary/count/categorical)
-7. **Ignoring excess zeros**: Use ZIP/ZINB when appropriate
-8. **Not validating predictions**: Always check out-of-sample performance
-9. **Comparing non-nested models**: Use AIC/BIC, not likelihood ratio test
-10. **Ordinal as nominal**: Use OrderedModel for ordered categories
+1. **漏掉常数项**：没有截距项
+2. **完全分离**：Logit/probit 可能不收敛
+3. **过度离散仍用 Poisson**：先检查，改用负二项
+4. **误读系数**：记住它们处在 log-odds/对数尺度
+5. **不检查收敛**：优化可能悄悄失败
+6. **分布选错**：模型要与数据类型匹配（二值/计数/分类）
+7. **忽略多余零值**：必要时用 ZIP/ZINB
+8. **不验证预测**：始终检查样本外表现
+9. **比较非嵌套模型**：用 AIC/BIC，不用似然比检验
+10. **把有序当无序**：有序类别要用 OrderedModel

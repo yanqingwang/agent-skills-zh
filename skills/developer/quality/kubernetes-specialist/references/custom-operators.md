@@ -1,8 +1,12 @@
-# Custom Operators
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/custom-operators.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+# 自定义 Operator
 
 ---
 
-## CustomResourceDefinition (CRD)
+## CustomResourceDefinition（CRD）
 
 ```yaml
 apiVersion: apiextensions.k8s.io/v1
@@ -81,7 +85,7 @@ spec:
           jsonPath: .metadata.creationTimestamp
 ```
 
-## Custom Resource Instance
+## 自定义资源实例
 
 ```yaml
 apiVersion: mycompany.io/v1
@@ -96,7 +100,7 @@ spec:
   replicas: 3
 ```
 
-## Operator SDK Project Structure
+## Operator SDK 项目结构
 
 ```
 my-operator/
@@ -126,7 +130,7 @@ my-operator/
 └── go.mod
 ```
 
-## API Type Definition (Go)
+## API 类型定义（Go）
 
 ```go
 // api/v1/database_types.go
@@ -206,7 +210,7 @@ func init() {
 }
 ```
 
-## Controller Implementation
+## Controller 实现
 
 ```go
 // controllers/database_controller.go
@@ -464,7 +468,7 @@ subjects:
     namespace: operators
 ```
 
-## Operator Deployment
+## Operator 部署
 
 ```yaml
 apiVersion: apps/v1
@@ -524,7 +528,7 @@ spec:
               memory: 64Mi
 ```
 
-## Operator SDK Commands
+## Operator SDK 命令
 
 ```bash
 # Initialize new operator project
@@ -549,15 +553,15 @@ make deploy IMG=myregistry.io/database-operator:v1.0.0
 make undeploy
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Use finalizers** for cleanup of external resources before CR deletion
-2. **Set owner references** so owned resources are garbage collected with the CR
-3. **Implement idempotent reconciliation** - same input should produce same output
-4. **Use status subresource** to separate desired state (spec) from observed state (status)
-5. **Add validation** via OpenAPI schema or webhooks
-6. **Emit events** for significant state changes
-7. **Use leader election** for high availability
-8. **Set resource limits** on the operator deployment
-9. **Follow least privilege** RBAC principles
-10. **Test with envtest** for unit testing controllers
+1. **用 finalizer**：在删除 CR 前清理外部资源
+2. **设置 owner reference**：让从属资源随 CR 一起被垃圾回收
+3. **实现幂等调谐**：同样的输入应产生同样的输出
+4. **用 status 子资源**：把期望状态（spec）与观测状态（status）分开
+5. **加校验**：通过 OpenAPI schema 或 webhook
+6. **发出事件**：重要状态变更时发 Event
+7. **用 leader election**：实现高可用
+8. **设资源限制**：给 Operator Deployment 加上
+9. **遵循最小权限**：RBAC 原则
+10. **用 envtest 测试**：对 Controller 做单元测试

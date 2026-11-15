@@ -148,281 +148,285 @@ components:
     description: "Warm-toned rectangular placeholder for images, centered mono label inside, no border on dark / hairline border on yellow."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/studio/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Studio is a **type-as-graphic-mass** presentation system — the visual register of contemporary design-studio decks (Pentagram, Anti, Order, "Boring Studios" agency aesthetic). The premise is reductive to the point of severity: a single typeface (Barlow), at a single weight (900), in strict uppercase, at scales so large that type stops behaving like type and starts behaving like a graphic shape. The headline IS the design — there are no decorative elements, no accent colors, no ornaments. If you removed every other element from a Studio slide and left only the headline, the slide would still read as Studio.
+Studio 是一套**文字即图形质量块**的演示系统，是当代设计工作室文稿的视觉语域（Pentagram、Anti、Order、"Boring Studios" 事务所美学）。前提精简到近乎严苛：单一字面（Barlow）、单一字重（900）、严格全大写，尺度大到文字不再像文字、开始像一个图形形状。标题*就是*设计，没有装饰元素、没有强调色、没有纹样。若把 Studio 页上其余元素全去掉、只留标题，那页仍读作 Studio。
 
-The palette is **binary plus one**. The dark surface is `{colors.near-black}` (#1C1C1C) — a warm dark, not cold neutral. The light surface is `{colors.acid-yellow}` (#F5D200) — a saturated cadmium yellow that fills the entire slide, not as an accent but as the environment. On dark slides, text is `{colors.acid-yellow}`. On yellow slides, text is `{colors.near-black}`. That's the entire color system: dark/yellow, yellow/dark. There are no secondary colors, no grays, no warming accents. Even muted text is just the same color at reduced opacity (yellow at 58%, near-black at 62%).
+配色是**二元加一**。深色表面是 `{colors.near-black}`（#1C1C1C），一种暖深，不是冷中性。浅色表面是 `{colors.acid-yellow}`（#F5D200），一种饱和镉黄，填满整页，不是强调而是环境。深色页上文字是 `{colors.acid-yellow}`，黄页上文字是 `{colors.near-black}`。这就是整套色彩系统：深 / 黄、黄 / 深。没有次级色、没有灰、没有暖强调。连柔化文字也只是同色降低不透明度（黄 58%、近黑 62%）。
 
-The typeface stack is **functional rather than expressive**. Barlow at weight 900 carries every headline at every scale — from 1.15vw body all the way up to 12vw cover display. Barlow at 500 carries body and lead paragraphs. IBM Plex Mono carries the metadata footer, slide counter, and three-column cover lockup — and is the only point in the system where a second face appears. Mono is the system's "spec sheet" voice; everywhere else, Barlow dominates.
+字体栈是**功能而非表现**。Barlow 字重 900 承载每个尺度上的每个标题，从 1.15vw 正文一路到 12vw 封面展示。Barlow 500 承载正文与导语段。IBM Plex Mono 承载元数据页脚、页码、三栏封面锁定，是系统里唯一出现第二款字面的地方。等宽是系统的"规格表"声部，别处一律由 Barlow 主导。
 
-Depth is **flat and severe**. No drop shadows. No rounded corners. No gradients. Borders are 1px or 2px hairlines in `{colors.border-dark}` or `{colors.border-light}`. The 2px chart baseline and 2px stat-card top-rule are the heaviest lines in the system. The system reads as an architectural drawing or a manifesto poster — every line is intentional, nothing decorative.
+纵深是**扁平而严苛**。没有投影，没有圆角，没有渐变。边框是 `{colors.border-dark}` 或 `{colors.border-light}` 的 1px 或 2px 细线。2px 图表基线与 2px 统计卡顶线是系统里最重的线。系统读作建筑图纸或宣言海报，每条线都有意，无一处装饰。
 
-**Density philosophy: low and deliberate.** Studio is sparse by design. A statement slide is one headline filling most of the canvas with empty surface above and below. A chapter slide is a small mono label and a headline. A cover is an image placeholder behind a single word at 12vw. Padding runs tighter than Signal (5vw / 5vh vs 7.5vw / 5.5vh) because the type itself runs nearly to the edge — the heading is the spatial fill, not the margin. A slide that feels broken in Studio is one that contains multiple competing elements or fills its canvas with body paragraphs. The correct register is "one massive thing, said once, in 900 weight uppercase."
+**密度取向：低而刻意。** Studio 按设计就稀疏。陈述页是一条标题填满大半画布，上下留空。章节页是一条小等宽标签加一条标题。封面是图片占位后压一个 12vw 的单词。内边距比 Signal 更紧（5vw / 5vh 对 7.5vw / 5.5vh），因为文字本身就快跑到边缘，标题是空间填充，不是页边距。在 Studio 里读着别扭的页，是含多个互相竞争的元素、或把画布填满正文段的页。对的语域是"一件巨大的事，说一次，用 900 字重全大写"。
 
-**Key Characteristics:**
-- Binary palette — `{colors.near-black}` field with `{colors.acid-yellow}` type, or `{colors.acid-yellow}` field with `{colors.near-black}` type. No third color.
-- Barlow at weight 900 uppercase for every headline at every scale; Barlow 400/500 for body; IBM Plex Mono only for metadata chrome.
-- Headlines run massive — cover display at 12vw (~230px at 1920px viewport), statements at 7.5vw, section headers at 4.8vw.
-- Tight negative letter-spacing on all display type (-0.01 to -0.03em); uppercase non-negotiable.
-- Flat: no drop shadows, no rounded corners, no gradients, no accent colors beyond the yellow/dark binary.
-- Hairline 1px borders on chrome; 2px on stat-card tops, chart baselines, and compare panel dividers.
-- Three-column mono metadata footer on the cover slide is the system's signature lockup (studio × client / presentation title / studio name).
-- Em-dash bullet markers in the surface accent color (yellow on dark, near-black on yellow).
-- Body and chrome opacity-tuned versions of the same color (yellow at 58%/32%, near-black at 62%/35%) — never a separate grey color.
+**关键特征：**
+- 二元配色，`{colors.near-black}` 场地配 `{colors.acid-yellow}` 文字，或 `{colors.acid-yellow}` 场地配 `{colors.near-black}` 文字。无第三种颜色。
+- Barlow 字重 900 全大写用于每个尺度上的每个标题，Barlow 400/500 用于正文，IBM Plex Mono 仅用于元数据外壳。
+- 标题跑得极大，封面展示 12vw（1920px 视口下约 230px）、陈述 7.5vw、分节头 4.8vw。
+- 所有展示文字紧负字距（-0.01 到 -0.03em），全大写不可商量。
+- 扁平：无投影、无圆角、无渐变、无黄 / 深二元之外的强调色。
+- 外壳上 1px 细线边框，统计卡顶、图表基线、比较面板分隔用 2px。
+- 封面页三栏等宽元数据页脚是系统的招牌锁定（studio × client / 演示标题 / 工作室名）。
+- 表面强调色的破折号项目标记（深底黄、黄底近黑）。
+- 正文与外壳是同色的不透明度调节版（黄 58%/32%、近黑 62%/35%），绝不是单独的灰色。
 
-## Colors
+## 颜色
 
-### Palette
+### 调色板
 
-- **Near-Black** (`{colors.near-black}` — #1C1C1C): The dark surface. A warm dark, slightly biased toward brown rather than cold neutral. The "ink" of the system.
-- **Near-Black Alt** (`{colors.near-black-alt}` — #242422): A barely-lifted near-black for image placeholders and secondary dark surfaces. Visually nearly identical to near-black.
-- **Acid Yellow** (`{colors.acid-yellow}` — #F5D200): The light surface AND the primary text color on dark surfaces. Cadmium yellow, saturated and slightly warm. On dark slides, this is the type color. On light slides, this is the background. Same color, two roles.
-- **Acid Yellow Alt** (`{colors.acid-yellow-alt}` — #F0CC00): A slightly cooler yellow for adjacent-surface differentiation on light slides. Used sparingly.
-- **Text on Dark 2** (`{colors.text-on-dark-2}` — rgba(245,210,0,0.58)): Secondary text on dark — yellow at 58% opacity. The system never uses a separate "grey" color; muting is opacity only.
-- **Text on Dark 3** (`{colors.text-on-dark-3}` — rgba(245,210,0,0.32)): Tertiary text on dark — yellow at 32%.
-- **Text on Light 2** (`{colors.text-on-light-2}` — rgba(28,28,28,0.62)): Secondary text on yellow — near-black at 62%.
-- **Text on Light 3** (`{colors.text-on-light-3}` — rgba(28,28,28,0.35)): Tertiary text on yellow — near-black at 35%.
-- **Border Dark** (`{colors.border-dark}` — #2E2E2C): Hairline border color on dark surfaces. Slightly lifted from near-black so it reads as a line, not a void.
-- **Border Light** (`{colors.border-light}` — rgba(28,28,28,0.18)): Hairline border color on yellow surfaces. Low-opacity near-black for subtle separation.
+- **近黑**（`{colors.near-black}` — #1C1C1C）：深色表面。暖深，略偏棕而非冷中性。系统的"墨"。
+- **近黑 Alt**（`{colors.near-black-alt}` — #242422）：勉强抬起的近黑，用于图片占位与次级深色表面。视觉上与近黑几近一致。
+- **酸性黄**（`{colors.acid-yellow}` — #F5D200）：浅色表面，同时是深色表面上的主文字色。镉黄，饱和、略暖。深色页上它是文字色，浅色页上它是背景。同色两角。
+- **酸性黄 Alt**（`{colors.acid-yellow-alt}` — #F0CC00）：略冷的黄，用于浅色页上的相邻表面区分。省着用。
+- **深底文字 2**（`{colors.text-on-dark-2}` — rgba(245,210,0,0.58)）：深色上次级文字，58% 不透明度的黄。系统绝不用单独的"灰"色，柔化只靠不透明度。
+- **深底文字 3**（`{colors.text-on-dark-3}` — rgba(245,210,0,0.32)）：深色上三级文字，32% 的黄。
+- **浅底文字 2**（`{colors.text-on-light-2}` — rgba(28,28,28,0.62)）：黄上次级文字，62% 的近黑。
+- **浅底文字 3**（`{colors.text-on-light-3}` — rgba(28,28,28,0.35)）：黄上三级文字，35% 的近黑。
+- **深色边框**（`{colors.border-dark}` — #2E2E2C）：深色表面上的细线边框色。比近黑略抬起，好读作一条线而非一片虚空。
+- **浅色边框**（`{colors.border-light}` — rgba(28,28,28,0.18)）：黄表面上的细线边框色。低不透明度近黑，作细微分隔。
 
-### Defaults
+### 默认值
 
-- **Default surface**: alternate between `{colors.near-black}` (dark) and `{colors.acid-yellow}` (light) across the deck. Both surfaces are first-class. If unsure, reach for near-black for cover/quote/statement slides, acid-yellow for chapter and end slides.
-- **Default primary text on dark**: `{colors.acid-yellow}`.
-- **Default primary text on yellow**: `{colors.near-black}`.
-- **Default secondary text on dark**: `{colors.text-on-dark-2}` (yellow at 58% opacity).
-- **Default secondary text on yellow**: `{colors.text-on-light-2}` (near-black at 62%).
-- **Default tertiary text** (mono captions, chart axis labels, stat notes): tier-3 opacity on the surface accent.
-- **Default border on dark**: `{colors.border-dark}`.
-- **Default border on yellow**: `{colors.border-light}`.
-- **Default headline color**: surface accent — yellow on dark, near-black on yellow. Never any other color.
-- **Default chart accent fill**: surface accent (yellow on dark, near-black on yellow). The "highlighted" bar is just the primary text color; "default" bars are tier-3 muted.
+- **默认表面**：整套文稿在 `{colors.near-black}`（深）与 `{colors.acid-yellow}`（浅）间交替。两个表面都是一等。拿不准时，封面 / 引文 / 陈述页取近黑，章节与收尾页取酸性黄。
+- **深色上默认主文字**：`{colors.acid-yellow}`。
+- **黄上默认主文字**：`{colors.near-black}`。
+- **深色上默认次级文字**：`{colors.text-on-dark-2}`（58% 不透明度的黄）。
+- **黄上默认次级文字**：`{colors.text-on-light-2}`（62% 的近黑）。
+- **默认三级文字**（等宽图注、图表轴标签、统计注）：表面强调色的三级不透明度。
+- **深色上默认边框**：`{colors.border-dark}`。
+- **黄上默认边框**：`{colors.border-light}`。
+- **默认标题色**：表面强调色，深底黄、黄底近黑。绝不别的颜色。
+- **默认图表强调填充**：表面强调色（深底黄、黄底近黑）。"高亮"条就是主文字色，"默认"条是三级柔化。
 
-There are no semantic color roles. Yellow does not mean "warning"; near-black does not mean "primary." They are simply the two surfaces. Choice between them is rhythmic — alternate to vary the visual cadence, or run several dark slides in a row for a quiet section followed by a single yellow slide for a punctuation moment.
+没有语义颜色角色。黄不表"警告"，近黑不表"主"。它们只是两个表面。二者之间的选择是节奏性的，交替着变视觉节拍，或连跑几张深色页作安静段落、再用单张黄页作标点瞬间。
 
-## Typography
+## 排印
 
-### Font Family
+### 字族
 
-Studio runs **two families** in strictly separated roles:
+Studio 以严格分开的角色跑**两款字族**：
 
-- **Barlow** (`{typography.display.fontFamily}`) — a contemporary grotesque with a wide weight axis. Carries every headline at every scale (display through h3), every numeral (stat-value), every quote, all body, and all lead paragraphs. The system uses weight 900 for all display and headline tokens; weight 700 for h3; weight 500 for lead and bullet markers; weight 400 for body and caption.
-- **IBM Plex Mono** (`{typography.label.fontFamily}`) — a precision monospace. Used **only** for metadata labels — chrome bars, slide counters, chapter numbers, the three-column cover lockup, stat notes, mono captions inside cover-meta. Mono is the system's "metadata voice"; everywhere else, Barlow dominates.
+- **Barlow**（`{typography.display.fontFamily}`）：当代怪诞体，字重轴宽。承载每个尺度上的每个标题（display 到 h3）、每个数字（stat-value）、每条引文、全部正文、全部导语段。系统用字重 900 给全部展示与标题 token，字重 700 给 h3，字重 500 给导语与项目标记，字重 400 给正文与图注。
+- **IBM Plex Mono**（`{typography.label.fontFamily}`）：精密等宽。**仅**用于元数据标签，外壳条、页码、章节号、三栏封面锁定、统计注、cover-meta 内的等宽图注。等宽是系统的"元数据声部"，别处一律由 Barlow 主导。
 
-The emotional split is binary: Barlow for content (loud, uppercase, dominant); IBM Plex Mono for spec-sheet metadata (small, precise, supportive). There is no third face.
+情绪分工是二元的：Barlow 作内容（响、全大写、主导），IBM Plex Mono 作规格表元数据（小、精密、支撑）。没有第三款字面。
 
-Barlow weight 900 at display scale stops behaving like a typeface and starts behaving like a graphic shape — the letterforms are so heavy that counters (the holes inside letters) become structural negative space, and the headline reads as a black or yellow geometric block before it reads as words. This is the system's identity.
+Barlow 字重 900 在展示尺度上不再像一款字面、而开始像一个图形形状，字形重到字腔（字母里的洞）变成结构性负空间，标题在读作词之前先读作一块黑或黄的几何块。这就是系统的身份。
 
-### Type Scale
+### 排印比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.display}` | 12vw | Barlow | 900 | Cover hero at maximum scale |
-| `{typography.h1}` | 7.5vw | Barlow | 900 | Chapter title, full-slide statement headline |
-| `{typography.stat-value}` | 5.5vw | Barlow | 900 | Statistical numeral inside a stat card |
-| `{typography.h2}` | 4.8vw | Barlow | 900 | Primary slide headline |
-| `{typography.quote-text}` | 3.8vw | Barlow | 900 | Pull-quote body (uppercase, no quote marks) |
-| `{typography.h3}` | 2.8vw | Barlow | 700 | Sub-headline, panel title |
-| `{typography.lead}` | 1.6vw | Barlow | 500 | Lead paragraph, intro sentence |
-| `{typography.body}` | 1.15vw | Barlow | 400 | Default body paragraph, bullet body |
-| `{typography.caption}` | 0.85vw | Barlow | 400 | Caption, source attribution |
-| `{typography.label}` | 0.72vw | IBM Plex Mono | 500 | Mono chrome, slide counter, chapter number, stat note, cover-meta |
+| `{typography.display}` | 12vw | Barlow | 900 | 最大尺度的封面英雄 |
+| `{typography.h1}` | 7.5vw | Barlow | 900 | 章节标题、满页陈述标题 |
+| `{typography.stat-value}` | 5.5vw | Barlow | 900 | 统计卡里的统计数字 |
+| `{typography.h2}` | 4.8vw | Barlow | 900 | 页面主标题 |
+| `{typography.quote-text}` | 3.8vw | Barlow | 900 | 引文正文（全大写，无引号） |
+| `{typography.h3}` | 2.8vw | Barlow | 700 | 副标题、面板标题 |
+| `{typography.lead}` | 1.6vw | Barlow | 500 | 导语段、开场句 |
+| `{typography.body}` | 1.15vw | Barlow | 400 | 默认正文段、项目正文 |
+| `{typography.caption}` | 0.85vw | Barlow | 400 | 图注、来源归属 |
+| `{typography.label}` | 0.72vw | IBM Plex Mono | 500 | 等宽外壳、页码、章节号、统计注、cover-meta |
 
-### Defaults
+### 默认值
 
-- **Default size for a primary section headline**: `{typography.h2}` (4.8vw).
-- **Default size for a chapter or statement headline**: `{typography.h1}` (7.5vw).
-- **Default size for a cover hero**: `{typography.display}` (12vw).
-- **Default size for a paragraph body**: `{typography.body}` (1.15vw).
-- **Default size for a lead sentence**: `{typography.lead}` (1.6vw).
-- **Default size for any chrome label, counter, or mono caption**: `{typography.label}` (0.72vw).
-- **Default size for a statistical numeral**: `{typography.stat-value}` (5.5vw) in the surface accent.
-- **Default weight for any headline**: 900.
-- **Default weight for any body element**: 400 (lead = 500).
+- **主分节标题默认尺寸**：`{typography.h2}`（4.8vw）。
+- **章节或陈述标题默认尺寸**：`{typography.h1}`（7.5vw）。
+- **封面英雄默认尺寸**：`{typography.display}`（12vw）。
+- **段落正文默认尺寸**：`{typography.body}`（1.15vw）。
+- **导语句默认尺寸**：`{typography.lead}`（1.6vw）。
+- **任何外壳标签、计数器、等宽图注默认尺寸**：`{typography.label}`（0.72vw）。
+- **统计数字默认尺寸**：表面强调色的 `{typography.stat-value}`（5.5vw）。
+- **任何标题默认字重**：900。
+- **任何正文元素默认字重**：400（导语 = 500）。
 
-When unsure between sizes, lean larger. Studio's identity depends on type running massive — a 4.8vw h2 reads as the system; a 2.8vw h3 used as a primary headline reads as a different system.
+尺寸间拿不准时，偏大。Studio 的身份依赖文字跑得巨大，4.8vw h2 读作系统，把 2.8vw h3 当主标题读作另一套系统。
 
-### Signature Treatments
+### 招牌处理
 
-These treatments are **non-optional whenever the corresponding element type is used**:
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every display, h1, h2, h3, quote-text, and stat-value is uppercase.** Sentence-case display type does not exist. Even h3 (2.8vw) at weight 700 runs uppercase.
-- **Every display headline uses weight 900.** Display, h1, h2, quote-text, and stat-value are all weight 900 — no exceptions. Using weight 800 or 700 at display scale breaks the type-as-graphic-mass effect.
-- **Every display element uses negative letter-spacing.** Display at –0.02em, h1 at –0.02em, h2 at –0.01em, stat-value at –0.03em. Display Barlow 900 without negative tracking reads as untreated; the negative tracking is what gives the type its compressed density.
-- **All chrome, labels, counters, and metadata are IBM Plex Mono at 0.06em tracking.** No exceptions. Mono labels in Barlow break the metadata/content separation.
-- **Headlines are always rendered in the surface accent color** — yellow on dark, near-black on yellow. Never a muted opacity, never a different color.
-- **Body bullets use an em-dash in the surface accent color**, never a dot, never a different glyph. The em-dash carries surface-aware color (yellow on dark, near-black on yellow).
-- **Stat cards have a 2px (not 1px) top rule** in the surface accent (or muted accent on the dark side). The 2px rule is heavier than chrome hairlines because stats are anchors.
-- **The three-column cover-meta lockup uses IBM Plex Mono with column 1 left-aligned, column 2 centered, column 3 right-aligned.** This is the "Boring Studios" signature; the column structure is non-negotiable.
+- **每个 display、h1、h2、h3、quote-text、stat-value 都全大写。** 句式展示文字不存在。连 h3（2.8vw、字重 700）也跑全大写。
+- **每个展示标题都用字重 900。** display、h1、h2、quote-text、stat-value 全是字重 900，无例外。展示尺度用字重 800 或 700 会破掉文字即图形质量块的效果。
+- **每个展示元素都用负字距。** display -0.02em、h1 -0.02em、h2 -0.01em、stat-value -0.03em。不带负字距的展示 Barlow 900 读作未处理，负字距才给文字压缩的密度。
+- **所有外壳、标签、计数器、元数据都是 0.06em 字距的 IBM Plex Mono。** 无例外。用 Barlow 排的等宽标签会破掉元数据 / 内容分离。
+- **标题始终以表面强调色渲染**，深底黄、黄底近黑。绝不柔化不透明度、绝不别的颜色。
+- **正文项目用表面强调色的破折号**，绝不用圆点、绝不用别的字形。破折号带随表面切换的颜色（深底黄、黄底近黑）。
+- **统计卡有 2px（而非 1px）顶线**，用表面强调色（深色侧为柔化强调）。2px 线比外壳细线重，因为统计是锚点。
+- **三栏 cover-meta 锁定用 IBM Plex Mono，第 1 栏左对齐、第 2 栏居中、第 3 栏右对齐。** 这是 "Boring Studios" 招牌，栏结构不可商量。
 
-### Typography Principles
+### 排印原则
 
-The face ladder is fixed: Barlow for everything except metadata; IBM Plex Mono for metadata only. Mono outside metadata roles, or Barlow inside metadata roles, breaks the typographic separation.
+字族阶梯固定：除元数据外一切都用 Barlow，元数据只用 IBM Plex Mono。元数据角色之外用等宽、或元数据角色里用 Barlow，都会破掉排印分离。
 
-The weight ladder is fixed too: 900 / 700 / 500 / 400. Intermediate weights (600, 800) are not used. The four-tier weight system is the entire expressive register of the typography.
+字重阶梯也固定：900 / 700 / 500 / 400。中间字重（600、800）不用。这四级字重系统就是排印的全部表现语域。
 
-Line-height runs tight at display scale (0.9 on display, 0.92 on h1) and opens to 1.5–1.6 on body. Letter-spacing is uniformly negative on display (–0.01 to –0.03em), zero on body, positive 0.06em on mono labels.
+行高在展示尺度上紧（display 0.9、h1 0.92），正文放开到 1.5–1.6。字距在展示上统一为负（–0.01 到 –0.03em）、正文为零、等宽标签为正 0.06em。
 
-Italic is not used. Underline is not used. There is no font-style variation in the system; emphasis is achieved purely by weight contrast (900 headline against 400 body).
+斜体不用。下划线不用。系统里没有 font-style 变化，强调纯靠字重反差（900 标题对 400 正文）。
 
-## Layout
+## 布局
 
-### Canvas System
+### 画布系统
 
-Studio targets `100vw × 100vh` — full viewport. Each `.slide` flexes to fill the viewport exactly, and slides sit side-by-side in a horizontal strip that translates left/right on navigation. All sizes use viewport-relative units (`vw`, `vh`) so layout scales fluidly.
+Studio 以 `100vw × 100vh` 满视口为目标。每张 `.slide` 以 flex 精确铺满视口，页并排坐在一条横向条里，导航时左右平移。所有尺寸用视口相对单位（`vw`、`vh`），布局流式缩放。
 
-### Padding and Gap Scale
+### 内边距与间隙比例
 
-| Token | Value | Use |
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.pad-x}` | 5vw | Horizontal slide padding |
-| `{spacing.pad-y}` | 5vh | Vertical slide padding |
-| `{spacing.gap-lg}` | 3.5vh | Between major content sections |
-| `{spacing.gap-md}` | 2vh | Between related elements |
-| `{spacing.gap-sm}` | 1vh | Between tightly coupled elements |
+| `{spacing.pad-x}` | 5vw | 幻灯片横向内边距 |
+| `{spacing.pad-y}` | 5vh | 幻灯片纵向内边距 |
+| `{spacing.gap-lg}` | 3.5vh | 主内容分节之间 |
+| `{spacing.gap-md}` | 2vh | 相关元素之间 |
+| `{spacing.gap-sm}` | 1vh | 紧密耦合元素之间 |
 
-Statement and chapter slides increase bottom padding to 1.5× pad-y so the headline drops to the lower portion of the slide with deliberate empty space above. The cover slide uses zero outer padding because the image area fills the entire canvas.
+陈述与章节页把底部内边距提到 pad-y 的 1.5×，让标题落到页面下部、上方留刻意的空白。封面页用零外内边距，因为图片区填满整块画布。
 
-### Chrome Frame
+### 外壳画框
 
-Standard slides carry a top chrome bar and a bottom foot bar:
+标准页带顶部外壳条与底部页脚条：
 
-- **Chrome bar** — left-aligned mono label, right-aligned mono counter, 1px hairline rule beneath. Padding-bottom is `{spacing.gap-sm}`, margin-bottom is `{spacing.gap-md}`.
-- **Foot bar** — left-aligned mono label, right-aligned mono counter, 1px hairline rule above. Mirror of the chrome bar.
+- **外壳条**：左对齐等宽标签、右对齐等宽计数器，下方 1px 细线。padding-bottom 是 `{spacing.gap-sm}`，margin-bottom 是 `{spacing.gap-md}`。
+- **页脚条**：左对齐等宽标签、右对齐等宽计数器，上方 1px 细线。外壳条的镜像。
 
-The cover, chapter, statement, quote, and end slides omit standard chrome — those layouts use either the cover-meta lockup (cover) or nothing (chapter, statement, quote, end).
+封面、章节、陈述、引文、收尾页省掉标准外壳，那些布局要么用 cover-meta 锁定（封面），要么什么都不用（章节、陈述、引文、收尾）。
 
-### Cover Lockup
+### 封面锁定
 
-The cover slide is the system's signature layout:
-- An image placeholder fills the entire canvas behind everything.
-- A single display headline (typically one word at 12vw) sits in the top area as `cover-type`.
-- A three-column mono metadata footer sits at the bottom — column 1 left ("studio × client" + date), column 2 center (presentation title), column 3 right (studio name) — separated from the image area by a 1px hairline in yellow at 25% opacity.
+封面页是系统的招牌布局：
+- 一个图片占位填满整块画布、压在一切背后。
+- 一条展示标题（典型一个 12vw 的单词）以 `cover-type` 坐在上部区域。
+- 底部一条三栏等宽元数据页脚，第 1 栏左（"studio × client" + 日期）、第 2 栏中（演示标题）、第 3 栏右（工作室名），由一条 25% 不透明度黄的 1px 细线与图片区隔开。
 
-## Depth and Elevation
+## 纵深与层级
 
-Studio is **flat by design**. There are no drop shadows. No rounded card elevation. No gradients. Every element sits flush with the surface.
+Studio **按设计是扁平的**。没有投影，没有圆角卡片抬升，没有渐变。每个元素都与表面齐平。
 
-Apparent depth comes from:
-- **Surface contrast** — near-black against acid-yellow when both appear (compare panels, image placeholders).
-- **Hairline separation** — 1px and 2px borders divide regions.
-- **Heavy type** — display headlines at weight 900 create visual mass that reads as foreground against the flat surface.
+表观纵深来自：
+- **表面反差**：近黑对酸性黄同现时（比较面板、图片占位）。
+- **细线分隔**：1px 与 2px 边框划分区域。
+- **厚重文字**：字重 900 的展示标题造出视觉质量块，在扁平表面上读作前景。
 
-The system is intentionally severe. If a layout requires elevation to read correctly, the layout is wrong for Studio — reduce content or reorganize so that the flat surface plus heavy type plus hairlines provide enough hierarchy.
+系统刻意严苛。布局若需要抬升才能读对，那布局对 Studio 就是错的，减少内容或重组，让扁平表面 + 厚重文字 + 细线提供足够层级。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
+### 圆角
 
-| Value | Use |
+| 值 | 用途 |
 |---|---|
-| 0 | Everything in the system |
-| 50% (circle) | Nav dots and slide-counter UI only (not part of the slide content) |
+| 0 | 系统里的一切 |
+| 50%（圆） | 仅导航点与页码 UI（不属于页面内容） |
 
-Studio has **no rounded chrome**. Cards, panels, stat tiles, chart frames, image placeholders, compare panels — all strict rectangles with sharp corners. The only round shapes are the navigation dots and the underlying slide counter UI, which are deck-stage chrome, not slide content.
+Studio **没有圆角外壳**。卡片、面板、统计块、图表框、图片占位、比较面板，全是带尖角的严格矩形。仅有的圆形是导航点与底层页码 UI，它们是 deck-stage 外壳，不是页面内容。
 
-### Border Weights
+### 边框粗细
 
-- **1px solid** in `{colors.border-dark}` (on near-black) or `{colors.border-light}` (on yellow) — the universal hairline. Used on chrome bars, foot bars, cover-meta separator.
-- **2px solid** in the surface accent (yellow on dark, near-black on yellow) — the heavier rule. Used on stat-card top rules, compare panel vertical dividers, chart baselines, chart bar-track left rules.
-- **No dashed borders.** Every border in the system is solid.
+- **1px 实线**，`{colors.border-dark}`（近黑上）或 `{colors.border-light}`（黄上）：通用细线。用于外壳条、页脚条、cover-meta 分隔。
+- **2px 实线**，表面强调色（深底黄、黄底近黑）：较重的线。用于统计卡顶线、比较面板竖分隔、图表基线、图表条轨道左线。
+- **无虚线边框。** 系统里每条边框都是实线。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Display headline as graphic mass** — Barlow at weight 900 at display scale (4.8vw and above) sits as a black or yellow geometric block. The headline is the primary decorative element of every slide; there are no additional ornaments.
+**展示标题即图形质量块**：展示尺度（4.8vw 及以上）字重 900 的 Barlow 坐成一块黑或黄的几何块。标题是每页的主装饰元素，没有额外纹样。
 
-**Hairline rule** — a 1px solid line in the surface border color. Used to separate chrome from body, body from foot, and inside compare panels. The rule is the system's only structural divider.
+**细线**：表面边框色的 1px 实线。用于隔开外壳与正文、正文与页脚，以及比较面板内部。这条线是系统唯一的结构分隔。
 
-**Heavy rule** — a 2px solid line in the surface accent (or muted accent). Used on stat-card tops, chart baselines, compare-panel vertical dividers. Heavier than the chrome hairline; reads as "anchor" rather than "separator."
+**重线**：表面强调色（或柔化强调）的 2px 实线。用于统计卡顶、图表基线、比较面板竖分隔。比外壳细线重，读作"锚"而非"分隔"。
 
-**Stat card** — a flat region with a 2px top rule, a stat numeral (5.5vw Barlow 900) in the surface accent, a stat label (1.15vw Barlow 500), and an optional mono stat-note (0.85vw IBM Plex Mono at tier-3 opacity). Padding right and bottom; left padding is zero (the rule starts flush with the card's left edge).
+**统计卡**：扁平区域，带 2px 顶线、表面强调色的统计数字（5.5vw Barlow 900）、统计标签（1.15vw Barlow 500）、可选等宽统计注（0.85vw IBM Plex Mono、三级不透明度）。内边距给右与下，左内边距为零（线从卡片左边缘齐平起）。
 
-**Cover-meta lockup** — the three-column mono footer at the bottom of the cover slide. Column 1: studio × client name on row 1, date on row 2. Column 2: presentation title (centered). Column 3: studio name (right-aligned). Separated from the cover-type by a 1px hairline in yellow at 25% opacity.
+**Cover-meta 锁定**：封面页底部的三栏等宽页脚。第 1 栏：第 1 行 studio × client 名、第 2 行日期。第 2 栏：演示标题（居中）。第 3 栏：工作室名（右对齐）。由一条 25% 不透明度黄的 1px 细线与 cover-type 隔开。
 
-**Image placeholder** — a flat rectangle filled with `{colors.near-black-alt}` (on dark) or `{colors.acid-yellow-alt}` with a hairline border (on yellow), containing centered IBM Plex Mono text at tier-3 opacity. Used for image slots that haven't been filled.
+**图片占位**：扁平矩形，深色上填 `{colors.near-black-alt}`、黄上填 `{colors.acid-yellow-alt}` 配细线边框，内含三级不透明度居中的 IBM Plex Mono 文字。用于尚未填充的图片槽位。
 
-**Chart bar** — a flat vertical rectangle in muted text-on-surface color (default) or the surface accent (highlighted). No rounded ends, no gradient. The "hi" variant uses the full accent color and weight 900 on its numerical label.
+**图表条**：扁平竖矩形，用柔化的表面文字色（默认）或表面强调色（高亮）。无圆端、无渐变。"hi" 变体用全强调色，数值标签上字重 900。
 
-**Chart baseline** — a 2px solid line in muted surface accent (yellow tier-3 on dark, border-light on yellow) running the full width of the chart wrapper, below the bar tops.
+**图表基线**：柔化表面强调色（深色上黄三级、黄上 border-light）的 2px 实线，横贯图表包装器全宽，在条顶之下。
 
-**Em-dash bullet** — `—` prefix on every list item in the surface accent color, with 0.5em right margin. Color flips with the surface.
+**破折号项目**：每个列表项前置表面强调色的 `—`，配 0.5em 右外边距。颜色随表面翻转。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
+### 该做
 
-- Use Barlow at weight 900 uppercase for every headline at every scale, with negative letter-spacing of at least -0.01em. The type-as-graphic-mass effect is the system's identity.
-- Alternate `{colors.near-black}` and `{colors.acid-yellow}` surfaces freely. Both are first-class; the rhythm of dark/yellow alternation is the system's pacing.
-- Color every headline in the surface accent — yellow on dark, near-black on yellow. Never a muted version, never a third color.
-- Use IBM Plex Mono only for metadata (chrome labels, slide counters, chapter numbers, cover-meta lockup, stat notes, mono captions). Mono is the spec-sheet voice; never use it for content.
-- Render the cover-meta footer as a three-column mono lockup (left/center/right). This is the system's signature pattern.
-- Mute secondary text with opacity (.58 on yellow, .62 on near-black), not with a separate grey color. The system has no greys — only opacity variants of yellow and near-black.
-- Apply 2px rules to stat-card tops, chart baselines, and compare-panel dividers. The 2px weight differentiates "anchor" elements from chrome hairlines.
-- Use em-dashes in the surface accent color as bullet markers — never dots, never circles.
-- Pad slides tight (5vw / 5vh) so display type runs near the edge. Studio depends on type filling the canvas; generous padding breaks the scale effect.
-- Leave statement and chapter slides deliberately sparse. One massive headline against empty surface is the correct register for those slide types.
+- 每个尺度上的每个标题都用字重 900 全大写 Barlow，至少 -0.01em 负字距。文字即图形质量块的效果是系统身份。
+- 自由交替 `{colors.near-black}` 与 `{colors.acid-yellow}` 表面。两者都是一等，深 / 黄交替的节奏就是系统的节拍。
+- 每个标题都着表面强调色，深底黄、黄底近黑。绝不柔化版、绝不第三种颜色。
+- IBM Plex Mono 只用于元数据（外壳标签、页码、章节号、cover-meta 锁定、统计注、等宽图注）。等宽是规格表声部，绝不用于内容。
+- 把 cover-meta 页脚渲染成三栏等宽锁定（左 / 中 / 右）。这是系统的招牌式样。
+- 用不透明度柔化次级文字（黄 .58、近黑 .62），而非单独的灰色。系统没有灰，只有黄与近黑的不透明度变体。
+- 给统计卡顶、图表基线、比较面板分隔套 2px 线。2px 粗细把"锚"元素与外壳细线区分开。
+- 用表面强调色的破折号作项目标记，绝不用圆点、绝不用圆圈。
+- 页面内边距留紧（5vw / 5vh），让展示文字跑到近边缘。Studio 依赖文字填满画布，宽裕内边距会破掉尺度效果。
+- 让陈述与章节页刻意稀疏。一条巨大标题对空表面，是那些页型对的语域。
 
-### Don't
+### 不该做
 
-- Don't lowercase a headline. Every Barlow 900 element runs uppercase, no exceptions.
-- Don't use weight 800 or 700 at display scale. Display = 900 weight, always.
-- Don't add a third color to the palette. The system is binary plus opacity variants — adding red, blue, or any accent breaks the binary logic.
-- Don't round any corner. Strict rectangles everywhere; only the nav dots are circles.
-- Don't add drop shadows or gradients. The system is severely flat — depth comes from contrast and weight, not elevation.
-- Don't use Barlow for chrome metadata. Mono is the metadata voice; chrome in Barlow reads as content rather than spec.
-- Don't use Mono for headlines or body. Mono lives in the metadata role only.
-- Don't add italic, underline, or color variants for emphasis. The only emphasis mechanism is weight contrast (900 vs 400).
-- Don't introduce dashed borders. Every line in the system is solid.
-- Don't fill more than ~60% of a typical slide with content. The empty surface is structural — Studio reads as broken when crowded.
+- 不要把标题小写。每个 Barlow 900 元素都跑全大写，无例外。
+- 不要在展示尺度用字重 800 或 700。展示 = 始终字重 900。
+- 不要给调色板加第三种颜色。系统是二元加不透明度变体，加红、蓝或任何强调都会破掉二元逻辑。
+- 不要给任何角加圆角。处处严格矩形，只有导航点是圆。
+- 不要加投影或渐变。系统严苛扁平，纵深来自反差与字重，不来自抬升。
+- 不要用 Barlow 排外壳元数据。等宽是元数据声部，Barlow 外壳读作内容而非规格。
+- 不要用等宽排标题或正文。等宽只活在元数据角色里。
+- 不要加斜体、下划线或换色变体作强调。唯一的强调机制是字重反差（900 对 400）。
+- 不要引入虚线边框。系统里每条线都是实线。
+- 不要让内容填满典型一页超过约 60%。空表面是结构性的，Studio 一挤就读作坏了。
 
-## Responsive Behavior
+## 响应式行为
 
-Studio targets a 1920×1080 viewport and uses viewport-relative units (`vw`, `vh`) throughout, so layout scales fluidly between 1280×720 and 2560×1440 without breakpoints. There are no fixed pixel measurements except deck-chrome dots and the slide counter.
+Studio 以 1920×1080 视口为目标、通篇用视口相对单位（`vw`、`vh`），于是在 1280×720 与 2560×1440 间无需断点便流式缩放。除 deck 外壳圆点与页码外没有固定像素度量。
 
-### Scaling Behavior
+### 缩放行为
 
-- Display headline scales: 12vw → ~230px at 1920px viewport, ~154px at 1280px.
-- Body text scales: 1.15vw → ~22px at 1920px, ~15px at 1280px.
-- Padding scales: pad-x 5vw → ~96px at 1920px, ~64px at 1280px.
+- 展示标题缩放：12vw → 1920px 视口下约 230px，1280px 下约 154px。
+- 正文缩放：1.15vw → 1920px 下约 22px，1280px 下约 15px。
+- 内边距缩放：pad-x 5vw → 1920px 下约 96px，1280px 下约 64px。
 
-The 2px and 1px border weights are fixed pixel sizes that do not scale; at large viewports, borders read proportionally finer.
+2px 与 1px 边框粗细是固定像素尺寸、不缩放，视口大时边框在比例上显得更细。
 
-### Presenter Behavior
+### 放映行为
 
-The deck is JS-driven, with slides arranged side-by-side in a horizontal strip that translates left/right on navigation. The current slide carries `is-active`, which triggers any `[data-anim]` elements to animate in. Animations are sharper and shorter than Signal (0.5s duration vs 0.65s; 0.75s slide vs 0.85s) — "agency urgency, not editorial grace," per the source comment. Animation keyframes include fade-up, fade-in, reveal-right, reveal-left, scale-in with staggered `data-delay` (0–6).
+文稿由 JS 驱动，页并排坐在一条横向条里，导航时左右平移。当前页带 `is-active`，触发任何 `[data-anim]` 元素入场。动画比 Signal 更锐更短（0.5s 时长对 0.65s，0.75s 平移对 0.85s），按源码注释是"事务所的急迫，不是编辑的从容"。动画关键帧含 fade-up、fade-in、reveal-right、reveal-left、scale-in，配错峰 `data-delay`（0–6）。
 
-Nav dots and a slide counter sit fixed at the bottom of the viewport — small white-on-dark UI that is intentionally subtle.
+导航点与页码固定在视口底部，是刻意低调的深底白小 UI。
 
-### Print Behavior
+### 打印行为
 
-There is no embedded print stylesheet. The horizontal-strip layout would need to be unwound for static export.
+没有内嵌打印样式表。横向条布局需为静态导出解开。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin face (default) | Chinese face | Weight | Notes |
+| 角色 | 拉丁字面（默认） | 中文字面 | 字重 | 说明 |
 |---|---|---|---|---|
-| Display / h1 / h2 / quote-text / stat-value | Barlow 900 uppercase | 思源宋体 / Noto Serif SC | 700 | Studio's defining "type-as-graphic-mass" effect depends on a single typeface at maximum weight. NSC 700 is the heaviest Song-style serif on CDN that holds visual mass at 12vw / 7.5vw / 4.8vw display sizes. |
-| h3 | Barlow 700 uppercase | 思源宋体 / Noto Serif SC | 700 | Sub-headline weight matches. |
-| Lead / Body / Caption | Barlow 500 / 400 | 思源宋体 / Noto Serif SC | 400 | Minimal editorial body — NSC 400 reads cleanly in the system's sparse layouts. |
-| Metadata / chrome / label / stat-note | IBM Plex Mono 500 | IBM Plex Mono + Noto Sans Mono CJK fallback | 400–500 | Mono CJK is rarely needed (most metadata stays in Latin: dates, counters, studio names) but if Chinese appears in chrome, use Noto Sans Mono CJK SC. |
+| 展示 / h1 / h2 / quote-text / stat-value | Barlow 900 全大写 | 思源宋体 / Noto Serif SC | 700 | Studio 定义性的"文字即图形质量块"效果依赖单字面最大字重。NSC 700 是 CDN 上最重的宋体衬线，能在 12vw / 7.5vw / 4.8vw 展示尺寸撑住视觉分量。 |
+| h3 | Barlow 700 全大写 | 思源宋体 / Noto Serif SC | 700 | 副标题字重相配。 |
+| 导语 / 正文 / 图注 | Barlow 500 / 400 | 思源宋体 / Noto Serif SC | 400 | 极简编辑正文，NSC 400 在系统的稀疏布局里读得干净。 |
+| 元数据 / 外壳 / 标签 / 统计注 | IBM Plex Mono 500 | IBM Plex Mono + Noto Sans Mono CJK 回退 | 400–500 | 中文等宽很少需要（多数元数据留在拉丁：日期、计数器、工作室名），但外壳里出现中文时，用 Noto Sans Mono CJK SC。 |
 
-### Mixed-Content Strategy
+### 混排策略
 
-This template uses **Strategy A**: replace the Latin face entirely with the CJK face for any element rendering Chinese characters. Studio's identity is type-as-graphic-mass — and Barlow 900 cannot render CJK glyphs (no glyph coverage). Mixing Barlow Latin with NSC CJK in the same line via stack fallback creates a metric mismatch at display scale that breaks the "single typeface, single weight" register. Replace the entire `font-family` with NSC for any Chinese-content element.
+本模板用**策略 A**：任何渲染汉字的元素，把拉丁字面整体换成 CJK 字面。Studio 的身份是文字即图形质量块，而 Barlow 900 无法渲染 CJK 字形（无字形覆盖）。经栈回退在同一行里混 Barlow 拉丁与 NSC CJK，会在展示尺度造出度量错位，破掉"单字面、单字重"语域。任何含中文的元素都把整条 `font-family` 换成 NSC。
 
 ```css
 font-family: 'Noto Serif SC', 'Barlow', sans-serif;  /* display / headlines — CJK first */
@@ -430,11 +434,11 @@ font-family: 'Noto Serif SC', 'Barlow', sans-serif;  /* body — CJK first */
 font-family: 'IBM Plex Mono', 'Noto Sans Mono CJK SC', monospace;  /* mono — Latin first, CJK only if needed */
 ```
 
-For pure-Chinese decks, the system's "uppercase" identity drops away (Chinese has no case), so Studio's character shifts from "industrial agency manifesto" toward "editorial Chinese newspaper headline." This is a real register change — Chinese Studio reads as serious and severe, but no longer reads as Pentagram/Anti. Accept this trade-off or scope Chinese to specific slides while keeping the cover and section dividers in Latin Barlow.
+纯中文文稿里系统的"全大写"身份会脱落（中文没有大小写），于是 Studio 的性格从"工业事务所宣言"偏向"编辑式中文报纸标题"。这是真实的语域变化，中文 Studio 读起来郑重而严苛，但不再读作 Pentagram/Anti。接受这个取舍，或把中文限定在特定页、让封面与分节断口保留拉丁 Barlow。
 
-### Loading
+### 加载
 
-Add to `<head>` (Google Fonts hosts Noto Serif SC and Noto Sans SC):
+加到 `<head>`（Google Fonts 托管 Noto Serif SC 与 Noto Sans SC）：
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -442,56 +446,56 @@ Add to `<head>` (Google Fonts hosts Noto Serif SC and Noto Sans SC):
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 ```
 
-The Barlow stack in the original design.md already wires Noto Sans SC as the CJK fallback. We're upgrading to Noto Serif SC for headlines and body because the Song-style serif at 900 weight carries graphic mass equivalent to Barlow 900, where Noto Sans SC at the same weight reads as too smooth/round and loses the "graphic block" character. Keep Noto Sans SC available for body-only decks where the cleaner sans is preferred.
+原 design.md 里的 Barlow 栈已经把 Noto Sans SC 接为 CJK 回退。我们把标题与正文升级到 Noto Serif SC，因为 900 字重的宋体衬线承载的图形分量与 Barlow 900 相当，而同字重的 Noto Sans SC 读起来太顺太圆、丢掉"图形块"性格。偏好更干净无衬线的纯正文文稿可保留 Noto Sans SC。
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-Apply on any element rendering Chinese content (typically scope via `:lang(zh)` or `<span lang="zh">`):
+施于任何渲染中文内容的元素（典型用 `:lang(zh)` 或 `<span lang="zh">` 限定范围）：
 
-- **Line-height**: body 1.75–1.85 (Studio's 1.5–1.6 Barlow-default is fine for Latin but tight for CJK strokes); display 1.15–1.25 (looser than Latin 0.9–0.95 because CJK glyphs at 12vw need vertical breathing).
-- **Letter-spacing**: 0 on CJK. Studio's negative tracking (-0.01 to -0.03em) on display Latin is wrong for Chinese — CJK glyphs are pre-spaced; negative tracking causes glyphs to touch or overlap at display scale.
-- **Text-transform**: no uppercase on CJK. Studio's `text-transform: uppercase` on display tokens is a no-op on Han characters, but ensure no parent rule attempts unexpected behavior. The "uppercase" identity of the system drops away in Chinese.
-- **Full-width punctuation**: use `，。：；！？` (full-width) not `,.:;!?` (half-width). The full-width forms include their own surrounding whitespace and align to the CJK em-box.
-- **No period on display headlines**: Chinese headlines drop the terminal `。` — Studio headlines never carry periods in Latin and the rule extends to CJK.
-- **Pangu spacing (盘古之白)**: insert a thin space between CJK and adjacent Latin/numerals. Write `使用 Claude` not `使用Claude`; `2024 年` not `2024年`. Studio's mono metadata frequently sits beside Chinese labels — pangu spacing is essential there.
-- **One font per sentence**: don't mix NSC and Noto Sans SC inside a single line. The serif/sans switch should happen at element boundaries.
+- **行高**：正文 1.75–1.85（Studio 的 1.5–1.6 Barlow 默认对拉丁够用、对 CJK 笔画偏紧），展示 1.15–1.25（比拉丁 0.9–0.95 松，因为 12vw 的 CJK 字形需要纵向呼吸）。
+- **字距**：CJK 设 0。Studio 在展示拉丁上的负字距（-0.01 到 -0.03em）对中文是错的，CJK 字形本就预置间距，负字距会让展示尺度下的字形相碰或重叠。
+- **文字变换**：CJK 不用 uppercase。Studio 在展示 token 上的 `text-transform: uppercase` 对汉字是空操作，但要确保没有父级规则尝试意外行为。系统的"全大写"身份在中文里脱落。
+- **全角标点**：用 `，。：；！？`（全角）而非 `,.:;!?`（半角）。全角形式自带周围留白并贴合 CJK em 框。
+- **展示标题不加句号**：中文标题去掉末尾 `。`，Studio 标题在拉丁里从不带句号，规则延伸到 CJK。
+- **盘古之白（Pangu spacing）**：在 CJK 与相邻拉丁 / 数字间插入一个窄空格。写 `使用 Claude` 而非 `使用Claude`，`2024 年` 而非 `2024年`。Studio 的等宽元数据常挨着中文标签，那里盘古之白不可少。
+- **一句一款字体**：不要在同一行里混 NSC 与 Noto Sans SC。衬线 / 无衬线切换应发生在元素边界。
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-Studio's binary palette (acid yellow on near-black, near-black on acid yellow) is perfectly preserved in CJK — no color decisions change. NSC 700 in `{colors.acid-yellow}` against the `{colors.near-black}` field at 12vw display size carries the same visual punch as Barlow 900 in the same role; the saturated yellow against the warm dark surface makes Chinese characters read with the same poster-like authority.
+Studio 的二元配色（近黑上酸性黄、酸性黄上近黑）在 CJK 里完整保住，没有颜色决定要改。12vw 展示尺寸下、`{colors.near-black}` 场地上 `{colors.acid-yellow}` 的 NSC 700，与同角色 Barlow 900 带着同样的视觉冲击，饱和黄压暖深表面让汉字读出同样的海报式权威。
 
-The "type-as-graphic-mass" effect is genuinely altered in CJK, but in an interesting way: where Barlow 900 uppercase blocks read as Western signage / industrial manifesto, NSC 700 at display scale reads as **Chinese woodblock or letterpress poster** — equally severe, equally graphic, but in a different cultural register. For Chinese-language audiences this reads as authoritative and well-designed; for mixed audiences it shifts the perceived tone slightly toward "editorial publication" and away from "design agency."
+"文字即图形质量块"的效果在 CJK 里确实被改变，但方式有意思：Barlow 900 全大写块读作西方标牌 / 工业宣言，展示尺度的 NSC 700 读作**中文木刻或活字印刷海报**，同样严苛、同样图形化，但落在不同的文化语域。对中文读者这读作权威且设计精良，对混合受众则把感知调子略推向"编辑出版物"、远离"设计事务所"。
 
-The em-dash bullet markers translate directly — keep `—` in the surface accent color. The three-column mono cover-meta lockup also translates without modification — write the studio × client / presentation title / studio name in either Chinese or Latin and the IBM Plex Mono renders both cleanly (with CJK falling back to Noto Sans Mono CJK SC if Chinese appears in the lockup).
+破折号项目标记直接迁移，保留表面强调色的 `—`。三栏等宽 cover-meta 锁定也无需改动就能迁移，studio × client / 演示标题 / 工作室名用中文或拉丁写都行，IBM Plex Mono 都能干净渲染（锁定里出现中文时回退到 Noto Sans Mono CJK SC）。
 
-Stat cards work well in CJK — the 5.5vw italic-style stat numeral can render in NSC 700 if the value is a Chinese numeral (`三百万`) or stay in Barlow if Arabic (`3M`). The 2px top rule and the stat-note (mono) are unaffected.
+统计卡在 CJK 里运作良好，5.5vw 斜体式统计数字可在值为中文数字（`三百万`）时用 NSC 700 渲染，阿拉伯数字（`3M`）时留在 Barlow。2px 顶线与统计注（等宽）不受影响。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-- The "uppercase + negative tracking + weight 900" formula that defines the system cannot be reproduced in CJK. Chinese gets weight 700 (the heaviest NSC weight), no case transformation, and zero tracking. The system loses ~30% of its Latin character in pure-Chinese mode.
-- IBM Plex Mono is Latin-only at its full feature set. If Chinese characters appear in metadata (rare in Studio decks), they fall back to Noto Sans Mono CJK SC or system monospace, which may have visually different proportions than the Plex Mono around them.
-- NSC 900 weight (which would better match Barlow 900) exists on Google Fonts but is heavy enough at large sizes that counter shapes start to close — at 12vw display, NSC 900 may render some characters as near-solid blocks. NSC 700 is the recommended ceiling; for extreme display moments, test NSC 900 case-by-case.
-- The system's "alternate dark/yellow surfaces" rhythm is unaffected by CJK, but Chinese readers may parse the rhythm differently than Western readers (cultural reading conventions for color affect pacing perception).
+- 定义系统的"全大写 + 负字距 + 字重 900"公式在 CJK 里无法复现。中文得到字重 700（NSC 最重）、无大小写变换、零字距。纯中文模式下系统丢掉约 30% 的拉丁性格。
+- IBM Plex Mono 的完整特性集仅适用拉丁。元数据里出现汉字时（Studio 文稿里罕见），它们回退到 Noto Sans Mono CJK SC 或系统等宽，比例可能与周围的 Plex Mono 视觉不同。
+- NSC 900 字重（本可更好匹配 Barlow 900）在 Google Fonts 上存在，但大到在大尺寸下字腔开始闭合，12vw 展示时 NSC 900 可能把某些字渲染成近乎实心的块。NSC 700 是推荐上限，极端展示瞬间可逐例测试 NSC 900。
+- 系统的"深 / 黄表面交替"节奏不受 CJK 影响，但中文读者对节奏的解析可能与西方读者不同（颜色的文化阅读惯例影响节拍感知）。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new headline uses Barlow weight 900 uppercase with negative letter-spacing. Without all three (weight, case, tracking), the type loses its graphic-mass character.
-2. Any new slide alternates surface from the previous — generally don't run more than 2–3 dark slides in a row before a yellow break, or vice versa. Rhythm is part of the design.
-3. Any new chrome, metadata, label, or counter uses IBM Plex Mono. Mono in any other role breaks the metadata separation.
-4. Any new color introduces a third option to the binary palette — don't. Stick to yellow and near-black, with opacity variants for muting.
-5. Any new bullet list uses em-dash markers in the surface accent. Dot bullets break the system.
-6. Stat cards use the 2px top rule plus a 5.5vw weight 900 numeral. Smaller stats, sentence-case stats, or rounded stat tiles break the pattern.
-7. Cover slides use the three-column mono lockup at the bottom. Don't omit it; it is the system's most identifiable pattern.
-8. Chapter, statement, quote, and end slides are chromeless. Standard slides carry chrome and foot. Don't blend the two — a chromeless quote is correct; a chromed quote reads as a different system.
-9. New layouts should aim for one dominant element (the headline) plus minimal supporting elements. Multi-element layouts (more than 4–5 distinct regions) crowd the design.
-10. The 2px rule weight is reserved for anchors (stat-tops, baselines, compare dividers). Chrome and structural separators stay at 1px.
+1. 任何新标题都用负字距的全大写 Barlow 字重 900。三者（字重、大小写、字距）缺一，文字就丢掉图形质量块性格。
+2. 任何新页都与前一页交替表面，一般别连跑超过 2–3 张深色页才给一次黄断口，反之亦然。节奏是设计的一部分。
+3. 任何新外壳、元数据、标签、计数器都用 IBM Plex Mono。等宽用在别的角色会破掉元数据分离。
+4. 任何新颜色都会给二元调色板引入第三个选项，别加。守着黄与近黑，用不透明度变体柔化。
+5. 任何新项目列表都用表面强调色的破折号标记。圆点项目会破掉系统。
+6. 统计卡用 2px 顶线加 5.5vw 字重 900 数字。更小的统计、句式统计、或圆角统计块都会破掉式样。
+7. 封面页底部用三栏等宽锁定。别省掉它，它是系统最易认的式样。
+8. 章节、陈述、引文、收尾页无外壳，标准页带外壳与页脚。别把两者混，无外壳引文是对的，带外壳引文读作另一套系统。
+9. 新布局应以一个主导元素（标题）加最少辅助元素为目标。多元素布局（超过 4–5 个不同区域）会把设计挤满。
+10. 2px 线粗预留给锚点（统计顶、基线、比较分隔）。外壳与结构分隔保持 1px。
 
-## Known Gaps
+## 已知缺口
 
-- The two font families (Barlow, IBM Plex Mono) load from Google Fonts. If fonts fail, fallbacks are Noto Sans SC / system-ui (for Barlow) and monospace (for IBM Plex Mono); the system degrades significantly without Barlow 900, since the type-as-graphic-mass effect depends on the specific letterforms.
-- Chinese fallback (Noto Sans SC) is wired into the Barlow stack but ships with weights 400, 500, 700, 900 only — using h3 (700) and lead (500) in Chinese content renders cleanly; intermediate weights would fall back to closest available.
-- The `--c-bg-alt`, `--c-bg-light-alt`, and several muted color tokens are defined but used sparingly — they exist as a reserve for adjacent-surface differentiation.
-- The slide navigation JS is embedded inline; the system depends on it for the slide deck transform behavior and the `is-active` class management.
-- The cover image placeholder uses a hardcoded `IMAGE PLACEHOLDER` label and a flat near-black-alt fill; real image insertion requires replacing the placeholder div with a background-image-styled element matching the parent canvas.
-- The 5vw / 5vh padding is intentionally tight, which means at very small viewports headlines may approach the edge uncomfortably; the system is tuned for 16:9 displays at 1280px and above.
-- The compare panel uses a 2px right border on the left panel only (no left border on the right), creating an asymmetry between the two panels — this is intentional but worth noting if extending the compare layout to 3-up.
+- 两款字族（Barlow、IBM Plex Mono）从 Google Fonts 加载。字体加载失败时，回退是 Noto Sans SC / system-ui（Barlow）与 monospace（IBM Plex Mono），缺了 Barlow 900 系统显著退化，因为文字即图形质量块效果依赖具体字形。
+- 中文回退（Noto Sans SC）接在 Barlow 栈里，但出厂只有 400、500、700、900 字重，中文内容用 h3（700）与导语（500）渲染干净，中间字重会回退到最接近的可用值。
+- `--c-bg-alt`、`--c-bg-light-alt` 与若干柔化颜色 token 有定义但用得省，它们作为相邻表面区分的储备存在。
+- 翻页 JS 内联嵌着，系统依赖它做文稿 transform 行为与 `is-active` 类管理。
+- 封面图片占位用硬编码的 `IMAGE PLACEHOLDER` 标签与扁平 near-black-alt 填充，真正插入图片需把占位 div 换成带 background-image 样式、与父画布相配的元素。
+- 5vw / 5vh 内边距刻意紧，意味着视口极小时标题可能不舒服地逼近边缘，系统为 1280px 及以上的 16:9 显示调校。
+- 比较面板只在左面板用 2px 右边框（右面板无左边框），在两面板间造出一种非对称，这是刻意的，但把比较布局扩展到三连时值得记下。

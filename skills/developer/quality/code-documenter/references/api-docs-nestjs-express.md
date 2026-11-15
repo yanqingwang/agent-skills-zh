@@ -1,10 +1,14 @@
-# API Documentation: NestJS & Express
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/code-documenter/references/api-docs-nestjs-express.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## NestJS (@nestjs/swagger)
+# API 文档：NestJS 与 Express
 
-NestJS requires explicit decorators for OpenAPI documentation.
+## NestJS（@nestjs/swagger）
 
-### Controller Documentation
+NestJS 需要显式装饰器来生成 OpenAPI 文档。
+
+### Controller 文档
 
 ```typescript
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
@@ -50,7 +54,7 @@ export class UsersController {
 }
 ```
 
-### DTO Documentation
+### DTO 文档
 
 ```typescript
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -82,11 +86,11 @@ export class CreateUserDto {
 }
 ```
 
-## Express (swagger-jsdoc)
+## Express（swagger-jsdoc）
 
-Express uses JSDoc comments with swagger annotations.
+Express 使用带 swagger 注解的 JSDoc 注释。
 
-### Setup
+### 配置
 
 ```javascript
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -107,7 +111,7 @@ const specs = swaggerJsdoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 ```
 
-### Route Documentation
+### 路由文档
 
 ```javascript
 /**
@@ -160,7 +164,7 @@ router.post('/users', createUser);
 router.get('/users/:id', getUser);
 ```
 
-### Schema Documentation
+### Schema 文档
 
 ```javascript
 /**
@@ -196,25 +200,25 @@ router.get('/users/:id', getUser);
  */
 ```
 
-## Quick Reference
+## 速查表
 
-| NestJS Decorator | Purpose |
+| NestJS 装饰器 | 用途 |
 |------------------|---------|
-| `@ApiTags()` | Group endpoints |
-| `@ApiOperation()` | Endpoint summary |
-| `@ApiResponse()` | Response documentation |
-| `@ApiParam()` | Path parameter |
-| `@ApiQuery()` | Query parameter |
-| `@ApiBody()` | Request body |
-| `@ApiBearerAuth()` | Auth requirement |
-| `@ApiProperty()` | DTO property |
+| `@ApiTags()` | 给端点分组 |
+| `@ApiOperation()` | 端点摘要 |
+| `@ApiResponse()` | 响应文档 |
+| `@ApiParam()` | 路径参数 |
+| `@ApiQuery()` | 查询参数 |
+| `@ApiBody()` | 请求体 |
+| `@ApiBearerAuth()` | 认证要求 |
+| `@ApiProperty()` | DTO 属性 |
 
-| Express swagger-jsdoc | Purpose |
+| Express swagger-jsdoc | 用途 |
 |-----------------------|---------|
-| `@swagger` | Start swagger block |
-| `tags` | Group endpoints |
-| `summary` | Short description |
-| `parameters` | Path/query params |
-| `requestBody` | Request body schema |
-| `responses` | Response schemas |
-| `$ref` | Reference schema |
+| `@swagger` | 起始 swagger 块 |
+| `tags` | 给端点分组 |
+| `summary` | 简述 |
+| `parameters` | 路径/查询参数 |
+| `requestBody` | 请求体 schema |
+| `responses` | 响应 schema |
+| `$ref` | 引用 schema |

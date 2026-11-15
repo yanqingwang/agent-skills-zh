@@ -301,310 +301,314 @@ components:
     description: "Small pink right-arrow SVG used between process steps."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/pink-script/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Pink Script is a **nocturnal couture editorial system** built on a single atmospheric premise: a deep warm-black surface lit from the upper-left by a slightly warmer #1A1218 ellipse that fades to near-black across the lower-right. The off-center light source reads as a studio softbox catching one corner of a magazine spread. Over this, a subtle film-grain overlay at 8% opacity with screen blend adds the photographic graininess of late-night editorial photography. Inside this surface sits a 1px hairline interior frame (paper-blush at 14% opacity, inset 36px from each edge) — the editorial border of every page. Without the lit gradient, the film grain, and the interior frame, the system collapses into flat dark UI.
+Pink Script 是一套**夜色高级时装编辑系统**，建立在单一氛围前提上：一块深暖黑表面，被左上方略暖的 #1A1218 椭圆照亮，向右下渐隐到近黑。偏轴光源读作影棚柔光箱扫到杂志跨页的一角。其上一层 8% 不透明度、screen 混合的细微胶片颗粒，添上深夜编辑摄影的颗粒感。表面里嵌一道 1px 细线内框（paper-blush 14% 不透明度，距每边内缩 36px），是每页的编辑边框。没有打光渐变、胶片颗粒、内框这三者，系统就塌成扁平深色 UI。
 
-The typeface stack is a deliberate three-voice editorial pairing. **DM Serif Display** carries every editorial moment — script titles (treated as the system's "pink script"), serif headlines, stat figures, quote text. It runs at weight 400 only; the face has just one weight and that's the system's display voice. The serif scales freely from 32px (table labels) all the way up to 600px (section-divider numerals). **Inter** at weight 300 carries every body paragraph, lead, description, and caption — the ultra-light geometric sans is the system's calm prose voice. **JetBrains Mono** at weight 400 carries every label, kicker, page number, axis tag, runner, and footer string — always uppercase with at least 0.08em positive tracking.
+字体栈是刻意的三声部编辑搭配。**DM Serif Display** 承载每个编辑瞬间：脚本标题（被当作系统的 "pink script"）、衬线标题、统计数字、引文文字。它只跑字重 400，这款字面就一个字重，也正是系统的展示声部。衬线尺寸自由伸缩，从 32px（表格标签）一路到 600px（分节断口数字）。**Inter** 字重 300 承载每段正文、导语、描述、图注，极轻几何无衬线是系统平静的散文声部。**JetBrains Mono** 字重 400 承载每个标签、眉题、页码、坐标轴标记、跑马条、页脚串，始终全大写、至少 0.08em 正字距。
 
-The palette is anchored to a single signature: **hot pink fuchsia** (`{colors.pink}` — #ED3D8C) against deep warm-black (`{colors.ink-deep}` — #060507). The pink is the entire editorial accent system; it appears as script title color, as kicker color, as chart line color, as pill border, as inline `<em>` switch inside paper-blush headlines, as callout numerals, as rule color, and as the soft halo (text-shadow glow) behind hero script titles. **Paper-blush** (`{colors.paper-blush}` — #F5EDF1) is the secondary text color — used for editorial sans-serif headlines, paragraph copy, and any moment that should read as ink rather than highlight. Muted paper at 55% opacity handles secondary text; hairline paper at 14% handles separators and the interior frame.
+配色锚定在单一招牌上：深暖黑（`{colors.ink-deep}` — #060507）上的**热粉洋红**（`{colors.pink}` — #ED3D8C）。粉色就是整套编辑强调系统，它作脚本标题色、眉题色、图表线色、胶囊边框、paper-blush 标题里的行内 `<em>` 切换、标注数字、线色，以及英雄脚本标题背后柔和的光晕（text-shadow 辉光）。**Paper-blush**（`{colors.paper-blush}` — #F5EDF1）是次级文字色，用于编辑无衬线标题、段落文案，以及一切该读作墨而非高亮的瞬间。55% 不透明度的柔化 paper 处理次级文字，14% 的细线 paper 处理分隔与内框。
 
-Depth is created through three layered mechanisms: the **off-center radial gradient surface** (lit from the upper-left), the **subtle film-grain overlay** (8% opacity, screen blend, adds photographic texture), and the **pink halo text-shadow** on hero script titles (a soft 80–120px glow that simulates the light bleed of large neon-saturated type on photographic paper). There are no drop shadows on any element; the depth is atmospheric and photographic, not structural.
+纵深由三层叠置机制建立：**偏轴径向渐变表面**（左上打光）、**细微胶片颗粒叠层**（8% 不透明度、screen 混合、添摄影纹理）、**英雄脚本标题上的粉色光晕 text-shadow**（柔和 80–120px 辉光，模拟大号霓虹饱和字在相纸上的漏光）。任何元素都没有投影，纵深是氛围的、摄影的，不是结构的。
 
-**Density philosophy: sparse-medium with one hero moment.** Pink Script reads as elegant when a single oversized script anchors the slide and the rest is generous negative space punctuated by 2–4 small editorial fragments (a runner, a kicker, a paragraph, a footer). A slide with the hero script taking up 60–70% of the canvas and the supporting copy quietly orbiting the remaining margin is correct. Cramming the canvas with multiple equally-weighted regions breaks the late-night magazine feeling. The exception is the stats slide (5 stat rows side-by-side), the comparison matrix (full-grid table), and the system slide (multiple panels) — these slides are denser by design because the editorial purpose is reference, not poetry. Process and TOC slides are populated but always hierarchical: a giant script header dominates, with smaller card rows orbiting beneath.
+**密度取向：偏疏，带一个英雄瞬间。** 一条超大脚本锚定页面、其余是宽裕负空间、点缀 2–4 个小编辑碎片（跑马条、眉题、一段、页脚）时，Pink Script 才显得优雅。英雄脚本占画布 60–70%、辅助文案安静绕在余下页边，是对的。把画布塞进多个等权区域会破掉深夜杂志感。例外是统计页（5 行统计并排）、比较矩阵（满网格表）、系统页（多面板），这些页按设计更密，因为编辑目的是查阅而非诗。流程页与目录页填得满，但始终有层级：一个巨型脚本头主导，较小的卡片行绕在下面。
 
-**Key Characteristics:**
-- Deep warm-black surface (`{components.slide-surface}`) lit from the upper-left by a radial gradient ellipse.
-- A subtle film-grain overlay (`{components.film-grain}`) on every slide — opacity 0.08, screen blend.
-- A 1px paper-blush interior frame (`{components.hairline-frame}`) inset 36px from each edge, present on every slide.
-- Hot fuchsia pink (`{colors.pink}`) is the single chromatic accent — used as script color, kicker color, line color, pill outline, inline emphasis, and the soft halo behind hero scripts.
-- DM Serif Display carries every editorial moment, scaling from 32px to 600px. There is no second display face.
-- Inter at weight 300 carries every body paragraph — ultra-light sans is the system's prose voice.
-- JetBrains Mono uppercase at 0.08em+ tracking carries every label, page number, and runner string.
-- Top runner and bottom footer chromes appear on every slide; the runner brand text is pink, everything else in chrome is muted paper-blush.
-- The inline `<em>` element switches paper-blush serif headlines to pink — the system's editorial emphasis mechanism.
+**关键特征：**
+- 深暖黑表面（`{components.slide-surface}`），由径向渐变椭圆从左上打光。
+- 每页一层细微胶片颗粒（`{components.film-grain}`），不透明度 0.08、screen 混合。
+- 1px paper-blush 内框（`{components.hairline-frame}`），距每边内缩 36px，每页都有。
+- 热洋红粉（`{colors.pink}`）是唯一彩色强调，作脚本色、眉题色、线色、胶囊描边、行内强调、英雄脚本背后的柔光晕。
+- DM Serif Display 承载每个编辑瞬间，尺寸从 32px 到 600px。没有第二款展示字面。
+- Inter 字重 300 承载每段正文，极轻无衬线是系统的散文声部。
+- JetBrains Mono 全大写、0.08em+ 字距承载每个标签、页码、跑马条串。
+- 顶部跑马条与底部页脚外壳出现在每页，跑马条品牌文字是粉色，外壳里其余是柔化 paper-blush。
+- 行内 `<em>` 元素把 paper-blush 衬线标题切成粉色，是系统的编辑强调机制。
 
-## Colors
+## 颜色
 
-### Palette
+### 调色板
 
-- **Ink Deep** (`{colors.ink-deep}` — #060507): The base surface color. A near-black with a faint warm shift. Combined with the radial gradient, this anchors the dark editorial surface.
-- **Ink Violet** (`{colors.ink-violet}` — #0F0D11): A slightly lifted dark with a violet cast. Reserved alternate dark — available but rarely used in current slide types.
-- **Paper Blush** (`{colors.paper-blush}` — #F5EDF1): A warm off-white with a faint pink undertone. The primary editorial text color, the QR-tile background, and the secondary highlight surface. Reads as paper rather than pure white.
-- **Pink** (`{colors.pink}` — #ED3D8C): Hot fuchsia. The system's single chromatic accent. Used as the script title color, kicker color, inline `<em>` color, callout numeral color, rule color, chart line color, pill outline color, and the source color for the halo text-shadow.
-- **Pink Light** (`{colors.pink-light}` — #FF66A8): A brighter pink. Defined but not used in current slide types.
-- **Pink Deep** (`{colors.pink-deep}` — #B81D67): A darker pink. Defined but not used in current slide types.
-- **Line Pink** (`{colors.line-pink}` — rgba(237,61,140,0.32)): Pink at 32% opacity for table row dividers and chart axis lines.
-- **Mute Paper** (`{colors.mute-paper}` — rgba(245,237,241,0.55)): Paper-blush at 55% for muted body text and metadata.
-- **Hair Paper** (`{colors.hair-paper}` — rgba(245,237,241,0.14)): Paper-blush at 14% for the interior hairline frame, dim pill borders, and toc-row dividers.
+- **深墨**（`{colors.ink-deep}` — #060507）：基底表面色。带一丝暖调的近黑。配上径向渐变，锚住深色编辑表面。
+- **紫墨**（`{colors.ink-violet}` — #0F0D11）：略抬起的深、带紫调。保留的备选深色，可用但当前页型很少用。
+- **Paper Blush**（`{colors.paper-blush}` — #F5EDF1）：带一丝粉底的暖米白。主编辑文字色、QR 片背景、次级高亮表面。读作纸而非纯白。
+- **粉**（`{colors.pink}` — #ED3D8C）：热洋红。系统唯一彩色强调。用作脚本标题色、眉题色、行内 `<em>` 色、标注数字色、线色、图表线色、胶囊描边色，也是光晕 text-shadow 的源色。
+- **浅粉**（`{colors.pink-light}` — #FF66A8）：更亮的粉。有定义，当前页型未用。
+- **深粉**（`{colors.pink-deep}` — #B81D67）：更深的粉。有定义，当前页型未用。
+- **线粉**（`{colors.line-pink}` — rgba(237,61,140,0.32)）：32% 不透明度的粉，用于表格行分隔与图表轴线。
+- **柔 Paper**（`{colors.mute-paper}` — rgba(245,237,241,0.55)）：55% 的 paper-blush，用于柔化正文与元数据。
+- **细 Paper**（`{colors.hair-paper}` — rgba(245,237,241,0.14)）：14% 的 paper-blush，用于内细线框、暗胶囊边框、目录行分隔。
 
-### Defaults
+### 默认值
 
-- **Default slide surface**: `{components.slide-surface}` — the lit warm-black radial gradient. Always.
-- **Default film grain**: `{components.film-grain}` at opacity 0.08 with screen blend. Non-optional.
-- **Default interior frame**: `{components.hairline-frame}` at 1px paper-blush 14%. Non-optional.
-- **Default primary headline color**: For a hero script moment, `{colors.pink}`. For an editorial headline that should read as ink (not highlight), `{colors.paper-blush}`.
-- **Default body text color**: `{colors.paper-blush}` for primary copy; `{colors.mute-paper}` for muted lead and description.
-- **Default kicker color**: `{colors.pink}`. The eyebrow label is always pink.
-- **Default label / metadata color**: `{colors.mute-paper}` for runner, footer, and metadata.
-- **Default line / divider color**: `{colors.pink}` at 45% opacity for soft pink rules; `{colors.hair-paper}` for muted hairlines.
-- **Default emphasis mechanism inside a paper-blush headline**: wrap in `<em>` to switch that word to `{colors.pink}` (font-style stays upright).
-- **Default pill state**: outline (`{components.pill-outline}`) — pink border, pink text.
-- **Default chart series**: pink line for primary; muted paper-blush dashed for secondary.
+- **默认页面表面**：`{components.slide-surface}`，打光的暖黑径向渐变。始终如此。
+- **默认胶片颗粒**：`{components.film-grain}`，不透明度 0.08、screen 混合。不可省略。
+- **默认内框**：`{components.hairline-frame}`，1px paper-blush 14%。不可省略。
+- **默认主标题色**：英雄脚本瞬间用 `{colors.pink}`；该读作墨而非高亮的编辑标题用 `{colors.paper-blush}`。
+- **默认正文色**：主文案 `{colors.paper-blush}`，柔化导语与描述 `{colors.mute-paper}`。
+- **默认眉题色**：`{colors.pink}`。eyebrow 标签始终是粉。
+- **默认标签 / 元数据色**：跑马条、页脚、元数据用 `{colors.mute-paper}`。
+- **默认线 / 分隔色**：柔和粉线用 45% 不透明度的 `{colors.pink}`，柔化细线用 `{colors.hair-paper}`。
+- **paper-blush 标题内默认强调机制**：用 `<em>` 包住，把那个词切到 `{colors.pink}`（font-style 保持直立）。
+- **默认胶囊态**：描边（`{components.pill-outline}`），粉边框、粉文字。
+- **默认图表系列**：主线粉实线，次线柔化 paper-blush 虚线。
 
-The pink is the only chromatic color in regular use; the other pink variants (Pink Light, Pink Deep) are reserved. Don't introduce a second chromatic accent — Pink Script's identity is that it is monochromatically pink.
+粉是常规使用中唯一的彩色，其余粉变体（Pink Light、Pink Deep）保留。不要引入第二种彩色强调，Pink Script 的身份就是单色地粉。
 
-## Typography
+## 排印
 
-### Font Family
+### 字族
 
-The system loads three web fonts: **DM Serif Display** (weight 400, italic 0 only) carries every editorial / display moment from 32px up to 600px; **Inter** (weights 300, 400, 500, 600) carries every body paragraph and lead; **JetBrains Mono** (weights 400, 500) carries every label, runner, footer, and metadata string.
+系统加载三款网络字体：**DM Serif Display**（字重 400，仅 italic 0）承载从 32px 到 600px 的每个编辑 / 展示瞬间；**Inter**（字重 300、400、500、600）承载每段正文与导语；**JetBrains Mono**（字重 400、500）承载每个标签、跑马条、页脚、元数据串。
 
-The emotional register of each face is distinct:
-- DM Serif Display reads as **editorial, perfume-magazine, late-night couture** — the face has elegant high-contrast strokes and the system uses it for every moment that should feel literary or magazine-typeset.
-- Inter at weight 300 reads as **calm, contemporary, neutrally elegant** — the ultra-light weight matches the editorial tone without competing with the serif.
-- JetBrains Mono reads as **archival, boutique-catalog, edition-numbered** — the mono uppercase voice handles edition numbers, page positions, runner brand text, and section tags.
+每款字面的情绪语域各自分明：
+- DM Serif Display 读作**编辑、香水杂志、深夜高级时装**，笔画对比优雅，系统把一切该有文学或杂志排印感的瞬间交给它。
+- Inter 字重 300 读作**平静、当代、中性优雅**，极轻字重贴合编辑调性又不与衬线抢。
+- JetBrains Mono 读作**档案、精品目录、带版次号**，等宽全大写声部处理版次号、页位置、跑马条品牌文字、分节标签。
 
-A key inline mixing rule: **the `<em>` element inside a DM Serif Display headline switches color to `{colors.pink}`** (font-style normalized to upright). This is the system's primary headline emphasis — pink ink inside paper-blush serif text.
+一条关键行内混排规则：**DM Serif Display 标题里的 `<em>` 元素切到 `{colors.pink}` 色**（font-style 归一为直立）。这是系统的主标题强调，paper-blush 衬线文字里的粉色墨。
 
-A second inline mixing rule: **a `<sup>` element inside a stat figure renders at ~36px in `{colors.paper-blush}`** with a slight top-padding offset — used for unit suffixes (%, ×, M).
+第二条行内混排规则：**统计数字里的 `<sup>` 元素以约 36px 渲染成 `{colors.paper-blush}`**，带一点顶部内边距偏移，用于单位后缀（%、×、M）。
 
-### Type Scale
+### 排印比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.script-section}` | 600px | DM Serif Display | 400 | Section-divider mega numeral |
-| `{typography.script-huge}` | 540px | DM Serif Display | 400 | Hero script in a feature display position |
-| `{typography.script-giant}` | 360px | DM Serif Display | 400 | Large editorial script title |
-| `{typography.script-cover}` | 280px | DM Serif Display | 400 | Cover script title |
-| `{typography.script-large}` | 220px | DM Serif Display | 400 | TOC primary script |
-| `{typography.script-med}` | 156px | DM Serif Display | 400 | Process slide primary headline |
-| `{typography.serif-cta}` | 140px | DM Serif Display | 400 | Closing CTA headline (paper-blush color) |
-| `{typography.script-sm}` | 132px | DM Serif Display | 400 | Stat-slide headline, matrix headline |
-| `{typography.serif-stat}` | 116px | DM Serif Display | 400 | Stat row figure |
-| `{typography.callout-num}` | 120px | DM Serif Display | 400 | Chart callout numeral |
-| `{typography.serif-quote}` | 92px | DM Serif Display | 400 | Quote-slide body text |
-| `{typography.serif-chart-h}` | 90px | DM Serif Display | 400 | Chart-slide headline |
-| `{typography.serif-section-h}` | 88px | DM Serif Display | 400 | Section divider supporting headline |
-| `{typography.serif-toc-num}` | 64px | DM Serif Display | 400 | TOC row numeral |
-| `{typography.serif-toc-title}` | 56px | DM Serif Display | 400 | TOC row title |
-| `{typography.serif-quote-attr}` | 48px | DM Serif Display | 400 | Quote attribution name |
-| `{typography.serif-process-h}` | 38px | DM Serif Display | 400 | Process step heading |
-| `{typography.serif-matrix-label}` | 32px | DM Serif Display | 400 | Matrix row label |
-| `{typography.body}` | 24px | Inter | 300 | Standard body paragraph |
-| `{typography.body-muted}` | 22px | Inter | 300 | Muted lead and description |
-| `{typography.body-toc-desc}` | 24px | Inter | 300 | TOC row description |
-| `{typography.mono-runner}` | 24px | JetBrains Mono | 400 | Top runner and bottom footer |
-| `{typography.mono-kicker}` | 22px | JetBrains Mono | 400 | Pink kicker eyebrow |
-| `{typography.mono-label}` | 22px | JetBrains Mono | 400 | Standard paper-blush label |
-| `{typography.mono-cover-pre}` | 28px | JetBrains Mono | 400 | Cover preamble line (with 0.42em wide tracking) |
-| `{typography.mono-pill}` | 16px | JetBrains Mono | 400 | Pill text |
+| `{typography.script-section}` | 600px | DM Serif Display | 400 | 分节断口超大数字 |
+| `{typography.script-huge}` | 540px | DM Serif Display | 400 | 特性展示位里的英雄脚本 |
+| `{typography.script-giant}` | 360px | DM Serif Display | 400 | 大号编辑脚本标题 |
+| `{typography.script-cover}` | 280px | DM Serif Display | 400 | 封面脚本标题 |
+| `{typography.script-large}` | 220px | DM Serif Display | 400 | 目录主脚本 |
+| `{typography.script-med}` | 156px | DM Serif Display | 400 | 流程页主标题 |
+| `{typography.serif-cta}` | 140px | DM Serif Display | 400 | 收尾 CTA 标题（paper-blush 色） |
+| `{typography.script-sm}` | 132px | DM Serif Display | 400 | 统计页标题、矩阵标题 |
+| `{typography.serif-stat}` | 116px | DM Serif Display | 400 | 统计行数字 |
+| `{typography.callout-num}` | 120px | DM Serif Display | 400 | 图表标注数字 |
+| `{typography.serif-quote}` | 92px | DM Serif Display | 400 | 引文页正文 |
+| `{typography.serif-chart-h}` | 90px | DM Serif Display | 400 | 图表页标题 |
+| `{typography.serif-section-h}` | 88px | DM Serif Display | 400 | 分节断口辅助标题 |
+| `{typography.serif-toc-num}` | 64px | DM Serif Display | 400 | 目录行数字 |
+| `{typography.serif-toc-title}` | 56px | DM Serif Display | 400 | 目录行标题 |
+| `{typography.serif-quote-attr}` | 48px | DM Serif Display | 400 | 引文署名 |
+| `{typography.serif-process-h}` | 38px | DM Serif Display | 400 | 流程步骤标题 |
+| `{typography.serif-matrix-label}` | 32px | DM Serif Display | 400 | 矩阵行标签 |
+| `{typography.body}` | 24px | Inter | 300 | 标准正文段落 |
+| `{typography.body-muted}` | 22px | Inter | 300 | 柔化导语与描述 |
+| `{typography.body-toc-desc}` | 24px | Inter | 300 | 目录行描述 |
+| `{typography.mono-runner}` | 24px | JetBrains Mono | 400 | 顶部跑马条与底部页脚 |
+| `{typography.mono-kicker}` | 22px | JetBrains Mono | 400 | 粉色眉题 eyebrow |
+| `{typography.mono-label}` | 22px | JetBrains Mono | 400 | 标准 paper-blush 标签 |
+| `{typography.mono-cover-pre}` | 28px | JetBrains Mono | 400 | 封面引导行（0.42em 宽字距） |
+| `{typography.mono-pill}` | 16px | JetBrains Mono | 400 | 胶囊文字 |
 
-### Defaults
+### 默认值
 
-- **Default primary content headline**: `{typography.script-sm}` (132px) — when the slide is a content moment with a strong headline.
-- **Default cover / opening headline**: `{typography.script-cover}` (280px) — the cover script lockup.
-- **Default section-divider mega numeral**: `{typography.script-section}` (600px).
-- **Default body paragraph**: `{typography.body}` (24px Inter 300).
-- **Default muted lead / description**: `{typography.body-muted}` (22px Inter 300, mute-paper color).
-- **Default label / kicker**: `{typography.mono-kicker}` (22px JetBrains Mono, pink).
-- **Default footer / runner**: `{typography.mono-runner}` (24px JetBrains Mono).
-- **Default stat figure**: `{typography.serif-stat}` (116px) with a 36px paper-blush `<sup>` for unit.
-- **Default weight for any display element**: 400 (DM Serif Display has only one weight).
-- **Default weight for body**: 300.
+- **默认主内容标题**：`{typography.script-sm}`（132px），用于带强标题的内容瞬间。
+- **默认封面 / 开场标题**：`{typography.script-cover}`（280px），封面脚本锁定。
+- **默认分节断口超大数字**：`{typography.script-section}`（600px）。
+- **默认正文段落**：`{typography.body}`（24px Inter 300）。
+- **默认柔化导语 / 描述**：`{typography.body-muted}`（22px Inter 300，mute-paper 色）。
+- **默认标签 / 眉题**：`{typography.mono-kicker}`（22px JetBrains Mono，粉）。
+- **默认页脚 / 跑马条**：`{typography.mono-runner}`（24px JetBrains Mono）。
+- **默认统计数字**：`{typography.serif-stat}`（116px），配 36px paper-blush `<sup>` 作单位。
+- **任何展示元素默认字重**：400（DM Serif Display 只有一个字重）。
+- **正文默认字重**：300。
 
-When unsure, the canonical pattern is: a 22px pink kicker + a 132–156px DM Serif Display headline (with one `<em>`-wrapped word in pink if extra emphasis is needed) + a 22–24px Inter 300 paragraph in muted paper-blush. That three-element pattern is the system's most reliable rhythm.
+拿不准时，标准式样是：22px 粉眉题 + 132–156px DM Serif Display 标题（需额外强调时把一个词包进 `<em>` 成粉）+ 22–24px Inter 300 段落、柔化 paper-blush。这三元素式样是系统最稳的节奏。
 
-### Signature Treatments
+### 招牌处理
 
-These treatments are **non-optional whenever the corresponding element type is used**:
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every slide carries the radial-gradient surface, the film-grain overlay, AND the 1px paper-blush interior frame.** All three together. Removing any one collapses the editorial-magazine reading.
-- **Every hero script element (sizes 280px and larger) carries the pink halo text-shadow.** `{components.pink-glow}` for hero scripts (80px blur); `{components.pink-glow-mega}` for section-divider mega numerals (120px blur). The halo simulates the light bleed of neon-saturated print.
-- **Every script color is `{colors.pink}`.** DM Serif Display in any other color is not "script" — it becomes "serif headline." The pink color is what defines script vs. headline in this system.
-- **Paper-blush serif headlines may switch one word to pink via `<em>`** — this is the system's headline emphasis mechanism. The `<em>` stays upright (font-style: normal).
-- **DM Serif Display headlines always have `padding-bottom: .1em` (or `.12em` for the largest script).** This compensates for the serif descenders so the visual baseline reads correctly aligned.
-- **All JetBrains Mono is uppercase with at least 0.08em positive tracking** (most chrome and labels use 0.12–0.18em; the cover preamble uses 0.42em).
-- **Body text is always Inter at weight 300.** Inter at any other weight is not body — switching to 400 reads as a different tone.
-- **The kicker is always pink** in `{colors.pink}`. The eyebrow color is non-negotiable.
-- **Runner brand text on the left is always pink; the right-side meta is always muted paper-blush.** The pink brand text is the system's persistent identity signal.
-- **The page-position footer uses paper-blush base text with a pink `<em>` for the current number.** Format: `<span>03 / 09</span>` where `03` is wrapped in `<em>` to render pink.
+- **每页都带径向渐变表面、胶片颗粒叠层，以及 1px paper-blush 内框。** 三者齐备。去掉任一个都会塌掉编辑杂志读感。
+- **每个英雄脚本元素（280px 及以上）都带粉色光晕 text-shadow。** 英雄脚本用 `{components.pink-glow}`（80px 模糊），分节断口超大数字用 `{components.pink-glow-mega}`（120px 模糊）。光晕模拟霓虹饱和印刷的漏光。
+- **每个脚本颜色都是 `{colors.pink}`。** 别种颜色的 DM Serif Display 不算"脚本"，会变成"衬线标题"。在本系统里，粉色正是区分脚本与标题的东西。
+- **paper-blush 衬线标题可用 `<em>` 把一个词切成粉**，这是系统的标题强调机制。`<em>` 保持直立（font-style: normal）。
+- **DM Serif Display 标题始终带 `padding-bottom: .1em`**（最大脚本用 `.12em`）。这补偿衬线下伸部，让视觉基线读起来对齐。
+- **所有 JetBrains Mono 都全大写、至少 0.08em 正字距**（多数外壳与标签 0.12–0.18em，封面引导行 0.42em）。
+- **正文始终是 Inter 字重 300。** 别种字重的 Inter 不是正文，换成 400 读作另一种调性。
+- **眉题始终是 `{colors.pink}` 粉。** eyebrow 颜色不可商量。
+- **跑马条左侧品牌文字始终粉，右侧元数据始终柔化 paper-blush。** 粉品牌文字是系统常驻的身份信号。
+- **页位置页脚用 paper-blush 底文字配粉色 `<em>` 标当前数字。** 格式：`<span>03 / 09</span>`，其中 `03` 包进 `<em>` 渲染成粉。
 
-### Typography Principles
+### 排印原则
 
-The rhythm of Pink Script is **oversized pink script + paper-blush serif paragraph headline + muted Inter prose + small mono editorial tag**. Switching any voice (e.g., setting a script in Inter, or body in DM Serif) collapses the system's editorial register. The serif scales freely from 32px to 600px; choose the size based on the slide's hero moment, not on a fixed scale.
+Pink Script 的节奏是**超大粉脚本 + paper-blush 衬线段落标题 + 柔化 Inter 散文 + 小号等宽编辑标签**。换掉任一声音（例如把脚本排成 Inter，或把正文排成 DM Serif）都会塌掉系统的编辑语域。衬线从 32px 到 600px 自由伸缩，按页面的英雄瞬间挑尺寸，不按固定比例。
 
-Italic letterforms are not used (DM Serif Display does have an italic, but it's not loaded by the template). The `<em>` tag is repurposed as a pink color switch. Underline is not used. Bold weight is not available in DM Serif Display, and using bold Inter for body breaks the calm prose voice.
+斜体字形不用（DM Serif Display 确有斜体，但模板没加载）。`<em>` 标签被改作粉色换色开关。下划线不用。DM Serif Display 没有粗体字重，用粗 Inter 排正文会破掉平静的散文声部。
 
-## Layout
+## 布局
 
-### Canvas System
+### 画布系统
 
-The system targets a **fixed 1920×1080 canvas** rendered inside a `<deck-stage>` web component. All sizes are pixel-fixed; the stage handles proportional scaling.
+系统以**固定 1920×1080 画布**为目标，渲染在 `<deck-stage>` web component 内。所有尺寸像素固定，stage 负责等比缩放。
 
-Most slides use **absolute positioning** with edge-anchored elements. The standard content area is `inset: 140px 60px 140px 60px` — a 140px top reserve for the runner + headline area, 140px bottom reserve for the footer, and 60px left/right edge margins.
+多数页用**绝对定位**配贴边元素。标准内容区是 `inset: 140px 60px 140px 60px`，顶部留 140px 给跑马条 + 标题区，底部留 140px 给页脚，左右 60px 页边距。
 
-### Padding and Anchoring
+### 内边距与锚定
 
-| Anchor | Value | Use |
+| 锚点 | 值 | 用途 |
 |---|---|---|
-| `edge-x` | 60px | Left and right edge margins for content |
-| `edge-top-chrome` | 60px | Top inset for the runner chrome |
-| `edge-bottom-chrome` | 60px | Bottom inset for the footer chrome |
-| `content-top` | 140px | Top inset for slide body content (below runner) |
-| `content-bottom` | 140px | Bottom inset for slide body content (above footer) |
-| `inner-frame-inset` | 36px | The hairline interior frame inset |
+| `edge-x` | 60px | 内容左右页边距 |
+| `edge-top-chrome` | 60px | 跑马条外壳顶部内缩 |
+| `edge-bottom-chrome` | 60px | 页脚外壳底部内缩 |
+| `content-top` | 140px | 页正文内容顶部内缩（跑马条之下） |
+| `content-bottom` | 140px | 页正文内容底部内缩（页脚之上） |
+| `inner-frame-inset` | 36px | 细线内框内缩 |
 
-### Chrome Frame
+### 外壳画框
 
-Every slide carries a **top runner** at 60px top / 60px sides — a brand name on the left (always pink) and a section / chapter tag on the right (muted paper-blush). The runner is JetBrains Mono uppercase at 24px with 0.14em tracking.
+每页带 **top runner**，顶部 60px / 两侧 60px，左侧品牌名（始终粉）、右侧分节 / 章节标签（柔化 paper-blush）。跑马条是 24px JetBrains Mono 全大写、0.14em 字距。
 
-Every slide also carries a **bottom footer** at 60px bottom / 60px sides — typically a source or confidentiality string on the left and a page-position marker on the right. The page-position uses paper-blush base with a pink `<em>` for the current number (e.g., `01 / 09`).
+每页还带 **bottom footer**，底部 60px / 两侧 60px，通常左侧来源或保密串、右侧页位置标记。页位置用 paper-blush 底配粉色 `<em>` 标当前数字（如 `01 / 09`）。
 
-The **hairline interior frame** at 1px paper-blush 14% sits at `inset: 36px` on every slide. It is the editorial border of the magazine page and present unconditionally.
+**细线内框** 1px paper-blush 14% 落在每页 `inset: 36px`。它是杂志页的编辑边框，无条件存在。
 
-## Depth and Elevation
+## 纵深与层级
 
-### No Box Shadows, Atmospheric Depth Only
+### 无 box-shadow，只有氛围纵深
 
-The system uses **zero box-shadow declarations** on any structural element. Depth comes from three atmospheric layers:
+系统在任何结构元素上**零 box-shadow 声明**。纵深来自三层氛围：
 
-1. **The radial-gradient surface** (`{components.slide-surface}`) — lit from the upper-left by a warm dark ellipse fading to near-black across the lower-right. This creates the impression of a studio softbox catching one corner of the page.
-2. **The film-grain overlay** (`{components.film-grain}`) — 8% opacity, screen blend, adds photographic graininess to the surface.
-3. **The pink halo text-shadow** on hero script titles — a soft 80–120px blur in pink at low alpha that simulates the light bleed of large neon-saturated type on photographic paper.
+1. **径向渐变表面**（`{components.slide-surface}`），左上方暖深椭圆打光、向右下渐隐到近黑。造出影棚柔光箱扫到页面一角的印象。
+2. **胶片颗粒叠层**（`{components.film-grain}`），8% 不透明度、screen 混合，给表面添摄影颗粒感。
+3. **英雄脚本标题上的粉色光晕 text-shadow**，低 alpha 的粉色柔和 80–120px 模糊，模拟大号霓虹饱和字在相纸上的漏光。
 
-### No Drop Shadows on Cards or Panels
+### 卡片或面板上无投影
 
-Cards, tables, and panels do not carry shadows. The system's "card" pattern is structural rather than elevated: a region defined by a border or a left-rule, sitting flat on the surface.
+卡片、表格、面板不带阴影。系统的"卡片"式样是结构的而非抬升的：由一条边框或左线定义的区域，平躺在表面上。
 
-### Hairline Rules as Structural Depth
+### 细线作结构纵深
 
-Where the system needs to separate regions, it uses:
-- 1px pink at 45% opacity (`{components.pink-rule}`) for soft pink rules.
-- 1px paper-blush at 14% (`{components.hair-paper}`) for muted hairline separators.
-- 1px pink at 32% (`{colors.line-pink}`) for table row dividers and chart axis lines.
+系统要分隔区域时用：
+- 45% 不透明度的 1px 粉（`{components.pink-rule}`）作柔和粉线。
+- 14% 的 1px paper-blush（`{components.hair-paper}`）作柔化细线分隔。
+- 32% 的 1px 粉（`{colors.line-pink}`）作表格行分隔与图表轴线。
 
-Never a 2px or thicker rule. Never a colored rule outside pink and paper.
+绝不用 2px 或更粗的线。绝不用粉与 paper 之外的彩色线。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
+### 圆角
 
-| Value | Use |
+| 值 | 用途 |
 |---|---|
-| 0px | Cards, panels, table cells, QR tiles, runner / footer text |
-| 999px | None — pills here are explicitly rectangular |
+| 0px | 卡片、面板、表格单元、QR 片、跑马条 / 页脚文字 |
+| 999px | 无，这里的胶囊明确是矩形 |
 
-The system has **zero border-radius** on any structural element. Pills are 0-radius rectangles (despite the "pill" naming convention). The only round element is the small chart-callout circle marker (an SVG `<circle>` element marking an inflection point).
+系统在任何结构元素上**零 border-radius**。胶囊是 0 圆角矩形（尽管沿用 "pill" 命名）。唯一的圆元素是图表标注的小圆标记（标拐点的 SVG `<circle>`）。
 
-### Border Weights
+### 边框粗细
 
-- **1px solid paper-blush at 14%** — the universal interior hairline frame.
-- **1px solid pink** (`{colors.pink}`) — pill outlines.
-- **1px solid pink at 32%** (`{colors.line-pink}`) — table dividers, chart axes.
-- **1px solid paper-blush at 14%** — TOC row dividers, footer separators.
-- **1px solid pink** at full opacity — left callout-rail border, top-of-step border in process slides.
-- **1px dashed pink at 18%** — chart grid lines.
+- **1px 实 paper-blush 14%**：通用内细线框。
+- **1px 实粉**（`{colors.pink}`）：胶囊描边。
+- **1px 实粉 32%**（`{colors.line-pink}`）：表格分隔、图表轴。
+- **1px 实 paper-blush 14%**：目录行分隔、页脚分隔。
+- **全不透明度 1px 实粉**：标注轨左边框、流程页步骤顶边。
+- **1px 虚线粉 18%**：图表网格线。
 
-No other border weights exist. There is no 2px, 3px, or thicker border anywhere in the system.
+没有别的边框粗细。系统里任何地方都没有 2px、3px 或更粗的边框。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Hero script title** — A DM Serif Display headline at 220–600px in pink with the halo text-shadow. The defining moment of any slide that uses it. Always pink, always with the glow, always carries `padding-bottom: .1em` to compensate for descenders.
+**英雄脚本标题**：220–600px 的粉色 DM Serif Display 标题，带光晕 text-shadow。用到它的任何页面的定义性瞬间。始终粉、始终带辉光、始终带 `padding-bottom: .1em` 补偿下伸部。
 
-**Paper-blush serif headline** — A DM Serif Display headline at 88–140px in paper-blush. Used when the moment should read as ink rather than highlight. May contain `<em>` to switch one word to pink.
+**paper-blush 衬线标题**：88–140px 的 paper-blush DM Serif Display 标题。用于该读作墨而非高亮的瞬间。可含 `<em>` 把一个词切成粉。
 
-**Pink kicker** — A 22px JetBrains Mono uppercase eyebrow in `{colors.pink}` placed above a headline. The system's most consistent appearance of pink alongside the hero script.
+**粉眉题**：22px JetBrains Mono 全大写 eyebrow，`{colors.pink}` 色，放在标题上方。系统里粉与英雄脚本并立时最稳定的出现方式。
 
-**Mono runner / footer** — Standard JetBrains Mono chrome at 24px / 0.14em tracking. The brand on the runner is always pink; the rest is muted paper-blush.
+**等宽跑马条 / 页脚**：标准 JetBrains Mono 外壳，24px / 0.14em 字距。跑马条上品牌始终粉，其余柔化 paper-blush。
 
-**Pink rule (`{components.pink-rule}`)** — 1px pink at 45% opacity. Used as a soft separator.
+**粉线（`{components.pink-rule}`）**：45% 不透明度的 1px 粉。作柔和分隔。
 
-**Hairline rule (`{components.hair-rule}`)** — 1px paper-blush at 14% opacity. Used as a muted separator and as the TOC row divider.
+**细线（`{components.hair-rule}`）**：14% 不透明度的 1px paper-blush。作柔化分隔与目录行分隔。
 
-**Callout rail (`{components.callout-rail}`)** — A 1px pink left border with right-aligned content padding-left 24px. Used as a vertical callout container beside charts or beside a chapter explanation.
+**标注轨（`{components.callout-rail}`）**：1px 粉左边框，右对齐内容配 padding-left 24px。作竖直标注容器，贴在图表旁或章节说明旁。
 
-**Stat row (`{components.stat-row}`)** — A 240px serif figure paired with a mono label + Inter description, separated from the next row by a 1px paper hairline. Stat figures are pink; descriptions are muted paper-blush.
+**统计行（`{components.stat-row}`）**：240px 衬线数字配一条等宽标签 + 一段 Inter 描述，与下一行由 1px paper 细线隔开。统计数字是粉，描述是柔化 paper-blush。
 
-**Pills (`{components.pill-outline}`, `{components.pill-solid}`, `{components.pill-dim}`)** — Three pill states: hollow pink (default), solid pink with deep-ink text (affirmative / featured), and dim hairline (de-emphasized). All are 0-radius rectangles.
+**胶囊（`{components.pill-outline}`、`{components.pill-solid}`、`{components.pill-dim}`）**：三种胶囊态，空心粉（默认）、实粉配深墨文字（肯定 / 精选）、暗细线（弱化）。全是 0 圆角矩形。
 
-**QR tile (`{components.qr-tile}`)** — A 180×180 paper-blush square with 12px white padding and an SVG QR inside. The only large light-surface element in the system; it functions as a "ticket" object on the CTA slide.
+**QR 片（`{components.qr-tile}`）**：180×180 的 paper-blush 方块，12px 白内边距，内含 SVG QR。系统里唯一的大块浅表面元素，在 CTA 页上充当"票券"物件。
 
-**Chart callout** — A 120px pink serif numeral with a 0.5em paper-colored unit suffix, plus a small mono label and a 22px muted Inter description, anchored to the right of a chart by a 1px pink callout rail.
+**图表标注**：120px 粉衬线数字，配 0.5em paper 色单位后缀，加一条小等宽标签与 22px 柔化 Inter 描述，由 1px 粉标注轨锚在图表右侧。
 
-**Chart line** — A 3px solid pink line for the primary series; a 2px paper-blush dashed line for the secondary series. The inflection point on the primary line carries a 9px solid pink circle with an 18px hollow ring at 50% opacity and a vertical dashed line dropping to the axis.
+**图表线**：主系列 3px 实粉线，次系列 2px paper-blush 虚线。主线拐点带 9px 实粉圆、50% 不透明度的 18px 空心环，以及一条落到轴的竖向虚线。
 
-**Process step** — A vertical column anchored by a 1px solid pink top border with a 96px pink serif numeral, a 38px paper-blush serif heading, and an Inter description. Steps are separated by a 24px gap and connected by a small pink arrow glyph.
+**流程步骤**：一根竖列，由 1px 实粉顶边锚定，配 96px 粉衬线数字、38px paper-blush 衬线标题、一段 Inter 描述。步骤间 24px 间隙，由一枚小粉箭头字形连接。
 
-**Matrix table** — A 4-column grid with the first column being a 32px paper-blush serif label, the column header row colored pink, and the "our column" row tinted with `rgba(237, 61, 140, 0.08)` to mark it.
+**矩阵表**：4 列网格，首列是 32px paper-blush 衬线标签，表头行着粉色，"our column" 行以 `rgba(237, 61, 140, 0.08)` 着色标记。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
-- Apply the radial-gradient surface, the film-grain overlay, and the 1px paper-blush interior frame to every slide. All three are non-optional.
-- Set hero script titles in `{colors.pink}` with the halo text-shadow. The glow is part of the script's identity.
-- Use DM Serif Display for every editorial / display moment. The serif is the system's only editorial face — don't substitute a second face.
-- Set body paragraphs in Inter at weight 300. The ultra-light weight is the system's calm prose voice.
-- Use JetBrains Mono uppercase with at least 0.08em tracking for every label, page number, runner, and footer string.
-- Use `<em>` inside a paper-blush serif headline to switch one word to pink — the system's primary headline emphasis.
-- Place a pink kicker above every primary headline. The pink eyebrow is the system's editorial signal.
-- Use the pink left-rule callout (`{components.callout-rail}`) to anchor a stat, a callout, or a chapter explanation to the right of a chart or content region.
-- Add `padding-bottom: .1em` to every DM Serif Display headline. The serif descenders need compensation.
-- Use the page-position footer pattern with pink `<em>` for the current number: `<em>03</em> / 09`.
+### 该做
+- 给每页套径向渐变表面、胶片颗粒叠层、1px paper-blush 内框。三者都不可省略。
+- 英雄脚本标题设 `{colors.pink}` 配光晕 text-shadow。辉光属于脚本身份的一部分。
+- 每个编辑 / 展示瞬间都用 DM Serif Display。衬线是系统唯一的编辑字面，别换成第二款。
+- 正文段落设 Inter 字重 300。极轻字重是系统平静的散文声部。
+- 每个标签、页码、跑马条、页脚串都用 JetBrains Mono 全大写、至少 0.08em 字距。
+- 在 paper-blush 衬线标题里用 `<em>` 把一个词切成粉，系统的主标题强调。
+- 每个主标题上方放一条粉眉题。粉 eyebrow 是系统的编辑信号。
+- 用粉色左线标注（`{components.callout-rail}`）把一个统计、标注或章节说明锚在图表或内容区右侧。
+- 给每个 DM Serif Display 标题加 `padding-bottom: .1em`。衬线下伸部需要补偿。
+- 页位置页脚用粉 `<em>` 标当前数字的式样：`<em>03</em> / 09`。
 
-### Don't
-- Don't omit the film grain or the interior hairline frame. The system's editorial atmosphere depends on both.
-- Don't use box-shadow on any panel or card. Depth is atmospheric, not structural.
-- Don't introduce a second chromatic accent. Pink is the only accent. Adding red, blue, or green breaks the system.
-- Don't render the pink fuchsia as text on the paper-blush surface — the contrast inverts and looks like a typo.
-- Don't put body copy in DM Serif Display. The serif is for editorial moments, not paragraphs.
-- Don't put display headlines in Inter. The sans is the body voice, not the headline voice.
-- Don't round any element. Cards, pills, tables, QR tiles — all strict rectangles.
-- Don't use blurred shadows on any element. The only "shadow" in the system is the pink halo text-shadow on hero scripts, and that's a glow, not a drop shadow.
-- Don't use italic letterforms. The `<em>` tag is repurposed as a pink color switch.
-- Don't crowd a slide with multiple equally-weighted regions. The system reads as elegant when one hero moment dominates.
+### 不该做
+- 不要省掉胶片颗粒或内细线框。系统的编辑氛围靠这两者。
+- 不要给任何面板或卡片用 box-shadow。纵深是氛围的，不是结构的。
+- 不要引入第二种彩色强调。粉是唯一强调，加红、蓝、绿都会破掉系统。
+- 不要把粉洋红当文字放在 paper-blush 表面上，对比反转，看着像排印错误。
+- 不要用 DM Serif Display 排正文。衬线留给编辑瞬间，不留给段落。
+- 不要用 Inter 排展示标题。无衬线是正文声部，不是标题声部。
+- 不要给任何元素加圆角。卡片、胶囊、表格、QR 片，都是严格矩形。
+- 不要给任何元素用模糊阴影。系统里唯一的"阴影"是英雄脚本上的粉色光晕 text-shadow，而那是辉光，不是投影。
+- 不要用斜体字形。`<em>` 标签被改作粉色换色开关。
+- 不要用多个等权区域挤满页面。一个英雄瞬间主导时系统才显得优雅。
 
-## Responsive Behavior
+## 响应式行为
 
-The system targets a **fixed 1920×1080 canvas** rendered inside a `<deck-stage>` web component. The stage handles proportional scaling to the browser viewport — all pixel-fixed sizes inside the canvas scale uniformly.
+系统以**固定 1920×1080 画布**为目标，渲染在 `<deck-stage>` web component 内。stage 负责等比缩放适配浏览器视口，画布内所有像素固定尺寸统一缩放。
 
-### Presenter Behavior
-- Navigation, scaling, and presenter chrome are handled by the `<deck-stage>` component.
-- Keyboard, touch, and mouse-wheel navigation are managed by the stage.
-- The canvas is constant 1920×1080 regardless of viewport.
+### 放映行为
+- 导航、缩放、放映外壳由 `<deck-stage>` 组件处理。
+- 键盘、触屏、鼠标滚轮导航由 stage 管理。
+- 画布恒定 1920×1080，与视口无关。
 
-### Print Behavior
-Print export depends on the deck-stage component's print handling. The pink halo text-shadow and the film-grain overlay may render inconsistently in PDF export — test before assuming visual parity.
+### 打印行为
+打印导出取决于 deck-stage 组件的打印处理。粉色光晕 text-shadow 与胶片颗粒叠层在 PDF 导出里可能渲染不一致，别假定视觉对等，先测试。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin face | Chinese face (recommended) | Weight | Notes |
+| 角色 | 拉丁字面 | 中文字面（推荐） | 字重 | 说明 |
 |---|---|---|---|---|
-| Script / display (DM Serif Display) | DM Serif Display | **思源宋体 Noto Serif SC** | **900** | Heavy serif that holds visual mass on dark backgrounds. The default choice. |
-| Display alternate (delicate moments) | DM Serif Display | 站酷小薇体 ZCOOL XiaoWei | 400 | Couture-thin display face — use only at very large sizes (400px+) where delicacy reads as intentional. Too thin on dark backgrounds at typical headline sizes (40–200px). |
-| Body (Inter 300) | Inter | Noto Serif SC (思源宋体) | 400 | Serif body keeps the editorial register cohesive with the heavy display. |
-| Label / runner (JetBrains Mono UPPERCASE tracked) | JetBrains Mono | Noto Sans SC | 400 (do not force monospace on CJK) | |
+| 脚本 / 展示（DM Serif Display） | DM Serif Display | **思源宋体 Noto Serif SC** | **900** | 深底上撑得住视觉分量的重衬线。默认选择。 |
+| 展示备选（纤巧瞬间） | DM Serif Display | 站酷小薇体 ZCOOL XiaoWei | 400 | 高级时装式纤细展示字面，只在极大尺寸（400px+）下用，那里纤细才读作刻意。在典型标题尺寸（40–200px）的深底上太细。 |
+| 正文（Inter 300） | Inter | Noto Serif SC（思源宋体） | 400 | 衬线正文让编辑语域与厚重展示保持一致。 |
+| 标签 / 跑马条（JetBrains Mono 全大写加字距） | JetBrains Mono | Noto Sans SC | 400（别强给 CJK 套等宽） | |
 
-### Mixed-Content Strategy
+### 混排策略
 
-Strategy A — extend each token's `fontFamily` to include the Chinese face after the Latin face. DM Serif Display tokens become `"DM Serif Display, 'Noto Serif SC', serif"` with `font-weight: 900` on the Chinese run; Inter body tokens become `"Inter, 'Noto Serif SC', system-ui, sans-serif"`; JetBrains Mono tokens become `"JetBrains Mono, 'Noto Sans SC', monospace"`. Latin glyphs render in their original face; CJK falls through automatically.
+策略 A：把每个 token 的 `fontFamily` 扩展成拉丁字面之后跟中文字面。DM Serif Display token 变 `"DM Serif Display, 'Noto Serif SC', serif"` 且中文段设 `font-weight: 900`；Inter 正文 token 变 `"Inter, 'Noto Serif SC', system-ui, sans-serif"`；JetBrains Mono token 变 `"JetBrains Mono, 'Noto Sans SC', monospace"`。拉丁字形用原字面渲染，CJK 自动落下。
 
-**Critical**: when Chinese text uses the display role, set `font-weight: 900` explicitly. DM Serif Display's "single weight" is already visually heavy because it's a high-contrast display serif — the equivalent CJK heaviness lives at weight 900 in Noto Serif SC, not weight 400.
+**关键**：中文文字用展示角色时，显式设 `font-weight: 900`。DM Serif Display 的"单字重"因是高对比展示衬线，看起来本就厚重，对应的中文厚重在 Noto Serif SC 的 900 字重，不在 400。
 
-### Loading
+### 加载
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -612,62 +616,62 @@ Strategy A — extend each token's `fontFamily` to include the Chinese face afte
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- Line-height: body 1.75–1.85, display 1.15–1.25
-- Letter-spacing: 0 on CJK
-- Text-transform: no uppercase on CJK
-- Full-width punctuation （，。：；！？「」（））
-- No period on display headlines (Chinese typography convention)
-- Pangu spacing 盘古之白 (space between CJK and Latin: `使用 Claude` not `使用Claude`)
-- One font per sentence
+- 行高：正文 1.75–1.85，展示 1.15–1.25
+- 字距：CJK 设 0
+- 文字变换：CJK 不用 uppercase
+- 全角标点（，。：；！？「」（））
+- 展示标题不加句号（中文排印惯例）
+- 盘古之白（CJK 与拉丁之间加空格：`使用 Claude` 而非 `使用Claude`）
+- 一句一款字体
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-Pink Script (After Hours) is a nocturnal couture system whose entire editorial identity rests on DM Serif Display in hot fuchsia pink at sizes up to 600px against dim warm-black paper. The visual weight of DM Serif Display at any size is substantial — high-contrast strokes, serif terminals, and a typographic mass that holds against the dark background.
+Pink Script（After Hours）是夜色高级时装系统，整个编辑身份都架在暗暖黑纸上、最大 600px 的热洋红粉 DM Serif Display 上。DM Serif Display 任何尺寸的视觉分量都很足：高对比笔画、衬线终端，以及能在深底上立住的排印质量。
 
-The recommended Chinese equivalent is **思源宋体 Noto Serif SC at weight 900**. This carries the same visual mass as DM Serif Display: bold serif terminals, sufficient stroke density to read clearly against the dark surface, and the editorial register that defines the system. Weight 900 is non-negotiable for display moments — anything lighter (400, 500, even 700) will visually disappear against the pink-glow + dark-paper combination and break the entire couture register.
+推荐的中文对应是 **思源宋体 Noto Serif SC 字重 900**。它承载与 DM Serif Display 相同的视觉分量：粗衬线终端、足以在深表面上清晰读出的笔画密度，以及定义系统的编辑语域。展示瞬间字重 900 不可商量，任何更轻（400、500、哪怕 700）都会在粉辉光 + 深纸组合里视觉消失，破掉整条高级时装语域。
 
-**站酷小薇体 ZCOOL XiaoWei** is a viable secondary option for moments where extreme delicacy reads as intentional — a single 400-px+ pull-quote, a hairline section divider title, a brand wordmark at the very top of a cover slide. Its single-weight 400 with extreme stroke contrast carries a different feeling: dressier, more whisper-thin, more vintage-Vogue than modern-fashion-editorial. For most display work, choose Noto Serif SC 900; reach for XiaoWei only when the moment is genuinely a delicate accent at extreme size.
+**站酷小薇体 ZCOOL XiaoWei** 是次选，适合极端纤巧读作刻意的瞬间：一条 400px+ 的引文、细线分节断口标题、封面最顶端的品牌字标。它单字重 400 配极端笔画对比，带另一种感觉：更盛装、更气若游丝、更像旧版 Vogue 而非现代时装编辑。多数展示工作选 Noto Serif SC 900，只有瞬间真是极大尺寸下的纤巧点缀时才取 XiaoWei。
 
-The pink halo text-shadow (`{components.pink-glow}` at 80–120px blur) transfers perfectly to Chinese characters regardless of which display face you choose. **Apply the same glow to every Chinese display moment in pink** — the neon bleed effect is script-agnostic and the late-night magazine atmosphere survives the script switch fully.
+粉色光晕 text-shadow（`{components.pink-glow}`，80–120px 模糊）无论选哪款展示字面，都完美迁移到汉字。**给每个粉色中文展示瞬间套同样的辉光**，霓虹漏光效果与文字无关，深夜杂志氛围能完整跨文字存活。
 
-The pink color (`{colors.pink}` — #ED3D8C) as the only chromatic accent works unchanged. The inline `<em>` color switch (paper-blush headline with one word in pink) is a clean transfer to Chinese — wrap one CJK character or one phrase in `<em>` and the pink ink switch reads exactly the same.
+粉色（`{colors.pink}` — #ED3D8C）作为唯一彩色强调原样成立。行内 `<em>` 换色（paper-blush 标题里一个词成粉）干净迁移到中文，把一个汉字或一个短语包进 `<em>`，粉墨切换读起来完全一样。
 
-**Inter at weight 300 for body** does not transfer directly. Noto Serif SC at weight 400 is the recommended body face — its high-contrast serif stroke matches the couture register of the system's overall feel. Body color stays paper-blush (`{colors.paper-blush}`); the ultra-light register is achieved through size, paper-blush color, and the muted 55%-opacity lead, not through font weight.
+**正文用 Inter 字重 300** 不能直接迁移。推荐正文字面是 Noto Serif SC 字重 400，它的高对比衬线笔画贴合系统整体高级时装语域。正文色保持 paper-blush（`{colors.paper-blush}`），极轻语域靠尺寸、paper-blush 色与 55% 不透明度的柔化导语达成，不靠字重。
 
-JetBrains Mono uppercase tracked labels (runner brand, page numbers, footer chrome) do not transfer to CJK. Pure Latin chrome strings (the brand name itself, edition numbers like `01 / 09`) keep JetBrains Mono. For Chinese chrome text (a section / chapter tag in the upper-right), use Noto Sans SC 400 at the same 24px size with letter-spacing reset to 0 and no uppercase.
+JetBrains Mono 全大写加字距标签（跑马条品牌、页码、页脚外壳）迁移不到 CJK。纯拉丁外壳串（品牌名本身、`01 / 09` 之类版次号）保留 JetBrains Mono。中文外壳文字（右上分节 / 章节标签）用同样 24px 的 Noto Sans SC 400，字距归 0、不用 uppercase。
 
-The radial-gradient surface, the film-grain overlay, the 1px paper-blush interior frame — all script-agnostic. The pink halo, the kicker, the callout rail, the stat-row pattern, the matrix-cell — all transfer unchanged.
+径向渐变表面、胶片颗粒叠层、1px paper-blush 内框，都与文字无关。粉辉光、眉题、标注轨、统计行式样、矩阵单元，全都原样迁移。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-DM Serif Display's "single weight" is misleading: it's a high-contrast display serif that reads as visually heavy at any size. The Chinese equivalent heaviness lives at Noto Serif SC **weight 900**, not weight 400 — using weight 400 for display will make Chinese headlines look limp and disconnected from the bold pink callouts. The system's reliance on size for hierarchy still works in Chinese, but you must lock display weight at 900 to preserve the visual mass.
+DM Serif Display 的"单字重"有误导性：它是高对比展示衬线，任何尺寸都读起来视觉厚重。对等的中文厚重在 Noto Serif SC **字重 900**，不在 400；展示用 400 会让中文标题显得软塌，与粗粉标注脱节。系统靠尺寸建立层级在中文里仍成立，但必须把展示字重锁在 900 才能保住视觉分量。
 
-ZCOOL XiaoWei is the only CDN-loadable Chinese face that captures the "high-contrast couture serif" character in its proportions, but its single-weight 400 is too thin for most display sizes on this template's dark surface. Treat XiaoWei as a niche option, not the default.
+ZCOOL XiaoWei 是唯一可 CDN 加载、在比例上捕捉到"高对比高级时装衬线"性格的中文字面，但它单字重 400 在本模板深底上的多数展示尺寸下太细。把 XiaoWei 当小众选项，别当默认。
 
-## Iteration Guide
+## 迭代指南
 
-1. Every new slide background is the lit radial gradient (`{components.slide-surface}`) with film grain and the interior hairline frame. Don't skip any of the three layers.
-2. Every new hero script title is DM Serif Display in `{colors.pink}` with the halo text-shadow at 80–120px blur.
-3. Every new editorial headline that should read as ink (not highlight) is DM Serif Display in `{colors.paper-blush}`. Use `<em>` inside to switch a word to pink.
-4. Every new body paragraph is Inter at weight 300 in paper-blush (full) or mute-paper (muted).
-5. Every new label, runner, footer, or metadata tag is JetBrains Mono uppercase at 0.08em+ tracking.
-6. Every new kicker eyebrow is pink. Don't render a kicker in any other color.
-7. Every new pill is a 0-radius rectangle. Choose outline (default), solid (affirmative), or dim (de-emphasized) state.
-8. Every new table or matrix uses 1px pink-at-32% row dividers and no vertical borders.
-9. Every chart uses a 3px solid pink line for primary and a 2px paper-blush dashed line for secondary. Don't introduce a third color.
-10. The runner brand text is always pink; the right-side meta is always muted paper-blush. Don't swap.
+1. 每张新页背景都是打光的径向渐变（`{components.slide-surface}`），配胶片颗粒与内细线框。三层一层都别跳。
+2. 每条新英雄脚本标题都是 `{colors.pink}` 色的 DM Serif Display，配 80–120px 模糊的光晕 text-shadow。
+3. 每条该读作墨（而非高亮）的新编辑标题都是 `{colors.paper-blush}` 色 DM Serif Display。用 `<em>` 把一个词切成粉。
+4. 每段新正文都是 Inter 字重 300，paper-blush（全）或 mute-paper（柔化）。
+5. 每个新标签、跑马条、页脚、元数据标记都是 JetBrains Mono 全大写、0.08em+ 字距。
+6. 每个新眉题 eyebrow 都是粉。别把眉题渲染成别的颜色。
+7. 每个新胶囊都是 0 圆角矩形。在描边（默认）、实色（肯定）、暗态（弱化）里挑。
+8. 每张新表或矩阵都用 32% 粉的 1px 行分隔、不用竖边框。
+9. 每张图表主线用 3px 实粉、次线用 2px paper-blush 虚线。不要引入第三种颜色。
+10. 跑马条品牌文字始终粉，右侧元数据始终柔化 paper-blush。别对调。
 
-## Known Gaps
+## 已知缺口
 
-- The system depends on a `<deck-stage>` web component loaded via `deck-stage.js`. Without it, the 1920×1080 canvas will not scale and slides will render at native pixel size.
-- The film-grain overlay uses a data-URI SVG with `feTurbulence`. Some browsers (older Safari) render the noise inconsistently or skip it in PDF export.
-- DM Serif Display has only weight 400. There is no bold or italic variant available — the system has no fallback weight scale and depends on size alone for hierarchy.
-- The pink halo text-shadow uses fixed 80px and 120px blur values. At very small viewport scales, the glow may dominate the type; at very large scales, the glow may appear weak.
-- The `{colors.pink-light}`, `{colors.pink-deep}`, and `{colors.ink-violet}` tokens are defined but inactive in current slide types. They are reserved for future variation.
-- The QR-tile SVG inside the CTA slide is a hand-coded pattern of `<rect>` elements that does not encode a real scannable code. Real QR codes need to be generated externally.
-- Chart line points and inflection markers are SVG `<polyline>` coordinates that must be computed manually. There is no data-binding layer.
-- The cover script lockup uses `padding-left: 180px` on the second line for an indented hanging effect. This is a hardcoded layout decision and doesn't generalize to other word lengths — long second lines may break the centering.
-- The runner and footer rely on `white-space: nowrap` to prevent line-wrap. Extremely long brand names or page-position strings may overflow the 60px edge margin.
-- The matrix `cell.us` column highlight is a hardcoded `rgba(237, 61, 140, 0.08)` wash. Tinting other columns requires per-column class additions.
+- 系统依赖经 `deck-stage.js` 加载的 `<deck-stage>` web component。缺它，1920×1080 画布不会缩放，页会按原生像素尺寸渲染。
+- 胶片颗粒叠层用带 `feTurbulence` 的 data-URI SVG。某些浏览器（较旧 Safari）会不一致地渲染噪声，或在 PDF 导出时跳过。
+- DM Serif Display 只有字重 400。没有粗体或斜体变体可用，系统没有回退字重阶梯，只靠尺寸建立层级。
+- 粉色光晕 text-shadow 用固定的 80px 与 120px 模糊值。视口缩得极小时辉光可能盖过文字，放得极大时辉光可能显弱。
+- `{colors.pink-light}`、`{colors.pink-deep}`、`{colors.ink-violet}` token 有定义，当前页型里未启用。预留给未来变化。
+- CTA 页里的 QR 片 SVG 是手工编码的 `<rect>` 图案，不编码真能扫的码。真 QR 码需外部生成。
+- 图表线点与拐点标记是需手工计算的 SVG `<polyline>` 坐标。没有数据绑定层。
+- 封面脚本锁定在第二行用 `padding-left: 180px` 造悬挂缩进效果。这是硬编码布局决策，不能推广到别的词长，很长的第二行可能破掉居中。
+- 跑马条与页脚靠 `white-space: nowrap` 防止折行。极长的品牌名或页位置串可能溢出 60px 页边距。
+- 矩阵的 `cell.us` 列高亮是硬编码的 `rgba(237, 61, 140, 0.08)` 铺色。给别的列着色需逐列加类。

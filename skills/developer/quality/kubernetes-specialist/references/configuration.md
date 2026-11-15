@@ -1,8 +1,12 @@
-# Kubernetes Configuration Management
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/configuration.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## ConfigMap Patterns
+# Kubernetes 配置管理
 
-### Basic ConfigMap
+## ConfigMap 模式
+
+### 基础 ConfigMap
 
 ```yaml
 apiVersion: v1
@@ -41,7 +45,7 @@ data:
       max_connections: 100
 ```
 
-### ConfigMap from Files
+### 从文件创建 ConfigMap
 
 ```bash
 # Create from literal values
@@ -58,9 +62,9 @@ kubectl create configmap app-configs \
   --from-file=configs/
 ```
 
-## Secret Patterns
+## Secret 模式
 
-### Opaque Secret (Generic)
+### Opaque Secret（通用）
 
 ```yaml
 apiVersion: v1
@@ -147,9 +151,9 @@ stringData:
     <OpenSSH private key>
 ```
 
-## Using ConfigMaps and Secrets
+## 使用 ConfigMap 与 Secret
 
-### Environment Variables
+### 环境变量
 
 ```yaml
 apiVersion: v1
@@ -187,7 +191,7 @@ spec:
       prefix: SECRET_
 ```
 
-### Volume Mounts
+### 卷挂载
 
 ```yaml
 apiVersion: v1
@@ -242,7 +246,7 @@ spec:
       secretName: example-tls
 ```
 
-## Immutable ConfigMaps and Secrets
+## 不可变 ConfigMap 与 Secret
 
 ```yaml
 apiVersion: v1
@@ -305,7 +309,7 @@ spec:
             name: external-secrets-sa
 ```
 
-## Sealed Secrets (GitOps)
+## Sealed Secrets（GitOps）
 
 ```yaml
 apiVersion: bitnami.com/v1alpha1
@@ -324,9 +328,9 @@ spec:
     type: Opaque
 ```
 
-## Environment Variable Best Practices
+## 环境变量最佳实践
 
-### Structured Environment Variables
+### 结构化环境变量
 
 ```yaml
 apiVersion: v1
@@ -404,7 +408,7 @@ spec:
           resource: requests.cpu
 ```
 
-## Dynamic Configuration Updates
+## 动态配置更新
 
 ```yaml
 apiVersion: v1
@@ -432,15 +436,15 @@ spec:
           name: app-config
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Separation**: Use ConfigMaps for non-sensitive data, Secrets for credentials
-2. **Immutability**: Mark production configs as immutable for safety
-3. **Versioning**: Include version in ConfigMap/Secret names for updates
-4. **Least Privilege**: Mount secrets as files with restrictive permissions (0400)
-5. **External Secrets**: Use External Secrets Operator for cloud secret managers
-6. **No Hardcoding**: Never hardcode secrets in container images
-7. **Encryption**: Enable encryption at rest for Secrets in etcd
-8. **GitOps**: Use Sealed Secrets for safe GitOps workflows
-9. **Rotation**: Implement secret rotation strategies
-10. **Validation**: Validate configuration before deployment
+1. **隔离**：非敏感数据用 ConfigMap，凭据用 Secret
+2. **不可变**：生产配置标记为 immutable 更安全
+3. **版本管理**：在 ConfigMap/Secret 名称里带版本，便于更新
+4. **最小权限**：Secret 以文件挂载并设严格权限（0400）
+5. **外部 Secret**：云上密钥管理用 External Secrets Operator
+6. **不硬编码**：绝不在容器镜像里硬编码密钥
+7. **加密**：为 etcd 中的 Secret 启用静态加密
+8. **GitOps**：用 Sealed Secrets 保障 GitOps 流程安全
+9. **轮换**：实现密钥轮换策略
+10. **校验**：部署前校验配置

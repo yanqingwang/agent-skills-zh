@@ -1,41 +1,45 @@
-# Generalized Linear Models (GLM) Reference
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/researcher/science/statsmodels/references/glm.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document provides comprehensive guidance on generalized linear models in statsmodels, including families, link functions, and applications.
+# 广义线性模型（GLM）参考
 
-## Overview
+本文件全面介绍 statsmodels 中的广义线性模型，涵盖分布族、连接函数与应用。
 
-GLMs extend linear regression to non-normal response distributions through:
-1. **Distribution family**: Specifies the conditional distribution of the response
-2. **Link function**: Maps the conditional mean to the linear predictor; the inverse link maps back
-3. **Variance function**: Relates variance to the mean
+## 概览
 
-**General form**: g(μ) = Xβ, where g is the link function and μ = E(Y|X)
+GLM 通过以下几点把线性回归推广到非正态的响应分布：
+1. **分布族**：指定响应的条件分布
+2. **连接函数**：把条件均值映射到线性预测子；逆连接再映射回去
+3. **方差函数**：把方差与均值关联起来
 
-## When to Use GLM
+**一般形式**：g(μ) = Xβ，其中 g 为连接函数，μ = E(Y|X)
 
-- **Binary outcomes**: Logistic regression (Binomial family with logit link)
-- **Count data**: Poisson or Negative Binomial regression
-- **Positive continuous data**: Gamma or Inverse Gaussian
-- **Conditional mean/variance structure**: Choose family from the response mechanism, not a normality test on the marginal response
-- **Link functions**: Need non-linear relationship between predictors and response scale
+## 何时使用 GLM
 
-Formula predictions take raw named columns; array predictions take the exact training design. Do not reuse a result from a different family in a later fragment. Use positive finite exposure, pass `exposure=e` or `offset=np.log(e)` (not both), and supply new exposure/offset when predicting new rows. Binomial proportions need trial counts (`var_weights=n`) or a two-column `[successes, failures]` response; arbitrary proportions are not Bernoulli observations.
+- **二值结果**：Logistic 回归（Binomial 族配 logit 连接）
+- **计数数据**：Poisson 或负二项回归
+- **正的连续数据**：Gamma 或 Inverse Gaussian
+- **条件均值/方差结构**：按响应机制选分布族，而不是对边际响应做正态性检验
+- **连接函数**：预测变量与响应尺度之间需要非线性关系
 
-## Distribution Families
+公式预测接收带列名的原始列；数组预测接收与训练完全一致的设计矩阵。后续片段不要复用来自其他分布族的结果。使用正的有限 exposure，传 `exposure=e` 或 `offset=np.log(e)`（不要两者都传），预测新行时也要提供新的 exposure/offset。Binomial 比例需要试验次数（`var_weights=n`）或两列 `[successes, failures]` 响应；任意比例并不是 Bernoulli 观测。
 
-### Binomial Family
+## 分布族
 
-For binary outcomes (0/1) or proportions (k/n).
+### Binomial 族
 
-**When to use:**
-- Binary classification
-- Success/failure outcomes
-- Proportions or rates
+用于二值结果（0/1）或比例（k/n）。
 
-**Common links:**
-- Logit (default): log(μ/(1-μ))
-- Probit: Φ⁻¹(μ)
-- Log: log(μ)
+**适用场景：**
+- 二值分类
+- 成功/失败结果
+- 比例或率
+
+**常用连接：**
+- Logit（默认）：log(μ/(1-μ))
+- Probit：Φ⁻¹(μ)
+- Log：log(μ)
 
 ```python
 import statsmodels.api as sm
@@ -56,7 +60,7 @@ probs = results.predict(new_df)  # Raw named predictors after a formula fit
 predictions = (probs > 0.5).astype(int)
 ```
 
-**Interpretation:**
+**解读：**
 ```python
 import numpy as np
 
@@ -67,19 +71,19 @@ print("Odds ratios:", odds_ratios)
 # For 1-unit increase in x, odds multiply by exp(beta)
 ```
 
-### Poisson Family
+### Poisson 族
 
-For count data (non-negative integers).
+用于计数数据（非负整数）。
 
-**When to use:**
-- Count outcomes (number of events)
-- Rare events
-- Rate modeling (with offset)
+**适用场景：**
+- 计数结果（事件数）
+- 稀有事件
+- 率建模（带 offset）
 
-**Common links:**
-- Log (default): log(μ)
-- Identity: μ
-- Sqrt: √μ
+**常用连接：**
+- Log（默认）：log(μ)
+- Identity：μ
+- Sqrt：√μ
 
 ```python
 # Poisson regression
@@ -98,7 +102,7 @@ rate_ratios = np.exp(results.params)
 print("Rate ratios:", rate_ratios)
 ```
 
-**Overdispersion check:**
+**过度离散检查：**
 ```python
 # Pearson dispersion is a screening statistic, not a calibrated universal test
 overdispersion = results.pearson_chi2 / results.df_resid
@@ -109,14 +113,14 @@ if overdispersion > 1.5:
     print("Consider Negative Binomial model for overdispersion")
 ```
 
-### Negative Binomial Family
+### 负二项族
 
-For overdispersed count data.
+用于过度离散的计数数据。
 
-**When to use:**
-- Count data with variance > mean
-- Excess zeros or large variance
-- Poisson model shows overdispersion
+**适用场景：**
+- 方差 > 均值的计数数据
+- 零值过多或方差很大
+- Poisson 模型显示过度离散
 
 ```python
 # Negative Binomial GLM with fixed alpha
@@ -131,19 +135,19 @@ nb_results = nb_model.fit()
 print(f"Dispersion parameter alpha: {np.asarray(nb_results.params)[-1]}")
 ```
 
-### Gaussian Family
+### Gaussian 族
 
-Equivalent to OLS but fit via IRLS (Iteratively Reweighted Least Squares).
+等价于 OLS，但用 IRLS（迭代重加权最小二乘）拟合。
 
-**When to use:**
-- Want GLM framework for consistency
-- Need robust standard errors
-- Comparing with other GLMs
+**适用场景：**
+- 想用 GLM 框架保持一致
+- 需要稳健标准误
+- 与其他 GLM 比较
 
-**Common links:**
-- Identity (default): μ
-- Log: log(μ)
-- Inverse: 1/μ
+**常用连接：**
+- Identity（默认）：μ
+- Log：log(μ)
+- Inverse：1/μ
 
 ```python
 # Gaussian GLM (equivalent to OLS)
@@ -155,19 +159,19 @@ ols_results = sm.OLS(y, X).fit()
 print("Parameters close:", np.allclose(results.params, ols_results.params))
 ```
 
-### Gamma Family
+### Gamma 族
 
-For positive continuous data, often right-skewed.
+用于正的连续数据，常呈右偏。
 
-**When to use:**
-- Positive outcomes (insurance claims, survival times)
-- Right-skewed distributions
-- Variance proportional to mean²
+**适用场景：**
+- 正的结果（保险理赔、生存时间）
+- 右偏分布
+- 方差与均值² 成正比
 
-**Common links:**
-- Inverse (default): 1/μ
-- Log: log(μ)
-- Identity: μ
+**常用连接：**
+- Inverse（默认）：1/μ
+- Log：log(μ)
+- Identity：μ
 
 ```python
 # Gamma regression (common for cost data)
@@ -183,39 +187,39 @@ import numpy as np
 effects = np.exp(results.params)
 ```
 
-### Inverse Gaussian Family
+### Inverse Gaussian 族
 
-For positive continuous data with specific variance structure.
+用于具有特定方差结构的正连续数据。
 
-**When to use:**
-- Positive skewed outcomes
-- Variance proportional to mean³
-- Alternative to Gamma
+**适用场景：**
+- 正偏结果
+- 方差与均值³ 成正比
+- Gamma 的替代
 
-**Common links:**
-- Inverse squared (default): 1/μ²
-- Log: log(μ)
+**常用连接：**
+- Inverse squared（默认）：1/μ²
+- Log：log(μ)
 
 ```python
 model = sm.GLM(y, X, family=sm.families.InverseGaussian())
 results = model.fit()
 ```
 
-### Tweedie Family
+### Tweedie 族
 
-Flexible family covering multiple distributions.
+灵活的分布族，涵盖多种分布。
 
-**When to use:**
-- Insurance claims (mixture of zeros and continuous)
-- Semi-continuous data
-- Need flexible variance function
+**适用场景：**
+- 保险理赔（零值与连续值混合）
+- 半连续数据
+- 需要灵活的方差函数
 
-**Special cases (power parameter p):**
-- p=0: Normal
-- p=1: Poisson
-- p=2: Gamma
-- p=3: Inverse Gaussian
-- 1<p<2: Compound Poisson-Gamma (common for insurance)
+**特例（幂参数 p）：**
+- p=0：Normal
+- p=1：Poisson
+- p=2：Gamma
+- p=3：Inverse Gaussian
+- 1<p<2：复合 Poisson-Gamma（保险常用）
 
 ```python
 # Tweedie with power=1.5
@@ -224,11 +228,11 @@ model = sm.GLM(y, X, family=sm.families.Tweedie(link=sm.families.links.Log(),
 results = model.fit()
 ```
 
-## Link Functions
+## 连接函数
 
-Link functions connect the linear predictor to the mean of the response.
+连接函数把线性预测子与响应均值联系起来。
 
-### Available Links
+### 可用连接
 
 ```python
 from statsmodels.genmod import families
@@ -261,22 +265,22 @@ link = families.links.Sqrt()
 link = families.links.Power(power=2)
 ```
 
-### Choosing Link Functions
+### 选择连接函数
 
-**Common default links** (canonical up to conventional scaling for these families):
+**常见默认连接**（在这些分布族下按惯例缩放即为 canonical link）：
 - Binomial → Logit
 - Poisson → Log
 - Gamma → Inverse
 - Gaussian → Identity
 - Inverse Gaussian → Inverse squared
 
-The default Gamma inverse link and binomial log/identity links may violate their response domains for some designs. Inspect warnings, finite fitted means and support; a converged optimizer does not make an invalid mean valid. Use a positive-mean link when appropriate.
+默认的 Gamma inverse 连接与 binomial 的 log/identity 连接在某些设计下可能越出响应定义域。要检查警告、拟合均值有限性与支撑集；优化器收敛并不能把无效均值变有效。适当时改用正值均值连接。
 
-**When to use non-canonical:**
-- **Log link with Binomial**: Risk ratios instead of odds ratios
-- **Identity link**: Direct additive effects (when sensible)
-- **Probit vs Logit**: Similar results, preference based on field
-- **CLogLog**: Asymmetric relationship, common in survival analysis
+**何时使用非 canonical：**
+- **Binomial 配 Log 连接**：得到 risk ratio 而非 odds ratio
+- **Identity 连接**：直接的加性效应（在合理时）
+- **Probit 与 Logit**：结果相近，按领域偏好选择
+- **CLogLog**：非对称关系，生存分析常用
 
 ```python
 # Example: Risk ratios with log-binomial model
@@ -287,9 +291,9 @@ results = model.fit()
 risk_ratios = np.exp(results.params)
 ```
 
-## Model Fitting and Results
+## 模型拟合与结果
 
-### Basic Workflow
+### 基本流程
 
 ```python
 import statsmodels.api as sm
@@ -308,7 +312,7 @@ results = model.fit()
 print(results.summary())
 ```
 
-### Results Attributes
+### 结果属性
 
 ```python
 # Parameters and inference
@@ -350,9 +354,9 @@ print("Cox-Snell:", results.pseudo_rsquared(kind="cs"))
 # 1 - deviance/null_deviance is a different measure; do not label it McFadden.
 ```
 
-## Diagnostics
+## 诊断
 
-### Goodness of Fit
+### 拟合优度
 
 ```python
 # Chi-square goodness-of-fit approximations need adequate expected cell counts;
@@ -373,7 +377,7 @@ print(f"Dispersion: {dispersion}")
 # Gaussian/Gamma/InverseGaussian estimate scale; this ratio need not be 1.
 ```
 
-### Residual Analysis
+### 残差分析
 
 ```python
 import matplotlib.pyplot as plt
@@ -401,7 +405,7 @@ if isinstance(results.model.family, sm.families.Binomial):
     pass
 ```
 
-### Influence and Outliers
+### 影响点与异常值
 
 ```python
 from statsmodels.stats.outliers_influence import GLMInfluence
@@ -422,7 +426,7 @@ influential = np.where(cooks_d > 4/len(y))[0]
 print(f"Influential observations: {influential}")
 ```
 
-## Hypothesis Testing
+## 假设检验
 
 ```python
 # Wald test for single parameter (automatically in summary)
@@ -447,7 +451,7 @@ wald_test = results.wald_test(R)
 print(wald_test)
 ```
 
-## Robust Standard Errors
+## 稳健标准误
 
 ```python
 # Heteroscedasticity-robust (sandwich estimator)
@@ -462,9 +466,9 @@ print("Regular SE:", results.bse)
 print("Robust SE:", results_robust.bse)
 ```
 
-Robust covariance addresses the variance calculation under its asymptotic assumptions. It does not repair separation, an incorrect mean model, few independent clusters, or endogeneity. GLM influence approximations are experimental, especially with exposure/offset.
+稳健协方差在其渐近假设下修正方差计算。它不能修复分离、错误的均值模型、过少的独立群组或内生性。GLM 的影响点近似仍是实验性的，带 exposure/offset 时尤其如此。
 
-## Model Comparison
+## 模型比较
 
 ```python
 # AIC/BIC for non-nested models
@@ -497,7 +501,7 @@ for train_idx, val_idx in kf.split(X_array, y_array):
 print(f"CV Log Loss: {np.mean(cv_scores):.4f} ± {np.std(cv_scores):.4f}")
 ```
 
-## Prediction
+## 预测
 
 ```python
 # Point predictions
@@ -520,9 +524,9 @@ mean_table = mean_prediction.summary_frame()
 # Outcome prediction intervals need the fitted family/scale plus parameter uncertainty.
 ```
 
-## Common Applications
+## 常见应用
 
-### Logistic Regression (Binary Classification)
+### Logistic 回归（二值分类）
 
 ```python
 import statsmodels.api as sm
@@ -558,7 +562,7 @@ plt.title('ROC Curve')
 plt.show()
 ```
 
-### Poisson Regression (Count Data)
+### Poisson 回归（计数数据）
 
 ```python
 # Fit Poisson model
@@ -576,7 +580,7 @@ if dispersion > 1.5:
     print(f"Elevated Pearson dispersion ({dispersion:.2f}); investigate mean, dependence and count family.")
 ```
 
-### Gamma Regression (Cost/Duration Data)
+### Gamma 回归（成本/时长数据）
 
 ```python
 # Fit Gamma model with log link
@@ -590,28 +594,28 @@ effects = np.exp(results.params)
 print("Multiplicative effects on mean:", effects)
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Check conditional assumptions**: Examine response support, mean structure, exposure and residual patterns; marginal response normality does not choose a GLM
-2. **Verify link function**: Use canonical links unless there's a reason not to
-3. **Examine residuals**: Discrete deviance residuals need not be normal; evaluate calibration and simulation-based diagnostics appropriate to the family
-4. **Test for overdispersion**: Especially for Poisson models
-5. **Use offsets appropriately**: For rate modeling with varying exposure
-6. **Consider robust SEs**: When variance assumptions questionable
-7. **Compare models**: Use AIC/BIC for non-nested, LR test for nested
-8. **Interpret on original scale**: Transform coefficients (e.g., exp for log link)
-9. **Check influential observations**: Use Cook's distance
-10. **Validate predictions**: Use cross-validation or holdout set
+1. **检查条件假设**：查看响应支撑集、均值结构、exposure 与残差形态；边际响应是否正态并不能决定用哪个 GLM
+2. **核对连接函数**：除非有理由，否则用 canonical link
+3. **检查残差**：离散 deviance 残差不必正态；按分布族选用校准与基于模拟的诊断
+4. **检验过度离散**：Poisson 模型尤其要做
+5. **正确使用 offset**：用于 exposure 变化的率建模
+6. **考虑稳健 SE**：方差假设存疑时
+7. **比较模型**：非嵌套用 AIC/BIC，嵌套用 LR 检验
+8. **在原尺度上解读**：对系数做变换（如 log 连接取 exp）
+9. **检查影响点**：用 Cook's distance
+10. **验证预测**：用交叉验证或留出集
 
-## Common Pitfalls
+## 常见陷阱
 
-1. **Forgetting to add constant**: No intercept term
-2. **Using wrong family**: Check distribution of response
-3. **Ignoring overdispersion**: Use Negative Binomial instead of Poisson
-4. **Misinterpreting coefficients**: Remember link function transformation
-5. **Not checking convergence**: IRLS may not converge; check warnings
-6. **Complete separation in logistic**: Some categories perfectly predict outcome
-7. **Using identity link with bounded outcomes**: May predict outside valid range
-8. **Comparing models with different samples**: Use same observations
-9. **Forgetting offset in rate models**: Must use log(exposure) as offset
-10. **Not considering alternatives**: Mixed models, zero-inflation for complex data
+1. **忘记加常数项**：没有截距项
+2. **分布族选错**：先查看响应分布
+3. **忽略过度离散**：改用负二项而非 Poisson
+4. **误读系数**：记住连接函数的变换
+5. **不检查收敛**：IRLS 可能不收敛，留意警告
+6. **logistic 中完全分离**：某些类别完美预测结果
+7. **有界结果用 identity 连接**：可能预测到有效范围之外
+8. **比较样本不同的模型**：要用同一批观测
+9. **率模型漏掉 offset**：必须用 log(exposure) 作 offset
+10. **不考虑替代方案**：复杂数据可用混合模型、零膨胀模型

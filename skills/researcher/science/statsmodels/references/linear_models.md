@@ -1,20 +1,24 @@
-# Linear Regression Models Reference
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/researcher/science/statsmodels/references/linear_models.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document provides detailed guidance on linear regression models in statsmodels, including OLS, GLS, WLS, quantile regression, and specialized variants.
+# 线性回归模型参考
 
-## Core Model Classes
+本文件详细介绍 statsmodels 中的线性回归模型，涵盖 OLS、GLS、WLS、分位数回归与专用变体。
 
-### OLS (Ordinary Least Squares)
+## 核心模型类
 
-OLS estimates a linear conditional mean. Conventional covariance assumes homoscedastic, uncorrelated errors; normal errors support exact small-sample t/F inference. Robust covariance changes uncertainty, not an omitted-variable or endogeneity bias.
+### OLS（普通最小二乘）
 
-**When to use:**
-- Standard regression analysis
-- Errors are independent and have constant variance
-- No autocorrelation or heteroscedasticity
-- Most common starting point
+OLS 估计线性条件均值。常规协方差假设误差同方差且不相关；误差正态时支持精确的小样本 t/F 推断。稳健协方差改变的是不确定性，而非遗漏变量或内生性偏误。
 
-**Basic usage:**
+**适用场景：**
+- 标准回归分析
+- 误差独立且方差恒定
+- 无自相关或异方差
+- 最常用的起点
+
+**基本用法：**
 ```python
 import statsmodels.api as sm
 import numpy as np
@@ -30,7 +34,7 @@ results = model.fit()
 print(results.summary())
 ```
 
-**Key results attributes:**
+**主要结果属性：**
 ```python
 results.params           # Coefficients
 results.bse              # Standard errors
@@ -43,7 +47,7 @@ results.resid            # Residuals
 results.conf_int()       # Confidence intervals for parameters
 ```
 
-**Prediction with confidence/prediction intervals:**
+**带置信/预测区间的预测：**
 ```python
 # For in-sample predictions
 pred = results.get_prediction(X)
@@ -62,7 +66,7 @@ obs_ci_lower = pred_summary["obs_ci_lower"]  # Prediction intervals
 obs_ci_upper = pred_summary["obs_ci_upper"]
 ```
 
-**Formula API (R-style):**
+**Formula API（R 风格）：**
 ```python
 import statsmodels.formula.api as smf
 
@@ -71,16 +75,16 @@ formula = 'y ~ x1 + x2 + C(category) + x1:x2'
 results = smf.ols(formula, data=df).fit()
 ```
 
-### WLS (Weighted Least Squares)
+### WLS（加权最小二乘）
 
-Handles heteroscedastic errors (diagonal Σ) where variance differs across observations.
+处理异方差误差（对角 Σ），即方差随观测变化。
 
-**When to use:**
-- Known heteroscedasticity (non-constant error variance)
-- Different observations have different reliability
-- Weights are known or can be estimated
+**适用场景：**
+- 已知异方差（误差方差非恒定）
+- 不同观测的可靠度不同
+- 权重已知或可估计
 
-**Usage:**
+**用法：**
 ```python
 # If you know the weights (inverse variance)
 weights = 1 / error_variance
@@ -93,7 +97,7 @@ results = model.fit()
 # - 1/x: when variance proportional to x
 ```
 
-**Feasible WLS (estimating weights):**
+**可行 WLS（估计权重）：**
 ```python
 # Step 1: Fit OLS
 ols_results = sm.OLS(y, X).fit()
@@ -107,16 +111,16 @@ weights = 1 / np.exp(variance_model.fittedvalues)
 wls_results = sm.WLS(y, X, weights=weights).fit()
 ```
 
-### GLS (Generalized Least Squares)
+### GLS（广义最小二乘）
 
-Handles arbitrary covariance structure (Σ). Superclass for other regression methods.
+处理任意协方差结构（Σ），是其他回归方法的超类。
 
-**When to use:**
-- Known covariance structure
-- Correlated errors
-- More general than WLS
+**适用场景：**
+- 协方差结构已知
+- 误差相关
+- 比 WLS 更一般
 
-**Usage:**
+**用法：**
 ```python
 # Specify covariance structure
 # Sigma should be (n x n) covariance matrix
@@ -124,16 +128,16 @@ model = sm.GLS(y, X, sigma=Sigma)
 results = model.fit()
 ```
 
-### GLSAR (GLS with Autoregressive Errors)
+### GLSAR（带自回归误差的 GLS）
 
-Feasible generalized least squares with AR(p) errors for time series data.
+面向时间序列数据的可行广义最小二乘，误差服从 AR(p)。
 
-**When to use:**
-- Time series regression with autocorrelated errors
-- Need to account for serial correlation
-- Violations of error independence
+**适用场景：**
+- 误差自相关的时间序列回归
+- 需要考虑序列相关
+- 误差独立性被破坏
 
-**Usage:**
+**用法：**
 ```python
 # AR(1) errors
 model = sm.GLSAR(y, X, rho=1)  # rho=1 for AR(1), rho=2 for AR(2), etc.
@@ -143,16 +147,16 @@ print(results.summary())
 print(f"Estimated rho: {results.model.rho}")
 ```
 
-### RLS (Recursive Least Squares)
+### RLS（递推最小二乘）
 
-Expanding-window estimates of a fixed-coefficient regression, plus stability diagnostics; this is not a stochastic time-varying-coefficient model.
+对固定系数回归做扩展窗口估计，并给出稳定性诊断；它不是随机时变系数模型。
 
-**When to use:**
-- Assess coefficient stability as observations accumulate
-- Inspect recursive residuals and CUSUM
-- Refit with additional data; do not assume a streaming update interface
+**适用场景：**
+- 随观测累积评估系数稳定性
+- 查看递推残差与 CUSUM
+- 用新增数据重新拟合；不要假装有流式更新接口
 
-**Usage:**
+**用法：**
 ```python
 from statsmodels.regression.recursive_ls import RecursiveLS
 
@@ -164,16 +168,16 @@ params_over_time = results.recursive_coefficients.filtered
 cusum = results.cusum  # CUSUM statistic for structural breaks
 ```
 
-### Rolling Regressions
+### Rolling 回归
 
-Compute estimates across moving windows for time-varying parameter detection.
+在移动窗口上计算估计值，用于检测时变参数。
 
-**When to use:**
-- Parameters vary over time
-- Want to detect structural changes
-- Time series with evolving relationships
+**适用场景：**
+- 参数随时间变化
+- 想检测结构变化
+- 关系不断演变的时间序列
 
-**Usage:**
+**用法：**
 ```python
 from statsmodels.regression.rolling import RollingOLS, RollingWLS
 
@@ -192,17 +196,17 @@ plt.title('Time-Varying Coefficients')
 plt.show()
 ```
 
-### Quantile Regression
+### 分位数回归
 
-Analyzes conditional quantiles rather than conditional mean.
+分析条件分位数，而非条件均值。
 
-**When to use:**
-- Interest in quantiles (median, 90th percentile, etc.)
-- Robust to outliers (median regression)
-- Distributional effects across quantiles
-- Heterogeneous effects
+**适用场景：**
+- 关注分位数（中位数、第 90 百分位等）
+- 对异常值稳健（中位数回归）
+- 跨分位数的分布效应
+- 异质效应
 
-**Usage:**
+**用法：**
 ```python
 from statsmodels.regression.quantile_regression import QuantReg
 
@@ -226,16 +230,16 @@ plt.ylabel('Coefficient')
 plt.show()
 ```
 
-## Mixed Effects Models
+## 混合效应模型
 
-For hierarchical/nested data with random effects.
+用于带随机效应的分层/嵌套数据。
 
-**When to use:**
-- Clustered/grouped data (students in schools, patients in hospitals)
-- Repeated measures
-- Need random effects to account for grouping
+**适用场景：**
+- 整群/分组数据（学校里的学生、医院里的患者）
+- 重复测量
+- 需要随机效应来解释分组
 
-**Usage:**
+**用法：**
 ```python
 from statsmodels.regression.mixed_linear_model import MixedLM
 
@@ -250,13 +254,13 @@ results = model.fit()
 print(results.summary())
 ```
 
-Use ML (`fit(reml=False)`) when comparing mixed models with different fixed effects; REML likelihoods are not comparable across those designs. Check convergence, singular random-effect covariance and boundary variance estimates before inference.
+比较固定效应不同的混合模型时用 ML（`fit(reml=False)`）；这些设计之间 REML 似然不可比。推断前要检查收敛、随机效应协方差奇异与方差估计落在边界的情况。
 
-## Diagnostics and Model Assessment
+## 诊断与模型评估
 
-The following diagnostics use an OLS result with its original full-rank design. VIF, Cook's distance and condition-number thresholds are screening heuristics, not automatic exclusion rules; conditioning also depends on predictor units. Robust SEs do not validate classical OLS observation intervals under heteroskedasticity.
+以下诊断使用一个 OLS 结果及其原始满秩设计。VIF、Cook's distance 与条件数阈值只是筛查经验法则，不是自动剔除规则；条件数还取决于预测变量的单位。稳健 SE 并不能在异方差下验证经典 OLS 的观测区间。
 
-### Residual Analysis
+### 残差分析
 
 ```python
 # Basic residual plots
@@ -283,7 +287,7 @@ plt.title('Distribution of Residuals')
 plt.show()
 ```
 
-### Specification Tests
+### 设定检验
 
 ```python
 from statsmodels.stats.diagnostic import het_breuschpagan, het_white
@@ -309,7 +313,7 @@ jb_stat, jb_pval, skew, kurtosis = jarque_bera(results.resid)
 print(f"Jarque-Bera test p-value: {jb_pval}")
 ```
 
-### Multicollinearity
+### 多重共线性
 
 ```python
 from statsmodels.stats.outliers_influence import variance_inflation_factor
@@ -329,7 +333,7 @@ print(f"Condition number: {results.condition_number}")
 # Condition number > 30 indicates serious problems
 ```
 
-### Influence Statistics
+### 影响点统计量
 
 ```python
 from statsmodels.stats.outliers_influence import OLSInfluence
@@ -355,7 +359,7 @@ influence_plot(results, ax=ax)
 plt.show()
 ```
 
-### Hypothesis Testing
+### 假设检验
 
 ```python
 # Test single coefficient
@@ -382,7 +386,7 @@ wald_test = results.wald_test(R)
 print(wald_test)
 ```
 
-## Model Comparison
+## 模型比较
 
 ```python
 # Classical nested OLS F-test: same observations, larger model second
@@ -402,9 +406,9 @@ print(f"Model 2 AIC: {model2.aic}, BIC: {model2.bic}")
 # Lower AIC/BIC indicates better model
 ```
 
-## Robust Standard Errors
+## 稳健标准误
 
-Handle heteroscedasticity or clustering without reweighting.
+在不重新加权的情况下处理异方差或整群结构。
 
 ```python
 # Heteroscedasticity-robust (HC) standard errors
@@ -424,28 +428,28 @@ results_cluster = results.get_robustcov_results(cov_type='cluster',
 print(results_hc3.summary())
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Specify intercept once**: Array models need it explicitly; formulas include it by default. Keep prediction columns in the training order.
-2. **Check assumptions**: Run diagnostic tests (heteroscedasticity, autocorrelation, normality)
-3. **Use formula API for categorical variables**: `smf.ols()` handles categorical variables automatically
-4. **Robust standard errors**: Use when heteroscedasticity detected but model specification is correct
-5. **Model selection**: Use AIC/BIC for non-nested models, F-test/likelihood ratio for nested models
-6. **Outliers and influence**: Always check Cook's distance and leverage
-7. **Multicollinearity**: Check VIF and condition number before interpretation
-8. **Time series**: Use `GLSAR` or robust HAC standard errors for autocorrelated errors
-9. **Grouped data**: Consider mixed effects models or cluster-robust standard errors
-10. **Quantile regression**: Use for robust estimation or when interested in distributional effects
+1. **截距只设一次**：数组版模型要显式加；公式默认包含。预测列要保持训练时的顺序。
+2. **检查假设**：跑诊断检验（异方差、自相关、正态性）
+3. **分类变量用 formula API**：`smf.ols()` 会自动处理分类变量
+4. **稳健标准误**：检出异方差但模型设定正确时使用
+5. **模型选择**：非嵌套用 AIC/BIC，嵌套用 F 检验/似然比
+6. **异常值与影响点**：始终检查 Cook's distance 与杠杆值
+7. **多重共线性**：解读前先看 VIF 与条件数
+8. **时间序列**：误差自相关时用 `GLSAR` 或稳健 HAC 标准误
+9. **分组数据**：考虑混合效应模型或整群稳健标准误
+10. **分位数回归**：需要稳健估计或关注分布效应时使用
 
-## Common Pitfalls
+## 常见陷阱
 
-1. **Forgetting to add constant**: Results in no-intercept model
-2. **Ignoring heteroscedasticity**: Use WLS or robust standard errors
-3. **Using OLS with autocorrelated errors**: Use GLSAR or HAC standard errors
-4. **Over-interpreting with multicollinearity**: Check VIF first
-5. **Not checking residuals**: Always plot residuals vs fitted values
-6. **Rank deficiency**: Check design rank and singular values; a pseudoinverse fit can return coefficients for a non-identifiable design
-7. **Confusing prediction vs confidence intervals**: Prediction intervals are wider
-8. **Not handling categorical variables properly**: Use formula API or manual dummy coding
-9. **Comparing models with different sample sizes**: Ensure same observations used
-10. **Ignoring influential observations**: Check Cook's distance and DFFITS
+1. **忘记加常数项**：得到无截距模型
+2. **忽略异方差**：用 WLS 或稳健标准误
+3. **误差自相关仍用 OLS**：用 GLSAR 或 HAC 标准误
+4. **多重共线性下过度解读**：先查 VIF
+5. **不检查残差**：始终画残差对拟合值图
+6. **秩亏**：检查设计矩阵秩与奇异值；伪逆拟合可能对不可识别设计也返回系数
+7. **混淆预测区间与置信区间**：预测区间更宽
+8. **分类变量处理不当**：用 formula API 或手工哑变量编码
+9. **比较样本量不同的模型**：确保用同一批观测
+10. **忽略影响点**：检查 Cook's distance 与 DFFITS

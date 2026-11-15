@@ -1,30 +1,34 @@
-# Time Series Analysis Reference
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/researcher/science/statsmodels/references/time_series.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document provides comprehensive guidance on time series models in statsmodels, including ARIMA, state space models, VAR, exponential smoothing, and forecasting methods.
+# 时间序列分析参考
 
-## Overview
+本文件全面介绍 statsmodels 中的时间序列模型，涵盖 ARIMA、状态空间模型、VAR、指数平滑与预测方法。
 
-Statsmodels offers extensive time series capabilities:
-- **Univariate models**: AR, ARIMA, SARIMAX, Exponential Smoothing
-- **Multivariate models**: VAR, VARMAX, Dynamic Factor Models
-- **State space framework**: Custom models, Kalman filtering
-- **Diagnostic tools**: ACF, PACF, stationarity tests, residual analysis
-- **Forecasting**: Point forecasts and prediction intervals
+## 概览
 
-Use a sorted, unique regular time grid with a recorded frequency; do not drop interior missing dates and silently compress time. State-space models can handle missing responses, but exogenous data must be finite/aligned, and ADF/KPSS reject missing values. For date-labeled forecasting, preserve the frequency and provide future exogenous rows in exact model-column order.
+Statsmodels 提供丰富的时间序列能力：
+- **单变量模型**：AR、ARIMA、SARIMAX、Exponential Smoothing
+- **多变量模型**：VAR、VARMAX、Dynamic Factor Models
+- **状态空间框架**：自定义模型、Kalman 滤波
+- **诊断工具**：ACF、PACF、平稳性检验、残差分析
+- **预测**：点预测与预测区间
 
-## Univariate Time Series Models
+使用有序、唯一、规则且记录了频率的时间网格；不要丢弃中间缺失的日期而悄悄压缩时间。状态空间模型能处理缺失响应，但外生数据必须有限且对齐，ADF/KPSS 不接受缺失值。带日期标签的预测要保留频率，并按模型列序提供未来的外生行。
 
-### AutoReg (AR Model)
+## 单变量时间序列模型
 
-Autoregressive model: current value depends on past values.
+### AutoReg（AR 模型）
 
-**When to use:**
-- Univariate time series
-- Past values predict future
-- Stationary series
+自回归模型：当前值依赖过去值。
 
-**Model**: yₜ = c + φ₁yₜ₋₁ + φ₂yₜ₋₂ + ... + φₚyₜ₋ₚ + εₜ
+**适用场景：**
+- 单变量时间序列
+- 过去值可预测未来
+- 平稳序列
+
+**模型**：yₜ = c + φ₁yₜ₋₁ + φ₂yₜ₋₂ + ... + φₚyₜ₋ₚ + εₜ
 
 ```python
 from statsmodels.tsa.ar_model import AutoReg
@@ -37,33 +41,33 @@ results = model.fit()
 print(results.summary())
 ```
 
-**With exogenous regressors:**
+**带外生回归元：**
 ```python
 # AR with exogenous variables (ARX)
 model = AutoReg(y, lags=5, exog=X_exog)
 results = model.fit()
 ```
 
-**Seasonal AR:**
+**季节性 AR：**
 ```python
 # Lags 1..12 plus seasonal dummies; use lags=[1, 12] for sparse seasonal lags
 model = AutoReg(y, lags=12, seasonal=True, period=12)
 results = model.fit()
 ```
 
-### ARIMA (Autoregressive Integrated Moving Average)
+### ARIMA（自回归积分滑动平均）
 
-Combines AR, differencing (I), and MA components.
+组合 AR、差分（I）与 MA 成分。
 
-**When to use:**
-- Non-stationary time series (needs differencing)
-- Past values and errors predict future
-- Flexible model for many time series
+**适用场景：**
+- 非平稳时间序列（需要差分）
+- 过去值与误差共同预测未来
+- 适用于许多时间序列的灵活模型
 
-**Model**: ARIMA(p,d,q)
-- p: AR order (lags)
-- d: differencing order (to achieve stationarity)
-- q: MA order (lagged forecast errors)
+**模型**：ARIMA(p,d,q)
+- p：AR 阶数（滞后数）
+- d：差分阶数（用以达到平稳）
+- q：MA 阶数（滞后预测误差）
 
 ```python
 from statsmodels.tsa.arima.model import ARIMA
@@ -75,9 +79,9 @@ results = model.fit()
 print(results.summary())
 ```
 
-**Choosing p, d, q:**
+**选择 p, d, q：**
 
-1. **Determine d (differencing order)**:
+1. **确定 d（差分阶数）**：
 ```python
 from statsmodels.tsa.stattools import adfuller
 
@@ -101,7 +105,7 @@ y_diff = y.diff().dropna()
 check_stationarity(y_diff)
 ```
 
-2. **Determine p and q (ACF/PACF)**:
+2. **确定 p 和 q（ACF/PACF）**：
 ```python
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pyplot as plt
@@ -126,7 +130,7 @@ plt.show()
 # - Both decay → ARMA(p,q)
 ```
 
-3. **Model selection (AIC/BIC)**:
+3. **模型选择（AIC/BIC）**：
 ```python
 # Grid search for best (p,q) given d
 import numpy as np
@@ -157,18 +161,18 @@ print(pd.DataFrame(candidates))
 print(f"Best order: {best_order} with AIC: {best_aic:.2f}")
 ```
 
-### SARIMAX (Seasonal ARIMA with Exogenous Variables)
+### SARIMAX（带外生变量的季节性 ARIMA）
 
-Extends ARIMA with seasonality and exogenous regressors.
+在 ARIMA 上加入季节性与外生回归元。
 
-**When to use:**
-- Seasonal patterns (monthly, quarterly data)
-- External variables influence series
-- Most flexible univariate model
+**适用场景：**
+- 季节性形态（月度、季度数据）
+- 外部变量影响序列
+- 最灵活的单变量模型
 
-**Model**: SARIMAX(p,d,q)(P,D,Q,s)
-- (p,d,q): Non-seasonal ARIMA
-- (P,D,Q,s): Seasonal ARIMA with period s
+**模型**：SARIMAX(p,d,q)(P,D,Q,s)
+- (p,d,q)：非季节性 ARIMA
+- (P,D,Q,s)：周期为 s 的季节性 ARIMA
 
 ```python
 from statsmodels.tsa.statespace.sarimax import SARIMAX
@@ -182,7 +186,7 @@ results = model.fit()
 print(results.summary())
 ```
 
-**With exogenous variables:**
+**带外生变量：**
 ```python
 # SARIMAX with external predictors
 model = SARIMAX(y,
@@ -192,7 +196,7 @@ model = SARIMAX(y,
 results = model.fit()
 ```
 
-**Example: Monthly sales with trend and seasonality**
+**示例：带趋势与季节性的月度销售额**
 ```python
 # Typical for monthly data: (p,d,q)(P,D,Q,12)
 # Start with (1,1,1)(1,1,1,12) or (0,1,1)(0,1,1,12)
@@ -207,17 +211,17 @@ results = model.fit()
 
 ### Exponential Smoothing
 
-Weighted averages of past observations with exponentially decreasing weights.
+对过去观测做加权平均，权重按指数递减。
 
-**When to use:**
-- Simple, interpretable forecasts
-- Trend and/or seasonality present
-- No need for explicit model specification
+**适用场景：**
+- 简单、可解释的预测
+- 存在趋势和/或季节性
+- 不需要显式设定模型
 
-**Types:**
-- Simple Exponential Smoothing: no trend, no seasonality
-- Holt's method: with trend
-- Holt-Winters: with trend and seasonality
+**类型：**
+- Simple Exponential Smoothing：无趋势、无季节性
+- Holt's method：带趋势
+- Holt-Winters：带趋势与季节性
 
 ```python
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
@@ -240,7 +244,7 @@ results = model.fit()
 print(results.summary())
 ```
 
-**Additive vs Multiplicative:**
+**加性 vs 乘性：**
 ```python
 # Additive: constant seasonal variation
 # yₜ = Level + Trend + Seasonal + Error
@@ -253,7 +257,7 @@ print(results.summary())
 # - Multiplicative: seasonal variation increases with level
 ```
 
-**Innovations state space (ETS):**
+**新息状态空间（ETS）：**
 ```python
 from statsmodels.tsa.exponential_smoothing.ets import ETSModel
 
@@ -266,18 +270,18 @@ model = ETSModel(y,
 results = model.fit()
 ```
 
-## Multivariate Time Series
+## 多变量时间序列
 
-### VAR (Vector Autoregression)
+### VAR（向量自回归）
 
-System of equations where each variable depends on past values of all variables.
+方程组，每个变量依赖所有变量的过去值。
 
-**When to use:**
-- Multiple interrelated time series
-- Bidirectional relationships
-- Granger causality testing
+**适用场景：**
+- 多条相互关联的时间序列
+- 双向关系
+- Granger 因果检验
 
-**Model**: Each variable is AR on all variables:
+**模型**：每个变量对所有变量做 AR：
 - y₁ₜ = c₁ + φ₁₁y₁ₜ₋₁ + φ₁₂y₂ₜ₋₁ + ... + ε₁ₜ
 - y₂ₜ = c₂ + φ₂₁y₁ₜ₋₁ + φ₂₂y₂ₜ₋₁ + ... + ε₂ₜ
 
@@ -301,7 +305,7 @@ results = model.fit(maxlags=5, ic='aic')
 print(results.summary())
 ```
 
-**Granger causality testing:**
+**Granger 因果检验：**
 ```python
 # Test if series1 Granger-causes series2
 from statsmodels.tsa.stattools import grangercausalitytests
@@ -319,9 +323,9 @@ for lag in range(1, max_lag + 1):
     print(f"Lag {lag}: p-value = {p_value:.4f}")
 ```
 
-Granger predictability does not identify an intervention effect. Prespecify lags or correct for searching across them. Orthogonalized IRFs depend on Cholesky variable ordering and structural assumptions. Forecast intervals condition on the fitted parameters/model and are not guarantees of out-of-sample coverage.
+Granger 可预测性并不识别干预效应。要预先指定滞后阶数，或对跨滞后搜索做校正。正交化 IRF 依赖 Cholesky 变量排序与结构性假设。预测区间以拟合参数/模型为条件，并不保证样本外覆盖率。
 
-**Impulse Response Functions (IRF):**
+**脉冲响应函数（IRF）：**
 ```python
 # Trace effect of shock through system
 irf = results.irf(10)  # 10 periods ahead
@@ -335,7 +339,7 @@ irf.plot_cum_effects(orth=True)
 plt.show()
 ```
 
-**Forecast Error Variance Decomposition:**
+**预测误差方差分解：**
 ```python
 # Contribution of each variable to forecast error variance
 fevd = results.fevd(10)  # 10 periods ahead
@@ -343,14 +347,14 @@ fevd.plot()
 plt.show()
 ```
 
-### VARMAX (VAR with Moving Average and Exogenous Variables)
+### VARMAX（带移动平均与外生变量的 VAR）
 
-Extends VAR with MA component and external regressors.
+在 VAR 上加入 MA 成分与外部回归元。
 
-**When to use:**
-- VAR inadequate (MA component needed)
-- External variables affect system
-- More flexible multivariate model
+**适用场景：**
+- VAR 不够用（需要 MA 成分）
+- 外部变量影响系统
+- 更灵活的多变量模型
 
 ```python
 from statsmodels.tsa.statespace.varmax import VARMAX
@@ -364,15 +368,15 @@ results = model.fit()
 print(results.summary())
 ```
 
-## State Space Models
+## 状态空间模型
 
-Flexible framework for custom time series models.
+用于自定义时间序列模型的灵活框架。
 
-**When to use:**
-- Custom model specification
-- Unobserved components
-- Kalman filtering/smoothing
-- Missing data
+**适用场景：**
+- 自定义模型设定
+- 不可观测成分
+- Kalman 滤波/平滑
+- 缺失数据
 
 ```python
 from statsmodels.tsa.statespace.mlemodel import MLEModel
@@ -381,7 +385,7 @@ from statsmodels.tsa.statespace.mlemodel import MLEModel
 # Example: Local level model (random walk + noise)
 ```
 
-**Dynamic Factor Models:**
+**Dynamic Factor Models：**
 ```python
 from statsmodels.tsa.statespace.dynamic_factor import DynamicFactor
 
@@ -395,9 +399,9 @@ results = model.fit()
 factors = results.factors.filtered
 ```
 
-## Forecasting
+## 预测
 
-### Point Forecasts
+### 点预测
 
 ```python
 # ARIMA forecasting
@@ -416,7 +420,7 @@ results = model.fit()
 forecast = results.forecast(steps=h, exog=X_future)
 ```
 
-### Prediction Intervals
+### 预测区间
 
 ```python
 # Continuing the SARIMAX fit with exogenous regressors above:
@@ -446,9 +450,9 @@ plt.title('Forecast with Prediction Intervals')
 plt.show()
 ```
 
-The state-space summary uses `mean_ci_*` labels for forecast uncertainty. By default, forecast-error variance includes future observation uncertainty conditional on fitted parameters; it is not the same target as a GLM mean confidence interval.
+状态空间汇总用 `mean_ci_*` 标签表示预测不确定性。默认情况下，预测误差方差在给定拟合参数的条件下包含未来观测不确定性；它与 GLM 的均值置信区间不是同一目标量。
 
-### Dynamic vs Static Forecasts
+### 动态 vs 静态预测
 
 ```python
 # Static (one-step-ahead, using actual values)
@@ -468,9 +472,9 @@ ax.legend()
 plt.show()
 ```
 
-## Diagnostic Tests
+## 诊断检验
 
-### Stationarity Tests
+### 平稳性检验
 
 ```python
 from statsmodels.tsa.stattools import adfuller, kpss
@@ -496,7 +500,7 @@ else:
     print("Level-stationarity null not rejected; not proof of stationarity")
 ```
 
-### Residual Diagnostics
+### 残差诊断
 
 ```python
 # Ljung-Box test for autocorrelation in residuals
@@ -522,7 +526,7 @@ plt.show()
 # 4. Correlogram (ACF of residuals)
 ```
 
-### Heteroskedasticity Tests
+### 异方差检验
 
 ```python
 from statsmodels.stats.diagnostic import het_arch
@@ -535,7 +539,7 @@ print(f"p-value: {arch_test.lmpval:.4f}")
 # If significant, consider GARCH model
 ```
 
-## Seasonal Decomposition
+## 季节性分解
 
 ```python
 from statsmodels.tsa.seasonal import seasonal_decompose
@@ -572,9 +576,9 @@ fig = mstl_result.plot()
 plt.show()
 ```
 
-## Model Evaluation
+## 模型评估
 
-### In-Sample Metrics
+### 样本内指标
 
 ```python
 # From results object
@@ -595,7 +599,7 @@ mae = mean_absolute_error(y, results.fittedvalues)
 print(f"MAE: {mae:.4f}")
 ```
 
-### Out-of-Sample Evaluation
+### 样本外评估
 
 ```python
 # Train-test split for time series (no shuffle!)
@@ -623,7 +627,7 @@ print(f"Test MAE: {mae:.4f}")
 print(f"Test MAPE: {mape:.2f}%")
 ```
 
-### Rolling Forecast
+### Rolling 预测
 
 ```python
 # More realistic evaluation: rolling one-step-ahead forecasts
@@ -645,7 +649,7 @@ rmse = np.sqrt(mean_squared_error(y_test, forecasts))
 print(f"Rolling forecast RMSE: {rmse:.4f}")
 ```
 
-### Cross-Validation
+### 交叉验证
 
 ```python
 # Time series cross-validation (expanding window)
@@ -668,11 +672,11 @@ for train_idx, test_idx in tscv.split(y):
 print(f"CV RMSE: {np.mean(rmse_scores):.4f} ± {np.std(rmse_scores):.4f}")
 ```
 
-## Advanced Topics
+## 进阶主题
 
-### ARDL (Autoregressive Distributed Lag)
+### ARDL（自回归分布滞后）
 
-Bridges univariate and multivariate time series.
+连接单变量与多变量时间序列。
 
 ```python
 from statsmodels.tsa.ardl import ARDL
@@ -683,9 +687,9 @@ model = ARDL(y, lags=2, exog=X, order=2)
 results = model.fit()
 ```
 
-### Error Correction Models
+### 误差修正模型
 
-For cointegrated series.
+用于协整序列。
 
 ```python
 from statsmodels.tsa.vector_ar.vecm import coint_johansen
@@ -700,9 +704,9 @@ model = VECM(df_multivariate, k_ar_diff=1, coint_rank=1)
 results = model.fit()
 ```
 
-### Regime Switching Models
+### Regime Switching 模型
 
-For structural breaks and regime changes.
+用于结构断点与状态切换。
 
 ```python
 from statsmodels.tsa.regime_switching.markov_regression import MarkovRegression
@@ -716,28 +720,28 @@ results = model.fit()
 regime_probs = results.smoothed_marginal_probabilities
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Check stationarity**: Difference if needed, verify with ADF/KPSS tests
-2. **Plot data**: Always visualize before modeling
-3. **Identify seasonality**: Use appropriate seasonal models (SARIMAX, Holt-Winters)
-4. **Model selection**: Use AIC/BIC and out-of-sample validation
-5. **Residual diagnostics**: Check for autocorrelation, normality, heteroskedasticity
-6. **Forecast evaluation**: Use rolling forecasts and proper time series CV
-7. **Avoid overfitting**: Prefer simpler models, use information criteria
-8. **Document assumptions**: Note any data transformations (log, differencing)
-9. **Prediction intervals**: Always provide uncertainty estimates
-10. **Refit regularly**: Update models as new data arrives
+1. **检查平稳性**：必要时差分，用 ADF/KPSS 检验确认
+2. **画数据**：建模前始终先可视化
+3. **识别季节性**：用合适的季节性模型（SARIMAX、Holt-Winters）
+4. **模型选择**：用 AIC/BIC 与样本外验证
+5. **残差诊断**：检查自相关、正态性、异方差
+6. **预测评估**：用 rolling 预测与恰当的时间序列 CV
+7. **避免过拟合**：偏好更简单的模型，用信息准则
+8. **记录假设**：注明任何数据变换（log、差分）
+9. **预测区间**：始终给出不确定性估计
+10. **定期重拟合**：新数据到来时更新模型
 
-## Common Pitfalls
+## 常见陷阱
 
-1. **Misusing stationarity tests**: ADF/KPSS have different nulls and deterministic specifications; ARIMA can model integration through d
-2. **Data leakage**: Using future data in transformations
-3. **Wrong seasonal period**: S=4 for quarterly, S=12 for monthly
-4. **Overfitting**: Too many parameters relative to data
-5. **Ignoring residual autocorrelation**: Model inadequate
-6. **Using inappropriate metrics**: MAPE fails with zeros or negatives
-7. **Not handling missing data**: Affects model estimation
-8. **Extrapolating exogenous variables**: Need future X values for SARIMAX
-9. **Confusing static vs dynamic forecasts**: Dynamic more realistic for multi-step
-10. **Not validating forecasts**: Always check out-of-sample performance
+1. **误用平稳性检验**：ADF/KPSS 的原假设与确定性设定不同；ARIMA 可以通过 d 对单整建模
+2. **数据泄漏**：变换中用到了未来数据
+3. **季节周期选错**：季度用 S=4，月度用 S=12
+4. **过拟合**：参数相对数据太多
+5. **忽略残差自相关**：模型不充分
+6. **用不恰当的指标**：MAPE 遇到零或负值会失效
+7. **不处理缺失数据**：影响模型估计
+8. **外生变量外推**：SARIMAX 需要未来的 X 值
+9. **混淆静态与动态预测**：多步预测下动态更贴近实际
+10. **不验证预测**：始终检查样本外表现

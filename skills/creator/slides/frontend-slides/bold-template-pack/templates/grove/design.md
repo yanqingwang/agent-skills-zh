@@ -202,286 +202,289 @@ components:
     description: "Small white dots at the bottom of the viewport indicating slide position. The fixed counter (#slide-counter) is intentionally disabled — the slide-foot already shows NN / TT."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/grove/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Grove is a **quiet, editorial-serif presentation system** in the register of a literary monograph or boutique brand book. The foundational premise is restraint: every slide carries one focused content moment surrounded by deep negative space, anchored by thin 1px chrome bars at top and bottom and supported by a small library of compositional beats (coral kicker, 36px coral rule, italic-coral accent, em-dash bullet, near-invisible watermark numeral).
+Grove 是一套**安静的编辑衬线演示系统**，语域落在文学专著或精品品牌书。底层前提是克制：每页承载一个聚焦内容瞬间，由深负空间环绕，以顶底细 1px 外壳条锚定，并由一小组构图节拍支撑（珊瑚眉题、36px 珊瑚线、斜体珊瑚强调、破折号项目、几乎不可见的水印数字）。
 
-The typographic stack runs four faces, each in a single specific weight:
+排印栈跑四款字面，各守单一字重：
 
-- **Playfair Display at weight 400** carries every headline, every quote, every stat figure, and every watermark numeral. **Bold serif is not permitted** — the no-bold rule is the system's most important typographic commitment. Italicized Playfair in `{colors.accent}` coral is the signature accent move: `<em>` inside any headline switches to italic coral.
-- **Jost at weight 300** carries every paragraph and bullet body. The light weight is the "good paper" feel — it sits back and lets the serif lead.
-- **JetBrains Mono at weight 300** carries every label, kicker, footline, slide counter, and stat caption. Always uppercase, always with at least 0.12em letter-spacing.
-- **Noto Serif SC / Noto Sans SC at weight 300–500** are loaded as Chinese fallbacks for every role. The deck is built bilingually-aware — Chinese characters render through the Noto cuts when present in the content.
+- **Playfair Display 字重 400** 承载每个标题、每段引文、每个统计数字、每个水印数字。**粗衬线不允许**，无粗体规则是系统最重要的排印承诺。`{colors.accent}` 珊瑚色的斜体 Playfair 是招牌强调手法：任何标题里的 `<em>` 都切到斜体珊瑚。
+- **Jost 字重 300** 承载每段正文和每个项目正文。轻字重就是"好纸"感，它往后坐、让衬线领衔。
+- **JetBrains Mono 字重 300** 承载每个标签、眉题、页脚线、页码、统计图注。始终大写、始终至少 0.12em 字距。
+- **Noto Serif SC / Noto Sans SC 字重 300–500** 作为中文回退为每个角色加载。整套文稿具备双语意识，内容里出现汉字时经 Noto 切分渲染。
 
-The palette is a tight two-surface system with one accent. Dark slides use `{colors.bg}` (a deep forest green) with `{colors.fg}` (warm cream — never pure white) for body text. Light slides flip to `{colors.bg-light}` (warm parchment) with `{colors.fg-light}` (the same forest green now used as text). The single accent is **terracotta coral** (`{colors.accent}` — #c8524a), used only in small, deliberate places: the italic emphasis inside headlines, the 36px rule under a kicker, the em-dash bullet, the stat figure, the chapter ordinal, and the opening quote mark. Coral is the system's accent voice; using it as a surface fill or for body paragraphs shatters the editorial discipline.
+配色是紧凑的双表面系统加一种强调。深色页用 `{colors.bg}`（深森林绿）配 `{colors.fg}`（暖奶油，绝不纯白）作正文。浅色页翻到 `{colors.bg-light}`（暖羊皮纸）配 `{colors.fg-light}`（同一森林绿此时作文字）。唯一强调是**陶土珊瑚**（`{colors.accent}` — #c8524a），只用在小而刻意的地方：标题内的斜体强调、眉题下的 36px 线、破折号项目、统计数字、章节序数、起始引号。珊瑚是系统的强调声部，拿它作表面填充或正文段落会击碎编辑纪律。
 
-Depth is **flat and air-based**. There are no drop shadows, no gradients, no blur, no glow. The only "depth" devices are 1px hairline borders (the chrome bars, the stat-card divider, the compare-panel separator) and the watermark numeral at 6% opacity. The whole system reads as printed ink on linen paper, not as a digital surface.
+纵深是**平的、空气感的**。没有投影、没有渐变、没有模糊、没有辉光。仅有的"纵深"装置是 1px 细线边（外壳条、统计卡片分隔、比较面板分隔）和 6% 不透明度的水印数字。整套系统读起来像印在亚麻纸上的墨，不是数字表面。
 
-The system carries a built-in **motion vocabulary**: slide-to-slide transitions use a sharp `cubic-bezier(0.77, 0, 0.175, 1)` pan at 0.9s; element entrances stagger via `[data-anim]` and `[data-delay]` attributes (fade-up / fade-in / reveal-right / reveal-left / scale-in) with a spring-y `cubic-bezier(0.16, 1, 0.3, 1)` curve at 0.7s and delays of 0 / 0.08 / 0.18 / 0.3 / 0.44 / 0.6 / 0.78s. Animation is part of the system identity; new slides should use the animation attribute stack rather than authoring custom transitions.
+系统带一套内置**动效语汇**：页到页过渡用 0.9s 的锐利 `cubic-bezier(0.77, 0, 0.175, 1)` 平移，元素入场经 `[data-anim]` 与 `[data-delay]` 属性错峰（fade-up / fade-in / reveal-right / reveal-left / scale-in），配 0.7s 带弹性的 `cubic-bezier(0.16, 1, 0.3, 1)` 曲线，延迟 0 / 0.08 / 0.18 / 0.3 / 0.44 / 0.6 / 0.78s。动效是系统身份的一部分，新页应使用该动画属性栈，而非自写过渡。
 
-**Density philosophy: sparse and breathing.** Grove reads as elegant when slides are quiet — one headline, one supporting paragraph, three stats in a row, two columns of text-and-image. The 8vw horizontal and 6.5vh vertical padding is generous by design. A slide that crowds 6 elements into the canvas breaks the system; a slide with one headline, one lede, and one accent rule reads as authoritative. Reach for fewer, larger elements. The system rewards silence around the type, not density of content.
+**密度取向：稀疏、能呼吸。** Grove 页面安静时显得优雅：一个标题、一段辅助正文、一排三个统计、两栏图文。8vw 横向、6.5vh 纵向内边距刻意宽裕。把 6 个元素塞进画布的页会破掉系统，一个标题 + 一段导语 + 一条强调线的页才权威。宁可更少、更大。系统奖励文字周围的静默，不奖励内容密度。
 
-**Key Characteristics:**
-- Playfair Display at weight 400 — never bold — for every serif moment. Italic in `{colors.accent}` is the headline accent.
-- Jost weight 300 for every body paragraph. Lighter weight is the system's "good paper" voice.
-- JetBrains Mono weight 300 uppercase with 0.12em–0.2em letter-spacing for every label, kicker, footline, counter, and caption.
-- Dark slides on `{colors.bg}` deep forest green with `{colors.fg}` warm cream text. Light slides on `{colors.bg-light}` parchment with `{colors.fg-light}` green text.
-- One accent color: `{colors.accent}` terracotta coral. Used only for italic headline emphasis, the 36px coral rule, em-dash bullets, stat figures, chapter ordinals, and the quote mark.
-- 1px hairline borders only (`{colors.border}` on dark, `{colors.border-light}` on light). No thick borders, no shadows, no gradients.
-- Em-dash glyph rendered in JetBrains Mono coral is the system's universal bullet.
-- A massive serif watermark numeral (`{components.grove-num}` at 18vw, 6% opacity) sits in the bottom-right corner of chapter and section slides as compositional texture.
-- A staggered fade / reveal animation system (`[data-anim]` + `[data-delay]`) is built-in; new content should use it rather than appearing without entrance.
+**关键特征：**
+- Playfair Display 字重 400，绝不粗，用于每个衬线瞬间。`{colors.accent}` 斜体是标题强调。
+- Jost 字重 300 用于每段正文。更轻字重是系统的"好纸"声部。
+- JetBrains Mono 字重 300 大写、0.12em–0.2em 字距，用于每个标签、眉题、页脚线、计数器、图注。
+- 深色页用 `{colors.bg}` 深森林绿配 `{colors.fg}` 暖奶油文字，浅色页用 `{colors.bg-light}` 羊皮纸配 `{colors.fg-light}` 绿文字。
+- 一种强调色：`{colors.accent}` 陶土珊瑚。只给斜体标题强调、36px 珊瑚线、破折号项目、统计数字、章节序数、引号。
+- 仅 1px 细线边（深色 `{colors.border}`、浅色 `{colors.border-light}`）。无粗边、无阴影、无渐变。
+- JetBrains Mono 珊瑚色渲染的破折号字形是系统通用项目符号。
+- 巨型衬线水印数字（`{components.grove-num}` 18vw、6% 不透明度）坐在章节与分节页右下角作构图纹理。
+- 内置错峰淡入 / 揭示动画系统（`[data-anim]` + `[data-delay]`），新内容应使用它，而非无入场直接出现。
 
-## Colors
+## 颜色
 
-### Palette
-- **BG / Deep Forest** (`{colors.bg}` — #192b1b): The dominant dark canvas. A deep, considered forest green — grounded, editorial, the Grove base. The default slide background.
-- **BG Alt** (`{colors.bg-alt}` — #1e3221): A slightly lighter forest green for secondary dark surfaces. Used as the `{components.img-placeholder}` fill on dark slides, where it reads as a tonal step up from the canvas without leaving the green family.
-- **BG Light / Parchment** (`{colors.bg-light}` — #e8e4d6): The warm parchment surface used on light slides. Reads as good-quality paper stock, not as digital white.
-- **BG Light Alt** (`{colors.bg-light-alt}` — #dedad0): A slightly cooler parchment for secondary light surfaces. Available for tonal separation between adjacent light regions.
-- **FG / Warm Cream** (`{colors.fg}` — #d4cfbf): Primary text color on dark surfaces. Warm cream — never pure white. The off-white temperature is essential to the printed-ink feel.
-- **FG-2** (`{colors.fg-2}` — rgba(212,207,191,0.6)): Secondary / muted text on dark. Used for ledes, captions, and supporting copy that needs to recede from primary.
-- **FG-3** (`{colors.fg-3}` — rgba(212,207,191,0.32)): Tertiary / hint text on dark. Near-invisible — used for image-placeholder captions and the faintest metadata.
-- **FG Light** (`{colors.fg-light}` — #192b1b): Primary text on light surfaces. **Shares its hex with `{colors.bg}`** — the deep forest green is used both as the dark canvas and as the dark text-on-light color. This is the system's primary surface-text inversion device.
-- **FG Light 2** (`{colors.fg-light-2}` — rgba(25,43,27,0.58)): Secondary muted text on light.
-- **FG Light 3** (`{colors.fg-light-3}` — rgba(25,43,27,0.33)): Tertiary text on light.
-- **Accent / Terracotta Coral** (`{colors.accent}` — #c8524a): The single warm note. Used sparingly: italic emphasis inside headlines, the 36px coral rule under a kicker, the em-dash bullet, the stat figure, the chapter ordinal, the opening quote mark, and nav-dot active state. Never used as a surface fill, never used for body paragraphs.
-- **Border** (`{colors.border}` — rgba(212,207,191,0.12)): Hairline divider on dark slides. 12% cream — visible as a structural line but never loud.
-- **Border Light** (`{colors.border-light}` — rgba(25,43,27,0.14)): Hairline divider on light slides. 14% forest green.
+### 调色板
+- **BG / Deep Forest**（`{colors.bg}` — #192b1b）：主导深色画布。深沉、有分寸的森林绿，落地、编辑，Grove 基底。默认幻灯片背景。
+- **BG Alt**（`{colors.bg-alt}` — #1e3221）：略浅的森林绿，用于次级深色表面。作深色页上 `{components.img-placeholder}` 的填充，读起来是从画布往上一档色调，又不离开绿系。
+- **BG Light / Parchment**（`{colors.bg-light}` — #e8e4d6）：浅色页用的暖羊皮纸表面。读起来是优质纸料，不是数字白。
+- **BG Light Alt**（`{colors.bg-light-alt}` — #dedad0）：略冷的羊皮纸，用于次级浅色表面。可供相邻浅色区域之间作色调分隔。
+- **FG / Warm Cream**（`{colors.fg}` — #d4cfbf）：深色表面上的主文字色。暖奶油，绝不纯白。这份米白温度对印刷墨感不可少。
+- **FG-2**（`{colors.fg-2}` — rgba(212,207,191,0.6)）：深色上次级 / 柔化文字。用于导语、图注、需要往后退的辅助文案。
+- **FG-3**（`{colors.fg-3}` — rgba(212,207,191,0.32)）：深色上三级 / 提示文字。几乎不可见，用于图片占位图注与最淡的元数据。
+- **FG Light**（`{colors.fg-light}` — #192b1b）：浅色表面上的主文字。**与 `{colors.bg}` 共用同一十六进制**，深森林绿既作深色画布，也作浅底上的深色文字。这是系统主表面的文字反色装置。
+- **FG Light 2**（`{colors.fg-light-2}` — rgba(25,43,27,0.58)）：浅色上次级柔化文字。
+- **FG Light 3**（`{colors.fg-light-3}` — rgba(25,43,27,0.33)）：浅色上三级文字。
+- **Accent / Terracotta Coral**（`{colors.accent}` — #c8524a）：唯一的暖音符。省着用：标题内斜体强调、眉题下 36px 珊瑚线、破折号项目、统计数字、章节序数、起始引号、导航点激活态。绝不作为表面填充，绝不用于正文段落。
+- **Border**（`{colors.border}` — rgba(212,207,191,0.12)）：深色页上的细线分隔。12% 奶油，作为结构线可见但不响。
+- **Border Light**（`{colors.border-light}` — rgba(25,43,27,0.14)）：浅色页上的细线分隔。14% 森林绿。
 
-### Defaults
-- **Default slide background**: `{colors.bg}` (deep forest green) for the deck's dominant tonal register. Reach for `{colors.bg-light}` (parchment) when the content wants a literal "page" feel — typically for quote slides, lighter chapters, or contrast.
-- **Default primary text color on dark surface**: `{colors.fg}` (warm cream).
-- **Default primary text color on light surface**: `{colors.fg-light}` (deep forest green — same hex as the dark surface).
-- **Default secondary / muted text**: `{colors.fg-2}` on dark, `{colors.fg-light-2}` on light. Use the `.muted` utility class.
-- **Default headline color**: matches the surface's primary text color. Headlines never appear in coral except for the italic `<em>` accent inside them.
-- **Default body color**: matches the surface's primary text color.
-- **Default border color**: `{colors.border}` on dark, `{colors.border-light}` on light — both at 1px solid hairline weight.
-- **Default kicker / chapter-num color**: `{colors.accent}` (terracotta coral). The mono uppercase kicker is the only chrome element that takes the accent color.
-- **Default rule color** for the short 36px compositional rule under a kicker: `{colors.accent}`. The full-width section divider rule uses `{colors.border}` instead.
+### 默认值
+- **默认幻灯片背景**：`{colors.bg}`（深森林绿）作整稿主导色调。内容想要字面"页面"感时取 `{colors.bg-light}`（羊皮纸），通常用于引文页、较浅的章节或作对比。
+- **深色表面默认主文字色**：`{colors.fg}`（暖奶油）。
+- **浅色表面默认主文字色**：`{colors.fg-light}`（深森林绿，与深色表面同一十六进制）。
+- **默认次级 / 柔化文字**：深色 `{colors.fg-2}`、浅色 `{colors.fg-light-2}`，用 `.muted` 工具类。
+- **默认标题色**：跟随表面的主文字色。除标题内斜体 `<em>` 强调外，标题绝不出现在珊瑚里。
+- **默认正文色**：跟随表面的主文字色。
+- **默认边框色**：深色 `{colors.border}`、浅色 `{colors.border-light}`，都是 1px 实线细线粗细。
+- **默认眉题 / 章节号色**：`{colors.accent}`（陶土珊瑚）。等宽大写眉题是唯一取强调色的外壳元素。
+- **眉题下短 36px 构图线的默认线色**：`{colors.accent}`。满宽分节分隔线改用 `{colors.border}`。
 
-The palette is intentionally minimal. The dark forest / light parchment / terracotta coral triad is the entire color vocabulary. Introducing a fourth color (a navy, a yellow, a second accent) breaks the system's editorial restraint.
+配色刻意极简。深森林 / 浅羊皮纸 / 陶土珊瑚三元组就是整个色彩语汇。引入第四色（海军、黄、第二强调）会破掉系统的编辑克制。
 
-## Typography
+## 排印
 
-### Font Family
-The system loads four families from Google Fonts:
+### 字族
+系统从 Google Fonts 加载四款字族：
 
-- **Playfair Display** at weights 400 and 500 (italic and roman). **Only weight 400 is used in published slides.** Weight 500 is loaded but reserved; bold serif (weight 700) is explicitly not permitted by the system rules.
-- **Jost** at weights 200, 300, 400, 500. **Only weight 300 is used.** The light weight is the system's body voice.
-- **JetBrains Mono** at weights 300 and 400. **Only weight 300 is used.** The light mono is the chrome voice.
-- **Noto Serif SC / Noto Sans SC** at weights 300–500, loaded as the Chinese fallback chain for every role.
+- **Playfair Display** 字重 400 与 500（斜体和正体）。**已发布页面只用字重 400。** 字重 500 加载了但预留，系统规则明确不允许粗衬线（字重 700）。
+- **Jost** 字重 200、300、400、500。**只用字重 300。** 轻字重是系统的正文声部。
+- **JetBrains Mono** 字重 300 与 400。**只用字重 300。** 轻等宽是外壳声部。
+- **Noto Serif SC / Noto Sans SC** 字重 300–500，作为每个角色的中文回退链加载。
 
-The four-family stack is strict by role: Playfair for every serif moment (display, headlines, quotes, stat figures, watermark), Jost for every body paragraph and bullet, JetBrains Mono for every label / kicker / footline / counter / caption.
+四字族栈按角色严格：Playfair 管每个衬线瞬间（展示、标题、引文、统计数字、水印），Jost 管每段正文和项目，JetBrains Mono 管每个标签 / 眉题 / 页脚线 / 计数器 / 图注。
 
-### Display, Body, and Chrome Scale
+### 展示、正文、外壳比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.grove-num}` | 18vw | Playfair | 400 | Watermark ordinal numeral, 6% opacity, absolute bottom-right |
-| `{typography.display}` | 10vw | Playfair | 400 | Cover hero title |
-| `{typography.quote-mark}` | 8vw | Playfair | 400 | Opening quotation glyph |
-| `{typography.h1}` | 5.5vw | Playfair | 400 | Chapter title, statement headline |
-| `{typography.stat-value}` | 4.5vw | Playfair | 400 / coral | Stat-card numeric value |
-| `{typography.h2}` | 3.2vw | Playfair | 400 | Routine slide headline |
-| `{typography.quote-text}` | 3.2vw | Playfair | 400 italic | Quote body |
-| `{typography.h3}` | 2vw | Playfair | 400 | Sub-headline, compare-panel title |
-| `{typography.lead}` | 1.45vw | Jost | 300 | Lead paragraph |
-| `{typography.body-list-emph}` | max(1.4vw, 17px) | Jost | 300 | List-slide body / bullets — emphasized for legibility |
-| `{typography.body}` | 1.05vw | Jost | 300 | Standard body paragraph |
-| `{typography.caption}` | 0.82vw | Jost | 300 | Captions, footnotes, chart sources |
-| `{typography.label}` | 0.7vw | JetBrains Mono | 300 / 0.12em | Chrome label, mono metadata |
-| `{typography.kicker}` | 0.7vw | JetBrains Mono | 300 / 0.14em / UPPER | Eyebrow above a headline |
-| `{typography.chapter-num}` | 0.7vw | JetBrains Mono | 300 / 0.2em / UPPER | Chapter ordinal label |
-| `{typography.stat-label}` | 0.7vw | JetBrains Mono | 300 / 0.12em / UPPER | Mono label beneath a stat figure |
+| `{typography.grove-num}` | 18vw | Playfair | 400 | 水印序数数字，6% 不透明度，绝对右下 |
+| `{typography.display}` | 10vw | Playfair | 400 | 封面英雄标题 |
+| `{typography.quote-mark}` | 8vw | Playfair | 400 | 起始引号字形 |
+| `{typography.h1}` | 5.5vw | Playfair | 400 | 章节标题、陈述标题 |
+| `{typography.stat-value}` | 4.5vw | Playfair | 400 / 珊瑚 | 统计卡片数值 |
+| `{typography.h2}` | 3.2vw | Playfair | 400 | 常规页面标题 |
+| `{typography.quote-text}` | 3.2vw | Playfair | 400 斜体 | 引文正文 |
+| `{typography.h3}` | 2vw | Playfair | 400 | 副标题、比较面板标题 |
+| `{typography.lead}` | 1.45vw | Jost | 300 | 导语段 |
+| `{typography.body-list-emph}` | max(1.4vw, 17px) | Jost | 300 | 列表页正文 / 项目，为可读性强调 |
+| `{typography.body}` | 1.05vw | Jost | 300 | 标准正文段落 |
+| `{typography.caption}` | 0.82vw | Jost | 300 | 图注、脚注、图表来源 |
+| `{typography.label}` | 0.7vw | JetBrains Mono | 300 / 0.12em | 外壳标签、等宽元数据 |
+| `{typography.kicker}` | 0.7vw | JetBrains Mono | 300 / 0.14em / 大写 | 标题上方眉题 |
+| `{typography.chapter-num}` | 0.7vw | JetBrains Mono | 300 / 0.2em / 大写 | 章节序数标签 |
+| `{typography.stat-label}` | 0.7vw | JetBrains Mono | 300 / 0.12em / 大写 | 统计数字下方等宽标签 |
 
-### Defaults
-- **Default size for a routine slide headline**: `{typography.h2}` (3.2vw).
-- **Default size for a chapter or statement headline**: `{typography.h1}` (5.5vw). For statement-class moments specifically, use `{typography.h1-statement}` which caps at `min(4.5vw, 7.5vh, 88px)` to prevent overflow on short viewports.
-- **Default size for a cover hero title**: `{typography.display}` (10vw).
-- **Default size for a body paragraph**: `{typography.body}` (1.05vw) in Jost weight 300.
-- **Default size for a lede / introductory paragraph**: `{typography.lead}` (1.45vw).
-- **Default size for a kicker / eyebrow**: `{typography.kicker}` (0.7vw) in JetBrains Mono uppercase 0.14em with `{colors.accent}` color.
-- **Default size for a stat-card figure**: `{typography.stat-value}` (4.5vw) in Playfair coral.
-- **Default weight for every serif element**: 400.
-- **Default weight for every body / Jost element**: 300.
-- **Default weight for every mono / JetBrains element**: 300.
+### 默认值
+- **常规页面标题默认尺寸**：`{typography.h2}`（3.2vw）。
+- **章节或陈述标题默认尺寸**：`{typography.h1}`（5.5vw）。陈述类瞬间特别用 `{typography.h1-statement}`，封顶 `min(4.5vw, 7.5vh, 88px)` 防止矮视口溢出。
+- **封面英雄标题默认尺寸**：`{typography.display}`（10vw）。
+- **正文段落默认尺寸**：`{typography.body}`（1.05vw），Jost 字重 300。
+- **导语 / 开场段落默认尺寸**：`{typography.lead}`（1.45vw）。
+- **眉题 / eyebrow 默认尺寸**：`{typography.kicker}`（0.7vw），JetBrains Mono 大写 0.14em、`{colors.accent}` 色。
+- **统计卡片数字默认尺寸**：`{typography.stat-value}`（4.5vw），Playfair 珊瑚。
+- **每个衬线元素默认字重**：400。
+- **每个正文 / Jost 元素默认字重**：300。
+- **每个等宽 / JetBrains 元素默认字重**：300。
 
-When the body text on a list-style slide reads too small at 1.05vw on typical laptop viewports, the system bumps it to `{typography.body-list-emph}` (max of 1.4vw or 17px). Reach for the emphasized size whenever a slide's primary content moment is a body paragraph or bulleted list — the default 1.05vw is calibrated for projector viewing, not laptop reading.
+列表式页上的正文在常见笔记本视口下按 1.05vw 读起来偏小时，系统会提到 `{typography.body-list-emph}`（取 1.4vw 或 17px 的较大值）。页面主内容瞬间是正文段落或项目列表时取强调尺寸，默认 1.05vw 是为投影观看校准，不是笔记本阅读。
 
-### Signature Treatments
-These treatments are **non-optional whenever the corresponding element type is used**:
+### 招牌处理
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every Playfair element runs at weight 400.** Bold serif (weight 700) is not used anywhere in the system. This is the system's most important typographic rule.
-- **An `<em>` tag inside any Playfair headline (h1, h2, h3, or quote) renders as italic in `{colors.accent}` coral.** This is the signature Grove accent — the way you add emphasis to a headline is to italicize a word in coral. The em-style switch is automatic via CSS.
-- **The opening quote mark on a quote slide is rendered as a massive Playfair glyph at 8vw in `{colors.accent}` coral.** A quote without the oversized coral quote-mark is broken.
-- **The quote body is always italic.** Roman-style quote text is not in the system.
-- **Every kicker / chapter-num / footline / label / caption is JetBrains Mono uppercase with at least 0.12em letter-spacing.** Mono in sentence case or without tracking reads as code, not chrome.
-- **Bullet glyphs are em-dashes (`—`) rendered in JetBrains Mono `{colors.accent}` coral.** Never bullets (`•`), never hyphens (`-`), never asterisks. The em-dash is the system's bullet language.
-- **Every chrome bar (top and bottom) carries a 1px solid `{colors.border}` rule (or `{colors.border-light}` on light slides).** The hairline rule is what makes the chrome read as a "frame around the page" rather than a banner.
+- **每个 Playfair 元素都跑字重 400。** 系统任何地方都不用粗衬线（字重 700）。这是系统最重要的排印规则。
+- **任何 Playfair 标题（h1、h2、h3 或引文）里的 `<em>` 标签都渲染成 `{colors.accent}` 珊瑚斜体。** 这是招牌 Grove 强调，给标题加强调的方式就是把一个词斜体成珊瑚。em 样式切换由 CSS 自动完成。
+- **引文页上的起始引号渲染成 8vw 的巨型 Playfair 字形，`{colors.accent}` 珊瑚色。** 没有超大珊瑚引号的引文是坏的。
+- **引文正文始终斜体。** 系统里不存在正体式引文文字。
+- **每个眉题 / 章节号 / 页脚线 / 标签 / 图注都是 JetBrains Mono 大写、至少 0.12em 字距。** 句首大写或无字距的等宽读成代码，不像外壳。
+- **项目字形是 JetBrains Mono `{colors.accent}` 珊瑚渲染的破折号（`—`）。** 绝不用圆点（`•`）、连字符（`-`）、星号。破折号是系统的项目语言。
+- **每条外壳条（顶与底）都带 1px 实线 `{colors.border}` 线（浅色页 `{colors.border-light}`）。** 细线让外壳读作"页面周围的画框"，而非横幅。
 
-### Typography Principles
-The Playfair-400 / Jost-300 / JetBrains-Mono-300 weight commitment is the system's voice. Switching any of those weights breaks the editorial register. There is no weight ladder — each face has exactly one weight.
+### 排印原则
+Playfair-400 / Jost-300 / JetBrains-Mono-300 的字重承诺是系统的声部，换掉任一款字重都会破掉编辑语域。没有字重阶梯，每款字面恰好一个字重。
 
-Italics are reserved for two specific roles: the coral accent inside headlines (via `<em>`) and the quote body. Italic body paragraphs are not used. Underline is not used. Emphasis in body text is communicated by the `.accent` color utility (changes color to coral), not by italic or bold.
+斜体只留给两个特定角色：标题内的珊瑚强调（经 `<em>`）和引文正文。斜体正文段落不用。不用下划线。正文里的强调靠 `.accent` 颜色工具（把颜色改成珊瑚）传达，不靠斜体或粗体。
 
-## Layout
+## 布局
 
-### Canvas System
-The system targets a fluid viewport — each `.slide` is `100vw × 100vh` with `padding: {spacing.pad-y} {spacing.pad-x}` (6.5vh / 8vw). Slides sit side-by-side in a horizontal `#deck` flex strip and translate via `transform: translateX(...)` with the `{motion.dur-slide}` / `{motion.ease-slide}` transition. Only one slide is `is-active` at a time; non-active slides hold their content invisible (`[data-anim]` is `opacity: 0`) until the active class triggers the entrance animations.
+### 画布系统
+系统以流式视口为目标，每张 `.slide` 是 `100vw × 100vh`、`padding: {spacing.pad-y} {spacing.pad-x}`（6.5vh / 8vw）。幻灯片在横向 `#deck` flex 条里并排，经 `transform: translateX(...)` 配 `{motion.dur-slide}` / `{motion.ease-slide}` 过渡平移。同一时刻只有一页 `is-active`，非激活页内容保持不可见（`[data-anim]` 是 `opacity: 0`），直到 active 类触发入场动画。
 
-### Padding Scale
-| Token | Value | Use |
+### 内边距比例
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.pad-x}` | 8vw | Horizontal slide padding |
-| `{spacing.pad-y}` | 6.5vh | Vertical slide padding |
-| `{spacing.pad-quote-x}` | 8.8vw | Slightly wider horizontal padding on quote slides |
-| `{spacing.pad-quote-y}` | 7.8vh | Slightly taller vertical padding on quote slides |
-| `{spacing.gap-lg}` | 4.5vh | Between major content sections |
-| `{spacing.gap-md}` | 2.8vh | Between related elements |
-| `{spacing.gap-sm}` | 1.4vh | Between tightly coupled elements |
+| `{spacing.pad-x}` | 8vw | 横向幻灯片内边距 |
+| `{spacing.pad-y}` | 6.5vh | 纵向幻灯片内边距 |
+| `{spacing.pad-quote-x}` | 8.8vw | 引文页略宽的横向内边距 |
+| `{spacing.pad-quote-y}` | 7.8vh | 引文页略高的纵向内边距 |
+| `{spacing.gap-lg}` | 4.5vh | 主内容分节之间 |
+| `{spacing.gap-md}` | 2.8vh | 相关元素之间 |
+| `{spacing.gap-sm}` | 1.4vh | 紧密耦合元素之间 |
 
-### Chrome Anatomy
-Every content slide carries a **slide-chrome** at the top — a thin flex space-between row holding two mono labels separated below by a 1px hairline border — and a **slide-foot** at the bottom — a matching row with section name + "NN / TT" counter, separated above by a matching hairline.
+### 外壳解剖
+每张内容页顶部带 **slide-chrome**：一个细 flex space-between 行，两侧各一条等宽标签，下方由 1px 细线分隔；底部带 **slide-foot**：对应的一行，装分节名 + "NN / TT" 计数器，上方由对应的细线分隔。
 
-The chrome and foot are hidden on cover, chapter, quote, and end slides — those are the deck's chromeless emotional moments. Every other slide carries the frame.
+封面、章节、引文、收尾页隐藏 chrome 与 foot，它们是整套文稿无外壳的情绪瞬间。其余每页都带画框。
 
-### Border-Radius
-**Zero structural radius.** No rounded cards, no rounded buttons, no rounded image placeholders. The only round shapes in the system are the 5px nav-dots (50% radius — fully circular) at the bottom of the viewport.
+### 圆角
+**零结构半径。** 没有圆角卡片、圆角按钮、圆角图片占位。系统里唯一的圆是视口底部 5px 导航点（50% 半径，全圆）。
 
-## Depth and Elevation
+## 纵深与层级
 
-### Flat, No Shadows
-The system uses **zero box-shadow, zero text-shadow, zero blur, zero gradient**. Depth is communicated entirely through:
+### 平、无阴影
+系统**零 box-shadow、零 text-shadow、零模糊、零渐变**。纵深完全靠：
+1. **1px 细线边**：顶底外壳条、统计卡片分隔、比较面板分隔、分节分隔线。
+2. **文字颜色的不透明度层**：主（`{colors.fg}`）、柔化（`{colors.fg-2}`）、提示（`{colors.fg-3}`）。三级不透明度阶梯是系统的文字抬升装置。
+3. **6% 不透明度的水印数字**：巨型 Playfair 数字坐在章节与分节页右下角作构图纹理，不作 UI。
 
-1. **1px hairline borders** — the chrome bars at top and bottom, the stat-card divider, the compare-panel separator, the section-divider rule.
-2. **Opacity layers in text color** — primary (`{colors.fg}`), muted (`{colors.fg-2}`), hint (`{colors.fg-3}`). The three-step opacity ladder is the system's text-elevation device.
-3. **The watermark numeral** at 6% opacity — a massive Playfair digit sitting in the bottom-right corner of chapter and section slides as compositional texture, not as UI.
+没有阴影本身就是抬升语言。加 `box-shadow: 0 4px 12px rgba(0,0,0,0.1)` 会击碎印刷墨感。
 
-The absence of shadow is itself the elevation language. Adding `box-shadow: 0 4px 12px rgba(0,0,0,0.1)` shatters the printed-ink feel.
+### 水印数字
+`{components.grove-num}` 元素是 18vw / 6% 不透明度的 Playfair 数字，绝对定位在 `right: {spacing.pad-x}, bottom: -0.15em`。读作淡背景纹理，绝非内容。用在章节 / 分节 / 陈述页右下角，否则那里空着会显得没锚。它虽以装饰元素面貌出现，却属于纵深语言的一部分。
 
-### Watermark Numeral
-The `{components.grove-num}` element is a Playfair digit at 18vw / 6% opacity, positioned absolutely at `right: {spacing.pad-x}, bottom: -0.15em`. It reads as a faint background texture, never as content. Use it on chapter / section / statement slides where the empty bottom-right would otherwise feel un-anchored. It is part of the depth language even though it appears as a decorative element.
+## 形状与处理
 
-## Shapes and Treatment
+### 边框粗细与样式
+- **1px 实线 `{colors.border}`**：深色页的通用细线。外壳条边、统计卡片底、比较面板分隔、满宽分节分隔。
+- **1px 实线 `{colors.border-light}`**：浅色页上对应的细线。
+- **1px 实线 `{colors.accent}`**：36px 宽的珊瑚线（`{components.rule-coral}`），作眉题与其后标题之间的构图节拍。
 
-### Border Weight and Style
-- **1px solid `{colors.border}`** — the universal hairline on dark slides. Chrome bar borders, stat-card bottoms, compare-panel separators, full-width section dividers.
-- **1px solid `{colors.border-light}`** — the matching hairline on light slides.
-- **1px solid `{colors.accent}`** — the 36px-wide coral rule (`{components.rule-coral}`) used as the compositional beat between a kicker and the headline that follows.
+边框绝不粗于 1px，绝不用虚线、绝不用点线。1px 细线是系统的结构节奏。
 
-Borders are never thicker than 1px. Never dashed, never dotted. The 1px hairline is the system's structural rhythm.
+### 装饰元素类型
 
-### Decorative Element Types
+**Slide Chrome 条**（`{components.slide-chrome}`）：细顶条，两侧等宽标签，下方 1px 细线。系统通用的"你在读一页"画框。
 
-**Slide Chrome Bar** (`{components.slide-chrome}`) — Thin top bar with mono labels on each side, separated below by a 1px hairline. The system's universal "you are reading a page" frame.
+**Slide Foot 条**（`{components.slide-foot}`）：对应的底条，装分节名 + 计数器，上方 1px 细线。
 
-**Slide Foot Bar** (`{components.slide-foot}`) — Matching bottom bar with section name + counter, separated above by 1px hairline.
+**珊瑚线**（`{components.rule-coral}`）：36px 宽、1px 陶土珊瑚横线。坐在眉题（上）与标题（下）之间的构图节拍。每页用一次，眉题引向主标题处，别叠多条珊瑚线。
 
-**Coral Rule** (`{components.rule-coral}`) — A 36px-wide 1px terracotta coral horizontal rule. The compositional beat that sits between a kicker (above) and a headline (below). Use it once per slide where a kicker leads into a primary headline — do not stack multiple coral rules.
+**满线**（`{components.rule-full}`）：`{colors.border}` / `{colors.border-light}` 的满宽 1px 细线分隔。用作页内分节断口。
 
-**Full Rule** (`{components.rule-full}`) — Full-width 1px hairline divider in `{colors.border}` / `{colors.border-light}`. Used as a section break inside a slide body.
+**眉题**（`{components.kicker}`）：珊瑚色的等宽大写 eyebrow，放在 h1 或 h2 标题上方。常配下方一条珊瑚线。
 
-**Kicker** (`{components.kicker}`) — Mono uppercase eyebrow in coral, placed above an h1 or h2 headline. Often paired with a coral rule below it.
+**章节号**：珊瑚色的等宽大写序数（`{typography.chapter-num}`），在章节标题上方。在章节开场页确立章节身份。
 
-**Chapter Number** — A mono uppercase ordinal in coral (`{typography.chapter-num}`) above the chapter title. Sets the chapter's identity at chapter-opener slides.
+**破折号项目**（`{components.bullet-list}`）：两列网格列表（2em / 1fr），项目是 JetBrains Mono 渲染的珊瑚破折号字形。绝不用真圆点（`•`），始终破折号。
 
-**Em-Dash Bullet** (`{components.bullet-list}`) — A two-column grid list (2em / 1fr) where the bullet is a coral em-dash glyph rendered in JetBrains Mono. Never use a true bullet (`•`); always the em-dash.
+**Grove 统计**（`{components.grove-stat}`）：纵向叠排，上方大 Playfair 珊瑚值（4.5vw）、下方等宽大写标签、1px 底边细线。无背景填充，卡片由线 + 字定义，不由容器盒子定义。
 
-**Grove Stat** (`{components.grove-stat}`) — A vertical stack: large Playfair coral value (4.5vw) on top, mono uppercase label beneath, 1px border-bottom hairline. No background fill — the card is defined by the rule + the type, not by a containing box.
+**引号标记**（`{components.quote-mark}`）：8vw 的巨型 Playfair 起始引号字形，珊瑚色，放在斜体引文正文上方。引文页始终出现。
 
-**Quote Mark** (`{components.quote-mark}`) — Massive Playfair opening-quote glyph at 8vw in coral, placed above the italic quote body. Always present on a quote slide.
+**水印数字**（`{components.grove-num}`）：18vw / 6% 不透明度的 Playfair 数字，右下角。仅构图纹理，绝非 UI。
 
-**Watermark Numeral** (`{components.grove-num}`) — Playfair digit at 18vw / 6% opacity in the bottom-right corner. Compositional texture only, never UI.
+**图片占位**（`{components.img-placeholder}`）：实 `{colors.bg-alt}`（深色）或 `{colors.border-light}`（浅色）填充，标记真实 `<img>` 将放的位置。装一条 `{colors.fg-3}` 的等宽图注，如 "[ image ]"。
 
-**Image Placeholder** (`{components.img-placeholder}`) — A solid `{colors.bg-alt}` (on dark) or `{colors.border-light}` (on light) fill marking where a real `<img>` will go. Holds a mono caption like "[ image ]" in `{colors.fg-3}`.
+**导航点**（`{components.nav-dots}`）：固定在视口底部的 5px 圆点，指示页位置。未激活 22% 白，激活 80% 白、1.4× 缩放。
 
-**Nav Dots** (`{components.nav-dots}`) — Fixed 5px circular dots at the bottom of the viewport indicating slide position. Inactive: 22% white. Active: 80% white at 1.4× scale.
+## 该做与不该做
 
-## Do's and Don'ts
+### 该做
+- 每个衬线瞬间都用 Playfair Display 字重 400，绝不粗。
+- 任何 Playfair 标题里用 `<em>` 把一个词切到斜体陶土珊瑚，这是系统招牌强调手法。
+- 每段正文都用 Jost 字重 300，更轻字重是系统的正文声部。
+- 每个标签、眉题、章节号、页脚线、计数器、统计图注都用 JetBrains Mono 字重 300 大写、至少 0.12em 字距。
+- 默认幻灯片背景设成 `{colors.bg}`（深森林绿）。引文页及任何想要字面"页面"感的瞬间用 `{colors.bg-light}`（羊皮纸）。
+- 把眉题与 36px 珊瑚线配成单一构图单元，放在页面主标题上方。
+- 用珊瑚色破折号字形（`—`）作通用项目符号，绝不用圆点或连字符。
+- 给章节与分节开场页套 `{components.grove-num}` 水印数字，右下角需要那个锚。
+- 每个新内容元素都用内置 `[data-anim]` + `[data-delay]` 动画栈（fade-up / fade-in / reveal-right / reveal-left / scale-in，延迟 0–6）。动效是系统身份的一部分，不是可选润色。
+- 让页面宽裕，一个标题 + 一段辅助正文 + 一条强调线是节奏。宁可更少元素、更大尺寸。
 
-### Do
-- Run every serif moment in Playfair Display weight 400. Never bold.
-- Use `<em>` inside any Playfair headline to switch a word to italic terracotta coral — this is the system's signature accent move.
-- Run every paragraph in Jost weight 300. The lighter weight is the system's body voice.
-- Run every label, kicker, chapter-num, footline, counter, and stat-caption in JetBrains Mono weight 300, uppercase, with at least 0.12em letter-spacing.
-- Default slide background to `{colors.bg}` (deep forest green). Use `{colors.bg-light}` (parchment) on quote slides and any moment that wants a literal "page" feel.
-- Pair the kicker with the 36px coral rule as a single compositional unit above the slide's primary headline.
-- Use the em-dash glyph (`—`) in coral as the universal bullet. Never use round bullets or hyphens.
-- Apply the `{components.grove-num}` watermark numeral to chapter and section-opener slides — the bottom-right corner needs that anchor.
-- Use the built-in `[data-anim]` + `[data-delay]` animation stack (fade-up / fade-in / reveal-right / reveal-left / scale-in, with delays 0–6) for every new content element. Animation is part of the system identity, not optional polish.
-- Keep slides spacious — one headline + one supporting paragraph + one accent rule is the rhythm. Reach for fewer elements at larger sizes.
+### 不该做
+- 不要用粗衬线。系统里没有字重 700 的 Playfair，粗衬线会破掉编辑声部。
+- 不要引入 Playfair、Jost、JetBrains Mono、Noto SC 之外的第四款字体。四字族栈是全部排印身份。
+- 不要用珊瑚作表面填充或正文段落。珊瑚是强调声部：斜体强调、眉题、线、破折号项目、统计数字、引号、章节序数。这就是珊瑚的全部语汇。
+- 不要用 box-shadow、渐变、模糊或任何 rgba 阴影。系统是平的。
+- 不要用粗边（2px+）。1px 细线是系统的结构节奏。
+- 不要给任何角加圆角。唯一的圆是 5px 导航点。
+- 不要用圆点、连字符或星号作列表项目。珊瑚破折号是唯一项目字形。
+- 不要让眉题下方没有珊瑚线。眉题 → 线 → 标题三件套是一个单元。
+- 不要把等宽文字渲染成句首大写或无字距。等宽始终是大写外壳、0.12em+ 字距。
+- 不要省掉内容页的 slide-chrome 与 slide-foot。顶底细画框让页面读作一页。
+- 不要把画布塞满。Grove 奖励文字周围的静默。页面显得满时，去掉一个辅助元素，别缩小文字。
 
-### Don't
-- Don't use bold serif. Playfair at weight 700 is not in this system. Bold serif breaks the editorial voice.
-- Don't introduce a fourth typeface beyond Playfair, Jost, JetBrains Mono, and Noto SC. The four-family stack is the entire typographic identity.
-- Don't use coral as a surface fill or for body paragraphs. Coral is the accent voice: italic emphasis, kicker, rule, em-dash bullet, stat figure, quote mark, chapter ordinal. That's the entire coral vocabulary.
-- Don't use box-shadow, gradient, blur, or any rgba shadow. The system is flat.
-- Don't use thick borders (2px+). The 1px hairline is the system's structural rhythm.
-- Don't round any corners. The only round shape is the 5px nav-dot.
-- Don't use round bullets, hyphens, or asterisks for list items. The em-dash in coral is the only bullet glyph.
-- Don't put a kicker without a coral rule below it. The kicker → rule → headline triad is one unit.
-- Don't render mono text in sentence case or without letter-spacing. Mono is always uppercase chrome with 0.12em+ tracking.
-- Don't omit the slide-chrome and slide-foot on content slides. The thin frame at top and bottom is what makes the slide read as a page.
-- Don't crowd the canvas. Grove rewards silence around the type. If a slide feels full, remove a supporting element rather than shrinking type.
+## 响应式行为
 
-## Responsive Behavior
+系统通篇用 **vw / vh 单位**，每个尺寸、内边距、间隙、线都随视口成比例。同一构图在 1280×720 笔记本、1920×1080 显示器、2560×1440 屏上无需断点都能正确渲染。
 
-The system uses **vw / vh units throughout** — every size, padding, gap, and rule is proportional to the viewport. The same composition renders correctly on a 1280×720 laptop, a 1920×1080 monitor, and a 2560×1440 display without breakpoints.
+### 缩放行为
+- 展示标题随视口宽度线性缩放（10vw，1920 下 192px，1280 下 128px）。
+- 正文同样缩放（1.05vw，1920 下 20.16px，1280 下 13.44px），唯列表页正文有 `max(1.4vw, 17px)` 下限，防止小视口上读不了。
+- 内边距、间隙、grove-num 都随 vw/vh 成比例缩放。
+- 1px 细线边是固定像素、不缩放，于是大视口下比例上显得更细，这是刻意的。
 
-### Scaling Behavior
-- Display headline scales linearly with viewport width (10vw → 192px at 1920, 128px at 1280).
-- Body text scales similarly (1.05vw → 20.16px at 1920, 13.44px at 1280) — except on list-slide body, where the `max(1.4vw, 17px)` floor prevents the text from going unreadable on smaller viewports.
-- Padding, gaps, and grove-num all scale proportionally with vw/vh.
-- The 1px hairline borders are fixed-pixel and do not scale, which means at larger viewports they appear proportionally finer. This is by design.
+### 放映行为
+- 右 / 下方向键 / 空格 / page-down 前进（由 deck JavaScript 处理）。
+- 左 / 上方向键 / page-up 后退。
+- 横向 `#deck` 条经 `transform: translateX(-N * 100vw)` 在页间平移，配 `{motion.dur-slide}` 锐减速曲线、0.9s。
+- 每页带 `is-active` 类，触发 `[data-anim]` 元素的错峰入场动画。
+- 底部导航点反映当前页位置，点击圆点跳到该页。
 
-### Presenter Behavior
-- Slides advance via right/down arrow / space / page-down (handled by the deck JavaScript).
-- Slides reverse via left/up arrow / page-up.
-- The horizontal `#deck` strip translates via `transform: translateX(-N * 100vw)` between slides, with the `{motion.dur-slide}` sharp deceleration curve at 0.9s.
-- Each slide carries an `is-active` class that triggers the staggered entrance animations on its `[data-anim]` elements.
-- Bottom nav-dots reflect current slide position; clicking a dot jumps to that slide.
+### 动画
+`[data-anim]` + `[data-delay]` 系统内置：
+- `fade-up`：opacity 0 → 1，translateY 28px → 0
+- `fade-in`：opacity 0 → 1
+- `reveal-right`：clip-path inset(0 100% 0 0) → inset(0 0 0 0)
+- `reveal-left`：clip-path inset(0 0 0 100%) → inset(0 0 0 0)
+- `scale-in`：opacity 0 → 1，scale 0.94 → 1
 
-### Animation
-The `[data-anim]` + `[data-delay]` system is built-in:
-- `fade-up`: opacity 0 → 1, translateY 28px → 0
-- `fade-in`: opacity 0 → 1
-- `reveal-right`: clip-path inset(0 100% 0 0) → inset(0 0 0 0)
-- `reveal-left`: clip-path inset(0 0 0 100%) → inset(0 0 0 0)
-- `scale-in`: opacity 0 → 1, scale 0.94 → 1
+所有入场动画用 `{motion.ease-enter}` 配 `{motion.dur-enter}`（0.7s）。错峰延迟：0 / 0.08s / 0.18s / 0.3s / 0.44s / 0.6s / 0.78s。
 
-All entrance animations use `{motion.ease-enter}` at `{motion.dur-enter}` (0.7s). Stagger delays: 0 / 0.08s / 0.18s / 0.3s / 0.44s / 0.6s / 0.78s.
+### 打印 / 导出
+系统没有 `@media print` 规则。打印导出会继承横向条布局，不太可能干净分页。把 Grove 当屏幕优先系统，PDF 导出需要专用打印样式表。
 
-### Print / Export
-The system has no `@media print` rule. Print export will inherit the horizontal-strip layout and is unlikely to paginate cleanly. Treat Grove as a screen-first system; PDF export requires a dedicated print stylesheet.
+## CJK 与国际化内容
 
-## CJK & International Content
+### 推荐中文搭配
 
-### Recommended Chinese Pairing
-
-| Role | Chinese Face | Weight | Why |
+| 角色 | 中文字面 | 字重 | 理由 |
 |---|---|---|---|
-| Display / h1 / h2 / h3 (Playfair roles, 2–10vw) | 霞鹜文楷 LXGW WenKai | 400 | Literary, hand-set warmth that mirrors Playfair Display at weight 400 — never bold, exactly the Grove rule |
-| Quote text / mark (8vw mark, 3.2vw text) | 霞鹜文楷 LXGW WenKai | 400 | The same literary warmth carries the italic-quote moment; Chinese has no italic so the face does the expressive work |
-| Stat figure (4.5vw, coral) | 霞鹜文楷 LXGW WenKai | 400 | Keeps stat figures in the Playfair register; the coral color carries the accent |
-| Watermark numeral (18vw) | 霞鹜文楷 LXGW WenKai | 400 | The 6%-opacity watermark works at this scale with LXGW WenKai's open letterforms |
-| Body / lede (Jost roles, 1.05–1.45vw) | 思源宋体 Noto Serif SC | 300–400 | Mincho body voice — calm, literary, sits back like Jost weight 300 |
-| Label / kicker / chapter-num (JetBrains Mono roles) | 思源等宽 Noto Sans Mono CJK SC | 300–400 | Preserves the typewriter-chrome quality for kickers and footlines |
+| 展示 / h1 / h2 / h3（Playfair 角色，2–10vw） | 霞鹜文楷 LXGW WenKai | 400 | 文学、手工排的暖意，映照 Playfair Display 字重 400，绝不粗，正是 Grove 规则 |
+| 引文文字 / 标记（8vw 标记、3.2vw 文字） | 霞鹜文楷 LXGW WenKai | 400 | 同一份文学暖意承载斜体引文瞬间，中文没有斜体所以由字面承担表情工作 |
+| 统计数字（4.5vw，珊瑚） | 霞鹜文楷 LXGW WenKai | 400 | 把统计数字留在 Playfair 语域，珊瑚色承载强调 |
+| 水印数字（18vw） | 霞鹜文楷 LXGW WenKai | 400 | 6% 不透明度水印以 LXGW WenKai 开放字形在该尺度下成立 |
+| 正文 / 导语（Jost 角色，1.05–1.45vw） | 思源宋体 Noto Serif SC | 300–400 | 明朝正文声部，平静、文学，像 Jost 字重 300 一样往后坐 |
+| 标签 / 眉题 / 章节号（JetBrains Mono 角色） | 思源等宽 Noto Sans Mono CJK SC | 300–400 | 为眉题与页脚线保住打字机外壳质感 |
 
-### Mixed-Content Strategy
+### 混排策略
 
-Use **Strategy C** — keep Playfair Display as the Latin serif and let CJK glyphs fall through to LXGW WenKai. Playfair Display weight 400 (never bold) is the system's most important typographic commitment; replacing it with a CJK serif wholesale would break the monograph / boutique-brand-book register that defines Grove. The system already loads Noto Serif SC / Noto Sans SC as fallbacks per its existing font stack — the change is to add LXGW WenKai as the preferred CJK display face ahead of Noto Serif SC:
+用**策略 C**：保留 Playfair Display 作拉丁衬线，让 CJK 字形回退到 LXGW WenKai。Playfair Display 字重 400（绝不粗）是系统最重要的排印承诺，整体换成 CJK 衬线会破掉定义 Grove 的专著 / 精品品牌书语域。系统已按既有字体栈加载 Noto Serif SC / Noto Sans SC 作回退，改动是把 LXGW WenKai 作为首选 CJK 展示字面加在 Noto Serif SC 之前：
 
 ```css
 /* Playfair roles (display, h1, h2, h3, quote, stat, watermark) */
@@ -492,13 +495,13 @@ font-family: 'Jost', 'Noto Serif SC', system-ui, sans-serif;
 font-family: 'JetBrains Mono', 'Noto Sans Mono CJK SC', monospace;
 ```
 
-(Note: the system currently lists `'Noto Sans SC'` in the Jost stack — for Grove's literary register, swap to `'Noto Serif SC'` instead. The Mincho body voice is closer to Jost weight 300's "good paper" feel than the Hei sans face.)
+（注：系统当前 Jost 栈里列的是 `'Noto Sans SC'`，为 Grove 的文学语域，换成 `'Noto Serif SC'`。明朝正文声部比黑体无衬线更接近 Jost 字重 300 的"好纸"感。）
 
-Baseline mismatch at display sizes (5.5–10vw) is mild — LXGW WenKai and Playfair Display both sit at similar optical baselines, so mixed-script headlines like `A Quiet 山林` read cleanly. The `<em>` italic-coral accent rule is the more delicate piece (see Known CJK Gap below).
+展示尺寸（5.5–10vw）的基线错位轻微，LXGW WenKai 与 Playfair Display 光学基线相近，于是像 `A Quiet 山林` 这样的混排标题读起来干净。`<em>` 斜体珊瑚强调规则更微妙（见下方已知 CJK 缺口）。
 
-### Loading
+### 加载
 
-Replace the existing Noto-only fallback with an LXGW WenKai + Noto Serif SC + Noto Sans Mono CJK pair:
+把既有仅 Noto 的回退换成 LXGW WenKai + Noto Serif SC + Noto Sans Mono CJK 组合：
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -506,33 +509,33 @@ Replace the existing Noto-only fallback with an LXGW WenKai + Noto Serif SC + No
 <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&family=Noto+Serif+SC:wght@300;400;500&family=Noto+Sans+Mono+CJK+SC:wght@300;400&display=swap" rel="stylesheet">
 ```
 
-LXGW WenKai TC is the version hosted on Google Fonts (covers both traditional and simplified glyphs).
+LXGW WenKai TC 是 Google Fonts 托管的版本（同时覆盖繁体和简体字形）。
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-These adjustments apply to **every CJK block** in this system, regardless of size or role:
+以下调整适用于本系统**每一个 CJK 块**，无论尺寸或角色：
 
-- **Loosen line-height by 0.05–0.08.** CJK glyphs are full-width squares with more visual weight than Latin letterforms; line-heights tuned for Latin (1.0–1.1 on display, 1.65–1.75 on body) read as cramped in Chinese. Bump display to 1.15–1.25 and body to 1.7–1.85.
-- **Remove negative letter-spacing on CJK headlines.** Playfair Display uses -0.01em to -0.03em tracking, which collides Chinese glyphs into each other. For CJK runs, set `letter-spacing: 0` — or a tiny positive `0.02em` if the headline feels visually packed.
-- **Never `text-transform: uppercase` on CJK text.** Chinese has no case; the CSS property does nothing on Han glyphs but will silently break any mixed-script line where the JetBrains Mono portion was meant to be capitalized.
-- **Use Chinese full-width punctuation** (`，。：；！？「」『』（）`) inside Chinese sentences, not the Latin equivalents (`,.:;!?""''()`). Mixing punctuation systems within one sentence reads as a typesetting error.
-- **No period (。) at the end of CJK headlines.** Chinese headlines follow the same rule as Latin — title-style lines drop terminal punctuation. Body paragraphs keep their 。
-- **Apply Pangu spacing (盘古之白) at the boundary between CJK and Latin runs.** A space (or 0.25em margin) belongs between a Chinese character and an adjacent Latin word or digit, e.g. `2026 年 5 月` not `2026年5月`. Either type the spaces manually or use a `pangu.js`-style auto-spacer.
-- **One font per sentence.** Don't switch between LXGW WenKai and Noto Serif SC inside the same sentence — pick the face that matches the role (display = LXGW WenKai, body = Noto Serif SC) and commit to it for the whole run.
+- **行高放宽 0.05–0.08。** CJK 字形是全宽方块，视觉分量比拉丁字形重，为拉丁调的行高（展示 1.0–1.1、正文 1.65–1.75）在中文里读起来局促。展示放到 1.15–1.25，正文放到 1.7–1.85。
+- **去掉 CJK 标题的负字距。** Playfair Display 用 -0.01em 到 -0.03em 字距，会撞在一起。CJK 段设 `letter-spacing: 0`，标题看着挤时可用微小的正 `0.02em`。
+- **绝不对 CJK 文字用 `text-transform: uppercase`。** 中文没有大小写，CSS 属性对汉字无效，却会悄悄破坏混排行里本该大写的 JetBrains Mono 部分。
+- **中文句子里用中文全角标点**（`，。：；！？「」『』（）`），不用拉丁对应物（`,.:;!?""''()`）。同一句里混用标点系统读起来是排印错误。
+- **CJK 标题末尾不加句号（。）。** 中文标题与拉丁遵循同一规则，标题式行去掉末尾标点。正文段落保留 。
+- **在 CJK 与拉丁串交界处套用盘古之白。** 汉字与相邻拉丁词或数字之间应有一个空格（或 0.25em 外边距），例如 `2026 年 5 月` 而非 `2026年5月`。要么手打空格，要么用 `pangu.js` 式自动加空格器。
+- **一句一款字体。** 不要在同一句里切换 LXGW WenKai 与 Noto Serif SC，挑与角色匹配的字面（展示 = LXGW WenKai，正文 = Noto Serif SC），整段从一而终。
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-Grove's whole voice is "literary monograph / boutique brand book" with a single accent of terracotta coral. The Chinese equivalent of that quiet authority is **LXGW WenKai for every serif moment** (its hand-set warmth is the closest Chinese analog to Playfair Display at weight 400) and **Noto Serif SC at weight 300–400 for body** (the Mincho calm that matches Jost weight 300's reticence). Avoid running Chinese body in Noto Sans SC — the geometric sans tips the system from "good paper" to "modern app."
+Grove 的整个声部是"文学专著 / 精品品牌书"，配一抹陶土珊瑚作单一强调。这种安静权威的中文对应是：每个衬线瞬间用 **LXGW WenKai**（手工排的暖意是最接近 Playfair Display 字重 400 的中文类比），正文用 **Noto Serif SC 字重 300–400**（匹配 Jost 字重 300 克制的明朝平静）。中文正文别用 Noto Sans SC，几何无衬线会把系统从"好纸"翻成"现代应用"。
 
-The em-dash bullet glyph in DM Mono coral works in Chinese without modification — the em-dash character itself is the same Unicode glyph (—) and reads as a deliberate mark in front of a Chinese list item. Keep the bullet column in Noto Sans Mono CJK SC at weight 300 coral, exactly mirroring the Latin pattern.
+DM Mono 珊瑚色破折号项目字形在中文里无需改动，破折号字符本身是同一个 Unicode 字形（—），放在中文列表项前读起来就是一个刻意的标记。项目列保持在 Noto Sans Mono CJK SC 字重 300 珊瑚，精确镜像拉丁模式。
 
-The watermark numeral (18vw, 6% opacity) is particularly effective in Chinese — render a Chinese ordinal character (e.g., 「三」or 「五」) instead of a Western digit. At 6% opacity it reads as faint compositional texture, and the Han glyph's denser visual weight at that scale balances the slide better than a thin Western numeral would.
+水印数字（18vw、6% 不透明度）在中文里尤其有效，渲染一个中文序数字符（例如「三」或「五」）而非西方数字。6% 不透明度下它读作淡构图纹理，汉字在该尺度下更密的视觉分量比纤细的西方数字更能平衡页面。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-The system's signature `<em>` italic-coral treatment is the hardest piece to translate: **Chinese has no italic concept** — slanted Han glyphs read as broken, not as emphasis. The current Grove CSS depends on the browser's default `<em>` styling (italic) plus a CSS color rule for the coral. In Chinese, the italic does nothing visually, so the emphasis collapses to "just coral text inside a headline." That's not bad — coral inside an LXGW WenKai headline still reads as a deliberate accent — but the system loses one of its two emphasis dimensions (color + slant) and is left with only color.
+系统招牌的 `<em>` 斜体珊瑚处理最难汉化：**中文没有斜体概念**，倾斜的汉字读成坏了，不是强调。当前 Grove CSS 依赖浏览器默认 `<em>` 样式（斜体）加一条珊瑚色 CSS 规则。中文里斜体视觉上不起作用，于是强调塌成"标题里一段珊瑚文字"。这不算坏，LXGW WenKai 标题里的珊瑚仍是刻意的强调，但系统丢掉了两个强调维度（颜色 + 倾斜）之一，只剩颜色。
 
-To compensate, two options: (1) accept color-only emphasis on Chinese headlines and let the coral carry the weight, or (2) switch the `<em>` portion to a different face inside Chinese headlines — e.g., **站酷小薇体 (ZCOOL XiaoWei)** — to provide a face-based contrast that approximates the slant contrast of Latin italic. Add to the CSS:
+补偿有两个办法：（1）接受中文标题上仅颜色强调，让珊瑚承担分量，或（2）把中文标题里的 `<em>` 部分换成另一款字面，例如**站酷小薇体（ZCOOL XiaoWei）**，提供近似拉丁斜体倾斜反差的基于字面的对比。加进 CSS：
 
 ```css
 .h1 em, .h2 em, .h3 em, .quote-text em {
@@ -542,29 +545,29 @@ To compensate, two options: (1) accept color-only emphasis on Chinese headlines 
 }
 ```
 
-This gives the Latin portion italic-coral and the CJK portion face-shift-coral. Test on a per-deck basis — for many Grove decks, color-only emphasis is sufficient.
+这给拉丁部分斜体珊瑚、给 CJK 部分换字面珊瑚。逐套文稿测试，对许多 Grove 文稿，仅颜色强调已足够。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new headline is Playfair Display weight 400. Pick the size from the headline ladder (10vw display / 5.5vw h1 / 3.2vw h2 / 2vw h3) — do not invent a new size.
-2. Any new emphasis inside a headline uses `<em>` and renders as italic coral automatically. Do not author a manual color/italic style.
-3. Any new body paragraph is Jost weight 300 at 1.05vw (or 1.45vw for lede, or `max(1.4vw, 17px)` on list-style slides).
-4. Any new label / kicker / footline / counter / caption is JetBrains Mono weight 300 uppercase with at least 0.12em letter-spacing.
-5. Any new chrome line (top bar, bottom bar, section divider, stat-card border) is a 1px solid hairline in `{colors.border}` (dark) or `{colors.border-light}` (light). No thicker borders.
-6. Any new bullet list uses the `{components.bullet-list}` pattern (two-column grid, em-dash in coral mono). Do not author a different bullet style.
-7. Any new accent moment uses `{colors.accent}` terracotta coral. The accent is for italic headline emphasis, the 36px rule, em-dashes, stat figures, quote marks, chapter ordinals, and the kicker text. Nothing else.
-8. Any new chapter or section-opener slide carries a `{components.grove-num}` watermark numeral in the bottom-right corner.
-9. Any new content element gets a `[data-anim]` attribute (fade-up, fade-in, reveal-right, reveal-left, or scale-in) plus a `[data-delay]` (0–6) for staggered entrance. Do not author custom transitions.
-10. When in doubt, add space rather than content. Grove's editorial register is silence, not density.
+1. 任何新标题都是 Playfair Display 字重 400。从标题阶梯里挑尺寸（10vw display / 5.5vw h1 / 3.2vw h2 / 2vw h3），别自创尺寸。
+2. 标题内任何新强调都用 `<em>`，自动渲染成斜体珊瑚。别手写颜色/斜体样式。
+3. 任何新正文段落都是 Jost 字重 300、1.05vw（导语 1.45vw，列表式页 `max(1.4vw, 17px)`）。
+4. 任何新标签 / 眉题 / 页脚线 / 计数器 / 图注都是 JetBrains Mono 字重 300 大写、至少 0.12em 字距。
+5. 任何新外壳线（顶条、底条、分节分隔、统计卡片边）都是 1px 实线细线，深色 `{colors.border}`、浅色 `{colors.border-light}`。不要更粗的边。
+6. 任何新项目列表都用 `{components.bullet-list}` 模式（两列网格、珊瑚等宽破折号）。别自写别的项目样式。
+7. 任何新强调瞬间都用 `{colors.accent}` 陶土珊瑚。强调只给斜体标题强调、36px 线、破折号、统计数字、引号、章节序数、眉题文字，别无他用。
+8. 任何新章节或分节开场页都在右下角带 `{components.grove-num}` 水印数字。
+9. 任何新内容元素都带 `[data-anim]` 属性（fade-up、fade-in、reveal-right、reveal-left 或 scale-in）加 `[data-delay]`（0–6）作错峰入场。别自写过渡。
+10. 拿不准时，加空间而非内容。Grove 的编辑语域是静默，不是密度。
 
-## Known Gaps
+## 已知缺口
 
-- The four Google Fonts (Playfair Display, Jost, JetBrains Mono, Noto Serif SC / Noto Sans SC) are loaded via `<link>`. Offline rendering will fall back to Georgia, system-ui, monospace, and system serif/sans for the Noto roles — which preserves the rough character but loses the typographic identity. Self-hosting recommended for offline / print reliability.
-- The system loads Playfair weight 500 and Jost weights 200/400/500 — these are not used in the published CSS but are available. Using them would break the system's single-weight commitment.
-- The `<em>` italic-coral treatment relies on the CSS rule `.h1 em, .h2 em, .h3 em { color: var(--c-accent); }` — note that the actual italic property is NOT set in the rule (the comment block is empty). The italic comes from the browser's default `<em>` styling. If a stylesheet override removes the default italic, the coral accent will lose its italic character.
-- The grove-num watermark uses 18vw font-size — on extremely wide viewports (3000px+) this becomes very large and may push the slide-foot area. The CSS positions it at `bottom: -0.15em` to absorb some overflow, but very tall numerals at very wide viewports may need adjustment.
-- The vertical sidebar component (`.grove-sidebar`) is loaded in the CSS but explicitly disabled (`display: none !important`). It was a chapter-tab decoration that read as clutter; the slide-chrome bar provides the section name already.
-- The fixed slide-counter (`#slide-counter`) is also disabled — the slide-foot bar already shows "NN / TT" so the fixed counter was a duplicate.
-- The CSS has a few empty rule blocks (`.h1 em { }`, `.grove-stat-val em { }`, `.quote-text { ... }`) which appear to be leftover stubs from earlier iterations. They are inert and can be removed without effect.
-- The deck is built bilingually-aware (Chinese fallbacks via Noto Serif SC / Noto Sans SC) but no actual Chinese content is in the published source — the bilingual support is structural, not active.
-- The image-placeholder component is a layout reservation, not a real image. Replacing the placeholder div with an `<img>` requires manually matching the parent's flex behavior and background.
+- 四款 Google Fonts（Playfair Display、Jost、JetBrains Mono、Noto Serif SC / Noto Sans SC）经 `<link>` 加载。离线渲染会分别回退到 Georgia、system-ui、monospace 及系统衬线/无衬线承担 Noto 角色，能保住大致性格，但丢掉排印身份。离线 / 打印可靠性建议自托管。
+- 系统加载了 Playfair 字重 500 与 Jost 字重 200/400/500，已发布 CSS 里未用，但可用。使用它们会破掉系统单字重承诺。
+- `<em>` 斜体珊瑚处理依赖 CSS 规则 `.h1 em, .h2 em, .h3 em { color: var(--c-accent); }`，注意规则里**并未设置**斜体属性（注释块是空的）。斜体来自浏览器默认 `<em>` 样式。若某条样式覆盖去掉了默认斜体，珊瑚强调会丢掉斜体性格。
+- grove-num 水印用 18vw 字号，极宽视口（3000px+）下会变得很大，可能挤到 slide-foot 区域。CSS 把它定位在 `bottom: -0.15em` 吸收一部分溢出，但极宽视口下很高的数字可能仍需调整。
+- 竖向侧栏组件（`.grove-sidebar`）在 CSS 里加载了但显式禁用（`display: none !important`）。它本是章节标签装饰，读起来杂乱，slide-chrome 条已经提供分节名。
+- 固定页码（`#slide-counter`）同样禁用，slide-foot 条已显示 "NN / TT"，固定计数器是重复。
+- CSS 里有几个空规则块（`.h1 em { }`、`.grove-stat-val em { }`、`.quote-text { ... }`），看似早期迭代留下的桩。它们无作用，删掉没影响。
+- 整套文稿具备双语意识（经 Noto Serif SC / Noto Sans SC 中文回退），但已发布源码里没有实际中文内容，双语支持是结构性的、未激活。
+- 图片占位组件是布局预留，不是真实图片。把占位 div 换成 `<img>` 需手动匹配父级 flex 行为与背景。

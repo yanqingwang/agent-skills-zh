@@ -1,11 +1,15 @@
-# Formula API and Model Selection
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/researcher/science/statsmodels/references/model_selection.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The R-style formula API, then model selection and comparison: information criteria,
-nested-model tests, and cross-validation caveats for statistical models.
+# Formula API 与模型选择
 
-## Formula API (R-style)
+先讲 R 风格 formula API，再讲模型选择与比较：信息准则、
+嵌套模型检验，以及统计模型交叉验证的注意事项。
 
-Statsmodels supports R-style formulas for intuitive model specification:
+## Formula API（R 风格）
+
+Statsmodels 支持 R 风格公式，便于直观设定模型：
 
 ```python
 import statsmodels.formula.api as smf
@@ -31,13 +35,13 @@ results = smf.poisson('count ~ x1 + x2', data=df).fit()
 # ARIMA (not available via formula, use regular API)
 ```
 
-## Model Selection and Comparison
+## 模型选择与比较
 
-Use identical response definitions and observations with comparable likelihoods. Formula missing-value handling can silently change the sample: select/record common rows first. Compare fixed effects in mixed models under ML, not REML. GLM likelihood BIC is `bic_llf`; deviance BIC is a different convention. Regular LR chi-square inference excludes boundary cases such as Poisson vs NB alpha=0, separation and unidentified parameters.
+比较时要使用相同的响应定义、相同的观测，且似然可比。公式的缺失值处理可能悄悄改变样本：先选出/记录共同的行再比较。混合模型的固定效应要在 ML 下比较，不要用 REML。GLM 的似然 BIC 是 `bic_llf`；基于 deviance 的 BIC 是另一套约定。常规 LR 卡方推断不覆盖边界情形，如 Poisson 对 NB 的 alpha=0、分离与不可识别参数。
 
-Do not interpret a p-value after model/variable selection as though the model were prespecified.
+做完模型/变量选择后，不要把 p 值当成模型是预先设定好的那样去解读。
 
-### Information Criteria
+### 信息准则
 
 ```python
 # Compare models using AIC/BIC
@@ -57,7 +61,7 @@ print(comparison.sort_values('AIC'))
 # Lower values rank comparable candidates; they do not establish absolute adequacy
 ```
 
-### Likelihood Ratio Test (Nested Models)
+### 似然比检验（嵌套模型）
 
 ```python
 # For nested models (one is subset of the other)
@@ -78,9 +82,9 @@ else:
     print("No rejection of the specified restrictions; this is not equivalence")
 ```
 
-### Cross-Validation
+### 交叉验证
 
-The example assumes independent observations and a numeric pandas design with an intercept. Use grouped or time-ordered splits for dependent data and fit preprocessing within each training fold. Scikit-learn LogisticRegression is regularized by default and is not an interchangeable statsmodels MLE wrapper.
+此例假设观测相互独立，使用带截距的数值型 pandas 设计矩阵。相关数据要用分组或按时间顺序的划分，预处理要在每个训练折内拟合。Scikit-learn 的 LogisticRegression 默认带正则，不是可互换的 statsmodels MLE 封装。
 
 ```python
 from sklearn.model_selection import KFold

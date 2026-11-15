@@ -1,8 +1,12 @@
-# Monitoring and Analysis
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/database-optimizer/references/monitoring-analysis.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## PostgreSQL Monitoring
+# 监控与分析
 
-### Essential Extensions
+## PostgreSQL 监控
+
+### 必备扩展
 
 ```sql
 -- Install performance monitoring extensions
@@ -15,7 +19,7 @@ SELECT pg_stat_statements_reset();
 SELECT pg_stat_reset();
 ```
 
-### Query Performance Tracking
+### 查询性能跟踪
 
 ```sql
 -- Top queries by total time
@@ -60,7 +64,7 @@ ORDER BY shared_blks_read DESC
 LIMIT 20;
 ```
 
-### Connection and Lock Monitoring
+### 连接与锁监控
 
 ```sql
 -- Current activity
@@ -117,7 +121,7 @@ GROUP BY wait_event_type, wait_event
 ORDER BY waiting_connections DESC;
 ```
 
-### Table and Index Statistics
+### 表与索引统计
 
 ```sql
 -- Table bloat and dead tuples
@@ -169,7 +173,7 @@ WHERE seq_scan > 0
 ORDER BY seq_tup_read DESC;
 ```
 
-### Database Statistics
+### 数据库统计
 
 ```sql
 -- Database size and activity
@@ -201,9 +205,9 @@ SELECT
 FROM pg_stat_bgwriter;
 ```
 
-## MySQL Monitoring
+## MySQL 监控
 
-### Performance Schema Queries
+### Performance Schema 查询
 
 ```sql
 -- Top statements by total latency
@@ -249,7 +253,7 @@ ORDER BY SUM_TIMER_WAIT DESC
 LIMIT 20;
 ```
 
-### InnoDB Status Monitoring
+### InnoDB 状态监控
 
 ```sql
 -- InnoDB buffer pool status
@@ -292,7 +296,7 @@ WHERE TIMESTAMPDIFF(SECOND, trx_started, NOW()) > 60
 ORDER BY trx_started;
 ```
 
-### Connection and Process Monitoring
+### 连接与进程监控
 
 ```sql
 -- Current connections by state
@@ -326,7 +330,7 @@ SHOW STATUS LIKE 'Max_used_connections';
 SHOW VARIABLES LIKE 'max_connections';
 ```
 
-### System Status Variables
+### 系统状态变量
 
 ```sql
 -- Key buffer efficiency (MyISAM)
@@ -351,9 +355,9 @@ SHOW STATUS LIKE 'Connections';
 SHOW STATUS LIKE 'Qcache_%';
 ```
 
-## Cross-Platform Monitoring
+## 跨平台监控
 
-### Resource Utilization
+### 资源利用率
 
 ```sql
 -- PostgreSQL: Database size growth
@@ -374,7 +378,7 @@ GROUP BY table_schema
 ORDER BY size_mb DESC;
 ```
 
-### Health Check Queries
+### 健康检查查询
 
 ```sql
 -- PostgreSQL: Overall health
@@ -412,9 +416,9 @@ SELECT 'slow_queries',
        NULL;
 ```
 
-## Alert Thresholds
+## 告警阈值
 
-### PostgreSQL Alerts
+### PostgreSQL 告警
 
 ```sql
 -- Connection pool nearing capacity
@@ -456,7 +460,7 @@ SELECT
     END as status;
 ```
 
-### MySQL Alerts
+### MySQL 告警
 
 ```sql
 -- InnoDB buffer pool efficiency
@@ -489,13 +493,13 @@ SELECT
 FROM (SHOW SLAVE STATUS) s;
 ```
 
-## Monitoring Best Practices
+## 监控最佳实践
 
-1. **Establish baselines** - Record normal performance metrics
-2. **Track trends** - Monitor daily/weekly patterns
-3. **Set thresholds** - Define warning and critical levels
-4. **Automate alerts** - Use monitoring tools (Prometheus, Grafana, Datadog)
-5. **Regular reviews** - Weekly performance analysis meetings
-6. **Document changes** - Track configuration and schema modifications
-7. **Capacity planning** - Monitor growth and forecast needs
-8. **Test queries** - Validate optimizations in staging first
+1. **建立基线** - 记录正常性能指标
+2. **跟踪趋势** - 观察每日/每周规律
+3. **设定阈值** - 定义警告与严重级别
+4. **自动告警** - 用监控工具（Prometheus、Grafana、Datadog）
+5. **定期复盘** - 每周性能分析会
+6. **记录变更** - 跟踪配置与 schema 修改
+7. **容量规划** - 监控增长并预测需求
+8. **测试查询** - 先在预发布环境验证优化

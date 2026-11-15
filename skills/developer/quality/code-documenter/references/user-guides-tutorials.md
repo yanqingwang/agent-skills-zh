@@ -1,8 +1,12 @@
-# User Guides & Tutorials
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/code-documenter/references/user-guides-tutorials.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Tutorial Structure
+# 用户指南与教程
 
-### Progressive Learning Path
+## 教程结构
+
+### 渐进式学习路径
 
 ```markdown
 # Getting Started with API
@@ -49,7 +53,7 @@ Run the code and you should see a list of users.
 - [Error Handling](/docs/errors) - Handle errors gracefully
 ```
 
-### Step-by-Step Tutorial
+### 分步教程
 
 ```markdown
 # Tutorial: Building a User Dashboard
@@ -157,9 +161,9 @@ At this point, you have:
 [Continue to Step 5 →](/docs/tutorial/step-5)
 ```
 
-## Information Architecture
+## 信息架构
 
-### Content Hierarchy
+### 内容层级
 
 ```markdown
 Documentation/
@@ -197,9 +201,9 @@ Documentation/
     └── Migration Guides
 ```
 
-## Writing Techniques
+## 写作技巧
 
-### Task-Based Writing
+### 任务导向写作
 
 ```markdown
 # How to Upload a File
@@ -242,7 +246,7 @@ Only .jpg, .png, .gif are allowed. Check the file extension.
 - [Handling Upload Progress](/guides/upload-progress)
 ```
 
-### Progressive Disclosure
+### 渐进式展开
 
 ```markdown
 # Authentication
@@ -308,9 +312,9 @@ const client = new Client({ jwt });
 </details>
 ```
 
-## Visual Communication
+## 可视化沟通
 
-### Diagram Integration
+### 图表集成
 
 ```markdown
 # System Architecture
@@ -357,7 +361,7 @@ erDiagram
 ```
 ```
 
-### Screenshot Annotations
+### 截图批注
 
 ```markdown
 # Dashboard Overview
@@ -383,9 +387,9 @@ erDiagram
 ![Create API key dialog](./images/create-key.png)
 ```
 
-## Troubleshooting Guides
+## 排障指南
 
-### Problem-Solution Format
+### 问题-解法格式
 
 ```markdown
 # Troubleshooting
@@ -462,7 +466,7 @@ Instead of 100 individual requests, use batch endpoints.
 [View plans](/pricing) - Higher tiers have increased limits.
 ```
 
-## FAQ Section
+## FAQ 章节
 
 ```markdown
 # Frequently Asked Questions
@@ -512,19 +516,19 @@ Credit card, PayPal, wire transfer (annual plans only).
 - [Contact support](/support)
 ```
 
-## Quick Reference
+## 速查表
 
-| Content Type | Best For | Key Elements |
+| 内容类型 | 适用场景 | 关键要素 |
 |-------------|----------|-------------|
-| Quick Start | New users (5 min) | Prerequisites, minimal code, verify |
-| Tutorial | Learning by doing | Steps, checkpoints, working code |
-| How-To Guide | Specific tasks | Goal, steps, troubleshooting |
-| Reference | Looking up details | Comprehensive, searchable |
-| Explanation | Understanding concepts | Why, not how |
+| 快速上手 | 新用户（5 分钟） | 前置条件、最少代码、验证 |
+| 教程 | 边做边学 | 步骤、检查点、可运行代码 |
+| 操作指南 | 具体任务 | 目标、步骤、排障 |
+| 参考手册 | 查阅细节 | 全面、可检索 |
+| 概念解释 | 理解概念 | 讲为什么，不讲怎么做 |
 
-| Writing Principle | Technique |
+| 写作原则 | 手法 |
 |------------------|-----------|
-| Clarity | Active voice, short sentences |
-| Scannability | Headings, lists, code blocks |
-| Completeness | Prerequisites, next steps, related links |
-| Accuracy | Test all code, version specifics |
+| 清晰 | 主动语态、短句 |
+| 可扫读 | 标题、列表、代码块 |
+| 完整 | 前置条件、后续步骤、相关链接 |
+| 准确 | 测试所有代码、注明版本细节 |

@@ -225,289 +225,293 @@ components:
     opacity: 0.85
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/neo-grid-bold/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Neo-Grid Bold is a **heavy editorial poster system** built on a single structural premise: every slide is a 12-column × 8-row CSS grid inset 40px from the slide edges, with 12px gaps between cells. Composition happens by assigning colored panels to grid spans — `grid-column: 4 / span 5` and `grid-row: 1 / span 5` is how layout is described. The grid is rigid; the visual variety comes from how panels of `{colors.paper}`, `{colors.ink}`, and `{colors.accent-lemon}` are arranged across cells.
+Neo-Grid Bold 是一套**厚重编辑海报系统**，建立在单一结构前提上：每页都是 12 列 × 8 行的 CSS 网格，距页面边缘内缩 40px，单元格间 12px 间隙。构图靠把彩色面板指派给网格跨度完成，`grid-column: 4 / span 5`、`grid-row: 1 / span 5` 就是描述布局的方式。网格是刚性的，视觉变化来自 `{colors.paper}`、`{colors.ink}`、`{colors.accent-lemon}` 的面板在单元格间如何排布。
 
-The typeface stack is intentionally narrow. **Space Grotesk** at weight 700 carries every display moment in strict uppercase with negative letter-spacing. Body copy runs at weight 400 in mixed case. **JetBrains Mono** at weight 400 carries every label, page number, axis tag, and metadata string — always uppercase with 0.08–0.12em positive tracking. There is no third face. The contrast between heavy Space Grotesk uppercase and JetBrains Mono uppercase is the system's primary typographic rhythm.
+字体栈刻意收窄。**Space Grotesk** 字重 700 承载每个展示瞬间，严格全大写、负字距。正文以字重 400 大小写混排。**JetBrains Mono** 字重 400 承载每个标签、页码、坐标轴标记、元数据串，始终全大写、0.08–0.12em 正字距。没有第三款字面。厚重 Space Grotesk 全大写与 JetBrains Mono 全大写之间的反差，是系统的主排印节奏。
 
-The palette has three working colors plus a putty surface. **Paper** (`{colors.paper}` — a warm ecru off-white) is the default panel fill. **Ink** (`{colors.ink}` — a near-black) is the structural color: text on paper, fills for inverted panels, all dividers, all rules. **Accent Lemon** (`{colors.accent-lemon}` — an electric neon-yellow #E6FF3D) is the loud signal — used as panel fill, as a highlight `<mark>` swatch inside headlines, and as the second series in charts. **Putty BG** (`{colors.bg}`) is the slightly cooler ecru that sits behind the 40px slide inset, framing the composition like a passe-partout. **Muted graphite** is present in the token list but rarely used in practice.
+配色有三款工作色加一种腻子表面。**Paper**（`{colors.paper}`，暖本白）是默认面板填充。**Ink**（`{colors.ink}`，近黑）是结构色：纸上的文字、反色面板填充、所有分隔、所有线。**Accent Lemon**（`{colors.accent-lemon}`，电光霓虹黄 #E6FF3D）是响亮的信号，用作面板填充、标题内 `<mark>` 高亮色块、图表的第二系列。**Putty BG**（`{colors.bg}`）是略冷的本白，衬在 40px 内缩之后，像卡纸一样框住构图。**柔化石墨**在 token 表里，实际很少用。
 
-Depth is created entirely through **panel adjacency and color contrast**, not shadows. Cards do not carry box-shadows; cards do not have rounded corners; cards do not have borders (except for table cells and pill outlines, which use 1.5px solid ink). The visual weight of a slide is determined by how many cells are filled with `{colors.ink}` vs. `{colors.accent-lemon}` vs. `{colors.paper}`. A composition with three yellow panels reads as much more aggressive than one with a single yellow panel.
+纵深完全靠**面板相邻与颜色反差**建立，不靠阴影。卡片不带 box-shadow，卡片没有圆角，卡片没有边框（表格单元与胶囊描边除外，用 1.5px 实墨）。一页的视觉分量由多少个单元格填了 `{colors.ink}`、`{colors.accent-lemon}`、`{colors.paper}` 决定。三块黄面板的构图比单块黄面板读起来进攻性强得多。
 
-**Density philosophy: dense.** Neo-Grid Bold reads as authoritative when the 12×8 grid is fully populated with panels of varying span and color. A slide with only one or two panels and large empty grid areas reads as broken; the system was designed as an editorial poster, and posters are dense. The expected pattern is 4–8 panels per slide, each occupying a non-trivial cell span, with the grid fully used corner-to-corner. The exception is a section-divider slide where a single 320px section number occupies an entire pane of the grid — but even there, the rest of the canvas is filled with a second panel of contrasting color.
+**密度取向：密集。** 12×8 网格被跨度、颜色各异的面板填满时，Neo-Grid Bold 才显得权威。只有一两块面板、大片空网格的页读作坏了；系统是当编辑海报设计的，海报本就密集。预期式样是每页 4–8 块面板，各占一块不小的单元格跨度，网格从角到角用满。例外是分节断口页，一个 320px 的分节号占满网格的一整格，但即便如此，画布其余部分也由第二块反色面板填满。
 
-**Key Characteristics:**
-- Universal 12-column × 8-row CSS grid (`{components.frame}`) inset 40px from each slide edge, with 12px gaps between cells.
-- Three-color panel system: paper ecru (`{colors.paper}`) as default, ink black (`{colors.ink}`) for inverted blocks, accent lemon (`{colors.accent-lemon}`) for signal blocks.
-- Space Grotesk weight 700 uppercase with negative letter-spacing for every display element.
-- JetBrains Mono uppercase with 0.08–0.12em tracking for every label, page number, axis tag.
-- A signature corner-mark and blockmark — small 2×2 block stamps that act as decorative identity tags.
-- Inline `<mark>` element that wraps words inside a headline in a neon-yellow swatch — the system's headline emphasis mechanism.
-- A persistent page-number tag (`{components.pagenum}`) anchored bottom-left of every slide.
-- No rounded corners, no drop shadows, no gradients (apart from photo-region stylized noise textures).
-- Stat numerals scale up to 240px and even 320px — type is allowed to dominate entire panels.
+**关键特征：**
+- 通用 12 列 × 8 行 CSS 网格（`{components.frame}`），距每页边缘内缩 40px，单元格间 12px 间隙。
+- 三色面板系统：纸本白（`{colors.paper}`）作默认、墨黑（`{colors.ink}`）作反色块、强调柠檬黄（`{colors.accent-lemon}`）作信号块。
+- Space Grotesk 字重 700 全大写、负字距，用于每个展示元素。
+- JetBrains Mono 全大写、0.08–0.12em 字距，用于每个标签、页码、坐标轴标记。
+- 招牌角标与块标，小小的 2×2 方块印章，作装饰性身份标记。
+- 行内 `<mark>` 元素把标题里的词包进霓虹黄块，是系统的标题强调机制。
+- 常驻页码标签（`{components.pagenum}`）锚在每页左下。
+- 无圆角、无投影、无渐变（照片区的风格化噪声纹理除外）。
+- 统计数字放大到 240px 甚至 320px，文字允许主导整块面板。
 
-## Colors
+## 颜色
 
-### Palette
+### 调色板
 
-- **Paper** (`{colors.paper}` — #F5F4EF): Warm ecru off-white. The default panel fill, the default text color when inverted, and the canvas of any "neutral" card. Slightly creamier than pure white — chosen so the neon-yellow accent doesn't vibrate against it.
-- **BG (Putty)** (`{colors.bg}` — #ECECE8): A cooler ecru that sits behind the 40px slide inset, framing the grid composition like a passe-partout. The 40px border of putty around every slide is the system's universal frame.
-- **Ink** (`{colors.ink}` — #0A0A0A): The structural near-black. Used for all text on paper, all inverted panel fills, all dividers, all table cell borders, all pill outlines. Not pure #000 — slightly softer.
-- **Accent Lemon** (`{colors.accent-lemon}` — #E6FF3D): Electric neon-yellow. The signal color. Used as a panel fill, as the inline `<mark>` highlight swatch inside headlines, as the second chart series, as the affirmative pill fill, and as page-number variant background. Never as a text color (the yellow is too light to read as type against any surface).
-- **Muted** (`{colors.muted}` — #8A8A85): A reserved graphite tone present in the token list but used only at low opacity on photo-region tags. Available for de-emphasized text but rarely deployed.
-- **Stage BG** (`{colors.stage-bg}` — #1A1A1A): The viewport background outside the 1920×1080 slide canvas. This is the deck-stage container color, not part of slide design.
+- **Paper**（`{colors.paper}` — #F5F4EF）：暖本白。默认面板填充、反色时的默认文字色、任何"中性"卡片的画布。比纯白略带奶油，特意选它，让霓虹黄强调不刺眼。
+- **BG（腻子）**（`{colors.bg}` — #ECECE8）：略冷的本白，衬在 40px 内缩之后，像卡纸一样框住网格构图。每页四周 40px 腻子边是系统的通用画框。
+- **Ink**（`{colors.ink}` — #0A0A0A）：结构性近黑。用于纸上全部文字、全部反色面板填充、全部分隔、全部表格单元边框、全部胶囊描边。不是纯 #000，略柔。
+- **Accent Lemon**（`{colors.accent-lemon}` — #E6FF3D）：电光霓虹黄。信号色。用作面板填充、标题内行内 `<mark>` 高亮色块、图表第二系列、肯定态胶囊填充、页码变体背景。绝不作为文字色（黄太浅，在任何表面上都读不成字）。
+- **Muted**（`{colors.muted}` — #8A8A85）：保留的石墨调，在 token 表里，但只在照片区标签上以低不透明度使用。可用于弱化文字，实际很少派上场。
+- **Stage BG**（`{colors.stage-bg}` — #1A1A1A）：1920×1080 幻灯片画布之外的视口背景。这是 deck-stage 容器色，不属于幻灯片设计。
 
-### Defaults
+### 默认值
 
-- **Default slide canvas background**: `{colors.bg}` — visible as the 40px putty frame around every grid composition.
-- **Default panel fill**: `{colors.paper}`. When in doubt, a panel is paper.
-- **Default primary headline color**: `{colors.ink}` on paper or lemon panels; `{colors.paper}` on ink panels.
-- **Default body text color**: `{colors.ink}` on paper/lemon; `{colors.paper}` on ink.
-- **Default label / metadata color**: `{colors.ink}` on paper, at opacity 0.7–0.85 to mute; `{colors.paper}` on ink, at opacity 0.7–0.85.
-- **Default chart series color**: `{colors.ink}` for series A; `{colors.accent-lemon}` for series B (with 1.5px ink border).
-- **Default emphasis mechanism inside a headline**: wrap in `<mark>` for a neon-yellow swatch on ink text. This is the system's primary headline-level emphasis.
-- **Default affirmative state**: `{colors.accent-lemon}` fill. Default negative state: `{colors.ink}` fill. Default neutral state: `{colors.paper}` fill with `{colors.ink}` border.
+- **默认幻灯片画布背景**：`{colors.bg}`，表现为每幅网格构图四周 40px 的腻子框。
+- **默认面板填充**：`{colors.paper}`。拿不准时，面板就是纸色。
+- **默认主标题色**：纸色或柠檬黄面板上用 `{colors.ink}`；墨色面板上用 `{colors.paper}`。
+- **默认正文色**：纸 / 柠檬黄上 `{colors.ink}`；墨上 `{colors.paper}`。
+- **默认标签 / 元数据色**：纸上 `{colors.ink}`，以 0.7–0.85 不透明度柔化；墨上 `{colors.paper}`，0.7–0.85 不透明度。
+- **默认图表系列色**：系列 A `{colors.ink}`；系列 B `{colors.accent-lemon}`（配 1.5px 墨边框）。
+- **标题内默认强调机制**：用 `<mark>` 包住，在墨色文字上得到霓虹黄块。这是系统标题级的主要强调。
+- **默认肯定态**：`{colors.accent-lemon}` 填充。默认否定态：`{colors.ink}` 填充。默认中性态：`{colors.paper}` 填充配 `{colors.ink}` 边框。
 
-Neon yellow is the system's only chromatic accent — never substitute red, blue, or any third color. Yellow's role is to draw the eye, not to communicate meaning (it is not "warning" or "highlight" in the semantic sense; it is simply the signal).
+霓虹黄是系统唯一的彩色强调，绝不以红、蓝或任何第三色替代。黄的角色是吸睛，不是传意（它不是语义上的"警告"或"高亮"，纯粹是信号）。
 
-## Typography
+## 排印
 
-### Font Family
+### 字族
 
-The system uses two web fonts: **Space Grotesk** (weights 400, 500, 700) for all display and body, and **JetBrains Mono** (weights 400, 500) for all labels and metadata. There is no third face — no serif, no italic, no display script. The system's character lives in the weight contrast between Space Grotesk 700 uppercase and Space Grotesk 400 mixed case, plus the structural mono labels in JetBrains Mono.
+系统用两款网络字体：**Space Grotesk**（字重 400、500、700）承载全部展示与正文，**JetBrains Mono**（字重 400、500）承载全部标签与元数据。没有第三款字面，无衬线、无斜体、无展示手写体。系统的性格活在 Space Grotesk 700 全大写与 Space Grotesk 400 混排之间的字重反差里，再加 JetBrains Mono 的结构性等宽标签。
 
-A specific inline mixing rule: **the `<em>` tag inside a Space Grotesk headline switches color to `{colors.accent-lemon}` and stays upright** (font-style is normalized to non-italic). Em is repurposed as a yellow inline color switch, like the `<mark>` swatch but without the background fill.
+一条具体的行内混排规则：**Space Grotesk 标题里的 `<em>` 标签切到 `{colors.accent-lemon}` 色且保持直立**（font-style 归一为非斜体）。Em 被改作黄色行内换色，像 `<mark>` 色块但没有背景填充。
 
-A second inline mixing rule: **the `<mark>` element wraps words inside a Space Grotesk headline in a neon-yellow swatch with 0 6px padding**, creating the highlighter-pen emphasis that is a recurring signature of the system.
+第二条行内混排规则：**`<mark>` 元素以 `0 6px` 内边距把 Space Grotesk 标题里的词包进霓虹黄块**，造出荧光笔强调，是系统反复出现的招牌。
 
-### Type Scale
+### 排印比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.section-num}` | 320px | Space Grotesk | 700 | Hero section ordinal in a section-divider panel |
-| `{typography.stat-num-lg}` | 240px | Space Grotesk | 700 | Featured large numerical stat |
-| `{typography.stat-num}` | 156px | Space Grotesk | 700 | Standard stat numeral |
-| `{typography.display}` | 132px | Space Grotesk | 700 | Cover, section, or hero display headline |
-| `{typography.stat-num-sm}` | 96px | Space Grotesk | 700 | Compact stat numeral inside a small card |
-| `{typography.title}` | 88px | Space Grotesk | 700 | Primary content-slide headline |
-| `{typography.subtitle}` | 56px | Space Grotesk | 700 | Secondary headline, region heading |
-| `{typography.card-headline}` | 44px | Space Grotesk | 700 | Card title at panel-fill scale |
-| `{typography.card-h3}` | 30px | Space Grotesk | 700 | Sub-headline inside a smaller card |
-| `{typography.body}` | 28px | Space Grotesk | 400 | Body paragraph inside a feature card |
-| `{typography.label}` | 24px | JetBrains Mono | 400 | Standard mono label or kicker |
-| `{typography.body-sm}` | 22px | Space Grotesk | 400 | Compact body inside dense cards |
-| `{typography.pagenum}` | 24px | JetBrains Mono | 400 | Page-number tag (e.g. "01 / 12") |
-| `{typography.label-sm}` | 16px | JetBrains Mono | 400 | Secondary metadata label, copyright text |
-| `{typography.label-xs}` | 14px | JetBrains Mono | 400 | Axis labels, table header text, fine print |
+| `{typography.section-num}` | 320px | Space Grotesk | 700 | 分节断口面板里的英雄分节序数 |
+| `{typography.stat-num-lg}` | 240px | Space Grotesk | 700 | 精选大号统计数字 |
+| `{typography.stat-num}` | 156px | Space Grotesk | 700 | 标准统计数字 |
+| `{typography.display}` | 132px | Space Grotesk | 700 | 封面、分节或英雄展示标题 |
+| `{typography.stat-num-sm}` | 96px | Space Grotesk | 700 | 小卡片里的紧凑统计数字 |
+| `{typography.title}` | 88px | Space Grotesk | 700 | 内容页主标题 |
+| `{typography.subtitle}` | 56px | Space Grotesk | 700 | 次级标题、区域标题 |
+| `{typography.card-headline}` | 44px | Space Grotesk | 700 | 面板填充尺度的卡片标题 |
+| `{typography.card-h3}` | 30px | Space Grotesk | 700 | 较小卡片里的副标题 |
+| `{typography.body}` | 28px | Space Grotesk | 400 | 特性卡片里的正文段落 |
+| `{typography.label}` | 24px | JetBrains Mono | 400 | 标准等宽标签或眉题 |
+| `{typography.body-sm}` | 22px | Space Grotesk | 400 | 密集卡片里的紧凑正文 |
+| `{typography.pagenum}` | 24px | JetBrains Mono | 400 | 页码标签（如 "01 / 12"） |
+| `{typography.label-sm}` | 16px | JetBrains Mono | 400 | 次级元数据标签、版权文字 |
+| `{typography.label-xs}` | 14px | JetBrains Mono | 400 | 坐标轴标签、表头文字、细则 |
 
-### Defaults
+### 默认值
 
-- **Default primary section headline**: `{typography.title}` (88px) — the workhorse content-slide headline.
-- **Default cover or section-opening display**: `{typography.display}` (132px) for a cover; `{typography.section-num}` (320px) for a section-divider ordinal.
-- **Default body paragraph size**: `{typography.body}` (28px). For dense multi-card slides, drop to `{typography.body-sm}` (22px).
-- **Default label / metadata size**: `{typography.label}` (24px) for standalone mono tags; `{typography.label-sm}` (16px) for inline metadata.
-- **Default stat numeral**: `{typography.stat-num}` (156px). Reach for `{typography.stat-num-lg}` (240px) only when the stat occupies an entire featured panel.
-- **Default weight for any display element**: 700. Display in any other weight does not exist in this system.
-- **Default weight for body**: 400.
+- **默认主分节标题**：`{typography.title}`（88px），内容页主力标题。
+- **默认封面或分节开场展示**：封面用 `{typography.display}`（132px）；分节断口序数用 `{typography.section-num}`（320px）。
+- **默认正文段落尺寸**：`{typography.body}`（28px）。密集多卡片页降到 `{typography.body-sm}`（22px）。
+- **默认标签 / 元数据尺寸**：独立等宽标记用 `{typography.label}`（24px）；行内元数据用 `{typography.label-sm}`（16px）。
+- **默认统计数字**：`{typography.stat-num}`（156px）。仅当统计占满一整块精选面板时才取 `{typography.stat-num-lg}`（240px）。
+- **任何展示元素默认字重**：700。本系统不存在别的字重的展示。
+- **正文默认字重**：400。
 
-When unsure, reach for `{typography.title}` for the slide's primary text moment and pair it with `{typography.body}` for supporting copy.
+拿不准时，页面主文字瞬间取 `{typography.title}`，辅助文案配 `{typography.body}`。
 
-### Signature Treatments
+### 招牌处理
 
-These treatments are **non-optional whenever the corresponding element type is used**:
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every Space Grotesk display, title, subtitle, card-headline, and stat numeral is uppercase** with negative letter-spacing (-0.005 to -0.05em depending on scale). Mixed-case display does not exist in this system.
-- **Body copy is mixed case at weight 400.** Never uppercase body.
-- **Every JetBrains Mono element is uppercase** with at least 0.08em positive tracking.
-- **The `<mark>` element inside a headline always uses `{colors.accent-lemon}` background with `{colors.ink}` text and 0 6px padding.** The yellow highlighter swatch is the system's headline emphasis signal.
-- **The `<em>` element inside a headline switches to `{colors.accent-lemon}` color and stays upright (font-style: normal).** Italic letterforms are not used.
-- **Negative letter-spacing scales with size**: smaller headlines use -0.005em to -0.015em; larger displays use -0.02 to -0.05em. The tighter the tracking, the more compressed and brutalist the headline reads — at 320px size, -0.05em is correct.
-- **Page numbers are always JetBrains Mono at 24px with 0.04em tracking** in the format `01 / 12` with a single padded zero and slash separator.
+- **每个 Space Grotesk display、title、subtitle、card-headline、统计数字都全大写**配负字距（按尺度 -0.005 到 -0.05em）。本系统不存在混排展示。
+- **正文以字重 400 大小写混排。** 正文绝不全文大写。
+- **每个 JetBrains Mono 元素都全大写**、至少 0.08em 正字距。
+- **标题里的 `<mark>` 元素始终用 `{colors.accent-lemon}` 背景、`{colors.ink}` 文字、`0 6px` 内边距。** 黄色荧光块是系统的标题强调信号。
+- **标题里的 `<em>` 元素切到 `{colors.accent-lemon}` 色并保持直立（font-style: normal）。** 不用斜体字形。
+- **负字距随尺寸缩放**：较小标题用 -0.005em 到 -0.015em；较大展示用 -0.02 到 -0.05em。字距越紧，标题读起来越压缩、越粗野，320px 尺寸下 -0.05em 才对。
+- **页码始终用 24px JetBrains Mono、0.04em 字距**，格式 `01 / 12`，单个补零、斜杠分隔。
 
-### Typography Principles
+### 排印原则
 
-The rhythm is **heavy uppercase display + light mixed-case body + small uppercase mono label**. Switching any of those three modes breaks the editorial register. Body in uppercase reads as a shouting paragraph. Display in mixed case reads as a different design system. Mono in mixed case reads as code, not editorial metadata.
+节奏是**厚重全大写展示 + 轻混排正文 + 小号全大写等宽标签**。三者中任一模式被换掉都会破掉编辑语域。正文全大写读成一段在吼的段落。展示混排读成另一套设计系统。等宽混排读成代码，不像编辑元数据。
 
-Italic letterforms are not used. The `<em>` and `<mark>` tags are repurposed as color/highlight switches, not italic emphasis. Underline is not used. Bold inside body text is not used — emphasis is achieved by isolating the headline in its own cell.
+斜体字形不用。`<em>` 与 `<mark>` 标签被改作换色 / 高亮开关，不作斜体强调。下划线不用。正文里不用粗体，强调靠把标题隔离在它自己的单元格里达成。
 
-## Layout
+## 布局
 
-### Canvas System
+### 画布系统
 
-The system targets a **fixed 1920×1080 canvas** rendered inside a `<deck-stage>` web component that handles scaling to fit the viewport. All sizes are in `px` (not vw/vh) — typography sizes, padding values, grid gaps, and inset values are all pixel-fixed. The composition is designed at 1920×1080 and the stage scales the entire deck proportionally.
+系统以**固定 1920×1080 画布**为目标，渲染在负责缩放适配视口的 `<deck-stage>` web component 内。所有尺寸用 `px`（不用 vw/vh），排印尺寸、内边距、网格间隙、内缩值都是像素固定。构图按 1920×1080 设计，stage 把整份文稿等比缩放。
 
-The viewport background outside the deck stage is `{colors.stage-bg}` (#1A1A1A) — a dark gray frame that visually anchors the bright slide against the browser chrome.
+deck stage 之外的视口背景是 `{colors.stage-bg}`（#1A1A1A），一道深灰框，把明亮的幻灯片在浏览器外壳里视觉锚住。
 
-### The Universal Frame
+### 通用画框
 
-Every slide carries a `.frame` div positioned `absolute; inset: 40px` with `display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(8, 1fr); gap: 12px`. This is the structural constant of the system: a 12-column × 8-row grid with 12px gaps, inset 40px from the slide edges. Some slide variants increase the grid gap to 16–18px for breathing room, but the column/row counts and the 40px inset never change.
+每页带一个 `.frame` div，定位 `absolute; inset: 40px`，`display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(8, 1fr); gap: 12px`。这是系统的结构常量：12 列 × 8 行网格、12px 间隙、距页面边缘内缩 40px。某些页变体把网格间隙加到 16–18px 求呼吸空间，但行列数与 40px 内缩永不变。
 
-Composition happens entirely by spanning cells inside this grid. A panel occupying `grid-column: 1 / span 4; grid-row: 1 / span 3` is a 4-cell-wide × 3-row-tall card in the upper-left. The grid is the only layout language — flexbox is used only for internal alignment inside a single cell.
+构图完全靠在这个网格里跨单元格完成。占 `grid-column: 1 / span 4; grid-row: 1 / span 3` 的面板，就是左上角一块 4 格宽 × 3 行高的卡片。网格是唯一的布局语言，flexbox 只用于单个单元格内部的对齐。
 
-### Padding Inside Cells
+### 单元格内边距
 
-Internal padding inside a cell varies with cell size and purpose:
-- Compact cards (small stat tiles): 24px × 28px
-- Standard cards (feature panels): 28px × 32px
-- Large cards (chapter panels): 36px × 32px
-- Hero cards (section dividers): 40px × 44px
+单元格内部的内边距随格子大小与用途变化：
+- 紧凑卡片（小统计块）：24px × 28px
+- 标准卡片（特性面板）：28px × 32px
+- 大卡片（章节面板）：36px × 32px
+- 英雄卡片（分节断口）：40px × 44px
 
-These are not rigid tokens — they're a practical scale. Choose the padding that gives the card's internal type room to breathe without losing the panel's identity.
+这些不是刚性 token，是一套实用比例。挑那个既给卡片内部文字呼吸空间、又不丢面板身份的内边距。
 
-### Persistent Chrome
+### 常驻外壳
 
-Every slide carries a `{components.pagenum}` tag bottom-left in the format `01 / 12`. Three variants:
-- Default: paper background, ink text.
-- `.invert`: ink background, paper text.
-- `.lemon`: yellow background, ink text.
+每页左下都带一个 `{components.pagenum}` 标签，格式 `01 / 12`。三种变体：
+- 默认：纸背景、墨文字。
+- `.invert`：墨背景、纸文字。
+- `.lemon`：黄背景、墨文字。
 
-Some slides also carry a `{components.corner-mark}` (small 2×2 block) top-right, a `{components.copyright}` bottom-left, or a `{components.blockmark}` (larger 2×2 stamp) as a brand identifier.
+有些页还带右上角的 `{components.corner-mark}`（小 2×2 方块）、左下的 `{components.copyright}`，或作品牌标识的 `{components.blockmark}`（较大的 2×2 印章）。
 
-## Depth and Elevation
+## 纵深与层级
 
-### No Shadows, Color-Block Adjacency Only
+### 无阴影，只有色块相邻
 
-The system uses **zero box-shadow declarations** on any structural panel. Depth is entirely a function of color adjacency: a paper panel next to an ink panel reads as elevated (paper toward viewer); a yellow panel next to an ink panel reads as the loudest signal in the composition. The 12px grid gap between panels reveals the putty `{colors.bg}` between cells, which acts as a unifying frame color.
+系统在任何结构面板上**零 box-shadow 声明**。纵深完全是颜色相邻的函数：纸面板挨着墨面板读作抬升（纸朝向观者）；黄面板挨着墨面板读作构图里最响的信号。面板间 12px 网格间隙露出单元格之间的腻子 `{colors.bg}`，充当统一画框色。
 
-### No Gradients (Except Photo Regions)
+### 无渐变（照片区除外）
 
-The only gradients in the system are inside photo-region placeholder textures, where a `radial-gradient` plus a `repeating-linear-gradient` creates a stylized B&W-grain texture as a stand-in for photography. These textures live inside cells classed `.photo` or `.ph`, never on a structural panel.
+系统里唯一的渐变在照片区占位纹理内，`radial-gradient` 加 `repeating-linear-gradient` 造出风格化黑白颗粒纹理，代照片站位。这些纹理住在 `.photo` 或 `.ph` 类的单元格里，绝不在结构面板上。
 
-### Borders on Tables and Pills
+### 表格与胶囊上的边框
 
-- Table cells (`{components.table-cell}`) use 1.5px solid ink dividers on bottom and right edges to create a wireframe grid.
-- Comparison pills (`{components.pill-part}`) use a 1.5px solid ink border as the partial-state outline.
-- Chart axes use 2px solid ink as the bottom-left wireframe.
-- The yellow bar in a bar chart (`{components.bar-fill-lemon}`) carries a 1.5px solid ink border to prevent the bright fill from vibrating against the paper background.
+- 表格单元（`{components.table-cell}`）用底边与右边 1.5px 实墨分隔，造出线框网格。
+- 比较胶囊（`{components.pill-part}`）用 1.5px 实墨边框作部分态描边。
+- 图表轴用 2px 实墨作左下线框。
+- 条形图里的黄条（`{components.bar-fill-lemon}`）带 1.5px 实墨边框，防止亮填充在纸背景上刺眼。
 
-No other elements carry borders. Cards are borderless and rely on fill contrast.
+别的元素都不带边框。卡片无边框，靠填充反差。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
+### 圆角
 
-| Value | Use |
+| 值 | 用途 |
 |---|---|
-| 0px | Every element — cards, pills, tags, page numbers, table cells, chart bars, blockmarks |
+| 0px | 每个元素，卡片、胶囊、标签、页码、表格单元、图表条、块标 |
 
-The system has **zero border-radius** on any element. Every shape is a strict rectangle or square. The block-stamp and corner-mark glyphs are composed of right-angle squares.
+系统在任何元素上**零 border-radius**。每个形状都是严格矩形或方形。块印与角标字形由直角方块拼成。
 
-### Border Weights
+### 边框粗细
 
-- **1.5px solid `{colors.ink}`** — used on table cell dividers, pill outlines, and the yellow bar's border. The most common border weight.
-- **2px solid `{colors.ink}`** — used on chart axes (left and bottom of the plot area) for slightly stronger wireframe.
+- **1.5px 实 `{colors.ink}`**：表格单元分隔、胶囊描边、黄条边框。最常见的边框粗细。
+- **2px 实 `{colors.ink}`**：图表轴（绘图区左与下），略强的线框。
 
-No other border weights exist. There are no muted-color borders, no dashed borders (except a very specific `1px dashed rgba(0,0,0,.18)` chart grid line used internally).
+没有别的边框粗细。没有柔化色边框，没有虚线边框（内部用的一条很特定的 `1px dashed rgba(0,0,0,.18)` 图表网格线除外）。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Block stamp (`{components.blockmark}`)** — A 2×2 grid of small squares with the top-left and bottom-right cells filled (and the other two transparent). A diagonal-fill stamp that acts as a brand identity mark. Sized from 36px (corner-mark) up to 96px (block stamp on quote slides). May render in ink or accent-lemon.
+**块印（`{components.blockmark}`）**：2×2 小方块网格，左上与右下格填充、另两格透明。对角填充的印章，作品牌身份标记。尺寸从 36px（角标）到 96px（引文页上的块印）。可渲染成墨色或强调柠檬黄。
 
-**Corner mark (`{components.corner-mark}`)** — A 36px × 36px version of the block stamp anchored top-right of a panel. Acts as a small structural identity tag.
+**角标（`{components.corner-mark}`）**：36px × 36px 版的块印，锚在面板右上。作小结构身份标记。
 
-**QR tile (`{components.qr-tile}`)** — A 5×5 grid of small squares with a checkerboard-like pattern of ink and accent-lemon fills. Decorative QR-pattern visual, not a real scannable code. Used as a cover-slide flourish.
+**QR 片（`{components.qr-tile}`）**：5×5 小方块网格，墨与强调柠檬黄填充呈棋盘式图案。装饰性 QR 纹样视觉，不是真能扫的码。用作封面页的点缀。
 
-**Arrow (`{components.arrow}`)** — An inline SVG right-pointing arrow at 64px × 64px (or 24px × 24px for small flow indicators). Used as a flow signal between process steps and as an out-pointing indicator on stat panels.
+**箭头（`{components.arrow}`）**：64px × 64px 的行内 SVG 右指箭头（小流程指示用 24px × 24px）。作流程步骤间的流向信号，也作统计面板上的外指标记。
 
-**Highlight mark (`{components.highlight-mark}`)** — A neon-yellow swatch wrapping one or more words inside a headline via the `<mark>` element. The system's headline emphasis mechanism. Padding is `0 6px` (or `0 8px` at larger sizes).
+**高亮块（`{components.highlight-mark}`）**：经 `<mark>` 元素把标题里一个或多个词包进的霓虹黄色块。系统的标题强调机制。内边距 `0 6px`（更大尺寸下 `0 8px`）。
 
-**Page number (`{components.pagenum}`)** — Bottom-left position-tag in the format `01 / 12` with a colored background. The three background variants (paper, ink, lemon) let the page number adapt to whichever color is most visible against the active slide's dominant panels.
+**页码（`{components.pagenum}`）**：左下位置标签，格式 `01 / 12`，带彩色背景。三种背景变体（纸、墨、柠檬黄）让页码能适配当前页主导面板上最显眼的颜色。
 
-**Photo region** — A cell classed `.photo` with a deep-black background (#111) containing a `.ph` child that renders a stylized B&W noise texture (radial + diagonal stripes). A small mono tag inside the cell labels the region (e.g., "PORTRAIT / B&W"). Used as a placeholder until real photography arrives.
+**照片区**：`.photo` 类单元格，深黑背景（#111），内含一个 `.ph` 子元素渲染风格化黑白噪声纹理（径向 + 对角条纹）。格内一条小等宽标签标注区域（如 "PORTRAIT / B&W"）。在真实照片到位前作占位。
 
-**Pills (`{components.pill-yes}`, `{components.pill-part}`, `{components.pill-no}`)** — Inline mono uppercase labels in a comparison cell with three color states: yellow fill (affirmative), paper with ink border (partial), ink fill with paper text (negative). All three are 0-radius rectangles, not rounded pills despite the name.
+**胶囊（`{components.pill-yes}`、`{components.pill-part}`、`{components.pill-no}`）**：比较单元里的行内等宽全大写标签，三种颜色态：黄填充（肯定）、纸配墨边框（部分）、墨填充配纸文字（否定）。三者都是 0 圆角矩形，名字叫 pill 其实不圆。
 
-**Section ordinal panel** — A panel containing a 320px Space Grotesk weight-700 numeral as the entire content. Used as the visual identity of a section-divider slide; the rest of the slide carries a complementary headline panel in ink.
+**分节序数面板**：一块面板，内容就是一个 320px Space Grotesk 字重 700 的数字。作分节断口页的视觉身份，页面其余部分配一块墨色标题面板。
 
-**Chart bar pair** — Vertical bars in groups of two (series A in solid ink, series B in yellow with ink border). The bars share equal width inside their column and the column gap is set by the parent grid.
+**图表条对**：两条一组的竖条（系列 A 实墨、系列 B 黄配墨边框）。条在各自列里等宽，列间隙由父网格决定。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
-- Compose every slide on the 12-column × 8-row grid (`{components.frame}`) with 40px inset and 12px (or 18px for breathing room) gaps. The grid is the system's identity.
-- Fill the grid corner to corner. The system reads as authoritative when the grid is densely populated with panels of varying span.
-- Use `{colors.paper}` as your default panel fill, `{colors.ink}` for contrast blocks, and `{colors.accent-lemon}` for one to three signal panels per slide.
-- Set every display, title, subtitle, and stat numeral in Space Grotesk 700 uppercase with negative letter-spacing. The combination is the system's typographic voice.
-- Use `<mark>` inside a headline to wrap one or more words in a yellow highlighter swatch — the system's primary headline emphasis.
-- Use `<em>` inside a headline to switch one word to accent-lemon color (stays upright, no italic).
-- Place a `{components.pagenum}` tag bottom-left of every slide. Choose the background variant (paper / ink / lemon) that contrasts with the lower-left panel.
-- Use JetBrains Mono uppercase with at least 0.08em tracking for every label, page number, axis tag, and metadata string.
-- Render pills (yes / part / no) in their canonical three-color treatment inside comparison tables.
-- Allow stat numerals to scale to 156–320px when they occupy a featured panel. Large numbers are part of the editorial poster identity.
+### 该做
+- 每页都在 12 列 × 8 行网格（`{components.frame}`）上构图，40px 内缩、12px（求呼吸空间时 18px）间隙。网格就是系统的身份。
+- 把网格从角到角填满。网格被跨度各异的面板密集占满时，系统才显得权威。
+- 用 `{colors.paper}` 作默认面板填充、`{colors.ink}` 作对比块、每页用 1–3 块 `{colors.accent-lemon}` 信号面板。
+- 每个 display、title、subtitle、统计数字都用 Space Grotesk 700 全大写配负字距。这个组合是系统的排印声部。
+- 标题里用 `<mark>` 把一个或多个词包进黄色荧光块，系统的主标题强调。
+- 标题里用 `<em>` 把一个词切成强调柠檬黄（保持直立、无斜体）。
+- 每页左下放一个 `{components.pagenum}` 标签。挑与左下方面板形成反差的背景变体（纸 / 墨 / 柠檬黄）。
+- 每个标签、页码、坐标轴标记、元数据串都用 JetBrains Mono 全大写、至少 0.08em 字距。
+- 比较表格里按标准三色处理渲染胶囊（yes / part / no）。
+- 统计数字占精选面板时允许放大到 156–320px。大数字是编辑海报身份的一部分。
 
-### Don't
-- Don't add box-shadow to any panel. Depth comes from color adjacency only.
-- Don't round any corner on any element. The system is strictly rectangular.
-- Don't put display headlines in mixed case. Space Grotesk display is always uppercase.
-- Don't put body copy in uppercase. Mixed case at weight 400 is the body voice.
-- Don't introduce a second accent color. Neon yellow is the only chromatic accent — adding red, blue, or green breaks the system.
-- Don't use the yellow as a text color. The accent is too light to read as type; it's a fill color only.
-- Don't compose layouts outside the 12×8 grid. Absolutely-positioned elements that break the grid (page number, corner mark, copyright) are explicitly the only exceptions.
-- Don't use italic letterforms. The `<em>` tag is repurposed as a color switch — italic visual style does not exist here.
-- Don't use rounded "pill" shapes despite the pill component naming. Pills are 0-radius rectangles.
-- Don't sparsely populate the grid. A slide with one panel and seven empty cells reads as broken — the system needs density to function as an editorial poster.
+### 不该做
+- 不要给任何面板加 box-shadow。纵深只来自颜色相邻。
+- 不要给任何元素的任何角加圆角。系统严格矩形。
+- 不要把展示标题做成混排。Space Grotesk 展示始终全大写。
+- 不要把正文做成全大写。字重 400 混排是正文声部。
+- 不要引入第二种强调色。霓虹黄是唯一的彩色强调，加红、蓝、绿都会破掉系统。
+- 不要把黄当文字色。强调太浅读不成字，它只是填充色。
+- 不要在 12×8 网格之外构图。打破网格的绝对定位元素（页码、角标、版权）是明确仅有的例外。
+- 不要用斜体字形。`<em>` 标签被改作换色开关，这里不存在斜体视觉样式。
+- 不要因为组件叫 pill 就做成圆"胶囊"。胶囊是 0 圆角矩形。
+- 不要把网格填得稀疏。一块面板加七个空格的页读作坏了，系统需要密度才能当编辑海报运作。
 
-## Responsive Behavior
+## 响应式行为
 
-The system targets a **fixed 1920×1080 canvas** rendered inside a `<deck-stage>` web component (loaded via `deck-stage.js`). The stage scales the entire 1920×1080 composition proportionally to fit the browser viewport — type sizes, panel positions, grid gaps, and inset values are all pixel-fixed inside the canvas, and the stage handles the responsive transform.
+系统以**固定 1920×1080 画布**为目标，渲染在 `<deck-stage>` web component 内（经 `deck-stage.js` 加载）。stage 把整幅 1920×1080 构图等比缩放适配浏览器视口，字号、面板位置、网格间隙、内缩值在画布内都是像素固定，响应式 transform 由 stage 处理。
 
-This means: every typographic and layout decision in the system is made at 1920×1080 resolution. Sizes do not scale per breakpoint; the entire canvas scales as a single unit. There are no media queries inside slide styles.
+这意味着：系统里每个排印与布局决策都在 1920×1080 分辨率下做出。尺寸不按断点缩放，整块画布作为一个单元缩放。幻灯片样式里没有媒体查询。
 
-### Presenter Behavior
-- The `<deck-stage>` web component manages slide-to-slide navigation, viewport scaling, and presenter chrome.
-- Keyboard navigation, touch swipe, and mouse wheel are handled by the stage component, not by inline scripts.
-- The slide canvas is constant 1920×1080 regardless of browser viewport; the stage proportionally scales it.
+### 放映行为
+- `<deck-stage>` web component 管理页间导航、视口缩放与放映外壳。
+- 键盘导航、触屏滑动、鼠标滚轮都由 stage 组件处理，不由内联脚本处理。
+- 幻灯片画布恒定 1920×1080，与浏览器视口无关，stage 等比缩放它。
 
-### Frontend Slides Integration Note
+### Frontend Slides 集成说明
 
-When using this design system inside the `frontend-slides` skill, preserve the
-fixed 1920×1080 canvas model. Do not translate the 12-column × 8-row grid,
-fixed typography, and fixed spacing into independent viewport-responsive
-`clamp()` values. That breaks the relationship between panel size and type
-scale, especially with CJK text, and can create clipping even when the original
-template would have scaled cleanly.
+在 `frontend-slides` skill 里使用本设计系统时，保留
+固定 1920×1080 画布模型。不要把 12 列 × 8 行网格、
+固定排印、固定间距翻成各自独立的视口响应式
+`clamp()` 值。那会破掉面板尺寸与字号比例之间的关系，
+在 CJK 文字下尤其如此，即便原模板本可干净缩放，
+也可能造成裁切。
 
-The safe single-file implementation is:
+稳妥的单文件实现是：
 
-1. Render each slide as a 1920×1080 `.stage`.
-2. Scale that stage proportionally to fit the current viewport.
-3. Keep the internal `.frame` grid at `inset: 40px`, `12` columns, `8` rows,
-   and `12px` gaps.
-4. Fit content at the 1920×1080 design size first, then scale the whole stage.
-5. Verify both text overflow and panel overlap in the rendered browser. A
-   `scrollHeight` check can pass while one grid panel visually covers another.
+1. 把每页渲染成 1920×1080 的 `.stage`。
+2. 把该 stage 等比缩放适配当前视口。
+3. 内部 `.frame` 网格保持 `inset: 40px`、`12` 列、`8` 行、
+   `12px` 间隙。
+4. 先在 1920×1080 设计尺寸下把内容排妥，再缩放整个 stage。
+5. 在渲染出的浏览器里核对文字溢出与面板重叠。`scrollHeight`
+   检查可能通过，而一块网格面板在视觉上盖住了另一块。
 
-### Print Behavior
-The template uses the deck-stage component for rendering. Print export depends on the component's print handling, which may render slide-per-page or capture the active slide only.
+### 打印行为
+模板用 deck-stage 组件渲染。打印导出取决于组件的打印处理，可能逐页渲染，也可能只抓当前激活页。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin face | Chinese face | Weight |
+| 角色 | 拉丁字面 | 中文字面 | 字重 |
 |---|---|---|---|
-| Display / title / stat (Space Grotesk 700 UPPERCASE) | Space Grotesk | Noto Sans SC (思源黑体) | 900 |
-| Body (Space Grotesk 400) | Space Grotesk | Noto Sans SC | 400 |
-| Label / page number (JetBrains Mono UPPERCASE) | JetBrains Mono | Noto Sans SC | 400 (do not force monospace on CJK) |
+| 展示 / 标题 / 统计（Space Grotesk 700 全大写） | Space Grotesk | Noto Sans SC（思源黑体） | 900 |
+| 正文（Space Grotesk 400） | Space Grotesk | Noto Sans SC | 400 |
+| 标签 / 页码（JetBrains Mono 全大写） | JetBrains Mono | Noto Sans SC | 400（别强给 CJK 套等宽） |
 
-### Mixed-Content Strategy
+### 混排策略
 
-Strategy A — single `font-family` stack with Latin-first fallback. Update each token's `fontFamily` from `"Space Grotesk, Helvetica Neue, Helvetica, Arial, sans-serif"` to `"Space Grotesk, Noto Sans SC, Helvetica Neue, Helvetica, Arial, sans-serif"`. Latin glyphs render in Space Grotesk 700; CJK characters fall through to Noto Sans SC 900 automatically. Mixed strings like `THE CLAUDE 模型` render correctly inline.
+策略 A：单条 `font-family` 栈、拉丁优先回退。把每个 token 的 `fontFamily` 从 `"Space Grotesk, Helvetica Neue, Helvetica, Arial, sans-serif"` 改成 `"Space Grotesk, Noto Sans SC, Helvetica Neue, Helvetica, Arial, sans-serif"`。拉丁字形用 Space Grotesk 700 渲染，CJK 字符自动落到 Noto Sans SC 900。像 `THE CLAUDE 模型` 这样的混排串能正确行内渲染。
 
-### Loading
+### 加载
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -515,50 +519,50 @@ Strategy A — single `font-family` stack with Latin-first fallback. Update each
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- Line-height: body 1.75–1.85, display 1.15–1.25
-- Letter-spacing: 0 on CJK
-- Text-transform: no uppercase on CJK
-- Full-width punctuation （，。：；！？「」（））
-- No period on display headlines (Chinese typography convention)
-- Pangu spacing 盘古之白 (space between CJK and Latin: `使用 Claude` not `使用Claude`)
-- One font per sentence
+- 行高：正文 1.75–1.85，展示 1.15–1.25
+- 字距：CJK 设 0
+- 文字变换：CJK 不用 uppercase
+- 全角标点（，。：；！？「」（））
+- 展示标题不加句号（中文排印惯例）
+- 盘古之白（CJK 与拉丁之间加空格：`使用 Claude` 而非 `使用Claude`）
+- 一句一款字体
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-Neo-Grid Bold is heavy uppercase Space Grotesk 700 with negative letter-spacing at sizes up to 320px. **Chinese has no concept of uppercase**, so the system's primary typographic signature (uppercase brutalist headlines) must transfer through *weight and density* instead. Set every Chinese display moment in **Noto Sans SC 900** — the heaviest available weight — to match the visual weight of Space Grotesk 700 ALL CAPS at large sizes. Chinese headlines should also drop the negative letter-spacing entirely; CJK glyphs are designed on a square em-box and tightening them causes glyph collision.
+Neo-Grid Bold 是厚重全大写 Space Grotesk 700 配负字距，尺寸可到 320px。**中文没有全大写概念**，所以系统的主排印招牌（全大写粗野标题）必须改由*字重与密度*承载。把每个中文展示瞬间设成 **Noto Sans SC 900**（可用的最重字重），去匹配大尺寸 Space Grotesk 700 全大写的视觉分量。中文标题还应彻底丢掉负字距；CJK 字形按方形 em 框设计，收紧会造成字撞字。
 
-The `<mark>` neon-yellow swatch highlighting one word inside a headline is a perfect transfer to Chinese — wrap one CJK character or one phrase in `<mark>` and the lemon swatch reads the same. **Keep the highlighter mechanism as the system's primary headline emphasis in CJK.** The `<em>` color switch (yellow inline) also transfers cleanly.
+`<mark>` 霓虹黄色块高亮标题里一个词，迁移到中文堪称完美，把一个汉字或一个短语包进 `<mark>`，柠檬黄块读起来一样。**保留荧光笔机制作为 CJK 里系统的主标题强调。** `<em>` 换色（黄色行内）也能干净迁移。
 
-JetBrains Mono uppercase labels (page numbers in `01 / 12` format) are pure Latin / numeric — keep them in JetBrains Mono. Don't try to render Chinese in monospace; CJK glyphs are already monospaced by design and forcing JetBrains Mono produces missing glyphs. For mixed mono labels containing CJK, fall through to Noto Sans SC 400 at the same size.
+JetBrains Mono 全大写标签（`01 / 12` 格式的页码）是纯拉丁 / 数字，保留 JetBrains Mono。别试着用等宽渲染中文；CJK 字形本就按等宽设计，强套 JetBrains Mono 会出缺字。含 CJK 的混排等宽标签，以同样尺寸落到 Noto Sans SC 400。
 
-Section numerals (320px Space Grotesk 700) and stat numerals (156–240px) are pure digits — they transfer unchanged. The neon-yellow accent panel system is script-agnostic; the brutalist poster aesthetic survives the script switch as long as the weight stays at 900.
+分节序数（320px Space Grotesk 700）与统计数字（156–240px）是纯数字，原样迁移。霓虹黄强调面板系统与文字无关，只要字重守住 900，粗野海报美学就能跨文字存活。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-The negative letter-spacing (-0.005 to -0.05em) scales with display size in this system and is part of the "brutalist compressed" signature. **Removing it for Chinese characters breaks visual parity with Latin slides in a mixed deck.** Accept this: pure-CJK slides will read as slightly less compressed than pure-Latin slides. Don't try to compensate by tightening Chinese — glyph collision is a worse failure than tonal mismatch.
+负字距（-0.005 到 -0.05em）在本系统里随展示尺寸缩放，是"粗野压缩"招牌的一部分。**为中文字符去掉它，会破掉混排文稿里与拉丁页的视觉对等。** 接受这一点：纯 CJK 页会比纯拉丁页读起来略松。别靠收紧中文来补偿，字撞字是比调性不合更糟的失败。
 
-## Iteration Guide
+## 迭代指南
 
-1. Every new slide composes its layout on the 12×8 grid via `grid-column` and `grid-row` span declarations. Never break the grid with absolute positioning except for the page-number tag, corner-mark, and copyright stamp.
-2. Every new panel uses one of three fill colors: paper (default), ink (inverted), or accent-lemon (signal). Don't introduce a fourth panel color.
-3. Every new display headline is Space Grotesk weight 700 uppercase with negative letter-spacing scaled to the headline size (-0.005em at 30px, up to -0.05em at 320px).
-4. Every new body element is Space Grotesk weight 400 mixed case at one of the three body sizes (28px, 24px, 22px).
-5. Every new label or metadata tag is JetBrains Mono uppercase with at least 0.08em tracking.
-6. Every new chart-series color is either `{colors.ink}` (series A) or `{colors.accent-lemon}` with an ink border (series B). Don't add a third series color.
-7. Every new card uses 0 border-radius. Square corners are non-negotiable.
-8. To emphasize a word inside a headline, wrap it in `<mark>` for a yellow swatch or `<em>` for a yellow color switch. Don't use bold, italic, or underline.
-9. Every new comparison cell uses the three-state pill system: yellow fill (yes), paper with ink border (partial), ink fill (no).
-10. Densely populate the grid. If a composition leaves more than two cells empty in a row, reconsider whether a card is missing.
+1. 每页新布局都在 12×8 网格上经 `grid-column`、`grid-row` 跨度声明构图。除页码标签、角标、版权印章外，绝不用绝对定位打破网格。
+2. 每块新面板都用三种填充色之一：纸（默认）、墨（反色）、强调柠檬黄（信号）。不要引入第四种面板色。
+3. 每条新展示标题都用 Space Grotesk 字重 700 全大写，负字距按标题尺寸缩放（30px 时 -0.005em，320px 时到 -0.05em）。
+4. 每个新正文元素都用 Space Grotesk 字重 400 混排，取三档正文尺寸之一（28px、24px、22px）。
+5. 每个新标签或元数据标记都用 JetBrains Mono 全大写、至少 0.08em 字距。
+6. 每个新图表系列色要么 `{colors.ink}`（系列 A），要么 `{colors.accent-lemon}` 配墨边框（系列 B）。不要加第三系列色。
+7. 每张新卡片用 0 border-radius。方角不可商量。
+8. 要强调标题里的一个词，用 `<mark>` 包成黄色块，或用 `<em>` 换成黄色。不要用粗体、斜体、下划线。
+9. 每个新比较单元都用三态胶囊系统：黄填充（yes）、纸配墨边框（partial）、墨填充（no）。
+10. 把网格填密。若某行空出两个以上单元格，重新想想是不是少了一块卡片。
 
-## Known Gaps
+## 已知缺口
 
-- The system relies on a `<deck-stage>` web component loaded via `deck-stage.js`. Without this script, the 1920×1080 canvas will not scale to the viewport and slides will render at native pixel size.
-- Photo regions use stylized CSS-generated noise textures (radial + diagonal stripe gradients) as placeholders. Real photography must be inserted by replacing the `.photo` cell contents with an `<img>` and ensuring the surrounding panel colors complement the photo's negative space.
-- The QR-pattern tile is decorative — the 5×5 grid of squares does not encode a real scannable code. Real QR codes would need a separate SVG generated externally.
-- Bar chart heights are set via inline `style="height: XX%"` declarations on each bar fill. There is no data-binding layer.
-- The arrow SVG used between process steps is hand-pathed inside each slide template; if a slide adds or removes process nodes, the arrow positions must be recomputed manually.
-- The `<deck-stage>` component is not loaded directly by this template's script tag — it's expected to be globally available via `deck-stage.js`. Missing the script will silently render slides as flat absolute-positioned divs.
-- The system uses fixed pixel sizes throughout (no `vw`/`vh`). At unusual viewport aspect ratios, the deck-stage proportional scaling may letterbox the canvas with putty bars.
-- The `{colors.muted}` (#8A8A85) token is defined but used only in low-opacity overlays on photo region tags — it has no role in the main type or panel system.
+- 系统依赖经 `deck-stage.js` 加载的 `<deck-stage>` web component。缺这个脚本，1920×1080 画布不会缩放到视口，页会按原生像素尺寸渲染。
+- 照片区用 CSS 生成的风格化噪声纹理（径向 + 对角条纹渐变）作占位。真实照片需把 `.photo` 单元格内容换成 `<img>`，并确保周围面板色与照片负空间相配。
+- QR 纹样片是装饰性的，5×5 方块网格不编码真能扫的码。真 QR 码需另用外部生成的 SVG。
+- 条形图高度在每根条填充上用内联 `style="height: XX%"` 声明设定。没有数据绑定层。
+- 流程步骤间的箭头 SVG 在每页模板里手工描路径；若某页增删流程节点，箭头位置需手工重算。
+- `<deck-stage>` 组件不由本模板的 script 标签直接加载，预期它经 `deck-stage.js` 全局可用。缺脚本会静默地把页渲染成扁平的绝对定位 div。
+- 系统通篇用固定像素尺寸（无 `vw`/`vh`）。视口宽高比异常时，deck-stage 的等比缩放可能给画布留下腻子色黑边。
+- `{colors.muted}`（#8A8A85）token 有定义，但只用在照片区标签的低不透明度叠层上，在主文字或面板系统里没有角色。

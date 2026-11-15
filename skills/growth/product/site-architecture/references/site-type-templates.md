@@ -1,12 +1,16 @@
-# Site Type Templates
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/growth/product/site-architecture/references/site-type-templates.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Full page hierarchy templates with ASCII trees, URL maps, and navigation recommendations for common site types.
+# 站点类型模板
+
+常见站点类型的完整页面层级模板，含 ASCII 树、URL 映射和导航建议。
 
 ---
 
-## SaaS Marketing Site
+## SaaS 营销站
 
-### Page Hierarchy
+### 页面层级
 
 ```
 Homepage (/)
@@ -40,39 +44,39 @@ Homepage (/)
 └── Terms (/terms)
 ```
 
-### URL Map
+### URL 映射
 
-| Page | URL | Nav Location | Priority |
+| 页面 | URL | 导航位置 | 优先级 |
 |------|-----|-------------|----------|
-| Homepage | `/` | Header (logo) | Critical |
-| Features | `/features` | Header | High |
-| Feature pages | `/features/{slug}` | Header dropdown | Medium |
-| Pricing | `/pricing` | Header | Critical |
-| Customers | `/customers` | Header | Medium |
-| Case studies | `/customers/{slug}` | Customers dropdown | Medium |
-| Blog | `/blog` | Header (Resources) | High |
-| Blog posts | `/blog/{slug}` | — | Medium |
-| Integrations | `/integrations` | Header | Medium |
-| Docs | `/docs` | Header | Medium |
-| Compare | `/compare/{slug}` | Footer | High (SEO) |
-| About | `/about` | Footer | Low |
-| Pricing CTA | `/pricing` | Header (CTA button) | Critical |
+| 首页 | `/` | 头部（logo） | 关键 |
+| 功能 | `/features` | 头部 | 高 |
+| 功能页 | `/features/{slug}` | 头部下拉 | 中 |
+| 定价 | `/pricing` | 头部 | 关键 |
+| 客户 | `/customers` | 头部 | 中 |
+| 案例研究 | `/customers/{slug}` | 客户下拉 | 中 |
+| 博客 | `/blog` | 头部（资源） | 高 |
+| 博客文章 | `/blog/{slug}` | — | 中 |
+| 集成 | `/integrations` | 头部 | 中 |
+| 文档 | `/docs` | 头部 | 中 |
+| 对比 | `/compare/{slug}` | 页脚 | 高（SEO） |
+| 关于 | `/about` | 页脚 | 低 |
+| 定价 CTA | `/pricing` | 头部（CTA 按钮） | 关键 |
 
-### Navigation
+### 导航
 
-**Header (6 items + CTA)**: Features | Pricing | Customers | Resources | Integrations | Docs | [Get Started]
+**头部（6 项 + CTA）**：功能 | 定价 | 客户 | 资源 | 集成 | 文档 | [开始使用]
 
-**Footer columns**:
-- Product: Features, Pricing, Integrations, Changelog, Security
-- Resources: Blog, Templates, Guides, Case Studies
-- Company: About, Careers, Contact, Press
-- Legal: Privacy, Terms, Security
+**页脚分栏**：
+- 产品：功能、定价、集成、更新日志、安全
+- 资源：博客、模板、指南、案例研究
+- 公司：关于、招聘、联系、媒体
+- 法律：隐私、条款、安全
 
 ---
 
-## Content / Blog Site
+## 内容 / 博客站
 
-### Page Hierarchy
+### 页面层级
 
 ```
 Homepage (/)
@@ -93,29 +97,29 @@ Homepage (/)
 └── Terms (/terms)
 ```
 
-### URL Map
+### URL 映射
 
-| Page | URL | Nav Location | Priority |
+| 页面 | URL | 导航位置 | 优先级 |
 |------|-----|-------------|----------|
-| Homepage | `/` | Header (logo) | Critical |
-| Blog index | `/blog` | Header | High |
-| Categories | `/blog/category/{slug}` | Header dropdown | Medium |
-| Posts | `/blog/{slug}` | — | Medium |
-| Newsletter | `/newsletter` | Header (CTA) | High |
-| Guides | `/resources/guides` | Header | Medium |
-| About | `/about` | Header | Low |
+| 首页 | `/` | 头部（logo） | 关键 |
+| 博客索引 | `/blog` | 头部 | 高 |
+| 分类 | `/blog/category/{slug}` | 头部下拉 | 中 |
+| 文章 | `/blog/{slug}` | — | 中 |
+| 订阅通讯 | `/newsletter` | 头部（CTA） | 高 |
+| 指南 | `/resources/guides` | 头部 | 中 |
+| 关于 | `/about` | 头部 | 低 |
 
-### Navigation
+### 导航
 
-**Header (4 items + CTA)**: Blog | Resources | About | Contact | [Subscribe]
+**头部（4 项 + CTA）**：博客 | 资源 | 关于 | 联系 | [订阅]
 
-**Sidebar** (on blog): Categories, Popular Posts, Newsletter signup
+**侧边栏**（博客页）：分类、热门文章、订阅通讯注册
 
 ---
 
-## E-Commerce
+## 电商
 
-### Page Hierarchy
+### 页面层级
 
 ```
 Homepage (/)
@@ -146,30 +150,30 @@ Homepage (/)
 └── Terms (/terms)
 ```
 
-### URL Map
+### URL 映射
 
-| Page | URL | Nav Location | Priority |
+| 页面 | URL | 导航位置 | 优先级 |
 |------|-----|-------------|----------|
-| Homepage | `/` | Header (logo) | Critical |
-| Shop | `/shop` | Header | Critical |
-| Categories | `/shop/{category}` | Header mega menu | High |
-| Products | `/shop/{category}/{product}` | — | High |
-| Collections | `/collections/{slug}` | Header | Medium |
-| Sale | `/sale` | Header (highlighted) | High |
-| Cart | `/cart` | Header (icon) | Critical |
-| Account | `/account` | Header (icon) | Medium |
+| 首页 | `/` | 头部（logo） | 关键 |
+| 商店 | `/shop` | 头部 | 关键 |
+| 分类 | `/shop/{category}` | 头部巨型菜单 | 高 |
+| 商品 | `/shop/{category}/{product}` | — | 高 |
+| 合集 | `/collections/{slug}` | 头部 | 中 |
+| 促销 | `/sale` | 头部（高亮） | 高 |
+| 购物车 | `/cart` | 头部（图标） | 关键 |
+| 账户 | `/account` | 头部（图标） | 中 |
 
-### Navigation
+### 导航
 
-**Header (5 items + cart/account)**: Shop (mega menu) | Collections | Sale | Blog | Help | [Cart icon] [Account icon]
+**头部（5 项 + 购物车/账户）**：商店（巨型菜单） | 合集 | 促销 | 博客 | 帮助 | [购物车图标] [账户图标]
 
-**Mega menu under Shop**: Category columns with featured products/images
+**商店下的巨型菜单**：按分类分栏，带精选商品和图片
 
 ---
 
-## Documentation Site
+## 文档站
 
-### Page Hierarchy
+### 页面层级
 
 ```
 Docs Home (/docs)
@@ -191,29 +195,29 @@ Docs Home (/docs)
 └── FAQ (/docs/faq)
 ```
 
-### URL Map
+### URL 映射
 
-| Page | URL | Nav Location | Priority |
+| 页面 | URL | 导航位置 | 优先级 |
 |------|-----|-------------|----------|
-| Docs home | `/docs` | Header | High |
-| Getting Started | `/docs/getting-started` | Sidebar (top) | Critical |
-| Guides | `/docs/guides` | Sidebar | High |
-| API Reference | `/docs/api` | Sidebar | High |
-| Changelog | `/docs/changelog` | Sidebar (bottom) | Low |
+| 文档首页 | `/docs` | 头部 | 高 |
+| 入门 | `/docs/getting-started` | 侧边栏（顶部） | 关键 |
+| 指南 | `/docs/guides` | 侧边栏 | 高 |
+| API 参考 | `/docs/api` | 侧边栏 | 高 |
+| 更新日志 | `/docs/changelog` | 侧边栏（底部） | 低 |
 
-### Navigation
+### 导航
 
-**Header**: Docs | API | Blog | Community | GitHub | [Dashboard]
+**头部**：文档 | API | 博客 | 社区 | GitHub | [控制台]
 
-**Sidebar** (persistent, left): Getting Started, Guides, API Reference, Examples, Changelog — with expandable subsections
+**侧边栏**（常驻左侧）：入门、指南、API 参考、示例、更新日志，子分区可展开
 
-**On-page**: Previous/Next navigation at bottom of each doc page
+**页内**：每篇文档底部放上一篇/下一篇导航
 
 ---
 
-## Hybrid SaaS + Content
+## SaaS + 内容混合站
 
-### Page Hierarchy
+### 页面层级
 
 ```
 Homepage (/)
@@ -247,17 +251,17 @@ Homepage (/)
 └── Terms (/terms)
 ```
 
-### Navigation
+### 导航
 
-**Header (7 items + CTA)**: Product | Solutions | Pricing | Resources | Blog | Docs | Integrations | [Start Free Trial]
+**头部（7 项 + CTA）**：产品 | 方案 | 定价 | 资源 | 博客 | 文档 | 集成 | [开始免费试用]
 
-Use mega menus for Product (features list), Solutions (use cases + industries), and Resources (blog, guides, templates, webinars, case studies).
+产品（功能清单）、方案（使用场景 + 行业）、资源（博客、指南、模板、网络研讨会、案例研究）都用巨型菜单。
 
 ---
 
-## Small Business / Local
+## 小型企业 / 本地商家
 
-### Page Hierarchy
+### 页面层级
 
 ```
 Homepage (/)
@@ -274,20 +278,20 @@ Homepage (/)
 └── Terms (/terms)
 ```
 
-### URL Map
+### URL 映射
 
-| Page | URL | Nav Location | Priority |
+| 页面 | URL | 导航位置 | 优先级 |
 |------|-----|-------------|----------|
-| Homepage | `/` | Header (logo) | Critical |
-| Services | `/services` | Header | High |
-| Service pages | `/services/{slug}` | Header dropdown | High |
-| About | `/about` | Header | Medium |
-| Testimonials | `/testimonials` | Header | Medium |
-| Blog | `/blog` | Header | Medium |
-| Contact | `/contact` | Header (CTA) | High |
+| 首页 | `/` | 头部（logo） | 关键 |
+| 服务 | `/services` | 头部 | 高 |
+| 服务页 | `/services/{slug}` | 头部下拉 | 高 |
+| 关于 | `/about` | 头部 | 中 |
+| 客户评价 | `/testimonials` | 头部 | 中 |
+| 博客 | `/blog` | 头部 | 中 |
+| 联系 | `/contact` | 头部（CTA） | 高 |
 
-### Navigation
+### 导航
 
-**Header (5 items + CTA)**: Services | About | Testimonials | Blog | [Contact Us]
+**头部（5 项 + CTA）**：服务 | 关于 | 客户评价 | 博客 | [联系我们]
 
-Keep it simple. Small business sites should be flat (1-2 levels max). Every page should be reachable from the header.
+保持简单。小型企业站点要扁平（最多 1-2 层）。每个页面都能从头部导航到达。

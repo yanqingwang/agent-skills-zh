@@ -155,254 +155,258 @@ components:
     description: "The wood-brown atmospheric glow that lives on every dark slide via ::before. Non-optional on dark surfaces; defines the warmth of the system."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/mat/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Mat is a **material-tactile presentation system** built around a single environmental premise: a deep forest-green surface warmed from the bottom-right corner by a low wood-brown glow. The atmosphere does the heavy lifting — before any content lands, the slide already feels like a workbench in afternoon light. Cream type floats directly on the green field; there are no cards, no panels, no frames. Where the system needs to break the green, it does so with a single cream inset box (the info-card) that reads as a piece of warm paper laid on the dark surface.
+Mat 是一套**材料触感演示系统**，围绕单一环境前提搭建：深森林绿表面，从右下角被一束低矮的木棕辉光烘暖。氛围承担了主要工作——内容还没落地，页面就已经像午后光线里的一张工作台。奶油色文字直接浮在绿色场地上，没有卡片、没有面板、没有画框。系统需要打破绿色时，只用一个奶油色内嵌盒（info-card），读起来像一张暖纸铺在深色表面上。
 
-The typeface stack is a deliberate three-voice pairing. **Bricolage Grotesque** at weights 700 and 800 is the display workhorse — heavy, rounded, with a slightly mechanical character that suits product writing without feeling tech-startup. **DM Sans** at weight 400 is the body voice, neutral enough to let the display type breathe. **DM Mono** at weight 400 handles all labels, kickers, metadata, and chrome — anything structural that needs to read as a tag rather than a sentence. Display type is **always mixed case** in this system, never uppercase; the uppercase work is reserved for mono labels.
+字体栈是刻意的三声部搭配。**Bricolage Grotesque** 字重 700 与 800 是展示主力，粗壮、圆润，带一点机械气质，适合产品文案又不像科技创业公司。**DM Sans** 字重 400 是正文声部，中性到足以让展示字面呼吸。**DM Mono** 字重 400 掌管所有标签、眉题、元数据与外壳，也就是一切需要读成标签而非句子的结构性文字。本系统里展示文字**始终大小写混排**，绝不全大写；全大写留给等宽标签。
 
-The palette is intentionally narrow. **Dark forest green** is the dominant surface (`{colors.bg-dark}`), with a slightly lighter alternate available for layered regions. **Warm cream** is the primary text color on dark and the secondary surface color when a slide flips light. **Warm orange** (`{colors.accent-orange}`) is the single accent — it appears only as small inline marks: kicker text, bullet em-dashes, the `<em>` inside a stat numeral, the opening quote glyph, the single highlighted bar in a chart. Orange is never a background and never a large headline color; it's the structural emphasis dot of the system.
+配色刻意收窄。**深森林绿**是主导表面（`{colors.bg-dark}`），另备一档略浅的绿用于分层区域。**暖奶油**是深底上的主文字色，页面翻浅时作次级表面色。**暖橙**（`{colors.accent-orange}`）是唯一强调色，只以小面积行内标记出现：眉题文字、项目破折号、统计数字里的 `<em>`、起始引号、图表里那根高亮的条。橙色绝不作为背景，绝不做大标题色；它是系统的结构性重点符。
 
-Depth is minimal and atmospheric, not stacked. There are no drop shadows. There are no rounded corners on any structural element. The only depth signal is the wood-brown radial glow that sits behind every dark slide via a `::before` pseudo-element. Region separation comes from **thin 1px hairline rules** in low-opacity cream — for chrome bands, foot bands, stat cell dividers, compare panel splits, and chart baselines. Nothing about this system is loud.
+纵深极浅、靠氛围，不靠堆叠。没有投影。任何结构元素都没有圆角。唯一的纵深信号是木棕色径向辉光，经 `::before` 伪元素落在每张深色页背后。区域分隔靠**低不透明度奶油的 1px 细线**：外壳条、页脚条、统计单元分隔、比较面板切分、图表基线。这套系统没有一处是响的。
 
-**Density philosophy: medium-sparse.** Mat reads as elegant when the slide breathes — generous left and right padding (`{spacing.pad-x}` at 5.5vw), one main typographic moment, and one secondary block of supporting copy. Cramming three columns of bullets onto a slide breaks the system; the warm green field needs negative space to do its atmospheric work. The exception is the stats and compare slide types, where a clean three-up or two-up arrangement of restrained cells is correct. A slide with a single headline and one paragraph of lead copy is right in this system's lane. A slide that fills 80% of its area with type is fighting the design.
+**密度取向：中等偏疏。** 页面留得开时 Mat 才显得优雅：宽裕的左右内边距（`{spacing.pad-x}` 5.5vw）、一个主排印瞬间、一段辅助文案。把三栏项目塞进一页会破掉系统；暖绿色场地需要负空间来做它的氛围工作。例外是统计页与比较页，克制的三栏或两栏单元排列才算对。一个标题加一段导语的页面正合这套系统的路数。用文字填满 80% 面积的页面是在跟设计较劲。
 
-**Key Characteristics:**
-- Dark forest green canvas (`{colors.bg-dark}`) with a warm wood-brown radial glow (`{components.atmospheric-glow}`) anchored to the bottom-right corner of every dark slide.
-- Cream text (`{colors.ink-cream}`) floats directly on the green field with no card, panel, or frame around it.
-- Bricolage Grotesque display type is **always mixed case** — never uppercase. Uppercase is reserved for DM Mono labels.
-- A single accent color, warm orange (`{colors.accent-orange}`), used only as small inline emphasis (kicker, bullet marker, inline `<em>`, quote glyph, one chart bar).
-- The cream **info-card** (`{components.info-card}`) is the signature material-contrast component — a warm paper rectangle inset on the dark field.
-- Bullet lists use an em-dash prefix in warm orange via DM Mono — never a dot, never a check.
-- Thin 1px hairline rules in low-opacity cream are the only divider language. No heavy borders, no shadows.
-- The system has one light slide variant (cream background with dark green text) used as a tonal inversion within a deck, never as the default.
+**关键特征：**
+- 深森林绿画布（`{colors.bg-dark}`）配暖木棕径向辉光（`{components.atmospheric-glow}`），锚定在每张深色页右下角。
+- 奶油文字（`{colors.ink-cream}`）直接浮在绿色场地上，周围无卡片、无面板、无画框。
+- Bricolage Grotesque 展示文字**始终大小写混排**，绝不全大写。全大写留给 DM Mono 标签。
+- 单一强调色暖橙（`{colors.accent-orange}`），只作小面积行内强调（眉题、项目标记、行内 `<em>`、引号、一根图表条）。
+- 奶油 **info-card**（`{components.info-card}`）是招牌材料反差组件，一块暖纸矩形内嵌在深色场地上。
+- 项目列表用 DM Mono 渲染的暖橙破折号前缀，绝不用圆点，绝不用对勾。
+- 低不透明度奶油的 1px 细线是唯一的分隔语言。无粗边、无阴影。
+- 系统只有一个浅色变体（奶油底配深绿文字），作整套文稿里的色调反转，绝不作默认。
 
-## Colors
+## 颜色
 
-### Palette
+### 调色板
 
-- **Dark Forest Green** (`{colors.bg-dark}` — #232E26): The dominant environment. Default background for every slide unless a deliberate light-slide variant is chosen. The green is muted enough that cream type sits on it without vibration.
-- **Slightly Lighter Green** (`{colors.bg-dark-alt}` — #2E3D30): A tonal step-up reserved for layered or recessed surfaces within a dark slide. Available but used sparingly.
-- **Warm Cream** (`{colors.bg-cream}` — #EDE6D0): The light-slide background and the fill color of the info-card inset. Reads as warm paper, not white — the warmth is essential to the system's material identity.
-- **Deeper Cream** (`{colors.bg-cream-alt}` — #E4DAC4): A secondary cream tone for image placeholders on light slides.
-- **Cream Ink** (`{colors.ink-cream}` — #F0E8D2): Primary text color on every dark surface. Slightly warmer than the background cream — chosen so headlines feel like they're carved into the green rather than printed on it.
-- **Cream Ink at 58% / 30%** (`{colors.ink-cream-2}`, `{colors.ink-cream-3}`): Secondary and tertiary text on dark. Used for muted lead copy and barely-there metadata respectively.
-- **Dark Ink** (`{colors.ink-dark}` — #1E2820): Primary text color on cream surfaces (info-card body, light slide). A very dark forest green, never pure black.
-- **Dark Ink at 60% / 30%** (`{colors.ink-dark-2}`, `{colors.ink-dark-3}`): Muted and tertiary text on cream.
-- **Warm Orange** (`{colors.accent-orange}` — #C07030): The single accent. A burnt copper-orange that nods to wood, leather, and oxidized metal. Never a background, never a large headline color.
-- **Wood Glow** (`{colors.wood-glow}` — #7A4E24): The radial atmospheric glow color, applied only at 0.28 and 0.14 alpha inside the bottom-right corner gradient. Never used as a flat fill.
+- **深森林绿**（`{colors.bg-dark}` — #232E26）：主导环境。除非刻意选浅色变体，否则是每页默认背景。绿压得够沉，奶油文字落上去不刺眼。
+- **略浅绿**（`{colors.bg-dark-alt}` — #2E3D30）：深底内分层或后陷表面预留的一档色调。可用，但省着用。
+- **暖奶油**（`{colors.bg-cream}` — #EDE6D0）：浅色页背景，也是 info-card 内嵌盒的填充色。读起来是暖纸，不是白，这份暖对系统的材料身份不可少。
+- **更深的奶油**（`{colors.bg-cream-alt}` — #E4DAC4）：次级奶油调，用于浅色页上的图片占位。
+- **奶油墨**（`{colors.ink-cream}` — #F0E8D2）：深色表面上的主文字色。比背景奶油略暖，特意选它，让标题像刻进绿色里，而不是印在上面。
+- **58% / 30% 奶油墨**（`{colors.ink-cream-2}`、`{colors.ink-cream-3}`）：深色上次级与三级文字。分别用于柔化的导语和几乎看不见的元数据。
+- **深墨**（`{colors.ink-dark}` — #1E2820）：奶油表面上的主文字色（info-card 正文、浅色页）。极深的森林绿，绝非纯黑。
+- **60% / 30% 深墨**（`{colors.ink-dark-2}`、`{colors.ink-dark-3}`）：奶油上的柔化与三级文字。
+- **暖橙**（`{colors.accent-orange}` — #C07030）：唯一强调色。一种烧过的铜橙，向木头、皮革、氧化金属致意。绝不作背景，绝不做大标题色。
+- **木辉光**（`{colors.wood-glow}` — #7A4E24）：径向氛围辉光色，只在右下角渐变里以 0.28 与 0.14 alpha 出现。绝不作为平涂填充。
 
-### Defaults
+### 默认值
 
-- **Default surface background**: `{colors.bg-dark}` (forest green). The system is dark-default; cream slides are an intentional tonal break, not a routine choice.
-- **Default headline color on dark**: `{colors.ink-cream}`. Headlines never appear in orange.
-- **Default headline color on cream**: `{colors.ink-dark}`.
-- **Default body text color on dark**: `{colors.ink-cream-2}` (the 58% cream — the `.muted` helper).
-- **Default body text color on cream**: `{colors.ink-dark-2}`.
-- **Default border / divider color**: `{colors.border-on-dark}` on dark; `{colors.border-on-cream}` on cream. Always 1px, never thicker.
-- **Default kicker color**: `{colors.accent-orange}`. The kicker is the system's eyebrow label and is the most consistent place orange shows up.
-- **Default inline emphasis color**: `{colors.accent-orange}`. An `<em>` inside a stat value, a quote attribution, or a chart label resolves to orange.
-- **Default atmospheric treatment for dark slides**: the wood-brown radial glow (`{components.atmospheric-glow}`) is always on. It is part of the dark surface itself.
+- **默认表面背景**：`{colors.bg-dark}`（森林绿）。系统默认深色；奶油页是刻意的色调断口，不是常规选择。
+- **深色上默认标题色**：`{colors.ink-cream}`。标题绝不出现在橙色里。
+- **奶油上默认标题色**：`{colors.ink-dark}`。
+- **深色上默认正文色**：`{colors.ink-cream-2}`（58% 奶油，即 `.muted` 工具类）。
+- **奶油上默认正文色**：`{colors.ink-dark-2}`。
+- **默认边框 / 分隔线色**：深色 `{colors.border-on-dark}`、奶油上 `{colors.border-on-cream}`。始终 1px，绝不更粗。
+- **默认眉题色**：`{colors.accent-orange}`。眉题是系统的 eyebrow 标签，也是橙色最稳定出现的位置。
+- **默认行内强调色**：`{colors.accent-orange}`。统计值里的 `<em>`、引文署名、图表标签都解析为橙色。
+- **深色页默认氛围处理**：木棕色径向辉光（`{components.atmospheric-glow}`）始终开启。它属于深色表面本身。
 
-Orange functions as a punctuation color: it tells the eye where the structural emphasis lives without ever competing for surface area. If two orange elements end up adjacent on the same slide, one of them is wrong.
+橙色是标点色：它告诉眼睛结构性重点在哪，从不抢表面面积。同一页上若两处橙色挨在一起，其中一处是错的。
 
-## Typography
+## 排印
 
-### Font Family
+### 字族
 
-The system runs on three Google Fonts plus CJK fallback. **Bricolage Grotesque** carries every display, h1, h2, h3, stat numeral, and quote text — its rounded, heavy character at weights 700–800 is the defining voice. **DM Sans** at weight 400 carries every paragraph, lead, caption, and bullet item — neutral, readable, lets the display type lead. **DM Mono** at weight 400 carries every label, kicker, chrome tag, footer text, bullet em-dash, and chart label — anything that needs to read as a structural marker rather than prose. **Noto Sans SC** is the CJK fallback for all sans roles; **Noto Serif SC** is not used.
+系统跑三款 Google Fonts 加 CJK 回退。**Bricolage Grotesque** 承载每个展示、h1、h2、h3、统计数字、引文文字，字重 700–800 的圆润粗壮是定义性的声部。**DM Sans** 字重 400 承载每段正文、导语、图注、项目，中性、易读，让展示字面领衔。**DM Mono** 字重 400 承载每个标签、眉题、外壳标记、页脚文字、项目破折号、图表标签，也就是一切要读成结构标记而非散文的元素。**Noto Sans SC** 是全部无衬线角色的 CJK 回退；**Noto Serif SC** 不用。
 
-A subtle but load-bearing rule: **the bullet em-dash before each list item renders in DM Mono in warm orange**, not in the body face. The mono shape is what makes the dash feel like a deliberate mark and not a stray punctuation glyph.
+一条细微但承重的规则：**每个列表项前的破折号以暖橙的 DM Mono 渲染**，而非正文字面。等宽的字形才让这道破折号读成刻意的标记，而不是一个跑偏的标点。
 
-Italics are not used for typographic decoration in this system. The `<em>` tag is repurposed as an **orange inline emphasis** — `<em>` inside a stat value or a quote attribution switches to `{colors.accent-orange}` and stays upright (font-style: normal). There is no italicized face anywhere.
+本系统不用斜体作排印装饰。`<em>` 标签被改作**橙色行内强调**：统计值或引文署名里的 `<em>` 切到 `{colors.accent-orange}` 且保持直立（font-style: normal）。全套系统不存在斜体字面。
 
-### Type Scale
+### 排印比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.display}` | 12vw | Bricolage Grotesque | 800 | Cover or opening hero display — massive, line-broken into 1–2 words per line |
-| `{typography.h1}` | 7vw | Bricolage Grotesque | 800 | Chapter-opening or closing headline |
-| `{typography.h2}` | 4vw | Bricolage Grotesque | 700 | Primary content-slide headline |
-| `{typography.stat-value}` | 5.5vw | Bricolage Grotesque | 800 | Large numerical figure inside a stat cell |
-| `{typography.quote-mark}` | 8vw | Bricolage Grotesque | 800 | Decorative opening quotation glyph in warm orange |
-| `{typography.quote-text}` | 3.4vw | Bricolage Grotesque | 600 | Pull-quote body text |
-| `{typography.h3}` | 2.4vw | Bricolage Grotesque | 600 | Sub-headline or region heading |
-| `{typography.lead}` | 1.5vw | DM Sans | 400 | Lead paragraph or large bullet item |
-| `{typography.body}` | 1.05vw | DM Sans | 400 | Body paragraph and info-card body |
-| `{typography.caption}` | 0.82vw | DM Sans | 400 | Image caption, tagline, fine print |
-| `{typography.label}` | 0.7vw | DM Mono | 400 | Kicker, chrome tag, footer label, metadata, chart label |
+| `{typography.display}` | 12vw | Bricolage Grotesque | 800 | 封面或开场英雄展示，巨大，每行断成 1–2 个词 |
+| `{typography.h1}` | 7vw | Bricolage Grotesque | 800 | 章节开场或收尾标题 |
+| `{typography.h2}` | 4vw | Bricolage Grotesque | 700 | 内容页主标题 |
+| `{typography.stat-value}` | 5.5vw | Bricolage Grotesque | 800 | 统计单元内的大数值 |
+| `{typography.quote-mark}` | 8vw | Bricolage Grotesque | 800 | 暖橙装饰性起始引号字形 |
+| `{typography.quote-text}` | 3.4vw | Bricolage Grotesque | 600 | 引文正文 |
+| `{typography.h3}` | 2.4vw | Bricolage Grotesque | 600 | 副标题或区域标题 |
+| `{typography.lead}` | 1.5vw | DM Sans | 400 | 导语段或大号项目 |
+| `{typography.body}` | 1.05vw | DM Sans | 400 | 正文段落、info-card 正文 |
+| `{typography.caption}` | 0.82vw | DM Sans | 400 | 图片图注、tagline、细则 |
+| `{typography.label}` | 0.7vw | DM Mono | 400 | 眉题、外壳标记、页脚标签、元数据、图表标签 |
 
-### Defaults
+### 默认值
 
-- **Default primary section headline**: `{typography.h2}` (4vw).
-- **Default opening or cover display**: `{typography.display}` (12vw) on a cover; `{typography.h1}` (7vw) on a chapter or closing moment.
-- **Default body paragraph size**: `{typography.body}` (1.05vw). Reach for `{typography.lead}` (1.5vw) when the paragraph is the single supporting block under a large headline.
-- **Default label / kicker size**: `{typography.label}` (0.7vw).
-- **Default weight for any display element**: 700 (h2) or 800 (display, h1, stat-value).
-- **Default weight for body**: 400.
-- **Default headline letter-spacing**: negative — display at -0.03em, h1 at -0.025em, h2 at -0.02em. The negative tracking is essential.
+- **默认主分节标题**：`{typography.h2}`（4vw）。
+- **默认开场或封面展示**：封面用 `{typography.display}`（12vw）；章节或收尾瞬间用 `{typography.h1}`（7vw）。
+- **默认正文段落尺寸**：`{typography.body}`（1.05vw）。当段落是大标题下唯一一段辅助文字时，取 `{typography.lead}`（1.5vw）。
+- **默认标签 / 眉题尺寸**：`{typography.label}`（0.7vw）。
+- **任何展示元素默认字重**：700（h2）或 800（display、h1、stat-value）。
+- **正文默认字重**：400。
+- **默认标题字距**：负值，display -0.03em、h1 -0.025em、h2 -0.02em。负字距不可少。
 
-When unsure, default to `{typography.h2}` for the primary text moment paired with one `{typography.lead}` paragraph as supporting copy — that pairing is the system's most reliable rhythm.
+拿不准时，主文字瞬间默认取 `{typography.h2}`，配一段 `{typography.lead}` 作辅助文案，这对组合是系统最稳的节奏。
 
-### Signature Treatments
+### 招牌处理
 
-These treatments are **non-optional whenever the corresponding element type is used**:
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **All display, h1, h2, h3 text is mixed case** — never uppercase. Uppercase display type does not exist in this system. If text is in Bricolage Grotesque, it is sentence case.
-- **All labels, kickers, chrome text, footers, and metadata are DM Mono uppercase with 0.12em positive tracking.** Mono in sentence case does not exist here.
-- **The kicker is always warm orange.** When a slide carries a kicker (eyebrow label above a headline), its color is `{colors.accent-orange}` regardless of surface.
-- **Bullet lists use an em-dash prefix in DM Mono colored warm orange.** Never a dot, never a check, never a numeral.
-- **The `<em>` tag inside a stat numeral renders in warm orange and stays upright.** It is the mechanism for highlighting a unit suffix or a key digit inside a number.
-- **Headlines on dark surfaces are cream; headlines on cream surfaces are dark ink.** Headlines are never orange.
-- **All Bricolage display type uses negative letter-spacing.** Default tracking on display reads as untreated; the negative is what gives the type its compressed, premium-product character.
+- **所有 display、h1、h2、h3 文字都大小写混排**，绝不全大写。本系统不存在全大写展示文字。只要落在 Bricolage Grotesque 里，就是句首大写式。
+- **所有标签、眉题、外壳文字、页脚、元数据都是 DM Mono 全大写、0.12em 正字距。** 本系统不存在句首大写式的等宽。
+- **眉题永远是暖橙。** 页面带眉题（标题上方的 eyebrow 标签）时，无论何种表面，颜色都是 `{colors.accent-orange}`。
+- **项目列表用暖橙 DM Mono 的破折号前缀。** 绝不用圆点、对勾、数字。
+- **统计数字里的 `<em>` 标签渲染成暖橙且保持直立。** 这是在数字里高亮单位后缀或某个关键数位的机制。
+- **深色表面上的标题是奶油，奶油表面上的标题是深墨。** 标题绝不带橙。
+- **所有 Bricolage 展示文字用负字距。** 展示用默认字距读作未处理，负值才带来压缩的高端产品气质。
 
-### Typography Principles
+### 排印原则
 
-The rhythm of the system is **heavy mixed-case display + light mixed-case body + small uppercase mono label**. Switching any of those three modes (e.g., uppercasing the display, or making the body the same weight as the display) breaks the editorial register. Bricolage at 700–800 sits next to DM Sans at 400 — the weight gap is deliberate and wide. Do not use intermediate Bricolage weights (400, 500) for display moments; they read as undecided.
+系统的节奏是**粗壮混排展示 + 轻混排正文 + 小号全大写等宽标签**。三者中任一模式被换掉（例如把展示全大写，或把正文做成和展示同重），都会破掉编辑语域。Bricolage 700–800 与 DM Sans 400 并置，字重差刻意拉得很开。别用 Bricolage 的中间字重（400、500）做展示瞬间，它们读起来像还没拿定主意。
 
-Italics are not used. Underline is not used. The only emphasis mechanism inside body copy is the orange `<em>` inline. The only structural emphasis is the kicker and the bullet em-dash.
+斜体不用。下划线不用。正文里唯一的强调机制是橙色行内 `<em>`。唯一的结构性强调是眉题与项目破折号。
 
-## Layout
+## 布局
 
-### Canvas System
+### 画布系统
 
-Mat is **viewport-fluid by design**. All sizes use `vw` and `vh` units so the layout scales linearly with the viewport. The slide container is `100vw × 100vh` and the deck is a horizontal flex strip that translates left/right by full viewport widths. There is no fixed canvas dimension; the same composition renders correctly on any 16:9-ish viewport.
+Mat **设计上就是视口流式**。所有尺寸用 `vw`、`vh` 单位，布局随视口线性缩放。幻灯片容器是 `100vw × 100vh`，文稿是一条横向 flex 条，按整屏宽度左右平移。没有固定画布尺寸，同一构图在任意近似 16:9 的视口上都能正确渲染。
 
-### Padding and Gap Scale
+### 内边距与间隙比例
 
-| Token | Value | Use |
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.pad-x}` | 5.5vw | Slide horizontal padding; the breathing room on left and right edges |
-| `{spacing.pad-y}` | 5.5vh | Slide vertical padding |
-| `{spacing.gap-lg}` | 4.5vh | Between major content sections |
-| `{spacing.gap-md}` | 2.8vh | Between related elements (headline → lead, stat → label) |
-| `{spacing.gap-sm}` | 1.4vh | Between tightly related elements (label pair in chrome band) |
+| `{spacing.pad-x}` | 5.5vw | 幻灯片横向内边距，左右边缘的呼吸空间 |
+| `{spacing.pad-y}` | 5.5vh | 幻灯片纵向内边距 |
+| `{spacing.gap-lg}` | 4.5vh | 主内容分节之间 |
+| `{spacing.gap-md}` | 2.8vh | 相关元素之间（标题 → 导语、统计 → 标签） |
+| `{spacing.gap-sm}` | 1.4vh | 紧密相关元素之间（外壳条里的标签对） |
 
-The horizontal padding is generous — content occupies roughly the middle 89% of the viewport. Pushing content closer to the edges breaks the system's editorial spaciousness.
+横向内边距宽裕，内容大致占视口中间 89%。把内容往边缘推会破掉系统的编辑式宽绰。
 
-### Chrome Frame
+### 外壳画框
 
-Most slide types carry a **chrome band** (`{components.chrome-band}`) at the top and a **foot band** (`{components.foot-band}`) at the bottom. Each is a `flex space-between` row of two DM Mono labels (typically a section name on the left and a slide-position or section number on the right) separated from the body by a 1px hairline rule. Cover, quote, and end-style slides suppress both bands entirely — those moments are chromeless by convention.
+多数页型顶部带 **chrome band**（`{components.chrome-band}`）、底部带 **foot band**（`{components.foot-band}`）。各是一行 `flex space-between`、两条 DM Mono 标签（通常左侧分节名、右侧页位置或分节号），由 1px 细线与正文隔开。封面、引文、收尾型页把两条都彻底隐去，这些瞬间按惯例无外壳。
 
-### Navigation Chrome
+### 导航外壳
 
-A row of nav-dots is fixed center-bottom (5px circles in low-opacity white) and a slide counter sits bottom-right (10px DM Mono in `rgba(255,255,255,0.25)`, format `01 / 09`). These are presentation chrome, not part of the design language proper — they're consistent across all template families in this library.
+一排导航点固定在底部居中（5px 圆点、低不透明度白），页码固定在右下（10px DM Mono，`rgba(255,255,255,0.25)`，格式 `01 / 09`）。这些是放映外壳，不算设计语言本身，在本库所有模板族里一致。
 
-## Depth and Elevation
+## 纵深与层级
 
-### Atmospheric Glow (Primary Depth Mechanism)
+### 氛围辉光（主纵深机制）
 
-The system's only depth treatment is the **bottom-right wood-brown radial glow** that lives on every dark slide via `::before`. The pseudo-element occupies 55% width × 70% height anchored to the bottom-right corner, with a radial gradient from `rgba(122,78,36,0.28)` to `rgba(80,50,20,0.14)` to transparent. The glow sits at `z-index: 0`; all slide content sits at `z-index: 1`. This is the depth — there are no drop shadows, no elevation cards, no glow effects on text.
+系统唯一的纵深处理是**右下角木棕色径向辉光**，经 `::before` 落在每张深色页上。伪元素占 55% 宽 × 70% 高，锚在右下角，径向渐变从 `rgba(122,78,36,0.28)` 到 `rgba(80,50,20,0.14)` 再到透明。辉光在 `z-index: 0`，所有页面内容在 `z-index: 1`。这就是纵深，没有投影、没有抬升卡片、没有文字辉光效果。
 
-### Hairline Rules (Structural Separation)
+### 细线（结构分隔）
 
-Where the system needs to separate regions, it uses **1px hairline rules in low-opacity cream** (`{colors.border-on-dark}` at 12% opacity) on dark surfaces, or low-opacity dark ink (`{colors.border-on-cream}` at 14% opacity) on cream. These rules appear under chrome bands, above foot bands, between stat cells, between compare panels, and as the chart baseline. Hairlines never go thicker than 1px, never colored.
+系统要分隔区域时，用**低不透明度奶油的 1px 细线**（深色表面 `{colors.border-on-dark}` 12% 不透明度，奶油表面用低不透明度深墨 `{colors.border-on-cream}` 14% 不透明度）。这些线出现在外壳条下、页脚条上、统计单元之间、比较面板之间，以及图表基线。细线绝不粗于 1px，绝不上色。
 
-### No Shadows
+### 无阴影
 
-There are no `box-shadow` declarations on any structural element. The info-card sits on the dark field with no shadow — its material contrast is the cream-on-green tonal jump, not elevation. Adding a shadow to any component breaks the system's flat material-photography aesthetic.
+任何结构元素都没有 `box-shadow` 声明。info-card 落在深色场地上不带阴影，它的材料反差来自奶油对绿的色调跳变，不是抬升。给任何组件加阴影都会破掉系统平的材料摄影美学。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
+### 圆角
 
-| Value | Use |
+| 值 | 用途 |
 |---|---|
-| 0px | Every structural element — info-card, image placeholders, stat cells, compare panels, bars |
-| 50% | Nav-dot circles only |
+| 0px | 每个结构元素，info-card、图片占位、统计单元、比较面板、条形 |
+| 50% | 仅导航点圆 |
 
-The system has **no rounded corners** on any composed content. Cards, panels, and image frames are all strict rectangles. The only round shapes are the navigation UI dots.
+系统在任何组织内容上都**没有圆角**。卡片、面板、图片框都是严格矩形。唯一的圆形是导航 UI 圆点。
 
-### Border Weights
+### 边框粗细
 
-- **1px solid hairline** — the universal structural border. Used for chrome bands, foot bands, stat cell dividers, compare panel splits, chart baselines, and image placeholder outlines. Color is `{colors.border-on-dark}` on dark surfaces and `{colors.border-on-cream}` on cream.
-- No other border weights exist. A 2px border breaks the system; a 3px border belongs to a different design family.
+- **1px 实线细线**：通用结构边框。用于外壳条、页脚条、统计单元分隔、比较面板切分、图表基线、图片占位轮廓。深色表面用 `{colors.border-on-dark}`，奶油用 `{colors.border-on-cream}`。
+- 不存在别的边框粗细。2px 边框会破掉系统，3px 边框属于另一个设计族。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Kicker** — A small DM Mono uppercase tag in warm orange with 0.12em positive tracking, placed above a headline as an eyebrow label. The most consistent appearance of orange in the system. Typically 0.7vw size.
+**眉题**：暖橙的小号 DM Mono 全大写标签，0.12em 正字距，作为 eyebrow 标签放在标题上方。系统里橙色最稳定出现的地方。通常 0.7vw 尺寸。
 
-**Rule** — A 32px-wide × 1px-tall horizontal accent line in warm orange. Used as a small underline-style separator between a kicker and a headline, or beneath a chapter number. Decorative, not structural.
+**短线**：32px 宽 × 1px 高的暖橙水平强调线。作眉题与标题之间、或章节号下方的小号下划线式分隔。装饰性，非结构性。
 
-**Bullet em-dash** — The list marker for every bullet list. Renders as `—` in DM Mono colored warm orange, prepended to the list item via the marker column of a CSS grid (`grid-template-columns: 1.4em 1fr`). The bullet voice of the system.
+**项目破折号**：每个项目列表的列表标记。渲染成暖橙 DM Mono 的 `—`，经 CSS 网格标记列（`grid-template-columns: 1.4em 1fr`）前置到列表项。系统的项目声部。
 
-**Info-card** — A cream inset rectangle (`{components.info-card}`) placed on a dark slide. Carries a heading (h3-scale, dark ink) and a body block (body-scale, muted dark ink). The single most distinctive component in the system — used to puncture the green field with a piece of warm paper. Has no border, no shadow, no rounded corners; the tonal jump alone defines the edge.
+**info-card**：深色页上的奶油内嵌矩形（`{components.info-card}`）。承载一个标题（h3 级、深墨）和一段正文块（body 级、柔化深墨）。系统里最鲜明的组件，用来拿一块暖纸刺破绿色场地。无边框、无阴影、无圆角，光靠色调跳变定义边界。
 
-**Stat cell** — A vertically-divided cell containing a large numerical value (`{typography.stat-value}`) above a one-line label (`{typography.body}` in muted cream). Cells line up in groups of three with a 1px right border separating each (last cell has no right border). The numerical value supports an inline `<em>` in orange for unit suffixes (e.g., the suffix in `4.7k`).
+**统计单元**：纵向分隔的单元，上方一个大数值（`{typography.stat-value}`），下方一行标签（柔化奶油的 `{typography.body}`）。单元三个一组排开，以 1px 右边框分隔（末个单元无右边框）。数值支持橙色行内 `<em>` 作单位后缀（如 `4.7k` 里的后缀）。
 
-**Quote mark** — An oversized opening quotation glyph at `{typography.quote-mark}` size in warm orange. Sits above the quote text as a typographic ornament. Used only inside the quote slide type.
+**引号标记**：`{typography.quote-mark}` 尺寸的暖橙超大起始引号字形。坐在引文文字上方作排印装饰。只在引文页型里用。
 
-**Compare divider** — A 1px-wide vertical CSS column (not a border) between two side-by-side panels. Subtle by design — the contrast between the two panels does the visual work, not the divider.
+**比较分隔线**：两个并排面板之间 1px 宽的 CSS 竖列（不是边框）。刻意低调，视觉工作由两面板的反差承担，不靠分隔线。
 
-**Image placeholder** — A void rectangle with a 1px hairline border, 6% cream background, and centered DM Mono label reading the placeholder name. Used until real photography is dropped in. The placeholder color is intentionally close to the background — image regions should not announce themselves.
+**图片占位**：空矩形，1px 细线边框、6% 奶油底、居中 DM Mono 标签写占位名。在放进真实照片前使用。占位色刻意贴近背景，图片区域不该自我宣告。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
-- Use the dark forest green (`{colors.bg-dark}`) as your default slide background. The system is dark-first; cream slides are a tonal break, not the default.
-- Apply the wood-brown atmospheric glow to every dark slide. It is part of the surface, not an optional flourish.
-- Pair Bricolage Grotesque display in mixed case with DM Mono labels in uppercase. The case contrast between the two faces is the system's typographic rhythm.
-- Set headlines in cream (`{colors.ink-cream}`) on dark and dark ink (`{colors.ink-dark}`) on cream. Headlines never carry the orange accent.
-- Use warm orange (`{colors.accent-orange}`) as the kicker color, the bullet em-dash color, and the inline `<em>` color. Orange is the punctuation, never the surface.
-- Use the cream info-card (`{components.info-card}`) when a slide needs a piece of warm paper inset on the green field — the system's signature material-contrast move.
-- Keep slides medium-sparse. One primary headline, one supporting paragraph, optionally one list of 3–5 short bullets is the right density.
-- Use 1px hairline rules in low-opacity cream or dark ink for every structural divider. Borders never go thicker.
-- Use the em-dash prefix in DM Mono for every bullet list. Never substitute a dot, check, or numeral.
-- Render the `<em>` inside a numerical value in warm orange, font-style normal — that's how unit suffixes and emphasis digits read in this system.
+### 该做
+- 用深森林绿（`{colors.bg-dark}`）作默认幻灯片背景。系统深色优先，奶油页是色调断口，不是默认。
+- 给每张深色页套木棕色氛围辉光。它属于表面，不是可选的点缀。
+- 把 Bricolage Grotesque 混排展示与 DM Mono 全大写标签配对。两款字面的大小写反差就是系统的排印节奏。
+- 深色上标题用奶油（`{colors.ink-cream}`），奶油上用深墨（`{colors.ink-dark}`）。标题绝不承载橙色强调。
+- 用暖橙（`{colors.accent-orange}`）作眉题色、项目破折号色、行内 `<em>` 色。橙色是标点，绝非表面。
+- 页面需要在绿色场地上嵌一块暖纸时，用奶油 info-card（`{components.info-card}`），系统的招牌材料反差手法。
+- 让页面保持中等偏疏。一个主标题、一段辅助文字、可选一列 3–5 条短项目，就是对的密度。
+- 每条结构分隔都用低不透明度奶油或深墨的 1px 细线。边框绝不更粗。
+- 每个项目列表都用 DM Mono 的破折号前缀。绝不换成圆点、对勾或数字。
+- 把数值里的 `<em>` 渲染成暖橙、font-style normal，单位后缀与强调数位在本系统里就这么读。
 
-### Don't
-- Don't uppercase any Bricolage display, h1, h2, or h3 text. Display type is always mixed case. Uppercase is exclusively for DM Mono labels.
-- Don't introduce a second accent color. The system has one accent (warm orange) and it cannot share that role.
-- Don't add drop shadows, blur shadows, or elevation effects on any component. Depth is the atmospheric glow only.
-- Don't round any corner on a structural element. Cards, panels, image frames, bars — all strict rectangles. Only the nav-dot circles are round.
-- Don't fill a slide with three columns of bullets or stack five regions vertically. Mat reads as broken when crowded.
-- Don't use orange as a background fill. Orange is inline-only.
-- Don't use a serif face anywhere. There is no serif in this system; the rounded grotesque carries every editorial moment.
-- Don't add a border around the info-card. The tonal jump between cream and forest green defines the edge — a border breaks the flat material reading.
-- Don't use italic letterforms. The `<em>` tag is repurposed as an orange inline color switch and stays upright.
-- Don't increase border weights above 1px. A 2px border breaks the hairline language of the system.
+### 不该做
+- 不要把任何 Bricolage 展示、h1、h2、h3 文字全大写。展示文字始终大小写混排。全大写专属于 DM Mono 标签。
+- 不要引入第二种强调色。系统只有一种强调（暖橙），这个角色不能分给别人。
+- 不要给任何组件加投影、模糊阴影或抬升效果。纵深只有氛围辉光。
+- 不要给任何结构元素加圆角。卡片、面板、图片框、条形，都是严格矩形。只有导航点圆是圆的。
+- 不要用三栏项目填满一页，也不要纵向堆五个区域。Mat 一挤就读作坏了。
+- 不要把橙色当背景填充。橙色只作行内。
+- 不要在任何地方用衬线字面。系统里没有衬线，圆润怪诞体承载每个编辑瞬间。
+- 不要给 info-card 加边框。奶油与森林绿之间的色调跳变定义边界，加边框会破掉平的材料读感。
+- 不要用斜体字形。`<em>` 标签被改作橙色行内换色，并保持直立。
+- 不要把边框粗细加到 1px 以上。2px 边框会破掉系统的细线语言。
 
-## Responsive Behavior
+## 响应式行为
 
-Mat targets a fluid `100vw × 100vh` viewport and uses `vw`/`vh` units for every typographic size, padding, and gap. The same composition renders correctly across 1280×720, 1920×1080, and 2560×1440 displays without breakpoints. Because all sizes are viewport-relative, content scales linearly — at wider viewports, both text and padding grow proportionally, so the visual density stays constant.
+Mat 以流式 `100vw × 100vh` 视口为目标，每个排印尺寸、内边距、间隙都用 `vw`/`vh` 单位。同一构图在 1280×720、1920×1080、2560×1440 上无需断点都能正确渲染。所有尺寸都相对视口，内容线性缩放，视口越宽文字与内边距同比放大，视觉密度保持恒定。
 
-### Presenter Behavior
-- Arrow Right / Arrow Down / Space advance to the next slide.
-- Arrow Left / Arrow Up move back.
-- Home jumps to the first slide; End jumps to the last.
-- Touch swipe (horizontal) advances or reverses on mobile.
-- Mouse wheel advances with a 1000ms debounce to prevent accidental multi-skip.
-- Slides translate horizontally as a single flex strip with a 0s transition (the deck is configured for instant navigation, not animated transitions — the `--dur-slide` token is set to `0s`).
+### 放映行为
+- 右 / 下方向键 / 空格前进到下一页。
+- 左 / 上方向键后退。
+- Home 跳到首页，End 跳到末页。
+- 触屏横向滑动在移动端前进 / 后退。
+- 鼠标滚轮以前进，配 1000ms 防抖，防止误连跳。
+- 幻灯片作为单条 flex 横向平移，过渡 0s（文稿设为即时导航，不做动画过渡，`--dur-slide` token 设为 `0s`）。
 
-### Print Behavior
-The template does not declare a `@media print` rule. To produce a PDF, use the browser's screenshot or printing tool; multi-slide PDF export requires manually triggering each slide.
+### 打印行为
+模板没有声明 `@media print` 规则。要出 PDF，用浏览器的截图或打印工具；多页 PDF 导出需逐页手动触发。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Chinese Face | Weight | Why |
+| 角色 | 中文字面 | 字重 | 理由 |
 |---|---|---|---|
-| Display / h1 / h2 / h3 / stat-value (Bricolage roles, 2.4–12vw) | 思源宋体 Noto Serif SC | 700 | Mincho heavy weight provides the structural mass that Bricolage 700–800 provides in Latin, while preserving the warm material register |
-| Quote text / quote mark (3.4vw / 8vw) | 思源宋体 Noto Serif SC | 600–700 | Same Mincho voice for editorial moments |
-| Lead / body / caption (DM Sans roles, 0.82–1.5vw) | 思源宋体 Noto Serif SC | 400 | Mincho body voice — calm and material; pairs with the wood-glow warmth |
-| Info-card body / heading | 思源宋体 Noto Serif SC | 400 / 600 | Maintains the warm-paper-on-green contrast in Chinese |
-| Label / kicker / chrome / footer (DM Mono roles, 0.7vw) | 思源宋体 Noto Serif SC | 500 with 0.05em letter-spacing | Replaces DM Mono — Chinese has no monospace tradition that reads as editorial chrome |
+| 展示 / h1 / h2 / h3 / stat-value（Bricolage 角色，2.4–12vw） | 思源宋体 Noto Serif SC | 700 | 明朝体粗字重提供 Bricolage 700–800 在拉丁里的结构分量，同时保住暖材料语域 |
+| 引文文字 / 引号标记（3.4vw / 8vw） | 思源宋体 Noto Serif SC | 600–700 | 编辑瞬间沿用同一明朝声部 |
+| 导语 / 正文 / 图注（DM Sans 角色，0.82–1.5vw） | 思源宋体 Noto Serif SC | 400 | 明朝正文声部，平静、材料感，与木辉光的暖意相配 |
+| info-card 正文 / 标题 | 思源宋体 Noto Serif SC | 400 / 600 | 在中文里维持暖纸压绿的对比 |
+| 标签 / 眉题 / 外壳 / 页脚（DM Mono 角色，0.7vw） | 思源宋体 Noto Serif SC | 500 配 0.05em 字距 | 替换 DM Mono，中文没有读成编辑外壳的等宽传统 |
 
-### Mixed-Content Strategy
+### 混排策略
 
-Use **Strategy A** — switch the entire face stack to Noto Serif SC across all roles, replacing Bricolage Grotesque (display), DM Sans (body), and DM Mono (labels). Mat's identity does not depend on the specific Latin faces; it depends on the **dark forest green canvas with wood-brown atmospheric glow**, the **single warm orange accent**, the **cream info-card inset**, and the **1px hairline divider language**. Going all-Mincho in Chinese preserves every one of those identity markers cleanly without the baseline wobble that Strategy C would introduce on a viewport-fluid system. Stack:
+用**策略 A**：把整条字面栈在所有角色上切到 Noto Serif SC，替换 Bricolage Grotesque（展示）、DM Sans（正文）、DM Mono（标签）。Mat 的身份不依赖具体的拉丁字面，它依赖**带木棕氛围辉光的深森林绿画布**、**单一暖橙强调**、**奶油 info-card 内嵌**、**1px 细线分隔语言**。中文全用明朝能干净地保住以上每一条身份标记，又不会引入策略 C 在视口流式系统上的基线抖动。字体栈：
 
 ```css
 /* Bricolage roles (display, h1, h2, h3, stat-value, quote) */
@@ -413,11 +417,11 @@ font-family: 'DM Sans', 'Noto Serif SC', sans-serif;
 font-family: 'DM Mono', 'Noto Serif SC', monospace;
 ```
 
-The system's source currently lists `'Noto Sans SC'` as the CJK fallback — for Mat's material-tactile register, **swap to `'Noto Serif SC'`**. The Mincho face's warm letterforms match the wood-glow / forest-green atmosphere better than the geometric Noto Sans SC, which reads as too modern-clinical for this system.
+系统源码当前把 `'Noto Sans SC'` 列为 CJK 回退，为 Mat 的材料触感语域，**换成 `'Noto Serif SC'`**。明朝字面暖的字形比几何的 Noto Sans SC 更贴木辉光 / 森林绿氛围，后者对这套系统读起来太现代、太临床。
 
-### Loading
+### 加载
 
-Replace the existing Noto Sans SC link with Noto Serif SC:
+把既有的 Noto Sans SC 链接换成 Noto Serif SC：
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -425,50 +429,50 @@ Replace the existing Noto Sans SC link with Noto Serif SC:
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-These adjustments apply to **every CJK block** in this system, regardless of size or role:
+以下调整适用于本系统**每一个 CJK 块**，无论尺寸或角色：
 
-- **Loosen line-height by 0.05–0.08.** CJK glyphs are full-width squares with more visual weight than Latin letterforms; line-heights tuned for Latin (0.88–1.1 on display, 1.5–1.65 on body) read as cramped in Chinese. Bump display to 1.0–1.2 and body to 1.7–1.85.
-- **Remove negative letter-spacing on CJK headlines.** Bricolage display uses -0.025em to -0.03em tracking, which collides Chinese glyphs into each other. For CJK runs, set `letter-spacing: 0` — or a tiny positive `0.02em` if the headline feels visually packed.
-- **Never `text-transform: uppercase` on CJK text.** Chinese has no case; the CSS property does nothing on Han glyphs but will silently break any mixed-script line where the DM Mono label portion was meant to be capitalized. (This matters here — every DM Mono label, kicker, chrome-band, and footer is `text-transform: uppercase`.)
-- **Use Chinese full-width punctuation** (`，。：；！？「」『』（）`) inside Chinese sentences, not the Latin equivalents (`,.:;!?""''()`). Mixing punctuation systems within one sentence reads as a typesetting error.
-- **No period (。) at the end of CJK headlines.** Chinese headlines follow the same rule as Latin — title-style lines drop terminal punctuation. Body paragraphs keep their 。
-- **Apply Pangu spacing (盘古之白) at the boundary between CJK and Latin runs.** A space (or 0.25em margin) belongs between a Chinese character and an adjacent Latin word or digit, e.g. `2026 年 5 月` not `2026年5月`. Either type the spaces manually or use a `pangu.js`-style auto-spacer.
-- **One font per sentence.** Don't switch between Noto Serif SC weight 400, 500, and 700 inside the same sentence — pick the weight that matches the role (headline = 700, body = 400, label = 500) and commit to it for the whole run.
+- **行高放宽 0.05–0.08。** CJK 字形是全宽方块，视觉分量比拉丁字母重，为拉丁调的行高（展示 0.88–1.1、正文 1.5–1.65）在中文里读起来局促。展示提到 1.0–1.2，正文提到 1.7–1.85。
+- **去掉 CJK 标题的负字距。** Bricolage 展示用 -0.025em 到 -0.03em 字距，会把汉字撞在一起。CJK 段设 `letter-spacing: 0`，标题看着挤时可用微小正值 `0.02em`。
+- **绝不对 CJK 文字用 `text-transform: uppercase`。** 中文没有大小写，CSS 属性对汉字无效，却会悄悄破坏混排行里本该大写的 DM Mono 部分。（这点在这里要紧：每个 DM Mono 标签、眉题、外壳条、页脚都是 `text-transform: uppercase`。）
+- **中文句子里用中文全角标点**（`，。：；！？「」『』（）`），不用拉丁对应物（`,.:;!?""''()`）。同一句里混用标点系统读起来是排印错误。
+- **CJK 标题末尾不加句号（。）。** 中文标题与拉丁遵循同一规则，标题式行去掉末尾标点。正文段落保留 。
+- **在 CJK 与拉丁串交界处套用盘古之白。** 汉字与相邻拉丁词或数字之间应有一个空格（或 0.25em 外边距），例如 `2026 年 5 月` 而非 `2026年5月`。要么手打空格，要么用 `pangu.js` 式自动加空格器。
+- **一句一款字体。** 不要在同一句里切换 Noto Serif SC 字重 400、500、700，挑与角色匹配的字重（标题 = 700、正文 = 400、标签 = 500），整段从一而终。
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-Mat's whole voice is "industrial-design portfolio meets boutique product launch" — dark forest green with a wood-brown glow, cream type floating on the field, warm orange as the single accent. In Chinese, the system's identity does not depend on the Bricolage / DM Sans / DM Mono trio; it depends on the **environmental atmosphere** (the radial wood-glow on every dark slide), the **single-accent discipline** (orange only as kicker, em-dash bullet, inline emphasis), and the **cream info-card** as the signature material-contrast move. All of these translate without modification.
+Mat 的整个声部是"工业设计作品集遇上精品产品发布"：深森林绿配木棕辉光、奶油文字浮在场地上、暖橙作唯一强调。中文里系统的身份不依赖 Bricolage / DM Sans / DM Mono 三件套，它依赖**环境氛围**（每张深色页上的径向木辉光）、**单强调纪律**（橙色只作眉题、破折号项目、行内强调）、**奶油 info-card** 这个招牌材料反差手法。这些都不用改动就能迁移。
 
-The bullet em-dash in orange works in Chinese identically — the em-dash character (—) is the same glyph in any script, and the orange Noto Serif SC at weight 500 prepended to a Chinese list item reads as a deliberate mark exactly as it does in Latin. Keep the bullet column in Noto Serif SC at weight 500 (replacing DM Mono); the warmth of the Mincho face matches the system's material-tactile register better than a sans-serif chrome face would.
+暖橙破折号项目在中文里同样成立，破折号字符（—）在任何文字里都是同一个字形，暖橙 Noto Serif SC 字重 500 前置到中文列表项前，读起来就和拉丁里一样是一个刻意的标记。项目列保持在 Noto Serif SC 字重 500（替换 DM Mono），明朝字面的暖意比无衬线外壳字面更贴系统的材料触感语域。
 
-The Bricolage rule "always mixed case, never uppercase" is interesting in Chinese — since Chinese has no case, the rule is automatically satisfied. But the system's uppercase rule for labels (DM Mono at 0.12em tracking) doesn't translate; in Chinese, labels should be **Noto Serif SC weight 500 with 0.05em positive tracking**, no `text-transform`. The positive tracking carries the chrome quality through weight and spacing alone.
+Bricolage "始终混排、绝不全大写" 这条规则在中文里很有意思：中文没有大小写，规则自动满足。但系统对标签的全大写规则（DM Mono 0.12em 字距）迁移不过来；中文里标签应是 **Noto Serif SC 字重 500 配 0.05em 正字距**，不要 `text-transform`。正字距靠字重与间距独自撑起外壳质感。
 
-The `<em>` inline-orange rule (for unit suffixes inside stat numerals) works in Chinese — a Chinese unit character like 「万」or 「亿」 inside `<em>` renders in warm orange and stays upright, exactly mirroring the Latin pattern. Use it the same way: `4.7<em>万</em>` for `4.7 万 (47k)`.
+`<em>` 行内橙色规则（统计数字里的单位后缀）在中文里成立：中文单位字如「万」或「亿」放进 `<em>`，渲染成暖橙并保持直立，精确镜像拉丁式样。照同样方式用：`4.7<em>万</em>` 对应 `4.7 万 (47k)`。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-The Bricolage Grotesque "heavy, rounded grotesque with mechanical character" is one of Mat's most distinctive typographic moves in Latin — it's what gives the system its industrial-product-page voice. Chinese has no exact equivalent: Noto Serif SC at weight 700 provides structural mass but reads as more traditional / literary than Bricolage's rounded modernity. The Chinese rendering loses some of the industrial-design quality, partially compensated by the wood-glow atmosphere and the warm orange accent doing more of the personality work. For decks where the industrial register is critical (e.g., a product launch deck specifically about hardware or material design), consider supplementing Noto Serif SC with **思源黑体 Noto Sans SC at weight 800** for the largest display moments only (cover, hero) — the geometric heaviness of Noto Sans SC at 800 reads closer to Bricolage Grotesque 800 than Noto Serif SC does. Use sparingly to preserve the literary-material register elsewhere.
+Bricolage Grotesque "粗壮、圆润、带机械气质的怪诞体" 是 Mat 在拉丁里最鲜明的排印手法之一，正是它给系统带来工业产品页的声部。中文没有精确对应：Noto Serif SC 字重 700 有结构分量，却比 Bricolage 的圆润现代读起来更传统、更文学。中文渲染会丢掉一部分工业设计气质，由木辉光氛围与暖橙强调多担一些个性工作来部分补偿。对工业语域吃紧的文稿（例如专讲硬件或材料设计的产品发布稿），可考虑在最大的展示瞬间（封面、英雄）仅补**思源黑体 Noto Sans SC 字重 800**：Noto Sans SC 800 的几何厚重比 Noto Serif SC 更接近 Bricolage Grotesque 800。省着用，好让别处保住文学材料语域。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new component sits on the dark surface as cream text; no card, panel, or frame wraps it unless it's the info-card move (cream-on-green tonal contrast).
-2. Any new headline uses Bricolage Grotesque in mixed case, weight 700 (h2) or 800 (display/h1). Never reach for weight 500 on display.
-3. Any new structural divider is a 1px hairline rule in low-opacity cream or dark ink. Never use a thicker or colored border.
-4. Any new label, eyebrow, tag, or metadata text uses DM Mono uppercase with 0.12em tracking. Mono in mixed case does not exist here.
-5. Any new bullet list uses the em-dash prefix in DM Mono colored warm orange. The marker face and color are non-negotiable.
-6. Any new accent moment (a highlighted number, an emphasis word, a kicker) uses warm orange. Don't introduce a second accent.
-7. Any new dark slide carries the atmospheric glow on `::before`. If you make a custom slide layout, replicate the pseudo-element or the slide will read flat.
-8. If a slide needs a piece of warm paper to anchor it (a CTA, a summary, an attribution block), use the info-card. Don't invent a parallel card pattern.
-9. Tonal break slides (cream backgrounds) are used once per deck for emphasis, not as a routine alternative to dark. The system reads as dark-default.
+1. 任何新组件都作为奶油文字落在深色表面上，除非是 info-card 手法（奶油压绿色调反差），否则不套卡片、面板或画框。
+2. 任何新标题都用 Bricolage Grotesque 混排、字重 700（h2）或 800（display/h1）。展示别去取字重 500。
+3. 任何新结构分隔都是低不透明度奶油或深墨的 1px 细线。绝不用更粗或上色的边框。
+4. 任何新标签、eyebrow、标记、元数据文字都用 DM Mono 全大写、0.12em 字距。本系统不存在混排等宽。
+5. 任何新项目列表都用暖橙 DM Mono 的破折号前缀。标记字面与颜色不可商量。
+6. 任何新强调瞬间（高亮数字、强调词、眉题）都用暖橙。不要引入第二种强调。
+7. 任何新深色页都在 `::before` 上带氛围辉光。若自定义页面布局，复刻这个伪元素，否则页面读起来是平的。
+8. 页面需要一块暖纸来锚定（CTA、小结、署名块）时，用 info-card。别另造一套平行卡片式样。
+9. 色调断口页（奶油背景）整套文稿用一次作强调，不作深色的常规替代。系统读作深色默认。
 
-## Known Gaps
+## 已知缺口
 
-- The `--c-bg-dark-alt` (#2E3D30) variable is defined for a slightly lighter green surface but is not actively used in any selector. It's reserved for future layered-region work.
-- The atmospheric glow is hardcoded to the bottom-right corner via the `::before` pseudo-element. Repositioning it requires editing the CSS rule directly; there's no token for glow position or intensity.
-- The system loads four Google Fonts (Bricolage Grotesque, DM Sans, DM Mono, Noto Sans SC) — render parity depends on those fonts loading. The CJK fallback stack covers Chinese, but Japanese and Korean glyphs fall back to system serif/sans.
-- The slide-transition duration is set to `0s` (instant). The `--ease-slide` and `--dur-slide` tokens exist for animation but are inert; if a deck needs animated transitions, the duration value must be raised.
-- The vertical bar chart uses inline `style="height: XX%"` declarations on each bar fill. There is no data-binding layer; bar heights must be computed manually.
-- The `.split-center` image region is fixed at 52vh height. Tall portrait imagery may need a layout-level override.
-- Nav dots and slide counter use hardcoded `rgba(255,255,255,...)` values that don't adapt to the cream-slide variant — on cream slides, the white dots read as washed-out.
+- `--c-bg-dark-alt`（#2E3D30）变量为略浅的绿表面而定义，但没有任何选择器在用它。预留给未来的分层区域工作。
+- 氛围辉光经 `::before` 伪元素硬编码在右下角。改位置要直接编辑 CSS 规则，没有辉光位置或强度的 token。
+- 系统加载四款 Google Fonts（Bricolage Grotesque、DM Sans、DM Mono、Noto Sans SC），渲染一致性取决于这些字体能否加载。CJK 回退栈覆盖中文，但日文与韩文字形回退到系统衬线 / 无衬线。
+- 幻灯片过渡时长设为 `0s`（即时）。`--ease-slide` 与 `--dur-slide` token 为动画而存在但闲置；文稿需要动画过渡时，必须提高 duration 值。
+- 竖向条形图在每根条填充上用内联 `style="height: XX%"` 声明。没有数据绑定层，条高需手工计算。
+- `.split-center` 图片区域固定为 52vh 高。高竖幅图片可能需要布局级覆盖。
+- 导航点与页码用硬编码 `rgba(255,255,255,...)` 值，不适配奶油页变体，在奶油页上白点读起来发灰。

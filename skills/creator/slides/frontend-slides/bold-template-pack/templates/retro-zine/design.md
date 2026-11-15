@@ -238,274 +238,278 @@ components:
     description: "Mono-font color chip used inline in tabular ledger rows to tag a row's category. Fill pulls from green / red-stamp / orange / pink / blue as a categorical palette extension."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/retro-zine/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Retro Zine is a **risograph-zine editorial system** on a warm khaki canvas (`{colors.bg}` — #C8B99A) with deep forest-green (`{colors.green}` — #008F4D) as the meaningful accent and ink-black (`{colors.black}` — #1A1A1A) as the structural color. The aesthetic borrows from independent press culture, mid-century activist posters, and DIY zine layouts: condensed industrial display type, hand-script emphasis, slightly rotated stamps, masking-tape collage marks, drop caps, and a print-grain overlay that ties every surface to a printed-paper register.
+Retro Zine 是一套**孔版印刷杂志编辑系统**，落在暖卡其画布（`{colors.bg}` — #C8B99A）上，以深森林绿（`{colors.green}` — #008F4D）作真正算数的强调，墨黑（`{colors.black}` — #1A1A1A）作结构色。美学借自独立出版文化、世纪中叶行动主义海报与 DIY 杂志排版：压缩的工业展示字面、手写脚本强调、略带旋转的印章、美纹纸胶带拼贴痕、首字下沉，以及把每处表面系在印刷纸语域上的颗粒叠层。
 
-The typeface stack pairs three faces with distinct emotional roles. **Bebas Neue** is the display voice — a condensed, all-caps industrial sans with generous tracking (0.02–0.04em) used for every headline, statement, statistic, numeral, and label. Its compressed verticality is the system's visual identity; substituting any other display sans loses the zine voice. **Space Grotesk** is the body voice — a clean humanist geometric sans at weight 300–500 for paragraphs, used at small sizes (13–18px) which preserves the magazine column-text density. **Caveat** is the hand-script voice — a casual ballpoint cursive used for author attributions, side notes, captions on display elements, and the form-field "writing" in RSVP-style layouts. The three faces together read as "an editorial spread typeset by a small press."
+字体栈搭配三款字面，各有分明的情绪角色。**Bebas Neue** 是展示声部，一款压缩的全大写工业无衬线，带宽裕字距（0.02–0.04em），用于每个标题、陈述、统计、数字、标签。它压缩的竖向感是系统的视觉身份，换成别的展示无衬线就丢了杂志声部。**Space Grotesk** 是正文声部，一款干净的人文几何无衬线，字重 300–500 用于段落，以小尺寸（13–18px）使用，保住杂志栏文的密度。**Caveat** 是手写脚本声部，一款随意的圆珠笔草书，用于作者署名、旁注、展示元素上的图注，以及 RSVP 式布局里表单栏的"填写"。三款字面合起来读作"一份小出版社排的编辑跨页"。
 
-The color philosophy is **earth + forest**: a warm khaki paper canvas, a deeper khaki tonal sibling for layered surfaces, deep forest-green for accents and accent surfaces, ink-black for structure and body, and an off-white cream (`{colors.white}` — #F4EFE6) for cards and inverted text fills. The white is deliberately not pure — it's a soft cream that sits as paper inside paper rather than as a hard rectangle. Green carries the system's emotional voice: it is what activates a section, what stamps approval, what marks the brand. The same hex (#008F4D) appears as drop caps, ribbon bars, inline labels, statement backgrounds, and the progress bar.
+色彩理念是**土地 + 森林**：暖卡其纸画布、更深的卡其色调兄弟作分层表面、深森林绿作强调与强调表面、墨黑作结构与正文，以及米白奶油（`{colors.white}` — #F4EFE6）作卡片与反色文字填充。白刻意不纯，是柔和奶油，作为纸中纸坐着，而非一块硬矩形。绿承载系统的情绪声部：它激活一个分节、盖下批准、标出品牌。同一个十六进制（#008F4D）出现在首字下沉、飘带条、行内标签、陈述页背景、进度条里。
 
-Depth comes from **paper-on-paper offset blocks** and **slight rotations**, not blurred shadows. The signature treatment: a `{components.card-offset}` carries a solid green slab sitting 12px down-and-right behind it via an absolutely-positioned `::before` pseudo-element. The visual effect is a layered paper or letterpress underprint rather than a soft drop shadow. Rotations on stamps (`-8deg` or `6deg`) and on collage pieces (`-5deg` to `5deg`) add the hand-placed feeling.
+纵深来自**纸压纸偏移块**与**轻微旋转**，不靠模糊阴影。招牌处理是 `{components.card-offset}` 带一块实绿色板，经绝对定位的 `::before` 伪元素坐在它背后朝右下 12px。视觉效果是分层纸或凸版套印，而非柔和投影。印章上的旋转（`-8deg` 或 `6deg`）与拼贴件上的旋转（`-5deg` 到 `5deg`）添上手放感。
 
-**Density philosophy: medium-high.** The zine register depends on visual richness — collage compositions, multi-column editorial layouts, drop caps inside body text, tabular ledgers with chip categories, ribbon-bar headers stamped at angles. A slide that holds only one centered headline reads as underdesigned; the zine voice expects a layout to be packed with editorial moves. The correct density is one dominant text moment supported by multiple subordinate components (decorative stamps, eyebrow labels, divider stubs, hand-script attributions, drop caps). Reserve true sparseness for the manifesto / statement moment where a single large quote dominates a solid green field.
+**密度取向：中高。** 杂志语域依赖视觉丰盛，拼贴构图、多栏编辑布局、正文里的首字下沉、带类别小片的账表、斜盖的飘带头。只有一个居中标题的页读作设计不足，杂志声部期待一个版面塞满编辑动作。对的密度是一个主导文字瞬间，由多个从属组件支撑（装饰印章、eyebrow 标签、分隔短线、手写脚本署名、首字下沉）。把真正的稀疏留给宣言 / 陈述瞬间，那里一条大引文主导一整块实绿场地。
 
-**Key Characteristics:**
-- Warm khaki paper canvas (`{colors.bg}`) + deep forest-green accent (`{colors.green}`) + ink-black structure (`{colors.black}`).
-- An SVG grain overlay (`{components.grain-overlay}`) sits over every slide at 0.07 opacity, reinforcing the printed-paper register.
-- Bebas Neue uppercase + tracked for every display moment; Space Grotesk at small sizes for body; Caveat for hand-script emphasis.
-- 3px solid black structural borders divide regions; 2px and 1.5px borders subdivide.
-- Paper-on-paper offset cards: green slab sits 12px behind a white card via `::before`.
-- Stamps and collage pieces carry small rotations (-8°, +6°, -5° to +5°).
-- Translucent masking-tape pieces (`{components.tape}`) layered over collage compositions.
-- Green drop caps, green ribbon bars, and green inline highlights mark editorial emphasis.
+**关键特征：**
+- 暖卡其纸画布（`{colors.bg}`）+ 深森林绿强调（`{colors.green}`）+ 墨黑结构（`{colors.black}`）。
+- SVG 颗粒叠层（`{components.grain-overlay}`）以 0.07 不透明度盖在每页上，强化印刷纸语域。
+- Bebas Neue 全大写加字距用于每个展示瞬间，Space Grotesk 小尺寸作正文，Caveat 作手写脚本强调。
+- 3px 实黑结构边框分隔区域，2px 与 1.5px 边框再细分。
+- 纸压纸偏移卡片：绿色板经 `::before` 坐在白卡背后 12px。
+- 印章与拼贴件带小旋转（-8°、+6°、-5° 到 +5°）。
+- 半透明美纹纸胶带片（`{components.tape}`）叠在拼贴构图上。
+- 绿色首字下沉、绿色飘带条、绿色行内高亮标出编辑强调。
 
-## Colors
+## 颜色
 
-### Palette
-- **Background** (`{colors.bg}` — #C8B99A): The warm khaki paper canvas. The default surface for every slide. Saturated enough to read as paper-with-history rather than as a neutral; warm enough to harmonize with the forest-green accent.
-- **Background Dark** (`{colors.bg-dark}` — #B8A98A): A slightly darker tonal sibling of the canvas. Used for layered surface regions when one half of a split-screen needs to sit visually behind the other, and for collage pieces that want to read as "paper on khaki paper."
-- **Green** (`{colors.green}` — #008F4D): Deep forest green. The system's accent color — hero numerals, drop caps, ribbon bars, statement-slide backgrounds, progress bar, inline highlights, RSVP labels, the offset slab behind cards, divider stubs on the closing slide. The single most distinctive non-canvas color.
-- **Green Light** (`{colors.green-light}` — #00A85D): A slightly brighter sibling of green. Available as a hover-state or secondary green where the deep green needs a step-up; rarely used in baseline static slides.
-- **Black** (`{colors.black}` — #1A1A1A): Ink-black. The structural color — all borders, all body text, all dividers, all closing-slide backgrounds, all label fills (when inverted). Slightly softer than pure black (#000000) so it sits as warm ink on warm paper.
-- **White / Cream** (`{colors.white}` — #F4EFE6): Soft cream. Used as card fills (paper-on-paper), as text inside black surfaces, and as the divider-stub color on statement slides. Critically, this is not pure white — it's a paper-cream that maintains the warm-paper register even when used as a "white" surface.
+### 调色板
+- **背景**（`{colors.bg}` — #C8B99A）：暖卡其纸画布。每页默认表面。饱和到读作"有历史的纸"而非中性色，又暖到与森林绿强调相谐。
+- **深背景**（`{colors.bg-dark}` — #B8A98A）：画布略深的色调兄弟。用于分层表面区域，即分屏中一半需要在视觉上坐在另一半之后时，以及想读作"卡其纸上的纸"的拼贴件。
+- **绿**（`{colors.green}` — #008F4D）：深森林绿。系统强调色，英雄数字、首字下沉、飘带条、陈述页背景、进度条、行内高亮、RSVP 标签、卡片背后的偏移板、收尾页分隔短线。最鲜明的非画布色。
+- **浅绿**（`{colors.green-light}` — #00A85D）：绿略亮的兄弟。深绿需要抬一档时，可作悬停态或次级绿，基线静态页里很少用。
+- **黑**（`{colors.black}` — #1A1A1A）：墨黑。结构色，全部边框、全部正文、全部分隔、全部收尾页背景、全部标签填充（反色时）。比纯黑（#000000）略柔，好作为暖墨落在暖纸上。
+- **白 / 奶油**（`{colors.white}` — #F4EFE6）：柔和奶油。用作卡片填充（纸压纸）、黑表面里的文字、陈述页上的分隔短线色。关键是这不是纯白，是纸奶油，哪怕当作"白"表面用也维持暖纸语域。
 
-### Defaults
-- **Default surface background**: `{colors.bg}` — every slide opens on warm khaki paper.
-- **Default headline color**: `{colors.green}` for primary section headlines and hero titles; `{colors.black}` for body-paired headlines in two-column or split layouts. When in doubt, reach for `{colors.green}` — a green headline is the system's loudest editorial signal.
-- **Default body text color**: `{colors.black}`.
-- **Default border color**: `{colors.black}` — every structural border is black, no exceptions.
-- **Default accent surface for emphasis (statement, hero callout)**: `{colors.green}` with `{colors.white}` text.
-- **Default text color on a `{colors.green}` surface**: `{colors.white}` (cream).
-- **Default text color on a `{colors.black}` surface**: `{colors.bg}` (the khaki canvas), so type still reads as "ink on paper" even in inversion. Green accents on a black surface (closing slide eyebrow + hand-script) lift the inversion.
-- **Default eyebrow / label color**: `{colors.green}` for Bebas Neue labels; `{colors.black}` for letter-spaced Space Grotesk labels.
-- **Default drop-cap color**: `{colors.green}`. Drop caps are the editorial fingerprint and they are always green.
-- **Default hand-script color**: `{colors.black}` on khaki/cream surfaces; `{colors.green}` on black surfaces (closing).
-- **Default inline highlight**: black-on-khaki (`{components.inline-highlight}`) — used to lift phrases inside body paragraphs as if marked with a pen.
+### 默认值
+- **默认表面背景**：`{colors.bg}`，每页都在暖卡其纸上开场。
+- **默认标题色**：主分节标题与英雄标题用 `{colors.green}`；双栏或分屏布局里与正文配对的标题用 `{colors.black}`。拿不准时取 `{colors.green}`，绿标题是系统最响的编辑信号。
+- **默认正文色**：`{colors.black}`。
+- **默认边框色**：`{colors.black}`，每条结构边框都是黑，无例外。
+- **强调默认表面（陈述、英雄标注）**：`{colors.green}` 配 `{colors.white}` 文字。
+- **`{colors.green}` 表面上默认文字色**：`{colors.white}`（奶油）。
+- **`{colors.black}` 表面上默认文字色**：`{colors.bg}`（卡其画布），于是即便反转，文字仍读作"纸上的墨"。黑表面上的绿点缀（收尾页 eyebrow + 手写脚本）把反转提亮。
+- **默认 eyebrow / 标签色**：Bebas Neue 标签用 `{colors.green}`，加字距的 Space Grotesk 标签用 `{colors.black}`。
+- **默认首字下沉色**：`{colors.green}`。首字下沉是编辑指纹，始终是绿。
+- **默认手写脚本色**：卡其 / 奶油表面上 `{colors.black}`，黑表面上（收尾页）`{colors.green}`。
+- **默认行内高亮**：黑压卡其（`{components.inline-highlight}`），用来把正文段里的短语提起来，像用笔划过。
 
-The green and black accents are not interchangeable: **green = emphasis** (this is what we want you to notice), **black = structure** (this is what holds the page together). Reversing them — using black for emphasis and green for structure — flips the system's voice.
+绿与黑的点缀不可互换：**绿 = 强调**（这是要你注意的），**黑 = 结构**（这是把页面撑住的）。把两者反过来，用黑做强调、绿做结构，会翻转系统的声部。
 
-## Typography
+## 排印
 
-### Font Family
-The system pairs three Google Fonts:
+### 字族
+系统搭配三款 Google Fonts：
 
-- **Bebas Neue** (display): A condensed all-caps industrial sans-serif. Single weight (400) but reads bold by virtue of its dense vertical strokes. Used uppercase with 0.02–0.04em letter-spacing for every display moment — headlines, statements, statistics, ordinals, eyebrow labels. The narrow tracked Bebas voice is what makes the system unmistakably "zine."
-- **Space Grotesk** (body): A clean humanist geometric sans-serif with subtle quirky proportions. Used at weights 300–500 for body paragraphs at small sizes (13–18px), and at weight 600 for letter-spaced Space Grotesk caps labels. Provides the readable counterpoint to Bebas's expressive density.
-- **Caveat** (hand-script): A casual handwritten cursive. Used at weights 400–700 for author attributions ("— Our founding principle since day one"), side notes, decorative captions on display elements, value-fills in RSVP-style form layouts. Provides warmth and a human-hand voice against the otherwise typeset system.
+- **Bebas Neue**（展示）：压缩的全大写工业无衬线。单字重（400），但凭致密的竖笔读起来就粗。以全大写、0.02–0.04em 字距用于每个展示瞬间，标题、陈述、统计、序数、eyebrow 标签。窄而加字距的 Bebas 声部正是让系统一眼是"杂志"的东西。
+- **Space Grotesk**（正文）：干净的人文几何无衬线，带细微古怪比例。字重 300–500 用于小尺寸（13–18px）正文段，字重 600 用于加字距的 Space Grotesk 全大写标签。给 Bebas 的表现性密度一个易读的对位。
+- **Caveat**（手写脚本）：随意的手写草书。字重 400–700 用于作者署名（"— Our founding principle since day one"）、旁注、展示元素上的装饰图注、RSVP 式表单布局里的填值。在本就排印规整的系统里添暖意与人手声部。
 
-There is no fourth face. Italic does not exist (Caveat is a script face, not an italic). Underline does not exist. Emphasis is achieved by switching face (Space Grotesk body → Caveat hand-script for a personal note, Bebas Neue display for a callout) or by color (`{colors.black}` → `{colors.green}`).
+没有第四款字面。斜体不存在（Caveat 是脚本字面，不是斜体）。下划线不存在。强调靠换字面（Space Grotesk 正文 → Caveat 手写脚本写私人便签，Bebas Neue 展示作标注）或换色（`{colors.black}` → `{colors.green}`）达成。
 
-### Type Scale
+### 排印比例
 
-| Token | Size (clamp) | Family | Weight | Use |
+| Token | 尺寸（clamp） | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.display-hero}` | 56–160px | Bebas Neue | 400 | Closing or oversized cover headline |
-| `{typography.display-cover}` | 48–140px | Bebas Neue | 400 | Cover / opening display headline |
-| `{typography.display}` | 48–120px | Bebas Neue | 400 | Major declarative or callout display |
-| `{typography.headline}` | 42–90px | Bebas Neue | 400 | Primary section headline |
-| `{typography.statement}` | 36–90px | Bebas Neue | 400 | Long-form quoted statement |
-| `{typography.headline-md}` | 36–72px | Bebas Neue | 400 | Editorial section header |
-| `{typography.title}` | 24–42px | Bebas Neue | 400 | Region or collage-piece title |
-| `{typography.number-hero}` | 80–160px | Bebas Neue | 400 | Hero statistic numeral |
-| `{typography.number-md}` | 44–80px | Bebas Neue | 400 | Tile or sub-stat numeral |
-| `{typography.drop-cap}` | 48–80px | Bebas Neue | 400 | Initial cap leading an editorial paragraph |
-| `{typography.body-md}` | 14–18px | Space Grotesk | 400 | Lead paragraph or emphasized body |
-| `{typography.body}` | 13–16px | Space Grotesk | 400 | Standard paragraph body |
-| `{typography.label-eyebrow}` | 14–18px | Bebas Neue | 400 | Eyebrow label above a headline, tracked 0.2em |
-| `{typography.label-spaced}` | 12–14px | Space Grotesk | 600 | Tracked all-caps small label |
-| `{typography.caption-feature}` | 13–15px | Bebas Neue | 400 | Tracked all-caps caption or feature-callout label |
-| `{typography.hand-script}` | 22–36px | Caveat | 600 | Author attribution, decorative note, statement byline |
-| `{typography.hand-script-sm}` | 16–22px | Caveat | 400 | Small handwritten label or descriptor |
-| `{typography.hand-script-lg}` | 24–36px | Caveat | 600 | Larger handwritten subtitle |
+| `{typography.display-hero}` | 56–160px | Bebas Neue | 400 | 收尾或超大封面标题 |
+| `{typography.display-cover}` | 48–140px | Bebas Neue | 400 | 封面 / 开场展示标题 |
+| `{typography.display}` | 48–120px | Bebas Neue | 400 | 主要宣言或标注展示 |
+| `{typography.headline}` | 42–90px | Bebas Neue | 400 | 主分节标题 |
+| `{typography.statement}` | 36–90px | Bebas Neue | 400 | 长引述陈述 |
+| `{typography.headline-md}` | 36–72px | Bebas Neue | 400 | 编辑分节头 |
+| `{typography.title}` | 24–42px | Bebas Neue | 400 | 区域或拼贴件标题 |
+| `{typography.number-hero}` | 80–160px | Bebas Neue | 400 | 英雄统计数字 |
+| `{typography.number-md}` | 44–80px | Bebas Neue | 400 | 块或次级统计数字 |
+| `{typography.drop-cap}` | 48–80px | Bebas Neue | 400 | 引领编辑段落的首字 |
+| `{typography.body-md}` | 14–18px | Space Grotesk | 400 | 导语段或强调正文 |
+| `{typography.body}` | 13–16px | Space Grotesk | 400 | 标准段落正文 |
+| `{typography.label-eyebrow}` | 14–18px | Bebas Neue | 400 | 标题上方的 eyebrow 标签，字距 0.2em |
+| `{typography.label-spaced}` | 12–14px | Space Grotesk | 600 | 加字距的全大写小标签 |
+| `{typography.caption-feature}` | 13–15px | Bebas Neue | 400 | 加字距的全大写图注或特性标注标签 |
+| `{typography.hand-script}` | 22–36px | Caveat | 600 | 作者署名、装饰便签、陈述署名行 |
+| `{typography.hand-script-sm}` | 16–22px | Caveat | 400 | 小号手写标签或描述词 |
+| `{typography.hand-script-lg}` | 24–36px | Caveat | 600 | 较大的手写副标题 |
 
-### Defaults
-- **Default size for a primary section headline**: `{typography.headline}` (42–90px clamp) in `{colors.green}`.
-- **Default size for a cover or oversized opening headline**: `{typography.display-cover}` (48–140px clamp) in `{colors.green}`.
-- **Default size for paragraph body**: `{typography.body}` (13–16px clamp) — the zine register expects small body type, not modern 18px+ paragraphs.
-- **Default size for a lead paragraph or emphasized body**: `{typography.body-md}` (14–18px).
-- **Default size for an eyebrow label above a headline**: `{typography.label-eyebrow}` (14–18px) in `{colors.green}`, tracked 0.2em uppercase.
-- **Default size for a hero numerical figure**: `{typography.number-hero}` (80–160px clamp) in `{colors.green}`.
-- **Default size for any hand-script attribution / side note**: `{typography.hand-script}` (22–36px clamp).
-- **Default weight for any Bebas display element**: 400 (Bebas Neue ships at 400; weight changes are not part of the system).
-- **Default weight for body**: 400; for tracked-caps small labels: 600.
+### 默认值
+- **主分节标题默认尺寸**：`{colors.green}` 的 `{typography.headline}`（42–90px clamp）。
+- **封面或超大开场标题默认尺寸**：`{colors.green}` 的 `{typography.display-cover}`（48–140px clamp）。
+- **段落正文默认尺寸**：`{typography.body}`（13–16px clamp），杂志语域要小正文，不是现代 18px+ 段落。
+- **导语段或强调正文默认尺寸**：`{typography.body-md}`（14–18px）。
+- **标题上方 eyebrow 标签默认尺寸**：`{colors.green}`、0.2em 字距全大写的 `{typography.label-eyebrow}`（14–18px）。
+- **英雄数字默认尺寸**：`{colors.green}` 的 `{typography.number-hero}`（80–160px clamp）。
+- **任何手写脚本署名 / 旁注默认尺寸**：`{typography.hand-script}`（22–36px clamp）。
+- **任何 Bebas 展示元素默认字重**：400（Bebas Neue 出厂即 400，改字重不属于系统）。
+- **正文默认字重**：400；加字距全大写小标签：600。
 
-When unsure between `{typography.headline}` and `{typography.title}` for the dominant text moment on a slide, reach for `{typography.headline}` — `{typography.title}` is for collage-piece or region-level subtitling within a slide.
+页面主导文字在 `{typography.headline}` 与 `{typography.title}` 间拿不准时，取 `{typography.headline}`，`{typography.title}` 留给页内拼贴件或区域级副标题。
 
-### Signature Treatments
-These treatments are **non-optional whenever the corresponding element type is used**:
+### 招牌处理
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every Bebas Neue element is uppercase.** The font has lowercase glyphs but they are not used in this system. Sentence-case Bebas is not part of the vocabulary.
-- **Every Bebas Neue element carries positive letter-spacing of at least 0.02em.** Default tracking on Bebas reads as cramped; the 0.02–0.04em opens it up. Labels and eyebrows track even more (0.2–0.25em).
-- **Every primary section headline is set in `{colors.green}`.** Black headlines exist (for body-paired columns) but the system's loudest editorial voice is green-on-khaki.
-- **Every editorial paragraph that opens a column may carry a drop cap.** The drop cap is always `{components.drop-cap}` — green, Bebas Neue, line-height 0.8, floated left. Use it as the opening flourish for a feature-length body column.
-- **Every hand-script element uses Caveat.** Substituting another script face loses the personal-note voice.
-- **Hand-script attributions follow display headlines on quote / statement layouts.** A statement without a hand-script byline reads as incomplete; the byline grounds the quote as a human voice.
-- **Inline highlights inside body use the black-on-khaki pattern** (`{components.inline-highlight}`), not green-on-khaki. Green inline reads as a typo; black inline reads as a marker stripe.
+- **每个 Bebas Neue 元素都全大写。** 这款字体有小写字形，但本系统不用。句式 Bebas 不在词表内。
+- **每个 Bebas Neue 元素都带至少 0.02em 的正字距。** Bebas 用默认字距读作拥挤，0.02–0.04em 把它打开。标签与 eyebrow 字距更大（0.2–0.25em）。
+- **每个主分节标题都设 `{colors.green}`。** 黑标题存在（给与正文配对的栏），但系统最响的编辑声部是绿压卡其。
+- **每个开启一栏的编辑段落都可带首字下沉。** 首字下沉始终是 `{components.drop-cap}`，绿色、Bebas Neue、行高 0.8、左浮动。用它作长篇正文栏的开场华彩。
+- **每个手写脚本元素都用 Caveat。** 换成别的脚本字面会丢掉私人便签声部。
+- **手写脚本署名在引文 / 陈述布局里跟在展示标题之后。** 陈述没有手写脚本署名行读作不完整，署名把引文落成一个人的声音。
+- **正文里的行内高亮用黑压卡其式样**（`{components.inline-highlight}`），不用绿压卡其。绿色行内读成笔误，黑色行内读作马克笔划痕。
 
-### Typography Principles
-The system's typographic rhythm comes from **three-face contrast**: condensed industrial Bebas display (loud, tracked, uppercase) → clean Space Grotesk body (quiet, small, sentence case) → expressive Caveat hand-script (personal, looser, signature-style). Slides that use only one face read as monotonous; slides that mix all three within a single composition read as zine-correct.
+### 排印原则
+系统的排印节奏来自**三字面反差**：压缩工业 Bebas 展示（响、加字距、全大写）→ 干净 Space Grotesk 正文（静、小、句式）→ 表现性 Caveat 手写脚本（私人、松、签名式）。只用一款字面的页读作单调，在单一构图里把三款混起来的页读作杂志式正确。
 
-Line-height: tight on display (0.85–1.1), generous on body (1.6–1.7), loose on hand-script (1.3). Never invert these — tight body and loose display both break the rhythm.
+行高：展示紧（0.85–1.1）、正文宽（1.6–1.7）、手写脚本松（1.3）。绝不要倒置，正文紧、展示松都会破掉节奏。
 
-## Layout
+## 布局
 
-### Canvas System
-The system targets `100vw × 100vh` — full viewport. Each `.slide` is absolutely positioned to fill the viewport; only the `.active` slide is visible (opacity 1, others at opacity 0). Slide transitions use a 0.6s opacity + translateY(20px) ease for a soft paper-shuffle feel. Navigation is JS-driven via arrow keys, space, click, and touch swipe. A 4px tall `{colors.green}` progress bar runs flush along the bottom edge.
+### 画布系统
+系统以 `100vw × 100vh` 满视口为目标。每张 `.slide` 绝对定位铺满视口，只有 `.active` 页可见（opacity 1，其余 opacity 0）。页间过渡用 0.6s opacity + translateY(20px) ease，求柔和的翻纸感。导航由 JS 驱动，方向键、空格、点击、触屏滑动。一条 4px 高的 `{colors.green}` 进度条齐平贴在底边。
 
-### Padding Scale
-| Token | Value | Use |
+### 内边距比例
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.slide-pad}` | 60px | Standard slide outer padding |
-| `{spacing.slide-pad-wide}` | 60px 80px | Editorial column-spread outer padding |
-| `{spacing.card-pad-lg}` | 48px | Inside hero cards (RSVP, large callout) |
-| `{spacing.card-pad-md}` | 32px | Inside grid-box cells |
-| `{spacing.card-pad-sm}` | 24px | Inside collage pieces, smaller card cells |
-| `{spacing.gap-lg}` | 60px | Editorial column gap |
-| `{spacing.gap-md}` | 40px | Standard region gap |
-| `{spacing.gap-sm}` | 24px | Tight inline gap |
+| `{spacing.slide-pad}` | 60px | 标准页面外内边距 |
+| `{spacing.slide-pad-wide}` | 60px 80px | 编辑栏跨页外内边距 |
+| `{spacing.card-pad-lg}` | 48px | 英雄卡片内部（RSVP、大标注） |
+| `{spacing.card-pad-md}` | 32px | 网格盒单元内部 |
+| `{spacing.card-pad-sm}` | 24px | 拼贴件、较小卡片单元内部 |
+| `{spacing.gap-lg}` | 60px | 编辑栏间隙 |
+| `{spacing.gap-md}` | 40px | 标准区域间隙 |
+| `{spacing.gap-sm}` | 24px | 紧凑行内间隙 |
 
-### Persistent Chrome
-Three persistent elements live outside the slide composition:
-- **Progress bar** flush along the bottom-left, 4px tall, fill in `{colors.green}`. Grows as the deck advances.
-- **Slide counter** at bottom-right — Bebas Neue 14px in a 2px-bordered cream chip with khaki ink.
-- **Nav hint** at bottom-center — a black-fill pill with cream text, fading in only on `body:hover` (0.4s opacity transition).
+### 常驻外壳
+三个常驻元素活在页面构图之外：
+- **进度条**：齐平贴在左下，4px 高，填充 `{colors.green}`，随文稿推进增长。
+- **页码**：右下，Bebas Neue 14px，装在 2px 边框奶油小片里、卡其墨色。
+- **导航提示**：底部居中，黑填充胶囊配奶油文字，仅在 `body:hover` 时淡入（0.4s opacity 过渡）。
 
-### Region Borders vs Internal Padding
-The system follows a **border-as-divider** principle for grid containers — a parent container has a 3px solid black outer border, and each child cell has a 1.5px solid black border that creates a hairline cell-to-cell divider. Where regions abut at a slide-edge (split-screen layouts), the dividing line is 3px solid black with the two regions meeting it directly — no gap.
+### 区域边框对内部内边距
+系统对网格容器遵循**边框即分隔**原则：父容器有 3px 实黑外边框，每个子单元有 1.5px 实黑边框，造出单元间细线分隔。区域在页边相接时（分屏布局），分隔线是 3px 实黑，两个区域直接贴着它，没有间隙。
 
-For free compositions (collage, hero, manifesto), regions are positioned absolutely with rotation and overlap; borders sit on individual pieces, not on the slide grid.
+自由构图（拼贴、英雄、宣言）里，区域带旋转与重叠绝对定位，边框落在各个件上，而非落在页面网格上。
 
-## Depth and Elevation
+## 纵深与层级
 
-### Paper-on-Paper Offset Block (Primary Technique)
-The signature depth treatment is the **offset color block**: a card carries a `::before` pseudo-element absolutely positioned, offset 12px down-and-right, filled in `{colors.green}` (or another accent), and z-indexed behind the card. The visual effect is a layered paper underprint — the card looks like it sits on top of a slightly-larger green sheet of paper, with the green showing through at the bottom-right edges. Used on hero RSVP cards and primary callout containers.
+### 纸压纸偏移块（主手法）
+招牌纵深处理是**偏移色块**：卡片带一个绝对定位的 `::before` 伪元素，朝右下偏移 12px、填 `{colors.green}`（或别的强调色）、z-index 排在卡片之后。视觉效果是分层纸套印，卡片看着像坐在一张略大的绿纸上面，绿色从右下边缘透出来。用于英雄 RSVP 卡与主标注容器。
 
-### Rotation (Secondary Technique)
-Small rotations (`-8deg` stamp, `+6deg` stamp-alt, `-5deg` to `+5deg` collage) on stamp marks, RSVP labels, visual overlay callouts, and collage pieces give the system its hand-placed energy. Rotations are intentional — never accidental tilt — and reserved for elements meant to read as physical artifacts (stamps, taped pieces, applied labels).
+### 旋转（次级手法）
+印章标记、RSVP 标签、视觉叠加标注、拼贴件上的小旋转（`-8deg` 印章、`+6deg` stamp-alt、`-5deg` 到 `+5deg` 拼贴）给系统手放的能量。旋转是刻意的，绝非偶然歪斜，且只留给该读作实体物件的元素（印章、贴胶带的件、贴上去的标签）。
 
-### Grain Overlay (Atmospheric Texture)
-A subtle SVG fractal-noise overlay sits over every slide at 0.07 opacity, tinting all surfaces with print grain. This is not depth in the strict sense — it's surface texture that grounds every flat color block in the printed-paper register. Removing the grain breaks the zine voice immediately.
+### 颗粒叠层（氛围纹理）
+一层细微的 SVG 分形噪声叠层以 0.07 不透明度盖在每页上，给所有表面染上印刷颗粒。严格说这不是纵深，而是把每块平色块落实在印刷纸语域里的表面纹理。去掉颗粒会立刻破掉杂志声部。
 
-### No Web Shadows
-The system uses **no blurred `box-shadow`, no `drop-shadow`, no rgba shadow tints** for depth. The offset color block, the rotations, and the grain overlay are the entire depth grammar. A modern soft shadow on any element breaks the print aesthetic.
+### 无网页阴影
+系统用**零模糊 `box-shadow`、零 `drop-shadow`、零 rgba 着色阴影**做纵深。偏移色块、旋转、颗粒叠层就是全部纵深语法。任何元素上的现代柔阴影都会破掉印刷美学。
 
-### Color-Block Contrast
-Beyond shadows and rotations, **green-on-khaki and black-on-khaki contrast** provides regional depth. A green ribbon bar inside a khaki region visually projects forward; a black region behind a white card visually recedes. The palette's high contrast is the secondary depth signal.
+### 色块反差
+阴影与旋转之外，**绿压卡其与黑压卡其的反差**提供区域纵深。卡其区域里的绿飘带条在视觉上往前凸，白卡背后的黑区域在视觉上往后退。调色板的高反差是次级纵深信号。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
-The system has **no rounded corners**. Every shape — cards, ribbon bars, stamps, RSVP cards, table cells, drop caps, chips, divider stubs — is a strict rectangle or square. Border-radius is `0` system-wide.
+### 圆角
+系统**没有圆角**。每个形状，卡片、飘带条、印章、RSVP 卡、表格单元、首字下沉、小片、分隔短线，都是严格矩形或方形。border-radius 全系统为 `0`。
 
-### Border Weights
-- **3px solid `{colors.black}`** — the universal structural border on cards, region dividers, grid container outer borders, collage pieces, RSVP cards, hero callouts.
-- **2px solid `{colors.black}`** — used for editorial column rules, RSVP-field underlines, ed-header bottoms, and the stamp-mark green border.
-- **1.5px solid `{colors.black}`** — used for grid cell sub-borders inside a 3px outer-bordered container, and for ledger header underlines.
-- **1px solid rgba(black, 0.22)** — used for ledger row dividers and hairline tabular separations.
+### 边框粗细
+- **3px 实 `{colors.black}`**：卡片、区域分隔、网格容器外边框、拼贴件、RSVP 卡、英雄标注上的通用结构边框。
+- **2px 实 `{colors.black}`**：编辑栏线、RSVP 栏下划线、ed-header 底边、印章标记的绿边框。
+- **1.5px 实 `{colors.black}`**：3px 外边框容器内的网格单元子边框、账表头下划线。
+- **1px 实 rgba(black, 0.22)**：账表行分隔与细线表格分隔。
 
-Borders are always black. Colored borders do not exist except the green border on the `{components.stamp-mark}` approval stamp.
+边框始终是黑。除 `{components.stamp-mark}` 批准印章上的绿边框外，不存在彩色边框。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Line box** (`{components.line-box}`) — Generic 3px-bordered card on khaki background. The system's default content container. Padding from the `{spacing.card-pad-*}` scale.
+**线盒（`{components.line-box}`）**：卡其背景上的通用 3px 边框卡片。系统默认内容容器。内边距取 `{spacing.card-pad-*}` 比例。
 
-**Card with offset** (`{components.card-offset}`) — White cream card with a 3px black border and a 12px-offset green slab sitting behind via `::before`. The signature paper-on-paper card.
+**带偏移卡片（`{components.card-offset}`）**：白奶油卡，3px 黑边框，一块经 `::before` 坐在背后 12px 偏移的绿板。招牌纸压纸卡片。
 
-**Stamp** (`{components.stamp}` / `{components.stamp-mark}`) — Any element may be rotated -8° (stamp) or +6° (stamp-alt) to read as a hand-pressed mark. The `stamp-mark` variant is a black rectangle with green text and green border. Used as approval seals, "CONTACT US" badges, and editorial stamps.
+**印章（`{components.stamp}` / `{components.stamp-mark}`）**：任何元素可旋转 -8°（stamp）或 +6°（stamp-alt），读作手压的印记。`stamp-mark` 变体是黑矩形配绿文字、绿边框。用作批准封印、`CONTACT US` 徽章、编辑印章。
 
-**Collage piece** (`{components.collage-piece}`) — Free-positioned panel with 3px black border and small rotation. Backgrounds rotate across pieces: green, white-cream, khaki-dark, black-inverted. Used in collage compositions where multiple pieces scatter across the slide with overlap.
+**拼贴件（`{components.collage-piece}`）**：自由定位面板，3px 黑边框、小旋转。背景在件间轮换：绿、白奶油、深卡其、黑反色。用于多件散落重叠在页上的拼贴构图。
 
-**Tape** (`{components.tape}`) — Translucent white rectangle layered at random angle over collage pieces to suggest physical taped-down paper. Always semi-transparent, always at a sharp angle (-40° to +35°).
+**胶带（`{components.tape}`）**：半透明白矩形，以随机角度叠在拼贴件上，暗示被胶带贴住的实体纸。始终半透明、始终带锐角（-40° 到 +35°）。
 
-**Ribbon bar** (`{components.ribbon-bar}`) — Solid green color block with cream text — used as eyebrow strips, accent bars, and inline section labels. Read as a printed ribbon glued onto the page.
+**飘带条（`{components.ribbon-bar}`）**：实绿色块配奶油文字，用作 eyebrow 条、强调条、行内分节标签。读作粘在页上的印刷飘带。
 
-**Drop cap** (`{components.drop-cap}`) — Oversized green Bebas Neue initial that opens an editorial paragraph. Floated left, line-height 0.8, body text wraps around.
+**首字下沉（`{components.drop-cap}`）**：开启编辑段落的超大绿色 Bebas Neue 首字母。左浮动、行高 0.8，正文绕排。
 
-**Inline highlight** (`{components.inline-highlight}`) — Black-on-khaki marker swipe applied inline inside body paragraphs to lift a phrase. The print equivalent of a marker pen.
+**行内高亮（`{components.inline-highlight}`）**：黑压卡其的马克笔划痕，行内施于正文段里提起一个短语。相当于印刷版的马克笔。
 
-**RSVP field** (`{components.rsvp-field}`) — Form-field row pattern with a Bebas Neue green label paired with hand-script Caveat "writing" over a 2px black underline. The system's "filled-by-hand" form pattern.
+**RSVP 栏（`{components.rsvp-field}`）**：表单栏行式样，Bebas Neue 绿标签配手写脚本 Caveat 的"填写"，压在 2px 黑下划线上。系统的"手工填写"表格式样。
 
-**Ledger row** (`{components.ledger-row}`) — Horizontal data row pattern with date | title | edition | track | nr columns. Header row has 1.5px black underline; body rows have 1px hairline dividers. Each row may contain a color-coded chip (`{components.chip}`) tagging its category.
+**账表行（`{components.ledger-row}`）**：横向数据行式样，列有 date | title | edition | track | nr。表头行带 1.5px 黑下划线，正文行带 1px 细线分隔。每行可含一个颜色编码的 `{components.chip}` 标类别。
 
-**Chip** (`{components.chip}`) — Mono-font color block (JetBrains Mono if used, else default mono) tagging a row category. Fill colors: green, plus the categorical-palette extension on slides that pull from the broader stamp palette.
+**小片（`{components.chip}`）**：等宽字体色块（用则 JetBrains Mono，否则默认等宽），标行类别。填充色：绿，外加从更广印章调色板取色的页上的分类型调色板扩展。
 
-**Divider stub** (`{components.divider-stub}`) — A short 4px solid horizontal rule (60–80px wide), centered, used as visual breath above/below a hero title or statement. White on green surfaces, green on black surfaces.
+**分隔短线（`{components.divider-stub}`）**：居中的短 4px 实水平线（60–80px 宽），作英雄标题或陈述上下的视觉呼吸。绿表面上为白，黑表面上为绿。
 
-**Hand-script element** — Any text in Caveat. The system signal for "human voice" — attributions, side notes, captions, RSVP-field fills, closing-slide sign-offs.
+**手写脚本元素**：任何 Caveat 文字。系统标示"人的声音"的信号，署名、旁注、图注、RSVP 栏填值、收尾页落款。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
-- Keep the SVG grain overlay (`{components.grain-overlay}`) on every slide at 0.07 opacity. It is the texture that anchors the entire deck to the printed-paper register.
-- Use Bebas Neue uppercase with 0.02–0.04em tracking for every display, headline, statement, statistic, numeral, and eyebrow label.
-- Reach for `{colors.green}` as the default headline color for primary section headlines. Green-on-khaki is the system's loudest editorial signal.
-- Use the paper-on-paper offset pattern (`{components.card-offset}`) on hero callouts and RSVP-style cards — a green slab behind a white card via `::before`.
-- Apply small rotations (-8° stamps, -5° to +5° collage pieces) to elements meant to read as physical artifacts. Rotation should always feel intentional.
-- Use drop caps (`{components.drop-cap}`) to open editorial body columns. They are the system's editorial fingerprint.
-- Mix the three faces — Bebas Neue display + Space Grotesk body + Caveat hand-script — within a single composition. Three-face contrast is the typographic rhythm.
-- Set inline highlights inside body paragraphs in black-on-khaki (`{components.inline-highlight}`), mimicking a marker swipe.
-- Pair every quote / statement with a Caveat hand-script byline below. The script attribution grounds the quote as a human voice.
-- Layer translucent tape pieces (`{components.tape}`) at sharp angles over collage compositions to suggest physical taped-down paper.
+### 该做
+- 每页保留 SVG 颗粒叠层（`{components.grain-overlay}`）于 0.07 不透明度。它是把整份文稿锚在印刷纸语域上的纹理。
+- 每个展示、标题、陈述、统计、数字、eyebrow 标签都用 Bebas Neue 全大写、0.02–0.04em 字距。
+- 主分节标题默认标题色取 `{colors.green}`。绿压卡其是系统最响的编辑信号。
+- 英雄标注与 RSVP 式卡片用纸压纸偏移式样（`{components.card-offset}`），经 `::before` 在白卡后放一块绿板。
+- 给该读作实体物件的元素套小旋转（-8° 印章、-5° 到 +5° 拼贴件）。旋转始终要显得刻意。
+- 用首字下沉（`{components.drop-cap}`）开启编辑正文栏。它们是系统的编辑指纹。
+- 在单一构图里混三款字面，Bebas Neue 展示 + Space Grotesk 正文 + Caveat 手写脚本。三字面反差是排印节奏。
+- 正文段里的行内高亮设黑压卡其（`{components.inline-highlight}`），模仿马克笔划痕。
+- 每条引文 / 陈述都在下方配一行 Caveat 手写脚本署名。脚本署名把引文落成人的声音。
+- 在拼贴构图上以锐角叠半透明胶带片（`{components.tape}`），暗示被胶带贴住的实体纸。
 
-### Don't
-- Don't round any corner. Border-radius is 0 system-wide on every element.
-- Don't use blurred `box-shadow`. All depth comes from the offset color block, rotation, and the grain overlay.
-- Don't substitute another display face for Bebas Neue. The condensed industrial tracked-uppercase voice is the entire system identity.
-- Don't use Bebas Neue in sentence case. Bebas always renders uppercase in this system; lowercase Bebas reads as wrong.
-- Don't substitute another script face for Caveat. The casual ballpoint voice is part of the system; Lobster, Pacifico, etc. land elsewhere.
-- Don't introduce a third brand color. Khaki + green + black + cream is the system. Adding blue or red breaks the earth-and-forest palette. The chip palette extension (orange / pink / blue / red) is reserved for categorical chip tags inside tabular ledgers — not for general accents.
-- Don't use green-on-khaki for inline highlights. Inline marker swipes are black-on-khaki; green inline reads as a typo.
-- Don't tilt elements more than ±8°. Beyond that, hand-placed becomes broken.
-- Don't put body text larger than 18px. The zine column-density register depends on small body type (13–16px). Modern 20px+ body reads as overscaled.
-- Don't use pure white (#FFFFFF) for cards. The cream (`{colors.white}` #F4EFE6) maintains the paper-on-paper register; pure white reads as digital.
+### 不该做
+- 不要给任何角加圆角。每个元素上 border-radius 全系统为 0。
+- 不要用模糊 `box-shadow`。纵深全来自偏移色块、旋转与颗粒叠层。
+- 不要把 Bebas Neue 换成别的展示字面。压缩工业加字距全大写的声部就是整套系统身份。
+- 不要把 Bebas Neue 排成句式。本系统里 Bebas 始终渲染全大写，小写 Bebas 读作错的。
+- 不要把 Caveat 换成别的脚本字面。随意圆珠笔声部属于系统，Lobster、Pacifico 等落在别处。
+- 不要引入第三种品牌色。卡其 + 绿 + 黑 + 奶油就是系统。加蓝或加红会破掉土地与森林配色。小片调色板扩展（橙 / 粉 / 蓝 / 红）只预留给账表内分类型小片标签，不作通用强调。
+- 不要把绿压卡其用于行内高亮。行内马克笔划痕是黑压卡其，绿色行内读成笔误。
+- 不要把元素倾斜超过 ±8°。超过之后，手放就变成坏了。
+- 不要把正文放到大于 18px。杂志栏密度语域依赖小正文（13–16px），现代 20px+ 正文读作尺寸过大。
+- 不要用纯白（#FFFFFF）做卡片。奶油（`{colors.white}` #F4EFE6）维持纸压纸语域，纯白读作数字感。
 
-## Responsive Behavior
+## 响应式行为
 
-The system targets `100vw × 100vh` and uses `clamp()` throughout for fluid scaling. A single media query at `max-width: 768px` reflows multi-column layouts to single-column, removes inter-column border rules and replaces them with bottom-borders, and reduces slide padding to 32px.
+系统以 `100vw × 100vh` 为目标、通篇用 `clamp()` 流式缩放。单条 `max-width: 768px` 媒体查询把多栏布局重排成单栏、去掉栏间边框线换成底边框、把页面内边距降到 32px。
 
-### Scaling Behavior
-- Display headlines scale from 48px at minimum to 140–160px at maximum.
-- Body text scales from 13px to 16–18px.
-- Padding scales from 32px (mobile) to 60–80px (desktop).
-- Borders, tape sizes, and stamp rotations are fixed — they do not scale with viewport.
+### 缩放行为
+- 展示标题从最小 48px 缩到最大 140–160px。
+- 正文从 13px 缩到 16–18px。
+- 内边距从 32px（移动端）缩到 60–80px（桌面）。
+- 边框、胶带尺寸、印章旋转固定，不随视口缩放。
 
-### Presenter Behavior
-- Slides advance via `ArrowRight`, `ArrowDown`, `Space`, `Enter`, `PageDown`, or a click on the right half of the viewport.
-- Slides reverse via `ArrowLeft`, `ArrowUp`, `PageUp`, or a click on the left half.
-- The active slide carries the `.active` class; inactive slides are at opacity 0 with `translateY(20px)`.
-- Touch swipe horizontal advances/reverses on mobile.
-- The nav hint at bottom-center fades in on `body:hover` (0.4s opacity).
+### 放映行为
+- `ArrowRight`、`ArrowDown`、`Space`、`Enter`、`PageDown`、或点击视口右半前进。
+- `ArrowLeft`、`ArrowUp`、`PageUp`、或点击左半后退。
+- 激活页带 `.active` 类，非激活页 opacity 0 且 `translateY(20px)`。
+- 移动端横向触屏滑动前进 / 后退。
+- 底部居中导航提示在 `body:hover` 时淡入（0.4s opacity）。
 
-### Print Behavior
-No `@media print` rule is defined. The deck is web/viewport-first.
+### 打印行为
+没有定义 `@media print` 规则。文稿以网页 / 视口为先。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin | Chinese | Weight mapping |
+| 角色 | 拉丁 | 中文 | 字重映射 |
 |---|---|---|---|
-| Display / Headline / Statement / Title / Number / Drop-cap / Label-eyebrow | Bebas Neue (400) | **思源宋体 Noto Serif SC** | 900 |
-| Body / Body-md / Label-spaced | Space Grotesk (400 / 600) | **思源宋体 Noto Serif SC** | 400 (body), 600 (label) |
-| Hand-script (Caveat) — Latin only | Caveat (400 / 600) | *(no CJK substitute)* | n/a |
+| 展示 / 标题 / 陈述 / 题目 / 数字 / 首字下沉 / eyebrow 标签 | Bebas Neue（400） | **思源宋体 Noto Serif SC** | 900 |
+| 正文 / 正文-md / 加字距标签 | Space Grotesk（400 / 600） | **思源宋体 Noto Serif SC** | 400（正文），600（标签） |
+| 手写脚本（Caveat），仅拉丁 | Caveat（400 / 600） | *（无 CJK 替代）* | 不适用 |
 
-### Mixed-Content Strategy
+### 混排策略
 
-**Strategy A — single CJK family (思源宋体 Noto Serif SC) carries every typeset role.** Bebas Neue's condensed-industrial-uppercase voice has no Chinese sans equivalent that preserves the heavy poster weight without reading as a clichéd kanji-style display. Noto Serif SC at weight 900, however, carries genuine print-press weight that maps to the zine register: the deep serif strokes echo letterpress and woodblock printing, which is *closer* to the system's mid-century-activist-poster aesthetic than any Chinese sans would be. Pairing Latin Bebas + Chinese Noto Serif SC reads as "translated edition of the same zine," not as two competing systems. For body, the same family at weight 400 sits comfortably at small sizes (13–16px) and preserves the magazine column density.
+**策略 A：单一 CJK 字族（思源宋体 Noto Serif SC）承载每个排印角色。** Bebas Neue 压缩工业全大写声部，没有既保住厚重海报分量、又不读成套话汉字展示的中文无衬线对应。而 Noto Serif SC 字重 900 承载真正的印刷机分量，映射到杂志语域：深衬线笔画呼应凸版与木刻印刷，这比任何中文无衬线都*更*贴近系统的世纪中叶行动主义海报美学。拉丁 Bebas 配中文 Noto Serif SC 读作"同一份杂志的翻译版"，而非两套互相打架的系统。正文用同族字重 400，在小尺寸（13–16px）下安稳，保住杂志栏密度。
 
-### Loading
+### 加载
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -513,7 +517,7 @@ No `@media print` rule is defined. The deck is web/viewport-first.
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
 ```
 
-Then append `'Noto Serif SC'` to the appropriate font stacks:
+然后把 `'Noto Serif SC'` 追加到相应字体栈：
 ```css
 /* Display roles */
 font-family: 'Bebas Neue', 'Noto Serif SC', sans-serif;
@@ -521,49 +525,49 @@ font-family: 'Bebas Neue', 'Noto Serif SC', sans-serif;
 font-family: 'Space Grotesk', 'Noto Serif SC', sans-serif;
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- Line-height: body 1.75–1.85, display 1.15–1.25
-- Letter-spacing: 0 on CJK
-- Text-transform: no uppercase on CJK
-- Full-width punctuation
-- No period on display headlines
-- Pangu spacing (盘古之白): `使用 Claude` not `使用Claude`
-- One font per sentence
+- 行高：正文 1.75–1.85，展示 1.15–1.25
+- 字距：CJK 设 0
+- 文字变换：CJK 不用 uppercase
+- 全角标点
+- 展示标题不加句号
+- 盘古之白（Pangu spacing）：`使用 Claude` 而非 `使用Claude`
+- 一句一款字体
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-- **The 0.02–0.04em positive tracking that defines Bebas display must drop to 0** on CJK. Tracked Chinese characters look broken — the spacing visually divides each character into a separate word. The compression-and-tracking signature of Bebas does not transfer; lean on weight 900 alone to carry the display voice.
-- **Display line-height must open from 0.85–0.95 to 1.15–1.25.** Bebas's tight line-height is a Latin-display convention; CJK characters fully occupy their em-box and need vertical breathing room.
-- **Drop caps need re-thinking.** A Bebas drop cap floats left of body text; a Noto Serif SC drop cap at the same size (`clamp(48px, 6vw, 80px)`) in `{colors.green}` works visually but lacks the editorial-tradition resonance — Chinese typography has historically not used drop caps. Either retain the treatment as a Western-editorial nod, or replace with a green vertical sidebar (3px wide, green fill) running alongside the opening paragraph.
-- **Inline highlights, ribbon bars, and stamp marks all translate cleanly** — they are color-block treatments, not glyph-dependent.
-- **Hand-script Caveat is the system's "human voice" — and has no Chinese equivalent that preserves the ballpoint-cursive personality.** Treat Caveat moments as Latin-only: attributions in Latin, side notes in Latin even on otherwise-Chinese slides, RSVP form fills in Latin. The contrast between Chinese typeset body and Latin handwritten margin notes can actually deepen the zine voice (it reads as "translator's annotation," which fits the small-press register).
-- **Editorial body sizes (13–16px) still apply** — Noto Serif SC at this size reads as dense magazine column text, which is correct for the zine register.
+- **定义 Bebas 展示的 0.02–0.04em 正字距在 CJK 上必须降到 0**。加字距的汉字看着是坏的，间距在视觉上把每个字切成独立的词。Bebas 的压缩加字距招牌迁移不过来，单靠字重 900 扛起展示声部。
+- **展示行高必须从 0.85–0.95 放宽到 1.15–1.25。** Bebas 的紧行高是拉丁展示惯例，CJK 字符占满 em 框，需要纵向呼吸空间。
+- **首字下沉要重新想。** Bebas 首字下沉浮在正文左侧，同样尺寸（`clamp(48px, 6vw, 80px)`）的 `{colors.green}` Noto Serif SC 首字下沉视觉上成立，却缺编辑传统的共鸣，中文排印历史上不用首字下沉。要么把它当作西式编辑致意保留，要么换成一条沿开场段落走的绿色竖侧栏（3px 宽、绿填充）。
+- **行内高亮、飘带条、印章标记都干净迁移**，它们是色块处理，不依赖字形。
+- **手写脚本 Caveat 是系统的"人的声音"，没有能保住圆珠笔草书性格的中文对应。** 把 Caveat 瞬间当作纯拉丁：署名用拉丁，即便在其余全中文的页上旁注也用拉丁，RSVP 表单填值用拉丁。中文排印正文与拉丁手写页边注之间的反差其实能加深杂志声部（读作"译者注"，正贴小出版社语域）。
+- **编辑正文尺寸（13–16px）仍然适用**，Noto Serif SC 在该尺寸下读作致密的杂志栏文，对杂志语域是对的。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-The system's three-face contrast (Bebas display + Space Grotesk body + Caveat hand-script) is a Latin-typographic argument; collapsing it to a single CJK serif loses one rhythm and gains another. The decision to use a serif (Noto Serif SC) rather than a sans (Noto Sans SC) is deliberate — the zine's mid-century printed-press lineage maps better to Chinese serif tradition than to Chinese geometric sans. A deck that mixes Chinese and English will need to accept that the English Bebas voice and the Chinese Serif voice are different registers; this is unavoidable in any heavy-poster CJK adaptation.
+系统的三字面反差（Bebas 展示 + Space Grotesk 正文 + Caveat 手写脚本）是拉丁排印论点，塌成单一 CJK 衬线会丢掉一种节奏、换来另一种。选衬线（Noto Serif SC）而非无衬线（Noto Sans SC）是刻意的，杂志的世纪中叶印刷机血脉映射到中文衬线传统，比映射到中文几何无衬线更贴。中英混排的文稿得接受英文 Bebas 声部与中文宋体声部是不同语域，这在任何厚重海报式 CJK 改编里都不可避免。
 
-## Iteration Guide
+## 迭代指南
 
-1. Every new slide carries the SVG grain overlay at 0.07 opacity. Removing the grain breaks the zine voice immediately.
-2. Any new headline uses Bebas Neue uppercase, weight 400, tracking 0.02–0.04em. For the primary slide moment reach for `{typography.headline}` in `{colors.green}`; for splits or columns where the headline pairs with body, use `{colors.black}`.
-3. Any new body uses Space Grotesk at 13–16px (or 14–18px for lead body). Line-height 1.6–1.7. Don't enlarge body beyond 18px.
-4. Any new eyebrow label uses `{typography.label-eyebrow}` (Bebas Neue, 14–18px, 0.2em tracking) in `{colors.green}` for the most-emphasized eyebrow; switch to `{typography.label-spaced}` (Space Grotesk weight 600, 0.25em tracking) for secondary labels.
-5. Any new card uses a 3px solid black border on white-cream or khaki background. For hero callouts, add the 12px-offset green slab via `::before` (`{components.card-offset}`).
-6. Any new editorial column may carry a drop cap — green Bebas Neue, floated left, line-height 0.8. Drop caps are the editorial fingerprint.
-7. Any new statement / quote slide pairs a Bebas Neue uppercase quote with a Caveat hand-script byline. The byline is not optional.
-8. Any collage composition uses 3px-bordered collage pieces at small rotations (-5° to +5°), with translucent tape pieces at sharp angles overlapping the joints. Cycle backgrounds: green, white-cream, khaki-dark, black-inverted.
-9. Any tabular ledger uses the `{components.ledger-row}` pattern with header underline at 1.5px and body row dividers at 1px hairline. Categorical tags use mono-font `{components.chip}` in green or the categorical chip palette.
-10. Status / approval stamps use `{components.stamp-mark}` — black background, green text, green 2px border, rotated -8°. Reserve for moments that earn a stamp; overuse degrades the signal.
+1. 每张新页都带 0.07 不透明度的 SVG 颗粒叠层。去掉颗粒会立刻破掉杂志声部。
+2. 任何新标题都用 Bebas Neue 全大写、字重 400、字距 0.02–0.04em。页面主瞬间取 `{colors.green}` 的 `{typography.headline}`；分屏或栏里标题与正文配对时用 `{colors.black}`。
+3. 任何新正文都用 13–16px 的 Space Grotesk（导语正文 14–18px），行高 1.6–1.7。别把正文放大超过 18px。
+4. 任何新 eyebrow 标签，最强调的用 `{colors.green}` 的 `{typography.label-eyebrow}`（Bebas Neue、14–18px、0.2em 字距），次级标签切到 `{typography.label-spaced}`（Space Grotesk 字重 600、0.25em 字距）。
+5. 任何新卡片都用白奶油或卡其背景上的 3px 实黑边框。英雄标注加经 `::before` 的 12px 偏移绿板（`{components.card-offset}`）。
+6. 任何新编辑栏都可带首字下沉，绿色 Bebas Neue、左浮动、行高 0.8。首字下沉是编辑指纹。
+7. 任何新陈述 / 引文页都把 Bebas Neue 全大写引文与一行 Caveat 手写脚本署名配对。署名不可省略。
+8. 任何拼贴构图都用带小旋转（-5° 到 +5°）的 3px 边框拼贴件，接缝处叠锐角半透明胶带片。背景轮换：绿、白奶油、深卡其、黑反色。
+9. 任何账表都用 `{components.ledger-row}` 式样，表头下划线 1.5px、正文行分隔 1px 细线。分类型标签用绿色或分类型小片调色板的等宽 `{components.chip}`。
+10. 状态 / 批准印章用 `{components.stamp-mark}`，黑背景、绿文字、2px 绿边框、旋转 -8°。留给配得上盖章的瞬间，滥用会稀释信号。
 
-## Known Gaps
+## 已知缺口
 
-- The system loads three Google Fonts (Bebas Neue, Caveat, Space Grotesk) from a CDN. Bebas Neue is single-weight (400 only); attempting to use a heavier weight will fall back. Self-hosting is recommended for production.
-- The grain overlay is an inline SVG data URI with `feTurbulence` — rendering will vary slightly across browsers, especially older Safari and Firefox versions.
-- The paper-on-paper offset block depends on a `::before` pseudo-element with `z-index: -1`. Cards must have `position: relative` and the parent must not clip overflow, or the offset slab will be cut off.
-- The chip color extension on ledger rows uses red / pink / orange / blue / green — pulled in only for categorical tagging inside tables. These colors are not part of the general system palette and should not appear elsewhere in a slide composition.
-- The Caveat hand-script face has a strong cultural register (casual American handwriting). It does not pair well with non-Latin scripts; a CJK or Cyrillic deck would need a different hand-script substitution.
-- The `body:hover` fade-in on the nav hint does not trigger on touch devices, which means mobile users may never see the nav hint. Treat the hint as desktop-only chrome.
-- The closing slide uses a `{colors.black}` background with `{colors.bg}` (khaki) text. The grain overlay still applies but is much less visible at 0.07 opacity over black — the print register is weaker on the closing slide than on khaki-background slides.
-- The form-field RSVP card uses hand-drawn underscores (`_________`) as the "blank line" — these are character-based, not rendered as actual `<input>` underlines, and will not align perfectly across system fonts.
+- 系统从 CDN 加载三款 Google Fonts（Bebas Neue、Caveat、Space Grotesk）。Bebas Neue 单字重（仅 400），试图用更重字重会回退。生产环境建议自托管。
+- 颗粒叠层是带 `feTurbulence` 的行内 SVG data URI，渲染会随浏览器略变，较旧 Safari 与 Firefox 版本尤其。
+- 纸压纸偏移块依赖 `z-index: -1` 的 `::before` 伪元素。卡片必须有 `position: relative` 且父级不得裁切 overflow，否则偏移板会被切掉。
+- 账表行上的小片颜色扩展用红 / 粉 / 橙 / 蓝 / 绿，仅为表内分类型标记引入。这些颜色不属于通用系统调色板，不该出现在页面构图的别处。
+- Caveat 手写脚本字面带很强的文化语域（随意美式手写）。它与非拉丁文字不搭，CJK 或西里尔文稿需要换别的手写脚本替代。
+- 导航提示的 `body:hover` 淡入在触屏设备上不触发，意味着移动端用户可能永远看不到导航提示。把提示当作仅桌面外壳。
+- 收尾页用 `{colors.black}` 背景配 `{colors.bg}`（卡其）文字。颗粒叠层仍适用，但 0.07 不透明度压在黑上明显更不明显，收尾页的印刷语域比卡其背景页弱。
+- 表单 RSVP 卡用手画下划线（`_________`）作"空行"，这些是基于字符的、并非渲染成真正的 `<input>` 下划线，跨系统字体不会完美对齐。

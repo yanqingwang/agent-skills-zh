@@ -1,9 +1,13 @@
-# Quick start: executable synthetic examples
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/researcher/science/statsmodels/references/quick_start_guide.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Run the four blocks in order with the stack in SKILL.md. The generated data are
-mechanical smoke checks, not evidence that a model fits a real scientific problem.
+# 快速上手：可执行的合成示例
 
-## OLS: design alignment and uncertainty targets
+用 SKILL.md 里的环境按顺序运行下面四个代码块。生成的数据只是
+机械的冒烟检查，不能证明某个模型适合真实的科学问题。
+
+## OLS：设计对齐与不确定性对象
 
 ```python
 import numpy as np
@@ -37,7 +41,7 @@ plt.ylabel("Residuals")
 plt.show()
 ```
 
-## Binary logit: average marginal effects and held-out evaluation
+## 二值 logit：平均边际效应与留出评估
 
 ```python
 from scipy.special import expit
@@ -58,7 +62,7 @@ print("Held-out log loss:", log_loss(y_binary[test], probs))
 # Select any classification threshold on training/validation data, not this test set.
 ```
 
-## ARIMA: chronological validation and forecast intervals
+## ARIMA：按时间顺序验证与预测区间
 
 ```python
 from statsmodels.tsa.arima.model import ARIMA
@@ -88,7 +92,7 @@ innov = innov[ts_result.loglikelihood_burn:]
 print(acorr_ljungbox(innov, lags=[10], model_df=1, return_df=True))
 ```
 
-## Poisson GLM: exposure and conditional mean intervals
+## Poisson GLM：exposure 与条件均值区间
 
 ```python
 exposure = rng.uniform(0.5, 2.0, n)

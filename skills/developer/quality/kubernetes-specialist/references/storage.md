@@ -1,8 +1,12 @@
-# Kubernetes Storage
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/storage.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## StorageClass Definitions
+# Kubernetes 存储
 
-### AWS EBS (gp3)
+## StorageClass 定义
+
+### AWS EBS（gp3）
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -23,7 +27,7 @@ allowVolumeExpansion: true
 reclaimPolicy: Delete
 ```
 
-### GCE Persistent Disk (SSD)
+### GCE Persistent Disk（SSD）
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -39,7 +43,7 @@ allowVolumeExpansion: true
 reclaimPolicy: Delete
 ```
 
-### Azure Disk (Premium SSD)
+### Azure Disk（Premium SSD）
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -55,7 +59,7 @@ allowVolumeExpansion: true
 reclaimPolicy: Delete
 ```
 
-### NFS Storage
+### NFS 存储
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -70,7 +74,7 @@ volumeBindingMode: Immediate
 reclaimPolicy: Retain
 ```
 
-## PersistentVolume (Static Provisioning)
+## PersistentVolume（静态供给）
 
 ```yaml
 apiVersion: v1
@@ -100,9 +104,9 @@ spec:
           - node-01
 ```
 
-## PersistentVolumeClaim Patterns
+## PersistentVolumeClaim 模式
 
-### Basic PVC (Dynamic Provisioning)
+### 基础 PVC（动态供给）
 
 ```yaml
 apiVersion: v1
@@ -121,7 +125,7 @@ spec:
       storage: 50Gi
 ```
 
-### Shared Storage (ReadWriteMany)
+### 共享存储（ReadWriteMany）
 
 ```yaml
 apiVersion: v1
@@ -138,7 +142,7 @@ spec:
       storage: 100Gi
 ```
 
-### Block Volume
+### 块卷
 
 ```yaml
 apiVersion: v1
@@ -156,9 +160,9 @@ spec:
       storage: 10Gi
 ```
 
-## Using PVCs in Pods
+## 在 Pod 里使用 PVC
 
-### Single PVC Mount
+### 单个 PVC 挂载
 
 ```yaml
 apiVersion: v1
@@ -178,7 +182,7 @@ spec:
       claimName: database-pvc
 ```
 
-### Multiple PVCs
+### 多个 PVC
 
 ```yaml
 apiVersion: v1
@@ -208,7 +212,7 @@ spec:
       claimName: shared-assets
 ```
 
-## StatefulSet with VolumeClaimTemplates
+## 带 VolumeClaimTemplates 的 StatefulSet
 
 ```yaml
 apiVersion: apps/v1
@@ -254,7 +258,7 @@ spec:
           storage: 50Gi
 ```
 
-## Volume Snapshots
+## 卷快照
 
 ### VolumeSnapshotClass
 
@@ -283,7 +287,7 @@ spec:
     persistentVolumeClaimName: database-pvc
 ```
 
-### Restore from Snapshot
+### 从快照恢复
 
 ```yaml
 apiVersion: v1
@@ -304,7 +308,7 @@ spec:
       storage: 50Gi
 ```
 
-## Volume Expansion
+## 卷扩容
 
 ```yaml
 # 1. Ensure StorageClass allows expansion
@@ -330,9 +334,9 @@ spec:
       storage: 100Gi  # Increased from 50Gi
 ```
 
-## EmptyDir Volumes
+## EmptyDir 卷
 
-### Memory-Backed EmptyDir
+### 内存支撑的 EmptyDir
 
 ```yaml
 apiVersion: v1
@@ -353,7 +357,7 @@ spec:
       sizeLimit: 1Gi
 ```
 
-### Disk-Backed EmptyDir
+### 磁盘支撑的 EmptyDir
 
 ```yaml
 apiVersion: v1
@@ -373,7 +377,7 @@ spec:
       sizeLimit: 10Gi
 ```
 
-## ConfigMap and Secret Volumes
+## ConfigMap 与 Secret 卷
 
 ```yaml
 apiVersion: v1
@@ -408,7 +412,7 @@ spec:
         path: database/password
 ```
 
-## Projected Volumes
+## Projected 卷
 
 ```yaml
 apiVersion: v1
@@ -447,7 +451,7 @@ spec:
               fieldPath: metadata.annotations
 ```
 
-## CSI Driver Examples
+## CSI Driver 示例
 
 ### AWS EBS CSI Driver
 
@@ -498,7 +502,7 @@ spec:
         secretProviderClass: aws-secrets
 ```
 
-## HostPath Volumes (Use with Caution)
+## HostPath 卷（谨慎使用）
 
 ```yaml
 apiVersion: v1
@@ -521,15 +525,15 @@ spec:
       type: DirectoryOrCreate
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Dynamic Provisioning**: Prefer dynamic provisioning with StorageClasses
-2. **Access Modes**: Use correct access mode (RWO for single node, RWX for multi-node)
-3. **Reclaim Policy**: Use Retain for critical data, Delete for temporary
-4. **Backup**: Regular snapshots and offsite backups
-5. **Monitoring**: Monitor disk usage and performance metrics
-6. **Expansion**: Enable volume expansion in StorageClass
-7. **Performance**: Choose appropriate storage type for workload
-8. **Security**: Encrypt volumes at rest and in transit
-9. **Limits**: Set size limits on emptyDir volumes
-10. **Labels**: Label PVCs for organization and backup policies
+1. **动态供给**：优先用 StorageClass 动态供给
+2. **访问模式**：选对访问模式（单节点用 RWO，多节点用 RWX）
+3. **回收策略**：关键数据用 Retain，临时数据用 Delete
+4. **备份**：定期快照并做异地备份
+5. **监控**：监控磁盘用量与性能指标
+6. **扩容**：在 StorageClass 里启用卷扩容
+7. **性能**：按工作负载选合适的存储类型
+8. **安全**：对卷做静态与传输加密
+9. **限额**：给 emptyDir 卷设大小上限
+10. **标签**：给 PVC 打标签，便于组织与备份策略

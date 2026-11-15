@@ -272,303 +272,307 @@ components:
     description: "Ink-bordered square checkbox used in spec-checklists and the cover footer. Checked state fills ink and centers a cream multiplication-sign glyph (not a checkmark)."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/sakura-chroma/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Sakura Chroma is a **cassette-package editorial system** that treats every slide as a printed product page from a small Japanese audio-products catalogue. The visual metaphor is total: petal-cluster blob marks, diagonal multi-color ribbon bands, 12-point starburst seals, red rectangular stamps, mono-font spec rows, color-coded chips, and equalizer-style bar charts. Everything reads as if pulled from the back-page spread of a 1970s consumer-audio brochure — warm, hand-curated, industrially typeset.
+Sakura Chroma 是一套**卡带包装编辑系统**，把每页当作一本小型日本音响产品目录里的印刷产品页。视觉隐喻是彻底的：花瓣簇色块标记、对角多色飘带、12 角星芒封印、红色矩形印章、等宽字体规格行、颜色编码小片、均衡器式条形图。一切都像从 1970 年代消费音响宣传册的封底跨页上抽出来的，温暖、手工甄选、工业式排印。
 
-The typeface stack pairs four faces with distinct functional roles. **Big Shoulders Display** is the display voice — a condensed industrial sans at weight 900 with tight negative letter-spacing (-0.012em to -0.025em). It carries every display moment: hero numerals, statements, brand lockups, card names, section titles. Its compressed verticality and heavy weight give the system its loud, catalogue-front voice. **Albert Sans** is the body voice — a clean modern humanist sans at weight 400–700 for body paragraphs, micro-labels, and spec captions. **JetBrains Mono** is the tabular voice — used for spec rows, page numbers, dates, chips, equalizer ticks, and any moment that needs to read as "data" rather than as "editorial." **Noto Sans JP** is the cultural accent — used for occasional Japanese characters (限定版 "limited edition") that signal the Matsumoto-workshop voice. Together the four faces compose as "industrial display + clean body + monospaced data + Japanese spice."
+字体栈搭配四款字面，各有分明的功能角色。**Big Shoulders Display** 是展示声部，一款压缩工业无衬线，字重 900、紧负字距（-0.012em 到 -0.025em）。它承载每个展示瞬间：英雄数字、陈述、品牌锁定、卡片名、分节标题。它压缩的竖向感与厚重字重给系统响亮的目录封面声部。**Albert Sans** 是正文声部，一款干净的现代人文无衬线，字重 400–700 用于正文段、微标签、规格图注。**JetBrains Mono** 是表格声部，用于规格行、页码、日期、小片、均衡器刻度，以及一切需要读作"数据"而非"编辑"的瞬间。**Noto Sans JP** 是文化点缀，偶用于日文字符（限定版 "limited edition"），标示松本工坊的声部。四款字面合起来构成"工业展示 + 干净正文 + 等宽数据 + 日式调味"。
 
-The color philosophy is **warm-cream paper + ink-brown structure + six-color primary accent set**. The paper (`{colors.paper}` — #F1E6CB) is a warm cream, slightly darker than typical bone-white, with a darker tonal sibling (`{colors.paper-dk}` — #E5D6B0) for layered surfaces. The ink (`{colors.ink}` — #3A2516) is a deep warm brown rather than pure black, giving every type and border a print-on-paper warmth. Six primary colors (`red`, `pink`, `orange`, `yellow`, `green`, `blue`) appear as petal-cluster fills, ribbon bands, card topstrips, equalizer-bar fills, chip backgrounds, and red rectangular stamps. The reds and pinks dominate as emphasis colors; the orange / yellow / green / blue ladder serves as the categorical accent set.
+色彩理念是**暖奶油纸 + 墨棕结构 + 六色主强调集**。纸（`{colors.paper}` — #F1E6CB）是暖奶油，比常见骨白略深，另有一个更深的色调兄弟（`{colors.paper-dk}` — #E5D6B0）作分层表面。墨（`{colors.ink}` — #3A2516）是深暖棕而非纯黑，让每一处文字与边框都带纸上印刷的暖意。六种主色（红、粉、橙、黄、绿、蓝）出现在花瓣簇填充、飘带、卡片顶条、均衡器条填充、小片背景、红色矩形印章里。红与粉主导作强调色，橙 / 黄 / 绿 / 蓝阶梯充当分类型强调集。
 
-Depth comes from **hard offset shadows** (8px 8px 0 ink), **paper-grain texture**, and **color-block layering** — not blurred drops. The signature treatments: the qbody-box (quote callout) carries an 8px hard ink-colored shadow with zero blur; every slide carries a 4px-period halftone-dot paper texture at 16% opacity that grounds every color block in the print register; diagonal multi-color ribbon bands sweep behind content as the system's most distinctive atmospheric layer.
+纵深来自**硬边偏移阴影**（8px 8px 0 ink）、**纸张颗粒纹理**、**色块分层**，不靠模糊投影。招牌处理是 qbody-box（引文标注）带一道零模糊的 8px 硬墨色阴影；每页带一层 4px 周期的半调网点纸纹，16% 不透明度，把每个色块落实在印刷语域里；对角多色飘带扫在内容背后，是系统最鲜明的氛围层。
 
-**Density philosophy: medium-high.** The catalogue register depends on visual richness — product-card grids with 4 stacked cards each holding name + description + spec rows, ledger tables with 7+ rows, dashboards combining hero stats + equalizer charts, cover spreads stacking brand lockup + petals + ribbons + hero numeral + spec checklist + footer. A slide with only a single centered headline reads as a manifesto moment (deliberate sparsity in service of impact); every other slide should feel like a packed catalogue page. The correct density is "every region is doing concurrent work" — a topbar with title + meta-label, a body with primary visual + secondary panels, often a chip / stamp / seal as decorative punctuation.
+**密度取向：中高。** 目录语域依赖视觉丰盛：产品卡网格里 4 张叠卡各装名称 + 描述 + 规格行，7 行以上的账表，把英雄统计与均衡器图合起来的仪表盘，把品牌锁定 + 花瓣 + 飘带 + 英雄数字 + 规格清单 + 页脚叠起来的封面跨页。只有一个居中标题的页读作宣言瞬间（为冲击力刻意的稀疏），其余每页都该像塞满的目录页。对的密度是"每个区域都在同时干活"，顶条带标题 + 元数据标签，正文带主视觉 + 次级面板，往往还有一枚小片 / 印章 / 封印作装饰标点。
 
-**Key Characteristics:**
-- Warm cream paper canvas (`{colors.paper}`) with warm-brown ink (`{colors.ink}`) as structure and six primary accent colors.
-- A 4px-period halftone-dot paper texture (`{components.paper-texture}`) sits over every slide at 16% opacity. Required.
-- Big Shoulders Display weight 900 with negative tracking for every display moment; Albert Sans for body; JetBrains Mono for tabular / data; Noto Sans JP for Japanese accents.
-- Petal-cluster blob marks (4–5 overlapping perfect circles) as the signature decorative element.
-- Diagonal multi-color ribbon bands (5 stacked colored bars at -22° or +22°) as atmospheric layering.
-- 32-point starburst seal (`{components.rosette-seal}`) and red rectangular stamps (`{components.red-stamp}`) as authority marks.
-- Hard offset shadows: 8px 8px 0 ink on quote callouts; no blur, no soft drops anywhere.
-- Catalogue product cards with colored topstrip + name + description + dashed-rule + mono spec rows.
-- Equalizer bar charts where each column stacks 6 tiles and "on" segments stack from the bottom up like a VU meter.
-- Page numbers on every content slide in JetBrains Mono at bottom-right.
+**关键特征：**
+- 暖奶油纸画布（`{colors.paper}`）配暖棕墨（`{colors.ink}`）作结构，再加六种主强调色。
+- 4px 周期半调网点纸纹（`{components.paper-texture}`）以 16% 不透明度盖在每页上。必需。
+- Big Shoulders Display 字重 900 配负字距用于每个展示瞬间；Albert Sans 作正文；JetBrains Mono 作表格 / 数据；Noto Sans JP 作日文点缀。
+- 花瓣簇色块标记（4–5 个重叠的正圆）作招牌装饰元素。
+- 对角多色飘带（5 条叠放的彩色条，-22° 或 +22°）作氛围分层。
+- 32 角星芒封印（`{components.rosette-seal}`）与红色矩形印章（`{components.red-stamp}`）作权威标记。
+- 硬边偏移阴影：引文标注上 8px 8px 0 ink，任何地方无模糊、无柔和投影。
+- 目录产品卡带彩色顶条 + 名称 + 描述 + 虚线 + 等宽规格行。
+- 均衡器条形图，每列叠 6 块瓦片，"亮"段像 VU 表一样从底部往上叠。
+- 每张内容页右下角有 JetBrains Mono 页码。
 
-## Colors
+## 颜色
 
-### Palette
-- **Paper** (`{colors.paper}` — #F1E6CB): The warm cream canvas. The default surface for every slide. Slightly darker and warmer than typical off-white, giving the deck a printed-paper warmth.
-- **Paper Dark** (`{colors.paper-dk}` — #E5D6B0): A slightly darker tonal sibling of the canvas. Used for layered surfaces, half-region backgrounds, and where one paper region needs to read as sitting beneath another.
-- **Ink** (`{colors.ink}` — #3A2516): Deep warm-brown ink. The structural color — all body text, all borders, all dividers, all hard-offset shadow color, all seal fills, all topbar rules. Slightly cool brown rather than pure black so it sits as warm ink on warm paper.
-- **Red** (`{colors.red}` — #E5392A): The primary emphasis color and stamp color. Used for inline `em` emphasis inside Big Shoulders display headlines, for the red rectangular stamps, for catalogue-card topstrips on the first card, for hero numerals on data slides, and as the first ribbon-band color.
-- **Pink** (`{colors.pink}` — #E54489): A bright magenta-pink. Used as the lockup-bar background on cover hero lockups, as a ribbon band color, as card-topstrip color for the second variant, and as a chip background.
-- **Orange** (`{colors.orange}` — #F09131): A warm sunset orange. Used as a petal color, ribbon-band color, card-topstrip color for the third variant, and chip background.
-- **Yellow** (`{colors.yellow}` — #F0BC2A): A mustard-warm yellow. Used as a petal color, ribbon-band color. Reserved as a categorical accent.
-- **Green** (`{colors.green}` — #3D9F47): A medium grass green. Used as a petal color, ribbon-band color, chip background, and equalizer bar color.
-- **Blue** (`{colors.blue}` — #3F8BC4): A warm mid-blue. Used as a petal color, ribbon-band color, card-topstrip color for the fourth variant, chip background, and as the second hero statistic color when the primary red statistic needs a paired counterpart.
+### 调色板
+- **纸**（`{colors.paper}` — #F1E6CB）：暖奶油画布。每页默认表面。比常见米白略深略暖，给文稿印刷纸的暖意。
+- **深纸**（`{colors.paper-dk}` — #E5D6B0）：画布略深的色调兄弟。用于分层表面、半区背景，以及某一纸区需要读作坐在另一区之下时。
+- **墨**（`{colors.ink}` — #3A2516）：深暖棕墨。结构色，全部正文、全部边框、全部分隔、全部硬边偏移阴影色、全部封印填充、全部顶条线。略偏冷的棕而非纯黑，好作为暖墨落在暖纸上。
+- **红**（`{colors.red}` — #E5392A）：主强调色与印章色。用于 Big Shoulders 展示标题内的行内 `em` 强调、红色矩形印章、第一张卡的目录卡顶条、数据页的英雄数字，以及飘带第一色。
+- **粉**（`{colors.pink}` — #E54489）：明亮洋红粉。用作封面英雄锁定的锁定条背景、飘带色、第二变体的卡片顶条色、小片背景。
+- **橙**（`{colors.orange}` — #F09131）：暖落日橙。用作花瓣色、飘带色、第三变体的卡片顶条色、小片背景。
+- **黄**（`{colors.yellow}` — #F0BC2A）：芥末暖黄。用作花瓣色、飘带色。预留作分类型强调。
+- **绿**（`{colors.green}` — #3D9F47）：中等草绿。用作花瓣色、飘带色、小片背景、均衡器条色。
+- **蓝**（`{colors.blue}` — #3F8BC4）：暖中蓝。用作花瓣色、飘带色、第四变体的卡片顶条色、小片背景，以及主红统计需要配对时的第二英雄统计色。
 
-### Defaults
-- **Default surface background**: `{colors.paper}` — every slide opens on warm cream paper.
-- **Default headline color**: `{colors.ink}` — display headlines are warm-brown ink, not red or another accent. Red appears only as inline `em` emphasis inside an ink headline.
-- **Default body text color**: `{colors.ink}`.
-- **Default border color**: `{colors.ink}` — every structural border is warm-brown ink, no exceptions.
-- **Default tabular / mono text color**: `{colors.ink}`. Mono rows occasionally use `opacity: 0.7` on key labels for visual hierarchy.
-- **Default emphasis color (inline `em` inside display headlines)**: `{colors.red}` for body and catalogue spreads; `{colors.blue}` for quote spreads when the body's color story already includes red.
-- **Default hero numeral color**: `{colors.red}` — large data-slide statistics are red. Pair with `{colors.blue}` for a second statistic if two stats appear together.
-- **Default stamp color**: `{colors.red}` background with `{colors.paper}` text on every red rectangular stamp.
-- **Default seal color**: `{colors.ink}` background with `{colors.paper}` text on every starburst seal.
-- **Default text color on `{colors.red}`, `{colors.pink}`, `{colors.orange}`, `{colors.green}`, `{colors.blue}` surfaces**: `{colors.paper}` (cream) — the only color inversion in the system.
-- **Default text color on `{colors.ink}` surfaces**: `{colors.paper}` (cream) for inversions.
-- **Default chip palette ordering** (for categorical chips in ledgers / tables): red → pink → orange → blue → green.
+### 默认值
+- **默认表面背景**：`{colors.paper}`，每页都在暖奶油纸上开场。
+- **默认标题色**：`{colors.ink}`，展示标题是暖棕墨，不是红或别的强调。红只作为墨色标题内的行内 `em` 强调出现。
+- **默认正文色**：`{colors.ink}`。
+- **默认边框色**：`{colors.ink}`，每条结构边框都是暖棕墨，无例外。
+- **默认表格 / 等宽文字色**：`{colors.ink}`。等宽行偶尔在关键标签上用 `opacity: 0.7` 求视觉层级。
+- **默认强调色（展示标题内的行内 `em`）**：正文与目录跨页用 `{colors.red}`；正文的色彩故事里已经含红时，引文跨页用 `{colors.blue}`。
+- **默认英雄数字色**：`{colors.red}`，数据页大统计是红。两个统计同现时配 `{colors.blue}` 作第二统计。
+- **默认印章色**：`{colors.red}` 背景配 `{colors.paper}` 文字，用于每个红色矩形印章。
+- **默认封印色**：`{colors.ink}` 背景配 `{colors.paper}` 文字，用于每个星芒封印。
+- **`{colors.red}`、`{colors.pink}`、`{colors.orange}`、`{colors.green}`、`{colors.blue}` 表面上默认文字色**：`{colors.paper}`（奶油），系统里唯一的颜色反转。
+- **`{colors.ink}` 表面上默认文字色**：反色时用 `{colors.paper}`（奶油）。
+- **默认小片调色板顺序**（账表 / 表格里的分类型小片）：红 → 粉 → 橙 → 蓝 → 绿。
 
-The six primary colors have **no fixed semantic meaning** (red is not "danger," green is not "success"). They serve as a categorical accent set — pick whichever color suits the composition. The exception is `{colors.red}` for emphasis: it carries an "attention" register that the cool colors do not, so reserve it for inline `em` and for the most-emphasized hero numerals.
+六种主色**没有固定语义**（红不表"危险"、绿不表"成功"）。它们充当分类型强调集，挑最适合构图的颜色即可。例外是 `{colors.red}` 作强调：它带冷色没有的"注意"语域，所以预留给行内 `em` 与最强调的英雄数字。
 
-## Typography
+## 排印
 
-### Font Family
-The system has four Google Fonts each with a distinct functional role:
+### 字族
+系统有四款 Google Fonts，各有分明的功能角色：
 
-- **Big Shoulders Display** (display): Condensed industrial sans-serif at weight 700 and 900. Used for every display moment — headlines, statements, hero numerals, brand lockups, card names, seal text, stamp text, ledger row titles. Always with negative letter-spacing (-0.012em to -0.025em). Its tall narrow condensed forms are the entire system's visual identity.
-- **Albert Sans** (body): Clean modern humanist sans at weights 400, 500, 600, 700. Used for body paragraphs (weight 400), descriptions (weight 400), tracked-caps micro-labels (weight 700), and emphasis body (weight 600–700). The neutral counterpoint to Big Shoulders' expressiveness.
-- **JetBrains Mono** (data): Monospace at weights 400, 500. Used for spec rows in product cards, date tags in ledgers, page numbers, equalizer-tick labels, chip text, navigation hints, meta tags. Any moment that reads as "data" rather than "editorial."
-- **Noto Sans JP** (cultural accent): Japanese sans at weight 500, 700. Used sparingly for Japanese characters (限定版, 漢字, 平仮名) embedded in cover footers and brand marks. Provides the Matsumoto-workshop cultural register.
+- **Big Shoulders Display**（展示）：压缩工业无衬线，字重 700 与 900。用于每个展示瞬间，标题、陈述、英雄数字、品牌锁定、卡片名、封印文字、印章文字、账表行标题。始终配负字距（-0.012em 到 -0.025em）。它高窄的压缩字形就是整套系统的视觉身份。
+- **Albert Sans**（正文）：干净的现代人文无衬线，字重 400、500、600、700。用于正文段（400）、描述（400）、加字距全大写微标签（700）、强调正文（600–700）。是 Big Shoulders 表现力的中性对位。
+- **JetBrains Mono**（数据）：等宽，字重 400、500。用于产品卡里的规格行、账表里的日期标签、页码、均衡器刻度标签、小片文字、导航提示、元数据标记。一切读作"数据"而非"编辑"的瞬间。
+- **Noto Sans JP**（文化点缀）：日文无衬线，字重 500、700。省着用于嵌在封面页脚与品牌标记里的日文字符（限定版、漢字、平仮名）。提供松本工坊的文化语域。
 
-Italic does not exist. Underline does not exist. Emphasis is achieved by inline `<em>` (color shift to red or blue without italic style), by weight (Albert Sans 400 → 700), or by switching face (Albert Sans body → Big Shoulders display).
+斜体不存在。下划线不存在。强调靠行内 `<em>`（换色到红或蓝，不带斜体样式）、靠字重（Albert Sans 400 → 700）、或靠换字面（Albert Sans 正文 → Big Shoulders 展示）达成。
 
-### Type Scale
+### 排印比例
 
-| Token | Size (clamp) | Family | Weight | Use |
+| Token | 尺寸（clamp） | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.disp-hero}` | 120–280px | Big Shoulders Display | 900 | Hero numeral on a cover spread |
-| `{typography.disp-title}` | 80–180px | Big Shoulders Display | 900 | Oversized title on a colophon / closing spread |
-| `{typography.disp-statement}` | 70–168px | Big Shoulders Display | 900 | Manifesto / single-statement spread |
-| `{typography.disp-lockup}` | 56–130px | Big Shoulders Display | 900 | Brand lockup bar on cover |
-| `{typography.disp-quote-lg}` | 56–130px | Big Shoulders Display | 900 | Large pulled quote |
-| `{typography.disp-section}` | 52–100px | Big Shoulders Display | 900 | Section topbar title |
-| `{typography.disp-quote}` | 48–110px | Big Shoulders Display | 900 | Standard pulled quote |
-| `{typography.disp-brand}` | 32–56px | Big Shoulders Display | 900 | Brand sub-mark or wordmark |
-| `{typography.disp-card-name}` | 28–48px | Big Shoulders Display | 900 | Product card name |
-| `{typography.num-hero}` | 110–240px | Big Shoulders Display | 900 | Primary hero statistic |
-| `{typography.num-md}` | 70–150px | Big Shoulders Display | 900 | Secondary statistic |
-| `{typography.ttl-row}` | 22–30px | Big Shoulders Display | 700 | Ledger row title |
-| `{typography.body-emphasis}` | 15–20px | Albert Sans | 600 | Lead paragraph or emphasized body |
-| `{typography.body}` | 14–17px | Albert Sans | 400 | Standard paragraph body |
-| `{typography.body-md}` | 14–15px | Albert Sans | 400 | Compact body inside cards |
-| `{typography.micro-spec}` | 14–20px | Albert Sans | 700 | Spec-checklist label (lightly tracked) |
-| `{typography.micro-xl}` | 12–14px | Albert Sans | 700 | Loosest tracked-caps micro-label (0.32em) |
-| `{typography.micro-lg}` | 12–14px | Albert Sans | 700 | Tracked-caps eyebrow label (0.2em) |
-| `{typography.micro}` | 12–14px | Albert Sans | 700 | Standard tracked-caps micro-label (0.16em) |
-| `{typography.mono-md}` | 14–16px | JetBrains Mono | 400 | Tabular date or value |
-| `{typography.mono}` | 11–12px | JetBrains Mono | 400 | Spec row, page number, equalizer tick |
-| `{typography.mono-tag}` | 12–14px | JetBrains Mono | 400 | Chip tag text |
-| `{typography.stamp-text}` | 20–28px | Big Shoulders Display | 900 | Red rectangular stamp text |
-| `{typography.seal-text}` | 22–38px | Big Shoulders Display | 900 | Starburst seal text |
-| `{typography.jp}` | inherit | Noto Sans JP | 500 | Japanese character accent |
+| `{typography.disp-hero}` | 120–280px | Big Shoulders Display | 900 | 封面跨页的英雄数字 |
+| `{typography.disp-title}` | 80–180px | Big Shoulders Display | 900 | 版权页 / 收尾跨页的超大标题 |
+| `{typography.disp-statement}` | 70–168px | Big Shoulders Display | 900 | 宣言 / 单句陈述跨页 |
+| `{typography.disp-lockup}` | 56–130px | Big Shoulders Display | 900 | 封面品牌锁定条 |
+| `{typography.disp-quote-lg}` | 56–130px | Big Shoulders Display | 900 | 大号引文 |
+| `{typography.disp-section}` | 52–100px | Big Shoulders Display | 900 | 分节顶条标题 |
+| `{typography.disp-quote}` | 48–110px | Big Shoulders Display | 900 | 标准引文 |
+| `{typography.disp-brand}` | 32–56px | Big Shoulders Display | 900 | 品牌子标记或字标 |
+| `{typography.disp-card-name}` | 28–48px | Big Shoulders Display | 900 | 产品卡名称 |
+| `{typography.num-hero}` | 110–240px | Big Shoulders Display | 900 | 主英雄统计 |
+| `{typography.num-md}` | 70–150px | Big Shoulders Display | 900 | 次级统计 |
+| `{typography.ttl-row}` | 22–30px | Big Shoulders Display | 700 | 账表行标题 |
+| `{typography.body-emphasis}` | 15–20px | Albert Sans | 600 | 导语段或强调正文 |
+| `{typography.body}` | 14–17px | Albert Sans | 400 | 标准段落正文 |
+| `{typography.body-md}` | 14–15px | Albert Sans | 400 | 卡内紧凑正文 |
+| `{typography.micro-spec}` | 14–20px | Albert Sans | 700 | 规格清单标签（略加字距） |
+| `{typography.micro-xl}` | 12–14px | Albert Sans | 700 | 最松的加字距全大写微标签（0.32em） |
+| `{typography.micro-lg}` | 12–14px | Albert Sans | 700 | 加字距全大写 eyebrow 标签（0.2em） |
+| `{typography.micro}` | 12–14px | Albert Sans | 700 | 标准加字距全大写微标签（0.16em） |
+| `{typography.mono-md}` | 14–16px | JetBrains Mono | 400 | 表格日期或数值 |
+| `{typography.mono}` | 11–12px | JetBrains Mono | 400 | 规格行、页码、均衡器刻度 |
+| `{typography.mono-tag}` | 12–14px | JetBrains Mono | 400 | 小片标签文字 |
+| `{typography.stamp-text}` | 20–28px | Big Shoulders Display | 900 | 红色矩形印章文字 |
+| `{typography.seal-text}` | 22–38px | Big Shoulders Display | 900 | 星芒封印文字 |
+| `{typography.jp}` | inherit | Noto Sans JP | 500 | 日文字符点缀 |
 
-### Defaults
-- **Default size for a primary section headline (topbar context)**: `{typography.disp-section}` (52–100px clamp) in `{colors.ink}`.
-- **Default size for a manifesto / centered-statement spread**: `{typography.disp-statement}` (70–168px clamp) in `{colors.ink}` with optional `<em>` color shift.
-- **Default size for paragraph body**: `{typography.body}` (14–17px clamp).
-- **Default size for a tracked-caps micro-label or eyebrow**: `{typography.micro}` (12–14px Albert Sans weight 700, 0.16em tracking, uppercase) in `{colors.ink}`.
-- **Default size for a hero statistic**: `{typography.num-hero}` (110–240px clamp) in `{colors.red}`.
-- **Default size for a tabular date or mono value**: `{typography.mono-md}` (14–16px) in `{colors.ink}`.
-- **Default size for a page number**: `{typography.mono}` (11–12px) in `{colors.ink}`.
-- **Default weight for any Big Shoulders Display element**: 900. (700 is reserved for `{typography.ttl-row}` — the ledger row title, which is the only sub-display moment in the system.)
-- **Default weight for body**: 400; for micro-labels: 700; for emphasis body: 600–700.
+### 默认值
+- **主分节标题默认尺寸（顶条语境）**：`{colors.ink}` 的 `{typography.disp-section}`（52–100px clamp）。
+- **宣言 / 居中陈述跨页默认尺寸**：`{colors.ink}` 的 `{typography.disp-statement}`（70–168px clamp），可选 `<em>` 换色。
+- **段落正文默认尺寸**：`{typography.body}`（14–17px clamp）。
+- **加字距全大写微标签或 eyebrow 默认尺寸**：`{colors.ink}` 的 `{typography.micro}`（12–14px Albert Sans 字重 700、0.16em 字距、全大写）。
+- **英雄统计默认尺寸**：`{colors.red}` 的 `{typography.num-hero}`（110–240px clamp）。
+- **表格日期或等宽数值默认尺寸**：`{colors.ink}` 的 `{typography.mono-md}`（14–16px）。
+- **页码默认尺寸**：`{colors.ink}` 的 `{typography.mono}`（11–12px）。
+- **任何 Big Shoulders Display 元素默认字重**：900（700 预留给 `{typography.ttl-row}`，账表行标题，系统里唯一的次级展示瞬间）。
+- **正文默认字重**：400；微标签：700；强调正文：600–700。
 
-When unsure between `{typography.disp-section}` and `{typography.disp-statement}` for the dominant text moment, choose `{typography.disp-section}` if the slide carries a topbar/body grid; choose `{typography.disp-statement}` if the slide is dedicated to a single centered statement.
+主导文字在 `{typography.disp-section}` 与 `{typography.disp-statement}` 间拿不准时，页带顶条 / 正文网格就选 `{typography.disp-section}`，页专给单条居中陈述就选 `{typography.disp-statement}`。
 
-### Signature Treatments
-These treatments are **non-optional whenever the corresponding element type is used**:
+### 招牌处理
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every Big Shoulders Display element carries negative letter-spacing** (-0.012em to -0.025em). Default tracking on Big Shoulders reads as untreated; the negative tracking is what gives display type its compressed, catalogue-cover density.
-- **Every micro-label is uppercase with significant tracking** (0.16em, 0.18em, 0.2em, or 0.32em depending on context). A micro-label without uppercase + tracking reads as a body fragment, not a label.
-- **Every page number uses JetBrains Mono** in the `NN / TT` format. Page numbers are non-optional on every content slide and live at bottom-right.
-- **Every inline `<em>` inside a Big Shoulders display headline switches color** to `{colors.red}` (default) or `{colors.blue}` (on quote spreads where red is overloaded). Never use italic style; the color shift is the entire emphasis device.
-- **Every spec row uses JetBrains Mono.** A spec row in Albert Sans reads as a body sentence, not as catalogue data.
-- **Every starburst seal uses the 32-point clip-path polygon** with `{colors.ink}` fill and `{colors.paper}` text. Variations in point count or simplification (e.g., 8-point burst, 16-point) break the seal-recognition signal.
-- **Every red stamp uses `{colors.red}` background with `{colors.paper}` text** and Big Shoulders 900. Stamp text is always uppercase, always tracked positively (0.02em).
+- **每个 Big Shoulders Display 元素都带负字距**（-0.012em 到 -0.025em）。Big Shoulders 用默认字距读作未处理，负字距才给展示文字压缩的目录封面密度。
+- **每个微标签都全大写配显著字距**（按语境 0.16em、0.18em、0.2em 或 0.32em）。没有全大写 + 字距的微标签读作正文碎片，不像标签。
+- **每个页码都用 JetBrains Mono**，格式 `NN / TT`。页码在每张内容页上不可省略，住在右下。
+- **Big Shoulders 展示标题里的每个行内 `<em>` 都换色**到 `{colors.red}`（默认）或 `{colors.blue}`（红已过载的引文跨页）。绝不用斜体样式，换色就是整个强调装置。
+- **每条规格行都用 JetBrains Mono。** 用 Albert Sans 排的规格行读作正文句，不像目录数据。
+- **每个星芒封印都用 32 角 clip-path 多边形**，`{colors.ink}` 填充、`{colors.paper}` 文字。改动角数或简化（如 8 角、16 角芒）会破掉封印辨识信号。
+- **每个红色印章都用 `{colors.red}` 背景配 `{colors.paper}` 文字**与 Big Shoulders 900。印章文字始终全大写、始终配正字距（0.02em）。
 
-### Typography Principles
-The system's typographic rhythm comes from **face-to-face contrast**: Big Shoulders display (loud, condensed, ink) → Albert Sans body (quiet, neutral, sentence case) → JetBrains Mono data (mechanical, tabular, fixed-width) → Noto Sans JP (cultural punctuation). A slide that uses only one face reads as flat; a slide that uses Big Shoulders + Albert Sans + JetBrains Mono together reads as catalogue-correct.
+### 排印原则
+系统的排印节奏来自**字面对字面的反差**：Big Shoulders 展示（响、压缩、墨）→ Albert Sans 正文（静、中性、句式）→ JetBrains Mono 数据（机械、表格、定宽）→ Noto Sans JP（文化标点）。只用一款字面的页读作扁平，把 Big Shoulders + Albert Sans + JetBrains Mono 一起用的页读作目录式正确。
 
-Line-height: tight on display (0.84–0.94), generous on body (1.4–1.5), tight on micro and mono (1.0–1.3). Inverting these breaks the rhythm.
+行高：展示紧（0.84–0.94）、正文宽（1.4–1.5）、微标签与等宽紧（1.0–1.3）。倒置会破掉节奏。
 
-## Layout
+## 布局
 
-### Canvas System
-The system targets `100vw × 100vh`. The deck is wrapped in a `.deck` grid with a centered `.stage` filling the viewport. Each `.slide` is absolutely positioned inset 0 with opacity 0; only the `.active` slide has opacity 1. Transitions are 280ms ease opacity fades. Navigation is JS-driven via arrow keys, space, PageUp/Down, Home/End, and touch swipe.
+### 画布系统
+系统以 `100vw × 100vh` 为目标。文稿包在 `.deck` 网格里，居中一个铺满视口的 `.stage`。每张 `.slide` 绝对定位 inset 0、opacity 0，只有 `.active` 页 opacity 1。过渡是 280ms ease 的 opacity 淡入。导航由 JS 驱动，方向键、空格、PageUp/Down、Home/End、触屏滑动。
 
-### Frame Inset Pattern
-Most content slides follow a frame-inset pattern: a `.frame` div sits inset from the slide edges by `clamp(36px, 3.6vw, 72px)` on top/left/right and `clamp(72px, 7vh, 110px)` at bottom (to clear the page number). Inside the frame, a topbar pattern (title + meta-label + 1.5px ink rule) sits above a body region.
+### 画框内缩式样
+多数内容页遵循画框内缩式样：一个 `.frame` div 距页边在上 / 左 / 右内缩 `clamp(36px, 3.6vw, 72px)`、在底部内缩 `clamp(72px, 7vh, 110px)`（给页码让位）。画框内，顶条式样（标题 + 元数据标签 + 1.5px 墨线）坐在正文区上方。
 
-Cover, manifesto, and quote spreads break the frame pattern — they layer petals, ribbons, hero numerals, and lockups freely across the canvas without the topbar/body grid.
+封面、宣言、引文跨页打破画框式样，它们把花瓣、飘带、英雄数字、锁定自由叠在画布上，不用顶条 / 正文网格。
 
-### Padding Scale
-| Token | Value | Use |
+### 内边距比例
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.frame-inset}` | 36–72px | Frame inset from slide edges |
-| `{spacing.frame-inset-bottom}` | 72–110px | Frame bottom inset (clears page number) |
-| `{spacing.topbar-gap}` | 12–22px | Topbar pad-bottom and section gap |
-| `{spacing.grid-gap}` | 16–26px | Card grid inter-cell gap |
-| `{spacing.col-gap}` | 28–56px | Two-column body gap |
-| `{spacing.card-pad-x}` / `{spacing.card-pad-y}` | 14–20px / 16–24px | Product card body padding |
-| `{spacing.pagenum-inset}` | 20–36px / 24–44px | Page number inset from bottom-right |
+| `{spacing.frame-inset}` | 36–72px | 画框距页边内缩 |
+| `{spacing.frame-inset-bottom}` | 72–110px | 画框底部内缩（给页码让位） |
+| `{spacing.topbar-gap}` | 12–22px | 顶条下内边距与分节间隙 |
+| `{spacing.grid-gap}` | 16–26px | 卡片网格单元间隙 |
+| `{spacing.col-gap}` | 28–56px | 双栏正文间隙 |
+| `{spacing.card-pad-x}` / `{spacing.card-pad-y}` | 14–20px / 16–24px | 产品卡正文内边距 |
+| `{spacing.pagenum-inset}` | 20–36px / 24–44px | 页码距右下内缩 |
 
-### Persistent Chrome
-Two persistent elements:
-- **Page number** at bottom-right of every content slide — JetBrains Mono 11–13px `NN / TT` format.
-- **Nav hint** at fixed bottom-left — JetBrains Mono 10–12px text reading `← / → · space`, at 0.36 opacity.
+### 常驻外壳
+两个常驻元素：
+- **页码**：每张内容页右下，JetBrains Mono 11–13px `NN / TT` 格式。
+- **导航提示**：固定在左下，JetBrains Mono 10–12px 文字 `← / → · space`，0.36 不透明度。
 
-The page number is part of every slide composition (not a global overlay); the nav hint is a single global element.
+页码属于每张页的构图（不是全局叠层），导航提示是单个全局元素。
 
-## Depth and Elevation
+## 纵深与层级
 
-### Hard Offset Shadow (Primary Technique)
-The system uses **hard offset shadows in ink** at exactly one value: `8px 8px 0 {colors.ink}` (zero blur, solid ink). Applied to the qbody-box (quote callout) and other elevated paper-on-ribbons elements that need to lift off a busy underlying composition. The shadow is rare — most cards and panels rely on borders alone for definition, and the 8px ink shadow is reserved for the moment that earns it.
+### 硬边偏移阴影（主手法）
+系统在墨色上用**硬边偏移阴影**，恰好一个值：`8px 8px 0 {colors.ink}`（零模糊、实墨）。施于 qbody-box（引文标注）与其他需要从繁忙底层构图上抬起的"纸压飘带"元素。阴影很少用，多数卡片与面板只靠边框定义，8px 墨阴影留给配得上它的瞬间。
 
-### Paper-Grain Texture (Atmospheric Layer)
-The `{components.paper-texture}` halftone-dot pattern sits over every slide at 16% opacity. It is not depth in the strict sense but provides the foundational textural ground that makes every flat color block read as ink on paper. Removing it breaks the print register immediately. Required on every slide.
+### 纸张颗粒纹理（氛围层）
+`{components.paper-texture}` 半调网点图案以 16% 不透明度盖在每页上。严格说这不是纵深，而是让每块平色块读作纸上墨的基础纹理底。去掉它会立刻破掉印刷语域。每页必需。
 
-### Color-Block Layering
-Depth comes primarily from **layered colored regions**: ribbon bands behind hero numerals; petals behind brand lockups; topstrip color tabs on top of paper cards; red stamps over diagonal ribbons. The high-contrast accents projecting forward against the warm cream backdrop is the system's primary depth grammar.
+### 色块分层
+纵深主要来自**分层彩色区域**：英雄数字背后的飘带、品牌锁定背后的花瓣、纸卡顶上的顶条色片、对角飘带上的红印章。高反差强调在暖奶油底上往前凸，是系统的主纵深语法。
 
-### Border Definition
-Most cards and panels rely on 1.5px ink borders for definition, not shadows. A 1.5px ink border around a paper card on the same paper background reads as elevated through the boundary alone.
+### 边框定义
+多数卡片与面板靠 1.5px 墨边框定义，不靠阴影。同纸色背景上的纸卡周围一道 1.5px 墨边框，单靠边界就读作抬升。
 
-### No Soft Shadows
-The system uses **no blurred `box-shadow`** (other than the single 8px hard offset on qbody-box), no `drop-shadow` filters, no rgba shadow tints. A soft modern shadow on any element breaks the print catalogue aesthetic.
+### 无柔和阴影
+系统用**零模糊 `box-shadow`**（除 qbody-box 上唯一那道 8px 硬偏移外）、零 `drop-shadow` 滤镜、零 rgba 着色阴影。任何元素上的现代柔阴影都会破掉印刷目录美学。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
-| Value | Use |
+### 圆角
+| 值 | 用途 |
 |---|---|
-| 0px | All cards, all stamps, all topbars, all bodies, all chips, all ledger rows |
-| 50% | Petals (perfect circles) — used inside petal-clusters and scattered blobs only |
-| Polygon clip-path (32-point starburst) | Rosette seal — the only complex shape primitive |
+| 0px | 全部卡片、全部印章、全部顶条、全部正文、全部小片、全部账表行 |
+| 50% | 花瓣（正圆），仅用于花瓣簇内与散落色块 |
+| 多边形 clip-path（32 角星芒） | 花结封印，唯一的复杂形状基元 |
 
-The system has **no rounded corner radii** other than perfect circles (petals) and the polygon-clipped starburst (seal). Every other shape is strict rectangular or square.
+系统除正圆（花瓣）与多边形裁切的星芒（封印）外**没有圆角半径**。其余每个形状都是严格矩形或方形。
 
-### Border Weights
-- **1.5px solid `{colors.ink}`** — the standard border weight on cards, topbar rules, ledger header rules, qbody-box, the cover frame's bottom rule, the cover footer's top rule.
-- **2px solid `{colors.ink}`** — used on the spec-checklist checkbox borders.
-- **1px solid `{colors.ink}`** — used inside the equalizer for the ticks/labels separator.
-- **1px solid rgba(58,37,22, 0.22)** — used as the hairline ledger row body divider and as equalizer-segment off-state borders.
-- **1px dashed `{colors.ink}`** — used as the dashed rule separating a product card's description from its mono spec rows.
+### 边框粗细
+- **1.5px 实 `{colors.ink}`**：卡片、顶条线、账表头线、qbody-box、封面画框底线、封面页脚顶线的标准边框粗细。
+- **2px 实 `{colors.ink}`**：用于规格清单复选框边框。
+- **1px 实 `{colors.ink}`**：用于均衡器内刻度 / 标签分隔。
+- **1px 实 rgba(58,37,22, 0.22)**：用作账表正文行细线分隔与均衡器段"灭"态边框。
+- **1px 虚线 `{colors.ink}`**：用作分隔产品卡描述与等宽规格行的虚线。
 
-Borders are always ink (warm brown). Colored borders do not exist in this system except as a chip's implicit background-border.
+边框始终是墨（暖棕）。本系统里不存在彩色边框，除了小片隐含的背景边框。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Petal cluster** (`{components.petals-cluster}`) — A bounded container holding 4–5 perfectly-circular colored blobs that overlap. Each petal is positioned absolutely within the container as a percentage offset. The colors rotate across the primary palette (red, pink, orange, yellow, green, blue) — never all the same color. Used as a brand mark anchor in slide corners and as decorative ornament on quote spreads. The signature decorative element.
+**花瓣簇（`{components.petals-cluster}`）**：一个定界容器，装 4–5 个重叠的正圆彩色色块。每片花瓣以百分比偏移绝对定位在容器内。颜色在主调色板间轮换（红、粉、橙、黄、绿、蓝），绝不全同色。用作页角的品牌标记锚点与引文跨页的装饰纹样。招牌装饰元素。
 
-**Ribbon band** (`{components.ribbon-band}`) — A stack of 5 solid-colored horizontal bars rotated -22° or +22° to sweep diagonally across a region. Bars stack vertically with each ribbon at a different `top` percentage, creating a parallel-rays effect. Anchored to one slide edge, oversized to bleed off the opposite edge. The system's atmospheric layering signature.
+**飘带（`{components.ribbon-band}`）**：5 条实色水平条叠放，旋转 -22° 或 +22°，斜扫过一片区域。条纵向叠放，每条飘带用不同的 `top` 百分比，造出平行射线效果。锚在页的一边、放大到从对边溢出。系统的氛围分层招牌。
 
-**Rosette seal** (`{components.rosette-seal}`) — A 32-point starburst clip-path shape filled `{colors.ink}` with cream text. Carries a 1–4 character glyph: a year number ("26"), a volume number ("VOL 26"), or a 2-3 letter abbreviation. Used as authority mark on covers and closing colophons.
+**花结封印（`{components.rosette-seal}`）**：32 角星芒 clip-path 形状，`{colors.ink}` 填充配奶油文字。承载一个 1–4 字符字形：年份数字（"26"）、卷号（"VOL 26"）、或 2–3 字母缩写。用作封面与收尾版权页上的权威标记。
 
-**Red rectangular stamp** (`{components.red-stamp}`) — A red rectangle with cream text and optional -3° rotation. Used for status badges (COMPLETE, AS SEEN ON) and product callouts. Always Big Shoulders 900 uppercase.
+**红色矩形印章（`{components.red-stamp}`）**：红矩形，奶油文字，可选 -3° 旋转。用于状态徽章（COMPLETE、AS SEEN ON）与产品标注。始终 Big Shoulders 900 全大写。
 
-**Product card** (`{components.card-product}`) — Vertical card with a 1.5px ink border, a colored top strip (red / pink / orange / blue variant), and a stacked body: card name in Big Shoulders 900 → description in Albert Sans 400 → dashed-rule → mono spec rows. The catalogue grid's primary unit.
+**产品卡（`{components.card-product}`）**：竖卡，1.5px 墨边框、一条彩色顶条（红 / 粉 / 橙 / 蓝变体），以及叠放的正文：Big Shoulders 900 卡名 → Albert Sans 400 描述 → 虚线 → 等宽规格行。目录网格的主单元。
 
-**Card topstrip** (`{components.card-topstrip}`) — A 18–32px tall solid-color band running the full width of a product card's top. Reads as a Pantone color tab; identifies the card's variant within the grid.
+**卡片顶条（`{components.card-topstrip}`）**：18–32px 高实色带，横贯产品卡顶部全宽。读作 Pantone 色片，在网格里标出卡片的变体。
 
-**Spec checklist** (`{components.spec-checklist}`) — Vertical column of `nb-checkbox` + tracked-caps label rows. Each row has a 14–20px ink-bordered square box (filled or empty, filled state shows a cream `×` glyph) followed by an uppercase tracked label.
+**规格清单（`{components.spec-checklist}`）**：`nb-checkbox` + 加字距全大写标签行的竖列。每行有一个 14–20px 墨边框方框（填或空，填态显示奶油 `×` 字形），后跟一条全大写加字距标签。
 
-**Ledger row** (`{components.ledger-row}`) — 5-column tabular row pattern: date (mono) | title (Big Shoulders 700) | edition (Albert Sans) | chip | nr indicator (square boxes). Header row uses 1.5px ink border-bottom; body rows use 1px hairline ink-alpha dividers.
+**账表行（`{components.ledger-row}`）**：5 列表格行式样，日期（等宽）| 标题（Big Shoulders 700）| 版次（Albert Sans）| 小片 | nr 指示（方框）。表头行用 1.5px 墨底边，正文行用 1px 墨-alpha 细线分隔。
 
-**Chip** (`{components.chip}`) — Mono-font color block tagging a ledger row category. Background pulls from the primary palette (red, pink, orange, blue, green). Always cream text.
+**小片（`{components.chip}`）**：等宽字体色块，标账表行类别。背景取主调色板（红、粉、橙、蓝、绿）。始终奶油文字。
 
-**Topbar rule** (`{components.topbar-rule}`) — Section header underline pattern: title (display) on left aligned-end with a tracked-caps meta-label on right, separated from the body by a 1.5px ink rule.
+**顶条线（`{components.topbar-rule}`）**：分节头下划线式样，左侧标题（展示）与右侧加字距全大写元数据标签对齐末端，由 1.5px 墨线与正文隔开。
 
-**Equalizer bar chart** (`{components.bar-eq}`) — 8-column grid where each column stacks 6 equal-height tiles (segments). `column-reverse` flex direction means the first segment in source order sits at the bottom; "on" segments stack from the bottom up like a VU meter. On-segment color is set per column (red, pink, orange, yellow, green, or blue); off-segments are translucent ink tint.
+**均衡器条形图（`{components.bar-eq}`）**：8 列网格，每列叠 6 块等高瓦片（段）。`column-reverse` flex 方向意味着源码顺序里第一段坐在底部，"亮"段像 VU 表一样从底部往上叠。亮段颜色按列设定（红、粉、橙、黄、绿或蓝），灭段是半透明墨调。
 
-**Qbody-box** (`{components.qbody-box}`) — Quote callout container with 1.5px ink border and 8px hard ink shadow. Sits on top of diagonal ribbons.
+**Qbody-box（`{components.qbody-box}`）**：引文标注容器，1.5px 墨边框、8px 硬墨阴影。坐在对角飘带之上。
 
-**Brand lockup** — Big Shoulders 900 wordmark over Albert Sans 600 sub-mark, positioned absolutely near the cover petals.
+**品牌锁定**：Big Shoulders 900 字标压 Albert Sans 600 子标记，绝对定位在封面花瓣附近。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
-- Keep the paper-grain halftone-dot texture (`{components.paper-texture}`) on every slide at 16% opacity. It is the foundational print register; removing it makes the deck look like a flat web template.
-- Use Big Shoulders Display at weight 900 with negative letter-spacing (-0.012em to -0.025em) for every display moment.
-- Apply tracked uppercase to every micro-label — 0.16em standard, 0.2em for eyebrows, 0.32em for the loosest manifesto kicker. Default tracking reads as a body sentence.
-- Set hero statistics in `{colors.red}` at Big Shoulders 900. Pair with `{colors.blue}` for a second statistic.
-- Use inline `<em>` in display headlines to shift color (red default, blue on quote spreads). Never italicize.
-- Compose petal-cluster blob marks (4–5 overlapping perfect circles in primary colors) as decorative anchors in slide corners.
-- Sweep diagonal multi-color ribbon bands (-22° or +22°) behind hero content as atmospheric layering on cover and closing spreads.
-- Place a page number on every content slide in JetBrains Mono at bottom-right (`NN / TT` format).
-- Use JetBrains Mono for spec rows, dates, chips, and any tabular data — anything that should read as "data" instead of "editorial."
-- Reserve the 32-point starburst seal and the red rectangular stamp for authority moments (covers, colophons, product callouts). They are signature marks; overuse degrades them.
+### 该做
+- 每页保留纸张颗粒半调网点纹理（`{components.paper-texture}`）于 16% 不透明度。它是基础印刷语域，去掉会让文稿看着像扁平网页模板。
+- 每个展示瞬间都用 Big Shoulders Display 字重 900 配负字距（-0.012em 到 -0.025em）。
+- 给每个微标签套加字距全大写，标准 0.16em、eyebrow 0.2em、最松的宣言眉题 0.32em。默认字距读作正文句。
+- 英雄统计设 `{colors.red}` 的 Big Shoulders 900。第二统计配 `{colors.blue}`。
+- 展示标题里用行内 `<em>` 换色（默认红，引文跨页蓝）。绝不斜体。
+- 把花瓣簇色块标记（4–5 个重叠正圆、主色混用）构造成页角的装饰锚点。
+- 在封面与收尾跨页把对角多色飘带（-22° 或 +22°）扫在英雄内容背后作氛围分层。
+- 每张内容页右下放 JetBrains Mono 页码（`NN / TT` 格式）。
+- 规格行、日期、小片、任何表格数据都用 JetBrains Mono，一切该读作"数据"而非"编辑"的东西。
+- 把 32 角星芒封印与红色矩形印章留给权威瞬间（封面、版权页、产品标注）。它们是招牌标记，滥用会稀释。
 
-### Don't
-- Don't round any corner. Cards, stamps, chips, topbars — all strict rectangles. Petals (circles) and the starburst seal (polygon clip-path) are the only non-rectangular shapes.
-- Don't use blurred `box-shadow`. The only shadow in the system is the 8px hard ink offset on quote callouts. Soft modern shadows break the print register.
-- Don't substitute another display face for Big Shoulders Display. The condensed industrial 900 voice is the entire system identity.
-- Don't substitute another mono face for JetBrains Mono. The tabular voice is part of the catalogue conceit.
-- Don't use Big Shoulders Display for body paragraphs. It reads as overwrought at small body sizes.
-- Don't use Albert Sans for display moments. Albert Sans is the neutral body face; display moments need Big Shoulders.
-- Don't italicize for emphasis. Use inline `<em>` with red or blue color, or switch weight (Albert 400 → 700).
-- Don't introduce a seventh primary color. The palette is locked at red / pink / orange / yellow / green / blue. Adding purple, cyan, or other hues breaks the catalogue color story.
-- Don't fill a card border with a saturated accent color (red border, blue border). Borders are always ink.
-- Don't omit the page number on a content slide. It is a non-optional editorial signal.
+### 不该做
+- 不要给任何角加圆角。卡片、印章、小片、顶条，全是严格矩形。花瓣（圆）与星芒封印（多边形 clip-path）是仅有的非矩形形状。
+- 不要用模糊 `box-shadow`。系统里唯一的阴影是引文标注上的 8px 硬墨偏移。现代柔阴影会破掉印刷语域。
+- 不要把 Big Shoulders Display 换成别的展示字面。压缩工业 900 声部就是整套系统身份。
+- 不要把 JetBrains Mono 换成别的等宽字面。表格声部属于目录设定。
+- 不要用 Big Shoulders Display 排正文段。小正文尺寸下它读作用力过猛。
+- 不要用 Albert Sans 做展示瞬间。Albert Sans 是中性正文字面，展示瞬间需要 Big Shoulders。
+- 不要用斜体强调。用换红或蓝的行内 `<em>`，或换字重（Albert 400 → 700）。
+- 不要引入第七种主色。调色板锁在红 / 粉 / 橙 / 黄 / 绿 / 蓝。加紫、青或别的色相会破掉目录色彩故事。
+- 不要用饱和强调色填卡片边框（红边框、蓝边框）。边框始终是墨。
+- 不要在内容页上省掉页码。它是不可省略的编辑信号。
 
-## Responsive Behavior
+## 响应式行为
 
-The system targets `100vw × 100vh` and uses `clamp()` throughout with `min(Xvw, Yvh)` patterns that combine viewport-width and viewport-height constraints. This produces fluid scaling across desktop sizes without responsive breakpoints. There is no defined mobile breakpoint — the deck is presentation-first.
+系统以 `100vw × 100vh` 为目标、通篇用 `clamp()`，配 `min(Xvw, Yvh)` 式样把视口宽与视口高约束合起来。这带来桌面尺寸间的流式缩放，无需响应式断点。没有定义移动端断点，文稿以演示为先。
 
-### Scaling Behavior
-- Display headlines scale via `min(Xvw, Yvh)` so they shrink when the viewport gets short, not only when it gets narrow.
-- Body, mono, and micro labels scale within their clamp range based on viewport width.
-- Petals, ribbons, seals, and stamps use `vw`/`vmin` units so they scale proportionally with the canvas.
-- The 4px paper-grain texture period is fixed regardless of viewport.
+### 缩放行为
+- 展示标题经 `min(Xvw, Yvh)` 缩放，视口变矮时也会缩小，不只是变窄时。
+- 正文、等宽、微标签按视口宽度在各自 clamp 区间内缩放。
+- 花瓣、飘带、封印、印章用 `vw`/`vmin` 单位，随画布成比例缩放。
+- 4px 纸张颗粒纹理周期固定，与视口无关。
 
-### Presenter Behavior
-- Slides advance via `ArrowRight`, `PageDown`, or `Space`.
-- Slides reverse via `ArrowLeft` or `PageUp`.
-- `Home` jumps to first, `End` to last.
-- Touch swipe horizontal advances/reverses.
-- The active slide carries the `.active` class; inactive slides are at opacity 0.
+### 放映行为
+- `ArrowRight`、`PageDown`、`Space` 前进。
+- `ArrowLeft`、`PageUp` 后退。
+- `Home` 跳到首页，`End` 跳到末页。
+- 横向触屏滑动前进 / 后退。
+- 激活页带 `.active` 类，非激活页 opacity 0。
 
-### Print Behavior
-No `@media print` rule is defined.
+### 打印行为
+没有定义 `@media print` 规则。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin | Chinese | Weight mapping |
+| 角色 | 拉丁 | 中文 | 字重映射 |
 |---|---|---|---|
-| Display / Headline / Statement / Hero numeral / Card name / Seal / Stamp / Lockup | Big Shoulders Display (900) | **站酷小薇体 ZCOOL XiaoWei** | regular (single weight) |
-| Body / Body-md / Body-emphasis / Micro labels | Albert Sans (400 / 600 / 700) | **霞鹜文楷 LXGW WenKai** | regular |
-| Tabular / Spec rows / Chips / Page numbers / Mono labels | JetBrains Mono (400 / 500) | **霞鹜文楷 LXGW WenKai** (or keep mono Latin-only for spec rows) | regular |
-| Japanese accents | Noto Sans JP | *(unchanged)* | 500 / 700 |
+| 展示 / 标题 / 陈述 / 英雄数字 / 卡名 / 封印 / 印章 / 锁定 | Big Shoulders Display（900） | **站酷小薇体 ZCOOL XiaoWei** | regular（单字重） |
+| 正文 / 正文-md / 强调正文 / 微标签 | Albert Sans（400 / 600 / 700） | **霞鹜文楷 LXGW WenKai** | regular |
+| 表格 / 规格行 / 小片 / 页码 / 等宽标签 | JetBrains Mono（400 / 500） | **霞鹜文楷 LXGW WenKai**（或规格行保留纯拉丁等宽） | regular |
+| 日文点缀 | Noto Sans JP | *（不变）* | 500 / 700 |
 
-### Mixed-Content Strategy
+### 混排策略
 
-**Strategy A — display CJK + body CJK, each with its own character.** The cassette-package aesthetic is feminine-floral with industrial discipline, and the Chinese pairing should honor both halves. **ZCOOL XiaoWei (站酷小薇体)** is a graceful condensed display face with elegant high-contrast strokes — it echoes Big Shoulders Display's condensed verticality while carrying a softer, distinctly feminine voice that matches the petal-cluster decorative system. **LXGW WenKai (霞鹜文楷)** is a warm KaiTi-style body face based on Fontworks Klee — it has the friendly hand-curated quality that matches Albert Sans's role as the body voice, and reads beautifully at small sizes against the warm cream paper. Together the two CJK faces preserve the "industrial display + warm body" rhythm of the Latin system while landing the Chinese deck in a distinctly hand-curated, slightly-feminine register that suits Sakura Chroma's name and its floral motifs.
+**策略 A：展示 CJK + 正文 CJK，各有各的性格。** 卡带包装美学是女性化花卉配工业纪律，中文搭配该同时敬重这两半。**ZCOOL XiaoWei（站酷小薇体）** 是优雅的压缩展示字面，笔画对比精致，既呼应 Big Shoulders Display 的压缩竖向感，又带更柔、更分明的女性声部，贴合花瓣簇装饰系统。**LXGW WenKai（霞鹜文楷）** 是暖楷书风正文字面，基于 Fontworks Klee，带友好的手工甄选气质，贴合 Albert Sans 作正文声部的角色，在暖奶油纸上的小尺寸下读起来很美。两款 CJK 字面合起来保住拉丁系统"工业展示 + 暖正文"的节奏，又把中文文稿落在一个分明手工甄选、略女性化的语域里，正合 Sakura Chroma 的名字与花卉母题。
 
-### Loading
+### 加载
 
 ```html
 <link href="https://chinese-fonts-cdn.deno.dev/packages/zcool-xiaowei/dist/ZCOOLXiaoWei-Regular/result.css" rel="stylesheet">
 <link href="https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css" rel="stylesheet">
 ```
 
-Then append the CJK families to the appropriate font stacks:
+然后把 CJK 字族追加到相应字体栈：
 ```css
 /* Display roles */
 font-family: 'Big Shoulders Display', 'ZCOOL XiaoWei', sans-serif;
@@ -578,50 +582,50 @@ font-family: 'Albert Sans', 'LXGW WenKai', sans-serif;
 font-family: 'JetBrains Mono', 'LXGW WenKai', ui-monospace, monospace;
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- Line-height: body 1.75–1.85, display 1.15–1.25
-- Letter-spacing: 0 on CJK
-- Text-transform: no uppercase on CJK
-- Full-width punctuation
-- No period on display headlines
-- Pangu spacing (盘古之白): `使用 Claude` not `使用Claude`
-- One font per sentence
+- 行高：正文 1.75–1.85，展示 1.15–1.25
+- 字距：CJK 设 0
+- 文字变换：CJK 不用 uppercase
+- 全角标点
+- 展示标题不加句号
+- 盘古之白（Pangu spacing）：`使用 Claude` 而非 `使用Claude`
+- 一句一款字体
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-- **The negative tracking on Big Shoulders display (-0.012em to -0.025em) must drop to 0** on CJK. ZCOOL XiaoWei is already a condensed face; negative tracking will collide glyphs.
-- **The tracked-caps micro-labels (0.16em, 0.2em, 0.32em) have no CJK equivalent.** Drop tracking to 0 for CJK micro-labels and let the warm-brown ink color + bold weight carry the categorical-label signal. A "限定版 LIMITED EDITION" eyebrow can mix CJK + Latin in the same label — keep tracking 0 on the CJK characters and 0.16em+ on the Latin.
-- **Inline `<em>` color shifts (to red or blue) work identically in CJK** — color emphasis is glyph-agnostic and lands beautifully on ZCOOL XiaoWei display headlines.
-- **Petal clusters, ribbon bands, starburst seals, and red rectangular stamps are all glyph-agnostic** — they carry the system's industrial-catalogue voice equally well behind Chinese content.
-- **The 32-point starburst seal carrying a 2–4 character glyph** works exceptionally well with a single Chinese character (限, 新, 季) at ZCOOL XiaoWei in `{colors.paper}` cream. The bold display weight makes the central glyph read as a maker's mark.
-- **Spec rows in JetBrains Mono** present the trickiest decision: pure-Latin spec rows (`44.1 KHZ`, `LP / 33⅓`) preserve the catalogue conceit; localized spec rows in LXGW WenKai (`立体声`, `限定版`) read as a Chinese-market catalogue but lose the technical-spec voice. The right move is **mixed-language spec rows where Latin values stay mono and Chinese descriptors switch to LXGW WenKai inline.**
-- **Noto Sans JP accents (限定版) remain unchanged** — Japanese characters share glyphs with Simplified Chinese in many cases but the Noto Sans JP rendering is intentional (Japanese-edition affect). On a Chinese-primary deck, swap to LXGW WenKai for these characters so they read as Chinese rather than as a Japanese loan.
+- **Big Shoulders 展示上的负字距（-0.012em 到 -0.025em）在 CJK 上必须降到 0**。ZCOOL XiaoWei 本就是压缩字面，负字距会让字撞字。
+- **加字距全大写微标签（0.16em、0.2em、0.32em）没有 CJK 对应。** CJK 微标签把字距降到 0，让暖棕墨色 + 粗字重承担分类型标签信号。一条 "限定版 LIMITED EDITION" eyebrow 可在同一标签里混 CJK + 拉丁，汉字字距保持 0，拉丁给 0.16em+。
+- **行内 `<em>` 换色（到红或蓝）在 CJK 里同样成立**，颜色强调与字形无关，落在 ZCOOL XiaoWei 展示标题上很漂亮。
+- **花瓣簇、飘带、星芒封印、红色矩形印章都与字形无关**，它们在中文内容背后同样扛得住系统的工业目录声部。
+- **承载 2–4 字符字形的 32 角星芒封印**，配单个汉字（限、新、季）、以 `{colors.paper}` 奶油的 ZCOOL XiaoWei 呈现时格外出彩。粗展示字重让中心字形读作制作者标记。
+- **JetBrains Mono 规格行是最难的决定**：纯拉丁规格行（`44.1 KHZ`、`LP / 33⅓`）保住目录设定，本地化到 LXGW WenKai 的规格行（`立体声`、`限定版`）读作中国市场目录却丢了技术规格声部。正确做法是**混语规格行，拉丁数值保持等宽，中文描述词行内切到 LXGW WenKai**。
+- **Noto Sans JP 点缀（限定版）保持不变**，日文字符在许多情况下与简体中文共享字形，但 Noto Sans JP 渲染是刻意的（日版情调）。在以中文为主的文稿上，把这些字符换成 LXGW WenKai，让它们读作中文而非日文借字。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-ZCOOL XiaoWei is a single-weight face — there is no 900-equivalent. The Big Shoulders 900-weight loudness that defines the Latin display voice cannot be exactly matched. Compensate by reserving CJK display for moments where the soft elegance is welcome (cover spreads, quote slides) rather than where pure brutalist weight is needed (hero stats). For hero numerals, keep the figures in Latin numerals at Big Shoulders 900 — Chinese numerals (一二三四) don't carry the catalogue-cover statistical voice anyway.
+ZCOOL XiaoWei 是单字重字面，没有 900 等价。定义拉丁展示声部的 Big Shoulders 900 响度无法精确匹配。补偿办法是把 CJK 展示留给欢迎柔和优雅的瞬间（封面跨页、引文页），而非需要纯粹粗野分量的地方（英雄统计）。英雄数字保留拉丁数字的 Big Shoulders 900，中文数字（一二三四）本就不承载目录封面的统计声部。
 
-## Iteration Guide
+## 迭代指南
 
-1. Every new content slide carries the paper-grain halftone-dot texture, a frame-inset region (36–72px from edges, 72–110px from bottom), and a page number at bottom-right.
-2. Any new content slide that follows the frame pattern opens with a topbar: display-section title on the left, tracked-caps meta-label on the right, separated from the body by a 1.5px ink rule.
-3. Any new headline uses Big Shoulders Display weight 900 with negative tracking. For section topbars use `{typography.disp-section}`; for single-statement spreads use `{typography.disp-statement}`; for hero numerals use `{typography.num-hero}` in red.
-4. Any new body uses Albert Sans 400; tracked-caps labels use Albert Sans 700 uppercase with 0.16–0.32em tracking; tabular content uses JetBrains Mono 400.
-5. Any new card uses a 1.5px ink border, optional colored topstrip (red / pink / orange / blue), and a body pattern of display name → Albert body → dashed-rule → mono spec rows.
-6. Any new ledger / tabular pattern uses the 5-column ledger-row grid with header underline (1.5px ink) and hairline body dividers (1px ink-alpha). Categorical tags use mono chips with primary-palette backgrounds.
-7. Any new decorative anchor uses a petal-cluster (4–5 overlapping perfect-circle petals in mixed primary colors). Avoid ellipses — petals are always perfectly round.
-8. Any new authority mark uses the 32-point starburst seal (ink-filled, cream text) or the red rectangular stamp. Seals are formal; stamps are punchy.
-9. Any inline emphasis inside a display headline uses `<em>` with color shift to `{colors.red}` (default) or `{colors.blue}` (when red is overloaded). Never italicize.
-10. Atmospheric layering — diagonal ribbon bands at -22° or +22° behind hero content — appears on cover, closing, and stripe-spread moments. It is not a routine slide element; reserve it for spreads that earn atmospheric ambition.
+1. 每张新内容页都带纸张颗粒半调网点纹理、一个画框内缩区（距边 36–72px、距底 72–110px）、以及右下角页码。
+2. 任何遵循画框式样的新内容页都以顶条开场：左侧 display-section 标题、右侧加字距全大写元数据标签，由 1.5px 墨线与正文隔开。
+3. 任何新标题都用 Big Shoulders Display 字重 900 配负字距。分节顶条用 `{typography.disp-section}`，单句陈述跨页用 `{typography.disp-statement}`，英雄数字用红色的 `{typography.num-hero}`。
+4. 任何新正文都用 Albert Sans 400，加字距全大写标签用 Albert Sans 700 全大写、0.16–0.32em 字距，表格内容用 JetBrains Mono 400。
+5. 任何新卡片都用 1.5px 墨边框、可选彩色顶条（红 / 粉 / 橙 / 蓝），以及展示名 → Albert 正文 → 虚线 → 等宽规格行的正文式样。
+6. 任何新账表 / 表格式样都用 5 列 ledger-row 网格，表头下划线 1.5px 墨、正文细线分隔 1px 墨-alpha。分类型标签用主调色板背景的等宽小片。
+7. 任何新装饰锚点都用花瓣簇（4–5 个混主色的重叠正圆花瓣）。避开椭圆，花瓣始终是正圆。
+8. 任何新权威标记都用 32 角星芒封印（墨填充、奶油文字）或红色矩形印章。封印正式，印章有劲。
+9. 展示标题内的任何行内强调都用换色到 `{colors.red}`（默认）或 `{colors.blue}`（红过载时）的 `<em>`。绝不斜体。
+10. 氛围分层，即英雄内容背后 -22° 或 +22° 的对角飘带，出现在封面、收尾、条纹跨页瞬间。它不是常规页元素，留给配得上氛围野心的跨页。
 
-## Known Gaps
+## 已知缺口
 
-- The system loads four Google Fonts (Big Shoulders Display, Albert Sans, JetBrains Mono, Noto Sans JP). Big Shoulders is multi-weight (500, 700, 800, 900); the system uses 700 and 900. Self-hosting recommended for production.
-- The paper-grain texture is a CSS radial-gradient (not an SVG noise filter) so it tiles deterministically across browsers and is performant. The dot period (4px) is fixed and does not scale with viewport.
-- The 32-point starburst clip-path polygon is hardcoded; modifying the seal shape requires rewriting the polygon point list. The system is consistent only because the same polygon is reused everywhere — switching to a different starburst polygon breaks visual cohesion.
-- The diagonal ribbon bands use `transform: rotate(-22deg)` and oversize widths (160%) to bleed off the slide edges. On very tall viewports the ribbon coverage may look thinner than on standard 16:9 viewports.
-- The equalizer bar chart uses `display: flex; flex-direction: column-reverse;` to stack on-segments from the bottom up. This is a subtle layout pattern that can be fragile under aggressive overrides — modifying the eq segments requires preserving the column-reverse behavior.
-- Hero statistics use inline `<sub>` and inline-style `font-size` overrides for sub-units (`26K`, `61%`), which sidesteps the typography token system. New stats should follow the same pattern: oversized numeral + smaller inline unit at ~34% the numeral's size in ink color.
-- Noto Sans JP is loaded but used only once (限定版 "limited edition" in the cover footer). If a deck contains no Japanese content, the font load is unused weight; consider removing the import for non-Japanese decks.
-- The nav hint at bottom-left has very low opacity (0.36) and may be difficult to see at default presenter brightness. It is intended as ambient chrome, not as a prominent affordance.
+- 系统加载四款 Google Fonts（Big Shoulders Display、Albert Sans、JetBrains Mono、Noto Sans JP）。Big Shoulders 多字重（500、700、800、900），系统用 700 与 900。生产环境建议自托管。
+- 纸张颗粒纹理是 CSS 径向渐变（不是 SVG 噪声滤镜），因此跨浏览器确定地平铺且性能好。网点周期（4px）固定，不随视口缩放。
+- 32 角星芒 clip-path 多边形是硬编码的，改封印形状要重写多边形点列。系统之所以一致，只因处处复用同一个多边形，换成别的星芒多边形会破掉视觉凝聚。
+- 对角飘带用 `transform: rotate(-22deg)` 与超宽宽度（160%）从页边溢出。视口很高时，飘带覆盖可能显得比标准 16:9 视口薄。
+- 均衡器条形图用 `display: flex; flex-direction: column-reverse;` 把亮段从底部往上叠。这是个细微布局式样，在激进覆盖下可能脆弱，改动 eq 段时必须保住 column-reverse 行为。
+- 英雄统计用行内 `<sub>` 与行内样式 `font-size` 覆盖做子单位（`26K`、`61%`），绕过了排印 token 系统。新统计应沿同一式样：超大数字 + 墨色、约为数字尺寸 34% 的较小行内单位。
+- Noto Sans JP 有加载但只用了一次（封面页脚的 限定版 "limited edition"）。文稿无日文内容时，这次字体加载是没用上的负担，非日文稿可考虑去掉该 import。
+- 左下导航提示不透明度很低（0.36），在默认放映亮度下可能难看见。它本意是氛围外壳，不是醒目的操作提示。

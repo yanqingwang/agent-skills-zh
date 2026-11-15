@@ -1,6 +1,10 @@
-# Coverage Reports
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/code-documenter/references/coverage-reports.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Documentation Coverage Report Template
+# 覆盖率报告
+
+## 文档覆盖率报告模板
 
 ```markdown
 # Documentation Report: {project_name}
@@ -62,7 +66,7 @@
 ```
 ```
 
-## Checklist During Documentation
+## 文档编写检查清单
 
 ```markdown
 ## Documentation Checklist
@@ -99,7 +103,7 @@
 - [ ] Coverage report generated
 ```
 
-## Framework-Specific Linting
+## 按框架做 lint
 
 ```bash
 # JavaScript/TypeScript - ESLint
@@ -115,11 +119,11 @@ pip install interrogate
 interrogate -v src/
 ```
 
-## Quick Reference
+## 速查表
 
-| Metric | Good | Acceptable | Poor |
+| 指标 | 良好 | 可接受 | 较差 |
 |--------|------|------------|------|
-| Function coverage | >90% | 70-90% | <70% |
-| Class coverage | 100% | >90% | <90% |
-| API endpoint coverage | 100% | 100% | <100% |
-| Example coverage | >50% | 30-50% | <30% |
+| 函数覆盖率 | >90% | 70-90% | <70% |
+| 类覆盖率 | 100% | >90% | <90% |
+| API 端点覆盖率 | 100% | 100% | <100% |
+| 示例覆盖率 | >50% | 30-50% | <30% |

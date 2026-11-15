@@ -3759,6 +3759,22 @@
         {
           "upstream": "skills/copy-editing/references/plain-english-alternatives.md",
           "local": "skills/writer/writing/copy-editing/references/plain-english-alternatives.md"
+        },
+        {
+          "upstream": "skills/site-architecture/references/mermaid-templates.md",
+          "local": "skills/growth/product/site-architecture/references/mermaid-templates.md"
+        },
+        {
+          "upstream": "skills/site-architecture/references/navigation-patterns.md",
+          "local": "skills/growth/product/site-architecture/references/navigation-patterns.md"
+        },
+        {
+          "upstream": "skills/site-architecture/references/platforms-and-migration.md",
+          "local": "skills/growth/product/site-architecture/references/platforms-and-migration.md"
+        },
+        {
+          "upstream": "skills/site-architecture/references/site-type-templates.md",
+          "local": "skills/growth/product/site-architecture/references/site-type-templates.md"
         }
       ],
       "verbatim": [
@@ -3821,22 +3837,6 @@
         {
           "upstream": "skills/co-marketing/evals/evals.json",
           "local": "skills/growth/product/co-marketing/evals/evals.json"
-        },
-        {
-          "upstream": "skills/site-architecture/references/mermaid-templates.md",
-          "local": "skills/growth/product/site-architecture/references/mermaid-templates.md"
-        },
-        {
-          "upstream": "skills/site-architecture/references/navigation-patterns.md",
-          "local": "skills/growth/product/site-architecture/references/navigation-patterns.md"
-        },
-        {
-          "upstream": "skills/site-architecture/references/platforms-and-migration.md",
-          "local": "skills/growth/product/site-architecture/references/platforms-and-migration.md"
-        },
-        {
-          "upstream": "skills/site-architecture/references/site-type-templates.md",
-          "local": "skills/growth/product/site-architecture/references/site-type-templates.md"
         }
       ],
       "verbatim_excluded": [
@@ -3927,6 +3927,42 @@
         {
           "upstream": "skills/peer-review/references/reporting_standards.md",
           "local": "skills/researcher/science/peer-review/references/reporting_standards.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/discrete_choice.md",
+          "local": "skills/researcher/science/statsmodels/references/discrete_choice.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/glm.md",
+          "local": "skills/researcher/science/statsmodels/references/glm.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/linear_models.md",
+          "local": "skills/researcher/science/statsmodels/references/linear_models.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/model_selection.md",
+          "local": "skills/researcher/science/statsmodels/references/model_selection.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/modeling_capabilities.md",
+          "local": "skills/researcher/science/statsmodels/references/modeling_capabilities.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/quick_start_guide.md",
+          "local": "skills/researcher/science/statsmodels/references/quick_start_guide.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/review.md",
+          "local": "skills/researcher/science/statsmodels/references/review.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/stats_diagnostics.md",
+          "local": "skills/researcher/science/statsmodels/references/stats_diagnostics.md"
+        },
+        {
+          "upstream": "skills/statsmodels/references/time_series.md",
+          "local": "skills/researcher/science/statsmodels/references/time_series.md"
         }
       ],
       "translated_prose": [
@@ -4359,42 +4395,6 @@
         {
           "upstream": "skills/statistical-power/scripts/simulate_power.py",
           "local": "skills/researcher/science/statistical-power/scripts/simulate_power.py"
-        },
-        {
-          "upstream": "skills/statsmodels/references/discrete_choice.md",
-          "local": "skills/researcher/science/statsmodels/references/discrete_choice.md"
-        },
-        {
-          "upstream": "skills/statsmodels/references/glm.md",
-          "local": "skills/researcher/science/statsmodels/references/glm.md"
-        },
-        {
-          "upstream": "skills/statsmodels/references/linear_models.md",
-          "local": "skills/researcher/science/statsmodels/references/linear_models.md"
-        },
-        {
-          "upstream": "skills/statsmodels/references/model_selection.md",
-          "local": "skills/researcher/science/statsmodels/references/model_selection.md"
-        },
-        {
-          "upstream": "skills/statsmodels/references/modeling_capabilities.md",
-          "local": "skills/researcher/science/statsmodels/references/modeling_capabilities.md"
-        },
-        {
-          "upstream": "skills/statsmodels/references/quick_start_guide.md",
-          "local": "skills/researcher/science/statsmodels/references/quick_start_guide.md"
-        },
-        {
-          "upstream": "skills/statsmodels/references/review.md",
-          "local": "skills/researcher/science/statsmodels/references/review.md"
-        },
-        {
-          "upstream": "skills/statsmodels/references/stats_diagnostics.md",
-          "local": "skills/researcher/science/statsmodels/references/stats_diagnostics.md"
-        },
-        {
-          "upstream": "skills/statsmodels/references/time_series.md",
-          "local": "skills/researcher/science/statsmodels/references/time_series.md"
         }
       ],
       "verbatim_excluded": [],
@@ -17674,9 +17674,7 @@
         {
           "upstream": "skills/chaos-engineer/references/kubernetes-chaos.md",
           "local": "skills/developer/quality/chaos-engineer/references/kubernetes-chaos.md"
-        }
-      ],
-      "verbatim": [
+        },
         {
           "upstream": "skills/kubernetes-specialist/references/configuration.md",
           "local": "skills/developer/quality/kubernetes-specialist/references/configuration.md"
@@ -17774,6 +17772,7 @@
           "local": "skills/developer/quality/database-optimizer/references/query-optimization.md"
         }
       ],
+      "verbatim": [],
       "verbatim_excluded": [
         {
           "upstream": "其余 65 件",
@@ -22452,20 +22451,6 @@
         {
           "upstream": "plugins/frontend-slides/skills/frontend-slides/html-template.md",
           "local": "skills/creator/slides/frontend-slides/html-template.md"
-        }
-      ],
-      "verbatim": [
-        {
-          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/README.md",
-          "local": "skills/creator/slides/frontend-slides/bold-template-pack/README.md"
-        },
-        {
-          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/deck-stage.js",
-          "local": "skills/creator/slides/frontend-slides/bold-template-pack/deck-stage.js"
-        },
-        {
-          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/selection-index.json",
-          "local": "skills/creator/slides/frontend-slides/bold-template-pack/selection-index.json"
         },
         {
           "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/8-bit-orbit/design.md",
@@ -22602,6 +22587,20 @@
         {
           "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/vellum/design.md",
           "local": "skills/creator/slides/frontend-slides/bold-template-pack/templates/vellum/design.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/README.md",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/README.md"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/deck-stage.js",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/deck-stage.js"
+        },
+        {
+          "upstream": "plugins/frontend-slides/skills/frontend-slides/bold-template-pack/selection-index.json",
+          "local": "skills/creator/slides/frontend-slides/bold-template-pack/selection-index.json"
         },
         {
           "upstream": "plugins/frontend-slides/skills/frontend-slides/scripts/deploy.sh",
@@ -24768,6 +24767,14 @@
         {
           "upstream": "skills/stack-diagram/SKILL.md",
           "local": "skills/designer/design/stack-diagram/SKILL.md"
+        },
+        {
+          "upstream": "skills/stack-diagram/references/geometry.md",
+          "local": "skills/designer/design/stack-diagram/references/geometry.md"
+        },
+        {
+          "upstream": "skills/stack-diagram/references/tsx.md",
+          "local": "skills/designer/design/stack-diagram/references/tsx.md"
         }
       ],
       "verbatim": [
@@ -24820,14 +24827,6 @@
           "local": "skills/designer/design/stack-diagram/assets/template.html"
         },
         {
-          "upstream": "skills/stack-diagram/references/geometry.md",
-          "local": "skills/designer/design/stack-diagram/references/geometry.md"
-        },
-        {
-          "upstream": "skills/stack-diagram/references/tsx.md",
-          "local": "skills/designer/design/stack-diagram/references/tsx.md"
-        },
-        {
           "upstream": "skills/stack-diagram/scripts/build.py",
           "local": "skills/designer/design/stack-diagram/scripts/build.py"
         },
@@ -24856,12 +24855,6 @@
         {
           "upstream": "skills/reanimate/SKILL.md",
           "local": "skills/designer/design/reanimate/SKILL.md"
-        }
-      ],
-      "verbatim": [
-        {
-          "upstream": "skills/reanimate/LICENSE",
-          "local": "skills/designer/design/reanimate/LICENSE"
         },
         {
           "upstream": "skills/reanimate/references/analysis.md",
@@ -24882,6 +24875,12 @@
         {
           "upstream": "skills/reanimate/references/webgl.md",
           "local": "skills/designer/design/reanimate/references/webgl.md"
+        }
+      ],
+      "verbatim": [
+        {
+          "upstream": "skills/reanimate/LICENSE",
+          "local": "skills/designer/design/reanimate/LICENSE"
         },
         {
           "upstream": "skills/reanimate/scripts/bun.lock",

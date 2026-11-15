@@ -1,6 +1,10 @@
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/helm-charts.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Helm Charts
 
-## Chart Structure
+## Chart 结构
 
 ```
 mychart/
@@ -400,7 +404,7 @@ spec:
 
 ## Helm Hooks
 
-### Pre-Install Hook (Database Migration)
+### Pre-Install Hook（数据库迁移）
 
 ```yaml
 apiVersion: batch/v1
@@ -433,7 +437,7 @@ spec:
               key: database-url
 ```
 
-### Post-Install Hook (Test)
+### Post-Install Hook（测试）
 
 ```yaml
 apiVersion: v1
@@ -457,7 +461,7 @@ spec:
       curl -f http://{{ include "myapp.fullname" . }}:{{ .Values.service.port }}/health || exit 1
 ```
 
-## Helm Commands
+## Helm 命令
 
 ```bash
 # Create new chart
@@ -509,7 +513,7 @@ helm package myapp/ --version 1.2.0
 helm dependency update myapp/
 ```
 
-## values-prod.yaml (Environment Override)
+## values-prod.yaml（环境覆盖）
 
 ```yaml
 replicaCount: 5
@@ -557,9 +561,9 @@ redis:
       size: 20Gi
 ```
 
-## Chart Testing
+## Chart 测试
 
-### Helm Test Command
+### Helm Test 命令
 
 ```bash
 # Run chart tests after installation
@@ -572,7 +576,7 @@ helm test myapp --namespace production --logs
 helm test myapp --namespace production --timeout 5m
 ```
 
-### Chart Testing Tool (ct)
+### Chart Testing 工具（ct）
 
 ```bash
 # Install chart-testing
@@ -601,7 +605,7 @@ validate-maintainers: true
 check-version-increment: true
 ```
 
-### Unit Testing with helm-unittest
+### 用 helm-unittest 做单元测试
 
 ```bash
 # Install plugin
@@ -654,7 +658,7 @@ tests:
           count: 0
 ```
 
-## Values Schema Validation
+## Values Schema 校验
 
 ```json
 {
@@ -729,9 +733,9 @@ tests:
 }
 ```
 
-## Chart Repository
+## Chart 仓库
 
-### Create Repository
+### 创建仓库
 
 ```bash
 # Package chart
@@ -744,7 +748,7 @@ helm repo index ./repo --url https://charts.example.com
 helm repo index ./repo --url https://charts.example.com --merge ./repo/index.yaml
 ```
 
-### GitHub Pages Repository
+### GitHub Pages 仓库
 
 ```yaml
 # .github/workflows/release.yaml
@@ -788,7 +792,7 @@ helm pull oci://myregistry.io/charts/mychart --version 1.2.0
 helm install myapp oci://myregistry.io/charts/mychart --version 1.2.0
 ```
 
-## Helm Plugins
+## Helm 插件
 
 ```bash
 # helm-diff - preview upgrades
@@ -811,7 +815,7 @@ helm s3 init s3://my-bucket/charts
 helm s3 push mychart-1.2.0.tgz my-s3-repo
 ```
 
-## Complex Upgrade/Rollback
+## 复杂升级与回滚
 
 ```bash
 # Upgrade with atomic (rollback on failure)
@@ -899,20 +903,20 @@ dependencies:
 {{- include "mylib.deployment" . }}
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Versioning**: Follow semantic versioning for charts
-2. **Values**: Provide sensible defaults, allow overrides
-3. **Documentation**: Document all values in README
-4. **Testing**: Include tests in templates/tests/
-5. **Helpers**: Use _helpers.tpl for reusable templates
-6. **Labels**: Include standard Kubernetes labels
-7. **Annotations**: Use annotations for metadata and tools
-8. **Hooks**: Use hooks for migrations, cleanup
-9. **Dependencies**: Pin dependency versions
-10. **Schema**: Validate values with values.schema.json
-11. **Use ct** for comprehensive chart testing in CI
-12. **Use helm-diff** before production upgrades
-13. **Encrypt secrets** with helm-secrets or sealed-secrets
-14. **Use library charts** for shared patterns
-15. **Push to OCI registries** for better artifact management
+1. **版本管理**：Chart 遵循语义化版本
+2. **Values**：提供合理默认值，允许覆盖
+3. **文档**：在 README 里记录所有 values
+4. **测试**：在 templates/tests/ 下放测试
+5. **Helpers**：用 _helpers.tpl 放可复用模板
+6. **标签**：加上 Kubernetes 标准标签
+7. **注解**：用注解承载元数据与工具配置
+8. **Hooks**：用 hook 做迁移、清理
+9. **依赖**：锁定依赖版本
+10. **Schema**：用 values.schema.json 校验 values
+11. **在 CI 里用 ct** 做全面 Chart 测试
+12. **生产升级前用 helm-diff**
+13. **用 helm-secrets 或 sealed-secrets 加密密钥**
+14. **用 Library Chart** 复用共享模式
+15. **推送到 OCI 仓库**：更好地管理制品

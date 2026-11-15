@@ -252,308 +252,312 @@ components:
     description: "Persistent slide counter pill at bottom-left. Space Grotesk uppercase NN / NN format."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/block-frame/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-BlockFrame is a **maximalist neobrutalist presentation system** built on five structural laws: every region has a 4px black border, every elevated element has an 8px hard offset shadow, every corner is square, every accent color is a saturated pastel, and every layout is allowed to be a little bit crooked. The system's joy comes from the deliberate collision of these laws — bordered cards meet bordered cards, shadows stack against shadows, tilted decorations puncture the grid intentionally.
+BlockFrame 是一套**极繁的新粗野主义演示系统**，建立在五条结构定律上：每个区域都有 4px 黑边、每个抬升元素都有 8px 硬边偏移阴影、每个角都是方角、每种强调色都是饱和浅彩、每个布局都允许稍微歪一点。系统的乐趣来自这些定律的刻意碰撞：带框卡片撞带框卡片，阴影叠阴影，倾斜装饰有意破开网格。
 
-The type system pivots on **Inter** (weights 400-900) for display, body, and stats — set at weight 800-900 in tight uppercase with negative letter-spacing for headlines, weight 500 sentence case for body, and weight 700 uppercase for card titles. **Space Grotesk** (weights 400-700) is the secondary face, used as a quasi-monospace label voice for eyebrows, slide counters, stat labels, mono tags, and any chrome that should read as "system" rather than "editorial". The face combination is deliberately ordinary — both are widely-available open sans-serifs — but the treatment (heavy uppercase Inter + wide-tracked Space Grotesk) gives them a distinct neobrutalist register.
+字体系统以 **Inter**（字重 400-900）为轴，兼顾展示、正文与统计：标题用字重 800-900、紧大写、负字距；正文用字重 500 句首大写；卡片标题用字重 700 大写。**Space Grotesk**（字重 400-700）是次级字面，作准等宽的标签声部，用于眉题、页码、统计标签、等宽小片，以及任何该读成"系统"而非"编辑"的外壳。字面组合刻意普通，两款都是随处可得的开源无衬线，但处理方式（重磅大写 Inter + 宽字距 Space Grotesk）赋予了它们鲜明的新粗野主义语域。
 
-The palette is built around **five saturated pastels** (pink `#FE90E8`, blue `#C0F7FE`, green `#99E885`, yellow `#F7CB46`, cream `#FFDC8B`) plus **pure black** (`#000000`) for borders and text, **white** (`#FFFFFF`) for clean card fills, and **off-white** (`#FFFDF5`) for warm canvas. The pastels are not subtle accents — they are full-bleed surface fills. A typical deck cycles every slide through a different colored ground (offwhite cover → blue intro → offwhite content → green chart → pink quote → yellow split → offwhite timeline → blue stats → cream team → black close). This color cycling is the system's primary rhythm.
+配色围绕**五种饱和浅彩**（粉 `#FE90E8`、蓝 `#C0F7FE`、绿 `#99E885`、黄 `#F7CB46`、奶油 `#FFDC8B`）加**纯黑**（`#000000`）作边框与文字、**白**（`#FFFFFF`）作干净卡片填充、**米白**（`#FFFDF5`）作暖画布。浅彩不是微妙点缀，而是满出血的表面填充。典型演示文稿让每一页轮过不同色底（米白封面 → 蓝导言 → 米白内容 → 绿图表 → 粉引文 → 黄分栏 → 米白时间轴 → 蓝统计 → 奶油团队 → 黑收尾）。这种换色循环是系统的主节奏。
 
-Depth is **hard offset shadow at 4px and 8px**, always solid black, always zero blur, always positioned bottom-right. Larger elements get 8px, smaller chrome gets 4px. The close-frame uses a single 12px offset in **yellow** (the only colored shadow in the system) as the system's loudest depth statement, and inverted close-frames pair 6px **white** shadows on black surfaces. Borders are 4px solid black on primary cards, 3px solid black on secondary chrome. Border weight and shadow size are tightly coupled — a 4px border carries an 8px shadow; a 3px border carries a 4px shadow.
+纵深是 **4px 与 8px 的硬边偏移阴影**，始终纯黑、始终零模糊、始终落在右下。大元素用 8px，小外壳用 4px。收尾框用单枚 12px 的**黄色**偏移（系统里唯一的彩色阴影），是系统最响的纵深表态；反色收尾框则在黑表面上配 6px **白色**阴影。主卡片边框 4px 实线黑，次级外壳 3px 实线黑。边框粗细与阴影尺寸紧密绑定：4px 边配 8px 阴影，3px 边配 4px 阴影。
 
-**Density philosophy: comfortably dense.** This system reads as authoritative when packed and timid when sparse. A typical surface holds: a label-pill eyebrow + a large headline + a multi-card grid (3-6 cards) + at least one decorative element (tilted rectangle, star burst, stripe block, corner bracket, deco dots). Empty space within a region reads as "broken" — every card should be filled, every grid should be complete. The system's joy depends on the visual chatter of many bordered objects existing in the same frame.
+**密度取向：舒适地密。** 这套系统填满时显得权威，稀疏时显得怯。典型一页承载：label-pill 眉题 + 一个大标题 + 多卡片网格（3-6 张）+ 至少一个装饰元素（倾斜矩形、星爆、条纹块、角标、装饰点）。区域内的空白读起来像"坏了"，每张卡片都该填满，每个网格都该排满。系统的乐趣依赖许多带框物件在同一画面里的视觉喧闹。
 
-**Key Characteristics:**
-- 4px solid black borders on primary cards, 3px on secondary chrome — never thinner.
-- 8px hard offset shadows on primary cards, 4px on secondary chrome — solid black, zero blur.
-- Five-pastel palette (pink, blue, green, yellow, cream) plus black, white, off-white — cycled across surfaces.
-- Inter weight 800-900 uppercase with negative tracking is the display voice; Space Grotesk weight 600 uppercase with 0.08em tracking is the label voice.
-- Square corners everywhere except a single circular accent dot on stat cards.
-- Tilted decorative elements (rotated rectangles, stars, badges) puncture the grid intentionally.
-- Label pills (`{components.label-pill}`) carry a 3px border, 4px offset shadow, and a pastel fill variant — the universal section eyebrow.
-- Colored fills are bold and saturated; pastels are used as panel grounds, not as light accents.
-- Yellow is the default CTA color; black is the default close-surface color.
-- Star bursts, stripe blocks, and dot grids are reusable decorative attention units.
+**关键特征：**
+- 主卡片 4px 实线黑边，次级外壳 3px，绝不更细。
+- 主卡片 8px 硬边偏移阴影，次级外壳 4px，纯黑、零模糊。
+- 五浅彩配色（粉、蓝、绿、黄、奶油）加黑、白、米白，跨表面轮转。
+- Inter 字重 800-900 大写配负字距是展示声部；Space Grotesk 字重 600 大写配 0.08em 字距是标签声部。
+- 处处方角，唯一例外是统计卡片上的一枚圆形点缀点。
+- 倾斜装饰元素（旋转矩形、星星、徽章）有意破开网格。
+- 标签胶囊（`{components.label-pill}`）带 3px 边、4px 偏移阴影和浅彩填充变体，是通用分节眉题。
+- 彩色填充大胆饱和，浅彩用作面板底，不是轻点缀。
+- 黄色是默认 CTA 色，黑色是默认收尾表面色。
+- 星爆、条纹块、点网格是可复用的装饰注意力单元。
 
-## Colors
+## 颜色
 
-### Palette
+### 调色板
 
-- **Black** (`{colors.black}` — `#000000`): The structural color. Every border, every primary text moment, every shadow. Pure black, no warm bias. The system's contrast anchor.
-- **White** (`{colors.white}` — `#FFFFFF`): The default card fill. Used on every primary card and as the background of label-pills and nav-buttons. Pure white, no warmth.
-- **Off-white** (`{colors.offwhite}` — `#FFFDF5`): The warm canvas tone. The default body/slide background when no pastel ground is in play. Subtly warmer than pure white so that white cards sitting on top still feel layered.
-- **Pink** (`{colors.pink}` — `#FE90E8`): A high-key candy magenta. Used as a full-surface ground, as label-pill fill, as icon-square fill, as star-burst fill, and as one of the pastel chart series. The most saturated of the five pastels.
-- **Blue** (`{colors.blue}` — `#C0F7FE`): A pale cyan-ice blue. Used as a full-surface ground (the "intro" and "stats" feel), as label-pill fill, as icon-square fill, and as a chart series.
-- **Green** (`{colors.green}` — `#99E885`): A bright spring green. Used as a full-surface ground, as label-pill fill, as icon-square fill, in the stripe-block diagonal pattern, and as a chart series.
-- **Yellow** (`{colors.yellow}` — `#F7CB46`): The CTA color. Used as the default button fill, as the close-frame shadow color, as list-number squares, as the feature-deco notch, and as label-pill fill. The brightest, most attention-pulling pastel.
-- **Cream** (`{colors.cream}` — `#FFDC8B`): A warm yellow-cream. Softer than yellow, more saturated than offwhite. Used as a full-surface ground (the "team" or "cover" feel), as label-pill fill, and as a tertiary chart accent.
+- **Black**（`{colors.black}` — `#000000`）：结构色。每一条边、每一个主文字瞬间、每一处阴影。纯黑，无暖偏。系统的对比锚点。
+- **White**（`{colors.white}` — `#FFFFFF`）：默认卡片填充。每张主卡片、标签胶囊与导航按钮的底。纯白，无暖意。
+- **Off-white**（`{colors.offwhite}` — `#FFFDF5`）：暖画布色。没有浅彩底在用时，是默认的正文/幻灯片背景。比纯白略暖，好让压在上头的白卡片仍有层次感。
+- **Pink**（`{colors.pink}` — `#FE90E8`）：高明度糖果洋红。用作整片表面底、标签胶囊填充、icon-square 填充、星爆填充，以及浅彩图表系列之一。五浅彩里最饱和的一色。
+- **Blue**（`{colors.blue}` — `#C0F7FE`）：淡青冰蓝。用作整片表面底（"导言"与"统计"感）、标签胶囊填充、icon-square 填充，以及一个图表系列。
+- **Green**（`{colors.green}` — `#99E885`）：明亮春绿。用作整片表面底、标签胶囊填充、icon-square 填充、stripe-block 斜纹图案，以及一个图表系列。
+- **Yellow**（`{colors.yellow}` — `#F7CB46`）：CTA 色。用作默认按钮填充、收尾框阴影色、list-number 方块、feature-deco 缺口、标签胶囊填充。最亮、最抓眼的浅彩。
+- **Cream**（`{colors.cream}` — `#FFDC8B`）：暖黄奶油。比黄柔，比米白饱和。用作整片表面底（"团队"或"封面"感）、标签胶囊填充，以及三级图表强调。
 
-### Defaults
+### 默认值
 
-- **Default surface background**: `{colors.offwhite}` for content-heavy surfaces; cycle through `{colors.cream}`, `{colors.blue}`, `{colors.pink}`, `{colors.green}`, `{colors.yellow}` for surfaces that need a stronger ground. The cycle is the rhythm; staying on one ground for many slides flattens the system.
-- **Default headline color**: `{colors.black}` on all light/pastel surfaces; `{colors.white}` on the black close-surface.
-- **Default body text color**: `{colors.black}` on all light/pastel surfaces; `{colors.white}` or `{colors.cream}` on dark surfaces.
-- **Default border color**: `{colors.black}` — always. There are no colored borders anywhere except the 4px white border on the inverted close-frame.
-- **Default card fill**: `{colors.white}`. Use a pastel fill only when the card is part of a multi-card row where each card needs distinct color identity (e.g., the timeline-step row where each step is a different pastel).
-- **Default button fill**: `{colors.yellow}`. Other pastels work, but yellow is the system's primary "click here" signal.
-- **Default label-pill base**: `{colors.white}`; pastel variants (`{colors.pink}`, `{colors.blue}`, `{colors.green}`, `{colors.yellow}`, `{colors.cream}`) signal section type or decorate the eyebrow.
-- **Default decorative accent on stat cards**: a 12px circle (`{components.stat-deco-dot}`) in a pastel fill — cycling pink, blue, green, yellow across cards.
-- **Default chart palette order**: pink → blue → green (three-series), with yellow and cream available for additional series.
+- **默认表面背景**：内容多的表面用 `{colors.offwhite}`；需要更强底色的表面轮用 `{colors.cream}`、`{colors.blue}`、`{colors.pink}`、`{colors.green}`、`{colors.yellow}`。循环就是节奏，连着多页停在一个底色会把系统压平。
+- **默认标题色**：所有浅/浅彩表面上用 `{colors.black}`；黑色收尾表面上用 `{colors.white}`。
+- **默认正文文字色**：所有浅/浅彩表面上用 `{colors.black}`；深色表面上用 `{colors.white}` 或 `{colors.cream}`。
+- **默认边框色**：`{colors.black}`，始终如此。除反色收尾框的 4px 白边外，哪里都没有彩色边框。
+- **默认卡片填充**：`{colors.white}`。只有当卡片属于多卡一行、每张都需要独立色彩身份时，才用浅彩填充（例如时间轴步骤行，每步一个浅彩）。
+- **默认按钮填充**：`{colors.yellow}`。别的浅彩也行，但黄色是系统主要的"点这里"信号。
+- **默认标签胶囊基色**：`{colors.white}`；浅彩变体（`{colors.pink}`、`{colors.blue}`、`{colors.green}`、`{colors.yellow}`、`{colors.cream}`）用来标示分节类型或装饰眉题。
+- **统计卡片上的默认装饰点缀**：一枚 12px 圆（`{components.stat-deco-dot}`），浅彩填充，在卡片间轮用粉、蓝、绿、黄。
+- **默认图表配色顺序**：粉 → 蓝 → 绿（三系列），黄与奶油可作额外系列。
 
-The pastels are interchangeable in role — none of them carry fixed semantic meaning (green isn't "success", red doesn't exist in the palette at all). Pair them by visual juxtaposition: pink + blue + green is the most common trio; cream + yellow is the warm pair; blue + pink is the cool-warm contrast.
+浅彩在角色上可互换，谁都不带固定语义（绿不是"成功"，红根本不在配色里）。按视觉并置来配：粉 + 蓝 + 绿是最常见的三色组，奶油 + 黄是暖对，蓝 + 粉是冷暖对比。
 
-## Typography
+## 排印
 
-### Font Family Stack
-The system runs two faces.
+### 字族栈
+系统用两款字面。
 
-**Inter** (weights 400-900) is the display, body, headline, and stat face. Used at weight 900 for hero/close titles and quote text, weight 800 for primary headlines, weight 700 for medium headlines and card titles, weight 500 for body. Display weights are always uppercase with negative letter-spacing (-0.02 to -0.03em); body weights are always sentence case with default tracking. The contrast between heavy uppercase display and weight-500 sentence body is the system's typographic rhythm.
+**Inter**（字重 400-900）是展示、正文、标题、统计字面。英雄/收尾标题与引文文字用字重 900，主标题用字重 800，中级标题与卡片标题用字重 700，正文用字重 500。展示字重始终大写配负字距（-0.02 到 -0.03em）；正文字重始终句首大写、默认字距。重磅大写展示与字重 500 句首正文之间的反差，是系统的排印节奏。
 
-**Space Grotesk** (weights 400-700) is the label and chrome face. Used at weight 600 for label-pills (13px, 0.08em tracking, uppercase) and at weight 500 for monospace meta callouts. The face is technically not monospace, but its slightly geometric character + the wide tracking treatment makes it read as the system's "code" voice.
+**Space Grotesk**（字重 400-700）是标签兼外壳字面。字重 600 用于标签胶囊（13px、0.08em 字距、大写），字重 500 用于等宽元数据标注。这款字面严格说不是等宽，但略带几何的性格加宽字距处理，让它读起来像系统的"代码"声部。
 
-Don't introduce a third face. The Inter + Space Grotesk pairing is the entire typographic palette.
+不要引入第三款字面。Inter + Space Grotesk 的搭配就是全部排印配色。
 
-### Typography Scale
+### 排印比例
 
-| Token | Size (clamp / px) | Family | Weight | Use |
+| Token | 尺寸（clamp / px） | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.heading-xl}` | 48–96px clamp | Inter | 900 | Hero or cover-scale headline |
-| `{typography.heading-lg}` | 32–64px clamp | Inter | 800 | Primary section headline |
-| `{typography.heading-md}` | 24–40px clamp | Inter | 700 | Region headline, chart title |
-| `{typography.close-title}` | 40–80px clamp | Inter | 900 | Closing-statement title (inverted surface) |
-| `{typography.quote-text}` | 28–52px clamp | Inter | 900 | Quote body — always uppercase |
-| `{typography.stat-number}` | 36–64px clamp | Inter | 900 | Stat numeral |
-| `{typography.card-title}` | 22px | Inter | 700 | Feature card title — uppercase |
-| `{typography.step-num}` | 48px | Inter | 900 | Numeral inside a timeline-step (opacity 0.6) |
-| `{typography.body}` | 16–20px clamp | Inter | 500 | Standard body paragraph |
-| `{typography.body-card}` | 15px | Inter | 500 | Body inside compact cards |
-| `{typography.list-body}` | 16px | Inter | 500 | Numbered list body |
-| `{typography.label}` | 13px | Space Grotesk | 600 | Text inside label-pill |
-| `{typography.mono-tag}` | 14px | Space Grotesk | 600 | Mono tag/badge, slide-counter |
-| `{typography.mono-meta}` | 15px | Space Grotesk | 500 | Inline mono metadata |
-| `{typography.subtitle-mono}` | 18px | Space Grotesk | 500 | Hero subtitle / close subtitle |
-| `{typography.counter}` | 14px | Space Grotesk | 700 | Persistent slide counter (NN / NN) |
-| `{typography.legend-item}` | 13px | Space Grotesk | 600 | Chart legend label |
+| `{typography.heading-xl}` | 48–96px clamp | Inter | 900 | 英雄或封面级标题 |
+| `{typography.heading-lg}` | 32–64px clamp | Inter | 800 | 分节主标题 |
+| `{typography.heading-md}` | 24–40px clamp | Inter | 700 | 区域标题、图表标题 |
+| `{typography.close-title}` | 40–80px clamp | Inter | 900 | 收尾陈述标题（反色表面） |
+| `{typography.quote-text}` | 28–52px clamp | Inter | 900 | 引文正文，始终大写 |
+| `{typography.stat-number}` | 36–64px clamp | Inter | 900 | 统计数字 |
+| `{typography.card-title}` | 22px | Inter | 700 | 特性卡片标题，大写 |
+| `{typography.step-num}` | 48px | Inter | 900 | 时间轴步骤内的数字（不透明度 0.6） |
+| `{typography.body}` | 16–20px clamp | Inter | 500 | 标准正文段落 |
+| `{typography.body-card}` | 15px | Inter | 500 | 紧凑卡片内正文 |
+| `{typography.list-body}` | 16px | Inter | 500 | 编号列表正文 |
+| `{typography.label}` | 13px | Space Grotesk | 600 | 标签胶囊内文字 |
+| `{typography.mono-tag}` | 14px | Space Grotesk | 600 | 等宽小片/徽章、页码 |
+| `{typography.mono-meta}` | 15px | Space Grotesk | 500 | 行内等宽元数据 |
+| `{typography.subtitle-mono}` | 18px | Space Grotesk | 500 | 英雄副标题 / 收尾副标题 |
+| `{typography.counter}` | 14px | Space Grotesk | 700 | 常驻页码（NN / NN） |
+| `{typography.legend-item}` | 13px | Space Grotesk | 600 | 图表图例标签 |
 
-### Defaults
+### 默认值
 
-- **Default size for a hero or cover title**: `{typography.heading-xl}` (48–96px). Always uppercase, always weight 900, always with -0.03em tracking.
-- **Default size for a primary section headline**: `{typography.heading-lg}` (32–64px). Uppercase, weight 800, -0.02em.
-- **Default size for a region or chart title**: `{typography.heading-md}` (24–40px). The only Inter heading not in uppercase by default — though uppercase is permitted.
-- **Default size for a stat numeral**: `{typography.stat-number}` (36–64px). Weight 900, line-height 1.
-- **Default size for body paragraph**: `{typography.body}` (16–20px clamp). Weight 500, sentence case, line-height 1.6.
-- **Default size for an eyebrow label**: `{typography.label}` (13px) inside the `{components.label-pill}`.
-- **Default weight for any Inter display**: 800 or 900. Inter display at weight 700 reads as "almost there"; only use 700 for `{typography.heading-md}` or card titles.
-- **Default weight for any Inter body**: 500. Body at 400 reads as too light, body at 700 reads as oversized.
-- **Default tracking for any Space Grotesk label/chrome**: 0.05-0.10em. Wide tracking is the face's "chrome" signal.
-- **Default tracking for any Inter display**: -0.01em (heading-md) to -0.03em (heading-xl). Display without negative tracking reads as untreated.
+- **英雄或封面标题默认尺寸**：`{typography.heading-xl}`（48–96px）。始终大写、始终字重 900、始终 -0.03em 字距。
+- **分节主标题默认尺寸**：`{typography.heading-lg}`（32–64px）。大写、字重 800、-0.02em。
+- **区域或图表标题默认尺寸**：`{typography.heading-md}`（24–40px）。唯一默认不大写的 Inter 标题，不过允许大写。
+- **统计数字默认尺寸**：`{typography.stat-number}`（36–64px）。字重 900、行高 1。
+- **正文段落默认尺寸**：`{typography.body}`（16–20px clamp）。字重 500、句首大写、行高 1.6。
+- **眉题标签默认尺寸**：装在 `{components.label-pill}` 里的 `{typography.label}`（13px）。
+- **任何 Inter 展示默认字重**：800 或 900。Inter 展示用字重 700 读起来"差一口气"；700 只留给 `{typography.heading-md}` 或卡片标题。
+- **任何 Inter 正文默认字重**：500。正文 400 太轻，700 太大。
+- **任何 Space Grotesk 标签/外壳默认字距**：0.05-0.10em。宽字距是这款字面的"外壳"信号。
+- **任何 Inter 展示默认字距**：-0.01em（heading-md）到 -0.03em（heading-xl）。展示没有负字距会显得没处理过。
 
-When unsure which heading token to reach for, default to `{typography.heading-lg}` (32–64px) for the slide's primary text moment. `{typography.heading-md}` is for region or chart titles within a slide.
+拿不准该用哪个标题 token 时，页面主要文字瞬间默认取 `{typography.heading-lg}`（32–64px）。`{typography.heading-md}` 留给页内的区域或图表标题。
 
-### Signature Treatments
+### 招牌处理
 
-These treatments are **non-optional whenever the corresponding element type is used**:
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every Inter display element (heading-xl, heading-lg, quote-text, close-title) is uppercase.** Sentence-case Inter display at weights 800+ does not exist in this system. The uppercase + heavy-weight + negative-tracking combination is the visual identity.
-- **Every Inter display element uses negative letter-spacing** (-0.01 to -0.03em). Display without negative tracking reads as default Inter, which is a fundamentally different aesthetic.
-- **Every label-pill carries the 3px border + 4px shadow + uppercase Space Grotesk text** combination. A label without all three properties is not a label-pill — it's a stray text element.
-- **Every card-title is uppercase Inter weight 700.** Card titles in sentence case break the brutalist rhythm.
-- **Every Space Grotesk label/chrome/counter is uppercase with 0.05-0.1em tracking.** Sentence-case Space Grotesk does not exist in this system except for body-adjacent metadata (mono-meta, mono inline).
-- **Every stat numeral is Inter weight 900 with line-height 1.** Stat numerals are display moments, not data chrome.
-- **Every Inter body block is sentence case with line-height 1.6 (or 1.5 for compact card body).** Body in uppercase or with tight line-height reads as broken.
-- **Step numbers inside timeline-step cards are 48px weight 900 at opacity 0.6.** The reduced opacity is mandatory — full-opacity step numbers overwhelm the step title.
+- **每个 Inter 展示元素（heading-xl、heading-lg、quote-text、close-title）都大写。** 系统里不存在字重 800+ 的句首大写 Inter 展示。大写 + 重磅 + 负字距的组合就是视觉身份。
+- **每个 Inter 展示元素都用负字距**（-0.01 到 -0.03em）。展示没有负字距会读成默认 Inter，那是根本不同的美学。
+- **每个标签胶囊都带 3px 边 + 4px 阴影 + 大写 Space Grotesk 文字**的组合。缺了三者任一的标签不算标签胶囊，只是一段游离文字。
+- **每个 card-title 都是大写 Inter 字重 700。** 句首大写的卡片标题会破掉粗野节奏。
+- **每个 Space Grotesk 标签/外壳/计数器都大写、0.05-0.1em 字距。** 系统里不存在句首大写的 Space Grotesk，例外只有贴近正文的元数据（mono-meta、行内等宽）。
+- **每个统计数字都是 Inter 字重 900、行高 1。** 统计数字是展示瞬间，不是数据外壳。
+- **每个 Inter 正文块都句首大写、行高 1.6（紧凑卡片正文 1.5）。** 正文大写或行高偏紧会读成坏了。
+- **时间轴步骤卡片内的步骤数字是 48px、字重 900、不透明度 0.6。** 降低不透明度是强制的，全不透明的步骤数字会压过步骤标题。
 
-### Typography Principles
+### 排印原则
 
-The voice contrast is **bold uppercase display ↔ sentence body ↔ wide-tracked label**. Italic is never used. Underline is never used. The only emphasis mechanism is weight contrast within the Inter ladder and the uppercase/sentence-case switch.
+声部对比是**重磅大写展示 ↔ 句首正文 ↔ 宽字距标签**。不用斜体，不用下划线。唯一的强调机制是 Inter 阶梯内的字重反差，以及大写/句首大写的切换。
 
-Display elements should be allowed to **dominate the canvas**. The system is built for poster-scale typography; reading a heading-xl at small size collapses its character. Lean into the upper bound of every clamp.
+展示元素应当**主导画布**。系统为海报级排印而生，把 heading-xl 缩到很小会抹掉它的性格。尽量取每个 clamp 的上界。
 
-## Layout
+## 布局
 
-### Canvas System
-The system targets `100vw × 100vh` per slide. Slides are absolutely positioned and toggled via `display: none` / `display: flex` on the `.active` class. Default slide padding is 60px on all sides. Slides that contain bottom-anchored grids (timeline, team grid, chart with stat column) carry an additional `padding-bottom: 110px` to clear the fixed slide-counter and nav-controls chrome.
+### 画布系统
+系统以每页 `100vw × 100vh` 为目标。幻灯片绝对定位，靠 `.active` 类上的 `display: none` / `display: flex` 切换。默认幻灯片内边距四边 60px。含底部锚定网格的页面（时间轴、团队网格、带统计列的图表）另加 `padding-bottom: 110px`，给常驻页码和导航控件外壳让位。
 
-The default slide flex direction is column with `justify-content: center`. For two-column splits (intro slide, split image+text), flex direction switches to row.
+默认幻灯片 flex 方向为 column、`justify-content: center`。双栏分栏（导言页、图文分栏）切换到 row。
 
-### Padding and Gap Scale
+### 内边距与间隙比例
 
-| Token | Value | Use |
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.slide-pad}` | 60px | Default slide padding from edge to content |
-| `{spacing.card-pad-lg}` | 60px | Hero-frame and quote-frame internal padding |
-| `{spacing.card-pad-md}` | 36px | Feature-card internal padding |
-| `{spacing.card-pad-sm}` | 28px | Intro-card internal padding |
-| `{spacing.card-pad-xs}` | 22px | Team-card and small-cell padding |
-| `{spacing.gap-lg}` | 48px | Gap between major sections (header-to-grid) |
-| `{spacing.gap-md}` | 32px | Gap between feature cards |
-| `{spacing.gap-sm}` | 24px | Gap between intro cards, stat cards |
-| `{spacing.gap-xs}` | 16px | Gap inside list items, intra-card content |
-| `{spacing.pad-bottom-clearance}` | 110px | Bottom padding reserve to clear fixed nav chrome |
+| `{spacing.slide-pad}` | 60px | 默认幻灯片边缘到内容的内边距 |
+| `{spacing.card-pad-lg}` | 60px | 英雄框与引文框内部内边距 |
+| `{spacing.card-pad-md}` | 36px | 特性卡片内部内边距 |
+| `{spacing.card-pad-sm}` | 28px | 导言卡片内部内边距 |
+| `{spacing.card-pad-xs}` | 22px | 团队卡片与小单元格内边距 |
+| `{spacing.gap-lg}` | 48px | 主分节之间（页眉到网格）的间隙 |
+| `{spacing.gap-md}` | 32px | 特性卡片之间的间隙 |
+| `{spacing.gap-sm}` | 24px | 导言卡片、统计卡片之间的间隙 |
+| `{spacing.gap-xs}` | 16px | 列表项内、卡片内内容之间的间隙 |
+| `{spacing.pad-bottom-clearance}` | 110px | 给固定导航外壳让位的底部内边距预留 |
 
-### Persistent Chrome
-Three elements appear on every slide:
-- **Slide counter** at bottom-left — 3px black border, white fill, 4px shadow, Space Grotesk 14px weight 700 uppercase, NN / NN format.
-- **Nav controls** at bottom-right — two 48px square nav buttons with 3px borders, white fills, 4px shadows.
-- The slide-counter and nav-controls are not part of the slide composition — they live outside `.slides-container` and overlap the bottom edge.
+### 常驻外壳
+每页都出现三个元素：
+- **页码**在左下：3px 黑边、白填充、4px 阴影、Space Grotesk 14px 字重 700 大写、NN / NN 格式。
+- **导航控件**在右下：两枚 48px 方形导航按钮，带 3px 边、白填充、4px 阴影。
+- 页码与导航控件不属于幻灯片构图，它们活在 `.slides-container` 之外，压在底边上。
 
-### Card-on-Card Structure
-The system's primary layout pattern is **cards on grounds on grounds**. A typical slide places a colored-ground surface, on which sits a white card with 4px black border + 8px shadow, which may contain smaller cards or icon-squares. Each level of nesting carries its own border weight: 4px for the outer card, 3px for inner chrome. This nested-bordered structure is what gives the system its dense, packed feel.
+### 卡上叠卡结构
+系统主要的布局模式是**底上的底上的卡片**。典型一页放一张浅彩色底表面，其上坐一张带 4px 黑边 + 8px 阴影的白卡片，卡内还可以装更小的卡片或 icon-square。每一层嵌套自带边框粗细：外层卡片 4px，内层外壳 3px。正是这种嵌套带框结构，给了系统密实、填满的观感。
 
-### Decorative Disruption
-Tilted decorative elements (rotated rectangles, stars, badges, dot grids) are placed absolutely on slide and card surfaces to puncture the grid intentionally. These are not "background decoration" — they are part of the composition. A surface without any decorative element reads as too clean.
+### 装饰性破局
+倾斜装饰元素（旋转矩形、星星、徽章、点网格）绝对定位在页面与卡片表面上，有意破开网格。它们不是"背景装饰"，而是构图的一部分。没有任何装饰元素的表面读起来太干净。
 
-## Depth and Elevation
+## 纵深与层级
 
-### Hard Offset Shadow Stack
-The system uses three primary shadow values:
-- **`{shadows.default}`** = `8px 8px 0px {colors.black}` — primary card shadow. Used on hero-frame, feature-card, quote-frame, chart-frame, and any elevated card.
-- **`{shadows.small}`** = `4px 4px 0px {colors.black}` — secondary chrome shadow. Used on intro-card, stat-card, team-card, timeline-step, label-pill, button-primary, nav-btn, slide-counter.
-- **`{shadows.hover}`** = `6px 6px 0px {colors.black}` — hover state for buttons and nav. Triggered with a -2/-2 transform.
+### 硬边偏移阴影栈
+系统用三种主要阴影值：
+- **`{shadows.default}`** = `8px 8px 0px {colors.black}`：主卡片阴影。用于英雄框、特性卡片、引文框、图表框，以及任何抬升卡片。
+- **`{shadows.small}`** = `4px 4px 0px {colors.black}`：次级外壳阴影。用于导言卡片、统计卡片、团队卡片、时间轴步骤、标签胶囊、button-primary、nav-btn、页码。
+- **`{shadows.hover}`** = `6px 6px 0px {colors.black}`：按钮与导航的悬停态，配 -2/-2 变换触发。
 
-All shadows are solid black, zero blur, fixed offset bottom-right. The shadow + transform pairing on hover creates a "lifting off the page" interaction signature — the element translates -2/-2 while the shadow grows to 6/6, simulating a peel-up.
+所有阴影纯黑、零模糊、固定右下偏移。悬停时阴影 + 变换的搭配造出"从纸面抬起"的交互签名：元素平移 -2/-2，阴影长到 6/6，模拟被揭起。
 
-### Inverted Shadows
-On the dark close-surface, shadows invert their color but keep the offset logic:
-- **`{shadows.close-yellow}`** = `12px 12px 0px {colors.yellow}` — the loudest depth statement in the system. Used on close-frame to make the inverted surface read as still "elevated" despite its dark ground.
-- **`{shadows.close-white}`** = `6px 6px 0px {colors.white}` — used on the close-btn to maintain elevation on the black ground.
+### 反色阴影
+在深色收尾表面上，阴影反转颜色但保留偏移逻辑：
+- **`{shadows.close-yellow}`** = `12px 12px 0px {colors.yellow}`：系统里最响的纵深表态。用在收尾框上，让反色表面尽管底色深，仍读得出"抬升"。
+- **`{shadows.close-white}`** = `6px 6px 0px {colors.white}`：用在 close-btn 上，在黑底上维持抬升感。
 
-These colored shadows are the only exceptions to the "shadows are always black" rule, and they appear only on the dark surface.
+这些彩色阴影是"阴影永远黑"规则仅有的例外，且只出现在深色表面上。
 
-### Border-Based Depth
-Most of the system's apparent layering comes from the 4px or 3px ink borders, not from shadow. A card with a border but no shadow still reads as "an object on a surface" — the shadow is what makes it read as "lifted". Use shadow for elevated cards; use border-only for secondary cards inside a multi-card grid where stacked shadows would compound into noise.
+### 基于边框的纵深
+系统大部分表面层次来自 4px 或 3px 墨边，而非阴影。带边无阴影的卡片仍读作"表面上的一个物件"，阴影才让它读作"被抬起"。抬升卡片用阴影；多卡网格里的次级卡片用纯边框，免得叠起来的阴影糊成噪声。
 
-### Tilted Elements as Depth
-The system's playful depth signature is **tilt**. Stat cards alternate -2deg / +2deg rotation. Decorative pink rectangles tilt up to ±12deg. The yellow button tab on the hero frame tilts -3deg. These tilts break the grid alignment intentionally and create perceived dimensionality without using actual perspective or shadow.
+### 倾斜元素即纵深
+系统俏皮的纵深签名是**倾斜**。统计卡片交替 -2deg / +2deg 旋转。装饰粉色矩形最多倾斜 ±12deg。英雄框上的黄色按钮片倾斜 -3deg。这些倾斜有意打破网格对齐，不用真透视或阴影就造出维度感。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
-- **0px** on everything structural — cards, label-pills, buttons, icon-squares, list-numbers, avatars, badges. Square corners are non-negotiable.
-- **50% (circle)** used only for the stat-deco dot (12×12 circular accent pinned to stat cards). This is the only round shape in the system.
+### 圆角
+- 结构上**一律 0px**：卡片、标签胶囊、按钮、icon-square、list-number、头像、徽章。方角不可商量。
+- **50%（圆）**只用于 stat-deco 点缀点（钉在统计卡片上的 12×12 圆形点缀）。这是系统唯一的圆形。
 
-The square-corner discipline is the system's structural identity. Adding rounded corners to any card or chip immediately reads as a different aesthetic.
+方角纪律是系统的结构身份。给任何卡片或小片加圆角，会立刻读成另一套美学。
 
-### Border Weights
-- **4px solid `{colors.black}`** — used on primary cards (hero-frame, feature-card, quote-frame, chart-frame, team-card border, timeline-step border, stat-card border) and the close-frame inverse (4px solid white on black ground).
-- **3px solid `{colors.black}`** — used on secondary chrome (label-pill, button, intro-card, icon-square, list-number, avatar, corner-bracket, nav-btn, slide-counter, stripe-block, star-burst). The 3px weight signals "secondary structural" vs. the 4px "primary structural".
-- **2px solid `{colors.black}`** — used only on legend swatches (16×16 chart swatches) and stat-deco dots. The thinnest border weight, reserved for atomic chrome.
-- **4px solid `{colors.white}`** — used only on the inverted close-frame, the visual-box, and its ::after offset frame on the dark split-visual surface.
+### 边框粗细
+- **4px 实线 `{colors.black}`**：主卡片（英雄框、特性卡片、引文框、图表框、团队卡片边、时间轴步骤边、统计卡片边），以及收尾框反色版（黑底上 4px 实线白）。
+- **3px 实线 `{colors.black}`**：次级外壳（标签胶囊、按钮、导言卡片、icon-square、list-number、头像、角标、nav-btn、页码、stripe-block、star-burst）。3px 表示"次级结构"，4px 表示"主结构"。
+- **2px 实线 `{colors.black}`**：只用于图例色块（16×16 图色块）与 stat-deco 点缀点。最细的边框，留给原子级外壳。
+- **4px 实线 `{colors.white}`**：只用于反色收尾框、visual-box，以及深色分栏视觉表面上它的 ::after 偏移框。
 
-The border weight ladder (2 / 3 / 4) is fixed. No 1px borders, no 5px+ borders.
+边框粗细阶梯（2 / 3 / 4）是固定的。没有 1px 边，没有 5px+ 边。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Label-pill** — Square bordered pill (3px black border, 4px shadow), pastel or white fill, Space Grotesk 13px weight 600 uppercase text with 0.08em tracking. The universal section eyebrow.
+**Label-pill**：方形带框胶囊（3px 黑边、4px 阴影），浅彩或白填充，Space Grotesk 13px 字重 600 大写文字、0.08em 字距。通用分节眉题。
 
-**Corner-bracket** — Two L-shaped brackets (or four for full enclosure) at the corners of a card, 3px black border. Creates a frame-within-frame decorative motif.
+**Corner-bracket**：卡片四角的两枚 L 形角标（全包围时四枚），3px 黑边。造出框中框的装饰母题。
 
-**Star-burst** — 10-point star clipped via CSS clip-path with a 3px border, pastel fill. Decorative attention-grabber pinned to corners of close-frames and feature cards.
+**Star-burst**：CSS clip-path 剪出的十角星，带 3px 边、浅彩填充。装饰性注意力抓手，钉在收尾框与特性卡片的角上。
 
-**Stripe-block** — Diagonal 4px-on, 8px-off stripe pattern in black + a pastel color, framed with a 3px black border. Decorative attention block used on poster-class surfaces.
+**Stripe-block**：黑 + 一色浅彩的 4px 实、8px 空斜纹图案，配 3px 黑边框。海报类表面上的装饰注意力块。
 
-**Dot-grid** — 1.2px radial-gradient dot pattern at 24×24 spacing. Used as a faint decorative overlay in corners of slides, at 30-40% opacity.
+**Dot-grid**：1.2px 径向渐变点图案，24×24 间距。用作页面角落的淡装饰叠层，30-40% 不透明度。
 
-**Feature-deco notch** — 48×48 yellow square with 3px black border, positioned absolutely to protrude from the top edge of a feature card. The notch breaks the card's top border, suggesting it's been "stapled on".
+**Feature-deco 缺口**：48×48 黄色方块带 3px 黑边，绝对定位从特性卡片顶边探出。缺口破开卡片顶边，像是被"订上去"的。
 
-**Icon-square** — 64×64 pastel square with 3px black border holding a single uppercase letter glyph at Inter weight 700 / 28px. Used as feature-card icons.
+**Icon-square**：64×64 浅彩方块带 3px 黑边，内含一个 Inter 字重 700 / 28px 的大写字母字形。用作特性卡片图标。
 
-**Stat-deco dot** — 12×12 circle with 2px black border, pastel fill, pinned to the top-right of a stat card. The system's only round shape.
+**Stat-deco 点**：12×12 圆形带 2px 黑边、浅彩填充，钉在统计卡片右上。系统唯一的圆形。
 
-**List-number** — 36×36 yellow square with 3px black border holding a Space Grotesk 14px weight 700 numeral. Used as bullets on numbered lists.
+**List-number**：36×36 黄色方块带 3px 黑边，内含 Space Grotesk 14px 字重 700 数字。用作编号列表项目符号。
 
-**Avatar-square** — 72×72 pastel square with 3px black border holding two uppercase initials at Inter weight 900 / 28px. Used in team grids; fills cycle through pastels.
+**Avatar-square**：72×72 浅彩方块带 3px 黑边，内含两个 Inter 字重 900 / 28px 的大写首字母。用于团队网格，填充在浅彩间轮转。
 
-**Step-connector** — A 28×4 horizontal black bar pinned to the right edge of a timeline-step card, mid-height. Visually links adjacent steps in a horizontal flow.
+**Step-connector**：28×4 的黑色横条，钉在时间轴步骤卡片右边缘、半高处。视觉上把相邻步骤串成横向流程。
 
-**Tilted decoration** — Any rectangle, badge, or star with a rotate(±2deg to ±12deg) transform. The tilt is intentional disruption of the grid; without it, the system reads as too uniform.
+**倾斜装饰**：任何带 `rotate(±2deg 到 ±12deg)` 变换的矩形、徽章或星星。倾斜是对网格的刻意破局，没有它系统会显得太整齐。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
+### 该做
 
-- Apply 4px solid black borders to primary cards (`{components.card-elevated}`, hero-frame, quote-frame) and 3px to secondary chrome. The border weight ladder is the system's structural backbone.
-- Pair every 4px border with an 8px offset shadow, and every 3px border with a 4px offset shadow. The border/shadow coupling is non-negotiable.
-- Cycle slide backgrounds through the pastel palette — offwhite, cream, blue, pink, green, yellow — to keep the deck visually rhythmic. Staying on one color for many slides flattens the system.
-- Set every Inter display element in uppercase with negative letter-spacing (-0.01 to -0.03em) and weight 800+. The combination is the typographic identity.
-- Use the `{components.label-pill}` (3px border, 4px shadow, pastel fill, Space Grotesk uppercase 0.08em) as the universal section eyebrow on every region.
-- Apply tilt to decorative rectangles, stat cards, stars, and badges (±2deg to ±12deg). The intentional misalignment is the system's playful signature.
-- Use `{colors.yellow}` as the default button color. Yellow with a 3px black border and 4px black shadow is the system's "click here" voice.
-- Render shadows as solid black with zero blur, always offset bottom-right. The hard-edge shadow is the depth language.
-- Add a decorative element (star-burst, stripe-block, dot-grid, corner-bracket, tilted rectangle) to every surface. The visual chatter is part of the system's energy.
-- Use pure black `{colors.black}` for the closing surface, with white text and a 12px yellow offset shadow on the close-frame. The inverted dark surface is the system's loudest contrast moment.
+- 主卡片（`{components.card-elevated}`、英雄框、引文框）用 4px 实线黑边，次级外壳用 3px。边框粗细阶梯是系统的结构脊梁。
+- 每条 4px 边配 8px 偏移阴影，每条 3px 边配 4px 偏移阴影。边/影绑定不可商量。
+- 让幻灯片背景在浅彩配色里轮转（米白、奶油、蓝、粉、绿、黄），保持视觉节奏。连着多页停在一色会把系统压平。
+- 每个 Inter 展示元素都设成大写、负字距（-0.01 到 -0.03em）、字重 800+。这个组合就是排印身份。
+- 用 `{components.label-pill}`（3px 边、4px 阴影、浅彩填充、Space Grotesk 大写 0.08em）作每个区域的通用分节眉题。
+- 给装饰矩形、统计卡片、星星、徽章加倾斜（±2deg 到 ±12deg）。刻意的错位是系统的俏皮签名。
+- 用 `{colors.yellow}` 作默认按钮色。黄配 3px 黑边、4px 黑阴影是系统的"点这里"声部。
+- 阴影渲染成纯黑零模糊、始终右下偏移。硬边阴影是纵深语言。
+- 每处表面都加一个装饰元素（星爆、条纹块、点网格、角标、倾斜矩形）。视觉喧闹是系统能量的一部分。
+- 收尾表面用纯黑 `{colors.black}`，白文字，收尾框上 12px 黄色偏移阴影。反色深表面是系统最响的对比瞬间。
 
-### Don't
+### 不该做
 
-- Don't round any corner on cards, buttons, label-pills, icon-squares, or avatars. Border-radius is forbidden except on the stat-deco dot (12px circle).
-- Don't blur any shadow. Every shadow is hard-edged at zero blur. `box-shadow: 0 4px 12px rgba(0,0,0,0.1)` does not exist in this system.
-- Don't use colored borders. Borders are always pure black, except for the inverted 4px white border on the close-frame.
-- Don't use Inter display weights in sentence case. Uppercase is mandatory on heading-xl, heading-lg, quote-text, close-title, and card-title.
-- Don't set Inter display without negative letter-spacing. Default-tracked Inter at heavy weights reads as a different system.
-- Don't introduce a sixth pastel color. The palette is locked at pink, blue, green, yellow, cream. Adding purple, orange, or red breaks the curated candy palette.
-- Don't omit the label-pill on a region. Going straight from background to headline without an eyebrow tag breaks the system's editorial rhythm.
-- Don't render label-pills as plain text. The 3px border + 4px shadow + pastel fill combination is what defines the pill.
-- Don't use blurred or colored body text. Body is solid black on light surfaces, solid white or cream on dark surfaces.
-- Don't keep every card perfectly aligned. The tilt on stat cards, decorations, and badges is what gives the system its hand-made energy.
+- 不要给卡片、按钮、标签胶囊、icon-square、头像加圆角。除 stat-deco 点（12px 圆）外，border-radius 禁用。
+- 不要模糊任何阴影。每处阴影都是零模糊硬边。`box-shadow: 0 4px 12px rgba(0,0,0,0.1)` 在这套系统里不存在。
+- 不要用彩色边框。边框永远纯黑，唯一例外是收尾框反色的 4px 白边。
+- 不要把 Inter 展示字重写成句首大写。heading-xl、heading-lg、quote-text、close-title、card-title 上大写是强制的。
+- 不要设没有负字距的 Inter 展示。重磅默认字距的 Inter 读起来是另一套系统。
+- 不要引入第六种浅彩。配色锁死在粉、蓝、绿、黄、奶油。加紫、橙、红会破掉精心收拢的糖果配色。
+- 不要省掉区域的标签胶囊。从背景直接跳到标题、没有眉题小片，会破掉系统的编辑节奏。
+- 不要把标签胶囊渲染成纯文字。3px 边 + 4px 阴影 + 浅彩填充的组合才定义了胶囊。
+- 不要用模糊或彩色的正文文字。浅表面上正文是纯黑，深表面上是纯白或奶油。
+- 不要让每张卡片都对齐得整整齐齐。统计卡片、装饰、徽章上的倾斜，正是系统手工感的来源。
 
-## Responsive Behavior
+## 响应式行为
 
-BlockFrame is designed as a **1920×1080 presentation system** (effective 100vw × 100vh). Sizing uses CSS `clamp()` for type and fixed px for borders, shadows, and structural padding. The system has three component-level breakpoints for narrow viewports.
+BlockFrame 设计为 **1920×1080 演示系统**（等效 100vw × 100vh）。尺寸用 CSS `clamp()` 排字，边框、阴影、结构内边距用固定 px。系统为窄视口设了三个组件级断点。
 
-### Scaling Behavior
-- Heading-xl scales 48px → 96px on viewport width.
-- Heading-lg scales 32px → 64px.
-- Body scales 16px → 20px.
-- Borders (3px, 4px), shadows (4px, 8px), and structural padding (60px slide-pad) are fixed and do not scale.
+### 缩放行为
+- Heading-xl 按视口宽度从 48px 缩放到 96px。
+- Heading-lg 从 32px 缩放到 64px。
+- 正文从 16px 缩放到 20px。
+- 边框（3px、4px）、阴影（4px、8px）、结构内边距（60px slide-pad）固定不缩放。
 
-### Component Breakpoints
-- `max-width: 1024px` — slide padding shrinks 60px → 40px, two-column splits stack vertically, feature card row stacks vertically, timeline track stacks vertically with step-connectors hidden, stats grid collapses to 2 columns, team grid collapses to 2 columns. Split visual loses left border and gains a top border.
-- `max-width: 640px` — stats grid collapses to 1 column, team grid collapses to 1 column, hero-frame padding shrinks to 32px, quote-frame padding shrinks to 32px.
+### 组件断点
+- `max-width: 1024px`：幻灯片内边距由 60px 收到 40px，双栏分栏纵向堆叠，特性卡片行纵向堆叠，时间轴轨道纵向堆叠并隐藏 step-connector，统计网格收成 2 列，团队网格收成 2 列。分栏视觉失去左边框、得到上边框。
+- `max-width: 640px`：统计网格收成 1 列，团队网格收成 1 列，英雄框内边距收到 32px，引文框内边距收到 32px。
 
-### Presenter Behavior
-- Slides advance via `ArrowRight` or `Space`.
-- Slides reverse via `ArrowLeft`.
-- Horizontal touch swipe with a 50px threshold advances/reverses.
-- Slide transitions are instant (`display: none` ↔ `display: flex` on the `.active` class), with no crossfade.
+### 放映行为
+- 用 `ArrowRight` 或 `Space` 前进。
+- 用 `ArrowLeft` 后退。
+- 横向触摸滑动，50px 阈值前进/后退。
+- 幻灯片过渡是瞬时的（`.active` 类上 `display: none` ↔ `display: flex`），没有交叉淡入。
 
-### Print Behavior
-The system has no `@media print` rule. Slides are absolute-positioned and only one is visible at a time — printing produces only the active slide. For static export, screenshots of each slide preserve all borders, shadows, and decorations (all are CSS, not image assets).
+### 打印行为
+系统没有 `@media print` 规则。幻灯片绝对定位、同一时刻只有一页可见，打印只能得到激活页。静态导出时，逐页截图能保留所有边框、阴影与装饰（全部是 CSS，不是图片资源）。
 
-### Interactive States
-- Buttons and nav-buttons translate -2/-2 on hover and shadow grows to 6px (`{shadows.hover}`); on active, translate 2/2 and shadow shrinks to 2px. The hover-press behavior is unusual for a presentation system; it reflects BlockFrame's hybrid identity as both deck and interactive product mockup.
+### 交互状态
+- 按钮与导航按钮悬停时平移 -2/-2、阴影长到 6px（`{shadows.hover}`）；激活时平移 2/2、阴影缩到 2px。这种悬停-按下行为在演示系统里不常见，它反映了 BlockFrame 兼具演示文稿与交互式产品原型的双重身份。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-When using this template for Chinese (or other CJK) content, swap the Latin typeface stack for an equivalent Chinese pairing and apply universal CJK adjustments. All recommended Chinese fonts load via CDN — no install required.
+用本模板承载中文（或其他 CJK）内容时，把拉丁字体栈换成对等的中文搭配，并套用通用 CJK 调整。所有推荐中文字体均通过 CDN 加载，无需安装。
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin (default) | Chinese counterpart |
+| 角色 | 拉丁（默认） | 中文对应 |
 |---|---|---|
-| Display / hero / quote / close title / stat numerals | Inter 800–900 (uppercase, negative tracking) | 思源黑体 Noto Sans SC 900 (sentence case, 0 tracking) |
-| Card title | Inter 700 (uppercase) | 思源黑体 Noto Sans SC 700 (no transform) |
-| Body / list body | Inter 500 | 思源黑体 Noto Sans SC 400 |
-| Label / mono tag / counter / legend | Space Grotesk 600–700 (uppercase, 0.05–0.1em tracking) | 思源黑体 Noto Sans SC 600 (no transform, no tracking) |
+| 展示 / 英雄 / 引文 / 收尾标题 / 统计数字 | Inter 800–900（大写、负字距） | 思源黑体 Noto Sans SC 900（句首大写、0 字距） |
+| 卡片标题 | Inter 700（大写） | 思源黑体 Noto Sans SC 700（无变换） |
+| 正文 / 列表正文 | Inter 500 | 思源黑体 Noto Sans SC 400 |
+| 标签 / 等宽小片 / 计数器 / 图例 | Space Grotesk 600–700（大写、0.05–0.1em 字距） | 思源黑体 Noto Sans SC 600（无变换、无字距） |
 
-### Mixed-Content Strategy
+### 混排策略
 
-**Strategy A** — single CJK family with built-in Latin glyph coverage. Set every text element to `font-family: 'Noto Sans SC', sans-serif`. 思源黑体 ships Latin glyphs that pair cleanly with its Chinese characters, so mixed sentences render in one consistent face. The Inter / Space Grotesk distinction in the Latin original is preserved through weight contrast: weight 900 carries the brutalist display role, weight 600 carries the label role, weight 400–500 carries body. Visual hierarchy survives even though the face contrast is gone.
+**策略 A**：用一款自带拉丁字形覆盖的 CJK 字族，把所有文字元素设为 `font-family: 'Noto Sans SC', sans-serif`。思源黑体自带拉丁字形，与汉字并排也干净，混排句子会用一致字面渲染。拉丁原版里 Inter / Space Grotesk 的区分靠字重反差保留下来：字重 900 担粗野展示角色，字重 600 担标签角色，字重 400–500 担正文。即便字面反差没了，视觉层级仍在。
 
-### Loading
+### 加载
 
-Add to the template's `<head>`:
+在模板 `<head>` 中加入：
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -561,49 +565,49 @@ Add to the template's `<head>`:
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- **Line-height**: increase by ~15–25% from the Latin spec. Body 1.75–1.85 (up from 1.6), display 1.15–1.25 (up from 0.95–1). The Latin display compresses to 0.95 line-height; CJK at that compression collides vertically.
-- **Letter-spacing**: set to 0 on every CJK run. The template's negative display tracking (−0.02 to −0.03em on Inter) overlaps CJK strokes and reads as broken; the positive 0.05–0.1em tracking on Space Grotesk labels reads as gappy on square glyphs.
-- **Text transform**: don't apply `uppercase` to Chinese text — CJK has no case. Every Inter display heading (heading-xl, heading-lg, quote-text, close-title, card-title) uses `text-transform: uppercase` in the Latin original; remove it for CJK runs. Every label-pill, counter, and chrome element also uses uppercase; remove that too.
-- **Punctuation**: use full-width Chinese punctuation （，。：；！？「」（））.
-- **No period on display headlines**: Chinese typography convention omits trailing 。 on display-scale headlines.
-- **Space between CJK and Latin (盘古之白)**: insert an ASCII space between every Chinese character and adjacent Latin character or digit. Write `BlockFrame 设计系统` not `BlockFrame设计系统`.
-- **One font per sentence**: 思源黑体 covers both CJK and Latin glyphs in a unified style — let it handle mixed sentences. Don't let the browser font-switch to Inter or Space Grotesk mid-word.
+- **行高**：在拉丁规格上提高约 15–25%。正文 1.75–1.85（从 1.6 上调），展示 1.15–1.25（从 0.95–1 上调）。拉丁展示压到 0.95 行高，CJK 压到这个程度会纵向相撞。
+- **字距**：每段 CJK 文本设为 0。模板里 Inter 展示的负字距（−0.02 到 −0.03em）套在 CJK 上会笔画重叠、读着像坏了；Space Grotesk 标签的 0.05–0.1em 正字距放在方正字形上显得松垮。
+- **文字变换**：不要对中文套 `uppercase`，CJK 没有大小写。拉丁原版里每个 Inter 展示标题（heading-xl、heading-lg、quote-text、close-title、card-title）都用 `text-transform: uppercase`，CJK 文本要去掉。每个标签胶囊、计数器、外壳元素也用大写，同样去掉。
+- **标点**：用全角中文标点（，。：；！？「」（））。
+- **展示标题不加句号**：中文排印惯例，展示级标题末尾不写 。
+- **中西文之间加空格（盘古之白）**：每个汉字与相邻的拉丁字符或数字之间插入一个 ASCII 空格。写 `BlockFrame 设计系统`，不要写 `BlockFrame设计系统`。
+- **一句一款字体**：思源黑体以统一风格覆盖 CJK 与拉丁字形，混排句子交给它处理。不要让浏览器在词中切回 Inter 或 Space Grotesk。
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-The Latin original's typographic identity rests entirely on the **heavy uppercase + negative tracking** combination on Inter display. CJK has no case, so this signal disappears. The system survives because its identity is **80% structural, 20% typographic**: the 4px black borders, 8px hard offset shadows, five-pastel palette, tilted decorations, label-pills, star bursts, stripe blocks, and dot grids do the brutalist work. Set 思源黑体 900 in sentence case at the same large sizes; the chunky black-on-pastel + hard-shadow framing reads as brutalist regardless of whether the type is in caps.
+拉丁原版的排印身份完全建立在 Inter 展示上**重磅大写 + 负字距**的组合。CJK 没有大小写，这个信号便消失了。系统之所以能存活，是因为它的身份**八成靠结构、两成靠排印**：4px 黑边、8px 硬边偏移阴影、五浅彩配色、倾斜装饰、标签胶囊、星爆、条纹块、点网格，才是粗野主义的主力。把思源黑体 900 设成句首大写、保持同样的大字号即可；黑压浅彩的厚重加硬阴影框边，不管文字是不是大写，都读得出粗野。
 
-The label-pill (Space Grotesk 600 uppercase, 0.08em tracking, 3px border + 4px shadow, pastel fill) loses the uppercase + tracked-mono character. Render Chinese label-pills with 思源黑体 weight 600 at 0 tracking and a slightly tighter fontSize (11–12px instead of 13px) — the bordered pill shape and shadow do the chrome-recognition work. Keep the pastel fill rotation (pink / blue / green / yellow / cream) intact; it's the system's most recognizable signal after the borders themselves.
+标签胶囊（Space Grotesk 600 大写、0.08em 字距、3px 边 + 4px 阴影、浅彩填充）会丢掉大写 + 宽字距等宽的性格。中文标签胶囊请用思源黑体字重 600、0 字距，字号略收紧（11–12px 而非 13px）：带框胶囊形状和阴影承担外壳识别工作。浅彩填充的轮转（粉 / 蓝 / 绿 / 黄 / 奶油）要保留，它是边框之外系统最易认的信号。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-- **No CDN Chinese monospace face for the "system readout" voice.** Space Grotesk's quasi-mono role (label-pills, counters, mono-tags, slide counter NN / NN) depends on its slightly geometric character plus the wide-tracked uppercase treatment. Neither survives the CJK translation. The slide counter and chart legend can keep Latin digits + Latin labels intact; for purely Chinese chrome, lean on the pill border + shadow + pastel fill to signal "label" rather than the typographic treatment.
-- **The "uppercase brutalist" identity weakens.** The system's most distinctive typographic decision is "heavy uppercase Inter with negative tracking" — and that signal is irreplaceable in CJK. Compensate by leaning harder on the structural elements: more decorative disruption (extra tilted rectangles, star bursts, stripe blocks), more saturated pastel-ground rotation across slides, and slightly tighter shadow offsets to compensate for the calmer typographic baseline.
+- **没有可 CDN 加载的中文等宽字面给"系统读数"声部。** Space Grotesk 的准等宽角色（标签胶囊、计数器、等宽小片、页码 NN / NN）依赖它略带几何的性格加宽字距大写处理，这两样都撑不过 CJK 汉化。页码与图表图例可以保留拉丁数字 + 拉丁标签；纯中文外壳只能靠胶囊边 + 阴影 + 浅彩填充来提示"标签"，而不是靠排印处理。
+- **"大写粗野"身份变弱。** 系统最鲜明的排印决策是"重磅大写 Inter 配负字距"，这个信号在 CJK 里无可替代。补偿办法是更倚重结构元素：多加装饰破局（额外倾斜矩形、星爆、条纹块）、跨页更饱和的浅彩底轮转、略收紧阴影偏移，以抵消更平静的排印基线。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new card uses a 4px or 3px solid black border + the matched-weight offset shadow (8px or 4px). Never use a card without both.
-2. Any new region begins with a `{components.label-pill}` eyebrow in pastel fill, then the headline in uppercase Inter weight 800+, then content. The label-headline-content sequence is the system's editorial rhythm.
-3. Any new headline uses uppercase Inter with negative letter-spacing and weight 800-900. Reach for `{typography.heading-lg}` (32-64px) for primary moments and `{typography.heading-xl}` (48-96px) for cover/hero scale.
-4. Any new accent or surface fill picks from the 5-pastel palette (pink, blue, green, yellow, cream) — never introduce a sixth pastel.
-5. Any new CTA uses the `{components.button-primary}` pattern: 3px black border, yellow fill, 4px black shadow, Inter weight 700 / 16px. Hover lifts -2/-2 with shadow growing to 6px.
-6. Any new chart cycles through pink → blue → green for series order, with yellow/cream available for additional series. Legend swatches use 2px black border.
-7. Any new stat or metric uses Inter weight 900 + line-height 1 for the numeral, paired with Space Grotesk uppercase label below. Decorate the card with a `{components.stat-deco-dot}` in a pastel color.
-8. Any new slide adds at least one decorative disruption (tilted rectangle, star-burst, stripe-block, dot-grid corner, corner-bracket frame) — empty surfaces feel timid.
-9. Any new closing-style surface uses pure `{colors.black}` ground with white text, a 4px white-bordered close-frame, and a 12px yellow offset shadow. This is the only colored shadow allowed.
-10. If a surface feels too noisy, drop a decoration — don't drop a border or shadow. The borders and shadows are structural; the decorations are tunable.
+1. 任何新卡片都用 4px 或 3px 实线黑边 + 配重的偏移阴影（8px 或 4px）。绝不出一张两者缺一的卡片。
+2. 任何新区域都以 `{components.label-pill}` 眉题（浅彩填充）开头，接着大写字重 800+ 的 Inter 标题，再是内容。标签-标题-内容的顺序是系统的编辑节奏。
+3. 任何新标题都用大写 Inter 配负字距、字重 800-900。主瞬间取 `{typography.heading-lg}`（32-64px），封面/英雄级取 `{typography.heading-xl}`（48-96px）。
+4. 任何新强调色或表面填充都从五浅彩配色里挑（粉、蓝、绿、黄、奶油），绝不引入第六种浅彩。
+5. 任何新 CTA 都用 `{components.button-primary}` 模式：3px 黑边、黄填充、4px 黑阴影、Inter 字重 700 / 16px。悬停抬起 -2/-2、阴影长到 6px。
+6. 任何新图表按粉 → 蓝 → 绿的系列顺序轮转，黄/奶油可作额外系列。图例色块用 2px 黑边。
+7. 任何新统计或指标都用 Inter 字重 900 + 行高 1 作数字，下方配 Space Grotesk 大写标签。卡片用一枚浅彩 `{components.stat-deco-dot}` 点缀。
+8. 任何新页面都至少加一处装饰破局（倾斜矩形、星爆、条纹块、点网格角、角标框），空表面显得怯。
+9. 任何新收尾类表面都用纯 `{colors.black}` 底、白文字、4px 白边收尾框、12px 黄色偏移阴影。这是唯一允许的彩色阴影。
+10. 表面若显得太吵，去掉一个装饰，别去掉边框或阴影。边框和阴影是结构，装饰才可调。
 
-## Known Gaps
+## 已知缺口
 
-- **Inter and Space Grotesk are loaded from Google Fonts** via inline `@import`. There are no system fallbacks beyond `sans-serif` and `monospace` — in environments where Google Fonts fail, the system collapses to system defaults and loses its identity.
-- **The system uses `@import` inside the `<style>` block** rather than a `<link>` preconnect. This is slower than the standard `<link>` approach and may delay first paint of typography.
-- **The chart is rendered as inline SVG with hardcoded coordinates** (`viewBox="0 0 800 360"`, hardcoded `x/y/width/height` per `<rect>`). Adding new chart slides requires manual coordinate math; there is no data-binding layer.
-- **The hover/active state on buttons assumes a pointing device.** On touch devices the lift-and-press feedback only triggers on tap and may feel inconsistent.
-- **The tilt on stat cards is hardcoded with `:nth-child(odd)` -2deg and `:nth-child(even)` +2deg.** Re-ordering cards changes which tilts which direction — there's no per-card tilt control beyond ordering.
-- **The decorative star uses a CSS clip-path polygon with 10 points.** Browsers without clip-path support (very old IE/Edge) will render the star as a colored rectangle.
-- **The slide-counter and nav-controls overlap the slide content area at the bottom edge.** The 110px bottom padding on certain slides (slide-4, slide-9) reserves space, but other slides may have content that crowds the bottom-left counter pill.
-- **The black close-surface uses pure `#000000` ground with white text** — accessibility-wise this is high-contrast and fine, but the colored decorations on this surface (yellow shadow, white border) don't pass the WCAG color contrast checks at small sizes.
-- **The dot-grid background is a CSS radial-gradient.** At very large viewport sizes the dots may look too small to read as a grid; at very small sizes they may visually merge into solid noise.
-- **There is no transition between slides** other than the binary display toggle. Adding a fade or slide animation requires modifying the JS and adding transition CSS.
+- **Inter 与 Space Grotesk 通过内联 `@import` 从 Google Fonts 加载**。除 `sans-serif` 与 `monospace` 外没有系统回退；在 Google Fonts 失效的环境里，系统会塌成系统默认字体，失去身份。
+- **系统用 `<style>` 块内的 `@import`**，而非 `<link>` preconnect。这比标准 `<link>` 方式慢，可能延后排印的首次绘制。
+- **图表以内联 SVG 配硬编码坐标渲染**（`viewBox="0 0 800 360"`，每个 `<rect>` 的 `x/y/width/height` 写死）。加新图表页要手算坐标，没有数据绑定层。
+- **按钮的悬停/激活态假定有指针设备**。触屏上抬起-按下的反馈只在点按时触发，可能显得不一致。
+- **统计卡片的倾斜用 `:nth-child(odd)` -2deg、`:nth-child(even)` +2deg 硬编码**。卡片一重排，倾斜方向就跟着变，除排序外没有逐卡控制。
+- **装饰星星用 10 点的 CSS clip-path 多边形**。不支持 clip-path 的浏览器（很老的 IE/Edge）会把星星渲染成一块彩色矩形。
+- **页码与导航控件在底边压住幻灯片内容区**。某些页面（slide-4、slide-9）的 110px 底部内边距留了位置，但别的页面可能有内容挤到左下页码胶囊。
+- **黑色收尾表面用纯 `#000000` 底配白文字**，无障碍角度是高对比、没问题，但这个表面上的彩色装饰（黄阴影、白边）在小尺寸下过不了 WCAG 色彩对比检查。
+- **点网格背景是 CSS 径向渐变**。视口极大时点可能小到读不成网格，极小时又可能糊成一片实噪声。
+- **除二值 display 切换外，幻灯片之间没有过渡**。要加淡入或滑动动画得改 JS 并补 transition CSS。

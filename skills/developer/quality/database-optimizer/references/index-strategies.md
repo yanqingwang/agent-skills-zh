@@ -1,8 +1,12 @@
-# Index Strategies
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/database-optimizer/references/index-strategies.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Index Selection Methodology
+# 索引策略
 
-### Identify Index Candidates
+## 索引选择方法
+
+### 找出索引候选
 
 ```sql
 -- PostgreSQL: Find queries missing indexes
@@ -26,9 +30,9 @@ WHERE db = 'your_database'
 ORDER BY exec_count DESC;
 ```
 
-## B-Tree Indexes (Default)
+## B-Tree 索引（默认）
 
-### Single Column Indexes
+### 单列索引
 
 ```sql
 -- Create index for WHERE clauses
@@ -44,7 +48,7 @@ CREATE INDEX idx_products_price ON products(price);
 CREATE UNIQUE INDEX idx_users_username ON users(username);
 ```
 
-### Multi-Column Indexes
+### 多列索引
 
 ```sql
 -- Order matters: most selective column first
@@ -64,7 +68,7 @@ CREATE INDEX idx_users_active_email_name
 ON users(active, email) INCLUDE (name);
 ```
 
-### Column Order Guidelines
+### 列顺序准则
 
 ```sql
 -- Rule 1: Equality before range
@@ -81,9 +85,9 @@ CREATE INDEX idx_locations_country_city_zip
 ON locations(country, city, zip);
 ```
 
-## Covering Indexes
+## 覆盖索引
 
-### PostgreSQL INCLUDE Clause
+### PostgreSQL INCLUDE 子句
 
 ```sql
 -- Include non-key columns for index-only scans
@@ -98,7 +102,7 @@ WHERE email = 'user@example.com';
 -- Should show "Index Only Scan"
 ```
 
-### MySQL Covering Indexes
+### MySQL 覆盖索引
 
 ```sql
 -- MySQL: Add columns to end of index
@@ -113,9 +117,9 @@ WHERE user_id = 123;
 -- Should show "Using index" in Extra column
 ```
 
-## Partial Indexes
+## 部分索引
 
-### PostgreSQL Partial Indexes
+### PostgreSQL 部分索引
 
 ```sql
 -- Index only active users
@@ -136,7 +140,7 @@ WHERE status IN ('pending', 'processing');
 -- Smaller index = better performance + less storage
 ```
 
-### MySQL Filtered Indexes (8.0+)
+### MySQL 过滤索引（8.0+）
 
 ```sql
 -- MySQL 8.0+ supports functional indexes for similar effect
@@ -144,9 +148,9 @@ CREATE INDEX idx_users_active
 ON users((CASE WHEN active = 1 THEN email END));
 ```
 
-## Expression Indexes
+## 表达式索引
 
-### PostgreSQL Function Indexes
+### PostgreSQL 函数索引
 
 ```sql
 -- Index for case-insensitive search
@@ -169,7 +173,7 @@ CREATE INDEX idx_orders_date
 ON orders(DATE(created_at));
 ```
 
-### MySQL Generated Column Indexes
+### MySQL 生成列索引
 
 ```sql
 -- Create generated column, then index it
@@ -185,9 +189,9 @@ SELECT * FROM users
 WHERE email_lower = LOWER('User@Example.com');
 ```
 
-## Specialized Index Types
+## 专用索引类型
 
-### PostgreSQL GIN Indexes (Full-Text, Arrays, JSONB)
+### PostgreSQL GIN 索引（全文、数组、JSONB）
 
 ```sql
 -- Full-text search
@@ -213,7 +217,7 @@ SELECT * FROM users
 WHERE metadata @> '{"plan": "premium"}';
 ```
 
-### PostgreSQL GiST Indexes (Geometric, Range)
+### PostgreSQL GiST 索引（几何、范围）
 
 ```sql
 -- Range types
@@ -228,7 +232,7 @@ CREATE INDEX idx_locations_coords
 ON locations USING GIST(coordinates);
 ```
 
-### MySQL Full-Text Indexes
+### MySQL 全文索引
 
 ```sql
 -- Full-text search
@@ -245,9 +249,9 @@ WHERE MATCH(title, content)
       AGAINST('+database -mysql' IN BOOLEAN MODE);
 ```
 
-## Index Maintenance
+## 索引维护
 
-### PostgreSQL Maintenance
+### PostgreSQL 维护
 
 ```sql
 -- Update statistics for query planner
@@ -277,7 +281,7 @@ WHERE idx_scan = 0
 ORDER BY pg_relation_size(indexrelid) DESC;
 ```
 
-### MySQL Maintenance
+### MySQL 维护
 
 ```sql
 -- Update statistics
@@ -309,23 +313,23 @@ WHERE index_name IS NOT NULL
   AND object_schema = 'your_database';
 ```
 
-## Index Anti-Patterns
+## 索引反模式
 
-| Anti-Pattern | Issue | Solution |
+| 反模式 | 问题 | 解决方案 |
 |-------------|-------|----------|
-| Index every column | Write overhead, storage waste | Index based on query patterns |
-| Redundant indexes | `(a)` + `(a,b)` | Keep only `(a,b)` |
-| Wrong column order | `(created_at, user_id)` for `WHERE user_id = ?` | Put filtered columns first |
-| Over-covering | Including rarely-used columns | Include only frequently accessed columns |
-| Ignoring WHERE clause | Full index for 5% of data | Use partial indexes |
-| Expression mismatch | Index `email`, query `LOWER(email)` | Create expression index |
+| 每列都建索引 | 写入开销大、浪费存储 | 按查询模式建索引 |
+| 冗余索引 | `(a)` + `(a,b)` | 只保留 `(a,b)` |
+| 列顺序错误 | 对 `WHERE user_id = ?` 用 `(created_at, user_id)` | 把过滤列放前面 |
+| 过度覆盖 | 纳入很少用到的列 | 只纳入频繁访问的列 |
+| 忽略 WHERE 子句 | 为 5% 的数据建全量索引 | 改用部分索引 |
+| 表达式不匹配 | 索引 `email`，查询 `LOWER(email)` | 建表达式索引 |
 
-## Index Design Checklist
+## 索引设计检查清单
 
-1. **Analyze queries**: Use pg_stat_statements or slow query log
-2. **Check execution plans**: Look for Seq Scan on large tables
-3. **Design indexes**: Equality → Range → Include
-4. **Create concurrently**: Avoid locking (PostgreSQL)
-5. **Validate improvement**: Compare before/after EXPLAIN
-6. **Monitor usage**: Remove unused indexes after 30 days
-7. **Maintain regularly**: VACUUM, ANALYZE, REINDEX as needed
+1. **分析查询**：用 pg_stat_statements 或慢查询日志
+2. **检查执行计划**：留意大表上的 Seq Scan
+3. **设计索引**：等值 → 范围 → INCLUDE
+4. **并发创建**：避免锁表（PostgreSQL）
+5. **验证改进**：对比改动前后的 EXPLAIN
+6. **监控使用情况**：30 天后删除未使用的索引
+7. **定期维护**：按需执行 VACUUM、ANALYZE、REINDEX

@@ -223,304 +223,308 @@ components:
     description: "Large serif date or date-range stacked at top-right of cover surfaces. Uses an en-dash to indicate spans."
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/biennale-yellow/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Biennale Yellow is a **literary-editorial presentation system** modeled on the visual language of European art biennale catalogues, slow exhibition posters, and quarterly literary publications. There are no cards, no buttons, no shadows, no rounded corners. The structural vocabulary is just three things: paper, ink, and yellow.
+Biennale Yellow 是一套**文学编辑式演示系统**，取法欧洲艺术双年展图录、慢节奏展览海报与文学季刊的视觉语言。没有卡片、没有按钮、没有阴影、没有圆角。结构语汇只有三样：纸、墨、黄。
 
-The typographic system pivots on **Instrument Serif**, a contemporary high-contrast serif with tall ascenders, elegant italics, and slightly flared terminals. It carries every display moment, every numeral, every quote — at scales ranging from headline-small (40px) to jumbo numerals over 700px. Set tight (line-height 0.86, letter-spacing −0.018em), it reads as confident editorial display; set looser in italic (line-height 1.04, letter-spacing −0.005em), it becomes a slow-reading quotation face. **Archivo** is the sans companion — used for body paragraphs and as small, wide-tracked uppercase labels (the "micro-label" treatment). **JetBrains Mono** handles all numerical and metadata callouts: dates, ledger figures, page numbers. The three-face system is rigid and disciplined; the contrast between them is the entire typographic story.
+排印系统以 **Instrument Serif** 为轴，这是一款当代高对比衬线，升部高、斜体优雅、字端微张。它承载每一个展示瞬间、每一个数字、每一段引文，尺度从小标题（40px）一直跨到 700px 以上的巨型数字。排得紧（行高 0.86、字距 −0.018em）时，它读起来是自信的编辑式展示；换到斜体排得松些（行高 1.04、字距 −0.005em），又成了慢读的引文字面。**Archivo** 是无衬线搭档，用于正文段落，以及小巧、宽字距的大写标签（即 micro-label 处理）。**JetBrains Mono** 承担所有数字与元数据标注：日期、账目数字、页码。三字面系统严谨克制，三者之间的反差就是整套排印叙事。
 
-The color world is built on **warm parchment** (`{colors.paper}` — `#E9E5DB`) as the universal ground, marked by a single **ink** color (`{colors.ink}` — `#1B2566`, a deep indigo navy) used for every line of type and every rule. The system's signature color is **sun** (`{colors.sun}` — `#F1EE2E`), a highly saturated solar yellow used as a flooded panel, as a soft blooming radial gradient, or as a geometric tile underprint. A **soft ember peach** (`{colors.ember}` — `#E26B4A`) appears only as a subordinate counter-temperature accent, always at 15-22% opacity in a corner radial bloom. Inverted color treatments are not used; the system commits to navy ink on a warm ground.
+色彩世界以**暖羊皮纸**（`{colors.paper}` — `#E9E5DB`）作通用底，配一色 **ink**（`{colors.ink}` — `#1B2566`，深靛海军蓝），所有文字与所有分隔线都用它。系统招牌色是 **sun**（`{colors.sun}` — `#F1EE2E`），高饱和日照黄，可作满铺面板、柔和放射状光晕，或几何拼块底纹。一抹**柔暖灰桃**（`{colors.ember}` — `#E26B4A`）只作从属的反向温度点缀，永远以 15-22% 不透明度出现在对角的径向光晕里。系统不用反色处理，始终认准暖底上的海军蓝墨。
 
-Depth is **atmospheric, not structural**. There are no drop shadows anywhere in the system. Depth comes from layered radial gradients of yellow (the sun-bloom and ember-bloom components) and the optional block-tile underprint on cover-class surfaces. Cards have no borders; regions are separated only by 1px hairline rules in ink. The lack of border weight is itself the aesthetic — the design feels printed, not engineered.
+纵深是**氛围性的，不是结构性的**。系统里没有任何投影。纵深来自层叠的黄色径向渐变（sun-bloom 与 ember-bloom 组件），以及封面类表面上可选的 block-tile 底纹。卡片没有边框，区域之间只用 1px 墨色细线分隔。不靠边框重量，这本身就是美学：设计读起来像印出来的，不像搭出来的。
 
-**Density philosophy: editorial-restrained.** This system reads as elegant when sparse and broken when crowded. A typical surface holds one large display moment + a handful of supporting elements (a micro-label, a body paragraph, an ordered list, or a single radial bloom). Crowding the canvas with cards, buttons, panels, or stacked components turns the system into a different aesthetic entirely. Even dense surfaces (a calendar or programme) achieve density through tabular repetition, not visual richness — many quiet rows of hairline-separated metadata, not many bordered cells. Generous edge padding (40-76px) and wide footer/header bands let the canvas breathe.
+**密度取向：编辑式克制。** 这套系统稀疏时优雅，拥挤时散架。典型一页承载一个大型展示瞬间 + 少量辅助元素（一个 micro-label、一段正文、一组有序列表，或单单一团径向光晕）。用卡片、按钮、面板或堆叠组件塞满画布，会把它变成另一套美学。即便是密集表面（日历或节目单），密度也来自表格的重复，而非视觉的丰富：许多安静的、由细线分隔的元数据行，而不是许多带框的格子。宽裕的边内边距（40-76px）与宽的页脚/页眉带让画布能呼吸。
 
-**Key Characteristics:**
-- Warm parchment ground (`{colors.paper}`) on every surface; never white, never gray.
-- Single ink color (`{colors.ink}`) for all text and all rules — no secondary text colors.
-- Solar yellow (`{colors.sun}`) deployed three ways: as a flooded panel, as a soft radial bloom, as a translucent geometric tile underprint.
-- Instrument Serif handles every display moment at scales from 40px to 720px+.
-- Archivo Bold uppercase + 0.16–0.32em tracking is the universal label voice.
-- JetBrains Mono is reserved exclusively for dates, ledger numerals, and page numbers.
-- 1px hairline rules in `{colors.ink}` are the only border treatment — used for header bands, ledger rows, footer columns, and strand separators.
-- No drop shadows, no rounded corners, no card outlines, no buttons. Decoration is atmospheric (radial blooms) or geometric (translucent tile blocks).
-- Persistent `01 / NN` JetBrains Mono pagenumber at bottom-right of every surface at 75% opacity.
-- Optional vertical rotated rail-label at the left edge of chapter/divider surfaces.
+**关键特征：**
+- 每处表面都是暖羊皮纸底（`{colors.paper}`）；绝不用纯白，绝不用灰。
+- 单一墨色（`{colors.ink}`）用于所有文字与所有分隔线，没有次级文字色。
+- 日照黄（`{colors.sun}`）有三种用法：满铺面板、柔和径向光晕、半透明几何拼块底纹。
+- Instrument Serif 承担 40px 到 720px+ 的每一个展示瞬间。
+- Archivo Bold 大写 + 0.16–0.32em 字距是通用标签声部。
+- JetBrains Mono 只留给日期、账目数字与页码。
+- 1px 的 `{colors.ink}` 细线是唯一边框处理，用于页眉带、账目行、页脚列与 strand 分隔线。
+- 没有投影、没有圆角、没有卡片轮廓、没有按钮。装饰是氛围性的（径向光晕）或几何性的（半透明拼块）。
+- 每处表面右下角有常驻的 `01 / NN` JetBrains Mono 页码，75% 不透明度。
+- 章节/分隔页左边缘可选旋转的竖排 rail-label。
 
-## Colors
+## 颜色
 
-### Palette
+### 调色板
 
-- **Paper** (`{colors.paper}` — `#E9E5DB`): The warm parchment canvas. The default and near-universal background. Reads as a softened off-white with strong warmth — never neutral, never cold.
-- **Paper-deep** (`{colors.paper-deep}` — `#DCD6C4`): A slightly darker parchment tone, available as a secondary surface or to suggest a shadow band without using actual shadow. Reserved for moments that need surface differentiation while staying within the warm-paper family.
-- **Ink** (`{colors.ink}` — `#1B2566`): The single text and line color across the entire system. A deep indigo navy that reads as confident editorial black-with-blue-bias. Used for headlines, body, micro-labels, monos, hairline rules, and ink-bar fills. The `--line` CSS variable resolves to this same color.
-- **Sun** (`{colors.sun}` — `#F1EE2E`): The system's signature solar yellow. Highly saturated, slightly green-leaning. Used three ways: as a flooded full-bleed or column-bleed panel, as the core of soft radial blooms, and as 40-70% opacity geometric tile blocks.
-- **Sun-soft** (`{colors.sun-soft}` — `#F8F39B`): A paler buttery yellow used in the middle stops of sun-bloom gradients to soften the transition from saturated sun to paper.
-- **Haze** (`{colors.haze}` — `#F0DA7C`): A warmer mustard-leaning yellow used in the outermost stops of sun-bloom gradients to extend the bloom into the paper without a hard edge.
-- **Ember** (`{colors.ember}` — `#E26B4A`): A warm peach-orange used only as a subordinate counter-temperature accent in 15-22% opacity radial blooms. Never used as a fill color, never as a text color. Its job is to balance a sun-bloom on the opposite side of the canvas.
+- **Paper**（`{colors.paper}` — `#E9E5DB`）：暖羊皮纸画布。默认且近乎通用的背景。读起来是柔化的、暖意明显的灰白，绝不中性，绝不冷。
+- **Paper-deep**（`{colors.paper-deep}` — `#DCD6C4`）：略深的羊皮纸调，可作次级表面，或用来暗示一条暗带而不真用阴影。留给需要在暖纸家族内做表面区隔的时刻。
+- **Ink**（`{colors.ink}` — `#1B2566`）：全系统唯一的文字与线条色。一种深靛海军蓝，读起来是自信的、偏蓝的编辑黑。用于标题、正文、micro-label、等宽字、细线与墨条填充。CSS 变量 `--line` 也解析到这个颜色。
+- **Sun**（`{colors.sun}` — `#F1EE2E`）：系统招牌的日照黄。高饱和、略偏绿。三种用法：满出血或整列出血的面板、柔和径向光晕的核心、以及 40-70% 不透明度的几何拼块。
+- **Sun-soft**（`{colors.sun-soft}` — `#F8F39B`）：更淡的奶油黄，用在 sun-bloom 渐变的中段色标，柔化从饱和 sun 到纸的过渡。
+- **Haze**（`{colors.haze}` — `#F0DA7C`）：偏芥末的暖黄，用在 sun-bloom 渐变最外层色标，让光晕没有硬边地融进纸里。
+- **Ember**（`{colors.ember}` — `#E26B4A`）：暖桃橙，只作 15-22% 不透明度径向光晕里从属的反向温度点缀。绝不作为填充色，绝不作为文字色。它的职责是在画布另一侧与 sun-bloom 取得平衡。
 
-### Defaults
+### 默认值
 
-- **Default surface background**: `{colors.paper}`. Every surface starts here.
-- **Default headline color**: `{colors.ink}`. Always. Headlines never appear in yellow, ember, or paper-deep — only ink.
-- **Default body text color**: `{colors.ink}`. Body uses the same color as display; the contrast is achieved through size and weight, not color.
-- **Default rule color**: `{colors.ink}` (1px solid) for primary separators, ink at 18-20% opacity for secondary row separators.
-- **Default accent surface for poster moments**: `{colors.sun}` — a flooded panel of solar yellow with `{colors.ink}` text on top.
-- **Default atmospheric layer**: a single `{components.sun-bloom}` placed off-center on the surface, with an optional `{components.ember-bloom}` in the opposite corner.
-- **Default chart bar color**: `{colors.ink}`. The featured/current bar uses `{components.bar-lit}` (yellow fill, ink stroke).
-- **Default label color**: `{colors.ink}` for the text, no fill. Labels are tracking + uppercase + weight 600, not filled pills.
+- **默认表面背景**：`{colors.paper}`。每处表面都从这里起。
+- **默认标题色**：`{colors.ink}`。始终如此。标题绝不出现在黄、灰桃或 paper-deep 里，只用墨色。
+- **默认正文文字色**：`{colors.ink}`。正文与展示用同一颜色，反差靠尺寸与字重，不靠颜色。
+- **默认分隔线色**：`{colors.ink}`（1px 实线）作主分隔，墨色 18-20% 不透明度作次级行分隔。
+- **海报瞬间的默认强调表面**：`{colors.sun}`，满铺日照黄面板，其上压 `{colors.ink}` 文字。
+- **默认氛围层**：一枚偏心的 `{components.sun-bloom}`，对角可选配一枚 `{components.ember-bloom}`。
+- **默认图表条色**：`{colors.ink}`。当前/精选条用 `{components.bar-lit}`（黄填充、墨描边）。
+- **默认标签色**：文字用 `{colors.ink}`，无填充。标签靠字距 + 大写 + 字重 600，不是填充胶囊。
 
-The system never inverts: ink text on a sun panel is correct (and a key signature treatment), but yellow text on an ink ground does not exist. Text is always ink; the variability lives in what's behind the text, not in the text color itself.
+系统绝不反色：黄面板上压墨色文字是对的（也是招牌处理），但墨底上放黄文字不存在。文字永远是墨色，变化在文字背后的东西，不在文字颜色本身。
 
-## Typography
+## 排印
 
-### Font Family Stack
-The system runs three faces, each with a tightly defined role.
+### 字族栈
+系统用三款字面，各守一个严密定义的角色。
 
-**Instrument Serif** (Google Fonts, italic + roman) is the display and editorial face. Its high contrast, tall ascenders, and slightly flared terminals give it a contemporary literary register — closer to a magazine masthead than a traditional book serif. Roman is used for headlines, numerals, ledger titles, and date rails. Italic is used for manifesto quotes and certain emphasis moments. Set tight (line-height ≤ 1.06, negative letter-spacing −0.005 to −0.04em).
+**Instrument Serif**（Google Fonts，斜体 + 正体）是展示兼编辑字面。高对比、升部高、字端微张，气质是当代文学，更接近杂志刊头而非传统书籍衬线。正体用于标题、数字、账目标题、日期栏。斜体用于宣言式引文和某些强调时刻。排得紧（行高 ≤ 1.06，负字距 −0.005 到 −0.04em）。
 
-**Archivo** (Google Fonts) is the sans companion. Used at weight 400 for body paragraphs (line-height 1.5) and at weight 600 for the universal micro-label treatment (uppercase, 0.16-0.32em tracking, 10-14px). Never used at intermediate weights, never used for headlines.
+**Archivo**（Google Fonts）是无衬线搭档。字重 400 用于正文段落（行高 1.5），字重 600 用于通用 micro-label 处理（大写、0.16-0.32em 字距、10-14px）。绝不用中间字重，绝不用于标题。
 
-**JetBrains Mono** (Google Fonts) is the numerical/metadata face. Used exclusively for dates in ledgers, mono numerical callouts in data slides, page numbers, and the nav-hint. Its slab character gives editorial weight to numerical content without leaning on bold styling.
+**JetBrains Mono**（Google Fonts）是数字/元数据字面。只用于账目里的日期、数据页的等宽数字标注、页码和导航提示。它的板状特征让数字内容有编辑分量，不必靠加粗。
 
-### Typography Scale
+### 排印比例
 
-| Token | Size (clamp) | Family | Weight | Use |
+| Token | 尺寸（clamp） | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.display}` | 120–240px | Instrument Serif | 400 | Cover-scale display title |
-| `{typography.display-sm}` | 110–200px | Instrument Serif | 400 | Editorial display in a panel context |
-| `{typography.display-md}` | 80–200px | Instrument Serif | 400 | Closing-statement display |
-| `{typography.display-it}` | 56–120px | Instrument Serif italic | 400 | Manifesto-scale italic quote body |
-| `{typography.numeral-jumbo}` | 220–720px | Instrument Serif | 400 | Chapter-divider ordinal numeral |
-| `{typography.numeral-lg}` | 120–280px | Instrument Serif | 400 | Decorative quotation mark, oversized punctuation |
-| `{typography.numeral-md}` | 72–144px | Instrument Serif | 400 | Hero stat figure |
-| `{typography.headline}` | 40–88px | Instrument Serif | 400 | Primary section headline, large quote body |
-| `{typography.headline-sm}` | 32–56px | Instrument Serif | 400 | Region headline, ledger/calendar topbar |
-| `{typography.date-rail}` | 48–96px | Instrument Serif | 400 | Date or date-range stacked at top of a surface |
-| `{typography.ledger-title}` | 20–30px | Instrument Serif | 400 | Title cell inside a calendar/ledger row |
-| `{typography.strand-title}` | 22–32px | Instrument Serif | 400 | Title inside a numbered strand/list row |
-| `{typography.strand-num}` | 28–38px | Instrument Serif | 400 | Numeral cell inside a strand row |
-| `{typography.body-lede}` | 15–18px | Archivo | 400 | Lede paragraph following a chapter headline |
-| `{typography.body}` | 14–16px | Archivo | 400 | Standard body paragraph |
-| `{typography.body-sm}` | 11–13px | Archivo | 400 | Footer-band body text, dense metadata |
-| `{typography.micro-label}` | 11–14px | Archivo | 600 | Universal uppercase eyebrow label |
-| `{typography.micro-label-tight}` | 10–12px | Archivo | 600 | Smaller uppercase label inside footer cells |
-| `{typography.rail-label}` | 11–13px | Archivo | 600 | Vertical rotated rail label |
-| `{typography.mono-data}` | 12–14px | JetBrains Mono | 400 | Chart year/value labels, mono inline data |
-| `{typography.mono-date}` | 13–16px | JetBrains Mono | 400 | Date column in calendar ledgers |
-| `{typography.pagenum}` | 11–13px | JetBrains Mono | 400 | Persistent page number |
+| `{typography.display}` | 120–240px | Instrument Serif | 400 | 封面级展示标题 |
+| `{typography.display-sm}` | 110–200px | Instrument Serif | 400 | 面板语境下的编辑式展示 |
+| `{typography.display-md}` | 80–200px | Instrument Serif | 400 | 收尾陈述展示 |
+| `{typography.display-it}` | 56–120px | Instrument Serif italic | 400 | 宣言级斜体引文正文 |
+| `{typography.numeral-jumbo}` | 220–720px | Instrument Serif | 400 | 章节分隔的序数数字 |
+| `{typography.numeral-lg}` | 120–280px | Instrument Serif | 400 | 装饰性引号、超规格标点 |
+| `{typography.numeral-md}` | 72–144px | Instrument Serif | 400 | 英雄统计数字 |
+| `{typography.headline}` | 40–88px | Instrument Serif | 400 | 分节主标题、大号引文正文 |
+| `{typography.headline-sm}` | 32–56px | Instrument Serif | 400 | 区域标题、账目/日历顶栏 |
+| `{typography.date-rail}` | 48–96px | Instrument Serif | 400 | 叠在表面顶部的日期或日期区间 |
+| `{typography.ledger-title}` | 20–30px | Instrument Serif | 400 | 日历/账目行内的标题单元格 |
+| `{typography.strand-title}` | 22–32px | Instrument Serif | 400 | 编号 strand/列表行内的标题 |
+| `{typography.strand-num}` | 28–38px | Instrument Serif | 400 | strand 行内的数字单元格 |
+| `{typography.body-lede}` | 15–18px | Archivo | 400 | 章节标题后的导语段 |
+| `{typography.body}` | 14–16px | Archivo | 400 | 标准正文段落 |
+| `{typography.body-sm}` | 11–13px | Archivo | 400 | 页脚带正文、密集元数据 |
+| `{typography.micro-label}` | 11–14px | Archivo | 600 | 通用大写眉题标签 |
+| `{typography.micro-label-tight}` | 10–12px | Archivo | 600 | 页脚单元格内更小的大写标签 |
+| `{typography.rail-label}` | 11–13px | Archivo | 600 | 竖排旋转的栏标签 |
+| `{typography.mono-data}` | 12–14px | JetBrains Mono | 400 | 图表年份/数值标签、行内等宽数据 |
+| `{typography.mono-date}` | 13–16px | JetBrains Mono | 400 | 日历账目里的日期列 |
+| `{typography.pagenum}` | 11–13px | JetBrains Mono | 400 | 常驻页码 |
 
-### Defaults
+### 默认值
 
-- **Default size for a cover-scale display headline**: `{typography.display}` (120–240px clamp). Anything smaller reads as section-level, not cover-level.
-- **Default size for a primary section headline**: `{typography.headline}` (40–88px clamp).
-- **Default size for a chapter-divider numeral**: `{typography.numeral-jumbo}` (220–720px clamp). Don't shrink — the jumbo numeral is the point of a divider surface.
-- **Default size for a hero statistic**: `{typography.numeral-md}` (72–144px clamp). Stat figures share the same serif as headlines — they are display moments, not data chrome.
-- **Default size for a paragraph body**: `{typography.body}` (14–16px). For a lede after a chapter headline, step up to `{typography.body-lede}` (15–18px).
-- **Default size for any eyebrow label**: `{typography.micro-label}` (11–14px) at weight 600, uppercase, 0.18em tracking.
-- **Default weight for any Archivo body**: 400. Archivo body at any other weight breaks the rhythm.
-- **Default weight for any micro-label**: 600. Labels at weight 400 or 700 read as either timid or oversized.
-- **Default tracking for any uppercase label**: 0.16em minimum, 0.32em maximum. Labels without wide tracking read as code, not editorial.
+- **封面级展示标题默认尺寸**：`{typography.display}`（120–240px clamp）。再小就读成分节级，不是封面级。
+- **分节主标题默认尺寸**：`{typography.headline}`（40–88px clamp）。
+- **章节分隔数字默认尺寸**：`{typography.numeral-jumbo}`（220–720px clamp）。别缩小，巨型数字就是分隔页的意义所在。
+- **英雄统计默认尺寸**：`{typography.numeral-md}`（72–144px clamp）。统计数字与标题共用同一衬线，它们是展示瞬间，不是数据外壳。
+- **段落正文默认尺寸**：`{typography.body}`（14–16px）。章节标题后的导语升一档到 `{typography.body-lede}`（15–18px）。
+- **任何眉题标签默认尺寸**：`{typography.micro-label}`（11–14px），字重 600、大写、0.18em 字距。
+- **任何 Archivo 正文默认字重**：400。Archivo 正文用别的字重会破掉节奏。
+- **任何 micro-label 默认字重**：600。字重 400 或 700 的标签读起来要么怯要么过大。
+- **任何大写标签默认字距**：最低 0.16em，最高 0.32em。没有宽字距的标签读成代码，不像编辑。
 
-When unsure which display token to reach for, default to `{typography.headline}` (40–88px) for the primary moment, and `{typography.numeral-md}` (72–144px) for a single hero statistic. The display, display-sm, and display-md tokens are reserved for cover/colophon/poster-scale moments.
+拿不准该用哪个展示 token 时，主瞬间默认取 `{typography.headline}`（40–88px），单个英雄统计取 `{typography.numeral-md}`（72–144px）。display、display-sm、display-md 留给封面/版权页/海报级时刻。
 
-### Signature Treatments
+### 招牌处理
 
-These treatments are **non-optional whenever the corresponding element type is used**:
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every display, numeral, headline, and ledger-title element is Instrument Serif at weight 400.** Bold serif display does not exist in this system — the face's contrast is its weight signal. Setting Instrument Serif at weight 700 collapses the entire elegance.
-- **Every Instrument Serif display element uses tight line-height (0.84–1.06).** Generous line-height on display destroys the editorial poster feel — large serif headlines must feel stacked, not aerated.
-- **Every Instrument Serif display element uses negative letter-spacing.** Display, headline, jumbo numerals at −0.018 to −0.04em; italic display at −0.005em. Without negative tracking, the wide-bodied glyphs read as untreated.
-- **Every micro-label is uppercase Archivo weight 600 with tracking ≥ 0.16em.** No exceptions. A label without uppercase + tracking is not a label in this system; it's a stray sans element.
-- **Every numerical metadata element (date, page number, chart value, calendar date) is JetBrains Mono.** Serif numerals are for display moments; mono numerals are for data chrome. Don't cross the line.
-- **Every italic manifesto-scale quote uses `{typography.display-it}`.** Setting an italic quote at headline scale (40–88px) reads as a smaller moment; the italic is meant to dominate.
-- **Every body paragraph is Archivo weight 400 with line-height ≥ 1.45.** Body in Instrument Serif does not exist — Instrument is for display only.
+- **每一个 display、numeral、headline、ledger-title 元素都是 Instrument Serif 字重 400。** 系统里没有粗衬线展示，这款字面的对比度本身就是字重信号。把 Instrument Serif 设成字重 700 会毁掉全部优雅。
+- **每个 Instrument Serif 展示元素都用紧行高（0.84–1.06）。** 展示上宽松行高会毁掉编辑海报感，大衬线标题必须显得叠紧，而不是透气。
+- **每个 Instrument Serif 展示元素都用负字距。** 展示、标题、巨型数字用 −0.018 到 −0.04em；斜体展示用 −0.005em。没有负字距，宽身字形读起来像没处理过。
+- **每个 micro-label 都是大写 Archivo 字重 600、字距 ≥ 0.16em。** 没有例外。没有大写 + 字距的标签在这套系统里不算标签，只是一段游离的无衬线文字。
+- **每个数字元数据元素（日期、页码、图表数值、日历日期）都是 JetBrains Mono。** 衬线数字用于展示瞬间，等宽数字用于数据外壳。别越线。
+- **每个斜体宣言级引文都用 `{typography.display-it}`。** 把斜体引文设成标题尺度（40–88px）会读成更小的瞬间，斜体本该主导全场。
+- **每个正文段落都是 Archivo 字重 400、行高 ≥ 1.45。** 系统里不存在 Instrument Serif 正文，Instrument 只做展示。
 
-### Typography Principles
+### 排印原则
 
-The voice contrast is **slow elegant serif ↔ wide-tracked uppercase sans ↔ tabular mono**. Italic Instrument is the system's "feeling" voice (reserved for quotes and manifesto moments); roman Instrument is the "statement" voice; Archivo upper-tracked is the "label" voice; mono is the "data" voice. Each has a single job.
+声部对比是**缓慢优雅的衬线 ↔ 宽字距大写无衬线 ↔ 表格化等宽**。斜体 Instrument 是系统的"情绪"声部（只留给引文与宣言时刻）；正体 Instrument 是"陈述"声部；Archivo 大写加字距是"标签"声部；等宽是"数据"声部。各司一职。
 
-Mixing rules are tight: an `<em>` inside an Instrument Serif headline stays in italic Instrument Serif (no face switch). An `<em>` inside an Archivo body paragraph becomes italic Archivo, not a serif. Don't mix faces inline.
+混排规则很紧：Instrument Serif 标题里的 `<em>` 保持斜体 Instrument Serif（不换字面）。Archivo 正文段落里的 `<em>` 变成斜体 Archivo，不是衬线。不要在行内混字面。
 
-Color is locked to ink on every element. There is no "accent color text" treatment in this system — accent is delivered through atmospheric blooms and panel fills, not text color.
+每个元素的颜色都锁死为墨色。系统里没有"强调色文字"处理，强调靠氛围光晕和面板填充，不靠文字颜色。
 
-## Layout
+## 布局
 
-### Canvas System
-The system targets `100vw × 100vh` per slide. Slides are absolutely positioned and crossfade via opacity transition (280ms ease). Only one slide is `.active` at a time. Every measurement uses CSS `clamp()` with both vw and vh terms — typography clamps include `min(...vw, ...vh)` patterns so display type scales by whichever viewport axis is shorter.
+### 画布系统
+系统以每页 `100vw × 100vh` 为目标。幻灯片绝对定位，通过 opacity 过渡（280ms ease）交叉淡入。同一时刻只有一页 `.active`。每一处尺寸都用同时带 vw 与 vh 项的 CSS `clamp()`，排印 clamp 里含 `min(...vw, ...vh)` 模式，使展示文字按两条视口轴里较短的一条缩放。
 
-### Padding and Margin Scale
+### 内边距与间距比例
 
-| Token | Range | Use |
+| Token | 范围 | 用途 |
 |---|---|---|
-| `{spacing.pad-edge}` | 40–76px | Standard edge padding from any slide edge to content |
-| `{spacing.pad-region}` | 40–80px | Internal padding inside a flooded yellow panel or major region |
-| `{spacing.pad-foot}` | 56–88px | Bottom padding when the footer band is present |
-| `{spacing.gap-region}` | 20–48px | Gap between two major content columns/regions |
-| `{spacing.gap-strand}` | 14–22px | Gap between strand rows in a numbered list |
-| `{spacing.gap-footer-col}` | 20–44px | Gap between columns of the footer-band metadata strip |
-| `{spacing.pagenum-bottom}` | 22–42px | Bottom inset of the persistent pagenum |
-| `{spacing.pagenum-right}` | 24–48px | Right inset of the persistent pagenum |
+| `{spacing.pad-edge}` | 40–76px | 任意幻灯片边缘到内容的标准边内边距 |
+| `{spacing.pad-region}` | 40–80px | 满铺黄面板或大区域的内部内边距 |
+| `{spacing.pad-foot}` | 56–88px | 有页脚带时的底部内边距 |
+| `{spacing.gap-region}` | 20–48px | 两个主内容列/区域之间的间隙 |
+| `{spacing.gap-strand}` | 14–22px | 编号列表里 strand 行之间的间隙 |
+| `{spacing.gap-footer-col}` | 20–44px | 页脚带元数据条的列间隙 |
+| `{spacing.pagenum-bottom}` | 22–42px | 常驻页码的下内缩 |
+| `{spacing.pagenum-right}` | 24–48px | 常驻页码的右内缩 |
 
-### Persistent Chrome
-The **pagenum** is the only persistent on-canvas element. It appears at `bottom-right` of every slide in JetBrains Mono at 11–13px, color ink, opacity 0.75. A **nav-hint** (`← / → · space`) appears once, fixed to the bottom-left of the viewport in JetBrains Mono at 10–12px / opacity 0.4. The nav-hint is not part of the slide composition — it lives outside the `.stage`.
+### 常驻外壳
+**页码**是画布上唯一的常驻元素。它出现在每页 `bottom-right`，用 11–13px JetBrains Mono、墨色、不透明度 0.75。**nav-hint**（`← / → · space`）只出现一次，固定在视口左下角，10–12px JetBrains Mono / 不透明度 0.4。nav-hint 不属于幻灯片构图，它活在 `.stage` 之外。
 
-### Edge Discipline
-Every meaningful element respects a minimum 40px (mobile) to 76px (desktop) edge inset. The system's elegance depends on negative space at the edges — pushing content to the bleed (other than full-bleed panels, blooms, and tile blocks) breaks the catalogue feel.
+### 边缘纪律
+每个有意义的元素都遵守最低 40px（移动端）到 76px（桌面）的边内缩。系统的优雅依赖边缘的负空间；把内容推到出血边（满出血面板、光晕、拼块除外）会破掉图录感。
 
-### Atmospheric Layer
-Every slide may carry one or both atmospheric layers behind content:
-- A **sun-bloom** (`{components.sun-bloom}`) — a large soft radial gradient of solar yellow, sized 42-70% of viewport, placed off-center or behind a focal element.
-- An **ember-bloom** (`{components.ember-bloom}`) — a small warm peach radial gradient at 15-22% opacity, placed in a corner opposite the sun bloom.
+### 氛围层
+每页可在内容背后承载一层或两层氛围：
+- **sun-bloom**（`{components.sun-bloom}`）：一大团柔和的日照黄径向渐变，尺寸占视口 42-70%，偏心或压在焦点元素后方。
+- **ember-bloom**（`{components.ember-bloom}`）：一小团暖桃径向渐变，15-22% 不透明度，放在 sun-bloom 对角的角落。
 
-These layers are not optional decoration — they are the system's primary depth mechanism. A surface without a bloom reads as flat parchment.
+这些层不是可选装饰，而是系统主要的纵深机制。没有光晕的表面读起来是平羊皮纸。
 
-## Depth and Elevation
+## 纵深与层级
 
-### No Drop Shadows
-The system has **zero drop shadows**. No `box-shadow`, no `text-shadow`, no `filter: drop-shadow(...)`. Depth is delivered atmospherically.
+### 无投影
+系统**零投影**。没有 `box-shadow`，没有 `text-shadow`，没有 `filter: drop-shadow(...)`。纵深靠氛围传达。
 
-### Atmospheric Depth (Sun Bloom)
-The primary depth mechanism is the **sun-bloom** — a large soft radial gradient of solar yellow blooming from a point on the canvas. Bloom anatomy is a layered radial gradient with three or four color stops:
-- 0%: `{colors.sun}` at 70-95% opacity (the hot core)
-- ~30-40%: `{colors.sun}` at 40-65% opacity (the bloom)
-- ~55-65%: `{colors.haze}` at 18-22% opacity (the soft extension)
-- 80-90%: `{colors.paper}` at 0% (smooth fade into ground)
+### 氛围纵深（Sun Bloom）
+主要纵深机制是 **sun-bloom**：一大团柔和的日照黄径向渐变，从画布上某点绽开。光晕解剖是一组三到四个色标的层叠径向渐变：
+- 0%：`{colors.sun}` 70-95% 不透明度（热核）
+- 约 30-40%：`{colors.sun}` 40-65% 不透明度（光晕）
+- 约 55-65%：`{colors.haze}` 18-22% 不透明度（柔和外延）
+- 80-90%：`{colors.paper}` 0%（平滑融进底）
 
-Bloom size and position varies by surface need: cover surfaces use a centered or slightly-off-center bloom 42% × 38% of viewport; chapter surfaces use a corner-anchored 720px-radius bloom; closing surfaces use a bottom-anchored 55% × 50% bloom rising from below.
+光晕尺寸与位置随表面需要变化：封面用居中或略偏心的光晕，占视口 42% × 38%；章节页用锚在角落、720px 半径的光晕；收尾页用锚在底部、从下方升起的 55% × 50% 光晕。
 
-### Counter-Temperature Accent (Ember Bloom)
-An optional **ember-bloom** in a corner opposite the sun-bloom provides warm-cool color tension without raising the saturation of the canvas. Always at 15-22% opacity, always smaller than the sun-bloom, always subordinate.
+### 反向温度点缀（Ember Bloom）
+sun-bloom 对角可选一枚 **ember-bloom**，在不抬高画布饱和度的前提下制造冷暖张力。始终 15-22% 不透明度，始终小于 sun-bloom，始终从属。
 
-### Geometric Underprint (Block Tiles)
-On cover and colophon surfaces, an additional **block-tile** layer can appear behind content — translucent solar yellow rectangles placed on an 8-row × 4-column grid system at 40-70% opacity. This layer suggests a layered poster underprint without committing to a solid panel. The tiles are decorative geometry, not active content regions.
+### 几何底纹（Block Tiles）
+在封面与版权页表面，内容背后还可加一层 **block-tile**：半透明日照黄矩形，排在 8 行 × 4 列的网格上，40-70% 不透明度。这层暗示层叠的海报底印，不必落实成实色面板。拼块是装饰几何，不是活动内容区域。
 
-### Yellow Panel (Structural Color)
-For surfaces that need the strongest possible color statement, a **yellow-panel** flood (`{components.yellow-panel}`) covers a column, half, or third of the canvas in saturated `{colors.sun}`. This is the only "hard" color treatment in the system — when a panel is used, ink text sits on top at full opacity. Panels do not have borders or shadows; they meet the paper edge or another panel edge directly.
+### 黄色面板（结构色）
+需要最强色彩表态的表面，用 **yellow-panel** 满铺（`{components.yellow-panel}`）把画布的一列、一半或三分之一盖成饱和 `{colors.sun}`。这是系统唯一的"硬"色彩处理；用了面板，墨色文字就以全不透明度压在上头。面板没有边框也没有阴影，它们直接与纸边或另一块面板边相接。
 
-### Hairline Rules
-Internal structural depth is delivered by **1px solid ink hairline rules** separating header bands from content, ledger rows from each other, and footer columns from each other. Rules are never thicker than 1px. Between secondary list rows (e.g., strand separators), the rule drops to `rgba(27, 37, 102, 0.18-0.2)` — same color, lower opacity.
+### 细线
+内部结构纵深由 **1px 实线墨色细线**传达，分隔页眉带与内容、账目行彼此、页脚列彼此。细线绝不粗于 1px。次级列表行之间（例如 strand 分隔线），线降到 `rgba(27, 37, 102, 0.18-0.2)`：同色，低不透明度。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
-**Zero, on everything.** Every shape is a strict rectangle. The radial blooms are technically circles but they have no visible edge — they fade into paper.
+### 圆角
+**处处为零。** 每个形状都是严格的矩形。径向光晕技术上是圆，但没有可见边缘，会融进纸里。
 
-### Border Weights
-- **1px solid `{colors.ink}`** — the universal rule. Used for header-band underlines, ledger row separators, footer-column tops, and the bordered chart bar accent on the lit row.
-- **1px solid `rgba(27, 37, 102, 0.18-0.2)`** — soft variant of the same rule. Used for secondary row separators inside dense lists where full-weight ink would feel heavy.
+### 边框粗细
+- **1px 实线 `{colors.ink}`**：通用分隔线。用于页眉带下划线、账目行分隔、页脚列顶线、精选行上带描边的图表条强调。
+- **1px 实线 `rgba(27, 37, 102, 0.18-0.2)`**：同款线的柔和变体。用于密集列表内部的次级行分隔，全重墨色在那里会显重。
 
-The system has **no thicker borders**. There are no 2px, 3px, or 4px outlines anywhere. The visual structure depends on the lightness of the hairline.
+系统**没有更粗的边框**。哪里都没有 2px、3px、4px 轮廓。视觉结构靠细线的轻。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Sun-bloom** — Large soft radial gradient of solar yellow placed off-center or behind a focal element. The system's primary depth mechanism. Always one per surface, sometimes paired with a counter-bloom.
+**Sun-bloom**：一大团柔和的日照黄径向渐变，偏心或压在焦点元素后方。系统主要的纵深机制。每处表面始终一枚，有时配一枚反向光晕。
 
-**Ember-bloom** — Small warm peach radial gradient at 15-22% opacity, placed in a corner opposite the sun-bloom. Subordinate atmospheric balance.
+**Ember-bloom**：一小团暖桃径向渐变，15-22% 不透明度，放在 sun-bloom 对角。从属的氛围平衡。
 
-**Block-tile underprint** — Translucent solar yellow rectangles placed on an 8×4 grid system. Decorative geometry suggesting a layered poster, used on cover and colophon-type surfaces.
+**Block-tile 底纹**：半透明日照黄矩形，排在 8×4 网格系统里。暗示层叠海报的装饰几何，用于封面与版权页类表面。
 
-**Yellow panel** — A full-bleed column, half, or third of the canvas flooded with `{colors.sun}`. The system's strongest color statement. Carries ink text on top.
+**Yellow panel**：满出血的一列、一半或三分之一画布，铺满 `{colors.sun}`。系统最强的色彩表态。其上承载墨色文字。
 
-**Hairline rule** — 1px solid ink. Used for header-band underlines, ledger separators, footer column tops. The system's only border.
+**Hairline rule**：1px 实线墨色。用于页眉带下划线、账目分隔、页脚列顶线。系统唯一的边框。
 
-**Footer band** — A four-column metadata strip at the bottom of cover/colophon surfaces. Each cell has a `{components.hairline-rule}` top border, an Archivo micro-label, and a short body statement.
+**Footer band**：封面/版权页底部四列元数据条。每个单元格有一条 `{components.hairline-rule}` 顶线、一个 Archivo micro-label 和一句简短正文。
 
-**Strand row** — Numbered editorial list row with serif numeral cell + serif title + sans body, separated from the next row by a hairline-soft rule.
+**Strand row**：编号编辑式列表行，衬线数字单元格 + 衬线标题 + 无衬线正文，行与行之间用 hairline-soft 分隔。
 
-**Ledger row** — Four-column tabular calendar/itinerary row: mono date + serif title + sans venue + mono duration (right-aligned), separated by hairline-soft rules.
+**Ledger row**：四列表格化日历/行程行：等宽日期 + 衬线标题 + 无衬线地点 + 等宽时长（右对齐），用 hairline-soft 线分隔。
 
-**Vertical rail label** — Rotated Archivo uppercase text running up the left edge of a chapter-divider surface, with 0.32em tracking.
+**Vertical rail label**：竖排旋转的 Archivo 大写文字，沿章节分隔页左边缘上行，0.32em 字距。
 
-**Date rail** — Large serif date or date-range stacked at top-right of cover surfaces, often using an en-dash to indicate a span across years or months.
+**Date rail**：叠在封面表面右上、大号衬线的日期或日期区间，常用连接号表示跨年跨月的区间。
 
-**Jumbo numeral** — A single huge Instrument Serif numeral (220-720px) dominating a divider surface. Always serif, always at weight 400, always with tight line-height.
+**Jumbo numeral**：单个巨大的 Instrument Serif 数字（220-720px），主导分隔页。始终衬线，始终字重 400，始终紧行高。
 
-**Chart bar** — A solid ink rectangle whose width carries the data value. The featured/current bar swaps to yellow fill with a 1px ink stroke (`{components.bar-lit}`). Chart layouts use grid-row patterns: mono year label + bar + mono value, separated by gap.
+**Chart bar**：实色墨色矩形，宽度承载数据值。当前/精选条换成黄填充配 1px 墨描边（`{components.bar-lit}`）。图表布局用网格行模式：等宽年份标签 + 条 + 等宽数值，之间留 gap。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
+### 该做
 
-- Apply `{colors.paper}` as the universal background. Every surface starts on parchment.
-- Set every line of text in `{colors.ink}` — display, body, micro-label, mono, everything. The single text color is non-negotiable.
-- Use Instrument Serif at weight 400 with tight line-height (0.84-1.06) and negative letter-spacing (-0.018 to -0.04em) for every display moment. The serif's elegance lives in this configuration.
-- Add at least one `{components.sun-bloom}` to every surface. Atmospheric depth is the system's depth mechanism; a flat parchment surface reads as broken.
-- Pair a sun-bloom with an `{components.ember-bloom}` in the opposite corner when you want warm-cool tension without raising the overall saturation.
-- Use `{components.hairline-rule}` (1px solid ink) for every structural separator: header-band underline, ledger row, footer column, strand separator.
-- Set every uppercase label in Archivo weight 600 with 0.16-0.32em tracking. Without the wide tracking, labels read as code, not editorial.
-- Use `{components.yellow-panel}` (full-bleed sun column or panel) when a surface needs strongest color commitment — keep ink text on top at full opacity.
-- Place the persistent `{components.pagenum}` (JetBrains Mono, 75% opacity ink) at bottom-right of every surface.
-- Reserve JetBrains Mono exclusively for numerical and metadata callouts: dates, ledger figures, chart values, page numbers, nav-hint. Never use mono for display or body.
+- 用 `{colors.paper}` 作通用背景。每处表面都从羊皮纸起。
+- 每一行文字都用 `{colors.ink}`：展示、正文、micro-label、等宽，全部如此。单一文字色不可商量。
+- 每个展示瞬间都用 Instrument Serif 字重 400、紧行高（0.84-1.06）与负字距（-0.018 到 -0.04em）。衬线的优雅活在这套配置里。
+- 每处表面至少加一枚 `{components.sun-bloom}`。氛围纵深就是系统的纵深机制，平的羊皮纸表面读起来像坏了。
+- 想要冷暖张力又不想抬高整体饱和度时，给 sun-bloom 在对角配一枚 `{components.ember-bloom}`。
+- 每处结构分隔都用 `{components.hairline-rule}`（1px 实线墨色）：页眉带下划线、账目行、页脚列、strand 分隔。
+- 每个大写标签都用 Archivo 字重 600、0.16-0.32em 字距。没有宽字距，标签读成代码，不像编辑。
+- 表面需要最强色彩投入时用 `{components.yellow-panel}`（满出血的 sun 列或面板），墨色文字以全不透明度压在上头。
+- 每处表面右下角放常驻 `{components.pagenum}`（JetBrains Mono、75% 不透明度墨色）。
+- JetBrains Mono 只留给数字与元数据标注：日期、账目数字、图表数值、页码、导航提示。绝不用于展示或正文。
 
-### Don't
+### 不该做
 
-- Don't add drop shadows. The system has zero box-shadows and zero text-shadows. Adding any blurred or offset shadow breaks the printed-paper feel immediately.
-- Don't round any corner. Every shape is strict rectangle. Border-radius is forbidden.
-- Don't use borders thicker than 1px. The hairline rule is the only border vocabulary; 2px, 3px, or 4px outlines do not exist.
-- Don't set Instrument Serif at weight 700 or any bold weight. The serif's character lives at weight 400; bold serif display flattens the system.
-- Don't introduce a second text color. Yellow text on paper, ember text anywhere, or muted-ink secondary text — none exist. Text is always full-opacity ink.
-- Don't crowd the canvas with cards or panels. The system reads as elegant when sparse. Bordered cards, button stacks, or multi-region grids of containers break the editorial restraint.
-- Don't invert: ink panels with yellow or paper text are not part of the system. Ink ground is reserved for chart bars and small rule elements only.
-- Don't substitute Inter, Helvetica, or system-ui for Archivo, or Times for Instrument Serif. The font selection is the visual identity; substitution collapses the aesthetic.
-- Don't use mono for body or headlines. JetBrains Mono is exclusively for numerical/metadata chrome.
-- Don't omit the bloom layer on a surface. A flat parchment slide reads as a CMS template; the bloom is the atmosphere that signals "biennale".
+- 不要加投影。系统零 box-shadow、零 text-shadow。任何模糊或偏移阴影都会立刻破掉印纸感。
+- 不要给任何角加圆角。每个形状都是严格矩形。border-radius 禁用。
+- 不要用粗于 1px 的边框。细线是唯一的边框语汇，2px、3px、4px 轮廓不存在。
+- 不要把 Instrument Serif 设成字重 700 或任何粗字重。衬线的性格在字重 400；粗衬线展示会把系统压平。
+- 不要引入第二种文字色。纸上的黄字、任何地方的灰桃字、柔化墨色的次级文字，都不存在。文字永远是全不透明度墨色。
+- 不要用卡片或面板塞满画布。系统稀疏时优雅。带框卡片、成堆按钮、多区域容器网格会破掉编辑式克制。
+- 不要反色：墨底配黄字或纸色字不属于系统。墨底只留给图表条和细小的分隔线元素。
+- 不要用 Inter、Helvetica、system-ui 顶替 Archivo，也不要用 Times 顶替 Instrument Serif。字体选择就是视觉身份，替换会让美学崩塌。
+- 不要把等宽用于正文或标题。JetBrains Mono 只给数字/元数据外壳。
+- 不要省掉表面的光晕层。平的羊皮纸页读起来像 CMS 模板，光晕才是传递"双年展"气质的氛围。
 
-## Responsive Behavior
+## 响应式行为
 
-This system is built as a **viewport-fluid 100vw × 100vh deck** with no responsive breakpoints. Every font size, padding value, and gap uses CSS `clamp()` with both vw and vh terms — `clamp(40px, min(4.4vw, 7vh), 88px)` is a typical pattern. Display type scales by whichever viewport axis is shorter, so portrait orientations don't blow out the headlines.
+本系统构建为**视口流式 100vw × 100vh 演示文稿**，没有响应式断点。每个字号、内边距、间隙都用同时带 vw 与 vh 项的 CSS `clamp()`，`clamp(40px, min(4.4vw, 7vh), 88px)` 是典型模式。展示文字按两条视口轴里较短的一条缩放，纵向摆放不会把标题撑爆。
 
-### Scaling Behavior
-- Cover-scale display scales 120px → 240px.
-- Chapter-divider jumbo numeral scales 220px → 720px.
-- Headline scales 40px → 88px.
-- Body scales 14px → 16px.
-- Edge padding scales 40px → 76px.
-- Hairline rule (1px) and pagenum sizing (11-13px) are essentially fixed.
+### 缩放行为
+- 封面级展示从 120px 缩放到 240px。
+- 章节分隔巨型数字从 220px 缩放到 720px。
+- 标题从 40px 缩放到 88px。
+- 正文从 14px 缩放到 16px。
+- 边内边距从 40px 缩放到 76px。
+- 细线（1px）与页码尺寸（11-13px）基本固定。
 
-### Presenter Behavior
-- Slides advance via `ArrowRight`, `PageDown`, or `Space`.
-- Slides reverse via `ArrowLeft` or `PageUp`.
-- `Home` jumps to first slide, `End` to last.
-- Horizontal touch swipe with a 40px threshold advances/reverses.
-- Slide crossfades at 280ms ease via `opacity` toggle on the `.active` class. Only the active slide is `pointer-events: auto`.
+### 放映行为
+- 用 `ArrowRight`、`PageDown` 或 `Space` 前进。
+- 用 `ArrowLeft` 或 `PageUp` 后退。
+- `Home` 跳首页，`End` 跳末页。
+- 横向触摸滑动，40px 阈值前进/后退。
+- 幻灯片在 `.active` 类上以 280ms ease 的 `opacity` 切换交叉淡入。只有激活页是 `pointer-events: auto`。
 
-### Print Behavior
-The system has no `@media print` rule. The crossfade transition is screen-only. For static export, capturing each slide individually via screenshot preserves all atmospheric layers (the radial blooms are pure CSS gradients, not assets).
+### 打印行为
+系统没有 `@media print` 规则。交叉淡入过渡只用于屏幕。静态导出时逐页截图能保留所有氛围层（径向光晕是纯 CSS 渐变，不是图片资源）。
 
-### Mobile Behavior
-The `min(vw, vh)` pattern in display clamps means narrow portrait viewports automatically shrink display type to fit. The strand and ledger rows use fixed-px first columns (56px, 92px) that may feel tight on narrow widths — the system is designed for landscape presentation contexts and is functional but not optimized for sub-768px portrait usage.
+### 移动端行为
+展示 clamp 里的 `min(vw, vh)` 模式让窄的纵向视口自动缩小展示文字以适配。strand 与 ledger 行用固定 px 的首列（56px、92px），窄宽度下可能偏紧；系统为横向演示语境设计，在 768px 以下的纵向用法里能用，但没做优化。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-When using this template for Chinese (or other CJK) content, swap the Latin typeface stack for an equivalent Chinese pairing and apply universal CJK adjustments. All recommended Chinese fonts load via CDN — no install required.
+用本模板承载中文（或其他 CJK）内容时，把拉丁字体栈换成对等的中文搭配，并套用通用 CJK 调整。所有推荐中文字体均通过 CDN 加载，无需安装。
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin (default) | Chinese counterpart |
+| 角色 | 拉丁（默认） | 中文对应 |
 |---|---|---|
-| Display / numerals / headlines / date rail | Instrument Serif 400 | 得意黑 Smiley Sans (oblique) — display moments; 思源宋体 Noto Serif SC 400 as fallback for long-form serif headlines |
-| Body / lede / micro-label | Archivo 400–600 | 思源宋体 Noto Serif SC 400 for body; 思源黑体 Noto Sans SC 600 for micro-labels |
-| Mono data / dates / page numbers | JetBrains Mono 400 | 思源黑体 Noto Sans SC 500 with tabular-feeling alignment — see Known CJK Gap below |
+| 展示 / 数字 / 标题 / 日期栏 | Instrument Serif 400 | 得意黑 Smiley Sans (oblique) 用于展示瞬间；长篇衬线标题回退到思源宋体 Noto Serif SC 400 |
+| 正文 / 导语 / micro-label | Archivo 400–600 | 正文用思源宋体 Noto Serif SC 400；micro-label 用思源黑体 Noto Sans SC 600 |
+| 等宽数据 / 日期 / 页码 | JetBrains Mono 400 | 思源黑体 Noto Sans SC 500 配表格感对齐，见下方已知 CJK 缺口 |
 
-### Mixed-Content Strategy
+### 混排策略
 
-**Strategy A** — single CJK family per role, with Latin glyphs handled by the same CJK family. Both 思源宋体 and 思源黑体 ship Latin glyphs that read cleanly alongside Chinese characters, so a mixed sentence renders in a consistent face. 得意黑 is used surgically — only on the biggest display moments where its slight oblique slant matches the Italian-poster register Instrument Serif provides in the Latin original. For everything else (body, micro-label, mono), Noto Serif SC / Noto Sans SC carries both scripts.
+**策略 A**：每个角色一款自带拉丁字形覆盖的 CJK 字族。思源宋体与思源黑体都自带拉丁字形，与汉字并排也干净，混排句子会用一致字面渲染。得意黑要克制地用，只用在最大的展示瞬间，它略斜的倾斜正好呼应拉丁原版里 Instrument Serif 所提供的意大利海报气质。其余一切（正文、micro-label、等宽）交给 Noto Serif SC / Noto Sans SC 同时覆盖两套文字。
 
-### Loading
+### 加载
 
-Add to the template's `<head>`:
+在模板 `<head>` 中加入：
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -529,51 +533,51 @@ Add to the template's `<head>`:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-smiley-sans-oblique/font.min.css">
 ```
 
-After loading, reference 得意黑 as `font-family: 'Smiley Sans Oblique', 'Noto Serif SC', serif` on the display tokens that should carry the strongest poster register.
+加载后，在需要最强海报气质的展示 token 上把得意黑写作 `font-family: 'Smiley Sans Oblique', 'Noto Serif SC', serif`。
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- **Line-height**: increase by ~15–25% from the Latin spec. Body 1.75–1.85 (up from 1.5–1.55), display 1.05–1.15 (up from the very tight 0.84–0.96 used on Instrument Serif). The Latin display tokens here use line-height as low as 0.84 — at that compression, CJK characters collide vertically. Open display to a minimum of 1.0 for Chinese, and 1.15+ on multi-line headlines.
-- **Letter-spacing**: set to 0 on every CJK run. The Latin display tokens use negative tracking from −0.005em down to −0.04em; on square CJK glyphs this overlaps strokes and reads as broken. Micro-labels at 0.16–0.32em wide tracking also drop to 0.
-- **Text transform**: don't apply `uppercase` to Chinese text — CJK has no case. Every micro-label and rail-label in this system uses `text-transform: uppercase`; remove it for CJK runs.
-- **Punctuation**: use full-width Chinese punctuation （，。：；！？「」（））. Replace the en-dash separator in date ranges with a Chinese 至 or full-width 「—」 hyphen.
-- **No period on display headlines**: Chinese typography convention omits trailing 。 on display-scale headlines.
-- **Space between CJK and Latin (盘古之白)**: insert an ASCII space between every Chinese character and adjacent Latin character or digit. Write `2024 春季双年展` not `2024春季双年展`.
-- **One font per sentence**: 思源宋体 covers both CJK and Latin glyphs in a unified serif style — let it handle mixed editorial sentences. Don't let the browser font-switch to Archivo mid-paragraph.
+- **行高**：在拉丁规格上提高约 15–25%。正文 1.75–1.85（从 1.5–1.55 上调），展示 1.05–1.15（从 Instrument Serif 极紧的 0.84–0.96 上调）。这里的拉丁展示 token 行高低到 0.84，压到这个程度 CJK 字符会纵向相撞。中文展示至少放到 1.0，多行标题放到 1.15 以上。
+- **字距**：每段 CJK 文本设为 0。拉丁展示 token 用 −0.005em 到 −0.04em 的负字距，套在方正 CJK 字形上会笔画重叠、读着像坏了。micro-label 的 0.16–0.32em 宽字距也降到 0。
+- **文字变换**：不要对中文套 `uppercase`，CJK 没有大小写。系统里每个 micro-label 与 rail-label 都用 `text-transform: uppercase`，CJK 文本要去掉。
+- **标点**：用全角中文标点（，。：；！？「」（））。把日期区间里的连接号分隔符换成中文"至"或全角「—」。
+- **展示标题不加句号**：中文排印惯例，展示级标题末尾不写 。
+- **中西文之间加空格（盘古之白）**：每个汉字与相邻的拉丁字符或数字之间插入一个 ASCII 空格。写 `2024 春季双年展`，不要写 `2024春季双年展`。
+- **一句一款字体**：思源宋体以统一衬线风格覆盖 CJK 与拉丁字形，混排的编辑句子交给它处理。不要让浏览器在段落中途切回 Archivo。
 
-### Aesthetic Notes for This System
+### 本系统的美学提示
 
-The system's editorial identity rests on Instrument Serif's high-contrast, tall-ascender personality — a face that signals "art biennale catalogue" and "slow literary quarterly". The closest Chinese equivalent for register is **思源宋体 Noto Serif SC** for body and editorial display, with **得意黑 Smiley Sans Oblique** reserved for the poster-scale display moments where Instrument Serif at 120–240px does the heaviest identity work in the Latin original. 得意黑's slight italic tilt and slab character matches the Italian-exhibition-poster register; pure Noto Serif SC at jumbo numerals reads as restrained academic Chinese rather than biennale-loud.
+系统的编辑身份建立在 Instrument Serif 高对比、升部高的性格上，这款字面传递"艺术双年展图录"和"慢读文学季刊"。语域上最接近的中文对应是：正文与编辑式展示用**思源宋体 Noto Serif SC**，海报级展示瞬间留给**得意黑 Smiley Sans Oblique**——拉丁原版里正是 Instrument Serif 在 120–240px 承担最重的身份工作。得意黑略带斜意的板状特征正好匹配意大利展览海报的气质；纯 Noto Serif SC 放在巨型数字上读起来是克制的学院中文，而不是双年展式的张扬。
 
-The "single text color, single accent" discipline of this system transfers cleanly to CJK — ink-on-paper, sun-bloom atmosphere, hairline rules, no shadows. The micro-label treatment (Archivo weight 600, uppercase, 0.16–0.32em tracking) is the system's most fragile element when translated: CJK micro-labels lose both the uppercase signal and the wide tracking. Compensate by setting Chinese micro-labels in 思源黑体 weight 600 at 0 tracking with the **slightly heavier weight contrast** (drop body to weight 400 of 思源宋体, keep labels at 600 of 思源黑体) and by **always pairing the label with a hairline-soft rule beneath** — the rule does the chrome-recognition work the wide-tracked uppercase did in Latin.
+系统"单一文字色、单一强调"的纪律能干净地迁移到 CJK：纸上的墨、sun-bloom 氛围、细线、无阴影，都不变。micro-label 处理（Archivo 字重 600、大写、0.16–0.32em 字距）是汉化时最脆的一环：CJK micro-label 会同时丢掉大写信号和宽字距。补偿办法是把中文 micro-label 设成思源黑体字重 600、0 字距，并用**略重的字重反差**（正文降到思源宋体 400，标签保持思源黑体 600），并且**始终在标签下方配一条 hairline-soft 线**：由这条线承担拉丁里宽字距大写所做的外壳识别工作。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-- **No CDN-loadable Chinese monospace face for tabular data.** JetBrains Mono's role here (calendar ledger dates, chart year/value labels, page numbers) depends on monospaced figure rhythm that CJK doesn't provide. 思源黑体 at weight 500 with `font-feature-settings: "tnum"` gives tabular Latin digits but Chinese characters remain proportional. For ledger rows where alignment is structural, keep the date and value columns in Latin digits (Arabic numerals + Latin date abbreviations) and use 思源黑体 only for the title/venue cells.
-- **Instrument Serif italic has no direct Chinese counterpart.** The italic display token (manifesto-scale quote body) loses its slow-reading personality entirely in CJK. Use 思源宋体 400 with looser line-height (1.4) and slightly larger size to compensate; consider 「」 quotation framing to signal "this is a quoted passage".
-- **得意黑 may not load on restricted networks.** The cn-fontsource CDN is reliable in mainland China but less proven internationally. Always include `'Noto Serif SC', serif` in the stack as fallback so display headlines remain editorial even when 得意黑 fails.
+- **没有可 CDN 加载的中文等宽字面给表格数据。** JetBrains Mono 在这里的角色（日历账目日期、图表年份/数值标签、页码）依赖等宽数字节奏，而 CJK 不提供。思源黑体字重 500 配 `font-feature-settings: "tnum"` 能给出表格化的拉丁数字，但汉字仍是比例宽度。对于以对齐为结构前提的账目行，把日期列与数值列保留为拉丁数字（阿拉伯数字 + 拉丁日期缩写），思源黑体只用于标题/地点单元格。
+- **Instrument Serif 斜体没有直接的中文对应。** 斜体展示 token（宣言级引文正文）到了 CJK 会彻底失去慢读性格。改用思源宋体 400，行高放宽到 1.4，字号略大作为补偿；可考虑用「」引号框住来提示"这是引文段落"。
+- **得意黑在受限网络上可能加载不到。** cn-fontsource CDN 在中国大陆可靠，国际上的表现尚未充分验证。字体栈里始终带上 `'Noto Serif SC', serif` 作回退，这样即便得意黑失败，展示标题仍保持编辑感。
 
-## Iteration Guide
+## 迭代指南
 
-1. Any new surface starts on `{colors.paper}`, places at least one `{components.sun-bloom}` for atmosphere, and pins the persistent `{components.pagenum}` to bottom-right.
-2. Any new headline uses Instrument Serif weight 400 with tight line-height and negative tracking. Reach for `{typography.headline}` for primary moments and `{typography.display}` only for cover-scale.
-3. Any new body paragraph uses Archivo weight 400 with line-height 1.5. Lede paragraphs following a headline use the slightly larger `{typography.body-lede}` for breathing room.
-4. Any new eyebrow or section tag uses the micro-label treatment: Archivo weight 600, uppercase, 0.16-0.32em tracking, ink color, no fill. Don't substitute a pill or chip.
-5. Any new structural separator is a 1px `{components.hairline-rule}` in ink, or its soft variant for secondary list rows. Never reach for a thicker border.
-6. Any new numerical or metadata content (date, page number, chart value, ledger figure) uses JetBrains Mono. Serif numerals are reserved for display moments only.
-7. Any new "poster-scale" color statement uses `{components.yellow-panel}` — a flooded column or fraction of the canvas in `{colors.sun}` with ink text on top.
-8. Any new ordered list of program items uses the `{components.strand-row}` pattern: serif numeral cell + serif title + sans body, separated by hairline-soft rule.
-9. Any new tabular itinerary uses the `{components.ledger-row}` pattern: mono date + serif title + sans venue + mono duration right-aligned, separated by hairline-soft rule.
-10. If a surface feels flat, add an `{components.ember-bloom}` in the opposite corner from the sun-bloom — never add a card border or shadow.
+1. 任何新表面都从 `{colors.paper}` 起，至少放一枚 `{components.sun-bloom}` 作氛围，并把常驻 `{components.pagenum}` 钉在右下角。
+2. 任何新标题都用 Instrument Serif 字重 400、紧行高、负字距。主瞬间取 `{typography.headline}`，封面级才用 `{typography.display}`。
+3. 任何新正文段落都用 Archivo 字重 400、行高 1.5。标题后的导语用略大的 `{typography.body-lede}` 留出呼吸。
+4. 任何新眉题或分节标签都用 micro-label 处理：Archivo 字重 600、大写、0.16-0.32em 字距、墨色、无填充。不要拿胶囊或小片顶替。
+5. 任何新结构分隔都是 1px 的 `{components.hairline-rule}` 墨色，次级列表行用它的柔和变体。绝不取更粗的边框。
+6. 任何新数字或元数据内容（日期、页码、图表数值、账目数字）都用 JetBrains Mono。衬线数字只留给展示瞬间。
+7. 任何新"海报级"色彩表态都用 `{components.yellow-panel}`：画布的一列或一部分满铺 `{colors.sun}`，其上压墨色文字。
+8. 任何新的有序节目列表都用 `{components.strand-row}` 模式：衬线数字单元格 + 衬线标题 + 无衬线正文，用 hairline-soft 线分隔。
+9. 任何新表格化行程都用 `{components.ledger-row}` 模式：等宽日期 + 衬线标题 + 无衬线地点 + 等宽时长右对齐，用 hairline-soft 线分隔。
+10. 表面若显得平，在 sun-bloom 对角加一枚 `{components.ember-bloom}`——绝不要加卡片边框或阴影。
 
-## Known Gaps
+## 已知缺口
 
-- **Instrument Serif, Archivo, and JetBrains Mono are loaded from Google Fonts** via a preconnect + `<link>`. Fallbacks (`Georgia`, `Helvetica Neue`, `ui-monospace`) are defined but render very differently — in environments where Google Fonts fail, the system collapses to generic editorial defaults and loses its identity.
-- **The Instrument Serif italic axis is loaded** but used only for the manifesto-scale quote treatment. Other italic moments (an `<em>` inside a body paragraph, for instance) will not stylistically signal the same as the dedicated italic display.
-- **The system has no chart engine** — the data slide uses inline `style="width: XX%"` on bar divs. Building dynamic charts requires computing widths in JS or templating the markup server-side.
-- **The block-tile underprint uses hardcoded grid positions** (`grid-column: 1 / 3; grid-row: 6 / 9;`) per tile. Tiles are decorative and the placements are tuned per surface; there is no parametric tile placement system.
-- **The vertical rail-label uses a rotated transform** that can produce subtle subpixel rendering artifacts on some browsers. The label is decorative; if rendering looks off, it can safely be dropped.
-- **The slide navigation has no slide indicator beyond the pagenum.** There are no dot-rails, no progress bar, no thumbnail bar. The pagenum text is the only positional cue.
-- **The crossfade transition is screen-only** and doesn't degrade to a sensible print/static state. Capturing slides for PDF export requires manual screenshot per surface.
-- **The cover and colophon footer-band columns use fractional widths** (`1.1fr 1fr 1.4fr 2fr` and `1.2fr 1.1fr 1fr 1.4fr`). These ratios are tuned to the demo content and may need adjusting if footer cells carry significantly different text length.
-- **The system loads Google Fonts with `ital` axis for Instrument Serif** but only `wght` axes for Archivo and JetBrains Mono. Adding italic body or italic mono moments requires updating the font-loading request.
+- **Instrument Serif、Archivo 与 JetBrains Mono 都通过 preconnect + `<link>` 从 Google Fonts 加载**。虽然定义了回退（`Georgia`、`Helvetica Neue`、`ui-monospace`），但渲染差别很大；在 Google Fonts 失效的环境里，系统会塌成通用编辑默认值，失去身份。
+- **Instrument Serif 斜体轴已加载**，却只用于宣言级引文处理。其他斜体时刻（例如正文段落里的 `<em>`）在风格上不会与专用斜体展示传递同样的信号。
+- **系统没有图表引擎**：数据页在条 div 上用内联 `style="width: XX%"`。做动态图表需要在 JS 里算宽度或在服务端模板化标记。
+- **block-tile 底纹用硬编码的网格位置**（每块 `grid-column: 1 / 3; grid-row: 6 / 9;`）。拼块是装饰，位置按表面逐处调过，没有参数化的拼块排布系统。
+- **竖排 rail-label 用旋转 transform**，某些浏览器上可能产生细微的亚像素渲染瑕疵。标签是装饰性的，渲染看着不对可以安全去掉。
+- **幻灯片导航除页码外没有任何页指示器**。没有点轨、没有进度条、没有缩略图条。页码文字是唯一的位置提示。
+- **交叉淡入过渡只用于屏幕**，不会退化成合理的打印/静态状态。导出 PDF 需要逐表面手动截图。
+- **封面与版权页的 footer-band 列用分数宽度**（`1.1fr 1fr 1.4fr 2fr` 与 `1.2fr 1.1fr 1fr 1.4fr`）。这些比例按演示内容调过，若页脚单元格文字长度差异很大，可能需要重调。
+- **系统为 Instrument Serif 加载了 Google Fonts 的 `ital` 轴**，但 Archivo 与 JetBrains Mono 只加载了 `wght` 轴。要加斜体正文或斜体等宽时刻，得改字体加载请求。

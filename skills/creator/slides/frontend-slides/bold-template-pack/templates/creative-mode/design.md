@@ -307,108 +307,110 @@ components:
     color: "{colors.cream}"
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/creative-mode/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
 
-
-## Overview
-
-Creative Mode is a **neo-brutalist editorial slide system** for 1920x1080 presentations. The foundational aesthetic choice is restraint of technique paired with aggression of expression: no rounded cards, no gradients, no shadows that suggest light sources — only flat color-blocking and hard offset drop-shadows (the "Risograph" or "screen-print" kind where the shadow is a sold same-color offset).
-
-The canvas is warm cream (`{colors.cream}` — #EFE9D9) with near-black ink (`{colors.ink}` — #0F0F0F) for borders, text, and rules. Four accent colors fire at full saturation: forest green, hot pink, burnt orange, and sunshine yellow. These never blend — they collide on the slide and the collision is the design.
-
-Headlines run **Archivo Black** (weight 400 due to the display face being intrinsically heavy) in strict uppercase with tight line-height (0.92). Font sizes are extreme: 220px for closing slides, 160px for titles. **JetBrains Mono** carries all metadata, labels, topbar text, and axis labels — reinforcing a "designed artifact" or "technical manual" register. **Space Grotesk** handles all body paragraphs.
-
-Every slide follows an identical chrome frame: a JetBrains Mono topbar at 48px from top (left text + right pill), and a JetBrains Mono meta footer at 40px from bottom (label left, slide number right with ink dot divider). Content lives inside this frame with 96px side gutters.
-
-**Key Characteristics:**
-- Cream canvas (`{colors.cream}` — #EFE9D9) as the universal background; green (`{colors.green}` — #1F8A4C) used for the closing slide only.
-- 4px solid ink borders on every structural element — cards, panels, table cells, chart axes.
-- Hard offset box-shadows in place of blurred drops: `24px 24px 0 color, 24px 24px 0 4px ink` on featured blocks.
-- Archivo Black display type in uppercase with 0.92 line-height for extreme tightness.
-- Four accent colors used as flat fills; each slide uses two or three of the four, never all simultaneously.
-- Topbar pill badge (JetBrains Mono, 2px ink border, 999px radius) as the only rounded element per slide.
-
-## Colors
-
-### Canvas and Ink
-- **Cream** (`{colors.cream}` — #EFE9D9): The universal slide background. Warm, not white. Distinguishes the deck from sterile white-background slides.
-- **Cream 2** (`{colors.cream-2}` — #E4DCC4): One step darker cream. Used exclusively as the comparison table's background fill, creating a subtle recessed surface inside the ink border.
-- **Ink** (`{colors.ink}` — #0F0F0F): Near-black used for all borders, body text, rules, topbar chrome, and the closing stamp border. Not pure #000000 — slightly softened.
-- **Ink 2** (`{colors.ink-2}` — #2A2A2A): Softer near-black for secondary body text, descriptions inside stat cells, chart footnotes.
-
-### Accent Colors
-- **Green** (`{colors.green}` — #1F8A4C): Forest green. The dominant accent. Works on stat cells, diagram panels, process steps, and as a full-slide background for maximum visual impact.
-- **Green Dark** (`{colors.green-dark}` — #136636): Darker green variant — available for lever/depth decorative effects. Not used as a primary surface fill.
-- **Pink** (`{colors.pink}` — #F06CA8): Hot pink. High energy. Works on toggle switch illustrations, section markers, stat cells, process steps, and stamp elements.
-- **Pink Dark** (`{colors.pink-dark}` — #D14E8B): Darker pink for depth on decorative lever elements. Available for shadow-side accents.
-- **Orange** (`{colors.orange}` — #E85A1F): Burnt orange. The hard drop-shadow color on featured blocks; also works as a stat cell fill, bar chart color, and table column background.
-- **Yellow** (`{colors.yellow}` — #F5C518): Sunshine yellow. Works on decorative circles, process steps, rotated badges, and bar chart bars. A warm punctuation color.
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Typography
+## 概述
 
-### Font Families
-The system uses three typefaces, each in a strict register:
-- **Archivo Black** — display headlines, step numbers, stat numbers, table labels, all uppercase presentation text. Intrinsically heavy, no additional font-weight needed.
-- **JetBrains Mono** — all metadata: topbar labels, meta footer, kicker labels, chart axes, legend rows, layer tags, figure notes. Carries the "technical spec" voice.
-- **Space Grotesk** — body copy only: body column text (slide 2), stat cell descriptors, diagram subtext, step descriptions, closing strap.
+Creative Mode 是一套**新粗野主义编辑式幻灯片系统**，面向 1920x1080 演示。底层美学选择是手法克制、表达张扬：没有圆角卡片、没有渐变、没有暗示光源的阴影，只有平色块与硬边偏移投影（"Risograph" 或"丝网印"那种同色实色偏移的阴影）。
 
-### Display Scale
-The slide canvas is 1920x1080px, so font sizes are far larger than web norms.
+画布是暖奶油（`{colors.cream}` — #EFE9D9），近黑墨（`{colors.ink}` — #0F0F0F）用于边框、文字、分隔线。四种强调色以全饱和开火：森林绿、亮粉、焦橙、阳光黄。它们从不交融，在页上彼此碰撞，碰撞就是设计。
 
-| Token | Size | Use |
+标题跑 **Archivo Black**（因展示字面天生厚重，用字重 400），严格大写、紧行高（0.92）。字号极端：收尾页 220px，标题 160px。**JetBrains Mono** 承载所有元数据、标签、顶栏文字、轴标签，强化"设计成品"或"技术手册"语域。**Space Grotesk** 处理所有正文段落。
+
+每页遵循同一套外壳画框：顶部 48px 处一条 JetBrains Mono 顶栏（左文字 + 右胶囊），底部 40px 处一条 JetBrains Mono 元信息页脚（左标签，右页码，中间墨点分隔）。内容住在这个画框里，左右各留 96px 栏距。
+
+**关键特征：**
+- 奶油画布（`{colors.cream}` — #EFE9D9）作通用背景，绿（`{colors.green}` — #1F8A4C）只给收尾页用。
+- 每个结构元素（卡片、面板、表格单元格、图表轴）都有 4px 实线墨边。
+- 硬边偏移盒阴影取代模糊投影：精选块上 `24px 24px 0 color, 24px 24px 0 4px ink`。
+- Archivo Black 展示字大写成 0.92 行高，紧到极致。
+- 四种强调色作平填充，每页用其中两到三种，绝不同时用全四种。
+- 顶栏胶囊徽章（JetBrains Mono、2px 墨边、999px 半径）是每页唯一的圆角元素。
+
+## 颜色
+
+### 画布与墨
+- **Cream**（`{colors.cream}` — #EFE9D9）：通用幻灯片背景。暖，不是白。把整套文稿与冷冰冰的白底幻灯片区分开。
+- **Cream 2**（`{colors.cream-2}` — #E4DCC4）：深一档的奶油。只用作比较表格的背景填充，在墨边内部造出微微下陷的表面。
+- **Ink**（`{colors.ink}` — #0F0F0F）：近黑，用于所有边框、正文文字、分隔线、顶栏外壳、收尾印章边。不是纯 #000000，略柔化。
+- **Ink 2**（`{colors.ink-2}` — #2A2A2A）：更柔的近黑，用于次级正文文字、统计单元格内的说明、图表脚注。
+
+### 强调色
+- **Green**（`{colors.green}` — #1F8A4C）：森林绿。主导强调色。适用于统计单元格、图示面板、流程步骤，以及作整页背景取得最大视觉冲击。
+- **Green Dark**（`{colors.green-dark}` — #136636）：更深的绿变体，可供操纵杆/纵深装饰效果使用。不作主表面填充。
+- **Pink**（`{colors.pink}` — #F06CA8）：亮粉。高能量。适用于开关拨钮插图、分节标记、统计单元格、流程步骤、印章元素。
+- **Pink Dark**（`{colors.pink-dark}` — #D14E8B）：更深的粉，用于装饰操纵杆的纵深，可供阴影侧强调使用。
+- **Orange**（`{colors.orange}` — #E85A1F）：焦橙。精选块上的硬边投影色，也作统计单元格填充、条形图色、表格列背景。
+- **Yellow**（`{colors.yellow}` — #F5C518）：阳光黄。适用于装饰圆、流程步骤、旋转徽章、条形图条。暖标点色。
+
+## 排印
+
+### 字族
+系统用三款字面，各守严格语域：
+- **Archivo Black**：展示标题、步骤数字、统计数字、表格标签、所有大写呈现文字。天生厚重，无需额外 font-weight。
+- **JetBrains Mono**：所有元数据，顶栏标签、元信息页脚、眉题标签、图表轴、图例行、层小片、图注。承载"技术规格"声部。
+- **Space Grotesk**：仅正文，正文栏文字（slide 2）、统计单元格描述、图示副文、步骤说明、收尾标语。
+
+### 展示比例
+幻灯片画布是 1920x1080px，所以字号远大于网页常规。
+
+| Token | 尺寸 | 用途 |
 |---|---|---|
-| `{typography.display-jumbo}` | 220px | Jumbo title or closing headline |
-| `{typography.display-hero}` | 160px | Primary deck title or hero name |
-| `{typography.display-xl}` | 140px | Section-opening display headline |
-| `{typography.display-lg}` | 100px | Section headline alongside a panel |
-| `{typography.display-md}` | 96px | Mid-weight section headline |
-| `{typography.display-sm}` | 84px | Section headline for data-heavy layouts |
-| `{typography.display-xs}` | 72px | Section headline for grid layouts |
-| `{typography.step-num}` | 140px | Large ordinal numerals in stepped layouts |
-| `{typography.stat-num}` | 96px | Large numerals in stat or data cells |
-| `{typography.stamp-num}` | 64px | Stamp or seal numeral |
-| `{typography.marker-label}` | 46px | Featured marker or callout block label |
-| `{typography.step-title}` | 34px | Card or step title |
-| `{typography.table-head}` | 28px | Table header or label row text |
-| `{typography.badge-label}` | 28px | Rotated badge or annotation label |
+| `{typography.display-jumbo}` | 220px | 巨型标题或收尾标题 |
+| `{typography.display-hero}` | 160px | 主文稿标题或英雄名 |
+| `{typography.display-xl}` | 140px | 分节开场展示标题 |
+| `{typography.display-lg}` | 100px | 配面板的分节标题 |
+| `{typography.display-md}` | 96px | 中等分量分节标题 |
+| `{typography.display-sm}` | 84px | 数据密集布局的分节标题 |
+| `{typography.display-xs}` | 72px | 网格布局的分节标题 |
+| `{typography.step-num}` | 140px | 阶梯布局里的大序数数字 |
+| `{typography.stat-num}` | 96px | 统计或数据单元格里的大数字 |
+| `{typography.stamp-num}` | 64px | 印章或封印数字 |
+| `{typography.marker-label}` | 46px | 精选标记或标注块标签 |
+| `{typography.step-title}` | 34px | 卡片或步骤标题 |
+| `{typography.table-head}` | 28px | 表头或标签行文字 |
+| `{typography.badge-label}` | 28px | 旋转徽章或注释标签 |
 
-### Monospace Scale
-All JetBrains Mono text sits at 24px. Letter-spacing varies by use:
-- Topbar labels: 0.08em
-- Meta footer: 0.06em
-- Kicker labels (inverted): 0.14em
-- Chart axes: 0.08em (via `{typography.mono-chart}`)
-- Legend rows: 0.06em
-- Layer tags: 0.1em
+### 等宽比例
+所有 JetBrains Mono 文字都是 24px。字距按用途变化：
+- 顶栏标签：0.08em
+- 元信息页脚：0.06em
+- 眉题标签（反色）：0.14em
+- 图表轴：0.08em（经 `{typography.mono-chart}`）
+- 图例行：0.06em
+- 层小片：0.1em
 
-### Body Scale
-- `{typography.body-lg}` (28px): Body copy for wide column layouts or lede paragraphs.
-- `{typography.body-md}` (24px): Body text in stat cells, diagram annotations, step descriptions, footnotes, and strap lines.
+### 正文比例
+- `{typography.body-lg}`（28px）：宽栏布局或导语段的正文。
+- `{typography.body-md}`（24px）：统计单元格、图示注释、步骤说明、脚注、标语行的正文。
 
-### Principles
-Archivo Black has a line-height of 0.92 — headlines overlap their own cap-height, which is intentional. Uppercase lock is non-negotiable for the display face; lowercase Archivo Black breaks the editorial register. The monospace face uses generous letter-spacing (0.06–0.16em) to feel like a typewritten label. Never use letter-spacing on Archivo Black or Space Grotesk.
+### 原则
+Archivo Black 行高 0.92，标题会压到自身的 cap-height，这是刻意的。展示字面大小写锁定不可商量，小写 Archivo Black 会破掉编辑语域。等宽字面用宽裕字距（0.06–0.16em）读起来像打字机标签。绝不给 Archivo Black 或 Space Grotesk 加字距。
 
-## Layout
+## 布局
 
-### Canvas System
-Every slide is exactly 1920×1080px in a fixed, non-scrolling viewport. The `deck-stage` custom element handles centering and scaling.
+### 画布系统
+每页恰好 1920×1080px，固定、不滚动的视口。`deck-stage` 自定义元素负责居中与缩放。
 
-### Gutter System
-- **Chrome gutter** (64px left/right): Used by topbar and slide-meta only.
-- **Content gutter** (96px left/right): Used by all content — headlines, body, grids.
-- Headlines occasionally push right to within 96px of the right edge, or are constrained by `right: 1000px` / `right: 900px` to coexist with a right-panel diagram.
+### 栏距系统
+- **外壳栏距**（左右 64px）：只给顶栏和 slide-meta 用。
+- **内容栏距**（左右 96px）：给所有内容用，标题、正文、网格。
+- 标题偶尔向右推到距右缘 96px 内，或受 `right: 1000px` / `right: 900px` 约束，好与右侧面板图示共存。
 
-
-### Chrome Frame (All Slides)
+### 外壳画框（所有页）
 ```
 ┌─ topbar @ top:48px, left:64px, right:64px ──────────────────────────────────┐
 │  SECTION LABEL                                       [pill badge]            │
@@ -421,94 +423,94 @@ Every slide is exactly 1920×1080px in a fixed, non-scrolling viewport. The `dec
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-## Depth and Elevation
+## 纵深与层级
 
-The system uses **zero blurred shadows**. Depth is expressed through two techniques:
+系统**零模糊阴影**。纵深用两种手法表达：
 
-### Hard Offset Shadow
-The signature treatment: a second solid shape offset by a fixed amount in both X and Y. Two values are used:
-- **Large offset** (24px 24px): Featured blocks like the marker and poster switch — `box-shadow: 24px 24px 0 {colors.orange}, 24px 24px 0 4px {colors.ink}`. The first shadow is the colored offset; the second is the ink border around it.
-- **Medium offset** (18px 18px): Stacked blocks in the diagram — `box-shadow: 18px 18px 0 {colors.ink}`. Pure ink shadow only.
+### 硬边偏移阴影
+招牌处理：第二个实色形状在 X 和 Y 上都偏移固定量。用两个值：
+- **大偏移**（24px 24px）：精选块如标记与海报开关，`box-shadow: 24px 24px 0 {colors.orange}, 24px 24px 0 4px {colors.ink}`。第一层阴影是彩色偏移，第二层是围着它的墨边。
+- **中偏移**（18px 18px）：图示里的堆叠块，`box-shadow: 18px 18px 0 {colors.ink}`。纯墨阴影。
 
-### Color-Block Contrast
-Depth perception comes from juxtaposing surfaces: cream on cream-2 (table), ink on cream (kicker block), green on cream (diagram panel). No shadow needed when contrast does the work.
+### 色块反差
+纵深感知来自表面并置：奶油压 cream-2（表格）、墨压奶油（眉题块）、绿压奶油（图示面板）。反差够用时不需要阴影。
 
-### Flat Elements
-Topbar, meta footer, chart axis lines, legend swatches: flat, no shadow, no border-radius.
+### 平元素
+顶栏、元信息页脚、图表轴线、图例色块：平，无阴影，无 border-radius。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
-- **0px (square)**: All structural elements — stat cells, step cards, table cells, chart bars, diagram panels, stacked blocks. No rounding.
-- **50% (circle)**: Decorative circles within diagram (yellow circ), the topbar pill dot (slide meta separator dot).
-- **999px (pill)**: Topbar badge pill only. The one exception to the system's overall squareness, and it reads as a label chip rather than a card.
-- **Rotated elements**: The comparison badge rotates -4deg; the closing stamp rotates -6deg. These are the system's only non-orthogonal placements.
+### 圆角
+- **0px（方）**：所有结构元素，统计单元格、步骤卡片、表格单元格、图表条、图示面板、堆叠块。不圆。
+- **50%（圆）**：图示内的装饰圆（黄色 circ）、顶栏胶囊点（slide meta 分隔点）。
+- **999px（胶囊）**：仅顶栏徽章胶囊。这是系统整体方角里唯一的例外，读起来像标签芯片而非卡片。
+- **旋转元素**：比较徽章旋转 -4deg，收尾印章旋转 -6deg。这些是系统仅有的非正交摆放。
 
-### Borders
-- **4px solid `{colors.ink}`**: All structural borders — stat cells, step cards, diagram panels, table (outer), poster block, marker block, switch block, stamp.
-- **3px solid `{colors.ink}`**: All internal structural lines — table rows, table columns, chart axis, bar chart bars.
-- **2px solid `{colors.ink}`**: Topbar pill badge.
-- **3px dashed `{colors.ink}`**: Dashed horizontal rule separating the process slide's topbar from its flow cards.
+### 边框
+- **4px 实线 `{colors.ink}`**：所有结构边，统计单元格、步骤卡片、图示面板、表格（外）、海报块、标记块、开关块、印章。
+- **3px 实线 `{colors.ink}`**：所有内部结构线，表格行、表格列、图表轴、条形图条。
+- **2px 实线 `{colors.ink}`**：顶栏胶囊徽章。
+- **3px 虚线 `{colors.ink}`**：流程页里把顶栏与流程卡片分开的横向虚线。
 
-### Decorative Elements
-- **Toggle switch**: Pink square with a lever shape (skewed div) and thick/dark underside, offset shadow in orange with ink border.
-- **Stacked blocks**: Four overlapping absolute-positioned rectangles in pink, yellow, orange, cream-2 with 18px ink hard shadows.
-- **Circle overlay**: Yellow circle centered in a green square — shape contrast acting as decorative figure.
-- **Stamp**: Pink rotated square with a cream circular inner border — acts as a seal or approval mark.
+### 装饰元素
+- **开关拨钮**：粉色方块配操纵杆形状（倾斜 div）和厚/深底面，橙色偏移阴影配墨边。
+- **堆叠块**：四个重叠的绝对定位矩形，粉、黄、橙、cream-2，带 18px 墨色硬阴影。
+- **圆形叠层**：绿方块中央的黄色圆，形状反差充当装饰图形。
+- **印章**：带奶油色圆形内边的粉色旋转方块，作封印或核准标记。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
-- Use 4px ink borders on every structural element. Thinner looks soft; thicker looks like a web component.
-- Use hard offset shadows in exactly two sizes: 24px for featured hero blocks, 18px for diagram stacked blocks. Don't mix sizes.
-- Stay uppercase on all Archivo Black usage. The font in sentence case reads as a different brand.
-- Use the four accents in groups of two or three per slide. Every accent on one slide is noise.
-- Reserve the green background for a single dominant slide. Its rarity is what gives it impact.
-- Use JetBrains Mono for all labels, metadata, indices, figure notes, and axis text. Never use it for body or headlines.
-- Keep line-height at 0.92 for all display text. Looser leading breaks the tight editorial register.
-- Maintain 96px content gutter and 64px chrome gutter consistently across all slides.
+### 该做
+- 每个结构元素用 4px 墨边。更细显得软，更粗像网页组件。
+- 硬边阴影只用两种尺寸：精选英雄块 24px，图示堆叠块 18px。别混尺寸。
+- 所有 Archivo Black 用法保持大写。字面句首大写读起来像另一个品牌。
+- 四种强调色每页成组用两到三种。一种颜色全上就是噪声。
+- 把绿底留给单独一页主导。稀有才有冲击力。
+- 所有标签、元数据、索引、图注、轴文字用 JetBrains Mono。绝不用于正文或标题。
+- 所有展示文字行高保持 0.92。行距一松就破掉紧编辑语域。
+- 所有页一致维持 96px 内容栏距与 64px 外壳栏距。
 
-### Don't
-- Don't round card corners (except the topbar pill). Rounding signals "friendly SaaS"; sharp corners signal "editorial precision."
-- Don't use gradients, drop shadows with blur, or glow effects. All depth must come from hard offset or color contrast.
-- Don't use Archivo Black in sentence case. Never lowercase the display face.
-- Don't apply letter-spacing to Archivo Black (except at -0.01em which is already encoded). Extra tracking breaks its density.
-- Don't introduce a fifth accent color. The four-color palette is the brand constraint.
-- Don't use pure white (#ffffff) as a background. Cream is the canvas; white reads as blank.
-- Don't use Space Grotesk for labels or metadata. That role belongs to JetBrains Mono.
-- Don't add multiple typefaces. The three-family stack is complete.
-- Don't center-align body text. All body copy is left-aligned; centered text breaks the grid discipline.
-- Don't soften the stamp or badge rotation. The -4deg and -6deg angles are deliberate imperfection signals.
+### 不该做
+- 不要给卡片角加圆（顶栏胶囊除外）。圆角提示"友好 SaaS"，尖角提示"编辑精确"。
+- 不要用渐变、带模糊的投影或辉光效果。所有纵深必须来自硬边偏移或色彩反差。
+- 不要把 Archivo Black 用成句首大写。绝不把展示字面小写化。
+- 不要给 Archivo Black 加字距（已编码的 -0.01em 除外）。额外字距会破掉它的密度。
+- 不要引入第五种强调色。四色配色是品牌约束。
+- 不要用纯白（#ffffff）作背景。奶油才是画布，白读起来是空白。
+- 不要用 Space Grotesk 做标签或元数据。那个角色属于 JetBrains Mono。
+- 不要加更多字面。三字族栈已经完整。
+- 不要把正文居中。所有正文左对齐，居中文字会破掉网格纪律。
+- 不要柔化印章或徽章的旋转。-4deg 与 -6deg 是刻意的"不完美"信号。
 
-## Responsive Behavior
+## 响应式行为
 
-This template is designed **exclusively for 1920x1080 presentation display**. It is not a web page and has no mobile breakpoints. The `deck-stage` web component handles viewport scaling via CSS transforms, so the 1920x1080 canvas scales proportionally on any screen size without layout changes.
+本模板**专为 1920x1080 演示显示设计**。它不是网页，没有移动端断点。`deck-stage` web 组件通过 CSS transform 处理视口缩放，1920x1080 画布在任何屏上等比缩放而不改布局。
 
-### Touch / Presenter Behavior
-- Slides advance via keyboard arrow keys or presentation clicker (handled by `deck-stage.js`).
-- No hover states are defined or needed.
-- No interactive form elements exist.
+### 触摸 / 放映行为
+- 幻灯片通过键盘方向键或演示翻页笔前进（由 `deck-stage.js` 处理）。
+- 没有定义也不需要悬停态。
+- 没有交互式表单元素。
 
-### Print / Export Behavior
-- At 96dpi, the 1920x1080 canvas maps to a standard 20x11.25 inch frame.
-- For PDF export, a 1920x1080 viewport capture or browser print-to-PDF at 100% scale is recommended.
-- At 1pt = 1.333px, the effective print sizes of headlines range from 54pt (72px) to 165pt (220px) — correct for poster/title cards.
+### 打印 / 导出行为
+- 在 96dpi 下，1920x1080 画布对应标准 20x11.25 英寸画框。
+- PDF 导出建议按 1920x1080 视口抓取，或浏览器 100% 缩放打印成 PDF。
+- 在 1pt = 1.333px 下，标题的实际打印尺寸从 54pt（72px）到 165pt（220px），适合海报/标题卡。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin font | Recommended Chinese pairing | Source |
+| 角色 | 拉丁字体 | 推荐中文搭配 | 来源 |
 |---|---|---|---|
-| Display / Headline (Archivo Black uppercase 400) | Archivo Black | 思源宋体 Noto Serif SC 900 | Google Fonts |
-| Body (Space Grotesk 400) | Space Grotesk | 思源宋体 Noto Serif SC 400 | Google Fonts |
-| Mono / Label (JetBrains Mono uppercase) | JetBrains Mono | JetBrains Mono (Latin/digit only — keep mono chrome in Latin) | Google Fonts |
+| 展示 / 标题（Archivo Black 大写 400） | Archivo Black | 思源宋体 Noto Serif SC 900 | Google Fonts |
+| 正文（Space Grotesk 400） | Space Grotesk | 思源宋体 Noto Serif SC 400 | Google Fonts |
+| 等宽 / 标签（JetBrains Mono 大写） | JetBrains Mono | JetBrains Mono（仅拉丁/数字，等宽外壳保留拉丁） | Google Fonts |
 
-### Mixed-Content Strategy
+### 混排策略
 
-Use **Strategy A — single-font-stack with fallback**: declare Noto Serif SC *after* the Latin face in the same `font-family` stack so Latin glyphs render in Archivo Black / Space Grotesk and CJK glyphs fall through to NSC automatically. JetBrains Mono chrome stays Latin/digit-only — topbar labels, slide-meta, axis ticks, and figure notes do not need a CJK fallback (and JetBrains Mono has no CJK glyphs by design).
+用**策略 A — 单字体栈带回退**：在同一条 `font-family` 栈里把 Noto Serif SC 声明在拉丁字面**之后**，这样拉丁字形渲染成 Archivo Black / Space Grotesk，CJK 字形自动落到 NSC。JetBrains Mono 外壳保持拉丁/数字专用：顶栏标签、slide-meta、轴刻度、图注不需要 CJK 回退（JetBrains Mono 按设计没有 CJK 字形）。
 
-### Loading
+### 加载
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -525,42 +527,42 @@ Use **Strategy A — single-font-stack with fallback**: declare Noto Serif SC *a
 /* Display headlines use Noto Serif SC 900; body uses NSC 400. */
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- **Line-height**: bump CJK body line-height to ~1.55 (from 1.4) — Hanzi need more vertical breathing than Latin lowercase. For display NSC 900 at 100–220px, keep line-height tight at ~1.0 (NSC heavy weight at display size needs less leading than Archivo Black).
-- **Letter-spacing**: zero out `letter-spacing` on Hanzi runs (negative tracking that flatters Archivo Black caps jams Hanzi strokes together). Keep tight tracking only on Latin spans.
-- **Text-transform**: drop `text-transform: uppercase` on any display/label/mono when content is Hanzi — Chinese has no case; forcing uppercase does nothing for Hanzi but breaks the rendering of any mixed Latin acronyms inside.
-- **Punctuation**: use Chinese full-width punctuation (，。：；「」) for Chinese sentences, half-width (`,.:;""`) for Latin. Never mix half-width punctuation into a Chinese sentence.
-- **No period on headlines**: Chinese headline convention omits the terminal 。 — strip it from display strings.
-- **Pangu spacing**: insert a thin space (or a regular space) between adjacent Hanzi and Latin/digit runs (e.g. `2026 年`, `AI 产品`). Improves readability of mixed runs.
-- **One font per sentence**: don't switch CJK families mid-sentence. Pick a single weight of Noto Serif SC for a given text run, never two inside one phrase.
+- **行高**：把 CJK 正文行高提到约 1.55（从 1.4 上调），汉字比拉丁小写需要更多纵向呼吸。展示 NSC 900 在 100–220px 下保持紧行高约 1.0（NSC 重磅在展示尺寸下比 Archivo Black 需要更少的行距）。
+- **字距**：把汉字段上的 `letter-spacing` 清零（讨好 Archivo Black caps 的负字距会把汉字笔画挤在一起）。紧字距只保留在拉丁 span 上。
+- **文字变换**：任何展示/标签/等宽内容是汉字时，去掉 `text-transform: uppercase`。中文没有大小写；强制大写对汉字无效，却会破坏里面混排的拉丁缩写的渲染。
+- **标点**：中文句子用中文全角标点（，。：；「」），拉丁用半角（`,.:;""`）。绝不把半角标点混进中文句子。
+- **标题不加句号**：中文标题惯例省略末尾的 。，展示字符串里要去掉。
+- **盘古之白**：相邻的汉字与拉丁/数字串之间插入一个细空格（或普通空格），例如 `2026 年`、`AI 产品`，提升混排可读性。
+- **一句一款字体**：不要在句中切换 CJK 字族。某段文字挑 Noto Serif SC 的单一字重，绝不在同一短语里用两个。
 
-### Aesthetic Notes
+### 美学提示
 
-Creative Mode's neo-brutalist register depends on Archivo Black's extreme density at 100–220px — there is no Hanzi face that matches this exact mass, so Noto Serif SC at weight 900 is the closest available substitute. NSC 900's modulated serif strokes will read as more literary than the punk-zine Archivo Black voice, but the four-color block palette, 4px ink borders, and hard 24px offset shadows do most of the brutalist work — the typography becomes one component of a louder system rather than the system itself. The "uppercase always" rule for Archivo Black is meaningless for Hanzi (no case), so drop both `text-transform: uppercase` and the -0.01em tracking when content switches to Chinese — NSC 900 stands on size and color alone. JetBrains Mono chrome (topbar pill, slide-meta, axis ticks, kicker block) intentionally stays Latin/digit-only: render `04 / 08` slide counters in mono, but render any Chinese descriptor label in NSC 400 inside the meta footer. The four accents (green / pink / orange / yellow), stat-cell color blocks, table treatment, and decorative geometry (stamp, badge, stacked blocks) are all content-agnostic.
+Creative Mode 的新粗野语域依赖 Archivo Black 在 100–220px 下的极端密度，没有汉字字面匹配这种分量，思源宋体字重 900 是最接近的可用替代。NSC 900 带调制的衬线笔画读起来比朋克 zine 的 Archivo Black 更文学，但四色块配色、4px 墨边、硬 24px 偏移阴影承担了大部分粗野工作，排印变成更响系统里的一个组件，而非系统本身。Archivo Black 的"始终大写"规则对汉字毫无意义（没有大小写），内容切到中文时把 `text-transform: uppercase` 和 -0.01em 字距都去掉，NSC 900 单靠尺寸和颜色立住。JetBrains Mono 外壳（顶栏胶囊、slide-meta、轴刻度、眉题块）刻意保持拉丁/数字专用：`04 / 08` 页码用等宽渲染，但元信息页脚里任何中文描述标签用 NSC 400。四种强调（绿 / 粉 / 橙 / 黄）、统计单元格色块、表格处理、装饰几何（印章、徽章、堆叠块）都与内容无关。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-**Heavy Latin display has no exact CJK equivalent.** Archivo Black's brutalist density at 220px is the system's signature — Noto Serif SC 900 is the heaviest commonly available Hanzi weight, but it reads as a literary serif rather than a poster-grotesk. Chinese decks built with Creative Mode will feel ~30% less "punk-zine" than the Latin original; compensate by leaning harder on the accent color blocks, the hard offset shadows, and the rotated badge / stamp elements. Avoid the alternative of `Smiley Sans Oblique` for display — its oblique cut conflicts with the system's strict orthogonal rectangle geometry. NSC has no italic axis, but the system doesn't use italic anywhere — no loss. The mono chrome's "technical spec" voice is best preserved by keeping all JetBrains Mono content in Latin/digit and reserving NSC for headline and body roles only.
+**厚重拉丁展示没有精确的 CJK 对应。** Archivo Black 在 220px 下的粗野密度是系统签名，思源宋体字重 900 是常用汉字里最重的字重，但读起来是文学衬线而非海报怪诞体。用 Creative Mode 搭的中文文稿会比拉丁原版少约 30% "朋克 zine" 感，补偿办法是更倚重强调色块、硬边偏移阴影、旋转徽章 / 印章元素。别改用 `Smiley Sans Oblique` 作展示，它的斜切与系统严格正交的矩形几何冲突。NSC 没有斜体轴，但系统哪里都不用斜体，没有损失。等宽外壳的"技术规格"声部最好靠把全部 JetBrains Mono 内容保持拉丁/数字、NSC 只留给标题和正文角色来保住。
 
-## Iteration Guide
+## 迭代指南
 
-1. New slide layouts must respect the chrome frame: topbar at top:48px left:64px, slide-meta at bottom:40px left:64px.
-2. Content begins at 96px from each side edge.
-3. When adding a data section (chart, table, grid), pair a display headline above with JetBrains Mono labels inside.
-4. Pick two or three accent fills per slide. Never mix all four on a single slide.
-5. Hard shadows go on featured single elements only (marker, featured block). Grid cells do not get individual shadows.
-6. New step/stat cards follow the existing color-sequence pattern: alternate cream with accents, end the sequence on green.
-7. All borders are 4px solid ink. Internal sub-borders within a table or axis are 3px solid ink.
-8. Rotated elements (badge, stamp) use single fixed angles (-4deg, -6deg). Do not introduce other angles.
-9. Icons and illustrations are CSS-only geometric shapes (divs, borders, pseudo-elements). No external images or SVGs needed.
+1. 新页布局必须遵守外壳画框：topbar 在 top:48px left:64px，slide-meta 在 bottom:40px left:64px。
+2. 内容从每侧边缘 96px 处起。
+3. 加数据区（图表、表格、网格）时，上方配展示标题、内部配 JetBrains Mono 标签。
+4. 每页挑两到三种强调填充。绝不在单页把四种全混上。
+5. 硬阴影只给精选单元素（标记、精选块）。网格单元格不各配阴影。
+6. 新步骤/统计卡片沿用现有配色序列模式：奶油与强调色交替，序列以绿收尾。
+7. 所有边都是 4px 实线墨。表格或轴内的内部子边是 3px 实线墨。
+8. 旋转元素（徽章、印章）用单一固定角度（-4deg、-6deg）。别引入别的角度。
+9. 图标与插图是纯 CSS 几何形状（div、边框、伪元素）。不需要外部图片或 SVG。
 
-## Known Gaps
+## 已知缺口
 
-- The `deck-stage.js` script (slide advancement, keyboard nav) is an external dependency not documented here.
-- Animation and transition between slides is not in scope for this template; all slides are static.
-- The title slide poster contains a decorative toggle switch illustration built from nested divs; it has no functional state.
-- Chart data (bar heights, values, labels) is hardcoded as inline styles and placeholder content — there is no data-binding layer.
-- Table data is all placeholder; no dynamic population is supported.
-- The `--rule` CSS variable (#0F0F0F, identical to `--ink`) is defined but not used explicitly — it is reserved for horizontal rule elements and can be considered an alias for ink.
-- Font fallback for Archivo Black is `sans-serif` — the font must be loaded from Google Fonts for the design to render correctly.
+- `deck-stage.js` 脚本（前进、键盘导航）是外部依赖，本文件未描述。
+- 幻灯片之间的动画与过渡不在本模板范围内，所有页都是静态的。
+- 标题页海报含一个由嵌套 div 搭的装饰开关拨钮插图，没有功能状态。
+- 图表数据（条高、数值、标签）以内联样式和占位内容硬编码，没有数据绑定层。
+- 表格数据全是占位，不支持动态填充。
+- `--rule` CSS 变量（#0F0F0F，与 `--ink` 相同）已定义但未显式使用，它留给横向分隔线元素，可视为 ink 的别名。
+- Archivo Black 的字体回退是 `sans-serif`，必须从 Google Fonts 加载该字体，设计才能正确渲染。

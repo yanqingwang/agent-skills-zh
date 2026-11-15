@@ -1,12 +1,16 @@
-# Mermaid Diagram Templates
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/growth/product/site-architecture/references/mermaid-templates.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Copy-paste-ready Mermaid diagrams for visual sitemaps. Customize node labels and connections for your site.
+# Mermaid 图表模板
+
+可直接复制使用的 Mermaid 图，用来画可视化站点地图。按你的站点改节点标签和连线。
 
 ---
 
-## Basic Hierarchy
+## 基础层级
 
-Simple top-down page hierarchy.
+简单的自上而下页面层级。
 
 ```mermaid
 graph TD
@@ -25,9 +29,9 @@ graph TD
 
 ---
 
-## Hierarchy with Navigation Zones
+## 带导航分区的层级
 
-Uses subgraphs to show which pages appear in which navigation area.
+用子图展示各页面出现在哪个导航区。
 
 ```mermaid
 graph TD
@@ -66,9 +70,9 @@ graph TD
 
 ---
 
-## Hierarchy with URL Labels
+## 带 URL 标签的层级
 
-Each node shows the page name and URL path.
+每个节点同时显示页面名和 URL 路径。
 
 ```mermaid
 graph TD
@@ -87,9 +91,9 @@ graph TD
 
 ---
 
-## Hub-and-Spoke Content Model
+## 中心-辐条内容模型
 
-Shows a hub page connected to spoke articles, with spokes linking to each other.
+展示中心页连接多篇辐条文章，辐条之间也互相链接。
 
 ```mermaid
 graph TD
@@ -107,15 +111,15 @@ graph TD
     style HUB fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
-Legend:
-- Solid lines = primary hub-spoke links
-- Dashed lines = cross-links between spokes
+图例：
+- 实线 = 中心页到辐条页的主链接
+- 虚线 = 辐条页之间的交叉链接
 
 ---
 
-## Internal Linking Flow
+## 内链流向
 
-Shows how different site sections link to each other.
+展示站点各板块之间如何互相链接。
 
 ```mermaid
 graph LR
@@ -151,9 +155,9 @@ graph LR
 
 ---
 
-## Before/After Restructuring
+## 重构前后对比
 
-Compare current and proposed site structures side by side.
+并列对比现状与拟议的站点结构。
 
 ```mermaid
 graph TD
@@ -183,9 +187,9 @@ graph TD
 
 ---
 
-## Color-Coding Conventions
+## 配色约定
 
-Use styles to highlight page status, priority, or type.
+用样式突出页面状态、优先级或类型。
 
 ```mermaid
 graph TD
@@ -208,9 +212,9 @@ graph TD
     style REMOVE fill:#f44336,color:#fff
 ```
 
-Color key:
-- **Green** (`#4CAF50`): Existing pages (no changes)
-- **Blue** (`#2196F3`): New pages to create
-- **Red** (`#f44336`): Pages to remove or redirect
-- **Yellow** (`#FFC107`): Pages to restructure or move
-- **Purple** (`#9C27B0`): High-priority / CTA pages
+颜色说明：
+- **绿色** (`#4CAF50`)：现有页面（无改动）
+- **蓝色** (`#2196F3`)：待新建页面
+- **红色** (`#f44336`)：待删除或重定向的页面
+- **黄色** (`#FFC107`)：待重构或迁移的页面
+- **紫色** (`#9C27B0`)：高优先级 / CTA 页面

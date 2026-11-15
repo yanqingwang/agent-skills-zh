@@ -1,6 +1,10 @@
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/code-documenter/references/typescript-jsdoc.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # TypeScript JSDoc
 
-## Function Documentation
+## 函数文档
 
 ```typescript
 /**
@@ -20,7 +24,7 @@
 function calculateTotal(items: Item[], taxRate = 0): number {
 ```
 
-## Class Documentation
+## 类文档
 
 ```typescript
 /**
@@ -48,7 +52,7 @@ class UserService {
 }
 ```
 
-## Interface Documentation
+## 接口文档
 
 ```typescript
 /**
@@ -71,7 +75,7 @@ interface UserDto {
 }
 ```
 
-## Generic Types
+## 泛型类型
 
 ```typescript
 /**
@@ -94,7 +98,7 @@ interface PaginatedResponse<T> {
 }
 ```
 
-## Async Functions
+## 异步函数
 
 ```typescript
 /**
@@ -109,22 +113,22 @@ interface PaginatedResponse<T> {
 async function findUserById(id: string): Promise<User | null> {
 ```
 
-## Quick Reference
+## 速查表
 
-| Tag | Purpose | Example |
+| 标签 | 用途 | 示例 |
 |-----|---------|---------|
-| `@param` | Parameter description | `@param name - User's name` |
-| `@returns` | Return value | `@returns User object` |
-| `@throws` | Exception thrown | `@throws {Error} If invalid` |
-| `@example` | Usage example | Code block |
-| `@see` | Reference link | `@see UserService` |
-| `@deprecated` | Mark deprecated | `@deprecated Use v2 instead` |
-| `@template` | Generic type param | `@template T - Item type` |
-| `@async` | Async function | Mark async |
-| `@private` | Private member | Internal use |
-| `@readonly` | Read-only property | Cannot modify |
+| `@param` | 参数说明 | `@param name - User's name` |
+| `@returns` | 返回值 | `@returns User object` |
+| `@throws` | 抛出的异常 | `@throws {Error} If invalid` |
+| `@example` | 用法示例 | 代码块 |
+| `@see` | 参考链接 | `@see UserService` |
+| `@deprecated` | 标记为废弃 | `@deprecated Use v2 instead` |
+| `@template` | 泛型类型参数 | `@template T - Item type` |
+| `@async` | 异步函数 | 标记 async |
+| `@private` | 私有成员 | 仅供内部使用 |
+| `@readonly` | 只读属性 | 不可修改 |
 
-## Common Patterns
+## 常见写法
 
 ```typescript
 // Optional parameters

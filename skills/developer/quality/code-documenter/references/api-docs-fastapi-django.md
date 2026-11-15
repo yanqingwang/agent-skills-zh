@@ -1,10 +1,14 @@
-# API Documentation: FastAPI & Django
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/code-documenter/references/api-docs-fastapi-django.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## FastAPI (Auto-generates from types)
+# API 文档：FastAPI 与 Django
 
-FastAPI automatically generates OpenAPI documentation from type hints and docstrings.
+## FastAPI（从类型自动生成）
 
-### Endpoint Documentation
+FastAPI 从类型注解和 docstring 自动生成 OpenAPI 文档。
+
+### 端点文档
 
 ```python
 from fastapi import FastAPI, HTTPException, status
@@ -44,7 +48,7 @@ async def create_user(user: UserCreate) -> UserResponse:
     """
 ```
 
-### Router with Tags
+### 带标签的路由
 
 ```python
 from fastapi import APIRouter
@@ -64,9 +68,9 @@ async def get_user(user_id: int) -> UserResponse:
     """Retrieve a user by their unique identifier."""
 ```
 
-## Django REST Framework (drf-spectacular)
+## Django REST Framework（drf-spectacular）
 
-### ViewSet Documentation
+### ViewSet 文档
 
 ```python
 from rest_framework import viewsets, status
@@ -100,7 +104,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 ```
 
-### Serializer Documentation
+### Serializer 文档
 
 ```python
 from rest_framework import serializers
@@ -122,7 +126,7 @@ class UserSerializer(serializers.ModelSerializer):
     )
 ```
 
-### Custom Schema
+### 自定义 Schema
 
 ```python
 from drf_spectacular.utils import extend_schema, OpenApiExample
@@ -144,23 +148,23 @@ def create(self, request):
     """Create a new user."""
 ```
 
-## Quick Reference
+## 速查表
 
-| Framework | Documentation Source | Output |
+| 框架 | 文档来源 | 输出 |
 |-----------|---------------------|--------|
-| FastAPI | Type hints + docstrings | Auto Swagger UI |
-| DRF | Serializers + drf-spectacular | Auto Swagger UI |
+| FastAPI | 类型注解 + docstring | 自动生成 Swagger UI |
+| DRF | Serializer + drf-spectacular | 自动生成 Swagger UI |
 
-| FastAPI Decorator | Purpose |
+| FastAPI 装饰器 | 用途 |
 |-------------------|---------|
-| `summary` | Short endpoint description |
-| `description` | Detailed description |
-| `tags` | Group endpoints |
-| `response_model` | Response schema |
-| `responses` | Additional response codes |
+| `summary` | 端点简述 |
+| `description` | 详细描述 |
+| `tags` | 给端点分组 |
+| `response_model` | 响应 schema |
+| `responses` | 补充响应状态码 |
 
-| DRF Decorator | Purpose |
+| DRF 装饰器 | 用途 |
 |---------------|---------|
-| `@extend_schema` | Customize schema |
-| `OpenApiParameter` | Query/path params |
-| `OpenApiExample` | Request examples |
+| `@extend_schema` | 自定义 schema |
+| `OpenApiParameter` | 查询/路径参数 |
+| `OpenApiExample` | 请求示例 |

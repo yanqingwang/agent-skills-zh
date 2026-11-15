@@ -1,8 +1,12 @@
-# PostgreSQL Tuning
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/database-optimizer/references/postgresql-tuning.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Memory Configuration
+# PostgreSQL 调优
 
-### Shared Buffers
+## 内存配置
+
+### 共享缓冲区
 
 ```sql
 -- Recommended: 25% of system RAM (up to 40% for dedicated DB server)
@@ -20,7 +24,7 @@ SELECT
 FROM pg_statio_user_tables;
 ```
 
-### Work Memory
+### 工作内存
 
 ```sql
 -- Per-operation memory for sorting/hashing
@@ -47,7 +51,7 @@ SELECT ... ORDER BY ... LIMIT 1000;
 RESET work_mem;
 ```
 
-### Maintenance Work Memory
+### 维护工作内存
 
 ```sql
 -- For VACUUM, CREATE INDEX, ALTER TABLE
@@ -58,7 +62,7 @@ ALTER SYSTEM SET maintenance_work_mem = '2GB';
 ALTER SYSTEM SET autovacuum_work_mem = '512MB';
 ```
 
-### Effective Cache Size
+### 有效缓存大小
 
 ```sql
 -- Planner hint for available OS cache
@@ -67,9 +71,9 @@ ALTER SYSTEM SET autovacuum_work_mem = '512MB';
 ALTER SYSTEM SET effective_cache_size = '12GB';
 ```
 
-## Query Planner Settings
+## 查询计划器设置
 
-### Statistics Target
+### 统计目标
 
 ```sql
 -- Default is 100, increase for better estimates on complex queries
@@ -89,7 +93,7 @@ FROM pg_stats
 WHERE tablename = 'users';
 ```
 
-### Parallel Query Configuration
+### 并行查询配置
 
 ```sql
 -- Enable parallel queries
@@ -108,7 +112,7 @@ SELECT COUNT(*) FROM large_table WHERE condition = 'value';
 -- Look for "Parallel Seq Scan" or "Gather" nodes
 ```
 
-### Join and Scan Methods
+### 连接与扫描方法
 
 ```sql
 -- Enable all join methods (usually all enabled by default)
@@ -124,9 +128,9 @@ ALTER SYSTEM SET seq_page_cost = 1.0;
 SET enable_seqscan = off;  -- Force index usage for testing
 ```
 
-## Write Performance Optimization
+## 写入性能优化
 
-### WAL Configuration
+### WAL 配置
 
 ```sql
 -- WAL write strategy
@@ -152,7 +156,7 @@ FROM pg_stat_bgwriter;
 -- Too many requested checkpoints = increase max_wal_size
 ```
 
-### Commit Delays
+### 提交延迟
 
 ```sql
 -- Group commits (trade latency for throughput)
@@ -170,9 +174,9 @@ INSERT INTO logs (...) VALUES (...);
 COMMIT;
 ```
 
-## VACUUM and Autovacuum
+## VACUUM 与 Autovacuum
 
-### Autovacuum Configuration
+### Autovacuum 配置
 
 ```sql
 -- Enable autovacuum (should always be on)
@@ -198,7 +202,7 @@ ALTER TABLE busy_table SET (
 );
 ```
 
-### Manual Vacuum Operations
+### 手动 VACUUM 操作
 
 ```sql
 -- Full vacuum (locks table, reclaims space)
@@ -230,9 +234,9 @@ FROM pg_stat_user_tables
 ORDER BY last_autovacuum DESC NULLS LAST;
 ```
 
-## Connection Pooling
+## 连接池
 
-### Configuration
+### 配置
 
 ```sql
 -- Max connections (keep reasonable to manage memory)
@@ -265,9 +269,9 @@ WHERE (now() - pg_stat_activity.query_start) > interval '5 minutes'
   AND state != 'idle';
 ```
 
-## Lock Management
+## 锁管理
 
-### Lock Monitoring
+### 锁监控
 
 ```sql
 -- Check current locks
@@ -303,9 +307,9 @@ ALTER SYSTEM SET deadlock_timeout = '1s';
 ALTER SYSTEM SET log_lock_waits = on;
 ```
 
-## Partitioning
+## 分区
 
-### Range Partitioning
+### 范围分区
 
 ```sql
 -- Create partitioned table
@@ -334,9 +338,9 @@ WHERE created_at >= '2024-01-15' AND created_at < '2024-01-20';
 -- Should show "Partitions pruned: X"
 ```
 
-## Performance Monitoring
+## 性能监控
 
-### Key Metrics Queries
+### 关键指标查询
 
 ```sql
 -- pg_stat_statements (install extension first)
@@ -377,7 +381,7 @@ FROM pg_stat_user_indexes
 ORDER BY idx_scan DESC;
 ```
 
-## Configuration File Example
+## 配置文件示例
 
 ```ini
 # postgresql.conf - Production optimized for 16GB RAM server

@@ -1,6 +1,10 @@
-# Kubernetes Workloads
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/workloads.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Deployment Pattern
+# Kubernetes 工作负载
+
+## Deployment 模式
 
 ```yaml
 apiVersion: apps/v1
@@ -95,7 +99,7 @@ spec:
         emptyDir: {}
 ```
 
-## StatefulSet Pattern
+## StatefulSet 模式
 
 ```yaml
 apiVersion: apps/v1
@@ -172,7 +176,7 @@ spec:
           storage: 50Gi
 ```
 
-## DaemonSet Pattern
+## DaemonSet 模式
 
 ```yaml
 apiVersion: apps/v1
@@ -233,7 +237,7 @@ spec:
           path: /sys
 ```
 
-## Job Pattern
+## Job 模式
 
 ```yaml
 apiVersion: batch/v1
@@ -275,7 +279,7 @@ spec:
             memory: 512Mi
 ```
 
-## CronJob Pattern
+## CronJob 模式
 
 ```yaml
 apiVersion: batch/v1
@@ -336,7 +340,7 @@ spec:
               sizeLimit: 10Gi
 ```
 
-## Init Containers
+## Init 容器
 
 ```yaml
 spec:
@@ -365,13 +369,13 @@ spec:
     image: myregistry.io/app:latest
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Resource Management**: Always set requests and limits
-2. **Health Checks**: Include both liveness and readiness probes
-3. **Security**: Use non-root users, read-only filesystems when possible
-4. **Labels**: Consistent labeling for organization and selection
-5. **Update Strategy**: Choose appropriate strategy (RollingUpdate, Recreate)
-6. **Service Accounts**: Never use default, create specific SAs
-7. **Image Tags**: Use specific versions, not `latest` in production
-8. **Cleanup**: Set TTL for Jobs to auto-cleanup completed pods
+1. **资源管理**：始终设置 requests 与 limits
+2. **健康检查**：同时包含存活与就绪探针
+3. **安全**：尽量用非 root 用户、只读文件系统
+4. **标签**：标签保持一致，便于组织与选择
+5. **更新策略**：选合适的策略（RollingUpdate、Recreate）
+6. **Service Account**：绝不用 default，建专用 SA
+7. **镜像标签**：用具体版本，生产环境别用 `latest`
+8. **清理**：给 Job 设 TTL，自动清理已完成的 Pod

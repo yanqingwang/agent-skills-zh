@@ -1,8 +1,12 @@
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/service-mesh.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Service Mesh
 
 ---
 
-## Istio Installation
+## Istio 安装
 
 ```bash
 # Install Istio CLI
@@ -162,7 +166,7 @@ spec:
         credentialName: myapp-tls-secret
 ```
 
-## Traffic Mirroring (Shadow Traffic)
+## 流量镜像（影子流量）
 
 ```yaml
 apiVersion: networking.istio.io/v1beta1
@@ -185,7 +189,7 @@ spec:
         value: 100.0
 ```
 
-## mTLS Configuration
+## mTLS 配置
 
 ```yaml
 # Strict mTLS for namespace
@@ -222,7 +226,7 @@ spec:
     mode: STRICT
 ```
 
-## Authorization Policy
+## 授权策略
 
 ```yaml
 apiVersion: security.istio.io/v1beta1
@@ -256,7 +260,7 @@ spec:
     # Deny all other traffic (implicit deny when rules exist)
 ```
 
-## Circuit Breaker
+## 熔断器
 
 ```yaml
 apiVersion: networking.istio.io/v1beta1
@@ -282,7 +286,7 @@ spec:
       minHealthPercent: 0
 ```
 
-## Fault Injection (Testing)
+## 故障注入（测试）
 
 ```yaml
 apiVersion: networking.istio.io/v1beta1
@@ -315,7 +319,7 @@ spec:
             host: myapp
 ```
 
-## Linkerd Installation
+## Linkerd 安装
 
 ```bash
 # Install Linkerd CLI
@@ -376,7 +380,7 @@ spec:
     ttl: 10s
 ```
 
-## Linkerd Traffic Split (Canary)
+## Linkerd 流量拆分（金丝雀）
 
 ```yaml
 apiVersion: split.smi-spec.io/v1alpha1
@@ -393,7 +397,7 @@ spec:
       weight: 100m    # 10%
 ```
 
-## Multi-Cluster Mesh (Istio)
+## 多集群网格（Istio）
 
 ```yaml
 # Primary cluster - create remote secret
@@ -413,7 +417,7 @@ spec:
       network: network1
 ```
 
-## Kiali Dashboard
+## Kiali 仪表盘
 
 ```bash
 # Install Kiali
@@ -423,7 +427,7 @@ kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.20/samp
 istioctl dashboard kiali
 ```
 
-## Jaeger Tracing
+## Jaeger 链路追踪
 
 ```bash
 # Install Jaeger
@@ -433,27 +437,27 @@ kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.20/samp
 istioctl dashboard jaeger
 ```
 
-## Service Mesh Comparison
+## Service Mesh 对比
 
-| Feature | Istio | Linkerd |
+| 特性 | Istio | Linkerd |
 |---------|-------|---------|
-| Sidecar | Envoy | linkerd2-proxy (Rust) |
-| Resource usage | Higher | Lower |
-| Features | More extensive | Focused/simpler |
-| mTLS | Built-in | Built-in |
-| Traffic management | Advanced | Basic (SMI) |
-| Multi-cluster | Native support | Requires setup |
-| Learning curve | Steeper | Gentler |
+| Sidecar | Envoy | linkerd2-proxy（Rust） |
+| 资源占用 | 较高 | 较低 |
+| 功能 | 更丰富 | 聚焦、更简洁 |
+| mTLS | 内置 | 内置 |
+| 流量管理 | 高级 | 基础（SMI） |
+| 多集群 | 原生支持 | 需额外配置 |
+| 学习曲线 | 较陡 | 较平缓 |
 
-## Best Practices
+## 最佳实践
 
-1. **Start with permissive mTLS**, migrate to strict gradually
-2. **Use circuit breakers** to prevent cascade failures
-3. **Set reasonable timeouts** and retry budgets
-4. **Enable distributed tracing** for observability
-5. **Test with fault injection** before production
-6. **Monitor sidecar resource usage** and tune accordingly
-7. **Use traffic mirroring** to validate new versions safely
-8. **Implement authorization policies** for zero-trust
-9. **Keep service mesh version updated** for security patches
-10. **Document traffic routing decisions** in VirtualServices
+1. **从宽松 mTLS 起步**，逐步迁到严格模式
+2. **用熔断器**：防止级联故障
+3. **设合理超时**与重试预算
+4. **启用分布式追踪**：提升可观测性
+5. **上线前用故障注入测试**
+6. **监控 sidecar 资源占用**并据此调优
+7. **用流量镜像**：安全地验证新版本
+8. **实施授权策略**：落实零信任
+9. **保持 service mesh 版本更新**：及时打安全补丁
+10. **在 VirtualService 里记录流量路由决策**

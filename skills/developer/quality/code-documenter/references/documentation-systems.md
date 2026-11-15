@@ -1,8 +1,12 @@
-# Documentation Systems & Infrastructure
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/code-documenter/references/documentation-systems.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Static Site Generators
+# 文档系统与基础设施
 
-### Docusaurus (Meta)
+## 静态站点生成器
+
+### Docusaurus（Meta）
 
 ```bash
 # Setup
@@ -18,7 +22,7 @@ docs/
 └── docusaurus.config.js
 ```
 
-**docusaurus.config.js:**
+**docusaurus.config.js：**
 ```javascript
 module.exports = {
   title: 'My API',
@@ -50,7 +54,7 @@ module.exports = {
 };
 ```
 
-### MkDocs (Python)
+### MkDocs（Python）
 
 ```yaml
 # mkdocs.yml
@@ -94,7 +98,7 @@ nav:
   - API Reference: api/
 ```
 
-### VitePress (Vue)
+### VitePress（Vue）
 
 ```typescript
 // .vitepress/config.ts
@@ -131,9 +135,9 @@ export default defineConfig({
 });
 ```
 
-## Multi-Version Documentation
+## 多版本文档
 
-### Version Switcher
+### 版本切换器
 
 ```javascript
 // Docusaurus versions
@@ -148,7 +152,7 @@ export default defineConfig({
 }
 ```
 
-### Migration Guides
+### 迁移指南
 
 ```markdown
 # Migration Guide: v1 to v2
@@ -178,7 +182,7 @@ client = Client(api_key=api_key)  # Pass in constructor
 - v2.1: Current (June 2025)
 ```
 
-## Search Implementation
+## 搜索实现
 
 ### Algolia DocSearch
 
@@ -197,7 +201,7 @@ client = Client(api_key=api_key)  # Pass in constructor
 </script>
 ```
 
-### Local Search (Lunr.js)
+### 本地搜索（Lunr.js）
 
 ```javascript
 const idx = lunr(function() {
@@ -212,9 +216,9 @@ const idx = lunr(function() {
 const results = idx.search('authentication');
 ```
 
-## Documentation Testing
+## 文档测试
 
-### Link Checking
+### 链接检查
 
 ```bash
 # linkcheck (Python)
@@ -226,7 +230,7 @@ npm install -g broken-link-checker
 blc http://localhost:3000 -ro
 ```
 
-### Code Example Testing
+### 代码示例测试
 
 ```python
 # doctest for Python examples
@@ -252,9 +256,9 @@ test('API examples work', async () => {
 });
 ```
 
-## Performance Optimization
+## 性能优化
 
-### Build Optimization
+### 构建优化
 
 ```javascript
 // Webpack/Vite config
@@ -275,7 +279,7 @@ export default {
 };
 ```
 
-### CDN & Caching
+### CDN 与缓存
 
 ```nginx
 # nginx.conf
@@ -290,7 +294,7 @@ location ~* \.(html)$ {
 }
 ```
 
-## Analytics Integration
+## 分析集成
 
 ### Google Analytics
 
@@ -302,7 +306,7 @@ gtag: {
 },
 ```
 
-### Custom Analytics
+### 自定义分析
 
 ```javascript
 // Track search queries
@@ -315,19 +319,19 @@ function trackSearch(query, results) {
 }
 ```
 
-## Quick Reference
+## 速查表
 
-| Tool | Best For | Tech Stack |
+| 工具 | 适用场景 | 技术栈 |
 |------|----------|-----------|
-| Docusaurus | React projects, versioning | React, MDX |
-| MkDocs | Python projects, simple setup | Python, Jinja2 |
-| VitePress | Vue projects, fast builds | Vue, Vite |
-| Nextra | Next.js integration | React, Next.js |
-| Mintlify | Modern UI, AI search | React |
+| Docusaurus | React 项目、版本管理 | React, MDX |
+| MkDocs | Python 项目、搭建简单 | Python, Jinja2 |
+| VitePress | Vue 项目、构建快 | Vue, Vite |
+| Nextra | 集成 Next.js | React, Next.js |
+| Mintlify | 现代界面、AI 搜索 | React |
 
-| Search Solution | Cost | Features |
+| 搜索方案 | 成本 | 特性 |
 |----------------|------|----------|
-| Algolia DocSearch | Free (OSS) | Fast, typo-tolerant |
-| Local (Lunr.js) | Free | Offline, no server |
-| Typesense | Free (self-host) | Privacy-focused |
-| Meilisearch | Free (self-host) | Fast, relevance |
+| Algolia DocSearch | 免费（开源项目） | 快，容忍拼写错误 |
+| 本地（Lunr.js） | 免费 | 离线，无需服务端 |
+| Typesense | 免费（自托管） | 注重隐私 |
+| Meilisearch | 免费（自托管） | 快，相关性好 |

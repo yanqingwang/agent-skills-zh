@@ -197,275 +197,279 @@ components:
   chart-axis-tick-color: "{colors.accent}"
 ---
 
-## Frontend Slides Fixed-Stage Policy
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/cartesian/design.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When this design system is used by the `frontend-slides` skill, generate the final deck as a **fixed 1920×1080 stage** that scales uniformly to the browser viewport. The deck should preserve a 16:9 slide canvas on every screen, including phones; it may letterbox or pillarbox, but it should not reflow slide content for mobile.
+## Frontend Slides 固定舞台策略
 
-This policy has higher priority than any source-template responsive behavior described later in this file. If a later section says the original template is viewport-fluid, treat that as source history only, not as the target generation model for `frontend-slides`.
+当本设计系统被 `frontend-slides` Skill 使用时，请把最终演示文稿生成为**固定 1920×1080 舞台**，整体等比缩放以适配浏览器视口。演示文稿在所有屏幕（含手机）上都应保持 16:9 幻灯片画布；可以留黑边（letterbox）或留白边（pillarbox），但不应为移动端重排幻灯片内容。
 
-This policy applies even if the source template was originally implemented with viewport-fluid CSS such as `100vw`, `100vh`, `vw`, `vh`, or `clamp()`. Treat those values as design proportions to translate into 1920×1080 stage coordinates, not as live responsive rules in the generated deck.
+本策略的优先级高于本文件后面描述的任何源模板响应式行为。如果后文说原模板是视口流式（viewport-fluid），那只当作源历史，不视为 `frontend-slides` 的目标生成模型。
 
-Use `deck-stage.js` or an equivalent inline stage scaler for final output: render each slide at 1920×1080, scale the whole stage with one transform, and verify rendered screenshots for both text overflow and panel overlap.
+即使源模板最初用 `100vw`、`100vh`、`vw`、`vh` 或 `clamp()` 这类视口流式 CSS 实现，本策略同样适用。把这些数值当作要换算进 1920×1080 舞台坐标的设计比例，而不是生成文稿里实际生效的响应式规则。
+
+最终输出请使用 `deck-stage.js` 或等效的内联舞台缩放器：每页按 1920×1080 渲染，用一次 transform 缩放整个舞台，并核对渲染截图，检查文字溢出与面板重叠。
 
 
-## Overview
+## 概述
 
-Cartesian is a **quiet museum-catalog editorial system**. Its defining premise is **restraint through 1px lines**. Every structural element — list separators, agenda rules, timeline connectors, card borders, table dividers — is a single 1px line in a muted taupe `{colors.line}`. There are no thick borders, no fills, no shadows, no rounded surfaces. Hierarchy is built through type contrast and negative space; depth does not exist in the conventional sense.
+Cartesian 是一套**安静的博物馆图录式编辑系统**。定义性前提是**以 1px 线克制**：每个结构元素（列表分隔、议程线、时间轴连线、卡片边、表格分隔）都是一条单一 1px 的柔和灰褐线 `{colors.line}`。没有粗边、没有填充、没有阴影、没有圆角表面。层级靠字面反差与负空间搭起，常规意义上的纵深并不存在。
 
-The typeface stack is a literary-monograph pairing. **Playfair Display** — a high-contrast didone-influenced serif — carries every headline, every stat numeral, every card title, every team initial, every quote mark. Playfair runs at weight 400 (regular) almost exclusively — there is no use of bold or 700-weight Playfair in the system. The thin-stroke didone aesthetic depends on letting the letterforms breathe at modest weights. **Inter** — a clean modern grotesque — carries every body paragraph, every subtitle, every label, every attribution. Inter runs at 400 for body and 500 for labels. The pairing creates the system's editorial voice: serif statements + clean sans supporting structure.
+字面栈是文学专著式搭配。**Playfair Display**，受迪多尼影响的高对比衬线，承载每个标题、每个统计数字、每个卡片标题、每个团队首字母、每个引号。Playfair 几乎只跑字重 400（常规），系统里不用粗体或 700 字重的 Playfair。细笔画的迪多尼美学靠让字形在适中字重下呼吸。**Inter**，干净的现代怪诞体，承载每个正文段落、每个副标题、每个标签、每个出处。Inter 正文用 400、标签用 500。这个搭配造出系统的编辑声部：衬线陈述 + 干净无衬线辅助结构。
 
-The palette is **five warm stones plus ink**. The canvas is `{colors.bg-primary}` — a warm sandstone off-cream. A slightly deeper stone `{colors.bg-secondary}` provides subtle region differentiation (image placeholders, team photo frames). Ink `{colors.text-primary}` is the headline color; medium gray `{colors.text-secondary}` is body. A warmer taupe `{colors.accent}` carries labels, attribution, and small numerals. The lightest taupe `{colors.line}` is the universal 1px line color. There are no accent colors in the populist sense — no red, no orange, no blue. The palette is stone, stone, stone, ink, ink. The only "color" in the system is type contrast.
+配色是**五种暖石色加墨**。画布是 `{colors.bg-primary}`，暖砂岩米白。略深的石色 `{colors.bg-secondary}` 提供微妙的区域区隔（图片占位、团队照片框）。墨色 `{colors.text-primary}` 是标题色，中灰 `{colors.text-secondary}` 是正文。更暖的灰褐 `{colors.accent}` 承载标签、出处、小数字。最浅的灰褐 `{colors.line}` 是通用 1px 线色。没有平民化意义上的强调色，没有红、没有橙、没有蓝。配色就是石、石、石、墨、墨。系统里唯一的"颜色"是字面对比。
 
-Depth is **entirely absent in the conventional sense**. There are no shadows, no elevated cards, no rounded surfaces, no gradients. Atmosphere is created by **geometric line decorations**: thin solid and dashed circles in `{colors.line}` at 20–50% opacity drift behind content as if drawn on tracing paper with a compass. These do not create hierarchy — they create mood. The decorative geometry signals "drafted, considered, precise."
+纵深**在常规意义上完全缺席**。没有阴影、没有抬升卡片、没有圆角表面、没有渐变。氛围由**几何线装饰**造出：`{colors.line}` 里 20–50% 不透明度的细实线与虚线圆，像用圆规画在描图纸上一样漂在内容后方。它们不造层级，只造情绪。装饰几何传递"打过草稿、推敲过、精确"。
 
-**Density philosophy: sparse and breathing.** Cartesian reads as elegant when sparse and broken when crowded. A correctly composed slide pairs one Playfair headline with one body paragraph, or one chart with one short caption, framed by generous negative space. Most slide composition uses centered or asymmetric two-column layouts with `5–6vw` gutters and significant vertical breathing room. The decorative compass arcs reinforce the sparseness — they are most effective when there is room around them. A slide that feels broken in this system is one packed edge-to-edge with content; the correct density is "one clear idea, well-framed, on stone paper."
+**密度取向：稀疏、能呼吸。** Cartesian 稀疏时优雅，拥挤时散架。构图正确的一页，配一个 Playfair 标题加一段正文，或一张图表加一句短图注，由宽裕负空间框住。多数页用居中或不对称双栏布局，`5–6vw` 栏间距、显著的纵向呼吸。装饰圆规弧线强化稀疏：周围有空间时它们最有效。塞得满满当当、顶到边的页在这套系统里就是坏了；正确的密度是"一个清楚的想法，框得妥帖，落在石纸上"。
 
-**Key Characteristics:**
-- Warm sandstone canvas `{colors.bg-primary}` with single 1px taupe `{colors.line}` dividers as the universal structural element.
-- Playfair Display serif at weight 400 for every headline/numeral/quote-mark; Inter sans for every body/label/attribution.
-- Five-tone monochrome palette: two stones, two grays, one ink. No vivid accent colors anywhere.
-- Decorative geometric rings (thin solid + dashed circles, 20–50% opacity) drift behind content as compass-drafted atmosphere.
-- Every label, attribution, and micro-text is uppercase Inter with 2–3px letter-spacing.
-- All borders are 1px hairlines; no element has a thicker border, a shadow, or a rounded fill.
-- Right-edge vertical nav-dot column, bottom-left square nav-arrow buttons, bottom-right mono slide counter.
-- Image placeholders carry a signature pair of crossed 1px diagonals (an X) over a stone-tinted block.
+**关键特征：**
+- 暖砂岩画布 `{colors.bg-primary}`，单 1px 灰褐 `{colors.line}` 分隔线作通用结构元素。
+- Playfair Display 衬线字重 400 用于每个标题/数字/引号；Inter 无衬线用于每个正文/标签/出处。
+- 五调单色配色：两石、两灰、一墨。哪里都没有鲜艳强调色。
+- 装饰几何环（细实线 + 虚线圆，20–50% 不透明度）漂在内容后方，作圆规打稿的氛围。
+- 每个标签、出处、微型文字都是大写 Inter 配 2–3px 字距。
+- 所有边框都是 1px 细线，没有元素带更粗的边、阴影或圆角填充。
+- 右边缘竖向导航点列、左下方形导航箭头按钮、右下等宽页码。
+- 图片占位带一对交叉的 1px 对角线（一个 X），压在石色块上，是签名手法。
 
-## Colors
+## 颜色
 
-### Stone & Ink Palette
-- **Background Primary** (`{colors.bg-primary}` — #EDE8E0): The canvas. Warm sandstone off-cream — closer to "manila folder" than "white paper." This is the default slide background.
-- **Background Secondary** (`{colors.bg-secondary}` — #E2DBD1): A slightly deeper stone, used for image placeholders, team-photo frames, and any region that needs subtle separation from the canvas without a colored fill or a border.
-- **Text Primary** (`{colors.text-primary}` — #1A1A1A): Near-black ink. Used for headlines, stat numerals, and the special `{components.horizontal-accent}` rule. The strongest contrast color in the system.
-- **Text Secondary** (`{colors.text-secondary}` — #5A5A5A): Medium warm gray. Used for all body paragraph text. Softer than ink — readable but recedes.
-- **Accent** (`{colors.accent}` — #8A8178): Warm taupe. Used for labels, attributions, agenda numerals, slide counter, card-icon text, team-member role text. The system's "small text" color.
-- **Line** (`{colors.line}` — #B8B0A4): Pale taupe. The universal 1px line color: card borders, agenda rules, timeline connectors, team-photo rings, nav-arrow borders, geo-decoration rings.
+### 石与墨配色
+- **Background Primary**（`{colors.bg-primary}` — #EDE8E0）：画布。暖砂岩米白，更像"马尼拉文件夹"而非"白纸"。默认幻灯片背景。
+- **Background Secondary**（`{colors.bg-secondary}` — #E2DBD1）：略深的石色，用于图片占位、团队照片框，以及任何需要从画布上微妙分开、又不用彩色填充或边框的区域。
+- **Text Primary**（`{colors.text-primary}` — #1A1A1A）：近黑墨。用于标题、统计数字，以及特别的 `{components.horizontal-accent}` 线。系统里对比最强的颜色。
+- **Text Secondary**（`{colors.text-secondary}` — #5A5A5A）：中暖灰。用于所有正文段落文字。比墨柔，可读但往后退。
+- **Accent**（`{colors.accent}` — #8A8178）：暖灰褐。用于标签、出处、议程数字、页码、卡片图标文字、团队成员角色文字。系统的"小文字"色。
+- **Line**（`{colors.line}` — #B8B0A4）：浅灰褐。通用 1px 线色：卡片边、议程线、时间轴连线、团队照片环、导航箭头边、几何装饰环。
 
-### Defaults
-- **Default surface background**: `{colors.bg-primary}`.
-- **Default headline color**: `{colors.text-primary}` — always ink, never colored, never accent-taupe. Playfair headlines are uniformly ink.
-- **Default body text color**: `{colors.text-secondary}` (medium warm gray).
-- **Default label / attribution / micro-text color**: `{colors.accent}` (warm taupe).
-- **Default border color**: `{colors.line}` — every 1px structural border. Never use ink-black for borders except the rare `horizontal-accent` rule.
-- **Default secondary surface fill**: `{colors.bg-secondary}`.
-- **Default chart primary series color**: `{colors.text-primary}` (ink).
-- **Default chart comparison/secondary series color**: `{colors.line}` with 5px dashed stroke.
-- **Default chart grid color**: `{colors.bg-secondary}`.
-- **Default chart axis tick color**: `{colors.accent}`.
+### 默认值
+- **默认表面背景**：`{colors.bg-primary}`。
+- **默认标题色**：`{colors.text-primary}`，始终墨色，绝不上彩，绝不用强调灰褐。Playfair 标题一律墨色。
+- **默认正文文字色**：`{colors.text-secondary}`（中暖灰）。
+- **默认标签 / 出处 / 微型文字色**：`{colors.accent}`（暖灰褐）。
+- **默认边框色**：`{colors.line}`，每条 1px 结构边。除罕见的 `horizontal-accent` 线外，绝不用墨黑做边。
+- **默认次级表面填充**：`{colors.bg-secondary}`。
+- **默认图表主系列色**：`{colors.text-primary}`（墨）。
+- **默认图表比较/次级系列色**：`{colors.line}` 配 5px 虚线描边。
+- **默认图表网格色**：`{colors.bg-secondary}`。
+- **默认图表轴刻度色**：`{colors.accent}`。
 
-Cartesian has **no accent color in the populist sense.** A red callout, a blue bar, a green stat — none of these exist. When emphasis is needed, increase type size, switch from sans to serif, or add a single 1px `horizontal-accent` rule in ink. Color is not the emphasis mechanism in this system; restraint is.
+Cartesian **没有平民化意义上的强调色**。红色标注、蓝色条、绿色统计，这些都不存在。需要强调时，放大字号、从无衬线切到衬线，或加一条墨色 1px `horizontal-accent` 线。颜色在这套系统里不是强调机制，克制才是。
 
-## Typography
+## 排印
 
-### Font Family
-The system runs on a **two-face conversation**: `Playfair Display` (serif, weights 400/600/700, italic available) carries every headline, stat numeral, quote mark, card title, and team initial; `Inter` (sans, weights 300/400/500/600) carries every body, subtitle, label, attribution, and micro-text. There is no third face.
+### 字族
+系统跑在**两字面对话**上：`Playfair Display`（衬线，字重 400/600/700，有斜体）承载每个标题、统计数字、引号、卡片标题、团队首字母；`Inter`（无衬线，字重 300/400/500/600）承载每个正文、副标题、标签、出处、微型文字。没有第三字面。
 
-Playfair Display is used almost exclusively at **weight 400 (regular)**. The system deliberately avoids bold Playfair — the didone aesthetic relies on thin-stroke modulation that disappears at heavier weights. Italic Playfair is available (loaded) but not exercised in the default template; reserve it for inline emphasis inside body copy.
+Playfair Display 几乎只用在**字重 400（常规）**。系统刻意避开粗 Playfair，迪多尼美学依赖细笔画调制，字重一重就没了。斜体 Playfair 已加载，但默认模板不用，留给正文里的行内强调。
 
-Inter runs at weight 400 for body, weight 500 for labels and micro-text, weight 600 for the rare emphasized inline element. The contrast between Playfair's high-modulation serif and Inter's even sans is the system's primary typographic rhythm.
+Inter 正文用字重 400、标签与微型文字用 500、罕见的强调行内元素用 600。Playfair 的高调制衬线与 Inter 的均匀无衬线之间的反差，是系统主要的排印节奏。
 
-### Type Scale
+### 排印比例
 
-| Token | Size | Family | Weight | Use |
+| Token | 尺寸 | 字族 | 字重 | 用途 |
 |---|---|---|---|---|
-| `{typography.display}` | clamp(3rem, 6vw, 5.5rem) | Playfair Display | 400 | Cover or large opening title |
-| `{typography.h1}` | clamp(2.5rem, 5vw, 4.5rem) | Playfair Display | 400 | Section-opening or large closing headline |
-| `{typography.h2}` | clamp(1.8rem, 3.5vw, 3rem) | Playfair Display | 400 | Primary slide headline |
-| `{typography.h3}` | clamp(1.2rem, 2vw, 1.6rem) | Playfair Display | 400 | Sub-headline within a region |
-| `{typography.card-headline}` | 1.3rem | Playfair Display | 400 | Card or pillar-block title |
-| `{typography.timeline-headline}` | 1.2rem | Playfair Display | 400 | Timeline-step or phase headline |
-| `{typography.stat-figure}` | 2rem | Playfair Display | 400 | Numerical stat figure (typically inline in a stats cluster) |
-| `{typography.team-initial}` | 2rem | Playfair Display | 400 | Initial letter centered inside a team-photo circle |
-| `{typography.agenda-numeral}` | 1.5rem | Playfair Display | 400 | Ordinal numeral preceding an agenda row |
-| `{typography.quote-mark}` | 5rem | Playfair Display | 400 | Opening quotation glyph for a pull-quote |
-| `{typography.subtitle}` | clamp(1rem, 1.5vw, 1.3rem) | Inter | 400 | Subtitle paragraph below a display headline |
-| `{typography.body}` | clamp(0.9rem, 1.2vw, 1.1rem) | Inter | 400 | Standard paragraph body |
-| `{typography.body-sm}` | 0.9rem | Inter | 400 | Compact body inside cards or timeline items |
-| `{typography.attribution}` | 0.85rem | Inter | 400 | Attribution line below a quote, with 2px tracking + uppercase |
-| `{typography.label}` | 0.75rem | Inter | 500 | Section label / eyebrow above a headline, with 3px tracking + uppercase |
-| `{typography.micro}` | 0.7rem | Inter | 400 | Image label, slide counter, smallest chrome text |
+| `{typography.display}` | clamp(3rem, 6vw, 5.5rem) | Playfair Display | 400 | 封面或大开场标题 |
+| `{typography.h1}` | clamp(2.5rem, 5vw, 4.5rem) | Playfair Display | 400 | 分节开场或大收尾标题 |
+| `{typography.h2}` | clamp(1.8rem, 3.5vw, 3rem) | Playfair Display | 400 | 页面主标题 |
+| `{typography.h3}` | clamp(1.2rem, 2vw, 1.6rem) | Playfair Display | 400 | 区域内的副标题 |
+| `{typography.card-headline}` | 1.3rem | Playfair Display | 400 | 卡片或支柱块标题 |
+| `{typography.timeline-headline}` | 1.2rem | Playfair Display | 400 | 时间轴步骤或阶段标题 |
+| `{typography.stat-figure}` | 2rem | Playfair Display | 400 | 数值统计数字（通常行内放在统计簇里） |
+| `{typography.team-initial}` | 2rem | Playfair Display | 400 | 团队照片圆内居中的首字母 |
+| `{typography.agenda-numeral}` | 1.5rem | Playfair Display | 400 | 议程行前的序数数字 |
+| `{typography.quote-mark}` | 5rem | Playfair Display | 400 | 拉页引文的起始引号字形 |
+| `{typography.subtitle}` | clamp(1rem, 1.5vw, 1.3rem) | Inter | 400 | 展示标题下方的副标题段落 |
+| `{typography.body}` | clamp(0.9rem, 1.2vw, 1.1rem) | Inter | 400 | 标准段落正文 |
+| `{typography.body-sm}` | 0.9rem | Inter | 400 | 卡片或时间轴项内紧凑正文 |
+| `{typography.attribution}` | 0.85rem | Inter | 400 | 引文下方出处行，2px 字距 + 大写 |
+| `{typography.label}` | 0.75rem | Inter | 500 | 标题上方的分节标签 / 眉题，3px 字距 + 大写 |
+| `{typography.micro}` | 0.7rem | Inter | 400 | 图片标签、页码、最小外壳文字 |
 
-### Defaults
-- **Default size for the primary slide headline**: `{typography.h2}` (clamp 1.8–3rem).
-- **Default size for a cover or large opening headline**: `{typography.h1}` (clamp 2.5–4.5rem); for the most expansive cover, `{typography.display}` (clamp 3–5.5rem).
-- **Default size for paragraph body**: `{typography.body}` (clamp 0.9–1.1rem).
-- **Default size for any inline label or eyebrow**: `{typography.label}` (0.75rem) — always 3px tracking + uppercase.
-- **Default weight for any Playfair headline**: 400. Don't reach for 600 or 700.
-- **Default weight for body**: 400.
-- **Default weight for labels/micro**: 500.
-- **Default size for a stat numeral inside a stats cluster**: `{typography.stat-figure}` (2rem). Cartesian does not have a hero-stat-numeral pattern (no 5–7rem display stat); stats are presented as inline ranks at modest scale.
+### 默认值
+- **页面主标题默认尺寸**：`{typography.h2}`（clamp 1.8–3rem）。
+- **封面或大开场标题默认尺寸**：`{typography.h1}`（clamp 2.5–4.5rem）；最铺张的封面用 `{typography.display}`（clamp 3–5.5rem）。
+- **段落正文默认尺寸**：`{typography.body}`（clamp 0.9–1.1rem）。
+- **任何行内标签或眉题默认尺寸**：`{typography.label}`（0.75rem），始终 3px 字距 + 大写。
+- **任何 Playfair 标题默认字重**：400。别去取 600 或 700。
+- **正文默认字重**：400。
+- **标签/微型默认字重**：500。
+- **统计簇内统计数字默认尺寸**：`{typography.stat-figure}`（2rem）。Cartesian 没有英雄统计数字模式（没有 5–7rem 的展示统计），统计以适中尺度的行内排位呈现。
 
-When unsure, reach for `{typography.h2}` for the slide's primary text moment, not `{typography.h3}` (which is a sub-headline within a region).
+拿不准时，页面主要文字瞬间取 `{typography.h2}`，不要用 `{typography.h3}`（后者是区域内的副标题）。
 
-### Signature Treatments
-These treatments are **non-optional whenever the corresponding element type is used**:
+### 招牌处理
+以下处理**只要用到对应元素类型就不可省略**：
 
-- **Every Playfair headline, stat, quote, card title, and initial is set at weight 400.** Bold Playfair does not exist in this system. The thin-stroke didone aesthetic is the identity.
-- **Every Playfair element is set in sentence case (or true title case for proper nouns).** Uppercase Playfair is not used.
-- **Every Inter label, attribution, and micro-text element is uppercase with 2–3px letter-spacing.** Labels at 3px tracking; attributions and micro at 2px. Without the tracking, Inter caps read as untreated.
-- **Every Playfair element is rendered in `{colors.text-primary}` (ink).** Headlines are never accent-taupe and never gray. The exception is decorative initial letters inside a circular `card-icon` or `team-photo`, where the letterform is rendered in `{colors.accent}`.
-- **Every 1px structural border uses `{colors.line}`.** Other border colors do not exist except for the rare `horizontal-accent` rule in ink.
-- **Every card, image-placeholder, team-photo, and nav-arrow border is 1px solid.** Thicker borders do not exist in this system.
-- **Charts use ink-black for the primary series and dashed taupe (5px, 5px) for the comparison series.** This pair is the only chart-color rule.
+- **每个 Playfair 标题、统计、引文、卡片标题、首字母都设字重 400。** 系统里不存在粗 Playfair。细笔画迪多尼美学就是身份。
+- **每个 Playfair 元素都句首大写（专有名词用真正的标题式大写）。** 不用大写 Playfair。
+- **每个 Inter 标签、出处、微型文字元素都大写、2–3px 字距。** 标签 3px 字距，出处与微型 2px。没有字距，Inter capitals 读起来像没处理过。
+- **每个 Playfair 元素都以 `{colors.text-primary}`（墨）渲染。** 标题绝不用强调灰褐，绝不用灰。例外是圆形 `card-icon` 或 `team-photo` 内的装饰首字母，字形用 `{colors.accent}` 渲染。
+- **每条 1px 结构边都用 `{colors.line}`。** 别的边框色不存在，除罕见的墨色 `horizontal-accent` 线外。
+- **每张卡片、图片占位、团队照片、导航箭头边都是 1px 实线。** 系统里不存在更粗的边。
+- **图表主系列用墨黑，比较系列用灰褐虚线（5px, 5px）。** 这一对是唯一的图表配色规则。
 
-### Typography Principles
-The Playfair-400 + Inter-400 combination is the system's voice. Switching either family or jumping Playfair to weight 700 reads as a different design system. Italic emphasis is permitted via inline `<em>` inside body copy (Inter italic) — italic Playfair is loaded but reserved for rare uses. Underline is not used.
+### 排印原则
+Playfair-400 + Inter-400 的组合是系统的声部。换掉任一家族、或把 Playfair 跳到字重 700，都会读成另一套设计系统。斜体强调允许通过正文里的行内 `<em>`（Inter 斜体）；斜体 Playfair 已加载但留给罕见用途。不用下划线。
 
-Line-height stays open: headlines at 1.1, body at 1.6. The wide body line-height is part of the breathing-room aesthetic.
+行高保持宽松：标题 1.1，正文 1.6。宽正文行高是呼吸感美学的一部分。
 
-## Layout
+## 布局
 
-### Canvas System
-The canvas is `100vw × 100vh` — full viewport with hidden overflow. Each `.slide` is absolutely positioned to fill the viewport; one slide carries `.active` (opacity 1, visibility visible) at a time. Transitions are 0.6s opacity + visibility fades.
+### 画布系统
+画布是 `100vw × 100vh`，全视口、溢出隐藏。每张 `.slide` 绝对定位铺满视口，同一时刻一张带 `.active`（opacity 1、visibility visible）。过渡是 0.6s 的 opacity + visibility 淡入。
 
-### Padding and Gap Scale
-| Token | Value | Use |
+### 内边距与间隙比例
+| Token | 值 | 用途 |
 |---|---|---|
-| `{spacing.pad-y}` | 4vh | Default vertical slide padding |
-| `{spacing.pad-x}` | 4vw | Default horizontal slide padding |
-| `{spacing.gap-xl}` | 6vw | Major two-column gutter (most spacious) |
-| `{spacing.gap-lg}` | 5vw | Standard two-column or grid gutter |
-| `{spacing.gap-md}` | 3vw | Card-grid gutter |
-| `{spacing.gap-sm}` | 2vh | Agenda row vertical padding, attribution spacing |
-| `{spacing.card-pad}` | 4vh 2vw | Internal padding for content cards |
+| `{spacing.pad-y}` | 4vh | 默认纵向幻灯片内边距 |
+| `{spacing.pad-x}` | 4vw | 默认横向幻灯片内边距 |
+| `{spacing.gap-xl}` | 6vw | 主双栏栏间距（最宽裕） |
+| `{spacing.gap-lg}` | 5vw | 标准双栏或网格栏间距 |
+| `{spacing.gap-md}` | 3vw | 卡片网格栏间距 |
+| `{spacing.gap-sm}` | 2vh | 议程行纵向内边距、出处间距 |
+| `{spacing.card-pad}` | 4vh 2vw | 内容卡片内部内边距 |
 
-Headlines typically carry a 2–3vh margin-bottom from labels above and a 2vh margin-bottom from body below. Section headers above 3-card or 4-team grids carry a 6vh margin-bottom from the grid (significant breathing room).
+标题通常带上方标签下来的 2–3vh margin-bottom、下方正文出去的 2vh margin-bottom。3 卡或 4 团队网格上方的分节页眉带 6vh margin-bottom 到网格（显著的呼吸）。
 
-### Decorative Geometry Layer
-Cartesian's signature is its **drafting-paper geometric decoration**. Every slide may layer one or more of:
-- A large ringed `geo-decoration` anchored to a corner (typically 30–50vw diameter) with an inner dashed ring at ~80% diameter (the `::before` pseudo).
-- A `vertical-line` at ~8vw from the left edge running floor-to-ceiling at 30% opacity.
-- A `horizontal-accent` (a single short black 1px line) anchored at 15vh from the bottom-left.
-- A centered `geo-ring` (50vw circle) on closing or contemplative slides.
+### 装饰几何层
+Cartesian 的签名是**描图纸式几何装饰**。每页可叠一个或多个：
+- 锚在角落的大 `geo-decoration` 环（通常 30–50vw 直径），带约 80% 直径的内虚线环（`::before` 伪元素）。
+- 距左边缘约 8vw、从地面到顶的 `vertical-line`，30% 不透明度。
+- 锚在左下 15vh 处的 `horizontal-accent`（一条短黑 1px 线）。
+- 收尾或沉思页上居中的 `geo-ring`（50vw 圆）。
 
-These elements have **no informational role** — they create atmosphere. Slides without any geometric decoration are valid; over-decoration (more than two geo elements per slide) breaks the restraint.
+这些元素**不带信息角色**，只造氛围。完全没有几何装饰的页是有效的；装饰过度（每页超过两个 geo 元素）会破掉克制。
 
-### Chrome
-The system's chrome is minimal:
-- Right-edge vertical column of small `nav-dot` indicators (8px circles in taupe).
-- Bottom-left pair of square `nav-arrow` buttons (40×40, 1px taupe border, transparent fill).
-- Bottom-right `slide-counter` text in Inter at 0.75rem with 2px tracking in `{colors.accent}`.
+### 外壳
+系统的外壳极简：
+- 右边缘竖向列的小 `nav-dot` 指示器（8px 灰褐圆）。
+- 左下一对方形 `nav-arrow` 按钮（40×40，1px 灰褐边，透明填充）。
+- 右下 `slide-counter` 文字，Inter 0.75rem、2px 字距、`{colors.accent}`。
 
-There is no top chrome bar, no persistent header, no footer rule.
+没有顶部外壳条、没有常驻页眉、没有页脚线。
 
-## Depth and Elevation
+## 纵深与层级
 
-### Flat Plane (Only Technique)
-Cartesian has no shadows, no elevated cards, no rounded surfaces, no gradients. Every element sits on a single plane.
+### 平面（唯一手法）
+Cartesian 没有阴影、没有抬升卡片、没有圆角表面、没有渐变。每个元素落在单一平面。
 
-Hierarchy is constructed from:
-- **Type contrast** — Playfair serif vs Inter sans; size scale from 5rem down to 0.7rem.
-- **1px hairline dividers** — agenda rows, timeline rule, card outlines, image-placeholder outlines, stats top-border, team-photo rings, nav-arrow borders.
-- **Color tone** — ink vs gray vs taupe.
-- **Negative space** — generous padding around every element.
-- **Geometric atmosphere** — compass-drafted rings behind content suggest depth without creating it.
+层级来自：
+- **字面对比**：Playfair 衬线对 Inter 无衬线，尺寸从 5rem 到 0.7rem 的尺度。
+- **1px 细线分隔**：议程行、时间轴线、卡片轮廓、图片占位轮廓、统计顶边、团队照片环、导航箭头边。
+- **色调**：墨对灰对灰褐。
+- **负空间**：每个元素周围宽裕内边距。
+- **几何氛围**：内容后方圆规打稿般的环，暗示纵深而不真的造出纵深。
 
-Introducing a `box-shadow`, an elevated card, or a soft gradient breaks the restraint that defines the system.
+引入 `box-shadow`、抬升卡片或柔和渐变，会破掉定义系统的克制。
 
-## Shapes and Treatment
+## 形状与处理
 
-### Border Radius
-| Value | Use |
+### 圆角
+| 值 | 用途 |
 |---|---|
-| 50% (circle) | Every circular element: `card-icon` (40px), `team-photo` (12vw), `nav-dot` (8px), `geo-circle`, `geo-arc`, `geo-decoration`, `geo-ring` |
-| 0 | Everything else: cards, image-placeholders, nav-arrows, agenda rows, timeline, stat-blocks, chart container |
+| 50%（圆） | 每个圆形元素：`card-icon`（40px）、`team-photo`（12vw）、`nav-dot`（8px）、`geo-circle`、`geo-arc`、`geo-decoration`、`geo-ring` |
+| 0 | 其余一切：卡片、图片占位、导航箭头、议程行、时间轴、统计块、图表容器 |
 
-The system uses **only two radius values**: 50% (true circle) or 0 (sharp rectangle). Soft-rounded corners do not exist.
+系统**只用两种半径值**：50%（正圆）或 0（尖角矩形）。柔和圆角不存在。
 
-### Border Weights
-- **1px solid `{colors.line}`** — the universal structural border. Used on every card, image-placeholder, team-photo ring, nav-arrow, agenda row bottom, timeline rule, stats top, geo-circle, geo-decoration.
-- **1px dashed `{colors.line}`** — used on `geo-arc` and the inner `::before` ring inside `geo-decoration` / `geo-ring`. Dashed signals "construction line / arc."
-- **1px solid `{colors.text-primary}`** — used only on the rare `horizontal-accent` decorative rule. The system's only ink-black line.
-- **Chart bar/line stroke widths** — Chart.js series at 1px (bar borders), 2px (line series). Comparison series at 2px dashed (5px dash, 5px gap).
+### 边框粗细
+- **1px 实线 `{colors.line}`**：通用结构边。用于每张卡片、图片占位、团队照片环、导航箭头、议程行底边、时间轴线、统计顶边、geo-circle、geo-decoration。
+- **1px 虚线 `{colors.line}`**：用于 `geo-arc`，以及 `geo-decoration` / `geo-ring` 内的内 `::before` 环。虚线提示"构造线 / 弧"。
+- **1px 实线 `{colors.text-primary}`**：只用于罕见的 `horizontal-accent` 装饰线。系统唯一的墨黑线。
+- **图表条/线描边宽度**：Chart.js 系列 1px（条边）、2px（线系列）。比较系列 2px 虚线（5px 实、5px 空）。
 
-All structural borders are `{colors.line}`. Thicker borders, colored borders, and dashed structural borders (other than geo-arcs) do not exist.
+所有结构边都是 `{colors.line}`。更粗的边、彩色边、虚线结构边（geo 弧除外）都不存在。
 
-### Decorative Element Types
+### 装饰元素类型
 
-**Geometric ring (geo-circle / geo-decoration / geo-ring)** — Thin 1px taupe circles in various sizes (10vw, 30vw, 50vw) at 20–50% opacity. Typically paired with an inner dashed `::before` ring at 70–80% of the outer diameter, suggesting compass construction with both a primary and an offset arc. Anchored to corners or centers; sits behind content with `z-index: 0` and `pointer-events: none`.
+**几何环（geo-circle / geo-decoration / geo-ring）**：各种尺寸（10vw、30vw、50vw）、20–50% 不透明度的细 1px 灰褐圆。通常配一个外径 70–80% 的内虚线 `::before` 环，暗示圆规作图里同时有主圆和偏置弧。锚在角落或中心，以 `z-index: 0`、`pointer-events: none` 坐在内容后方。
 
-**Vertical line** — A single 1px taupe column anchored at ~8vw from the left slide edge, running floor-to-ceiling at 30% opacity. Suggests a drafting-paper alignment guide. Optional per slide.
+**竖线**：单条 1px 灰褐列，锚在距左页边约 8vw 处，从地面到顶，30% 不透明度。暗示描图纸的对齐辅助线。每页可选。
 
-**Horizontal accent** — A single 20vw × 1px black line anchored 15vh from the bottom-left of a slide. The system's only ink-black line — used as a strong terminal accent rule on cover or closing layouts. Use sparingly.
+**横向强调**：单条 20vw × 1px 黑线，锚在页面左下 15vh 处。系统唯一的墨黑线，作封面或收尾布局上强收尾强调线。用得省。
 
-**Image placeholder** — A solid `{colors.bg-secondary}` block with two 150% diagonal 1px taupe lines crossed at +30° and -30° via `::before` / `::after`, forming an X. Centers a small uppercase Inter label ("Visual Reference" or similar). The X pattern is the signature image-not-yet-wired treatment.
+**图片占位**：一块实色 `{colors.bg-secondary}` 块，两条 150% 对角 1px 灰褐线以 +30° 和 -30° 经 `::before` / `::after` 交叉成一个 X。中央一个小大写 Inter 标签（"Visual Reference" 或类似）。X 图案是图片未接时的签名处理。
 
-**Team-photo frame** — A 12vw circular block in `{colors.bg-secondary}` with a 1px taupe ring, holding a single Playfair-400 initial at 2rem in `{colors.accent}` centered. Used as portrait placeholder.
+**团队照片框**：12vw 圆形 `{colors.bg-secondary}` 块，1px 灰褐环，中央一个 2rem 的 Playfair-400 首字母，`{colors.accent}`。用作肖像占位。
 
-**Card** — A 1px taupe-bordered block with a semi-transparent white interior fill (`{colors.white-overlay}`) that lets the canvas tone bleed through subtly. The faint white fill is what differentiates a card from a bare region; remove the fill and the card disappears.
+**卡片**：1px 灰褐边的块，内部半透明白填充（`{colors.white-overlay}`），让画布色调微微透出。正是这层淡白填充把卡片与光区域区分开，去掉填充卡片就消失了。
 
-**Agenda row** — A flex row containing a Playfair `{typography.agenda-numeral}` in `{colors.accent}` at left, then a label at right, with 2vh padding and a 1px taupe bottom border. Stacked rows form an agenda list.
+**议程行**：flex 行，左边一个 `{colors.accent}` 的 Playfair `{typography.agenda-numeral}`，右边一个标签，2vh 内边距、1px 灰褐底边。叠起来的行构成议程列表。
 
-**Timeline** — A 1px taupe top-border across a flex row of evenly-distributed timeline items; each item carries a small Inter `year` label in taupe, a Playfair `{typography.timeline-headline}`, and an Inter body paragraph. The hairline is the only timeline structure — there are no nodes, no markers, no dots.
+**时间轴**：一排均分时间轴项上方一条 1px 灰褐顶边；每项带一个灰褐的小 Inter `year` 标签、一个 Playfair `{typography.timeline-headline}`、一段 Inter 正文。细线是时间轴唯一的结构，没有节点、没有标记、没有圆点。
 
-**Stats cluster** — A flex row of stat items separated by `gap-md`, framed by a 1px taupe top border, holding inline `{typography.stat-figure}` Playfair numerals with small uppercase Inter labels in taupe below.
+**统计簇**：由 `gap-md` 分隔的一排统计项，以 1px 灰褐顶边框住，装行内 `{typography.stat-figure}` Playfair 数字，下方灰褐的小大写 Inter 标签。
 
-**Quote mark** — A 5rem Playfair quote glyph at 50% opacity in taupe, positioned above a Playfair `{typography.h2}` headline + a small uppercase taupe attribution below.
+**引号**：5rem 的 Playfair 引号字形，50% 不透明度灰褐，放在 Playfair `{typography.h2}` 标题 + 下方小大写灰褐出处之上。
 
-**Chart** — Chart.js bar or line chart with ink-black primary series and dashed taupe comparison series. Grid lines in `{colors.bg-secondary}`. Axis ticks in `{colors.accent}`. Always rendered without fill on the primary series (or with a 5% ink-tinted fill on line charts).
+**图表**：Chart.js 条形或折线图，墨黑主系列、灰褐虚线比较系列。网格线用 `{colors.bg-secondary}`，轴刻度用 `{colors.accent}`。主系列始终不填充（折线图可用 5% 墨色淡填充）。
 
-## Do's and Don'ts
+## 该做与不该做
 
-### Do
-- Use a single 1px line in `{colors.line}` for every structural separator — agenda rule, timeline connector, card border, stats top, team-photo ring. The 1px hairline is Cartesian's identity.
-- Set every Playfair headline, stat, quote mark, and card title at weight 400. Don't reach for bold; the thin-stroke didone aesthetic depends on it.
-- Render every headline in `{colors.text-primary}` (ink). Playfair never appears in taupe or color.
-- Render every label, attribution, agenda numeral, and micro-text in `{colors.accent}` (taupe) with uppercase + 2–3px letter-spacing.
-- Layer decorative geometric rings (solid + dashed) at 20–50% opacity behind content for atmosphere. One or two geo elements per slide; never more.
-- Pair Playfair Display (serif headlines) with Inter (sans body). The two-face pairing is fixed.
-- Use the crossed-diagonal X pattern inside image placeholders. It is the system's signature placeholder treatment.
-- Let slides breathe — sparse layouts with generous negative space are the correct density.
-- Use `{colors.bg-secondary}` as the fill for image placeholders and team-photo frames — a subtle stone, not white, not gray.
-- Use a single `horizontal-accent` (20vw × 1px ink line) sparingly as a strong terminal rule on cover or closing compositions.
+### 该做
+- 每个结构分隔都用一条 1px 的 `{colors.line}` 线：议程线、时间轴连线、卡片边、统计顶边、团队照片环。1px 细线是 Cartesian 的身份。
+- 每个 Playfair 标题、统计、引号、卡片标题都设字重 400。别取粗体，细笔画迪多尼美学靠它。
+- 每个标题都用 `{colors.text-primary}`（墨）渲染。Playfair 绝不出现在灰褐或彩色里。
+- 每个标签、出处、议程数字、微型文字都用 `{colors.accent}`（灰褐）、大写 + 2–3px 字距。
+- 在内容后方叠装饰几何环（实线 + 虚线）、20–50% 不透明度作氛围。每页一到两个 geo 元素，绝不多。
+- 把 Playfair Display（衬线标题）与 Inter（无衬线正文）配对。两字面搭配是固定的。
+- 图片占位内用交叉对角 X 图案。这是系统签名占位处理。
+- 让页面呼吸，宽裕负空间的稀疏布局才是正确密度。
+- 图片占位与团队照片框用 `{colors.bg-secondary}` 作填充，是微妙石色，不是白，不是灰。
+- 单条 `horizontal-accent`（20vw × 1px 墨线）省着用，作封面或收尾构图上的强收尾线。
 
-### Don't
-- Don't introduce a populist accent color. No red, no orange, no blue, no green. The palette is stone-on-stone with ink for headlines.
-- Don't render Playfair headlines in `{colors.accent}` (taupe). Headlines are ink; taupe is reserved for small text.
-- Don't bold any Playfair element. Weight 400 is the standing rule; bold breaks the didone aesthetic.
-- Don't add shadows, elevated cards, or gradient fills. Cartesian is flat; depth comes from geometry and type, not z-axis.
-- Don't use rounded corners on cards or rectangles. The only round shapes are true circles (radius 50%).
-- Don't use thick borders (2px+). Every structural border is 1px.
-- Don't crowd the slide. Sparse breathing layouts read as elegant; packed layouts read as broken.
-- Don't pair Playfair with a different sans companion. The Inter pairing is fixed.
-- Don't render labels or micro-text in sentence case. Small Inter text is always uppercase + 2–3px tracking.
-- Don't add more than two geo decorations per slide — restraint is the rule; over-decoration reads as cluttered.
+### 不该做
+- 不要引入平民化强调色。没有红、橙、蓝、绿。配色是石压石，标题用墨。
+- 不要把 Playfair 标题渲染成 `{colors.accent}`（灰褐）。标题是墨，灰褐只留给小文字。
+- 不要把任何 Playfair 元素加粗。字重 400 是常驻规则，粗体会破掉迪多尼美学。
+- 不要加阴影、抬升卡片或渐变填充。Cartesian 是平的，纵深来自几何与文字，不来自 z 轴。
+- 不要在卡片或矩形上用圆角。唯一的圆是正圆（半径 50%）。
+- 不要用粗边（2px+）。每条结构边都是 1px。
+- 不要把页面塞满。稀疏、能呼吸的布局读起来优雅，塞满的布局读起来像坏了。
+- 不要给 Playfair 换别的无衬线搭档。Inter 搭配是固定的。
+- 不要把标签或微型文字渲染成句首大写。小号 Inter 文字始终大写 + 2–3px 字距。
+- 不要每页加超过两个 geo 装饰。克制是规则，装饰过度读起来杂乱。
 
-## Responsive Behavior
+## 响应式行为
 
-Cartesian is a viewport-fluid 1920×1080 presentation system using `vw` / `vh` units and `clamp()` throughout. There is a single `@media (max-aspect-ratio: 4/3)` breakpoint that collapses two-column grids to single-column, hides the timeline rule (which would lose meaning when stacked), and stacks team and card grids vertically. The system is otherwise responsive without breakpoints.
+Cartesian 是视口流式的 1920×1080 演示系统，通篇用 `vw` / `vh` 单位与 `clamp()`。有一个 `@media (max-aspect-ratio: 4/3)` 断点把双栏网格收成单栏、隐藏时间轴线（堆叠后失去意义）、并把团队与卡片网格纵向堆叠。其余部分无断点响应式。
 
-### Scaling Behavior
-- Display headlines scale from 2.5rem at minimum viewport to 5.5rem at maximum via `clamp()`.
-- Body text scales from 0.9rem to 1.1rem.
-- Padding uses `vh` / `vw` units that scale linearly with viewport.
-- The 1px borders, 8px nav dots, and 40px nav arrows are fixed and do not scale.
+### 缩放行为
+- 展示标题经 `clamp()` 从最小视口 2.5rem 缩放到最大 5.5rem。
+- 正文从 0.9rem 缩放到 1.1rem。
+- 内边距用随视口线性缩放的 `vh` / `vw` 单位。
+- 1px 边、8px 导航点、40px 导航箭头固定不缩放。
 
-### Presenter Behavior
-- Slides advance via `ArrowRight` or `Space`.
-- Slides reverse via `ArrowLeft`.
-- Nav dots at right edge can be clicked to jump to specific slides.
-- Nav arrows at bottom-left are clickable; hover state inverts background to ink and text to cream.
-- Slide counter at bottom-right shows current / total with 2-digit zero-padding.
+### 放映行为
+- 用 `ArrowRight` 或 `Space` 前进。
+- 用 `ArrowLeft` 后退。
+- 右边缘导航点可点击跳转到指定页。
+- 左下导航箭头可点击，悬停态把背景反成墨色、文字反成奶油。
+- 右下页码以两位数补零显示 当前 / 总数。
 
-### Charts
-Charts are rendered with Chart.js (loaded via CDN). The two chart types in the source are bar and line; both follow the ink-primary / dashed-taupe-comparison convention. Custom font settings inject Inter into Chart.js label rendering.
+### 图表
+图表用 Chart.js（经 CDN 加载）渲染。源码里的两种图表是条形和折线，都遵守墨主系列 / 灰褐虚线比较系列的约定。自定义字体设置把 Inter 注入 Chart.js 的标签渲染。
 
-### Print / Export
-Not explicitly handled. Each slide is a 100vw × 100vh block; export workflows should snapshot each slide at 1920×1080.
+### 打印 / 导出
+未明确处理。每页是 100vw × 100vh 块，导出流程应逐页按 1920×1080 截图。
 
-## CJK & International Content
+## CJK 与国际化内容
 
-### Recommended Chinese Pairing
+### 推荐中文搭配
 
-| Role | Latin font | Recommended Chinese pairing | Source |
+| 角色 | 拉丁字体 | 推荐中文搭配 | 来源 |
 |---|---|---|---|
-| Display / Headline (Playfair Display 400) | Playfair Display | 思源宋体 Noto Serif SC 700 | Google Fonts |
-| Body / Label (Inter 400–500) | Inter | 思源宋体 Noto Serif SC 400 | Google Fonts |
+| 展示 / 标题（Playfair Display 400） | Playfair Display | 思源宋体 Noto Serif SC 700 | Google Fonts |
+| 正文 / 标签（Inter 400–500） | Inter | 思源宋体 Noto Serif SC 400 | Google Fonts |
 
-### Mixed-Content Strategy
+### 混排策略
 
-Use **Strategy A — single-font-stack with fallback**: declare Noto Serif SC *after* the Latin font in the same `font-family` stack so Latin glyphs render in Playfair / Inter and CJK glyphs fall through to Noto Serif SC automatically. One CSS rule per role, no manual class switching.
+用**策略 A — 单字体栈带回退**：在同一条 `font-family` 栈里把 Noto Serif SC 声明在拉丁字体**之后**，这样拉丁字形渲染成 Playfair / Inter，CJK 字形自动落到 Noto Serif SC。每个角色一条 CSS 规则，无需手动切类。
 
-### Loading
+### 加载
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -481,44 +485,44 @@ Use **Strategy A — single-font-stack with fallback**: declare Noto Serif SC *a
 /* Headlines use Noto Serif SC 700; body uses Noto Serif SC 400. */
 ```
 
-### Universal CJK Adjustments
+### 通用 CJK 调整
 
-- **Line-height**: bump CJK body line-height to ~1.75 (from 1.6) — Hanzi need more vertical breathing than Latin lowercase, and Cartesian already favors generous leading.
-- **Letter-spacing**: zero out `letter-spacing` on Hanzi runs. Keep the 2–3px tracking only on uppercase Latin labels.
-- **Text-transform**: drop `text-transform: uppercase` on any label/attribution/micro when content is Hanzi — Chinese has no case; forcing uppercase does nothing for Hanzi but breaks the rendering of any mixed Latin acronyms inside.
-- **Punctuation**: use Chinese full-width punctuation (，。：；「」) for Chinese sentences, half-width (`,.:;""`) for Latin. Never mix half-width punctuation into a Chinese sentence.
-- **No period on headlines**: Chinese headline convention omits the terminal 。 — strip it from display strings.
-- **Pangu spacing**: insert a thin space (or a regular space) between adjacent Hanzi and Latin/digit runs (e.g. `2026 年`, `AI 产品`). Improves readability of mixed runs.
-- **One font per sentence**: don't switch CJK families mid-sentence. Pick a single weight of Noto Serif SC for a given text run, never two inside one phrase.
+- **行高**：把 CJK 正文行高提到约 1.75（从 1.6 上调），汉字比拉丁小写需要更多纵向呼吸，而 Cartesian 本就偏爱宽裕行距。
+- **字距**：把汉字段上的 `letter-spacing` 清零。2–3px 字距只保留在大写拉丁标签上。
+- **文字变换**：任何标签/出处/微型文字是汉字时，去掉 `text-transform: uppercase`。中文没有大小写；强制大写对汉字无效，却会破坏里面混排的拉丁缩写的渲染。
+- **标点**：中文句子用中文全角标点（，。：；「」），拉丁用半角（`,.:;""`）。绝不把半角标点混进中文句子。
+- **标题不加句号**：中文标题惯例省略末尾的 。，展示字符串里要去掉。
+- **盘古之白**：相邻的汉字与拉丁/数字串之间插入一个细空格（或普通空格），例如 `2026 年`、`AI 产品`，提升混排可读性。
+- **一句一款字体**：不要在句中切换 CJK 字族。某段文字挑 Noto Serif SC 的单一字重，绝不在同一短语里用两个。
 
-### Aesthetic Notes
+### 美学提示
 
-Noto Serif SC (思源宋体) is the only mainstream Hanzi serif with the same restrained editorial register Cartesian needs — its modulated horizontal-thin / vertical-thick strokes echo Playfair's didone aesthetic, and its uniformly even cadence matches Cartesian's "museum-catalog" voice. Using NSC at weight 700 for headlines preserves the visual mass of the Latin display while NSC 400 carries body with the same quiet warmth Inter provides. The five-stone palette absorbs Hanzi cleanly because every glyph stays in ink or taupe — no candy fills to negotiate. The decorative compass-arc geometry layer is content-agnostic and works identically in any language. Avoid bolding Hanzi (the Chinese-typography equivalent of Cartesian's "no bold Playfair" rule); rely on size and the 1px line dividers for hierarchy.
+Noto Serif SC（思源宋体）是唯一具备 Cartesian 所需克制编辑语域的主流汉字衬线，它横细竖粗的调制笔画呼应 Playfair 的迪多尼美学，均匀齐整的节奏贴合 Cartesian 的"博物馆图录"声部。标题用 NSC 字重 700 保住拉丁展示的视觉分量，NSC 400 承载正文，带着 Inter 所提供的那份安静暖意。五石配色能干净地吸收汉字，因为每个字形都落在墨或灰褐里，没有糖果填充要协商。装饰圆规弧线几何层与内容无关，任何语言里表现一致。避免加粗汉字（相当于 Cartesian"不粗 Playfair"规则的中文排印版本），靠尺寸与 1px 线分隔搭层级。
 
-### Known CJK Gap
+### 已知 CJK 缺口
 
-Noto Serif SC is the only Hanzi serif loaded — there is no italic axis (Chinese type historically has no italic), so the rare italic Playfair `<em>` moment loses its emphasis when the body falls through to NSC. Substitute a single-character span colored in `{colors.accent}` (taupe), or wrap the emphasized phrase in faint brackets 「」, to recover emphasis. NSC's 700 weight is the heaviest available — the system's restraint-through-400-weight rule naturally extends to Chinese, so this is rarely a gap in practice.
+系统只加载了 Noto Serif SC 这一款汉字衬线，它没有斜体轴（汉字排印历史上没有斜体），于是正文落到 NSC 时，罕见的斜体 Playfair `<em>` 瞬间会丢掉强调。可把一个单字 span 染成 `{colors.accent}`（灰褐），或把强调短语包进淡淡的「」，以找回强调。NSC 700 是可用的最重字重，系统"以 400 字重克制"的规则自然延伸到中文，所以这个缺口在实践中很少出现。
 
-## Iteration Guide
+## 迭代指南
 
-1. Every new structural separator uses a 1px solid `{colors.line}` border. No exceptions.
-2. Every new headline uses Playfair Display at weight 400 in `{colors.text-primary}`. Don't bold; don't color.
-3. Every new small text element (label, attribution, micro) uses Inter uppercase with 2–3px letter-spacing in `{colors.accent}`.
-4. Every new body paragraph uses Inter weight 400 in `{colors.text-secondary}`, with line-height 1.6.
-5. Every new card uses 1px taupe border + semi-transparent white overlay fill. No shadow, no radius.
-6. New circular elements (icons, photos, decorative rings) use border-radius 50% with 1px taupe ring.
-7. New geometric decorations stay subtle: 1 or 2 per slide, at 20–50% opacity, behind content (z-index 0, pointer-events none).
-8. New chart series follow the ink-primary / dashed-taupe-comparison convention. Don't introduce colored chart series.
-9. New layouts respect the breathing-room density rule — sparse beats dense in Cartesian.
-10. The `horizontal-accent` 20vw ink line is the system's only "ink rule" — use it sparingly as a terminal accent, never as a routine divider.
+1. 每个新结构分隔都用 1px 实线 `{colors.line}` 边。没有例外。
+2. 每个新标题都用 Playfair Display 字重 400、`{colors.text-primary}`。别加粗，别上色。
+3. 每个新小文字元素（标签、出处、微型）都用 Inter 大写、2–3px 字距、`{colors.accent}`。
+4. 每个新正文段落都用 Inter 字重 400、`{colors.text-secondary}`、行高 1.6。
+5. 每张新卡片都用 1px 灰褐边 + 半透明白叠层填充。无阴影，无半径。
+6. 新圆形元素（图标、照片、装饰环）用 border-radius 50% 配 1px 灰褐环。
+7. 新几何装饰保持微妙：每页 1 或 2 个、20–50% 不透明度、在内容后方（z-index 0、pointer-events none）。
+8. 新图表系列遵守墨主系列 / 灰褐虚线比较系列的约定。别引入彩色图表系列。
+9. 新布局遵守呼吸密度规则，Cartesian 里稀胜过密。
+10. `horizontal-accent` 20vw 墨线是系统唯一的"墨线"，省着用、作收尾强调，绝不当常规分隔线。
 
-## Known Gaps
+## 已知缺口
 
-- The Chart.js library is loaded via CDN; new chart types beyond bar and line require manual configuration matching the ink-primary / dashed-taupe-comparison aesthetic.
-- The decorative `geo-decoration` and `geo-ring` `::before` inner-ring pattern is hardcoded in CSS; size variants beyond what the source exercises require new style rules.
-- The team-photo placeholder shows a single Playfair initial in taupe; real portrait insertion requires replacing the initial with an `<img>` and adjusting the circular crop.
-- The chart axis label colors and grid colors are hardcoded inline in the Chart.js options blocks (rather than reading from CSS variables) — restyling requires editing JS, not CSS.
-- The image-placeholder X pattern (crossed +30°/-30° diagonals) is rendered via `::before` / `::after` with fixed 150% widths; resizing the placeholder beyond the source dimensions may require recomputing the rotation angle to maintain edge-touch.
-- Italic Playfair is loaded but not exercised in any default rule; it is available for inline `<em>` emphasis in body copy but the system itself does not author any italic text.
-- The `vertical-line` and `horizontal-accent` decorative elements have hardcoded position values (8vw from left, 15vh from bottom); using them off-default-position requires per-instance style overrides.
-- The slide-counter `currentSlide` / `totalSlides` IDs are referenced in the JS but the system has no internal slide-name registry; new slides simply increment by their DOM order.
+- Chart.js 库经 CDN 加载；超出条形和折线的新图表类型，需要手动配置以匹配墨主系列 / 灰褐虚线比较系列的美学。
+- 装饰 `geo-decoration` 与 `geo-ring` 的 `::before` 内环图案在 CSS 里硬编码，源码所用之外的尺寸变体需要新增样式规则。
+- 团队照片占位在灰褐里显示一个 Playfair 首字母，插入真实肖像要把首字母换成 `<img>` 并调整圆形裁切。
+- 图表轴标签色与网格色在 Chart.js options 块里内联硬编码（而非读 CSS 变量），改样式要改 JS，不是改 CSS。
+- 图片占位 X 图案（交叉的 +30°/-30° 对角线）经 `::before` / `::after` 以固定 150% 宽度渲染，占位尺寸超出源码范围时可能要重算旋转角才能贴边。
+- 斜体 Playfair 已加载但默认规则里未用，可用于正文里的行内 `<em>` 强调，但系统本身不编写任何斜体文字。
+- `vertical-line` 与 `horizontal-accent` 装饰元素的位置值硬编码（距左 8vw、距底 15vh），脱离默认位置使用要逐实例覆盖样式。
+- 页码的 `currentSlide` / `totalSlides` ID 在 JS 里被引用，但系统没有内部页名登记，新页只按 DOM 顺序递增。

@@ -1,34 +1,38 @@
-# Navigation Patterns
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/growth/product/site-architecture/references/navigation-patterns.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Detailed navigation patterns for different site types and contexts.
+# 导航模式
+
+面向不同站点类型与场景的详细导航模式。
 
 ---
 
-## Header Navigation
+## 头部导航
 
-### Simple Header (4-6 items)
+### 简易头部（4-6 项）
 
-Best for: small businesses, simple SaaS, portfolios.
+适用：小型企业、简单 SaaS、作品集站点。
 
 ```
 [Logo]   Features   Pricing   Blog   About   [CTA Button]
 ```
 
-Rules:
-- Logo always links to homepage
-- CTA button is rightmost, visually distinct (filled button, contrasting color)
-- Items ordered by priority (most visited first)
-- Active page gets visual indicator (underline, bold, color)
+规则：
+- Logo 始终链接到首页
+- CTA 按钮放在最右，视觉上要突出（实心按钮、对比色）
+- 各项按优先级排序（访问量最高的在前）
+- 当前页面加视觉标识（下划线、加粗、配色）
 
-### Mega Menu Header
+### 巨型菜单头部
 
-Best for: SaaS with many features, e-commerce with categories, large content sites.
+适用：功能众多的 SaaS、带分类的电商、大型内容站。
 
 ```
 [Logo]   Product ▾   Solutions ▾   Resources ▾   Pricing   Docs   [CTA]
 ```
 
-When "Product" is hovered/clicked:
+悬停或点击 "Product" 时：
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -43,31 +47,31 @@ When "Product" is hovered/clicked:
 └─────────────────────────────────────────────────┘
 ```
 
-Mega menu rules:
-- 2-4 columns max
-- Group items logically (by feature area, use case, or audience)
-- Include a "See all" link at the bottom
-- Don't nest dropdowns inside mega menus
-- Show descriptions for items when labels alone aren't clear
+巨型菜单规则：
+- 最多 2-4 列
+- 按逻辑分组（按功能域、使用场景或受众）
+- 底部放一个 "See all" 链接
+- 不要在巨型菜单里嵌套下拉菜单
+- 标签表意不清时，给条目加说明
 
-### Split Navigation
+### 分离式导航
 
-Best for: apps with both marketing and product nav.
+适用：营销导航与产品导航并存的应用。
 
 ```
 [Logo]   Features   Pricing   Blog        [Login]   [Sign Up]
 ├── Marketing nav (left) ──────┘          └── Auth nav (right) ──┤
 ```
 
-Right side handles authentication actions. Left side handles page navigation.
+右侧放认证操作，左侧放页面导航。
 
 ---
 
-## Footer Navigation
+## 页脚导航
 
-### Column-Based Footer (Standard)
+### 分栏页脚（标准）
 
-Best for: most sites. Organize links into 3-5 themed columns.
+适用：多数站点。把链接整理成 3-5 个主题分栏。
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -86,9 +90,9 @@ Best for: most sites. Organize links into 3-5 themed columns.
 └──────────────────────────────────────────────────────────┘
 ```
 
-### Minimal Footer
+### 极简页脚
 
-Best for: simple sites, landing pages.
+适用：简单站点、落地页。
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -97,9 +101,9 @@ Best for: simple sites, landing pages.
 └──────────────────────────────────────────────────────────┘
 ```
 
-### Expanded Footer
+### 扩展页脚
 
-Best for: sites using footer for SEO (comparison pages, location pages, resource links).
+适用：把页脚用于 SEO 的站点（对比页、地区页、资源链接）。
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -119,11 +123,11 @@ Best for: sites using footer for SEO (comparison pages, location pages, resource
 
 ---
 
-## Sidebar Navigation
+## 侧边栏导航
 
-### Documentation Sidebar
+### 文档侧边栏
 
-Persistent left sidebar with collapsible sections.
+常驻左侧栏，分区可折叠。
 
 ```
 Getting Started
@@ -151,14 +155,14 @@ Examples
 Changelog
 ```
 
-Rules:
-- Current page highlighted
-- Sections collapsible (expanded by default for active section)
-- Search at top of sidebar
-- "Previous / Next" page navigation at bottom of content area
-- Sticky on scroll (doesn't scroll away)
+规则：
+- 高亮当前页面
+- 分区可折叠（当前所在分区默认展开）
+- 搜索框放在侧边栏顶部
+- 内容区底部放 "Previous / Next" 翻页导航
+- 滚动时吸附（不随页面滚走）
 
-### Blog Category Sidebar
+### 博客分类侧边栏
 
 ```
 Categories
@@ -179,9 +183,9 @@ Newsletter
 
 ---
 
-## Breadcrumbs
+## 面包屑
 
-### Standard Format
+### 标准格式
 
 ```
 Home > Features > Analytics
@@ -189,13 +193,13 @@ Home > Blog > SEO Category > How to Do Keyword Research
 Home > Docs > API Reference > Authentication
 ```
 
-Rules:
-- Separator: `>` or `/` (be consistent)
-- Every segment is a link except the current page
-- Current page is plain text (not linked)
-- Don't include the current page if the title is already visible as an H1
+规则：
+- 分隔符：`>` 或 `/`（保持一致）
+- 除当前页面外，每一段都是链接
+- 当前页面用纯文本（不加链接）
+- 若标题已作为 H1 显示，就不要再列当前页面
 
-### With Schema Markup
+### 带 Schema 标记
 
 ```html
 <nav aria-label="Breadcrumb">
@@ -216,7 +220,7 @@ Rules:
 </nav>
 ```
 
-Or use JSON-LD (recommended):
+或者用 JSON-LD（推荐）：
 
 ```json
 {
@@ -232,22 +236,22 @@ Or use JSON-LD (recommended):
 
 ---
 
-## Mobile Navigation
+## 移动端导航
 
-### Hamburger Menu
+### 汉堡菜单
 
-Standard for mobile. All nav items collapse into a menu icon.
+移动端标准做法。所有导航项收进一个菜单图标。
 
-Rules:
-- Hamburger icon (three lines) top-right or top-left
-- Full-screen or slide-out panel
-- CTA button visible without opening the menu (sticky header)
-- Search accessible from mobile menu
-- Accordion pattern for nested items
+规则：
+- 汉堡图标（三条线）放右上或左上
+- 全屏或侧滑面板
+- 不打开菜单也能看到 CTA 按钮（吸附头部）
+- 移动端菜单里能进搜索
+- 嵌套项用手风琴模式
 
-### Bottom Tab Bar
+### 底部标签栏
 
-Best for: web apps, PWAs, mobile-first products.
+适用：Web 应用、PWA、移动优先产品。
 
 ```
 ┌──────────────────────────────────────┐
@@ -260,46 +264,46 @@ Best for: web apps, PWAs, mobile-first products.
 └──────────────────────────────────────┘
 ```
 
-Rules:
-- 3-5 items max
-- Icons + labels (not just icons)
-- Active state clearly indicated
-- Most important action in the center
+规则：
+- 最多 3-5 项
+- 图标 + 文字（不能只有图标）
+- 明确标出选中态
+- 最重要的操作放中间
 
 ---
 
-## Anti-Patterns
+## 反模式
 
-### Things to Avoid
+### 应避免的做法
 
-- **Too many header items** (8+): causes decision paralysis, nav becomes unreadable on smaller screens
-- **Dropdown inception**: dropdowns inside dropdowns inside dropdowns
-- **Mystery icons**: icons without labels — users don't know what they mean
-- **Hidden primary nav**: burying important pages in hamburger menus on desktop
-- **Inconsistent nav between pages**: nav should be identical across the site (except app vs marketing)
-- **No mobile consideration**: desktop nav that doesn't translate to mobile
-- **Footer as sitemap dump**: 50+ links in the footer with no organization
-- **Breadcrumbs that don't match URLs**: breadcrumb says "Products > Widget" but URL is `/shop/widget-pro`
+- **头部项目过多**（8 项以上）：引发决策瘫痪，小屏上导航难以阅读
+- **下拉套娃**：下拉里再套下拉，层层嵌套
+- **看不懂的图标**：图标不带文字说明，用户不知道它代表什么
+- **隐藏主导航**：桌面端把重要页面埋进汉堡菜单
+- **各页导航不一致**：全站导航应完全一致（应用与营销站除外）
+- **不考虑移动端**：桌面导航无法迁移到移动端
+- **页脚当站点地图倾倒场**：50 多个链接堆在页脚，毫无组织
+- **面包屑与 URL 不符**：面包屑写 "Products > Widget"，URL 却是 `/shop/widget-pro`
 
-### Common Fixes
+### 常见修法
 
-| Problem | Fix |
+| 问题 | 修法 |
 |---------|-----|
-| Too many nav items | Group into dropdowns or mega menus |
-| Users can't find pages | Add search, improve labeling |
-| High bounce from nav | Simplify choices, use clearer labels |
-| SEO pages not linked | Add to footer or resource sections |
-| Mobile nav is broken | Test on real devices, use hamburger pattern |
+| 导航项过多 | 收进下拉菜单或巨型菜单 |
+| 用户找不到页面 | 加搜索，改进标签措辞 |
+| 导航导致高跳出 | 精简选项，标签写得更清楚 |
+| SEO 页面没有入口链接 | 加进页脚或资源板块 |
+| 移动端导航失效 | 用真机测试，采用汉堡菜单模式 |
 
 ---
 
-## Navigation for SEO
+## 面向 SEO 的导航
 
-Internal links in navigation pass PageRank. Use this strategically:
+导航里的内链会传递 PageRank。要有策略地用：
 
-- **Header nav links are strongest** — put your most important pages here
-- **Footer links pass less value** but still matter — good for comparison pages, location pages
-- **Sidebar links** help with section-level authority — good for blog categories, doc sections
-- **Breadcrumbs** provide structural signals to search engines — implement with schema markup
-- **Don't use JavaScript-only nav** — search engines need crawlable HTML links
-- **Use descriptive anchor text** — "Analytics Features" not just "Features"
+- **头部导航链接权重最高**，把最重要的页面放这里
+- **页脚链接传递的权重较低**，但仍有用，适合对比页、地区页
+- **侧边栏链接**有助于板块级权威，适合博客分类、文档分区
+- **面包屑**向搜索引擎给出结构信号，配合 schema 标记实现
+- **别用纯 JavaScript 导航**，搜索引擎需要可抓取的 HTML 链接
+- **锚文本要具体**，写 "Analytics Features"，别只写 "Features"

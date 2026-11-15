@@ -1,8 +1,12 @@
-# Kubernetes Troubleshooting
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/developer/quality/kubernetes-specialist/references/troubleshooting.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Essential kubectl Commands
+# Kubernetes 排障
 
-### Pod Inspection
+## 常用 kubectl 命令
+
+### Pod 检查
 
 ```bash
 # Get pods with details
@@ -39,7 +43,7 @@ kubectl port-forward web-app-7d5c8b9f4-xk2pm 8080:8080 -n production
 kubectl port-forward service/web-app 8080:80 -n production
 ```
 
-### Deployment Debugging
+### Deployment 调试
 
 ```bash
 # Check deployment status
@@ -63,7 +67,7 @@ kubectl rollout undo deployment/web-app --to-revision=2 -n production
 kubectl rollout restart deployment/web-app -n production
 ```
 
-### Service and Network Debugging
+### Service 与网络调试
 
 ```bash
 # Get services
@@ -83,7 +87,7 @@ kubectl get networkpolicy -n production
 kubectl describe networkpolicy frontend-to-backend -n production
 ```
 
-### Resource and Configuration
+### 资源与配置
 
 ```bash
 # Get ConfigMaps and Secrets
@@ -107,7 +111,7 @@ kubectl get events -n production --field-selector involvedObject.name=web-app-7d
 
 ## Debug Pod
 
-### Ephemeral Debug Container
+### 临时调试容器
 
 ```bash
 # Attach debug container to running pod
@@ -129,7 +133,7 @@ kubectl debug web-app-7d5c8b9f4-xk2pm -n production \
   --target=web-app
 ```
 
-### Debug on Node
+### 在节点上调试
 
 ```bash
 # Create privileged pod on specific node
@@ -139,9 +143,9 @@ kubectl debug node/node-01 -it --image=ubuntu:latest
 kubectl debug node/node-01 -it --image=ubuntu:latest -- chroot /host
 ```
 
-## Common Issues and Solutions
+## 常见问题与解法
 
-### Issue 1: Pod in Pending State
+### 问题 1：Pod 处于 Pending 状态
 
 ```bash
 # Check pod status and events
@@ -163,7 +167,7 @@ kubectl describe pod web-app-7d5c8b9f4-xk2pm -n production | grep -A 10 Events
 kubectl get pod web-app-7d5c8b9f4-xk2pm -n production -o yaml | grep -A 5 nodeSelector
 ```
 
-### Issue 2: CrashLoopBackOff
+### 问题 2：CrashLoopBackOff
 
 ```bash
 # Check logs from crashed container
@@ -179,7 +183,7 @@ kubectl run debug-pod --image=myapp:latest -it --rm --restart=Never -- /bin/sh
 kubectl describe pod web-app-7d5c8b9f4-xk2pm -n production | grep -A 10 "Limits"
 ```
 
-### Issue 3: ImagePullBackOff
+### 问题 3：ImagePullBackOff
 
 ```bash
 # Check image pull secret
@@ -200,7 +204,7 @@ kubectl create secret docker-registry registry-credentials \
   -n production
 ```
 
-### Issue 4: Service Not Accessible
+### 问题 4：Service 不可访问
 
 ```bash
 # Check service endpoints
@@ -219,7 +223,7 @@ nslookup web-app.production.svc.cluster.local
 telnet web-app.production.svc.cluster.local 80
 ```
 
-### Issue 5: DNS Resolution Issues
+### 问题 5：DNS 解析问题
 
 ```bash
 # Check CoreDNS pods
@@ -237,7 +241,7 @@ dig web-app.production.svc.cluster.local
 kubectl exec web-app-7d5c8b9f4-xk2pm -n production -- cat /etc/resolv.conf
 ```
 
-### Issue 6: NetworkPolicy Blocking Traffic
+### 问题 6：NetworkPolicy 阻断流量
 
 ```bash
 # List network policies
@@ -260,7 +264,7 @@ kubectl get networkpolicy -n production -o custom-columns=NAME:.metadata.name,SE
 kubectl delete networkpolicy default-deny-all -n staging
 ```
 
-### Issue 7: High Resource Usage
+### 问题 7：资源占用过高
 
 ```bash
 # Check resource usage
@@ -279,7 +283,7 @@ kubectl top pods -n production --sort-by=memory
 kubectl describe node node-01 | grep -A 10 "Allocated resources"
 ```
 
-### Issue 8: PersistentVolumeClaim Issues
+### 问题 8：PersistentVolumeClaim 问题
 
 ```bash
 # Check PVC status
@@ -298,9 +302,9 @@ kubectl describe storageclass fast-ssd
 kubectl get events -n production --field-selector involvedObject.name=database-pvc
 ```
 
-## Advanced Debugging
+## 进阶调试
 
-### API Server Debugging
+### API Server 调试
 
 ```bash
 # Enable verbose output
@@ -314,7 +318,7 @@ kubectl cluster-info
 kubectl cluster-info dump > cluster-dump.txt
 ```
 
-### RBAC Debugging
+### RBAC 调试
 
 ```bash
 # Check if ServiceAccount can perform action
@@ -329,7 +333,7 @@ kubectl describe rolebinding web-app-rolebinding -n production
 kubectl auth can-i --list --as=system:serviceaccount:production:web-app-sa -n production
 ```
 
-### Performance Debugging
+### 性能调试
 
 ```bash
 # Get resource metrics
@@ -344,9 +348,9 @@ kubectl get priorityclasses
 kubectl describe priorityclass high-priority
 ```
 
-## Diagnostic Tools
+## 诊断工具
 
-### Network Tools Container
+### 网络工具容器
 
 ```yaml
 apiVersion: v1
@@ -362,7 +366,7 @@ spec:
   restartPolicy: Never
 ```
 
-### Database Client Container
+### 数据库客户端容器
 
 ```yaml
 apiVersion: v1
@@ -388,33 +392,33 @@ spec:
   restartPolicy: Never
 ```
 
-## Quick Reference
+## 速查表
 
-### Pod States
-- **Pending**: Waiting to be scheduled
-- **ContainerCreating**: Pulling image / creating container
-- **Running**: Pod is running
-- **Succeeded**: All containers exited successfully
-- **Failed**: At least one container failed
-- **CrashLoopBackOff**: Container keeps crashing
-- **ImagePullBackOff**: Cannot pull image
-- **ErrImagePull**: Image pull error
-- **Unknown**: Cannot get pod status
+### Pod 状态
+- **Pending**：等待调度
+- **ContainerCreating**：拉取镜像 / 创建容器
+- **Running**：Pod 正在运行
+- **Succeeded**：所有容器成功退出
+- **Failed**：至少一个容器失败
+- **CrashLoopBackOff**：容器反复崩溃
+- **ImagePullBackOff**：无法拉取镜像
+- **ErrImagePull**：镜像拉取出错
+- **Unknown**：无法获取 Pod 状态
 
-### Common Exit Codes
-- **0**: Success
-- **1**: General error
-- **137**: SIGKILL (OOMKilled - out of memory)
-- **139**: SIGSEGV (segmentation fault)
-- **143**: SIGTERM (graceful termination)
+### 常见退出码
+- **0**：成功
+- **1**：一般错误
+- **137**：SIGKILL（OOMKilled，内存不足）
+- **139**：SIGSEGV（段错误）
+- **143**：SIGTERM（优雅终止）
 
-## Best Practices
+## 最佳实践
 
-1. **Logs**: Always check logs first with `kubectl logs`
-2. **Events**: Use `kubectl describe` to see events
-3. **Labels**: Use consistent labels for easier debugging
-4. **Resources**: Set appropriate requests and limits
-5. **Health Checks**: Implement proper liveness and readiness probes
-6. **Monitoring**: Set up comprehensive monitoring and alerting
-7. **Debug Tools**: Keep debug containers ready
-8. **Documentation**: Document common issues and solutions
+1. **日志**：先用 `kubectl logs` 查日志
+2. **事件**：用 `kubectl describe` 看事件
+3. **标签**：标签保持一致，便于调试
+4. **资源**：设置合适的 requests 与 limits
+5. **健康检查**：实现存活与就绪探针
+6. **监控**：建立完善的监控与告警
+7. **调试工具**：备好调试容器
+8. **文档**：记录常见问题与解法

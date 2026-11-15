@@ -1,8 +1,12 @@
-# Geometry — coordinates, spacing, and collision rules
+> **中文汉化版** · 上游：[caru-ini/stack-diagram](https://github.com/caru-ini/stack-diagram) · 原文件：`skills/designer/design/stack-diagram/references/geometry.md` · License: MIT
+> 翻译日期：2026-11-15 · 同步状态：上游 HEAD（2026-11-15 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The canvas is a fixed-size absolutely-positioned coordinate system (default 1000px wide; height as needed). Nodes are `position:absolute` divs; edges live in one SVG overlay with the same viewBox as the canvas size. Because everything is hand-placed, the collision rules below are what keep the result clean.
+# 几何——坐标、间距和碰撞规则
 
-## The node box
+画布是一个定尺寸、绝对定位的坐标系（默认宽 1000px；高度按需）。节点是 `position:absolute` 的 div；连线放在同一张 SVG overlay 里，viewBox 与画布尺寸相同。因为一切都靠手工摆放，下面这些碰撞规则才是让结果干净的关键。
+
+## 节点盒子
 
 ```
 left = centerX - 66          (node div is 132 wide, text centered)
@@ -12,31 +16,31 @@ role: ~10px mono at topY+86
 node box bottom ≈ topY + 100
 ```
 
-So a node occupies roughly **132w × 100h**. All anchor math uses these numbers.
+所以一个节点大致占 **132w × 100h**。所有锚点计算都用这些数字。
 
-## Spacing constants
+## 间距常量
 
-- Horizontal: ≥140px between node centers on the same row (labels are 132 wide — closer and they touch)
-- Vertical: 140px between tile tops of consecutive rows (leaves ~40px clear between one row's box bottom and the next row's tile)
-- Groups, left/right: edges 24px outside the outermost node *boxes*, i.e. `leftmost centerX − 90` and `rightmost centerX + 90`. Measure from the 132px box, not the 60px tile — a name wider than its tile otherwise crowds one side, and every group gets the same, symmetric padding
-- Groups, top/bottom: top edge = first tile top − 60 (the group label lives in that band); **bottom edge ≥ last tile top + 150** so node text stays inside the box
-- Group label: inside the top-left corner (`top:12px; left:12px`, no background), so the border stays unbroken. Keep edges out of that corner.
-- Nested group: inset ≥24px from the parent on the sides and bottom, and start ≥48px below the parent's top edge (under the parent's label)
+- 水平：同一行节点中心相距 ≥140px（标签宽 132，再近就会挨上）
+- 垂直：相邻两行的 tile 顶相距 140px（上一行盒子底与下一行 tile 之间留约 40px 空隙）
+- 分组，左右：边界在最外侧节点**盒子**之外 24px，即 `leftmost centerX − 90` 和 `rightmost centerX + 90`。按 132px 盒子量，不要按 60px tile 量，否则名字比 tile 宽时会挤向一侧；每个分组都拿到相同的对称内边距
+- 分组，上下：上边界 = 第一个 tile 顶 − 60（分组标签就放在这条带里）；**下边界 ≥ 最后一个 tile 顶 + 150**，让节点文字留在盒子内
+- 分组标签：放在左上角内侧（`top:12px; left:12px`，无背景），这样边框不断开。让连线避开那个角。
+- 嵌套分组：左右和底部相对父级内缩 ≥24px，顶部从父级上边界往下 ≥48px 起（在父级标签下方）
 
-## Edge anchoring — the rule that prevents text collisions
+## 连线锚定——防止文字被压的规则
 
-**A node is its tile plus the text below it.** Treat `(centerX±66, topY..topY+100)` as the connection boundary.
+**一个节点等于它的 tile 加上下面的文字。** 把 `(centerX±66, topY..topY+100)` 当作连接边界。
 
-- **Horizontal edges** (same row): connect tile side to tile side at tile mid-height, `y = topY+30`, from `x = centerX+30+4` to `x = targetCenterX-30-4`. This is safe because there's no text beside tiles.
-- **Vertical edges** (node above node): connect **box bottom to tile top** — from `y = topY_upper + 100` down to `y = topY_lower - 4` (or upward, reversed). Never draw from tile bottom (`topY+60`) through the label text.
-- **Elbow edges** (different row AND column): run the vertical segment in an x-corridor free of node boxes; run the horizontal segment in the clear band between rows (`topY_lower - 40 .. topY_lower - 10`). Crossing another *edge* is normal diagram practice; crossing a *node box* is not.
-- Leave a 4–6px gap between line end and the boundary; arrowheads (`marker-end`) supply the touch.
+- **水平连线**（同一行）：在 tile 中线高度 `y = topY+30`，从 `x = centerX+30+4` 连到 `x = targetCenterX-30-4`，tile 边对 tile 边。安全，因为 tile 旁边没有文字。
+- **垂直连线**（节点在上、节点在下）：连**盒子底到 tile 顶**：从 `y = topY_upper + 100` 往下到 `y = topY_lower - 4`（或反过来向上）。绝不要从 tile 底（`topY+60`）穿过标签文字往下画。
+- **肘形连线**（不同行且不同列）：垂直段走在没有节点盒子的 x 走廊里；水平段走在两行之间的空白带里（`topY_lower - 40 .. topY_lower - 10`）。穿过另一条**连线**是画图的常规做法；穿过**节点盒子**不行。
+- 线端与边界之间留 4–6px 间隙；箭头（`marker-end`）负责补上那一碰。
 
-Two layers of defense are built into the template — keep them:
-1. Edge labels use `paint-order: stroke` with a paper-colored stroke (halo), so lines under them stay readable.
-2. Node name/role text is wrapped in `<span>`s with paper background, so an unavoidable crossing line disappears behind the text instead of striking through it.
+模板内置两层防护，保留它们：
+1. 连线标签用 `paint-order: stroke` 配纸色描边（光晕），线从底下过时仍可读。
+2. 节点 name/role 文字包在带纸色背景的 `<span>` 里，实在避不开的穿线会消失在文字背后，而不是划过文字。
 
-## Edge classes and labels
+## 连线类与标签
 
 ```html
 <path class="e" d="M148 150 H306" marker-end="url(#ar)"/>        accent solid — primary flow
@@ -45,16 +49,16 @@ Two layers of defense are built into the template — keep them:
 <text class="el a" x="227" y="142" text-anchor="middle">HTTPS</text>
 ```
 
-The arrowhead marker is `#ar`. It fills with `context-stroke`, so it takes the color of whichever line uses it, in both themes — don't add per-color markers. AWS diagrams use `#open`, the same way.
+箭头 marker 是 `#ar`。它用 `context-stroke` 填充，于是自动取用它的那条线的颜色，两种主题都成立，不要为每种颜色加单独 marker。AWS 图用 `#open`，同理。
 
-- Horizontal edge label: centered above the line, `y = lineY - 8`
-- Vertical edge label: right of the line, `x = lineX + 10`, vertically mid-segment
-- Use `.el.a` (accent) for labels on accent edges, `.el` for the rest
-- Keep labels to 1–2 short words; the role text under nodes carries the detail
+- 水平连线标签：居中放在线上方，`y = lineY - 8`
+- 垂直连线标签：放在线右侧，`x = lineX + 10`，垂直方向居中于该段
+- accent 连线上的标签用 `.el.a`（accent），其余用 `.el`
+- 标签只用 1–2 个短词；细节交给节点下面的 role 文字
 
-## Worked example (the template's sample)
+## 演算示例（模板自带的样例）
 
-Canvas 1000×540. Row 1 tiles at top=120: User(cx 112), App(cx 342), API(cx 487). Row 2 tiles at top=350: Tool One(cx 172), Tool Two(cx 354). Vendor group around App and API `left:252 top:60 w:325 h:210` (342−90 → 487+90; top 120−60; bottom 270 = 120+150); tooling group `left:82 top:290 w:362 h:210` (172−90 → 354+90; top 350−60; bottom 500 = 350+150).
+画布 1000×540。第 1 行 tile 在 top=120：User(cx 112)、App(cx 342)、API(cx 487)。第 2 行 tile 在 top=350：Tool One(cx 172)、Tool Two(cx 354)。Vendor 分组框住 App 和 API，`left:252 top:60 w:325 h:210`（342−90 → 487+90；top 120−60；bottom 270 = 120+150）；tooling 分组 `left:82 top:290 w:362 h:210`（172−90 → 354+90；top 350−60；bottom 500 = 350+150）。
 
 ```
 user→app        M148 150 H306      (horizontal, tile-mid: 112+30+6 → 342-30-6)   label "HTTPS" at (227, 142)
@@ -62,6 +66,6 @@ app→api         M376 150 H451      (horizontal, tile-mid)
 tool2→tool1     M318 380 H208      (dashed, tile-mid of row 2: 354-30-6 → 172+30+6) label "pre-commit" at (263, 372)
 ```
 
-A vertical edge from API down to a node at cx 487 in row 2 would be `M487 226 V344` (box bottom 120+100+6 → tile top 350-6).
+一条从 API 向下连到第 2 行 cx 487 节点的垂直连线会是 `M487 226 V344`（盒子底 120+100+6 → tile 顶 350-6）。
 
-Sanity-check your plan by listing every vertical/elbow segment and asking: which node boxes does this x-corridor pass through between y1 and y2? The answer must be none.
+检查你的方案时，把每条垂直/肘形段列出来，逐段问：在 y1 到 y2 之间，这条 x 走廊穿过了哪些节点盒子？答案必须是：一个都没有。
