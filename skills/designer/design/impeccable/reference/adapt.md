@@ -233,7 +233,7 @@
 
 /* Device supports hover */
 @media (hover: hover) {
-  .card:hover { transform: translateY(-2px); }
+  .card:hover .card-surface { transform: translateY(-2px); }  /* Lift a child; the card stays the hit area */
 }
 
 /* Device doesn't support hover (touch) */

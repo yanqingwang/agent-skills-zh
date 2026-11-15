@@ -58,7 +58,7 @@
     "understand-anything-plugin/skills/understand/SKILL.md": "a1e79d5c5332ac06da4de55a3997c272b825e17c"
   },
   "mvanhorn/last30days-skill": {
-    "skills/last30days/SKILL.md": "01cbf44bacd6aa1a567f257908999c1dd84ff54e",
+    "skills/last30days/SKILL.md": "aa32380befb6bb5b37be2cd6873f60d67bc41726",
     "skills/last30days/references/agent-mode.md": "d619b025b0071f07f6dc5665baab2f96c6ec0af3",
     "skills/last30days/references/category-peers.md": "bafdfc936ab28ae6b388d6d76da54460f6a40f21",
     "skills/last30days/references/competitors.md": "d8b05ecc346ff82d709c45b4bba48158ceb1fa93",
@@ -642,7 +642,7 @@
     ".claude/skills/ui-styling/SKILL.md": "b5a9acb9643e10b3629c0b9cac7e616c1080b597"
   },
   "pbakaus/impeccable": {
-    ".claude/skills/impeccable/SKILL.md": "c211c73772fd65e4352894abf8d9803962d46045"
+    ".claude/skills/impeccable/SKILL.md": "74f2357d060be200b84ae84e5f3fa97a5bc96275"
   },
   "cloudflare/security-audit-skill": {
     "skills/security-audit/SKILL.md": "92178dad304d3f63e37582a297026a7874e12c62"
@@ -701,21 +701,30 @@
     "skills/open-code-review/SKILL.md": "01317b749e475294236fc85999a4f277c88bbc5a"
   },
   "emilkowalski/skills": {
-    "skills/emil-design-eng/SKILL.md": "dc063c2a861922c1c9f2412b824b0862746304f5",
-    "skills/animate/SKILL.md": "2d3b63acc5e2afcbf54b5ba59792e69fa51bcb0d",
-    "skills/choreograph/SKILL.md": "9fef0048d260be7bc05a909a03b52627bb3ccf37",
-    "skills/animation-vocabulary/SKILL.md": "5ab2976514c74a194ebf069506d95ff3a5a0084f",
-    "skills/animation-performance/SKILL.md": "74c421e4e673cab84490f8b17b89735c30b0f555",
-    "skills/improve-animations/SKILL.md": "d6e77f37272329af0cc36f9eeedbe5226e86ce63",
-    "skills/review-animations/SKILL.md": "591397b5308266f76671dacc3e44830a3e3e535f",
-    "skills/remove-animations/SKILL.md": "100b7b7666f7d09c69a75ebb793e30e607058e77",
-    "skills/find-animation-opportunities/SKILL.md": "d3b030fbca9abad9220a032f72d425c6b7fa2de8",
-    "skills/gestures/SKILL.md": "23e6562c43cb60ac496536b540ba29f8dee8eba8",
-    "skills/apple-design/SKILL.md": "adf68c517f2d7d2781587d619de07f4de286da57",
-    "skills/mobile-native/SKILL.md": "94bba21fcb990b850e06effbf5709c96a07446ad",
-    "skills/prototype/SKILL.md": "dbcc1a23c66933f7372c0aacbce2b0d7cc6100b6",
-    "skills/pick-ui-library/SKILL.md": "5e0028e988b88d2a88a019fdc978b4732243e467",
-    "skills/learn-taste/SKILL.md": "df418c0f2c91dae692bc7009350ac4f2a71d4508",
-    "skills/write-swift/SKILL.md": "a09a8f693304fe1c04ed56d61dde9833a516849e"
+    "skills/emil-design-eng/SKILL.md": "5155a4bf33e99028645dbdad4c049a3d209b1f21",
+    "skills/animate/SKILL.md": "69338805e0ea1c77d6f4c1987d516f46b1657819",
+    "skills/choreograph/SKILL.md": "965f7b1ee991adbbc301401cf2f6f6890b247572",
+    "skills/animation-vocabulary/SKILL.md": "e976138ced9ba6e9ecc3d65236c9ec24b753d9c0",
+    "skills/animation-performance/SKILL.md": "c7dd441dde8d597c877e851ed9f9601249351591",
+    "skills/improve-animations/SKILL.md": "fb85fcc8c1707010ac0c64250d8a56ed0a68fe2d",
+    "skills/review-animations/SKILL.md": "70bb73c016d0dafc28c03272a205cd97ece9f06d",
+    "skills/remove-animations/SKILL.md": "ccd6070c53575a9e96995de805eee9ad7d81bc58",
+    "skills/find-animation-opportunities/SKILL.md": "8a72a1931e82d21ae24cd00834f4f0aaebf58a60",
+    "skills/gestures/SKILL.md": "71fb5af14cf57ce9b052bfbf22dad8e4c71e3ac1",
+    "skills/apple-design/SKILL.md": "97ec82d4ef630ff7f6f2fd283dc04702a63fcea4",
+    "skills/mobile-native/SKILL.md": "b97d73d9bd5f6b283b03588b852b7a2ad3764673",
+    "skills/prototype/SKILL.md": "56a648d217a8665f2acdf9d6f6a21bbfb5a325f3",
+    "skills/pick-ui-library/SKILL.md": "fca76b8792f0b2e72623a25ffb182c2c46d3fbc0",
+    "skills/learn-taste/SKILL.md": "9ea9da36bf557e063723df8641ce6b56594170d4",
+    "skills/write-swift/SKILL.md": "9fdf55eaf5f490da0c5712a3fdcdfb30195c9fc0"
+  },
+  "caru-ini/stack-diagram": {
+    "skills/stack-diagram/SKILL.md": "7ccb7a925f5642468216533fcec11bae8c4aa2bf"
+  },
+  "NiazMorshed2007/reanimate": {
+    "skills/reanimate/SKILL.md": "6d2b044db816f6d4c2b74d5c933d071f74178c7c"
+  },
+  "JuneYaooo/rea-video": {
+    "skills/rea-video/SKILL.md": "ab8653631030480fb875be4b32675762ddd2d30e"
   }
 }
