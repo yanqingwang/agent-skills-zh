@@ -1,21 +1,25 @@
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/macrostructures/10-specimen.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 ## 10 · Specimen
 
-Large serif display, asymmetric column spans, hairline rules, a typographic CTA, generous whitespace. The voice of a foundry, a journal or a press.
+大号衬线展示字、不对称跨栏、发丝线、字排式 CTA、大量留白。字厂、期刊或出版社的声音。
 
-- **Heading:** a large serif phrase, standing alone. When the run is genuinely ordinal the figure is generated on the heading itself (`<ol>` with `counter()`); a number typed beside or above it is an eyebrow (54).
-- **Body:** asymmetric spans: a narrow marginalia column (captions, dates, sidenotes) beside a wide content column.
-- **Divider:** hairline rules between sections.
-- **Button:** a typographic link carrying a verb ("Open your studio"); no box, no fill, no arrow (63).
-- **Image:** none, or one photograph of the face in print (a poster, a sign, a book spread) from the library or the user.
-- **Reveal:** fade-up stagger on first load.
+- **标题：** 独立站立的大号衬线短语。序列确实是序数时，数字由标题自己生成（`<ol>` 配 `counter()`）；在旁边或上方打出来的数字是一个 eyebrow（54）。
+- **正文：** 不对称跨栏：一栏窄的边注（图注、日期、旁注）伴着一栏宽的内容栏。
+- **分隔：** 小节之间发丝线。
+- **按钮：** 带动词的字排链接（"Open your studio"，开你的工作室）；没有盒子、没有填充、没有箭头（63）。
+- **图像：** 不放，或一张"印刷中的字面"照片（一张海报、一块招牌、一个书页跨页），来自图库或用户。
+- **Reveal：** 首次加载时淡入上浮、错峰入场。
 
-Reach for it when the prompt is about type, publishing or writing (a foundry, a journal, a press, a specimen sheet), or the user names it; the editorial genre alone does not qualify. On any other prompt pick another shape: this is the field's most-copied look, and a vague prompt that lands here has not been read.
+提示词关于字体、出版或写作（一家字厂、一本期刊、一家出版社、一张样本页）或用户点名时选它；只有 editorial 流派不够格。其他任何提示词选别的形态：这是本领域被抄得最多的一张脸，落在这里的模糊提示词等于没被读过。
 
-Avoid for product pages that need a demo; Specimen has nowhere to put one.
+需要演示的产品页避免使用；Specimen 没地方放演示。
 
-Compositions: Rows and a Statement (`layout.md` § 5); the action is a typographic link.
+构图：Rows 与一条 Statement（`layout.md` § 5）；动作是字排链接。
 
-**Sample opening lines** (foundry voice, treating type as material culture):
-> *"A quiet instrument."* Refusal of the verb.
-> *"Type, set with care."* Three words.
-> *"Set by hand, since 2003."* Date-anchored, names the method.
+**样例开篇句**（字厂语气，把字体当作物质文化）：
+> *"A quiet instrument."*（一件安静的乐器。）拒绝动词。
+> *"Type, set with care."*（用心排的字体。）三个词。
+> *"Set by hand, since 2003."*（手工排版，自 2003 年。）以日期锚定，点出方法。

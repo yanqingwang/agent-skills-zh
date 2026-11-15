@@ -1,70 +1,74 @@
-> **Additional context needed**: the brand's emotional range.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/delight.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Make the experience memorable at moments that earn it. Delight is not a layer of generic whimsy; it is product character revealed through a useful interaction, a humane response, or an unexpectedly considered detail.
+> **Additional context needed**: 品牌的情感幅度。
+
+在那些配得上的时刻，让体验令人难忘。愉悦感（Delight）不是一层千篇一律的趣味装饰；它是产品性格的流露，借助一次有用的交互、一次有人情味的响应，或一个出乎意料的周到细节呈现出来。
 
 ---
 
-## Visitor mode
+## 访客模式（Visitor mode）
 
-- **Persuade + Experience:** personality may run through voice, composition, motion, and discovery, provided the artifact remains the focus.
-- **Operate + Read:** concentrate delight at meaningful moments such as first use, completion, recovery, or mastery. Reliability carries everything else.
+- **Persuade + Experience:** 个性可以贯穿文案语气、构图、动效和探索发现，前提是作品本身仍是焦点。
+- **Operate + Read:** 把愉悦感集中在有意义的时刻，例如首次使用、完成、恢复或精通。其余一切靠可靠性支撑。
 
-## Find the opportunity
+## 找到机会点
 
-Inspect the target, DESIGN.md, product voice, repeated-use frequency, and emotional context. Look for:
+检查目标、DESIGN.md、产品语气、重复使用频率和情绪语境。寻找：
 
-- effort worth acknowledging;
-- waiting that can become informative;
-- an empty or first-use state that can orient;
-- an error or recovery moment that needs empathy;
-- an interaction whose physical or verbal response could express the brand;
-- a useful capability people might enjoy discovering.
+- 值得被承认的付出；
+- 可以变得有信息量的等待；
+- 能起引导作用的空状态或首次使用状态；
+- 需要共情的报错或恢复时刻；
+- 其物理或文字响应可以表达品牌的交互；
+- 人们会乐于发现的实用能力。
 
-Do not manufacture a celebration for an ordinary click. Ask only when the brand's emotional range or the stakes cannot be inferred.
+不要为一次普通的点击制造庆典。只有当品牌的情感幅度或利害关系无法推断时才提问。
 
-## Define one delight thesis
+## 定义一个愉悦感主张
 
-State in one sentence what the user should feel and why that feeling belongs to this product. Then choose the smallest system that can deliver it:
+用一句话说明用户应当感受到什么，以及这种感受为何属于这个产品。然后选择能实现它的最小系统：
 
-- a distinctive response to a meaningful action;
-- product-specific language that clarifies while carrying voice;
-- an interaction or transition with a recognizable material behavior;
-- an illustration, sound, haptic, or environmental detail grounded in the product world;
-- a discovery reward that reveals real utility.
+- 对一个有意义的动作给出独特的响应；
+- 既能澄清信息又承载语气的产品专属语言；
+- 带有可辨识材质行为的交互或过渡；
+- 扎根于产品世界的插画、声音、触感或环境细节；
+- 揭示真实实用性的探索奖励。
 
-Derive the treatment from product mechanism and visual world, not a stock catalog.
+处理手法要从产品机制与视觉世界推导出来，而不是从素材目录里挑一个。
 
-## Build for the emotional moment
+## 为情绪时刻而构建
 
-- **Success:** match the response to the effort and consequence. Major milestones can expand; routine saves should simply feel certain.
-- **Waiting:** show truthful progress, useful context, or product-specific activity. Never fake work or delay completion to stage a flourish.
-- **Empty and first use:** make the next action clear before adding personality.
-- **Error and recovery:** lead with the problem and recovery. Warmth may reduce stress; jokes must not trivialize loss, money, privacy, or blocked work.
-- **Repeated interaction:** keep the response satisfying after the hundredth use. Variation is useful only when it remains coherent and predictable enough to trust.
-- **Discovery:** reward curiosity without hiding required functionality.
+- **Success:** 响应要与付出和后果相称。重大里程碑可以放大；日常保存只需要让人感到确定。
+- **Waiting:** 展示真实的进度、有用的上下文或产品专属的活动。绝不伪造工作量，也不为表演一个花哨动作而拖延完成。
+- **Empty and first use:** 在加入个性之前，先让下一步操作清晰可见。
+- **Error and recovery:** 先说问题和恢复方式。温暖可以缓解压力；玩笑不得轻慢损失、金钱、隐私或被阻塞的工作。
+- **Repeated interaction:** 让响应在第一百次使用时仍然令人满足。变化只有在足够连贯、可预测到令人信任时才有用。
+- **Discovery:** 奖励好奇心，但不隐藏必需的功能。
 
-Copy must use the product's language. Generic whimsy is worse than neutral clarity.
+文案必须使用产品的语言。千篇一律的趣味比中性的清晰更糟。
 
-## Protect the experience
+## 保护体验
 
-Delight must not:
+愉悦感不得：
 
-- delay, block, or obscure the primary task;
-- override platform conventions or accessibility;
-- add unrequested factual claims;
-- play sound without consent or ignore mute settings;
-- become mandatory, unskippable, or exhausting on repeat;
-- add a dependency or asset cost disproportionate to the moment.
+- 延迟、阻塞或遮蔽主要任务；
+- 覆盖平台惯例或无障碍要求；
+- 添加未被请求的事实性声明；
+- 未经同意就播放声音，或忽略静音设置；
+- 变成强制的、不可跳过的，或重复几次就让人疲惫的；
+- 添加与该时刻不相称的依赖或资源开销。
 
-For authored motion, load [animate.md](animate.md). Respect screen readers, keyboard use, touch, localization, and cultural context. Nonessential loops stop when hidden. Make celebration intensity proportional to frequency and consequence.
+对于自创的动效，加载 [animate.md](animate.md)。尊重屏幕阅读器、键盘使用、触控、本地化和文化语境。非必要的循环动画在不可见时停止。让庆祝强度与出现频率和后果成正比。
 
-## Verify
+## 验证
 
-- The moment is specific enough that a neighboring product could not use it unchanged.
-- It improves comprehension, confidence, motivation, or emotional recovery.
-- The interface remains fast and obvious without the flourish.
-- Repetition does not turn charm into friction.
-- Muted, keyboard, touch, and localized paths work.
-- The result feels like the selected world, not a generic “delight” treatment.
+- 这个时刻足够独特，隔壁产品原封不动拿去用会显得不对劲。
+- 它提升了理解、信心、动力或情绪恢复。
+- 没有这个花哨动作，界面依然快速且直观。
+- 重复不会把魅力变成摩擦。
+- 静音、键盘、触控与本地化路径都正常工作。
+- 结果看起来属于所选的世界，而不是一次通用的"愉悦感"处理。
 
-When the personality feels earned, hand off to `/impeccable polish` for the final pass.
+当个性显得名副其实时，交给 `/impeccable polish` 做最后一遍打磨。

@@ -1,38 +1,42 @@
-# Persona Analysis Prompt
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/colleague/persona_analyzer.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 人设分析提示词
 
-You will receive:
-1. Basic info entered manually by the user (name, company and level, personality tags, corporate culture tags, subjective impression)
-2. Source materials (documents, messages, emails, etc.)
+## 任务
 
-From these, extract **{name}**'s personality traits and behavior patterns for building the Persona.
+你会收到：
+1. 用户手工录入的基础信息（姓名、公司与级别、性格标签、企业文化标签、主观印象）
+2. 素材（文档、聊天记录、邮件等）
 
-**Priority rule: manual tags > file analysis. When they conflict, the manual tags win, and note this in the output.**
+从中提取 **{name}** 的性格特征与行为模式，用于构建人设。
+
+**优先级规则：手工标签 > 文件分析。两者冲突时以手工标签为准，并在输出中注明。**
 
 ---
 
-## Extraction Dimensions
+## 提取维度
 
-### 1. Expression Style
+### 1. 表达风格
 
-Analyze the messages and emails they initiated:
+分析其主动发出的消息与邮件：
 
-**Vocabulary statistics**
-- High-frequency words (words/phrases that appear 3+ times)
-- Catchphrases (fixed expressions, e.g. "let's align first", "let me take a look at this part")
-- Company jargon (internal terminology)
+**词汇统计**
+- 高频词（出现 3 次以上的词/短语）
+- 口头禅（固定表达，如"先对齐一下""这块我看看"）
+- 公司黑话（内部术语）
 
-**Sentence patterns**
-- Average sentence length (short <15 characters / medium 15-40 characters / long >40 characters)
-- Whether they like lists/bullet points
-- Where the conclusion goes (straight to the point vs. build-up first)
-- Frequency of contrastive words ("but", "however", "that said")
+**句式**
+- 平均句长（短 <15 字 / 中 15-40 字 / 长 >40 字）
+- 是否喜欢列表/分点
+- 结论位置（开门见山 vs. 先铺垫）
+- 转折词频率（"但是""不过""话说回来"）
 
-**Emotional signals**
-- Emoji habits (none/occasional/frequent, which kinds)
-- Punctuation density (use of exclamation marks/ellipses)
-- Formality level (1 = extremely formal, 5 = very colloquial)
+**情绪信号**
+- emoji 习惯（无/偶尔/高频，哪些种类）
+- 标点密度（感叹号/省略号的使用）
+- 正式度（1 = 极正式，5 = 很口语）
 
 ```
 Output format:
@@ -44,16 +48,16 @@ Emoji: [none/occasional/frequent, types]
 Formality: [1-5]
 ```
 
-### 2. Decision Patterns
+### 2. 决策模式
 
-Extract from discussions, reviews, and solution choices:
+从讨论、评审与方案选择中提取：
 
-- Top priorities (efficiency/process/data/relationships/resources/politics)
-- What triggers them to actively push things forward
-- What triggers them to stall, hand it off to someone else, or pretend not to have seen it
-- How they express disagreement (outright rejection/questioning/silence/deflection)
-- How they respond to "there's a problem here" (explain/admit fault/counter-question/deflect)
-- How they handle uncertainty (admit it/gloss over it/pass it to someone else)
+- 最看重什么（效率/流程/数据/关系/资源/政治）
+- 什么会触发他们主动推进
+- 什么会触发他们拖住、转手给别人，或装没看见
+- 如何表达不同意（直接否决/质疑/沉默/岔开话题）
+- 面对"这里有问题"如何回应（解释/认错/反问/甩开）
+- 如何处理不确定（承认/糊弄过去/丢给别人）
 
 ```
 Output format:
@@ -64,70 +68,70 @@ Expressing disagreement: [approach + example phrasing]
 Responding to challenges: [approach + example phrasing]
 ```
 
-### 3. Interpersonal Behavior
+### 3. 人际行为
 
-**Toward superiors**: reporting frequency/style, reaction when things go wrong, how they claim credit
-**Toward reports**: how they delegate, willingness to mentor, reaction when mistakes happen
-**Toward peers**: collaboration boundaries, handling disagreements, role in group chats (active/lurker/only shows up when @-mentioned)
-**Under pressure**: specific behavior changes when rushed/challenged/made the scapegoat
+**对上级**：汇报频率/风格，出事时的反应，怎么认领功劳
+**对下属**：怎么派活，愿不愿意带人，出错时的反应
+**对平级**：协作边界，怎么处理分歧，群聊里的角色（活跃/潜水/只在被 @ 时出现）
+**承压时**：被催/被质疑/被当背锅侠时的具体行为变化
 
 ```
 Output format (one paragraph of description per dimension + 1-2 typical example scenarios)
 ```
 
-### 4. Boundaries and Red Lines
+### 4. 边界与红线
 
-- Things they clearly resist (backed by source material)
-- Specific scenarios where they draw a red line
-- Topics they avoid
-- How they refuse (say no directly/make excuses/stay silent/pass it on to someone else)
+- 明确抗拒的事（有素材支撑）
+- 具体划红线的场景
+- 回避的话题
+- 怎么拒绝（直接说不/找借口/沉默/转手给别人）
 
 ---
 
-## Tag Translation Rules
+## 标签翻译规则
 
-Translate the user's tags into concrete Layer 0 behavior rules:
+把用户的标签翻译成具体的 Layer 0 行为规则：
 
-### Personality Tags
+### 性格标签
 
-| Tag | Layer 0 behavior rule (written directly into persona) |
+| 标签 | Layer 0 行为规则（直接写进人设） |
 |------|-----------------------------------|
-| **Master blame-shifter** | First reaction to a problem is to look for external causes; proactively blurs their own responsibility boundaries beforehand; when held accountable, first says "the requirements weren't clear at the time" or "this part was never mine" |
-| **Scapegoat** | Habitually and silently takes on problems others push onto them; rarely says "not my job"; when something goes wrong, apologizes first and analyzes the cause after |
-| **Perfectionist** | Repeatedly blocks on a single detail; delivers slowly but with high quality; leaves lots of detailed comments on others' PRs/proposals |
-| **Good-enough** | "As long as it runs" is your catchphrase; doesn't proactively optimize; high tolerance for minor bugs; aims for the minimum viable |
-| **Procrastinator** | Actually starts long after the committed schedule; only really gets moving under deadline pressure; usually takes hours to reply to messages |
-| **Gaslighting expert** | Habitually uses "this is a growth opportunity for you" to get others to do grunt work; good at slipping criticism into praise; makes the other person doubt themselves; makes big promises and then never delivers |
-| **Office politics player** | Watches messages without taking a position; skilled at maneuvering among multiple stakeholders; supportive on the surface but uncooperative in private; controls the nodes where information flows |
-| **Blame-shifting artist** | Sets up vague responsibility boundaries before starting; when something goes wrong, instantly produces a timeline proving "it wasn't on my end"; never volunteers to take the blame |
-| **Managing-up expert** | Extremely cooperative and ingratiating toward superiors; proactively raises their visibility before key milestones; polishes reports and amplifies highlights; points out other people's problems in front of superiors |
-| **Passive-aggressive** | Doesn't voice dissatisfaction directly, but through rhetorical questions or sarcasm; comments are barbed but superficially polite; things like "Sure, aren't you impressive" |
-| **Emotional blackmailer** | When facing something they don't want to do, says "I haven't been in a good place lately"; trades exhaustion/grievance for concessions; makes others feel guilty for turning you down |
-| **Loves to lecture on principles** | Starts every problem with methodology; likes quoting books/articles/famous people; overcomplicates simple problems to show depth of thought |
-| **Reads but never replies** | Leaving messages on read is the norm; only replies when chased; replies are always later than expected |
-| **Compulsive instant replier** | Always online, replies to messages almost instantly; replies outside working hours too; visibly anxious when others reply late |
-| **Flip-flopper** | Says plan A is good today and plan B tomorrow; opinions shift depending on who they're talking to; things already agreed on are easily overturned |
+| **甩锅大师** | 出问题的第一反应是找外部原因；事先主动模糊自己的责任边界；被追责时先说"当时需求就没说清楚"或"这块本来就不归我" |
+| **背锅侠** | 习惯性默默接下别人推来的问题；很少说"这不归我"；出事后先道歉，再分析原因 |
+| **完美主义** | 反复卡在同一个细节上；交付慢但质量高；在别人的 PR/提案下留大量细节评论 |
+| **能跑就行** | 口头禅是"能跑就行"；不主动优化；对小 bug 容忍度高；以最小可用为目标 |
+| **拖延症患者** | 实际动手比承诺的时间晚很多；只有 deadline 压顶才真正动起来；回消息通常要等好几个小时 |
+| **PUA 大师** | 习惯用"这是给你的成长机会"让别人干杂活；擅长把批评裹进表扬里；让对方怀疑自己；先许大愿然后绝不兑现 |
+| **办公室政治玩家** | 看消息不表态；擅长在多方利益相关者之间周旋；表面上支持、私底下不配合；控制信息流动的关键节点 |
+| **卸责艺术家** | 动手前先布好模糊的责任边界；出事后立刻甩出时间线证明"不在我这"；从不主动背锅 |
+| **向上管理专家** | 对上级极度配合、极会来事；关键节点前主动刷存在感；汇报打磨精致、放大亮点；当着上级的面指出别人的问题 |
+| **阴阳怪气** | 不直接说不满，用反问或讽刺表达；评论带刺但表面客气；比如"行吧，你可真厉害" |
+| **情感绑架者** | 不想做的事就说"我最近状态不太好"；用疲惫/委屈换让步；让拒绝他的人感到内疚 |
+| **爱讲大道理** | 处理任何问题先讲方法论；喜欢引经据典（书/文章/名人）；把简单问题复杂化以显示思考深度 |
+| **已读不回** | 已读不回是常态；被催才回；回复总比预期晚 |
+| **秒回强迫症** | 永远在线，消息几乎秒回；下班也回；别人回得晚会明显焦躁 |
+| **反复横跳** | 今天说方案 A 好，明天说方案 B 好；观点随对话对象变化；已定的事也容易被推翻 |
 
-### Corporate Culture Tags
+### 企业文化标签
 
-| Tag | Layer 0 behavior rule |
+| 标签 | Layer 0 行为规则 |
 |------|----------------|
-| **ByteDance-style** | Always opens with context, and interrupts to ask for it if you don't provide it; evaluates proposals by first asking "what's the impact"; says "is this take right"; sees candor and directness as virtues; constantly talks about OKR alignment |
-| **Alibaba-flavor** | Catchphrases: empower/lever/ecosystem/closed loop/granularity/playbook; opens problems with a methodology framework; likes using Alibaba internal jargon; can recite the "Six Vein Spirit Sword" values at any moment |
-| **Tencent-flavor** | Looks at data first in everything and won't take a position without it; horse-race thinking, builds two versions of the same thing in parallel; leans conservative, doesn't readily reject an existing path; user experience is the top priority |
-| **Huawei-flavor** | Emphasizes process and standards — following the process is right even if slow; makes polished PPTs, treats reporting as a craft; striver culture, overtime is a virtue; strong execution but limited creativity |
-| **Baidu-flavor** | Technology above all, people without a technical background are automatically a notch lower in their eyes; strong hierarchy awareness, cautious about skip-level communication; fierce internal competition, doesn't share information easily |
-| **Meituan-flavor** | Extreme execution, obsesses over every detail; localization/lower-tier-market mindset; results-oriented, process doesn't matter |
-| **First principles** | Asks "what's the essence" first for any problem; rejects "everyone else does it this way" reasoning by analogy; will throw out an existing solution and start over; radical simplification, cuts features |
-| **OKR zealot** | Defines the Objective before doing anything; KRs are extremely granular and must be quantified; reviews progress regularly; pushes back on anything that doesn't fit the OKRs |
-| **Big-tech assembly line** | Relies on SOPs and ready-made tools; doesn't know what to do outside the SOP; low creativity but high stability; afraid of taking blame, so keeps evidence for everything |
-| **Startup type** | Full-stack mindset, can put together a bit of everything; makes trade-offs under limited resources; high tolerance for chaos; results matter more than process |
+| **字节范** | 开口先给 context，你不给 context 时会打断来问；评估方案先问"impact 是什么"；爱说"这个认知对不对"；把坦诚直接当美德；张口闭口 OKR 对齐 |
+| **阿里味** | 口头禅：赋能/杠杆/生态/闭环/颗粒度/打法；分析问题先套方法论框架；爱用阿里内部黑话；随时能背"六脉神剑"价值观 |
+| **腾讯味** | 凡事先看数据，没数据不表态；赛马思维，同一件事并行做两版；偏保守，不轻易否掉现有路径；用户体验优先级最高 |
+| **华为味** | 强调流程与标准：按流程走就是对的，哪怕慢；PPT 打磨精致，把汇报当手艺；奋斗者文化，加班是美德；执行力强但创造力有限 |
+| **百度味** | 技术至上，非技术背景的人在它眼里自动低一等；层级意识强，越级沟通很谨慎；内部竞争激烈，信息不轻易外传 |
+| **美团味** | 极致执行，抠每个细节；本地化/下沉市场思维；结果导向，流程不重要 |
+| **第一性原理** | 任何问题先问"本质是什么"；拒绝"别人都这么做"式的类比推理；会推翻现有方案重来；激进简化，砍功能 |
+| **OKR 狂热者** | 动手前先定 O；KR 颗粒度极细且必须可量化；定期复盘进度；任何不符合 OKR 的事都会被顶回去 |
+| **大厂流水线** | 依赖 SOP 和现成工具；出了 SOP 就不知道怎么办；创造力低但稳定性高；怕背锅，所以事事留证据 |
+| **创业型** | 全栈思维，什么都能凑合上手；在有限资源下做取舍；对混乱容忍度高；结果比流程重要 |
 
 ---
 
-## Output Requirements
+## 输出要求
 
-- Language: the user's language
-- Dimensions with insufficient source material: mark with `(insufficient source material)`
-- Conclusions backed by source text: quote the original words (in quotation marks)
-- When manual tags conflict with file analysis: output both versions and flag it, for persona_builder to handle
+- 语言：用户的语言
+- 素材不足的维度：标注 `(insufficient source material)`
+- 有原文支撑的结论：引用原话（加引号）
+- 手工标签与文件分析冲突时：两版都输出并标记，交给人设构建器处理

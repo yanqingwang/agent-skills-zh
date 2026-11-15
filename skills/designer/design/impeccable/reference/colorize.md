@@ -1,86 +1,90 @@
-> **Additional context needed**: existing brand colors.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/colorize.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Introduce color as hierarchy, meaning, and atmosphere. Preserve confirmed brand and semantic conventions; do not replace a visual world under the guise of colorizing it.
+> **需要补充上下文**：既有品牌色。
+
+把颜色作为层级、含义与氛围来引入。保留已确认的品牌与语义约定；不要借"上色"之名更换视觉世界。
 
 ---
 
-## Visitor mode
+## 访客模式
 
-- **Persuade + Experience:** color may carry the voice and own large regions when the selected world calls for it.
-- **Operate + Read:** color primarily encodes action, selection, status, wayfinding, and reading hierarchy. Rarity gives an accent force.
+- **说服 + 体验：**所选世界需要时，颜色可以承载声音并占据大块区域。
+- **操作 + 阅读：**颜色主要用于编码动作、选中、状态、导览与阅读层级。稀罕才让强调色有力量。
 
-## Audit before choosing
+## 选择前先审计
 
-Read DESIGN.md, tokens, assets, current themes, and representative states. Identify:
+读 DESIGN.md、令牌、资源、当前主题与代表性状态。找出：
 
-- which colors are confirmed brand commitments;
-- current surface, text, action, and semantic roles;
-- places where grayscale obscures hierarchy or state;
-- contrast failures and color-only communication;
-- light/dark or data-visualization requirements;
-- whether the task asks for more color or a new identity.
+- 哪些颜色是已确认的品牌承诺；
+- 当前的表面、文本、动作与语义角色；
+- 灰度遮蔽层级或状态的地方；
+- 对比度不达标与仅靠颜色传达信息之处；
+- 亮/暗模式或数据可视化的要求；
+- 任务要的是更多颜色还是新的识别体系。
 
-If a new identity is required, use [new-work.md](new-work.md). Ask only when a binding brand decision cannot be inferred.
+需要新识别体系时用 [new-work.md](new-work.md)。只在约束性的品牌决策无法推断时发问。
 
-## Choose a strategy
+## 选定策略
 
-Name the intended emotional temperature, dominant relationship, contrast range, and color dosage before editing. The strategy may be restrained or immersive; it must follow the brief and selected world rather than a fixed percentage rule.
+编辑前说清预期的情绪温度、主导关系、对比范围与颜色剂量。策略可以是克制的，也可以是沉浸的；它必须服从需求简报与所选世界，而不是一个固定的百分比规则。
 
-Build roles, not a bag of swatches:
+建立角色，而不是一堆色卡：
 
-- canvas and elevated surfaces;
-- primary and secondary text;
-- action, focus, and selection;
-- borders and separators;
-- success, warning, error, and information;
-- data categories or scales when needed.
+- 画布与抬升表面；
+- 主文本与次文本；
+- 动作、聚焦与选中；
+- 边框与分隔；
+- 成功、警告、错误与信息；
+- 需要时的数据类别或色阶。
 
-Use the project's existing color space. For a new web palette, prefer OKLCH because lightness and chroma can be adjusted predictably. Choose hue from product meaning and visual direction, never from a default category association.
+用项目既有的色彩空间。新建 web 色板优先 OKLCH，因为明度与彩度可以可预期地调整。色相从产品含义与视觉方向选择，绝不用默认的品类联想。
 
-## Apply at system scale
+## 在系统尺度上应用
 
-- Let the strongest color own a deliberate region or role instead of scattering tiny accents.
-- Keep the primary action easy to find; do not spend its color on decoration.
-- Tint neutrals only when the brand hue genuinely creates cohesion. Neutral gray is valid when it serves the world.
-- On colored surfaces, derive secondary text from the foreground or surface hue rather than using washed-out generic gray.
-- Keep semantic meanings consistent, but respect platform and domain conventions instead of assuming fixed hues.
-- For data, use distinct lightness, chroma, shape, label, or pattern so color is not the only code.
-- In dark mode, design surface elevation and contrast explicitly; do not invert the light theme mechanically.
-- Define primitive values and semantic tokens when the project has a token system. Theme changes should normally remap semantic roles.
+- 让最强的颜色占有一个有意图的区域或角色，而不是撒一把小点缀。
+- 主动作保持容易找到；不要把它的颜色花在装饰上。
+- 只在品牌色相真正带来整体感时才给中性色上色调。中性灰服务于这个世界时是正当的。
+- 彩色表面上，次文本从前景或表面色相派生，不用褪色的通用灰。
+- 语义含义保持一致，但尊重平台与领域惯例，不要假定固定的色相。
+- 数据上用不同的明度、彩度、形状、标签或图案，让颜色不是唯一编码。
+- 暗色模式下显式设计表面层级与对比度；不要机械地反转亮色主题。
+- 项目有令牌系统时，定义基础值与语义令牌。换主题通常应重映射语义角色。
 
-Decoration without a relationship to hierarchy, state, content, or the visual world is not a color strategy.
+与层级、状态、内容或视觉世界没有关系的装饰，不是颜色策略。
 
-## Contrast and perception
+## 对比度与感知
 
-Verify computed foreground/background pairs:
+验证计算后的前景/背景配对：
 
-| Content | WCAG AA minimum |
+| 内容 | WCAG AA 最低值 |
 |---|---|
-| body text | 4.5:1 |
-| large text | 3:1 |
-| controls, icons, focus indicators | 3:1 |
+| 正文文本 | 4.5:1 |
+| 大号文本 | 3:1 |
+| 控件、图标、焦点指示器 | 3:1 |
 
-Do not rely on eyesight alone. Check interactive states, overlays, text on images, disabled content, and both themes. Simulate common vision deficiencies. Information conveyed by color also needs text, shape, iconography, or position.
+不要只靠肉眼。检查交互状态、覆盖层、图上文字、禁用内容与两套主题。模拟常见视觉缺陷。由颜色传达的信息还需要文本、形状、图标或位置。
 
-When deriving OKLCH ramps, vary lightness and reduce chroma near white and black. Do not keep high chroma at extreme lightness merely to make the math uniform. Prefer explicit colors over chains of translucent overlays when alpha would make contrast context-dependent.
+推导 OKLCH 色阶时，调整明度并在接近白与黑处降低彩度。不要为了数值整齐而在极端明度下保持高彩度。alpha 会让对比度依赖上下文时，优先用明确的颜色而不是半透明覆盖层的链条。
 
-## Verify
+## 验证
 
-- Every color has a stable role or a world-specific atmospheric purpose.
-- Attention lands on the intended action, content, or state.
-- The palette works across quiet, dense, interactive, error, and empty states.
-- Light and dark themes are each composed, not mechanically inverted.
-- Contrast and non-color cues pass in all relevant states.
-- The result is recognizably this product, not a generic “colorful” treatment.
+- 每个颜色都有稳定角色或世界特有的氛围目的。
+- 注意力落在预期的动作、内容或状态上。
+- 色板在安静、高密度、交互、错误与空态下都成立。
+- 亮暗主题各自经过构图，不是机械反转。
+- 对比度与非颜色线索在所有相关状态下通过。
+- 结果一眼认得出是这个产品，不是通用的"多彩"处理。
 
-When the palette earns its place, hand off to `/impeccable polish` for the final pass.
+色板挣得位置之后，交给 `/impeccable polish` 做最后一遍打磨。
 
-## Live-mode signature params
+## Live 模式的签名参数
 
-When invoked from live mode, every variant declares a `color-amount` parameter. Author CSS against `var(--p-color-amount, 0.5)` so the user can move from neutral to the variant's full color strategy without regeneration.
+从 live 模式调用时，每个变体声明一个 `color-amount` 参数。CSS 基于 `var(--p-color-amount, 0.5)` 编写，让用户能从中性走到该变体完整的颜色策略，而无需重新生成。
 
 ```json
 {"id":"color-amount","kind":"range","min":0,"max":1,"step":0.05,"default":0.5,"label":"Color amount"}
 ```
 
-Add at most two variant-specific parameters, such as palette, temperature, or tint behavior. Follow [live.md](live.md)'s parameter contract.
+至多再加两个变体专属参数，如色板、温度或上色行为。遵循 [live.md](live.md) 的参数契约。

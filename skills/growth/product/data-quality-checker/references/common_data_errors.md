@@ -1,93 +1,89 @@
-# Common Data Errors in Market Analysis
+> **中文汉化版** · 上游：[tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) · 原文件：`skills/data-quality-checker/references/common_data_errors.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Reference document cataloging frequently observed data quality issues
-in market analysis documents, blog posts, and strategy reports.
+# 市场分析中的常见数据错误
 
-## 1. FRED Data Delay Patterns
+参考文档，收录市场分析文档、博客文章和策略报告中常见的数据质量问题。
 
-Economic data sources have varying publication delays. Using stale data
-without noting the lag can mislead readers.
+## 1. FRED 数据延迟模式
 
-| Data Series | Source | Typical Delay | Notes |
+经济数据源的发布延迟各不相同。用过期数据又不注明滞后，会误导读者。
+
+| 数据序列 | 来源 | 典型延迟 | 备注 |
 |-------------|--------|---------------|-------|
-| VIX Close | CBOE via FRED | T+1 business day | VIX settles after market close |
-| GDP (Advance) | BEA | ~T+30 days after quarter end | First estimate; revised twice |
-| GDP (Final) | BEA | ~T+90 days after quarter end | Third and final estimate |
-| CPI | BLS | ~T+14 days after reference month | Released mid-month for prior month |
-| PCE | BEA | ~T+30 days after reference month | Fed's preferred inflation gauge |
-| NFP (Nonfarm Payrolls) | BLS | First Friday after reference month | Subject to significant revisions |
-| ISM Manufacturing | ISM | First business day of the month | For the prior month |
-| FOMC Rate Decision | Federal Reserve | Same day (2:00 PM ET) | Minutes released 3 weeks later |
-| 10Y Treasury Yield | US Treasury | T+1 | Daily constant maturity rate |
-| Consumer Sentiment | U of Michigan | Preliminary: mid-month; Final: end of month | Two releases per month |
+| VIX 收盘价 | CBOE 经 FRED | T+1 个工作日 | VIX 在收盘后结算 |
+| GDP（初值） | BEA | 季度结束后约 T+30 天 | 首次估计；之后修订两次 |
+| GDP（终值） | BEA | 季度结束后约 T+90 天 | 第三次也是最终估计 |
+| CPI | BLS | 参考月后约 T+14 天 | 月中发布上月数据 |
+| PCE | BEA | 参考月后约 T+30 天 | 美联储首选的通胀指标 |
+| NFP（非农就业） | BLS | 参考月后的第一个周五 | 修订幅度可能很大 |
+| ISM 制造业指数 | ISM | 每月第一个工作日 | 对应上月数据 |
+| FOMC 利率决议 | 美联储 | 当天（2:00 PM ET） | 会议纪要 3 周后发布 |
+| 10 年期国债收益率 | 美国财政部 | T+1 | 每日固定期限收益率 |
+| 消费者信心指数 | 密歇根大学 | 初值：月中；终值：月底 | 每月发布两次 |
 
-### Common Error Pattern
+### 常见错误模式
 
-Writing "VIX is at 18.5 as of today" when the FRED data is actually
-from yesterday's close. Always note the data date explicitly.
+写"截至今日 VIX 为 18.5"，但 FRED 数据其实是昨日收盘值。务必明确注明数据日期。
 
-## 2. ETF vs Futures Scale Ratios
+## 2. ETF 与期货的量级比例
 
-A frequent error is applying a futures price to an ETF label or vice versa.
-The approximate scale ratios help catch such mistakes.
+一个高频错误是把期货价格套在 ETF 标签上，或者反过来。下面的近似量级比例有助于抓住这类错误。
 
-| Asset | ETF Price (approx) | Futures Price (approx) | Ratio (Futures/ETF) |
+| 资产 | ETF 价格（约） | 期货价格（约） | 比例（期货/ETF） |
 |-------|--------------------|----------------------|---------------------|
-| Gold | GLD ~$260 | GC ~$2,600 | ~10x |
-| Silver | SLV ~$28 | SI ~$30 | ~1.1x |
-| S&P 500 | SPY ~$580 | ES ~$5,800 (SPX) | ~10x |
-| Crude Oil | USO ~$72 | CL ~$78 | ~1.1x |
-| Treasuries | TLT ~$92 | ZB ~$118 | ~1.3x |
+| 黄金 | GLD ~$260 | GC ~$2,600 | ~10x |
+| 白银 | SLV ~$28 | SI ~$30 | ~1.1x |
+| 标普 500 | SPY ~$580 | ES ~$5,800 (SPX) | ~10x |
+| 原油 | USO ~$72 | CL ~$78 | ~1.1x |
+| 国债 | TLT ~$92 | ZB ~$118 | ~1.3x |
 
-**Key insight**: Gold and S&P 500 have a ~10x ratio between ETF and
-futures/index prices. This is the most common source of price scale errors.
+**关键认识**：黄金和标普 500 的 ETF 价格与期货/指数价格之间约为 10 倍比例。这是价格量级错误最常见的来源。
 
-## 3. Common Date Errors
+## 3. 常见日期错误
 
-### 3.1 Weekday Mismatches
+### 3.1 星期几写错
 
-The most frequent date error is stating the wrong day of the week.
-This is especially common in:
+最高频的日期错误是星期几写错。尤其常见于：
 
-- Weekly strategy reports that reference multiple future dates
-- Japanese-language reports using kanji weekday notation
-- Cross-year date references (December dates written in January)
+- 引用多个未来日期的周度策略报告
+- 用汉字星期标注的日语报告
+- 跨年的日期引用（1 月写 12 月的日期）
 
-**Prevention**: Always verify weekday with `calendar.weekday(year, month, day)`.
+**预防**：用 `calendar.weekday(year, month, day)` 核验星期几。
 
-### 3.2 Holiday Oversights
+### 3.2 漏看假期
 
-Common US market holidays that are often overlooked:
+常被漏看的美股假期：
 
-| Holiday | Date | Market Status |
+| 假期 | 日期 | 市场状态 |
 |---------|------|---------------|
-| New Year's Day | January 1 | Closed |
-| MLK Day | Third Monday in January | Closed |
-| Presidents' Day | Third Monday in February | Closed |
-| Good Friday | Friday before Easter (varies) | Closed |
-| Memorial Day | Last Monday in May | Closed |
-| Juneteenth | June 19 | Closed |
-| Independence Day | July 4 | Closed (early close July 3) |
-| Labor Day | First Monday in September | Closed |
-| Thanksgiving | Fourth Thursday in November | Closed (early close Wed) |
-| Christmas | December 25 | Closed (early close Dec 24) |
+| 元旦 | 1 月 1 日 | 休市 |
+| 马丁·路德·金纪念日 | 1 月第三个周一 | 休市 |
+| 总统日 | 2 月第三个周一 | 休市 |
+| 耶稣受难日 | 复活节前的周五（日期浮动） | 休市 |
+| 阵亡将士纪念日 | 5 月最后一个周一 | 休市 |
+| 六月节 | 6 月 19 日 | 休市 |
+| 独立日 | 7 月 4 日 | 休市（7 月 3 日提前收市） |
+| 劳工节 | 9 月第一个周一 | 休市 |
+| 感恩节 | 11 月第四个周四 | 休市（周三提前收市） |
+| 圣诞节 | 12 月 25 日 | 休市（12 月 24 日提前收市） |
 
-**Error pattern**: "Markets will react on Monday January 1" -- markets are
-closed on New Year's Day.
+**错误模式**："市场将在 1 月 1 日（周一）做出反应"，元旦市场休市。
 
-### 3.3 Year Inference Errors
+### 3.3 年份推断错误
 
-When dates lack an explicit year:
-- "December 25" written in a January 2026 report likely refers to December 2025
-- "March 15" written in a January 2026 report likely refers to March 2026
-- The 6-month window heuristic: if the date is more than 6 months away from
-  the reference date, consider the adjacent year
+日期没写年份时：
+- 2026 年 1 月的报告里写"12 月 25 日"，多半指 2025 年 12 月
+- 2026 年 1 月的报告里写"3 月 15 日"，多半指 2026 年 3 月
+- 6 个月窗口启发式：日期距参考日期超过 6 个月，就考虑相邻年份
 
-## 4. Allocation Total Error Patterns
+## 4. 配置总和错误模式
 
-### 4.1 Off-by-Rounding
+### 4.1 舍入误差
 
-When individual allocations are rounded, the sum may not equal 100%:
+各项配置四舍五入后，总和可能不等于 100%：
 
 ```
 Stocks:  33.3%
@@ -96,12 +92,11 @@ Cash:    33.3%
 Total:   99.9%  (should be 100%)
 ```
 
-**Fix**: Adjust one value to absorb the rounding difference (e.g., Cash: 33.4%).
+**修法**：调整其中一项来吸收舍入差（如 Cash: 33.4%）。
 
-### 4.2 Range Notation Pitfalls
+### 4.2 区间写法的坑
 
-Range-based allocations (e.g., "40-45%") require checking both the minimum
-and maximum totals:
+区间式配置（如 "40-45%"）要求最小总和与最大总和都检查：
 
 ```
 Stocks:  50-55%    min=50  max=55
@@ -112,9 +107,9 @@ Cash:     5-10%    min=5   max=10
                    min=95  max=115
 ```
 
-This is valid because 100% falls within [95%, 115%].
+这是有效的，因为 100% 落在 [95%, 115%] 区间内。
 
-**Invalid example**:
+**无效示例**：
 ```
 A: 60-65%    min=60  max=65
 B: 30-35%    min=30  max=35
@@ -123,95 +118,78 @@ C: 15-20%    min=15  max=20
              min=105 max=120
 ```
 
-This is invalid because the minimum (105%) already exceeds 100%.
+这是无效的，因为最小总和（105%）已经超过 100%。
 
-### 4.3 Forgetting Cash or "Other"
+### 4.3 忘记现金或"其他"项
 
-A common mistake is listing specific allocations that sum to less than 100%
-without an explicit "Cash" or "Other" category.
+常见错误：列出的各项配置加起来不足 100%，却没有显式的"现金"或"其他"类目。
 
-### 4.4 Non-Allocation Percentages
+### 4.4 非配置类百分比
 
-Not all percentages are allocations. The checker should ignore:
-- Probability statements: "There is a 60% chance..."
-- Indicator values: "RSI at 35%", "YoY growth of 3.2%"
-- Trigger conditions: "If drawdown exceeds 10%..."
-- Historical returns: "S&P 500 returned 12% last year"
+不是所有百分比都是配置。检查器应忽略：
+- 概率表述："有 60% 的概率……"
+- 指标数值："RSI 为 35%"、"同比增长 3.2%"
+- 触发条件："如果回撤超过 10%……"
+- 历史收益："标普 500 去年涨了 12%"
 
-## 5. Unit Confusion Patterns
+## 5. 单位混淆模式
 
-### 5.1 Basis Points vs Percentage
+### 5.1 基点 vs. 百分比
 
-| Expression | Meaning | Common In |
+| 表述 | 含义 | 常见场景 |
 |-----------|---------|-----------|
-| 25 bp | 0.25 percentage points | Bond yields, rate changes |
-| 0.25% | 0.25 percent | Same concept, different notation |
-| 25% | 25 percent | Equity returns, allocations |
+| 25 bp | 0.25 个百分点 | 债券收益率、利率变动 |
+| 0.25% | 0.25% | 同一概念，不同记法 |
+| 25% | 25% | 股票收益、配置比例 |
 
-**Error pattern**: "The Fed raised rates by 25%" (should be "25 bp" or "0.25%").
+**错误模式**："美联储加息 25%"（应为 "25 bp" 或 "0.25%"）。
 
-### 5.2 Dollar vs Cent
+### 5.2 美元 vs. 美分
 
-| Expression | Meaning |
+| 表述 | 含义 |
 |-----------|---------|
-| $1.50 | One dollar and fifty cents |
-| 150 cents | Same value |
-| $0.015 | 1.5 cents (common in EPS) |
+| $1.50 | 一美元五十美分 |
+| 150 cents | 同一数值 |
+| $0.015 | 1.5 美分（EPS 中常见） |
 
-### 5.3 Missing Units
+### 5.3 缺失单位
 
-Statements like "Gold moved 50 today" are ambiguous:
-- $50 (absolute price change)?
-- 50 bp (basis points)?
-- 0.50% (percentage change)?
+"黄金今天动了 50"这类表述是含糊的：
+- $50（绝对价格变动）？
+- 50 bp（基点）？
+- 0.50%（百分比变动）？
 
-Always specify the unit: "Gold moved $50 today" or "Gold moved 2.1% today."
+务必写明单位："黄金今天动了 $50" 或 "黄金今天涨了 2.1%"。
 
-### 5.4 Per-Unit vs Total Value
+### 5.4 单位价值 vs. 合约总价值
 
-Futures contracts represent multiple units:
-- Gold (GC): 100 troy ounces per contract
-- Crude Oil (CL): 1,000 barrels per contract
-- E-mini S&P (ES): $50 x index per contract
+期货合约对应多个单位：
+- 黄金（GC）：每手 100 金衡盎司
+- 原油（CL）：每手 1,000 桶
+- E-mini 标普（ES）：每手 $50 × 指数
 
-A "$50 move in gold" means:
-- Per ounce: $50
-- Per contract: $5,000 (100 oz x $50)
+"黄金动了 $50"意味着：
+- 按盎司：$50
+- 按合约：$5,000（100 盎司 × $50）
 
-Always clarify which is meant.
+务必写清指的是哪一个。
 
-## 6. Timezone Confusion
+## 6. 时区混淆
 
-| Abbreviation | UTC Offset (Winter) | UTC Offset (Summer) |
+| 缩写 | UTC 偏移（冬季） | UTC 偏移（夏季） |
 |-------------|--------------------|--------------------|
-| ET (Eastern) | UTC-5 | UTC-4 |
-| CT (Central) | UTC-6 | UTC-5 |
-| PT (Pacific) | UTC-8 | UTC-7 |
-| JST (Japan) | UTC+9 | UTC+9 (no DST) |
+| ET（美东） | UTC-5 | UTC-4 |
+| CT（美中） | UTC-6 | UTC-5 |
+| PT（美西） | UTC-8 | UTC-7 |
+| JST（日本） | UTC+9 | UTC+9（无夏令时） |
 | GMT/UTC | UTC+0 | UTC+0 |
 
-**ET to JST conversion**:
-- Winter (Nov first Sun to Mar second Sun): JST = ET + 14 hours
-- Summer (Mar second Sun to Nov first Sun): JST = ET + 13 hours
+**ET 到 JST 的换算**：
+- 冬季（11 月第一个周日至 3 月第二个周日）：JST = ET + 14 小时
+- 夏季（3 月第二个周日至 11 月第一个周日）：JST = ET + 13 小时
 
-**Common error**: Forgetting to account for DST transitions, especially
-around the March and November changeover dates.
+**常见错误**：忘记考虑夏令时切换，尤其是 3 月和 11 月的切换日前后。
 
-### Supported weekday checks
+### 支持的星期校验
 
-The checker accepts `YYYY-MM-DD`, `YYYY/MM/DD`, `M/D` and Japanese
-`M月D日` dates followed by a weekday. Numeric dates accept English three-letter
-or full names (case-insensitive), or Japanese `火` / `火曜日` style labels.
-Use matching ASCII `(Tue)` or full-width `（火）` parentheses, optionally
-preceded by spaces or tabs. Japanese weekday labels also accept mixed-width
-parentheses for compatibility. Dates accept Unicode decimal digits, including
-full-width digits. Tight ranges such as `11/10(火)-11/12(水)` and
-`12/9-12/10(金)` check every dated endpoint. A year prefix written as
-`2025-11/10(水)` is ambiguous, so the weekday is reported only when it is
-wrong for both that year and the inferred year. Invalid calendar dates and unrecognized labels
-are outside this weekday check and are skipped, not reported as valid dates.
-An explicit numeric year always wins. Yearless forms reuse `--as-of` year
-inference (including the existing six-month rollover), then document year,
-filename year, or current year. Supply `--as-of` for reproducible checks.
-Every computed mismatch is an advisory **ERROR**, including Japanese forms
-that previously produced WARNING. Findings still leave the CLI exit status 0.
+检查器接受 `YYYY-MM-DD`、`YYYY/MM/DD`、`M/D` 以及后接星期标注的日语 `M月D日` 日期。数字日期可接英文三字母缩写或全称（不区分大小写），或 `火` / `火曜日` 这类日语标注。括号用对应的 ASCII `(Tue)` 或全角 `（火）`，前面可有空格或制表符。为兼容起见，日语星期标注也接受混用宽度的括号。日期接受 Unicode 十进制数字，包括全角数字。`11/10(火)-11/12(水)`、`12/9-12/10(金)` 这类紧凑区间会校验每个带日期的端点。写成 `2025-11/10(水)` 这种带年份前缀的形式有歧义，因此只有在该年份和推断年份下星期都算错时才上报。无效日历日期和无法识别的标注不在本次星期校验范围内，会被跳过，不会当作有效日期上报。显式写出的数字年份优先。无年份形式复用 `--as-of` 的年份推断（包括现有的六个月跨年规则），其次取文档年份、文件名年份或当前年份。要结果可复现，请提供 `--as-of`。每个算出的不匹配都是建议性的 **ERROR**，包括此前报 WARNING 的日语形式。发现不匹配时 CLI 退出码仍为 0。

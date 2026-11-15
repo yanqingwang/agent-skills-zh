@@ -1,130 +1,134 @@
-# Attack Classes
+> **中文汉化版** · 上游：[cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) · 原文件：`skills/security-audit/ATTACK-CLASSES.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-#### Attack classes — choose and split based on Phase 1
+# 攻击类别
 
-Select attack classes relevant to the application type. Not every class applies to every codebase. The list below is a starting point; add application-specific classes from Phase 1 and split large codebases per subsystem. Frame work as finding, validating, fixing, and prioritizing vulnerabilities. Keep validation to source review and bounded local fixtures; do not develop payload chains, test availability on live services, or take action in shared environments.
+#### 攻击类别：基于 Phase 1 选择与拆分
 
-Use `confirmed` only when source evidence and bounded validation establish the full boundary and meaningful result. Use `needs_validation` when a specific deployment, provider, platform, identity, or runtime fact is unavailable; state the missing fact and the safe owner-observed or local check that resolves it.
+选择与应用类型相关的攻击类别。不是每个类别都适用于每个代码库。下面的列表只是起点；从 Phase 1 补充应用专属类别，并按子系统拆分大型代码库。把工作定位为发现、校验、修复漏洞并排定优先级。校验只做源码审查和有边界的本地 fixture；不开发载荷链，不在真实服务上测试可用性，不在共享环境中采取行动。
 
-> **Native / binary / kernel targets** (C/C++/Rust-unsafe, kernel modules, parsers and decoders, FFI, concurrent runtimes, binary loaders, JITs, firmware): use the memory-safety, integer/ABI, concurrency, binary-loader, and privileged-interface classes in [MEMORY-SAFETY-AND-BINARY.md](MEMORY-SAFETY-AND-BINARY.md).
+只有当源码证据和有边界校验确立了完整边界和有意义结果时，才使用 `confirmed`。当某个具体的部署、提供方、平台、身份或运行时事实不可得时，使用 `needs_validation`；陈述缺失的事实，以及能解决它的安全的所有者观察式或本地检查。
+
+> **原生 / 二进制 / 内核目标**（C/C++/Rust-unsafe、内核模块、解析器与解码器、FFI、并发运行时、二进制加载器、JIT、固件）：使用 [MEMORY-SAFETY-AND-BINARY.md](MEMORY-SAFETY-AND-BINARY.md) 中的内存安全、整数/ABI、并发、二进制加载器和特权接口类别。
 >
-> **AI / LLM / agent targets** (chatbots, RAG, persistent memory, tool-calling agents, MCP servers/clients, prompt assembly, or model-controlled actions): use the context, memory-poisoning, action-binding, tool-schema, MCP-identity, and output classes in [AI-AND-LLM.md](AI-AND-LLM.md).
+> **AI / LLM / Agent 目标**（聊天机器人、RAG、持久记忆、工具调用 Agent、MCP 服务器/客户端、提示词组装或模型控制的动作）：使用 [AI-AND-LLM.md](AI-AND-LLM.md) 中的上下文、记忆投毒、动作绑定、工具 schema、MCP 身份和输出类别。
 >
-> **HTTP, web, and identity targets** (ordinary web apps, APIs, reverse proxies, CDNs, gateways, custom HTTP parsers, sessions, CSRF, JWT, OAuth/OIDC, SAML, MFA, passkeys, account recovery/linking, API keys, or mTLS): use [WEB-PROTOCOL-AND-AUTH.md](WEB-PROTOCOL-AND-AUTH.md).
+> **HTTP、Web 与身份目标**（普通 Web 应用、API、反向代理、CDN、网关、自定义 HTTP 解析器、会话、CSRF、JWT、OAuth/OIDC、SAML、MFA、passkey、账号找回/绑定、API key 或 mTLS）：使用 [WEB-PROTOCOL-AND-AUTH.md](WEB-PROTOCOL-AND-AUTH.md)。
 >
-> **Client-side and browser targets** (SPAs, browser extensions, embedded webviews, service workers, browser storage, cross-window messaging, CORS, WebSockets, or DOM rendering): use [CLIENT-SIDE.md](CLIENT-SIDE.md).
+> **客户端与浏览器目标**（SPA、浏览器扩展、内嵌 webview、service worker、浏览器存储、跨窗口消息、CORS、WebSocket 或 DOM 渲染）：使用 [CLIENT-SIDE.md](CLIENT-SIDE.md)。
 >
-> **Supply-chain and release targets** (dependency resolution, generated inputs, CI, release/signing/promotion, updates, plugins, or extensions): use [SUPPLY-CHAIN-AND-RELEASE.md](SUPPLY-CHAIN-AND-RELEASE.md).
+> **供应链与发布目标**（依赖解析、生成的输入、CI、发布/签名/晋级、更新、插件或扩展）：使用 [SUPPLY-CHAIN-AND-RELEASE.md](SUPPLY-CHAIN-AND-RELEASE.md)。
 >
-> **Cloud and deployment targets** (IAM, infrastructure as code, containers/Kubernetes, service mesh, serverless/edge, ingress, provider events, or runtime configuration): use [CLOUD-AND-DEPLOYMENT.md](CLOUD-AND-DEPLOYMENT.md).
+> **云与部署目标**（IAM、基础设施即代码、容器/Kubernetes、服务网格、serverless/边缘、ingress、提供方事件或运行时配置）：使用 [CLOUD-AND-DEPLOYMENT.md](CLOUD-AND-DEPLOYMENT.md)。
 >
-> **Protocol, RPC, and messaging targets** (gRPC, GraphQL transports, Protobuf/Cap'n Proto/Thrift, custom protocols, queues, brokers, pub/sub, webhooks, or streaming RPC): use [PROTOCOLS-RPC-AND-MESSAGING.md](PROTOCOLS-RPC-AND-MESSAGING.md).
+> **协议、RPC 与消息目标**（gRPC、GraphQL 传输、Protobuf/Cap'n Proto/Thrift、自定义协议、队列、broker、pub/sub、webhook 或流式 RPC）：使用 [PROTOCOLS-RPC-AND-MESSAGING.md](PROTOCOLS-RPC-AND-MESSAGING.md)。
 >
-> **Resource-exhaustion and availability targets** (untrusted work can consume shared CPU, memory, disk, connections, workers, queues, quotas, or operator-owned spend): use [RESOURCE-EXHAUSTION-AND-AVAILABILITY.md](RESOURCE-EXHAUSTION-AND-AVAILABILITY.md).
+> **资源耗尽与可用性目标**（不可信工作可能消耗共享的 CPU、内存、磁盘、连接、worker、队列、配额或运营方资金）：使用 [RESOURCE-EXHAUSTION-AND-AVAILABILITY.md](RESOURCE-EXHAUSTION-AND-AVAILABILITY.md)。
 >
-> **Data-isolation and lifecycle targets** (multi-tenant stores, caches/search, object links, analytics, export/backup, migration, deletion, retention, or restore): use [DATA-ISOLATION-AND-LIFECYCLE.md](DATA-ISOLATION-AND-LIFECYCLE.md).
+> **数据隔离与生命周期目标**（多租户存储、缓存/搜索、对象链接、分析、导出/备份、迁移、删除、保留或恢复）：使用 [DATA-ISOLATION-AND-LIFECYCLE.md](DATA-ISOLATION-AND-LIFECYCLE.md)。
 >
-> **Desktop, mobile, and local-IPC targets** (native apps, deep links, webview bridges, exported components, privileged helpers, local daemons, Unix sockets/XPC/Binder/D-Bus): use [DESKTOP-MOBILE-AND-LOCAL-IPC.md](DESKTOP-MOBILE-AND-LOCAL-IPC.md).
+> **桌面、移动与本地 IPC 目标**（原生应用、深链、webview 桥、导出组件、特权助手、本地守护进程、Unix socket/XPC/Binder/D-Bus）：使用 [DESKTOP-MOBILE-AND-LOCAL-IPC.md](DESKTOP-MOBILE-AND-LOCAL-IPC.md)。
 
-**Injection** (subagent_type: `general`)
-Trace untrusted input from entry point to dangerous sink. What counts as a "dangerous sink" depends on the application:
-- Web apps: SQL queries, HTML output, shell commands, template engines, file paths, HTTP redirects, deserialization
-- Libraries: any function that processes caller-supplied data without validation — buffer operations, parsers, format strings
-- CLI tools: shell command construction, file path handling, environment variable interpolation
-- Services: query construction, message serialization, log injection, LDAP/XPATH queries
-- Client-side (browser/JS): DOM XSS, prototype pollution, `postMessage`/origin trust, and other browser-side classes — covered by the [CLIENT-SIDE.md](CLIENT-SIDE.md) companion blocks when selected
+**注入**（subagent_type: `general`）
+追踪不可信输入从入口点到危险 sink 的路径。什么算"危险 sink"取决于应用：
+- Web 应用：SQL 查询、HTML 输出、shell 命令、模板引擎、文件路径、HTTP 重定向、反序列化
+- 库：任何处理调用方提供数据而不做校验的函数：缓冲区操作、解析器、格式化字符串
+- CLI 工具：shell 命令构造、文件路径处理、环境变量插值
+- 服务：查询构造、消息序列化、日志注入、LDAP/XPATH 查询
+- 客户端（浏览器/JS）：DOM XSS、原型污染、`postMessage`/origin 信任，以及其他浏览器侧类别：选中时由 [CLIENT-SIDE.md](CLIENT-SIDE.md) 的配套块覆盖
 
-Do not stop at the obvious direct paths. Look for indirect injection: data stored safely, then retrieved and used in a dangerous context by different code. Look for injection through field names, keys, headers, and metadata — not just values. Look for injection into secondary systems (logs, caches, search indexes, analytics).
+不要止步于明显的直接路径。寻找间接注入：数据被安全存储，随后由另一段代码取出并用于危险上下文。寻找通过字段名、键、头部和元数据的注入，而不只是值。寻找注入进二级系统（日志、缓存、搜索索引、分析）。
 
-**Access control** (subagent_type: `general`)
-Verify that a caller cannot do something outside its authority. Go beyond checking whether permission checks exist — verify they check the *right* permission for the *right* resource via the *right* mechanism:
-- Is there a path to the same state change that checks a different (weaker) permission?
-- Can a field in the request body override what the permission system intended to restrict?
-- Are there endpoints that gate on authentication but forget authorization?
-- Does the same resource have multiple access paths with inconsistent checks?
-- What about bulk/batch/export/import operations — do they enforce per-item permissions?
+**访问控制**（subagent_type: `general`）
+核实调用方无法做出其权限之外的事。不要止步于检查权限检查是否存在：核实它们是否通过*正确的机制*检查了*正确资源*上的*正确*权限：
+- 是否存在指向同一状态变更、却检查另一个（更弱）权限的路径？
+- 请求体中的字段能否覆盖权限系统本想限制的内容？
+- 是否有端点只做了认证门禁却忘了授权？
+- 同一资源是否有多条检查不一致的访问路径？
+- 批量/批处理/导出/导入操作如何：它们是否逐条执行权限检查？
 
-For complex access models, split into separate agents for auth bypass vs authorization logic.
+对复杂的访问模型，拆成独立的 Agent 分别查认证绕过与授权逻辑。
 
-**Resource and file handling** (subagent_type: `general`)
-- Path traversal (reading/writing outside intended directories) — including through symlinks, encoded sequences, and null bytes
-- SSRF (making the application fetch attacker-controlled URLs) — including through redirects, DNS rebinding, and URL parser differentials
-- Unsafe deserialization, archive extraction (zip slip), temp file handling
-- Memory safety (if applicable): buffer overflows, use-after-free, integer overflow
-- Race conditions on file operations (TOCTOU between check and use)
+**资源与文件处理**（subagent_type: `general`）
+- 路径穿越（读写预期目录之外的内容）：包括通过符号链接、编码序列和空字节
+- SSRF（让应用抓取攻击者控制的 URL）：包括通过重定向、DNS rebinding 和 URL 解析器差异
+- 不安全反序列化、压缩包解压（zip slip）、临时文件处理
+- 内存安全（如适用）：缓冲区溢出、释放后使用、整数溢出
+- 文件操作上的竞态条件（检查与使用之间的 TOCTOU）
 
-**Cryptography and secrets** (subagent_type: `general`)
-- Weak randomness for security-critical values (tokens, keys, nonces)
-- Hardcoded secrets, secrets in logs, error messages, URLs, or client-visible responses
-- Broken key derivation, missing HMAC verification, nonce reuse
-- Timing side-channels on secret comparison
-- Misuse of crypto primitives (ECB mode, unauthenticated encryption, static IVs, etc.)
-- What happens when crypto operations fail? Does the error path fall back to no-crypto?
+**密码学与机密**（subagent_type: `general`）
+- 用于安全关键值（token、密钥、nonce）的弱随机数
+- 硬编码机密；出现在日志、错误消息、URL 或客户端可见响应中的机密
+- 损坏的密钥派生、缺失 HMAC 校验、nonce 重用
+- 机密比较上的时序侧信道
+- 密码学原语误用（ECB 模式、未认证加密、静态 IV 等）
+- 密码学操作失败时会发生什么？错误路径是否回退到无加密？
 
-**Business logic** (subagent_type: `general`)
-Hunt logic errors by hand: standard scanners cannot find them, and they yield high-impact findings. For each major workflow:
-- **State machine violations**: Can you skip steps? Go backwards? Reach an invalid state? What happens if you replay a completed flow? What about partial failure — if step 2 of 3 fails, is step 1 rolled back?
-- **Race conditions with business impact**: Concurrent operations that produce invalid states (double-spend, double-approve, lost updates). Focus on operations that check-then-act non-atomically.
-- **Numeric/quantity manipulation**: Negative values, zero values, overflow, precision loss, type coercion between string and number.
-- **Access boundary violations**: Not "does the permission check exist" but "is it the right check for the business rule?" Can input to one operation bypass a restriction enforced on a different operation for the same effect?
-- **Implicit trust assumptions**: Data from storage, config, other components, or plugins assumed safe because "we validated it on the way in." What if a different code path wrote it?
-- **Time-based logic**: Expiry checks, scheduling, rate windows, clock skew. What happens at exact boundary moments? What about timezone differences between components?
-- **Default and fallback behavior**: What is the security posture when config is missing? When a feature flag is off? When a dependency is unavailable? When the system is mid-migration?
+**业务逻辑**（subagent_type: `general`）
+手工猎取逻辑错误：标准扫描器找不到它们，而它们会产出高影响发现。对每个主要工作流：
+- **状态机违规**：能跳过步骤吗？能倒着走吗？能到达非法状态吗？重放一个已完成的流程会怎样？部分失败呢：三步中的第 2 步失败时，第 1 步会回滚吗？
+- **有业务影响的竞态条件**：产生非法状态的并发操作（双花、重复审批、丢失更新）。重点看"先检查后行动"且非原子的操作。
+- **数值/数量操纵**：负值、零值、溢出、精度丢失、字符串与数字之间的类型强转。
+- **访问边界违规**：不是"权限检查是否存在"，而是"它对这条业务规则是不是正确的检查"？对一个操作的输入能否绕过施加在另一个操作上、却服务于同一效果的限制？
+- **隐式信任假设**：来自存储、配置、其他组件或插件的数据，因为"进来时校验过"就被当作安全。如果写入它的是另一条代码路径呢？
+- **基于时间的逻辑**：过期检查、调度、限流窗口、时钟偏移。恰好在边界时刻会发生什么？组件之间的时区差异呢？
+- **默认与回退行为**：配置缺失时的安全态势是什么？功能开关关闭时？依赖不可用时？系统处于迁移中途时？
 
-**Feature abuse and data leakage** (subagent_type: `general`)
-Legitimate features used for unintended purposes. Look for bugs in the design, not only in the code:
-- **Export/backup as exfiltration**: Can a low-privilege user trigger an export, snapshot, or backup that includes data above their access level? Can they export other users' data? Does the export include deleted/draft/private content? Revision history that was supposed to be pruned?
-- **Import/restore as injection**: Can import overwrite existing data? Can it create records that bypass normal validation? Can it inject content into collections the user has no write access to? Does it respect the same permission model as the UI?
-- **Search/filter/sort as oracle**: Can search queries reveal whether content exists that the user cannot directly access? Do filter parameters let users probe statuses, roles, or fields they should not know about? Does sorting by a hidden field reveal its values through result ordering?
-- **Enumeration through side effects**: Do error messages differ between "does not exist" and "no access"? Do response times differ? Response sizes? HTTP status codes? Can you enumerate users through password reset, invite, or registration flows?
-- **Preview/draft/staging leakage**: Are preview tokens scoped to one item or do they unlock broader access? Can draft content be discovered through search, RSS feeds, sitemaps, or API listing endpoints? Can cache headers cause a CDN to serve private content publicly?
-- **Notification/webhook as SSRF**: Can a user set a notification URL, webhook URL, or callback URL that the server fetches? Is it validated against internal networks? What about after a redirect?
+**功能滥用与数据泄露**（subagent_type: `general`）
+合法功能被用于非预期目的。寻找设计层面的 bug，而不只是代码里的：
+- **导出/备份即外泄**：低权限用户能否触发包含超出其访问级别数据的导出、快照或备份？能否导出其他用户的数据？导出是否包含已删除/草稿/私密内容？本应被清理的修订历史呢？
+- **导入/恢复即注入**：导入能否覆盖既有数据？能否创建绕过正常校验的记录？能否把内容注入用户没有写权限的集合？它是否遵守与 UI 相同的权限模型？
+- **搜索/过滤/排序即预言机**：搜索查询能否暴露用户无法直接访问的内容是否存在？过滤参数能否让用户探测其不应知晓的状态、角色或字段？按隐藏字段排序能否通过结果顺序泄露其值？
+- **通过副作用枚举**："不存在"与"无权限"的错误消息是否有差异？响应时间呢？响应大小呢？HTTP 状态码呢？能否通过密码重置、邀请或注册流程枚举用户？
+- **预览/草稿/staging 泄露**：预览 token 是限定在单个条目上，还是解锁了更广的访问？草稿内容能否通过搜索、RSS feed、sitemap 或 API 列举端点被发现？缓存头能否让 CDN 公开提供私密内容？
+- **通知/webhook 即 SSRF**：用户能否设置会被服务器抓取的通知 URL、webhook URL 或回调 URL？是否针对内部网络做了校验？重定向之后呢？
 
-**Chained vulnerabilities and trust boundaries** (subagent_type: `general`)
-Individually allowed or contained behavior can become a vulnerability when another component or lifecycle step relies on a stronger guarantee:
-- **Multi-step boundary failures**: Map what a low-privilege principal may read, write, invoke, and retain, then connect only concrete outputs to later trust decisions. Confirm each prerequisite and do not assume a downstream effect.
-- **Cross-component trust gaps**: Component A validates input and passes it to component B. Compare the exact guarantee A produces with what B assumes, including truncation, type coercion, normalization, tenant scope, and plugin/extension access.
-- **Second-order use**: Data safe when stored may become dangerous in a later context. A field name becomes a JSON path, a slug becomes a file path, escaped text enters raw rendering, or a stored string becomes a URL, regex, template, or policy expression.
-- **Scope and capability growth**: Token, API-key, plugin, OAuth, MCP, or AI capabilities become broader after delegation, refresh, caching, role change, or composition. Name the concrete operation the resulting principal should not have.
-- **Timing and ordering**: Review setup, migration, soft-delete, revoke/cache expiry, check/use, and validate/consume windows. Confirm stale state is accepted before reporting.
-- **Rollback and recovery**: Undelete, restore, revision rollback, and cancellation must apply current ownership, validation, and authorization. Confirm which invalid state is restored.
+**链式漏洞与信任边界**（subagent_type: `general`）
+单独看被允许或已被遏制的行为，当另一个组件或生命周期步骤依赖更强的保证时，就可能成为漏洞：
+- **多步边界失败**：映射低权限主体可以读、写、调用和保留什么，然后只把具体输出连接到其后的信任决策。确认每个前置条件，不要假设某个下游效果存在。
+- **跨组件信任缺口**：组件 A 校验输入后传给组件 B。比较 A 产出的确切保证与 B 所假设的，包括截断、类型强转、规范化、租户范围和插件/扩展访问。
+- **二阶使用**：存储时安全的数据，在之后的上下文中可能变得危险。字段名变成 JSON path，slug 变成文件路径，转义过的文本进入原始渲染，存储的字符串变成 URL、正则、模板或策略表达式。
+- **范围与能力扩张**：token、API key、插件、OAuth、MCP 或 AI 能力在委托、刷新、缓存、角色变更或组合之后变得更大。说出结果主体本不应拥有的具体操作。
+- **时序与顺序**：审查设置、迁移、软删除、撤销/缓存过期、检查/使用、校验/消费的窗口。报告之前确认陈旧状态确实被接受。
+- **回滚与恢复**：取消删除、恢复、修订回滚和取消操作必须应用当前的所有权、校验与授权。确认恢复的是哪个非法状态。
 
-**Wildcard** (subagent_type: `general`)
-You are not given a category. Find vulnerabilities outside the standard classes already assigned.
+**自由猎取**（subagent_type: `general`）
+你不被指派类别。找出已指派标准类别之外的漏洞。
 
-Read code that looks boring or disconnected from security. Follow incomplete, experimental, compatibility, and fallback features, but retain the same concrete boundary and validation requirements as every other class.
+阅读看起来无聊或与安全无关的代码。跟进不完整、实验性、兼容性和回退性质的 feature，但保持与其他类别相同的具体边界和校验要求。
 
-Use these starting points, but do not limit yourself to them:
-- What is the strangest code in the codebase? Why does it exist? What happens if it is abused?
-- Are there any features that feel half-finished, experimental, or bolted on? Those have the weakest security because they got the least review.
-- What happens if you use the API in a way the frontend never would? The UI constrains users, but the API does not. What API calls are possible but never made by the client?
-- Are there any hidden or undocumented endpoints, parameters, headers, or features? Look at route registrations, middleware, and config for things that are not in the docs.
-- What happens when you mix features that were not designed to work together? Localization + preview + caching. Import + plugins + webhooks. OAuth + impersonation + API keys.
-- Is there anything interesting in the git history? Reverted security fixes, commented-out auth checks, secrets that were committed then removed (still in history).
-- Which valid-account actions affect other users, shared integrity, availability, or operator-owned cost? Verify containment, quotas, authorization, and recovery around those actions.
-- Which operations are irreversible or require elevated confirmation? Bind authorization and approval to the final principal, action, and resource.
-- What assumptions does the code make about the environment? That the database is local, that the clock is accurate, that DNS is trustworthy, that the filesystem is case-sensitive?
-- Look at the test files — what are they **not** testing? Compare the edge cases the developer thought about (tests exist) with the ones they did not (no tests).
+使用这些起点，但不局限于它们：
+- 代码库里最奇怪的代码是什么？它为什么存在？被滥用会怎样？
+- 有没有感觉半成品、实验性或硬凑上去的功能？它们的安全最弱，因为得到的审查最少。
+- 用前端绝不会用的方式调用 API 会怎样？UI 限制了用户，API 没有。哪些 API 调用可能存在却从未被客户端发起？
+- 有没有隐藏或未记载的端点、参数、头部或功能？查看路由注册、中间件和配置里文档中没有的东西。
+- 把并非为协同设计的功能混在一起会怎样？本地化 + 预览 + 缓存。导入 + 插件 + webhook。OAuth + 模拟登录 + API key。
+- git 历史里有没有有趣的东西？被回退的安全修复、被注释掉的认证检查、提交过又删除的机密（仍留在历史里）。
+- 哪些合法账号动作会影响其他用户、共享完整性、可用性或运营方成本？围绕这些动作核实遏制、配额、授权与恢复。
+- 哪些操作不可逆或需要更高层级的确认？把授权与批准绑定到最终主体、动作和资源上。
+- 代码对环境做了哪些假设？假设数据库在本地、时钟准确、DNS 可信、文件系统区分大小写？
+- 看测试文件：它们**没有**在测什么？比较开发者想到的边界情况（有测试）与没想到的（没有测试）。
 
-Pursue anomalies inside your assigned scope until the invariant is settled. If something looks strange, read it until you can state whether it is safe. If a function has a comment explaining why it is safe, verify the explanation. If a variable is named `temp` or `hack` or `legacy`, read it closely.
+在被指派的范围内追查异常，直到把不变量查清。有东西看起来奇怪，就读到你能说清它是否安全为止。如果函数有解释其安全性的注释，核实那个解释。如果变量名叫 `temp`、`hack` 或 `legacy`，凑近读它。
 
-**Obvious things** (subagent_type: `general`)
-Other agents hunt subtle bugs. This agent checks the basic exposures that are easy to overlook because everyone assumes someone else already checked them:
-- Are there any hardcoded passwords, API keys, tokens, or secrets in the source? (grep for `password`, `secret`, `apikey`, `token`, `Bearer`, `-----BEGIN`, common default passwords)
-- Are there any TODO/FIXME/HACK/XXX comments that reference security? (`TODO: add auth`, `FIXME: validate input`, `HACK: skip permission check`)
-- Is debug mode / dev mode properly gated? Can it be enabled in production via environment variable, query parameter, or header?
-- Are there test/example/seed credentials that work in production?
-- Is there a `/debug`, `/admin`, `/test`, `/status`, `/health`, `/metrics`, `/env`, `/.env`, `/config` endpoint that is unprotected?
-- Are there any `.env`, `.env.local`, `credentials.json`, `*.pem`, `*.key` files checked into the repo?
-- Does the `.gitignore` actually cover secrets, uploads, and local config?
-- Are dependencies pinned? Are there known CVEs in the dependency tree? (check lockfiles)
-- Are there any `eval()`, `exec()`, `child_process`, `Function()`, `vm.runInContext`, `import()` with dynamic input?
-- Are CORS headers set to `*` or overly permissive? Is `Access-Control-Allow-Credentials` combined with a wildcard origin?
-- Are cookies missing `HttpOnly`, `Secure`, or `SameSite` attributes?
-- Are there any open redirects? (parameters named `redirect`, `return`, `next`, `url`, `goto`, `continue` that feed into redirects without validation)
-- Is TLS enforced? Are there any HTTP-only endpoints?
-- Are error responses in production returning stack traces, internal paths, or SQL errors?
+**显而易见之事**（subagent_type: `general`）
+其他 Agent 猎取隐蔽 bug。这个 Agent 检查那些容易忽视的基本暴露面，因为每个人都假设别人已经查过了：
+- 源码里有没有硬编码的密码、API key、token 或机密？（grep 一下 `password`、`secret`、`apikey`、`token`、`Bearer`、`-----BEGIN` 和常见默认密码）
+- 有没有涉及安全的 TODO/FIXME/HACK/XXX 注释？（`TODO: add auth`、`FIXME: validate input`、`HACK: skip permission check`）
+- 调试模式/开发模式是否被正确门禁？能否通过环境变量、查询参数或头部在生产环境开启？
+- 有没有能在生产环境生效的测试/示例/种子凭证？
+- 有没有未加保护的 `/debug`、`/admin`、`/test`、`/status`、`/health`、`/metrics`、`/env`、`/.env`、`/config` 端点？
+- 有没有 `.env`、`.env.local`、`credentials.json`、`*.pem`、`*.key` 文件被提交进仓库？
+- `.gitignore` 真的覆盖了机密、上传文件和本地配置吗？
+- 依赖有锁定版本吗？依赖树里有已知 CVE 吗？（检查 lockfile）
+- 有没有 `eval()`、`exec()`、`child_process`、`Function()`、`vm.runInContext`、接受动态输入的 `import()`？
+- CORS 头是否设为 `*` 或过度宽松？`Access-Control-Allow-Credentials` 是否与通配 origin 同时出现？
+- cookie 是否缺 `HttpOnly`、`Secure` 或 `SameSite` 属性？
+- 有没有开放重定向？（名为 `redirect`、`return`、`next`、`url`、`goto`、`continue` 的参数未经校验就进入重定向）
+- 是否强制 TLS？有没有仅 HTTP 的端点？
+- 生产环境的错误响应是否返回堆栈跟踪、内部路径或 SQL 错误？
 
-This agent does not need to be creative. It needs to be thorough and literal. Check every item. Report each result.
+这个 Agent 不需要创意。它需要彻底和字面。逐项检查。逐项报告结果。
 
-**Important**: For any finding this agent reports, it must verify the full code path, not just surface appearance. If a cookie is missing `HttpOnly`, check whether the cookie contains security-sensitive data and whether JS needs to read it by design. If an error message contains a field name, check whether the field is ever actually populated with sensitive data. A flag is not a finding — trace the impact before reporting.
+**重要**：这个 Agent 报告的任何发现，都必须核实完整代码路径，而不只是表面现象。cookie 缺 `HttpOnly` 时，检查该 cookie 是否包含安全敏感数据、JS 是否本就需要读取它。错误消息包含字段名时，检查该字段是否真的会被填入敏感数据。一个标志不是一条发现：报告之前先追踪影响。

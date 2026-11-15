@@ -1,104 +1,108 @@
-# Layout
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/layout.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The canvas, the sizes, the sections and the hero for every theme build; a custom run designs its own (`direction.md`). A page looks made when every screen holds one idea at the right size. Numbers are at 1440 x 900 unless a line says otherwise.
+# 布局
 
-## 1. The canvas
+每次主题构建的画布、尺寸、区块与 hero 规格；自定义运行自行设计（`direction.md`）。每一屏都以合适的尺寸承载一个想法，页面看起来才是"做出来的"。除特别说明外，数值均以 1440 x 900 为准。
 
-- **One container, centred and capped:** `.container` from the scaffold, `--container` 1440px with `--gutter` 64px, so content is 1312px wide at 1440 and stays 1312px at 1920 while the gutters grow (44d).
-- **Twelve columns inside it**, `--gap-columns` 32px apart: one column is 80px, four 416px, six 640px, eight 864px. Every section places its parts on these columns, so left edges line up from the nav to the footer.
-- **Every section:** the outer element owns the background and the block padding, the inner `.container` the width and only `padding-inline` (a `padding` shorthand there silently zeroes the rhythm). A full-bleed band changes the background and keeps the container.
+## 1. 画布
 
-## 2. Sizes
+- **一个容器，居中且有上限：**脚手架的 `.container`，`--container` 1440px、`--gutter` 64px，因此 1440 宽时内容宽 1312px，1920 宽时内容仍是 1312px，只是边距变宽（44d）。
+- **容器内 12 栏**，栏距 `--gap-columns` 32px：1 栏宽 80px，4 栏 416px，6 栏 640px，8 栏 864px。每个区块的部件都落在这些栏上，于是从导航到页脚，左边缘一一对齐。
+- **每个区块：**外层元素负责背景与块级 padding，内层 `.container` 负责宽度且只设 `padding-inline`（在那里写 `padding` 简写会悄悄清零节奏）。通栏色带只改背景，保留容器。
 
-The scaffold writes these tokens and `base.css` sets them on the elements. A theme changes faces, weights, tracking and case; the steps hold, except where a theme sets its display a step larger.
+## 2. 尺寸
 
-| Role | Token | At 1440 | Element |
+这些 token 由脚手架写入，`base.css` 把它们应用到元素上。主题只改字体、字重、字距与大小写；档位不变，除非某主题把 display 档放大一档。
+
+| 角色 | Token | 1440 时 | 元素 |
 | --- | --- | --- | --- |
-| Hero head | `--text-display` | 84px | `h1` |
-| Long hero head, statement | `--text-display-s` | 60px | `.display-s` |
-| Section head | `--text-section` | 52px | `h2` |
-| Item title | `--text-title` | 25px | `h3` |
-| Lead (the one line under a head) | `--text-lead` | 21px | `.lead` |
-| Body | `--text-md` | 16px | `p` |
-| Label, caption, meta | `--text-sm` | 14px | `small`, `figcaption`, `th` |
+| Hero 标题 | `--text-display` | 84px | `h1` |
+| 长 hero 标题、宣言 | `--text-display-s` | 60px | `.display-s` |
+| 区块标题 | `--text-section` | 52px | `h2` |
+| 条目标题 | `--text-title` | 25px | `h3` |
+| 导语（标题下的那一行） | `--text-lead` | 21px | `.lead` |
+| 正文 | `--text-md` | 16px | `p` |
+| 标签、题注、元信息 | `--text-sm` | 14px | `small`, `figcaption`, `th` |
 
-- A section head under 40px at 1440 is the most common reason a page looks unfinished (78). The hero head is about one and a half times the section head, the section head about twice the item title.
-- A head and its line sit 16 to 24px apart (`--space-md` to `--space-lg`); the head block and the section's content 48 to 64px (`--space-2xl`), 40px in a tight composition.
-- Grid items sit `--gap-columns` apart across and 48 to 64px apart down; a card or well takes 32 to 40px of padding.
+- 1440 宽下区块标题小于 40px，是页面显得没做完的最常见原因（78）。Hero 标题约为区块标题的 1.5 倍，区块标题约为条目标题的 2 倍。
+- 标题与其导语之间隔 16 到 24px（`--space-md` 到 `--space-lg`）；标题块与区块内容之间隔 48 到 64px（`--space-2xl`），紧凑构图时 40px。
+- 网格条目横向间距 `--gap-columns`，纵向间距 48 到 64px；卡片或内嵌容器（well）用 32 到 40px 的 padding。
 
-## 3. Rhythm between sections
+## 3. 区块之间的节奏
 
-- Sections part by the three scaffold steps, `--section-gap-s` 120px, `--section-gap` 144px and `--section-gap-l` 176px, mixed (59). A band (a change of paper) takes `--section-gap-s` of padding top and bottom.
-- Space is earned by mass: a 144px gap frames a 700px section and is a hole under a 200px one. An empty-looking page wants a bigger head, a bigger visual or a fuller section, not a smaller gap.
-- Six to nine sections, hero and footer included; five on a thin prompt, never fewer. Height follows content (often 5,000 to 8,000px with pictures and a full prompt, 3,000 to 4,000px on a thin one); never pad toward a height.
+- 区块之间用脚手架的三档间隔，`--section-gap-s` 120px、`--section-gap` 144px、`--section-gap-l` 176px，混着用（59）。色带（换一种"纸"）上下各留 `--section-gap-s` 的 padding。
+- 留白要靠体量挣来：144px 的间隔衬得起 700px 的区块，垫在 200px 的区块下就成了空洞。页面显得空，出路是更大的标题、更大的视觉或更饱满的区块，而不是更小的间隔。
+- 区块六到九个，hero 与页脚算在内；素材单薄的 prompt 用五个，绝不再少。高度跟随内容（图片齐全、素材充沛时常为 5000 到 8000px，单薄时 3000 到 4000px）；绝不为凑高度注水。
 
-## 4. A section
+## 4. 区块
 
-A section is one piece of the page's content shown at its best: the menu, the lineup, the latest issue, the product at work, the room, the price. Decide the content first, then the composition that shows it best. Most sections carry a **head block** above or beside a **body** from § 5; a section whose content names itself (a menu, a timetable, a track list, a list of issues, the product's own screen) may go without one, or carry its head inside the content (the menu's own title, the date over the lineup). Never more than two neighbours with the same skeleton: a page of head-then-block, head-then-block reads as a template however good each block is. What real sites in each category are built around is in `anatomy.md`.
+区块是页面内容的一块，以它最好的样子呈现：菜单、阵容、最新一期、产品实际运转的样子、房间、价格。先定内容，再定呈现它的构图。多数区块在 § 5 的**主体**上方或旁边带一个**标题块**；内容自己会说话的区块（菜单、赛程表、曲目列表、期号列表、产品自己的界面）可以不带，或把标题放进内容里（菜单自己的名字、阵容上方的日期）。相邻区块骨架相同的不得超过两个：满页都是"标题接块、标题接块"的页面，每个块再好也读起来像模板。各品类的真实网站围绕什么搭建，见 `anatomy.md`。
 
-- **The head block:** an `h2` of six words or fewer at `--text-section` (a staged shape may head each stage with its one-word name), at most one line at `--text-lead` beneath it, on columns 1 to 6 or 1 to 7, or split (head on 1 to 5, the line on 7 to 12, baselines aligned). Centred only over a symmetric body, and never more centred head blocks than left-aligned ones.
-- **The body fills the width:** its widest row reaches ten of the twelve columns (77). A narrow text block with the right half empty is the sparse page's signature; pair it with a visual, split it, or set it as a statement.
-- **The body has mass:** a visual 360px tall or more; a set of three or four items across the width; a list or table of three or more rows across ten columns; a working control on the prompt's own facts; or a statement at `--text-section` or larger. A head and a paragraph are a head block, never a section.
-- **A split balances:** text and visual centre on each other within 60px, and neither column leaves more than a fifth of the row empty.
-- **Content sets the height:** usually 520 to 900px; under 360px only for a band (a call to action, a logo row, a statement), at most twice a page.
+- **标题块：**一个不超过六个词的 `h2`，字号 `--text-section`（分阶段形状可以让每个阶段用它的一词之名做标题），下方最多一行 `--text-lead`，落在第 1 到 6 栏或 1 到 7 栏，或拆分（标题占 1 到 5 栏，导语占 7 到 12 栏，基线对齐）。只在对称主体上方才居中，居中的标题块数量绝不多于左对齐的。
+- **主体要占满宽度：**最宽的一行要够到 12 栏中的 10 栏（77）。窄文本块配右半空白，是稀疏页的签名；给它配视觉、拆成两栏，或排成宣言。
+- **主体要有体量：**高度 360px 以上的视觉；横跨宽度的一组三四个条目；横跨 10 栏、三行以上的列表或表格；作用于 prompt 自身事实的可操作控件；或 `--text-section` 起步的宣言。一个标题加一段话只是标题块，永远不算区块。
+- **分栏要平衡：**文本与视觉的中心互相偏离不超过 60px，任何一栏留空不超过整行的五分之一。
+- **高度由内容定：**通常 520 到 900px；低于 360px 只用于色带（行动号召、logo 行、宣言），每页至多两次。
 
-## 5. Compositions
+## 5. 构图
 
-Layouts, not components: build each in the theme's material and the prompt's content. A page uses three to six different ones and never the same one twice in a row, except in a one-composition shape (Split Studio, Feature Stack, Catalogue), where neighbours change ratio and, where the shape allows, side.
+是版式，不是组件：每个都用主题的材质和 prompt 的内容来搭建。一页用三到六种不同构图，同一种绝不相邻重复；单一构图形状（Split Studio、Feature Stack、Catalogue）除外，这种形状里相邻区块要变换比例，形状允许时也变换左右侧。
 
-1. **Split.** A text block (head, line, two to four short facts or one action) beside a visual on columns 6 to 12 or 7 to 12, 440px tall or more at 4:3 to 4:5 (portrait for a product photograph). Swap the side at most once a page; change the ratio (5 and 7, 4 and 8, 6 and 6) between two splits.
-2. **Showcase.** The head block, then one visual across all twelve columns at 16:9 to 21:9, 560px tall or more; beneath it at most two smaller visuals at 8 and 4 or 7 and 5, never three equal frames.
-3. **Grid.** Three or four items across (or two by two): plans, products, places, rooms, dishes, each with its photograph, a large figure or a title big enough to carry the cell, then one line; equal heights, aligned tops, 240px or taller. Never empty frames (68), stock faces for people (F9) or icon tiles over headings (3).
-4. **Bento.** Four to six tiles on six or twelve columns in mixed spans (8 and 4 over 4, 4 and 4; or 7 and 5 over 5 and 7), rows 280 to 360px, two tiles at least with a visual, one clearly the lead.
-5. **Rows.** Three to five full-width rows parted by hairlines, 72 to 120px each: a title at `--text-title` on columns 1 to 5, its line or figure on 6 to 12. A head block may sit on 1 to 4 beside rows on 5 to 12 (an FAQ, an index, a timeline, a price list).
-6. **Table.** Full width, four or five rows of 56 to 72px, numerals tabular, the column that names the row one step heavier.
-7. **Figures.** Three or four real numbers at `--text-display-s`, labels beneath, across the twelve columns, parted by vertical hairlines. Only figures the user gave (46a).
-8. **Steps.** Three or four stages across, each a numeral (a real `<ol>`, never a `01` label over a head, 54), a title and a line, with a visual beneath or beside where the material has one; or a vertical run with a visual per stage on a fixed side.
-9. **Statement.** One sentence filling eight to ten columns in two or three lines, from `--text-section` up to `--text-display` (a condensed or light face takes the larger step), with its attribution or one action; once a page.
-10. **Band.** A change of paper (`--color-paper-2`, the ink, or a field of the accent where the posture allows) edge to edge, the container inside, holding whatever the page's job wants there: the next free table times, the buy box, the store buttons beside a screen, the next date and the address. Never an email field by default (85).
-11. **Form.** The fields on six or seven columns beside the head block and two to four facts, inputs 48 to 56px tall, one primary action.
-12. **Rail.** A horizontal run past the container's edge (dates, issues, products, rooms, episodes), five or more items with the next one cut by the edge, scrollable by touch and keyboard, snap points, no arrows needed past two.
-13. **Pinned.** One visual held sticky on six or seven columns while three or four short panels scroll past it on the other side, each changing what the visual shows (a state, a crop, a step); static under 60rem.
-14. **Switcher.** One area with two to five states behind a segmented control: the menu by lunch and dinner, the plans by month and year, the app on phone and watch, the schedule by day. Every state real; the first visible without script.
-15. **Index.** A dense, scannable list of the prompt's own items with their facts in columns (issues with dates and topics, projects with year and client, episodes with length, lots with estimates), optionally filtered; 6 to 20 rows, the lead row larger.
-16. **Schedule.** Time against place or day: a two-day festival as two columns of acts and times, a week of classes, opening hours as a strip; the current or next slot marked. Only for times the visitor picks or plans around, never a process, a workday or a delivery told as clock times.
-17. **Offer.** The thing for sale with what a buyer needs at the moment of buying: the photograph or screen, the options (size, scent, plan), the price, the action and one line of delivery or terms. On a buy page it is often the hero.
+1. **Split（对分）。**文本块（标题、导语、两到四条短事实或一个动作）旁边放视觉，视觉占第 6 到 12 栏或 7 到 12 栏，440px 高以上，比例 4:3 到 4:5（产品照片用竖幅）。左右互换每页至多一次；两个 split 之间变换比例（5 与 7、4 与 8、6 与 6）。
+2. **Showcase（展示）。**先标题块，然后一幅视觉横跨全部 12 栏，比例 16:9 到 21:9，560px 高以上；其下最多两幅更小的视觉，按 8 与 4 或 7 与 5 分栏，绝不三个等大画框。
+3. **Grid（网格）。**一行三四个条目（或两行两列）：套餐、产品、地点、房间、菜品，每个配自己的照片、一个大的数字，或大到足以撑起格子的标题，再加一行字；等高、顶对齐、240px 起步。绝不空画框（68）、用图库脸充当人物（F9）、标题上压图标块（3）。
+4. **Bento（便当格）。**六栏或十二栏上放四到六块混合跨度的格子（上排 8 与 4、下排 4 与 4；或上排 7 与 5、下排 5 与 7），行高 280 到 360px，至少两块带视觉，其中一块明显是主格。
+5. **Rows（行）。**三到五个通栏行，细线分隔，每行 72 到 120px：`--text-title` 的标题占 1 到 5 栏，其导语或数字占 6 到 12 栏。标题块也可占 1 到 4 栏，旁边的行占 5 到 12 栏（FAQ、索引、时间线、价目表）。
+6. **Table（表格）。**通栏，四到五行，每行 56 到 72px，数字用等宽数字（tabular figures），命名行的那一栏字重加一档。
+7. **Figures（数字）。**三四个真实数字，字号 `--text-display-s`，下方配标签，横跨 12 栏，竖细线分隔。只用用户给出的数字（46a）。
+8. **Steps（步骤）。**三四个阶段横排，每个含一个数字（真正的 `<ol>`，绝不在标题上贴 `01` 标签，54）、一个标题和一行字，素材有视觉的放下方或旁边；或竖排，每个阶段配一幅视觉，固定在同一侧。
+9. **Statement（宣言）。**一句话占八到十栏、两三行排下，字号从 `--text-section` 到 `--text-display`（窄体或细体可取更大一档），带出处或一个动作；每页一次。
+10. **Band（色带）。**一次"换纸"（`--color-paper-2`、换墨色，或姿态允许时一片强调色），通到边、容器在内，装的是页面任务此刻需要的东西：下一批空位时间、购买框、屏幕旁的门店按钮、下一个日期与地址。默认绝不放邮箱输入框（85）。
+11. **Form（表单）。**字段占六或七栏，旁边是标题块和两到四条事实，输入框高 48 到 56px，一个主操作。
+12. **Rail（横滑栏）。**越过容器边缘的横向一排（日期、期号、产品、房间、剧集），五个以上条目，下一个被边缘切掉，可触摸与键盘滚动，带吸附点，超过两个后无需箭头。
+13. **Pinned（钉住）。**一幅视觉钉在六或七栏上不动，另一侧三四个短面板滚过，每个面板改变视觉所显示的内容（一个状态、一个裁切、一个步骤）；60rem 以下退化为静态。
+14. **Switcher（切换器）。**一个区域带分段控件，背后有两到五个状态：菜单分午市晚市、套餐按月付年付、应用分手机与手表、日程按天。每个状态都是真的；第一个状态无需脚本即可见。
+15. **Index（索引）。**prompt 自身条目的致密可扫读列表，事实分栏呈现（期号配日期与主题、项目配年份与客户、剧集配时长、拍品配估价），可加筛选；6 到 20 行，首行更大。
+16. **Schedule（日程）。**时间对照地点或日期：两天音乐节排成两栏演出与时间、一周课程、营业时间排成条；当前或下一个时段做标记。只用于访客要挑选或据此计划的时间，绝不用钟点去讲流程、工作日或配送。
+17. **Offer（商品位）。**出售之物加上购买瞬间买家需要的信息：照片或界面截图、选项（尺寸、香型、套餐）、价格、动作按钮和一行配送或条款。购买页上它常就是 hero。
 
-Under 60rem every composition stacks in reading order: the head block, then the body; a split's visual after its text; a grid two across, then one under 40rem; a bento's lead tile first; a rail stays a rail; a pinned pair unpins; a schedule turns into one column per day. Visuals keep their aspect ratio and lose their minimum height; nothing scrolls sideways except a rail or a table that says so (`responsive.md`).
+60rem 以下所有构图按阅读顺序纵向堆叠：先标题块，再主体；split 的视觉排在文本之后；网格先两列并排，40rem 以下改单列；bento 主格排最前；rail 保持横滑；pinned 的配对解除钉住；日程按天各成一栏。视觉保留宽高比、取消最小高度；除 rail 和明确声明可横滚的表格外，任何东西都不横向滚动（`responsive.md`）。
 
-## 6. The hero
+## 6. Hero
 
-The first screen at 1440 x 900 and 1920 x 1080, and only the first screen (44c). Pick a posture at Step 2 from the job (`anatomy.md`), stamp it, and vary it run to run; text beside a picture (Settled, Stage) is the most common generated hero, so take it only when the picture is the strongest thing the prompt has.
+1440 x 900 与 1920 x 1080 下的首屏，且只是首屏（44c）。在 Step 2 依任务选定一种姿态（`anatomy.md`），记入 stamp，且每次运行都要换；图文并排（Settled、Stage）是生成页最常见 hero，所以只有当图像确是 prompt 里最强素材时才用它。
 
-| Posture | Height | Content |
+| 姿态 | 高度 | 内容 |
 | --- | --- | --- |
-| **Settled** | fills the screen under the nav | centred in the screen; the text on six columns, the visual on the other six |
-| **Stage** | fills the screen under the nav | the text on five columns, a visual on seven at 60 to 75% of the screen tall (reversed when a poster-size head needs the width); it may bleed off the outer edge |
-| **Banner** | 50 to 60% of the screen | the first section shows above the fold; for references, docs, utilities |
-| **Ledge** | fills the screen | a tall field above, the head resting at the base; at 1920 the head grows to its cap first |
-| **Corridor** | fills the screen | one centred column of 44ch or less, the head larger than usual |
-| **Poster** | 92 to 100dvh | a full-bleed photograph or canvas, the content on its calmest part with room around it, low and left or centred, never squeezed into a corner |
-| **Counter** | fills the screen under the nav | the action is the visual: the subscribe field with the latest issue, the booking times, the buy box with its options, the download with the screen, set large beside or under a shorter head |
-| **Index** | fills the screen under the nav | the content is the visual: the lineup, the menu, the list of issues or projects, set as the page's lead with the head small above it; for pages whose list is the reason to come |
+| **Settled** | 占满导航以下的屏幕 | 在屏幕内居中；文本占 6 栏，视觉占另外 6 栏 |
+| **Stage** | 占满导航以下的屏幕 | 文本占 5 栏，视觉占 7 栏、高为屏幕的 60% 到 75%（海报级大标题需要宽度时左右互换）；视觉可溢出外缘 |
+| **Banner** | 屏幕的 50% 到 60% | 首屏之下就能看到第一个区块；用于参考、文档、工具类页面 |
+| **Ledge** | 占满整屏 | 上方是大片高场域，标题停在底部；1920 宽时标题先放大到上限 |
+| **Corridor** | 占满整屏 | 一列居中的 44ch 以内文字，标题比平时更大 |
+| **Poster** | 92 到 100dvh | 通版照片或画布，内容放在画面最安静处并留四周余白，靠下靠左或居中，绝不挤在角落 |
+| **Counter** | 占满导航以下的屏幕 | 操作即视觉：带最新一期的订阅框、可预约时段、带选项的购买框、带界面截图的下载，放大摆在较短标题旁或其下 |
+| **Index** | 占满导航以下的屏幕 | 内容即视觉：阵容、菜单、期号或项目列表，作为页面主角呈现，标题缩小放在上方；用于列表本身就是来访理由的页面 |
 
-- **Centred in its screen.** For Settled, Stage, Banner and Corridor the space under the content is 1.0 to 1.5 times the space above it (44a), and the lowest content sits within 160px of the fold (79). Spend spare height on a larger visual or larger type, never on copy.
-- **The visual is big:** six or seven columns wide and 60% of the screen tall or more (520px at 1440 x 900), or a portrait object (a cover, a phone, a bottle) at 75% tall on four or five columns; its centre within 60px of the text block's. The hero grid is two tracks (`6fr 5fr`, `5fr 7fr`) with its own gap of `--space-2xl` to `--space-3xl`, so text and visual stand 48 to 120px apart; spans on the twelve columns leave an empty column between them. Under 60rem the gap becomes a row gap of `--space-xl`. What it shows is `imagery.md` § 1; a working form is a section or a close, not the default hero.
-- **No visual:** the head grows to `--text-display` at its cap across eight to twelve columns, or the posture is Banner and the first section starts by 640px.
-- **The text:** the head (seven words or fewer), one sentence at `--text-lead`, one or two actions (58). Under 60rem every posture collapses to its content's height (Poster may stay full-bleed).
+- **在其屏内居中。**Settled、Stage、Banner 与 Corridor 下，内容下方的空间是上方的 1.0 到 1.5 倍（44a），最低的内容距首屏底线 160px 以内（79）。富余高度用来放大视觉或放大字号，绝不用来堆文案。
+- **视觉要大：**宽六或七栏、高至少为屏幕的 60%（1440 x 900 下即 520px）；或竖幅物件（封面、手机、瓶子）占四或五栏、高 75%；中心与文本块中心相距 60px 以内。Hero 网格是双轨（`6fr 5fr`、`5fr 7fr`），自带 `--space-2xl` 到 `--space-3xl` 的间距，文本与视觉相隔 48 到 120px；若用 12 栏跨度，两栏之间要空出一栏。60rem 以下间距变为 `--space-xl` 的行距。视觉内容遵循 `imagery.md` § 1；能用的表单是区块或收尾，不是默认 hero。
+- **无视觉时：**标题放大到 `--text-display` 的上限、横跨八到十二栏；或改用 Banner 姿态，第一个区块在 640px 内开始。
+- **文本：**标题（七个词以内）、一句 `--text-lead` 的导语、一两个动作（58）。60rem 以下所有姿态塌缩为内容自身高度（Poster 可保持通版）。
 
-## 7. The page
+## 7. 页面
 
-- **The job decides the anatomy** (`anatomy.md`): where the action lives (in the hero, sticky, repeated beside the content, at the close), and which category-native sections the page is built around. A newsletter puts the subscribe field in the hero and shows the issues; a restaurant shows the menu and the booking; a band shows the record and the dates. The theme dresses that anatomy; it never replaces it.
-- **Order follows the argument the shape makes** (`macrostructures.md`), never hero, three features, a call to action and a footer (8). Lead with the strongest real thing after the hero; put each fact where it does work.
-- **Not every page has steps, figures or a schedule.** Steps only for a process the visitor really goes through (booking, joining, getting a festival ticket); a figure row only for three numbers the prompt states outright, never one derived from it (365 mornings from "every day"). Together they appear on most generated pages; on a made page they are a choice.
-- **Variety:** never the same composition in neighbouring sections (a one-composition shape aside); mirror a split once at most, never a zigzag; one full-width visual at least on a product page; one or two bands. Read the log's `sections`: a Statement, Steps, Figures and a closing Band are the easiest reaches, so when the last build used one, make that beat another way.
-- **Balance:** photographs take a quarter to a third of the page below the hero (83), and never lead two sections in a row; the sections between are built from the theme's material (its Range: type, figures, rules, the product, a table, a form). `imagery.md` § 5 has the counts.
-- **Pace:** a dense section (a grid, a table, a bento, an index) is followed by a quiet one (a statement, a showcase); the page ends on a real close.
-- **The close is the job, not a form.** End on what the visitor came to do, in the form the job takes (the next times to book, the buy box, the store buttons, the next date and the address, the latest issue), or simply on the last strong section and the footer. An email field closes a page only when the job is one where a mailing list is native (subscribe, join, attend, listen, visit) and the anatomy calls for it, or the user asked for one (85); a page whose action already sits in the hero or a sticky bar need not repeat it at the foot.
-- **The footer closes the page:** 200 to 400px: the wordmark or one closing line, the page's real links, the legal line. A single line under a hairline is a colophon, right for a letter, a document or a manifesto.
-- **The nav is one line, 56 to 80px tall**, sized to the page's real destinations. Vary it against the log: edge-aligned (wordmark and one or two links or an action at opposite edges), a floating pill, a masthead (a large centred wordmark over a rule), a slab (a heavy full-width bar), a search-led bar with a visible command pill, a banner over a bar that retracts on scroll, a three-part bar only for four or more real destinations (42). A side rail only where a sticky object earns it.
-- **Footers:** a mast (the wordmark large over the links), a statement (one closing sentence large, the links beneath), a colophon block (credits and address as one paragraph), newsletter-first (the form leads; only for a subscribe page), a letter close (a sign-off and a date), index columns only for a hub with a real sitemap.
+- **任务决定骨架**（`anatomy.md`）：操作放在哪（hero 里、吸顶、随内容反复出现、收尾处），以及页面围绕哪些品类固有的区块搭建。Newsletter 把订阅框放进 hero 并展示往期；餐厅展示菜单与订位；乐队展示唱片与演出日期。主题为这个骨架着装，绝不替换它。
+- **顺序跟随形状要讲的论点**（`macrostructures.md`），绝不走 hero、三个特性、一个行动号召、一个页脚（8）。Hero 之后用最强的真实素材开场；每条事实放在它能发挥作用的位置。
+- **不是每页都要有步骤、数字或日程。**步骤只用于访客真的会经历的过程（订位、入会、买音乐节票）；数字行只用于 prompt 明说的三个数字，绝不用推导出来的（从"每天"推出"365 个早晨"）。生成页大多两者都有；手工打磨的页面里它们是一种选择。
+- **变化：**相邻区块绝不用同一构图（单一构图形状除外）；镜像 split 至多一次，绝不来回之字；产品页至少一个通栏视觉；一到两个色带。读 log 的 `sections`：Statement、Steps、Figures 和收尾 Band 是最容易够到的拍子，所以上一次构建用过哪个，这一次就换个方式打这个拍子。
+- **平衡：**照片占 hero 以下页面的四分之一到三分之一（83），且绝不连续两个区块都以照片开场；中间区块用主题自己的材质搭建（它的 Range：文字、数字、线条、产品、表格、表单）。数量标准见 `imagery.md` § 5。
+- **节奏：**致密区块（网格、表格、bento、索引）之后接安静的区块（宣言、展示）；页面以真正的收尾结束。
+- **收尾是任务本身，不是一个表单。**以访客要做的事收尾，形式依任务而定（下一批可订时段、购买框、门店按钮、下一个日期与地址、最新一期），或就停在最后一个强区块和页脚。邮箱输入框收尾，仅在任务是邮件列表本位的（订阅、加入、参加、收听、到访）且骨架要求时，或用户明确要求时使用（85）；操作已在 hero 或吸顶栏里的页面，页脚不必重复。
+- **页脚收束页面：**200 到 400px：字标或一句收束语、页面的真实链接、法律行。细线下的一行是版权页（colophon），适合信件、文档或宣言。
+- **导航一行高，56 到 80px**，按页面的真实目的地配置。对照 log 做变化：两端对齐（字标与一两个链接或动作分踞两端）、悬浮胶囊、报头（细线上方大号居中字标）、厚板（重磅通栏条）、以搜索为主并露出命令胶囊的条、随滚动收回的横幅加条、三段式条仅在四个以上真实目的地时用（42）。侧栏仅在吸顶对象确实撑得起时用。
+- **页脚样式：**报头式（字标放大压在链接上方）、宣言式（一句收束语放大，链接在下）、版权块（署名与地址合为一段）、订阅优先（表单打头；仅限订阅页）、信件收尾（署名与日期）、索引分栏仅用于有真实站点地图的枢纽页。
 
-## 8. Before shipping
+## 8. 发布前
 
-Scroll the page at 1440 x 900 one screen at a time: is something on each screen big enough to be its reason? A screen holding only a heading and a line wants a bigger visual, the line set as a statement, or two sections merged. Then squint: with the words blurred, each section still has a shape and the page a rhythm of heavy and light. The render tier measures width (77), head scale (78), the hero's foot (79) and the photo share (83); the eye judges the rest.
+在 1440 x 900 下逐屏滚动页面：每一屏上是否都有大到足以成为其理由的东西？只有标题和一行字的屏，需要更大的视觉、把那行字排成宣言，或合并两个区块。然后眯眼看：文字糊掉之后，每个区块仍有形状，页面仍有轻重节奏。渲染层会量宽度（77）、标题比例（78）、hero 的落脚（79）与照片占比（83）；其余交给眼睛。

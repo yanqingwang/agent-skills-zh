@@ -1,68 +1,72 @@
-# Conditional Review Patterns
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/check/references/review-patterns.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Load only the sections whose trigger appears in the diff. These are hard stops when the described failure can reach users; otherwise report them as advisory.
+# 条件触发的审查模式
 
-## Recurring or hard-to-observe bugs
+只加载触发条件出现在 diff 中的小节。当所描述的失败可能波及用户时，这些是硬性中止；否则按建议性意见报告。
 
-For a recurring visual, layout, timing, or stateful-UI bug, do not accept another tuned constant as durable coverage. Pull the decision into a pure function and test the violated invariant, such as nonzero width, half-open hit regions, or bounded offsets. Runtime inspection proves one instance; the invariant prevents recurrence.
+## 复现或难以观察的 bug
 
-Do not demand a fake seam. If a shallow helper cannot exercise the real failure at its call site, report `no correct test seam` as the architectural defect. A pure function covers one wrong decision. It does not cover future callers bypassing a guard. For a silent, costly primitive such as direct deletion, raw privilege escalation, or an unbounded external command, add a source-invariant test that enumerates call sites and rejects raw usage outside an explicit allowlist.
+对反复出现的视觉、布局、时序或有状态 UI bug，不要再接受一个新调出来的常量当作持久覆盖。把决策抽成纯函数，并测试被违反的不变量，例如非零宽度、半开命中区间或有界偏移。运行时观察只能证明一个实例；不变量才能防止复发。
 
-## Captured output and asynchronous completion
+不要强求假接缝。如果浅层辅助函数无法在真实调用点复现失败，就把 `no correct test seam`（没有正确的测试接缝）作为架构缺陷报告。纯函数覆盖的是一个错误决策，覆盖不了未来绕过守卫的调用方。对静默且高代价的原语，例如直接删除、裸权限提升或无界外部命令，添加一个源码不变量测试：枚举调用点，并拒绝显式 allowlist 之外的裸用。
 
-When code branches on an error message or captured command output, probe what the string contains at runtime. A subprocess using inherited stdio may show diagnostics in the terminal while `error.message` contains only the command line. Prefer structured facts such as exit codes or known targets over reparsing prose.
+## 捕获输出与异步完成
 
-Flag fixed `sleep`, `asyncAfter`, `setTimeout`, frame counts, or guessed timeouts that stand in for an observable completion signal. They vary across CPU speed, display refresh rate, and networks. Drive the next step from callbacks, navigation completion, frame changes, state flags, or wall-clock state as appropriate.
+当代码根据错误信息或捕获的命令输出分支时，先探查字符串在运行时到底包含什么。使用继承 stdio 的子进程可能在终端显示诊断信息，而 `error.message` 只包含命令行。优先使用结构化事实（如退出码或已知目标），而不是重新解析散文式文本。
 
-## Simplification and deletion
+标记用固定 `sleep`、`asyncAfter`、`setTimeout`、帧数或拍脑袋的超时来顶替可观察完成信号的代码。这些数值随 CPU 速度、显示刷新率和网络而变化。应从回调、导航完成、帧变化、状态标志或墙钟状态（视情况）驱动下一步。
 
-For prose, rule, skill, or guidance consolidation, read the deletions back and classify every removed behavior as `folded into X`, `redundant with Y`, or `behavior removed`. List behavior-removed entries explicitly. Deletion volume is not evidence of a good pass.
+## 简化与删除
 
-For dead-code or YAGNI claims, search the whole repository: entrypoints, docs, tests, generated dispatch tables, scripts, CI, packaging allowlists, manifests, and dynamic lookup patterns. Separate test-only from production references and chase data written but only read indirectly. If a dev tool is merely exposed by the wrong package or mirror, tighten distribution rather than deleting the tool. Partial search scope cannot justify deletion.
+对散文、规则、Skill 或指引的合并整理，要回读删除内容，把每个被移除的行为归类为 `folded into X`（并入 X）、`redundant with Y`（与 Y 重复）或 `behavior removed`（行为被移除）。明确列出 behavior removed 的条目。删除量不是"高质量整理"的证据。
 
-## History-sensitive normalization
+对死代码或 YAGNI 主张，要搜索整个仓库：入口、文档、测试、生成的分发表、脚本、CI、打包 allowlist、manifest 以及动态查找模式。区分仅测试引用与生产引用，并追查"写入但只被间接读取"的数据。如果某个开发工具只是被错误的包或镜像暴露出来，收紧分发渠道而不是删除工具。搜索范围不完整不能作为删除依据。
 
-When a diff restores a recently removed symbol, string, asset, enum case, localization entry, or config field, confirm current main still consumes it. A parity test or stale rule is not proof of life.
+## 对历史敏感的归一化
 
-Before making an outlier match its siblings, inspect the change or comment that introduced the divergence. The asymmetry may deliberately avoid a known defect; normalization must preserve that protection.
+当 diff 恢复了一个最近被移除的符号、字符串、资源、枚举值、本地化条目或配置字段时，确认当前 main 仍在消费它。对齐测试或过时规则不能证明它还活着。
 
-## Non-atomic replacement of user files
+把离群值改成与同侪一致之前，先检查引入分歧的那次变更或注释。这种不对称可能是刻意规避某个已知缺陷；归一化必须保留该保护。
 
-When a diff writes to a path the user already has (`curl -o`, `>`, `tee`, open-truncate-write), ask what survives a failure partway through. Truncating the destination first means a dropped connection, timeout, or non-zero exit leaves a corrupt file and no original. Require staging into a sibling temp file, swapped in only once the content is complete.
+## 用户文件的非原子替换
 
-Staging covers the paths the code tests for. It does not cover signals: with no trap, an interrupt mid-write can both strand the temp file and let the shell run past the interrupt to install partial content. A fetch running with `-fsSL`, `2>/dev/null`, or a swallowed exit code compounds this by telling the user nothing about what broke or what was left intact.
+当 diff 写入用户已有内容的路径（`curl -o`、`>`、`tee`、open-truncate-write）时，问一句：中途失败后还剩下什么。先截断目标文件意味着断连、超时或非零退出会留下损坏的文件且丢失原件。要求先写入同目录的临时文件暂存，内容完整后才换入。
 
-## Destructive matcher breadth
+暂存只覆盖代码检查的那些路径，覆盖不了信号：没有 trap 时，写一半的中断既会让临时文件成为孤儿，也可能让 shell 越过中断继续把半成品安装到位。用 `-fsSL`、`2>/dev/null` 或吞掉退出码来 fetch 会让情况更糟：用户对哪里坏了、什么完好一无所知。
 
-For recursion, mass deletion, traversal, ID-prefix wildcards, or fallback regex branches feeding a destructive sink, inspect:
+## 破坏性匹配器的宽度
 
-- matcher breadth in every primary and fallback branch;
-- protected-path coverage at the new entry point;
-- user-confirmation paths; and
-- whether the guard lives inside the deletion primitive rather than only at one caller.
+对递归、批量删除、遍历、ID 前缀通配符或通往破坏性汇点的回退正则分支，检查：
 
-Ask for the narrowest evidence authorizing deletion. Exact identifiers and exact paths can pass. Display names, vendor prefixes, common tokens, and user labels cannot safely authorize neighboring deletion.
+- 每个主分支与回退分支中匹配器的宽度；
+- 新入口点的受保护路径覆盖；
+- 用户确认路径；以及
+- 守卫是否位于删除原语内部，而不是只在某一个调用方。
 
-## Duplicated derivations
+要求用最窄的证据授权删除。精确标识符和精确路径可以通过。显示名、厂商前缀、常见 token 和用户标签无法安全地授权相邻内容的删除。
 
-Flag a classification, ordering, threshold, count, or eligibility rule computed independently in two places. Summary/list, preview/executor, score/explanation, and ordering/control pairs drift after the first one-sided change. Require one constant or pure function and have both consumers use it. When one side changes, search for its sibling.
+## 重复的推导
 
-## Test surface fidelity
+标记在两处独立计算的分类、排序、阈值、计数或资格判定规则。摘要/列表、预览/执行器、分数/解释、排序/控制这类配对，在第一次单边修改后就会漂移。要求只保留一个常量或纯函数，两个消费方都用它。一侧变更时，搜索它的孪生副本。
 
-A test is not coverage when it pins a helper that production never reaches or asserts the literal source form of a command/config string instead of the shipped entry point. Ask whether it fails on the unfixed code and whether users execute the asserted path. If either answer is no, the test is a finding. Then ask the two questions a red-green run cannot answer. What can the assertion not see: a matcher scoped to tagged instances reads an untagged one as exempt rather than as a blind spot, an input set built before the producer's own transformation never contains what production emits, and a parity check comparing two copies to each other is blind to what both are missing. What benign change turns it red: an anchor on exact wording, on a positional slice, or on one spelling of a rule usually written another way survives the removal it exists to catch and fails on a rewrite. Anchor on the fact, the identifier, or the enclosing structure.
+## 测试表面的忠实度
 
-## Never-shipped migrations
+当测试钉住的是生产代码永远走不到的辅助函数，或断言的是命令/配置字符串的源码字面形式而非实际发布的入口时，它不是覆盖。要问：它在未修复的代码上会失败吗？用户会执行被断言的路径吗？任一答案为否，该测试就是一条发现。然后追问红-绿运行回答不了的两个问题。断言看不见什么：把匹配器限定在打了 tag 的实例上，会把未打 tag 的实例解读为"豁免"而非盲区；在生产者自身变换之前构建的输入集，永远不含生产环境会发出的内容；把两个副本互相对比的校验，对两者共同缺失的东西是盲的。什么良性改动会让它变红：锚定精确措辞、位置切片或某一种写法的规则（通常人们会用另一种写法）既能躲过它本要捕捉的删除，又会在重写时误报。要锚定事实、标识符或外层结构。
 
-Reject migration scaffolding, version-gated defaults, or old-key carry-forward logic when the underlying preference, schema, or feature first appears in the current unreleased work. Compare with the last published tag. If the key did not ship, use the default path; migration is dead-on-arrival complexity.
+## 从未发布的迁移
 
-## Unknown identifiers
+当底层偏好、schema 或功能首次出现在当前未发布的工作中时，拒绝迁移脚手架、按版本门控的默认值或旧键承接逻辑。与上一个已发布 tag 对比。如果该键从未发布过，就走默认路径；迁移逻辑是出生即死的复杂度。
 
-Search every new function, type, variable, asset, command target, and config key that the diff assumes already exists. No result outside the new diff means the dependency is unproven. Dynamic registries require checking their generation or lookup path rather than trusting a name match.
+## 未知标识符
 
-## Dependency changes
+对 diff 假定已存在的每个新函数、类型、变量、资源、命令目标和配置键进行搜索。在 diff 之外搜不到结果，就意味着这个依赖未被证实。动态注册表要检查其生成或查找路径，而不是相信名字匹配。
 
-Verify lockfile consistency in the project's declared environment. Check the full manifest, overrides, resolver configuration, and dependency diff, then run the project's frozen/locked verification. Regenerate in an isolated checkout only to investigate a concrete discrepancy, using the complete proposed inputs and declared toolchain. Equal bytes do not prove provenance; differences require explanation, not an assumption of hand-editing. Confirm that the resolved dependency graph implements the requested change.
+## 依赖变更
 
-Automated security PRs get two extra checks their scanner does not do. First, whole-file reserialization: bots that rewrite a manifest can silently escape non-ASCII (emoji, CJK) or reorder keys, so diff the manifest against base in full rather than only the version line. Second, reachability: confirm the package is actually built into the shipped artifact (`cargo tree -i <pkg> --target all`, or the equivalent import/feature check) before repeating the advisory's severity, since an inert lockfile entry is not a live vulnerability in this project.
+在项目声明的环境中验证 lockfile 一致性。检查完整 manifest、overrides、解析器配置与依赖 diff，然后运行项目冻结/锁定的验证。只在调查具体差异时才在隔离 checkout 中重新生成，且使用完整的拟定输入与声明的工具链。字节一致不能证明来源；出现差异需要解释，而不是默认有人手改过。确认解析出的依赖图确实实现了所请求的变更。
 
-When a version pin exists, find out why before moving anything near it: `git log -S'<pinned-name>' -- <manifest>` usually names the bug it was added for. A bump that satisfies the advisory but leaves a companion pin at its old version can be worse than not bumping at all.
+自动化安全 PR 还要做两项扫描器不会做的检查。第一，整文件重序列化：重写 manifest 的 bot 可能悄悄转义非 ASCII 字符（emoji、中日韩文字）或重排键序，因此要把 manifest 与基准做整文件 diff，而不是只看版本行。第二，可达性：在复述公告（advisory）的严重级别之前，确认该包确实被构建进发布的产物（`cargo tree -i <pkg> --target all` 或等效的 import/feature 检查），因为一条不活跃的 lockfile 条目在本项目中并非真实漏洞。
+
+存在版本锁定（pin）时，先弄清原因再动它附近的任何东西：`git log -S'<pinned-name>' -- <manifest>` 通常能指出当初是为什么 bug 加的。一个满足公告却把配套 pin 留在旧版本的升级，可能比不升级更糟。

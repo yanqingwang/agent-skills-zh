@@ -1,87 +1,91 @@
-# Layout grid, per-type budgets, page layout, and summary cards
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/layout-budget.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Routed from SKILL.md §7 and §8. SKILL.md keeps the grid rule in one line, the universal complexity limits, and the split rule. This file holds the full grid table, every per-type budget row, the page layout, and the summary card pattern.
+# 布局网格、各类型预算、页面布局与摘要卡片
 
-## Layout & Spacing
+从 SKILL.md §7 与 §8 路由到本文件。SKILL.md 只保留一行网格规则、通用复杂度上限与拆分规则。本文件承载完整网格表、每条类型预算、页面布局与摘要卡片模式。
 
-### 4px grid
+## 布局与间距
 
-**Structural geometry, divisible by 4:** node origins, widths, heights, gaps, padding. Off-grid by design: type sizes (role ramp in `references/output-spec.md`), radii, data-derived positions, text baselines, arrow markers, `.5` offsets that keep 1px strokes crisp, stroke widths, opacity, and the 22×22 dot-pattern.
+### 4px 网格
 
-| Category | Allowed values |
+**结构几何，可被 4 整除：**节点原点、宽、高、间距、padding。有意不入网格的：字号（角色阶梯见 `references/output-spec.md`）、圆角、数据推导的位置、文本基线、箭头 marker、让 1px 描边保持锐利的 `.5` 偏移、描边宽度、透明度，以及 22×22 点阵图案。
+
+| 类别 | 允许的值 |
 |---|---|
-| Node width / height | 80, 96, 112, 120, 128, 140, 144, 160, 180, 200, 240, 320 |
-| Gap between nodes | 20, 24, 32, 40, 48 |
-| Padding inside boxes | 8, 12, 16 |
-| Border radius | 4, 6, 8 |
+| 节点宽 / 高 | 80, 96, 112, 120, 128, 140, 144, 160, 180, 200, 240, 320 |
+| 节点间距 | 20, 24, 32, 40, 48 |
+| 盒内 padding | 8, 12, 16 |
+| 边框圆角 | 4, 6, 8 |
 
-### Complexity budget (per diagram)
+### 复杂度预算（每张图）
 
-These are the per-type limits. The universal rows in SKILL.md §7 (9 nodes, 12 arrows or transitions, 2 coral elements, 2 annotation callouts, and the motion limits) apply to every type on top of these, and a semantic pattern's own budget in [semantic-patterns.md](semantic-patterns.md) can only tighten them. One type is the exception: SBGN replaces the 9 nodes and 12 arrows rows with its own ceiling below, because a process square is a reaction marker rather than a node and every reaction needs its consumption and production arcs. Its other universal rows still apply, and no other type may exceed 9 nodes or 12 arrows by analogy.
+以下是各类型的上限。SKILL.md §7 的通用行（9 个节点、12 条箭头或转移、2 个 coral 元素、2 个注释标注，以及动效上限）在它们之上适用于所有类型；[semantic-patterns.md](semantic-patterns.md) 中某个语义模式自己的预算只能收紧这些值。一个类型是例外：SBGN 用下表自己的天花板替换 9 节点与 12 箭头两行，因为 process square 是反应标记而非节点，且每个反应都需要它的消耗弧与生成弧。它的其他通用行仍然适用，其他任何类型也不得类推突破 9 节点或 12 箭头。
 
-| Limit | Rule |
+| 上限 | 规则 |
 |---|---|
-| Max unique components / relationships / ledger entries (architecture delta) | 8 / 10 / 8 |
-| Max admin bands / traffic scopes / nodes (architecture containment) | 2 / 4 / 8 |
-| Max lifelines (sequence) | 5 |
-| Max combined fragments (sequence) | 1 (default); 2 only if each is single-region `opt`/`loop` |
-| Max `alt` regions (sequence) | 2 |
-| Max fragment nesting (sequence) | 1 |
-| Max lanes (swimlane) | 5 |
-| Max items (quadrant) | 12 |
-| Max entities (ER) | 8 |
-| Max nesting levels (nested) | 6 |
-| Max tree depth | 4 |
-| Max org chart depth | 4 |
-| Max org chart nodes | 12 |
-| Max layers (layer stack) | 6 |
-| Max parts / levels / focal parts (exploded axonometric) | 5 / 5 / 1, three detail levels |
-| Max tagged rooms or buildings / boxes / focal (axonometric plan) | 8 / 40 / 1 |
-| Max circles (venn) | 3 |
-| Max layers (pyramid) | 6 |
-| Max radar axes | 5 |
-| Max radar series | 5 |
-| Max focal radar series | 1 |
-| Max polar categories | 8 |
-| Max polar series | 1 |
-| Max focal polar categories | 1 |
-| Max bars (bar chart) | 8 |
-| Max bars (waterfall) | 8 incl. totals, 1 subtotal |
-| Max cells (treemap) | 8 |
-| Max series (line chart) | 5 |
-| Max tasks (Gantt) | 12 |
-| Max stages (steps) | 7, exactly 1 focal stage |
-| Max points (scatter plot) | 30 |
-| Max series / outliers (box plot) | 8 / 8, 1 focal series |
-| Max stages / nodes / flows (sankey) | 3 / 8 / 12 |
-| Max categories (fishbone) | 6 bones, 3 sub-causes each |
-| Max components / links (wardley) | 9 / 12, 2 movement arrows |
-| Max columns / cards (kanban) | 5 / 12 total, 4 per column |
-| Max stages / rows (user journey) | 6 / 3, 2 pain markers |
-| Max stages / layers (service blueprint) | 6 stages; required customer / frontstage / backstage; optional evidence / support; 1 focal cell |
-| Unit Grid | 100 equal cells; 10 × 10; 4px gutters; 1 count; at most 1 focal completed cell |
-| Max zones / nodes / paths (deployment) | 3 / 6 / 8, 9 artifacts |
-| Max nodes / edges (dependency) | 9 / 14, 4 ranks, 1 cycle |
-| Max nodes / arcs (arc diagram) | 9 / 14, 1 focal arc |
-| Max requirement rows / primary design links / primary verification links (requirement traceability) | 6 / 1 per row / 1 per row, 1 focal row |
-| Max stages / commands / events / read models (event modeling) | 6 / 1 per stage / 1 per stage / 1 per stage, 2 accent uses |
-| Max classes / relationships (UML class) | 7 / 8, 5 members per compartment |
-| Max activities / slices / cards (story map) | 5 / 3 / 12 |
-| Max tables / columns / FKs (db schema) | 5 / 8 shown / 6 |
-| Max macromolecules / processes / compartments / source-sink / arcs (SBGN) | 7 / 6 / 1 / 2 / 16; replaces the 9 nodes and 12 arrows rows |
+| 唯一组件 / 关系 / 台账条目上限（architecture delta） | 8 / 10 / 8 |
+| 管理带 / 流量范围 / 节点上限（architecture containment） | 2 / 4 / 8 |
+| 生命线上限（sequence） | 5 |
+| 组合片段上限（sequence） | 1（默认）；每片均为单区域 `opt`/`loop` 时才可为 2 |
+| `alt` 区域上限（sequence） | 2 |
+| 片段嵌套上限（sequence） | 1 |
+| 泳道上限（swimlane） | 5 |
+| 条目上限（quadrant） | 12 |
+| 实体上限（ER） | 8 |
+| 嵌套层级上限（nested） | 6 |
+| 树深度上限 | 4 |
+| 组织架构图深度上限 | 4 |
+| 组织架构图节点上限 | 12 |
+| 层数上限（layer stack） | 6 |
+| 部件 / 层级 / 焦点部件上限（exploded axonometric） | 5 / 5 / 1，三个细节层级 |
+| 标记房间或建筑 / 盒子 / 焦点上限（axonometric plan） | 8 / 40 / 1 |
+| 圆上限（venn） | 3 |
+| 层数上限（pyramid） | 6 |
+| 雷达轴上限 | 5 |
+| 雷达系列上限 | 5 |
+| 焦点雷达系列上限 | 1 |
+| 极坐标类目上限 | 8 |
+| 极坐标系列上限 | 1 |
+| 焦点极坐标类目上限 | 1 |
+| 柱数上限（bar chart） | 8 |
+| 柱数上限（waterfall） | 8 含总计，1 个小计 |
+| 单元格上限（treemap） | 8 |
+| 系列上限（line chart） | 5 |
+| 任务上限（Gantt） | 12 |
+| 阶段上限（steps） | 7，恰好 1 个焦点阶段 |
+| 点数上限（scatter plot） | 30 |
+| 系列 / 离群值上限（box plot） | 8 / 8，1 个焦点系列 |
+| 阶段 / 节点 / 流上限（sankey） | 3 / 8 / 12 |
+| 类目上限（fishbone） | 6 根骨，每根 3 个子因 |
+| 组件 / 链接上限（wardley） | 9 / 12，2 条移动箭头 |
+| 列 / 卡片上限（kanban） | 5 / 共 12，每列 4 |
+| 阶段 / 行上限（user journey） | 6 / 3，2 个痛点标记 |
+| 阶段 / 层上限（service blueprint） | 6 个阶段；customer / frontstage / backstage 必需；evidence / support 可选；1 个焦点单元格 |
+| Unit Grid | 100 个等分格；10 × 10；4px 沟槽；1 个计数；至多 1 个焦点已完成格 |
+| 区域 / 节点 / 路径上限（deployment） | 3 / 6 / 8，9 个产物 |
+| 节点 / 边上限（dependency） | 9 / 14，4 个层级，1 个环 |
+| 节点 / 弧上限（arc diagram） | 9 / 14，1 条焦点弧 |
+| 需求行 / 主设计链接 / 主验证链接上限（requirement traceability） | 6 / 每行 1 / 每行 1，1 个焦点行 |
+| 阶段 / 命令 / 事件 / 读模型上限（event modeling） | 6 / 每阶段 1 / 每阶段 1 / 每阶段 1，2 处强调色 |
+| 类 / 关系上限（UML class） | 7 / 8，每个隔间 5 个成员 |
+| 活动 / 切片 / 卡片上限（story map） | 5 / 3 / 12 |
+| 表 / 列 / 外键上限（db schema） | 5 / 显示 8 / 6 |
+| 大分子 / 过程 / 隔室 / 源汇 / 弧上限（SBGN） | 7 / 6 / 1 / 2 / 16；替换 9 节点与 12 箭头两行 |
 
-If you exceed, split into two diagrams (overview + detail).
+超出就拆成两张图（总览 + 细节）。
 
-### Page layout
+### 页面布局
 
-1. **Header** — `eyebrow` role, `title` role, optional subtitle (`node-name` family, `muted`).
-2. **Diagram container** — default: **clean, borderless**, no background — the SVG sits directly on the page paper. Optional *framed* variant (for card-heavy layouts or hero placements): `paper-2` bg + 1px `rule` border + 8px radius + `1.5rem` padding + `overflow-x: auto`.
-3. **Summary cards** — 2–3 col grid with *varied* widths (e.g., `1.1fr 1fr 0.9fr`).
-4. **Footer** — colophon in the `sublabel` role, `muted`, hairline top border.
+1. **头部** — `eyebrow` 角色、`title` 角色、可选副标题（`node-name` 字族，`muted`）。
+2. **图容器** — 默认：**干净、无边框**、无背景，SVG 直接坐在页面纸面上。可选*带框*变体（卡片密集布局或 hero 位使用）：`paper-2` 背景 + 1px `rule` 边框 + 8px 圆角 + `1.5rem` padding + `overflow-x: auto`。
+3. **摘要卡片** — 2–3 列网格、*不等*宽（如 `1.1fr 1fr 0.9fr`）。
+4. **页脚** — colophon 用 `sublabel` 角色、`muted`、顶部细线边框。
 
-## Summary Card Pattern
+## 摘要卡片模式
 
-Don't use 3 identical generic cards. Vary the treatment:
+不要用 3 张一模一样的通用卡片。处理方式要有变化：
 
 ```html
 <div class="card">
@@ -94,10 +98,10 @@ Don't use 3 identical generic cards. Vary the treatment:
 </div>
 ```
 
-Rules:
+规则：
 
-- `background: #ffffff` (not paper — slight lift without shadow)
-- `border: 1px solid` the `rule` color
+- `background: #ffffff`（不用 paper 色 —— 不加阴影的轻微抬升）
+- `border: 1px solid`，颜色用 `rule`
 - `border-radius: 6px`, `padding: 1.25rem`
-- **No `box-shadow`**
-- Card dots: 7px, `border-radius: 50%` — ink / muted / coral / link / soft variants
+- **不用 `box-shadow`**
+- 卡片圆点：7px，`border-radius: 50%`（ink / muted / coral / link / soft 变体）

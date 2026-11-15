@@ -1,10 +1,14 @@
-# Schema Markup Examples
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/growth/product/schema/references/schema-examples.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete JSON-LD examples for common schema types.
+# Schema 标记示例
+
+常见 schema 类型的完整 JSON-LD 示例。
 
 ## Contents
 - Organization
-- WebSite (site identity)
+- WebSite（站点身份）
 - Article / BlogPosting
 - Product
 - SoftwareApplication
@@ -13,12 +17,12 @@ Complete JSON-LD examples for common schema types.
 - BreadcrumbList
 - LocalBusiness
 - Event
-- Multiple Schema Types
-- Implementation Example (Next.js)
+- 多 Schema 类型组合
+- 实现示例（Next.js）
 
 ## Organization
 
-For company/brand homepage or about page.
+用于公司/品牌首页或关于页面。
 
 ```json
 {
@@ -42,9 +46,9 @@ For company/brand homepage or about page.
 
 ---
 
-## WebSite (site identity)
+## WebSite（站点身份）
 
-For homepage/site identity. Google retired the sitelinks search box in November 2024; adding `SearchAction` cannot restore it. Keep useful `WebSite` markup for site names. See the [search box announcement](https://developers.google.com/search/blog/2024/10/sitelinks-search-box).
+用于首页/站点身份。Google 已于 2024 年 11 月弃用站内链接搜索框；添加 `SearchAction` 也无法将其恢复。保留有用的 `WebSite` 标记用于站点名称。参见[搜索框发布公告](https://developers.google.com/search/blog/2024/10/sitelinks-search-box)。
 
 ```json
 {
@@ -59,7 +63,7 @@ For homepage/site identity. Google retired the sitelinks search box in November 
 
 ## Article / BlogPosting
 
-For blog posts and news articles.
+用于博客文章和新闻报道。
 
 ```json
 {
@@ -94,7 +98,7 @@ For blog posts and news articles.
 
 ## Product
 
-For product pages (e-commerce or SaaS).
+用于产品页面（电商或 SaaS）。
 
 ```json
 {
@@ -128,7 +132,7 @@ For product pages (e-commerce or SaaS).
 
 ## SoftwareApplication
 
-For SaaS product pages and app landing pages.
+用于 SaaS 产品页面和应用落地页。
 
 ```json
 {
@@ -154,7 +158,7 @@ For SaaS product pages and app landing pages.
 
 ## FAQPage
 
-For visible frequently asked questions when a consumer needs Schema.org semantics. Google FAQ rich results were retired in May 2026; this example cannot enable expandable Google search results. Use the Schema.org Validator for vocabulary validation, not missing Rich Results Test detection as a failure. See [Google's documentation updates](https://developers.google.com/search/updates).
+当消费方需要 Schema.org 语义时，用于页面上可见的常见问题。Google 的 FAQ 富媒体结果已于 2026 年 5 月弃用；本示例无法让 Google 搜索结果重新支持可展开展示。请用 Schema.org Validator 做词表验证，不要把 Rich Results Test 检测不到富媒体结果当作失败。参见 [Google 的文档更新](https://developers.google.com/search/updates)。
 
 ```json
 {
@@ -185,7 +189,7 @@ For visible frequently asked questions when a consumer needs Schema.org semantic
 
 ## HowTo
 
-For instructional content and tutorials when a consumer needs Schema.org semantics. Google retired HowTo rich results in September 2023; this example does not restore that appearance. See the [retirement announcement](https://developers.google.com/search/blog/2023/08/howto-faq-changes).
+当消费方需要 Schema.org 语义时，用于教学内容和教程。Google 已于 2023 年 9 月弃用 HowTo 富媒体结果；本示例不会恢复那种展示形式。参见[弃用公告](https://developers.google.com/search/blog/2023/08/howto-faq-changes)。
 
 ```json
 {
@@ -221,7 +225,7 @@ For instructional content and tutorials when a consumer needs Schema.org semanti
 
 ## BreadcrumbList
 
-For any page with breadcrumb navigation.
+用于任何带面包屑导航的页面。
 
 ```json
 {
@@ -254,7 +258,7 @@ For any page with breadcrumb navigation.
 
 ## LocalBusiness
 
-For local business location pages.
+用于本地商家门店页面。
 
 ```json
 {
@@ -292,7 +296,7 @@ For local business location pages.
 
 ## Event
 
-For event pages, webinars, conferences.
+用于活动页面、网络研讨会、会议。
 
 ```json
 {
@@ -331,9 +335,9 @@ For event pages, webinars, conferences.
 
 ---
 
-## Multiple Schema Types
+## 多 Schema 类型组合
 
-Combine multiple schema types using @graph.
+使用 @graph 组合多种 schema 类型。
 
 ```json
 {
@@ -364,7 +368,7 @@ Combine multiple schema types using @graph.
 
 ---
 
-## Implementation Example (Next.js)
+## 实现示例（Next.js）
 
 ```jsx
 export default function ProductPage({ product }) {
@@ -389,4 +393,4 @@ export default function ProductPage({ product }) {
 }
 ```
 
-When JSON-LD is inserted as raw HTML, JSON escaping alone does not stop a product string containing a script-closing tag from terminating the element. Escape every `<` in the serialized JSON as `\u003c`, as in the example above; parsing the JSON recovers the original product text. Do this at the HTML embedding boundary, without deleting legitimate characters from the source data. See the [Next.js JSON-LD guide](https://nextjs.org/docs/app/guides/json-ld).
+当 JSON-LD 以原始 HTML 形式插入时，仅靠 JSON 转义无法阻止一个包含脚本结束标签的产品字符串提前终止该元素。如上例所示，把序列化 JSON 中的每个 `<` 转义为 `\u003c`；解析 JSON 时即可还原原始的产品文本。请在 HTML 嵌入边界处执行此转义，不要从源数据中删除合法字符。参见 [Next.js JSON-LD 指南](https://nextjs.org/docs/app/guides/json-ld)。

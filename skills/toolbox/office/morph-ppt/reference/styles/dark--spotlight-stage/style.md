@@ -1,33 +1,37 @@
-# S18-spotlight-stage — Stage Spotlight
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--spotlight-stage/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# S18-spotlight-stage：舞台聚光
 
-Large elliptical light spots on a near-black background simulate stage spotlight effects, with spots shifting dramatically between pages to create dramatic atmosphere.
+## 风格概览
 
-- **Scene**: Speeches, product launches, TED-style, annual meetings
-- **Mood**: Dramatic, focused, theatrical
-- **Color Tone**: Near-black background + warm white/gold spotlight
+近黑背景上的大型椭圆光斑模拟舞台聚光灯效果，光斑跨页剧烈移动，营造戏剧化氛围。
 
-## Color Palette
+- **适用场景**：演讲、产品发布、TED 风格、年会
+- **氛围**：戏剧化、聚焦、舞台感
+- **色调**：近黑背景 + 暖白/金色聚光
 
-| Name       | Hex                      | Usage                       |
-| ---------- | ------------------------ | --------------------------- |
-| Near Black | 0A0A0A                   | Background (stage darkness) |
-| Spotlight  | Warm white/gold gradient | Spotlight beam              |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 近黑 | 0A0A0A | 背景（舞台黑暗） |
+| 聚光灯 | 暖白/金色渐变 | 聚光光束 |
 
-- Spotlights implemented using large ellipses, shifting 15cm+ between pages, creating beam-sweeping effect during Morph transitions
-- Use ellipse for light spots and halos, rect for stage elements (floor lines, text panels)
-- Multiple ellipse layers overlay to simulate halo diffusion (bright center, faint edges)
-- Text placed in spotlight center area, dark areas left empty, guiding visual focus
+## 设计技法
 
-## Reference Script
+- 聚光灯用大椭圆实现，跨页位移 15cm 以上，在 Morph 转场中形成光束扫动效果
+- 光斑与光晕用 ellipse，舞台元素（地面线、文字面板）用 rect
+- 多层椭圆叠加模拟光晕扩散（中心亮、边缘淡）
+- 文字置于聚光中心区，暗部留空，引导视觉焦点
 
-Full build script available in `build.sh`.
-**Recommended slides to read for understanding core design techniques**:
+## 参考脚本
 
-- **Slide 1 (hero)** — Spotlight ellipse size, position, and transparency settings
-- **Slide 2 (statement)** — Morph transition effect with large spot shifts
-- **Slide 5 (cta)** — Multi-light layering for stage finale effect
-  No need to read all — skim 2-3 representative slides.
+完整构建脚本见 `build.sh`。
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1 (hero)**：聚光椭圆的尺寸、位置与透明度设置
+- **Slide 2 (statement)**：大位移光斑的 Morph 转场效果
+- **Slide 5 (cta)**：多层光斑叠加，营造舞台终场效果
+  无需全部精读，浏览 2-3 张代表性幻灯片即可。

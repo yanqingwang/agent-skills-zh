@@ -12,11 +12,15 @@ photo: natural con=4
 pictured: Sample Drawer, Ledge hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/terrazzo.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Terrazzo
 
-A materials library's specification voice: off-white paper, near-black ink, wide Syne heads over a plain Onest body, JetBrains Mono for the codes and the millimetres, and white card surfaces ruled in 2px ink over a hard offset, holding the surfaces themselves photographed flat-on and close. Controls are ink; colour arrives only in aggregate, in the stone, timber, terrazzo and glaze the photographs show, with rust as the one signal. It is organised like a sample drawer and reads like a spec sheet. It is not a pastel lifestyle page and not confetti.
+材料库的规格口吻：米白纸、近黑墨色，宽体 Syne 标题压在朴素的 Onest 正文之上，JetBrains Mono 负责编号与毫米数，白色卡板表面以 2px 墨线划格、压在硬偏移阴影上，装着平拍特写的材料本身。控件用墨色；颜色只以集合的方式出现，在照片呈现的石材、木材、水磨石与釉面里，铁锈色是唯一的信号。它像样品抽屉一样整理，像规格表一样阅读。它不是粉彩生活方式页，也不是五彩纸屑。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -33,58 +37,58 @@ A materials library's specification voice: off-white paper, near-black ink, wide
 }
 ```
 
-Three colourways, stated in the stamp (`terrazzo: off-white`).
+三种配色，写入 stamp（印记）：`terrazzo: off-white`。
 
-| Colourway | Paper and ink | Signal and controls |
+| 配色 | 纸与墨 | 信号色与控件 |
 | --- | --- | --- |
-| **Off-white** (default) | the tokens above | rust; ink controls |
-| **Black** | `oklch(14% 0.005 60)` under bone ink `oklch(96% 0.01 80)`; cards stay white | rust lifted to `oklch(68% 0.14 40)`; bone controls with ink text |
-| **Stone** | warm grey `oklch(85% 0.012 80)` under the same ink | rust; ink controls |
+| **Off-white**（默认） | 上面的 token | 铁锈色；墨色控件 |
+| **Black** | 底 `oklch(14% 0.005 60)`，上覆骨白墨 `oklch(96% 0.01 80)`；卡片保持白色 | 铁锈色提亮为 `oklch(68% 0.14 40)`；骨白控件配墨色文字 |
+| **Stone** | 暖灰 `oklch(85% 0.012 80)` 底，墨色同上 | 铁锈色；墨色控件 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Syne 700, `--tracking-display`, line-height 1.0, sentence case. The face sets wide, so heads stay short rather than drop a step; 800 turns clumsy and is never used. A figure at display size takes -0.04em.
-- **Body:** Onest 400 and 500, line-height 1.5. Three weights a page: 400, 500, 700.
-- **Labels, captions, table heads:** Onest 500 a step smaller, sentence case, untracked.
-- **Codes and measures:** JetBrains Mono 500 for a sample code (`ST-0412`), a size in millimetres, a count in a table; the size of the text beside it, never a label or a head.
+- **展示字体：**Syne 700，`--tracking-display`，行高 1.0，句首大写。这款字排出来很宽，所以标题宁可短也不降档；800 会显得笨拙，永不使用。展示字号的数字字距取 -0.04em。
+- **正文：**Onest 400 与 500，行高 1.5。每页三种字重：400、500、700。
+- **标签、图注、表头：**Onest 500，小一号，句首大写，不加字距。
+- **编号与尺寸：**JetBrains Mono 500 用于样品编号（`ST-0412`）、毫米尺寸、表格中的计数；字号与旁边正文一致，绝不用作标签或标题。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Rules: `--rule-bar` ink on the top of a table, along a band's edge and around a card; `--rule-hair` in `--color-rule` between rows. Radius 0 everywhere.
-- Cards: `--color-plate` inside a `--rule-bar` ink border over the hard `--shadow-card` (paper-3, no blur), the page's one container; nothing else casts. A linked card swaps its offset to ink on hover.
-- Bands: a `--color-ink` band with paper text, or a `--color-paper-2` band; never a coloured field, two a page at most.
-- Photographs: the surface itself, flat-on and close in even daylight, so grain, chips, veins and joints read near one to one; a set of four runs as a true set at one ratio. True colour, a little sharpened. Each sits in a card, edge to edge with its caption beneath naming the family and the finish; type never sits on a photograph.
-- No texture and nothing drawn on the paper: the surfaces in the photographs are the pattern.
+- 横线：表格顶端、色带边缘、卡片四周压墨色 `--rule-bar`；行间用 `--color-rule` 的 `--rule-hair`。圆角处处为 0。
+- 卡片：`--color-plate` 装在 `--rule-bar` 墨色边框里，压着硬 `--shadow-card`（paper-3 色，无模糊），是页面上唯一的容器；其余东西一律不投影。可点击卡片悬停时把偏移换成墨色。
+- 色带：墨色色带配纸色文字，或 `--color-paper-2` 色带；绝无彩色色场，每页至多两条。
+- 照片：材料表面本身，均匀日光下平拍特写，颗粒、缺口、纹理与接缝接近一比一可读；一组四张按同一比例成套。真彩，略加锐化。每张装进卡片，边贴边，下方图注写明类别与饰面；文字绝不压在照片上。
+- 纸面上无纹理、无任何手绘：照片里的材料表面就是图案。
 
-## Range
+## 版式（Range）
 
-- **Specification table:** the stock as a full-width table under a `--rule-bar` ink rule: the code and the size in mono, the surface's name in Onest 500 at title size, family and finish in muted; a hovered or selected row takes `--color-accent-soft` and a rust code.
-- **Figure on the ink band:** the library's one big number in Syne at twice `--text-display`, paper on ink, with the families or the terms set beside it as a short ruled list.
-- **Steps on rules:** a real ordered list hung from hairlines, each numeral in Syne at section size, the stage in Onest 500 and one line beside it.
-- **Form as a request card:** the booking on a white card with its hard offset, inputs square on the plate colour, choices as square cells joined edge to edge, the checked cell ink with paper text.
+- **规格表：**库存排成横贯全宽的表格，压在 `--rule-bar` 墨线之下：编号与尺寸用等宽字，表面名称用 Onest 500 的标题字号，类别与饰面用弱化色；悬停或选中行取 `--color-accent-soft`，编号转铁锈色。
+- **墨色色带上的数字：**库里那个大数字用 Syne 排两倍 `--text-display`，纸色压墨色，旁边把类别或条款排成一小段划线列表。
+- **步骤挂在横线上：**货真价实的有序列表，挂在发丝线上，每个数字用 Syne 排区块字号，阶段名用 Onest 500，旁边一句话。
+- **表单作申请卡：**预约放在带硬偏移阴影的白色卡片上，输入框为直角、置于卡板色上，选项是边贴边的直角单元格，选中格墨色填充配纸色文字。
 
-## Controls
+## 控件（Controls）
 
-- An ink-filled primary with paper text beside a `--rule-bar` inset ink outline, both square, Onest 500. On the ink band the primary turns plate with ink text.
-- Links are ink with a hairline underline that turns rust on hover; inputs are square on `--color-plate` with a 1px ink border.
-- Rust reaches a code, a selected row or chip, a hover underline and the focus ring; colour otherwise comes only from the photographs.
+- 墨色填充主按钮配纸色文字，旁边是 `--rule-bar` 内嵌墨色描边按钮；两者都直角，Onest 500。墨色色带上主按钮转为卡板色底墨色字。
+- 链接用墨色，发丝线下划线悬停转铁锈色；输入框直角，置于 `--color-plate`，1px 墨色边框。
+- 铁锈色只落在编号、选中行或 chip、悬停下划线与焦点环上；其余颜色只来自照片。
 
-## Motion
+## 动效（Motion）
 
-Still. A linked card swaps its offset from paper-3 to ink over `--dur-micro`; a filtered row leaves without animation.
+静止。可点击卡片在 `--dur-micro` 内把偏移从 paper-3 换成墨色；被过滤掉的行离场无动画。
 
-## Voice
+## 语气（Voice）
 
-A catalogue's plainness: the family, the finish, the code, the size at one to one. Never sells the feeling of stone.
+产品目录的平实：类别、饰面、编号、一比一的尺寸。绝不贩卖石材的氛围感。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a drawn chip, speck or confetti; a surface's colour comes from its photograph.
-- Never a photograph as a background or under type; it lives in a card.
-- Never a coloured primary on off-white paper; controls are ink.
-- Never a rounded corner, on a card, a control or a photograph.
+- 绝不手绘碎屑、斑点或彩纸；表面的颜色来自它的照片。
+- 绝不用照片作背景或垫在文字下；它只活在卡片里。
+- 米白纸上绝不用彩色主按钮；控件是墨色。
+- 卡片、控件、照片上绝无圆角。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">

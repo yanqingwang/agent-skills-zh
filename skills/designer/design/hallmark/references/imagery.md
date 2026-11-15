@@ -1,99 +1,103 @@
-# Imagery
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/imagery.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-What a page shows, read on every page build. A page looks made when it shows the real thing (the place, the food, the object, the hands at work, the product running), and generated when it shows a gradient box, a drawing of a loaf, or a heading with nothing under it.
+# 图像
 
-## 1. What fills a page
+页面展示什么，在每次页面构建时阅读。一个页面看起来"做出来了"，是它展示真实的东西（那个地方、食物、物件、工作中的手、运行中的产品）；看起来"生成出来的"，是它展示一个渐变色块、一条画出来的面包，或一个下面什么都没有的标题。
 
-In order, the first that fits:
+## 1. 页面用什么填
 
-1. **The user's own images and recordings**, asked for at Step 1. They win every slot.
-2. **Screenshots of the real product,** taken by the build itself whenever the product can be reached: a URL, a running dev server, a project in the folder that starts with one command, a desktop or phone app on this machine (§ 4). A real screen beats any picture of one.
-3. **The product built,** only when there is no product to capture yet (§ 4).
-4. **Photographs from the library**, picked by script and treated in the theme's way (§ 2, § 5).
-5. **Generated stills**, only when `TOGETHER_API_KEY` is set and the user asked for them (§ 6).
-6. **Type at full scale**, when the prompt is about words.
+按顺序，第一个适用的：
 
-Which prompts want which:
+1. **用户自己的图片与录像**，在 Step 1 索取。它们赢得每一个槽位。
+2. **真实产品的截图**，只要产品够得着就由构建自己截取：提示词里的 URL、一个在跑的 dev server、文件夹里一条命令就能启动的项目、这台机器上的桌面或手机应用（§ 4）。真实的屏幕胜过它的任何一张图片。
+3. **构建出来的产品**，只在还没有产品可截时（§ 4）。
+4. **图库照片**，由脚本挑选、按主题的方式处理（§ 2, § 5）。
+5. **生成的静态图**，只在设置了 `TOGETHER_API_KEY` 且用户要求时（§ 6）。
+6. **满字号的文字**，当提示词是关于文字的。
 
-- **A place, a material, food or drink, an object, a craft, the outdoors, an event, people at work** (a bakery, a ski school, a gin, a weaving studio, a venue, a tailor, a farm): photographs lead. The hero's photograph is the largest thing on the first screen (full-bleed behind the head, or beside it at 60 to 75% of the screen tall). After it, two to four more carry the page, one of them large, each on its subject (an off-subject picture is cut, never kept to fill a count), with sections of the material alone between them (a menu or price list as rows, the hours and the place as a table, a statement, a form), so pictures take a quarter to a third of the page (§ 5, 83).
-- **Software** (SaaS, an app, a developer tool): the product leads, and the hero visual is its interface. One or two photographs may set the scene (where it is used, the material it handles, hands at the work it serves) when each passes the deletion test: take it away and the page loses a fact. A city at night, a laptop on a desk or an office building fails it.
-- **Words** (docs, an API, a CLI, a type specimen, a manifesto or a letter about an idea): type and code carry it; one photograph as a full-bleed band at most. A manifesto or a letter about something physical (repair, a river, a street) shows it like any other page.
+哪些提示词要哪种：
 
-A photograph never stands in for a fact: numbers, names and claims stay in type, and a picture of a person never stands in for a customer, a teammate or a testimonial (F9).
+- **一个地方、一种材料、食物或饮品、一件物品、一门手艺、户外、一场活动、工作中的人**（一家面包房、一所滑雪学校、一款金酒、一间织造工作室、一个演出场地、一位裁缝、一座农场）：照片领衔。Hero 的照片是首屏上最大的东西（通栏压在标题后，或在旁边占屏高 60 至 75%）。其后两到四张撑起页面，其中一张大，各拍其主题（离题的图片剪掉，绝不为了凑数而留），它们之间是纯材料的段落（菜单或价目表成行、钟点与地址成表、一句宣言、一个表单），让照片占页面的四分之一到三分之一（§ 5, 83）。
+- **软件**（SaaS、应用、开发者工具）：产品领衔，Hero 视觉就是它的界面。一到两张照片可以交代场景（它在哪里被用、它处理的材料、它所服务的工作中的手），前提是每张都通过删除测试：拿走它，页面就少了一条事实。夜景城市、桌上的笔记本、一栋办公楼都通不过。
+- **文字**（文档、API、CLI、字体样张、一篇宣言或一封关于某个想法的信）：文字与代码承担；至多一张照片作通栏色带。关于实物（修理、一条河、一条街）的宣言或信件，与其他页面一样把它展示出来。
 
-## 2. The library
+一张照片绝不冒充一条事实：数字、名称与主张留在文字里，人物照片绝不冒充一位顾客、一位同事或一条评价（F9）。
 
-Hallmark carries 755 verified photographs from Wikimedia Commons, each CC0, public domain, CC BY or CC BY-SA, tagged by subject, tone and temperature. Ask for each subject the page needs, concretely:
+## 2. 图库
+
+Hallmark 内置 755 张来自 Wikimedia Commons 的已核验照片，每张 CC0、公有领域、CC BY 或 CC BY-SA，按主体、影调与色温打了标签。按页面需要的每个主体去要，要具体：
 
 ```
 node <skill-dir>/scripts/theme.mjs photos "apple orchard in autumn" "hands picking apples" --theme <slug> [--n 3] [--orient portrait|landscape|square] [--seed <draw seed>] [--log .hallmark/log.json]
 ```
 
-It ranks the library for each subject, steers away from the photos the last five builds used, and prints for each pick what it shows, its size, a ready `<img>` with its `srcset`, and its credit. Keep only picks that fit the sentence the section makes; re-ask in other words (the place, the material, the action) before settling for a near miss.
+它为每个主体给图库排序，避开最近五次构建用过的照片，并为每个选中项打印：它拍的是什么、尺寸、一条带 `srcset` 的现成 `<img>`，以及它的署名。只保留符合该段落那句话的选中项；将就近似结果之前，先换词再问一次（那个地方、那种材料、那个动作）。
 
-- **Never write an image URL from memory or take one from a stock site** (Unsplash, Pexels and Pixabay bar AI-driven selection in their terms). Use only what the script printed or the user supplied (76).
-- **Credit every library photo:** one line in the footer marked `data-credits` (the word budget skips it), *Photographs:* then each printed credit, in the footer's small style. CC BY and CC BY-SA require it (76).
-- **Size and crop in CSS:** keep the printed `srcset`, set `sizes` to the layout (`50vw` for a half, `100vw` full-bleed), and crop with the frame: `aspect-ratio` on the slot, `object-fit: cover`, the printed `object-position` (or your own) to keep the subject in frame.
-- **For production,** `--save <dir>` downloads the picks into the project and prints local paths; drafts may link the Commons thumbnails.
-- **The hero photograph is the LCP:** `fetchpriority="high"`, never `loading="lazy"`; every other image is lazy. A full-bleed or hero frame takes a photo 2400px or more on its long side; a smaller one goes soft at 1920.
-- **A stand-in stays swappable:** in its slot (§ 3), with `data-alt` naming what the user's own picture should show, listed in the handoff.
-- **No Node:** say so in the Picks block and use slots with the user's material only; never guess a file.
+- **绝不凭记忆写图片 URL，也绝不取自素材网站**（Unsplash、Pexels 与 Pixabay 的条款禁止 AI 驱动的选取）。只用脚本打印的或用户提供的（76）。
+- **每张图库照片都署名：**页脚里一行标 `data-credits` 的内容（字数预算跳过它），*Photographs:* 之后逐条列出打印的署名，用页脚的小字样式。CC BY 与 CC BY-SA 要求署名（76）。
+- **尺寸与裁切在 CSS 里做：**保留打印的 `srcset`，`sizes` 按版式设（半宽 `50vw`，通栏 `100vw`），用框来裁：槽位上 `aspect-ratio`，`object-fit: cover`，用打印的 `object-position`（或你自己的）保证主体在框内。
+- **面向生产时**，`--save <dir>` 把选中项下载进项目并打印本地路径；草稿可以链接 Commons 缩略图。
+- **Hero 照片就是 LCP：**`fetchpriority="high"`，绝不 `loading="lazy"`；其余图片一律懒加载。通栏或 Hero 框要用长边 2400px 或更大的照片；1920 就开始发虚。
+- **替身保持可替换：**在它的槽位里（§ 3），`data-alt` 写明用户自己的照片应该拍什么，并在 handoff 中列出。
+- **没有 Node：**在 Picks 块里说明，只用装着用户素材的槽位；绝不猜文件名。
 
-## 3. Slots
+## 3. 槽位
 
-A slot is any picture the user will replace: `data-slot="<name>"` (`hero`, `demo-2`, `photo-1`), a `data-alt` saying what belongs there, and a real size (an `aspect-ratio` or a fixed height). The scaffold's `base.css` holds the slot CSS, and the scaffold prints the `hallmarkSlots` script: paste it once before `</body>` (F18). It swaps in the user's files without touching the layout (`hallmarkSlots({ hero: 'shop.jpg' })`) and drops a stand-in that fails to load.
+槽位是任何用户将要替换的图片：`data-slot="<name>"`（`hero`、`demo-2`、`photo-1`），一条 `data-alt` 说明那里该放什么，以及一个真实尺寸（`aspect-ratio` 或固定高度）。脚手架的 `base.css` 收着槽位 CSS，脚手架还打印 `hallmarkSlots` 脚本：在 `</body>` 前粘贴一次（F18）。它把用户的文件换进来而不碰版式（`hallmarkSlots({ hero: 'shop.jpg' })`），并移除加载失败的替身。
 
-- **A slot always shows something:** the user's image, a library photograph, or the product built at full fidelity. Its wash (`--color-paper-2` to `--color-paper-3`) is only the colour behind a photo while it loads; a slot showing nothing but its wash is an empty picture (81).
-- **No visible placeholder labels:** no "your screenshot here", ratio notes or "sample" chips; `data-alt` and the handoff carry that.
-- A child that must stay once the user's image lands (a credit, a plate number) carries `data-keep`; text over a slotted photograph (a Poster hero's head and scrim) sits in a sibling layer above the slot (`z-index: 2` or more; the slot's image takes 1), never inside it.
-- Never more than four slots in a row, and never a set of frames for things the page has no pictures of (a team, a list of venues): set those in type (68).
+- **槽位永远显示东西：**用户的图片、一张图库照片，或以全保真构建的产品。它的洗色（`--color-paper-2` 到 `--color-paper-3`）只是图片加载时的背后颜色；一个只显示洗色的槽位是一张空图（81）。
+- **没有可见的占位标签：**没有"你的截图放这里"、比例注记或"样例" chip；那些由 `data-alt` 与 handoff 承担。
+- 用户图片落地后必须留住的子元素（一条署名、一个版号）带 `data-keep`；压在槽位照片上的文字（Poster hero 的标题与暗化层）放在槽位之上的兄弟层（`z-index: 2` 或更高；槽位的图片取 1），绝不放进槽位内部。
+- 一行绝不超过四个槽位，也绝不为页面没有照片的东西（一个团队、一串场地）摆一排框：那些用文字排（68）。
 
-## 4. The product: captured first, built only when it cannot be
+## 4. 产品：先截取，截不到才构建
 
-**Capture it.** When the product exists, the page shows it, not a mock of it. Find it at Step 0: a URL in the prompt, a dev server already running, a `package.json` with a `dev` or `start` script, a built app on the machine, or a path the user names. Start it if it needs starting (install, run, wait for the port), put it in the state that tells the page's story (sample data, a real project open, the one screen that does the job), then:
+**截取它。**产品存在时，页面展示它，而不是它的仿制品。在 Step 0 找到它：提示词里的 URL、已在跑的 dev server、带 `dev` 或 `start` 脚本的 `package.json`、机器上已构建的应用，或用户指名的路径。需要启动就启动（安装、运行、等端口），把它摆进能讲页面故事的状态（示例数据、打开的真实项目、能干活的那个屏幕），然后：
 
 ```
 node <skill-dir>/scripts/capture.mjs http://localhost:3000 --routes /,/settings --sizes desktop,phone [--selector ".editor"] [--full] [--out images/screens]
 ```
 
-It writes 2x PNGs at 1440 x 900 and 390 x 844 (or one element with `--selector`) and prints an `<img>` for each. A desktop app built on Electron, WebView2 or CEF is started with a DevTools port and captured through it (`capture.mjs --cdp 9222 --target "<window title>" [--selector ...]`, clean and at its own pixel density); any other desktop app with the OS (`screencapture -l <window id>` or `-R x,y,w,h` on macOS), a phone app with its simulator (`xcrun simctl io booted screenshot`), a terminal tool by running it and setting its real output in a code block. Look at every capture before it ships: nothing personal on screen (names, emails, tokens, file paths), no error states unless they are the point, no debug overlays. Use several: the main screen in the hero, a detail cropped large lower down, a second screen, the phone view. Stamp `imagery: screenshots <n> (capture.mjs)` and credit nothing; they are the user's own.
+它写出 1440 x 900 与 390 x 844 的 2x PNG（或用 `--selector` 截单个元素），并为每张打印一条 `<img>`。Electron、WebView2 或 CEF 构建的桌面应用以 DevTools 端口启动并经它截取（`capture.mjs --cdp 9222 --target "<window title>" [--selector ...]`，干净、按其自身像素密度）；其他桌面应用走操作系统（macOS 上 `screencapture -l <window id>` 或 `-R x,y,w,h`），手机应用走模拟器（`xcrun simctl io booted screenshot`），终端工具就运行它、把真实输出放进代码块。每一张截图在上船前都看一眼：屏上没有个人信息（姓名、邮箱、令牌、文件路径），没有错误状态（除非错误正是主题），没有调试浮层。多用几张：主屏进 Hero、细节裁大放下面、第二块屏、手机视图。盖 `imagery: screenshots <n> (capture.mjs)`，不署名；它们是用户自己的。
 
-**Frame it in the theme.** A capture sits in a `data-slot` with the theme's radius and the inset outline (§ 5), never inside a drawn browser bar, device frame, traffic lights or notch (47a, 47b). Crop to the part that sells (`object-position`, or `--selector`), keep text in it legible at its displayed size (scale 2, never upscaled), and never retouch what the product shows. Captures are product pictures: mark their slots `data-kind="product"`, so they do not count toward the photo balance (83).
+**放进主题的框。**截图放在带主题圆角与内嵌描边的 `data-slot` 里（§ 5），绝不放进画出来的浏览器条、设备框、红绿灯或刘海（47a, 47b）。裁到能卖的那部分（`object-position` 或 `--selector`），文字在显示尺寸下保持可读（2 倍截取，绝不放大），绝不修产品展示的内容。截图是产品图：把它们的槽位标 `data-kind="product"`，不计入照片配额（83）。
 
-**Build it only when it cannot be captured** (an idea, a product not built yet, nothing reachable): the hero visual is the product's main screen built in HTML and CSS: real controls, at least eight elements, the prompt's nouns, the theme's surfaces and type, at the size `layout.md` § 6 gives the visual. Sample values read as samples (`example.com`, *Example Kitchen*, round plausible amounts), never a figure a visitor could take as a claim (46a). It sits in a `data-slot` so the real screenshot replaces it, and the handoff says which screens to capture once the product runs. Never build a mock of a product the build could have captured (84).
+**只在截不到时构建**（一个想法、尚未建成的产品、什么也够不着）：Hero 视觉是用 HTML 和 CSS 搭的产品主屏：真实控件、至少八个元素、提示词的名词、主题的表面与字体，尺寸按 `layout.md` § 6 给视觉的规格。示例值要读得出是示例（`example.com`、*Example Kitchen*、圆整可信的金额），绝不用访客会当真的数字（46a）。它放进 `data-slot`，真实截图来了就替换它，handoff 写明产品跑起来后要截哪些屏。绝不给构建本可截取的产品搭仿制品（84）。
 
-A working control (a calculator on the user's prices, a booking form) is a fine section and a fine close, once a page; it is not the default hero.
+一个能用的控件（按用户价格算的计算器、一个订位表单）是好的章节、好的收尾，每页一次；它不是默认的 Hero。
 
-## 5. Placing and treating photographs
+## 5. 摆放与处理照片
 
-- **Big or not at all.** A photograph spans six of twelve columns and stands 440px tall or more, or runs full-bleed; at thumbnail size it reads as clip art (a set of four or more may run smaller, each with its fact). In the hero it stands 60 to 75% of the screen tall beside the text, or fills the screen behind the head (the Poster posture). Delete the picture in your head: if the screen still says the same thing, the picture is too weak or too small.
-- **One subject a frame, cropped tight,** its weight leaning toward the text. Vary the ratio (4:5 beside text, 16:9 or 21:9 across, 1:1 in a pair) and the size (8 and 4 columns; three equal frames only for a true set: three dishes, three rooms).
-- **Balance.** Below the hero, photographs take at most a third of the page at 1440 (pictures inside the built product, marked `data-kind="product"`, do not count), up to 45% on a Photographic or Portfolio Grid shape; past that the page reads as a stock gallery and the theme never speaks (83). Never two photograph-led sections in a row: follow a picture with a section the theme's type, rules, colour or the product carry alone (the theme file's Range). A software page alternates the product with type-led sections and takes one or two photographs; a word-led page takes one at most. When in doubt, cut the weakest picture and set its fact large.
-- **Text over a photograph** sits on its calmest part over a scrim from the theme's ink (a gradient from the text's edge, 35 to 65%), behind the text's side only, at 4.5:1 or better against the image under it; never centred white type over a busy frame. A theme that refuses gradients uses a solid ink plate.
-- **Facts on the pictures:** captions are facts from the prompt in the label style, beside or under the picture (the dish and its price, the room and its hours, the date, the place). Never a credit line there, and never a caption that claims a stand-in as the user's own person, place or product.
-- **The theme's treatment, on every photo.** The theme's `photo:` header sets it and the scaffold writes it into `base.css` as CSS on every image in a slot, the user's own included: `natural`, `warm`, `muted`, `mono`, `duotone` in two of the theme's tokens, or `tint` in one, with adjustments (`con=`, `sat=`, `exp=`). A duotone or tint flattens a pale subject (snow, a white wall) into an empty field: choose frames with tonal range and look at each through the treatment. A duotone or tint takes the slot's `::before`, so draw a keyline or scrim with `::after` or a sibling. A photo inside a built product takes the treatment only if the page adds it.
-- **The frame is the theme's:** its radius, an inset outline of ink at 6 to 10% (`outline: 1px solid ...; outline-offset: -1px`), its texture if it has one. Never a border and a wide shadow together (F24).
+- **要么大，要么不要。**一张照片横跨十二列中的六列、高 440px 或更多，或通栏；缩略图尺寸读起来就是剪贴画（一组四张以上可以小些，各带它的事实）。在 Hero 里，它在文字旁边占屏高 60 至 75%，或在标题后面充满整屏（Poster 姿态）。在心里删掉这张图：屏幕还在说同一件事，这张图就太弱或太小。
+- **一框一个主体，裁得紧凑**，分量偏向文字一侧。比例要变化（文字旁 4:5，横跨 16:9 或 21:9，成对用 1:1），尺寸也要变化（8 列与 4 列；三张等大的框只给真正的并列：三道菜、三个房间）。
+- **配衡。**Hero 之下，照片至多占 1440 宽页面的三分之一（构建产品内部的图，标 `data-kind="product"` 的，不计），Photographic 或 Portfolio Grid 形态可到 45%；过了线，页面读起来就是素材图库，主题从此说不上话（83）。绝不两个照片领衔的章节相邻：一张图之后接一个由主题的字体、横线、颜色或产品独自承担的段落（主题文件的 Range）。软件页让产品与文字领衔的章节交替，收一或两张照片；文字领衔的页至多收一张。拿不准时，剪掉最弱的一张，把它的那点事实排大。
+- **压在照片上的文字**放在它最平静的部分，隔一层来自主题墨色的暗化层（从文字一侧起头的渐变，35 至 65%），只在文字那一侧，与其下的图像对比至少 4.5:1；绝不在热闹的画面上居中压白字。拒绝渐变的主题用一块实心墨色版。
+- **图上的事实：**图注是提示词的事实、用标签字体，在图片旁边或下面（那道菜与它的价、那个房间与它的钟点、日期、地点）。那里绝不放署名行，图注也绝不把替身说成用户本人、他处或他的产品。
+- **主题的处理，用在每张照片上。**主题的 `photo:` 头设定它，脚手架把它以 CSS 写进 `base.css`、作用于槽位里的每张图，用户自己的也算：`natural`、`warm`、`muted`、`mono`、取主题两个 token 的 `duotone`，或取一个 token 的 `tint`，带调整（`con=`、`sat=`、`exp=`）。双色调或染色会把浅淡的主体（雪、白墙）压成一片空场：选有影调层次的画面，并隔着处理逐张看过。双色调或染色占用槽位的 `::before`，所以画细线或暗化层用 `::after` 或兄弟元素。构建产品内部的照片只在页面主动添加时才吃处理。
+- **框是主题的：**它的圆角，6 至 10% 墨色的内嵌描边（`outline: 1px solid ...; outline-offset: -1px`），它的纹理（如果它有）。绝不边框与宽阴影同时上（F24）。
 
-## 6. Generated stills
+## 6. 生成的静态图
 
-Only when `TOGETHER_API_KEY` is set and the user asked for generated images, or for a subject the library cannot reach: `comp.md` § Generated stills. Never auto-fire it.
+只在设置了 `TOGETHER_API_KEY` 且用户要求生成图片，或题材是图库够不着的：`comp.md` § Generated stills。绝不自动触发。
 
-## 7. Never
+## 7. 绝不
 
-- **A drawn illustration** (80): an SVG or CSS figure of an object, plant, animal, person, product, building, landscape or scene past icon size. SVG is for icons from one set, the user's logo, charts and diagrams of real data or a real system with their labels, and plain geometry (a rule, a grid, a dot pattern as texture).
-- **An empty picture** (81): a slot showing only its wash, or a gradient field where a picture should be.
-- **A counting device** (82): a row or grid of identical marks standing for a quantity, one for each bottle or day. Set the number.
-- **Illustration packs and characters:** unDraw, Humaaans, Storyset, Lottie mascots, 3D blobs, isometric scenes.
-- Stock faces as proof (F9); a logo wall without the user's logos (46a); mesh blobs, orbs or aurora behind text (29); an image that zooms or rotates on hover (11); text baked into a picture; a photo of a screen showing someone else's interface.
+- **画出来的插图**（80）：超过图标尺寸的物体、植物、动物、人物、产品、建筑、风景或场景的 SVG 或 CSS 图形。SVG 用于一套图标、用户的 logo、真实数据或真实系统的图表与图解（带标注），以及朴素几何（一条线、一个网格、作纹理的点阵）。
+- **一张空图**（81）：只显示洗色的槽位，或本该有图片处的一块渐变场。
+- **计数装置**（82）：用一排或一片相同的记号表示数量，一瓶一个、一天一个。把数字排出来。
+- **插图包与吉祥物：**unDraw、Humaaans、Storyset、Lottie 吉祥物、3D 色块、等距场景。
+- 用素人脸当证明（F9）；没有用户 logo 的 logo 墙（46a）；文字背后的 mesh 色块、光球或极光（29）；悬停会缩放或旋转的图片（11）；烤进图片里的文字；一张拍着别人界面的屏幕照片。
 
-## 8. Icons, logos, video, 3D
+## 8. 图标、logo、视频、3D
 
-- **Icons:** one library a page (Lucide by default; Phosphor or Heroicons in a project that uses them), one stroke width and one style, at 16, 20, 24 or 32px on the set's grid (a 24 viewBox at 24px, never scaled to 19), `currentColor`, aligned to the first line of multi-line text, never in a coloured tile (3, F5), never an emoji (30a). A button with an icon pads the icon side by the vertical padding.
-- **Logos:** the user's own, monochrome, one treatment a row, 32 to 48px tall (20 to 28px in a footer); Simple Icons (`https://cdn.simpleicons.org/<slug>/<hex>`) only for a platform or brand the page names. Never an invented wall (46a).
-- **Video:** the user's recording or footage: `autoplay muted loop playsinline` with a `poster` (28a, 28b), AV1 or VP9 WebM then H.264 MP4, under 2 MB for ten seconds, a visible pause control on any loop past five seconds, captions when it speaks.
-- **3D and WebGL** only when the product is 3D and the visitor handles it, with a still fallback.
-- **Motion libraries:** CSS and `@property` first; Motion for orchestrated entrances in React; GSAP only when a timeline is the product.
+- **图标：**每页一个库（默认 Lucide；项目已在用的用 Phosphor 或 Heroicons），一种笔画粗细、一种风格，按库的网格取 16、20、24 或 32px（24 viewBox 配 24px，绝不缩到 19），用 `currentColor`，与多行文本首行对齐，绝不放进色块贴片（3, F5），绝不用 emoji（30a）。带图标的按钮，图标一侧的内边距与竖向内边距相等。
+- **Logo：**用户自己的，单色，一行一种处理，高 32 至 48px（页脚 20 至 28px）；Simple Icons（`https://cdn.simpleicons.org/<slug>/<hex>`）只给页面点名的平台或品牌。绝不编造一面墙（46a）。
+- **视频：**用户的录像或素材：`autoplay muted loop playsinline` 带 `poster`（28a, 28b），先 AV1 或 VP9 WebM 再 H.264 MP4，十秒不超过 2 MB，超过五秒的循环要给可见的暂停控件，有说话就配字幕。
+- **3D 与 WebGL**只在产品本身是 3D 且访客要操作它时用，配静帧降级。
+- **动效库：**CSS 与 `@property` 优先；React 里的编排入场用 Motion；只有时间轴本身是产品时才用 GSAP。
 
-## 9. Stamp, log and handoff
+## 9. Stamp、日志与 handoff
 
-Stamp `imagery: photographs, library 5, mono · product sample in hero and demo-2` (or `imagery: none`); the log's `imagery` field carries the same words and `photos` the ids used, so the next build's picks rotate. The handoff lists every stand-in and built sample with its slot, its size and what the user's own picture should show.
+盖 `imagery: photographs, library 5, mono · product sample in hero and demo-2`（或 `imagery: none`）；日志的 `imagery` 字段记同样的词，`photos` 记用掉的 id，下一次构建的选取就会轮换。handoff 列出每个替身与构建样例：它的槽位、尺寸，以及用户自己的照片应该拍什么。

@@ -7,14 +7,18 @@ display: grotesk-sans General Sans
 accent: warm 30
 posture: restrained
 keywords: saas, platform, billing, payments, invoicing, dashboard, b2b, startup, product, pricing, analytics, fintech, workflow, team, onboarding, trust, warm, human, calm
-material: warm grey paper and a felt desk, cotton stationery lit from the left, General Sans throughout with Geist Mono figures, letterpress card controls, coral pressed into the stock for the one settled state
+material: 暖灰纸张与毛毡桌面、左侧受光的棉质文具、通篇 General Sans 配 Geist Mono 数字、凸版印刷卡片控件、珊瑚色压进纸材标记唯一的落定状态
 photo: muted sepia=8
 pictured: Conversational FAQ, Desk hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/coral.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Coral
 
-A warm, plain product voice made physical: fine stationery on a felt desk, seen from above in one daylight from the left. Records are cotton sheets, envelopes and index cards with real edges; controls are letterpress cards; one coral ink is pressed in where something is settled. General Sans throughout. Not a cream editorial page, not a skeuomorphic toy, not a blue SaaS template.
+一个温暖、平实的产品声音被做成实体：毛毡桌上摆着精致文具，俯视、左侧来的一道日光。记录是带真实边缘的棉纸、信封和索引卡；控件是凸版印刷卡片；一件事落定的地方，压入一种珊瑚色墨。通篇 General Sans。不是奶油色编辑部页面，不是拟物玩具，也不是蓝色 SaaS 模板。
 
 ## Tokens
 
@@ -39,51 +43,51 @@ A warm, plain product voice made physical: fine stationery on a felt desk, seen 
 }
 ```
 
-## Type
+## 字体
 
-- **Display:** General Sans 600, `--tracking-display`, line-height 1.02 to 1.08, sentence case, roman. A lone price sets at two to three times `--text-display`, tracked -0.05em, line-height 0.85, its unit beside it at `--text-title` in 500.
-- **Body:** General Sans 400 and 500. On stock, `--color-print`; on board, `--color-board-type`.
-- **Labels:** General Sans 500 a step smaller, sentence case, `--color-muted`.
-- **Figures in a column:** Geist Mono 400 (General Sans has no tabular figures). A price in a sentence or a head stays General Sans.
+- **展示字体：**General Sans 600、`--tracking-display`、行高 1.02 到 1.08、句首大写、正体。单独的价格以两到三倍 `--text-display` 排，字距 -0.05em、行高 0.85，单位在旁用 `--text-title` 的 500。
+- **正文：**General Sans 400 与 500。纸材上用 `--color-print`；墨板（board）上用 `--color-board-type`。
+- **标签：**General Sans 500 小一档，句首大写，用 `--color-muted`。
+- **栏内的数字：**Geist Mono 400（General Sans 没有 tabular 数字）。句中或标题里的价格仍用 General Sans。
 
-## Surfaces
+## 表面
 
-- One light, from the left: each paper object takes a lit edge top and left, a shade edge bottom and right, and a cast falling right (`--edge-stock`, `--cast-stock`).
-- The hero ground is a desk: `--color-desk` under a daylight radial from the left and a generated felt texture. Records the product handles are built as stationery on it: invoices, letters and statements on cotton sheets, a window envelope with glassine showing the address, replies as correspondence index cards, a groove pressed into a card. Each is CSS on `--color-cotton`, sized from one unit so it scales whole.
-- Texture is generated, never a picture: the build writes `cotton.svg`, a 360px tile of two stitched feTurbulence layers (cloud 0.011, grain 0.92, warm and faint) with short fibre strokes, under a lit-to-shade gradient on every paper object; `felt.svg` the same at 0.018. Sections stay plain.
-- The settled state (paid, signed, booked) is pressed into the stock: the word in General Sans 600 in `--color-paid`, through an SVG filter that offsets a shade wall into the letterforms and lets a noise mask leave the ink uneven, tilted a few degrees.
-- One `--color-ink` band, the board; stationery on it casts from `--deep`.
-- Photographs are rare: work at arm's length in daylight, muted; built stationery answers first.
+- 唯一光源，来自左侧：每个纸面物件顶边与左边受光、底边与右边落影，投影向右落下（`--edge-stock`、`--cast-stock`）。
+- hero 底面是一张桌子：`--color-desk` 之上叠左侧日光径向渐变和生成的毛毡纹理。产品处理的记录做成桌上的文具：棉纸上的发票、信件与对账单、带玻璃纸显出地址的开窗信封、回函做成信函索引卡、卡片上压出的凹槽。每一件都是 `--color-cotton` 上的 CSS，从一个基准单位定尺寸，整体可缩放。
+- 纹理是生成的，绝不是图片：构建过程写出 `cotton.svg`，一块 360px 的贴片，两层拼合的 feTurbulence（cloud 0.011、grain 0.92，暖而淡）加短纤维笔触，垫在每个纸面物件受光到落影的渐变之下；`felt.svg` 同样做法、0.018。区块保持素净。
+- 落定状态（已付、已签、已订）压进纸材：那个词用 General Sans 600、`--color-paid`，经 SVG 滤镜把一面阴影墙偏移进字形，再让噪点遮罩留下不匀的墨，并倾斜几度。
+- 一条 `--color-ink` 色带，即墨板；它上面的文具从 `--deep` 投影。
+- 照片罕用：日光下一臂之遥的工作场景、低饱和；先用 CSS 搭的文具回答。
 
 ## Range
 
-- **The job played as paperwork:** the product's task told in its own documents on the desk (a sheet into an envelope, a reply card tucked under, the outcome pressed in), built in the hero and reused below.
-- **Records as an index:** replies, bookings or clients as cotton index cards stacked with offset tabs, beside their record on a full sheet.
-- **The price on the board:** the lone figure huge in paper beside a ruled list of what it pays for; the action sits on stationery laid on the band (an envelope flap, a card).
-- **The other side:** what the recipient sees, built on cotton, a groove control rewriting it live.
+- **任务演成案头文书：**产品的任务用它自己在桌上的文件讲（一张纸装进信封、一张回函卡插进去、结果压进去），在 hero 里搭好，下方复用。
+- **记录做成索引：**回函、预订或客户做成棉质索引卡，错位标签叠放，旁边整张纸上放着它们的记录。
+- **墨板上的价格：**那个孤零零的数字以纸色排得巨大，旁边是划线的清单、说明它买什么；操作按钮坐在铺在色带上的文具上（一个信封盖、一张卡）。
+- **另一侧：**收件人看到的样子，用棉纸搭出来，一个凹槽控件实时改写它。
 
-## Controls
+## 控件
 
-- Letterpress cards, not pills: 8px radius, 48px tall, cotton stock with `--edge-stock` and `--cast-stock` and the label pressed in (a lit text shadow below it); the primary is ink board with the label pressed the other way. Hover lifts 1px into `--cast-stock-lift`; active presses 1px down.
-- A choice of two to four is a groove pressed into cotton (`--press-groove`, 12px radius) with a cotton card riding in it to the chosen stop.
-- Inputs 48px, 6px radius, 1px `--color-muted` border, deep coral focus. Status is an ink outline; coral is spent only on the pressed settled state, link underlines and focus.
+- 凸版卡片，不是胶囊：8px 圆角、48px 高、棉质纸材带 `--edge-stock` 与 `--cast-stock`，标签压进纸里（文字下方一道受光的阴影）；主按钮是墨色墨板，标签反方向压。Hover 抬起 1px、阴影换成 `--cast-stock-lift`；active 下压 1px。
+- 两到四个的选项是一道压进棉纸的凹槽（`--press-groove`、12px 圆角），一张棉卡在槽里滑到选中的那档。
+- 输入框 48px、6px 圆角、1px `--color-muted` 边框，深珊瑚色焦点。状态用墨色描边；珊瑚色只花在压印的落定状态、链接下划线和焦点上。
 
-## Motion
+## 动效
 
-Once, after fonts load and in view: the job plays on the desk in about six seconds, transforms and opacity only, paused off screen, then still. Reduced motion and no script show the finished state.
+一次，字体加载完成且进入视口后：任务在桌上演约六秒，只用 transform 与 opacity，离屏即暂停，然后静止。Reduced motion 与无脚本时直接呈现完成状态。
 
-## Voice
+## 语气
 
-Plain, warm second-person sentences about the work and the money: who, how much, when, what the product did. Never cute.
+平实、温暖的第二人称句子，讲工作与钱：谁、多少钱、什么时候、产品做了什么。绝不卖萌。
 
-## Do-nots
+## 禁止事项
 
-- Never cool paper, a blue signal or a second light; every shadow falls right.
-- Never a pill button or a flat square button; controls are pressed cards.
-- Never a photograph of paper; stationery is built in CSS.
-- Never coral as a band, a fill behind text or a head; it is the pressed ink of one settled state.
+- 绝不用冷调纸、蓝色信号或第二个光源；每道影子都落在右边。
+- 绝不用胶囊按钮或扁平方块按钮；控件是压印卡片。
+- 绝不拍纸的照片；文具用 CSS 搭。
+- 珊瑚色绝不做色带、文字背后的填充或标题；它是唯一落定状态的压印墨色。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&display=swap" rel="stylesheet">

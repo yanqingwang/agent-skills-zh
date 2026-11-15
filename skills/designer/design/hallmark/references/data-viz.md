@@ -1,48 +1,52 @@
-# Data viz: charts that read as set, not generated
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/data-viz.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Loaded when the prompt involves charts, data or dashboards, or the shape is Stat-Led or Workbench: a tabular spine, hairline grids, one series that argues, and no decorative dashboards (no donut walls, gauge rows or confetti of KPIs).
+# 数据可视化：图表读起来是设定出来的，不是生成的
 
-## Form first (before any drawing)
+当提示词涉及图表、数据或仪表盘，或形态为 Stat-Led 或 Workbench 时加载：表格主轴、发丝网格、一条有立场的序列，以及拒绝装饰性仪表盘（不要甜甜圈墙、不要仪表排、不要 KPI 彩带）。
 
-| The data is | The form is |
+## 形式优先（画任何东西之前）
+
+| 数据是 | 形式是 |
 | --- | --- |
-| one value | a stat tile (a large figure and a worded qualifier), never a one-bar chart |
-| two to five values compared | a stat row, or horizontal bars |
-| a series over time | a line, or a sparkline when it rides inside another component |
-| more than about seven categories | a table; more colours is not an answer |
-| parts of a whole | a stacked horizontal bar; never a pie, a donut or a gauge |
+| 单个数值 | 一个 stat tile（大数字加文字限定语），绝不用单根柱的图 |
+| 两到五个要比较的数值 | 一排 stat，或水平条形 |
+| 一段随时间的序列 | 折线，或嵌在其他组件内部时用 sparkline |
+| 超过约七个类别 | 表格；加更多颜色不是答案 |
+| 整体中的部分 | 一根堆叠的水平条；绝不用饼图、甜甜圈或仪表盘 |
 
-The most underused form is emphasis: one accent series, everything else neutral. If every series is loud, none is.
+最被低估的形式是强调：一条强调序列，其余全部中性。每条序列都响的时候，就没有一条是响的。
 
-## Construction (inline SVG written for the data, no chart library)
+## 构建（为数据手写的内联 SVG，不用图表库）
 
-- **Bars**: <= 24px thick, 2-4px gaps, baseline at zero always; rounded only at the data end, <= 2px.
-- **Lines**: 2px stroke; markers only at annotated points (>= 6px); a sparkline may fade-fill to transparent, the one sanctioned gradient near a chart.
-- **Gridlines**: 1px solid `--color-rule`, never dashed, fewer than you think (3-5 horizontal lines); axis lines can be the grid's first line, not a heavier stroke.
-- **One y-axis.** Never dual axes, the classic way to fake a correlation. Two series with different units get two small charts (small multiples) instead.
-- **No mark shadows, no 3D, no gradients in marks** (the sparkline fade-fill excepted).
-- Sparklines inside components: no axes, no grid, no second colour.
+- **Bars**: 厚度 <= 24px，间隙 2-4px，基线永远在零；只在数据端圆角，<= 2px。
+- **Lines**: 2px 描边；只在被标注的点上放标记（>= 6px）；sparkline 可以向透明渐隐填充，这是图表附近唯一被许可的渐变。
+- **Gridlines**: 1px 实线 `--color-rule`，绝不用虚线，条数比你以为的少（3-5 条水平线）；轴线可以直接用网格的第一条线，不必加重描边。
+- **一条 y 轴。** 绝不用双轴，那是伪造相关性的经典手法。单位不同的两条序列改用两张小图（small multiples）。
+- **标记不加阴影、不用 3D、标记内不用渐变**（sparkline 渐隐填充除外）。
+- 组件内部的 sparkline：无轴、无网格、无第二种颜色。
 
-## Colour
+## 颜色
 
-Adapted to Hallmark's one-accent discipline (an 8-hue categorical palette would fight everything else on the page):
+适配 Hallmark 的单强调色纪律（8 色分类调色板会与页面上的一切打架）：
 
-- **Single series**: the accent.
-- **Multi-series**: a lightness ramp on the accent hue (L steps of ~12-15%, chroma constant), assigned in a fixed order, never cycled; context/reference series in `--color-muted`.
-- **A second hue** only under Full-palette posture, from the declared roles, never invented mid-chart.
-- **Text never wears the data colour.** Labels, values, and axis text are `--color-ink` / `--color-muted`; a series is identified by a swatch beside its label, not by dyeing the words.
-- **Tabular numerals on every numeric surface** (values, axes, tables; F6).
+- **单序列**：用强调色。
+- **多序列**：在强调色色相上取亮度渐变（L 步进约 12-15%，chroma 恒定），按固定顺序指派，绝不循环；语境/参照序列用 `--color-muted`。
+- **第二种色相**只在 Full-palette 姿态下使用，且来自已声明的角色，绝不在画图中途发明。
+- **文字绝不穿数据的颜色。** 标签、数值与轴文字用 `--color-ink` / `--color-muted`；序列靠标签旁的色块辨认，而不是把字染成那个颜色。
+- **每个数值表面都用等宽数字**（数值、轴、表格；F6）。
 
-## Honesty (gate 46a binds here hardest)
+## 诚实（闸门 46a 在这里最严格）
 
-- Real numbers, or a text slot (`craft.md` § 8) where a figure is missing; a fabricated series is worse than an empty slot.
-- Bars start at zero; a truncated axis that exaggerates a delta is the numeric version of an invented metric. Annotate a zoomed view explicitly ("axis starts at 94%") when the data genuinely lives in a narrow band.
-- Sample data lives only inside a built product sample or a code surface, reads as a sample (totals sum, dates sequence) and is never a figure a visitor could take as a claim (`craft.md` § 6); the stamp notes `data: sample`.
+- 真实数字，或图缺位时放一个文本槽（`craft.md` § 8）；编造的序列比空槽更糟。
+- 条形从零开始；夸大差值的截断轴，就是虚构指标的数字版。数据确实落在窄区间时，明确标注缩放视图（"axis starts at 94%"）。
+- 样例数据只存在于构建出的产品样例或代码表面内，读起来要像样例（总数相加、日期连续），绝不能成为访客可能当作主张的数字（`craft.md` § 6）；stamp 记录 `data: sample`。
 
 ## Dark
 
-Marks re-derive like accents in [`dark-mode.md`](dark-mode.md) (chroma down, L up); gridlines from the dark `--color-rule`; the fade-fill drops to half opacity on dark grounds.
+数据标记按 [`dark-mode.md`](dark-mode.md) 中强调色的方式重新推导（chroma 降，L 升）；网格线用深色的 `--color-rule`；深色底上渐隐填充降为半透明。
 
-## The dashboard bar
+## 仪表盘横条
 
-A Workbench or dashboard build shows fewer, truer figures: one hero figure (stat tile), one supporting chart, one table. The KPI wall with six gauges is the tell this file exists to kill.
+Workbench 或仪表盘构建展示更少、更真实的数字：一个主角数字（stat tile）、一张辅助图表、一张表格。六个仪表的 KPI 墙正是本文件要杀死的破绽。

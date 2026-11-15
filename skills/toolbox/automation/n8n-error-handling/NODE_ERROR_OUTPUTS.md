@@ -1,47 +1,51 @@
-# Per-Node Error Outputs
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-error-handling/NODE_ERROR_OUTPUTS.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This file is about the **error output on a single node** — the second `main` output that fires when that node throws — and the two-step setup that trips up nearly everyone. For the workflow-level catch-all (Error Trigger workflows) and the webhook/Respond shape, see the rest of `n8n-error-handling`.
+# 节点级错误输出
 
-The whole point: a node failing should route somewhere *you* control, instead of halting the run. The cost of forgetting half the setup is one of the worst silent-failure modes in n8n — a run that shows green while quietly dropping its work.
+本文件讲**单个节点上的错误输出**（该节点抛错时触发的第二个 `main` 输出），以及几乎人人会栽跟头的两步配置。工作流级兜底（Error Trigger 工作流）和 webhook/Respond 形态见 `n8n-error-handling` 其余文件。
+
+核心在于：节点失败应路由到*你*控制的地方，而不是让运行中止。漏配一半的代价是 n8n 最恶劣的静默失败之一：运行显示绿色，工作却被悄悄丢掉。
 
 ---
 
-## The two-step setup (both are required)
+## 两步配置（缺一不可）
 
-Routing a node's failure takes exactly two changes. Either one alone looks finished and misbehaves.
+路由一个节点的失败恰好需要两处改动。只做任何一处，看起来都像配置完了，实际行为却是错的。
 
-### Step 1 — create the error output
+### Step 1：创建错误输出
 
-Set `onError: "continueErrorOutput"` on the node. This is what *adds* the second output. Until you do, `main[1]` does not exist and nothing you wire to it can fire.
+在节点上设置 `onError: "continueErrorOutput"`。这一步才*添加*出第二个输出。没做之前，`main[1]` 不存在，接上去的任何东西都不会触发。
 
 ```javascript
 { type: "updateNode", nodeName: "Google Sheets",
   changes: { onError: "continueErrorOutput" } }
 ```
 
-Surgical alternative if you're touching only this field:
+若只改这一个字段，可用更精准的替代：
 
 ```javascript
 { type: "patchNodeField", nodeName: "Google Sheets",
   fieldPath: "onError", value: "continueErrorOutput" }
 ```
 
-The valid `onError` values:
+`onError` 的合法取值：
 
-| Value | Effect |
+| 取值 | 效果 |
 |---|---|
-| `"stopWorkflow"` (default) | Error halts the whole workflow. The right default for runs you watch. |
-| `"continueRegularOutput"` | The error item flows out the **normal** output (`main[0]`) alongside successes. Rare and usually a mistake — downstream gets error-shaped data and keeps going. |
-| `"continueErrorOutput"` | The error item flows out a **separate** error output (`main[1]`). This is the one you wire below. |
+| `"stopWorkflow"`（默认） | 错误使整个工作流中止。对你盯着看的运行，这是正确的默认。 |
+| `"continueRegularOutput"` | 错误条目从**普通**输出（`main[0]`）与成功条目一起流出。少见，而且通常是失误：下游拿到错误形态的数据还继续跑。 |
+| `"continueErrorOutput"` | 错误条目从**单独的**错误输出（`main[1]`）流出。就是下面要接的那个。 |
 
-### Step 2 — wire the error output
+### Step 2：接线错误输出
 
-With `onError: "continueErrorOutput"`, the node has two outputs:
+设了 `onError: "continueErrorOutput"` 之后，节点有两个输出：
 
-- `main[0]` → success path (`sourceIndex: 0`)
-- `main[1]` → error path (`sourceIndex: 1`)
+- `main[0]` → 成功路径（`sourceIndex: 0`）
+- `main[1]` → 错误路径（`sourceIndex: 1`）
 
-Wire the error output to a real handler:
+把错误输出接到真正的处理器上：
 
 ```javascript
 { type: "addConnection",
@@ -50,50 +54,50 @@ Wire the error output to a real handler:
   sourceIndex: 1 }
 ```
 
-`sourceIndex: 1` is the error output. (IF nodes accept the friendly aliases `branch: "true"`/`branch: "false"` for index 0/1; a generic fallible node has no such alias — use the explicit `sourceIndex: 1`.)
+`sourceIndex: 1` 就是错误输出。（IF 节点接受友好别名 `branch: "true"` / `branch: "false"` 对应索引 0/1；普通可能出错的节点没有这种别名，请显式写 `sourceIndex: 1`。）
 
 ---
 
-## Failure modes — why "one of two" is so dangerous
+## 失败模式：为什么"两步只做一步"如此危险
 
-### `onError` set, error output NOT wired
+### 设了 `onError`，错误输出没接线
 
 ```javascript
 // onError: "continueErrorOutput" set on the node,
 // but no addConnection from sourceIndex 1.
 ```
 
-On failure the node emits to `main[1]`, which has **no targets**. The error data is silently discarded, downstream never fires, and — this is the trap — the execution is recorded as **succeeded**, because from n8n's perspective the error was "handled" by a branch that happens to go nowhere. No failed execution logged, nothing in the dashboard. The integration "just stops working" and there's no trail.
+失败时节点向 `main[1]` 发出数据，而它**没有任何目标**。错误数据被静默丢弃，下游永不触发，而且（陷阱在此）这次执行被记为**成功**，因为在 n8n 看来，错误已被一条恰好通向虚无的分支"处理"了。没有失败执行记录，仪表板上什么都没有。集成"就是不好使了"，且查无实据。
 
-**Fix:** wire `sourceIndex: 1` to a real handler, *or* set `onError` back to `"stopWorkflow"` so the failure is loud again.
+**修法：**把 `sourceIndex: 1` 接到真正的处理器，*或者*把 `onError` 改回 `"stopWorkflow"`，让失败重新响亮。
 
-### Error output wired, `onError` NOT set
+### 接了错误输出，`onError` 没设
 
 ```javascript
 // addConnection from "Some Node" sourceIndex 1 → "Handle Error" exists,
 // but the node still has the default onError: "stopWorkflow".
 ```
 
-The connection sits in the JSON, but the slot it feeds from never fires. The handler is unreachable. On failure the workflow simply **halts** (default behavior). Less dangerous than the first mode — at least it's loud — but the handler you built does nothing.
+连接躺在 JSON 里，但它来源的槽位永不触发。处理器成为死代码。失败时工作流直接**中止**（默认行为）。比第一种模式危险性低（至少它是响的），但你建好的处理器什么也不做。
 
-**Fix:** set `onError: "continueErrorOutput"` on the node.
+**修法：**在节点上设置 `onError: "continueErrorOutput"`。
 
-### Why validation won't save you
+### 为什么校验救不了你
 
-A half-wired error output **validates clean**. `validate_workflow` and `n8n_validate_workflow` don't flag "`onError` is set but `main[1]` is empty" or vice versa — both are structurally legal. This is a runtime behavior, not a schema violation. The only reliable check is to read the workflow back (see Verification below).
+接线只做一半的错误输出**校验照样通过**。`validate_workflow` 和 `n8n_validate_workflow` 不会标记"设了 `onError` 但 `main[1]` 为空"或其反向——两者在结构上都合法。这是运行时行为，不是 schema 违规。唯一可靠的检查是把工作流读回来（见下文"验证"）。
 
 ---
 
-## Common wiring shapes
+## 常见接线形态
 
-### Single fallible node → error handler
+### 单个易错节点 → 错误处理器
 
 ```javascript
 // Node config: onError: "continueErrorOutput"
 { type: "addConnection", source: "HTTP Request", target: "Respond Error", sourceIndex: 1 }
 ```
 
-### Success path fans out, error path goes elsewhere
+### 成功路径扇出，错误路径另走一路
 
 ```javascript
 { type: "addConnection", source: "HTTP Request", target: "Save Result",  sourceIndex: 0 }
@@ -101,7 +105,7 @@ A half-wired error output **validates clean**. `validate_workflow` and `n8n_vali
 { type: "addConnection", source: "HTTP Request", target: "Respond Error", sourceIndex: 1 }
 ```
 
-### Multiple fallible nodes → one shared error handler (fan-in)
+### 多个易错节点 → 共享一个错误处理器（扇入）
 
 ```javascript
 // Each of these nodes needs onError: "continueErrorOutput" on its own config.
@@ -110,62 +114,62 @@ A half-wired error output **validates clean**. `validate_workflow` and `n8n_vali
 { type: "addConnection", source: "Write Database", target: "Respond Error", sourceIndex: 1 }
 ```
 
-Fan-in keeps the graph readable: one error responder, many sources. The handler can inspect which node failed (the error payload carries the failing node's name) to differentiate the response.
+扇入让图保持可读：一个错误响应器，多个来源。处理器可以查看是哪个节点失败（错误负载里带失败节点的名称），据此区分响应。
 
-### Both log AND respond on the same failure
+### 同一次失败既记日志又响应
 
-Wiring the error output to two targets composes without conflict — both receive the error data:
+把错误输出接到两个目标并不冲突，两者都收到错误数据：
 
 ```javascript
 { type: "addConnection", source: "Call External", target: "Log Full Error", sourceIndex: 1 }
 { type: "addConnection", source: "Call External", target: "Respond Error",  sourceIndex: 1 }
 ```
 
-Useful when you want a sanitized response *and* a private full-detail log on the same failure. (Or chain them: error output → Log → Respond, so the log runs first.)
+适用于同一次失败既要脱敏响应*又*要私有的全量明细日志。（或者串起来：错误输出 → 日志 → 响应，让日志先跑。）
 
 ---
 
-## What counts as "fallible"
+## 什么算"易错"
 
-Wire an error output on anything that can throw at runtime:
+任何运行时可能抛错的，都给它接错误输出：
 
-- Network calls — HTTP Request, third-party API nodes, databases.
-- Auth failures — expired credential, rotated token.
-- Schema mismatches — missing DB column, JSON parse failure.
-- Rate limits — 429 from upstream (configure `retryOnFail` first so these self-heal).
-- File/binary operations — missing path, permission denied (see **n8n-binary-and-data**).
-- Code nodes that can throw.
+- 网络调用：HTTP Request、第三方 API 节点、数据库。
+- 鉴权失败：凭据过期、令牌轮换。
+- schema 不匹配：缺数据库列、JSON 解析失败。
+- 限流：上游 429（先配 `retryOnFail`，让这类错误自愈）。
+- 文件/二进制操作：路径缺失、权限被拒（见 **n8n-binary-and-data**）。
+- 可能抛错的 Code 节点。
 
-Usually **not** worth an error output:
+通常**不值得**接错误输出的：
 
-- Set / Edit Fields on already-validated data.
-- IF / Switch with simple expressions — if those throw it's a bug to fix, not a path to catch.
-- Pure transformations with no I/O.
+- 对已校验数据做 Set / Edit Fields。
+- 带简单表达式的 IF / Switch：如果这些抛错，那是该修的 bug，不是该捕获的路径。
+- 无 I/O 的纯转换。
 
-When unsure, wire it. The cost is one connection; the cost of not wiring it is a silent halt.
-
----
-
-## Verification (do this every time)
-
-After any create/update, pull the workflow with `n8n_get_workflow` and check **both halves** on each fallible node:
-
-1. **Node config** — `onError` is `"continueErrorOutput"` (or whatever you intended).
-2. **Connections** — `connections["<node>"].main[1]` contains the expected handler(s).
-
-If either half is missing, you have a silent-failure setup. Fix before activating.
-
-`n8n_autofix_workflow` can repair some structural issues, but it won't infer that you *meant* to wire an error path — the intent to handle a given node's failure is yours to express. Treat the read-back as mandatory.
+拿不准就接。代价只是一条连线；不接的代价是静默中止。
 
 ---
 
-## When to use an error workflow instead
+## 验证（每次都做）
 
-Per-node outputs handle the failure of *one node you remembered to wire*. They do **not** catch:
+任何创建/更新之后，用 `n8n_get_workflow` 把工作流拉回来，对每个易错节点检查**两半**：
 
-- Failures on nodes you forgot to wire.
-- Crashes between nodes.
-- Whole-workflow timeouts.
-- Trigger failures.
+1. **节点配置**：`onError` 是 `"continueErrorOutput"`（或你想要的任何值）。
+2. **连接**：`connections["<node>"].main[1]` 包含预期的处理器。
 
-For those, you need a workflow-level **error workflow** (Error Trigger node). And note the inverse: a per-node error output that's wired to a no-op which drops the data counts as "handled" — so it will *suppress* the error workflow. Only catch per-node when you're genuinely acting on the error. See **ERROR_WORKFLOWS.md**.
+缺了任何一半，就是一个静默失败配置。激活前先修。
+
+`n8n_autofix_workflow` 能修一些结构问题，但它推断不出你*本想*接一条错误路径，对某个节点失败的处理意图得由你自己表达。把读回检查当作必做项。
+
+---
+
+## 什么时候该改用错误工作流
+
+节点级输出处理的是*你记得接线的某一个节点*的失败。它们**接不住**：
+
+- 你忘了接线的节点上的失败。
+- 节点之间的崩溃。
+- 整个工作流超时。
+- 触发器失败。
+
+这些要靠工作流级**错误工作流**（Error Trigger 节点）。注意反向情形：接到丢弃数据的空操作上的节点级错误输出算"已处理"，因此会*压制*错误工作流。只有当你真的要对错误采取行动时才做节点级捕获。见 **ERROR_WORKFLOWS.md**。

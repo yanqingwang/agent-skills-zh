@@ -1,14 +1,18 @@
-# Long-Running Agent Stop Conditions
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/health/references/long-running-agents.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Loaded from `health` Step 1c when the project uses `/loop`, autonomous agents, or any long-running agent flow. Skip entirely for projects without one.
+# 长时运行 Agent 的停止条件
 
-The project must define explicit stop conditions. An agent that never stops is a budget and safety incident waiting to happen.
+当项目使用 `/loop`、自主 Agent 或任何长时运行 Agent 流程时，从 `health` Step 1c 加载本文件。没有此类流程的项目完全跳过。
 
-Audit for these four hard stop signals; flag the absence of each as a Structural finding:
+项目必须定义显式的停止条件。永不停止的 Agent 是一个迟早爆发的预算与安全事故。
 
-1. **No progress across two consecutive checkpoints.** Same files touched, same errors logged, no new commits/tests/output. Recommend killing the loop and surfacing the state, not retrying.
-2. **Repeated identical failure.** Same stack trace, same error message, same failed assertion three times in a row means the hypothesis is wrong; more attempts will not help.
-3. **Cost or token budget exceeded.** Project should declare a per-run budget (tokens, API spend, wall-clock minutes). Loop exits when the budget is hit, not when work is done.
-4. **External blockers.** Merge conflict on the target branch, dependency lock the agent cannot resolve, missing credential, network unreachable. Any of these halt the loop and ask the user, not retry forever.
+审计以下四个硬停止信号；每一个缺失都标记为 Structural 发现：
 
-The stop conditions should live in tracked project docs (`AGENTS.md`, the loop's launch script, or a dedicated config), not only in the agent's prompt. Prompts are forgettable; tracked config is enforceable. Recommend hooks (PostToolUse on the relevant tools) over prompt instructions when the project supports them: a hook physically cannot be skipped, a prompt instruction can. Confirm the host's hook coverage before recommending one: some agents only fire PostToolUse for a subset of tools (for example, a runtime may match shell/Bash only), so a fixup that must run after file edits belongs on a Stop or session-end hook there instead.
+1. **连续两个检查点无进展。** 触碰同样的文件、记录同样的错误、没有新的 commit/测试/输出。建议终止循环并暴露当前状态，而不是重试。
+2. **重复出现完全相同的失败。** 连续三次出现相同的堆栈跟踪、相同错误信息、相同断言失败，说明假设错了；再试也不会有用。
+3. **成本或 token 预算超限。** 项目应声明每次运行的预算（token、API 花费、墙钟分钟数）。预算耗尽时循环退出，而不是等工作做完。
+4. **外部阻塞。** 目标分支上的合并冲突、Agent 无法解决的依赖锁、缺失的凭证、网络不可达。任何一项都应停止循环并询问用户，而不是永远重试。
+
+停止条件应存在于受版本管理的项目文档（`AGENTS.md`、循环的启动脚本或专用配置）中，而不是只在 Agent 的提示词里。提示词容易被遗忘；受版本管理的配置才可强制执行。项目支持时，建议用 hooks（在相关工具上的 PostToolUse）代替提示词指令：hook 在物理上无法被跳过，提示词指令可以。推荐 hook 之前先确认宿主的 hook 覆盖范围：有些 Agent 只对一部分工具触发 PostToolUse（例如某个运行时可能只匹配 shell/Bash），这种情况下必须在文件编辑之后运行的修复动作应改挂在 Stop 或会话结束 hook 上。

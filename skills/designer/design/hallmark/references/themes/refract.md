@@ -12,11 +12,15 @@ pictured: Timetable-led, Stage hero
 photo: natural con=3 exp=4
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/refract.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Refract
 
-White plaster in strong sun, with light doing the decorating: a net of water caustics moving across the ground, or a prism throwing a spectrum and its bright cusps over the page. Everything else is quiet: deep pool-blue ink, Funnel Display at a light weight, clear surfaces whose shadows carry a tint of the light that passed through them. It feels like a cool room on a hot afternoon. It is not a rainbow gradient, not frosted glass on a blur, not a blue tech landing page.
+烈日下的白色灰泥，由光来承担装饰：一层水波焦散在地面移动，或一枚棱镜把光谱和它的亮尖抛洒在页面上。其余一切安静：深池蓝墨色、轻字重的 Funnel Display、透明的表面，其阴影带着穿过它的光的色调。像热天午后一间凉爽的房间。它不是彩虹渐变，不是模糊底上的磨砂玻璃，也不是蓝色的科技落地页。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -36,56 +40,56 @@ White plaster in strong sun, with light doing the decorating: a net of water cau
 }
 ```
 
-Two dials, stated in the stamp (`refract: water/pool`). Two Refract pages in one run differ on both.
+两个旋钮，写入 stamp（印记）：`refract: water/pool`。同一次运行里的两个 Refract 页面，两者都不同。
 
-| Dial | Options |
+| 旋钮 | 选项 |
 | --- | --- |
-| **Light** (the generated ground) | `water` (default): caustics from a surface of moving water, a bright net over an aqua shade. `glass`: sun through a glazed window, the pane edges split warm and cool and a prism's fan crossing the patch, falling over the product as well as the ground, slow as the sun |
-| **Colourway** | `pool` (default) as above. `noon`: ink `oklch(20% 0.01 260)`, accent near-black, the spectrum the only colour |
+| **光**（生成的地面） | `water`（默认）：流动水面的焦散，青绿阴影上的一张亮网。`glass`：穿过玻璃窗的阳光，窗沿分成暖与冷两半，一柄棱镜扇面横过光斑，落在产品上也落在地面上，缓慢如太阳 |
+| **配色** | `pool`（默认），如上。`noon`：墨色 `oklch(20% 0.01 260)`，强调色近黑，光谱是唯一的颜色 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Funnel Display 400 (300 for a figure set at statement size), `--tracking-display`, line-height 1.02, sentence case, one colour. Heads stay calm; the light is the loud part.
-- **Body:** Funnel Sans 400 at 17px, line-height 1.6, `--color-ink-2`; leads a step up in `--color-muted`.
-- **Labels, table heads, times:** Funnel Sans 500 a step smaller, sentence case, `tabular-nums` on every figure. Never mono, never tracked capitals.
+- **展示字体：**Funnel Display 400（陈述字号的大数字用 300），`--tracking-display`，行高 1.02，句首大写，单色。标题保持平静；光才是大声的部分。
+- **正文：**Funnel Sans 400，17px，行高 1.6，用 `--color-ink-2`；导语大一档，用 `--color-muted`。
+- **标签、表头、钟点：**Funnel Sans 500，小一档，句首大写，所有数字加 `tabular-nums`。绝不用等宽字体，绝不用加字距的大写。
 
-## Surfaces
+## 表面（Surfaces）
 
-- **The light:** one generated canvas or shader, never a photograph of a texture and never a gradient blob. In `water` the shade is `--color-shade` with the net in `--color-light` and a faint split into `--spec-*` at the brightest seams; in `glass` the ground stays paper and bands of `--spec-*` fall at a low angle with a white cusp along one edge. The light lands on the side of the hero away from the head and fades to paper under the text, so the head always sits on plain paper.
-- **Clear surfaces:** panels are white at 72 to 86% over the light with `--edge-light`, never blurred; their shadow falls down and right from one sun (`--shadow-card`), tinted by the water. A second, larger cast (`--shadow-cast`) only under the one lead object on a page.
-- **Rules:** hairlines in `--color-rule`, horizontal only, in tables and lists. Radius `--radius-card` on panels, `--radius-inner` inside them, pills for controls.
-- **Bands:** paper and paper-2; one band may take the light again (the close or a statement), never more than two lit grounds a page.
-- **Photographs:** bright, sunlit, hard shadows, water or white architecture or the product in sun; no people posing. Square corners on full-bleed, `--radius-card` inside the container. No duotone.
+- **光：**一块生成的画布或着色器，绝不是纹理照片，也绝不是渐变色块。`water` 之下阴影为 `--color-shade`，亮网用 `--color-light`，最亮的接缝处微微分出 `--spec-*`；`glass` 之下地面保持纸色，几条 `--spec-*` 光带以低角度落下，一侧带白色亮尖。光落在 Hero 上远离标题的一侧，在文字下方淡出到纸色，标题永远坐在纯纸面上。
+- **透明表面：**面板是在光之上 72 至 86% 的白色，加 `--edge-light`，绝不模糊；影子从一个太阳落下、偏向右下（`--shadow-card`），带水色的调子。更大的一片投影（`--shadow-cast`）只给页面上唯一的主角物体。
+- **横线：**`--color-rule` 发丝线，只横向，用于表格与列表。面板圆角 `--radius-card`，其内部 `--radius-inner`，控件用胶囊。
+- **色带：**paper 与 paper-2；一条色带可以再次承载光（收尾或一句宣言），每页受光的地面绝不超过两块。
+- **照片：**明亮、阳光、硬影，水、白色建筑或阳光下的产品；没有摆拍的人。通栏处直角，容器内 `--radius-card`。不用双色调。
 
-## Range
+## 版式（Range）
 
-- **Times to book as lanes:** when the visitor picks a session, the sessions as long ruled rows, the time in display figures, a status pill at the right edge, the next open row lit by a thin band of the light behind it.
-- **A figure in sun:** one number at statement size in Funnel Display 300 with the light falling across the space beside it, its unit and source in one muted line.
-- **The day as light:** a strip of hours as slim bars whose height is the light or the demand, the present hour marked by an accent dot, the rest in `--color-shade`.
-- **The product on the table:** the product's real screen as a clear panel lying in the light, its cast shadow tinted, one working control that moves the light itself.
+- **可预订的钟点排成泳道：**访客挑选场次时，场次排成长长的划线行，时间用展示数字，状态胶囊在行尾，下一个可预订的行由其身后一条薄薄的光带点亮。
+- **阳光下的数字：**一个数字用 Funnel Display 300 排成陈述字号，光落在它旁边的空间上，单位与出处一行淡色小字。
+- **一天化作光：**一条小时条带，细条的高度是光的强度或需求量，当前小时用一个强调色圆点标记，其余用 `--color-shade`。
+- **桌上的产品：**产品的真实屏幕作为一块透明面板躺在光里，投影带色调，一个能真正移动光的可用控件。
 
-## Controls
+## 控件（Controls）
 
-- Primary pill: `--color-accent` under `--color-accent-ink`, a white inset top edge, 48px; hover darkens to `--color-accent-hi`. Secondary pill: white at 80% with `--edge-light` and a hairline.
-- Inputs are white wells with a hairline and `--radius-inner`; focus ring in `--color-focus`.
-- The accent sits on the primary, focus, the present marker and links on hover; the spectrum lives only in the light.
+- 主胶囊：`--color-accent` 之上覆 `--color-accent-ink`，白色内嵌顶边，48px；悬停加深为 `--color-accent-hi`。次胶囊：80% 白色加 `--edge-light` 与发丝线。
+- 输入框是白色凹槽，带发丝线与 `--radius-inner`；焦点环用 `--color-focus`。
+- 强调色只落在主按钮、焦点、当前标记与悬停链接上；光谱只存在于光里。
 
-## Motion
+## 动效（Motion）
 
-Water moves at swimming-pool speed (a full pattern change in about 12 seconds); glass drifts as the sun does, a band crossing in 60 seconds. Panels lift 2px on hover with their shadow lengthening. Light pauses off screen. Reduced motion: one still frame of the light.
+水以泳池的速度移动（约 12 秒完成一轮图案变化）；玻璃随太阳漂移，一条光带 60 秒横过。面板悬停抬起 2px，影子随之拉长。光在屏幕之外暂停。Reduced motion（减少动效）时：光静止为一帧。
 
-## Voice
+## 语气（Voice）
 
-Bright and plain, a little sensory: the temperature, the hour, what the light does.
+明亮而平实，带一点感官：温度、钟点、光在做什么。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a rainbow on type, a gradient button or a spectral border on more than one object.
-- Never frosted glass or a backdrop blur; clear surfaces stay clear.
-- Never the light under running text, and never two lit grounds in a row.
-- Never a grey drop shadow; every shadow carries the light's tint and falls from one sun.
+- 绝不在文字上放彩虹、渐变按钮，也绝不给多于一个物体加光谱边框。
+- 绝不用磨砂玻璃或背景模糊；透明表面保持透明。
+- 绝不让光落在正文之下，也绝不让两块受光的地面相邻。
+- 绝不用灰色投影；每一片影子都带光的色调，且从一个太阳落下。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500&family=Funnel+Sans:wght@400;500&display=swap" rel="stylesheet">

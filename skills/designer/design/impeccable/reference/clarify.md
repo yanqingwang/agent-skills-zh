@@ -1,94 +1,98 @@
-> **Additional context needed**: audience knowledge and emotional state.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/clarify.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Rewrite unclear interface text so users understand what happened, what matters, and what to do next. Preserve factual meaning, product terminology, and brand voice.
+> **需要补充上下文**：受众的知识水平与情绪状态。
 
-## Audit the language
+重写含混的界面文案，让用户明白发生了什么、什么重要、接下来做什么。保留事实含义、产品术语与品牌语气。
 
-Read the entire interaction path, not isolated strings. Identify:
+## 审查文案
 
-- ambiguous nouns, verbs, and actions;
-- internal jargon or assumed knowledge;
-- vague labels, outcomes, and system states;
-- missing consequences, recovery, or timing;
-- inconsistent terminology and capitalization;
-- redundant headings, intros, helper text, and confirmations;
-- text that breaks at realistic widths or in translation;
-- tone that ignores stress, risk, success, or urgency.
+通读整个交互路径，而不是孤立地看字符串。找出：
 
-Infer audience and task from product context and surrounding UI. Ask before changing factual claims, legal meaning, or a term that may be domain-specific.
+- 含混的名词、动词与动作；
+- 内部行话或想当然的背景知识；
+- 含糊的标签、结果与系统状态；
+- 缺失的后果说明、恢复路径或时机；
+- 不一致的术语与大小写；
+- 冗余的标题、引言、辅助文本与确认框；
+- 在真实宽度下或翻译后断行的文本；
+- 忽视压力、风险、成功或紧迫感的语气。
 
-## Set the message hierarchy
+从产品上下文与周边 UI 推断受众与任务。改动事实性陈述、法律含义或可能是领域专用的术语之前，先发问。
 
-For each state, decide:
+## 设定信息层级
 
-1. the one fact the user needs now;
-2. the action available next;
-3. supporting context that changes the decision;
-4. the appropriate tone for this moment.
+对每个状态，决定：
 
-Say each idea once. If the heading already explains the state, the introduction should add new information or disappear.
+1. 用户此刻需要的那一个事实；
+2. 下一步可用的动作；
+3. 会改变决策的支持性上下文；
+4. 适合此刻的语气。
 
-## Rewrite by function
+每个意思只说一次。如果标题已经解释了状态，引言就该补充新信息，否则就删掉。
 
-### Actions and navigation
+## 按功能重写
 
-Use a specific verb and object when the outcome is not already obvious. Labels should describe what will happen, not the gesture used to trigger it. Keep the same noun and verb for the same concept throughout the product.
+### 动作与导航
 
-For destructive actions, name the object and consequence. Prefer undo over confirmation when recovery is safe. When confirmation is necessary, name the action on both the message and button instead of using `Yes`, `No`, `OK`, or `Submit`.
+结果不够一目了然时，用具体的动词加宾语。标签应描述将要发生什么，而不是触发它的手势。同一个概念在整个产品中用同一个名词与动词。
 
-### Forms
+破坏性操作要点名对象与后果。恢复安全时，宁可提供撤销也不要确认框。确属必要时，确认信息与按钮上都要写出动作名，而不是用 `Yes`、`No`、`OK` 或 `Submit`。
 
-Use persistent labels; placeholders are examples, not labels. Put format and eligibility requirements before submission. Explain why information is requested only when it is not obvious. Required and optional treatment should be consistent.
+### 表单
 
-Validation says what needs attention and how to correct it without blaming the user. Keep related instructions near the field and announce errors accessibly.
+用常驻标签；占位符是示例，不是标签。格式与资格要求在提交前说明。只在原因不明显时解释为什么要收集该信息。必填与选填的处理方式要一致。
 
-### Errors and permissions
+校验信息要说清哪里需要注意、如何修正，不指责用户。相关说明放在字段附近，错误以无障碍方式播报。
 
-An actionable error answers:
+### 错误与权限
 
-1. what failed;
-2. why, when known and useful;
-3. how to recover or what alternative remains.
+一个可行动的错误信息要回答：
 
-Do not expose internal codes as the primary message. Do not promise a cause or resolution the system cannot know. Treat privacy, payment, deletion, access loss, and blocked work seriously; warmth is welcome, jokes are not.
+1. 什么失败了；
+2. 为什么（在已知且有用时）；
+3. 如何恢复，或还剩什么替代方案。
 
-### Loading, empty, and success states
+不要把内部错误码当作首要信息。不要许诺系统无法确知的原因或解决结果。隐私、支付、删除、失去访问权限、工作被阻断都要严肃对待；温暖可以有，玩笑不行。
 
-Loading text names the real operation and sets an honest expectation when the wait is meaningful. Show determinate progress when available; never invent progress.
+### 加载、空态与成功态
 
-An empty state distinguishes first use, no results, filters, permissions, and failure. Explain the state and provide the next useful action.
+加载文案要说出真实操作，等待有意义时给出诚实的预期。有确定进度就显示确定进度；绝不虚构进度。
 
-Success confirms the completed outcome and mentions the next consequence only when it changes what the user should do. Routine success should be brief.
+空态要区分首次使用、无结果、筛选、权限不足与失败。解释状态并给出下一个有用的动作。
 
-### Help and instructional text
+成功态确认已完成的结果，只在该后续会影响用户下一步时才提及。常规成功信息应简短。
 
-Helper text answers an implicit question instead of restating the control. Use progressive disclosure for uncommon detail. Link text must make sense out of context; icon-only controls need accessible names.
+### 帮助与说明文本
 
-## Voice, accessibility, and localization
+辅助文本回答一个隐含的问题，而不是复述控件。不常见的细节用渐进式披露。链接文本脱离上下文也要能看懂；纯图标控件需要无障碍名称。
 
-Voice stays consistent; tone adapts to the moment. Use plain language without flattening terminology the audience genuinely knows.
+## 语气、无障碍与本地化
 
-- Write complete translatable messages rather than concatenated fragments.
-- Keep variables and numbers structured so translators can reorder them.
-- Allow expansion instead of abbreviating prematurely.
-- Make alt text convey the image's information; use empty alt for decoration.
-- Keep screen-reader names aligned with visible labels and outcomes.
-- Do not rely on punctuation, color, or iconography to carry the message alone.
+语气风格保持一致；语调随场景调整。用平实语言，但不要抹平受众真正熟悉的术语。
 
-Maintain a short terminology glossary when inconsistency spans the product. Do not vary words for literary effect in an interface.
+- 写完整、可翻译的句子，而不是拼接的碎片。
+- 变量与数字保持结构化，让译者能调整语序。
+- 为文本膨胀留出空间，不要过早缩写。
+- 让替代文本传达图片的信息；装饰性图片用空 alt。
+- 屏幕阅读器名称与可见标签、实际结果保持一致。
+- 不要让标点、颜色或图标单独承载信息。
 
-## Verify
+不一致蔓延到全产品时，维护一份简短术语表。界面里不要为了文学效果更换用词。
 
-Read the flow in context and test:
+## 验证
 
-- comprehension without hidden product knowledge;
-- actionability at errors, empty states, and decision points;
-- factual accuracy and consistent terminology;
-- scanability at target widths and 200% zoom;
-- long names, localization expansion, pluralization, and dynamic values;
-- accessible names and announced state changes;
-- tone appropriate to consequence and emotional context.
+把流程放回上下文通读，并测试：
 
-The final copy is as short as it can be without removing meaning or recovery.
+- 不带产品内部知识也能读懂；
+- 错误、空态与决策点是否可行动；
+- 事实准确、术语一致；
+- 在目标宽度与 200% 缩放下可扫读；
+- 长名称、本地化膨胀、复数与动态值；
+- 无障碍名称与状态变化的播报；
+- 语气与后果及情绪语境相称。
 
-When the language reads cleanly, hand off to `/impeccable polish` for the final pass.
+最终文案在不损失含义与恢复路径的前提下，短到不能再短。
+
+文案读起来干净后，交给 `/impeccable polish` 做最后一遍打磨。

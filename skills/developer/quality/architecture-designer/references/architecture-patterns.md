@@ -1,16 +1,20 @@
-# Architecture Patterns
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/architecture-designer/references/architecture-patterns.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Pattern Comparison
+# 架构模式
 
-| Pattern | Best For | Team Size | Trade-offs |
+## 模式对比
+
+| 模式 | 最适合 | 团队规模 | 权衡 |
 |---------|----------|-----------|------------|
-| **Monolith** | Simple domain, small team | 1-10 | Simple deploy; hard to scale parts |
-| **Modular Monolith** | Growing complexity | 5-20 | Module boundaries; still single deploy |
-| **Microservices** | Complex domain, large org | 20+ | Independent scale; operational complexity |
-| **Serverless** | Variable load, event-driven | Any | Auto-scale; cold starts, vendor lock |
-| **Event-Driven** | Async processing | 10+ | Loose coupling; debugging complexity |
+| **单体（Monolith）** | 简单领域、小团队 | 1-10 | 部署简单；难以单独扩展某部分 |
+| **模块化单体（Modular Monolith）** | 复杂度增长中 | 5-20 | 有模块边界；仍是单次部署 |
+| **微服务（Microservices）** | 复杂领域、大型组织 | 20+ | 可独立扩展；运维复杂 |
+| **Serverless** | 负载多变、事件驱动 | 任意 | 自动伸缩；冷启动、厂商锁定 |
+| **事件驱动（Event-Driven）** | 异步处理 | 10+ | 松耦合；调试复杂 |
 
-## Monolith
+## 单体（Monolith）
 
 ```
 ┌─────────────────────────────────────┐
@@ -23,16 +27,16 @@
 └─────────────────────────────────────┘
 ```
 
-**When to Use**:
-- Starting a new project
-- Small team (< 10 developers)
-- Simple domain
-- Rapid iteration needed
+**何时使用**：
+- 启动新项目
+- 小团队（< 10 名开发者）
+- 简单领域
+- 需要快速迭代
 
-**Pros**: Simple deployment, easy debugging, no network latency
-**Cons**: Hard to scale independently, technology locked, deployment risk
+**优点**：部署简单、调试容易、无网络延迟
+**缺点**：难以独立扩展、技术锁定、部署风险
 
-## Microservices
+## 微服务（Microservices）
 
 ```
 ┌──────────┐  ┌──────────┐  ┌──────────┐
@@ -45,16 +49,16 @@
 └─────────┘  └─────────┘  └─────────┘
 ```
 
-**When to Use**:
-- Large team (20+ developers)
-- Complex domain with clear boundaries
-- Different scaling requirements per service
-- Polyglot technology needs
+**何时使用**：
+- 大团队（20+ 名开发者）
+- 边界清晰的复杂领域
+- 各服务有不同的扩展需求
+- 多语言技术栈需求
 
-**Pros**: Independent scaling, team autonomy, fault isolation
-**Cons**: Distributed system complexity, eventual consistency, operational overhead
+**优点**：独立扩展、团队自治、故障隔离
+**缺点**：分布式系统复杂度、最终一致性、运维开销
 
-## Event-Driven
+## 事件驱动（Event-Driven）
 
 ```
 ┌──────────┐     ┌─────────────┐     ┌──────────┐
@@ -68,16 +72,16 @@
                  └──────────┘
 ```
 
-**When to Use**:
-- Async processing required
-- Loose coupling between services
-- Event sourcing needs
-- High throughput messaging
+**何时使用**：
+- 需要异步处理
+- 服务间松耦合
+- 事件溯源（Event Sourcing）需求
+- 高吞吐消息传递
 
-**Pros**: Decoupled services, scalable, audit trail
-**Cons**: Eventual consistency, debugging complexity, message ordering
+**优点**：服务解耦、可扩展、有审计轨迹
+**缺点**：最终一致性、调试复杂、消息顺序问题
 
-## CQRS (Command Query Responsibility Segregation)
+## CQRS（命令查询职责分离）
 
 ```
 ┌─────────┐         ┌─────────────┐
@@ -93,19 +97,19 @@
 └─────────┘         └─────────────┘
 ```
 
-**When to Use**:
-- Read/write ratio heavily skewed
-- Complex read queries
-- Event sourcing architecture
-- Different optimization needs
+**何时使用**：
+- 读写比例严重倾斜
+- 复杂的读查询
+- 事件溯源架构
+- 读写有各自不同的优化需求
 
-## Quick Reference
+## 快速参考
 
-| Requirement | Recommended Pattern |
+| 需求 | 推荐模式 |
 |-------------|---------------------|
-| Simple CRUD app | Monolith |
-| Growing startup | Modular Monolith |
-| Enterprise scale | Microservices |
-| Variable load | Serverless |
-| Async processing | Event-Driven |
-| Read-heavy | CQRS |
+| 简单 CRUD 应用 | 单体 |
+| 成长中的创业项目 | 模块化单体 |
+| 企业级规模 | 微服务 |
+| 负载多变 | Serverless |
+| 异步处理 | 事件驱动 |
+| 读多写少 | CQRS |

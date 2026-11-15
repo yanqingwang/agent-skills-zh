@@ -1,10 +1,14 @@
-# BDI Ontology Core Patterns
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/bdi-mental-states/references/bdi-ontology-core.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Core ontology design patterns for Belief-Desire-Intention mental state modeling.
+# BDI 本体核心模式
 
-## Class Hierarchy
+用于"信念-愿望-意图"（Belief-Desire-Intention）心智状态建模的核心本体设计模式。
 
-### Mental Entities (Endurants)
+## 类层次结构
+
+### 心智实体（Endurants，持续体）
 
 ```
 bdi:MentalEntity
@@ -15,7 +19,7 @@ bdi:MentalEntity
 └── bdi:Plan            # Structured action sequence
 ```
 
-### Mental Processes (Perdurants)
+### 心智过程（Perdurants，持久过程）
 
 ```
 bdi:MentalProcess
@@ -26,7 +30,7 @@ bdi:MentalProcess
 └── bdi:PlanExecution      # Executes plan actions
 ```
 
-### Supporting Entities
+### 辅助实体
 
 ```
 bdi:WorldState        # Configuration of environment
@@ -37,66 +41,66 @@ bdi:TimeInterval      # Temporal validity bounds
 bdi:TimeInstant       # Point in time reference
 ```
 
-## Object Properties
+## 对象属性
 
-### Motivational Relations
+### 动机关系
 
-| Property | Domain | Range | Description |
+| 属性 | 定义域 | 值域 | 描述 |
 |----------|--------|-------|-------------|
-| `motivates` | Belief | Desire | Belief provides reason for desire |
-| `isMotivatedBy` | Desire | Belief | Inverse of motivates |
-| `fulfils` | Intention | Desire | Intention commits to achieving desire |
-| `isFulfilledBy` | Desire | Intention | Inverse of fulfils |
-| `isSupportedBy` | Intention | Belief | Beliefs supporting intention viability |
+| `motivates` | Belief | Desire | 信念为愿望提供理由 |
+| `isMotivatedBy` | Desire | Belief | motivates 的逆 |
+| `fulfils` | Intention | Desire | 意图承诺实现该愿望 |
+| `isFulfilledBy` | Desire | Intention | fulfils 的逆 |
+| `isSupportedBy` | Intention | Belief | 支撑意图可行性的信念 |
 
-### Generative Relations
+### 生成关系
 
-| Property | Domain | Range | Description |
+| 属性 | 定义域 | 值域 | 描述 |
 |----------|--------|-------|-------------|
-| `generates` | MentalProcess | MentalEntity | Process creates mental state |
-| `isGeneratedBy` | MentalEntity | MentalProcess | Inverse of generates |
-| `modifies` | MentalProcess | MentalEntity | Process updates existing state |
-| `suppresses` | MentalProcess | MentalEntity | Process deactivates state |
-| `isTriggeredBy` | MentalProcess | MentalEntity | State initiates process |
+| `generates` | MentalProcess | MentalEntity | 过程创造出心智状态 |
+| `isGeneratedBy` | MentalEntity | MentalProcess | generates 的逆 |
+| `modifies` | MentalProcess | MentalEntity | 过程更新既有状态 |
+| `suppresses` | MentalProcess | MentalEntity | 过程使状态失效 |
+| `isTriggeredBy` | MentalProcess | MentalEntity | 状态触发过程 |
 
-### Referential Relations
+### 指称关系
 
-| Property | Domain | Range | Description |
+| 属性 | 定义域 | 值域 | 描述 |
 |----------|--------|-------|-------------|
-| `refersTo` | MentalEntity | WorldState | Mental state about world |
-| `perceives` | Agent | WorldState | Agent observes world |
-| `bringsAbout` | Action | WorldState | Action causes world change |
-| `reasonsUpon` | MentalProcess | MentalEntity | Input to reasoning |
+| `refersTo` | MentalEntity | WorldState | 关于世界的心智状态 |
+| `perceives` | Agent | WorldState | Agent 观察世界 |
+| `bringsAbout` | Action | WorldState | 动作引发世界变化 |
+| `reasonsUpon` | MentalProcess | MentalEntity | 推理所依据的输入 |
 
-### Structural Relations
+### 结构关系
 
-| Property | Domain | Range | Description |
+| 属性 | 定义域 | 值域 | 描述 |
 |----------|--------|-------|-------------|
-| `hasPart` | MentalEntity | MentalEntity | Meronymic composition |
-| `specifies` | Intention | Plan | Intention defines plan |
-| `addresses` | Plan | Goal | Plan achieves goal |
-| `hasComponent` | Plan | Task | Plan contains tasks |
-| `precedes` | Task | Task | Task ordering |
+| `hasPart` | MentalEntity | MentalEntity | 部分-整体构成 |
+| `specifies` | Intention | Plan | 意图定义计划 |
+| `addresses` | Plan | Goal | 计划达成目标 |
+| `hasComponent` | Plan | Task | 计划包含任务 |
+| `precedes` | Task | Task | 任务排序 |
 
-### Temporal Relations
+### 时间关系
 
-| Property | Domain | Range | Description |
+| 属性 | 定义域 | 值域 | 描述 |
 |----------|--------|-------|-------------|
-| `atTime` | Entity | TimeInstant | Point occurrence |
-| `hasValidity` | MentalEntity | TimeInterval | Persistence bounds |
-| `hasStartTime` | TimeInterval | TimeInstant | Interval start |
-| `hasEndTime` | TimeInterval | TimeInstant | Interval end |
+| `atTime` | Entity | TimeInstant | 时间点上的发生 |
+| `hasValidity` | MentalEntity | TimeInterval | 持续存在的时间界 |
+| `hasStartTime` | TimeInterval | TimeInstant | 区间起点 |
+| `hasEndTime` | TimeInterval | TimeInstant | 区间终点 |
 
-### Justification Relations
+### 证成关系
 
-| Property | Domain | Range | Description |
+| 属性 | 定义域 | 值域 | 描述 |
 |----------|--------|-------|-------------|
-| `isJustifiedBy` | MentalEntity | Justification | Evidential support |
-| `justifies` | Justification | MentalEntity | Inverse relation |
+| `isJustifiedBy` | MentalEntity | Justification | 证据支撑 |
+| `justifies` | Justification | MentalEntity | 逆关系 |
 
-## Ontological Restrictions
+## 本体约束
 
-### Belief Restrictions
+### Belief 的约束
 
 ```turtle
 bdi:Belief rdfs:subClassOf [
@@ -112,7 +116,7 @@ bdi:Belief rdfs:subClassOf [
 ] .
 ```
 
-### Desire Restrictions
+### Desire 的约束
 
 ```turtle
 bdi:Desire rdfs:subClassOf [
@@ -122,7 +126,7 @@ bdi:Desire rdfs:subClassOf [
 ] .
 ```
 
-### Intention Restrictions
+### Intention 的约束
 
 ```turtle
 bdi:Intention rdfs:subClassOf [
@@ -138,7 +142,7 @@ bdi:Intention rdfs:subClassOf [
 ] .
 ```
 
-### Mental Process Restrictions
+### 心智过程的约束
 
 ```turtle
 bdi:BeliefProcess rdfs:subClassOf [
@@ -160,41 +164,41 @@ bdi:IntentionProcess rdfs:subClassOf [
 ] .
 ```
 
-## DOLCE Alignment
+## 与 DOLCE 对齐
 
-The BDI ontology aligns with DOLCE Ultra Lite (DUL) foundational ontology:
+BDI 本体与 DOLCE Ultra Lite（DUL）基础本体对齐：
 
-| BDI Class | DUL Superclass | Rationale |
+| BDI 类 | DUL 超类 | 理由 |
 |-----------|----------------|-----------|
-| `Agent` | `dul:Agent` | Intentional entity capable of action |
-| `Belief` | `dul:InformationObject` | Information-bearing entity |
-| `Desire` | `dul:Description` | Describes desired state |
-| `Intention` | `dul:Description` | Describes committed course |
-| `Goal` | `dul:Goal` | Desired end state description |
-| `Plan` | `dul:Plan` | Organized action sequence |
-| `WorldState` | `dul:Situation` | Configuration of entities |
-| `MentalProcess` | `dul:Event` | Temporally extended occurrence |
-| `Task` | `dul:Task` | Unit of planned work |
-| `Action` | `dul:Action` | Performed task instance |
+| `Agent` | `dul:Agent` | 能够行动的意向性实体 |
+| `Belief` | `dul:InformationObject` | 承载信息的实体 |
+| `Desire` | `dul:Description` | 描述期望的状态 |
+| `Intention` | `dul:Description` | 描述已承诺的行动路线 |
+| `Goal` | `dul:Goal` | 期望终态的描述 |
+| `Plan` | `dul:Plan` | 有组织的行动序列 |
+| `WorldState` | `dul:Situation` | 实体的配置 |
+| `MentalProcess` | `dul:Event` | 在时间中延展的发生 |
+| `Task` | `dul:Task` | 计划中的工作单元 |
+| `Action` | `dul:Action` | 已执行的任务实例 |
 
-## Reused Ontology Design Patterns
+## 复用的本体设计模式
 
-### EventCore Pattern
-Used for mental processes with temporal aspects and participant roles.
+### EventCore 模式
+用于具有时间维度和参与者角色的心智过程。
 
-### Situation Pattern  
-Used for world state configurations that mental states reference.
+### Situation 模式
+用于心智状态所指涉的世界状态配置。
 
-### TimeIndexedSituation Pattern
-Used for associating mental states with validity intervals.
+### TimeIndexedSituation 模式
+用于把心智状态与有效期区间关联起来。
 
-### BasicPlan Pattern
-Used for goal-plan-task structures linking intentions to actions.
+### BasicPlan 模式
+用于把意图连接到动作的"目标-计划-任务"结构。
 
-### Provenance Pattern
-Used for justification tracking and evidential chains.
+### Provenance 模式
+用于证成（justification）追踪与证据链。
 
-## Namespace Declarations
+## 命名空间声明
 
 ```turtle
 @prefix bdi: <https://w3id.org/fossr/ontology/bdi/> .
@@ -204,4 +208,3 @@ Used for justification tracking and evidential chains.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 ```
-

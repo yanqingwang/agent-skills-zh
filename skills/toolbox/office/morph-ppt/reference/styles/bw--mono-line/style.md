@@ -1,73 +1,77 @@
-# 01-mono-line — Minimalist Lines
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/bw--mono-line/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 01-mono-line（极简线条）
 
-Using ultra-thin lines and small dots to construct pure black-white minimalist space, conveying professionalism through whitespace and geometric order.
+## 风格概览
 
-- **Scene**: Minimalist business, academic reports, consulting proposals
-- **Mood**: Calm, restrained, professional
-- **Tone**: Pure black-white + mid-gray accents
+用超细线条和小圆点构建纯黑白极简空间，以留白和几何秩序传达专业感。
 
-## Color Palette
+- **场景**：极简商务、学术报告、咨询提案
+- **气质**：冷静、克制、专业
+- **基调**：纯黑白 + 中灰点缀
 
-| Name       | Hex      | Usage                                          |
+## 配色
+
+| 名称       | Hex      | 用途                                           |
 | ---------- | -------- | ---------------------------------------------- |
-| Pure White | `FFFFFF` | Background                                     |
-| Near Black | `1A1A1A` | Main lines, title text, main dots              |
-| Mid Gray   | `C8C8C8` | Secondary lines, subtitle text, secondary dots |
+| 纯白       | `FFFFFF` | 背景                                           |
+| 近黑       | `1A1A1A` | 主线条、标题文字、主圆点                       |
+| 中灰       | `C8C8C8` | 次级线条、副标题文字、次级圆点                 |
 
-## Typography
+## 字体排印
 
-| Role         | Font           | Size | Color  |
+| 角色         | 字体           | 字号 | 颜色   |
 | ------------ | -------------- | ---- | ------ |
-| Main Title   | Segoe UI Light | 54pt | 1A1A1A |
-| Subtitle     | Segoe UI       | 20pt | C8C8C8 |
-| Statement    | Segoe UI Light | 64pt | 1A1A1A |
-| Numbers      | Segoe UI Light | 40pt | C8C8C8 |
-| Column Title | Segoe UI Light | 28pt | 1A1A1A |
-| Data Numbers | Segoe UI Light | 54pt | 1A1A1A |
-| Data Label   | Segoe UI       | 16pt | C8C8C8 |
+| 主标题       | Segoe UI Light | 54pt | 1A1A1A |
+| 副标题       | Segoe UI       | 20pt | C8C8C8 |
+| 宣言         | Segoe UI Light | 64pt | 1A1A1A |
+| 数字         | Segoe UI Light | 40pt | C8C8C8 |
+| 栏目标题     | Segoe UI Light | 28pt | 1A1A1A |
+| 数据数字     | Segoe UI Light | 54pt | 1A1A1A |
+| 数据标签     | Segoe UI       | 16pt | C8C8C8 |
 
-## Design Techniques
+## 设计手法
 
-- **Ultra-thin rectangles simulate lines**: Horizontal lines height=0.05cm / 0.03cm, vertical lines width=0.05cm / 0.03cm, implemented using `rect` preset
-- **Small ellipses as decorative dots**: 1cm / 0.8cm `ellipse`, black or gray
-- **Abundant whitespace**: Only lines divide space on white background
-- **Morph animation**: Lines slide and stretch to change length and position between pages; dots drift to new positions
-- **Off-canvas hidden elements**: Text elements initially placed outside canvas (x=36cm), slide into view through morph
+- **超细矩形模拟线条**：横线 height=0.05cm / 0.03cm，竖线 width=0.05cm / 0.03cm，用 `rect` preset 实现
+- **小椭圆作装饰圆点**：1cm / 0.8cm `ellipse`，黑色或灰色
+- **大量留白**：白底上只用线条划分空间
+- **Morph 动画**：线条跨页滑动、拉伸，改变长度和位置；圆点漂移到新位置
+- **画布外隐藏元素**：文字元素初始放在画布外（x=36cm），通过 morph 滑入视野
 
-## Scene Elements
+## 场景元素
 
-6 scene elements with different positions on each page, animated through Morph transitions:
+6 个场景元素，每页位置不同，通过 Morph 切换产生动画：
 
-| Name             | preset  | fill   | Typical Size  | Description               |
+| 名称             | preset  | fill   | 典型尺寸      | 描述                      |
 | ---------------- | ------- | ------ | ------------- | ------------------------- |
-| `!!line-h-top`   | rect    | 1A1A1A | 20cm x 0.05cm | Horizontal main line      |
-| `!!line-h-mid`   | rect    | C8C8C8 | 15cm x 0.03cm | Horizontal secondary line |
-| `!!line-v-left`  | rect    | 1A1A1A | 0.05cm x 12cm | Vertical main line        |
-| `!!line-v-right` | rect    | C8C8C8 | 0.03cm x 8cm  | Vertical secondary line   |
-| `!!dot-accent-1` | ellipse | 1A1A1A | 1cm x 1cm     | Main dot                  |
-| `!!dot-accent-2` | ellipse | C8C8C8 | 0.8cm x 0.8cm | Secondary dot             |
+| `!!line-h-top`   | rect    | 1A1A1A | 20cm x 0.05cm | 横向主线                  |
+| `!!line-h-mid`   | rect    | C8C8C8 | 15cm x 0.03cm | 横向次线                  |
+| `!!line-v-left`  | rect    | 1A1A1A | 0.05cm x 12cm | 纵向主线                  |
+| `!!line-v-right` | rect    | C8C8C8 | 0.03cm x 8cm  | 纵向次线                  |
+| `!!dot-accent-1` | ellipse | 1A1A1A | 1cm x 1cm     | 主圆点                    |
+| `!!dot-accent-2` | ellipse | C8C8C8 | 0.8cm x 0.8cm | 次圆点                    |
 
-## Page Structure
+## 页面结构
 
-5 pages total, Slides 2-5 set `transition=morph`:
+共 5 页，第 2-5 页设置 `transition=morph`：
 
-| Slide   | Type               | Elements                                                                         | Description |
+| 页码    | 类型               | 元素                                                                             | 描述 |
 | ------- | ------------------ | -------------------------------------------------------------------------------- | ----------- |
-| Slide 1 | Hero               | Large title + subtitle left-aligned, lines construct asymmetric framework        |
-| Slide 2 | Statement          | Centered large text statement, lines intersect at center of canvas               |
-| Slide 3 | 3-Column Pillars   | Lines as column dividers, numbered 01/02/03 + titles, three columns side by side |
-| Slide 4 | Metrics / Evidence | Data display, left large numbers + right metrics, lines divide areas             |
-| Slide 5 | CTA / Closing      | Lines converge into canvas border frame, centered CTA text + contact info        |
+| Slide 1 | Hero               | 大标题 + 副标题左对齐，线条构建非对称框架                                        |             |
+| Slide 2 | Statement          | 居中大字宣言，线条在画布中心相交                                                 |             |
+| Slide 3 | 3-Column Pillars   | 线条作栏分隔，编号 01/02/03 + 标题，三栏并排                                     |             |
+| Slide 4 | Metrics / Evidence | 数据展示，左侧大数字 + 右侧指标，线条划分区域                                    |             |
+| Slide 5 | CTA / 结尾         | 线条汇聚成画布边框，居中 CTA 文字 + 联系方式                                     |             |
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.sh`.
-**Recommended slides to read for understanding core design techniques**:
+完整构建脚本见 `build.sh`。
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (Hero)** — Demonstrates initial layout of lines+dots and placement of off-canvas text elements
-- **Slide 3 (Pillars)** — How lines transform into column dividers, grid arrangement of three columns of content
-- **Slide 5 (CTA)** — Animation effect of lines converging into full-canvas border frame
+- **Slide 1（Hero）**：演示线条+圆点的初始布局，以及画布外文字元素的摆放
+- **Slide 3（Pillars）**：线条如何变成栏分隔，三栏内容的网格排布
+- **Slide 5（CTA）**：线条汇聚成全画布边框的动画效果
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

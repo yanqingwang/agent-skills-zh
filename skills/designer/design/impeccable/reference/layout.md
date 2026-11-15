@@ -1,84 +1,88 @@
-Layout turns product priority into reading order, grouping, rhythm, and usable space. Diagnose the structural problem before moving boxes.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/layout.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+布局（Layout）把产品优先级转化为阅读顺序、分组、节奏和可用空间。在移动盒子之前，先诊断结构性问题。
 
 ---
 
-## Visitor mode
+## 访客模式（Visitor mode）
 
-- **Persuade + Experience:** composition may be asymmetric, fluid, or intentionally disruptive when the selected world earns it.
-- **Operate + Read:** predictable structure, stable density, and navigable linearity are affordances.
-- **Native:** follow [ios.md](ios.md) or [android.md](android.md) for navigation, insets, adaptation, and touch targets.
+- **Persuade + Experience:** 当所选世界足以支撑时，构图可以不对称、流动，或有意制造干扰。
+- **Operate + Read:** 可预测的结构、稳定的密度、可导航的线性，这些都是可供性（affordance）。
+- **Native:** 导航、insets、适配与触控目标遵循 [ios.md](ios.md) 或 [android.md](android.md)。
 
-Preserve the established visual world. A layout command changes structure inside it; identity replacement belongs to [new-work.md](new-work.md).
+保持既定的视觉世界。布局命令只改变其中的结构；身份替换属于 [new-work.md](new-work.md)。
 
-## Two isolated assessments
+## 两项相互独立的评估
 
-When a sub-agent tool is available and permitted, run these independently; otherwise run them yourself in this order.
+当子代理工具可用且被允许时，分开独立执行；否则由你按以下顺序亲自执行。
 
-1. **Layout assessment:** inspect representative states and viewports. Answer every question below with rendered or source evidence:
-   - **Reading order:** Apply the squint test. With detail blurred, can you still identify the primary element, the secondary element, and the major groups in order?
-   - **Grouping:** Are related items close and distinct groups separated, or are containers compensating for weak proximity?
-   - **Rhythm:** Do tight and generous intervals create a deliberate cadence, or is one spacing value repeated until everything has equal weight?
-   - **Structure:** Does the topology match the content and task? Are repeated cards, columns, or sections genuinely equivalent, or merely a framework default?
-   - **Density:** Does the amount of information per region fit use frequency, decision complexity, and visitor mode?
-   - **Adaptation:** At narrow, intermediate, wide, zoomed, and localized states, what reorders, collapses, wraps, scrolls, or remains fixed? Does DOM and focus order still agree with the visual order?
-   - **Extremes:** Do long content, empty states, overlays, sticky elements, safe areas, and small touch targets expose structural failures?
-2. **Mechanical scan:** run:
+1. **Layout assessment:** 检查有代表性的状态与视口。对下面的每个问题都给出渲染结果或源码证据：
+   - **阅读顺序：** 做眯眼测试（squint test）。把细节虚化后，你还能否按顺序辨认出首要元素、次要元素和主要分组？
+   - **分组：** 相关条目是否彼此靠近、不同的组是否被清晰隔开？还是说容器正在弥补薄弱的邻近关系？
+   - **节奏：** 紧凑与宽松的间隔是否形成有意图的节奏？还是同一个间距值被反复使用，直到一切都等重？
+   - **结构：** 拓扑是否匹配内容与任务？重复的卡片、栏、区块是真正等价的，还是只是框架的默认样式？
+   - **密度：** 每个区域的信息量是否符合使用频率、决策复杂度与访客模式？
+   - **适配：** 在窄、中、宽、缩放和本地化状态下，哪些内容会重排、折叠、换行、滚动或保持固定？DOM 与焦点顺序是否仍与视觉顺序一致？
+   - **极端情况：** 超长内容、空状态、覆盖层、吸顶元素、安全区、过小的触控目标，是否会暴露结构性缺陷？
+2. **Mechanical scan:** 运行：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable detect --json --scope layout [target files or dirs]
 ```
 
-Also inspect arbitrary spacing, overflow, stacking, and container behavior the detector cannot resolve. Keep mechanical evidence out of the first assessment, then synthesize both passes before editing. A clean scan cannot prove hierarchy or rhythm.
+同时检查检测器无法判定的任意间距、溢出、层叠和容器行为。把机械证据留到第一项评估之外，编辑前再把两轮结果综合起来。一次干净的扫描不能证明层级或节奏成立。
 
-## Set the spatial thesis
+## 确立空间主张
 
-Before editing, name:
+动手编辑之前，先说明：
 
-- the primary reading or task path;
-- what belongs together and what must separate;
-- which element leads and which supports;
-- the intended density and spacing rhythm;
-- how the structure changes across containers, viewports, input modes, and content extremes.
+- 主要的阅读或任务路径；
+- 什么应当归在一起，什么必须分开；
+- 哪个元素主导，哪个元素辅助；
+- 预期的密度与间距节奏；
+- 结构如何随容器、视口、输入方式和内容极端情况而变化。
 
-Choose the simplest structural model that expresses those relationships. Use layout primitives according to the relationships they control, and name reusable spacing and container roles semantically.
+选择能表达这些关系的最简结构模型。按布局原语所控制的关系来选用它们，并以语义化方式命名可复用的间距与容器角色。
 
-## Apply
+## 应用
 
-- Group by meaning. Use proximity before adding containers or decoration.
-- Create rhythm through deliberate contrast between tight and generous intervals.
-- Use a documented spacing scale rather than one-off values. A 4-unit base usually provides the useful middle steps that an 8-only scale misses.
-- Let hierarchy follow product priority, not framework defaults.
-- Keep distinct content visually distinct without turning every group into an isolated component.
-- Make responsive behavior structural: reorder, collapse, reflow, or reveal based on what remains important.
-- Prefer container-aware components when the same component appears in different contexts.
-- Use `gap` for sibling rhythm when it expresses the relationship more directly than child margins.
-- Keep touch targets usable even when their visible marks are small.
-- Use depth only when it clarifies state or hierarchy.
-- Make optical corrections only after inspecting the rendered result.
+- 按含义分组。先靠邻近性，再考虑增加容器或装饰。
+- 通过紧凑与宽松间隔之间有意图的对比来制造节奏。
+- 使用成文的间距刻度，而不是一次性取值。以 4 为基数通常能提供 8-only 刻度缺失的中间档位。
+- 让层级跟随产品优先级，而不是框架默认值。
+- 让不同的内容在视觉上保持区分，但不要把每个组都做成孤立组件。
+- 让响应式行为成为结构本身：按"什么仍然重要"来重排、折叠、重排流或展开。
+- 同一组件出现在不同上下文时，优先选择能感知容器的组件。
+- 当 `gap` 比子元素 margin 更直接地表达兄弟关系时，用 `gap` 表达节奏。
+- 即使可见标记很小，也要保证触控目标可用。
+- 只在深度能澄清状态或层级时才使用深度。
+- 只有在检查过渲染结果之后才做视觉修正（optical correction）。
 
-Variation is not a goal by itself. Repetition should support recognition; break it only when content or priority changes.
+变化本身不是目标。重复应当支持辨识；只有内容或优先级改变时才打破重复。
 
-## Verify
+## 验证
 
-- The squint test still reveals the primary, secondary, and major groups in order.
-- The reading and task path remains clear at every supported size.
-- Related content groups naturally; unrelated content does not blur together.
-- Tight and generous spacing create intentional rhythm instead of monotonous repetition.
-- Density matches use frequency and content complexity.
-- Long text, empty states, localization, zoom, and dynamic content do not break the structure.
-- Keyboard, touch, and assistive-technology order agree with the visual order.
-- The final mechanical scan has no unexplained findings.
+- 眯眼测试仍能按顺序揭示首要、次要元素与主要分组。
+- 在每个受支持的尺寸下，阅读与任务路径依然清晰。
+- 相关内容自然成组；无关内容不会糊在一起。
+- 紧凑与宽松的间距形成有意图的节奏，而不是单调重复。
+- 密度匹配使用频率与内容复杂度。
+- 长文本、空状态、本地化、缩放与动态内容不会破坏结构。
+- 键盘、触控与辅助技术的顺序与视觉顺序一致。
+- 最终的机械扫描没有无法解释的发现。
 
-Answer each item with rendered or source evidence, then rerun the scan. Do not substitute a bare “yes” for verification.
+每一项都用渲染结果或源码证据回答，然后重跑扫描。不要用一句光秃秃的"是"代替验证。
 
-When the structure holds, hand off to `/impeccable polish`.
+当结构站得住时，交给 `/impeccable polish`。
 
-## Live-mode signature params
+## Live-mode 签名参数
 
-Every variant declares a coarse `density` parameter and authors spacing against `var(--p-density, 1)`.
+每个变体声明一个粗粒度的 `density` 参数，并基于 `var(--p-density, 1)` 编写间距。
 
 ```json
 {"id":"density","kind":"range","min":0.6,"max":1.4,"step":0.05,"default":1,"label":"Density"}
 ```
 
-Add one structural parameter only when the topology genuinely branches. Follow [live.md](live.md)'s parameter contract.
+只有当拓扑真正分叉时才增加一个结构参数。遵循 [live.md](live.md) 的参数契约。

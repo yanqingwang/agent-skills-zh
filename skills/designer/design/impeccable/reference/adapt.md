@@ -1,220 +1,224 @@
-> **Additional context needed**: target platforms/devices and usage contexts.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/adapt.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Adapt an existing design to a different context: another screen size, device, platform, or use case. The trap is treating adaptation as scaling. The job is rethinking the experience for the new context.
+> **需要补充上下文**：目标平台/设备与使用场景。
 
-**Web only** (mobile web included). Native platforms (`ios` / `android` / `adaptive`) route to [adapt.native.md](adapt.native.md) instead; if the project is native, switch to it now.
+把现有设计适配到不同的情境：另一种屏幕尺寸、设备、平台或使用场景。陷阱在于把适配当成缩放。真正的工作是为新情境重新思考体验。
 
----
-
-## Assess Adaptation Challenge
-
-Understand what needs adaptation and why:
-
-1. **Identify the source context**:
-   - What was it designed for originally? (Desktop web? Mobile app?)
-   - What assumptions were made? (Large screen? Mouse input? Fast connection?)
-   - What works well in current context?
-
-2. **Understand target context**:
-   - **Device**: Mobile, tablet, desktop, TV, watch, print?
-   - **Input method**: Touch, mouse, keyboard, voice, gamepad?
-   - **Screen constraints**: Size, resolution, orientation?
-   - **Connection**: Fast wifi, slow 3G, offline?
-   - **Usage context**: On-the-go vs desk, quick glance vs focused reading?
-   - **User expectations**: What do users expect on this platform?
-
-3. **Identify adaptation challenges**:
-   - What won't fit? (Content, navigation, features)
-   - What won't work? (Hover states on touch, tiny touch targets)
-   - What's inappropriate? (Desktop patterns on mobile, mobile patterns on desktop)
-
-Adaptation is rethinking the experience for the new context, not scaling pixels.
-
-## Plan Adaptation Strategy
-
-Create context-appropriate strategy:
-
-### Mobile Adaptation (Desktop → Mobile)
-
-**Layout Strategy**:
-- Single column instead of multi-column
-- Vertical stacking instead of side-by-side
-- Full-width components instead of fixed widths
-- Bottom navigation instead of top/side navigation
-
-**Interaction Strategy**:
-- Touch targets 44x44px minimum (not hover-dependent)
-- Swipe gestures where appropriate (lists, carousels)
-- Bottom sheets instead of dropdowns
-- Thumbs-first design (controls within thumb reach)
-- Larger tap areas with more spacing
-
-**Content Strategy**:
-- Progressive disclosure (don't show everything at once)
-- Prioritize primary content (secondary content in tabs/accordions)
-- Shorter text (more concise)
-- Larger text (16px minimum)
-
-**Navigation Strategy**:
-- Hamburger menu or bottom navigation
-- Reduce navigation complexity
-- Sticky headers for context
-- Back button in navigation flow
-
-### Tablet Adaptation (Hybrid Approach)
-
-**Layout Strategy**:
-- Two-column layouts (not single or three-column)
-- Side panels for secondary content
-- Master-detail views (list + detail)
-- Adaptive based on orientation (portrait vs landscape)
-
-**Interaction Strategy**:
-- Support both touch and pointer
-- Touch targets 44x44px but allow denser layouts than phone
-- Side navigation drawers
-- Multi-column forms where appropriate
-
-### Desktop Adaptation (Mobile → Desktop)
-
-**Layout Strategy**:
-- Multi-column layouts (use horizontal space)
-- Side navigation always visible
-- Multiple information panels simultaneously
-- Fixed widths with max-width constraints (don't stretch to 4K)
-
-**Interaction Strategy**:
-- Hover states for additional information
-- Keyboard shortcuts
-- Right-click context menus
-- Drag and drop where helpful
-- Multi-select with Shift/Cmd
-
-**Content Strategy**:
-- Show more information upfront (less progressive disclosure)
-- Data tables with many columns
-- Richer visualizations
-- More detailed descriptions
-
-### Print Adaptation (Screen → Print)
-
-**Layout Strategy**:
-- Page breaks at logical points
-- Remove navigation, footer, interactive elements
-- Black and white (or limited color)
-- Proper margins for binding
-
-**Content Strategy**:
-- Expand shortened content (show full URLs, hidden sections)
-- Add page numbers, headers, footers
-- Include metadata (print date, page title)
-- Convert charts to print-friendly versions
-
-### Email Adaptation (Web → Email)
-
-**Layout Strategy**:
-- Narrow width (600px max)
-- Single column only
-- Inline CSS (no external stylesheets)
-- Table-based layouts (for email client compatibility)
-
-**Interaction Strategy**:
-- Large, obvious CTAs (buttons not text links)
-- No hover states (not reliable)
-- Deep links to web app for complex interactions
-
-## Implement Adaptations
-
-Apply changes systematically:
-
-### Responsive Breakpoints
-
-Choose appropriate breakpoints:
-- Mobile: 320px-767px
-- Tablet: 768px-1023px
-- Desktop: 1024px+
-- Or content-driven breakpoints (where design breaks)
-
-### Layout Adaptation Techniques
-
-- **CSS Grid/Flexbox**: Reflow layouts automatically
-- **Container Queries**: Adapt based on container, not viewport
-- **`clamp()`**: Fluid sizing between min and max
-- **Media queries**: Different styles for different contexts
-- **Display properties**: Show/hide elements per context
-
-### Touch Adaptation
-
-- Increase touch target sizes (44x44px minimum)
-- Add more spacing between interactive elements
-- Remove hover-dependent interactions
-- Add touch feedback (ripples, highlights)
-- Consider thumb zones (easier to reach bottom than top)
-
-### Content Adaptation
-
-- Use `display: none` sparingly (still downloads)
-- Progressive enhancement (core content first, enhancements on larger screens)
-- Lazy loading for off-screen content
-- Responsive images (`srcset`, `picture` element)
-
-### Navigation Adaptation
-
-- Transform complex nav to hamburger/drawer on mobile
-- Bottom nav bar for mobile web
-- Persistent side navigation on desktop
-- Breadcrumbs on smaller screens for context
-
-Test on real devices. DevTools emulation is a useful first pass but misses real touch, performance, and browser chrome.
-
-**Avoid**:
-- Hide core functionality on mobile (if it matters, make it work)
-- Assume desktop = powerful device (consider accessibility, older machines)
-- Use different information architecture across contexts (confusing)
-- Break user expectations for platform (mobile users expect mobile patterns)
-- Forget landscape orientation on mobile/tablet
-- Use generic breakpoints blindly (use content-driven breakpoints)
-- Ignore touch on desktop (many desktop devices have touch)
-
-## Verify Adaptations
-
-Test thoroughly across contexts:
-
-- **Real devices**: Test on actual phones, tablets, desktops
-- **Different orientations**: Portrait and landscape
-- **Different browsers**: Safari, Chrome, Firefox, Edge
-- **Different OS**: iOS, Android, Windows, macOS
-- **Different input methods**: Touch, mouse, keyboard
-- **Edge cases**: Very small screens (320px), very large screens (4K)
-- **Slow connections**: Test on throttled network
-
-**Custom controls** (sliders, drag surfaces, scrollable control strips): a before/after slider can pass every width check above and still refuse to drag on iOS, so exercise each one in scope in the same batched round as the checks above:
-
-- **Primary gesture**: Tap it and confirm it responds as designed, then drag it with the target input method; the drag must complete, not just start
-- **Scroll across it**: A swipe along the page's scroll axis across the control scrolls the page or container without activating it; a drag that starts on the control along its axis moves the control, not the page. Neither failure throws an error, so try both
-- **Evidence**: Say what produced the evidence: an emulated viewport, synthesized touch input through a browser tool, which engine ran it (Chromium is not Safari), or a physical device. Screenshots and resized viewports verify layout, never a gesture. Name what stayed untested and move on; unreachable hardware is a reported gap, not a blocker
-
-When the adaptation feels native to each context, hand off to `/impeccable polish` for the final pass.
+**仅限 Web**（含移动端网页）。原生平台（`ios` / `android` / `adaptive`）改走 [adapt.native.md](adapt.native.md)；如果项目是原生的，现在就切换过去。
 
 ---
 
-## Reference Material
+## 评估适配挑战
 
-The sections below were previously `responsive-design.md` and live inline now so the adapt flow has its deep responsive reference in one place.
+弄清需要适配什么、为什么：
 
-### Responsive Design
+1. **识别来源情境**：
+   - 最初是为什么设计的？（桌面网页？移动应用？）
+   - 做了哪些假设？（大屏幕？鼠标输入？快速网络？）
+   - 当前情境下哪些部分运作良好？
 
-#### Mobile-First: Write It Right
+2. **理解目标情境**：
+   - **设备**：手机、平板、桌面、电视、手表、打印？
+   - **输入方式**：触控、鼠标、键盘、语音、游戏手柄？
+   - **屏幕约束**：尺寸、分辨率、方向？
+   - **网络**：快速 WiFi、慢速 3G、离线？
+   - **使用场景**：移动途中还是桌前？快速一瞥还是专注阅读？
+   - **用户预期**：用户在这个平台上期待什么？
 
-Start with base styles for mobile, use `min-width` queries to layer complexity. Desktop-first (`max-width`) means mobile loads unnecessary styles first.
+3. **识别适配挑战**：
+   - 什么放不下？（内容、导航、功能）
+   - 什么行不通？（触屏上的 hover 状态、过小的触控目标）
+   - 什么不合适？（移动端套桌面模式、桌面端套移动模式）
 
-#### Breakpoints: Content-Driven
+适配是为新情境重新思考体验，不是缩放像素。
 
-Don't chase device sizes; let content tell you where to break. Start narrow, stretch until design breaks, add breakpoint there. Three breakpoints usually suffice (640, 768, 1024px). Use `clamp()` for fluid values without breakpoints.
+## 规划适配策略
 
-#### Detect Input Method, Not Just Screen Size
+制定与情境匹配的策略：
 
-**Screen size doesn't tell you input method.** A laptop with touchscreen, a tablet with keyboard. Use pointer and hover queries:
+### 移动端适配（桌面 → 移动）
+
+**布局策略**：
+- 单列，而不是多列
+- 垂直堆叠，而不是并排
+- 全宽组件，而不是固定宽度
+- 底部导航，而不是顶部/侧边导航
+
+**交互策略**：
+- 触控目标最小 44x44px（不依赖 hover）
+- 在合适的地方用滑动手势（列表、轮播）
+- 底部面板，而不是下拉框
+- 拇指优先设计（控件放在拇指可及范围内）
+- 更大的点按区域与更宽的间距
+
+**内容策略**：
+- 渐进披露（不要一次展示全部）
+- 优先主要内容（次要内容放进标签页/折叠面板）
+- 更短的文字（更精炼）
+- 更大的字号（最小 16px）
+
+**导航策略**：
+- 汉堡菜单或底部导航
+- 降低导航复杂度
+- 吸顶头部提供上下文
+- 导航流程中的返回按钮
+
+### 平板适配（混合方式）
+
+**布局策略**：
+- 双列布局（不要单列或三列）
+- 侧边面板承载次要内容
+- 主-从视图（列表 + 详情）
+- 按方向自适应（竖屏与横屏）
+
+**交互策略**：
+- 同时支持触控与指针
+- 触控目标 44x44px，但布局密度可以比手机高
+- 侧边导航抽屉
+- 合适的地方用多列表单
+
+### 桌面适配（移动 → 桌面）
+
+**布局策略**：
+- 多列布局（利用横向空间）
+- 侧边导航常驻可见
+- 同时展示多个信息面板
+- 固定宽度加 max-width 约束（不要拉伸到 4K）
+
+**交互策略**：
+- 用 hover 状态展示附加信息
+- 键盘快捷键
+- 右键上下文菜单
+- 有帮助的地方用拖放
+- 用 Shift/Cmd 多选
+
+**内容策略**：
+- 直接展示更多信息（少用渐进披露）
+- 多列数据表格
+- 更丰富的可视化
+- 更详细的描述
+
+### 打印适配（屏幕 → 打印）
+
+**布局策略**：
+- 在逻辑节点分页
+- 移除导航、页脚、交互元素
+- 黑白（或有限色彩）
+- 为装订留出合适边距
+
+**内容策略**：
+- 展开被缩短的内容（显示完整 URL、隐藏的章节）
+- 添加页码、页眉、页脚
+- 包含元信息（打印日期、页面标题）
+- 把图表转换为适合打印的版本
+
+### 邮件适配（Web → 邮件）
+
+**布局策略**：
+- 窄宽度（最大 600px）
+- 只用单列
+- 内联 CSS（不用外部样式表）
+- 基于表格的布局（为了邮件客户端兼容性）
+
+**交互策略**：
+- 大而明显的 CTA（按钮，而不是文字链接）
+- 不用 hover 状态（不可靠）
+- 复杂交互用深链接跳回 Web 应用
+
+## 实施适配
+
+系统地落实改动：
+
+### 响应式断点
+
+选择合适的断点：
+- 移动端：320px-767px
+- 平板：768px-1023px
+- 桌面：1024px+
+- 或内容驱动的断点（设计在哪里撑不住就在哪里断）
+
+### 布局适配技术
+
+- **CSS Grid/Flexbox**：自动重排布局
+- **容器查询（Container Queries）**：按容器而不是视口自适应
+- **`clamp()`**：在最小值与最大值之间流式取值
+- **媒体查询**：不同情境用不同样式
+- **display 属性**：按情境显示/隐藏元素
+
+### 触控适配
+
+- 增大触控目标尺寸（最小 44x44px）
+- 拉大交互元素之间的间距
+- 移除依赖 hover 的交互
+- 添加触控反馈（波纹、高亮）
+- 考虑拇指热区（底部比顶部更容易够到）
+
+### 内容适配
+
+- 少用 `display: none`（内容仍会被下载）
+- 渐进增强（核心内容优先，增强留给大屏）
+- 屏幕外内容用懒加载
+- 响应式图片（`srcset`、`picture` 元素）
+
+### 导航适配
+
+- 移动端把复杂导航转为汉堡菜单/抽屉
+- 移动端网页用底部导航栏
+- 桌面端侧边导航常驻
+- 小屏上用面包屑提供上下文
+
+在真机上测试。DevTools 模拟适合做第一轮检查，但会漏掉真实的触控、性能和浏览器外壳。
+
+**避免**：
+- 把核心功能藏在移动端（如果重要，就让它能用）
+- 假设桌面设备性能强大（要考虑无障碍、老旧机器）
+- 在不同情境用不同的信息架构（让人困惑）
+- 打破用户对平台的预期（移动用户期待移动端模式）
+- 忘记手机/平板的横屏方向
+- 盲目套用通用断点（要用内容驱动的断点）
+- 忽视桌面端的触控（很多桌面设备支持触控）
+
+## 验证适配
+
+跨情境充分测试：
+
+- **真机**：在真实的手机、平板、桌面上测试
+- **不同方向**：竖屏与横屏
+- **不同浏览器**：Safari、Chrome、Firefox、Edge
+- **不同系统**：iOS、Android、Windows、macOS
+- **不同输入方式**：触控、鼠标、键盘
+- **边界情况**：极小屏幕（320px）、极大屏幕（4K）
+- **慢速网络**：在限速网络下测试
+
+**自定义控件**（滑块、拖拽面、可滚动的控制条）：一个前后对比滑块可以通过上面所有的宽度检查，却在 iOS 上拒绝拖拽，所以要把范围内的每个控件，与上面的检查放在同一轮批量测试里逐一操作：
+
+- **主手势**：先点按，确认按设计响应，再用目标输入方式拖拽；拖拽必须完整完成，而不是只开始
+- **横跨滚动**：沿页面滚动轴滑过控件时，页面或容器应滚动而控件不激活；从控件上沿其轴开始的拖拽应移动控件而不是页面。这两种失败都不会报错，所以两种都要试
+- **证据**：说明证据来自哪里：模拟视口、通过浏览器工具注入的合成触控输入、跑在哪个引擎上（Chromium 不是 Safari），还是物理设备。截图和调整过的视口只能验证布局，永远验证不了手势。说清哪些没测到，然后继续；够不着的硬件是如实上报的缺口，不是阻塞项
+
+当适配在每个情境里都感觉像原生设计时，交给 `/impeccable polish` 做最后一轮精修。
+
+---
+
+## 参考资料
+
+下面的章节原本是独立的 `responsive-design.md`，现在内联在此，让 adapt 流程的深度响应式参考集中在一处。
+
+### 响应式设计
+
+#### 移动优先：把它写对
+
+从移动端的基础样式写起，用 `min-width` 查询逐层叠加复杂度。桌面优先（`max-width`）意味着移动端会先加载一堆用不上的样式。
+
+#### 断点：内容驱动
+
+不要追着设备尺寸跑；让内容告诉你断点在哪。从窄屏开始，拉宽到设计撑不住为止，在那里加断点。三个断点通常就够了（640、768、1024px）。需要无断点的流式取值时用 `clamp()`。
+
+#### 检测输入方式，而不只是屏幕尺寸
+
+**屏幕尺寸不能告诉你输入方式。** 带触屏的笔记本、带键盘的平板都存在。使用 pointer 与 hover 查询：
 
 ```css
 /* Fine pointer (mouse, trackpad) */
@@ -238,11 +242,11 @@ Don't chase device sizes; let content tell you where to break. Start narrow, str
 }
 ```
 
-**Critical**: Don't rely on hover for functionality. Touch users can't hover.
+**关键**：不要把功能依赖在 hover 上。触屏用户无法 hover。
 
-#### Safe Areas: Handle the Notch
+#### 安全区域：处理刘海
 
-Modern phones have notches, rounded corners, and home indicators. Use `env()`:
+现代手机有刘海、圆角和 Home 指示条。使用 `env()`：
 
 ```css
 body {
@@ -258,14 +262,14 @@ body {
 }
 ```
 
-**Enable viewport-fit** in your meta tag:
+在 meta 标签里**启用 viewport-fit**：
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 ```
 
-#### Responsive Images: Get It Right
+#### 响应式图片：把它写对
 
-##### srcset with Width Descriptors
+##### 用宽度描述符的 srcset
 
 ```html
 <img
@@ -280,14 +284,14 @@ body {
 >
 ```
 
-**How it works**:
-- `srcset` lists available images with their actual widths (`w` descriptors)
-- `sizes` tells the browser how wide the image will display
-- Browser picks the best file based on viewport width AND device pixel ratio
+**工作原理**：
+- `srcset` 列出可用图片及其真实宽度（`w` 描述符）
+- `sizes` 告诉浏览器图片会以多宽显示
+- 浏览器会同时根据视口宽度**和**设备像素比挑选最合适的文件
 
-##### Picture Element for Art Direction
+##### 用 picture 元素做艺术指导
 
-When you need different crops/compositions (not just resolutions):
+当你需要不同的裁切/构图（而不仅是分辨率）时：
 
 ```html
 <picture>
@@ -297,22 +301,22 @@ When you need different crops/compositions (not just resolutions):
 </picture>
 ```
 
-#### Layout Adaptation Patterns
+#### 布局适配模式
 
-**Navigation**: Three stages: hamburger + drawer on mobile, horizontal compact on tablet, full with labels on desktop. **Tables**: Transform to cards on mobile using `display: block` and `data-label` attributes. **Progressive disclosure**: Use `<details>/<summary>` for content that can collapse on mobile.
+**导航**：三个阶段：移动端汉堡菜单 + 抽屉，平板横向紧凑，桌面完整带标签。**表格**：移动端用 `display: block` 和 `data-label` 属性转为卡片。**渐进披露**：可以在移动端折叠的内容用 `<details>/<summary>`。
 
-#### Testing: Don't Trust DevTools Alone
+#### 测试：别只信 DevTools
 
-DevTools device emulation is useful for layout but misses:
+DevTools 设备模拟对布局有用，但会漏掉：
 
-- Actual touch interactions
-- Real CPU/memory constraints
-- Network latency patterns
-- Font rendering differences
-- Browser chrome/keyboard appearances
+- 真实的触控交互
+- 真实的 CPU/内存约束
+- 网络延迟模式
+- 字体渲染差异
+- 浏览器外壳/键盘的外观
 
-**Test on at least**: One real iPhone, one real Android, a tablet if relevant. Cheap Android phones reveal performance issues you'll never see on simulators.
+**至少测试**：一台真 iPhone、一台真 Android，相关的话再加一台平板。便宜的 Android 手机暴露的性能问题，模拟器上永远看不到。
 
 ---
 
-**Avoid**: Desktop-first design. Device detection instead of feature detection. Separate mobile/desktop codebases. Ignoring tablet and landscape. Assuming all mobile devices are powerful.
+**避免**：桌面优先的设计；用设备检测代替特性检测；移动/桌面两套独立代码库；忽视平板与横屏；假设所有移动设备性能都强。

@@ -1,6 +1,10 @@
-# Game Day Planning & Execution
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/chaos-engineer/references/game-days.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Game Day Planning Template
+# 演练日（Game Day）规划与执行
+
+## 演练日规划模板
 
 ```yaml
 game_day:
@@ -80,7 +84,7 @@ game_day:
     required_attendees: "all participants"
 ```
 
-## Game Day Runbook
+## 演练日 Runbook
 
 ```markdown
 # Database Failover Game Day Runbook
@@ -214,7 +218,7 @@ for i in range(100):
 - [ ] Update runbooks based on learnings
 ```
 
-## Game Day Observation Template
+## 演练日观察记录模板
 
 ```python
 from dataclasses import dataclass, field
@@ -291,7 +295,7 @@ print(f"MTTR: {metrics.calculate_mttr()}s")
 print(f"Success Rate: {metrics.success_rate()}%")
 ```
 
-## Surprise Scenarios Library
+## 突袭场景库
 
 ```yaml
 # Keep these secret until game day!
@@ -340,7 +344,7 @@ surprise_scenarios:
       - "What are our latency SLOs?"
 ```
 
-## Post-Game Report Template
+## 演练后报告模板
 
 ```markdown
 # Game Day Report: Database Failover
@@ -422,13 +426,13 @@ improvements needed.
 - Raw observation notes: [link]
 ```
 
-## Quick Reference
+## 快速参考
 
-| Phase | Duration | Key Activities |
+| 阶段 | 时长 | 关键活动 |
 |-------|----------|----------------|
-| Planning | 2 weeks | Define scenarios, invite participants |
-| Pre-game | 30 min | Setup, verify environment, brief team |
-| Execution | 2 hours | Run scenarios, observe, document |
-| Debrief | 30 min | Immediate learnings, quick wins |
-| Post-mortem | 1 week later | Detailed analysis, action items |
-| Follow-up | 1 month | Verify improvements, plan next game day |
+| 规划 | 2 周 | 定义场景、邀请参与者 |
+| 演练前 | 30 分钟 | 环境准备、验证环境、团队简报 |
+| 执行 | 2 小时 | 运行场景、观察、记录 |
+| 复盘 | 30 分钟 | 即时总结、快速改进 |
+| 事后复盘（Post-mortem） | 1 周后 | 详细分析、行动项 |
+| 跟进 | 1 个月 | 验证改进、规划下一次演练日 |

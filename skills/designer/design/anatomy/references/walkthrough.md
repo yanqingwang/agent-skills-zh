@@ -1,75 +1,79 @@
-# Walkthrough: the test rig (Fig 6)
+> **中文汉化版** · 上游：[wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) · 原文件：`references/walkthrough.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-How `examples/test-rig/` was designed. It is a figure for a "Stretch" section explaining how a glass button responds to touch: a press swells it, pulling makes it lean toward the finger (with less give the further you pull), and letting go springs it back past rest once.
+# 走查：测试台架（Fig 6）
 
-## 1. Truth
-The behaviour was copied into a pure model, `rig.ts`, from the library source:
-- The rest size is 120 × 32 (`HALF = [60, 16]`).
-- A press swells it by 8%, at most 6 px a side.
-- The lean is a rubber band: `give · (1 − 1/(1 + 0.55·d/give))`, with `give` = 14 px.
-- There are three springs: press 700/32, hold 540/40 and release 320/16, as stiffness/drag.
-- The capsule stretches along the lean by at most 8% and thins across.
+`examples/test-rig/` 是如何设计出来的。它是"Stretch"章节里的一幅图，讲解玻璃按钮如何响应触摸：按压使它膨胀，拉动使它朝手指倾斜（拉得越远回弹越小），松手后它会弹回并越过静止位置一次。
 
-`step(member, held, pull, dt)` advances it and `poseOf(member)` returns the shape. The readout, the aria text, the caption numbers and every moving part read from this one model.
+## 1. 真实
+行为逻辑从库源码复制进纯模型 `rig.ts`：
+- 静止尺寸是 120 × 32（`HALF = [60, 16]`）。
+- 按压使它膨胀 8%，每侧最多 6 px。
+- 倾斜是一根橡皮筋：`give · (1 − 1/(1 + 0.55·d/give))`，`give` = 14 px。
+- 共三个弹簧：按压 700/32、保持 540/40、释放 320/16，即 stiffness/drag。
+- 胶囊沿倾斜方向最多拉伸 8%，横向相应变细。
 
-## 2. Object
-"A test rig." A real lab would hold a button in a sprung fixture and measure it with a probe and a dial gauge. Each part carries meaning:
-- **The glass capsule** is the subject. It is lit while held and its shape is rebuilt every frame from the pose.
-- **A carriage on two guide rods with four coil springs** shows that the glass is springy and returns. The springs compress and extend as it leans.
-- **A finger probe on a rail behind it** is the pointer. It comes down to press, then slides along the rail to pull. A ruler and a rider on the rail show how far it has pulled.
-- **A dial gauge with a plunger touching the carriage** reads the lean. Its needle turns 20 px per revolution, with a mark at `give`.
-- **A base plate on feet** carries a frame of four bars with a ruler and a zero mark, screws, a label plate, a floor grid and bores for the rods.
+`step(member, held, pull, dt)` 推进模型，`poseOf(member)` 返回形状。读数、aria 文本、图注数字和每个会动的部件都读自这一个模型。
 
-## 3. Parts list (53 solids)
-| Group | Parts |
+## 2. 实体
+"一台测试台架。"真实实验室会把按钮装进带弹簧的夹具里，用探针和千分表测量它。每个部件都承载含义：
+- **玻璃胶囊**是主角。被按住时点亮，其形状每帧都从 pose 重建。
+- **两根导杆加四个螺旋弹簧上的滑架**表明玻璃有弹性、会回位。它倾斜时弹簧随之压缩与伸展。
+- **后方导轨上的指压探针**代表指针。它下压进行按压，然后沿导轨滑动进行拉动。导轨上的刻度尺与滑标显示拉了多远。
+- **测头触及滑架的千分表**读出倾斜量。指针每圈走 20 px，在 `give` 处有刻度。
+- **带支脚的底板**承载一个四杆框架，含刻度尺与零位标记、螺钉、铭牌、地面网格和杆孔。
+
+## 3. 零件清单（53 个实体）
+| 分组 | 零件 |
 |---|---|
-| Base | plate, 4 feet (flange and foot), groove, 4 corner screws with rings, label plate with screws and rule |
-| Rail | 2 posts on feet, the beam with a ruler (minor every 5, major every 25), 2 end stops, screws, a rider |
-| Probe | block, thumb knob with knurl, pointer, index line, arm, housing with cap, collar, seams, lock screw, stem, collar, pad |
-| Frame | back, left, right and front bars with screws, floor with grid, rod bores and ends, ticks with a zero mark |
-| Mechanism | 2 rods, 4 coils (split back and front), the carriage plate with a seat outline, 4 bushings, rivets, a contact block, a plunger rod with a collar |
-| Dial | stand with screws, sleeve, clamp, lug, puck, knurled band, bezel and face rings, ticks, give marks, crown, a "px" engraving, the needle |
-| Subject | the glass capsule (fill, shades, top, crease, bevel, inner rim, shine, edge) and the dotted rest outline |
+| Base 底座 | 底板、4 个支脚（法兰与脚垫）、凹槽、4 颗带垫圈的角部螺钉、带螺钉与刻度的铭牌 |
+| Rail 导轨 | 带支脚的 2 根立柱、带刻度尺的横梁（每 5 一小格、每 25 一大格）、2 个端挡、螺钉、1 个滑标 |
+| Probe 探针 | 方块、带滚花的拇指旋钮、指针、基准线、支臂、带盖的外壳、环套、接缝、锁紧螺钉、杆身、环套、垫片 |
+| Frame 框架 | 后、左、右、前四根横杆及螺钉、带网格的地面、杆孔与杆端、带零位标记的刻度 |
+| Mechanism 机构 | 2 根导杆、4 个螺旋弹簧（分成前后两半）、带座位轮廓线的滑架板、4 个轴套、铆钉、接触块、带环套的柱塞杆 |
+| Dial 表盘 | 带螺钉的支架、套管、夹箍、凸耳、圆盘、滚花环带、表圈与表盘环、刻度、give 标记、旋钮、"px" 刻字、指针 |
+| Subject 主体 | 玻璃胶囊（填充、明暗、顶部、折痕、斜面、内缘、高光、边缘）与虚线静止轮廓 |
 
-## 4. Camera and layout (`view.ts`)
-- **Camera.** Azimuth 57°, so the long front of the frame faces the viewer. The viewBox is 600 × 340, fitted to the base and the top of the rail with a pad of 34.
-- **Layout.** The rig is laid out around the origin. The glass is centred at (0, 0) on the carriage top, the rods run along x at y = ±18, the dial stands at x = 131 and the rail sits behind at y = −66, z = 50.
-- **Helpers.** `at(point)` projects a point and `shift(x, z)` moves things along x and z.
+## 4. 相机与布局（`view.ts`）
+- **相机。** 方位角 57°，让框架的长正面朝向观者。viewBox 为 600 × 340，包住底座与导轨顶端并留 34 的边距。
+- **布局。** 台架围绕原点布置。玻璃以 (0, 0) 居中于滑架顶面，导杆沿 x 轴位于 y = ±18，表盘立在 x = 131，导轨在后方 y = −66、z = 50。
+- **辅助函数。** `at(point)` 投影一个点，`shift(x, z)` 沿 x 与 z 移动物体。
 
-## 5. Geometry (`geometry.ts`, `pose.ts`)
-- `geometry.ts` computes every static part once: a `solid(plan, z, h, steps, bevel)` wrapper over `slabOf`, a `cylinder`, `knurl`, `sideArc`, `faceRing` and ruler helpers.
-- `pose.ts` has `frameOf(pose, …)`, which rebuilds only what changes: the capsule's paths, the 4 coils, the carriage and probe transforms, the needle and the pull wire.
+## 5. 几何（`geometry.ts`、`pose.ts`）
+- `geometry.ts` 一次性算出每个静态部件：`slabOf` 之上的 `solid(plan, z, h, steps, bevel)` 封装，以及 `cylinder`、`knurl`、`sideArc`、`faceRing` 与刻度尺辅助函数。
+- `pose.ts` 有 `frameOf(pose, …)`，只重建变化的部分：胶囊的路径、4 个弹簧、滑架与探针的变换、指针和拉线。
 
-## 6. Painter's order (`live.tsx`)
-1. Base.
-2. Rail, with the rider and the probe block.
-3. Back frame bars.
-4. Back coil halves.
-5. Rods.
-6. Left coils.
-7. Carriage.
-8. Glass.
-9. Rest outline.
-10. Pull wire.
-11. Right-back coils.
-12. Plunger.
-13. Right-front coils.
-14. Front frame bars.
-15. Dial with needle.
-16. Finger.
-17. Arm.
+## 6. 绘制顺序（`live.tsx`）
+1. 底座。
+2. 导轨，连同滑标与探针方块。
+3. 后部框架横杆。
+4. 后半螺旋弹簧。
+5. 导杆。
+6. 左侧弹簧。
+7. 滑架。
+8. 玻璃。
+9. 静止轮廓。
+10. 拉线。
+11. 右后弹簧。
+12. 柱塞。
+13. 右前弹簧。
+14. 前部框架横杆。
+15. 表盘与指针。
+16. 手指。
+17. 支臂。
 
-The frame and the springs are split so the carriage sits *inside* them.
+框架与弹簧被拆分，使滑架坐在它们*内部*。
 
-## 7. Live behaviour (`live.tsx`)
-- **One loop.** It reads the scripted tour or the user's hand, eases the finger (τ 0.09 s) and the lift, steps the spring model, then writes every changed attribute through refs and says the readout.
-- **Idle tour.** It starts after 1.4 s in view and loops every 7.6 s: rest, press, pull 80, release, settle. It pauses on hover, focus or press and resumes 3.6 s after the last input.
-- **Pointer.** Hover moves the finger along the rail; press-and-drag presses and pulls.
-- **Keyboard.** Space presses or lets go, arrows move and pull (Shift for bigger steps), Home and End go to the ends, and Escape releases.
-- **Accessibility.** `role="slider"`, and `aria-valuetext` such as "Pressed: 129.6 by 34.6 pixels, pulled 80.0 px, leaning 10.6 px".
-- **Reduced motion.** The springs become critically damped: the glass still swells, but it never leans or bounces.
+## 7. 实时行为（`live.tsx`）
+- **单一循环。** 它读取脚本演示或用户的手，缓动手指（τ 0.09 s）与抬升，推进弹簧模型，然后通过 refs 写回每个变化的属性并播报读数。
+- **空闲演示。** 进入视野 1.4 s 后开始，每 7.6 s 循环一次：rest、press、拉到 80、release、settle。它在 hover、focus 或按压时暂停，并在最后一次输入 3.6 s 后恢复。
+- **指针。** hover 沿导轨移动手指；按住拖动即按压并拉动。
+- **键盘。** Space 按压或松开，方向键移动并拉动（Shift 为大步进），Home 和 End 到两端，Escape 释放。
+- **无障碍。** `role="slider"`，以及形如 "Pressed: 129.6 by 34.6 pixels, pulled 80.0 px, leaning 10.6 px" 的 `aria-valuetext`。
+- **Reduced motion。** 弹簧变为临界阻尼：玻璃仍然膨胀，但绝不再倾斜或回弹。
 
-## 8. Card
-- **Corners.** "Fig 6" · "Press and pull" · hint "Press, then pull ← →" · readout "120.0 × 32.0 · lean 0.0 px".
-- **Legend keys.** The glass while it is held (raised) · where it rests (dotted) · the pull, from where I pressed to the finger (edge).
-- **Caption.** States the rig and the true numbers.
+## 8. 卡片
+- **四角。** "Fig 6" · "Press and pull" · 提示 "Press, then pull ← →" · 读数 "120.0 × 32.0 · lean 0.0 px"。
+- **图例键。** 被按住时的玻璃（凸起）· 它的静止位置（虚线）· 拉动轨迹，从按压处到手指（边缘）。
+- **图注。** 说明台架与真实的数字。

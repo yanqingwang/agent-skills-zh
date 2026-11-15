@@ -1,17 +1,21 @@
-# 02-minimal-corporate — Minimal Corporate Presentation
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/light--minimal-corporate/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 02-minimal-corporate（极简企业报告）
 
-Pure white background with dark blue and gold accents, using left-side color block division + vertical information flow layout, suitable for annual reports, work summaries, business proposals, and similar occasions
+## 风格概览
 
-- **Scene**: Annual reports, work summaries, project reports, business proposals
-- **Mood**: Professional, concise, clear, sophisticated, stable
-- **Color Tone**: Light tone, warm tone, low contrast
-- **Industry**: Finance, consulting, enterprise, government, education
+纯白底配深蓝与金点缀，采用左侧色块分割 + 纵向信息流版式，适合年报、工作总结、商业提案等场合
 
-## Color Palette
+- **场景**：年报、工作总结、项目汇报、商业提案
+- **气质**：专业、简洁、清晰、精致、沉稳
+- **色调**：浅色调、暖色调、低对比
+- **行业**：金融、咨询、企业、政府、教育
 
-| Name            | Hex     | Usage          |
+## 配色
+
+| 名称            | Hex     | 用途           |
 | --------------- | ------- | -------------- |
 | Background      | #FFFFFF | background     |
 | Card Background | #E8EEF4 | card           |
@@ -21,42 +25,42 @@ Pure white background with dark blue and gold accents, using left-side color blo
 | Secondary Text  | #666666 | text_secondary |
 | Muted Text      | #999999 | text_muted     |
 
-## Typography
+## 字体排印
 
-| Element  | Font            |
+| 元素     | 字体            |
 | -------- | --------------- |
 | title_en | Arial Black     |
 | title_cn | Microsoft YaHei |
 | body     | Microsoft YaHei |
 | data     | Arial           |
 
-## Design Techniques
+## 设计手法
 
-- Pure white background with generous whitespace
-- Dark blue and gold professional color scheme
-- Simple line decorations
-- Geometric block accents
-- Asymmetric grid layout
-- Left-side color block division layout
-- Coordinate conflicts fixed
+- 纯白背景，大量留白
+- 深蓝与金的专业配色
+- 简洁线条装饰
+- 几何色块点缀
+- 非对称网格版式
+- 左侧色块分割版式
+- 已修复坐标冲突
 
-## Page Structure (6 pages)
+## 页面结构（6 页）
 
-| Slide | Type       | Elements | Description                                                                       |
+| 页码  | 类型       | 元素数量 | 描述                                                                              |
 | ----- | ---------- | -------- | --------------------------------------------------------------------------------- |
-| S1    | hero       | 50       | Cover page - left dark blue vertical bar + large title + info cards               |
-| S2    | statement  | 45       | Statement page - left content + right decoration area, coordinate conflicts fixed |
-| S3    | grid       | 60       | Grid page - asymmetric grid (2 top, 4 bottom)                                     |
-| S4    | case       | 50       | Case page - left-right two card comparison                                        |
-| S5    | comparison | 50       | Comparison page - central VS separator                                            |
-| S6    | thanks     | 40       | Thank you page - left thank you + right contact                                   |
+| S1    | hero       | 50       | 封面页：左侧深蓝竖条 + 大标题 + 信息卡片                                          |
+| S2    | statement  | 45       | 宣言页：左侧内容 + 右侧装饰区，已修复坐标冲突                                     |
+| S3    | grid       | 60       | 网格页：非对称网格（上 2 下 4）                                                   |
+| S4    | case       | 50       | 案例页：左右双卡对比                                                              |
+| S5    | comparison | 50       | 对比页：中央 VS 分隔                                                              |
+| S6    | thanks     | 40       | 致谢页：左侧致谢 + 右侧联系方式                                                   |
 
-## Reference Script
+## 参考脚本
 
-Complete build script is in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (hero)** — Cover page - left dark blue vertical bar + large title + info cards
+- **Slide 1（hero）**：封面页，左侧深蓝竖条 + 大标题 + 信息卡片
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

@@ -1,59 +1,63 @@
-# Cosmic Neon — Sci-Fi Time Travel
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/dark--cosmic-neon/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 宇宙霓虹（科幻时空之旅）
 
-A futuristic sci-fi design featuring dual neon glow orbs (purple and cyan) on a near-black canvas with star decorations. Creates a mysterious cosmic atmosphere perfect for science and technology presentations.
+## 风格概览
 
-- **Scenario**: Science talks, futuristic topics, physics presentations, cosmic themes
-- **Mood**: Sci-fi, mysterious, futuristic, neon
-- **Tone**: Near-black with purple and cyan neon
+未来科幻设计：近黑画布上的一对霓虹光晕球（紫与青）配星星装饰。营造神秘宇宙氛围，非常适合科技类演示。
 
-## Color Palette
+- **场景**：科学演讲、未来主题、物理演示、宇宙题材
+- **气质**：科幻、神秘、未来感、霓虹
+- **基调**：近黑底，配紫色与青色霓虹
 
-| Name           | Hex               | Usage                            |
+## 配色
+
+| 名称           | Hex               | 用途                             |
 | -------------- | ----------------- | -------------------------------- |
-| Background     | #050510           | Near-black deep space            |
-| Glow Purple    | #8A2BE2           | Primary neon glow effect         |
-| Glow Cyan      | #00FFFF           | Secondary neon glow effect       |
-| Card BG        | #111122           | Dark indigo for card backgrounds |
-| Primary text   | #FFFFFF           | White for headings               |
-| Secondary text | #AAAAAA / #CCCCCC | Gray variations for body text    |
-| Accent text    | #00FFFF           | Cyan for highlights              |
+| 背景           | #050510           | 近黑深空                         |
+| 紫色光晕       | #8A2BE2           | 主霓虹光晕效果                   |
+| 青色光晕       | #00FFFF           | 次霓虹光晕效果                   |
+| 卡片底色       | #111122           | 卡片背景用深靛蓝                 |
+| 主文字         | #FFFFFF           | 标题用白色                       |
+| 次级文字       | #AAAAAA / #CCCCCC | 正文用不同深浅的灰               |
+| 点缀文字       | #00FFFF           | 高光用青色                       |
 
-## Typography
+## 字体排印
 
-| Element         | Font                       |
+| 元素            | 字体                       |
 | --------------- | -------------------------- |
-| Title (English) | Montserrat                 |
-| Title (Chinese) | Source Han Sans (思源黑体) |
-| Body            | Source Han Sans            |
+| 标题（英文）    | Montserrat                 |
+| 标题（中文）    | Source Han Sans (思源黑体) |
+| 正文            | Source Han Sans            |
 
-## Design Techniques
+## 设计手法
 
-- Dual neon glow orbs (purple + cyan) as main decorative elements
-- Star decorations with varying opacity for depth
-- Donut ring accent element for cosmic feel
-- Neon-highlighted card backgrounds for content sections
-- Large data typography for evidence slides
-- Generous line spacing for readability on dark backgrounds
+- 双霓虹光晕球（紫 + 青）作主装饰元素
+- 星星装饰透明度各异，制造纵深
+- 圆环点缀元素，强化宇宙感
+- 内容区用霓虹高亮卡片底
+- evidence 页用大号数据排印
+- 加大行距，保证暗底上的可读性
 
-## Page Structure (5 slides)
+## 页面结构（5 页）
 
-| Slide | Type      | Elements | Description                                       |
+| 页码  | 类型      | 元素数量 | 描述                                              |
 | ----- | --------- | -------- | ------------------------------------------------- |
-| 1     | hero      | 25       | Title with dual neon glow orbs                    |
-| 2     | statement | 25       | Centered quote with shifted glow positions        |
-| 3     | pillars   | 25       | 3-column layout with neon card backgrounds        |
-| 4     | evidence  | 25       | Large data number + description with neon accents |
-| 5     | cta       | 25       | Closing with neon accent decoration               |
+| 1     | hero      | 25       | 标题配双霓虹光晕球                                |
+| 2     | statement | 25       | 居中引言，光晕位置偏移                            |
+| 3     | pillars   | 25       | 三栏布局配霓虹卡片底                              |
+| 4     | evidence  | 25       | 大数据数字 + 描述，配霓虹点缀                     |
+| 5     | cta       | 25       | 收尾，配霓虹点缀装饰                              |
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (hero)** — dual glow orb composition with stars
-- **Slide 3 (pillars)** — neon card backgrounds with content hierarchy
+- **Slide 1（hero）**：双光晕球配星辰的构图
+- **Slide 3（pillars）**：霓虹卡片底配内容层级
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

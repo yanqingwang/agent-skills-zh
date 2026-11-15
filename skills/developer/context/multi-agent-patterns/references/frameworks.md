@@ -1,12 +1,16 @@
-# Multi-Agent Patterns: Technical Reference
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/multi-agent-patterns/references/frameworks.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document provides implementation details for multi-agent architectures across different frameworks.
+# 多 Agent 模式：技术参考
 
-## Supervisor Pattern
+本文档给出多 Agent 架构在不同框架下的实现细节。
 
-### LangGraph Supervisor Implementation
+## 主管模式（Supervisor）
 
-Implement a supervisor that routes to worker nodes:
+### LangGraph 主管实现
+
+实现一个把任务路由到工作节点的主管：
 
 ```python
 from typing import TypedDict, Union
@@ -88,9 +92,9 @@ def build_supervisor_graph():
     return workflow.compile()
 ```
 
-### AutoGen Supervisor
+### AutoGen 主管
 
-Implement supervisor using GroupChat pattern:
+用 GroupChat 模式实现主管：
 
 ```python
 from autogen import AssistantAgent, UserProxyAgent, GroupChat
@@ -142,11 +146,11 @@ manager = GroupChatManager(
 )
 ```
 
-## Swarm Pattern Implementation
+## Swarm 模式实现
 
-### LangGraph Swarms
+### LangGraph Swarm
 
-Implement peer-to-peer handoffs:
+实现同级代理之间的移交（handoff）：
 
 ```python
 def create_agent(name, system_prompt, tools):
@@ -191,9 +195,9 @@ def build_swarm():
     return workflow.compile()
 ```
 
-## Hierarchical Pattern Implementation
+## 层级模式实现
 
-### CrewAI-Style Hierarchy
+### CrewAI 风格层级
 
 ```python
 class ManagerAgent:
@@ -248,9 +252,9 @@ class ManagerAgent:
             }
 ```
 
-## Context Isolation Patterns
+## 上下文隔离模式
 
-### Full Context Delegation
+### 全上下文委派
 
 ```python
 def delegate_with_full_context(planner_state, subagent):
@@ -266,7 +270,7 @@ def delegate_with_full_context(planner_state, subagent):
     }
 ```
 
-### Instruction Passing
+### 指令传递
 
 ```python
 def delegate_with_instructions(task_spec, subagent):
@@ -287,7 +291,7 @@ def delegate_with_instructions(task_spec, subagent):
     }
 ```
 
-### File System Coordination
+### 文件系统协作
 
 ```python
 class FileSystemCoordination:
@@ -317,9 +321,9 @@ class FileSystemCoordination:
         return True
 ```
 
-## Consensus Mechanisms
+## 共识机制
 
-### Weighted Voting
+### 加权投票
 
 ```python
 def weighted_consensus(agent_outputs, weights):
@@ -337,7 +341,7 @@ def weighted_consensus(agent_outputs, weights):
     return weighted_sum / total_weight
 ```
 
-### Debate Protocol
+### 辩论协议
 
 ```python
 class DebateProtocol:
@@ -377,9 +381,9 @@ class DebateProtocol:
         return self.evaluate_final(statements)
 ```
 
-## Failure Recovery
+## 故障恢复
 
-### Circuit Breaker
+### 熔断器
 
 ```python
 class AgentCircuitBreaker:
@@ -404,7 +408,7 @@ class AgentCircuitBreaker:
             raise
 ```
 
-### Checkpoint and Resume
+### 检查点与恢复
 
 ```python
 class CheckpointManager:
@@ -430,4 +434,3 @@ class CheckpointManager:
         with open(path, 'r') as f:
             return json.load(f)
 ```
-

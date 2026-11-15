@@ -1,35 +1,39 @@
-# S16-watercolor-wash — Watercolor Wash
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/light--watercolor-wash/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# S16-watercolor-wash：水彩晕染
 
-Warm white base color using extremely low transparency colored ellipses to simulate watercolor wash effect, creating a soft and poetic atmosphere.
+## 风格概览
 
-- **Scene**: Art, cultural creativity, tea ceremony, weddings
-- **Mood**: Soft, poetic, artistic
-- **Color Tone**: Warm white base + sky blue/peach/sage/lavender multicolor wash
+暖白底色，用极低透明度的彩色椭圆模拟水彩晕染效果，营造柔和诗意的氛围。
 
-## Color Palette
+- **适用场景**：艺术、文创、茶道、婚礼
+- **氛围**：柔和、诗意、艺术感
+- **色调**：暖白底 + 天蓝/蜜桃/鼠尾草绿/薰衣草紫多色晕染
 
-| Name       | Hex    | Usage                       |
-| ---------- | ------ | --------------------------- |
-| Warm White | FFFDF7 | Background base color       |
-| Sky Blue   | 7AADCF | Watercolor wash color block |
-| Peach      | E8A87C | Watercolor wash color block |
-| Sage Green | B5C99A | Watercolor wash color block |
-| Lavender   | D4A5C9 | Watercolor wash color block |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 暖白 | FFFDF7 | 背景底色 |
+| 天蓝 | 7AADCF | 水彩晕染色块 |
+| 蜜桃色 | E8A87C | 水彩晕染色块 |
+| 鼠尾草绿 | B5C99A | 水彩晕染色块 |
+| 薰衣草紫 | D4A5C9 | 水彩晕染色块 |
 
-- All decorative shapes are ellipses, no rectangles used, maintaining rounded softness
-- All color blocks have extremely low opacity (0.06-0.12), simulating watercolor pigment seeping into paper effect
-- Multiple overlapping ellipses produce natural color mixing and edge gradients
-- Typography uses thin/serif fonts, echoing the watercolor texture
+## 设计技法
 
-## Reference Script
+- 所有装饰形状均为椭圆，不用矩形，保持圆润柔和
+- 所有色块透明度极低（0.06-0.12），模拟水彩颜料渗入纸面的效果
+- 多个椭圆叠压产生自然的混色与边缘渐变
+- 字体用细体/衬线体，呼应水彩质感
 
-Complete build script is in `build.sh`.
-**Recommended slides to read for understanding core design techniques**:
+## 参考脚本
 
-- **Slide 1 (hero)** — Method of layering multicolor low transparency ellipses
-- **Slide 4 (evidence)** — Relationship between color blocks and content areas
-  No need to read all — skim 2-3 representative slides.
+完整构建脚本见 `build.sh`。
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1 (hero)**：多层彩色低透明度椭圆的叠压方法
+- **Slide 4 (evidence)**：色块与内容区域的关系
+  无需全部精读，浏览 2-3 张代表性幻灯片即可。

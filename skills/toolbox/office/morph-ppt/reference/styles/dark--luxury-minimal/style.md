@@ -1,57 +1,61 @@
-# Luxury Minimal — Black & Gold Premium
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--luxury-minimal/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Luxury Minimal：黑金高级感
 
-An ultra-minimalist design system with pure black canvas, white typography, and strategic gold accents. Epitomizes luxury and sophistication through restraint and precision.
+## 风格概览
 
-- **Scenario**: Luxury brands, premium product launches, high-end corporate presentations
-- **Mood**: Luxurious, minimalist, sophisticated, premium
-- **Tone**: Pure black with gold accent
+极简主义设计体系：纯黑画布、白色字体排印与有策略的金色点缀。以克制与精密诠释奢华与高级感。
 
-## Color Palette
+- **适用场景**：奢侈品牌、高端产品发布、高端企业演示
+- **氛围**：奢华、极简、精致、高端
+- **色调**：纯黑，配金色点缀
 
-| Name           | Hex     | Usage                              |
-| -------------- | ------- | ---------------------------------- |
-| Background     | #111111 | Near-black canvas                  |
-| Primary text   | #FFFFFF | White for all primary text         |
-| Accent         | #D4AF37 | Metallic gold for decorative lines |
-| Secondary text | #888888 | Mid-gray for supporting text       |
-| Muted text     | #555555 | Dark gray for subtle elements      |
+## 配色方案
 
-## Typography
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 背景 | #111111 | 近黑画布 |
+| 主文字 | #FFFFFF | 白色，用于所有主文字 |
+| 强调色 | #D4AF37 | 金属金，用于装饰线 |
+| 次要文字 | #888888 | 中灰，用于辅助文字 |
+| 弱化文字 | #555555 | 深灰，用于低调元素 |
 
-| Element         | Font              |
-| --------------- | ----------------- |
-| Title (English) | Helvetica         |
-| Body (English)  | Helvetica / Arial |
-| Body (Chinese)  | Helvetica         |
+## 字体排印
 
-## Design Techniques
+| 元素 | 字体 |
+| --- | --- |
+| 标题（英文） | Helvetica |
+| 正文（英文） | Helvetica / Arial |
+| 正文（中文） | Helvetica |
 
-- Ultra-minimalist with single gold line decoration
-- Ghost mechanism with opacity=0 for hidden actors
-- Black canvas with white typography + gold accents
-- Numbered pillar layout (01/02/03) for structured content
-- Large percentage data display for impact
-- Clean separation with gold divider lines
+## 设计技法
 
-## Page Structure (5 slides)
+- 超极简风格，仅一条金色装饰线
+- 幽灵机制：隐藏的 Actor 设 opacity=0
+- 黑色画布 + 白色字体排印 + 金色点缀
+- 编号柱式版式（01/02/03），承载结构化内容
+- 大号百分比数据展示，制造冲击力
+- 金色分隔线实现干净的分隔
 
-| Slide | Type      | Elements | Description                                 |
-| ----- | --------- | -------- | ------------------------------------------- |
-| 1     | hero      | 23       | Brand title with gold accent line           |
-| 2     | statement | 23       | Centered statement with minimal decoration  |
-| 3     | pillars   | 23       | Numbered 3-column layout with gold dividers |
-| 4     | evidence  | 23       | Large data percentage + bullet points       |
-| 5     | cta       | 23       | Closing with contact information            |
+## 页面结构（5 页幻灯片）
 
-## Reference Script
+| 幻灯片 | 类型 | 元素数 | 描述 |
+| --- | --- | --- | --- |
+| 1 | hero | 23 | 品牌标题配金色装饰线 |
+| 2 | statement | 23 | 居中陈述句，装饰极简 |
+| 3 | pillars | 23 | 编号三列版式，金色分隔线 |
+| 4 | evidence | 23 | 大号百分比数据 + 要点列表 |
+| 5 | cta | 23 | 联系方式收尾页 |
 
-Complete build script available in `build.sh`.
+## 参考脚本
 
-**Recommended slides to read for understanding core design techniques**:
+完整构建脚本见 `build.sh`。
 
-- **Slide 1 (hero)** — gold line + white title on black canvas
-- **Slide 3 (pillars)** — numbered layout with gold dividers
+**建议精读以下幻灯片，理解核心设计技法**：
 
-No need to read all — skim 2-3 representative slides.
+- **Slide 1 (hero)**：黑色画布上的金色装饰线 + 白色标题
+- **Slide 3 (pillars)**：金色分隔线的编号版式
+
+无需全部精读，浏览 2-3 张代表性幻灯片即可。

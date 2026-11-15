@@ -1,19 +1,23 @@
-# Dunning Playbook
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/churn-prevention/references/dunning-playbook.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete guide to recovering failed payments and reducing involuntary churn.
+# 催款手册（Dunning Playbook）
 
----
-
-## Why Dunning Matters
-
-- Failed payments cause 30-50% of all subscription churn
-- Most failed payments are recoverable with the right strategy
-- Subscription businesses lose an estimated $129 billion annually to involuntary churn
-- Effective dunning recovers 50-60% of failed payments
+回收失败扣款、降低被动流失（involuntary churn）的完整指南。
 
 ---
 
-## The Dunning Timeline
+## 催款为什么重要
+
+- 失败扣款造成全部订阅流失的 30-50%
+- 大部分失败扣款用对策略都能挽回
+- 订阅制企业每年因被动流失损失估计 1290 亿美元
+- 有效的催款能挽回 50-60% 的失败扣款
+
+---
+
+## 催款时间线
 
 ```
 Day -30 to -7: Pre-dunning (prevent failures)
@@ -28,18 +32,18 @@ Day 14+:       Win-back sequence begins
 
 ---
 
-## Pre-Dunning: Prevent Failures Before They Happen
+## 催款前预防：把失败挡在发生之前
 
-### Card Expiry Management
+### 卡片到期管理
 
-| Timing | Action |
+| 时机 | 动作 |
 |--------|--------|
-| 30 days before expiry | Email: "Your card ending in 4242 expires next month" |
-| 15 days before expiry | Email: "Update your payment method to avoid interruption" |
-| 7 days before expiry | Email: "Your card expires in 7 days — update now" |
-| 3 days before expiry | In-app banner: "Payment method expiring soon" |
+| 到期前 30 天 | 邮件："尾号 4242 的卡下个月到期" |
+| 到期前 15 天 | 邮件："更新支付方式，避免服务中断" |
+| 到期前 7 天 | 邮件："你的卡 7 天后到期：现在就更新" |
+| 到期前 3 天 | 应用内横幅："支付方式即将到期" |
 
-**Email template — Card expiring:**
+**邮件模板（卡片即将到期）：**
 ```
 Subject: Your card ending in 4242 expires soon
 
@@ -56,86 +60,86 @@ This takes less than 30 seconds.
 — [Product] Team
 ```
 
-### Card Updater Services
+### 卡片自动更新服务
 
-Major card networks offer automatic card update programs:
+主要卡组织都提供卡片自动更新计划：
 
-| Service | Network | What It Does |
+| 服务 | 卡组织 | 作用 |
 |---------|---------|--------------|
-| Visa Account Updater (VAU) | Visa | Auto-updates stored card numbers and expiry dates |
-| Mastercard Automatic Billing Updater (ABU) | Mastercard | Same for Mastercard |
-| Amex Cardrefresher | American Express | Same for Amex |
+| Visa Account Updater (VAU) | Visa | 自动更新存储的卡号和有效期 |
+| Mastercard Automatic Billing Updater (ABU) | Mastercard | Mastercard 同理 |
+| Amex Cardrefresher | American Express | Amex 同理 |
 
-**Impact:** Reduces hard declines from expired/replaced cards by 30-50%.
+**效果：**把因卡片过期/换卡导致的硬拒付减少 30-50%。
 
-**How to enable:**
-- **Stripe**: Automatic — enabled by default
-- **Chargebee**: Enabled through gateway settings
-- **Recurly**: Built-in, enabled by default
-- **Braintree**: Contact processor to enable
+**如何开启：**
+- **Stripe**：自动，默认开启
+- **Chargebee**：通过网关设置开启
+- **Recurly**：内置，默认开启
+- **Braintree**：联系收单方开启
 
-### Backup Payment Methods
+### 备用支付方式
 
-Prompt for a second payment method:
-- During signup: "Add a backup payment method" (low conversion)
-- After first successful payment: "Protect your account with a backup card" (better timing)
-- After a failed payment is recovered: "Add a backup to prevent future interruptions" (best timing — they felt the pain)
+引导用户添加第二种支付方式：
+- 注册时："添加备用支付方式"（转化率低）
+- 首次扣款成功后："用备用卡保护你的账户"（时机更好）
+- 失败扣款被挽回后："添加备用方式，防止再次中断"（时机最佳：他们刚痛过一次）
 
-### Pre-Billing Notifications
+### 扣款前通知
 
-For annual plans or high-value subscriptions:
-- Email 7 days before renewal with amount and date
-- Include link to update payment method
-- Show what's included in the renewal
-- Required by some regulations for auto-renewals
+对年费套餐或高价值订阅：
+- 续费前 7 天发邮件，写明金额和日期
+- 附上更新支付方式的链接
+- 展示续费包含的内容
+- 部分法规对自动续费有此要求
 
 ---
 
-## Smart Retry Strategy
+## 智能重试策略
 
-### Decline Type Classification
+### 拒付类型分类
 
-| Code | Type | Meaning | Retry? |
+| 代码 | 类型 | 含义 | 是否重试？ |
 |------|------|---------|--------|
-| `insufficient_funds` | Soft | Temporarily low balance | Yes — retry in 2-3 days |
-| `card_declined` (generic) | Soft | Various temporary reasons | Yes — retry 3-4 times |
-| `processing_error` | Soft | Gateway/network issue | Yes — retry within 24h |
-| `expired_card` | Hard | Card is expired | No — request new card |
-| `stolen_card` | Hard | Card reported stolen | No — request new card |
-| `do_not_honor` | Soft/Hard | Bank refused (ambiguous) | Try once more, then ask for new card |
-| `authentication_required` | Auth | SCA/3DS needed | Send customer to authenticate |
+| `insufficient_funds` | 软 | 余额暂时不足 | 是：2-3 天后重试 |
+| `card_declined`（泛指） | 软 | 各种临时原因 | 是：重试 3-4 次 |
+| `processing_error` | 软 | 网关/网络问题 | 是：24 小时内重试 |
+| `expired_card` | 硬 | 卡已过期 | 否：请用户换新卡 |
+| `stolen_card` | 硬 | 卡被挂失 | 否：请用户换新卡 |
+| `do_not_honor` | 软/硬 | 银行拒绝（原因不明） | 再试一次，然后请用户换卡 |
+| `authentication_required` | 验证 | 需要 SCA/3DS | 引导客户完成验证 |
 
-### Retry Schedule by Provider
+### 各服务商的重试安排
 
-**Stripe (Smart Retries — recommended):**
-- Enable "Smart Retries" in Stripe Dashboard → Billing → Settings
-- Stripe's ML model picks optimal retry timing based on billions of transactions
-- Typically 4-8 retry attempts over 3-4 weeks
-- Recovers ~15% more than fixed-schedule retries
+**Stripe（智能重试，推荐）：**
+- 在 Stripe Dashboard → Billing → Settings 里开启 "Smart Retries"
+- Stripe 的机器学习模型基于数十亿笔交易选择最优重试时机
+- 通常在 3-4 周内重试 4-8 次
+- 比固定节奏重试多挽回约 15%
 
-**Manual retry schedule (if no smart retries):**
+**手动重试节奏（没有智能重试时）：**
 
-| Retry | Timing | Best Day/Time |
+| 次数 | 时机 | 最佳日期/时间 |
 |-------|--------|--------------|
-| 1 | Day 1 (24h after failure) | Morning, same day of week as original |
-| 2 | Day 3 | Try a different time of day |
-| 3 | Day 5 | After typical payday (1st, 15th) |
-| 4 | Day 7 | Morning of the next business day |
-| 5 (final) | Day 10 | Last attempt before grace period ends |
+| 1 | 第 1 天（失败后 24 小时） | 早上，与原扣款同一星期几 |
+| 2 | 第 3 天 | 换一天中的不同时段 |
+| 3 | 第 5 天 | 常见发薪日之后（1 号、15 号） |
+| 4 | 第 7 天 | 下一工作日的早上 |
+| 5（最后一次） | 第 10 天 | 宽限期结束前的最后一次尝试 |
 
-**Retry timing insights:**
-- Retry on the same day of month the original payment succeeded
-- Retry after common paydays (1st and 15th of the month)
-- Avoid retrying on weekends (lower approval rates)
-- Morning retries (8-10am local time) perform slightly better
+**重试时机要点：**
+- 在原扣款成功的同一个月同一天重试
+- 在常见发薪日（每月 1 号和 15 号）之后重试
+- 避免周末重试（通过率更低）
+- 早间重试（当地时间 8-10 点）效果略好
 
 ---
 
-## Dunning Email Sequence
+## 催款邮件序列
 
-### Email 1: Payment Failed (Day 0)
+### Email 1：扣款失败（第 0 天）
 
-**Tone:** Friendly, matter-of-fact. No alarm.
+**语气：**友好、就事论事。不制造恐慌。
 
 ```
 Subject: Action needed — your payment didn't go through
@@ -157,9 +161,9 @@ Need help? Just reply to this email.
 — [Product] Team
 ```
 
-### Email 2: Reminder (Day 3)
+### Email 2：提醒（第 3 天）
 
-**Tone:** Helpful, slightly more urgent.
+**语气：**帮忙口吻，紧迫感略强。
 
 ```
 Subject: Quick reminder — update your payment for [Product]
@@ -180,9 +184,9 @@ Questions? Reply here and we'll help.
 — [Product] Team
 ```
 
-### Email 3: Urgency (Day 7)
+### Email 3：紧迫（第 7 天）
 
-**Tone:** Direct, clear consequences.
+**语气：**直接，后果说清。
 
 ```
 Subject: Your [Product] account will be paused in 3 days
@@ -207,9 +211,9 @@ updating your payment method.
 — [Product] Team
 ```
 
-### Email 4: Final Warning (Day 10)
+### Email 4：最后警告（第 10 天）
 
-**Tone:** Final, clear, no guilt.
+**语气：**收尾，清楚，不带指责。
 
 ```
 Subject: Last chance to keep your [Product] account active
@@ -234,58 +238,58 @@ will be paused automatically.
 
 ---
 
-## Grace Period Management
+## 宽限期管理
 
-### What Happens During Grace Period
+### 宽限期内会发生什么
 
-| Setting | Recommendation |
+| 设置项 | 建议 |
 |---------|---------------|
-| Duration | 7-14 days after final retry |
-| Access | Degraded (read-only) or full access |
-| Visibility | In-app banner: "Payment past due — update to continue" |
-| Retry | Continue background retries during grace |
-| Communication | Dunning emails continue |
+| 时长 | 最后一次重试后 7-14 天 |
+| 访问权限 | 降级（只读）或完整访问 |
+| 界面呈现 | 应用内横幅："扣款已逾期，更新后继续使用" |
+| 重试 | 宽限期内继续后台重试 |
+| 沟通 | 催款邮件继续发 |
 
-### Access Degradation Options
+### 访问降级选项
 
-**Option A: Full access during grace (recommended for B2B)**
-- Lower friction, customer feels respected
-- Higher recovery rate (they still see value)
-- Risk: some customers exploit the grace period
+**方案 A：宽限期内完整访问（B2B 推荐）**
+- 摩擦更小，客户感到被尊重
+- 挽回率更高（客户还能看到价值）
+- 风险：部分客户会钻宽限期的空子
 
-**Option B: Read-only access (recommended for B2C)**
-- Can view but not create/edit
-- Creates urgency without data loss fear
-- Clear message: "Update payment to resume full access"
+**方案 B：只读访问（B2C 推荐）**
+- 能看，不能建/改
+- 制造紧迫感，又没有丢数据的恐慌
+- 信息明确："更新支付方式即可恢复完整访问"
 
-**Option C: Immediate lockout (not recommended)**
-- Aggressive, damages relationship
-- Lower recovery rate
-- Only appropriate for very low-cost plans
+**方案 C：立即锁定（不推荐）**
+- 太激进，伤关系
+- 挽回率更低
+- 只适合极低价套餐
 
-### Post-Grace Period
+### 宽限期结束后
 
-| Timing | Action |
+| 时机 | 动作 |
 |--------|--------|
-| Grace period ends | Pause account (not delete) |
-| Day 1 post-pause | "Your account has been paused" email |
-| Day 7 post-pause | "Your data is still here" reminder |
-| Day 30 post-pause | Win-back attempt with new offer |
-| Day 60 post-pause | Final win-back |
-| Day 90 post-pause | Data deletion warning (if applicable) |
+| 宽限期结束 | 暂停账户（不是删除） |
+| 暂停后第 1 天 | "你的账户已暂停"邮件 |
+| 暂停后第 7 天 | "你的数据还在"提醒 |
+| 暂停后第 30 天 | 带新优惠的召回尝试 |
+| 暂停后第 60 天 | 最后一次召回 |
+| 暂停后第 90 天 | 数据删除警告（如适用） |
 
 ---
 
-## Provider-Specific Setup
+## 各服务商的配置
 
 ### Stripe
 
-**Enable Smart Retries:**
+**开启智能重试：**
 1. Dashboard → Settings → Billing → Subscriptions and emails
-2. Enable "Smart Retries" under retry rules
-3. Set failed payment emails in Dashboard → Settings → Emails
+2. 在重试规则下开启 "Smart Retries"
+3. 在 Dashboard → Settings → Emails 里配置扣款失败邮件
 
-**Custom retry rules (if not using Smart Retries):**
+**自定义重试规则（不用智能重试时）：**
 ```
 Retry 1: 3 days after failure
 Retry 2: 5 days after failure
@@ -293,56 +297,56 @@ Retry 3: 7 days after failure
 Final:   Mark subscription as unpaid after last retry
 ```
 
-**Webhook events to handle:**
-- `invoice.payment_failed` — trigger dunning
-- `invoice.paid` — cancel dunning, restore access
-- `customer.subscription.updated` — status changes
-- `customer.subscription.deleted` — final cancellation
+**需要处理的 webhook 事件：**
+- `invoice.payment_failed`：触发催款
+- `invoice.paid`：停止催款，恢复访问
+- `customer.subscription.updated`：状态变更
+- `customer.subscription.deleted`：最终取消
 
 ### Chargebee
 
-**Built-in dunning:**
+**内置催款：**
 1. Settings → Configure Chargebee → Retry Settings
-2. Configure retry attempts and intervals
+2. 配置重试次数和间隔
 3. Settings → Configure Chargebee → Email Notifications → Dunning
 
-**Dunning options:**
-- Automatic retries with configurable schedule
-- Built-in dunning emails (customizable templates)
-- Grace period configuration per plan
+**催款选项：**
+- 自动重试，节奏可配置
+- 内置催款邮件（模板可自定义）
+- 按套餐配置宽限期
 
 ### Paddle
 
-**Managed dunning:**
-- Paddle handles retries and dunning automatically
-- Limited customization (Paddle manages the relationship)
-- **Paddle Billing webhooks** (dot-separated `event_type` names):
-  - `transaction.payment_failed` reports a failed payment attempt. Use its `subscription_id` to associate a subscription renewal; a failed one-off transaction is not subscription churn.
-  - `subscription.past_due` reports that the subscription is past due.
-  - `subscription.canceled` reports an effective cancellation. A cancellation scheduled for the next billing period emits `subscription.updated` first; retain access according to the current subscription state until that change takes effect.
-- Configure notification subscriptions for these exact names. `subscription.payment_failed` and `subscription.cancelled` are not Paddle Billing event types; do not mix Billing webhooks with the separate Paddle Classic alert names.
-- Verify the [payment-failure](https://developer.paddle.com/webhooks/transactions/transaction-payment-failed/) and [cancellation](https://developer.paddle.com/webhooks/subscriptions/subscription-canceled/) contracts before wiring account state changes.
-- Best for hands-off approach
+**托管催款：**
+- Paddle 自动处理重试和催款
+- 自定义空间有限（客户关系由 Paddle 管理）
+- **Paddle Billing webhook**（点分式 `event_type` 命名）：
+  - `transaction.payment_failed` 表示一次扣款失败。用其中的 `subscription_id` 关联订阅续费；一次性交易的失败不属于订阅流失。
+  - `subscription.past_due` 表示订阅已逾期。
+  - `subscription.canceled` 表示订阅已实际取消。安排在下一账期生效的取消会先发出 `subscription.updated`；在该变更生效之前，按订阅当前状态保留访问权限。
+- 配置通知订阅时使用这些精确名称。`subscription.payment_failed` 和 `subscription.cancelled` 不是 Paddle Billing 的事件类型；不要把 Billing webhook 与 Paddle Classic 那套独立的告警名称混用。
+- 在为账户状态变更接线之前，先核对 [payment-failure](https://developer.paddle.com/webhooks/transactions/transaction-payment-failed/) 与 [cancellation](https://developer.paddle.com/webhooks/subscriptions/subscription-canceled/) 的契约。
+- 适合想完全甩手的团队
 
 ### Recurly
 
-**Revenue Recovery:**
+**收入挽回（Revenue Recovery）：**
 1. Configuration → Dunning Management
-2. Set retry schedule per plan
-3. Configure grace period and final action (pause vs cancel)
+2. 按套餐设置重试节奏
+3. 配置宽限期和最终动作（暂停 vs. 取消）
 
-**Advanced features:**
-- Machine-learning retry optimization
-- Per-plan dunning schedules
-- Built-in Account Updater
+**进阶功能：**
+- 机器学习重试优化
+- 按套餐的催款计划
+- 内置 Account Updater
 
 ---
 
-## In-App Dunning
+## 应用内催款
 
-Don't rely on email alone. Show payment failures in the app:
+别只靠邮件。在应用内直接呈现扣款失败：
 
-### Banner Pattern
+### 横幅模式
 ```
 ┌──────────────────────────────────────────────────────┐
 │ ⚠ Your payment of $29 failed. Update your card to    │
@@ -350,13 +354,13 @@ Don't rely on email alone. Show payment failures in the app:
 └──────────────────────────────────────────────────────┘
 ```
 
-**Rules:**
-- Show on every page load during dunning period
-- Allow dismiss (but show again next session)
-- Direct link to payment update (fewest clicks possible)
-- Don't block the product — let them continue using it
+**规则：**
+- 催款期间每次页面加载都显示
+- 允许关闭（但下次会话再显示）
+- 直达更新支付方式入口（点击次数越少越好）
+- 别挡着产品：让他们继续用
 
-### Modal Pattern (for final warning)
+### 模态框模式（最后警告用）
 ```
 ┌─────────────────────────────────────┐
 │                                     │
@@ -375,32 +379,32 @@ Don't rely on email alone. Show payment failures in the app:
 
 ---
 
-## Measuring Dunning Performance
+## 度量催款效果
 
-### Key Metrics
+### 关键指标
 
-| Metric | How to Calculate | Target |
+| 指标 | 计算方式 | 目标 |
 |--------|-----------------|--------|
-| Recovery rate | Recovered payments / Total failed | 50-60% |
-| Recovery rate by decline type | Recovered / Failed per type | Soft: 70%+, Hard: 40%+ |
-| Time to recovery | Days from failure to successful payment | <5 days |
-| Pre-dunning prevention rate | Prevented failures / Expected failures | 20-30% |
-| Dunning email open rate | Opens / Sent per email | 60%+ |
-| Dunning email click rate | Clicks / Opens per email | 30%+ |
-| Revenue recovered (monthly) | Sum of recovered payment amounts | Track trend |
-| Revenue lost to involuntary churn | Sum of failed + unrecovered amounts | Track trend |
+| 挽回率 | 挽回的扣款 / 全部失败 | 50-60% |
+| 按拒付类型的挽回率 | 各类型的挽回 / 失败 | 软拒付 70%+，硬拒付 40%+ |
+| 挽回耗时 | 从失败到扣款成功的天数 | <5 天 |
+| 催款前预防率 | 被预防的失败 / 预期失败 | 20-30% |
+| 催款邮件打开率 | 打开 / 发送（每封） | 60%+ |
+| 催款邮件点击率 | 点击 / 打开（每封） | 30%+ |
+| 挽回收入（月度） | 挽回金额合计 | 追踪趋势 |
+| 被动流失损失收入 | 失败且未挽回的金额合计 | 追踪趋势 |
 
-### Benchmarking
+### 基准对比
 
-**By company stage:**
+**按公司阶段：**
 
-| Stage | Typical Involuntary Churn | Target After Optimization |
+| 阶段 | 典型被动流失 | 优化后目标 |
 |-------|--------------------------|--------------------------|
-| Early (< $1M ARR) | 3-5% of MRR/month | 1-2% |
-| Growth ($1-10M ARR) | 2-4% of MRR/month | 0.5-1.5% |
-| Scale ($10M+ ARR) | 1-3% of MRR/month | 0.3-0.8% |
+| 早期（< $1M ARR） | MRR 的 3-5%/月 | 1-2% |
+| 成长期（$1-10M ARR） | MRR 的 2-4%/月 | 0.5-1.5% |
+| 规模期（$10M+ ARR） | MRR 的 1-3%/月 | 0.3-0.8% |
 
-### ROI Calculation
+### ROI 测算
 
 ```
 Assumed failed invoice amount:       $10,000/month
@@ -413,4 +417,4 @@ Recovered-revenue / tooling ratio:   6-15x
 After tooling alone / tooling cost:  5-14x (500-1,400%)
 ```
 
-The 6–15x is recovered cash ÷ tooling cost. Net of tooling it is 5–14x (`(3,000 - 500) / 500 = 5`; `(3,000 - 200) / 200 = 14`), before labor and payment fees. Validate the 60% recovery target against your own baseline. See [gross versus net profit](https://stripe.com/resources/more/gross-vs-net-profit-what-businesses-need-to-know).
+6–15x 是回收现金 ÷ 工具成本。扣除工具成本后是 5–14x（`(3,000 - 500) / 500 = 5`；`(3,000 - 200) / 200 = 14`），这是未计人力和支付手续费之前的数字。请用你自己的基线来验证 60% 的回收率目标。参见[毛利与净利](https://stripe.com/resources/more/gross-vs-net-profit-what-businesses-need-to-know)。

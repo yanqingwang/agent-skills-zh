@@ -1,21 +1,25 @@
-# Read
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/mode-read.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-`impeccable concept-seed --mode read` prints the two sections below as its MODE RULES block. On a Read surface the visitor came to understand something, so the page is first a document of its kind, framed by the world.
+# Read（阅读）
 
-## Directions
+`impeccable concept-seed --mode read` 把下面两节作为它的 MODE RULES 块打印。在 Read 界面上，访客是来理解某样东西的，所以页面首先是一份它这一类的文档，由世界装裱。
 
-The reader's question leads, and comprehension and wayfinding stay intact at every step. Documentation reads as documentation, a guide as a guide, an article as an article, a changelog as a changelog. The world owns the frame and serves the column. The frame is the masthead, the navigation rail, the ground, the title and section openers, and the way code, tables, and callouts are set: there the world's palette, type, and signature move commit fully, so the page could belong to no other product. The reading column inside it stays calm: a reading face, real contrast, a real measure, nothing performing behind the text. The world never supplies the reading order or replaces the navigation with something a reader has to learn. Documentation still reads as documentation, a guide as a guide, an article as an article.
+## 方向
 
-Candidates from the world's own publishing traditions transfer best: reference books, type specimens, timetables, field guides, technical manuals, scholarly apparatus, a newspaper's wayfinding. A tool, instrument, or fictional interface from the audience's world comes back as a costume on a page meant for reading: take from it only what transfers as type, palette, density, and a signature move, or replace it from your list. When a catalog world's source is itself an interface language, the same limit holds: it lends type, density, palette, and one signature move, while navigation and controls stay the standard ones for the platform.
+读者的问题领先，理解与寻路在每一步都保持完好。文档读起来是文档，指南是指南，文章是文章，更新日志是更新日志。世界拥有画框，为栏服务。画框是报头、导航栏、底面、标题与小节起笔，以及代码、表格、callout 的排法：世界的色板、字体和签名动作在那里全额贯彻，让页面不可能属于别的产品。框内的阅读栏保持安静：一款阅读字体、真实的对比度、真实的行长，文本背后没有任何东西在表演。世界绝不提供阅读顺序，也绝不把导航换成读者必须重新学的东西。文档仍然读起来是文档，指南是指南，文章是文章。
 
-Write each direction's first viewport as the document's shell first: the navigation and where the reader stands in it, the title and the opening that answers or frames the reader's question, the reading column, and the way forward (contents, section headings, next and previous). Then name where the world owns the frame and where the signature move lives: a masthead, a coloured rail, a running head, a margin system, a numbering scheme, a way of setting code or tables. When you weigh fused challengers, product clarity includes how fast a reader finds and understands the answer.
+从世界自身的出版传统来的候选转译得最好：工具书、字体样本册、时刻表、野外指南、技术手册、学术注释体系、报纸的寻路。受众世界里的一件工具、仪器或虚构界面，到一页为阅读而设的纸上就成了戏服：只取其中能转译为字体、色板、密度和一个签名动作的部分，其余从你的清单里替换。目录世界的来源本身就是一门界面语言时，同样的限制成立：它借出字体、密度、色板和一个签名动作，导航与控件仍是平台标准件。
 
-## Comps
+把每个方向的首视口先写成文档壳层：导航与读者在其中的位置、回答或框住读者问题的标题与开篇、阅读栏，以及往前的路（目录、小节标题、上一篇/下一篇）。然后点名世界拥有画框的地方和签名动作住的地方：报头、彩色侧栏、页眉书眉、边注系统、编号方案、一种代码或表格的排法。掂量融合后的挑战者时，产品清晰度也包括读者多快找到并理解答案。
 
-The comp is the document as the reader meets it: a frame the world owns, in the direction's committed palette and type, around a calm reading column at a real measure (on the web about 60 to 75 characters with body text near 16px; in a native app, the platform's body text style and its readable width), with headings in a clear hierarchy and the wayfinding that carries the reader through. Body text is set in a reading face with real contrast against its ground; a monospace face is for code, parameters, and small labels, never the running text or the headings by default. Code, tables, notes, and figures sit in the standard forms readers already know, set in the world's type and palette. The signature move is one system used where it earns its place, never a frame repeated around every element. The world never supplies the page's reading order, so a document never reads as a poster, a magazine cover, or a book photographed open.
+## 设计稿
 
-Prompt with the real material: the actual title, a real opening paragraph, real section names, and one example of the hardest content the surface holds (a code sample, a reference table, a diagram), never filler text.
+设计稿就是读者迎面遇到的那份文档：世界拥有的画框，用该方向的贯彻色板与字体，围着一栏安静的阅读栏，行长真实（web 上约 60 到 75 字符，正文接近 16px；原生应用里是平台的正文样式与其可读宽度），标题层级分明，寻路载着读者走完全程。正文用一款阅读字体排，与其底面有真实对比；等宽字体给代码、参数和小标签，默认绝不用于行文或标题。代码、表格、注记和插图放在读者已经认识的标准形态里，用世界的字体与色板来排。签名动作是一套体系，用在它配得上位置的地方，绝不是围着每个元素重复一圈画框。世界绝不提供页面的阅读顺序，所以文档永远不会读成海报、杂志封面，或一本摊开被拍下来的书。
 
-Comps two and three vary the reading structure and how the frame carries the world, never the column: the navigation model (sidebar tree, top tabs, inline contents), the column and margin system, how densely the reference material sits, and where the signature move appears. Each must be recognisably different from the first at thumbnail size; a variant only its prompt can tell apart adds no choice. A variant that pushes world material into the reading column makes reading harder and goes the wrong way.
+提示词用真实材料：真实标题、真实开篇段、真实小节名，以及该界面最难内容的一个实例（一段代码示例、一张参照表、一幅图），绝不用填充文本。
 
-Self-check every render: can a reader tell where they are and where to go next, and read the body comfortably? Then cover the name: could this be any other product's documentation? If so, the frame has not taken the world; push the masthead, rail, ground, and openers further into it. If the render reads as an artifact of the world before it reads as a document, the world has reached the column; pull it back to the frame.
+第二、三张设计稿变的是阅读结构和画框如何承载世界，绝不动那一栏：导航模型（侧边树、顶部标签、行内目录）、栏与边注体系、参照材料排多密、签名动作出现在哪。每张在缩略图尺寸下都要与第一张认得出差别；只有提示词能分辨的变体不增加选择。把世界素材推进阅读栏的变体让阅读更难，方向就错了。
+
+每张渲染都自检：读者能说出自己在哪里、下一步去哪，并舒适地读完正文吗？然后盖上名字：这可能是任何其他产品的文档吗？如果是，画框还没有吃进世界；把报头、侧栏、底面和起笔再往世界深处推。如果渲染先读起来像世界的制品、再读起来像文档，世界已经伸进了栏里；把它拉回画框。

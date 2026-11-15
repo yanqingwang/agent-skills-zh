@@ -1,28 +1,32 @@
-# Comparison research and synthesis
+> **中文汉化版** · 上游：[mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) · 原文件：`skills/last30days/references/comparison.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Read for explicit comparison intent before engine execution and synthesis. The root output laws define the comparison exceptions.
+# 对比研究与综述
 
-## If QUERY_TYPE = COMPARISON
+有明确对比意图时，在引擎执行和综述之前阅读。对比例外由根级输出法则定义。
 
-When the user asks "X vs Y" (or "X vs Y vs Z"), the engine fans out N full `pipeline.run()` calls in parallel — one per entity. This restored the old N-pass architecture (reverted the one-pass latency optimization that removed per-entity depth); parallel execution keeps wall clock ≈ a single pass.
+## 若 QUERY_TYPE = COMPARISON
 
-**When host web search is available, per-entity resolution is mandatory.** Resolve every entity in one pre-engine isolated web search dispatch (research runbook). For each entity, resolve the full Step 0.55 stack (X handle, subreddits, GitHub user/repos, news context). Then assemble a `--competitors-plan` JSON mapping each peer to its targeting, and invoke the engine once with the vs-topic string. When host web search is unavailable, skip Steps 0.55 and 0.75 as the root requires. Invoke the no-web-search command below without a host query plan; the engine resolves the main entity and each peer independently when a configured resolver exists, then plans each sub-run internally. Without a configured resolver, keyword search still runs, but entity targeting can be thinner. A Grok Bot X connector can still supply per-entity post envelopes through `--competitors-plan` without supplying a query plan.
+用户问 "X vs Y"（或 "X vs Y vs Z"）时，引擎并行发起 N 次完整 `pipeline.run()` 调用：每个实体一次。这恢复了旧的 N 轮架构（回退了牺牲每实体深度的单轮延迟优化）；并行执行让总耗时约等于单轮。
 
-Peer targeting entries accept `x_handle`, `x_related`, `subreddits`, `github_user`, `github_repos`, `trustpilot_domain`, `context`, and `x_posts`. Use arrays for related handles, subreddits, and repositories. Other peer targeting keys are ignored; do not invent fields for dedicated subreddits, TikTok, or Instagram.
+**宿主网页搜索可用时，逐实体解析是强制的。** 在一次引擎前的隔离网页搜索调度中解析每个实体（研究运行手册）。对每个实体解析完整的 Step 0.55 栈（X 句柄、subreddit、GitHub 用户/仓库、新闻背景）。然后组装把每个对手映射到其定向信息的 `--competitors-plan` JSON，用 vs 主题串调用一次引擎。宿主网页搜索不可用时，按根级要求跳过 Step 0.55 和 0.75。用下方无网页搜索命令调用，不带宿主查询计划；存在已配置解析器时，引擎独立解析主实体和每个对手，再在内部规划各子运行。没有已配置解析器时，关键词检索仍会运行，但实体定向可能更薄。Grok Bot X 连接器仍可经 `--competitors-plan` 提供逐实体帖子信封，无需查询计划。
 
-**Output shape per run:**
-- For `--emit=compact` / `--emit=md`, there is no separate merged Markdown raw file. The main topic saves to `{main-slug}-raw.md`; each peer saves to `{peer-slug}-raw.md`.
-- For `--emit=html`, the main saved artifact is the merged comparison HTML at `{main-slug}-vs-{peer-slug}-raw-html[...].html`; each peer may also save its own per-entity HTML artifact.
-- The engine logs every written file as `[last30days] Saved output to {path}` and, for comparison runs, follows with `[last30days] Comparison artifact set: main={path}; peers={path, ...}`. Treat that log line as authoritative instead of recomputing paths from slugs.
-- Stdout shows a merged comparison with the `## Head-to-Head` scaffold + per-entity Resolved Entities block.
+对手定向条目接受 `x_handle`、`x_related`、`subreddits`、`github_user`、`github_repos`、`trustpilot_domain`、`context` 和 `x_posts`。相关句柄、subreddit 和仓库用数组。其他对手定向键会被忽略；不要为专属 subreddit、TikTok 或 Instagram 发明字段。
 
-On hosts with web search, generate `QUERY_PLAN_JSON` through Step 0.75 for **TOPIC_A only**, not the whole vs-string. The main entity receives that `--plan`; peer sub-runs plan independently. The competitors plan supplies peer targeting, not peer query plans.
+**每次运行的输出形态：**
+- `--emit=compact` / `--emit=md` 时没有单独的合并 Markdown 原始文件。主主题保存为 `{main-slug}-raw.md`；每个对手保存为 `{peer-slug}-raw.md`。
+- `--emit=html` 时，主保存产物是位于 `{main-slug}-vs-{peer-slug}-raw-html[...].html` 的合并对比 HTML；每个对手也可能另存自己的逐实体 HTML 产物。
+- 引擎把每个写入文件记录为 `[last30days] Saved output to {path}`，对比运行还会跟一行 `[last30days] Comparison artifact set: main={path}; peers={path, ...}`。以该日志行为准，不要从 slug 重算路径。
+- stdout 展示带 `## Head-to-Head` 脚手架和逐实体 Resolved Entities 块的合并对比。
 
-Build `COMPETITORS_PLAN_JSON` as valid JSON keyed by the exact peer names, with JSON-encoded string values. For example, a peer entry can contain `{"Peer Widget":{"x_handle":"peer_widget","subreddits":["peer_widget"],"context":"The product says \"zero setup\""}}`. On a Grok Bot with the X connector, include every entity's `x_posts` envelope path, including the main entity, and matching `x_handle` and `x_related` fields for its handle lanes. Pass the main entity's handle and related handles through the outer flags as well. Encode quotes, backslashes, and newlines in names and fetched context; never paste raw values between JSON quotes. Use a quoted heredoc delimiter that is absent from the data. The same delimiter rule applies to the topic and main-targeting heredocs.
+网页搜索宿主上，只对 **TOPIC_A**（不是整个 vs 串）经 Step 0.75 生成 `QUERY_PLAN_JSON`。主实体接收该 `--plan`；对手子运行独立规划。对手计划提供对手定向，不提供对手查询计划。
 
-For a two-entity comparison, omit ` vs {TOPIC_C}` from the topic heredoc in either command. For more entities, include each name up to the engine's comparison limit.
+把 `COMPETITORS_PLAN_JSON` 构建为合法 JSON，键为对手的准确名字，值为 JSON 编码的字符串。例如一个对手条目可以是 `{"Peer Widget":{"x_handle":"peer_widget","subreddits":["peer_widget"],"context":"The product says \"zero setup\""}}`。带 X 连接器的 Grok Bot 上，要包含每个实体（含主实体）的 `x_posts` 信封路径，以及其句柄通道对应的 `x_handle` 和 `x_related` 字段。主实体的句柄和相关句柄也要经外层 flag 传入。名字和抓取到的 context 中的引号、反斜杠、换行都要编码；绝不把原始值直接粘进 JSON 引号之间。选用数据中不出现的带引号 heredoc 分隔符。主题和主实体定向的 heredoc 同样遵守该分隔符规则。
 
-### With host web search
+双实体对比时，任一命令的主题 heredoc 中省略 ` vs {TOPIC_C}`。更多实体时，在引擎对比上限之内纳入每个名字。
+
+### 宿主有网页搜索时
 
 ```bash
 (
@@ -78,13 +82,13 @@ QUERY_PLAN_EOF
 )
 ```
 
-For any additional outer targeting flag, capture its value through a quoted heredoc and add it to `MAIN_TARGETING` with a quoted variable expansion. Omit unresolved flags. Never paste a topic, handle, subreddit, or fetched context directly into shell command words. The quoted heredocs keep shell-active text literal; `json.tool` rejects malformed peer JSON before the research run.
+任何其他外层定向 flag，其值都经带引号 heredoc 捕获，并以带引号的变量展开加入 `MAIN_TARGETING`。未解析的 flag 省略。绝不把主题、句柄、subreddit 或抓取的 context 直接粘进 shell 命令词。带引号 heredoc 让 shell 活性文本保持字面；`json.tool` 会在研究运行前拒绝格式错误的对手 JSON。
 
-The cleanup trap removes the competitors plan file after research. For a later HTML export, follow `save-html-brief.md` with `--cached-report` and the original topic. Do not replay the removed plan path. The cache preserves every entity's report and targeting; if the cache expires, recreate the plans before running research again.
+清理 trap 会在研究后删除对手计划文件。之后要导出 HTML 时，按 `save-html-brief.md` 执行，用 `--cached-report` 和原始主题。不要重放已删除的计划路径。缓存保留每个实体的报告和定向；缓存过期时，先重建计划再重新研究。
 
-### Without host web search
+### 宿主无网页搜索时
 
-On a Grok Bot with the official X connector, follow `grok-bot-x.md` to fetch and write one envelope per entity before this command. Replace `COMPETITORS_PLAN_JSON` with JSON keyed by every entity name, including the main one, containing each envelope's absolute path as `x_posts`. When an envelope has `from` or `mention` calls, its plan entry must also contain the matching `x_handle`; when it has `related` calls, include their handles as an `x_related` array. For example, `{"Main Brand":{"x_posts":"/tmp/main.json","x_handle":"mainbrand"},"Peer Brand":{"x_posts":"/tmp/peer.json","x_handle":"peerbrand"}}`. Set `TOPIC_A_HANDLE` below to the main entity's matching handle and `TOPIC_A_RELATED` to its comma-separated related handles, or leave them empty when no handles are known. The main plan entry validates its envelope, while the outer flags target its pipeline run. With no known handle, fetch only a topic call and omit handle fields. Run the command in the same shell as the envelope setup so its parent cleanup trap remains active. Other hosts use this command without a competitors plan.
+带官方 X 连接器的 Grok Bot 上，先按 `grok-bot-x.md` 为每个实体抓取并写入一个信封，再运行本命令。把 `COMPETITORS_PLAN_JSON` 替换为以每个实体名（含主实体）为键的 JSON，值含该信封的绝对路径作为 `x_posts`。信封含 `from` 或 `mention` 调用时，其计划条目还须含对应的 `x_handle`；含 `related` 调用时，把它们的句柄作为 `x_related` 数组。例如 `{"Main Brand":{"x_posts":"/tmp/main.json","x_handle":"mainbrand"},"Peer Brand":{"x_posts":"/tmp/peer.json","x_handle":"peerbrand"}}`。把下方 `TOPIC_A_HANDLE` 设为主实体对应的句柄，`TOPIC_A_RELATED` 设为其逗号分隔的相关句柄；没有已知句柄就留空。主实体的计划条目校验其信封，外层 flag 定向其 pipeline 运行。没有已知句柄时只抓一次 topic 调用并省略句柄字段。在与信封设置相同的 shell 中运行本命令，父级清理 trap 才能保持有效。其他宿主直接用本命令，不带对手计划。
 
 ```bash
 (
@@ -121,28 +125,28 @@ fi
 )
 ```
 
-This branch has no host-authored `--plan`. The only no-web-search `--competitors-plan` is the Grok Bot connector handoff above. If the user supplied explicit targeting flags, pass those values through quoted variables as above. Do not fabricate a host query plan or pretend that empty `## Resolved Entities` fields prove Step 0.55 was skipped on a host that cannot run it.
+本分支没有宿主编写的 `--plan`。无网页搜索场景下唯一的 `--competitors-plan` 就是上文的 Grok Bot 连接器交接。用户给了显式定向 flag 时，按上文经带引号变量传值。不要伪造宿主查询计划，也不要假装空的 `## Resolved Entities` 字段能证明在不支持该步骤的宿主上跳过了 Step 0.55。
 
-Topic A (the main topic, first in the vs-string) uses outer `--x-handle`, `--x-related`, `--subreddits`, `--github-user`, `--github-repo`, `--trustpilot-domain`, `--tiktok-*`, `--ig-creators` as usual. Topics B and C get their targeting from `--competitors-plan` entries (keyed by entity name, case-insensitive) — a main-topic entry does not override those outer targeting flags, so the main topic's Trustpilot domain must ride the outer flag. Per-entity `x_posts` entries are the explicit exception: they can supply the main entity's connector envelope as well as peer envelopes.
+主题 A（主主题，vs 串中的第一个）照常使用外层 `--x-handle`、`--x-related`、`--subreddits`、`--github-user`、`--github-repo`、`--trustpilot-domain`、`--tiktok-*`、`--ig-creators`。主题 B 和 C 的定向来自 `--competitors-plan` 条目（按实体名做键，大小写不敏感）：主主题条目不会覆盖那些外层定向 flag，所以主主题的 Trustpilot 域必须走外层 flag。逐实体 `x_posts` 条目是显式例外：它既能提供对手信封，也能提供主实体的连接器信封。
 
-**Step 0.55 for N entities when host web search is available.** The same pre-research protocol that applies to a single-entity topic applies to EACH entity in a vs-run. For N=3, that means 3 WebSearches for X handles, 3 for subreddits, 3 for GitHub, 3 for news context — or equivalent batched queries. On that host path, a `## Resolved Entities` block with dashes for any entity means you skipped Step 0.55 for that one. Re-run with a corrected plan.
+**宿主网页搜索可用时对 N 个实体执行 Step 0.55。** 适用于单实体主题的同一研究前协议，对 vs 运行中的每个实体都要执行。N=3 意味着 3 次 WebSearch 查 X 句柄、3 次查 subreddit、3 次查 GitHub、3 次查新闻背景，或等价的合并查询。在该宿主路径上，任何实体的 `## Resolved Entities` 块中出现横线，就意味着你跳过了该实体的 Step 0.55。用修正后的计划重跑。
 
-**When host web search is available, do WebSearch supplements** (through the post-engine isolated web search dispatch in the research runbook) for: `{TOPIC_A} vs {TOPIC_B} comparison {YEAR}` and `{TOPIC_A} vs {TOPIC_B} which is better` — these catch rivalry articles that per-entity passes might not surface.
+**宿主网页搜索可用时，做 WebSearch 补充检索**（经研究运行手册中引擎后的隔离网页搜索调度），查询：`{TOPIC_A} vs {TOPIC_B} comparison {YEAR}` 和 `{TOPIC_A} vs {TOPIC_B} which is better`。它们能抓到逐实体检索可能漏掉的对手比较文章。
 
-**Use `RESOLVED_POSITIONING` per entity (Step 0.55 item 6) in two ways.** First, ground each entity's `What it is` cell in its CURRENT fetched pitch - describe the entity as it pitches itself today, never from memory. Second, if an entity's month of evidence directly bears on its pitch - SUPPORTS a specific claim, CUTS AGAINST one, or the conversation is squarely ABOUT the pitched ground - say so in ONE prose sentence inside that entity's section of the comparison synthesis (right after the Community Sentiment line - the template marks the slot), anchored to the real, well-engaged item, named without its count. When the pulse is orthogonal to the pitch (on-entity but about something the pitch doesn't speak to), say NOTHING about the pitch: omission is the correct output, and a manufactured connection is worse than silence. Match altitude: test SPECIFIC claims ("zero-config", "fastest", an uptime number) against specific threads; never grade a broad tagline ("financial infrastructure") against an individual thread - it is too broad to hit or miss. Keep claims windowed - "this month's conversation" - never trend verbs like "losing the narrative" that one 30-day window cannot support. If positioning was not actually fetched this run for an entity, skip both uses for that entity - never supply a pitch from memory.
+**逐实体使用 `RESOLVED_POSITIONING`（Step 0.55 第 6 项），两种用法。** 第一，把每个实体的 `What it is` 单元格锚定在其当前抓取到的宣传口径上：按它今天对自己的宣传来描述该实体，绝不用记忆。第二，若某实体一个月的证据与其宣传直接相关（支持某个具体主张、与之相悖，或讨论本身就聚焦宣传阵地），就在对比综述中该实体小节内用一句散文说明（紧跟 Community Sentiment 行之后：模板标出了该槽位），锚定到真实且互动良好的条目，点名但不带计数。当舆论与宣传正交（同实体，但谈的是宣传未涉及的东西）时，对宣传一字不写：省略才是正确输出，编造关联比沉默更糟。匹配高度：用具体主张（"zero-config"、"fastest"、某个在线率数字）对照具体帖子；绝不拿宽泛口号（"financial infrastructure"）对照单个帖子，太宽泛，谈不上命中或落空。表述限定在窗口内："本月讨论"，绝不用单个 30 天窗口撑不起来的趋势动词（如 "losing the narrative"）。某实体本次运行确实没有抓到定位信息时，两种用法都跳过：绝不从记忆里补宣传。
 
-**Use the applicable comparison invocation above in place of the research runbook's Step 1 command.** Run the runbook's Step 2 supplements when host web search is available and Step 2.5 appendix (comparison runs append to every per-entity file), then write the body with the comparison template below instead of the general template in `synthesis.md`.
+**用上文适用的对比调用替代研究运行手册的 Step 1 命令。** 宿主网页搜索可用时执行运行手册的 Step 2 补充和 Step 2.5 附录（对比运行会追加到每个逐实体文件），然后用下方对比模板写正文，替代 `synthesis.md` 的通用模板。
 
-**COMPARISON TABLE SCAFFOLD (engine-emitted, pass through verbatim):** For comparison topics, the engine's compact output includes a `## Head-to-Head` block with an empty markdown table (columns = entities, rows = axes like "What it is", "Philosophy", "Best for"). Your synthesis MUST include this block verbatim with filled cells, positioned between the narrative and the emoji-tree footer. Keep each cell to 5-15 words. Use ' - ' (hyphen with spaces) not em-dashes inside cells.
+**对比表格脚手架（引擎生成，原样透传）：** 对比主题下，引擎的 compact 输出包含一个 `## Head-to-Head` 块，内含空 Markdown 表（列 = 实体，行 = "What it is"、"Philosophy"、"Best for" 之类的维度）。你的综述必须原样包含该块并填入单元格，位置在叙事与 emoji 树页脚之间。每个单元格 5-15 个词。单元格内用 ' - '（带空格的连字符），不用 em-dash。
 
 
-### If QUERY_TYPE = COMPARISON
+### 若 QUERY_TYPE = COMPARISON
 
-**Comparison queries have their OWN synthesis template. Do NOT use the general-query `What I learned:` + bold-lead-in + `KEY PATTERNS:` structure for comparisons.** The comparison template below is the canonical shape proven by the April 9 launch-video exemplar. Follow it section-for-section.
+**对比查询有自己的综述模板。对比绝不要用通用查询的 `What I learned:` + 加粗引导段 + `KEY PATTERNS:` 结构。** 下方对比模板是被 4 月 9 日发布视频范例验证过的标准形态。逐节照做。
 
-Voice contract LAWs 1, 3, 5 apply to comparisons unchanged (omit unnecessary trailing source lists, no em-dashes, engine footer pass-through), subject to higher-priority host/tool requirements and user instructions. LAWs 2 and 4 have comparison-specific exceptions (see the LAW block: the comparison title and the five section headers below are REQUIRED, not violations).
+语态契约 LAWs 1、3、5 对比原样适用（省略多余的尾部来源清单、不用 em-dash、引擎页脚透传），服从更高优先级的宿主/工具要求与用户指令。LAWs 2 和 4 有对比专属例外（见 LAW 块：对比标题和下方五个小节标题是必需的，不算违规）。
 
-**Required comparison structure (match the April 9 exemplar):**
+**必需的对比结构（对齐 4 月 9 日范例）：**
 
 ````
 {the engine's first line, copied verbatim}
@@ -220,14 +224,14 @@ I've compared {TOPIC_A} vs {TOPIC_B} [vs ...] using the latest community data. S
 - [follow-up on the emerging-stack combination pattern]
 ````
 
-**On Claude Code** (`CLAUDECODE` set), `references/synthesis.md` NO MARKDOWN LISTS applies here too: write the Strengths, Weaknesses, and follow-up bullets as `• ` lines, not `- ` lists.
+**Claude Code 上**（设置了 `CLAUDECODE`），`references/synthesis.md` 的 NO MARKDOWN LISTS 规则同样适用：Strengths、Weaknesses 和后续提问列表写成 `• ` 行，不用 `- ` 列表。
 
-**Do NOT:**
-- Use `What I learned:` prose label (that is general-query voice)
-- Use bold-lead-in paragraphs with ` - ` separators for the body (that is general-query voice)
-- Use a `KEY PATTERNS from the research:` numbered list (replaced by per-entity Strengths/Weaknesses bullets and the emerging-stack paragraph)
-- Fabricate a `## Notable Stats` block (the engine footer IS the stats block, LAW 5)
-- Attach like, upvote, view, or point counts to quotes and attributions, or add pulled-quote lines (`references/synthesis.md` COUNTS IN PROSE; entity scale figures stay)
-- Produce section headers outside the six listed above (`## Quick Verdict`, `## {Entity}` per entity, `## Head-to-Head`, `## The Bottom Line`, `## The emerging stack` are the only allowed `##` headers per LAW 4 comparison exception)
+**不要：**
+- 使用 `What I learned:` 散文标签（那是通用查询语态）
+- 正文使用带 ` - ` 分隔的加粗引导段（那是通用查询语态）
+- 使用 `KEY PATTERNS from the research:` 编号列表（已被逐实体 Strengths/Weaknesses 列表和新兴组合段取代）
+- 伪造 `## Notable Stats` 块（引擎页脚就是统计块，见 LAW 5）
+- 给引语和署名附加点赞、顶、浏览或得分计数，或添加 pulled-quote 行（见 `references/synthesis.md` 的 COUNTS IN PROSE；实体规模数据保留）
+- 产出上列六个之外的小节标题（依 LAW 4 对比例外，只允许 `## Quick Verdict`、每个实体的 `## {Entity}`、`## Head-to-Head`、`## The Bottom Line`、`## The emerging stack`）
 
-**Reference exemplar:** `$LAST30DAYS_MEMORY_DIR/openclaw-vs-hermes-vs-paperclip-LAUNCH-VIDEO-april9-exemplar.md` preserves the April 9 canonical output with full structural analysis. Match this shape section-for-section.
+**参考范例：** `$LAST30DAYS_MEMORY_DIR/openclaw-vs-hermes-vs-paperclip-LAUNCH-VIDEO-april9-exemplar.md` 保存了 4 月 9 日的标准输出和完整结构分析。逐节对齐这个形态。

@@ -1,19 +1,22 @@
-# Testing Specialist Review Checklist
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`skills/developer/gstack/review/specialists/testing.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Scope: Always-on (every review)
-Output: JSON objects, one finding per line. Schema:
+# Testing Specialist 评审清单
+
+范围：Always-on（每次评审）
+输出：JSON 对象，每条发现一行。Schema：
 {"severity":"CRITICAL|INFORMATIONAL","confidence":N,"path":"file","line":N,"category":"testing","summary":"...","fix":"...","fingerprint":"path:line:testing","specialist":"testing"}
-Optional: line, fix, fingerprint, evidence, test_stub.
-If no findings: output `NO FINDINGS` and nothing else.
+可选字段：line、fix、fingerprint、evidence、test_stub。
+若无发现：只输出 `NO FINDINGS`，不输出任何其他内容。
 
-If the caller explicitly asks for an ASCII coverage diagram, first read the
-named source and test files directly in a dedicated tool call. Keep that tool
-call limited to those two file reads, using either native Read calls or a simple
-shell display such as `cat -n src/file && echo ---- && cat -n test/file`. Read
-diffs, package files, configs, or other context in separate tool calls. Then
-output the diagram before any JSON findings. Use one function root per public or
-changed function, put the `[OK]` or `[GAP]` marker on the same branch row as the
-tested or missing path, and keep the legend inside the same diagram block:
+如果调用方明确要求 ASCII 覆盖图，先在一次专用工具调用中直接读取
+指定的源文件与测试文件。该工具调用只限这两次文件读取，可以使用原生
+Read 调用，或 `cat -n src/file && echo ---- && cat -n test/file` 这类简单的
+shell 展示方式。diff、包文件、配置或其他上下文放在单独的工具调用里读取。
+然后在任何 JSON 发现之前输出覆盖图。每个公开或被修改的函数使用一个函数根，
+把 `[OK]` 或 `[GAP]` 标记放在与已测或缺失路径相同的分支行上，
+并把图例保留在同一覆盖图块内：
 
 ```text
 src/billing.ts
@@ -25,136 +28,123 @@ refundPayment(paymentId, reason)
 Legend: [OK] tested [GAP] no test
 ```
 
-Do not rely on a summary table, prose paragraph, or distant nested marker as the
-only coverage evidence. Covered happy-path rows must name the successful, valid,
-or concrete tested input path; gap rows must stay under the function that owns
-the missing path.
+不要把汇总表、散文段落或远处的嵌套标记当作唯一的覆盖证据。已覆盖的
+happy path 行必须写出成功、有效或具体被测的输入路径；gap 行必须留在
+拥有该缺失路径的函数之下。
 
 ---
 
-## Categories
+## 类别
 
-### Exploratory hypotheses
+### 探索性假设
 
-The parent runs one shared exploratory QA pass before Fix-First, including small diffs
-that skip specialists. Supply high-risk changed contracts, adverse scenarios and native
-test candidates to that pass; do not launch another explorer, edit product/tests or
-commit. A test proposal uses `test_stub` and keeps the caller's approval requirements.
-Check real request/queue/storage effects, retries, duplicates and interrupted recovery
-where applicable. A diagram or test count is not executed proof. For discoveries promoted
-to regressions, require failure for the reproduced bug before repair and green plus
-original/adjacent probes afterward; never accept buggy-output goldens or discarded valid
-red tests. Unit tests suit logic; real integration/E2E tests protect boundaries mocks hide.
+父代理会在 Fix-First 之前运行一次共享的探索式 QA pass，包括跳过 specialists 的小 diff。
+向该 pass 提供高风险的变更契约、不利场景和原生测试候选；不要另起 explorer，不要编辑
+product/tests，不要 commit。测试提案使用 `test_stub` 并保留调用方的审批要求。
+在适用处核查真实的请求/队列/存储效果、重试、重复与中断恢复。覆盖图或测试数量不是
+执行证据。对被提升为回归的发现，修复之前要求复现 bug 的失败证据，修复之后要求
+绿色加上原有/相邻探针；绝不接受输出错误的 golden，也不接受被丢弃的有效红测试。
+单测适合逻辑；真实的集成/E2E 测试保护 mock 藏起来的边界。
 
-### Missing Negative-Path Tests
-- New code paths that handle errors, rejections, or invalid input with NO corresponding test
-- Guard clauses and early returns that are untested
-- Error branches in try/catch, rescue, or error boundaries with no failure-path test
-- Permission/auth checks that are asserted in code but never tested for the "denied" case
+### 缺失负路径测试
+- 处理错误、拒绝或无效输入的新代码路径，却没有对应测试
+- 未测试的 guard 子句与提前返回
+- try/catch、rescue 或错误边界中的错误分支，没有失败路径测试
+- 代码中有断言的权限/鉴权检查，却从未测试"被拒绝"的情况
 
-### Missing Edge-Case Coverage
-- Boundary values: zero, negative, max-int, empty string, empty array, nil/null/undefined
-- Single-element collections (off-by-one on loops)
-- Unicode and special characters in user-facing inputs
-- Concurrent access patterns with no race-condition test
+### 缺失边界情况覆盖
+- 边界值：零、负数、max-int、空字符串、空数组、nil/null/undefined
+- 单元素集合（循环差一错误）
+- 用户可见输入中的 Unicode 与特殊字符
+- 没有竞态测试的并发访问模式
 
-### Negative Assertions
-- A new assertion that something is absent (`not.toContain`, `not in`, `assertNotIn`,
-  `pytest.raises` on a call that used to succeed) records a behavior removal, not coverage.
-  Cite the spec line, plan item or PR text that authorizes the removal; with none, report it
-  as a product decision shipped as a test.
-- A rename or removal in this diff can empty a standing negative assertion: a test asserting
-  the old token is absent now passes forever and guards nothing. For each identifier, flag,
-  heading or string the diff renames or deletes, grep the test suite for negative assertions
-  naming the old value, including inside tests that assert something else, and report each
-  as a coverage gap whose fix names the new value.
+### 负向断言
+- 新增的"某物不存在"断言（`not.toContain`、`not in`、`assertNotIn`，或对过去
+  能成功的调用加 `pytest.raises`）记录的是行为移除，不是覆盖。引用授权该移除的
+  spec 行、计划条目或 PR 文本；都没有时，把它报告为"以测试形式发布的产品决策"。
+- 本 diff 中的重命名或删除可能掏空一条既有的负向断言：断言旧 token 不存在的测试
+  从此永远通过，什么也没守住。对 diff 重命名或删除的每个标识符、flag、标题或
+  字符串，grep 整个测试套件中点名旧值的负向断言，包括断言其他事物的测试内部，
+  把每一处报告为覆盖缺口，其 fix 写出新值。
 
-### Test Isolation Violations
-- Tests sharing mutable state (class variables, global singletons, DB records not cleaned up)
-- Order-dependent tests (pass in sequence, fail when randomized)
-- Tests that depend on system clock, timezone, or locale
-- Tests that make real network calls instead of using stubs/mocks
+### 测试隔离违规
+- 测试共享可变状态（类变量、全局单例、未清理的 DB 记录）
+- 顺序依赖的测试（按顺序通过，随机化后失败）
+- 依赖系统时钟、时区或 locale 的测试
+- 不用 stub/mock 而发起真实网络调用的测试
 
-### Flaky Test Patterns
-- Timing-dependent assertions (sleep, setTimeout, waitFor with tight timeouts)
-- Assertions on ordering of unordered results (hash keys, Set iteration, async resolution order)
-- Tests that depend on external services (APIs, databases) without fallback
-- Randomized test data without seed control
+### 不稳定测试模式
+- 依赖时序的断言（sleep、setTimeout、超时过紧的 waitFor）
+- 对无序结果断言顺序（hash 键、Set 迭代、async 完成顺序）
+- 依赖外部服务（API、数据库）且无回退的测试
+- 无种子控制的随机测试数据
 
-### Security Enforcement Tests Missing
-- Auth/authz checks in controllers with no test for the "unauthorized" case
-- Rate limiting logic with no test proving it actually blocks
-- Input sanitization with no test for malicious input
-- CSRF/CORS configuration with no integration test
+### 缺失安全强制测试
+- controller 中的 auth/authz 检查，没有"未授权"情况的测试
+- 限流逻辑没有测试证明它真的会拦截
+- 输入清洗没有恶意输入测试
+- CSRF/CORS 配置没有集成测试
 
-### Coverage Gaps
-- New public methods/functions with zero test coverage
-- Changed methods where existing tests only cover the old behavior, not the new branch
-- Utility functions called from multiple places but tested only indirectly
-- A path whose only tests are weak (★ smoke/existence/trivial, or a new test failing the
-  authoring gate below) stays a coverage gap at its existing severity; a low-value test
-  never closes a gap
+### 覆盖缺口
+- 零测试覆盖的新公开方法/函数
+- 已改动的方法，现有测试只覆盖旧行为，不覆盖新分支
+- 多处调用的工具函数却只有间接测试
+- 只有弱测试（★ smoke/存在性/平凡测试，或未通过下方 authoring gate 的新测试）的路径，
+  按既有严重级别保持为覆盖缺口；低价值测试永远填不上缺口
 
-### Low-value or implementation-coupled tests
-Scope: tests and test-only production seams added or changed in the diff. Findings are
-INFORMATIONAL, never CRITICAL, and never an auto-delete: recommend rewrite at the owning
-boundary, extend an existing test, or retire with a complete retirement card
-(`test, detects, non_test_callers, search_command, stronger_proof, history, unlocks,
-validation`). End each finding's `fix` with `Repo-wide sweep: run /test-audit.`
+### 低价值或与实现耦合的测试
+范围：diff 中新增或改动的测试，以及仅供测试用的 production seam。发现一律为
+INFORMATIONAL，绝不 CRITICAL，也绝不自动删除：建议在所属边界处重写、扩展现有测试，
+或持完整退役卡退役（`test, detects, non_test_callers, search_command, stronger_proof, history, unlocks,
+validation`）。每条发现的 `fix` 以 `Repo-wide sweep: run /test-audit.` 结尾。
 
-A new or changed test passes the authoring gate only when all four answers exist (read
-its `Value: protects=...; fails_when=...; why_new=...; seam=...` header comment when the
-diff has one; an optional `no_claim=...` names what green does not prove and which
-fixtures or mocks stand in for what, and never waives a required live check):
-1. What observable behavior, invariant or independent contract does it protect?
-2. What credible regression makes it fail?
-3. Why does existing coverage not already catch that? Prefer adding a row to an existing table-driven test or shared fixture over a near-duplicate.
-4. Does it need a production seam (export, flag, wrapper, injection hook) that no production caller needs? If yes, test at the real boundary instead.
+新增或改动的测试只有四个答案齐备才通过 authoring gate（diff 中若有
+`Value: protects=...; fails_when=...; why_new=...; seam=...` 头注释则先读它；可选的
+`no_claim=...` 说明绿色不能证明什么、哪些 fixture 或 mock 替代了什么，且绝不豁免
+必需的实机检查）：
+1. 它保护什么可观察行为、不变量或独立契约？
+2. 什么可信回归会让它失败？
+3. 现有覆盖为何没有抓住它？优先给现有表驱动测试或共享 fixture 加一行，而不是近乎重复地新建。
+4. 它是否需要没有任何生产调用方需要的 production seam（export、flag、wrapper、注入钩子）？需要的话，改在真实边界测试。
 
-Patterns:
-- assertion-free coverage probes
-- self-comparisons and identity copies
-- copied fixtures, inventories or export lists
-- exact source, import or string greps that are not a declared contract
-- private predicate or call-shape tests duplicated at a real boundary
-- duplicate invocations of the same contract
-- per-caller replays of a shared helper's tests
-- tests whose only purpose is keeping a test-only export, global or wrapper alive
-- production code whose only callers are tests
+Patterns：
+- 无断言的覆盖探针
+- 自比较与恒等复制
+- 复制的 fixture、清单或导出列表
+- 未声明为契约的精确源码、import 或字符串 grep
+- 在真实边界重复的私有谓词或调用形态测试
+- 同一契约的重复调用
+- 逐调用方重放共享 helper 的测试
+- 唯一目的是保住仅测试可见的 export、全局或 wrapper 的测试
+- 唯一调用方是测试的生产代码
 
-Retention bar (never flag): a test that independently enforces a public API, protocol,
-config, migration, storage, security, platform, default, prompt-byte, generated-output
-(SKILL.md golden), package, release or architecture contract; call order when order is
-observable; source inspection when it is the cheapest independent guard; anything
-reachable from the package entrypoint (`package.json` exports/main, index re-exports).
-Static or slow is not a reason to delete.
+Retention bar（永不标记）：独立强制以下契约的测试：公开 API、协议、config、迁移、
+存储、安全、平台、默认值、prompt 字节、生成产物（SKILL.md golden）、包、发布或架构
+契约；顺序可观察时的调用顺序；源码检查是最便宜的独立守卫时；任何可从包入口
+（`package.json` 的 exports/main、index 再导出）到达的东西。静态或慢不是删除的理由。
 
-Evidence for each finding goes in `evidence` with the fields `detects` (what failure the
-test can actually detect), `non_test_callers`, `search_command` and `stronger_proof`.
-For the last two patterns, run the caller check for each symbol the diff adds or exports,
-only when the symbol matches `^[A-Za-z_][A-Za-z0-9_]*$` (otherwise record "caller check
-unavailable: unsupported symbol"), with the symbol quoted, never interpolated unquoted:
+每条发现的证据放入 `evidence`，字段为 `detects`（该测试实际能检测到什么失败）、
+`non_test_callers`、`search_command` 与 `stronger_proof`。对后两种 pattern，对 diff 新增或
+导出的每个符号运行 caller 检查，仅当符号匹配 `^[A-Za-z_][A-Za-z0-9_]*$`（否则记录 "caller check
+unavailable: unsupported symbol"），符号必须加引号，绝不以未加引号的形式插值：
 
 ```bash
 git grep -n -F -w -e '<symbol>' -- . ':!test/' ':!tests/' ':!spec/' ':!**/__tests__/**' ':!**/*.test.*' ':!**/*.spec.*' ':!**/*_test.*' ':!**/test_*.py'
 ```
 
-Record the command, exclusions and hit count, and mark the evidence "grep-only" (it cannot
-see re-exports, dynamic dispatch or generated code). If the search fails, record: caller
-check unavailable: <command>. The finding stays INFORMATIONAL and nothing is proposed for
-deletion; run the search by hand to complete the evidence. (see
-~/.claude/skills/gstack/docs/test-value-bar.md#caller-check-unavailable)
+记录命令、排除项与命中数，并把证据标记为 "grep-only"（它看不到再导出、动态分发或
+生成代码）。搜索失败时记录：caller check unavailable: <command>。发现保持
+INFORMATIONAL，不提议删除任何东西；手工运行搜索补全证据。（见
+~/.claude/skills/gstack/docs/test-value-bar.md#caller-check-unavailable）
 
-Skip a test carrying `gstack:test-value keep reason="<why>"` (any comment syntax). If any
-were skipped, report their count and reasons as one INFORMATIONAL line. Emit no finding
-for a test you reviewed and kept.
+跳过带有 `gstack:test-value keep reason="<why>"` 的测试（任意注释语法）。若有跳过，
+把其数量与原因合并为一条 INFORMATIONAL 行。对你评审后保留的测试，不发任何发现。
 
-Rejection vocabulary, when a finding names why a new test fails the gate:
-`duplicate_protects`, `needs_seam`, `incomplete_card`, `no_credible_regression`,
-`covered_elsewhere`, `implementation_coupled`.
+拒绝用词，当发现要说明新测试为何未过 gate 时：
+`duplicate_protects`、`needs_seam`、`incomplete_card`、`no_credible_regression`、
+`covered_elsewhere`、`implementation_coupled`。
 
-### Regression test without red proof
-- The diff adds a test named or commented as a regression, and neither the commit history
-  nor the PR body shows it failing before the fix. A regression test that never
-  demonstrably failed proves the mock, not the fix. INFORMATIONAL; ask for the
-  fails-at-HEAD / passes-after-fix record.
+### 无红证据的回归测试
+- diff 新增了一个命名或注释为回归的测试，而提交历史与 PR 正文都没有展示它在修复
+  之前失败。从未可证失败过的回归测试证明的是 mock，不是修复。INFORMATIONAL；
+  要求提供 fails-at-HEAD / passes-after-fix 的记录。

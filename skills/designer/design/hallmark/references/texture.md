@@ -1,18 +1,22 @@
-# Texture and print artifacts: a budgeted vocabulary
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/texture.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Loaded only when the picked theme earns texture (affinity table below) or a custom draw's lineage is print. Texture is a treatment with a budget, never ambience: one artifact family per page, tokened opacity, never animated, never under body text at more than a whisper. Grain smeared everywhere is the tic `flow.md` § Harnesses refuses; grain from this file, on a theme that earns it, is craft.
+# 纹理与印刷质感：一份有预算的词汇表
 
-## The budget (binds on every artifact)
+只在所选主题配得上纹理（见下方亲和表）或自定义绘制的血统是印刷时加载。纹理是有预算的处理手法，绝不是氛围：每页一个质感家族，不透明度进令牌，绝不做动画，正文之下最多轻声一层。到处抹颗粒是 `flow.md` § Harnesses 拒绝的癖好；来自本文件、用在配得上它的主题上的颗粒，是手艺。
 
-- **One artifact family per page.** Grain, halftone, misregistration, scanline or deckle, never two. A risograph print is one family: its grain and its misregistration come from the same drum. A halftone that is a photograph's treatment belongs to the image, not the page, and does not count.
-- **Tokened opacity, declared in the token block:** `--texture-opacity` <= 0.08 page-wide, <= 0.15 scoped to a card or plate. Under running body text, <= 0.05 or nothing. A low-frequency wash (a base frequency of 0.02 or lower: a fibre, a paper tone) tints rather than specks and may run to 0.12 page-wide, with contrast measured on the result.
-- **Never animated.** No drifting grain, no pulsing dots.
-- **`pointer-events: none` and `aria-hidden="true"`** on every overlay; texture never intercepts input, and the retro signal is atmosphere, never a drawn monitor bezel (47a).
-- **Perf:** pure CSS or a data-URI SVG filter; no image requests for texture.
+## 预算（约束每件质感）
 
-## 1 · Grain (paper)
+- **每页一个质感家族。**颗粒、半调网、套印错位、扫描线或毛边，绝不同时两个。riso 印刷是一个家族：它的颗粒与套印错位来自同一个滚筒。作为照片处理手段的半调网属于图像，不属于页面，不计入。
+- **不透明度进令牌，在令牌块中声明：**`--texture-opacity` 全页 <= 0.08，限定在卡片或版面内 <= 0.15。正文行文之下 <= 0.05 或为零。低频薄染（base frequency 0.02 或更低：纤维、纸张色调）是染色而非斑点，全页可到 0.12，对比度按最终结果测量。
+- **绝不做动画。**颗粒不漂移，圆点不脉动。
+- 每个覆盖层都加 **`pointer-events: none` 与 `aria-hidden="true"`**；纹理绝不拦截输入，复古信号是氛围，绝不是画出来的显示器外壳（47a）。
+- **性能：**纯 CSS 或 data-URI SVG 滤镜；纹理不发图片请求。
 
-A speck grain, tokenised:
+## 1 · 颗粒（纸张）
+
+斑点颗粒，令牌化：
 
 ```css
 :root { --texture-opacity: 0.08; }
@@ -24,11 +28,11 @@ A speck grain, tokenised:
 }
 ```
 
-The colour matrix turns the noise into discrete specks (alpha is the noise times nine, minus four), so the grain reads at 1x inside the budget; untreated `feTurbulence` at these opacities is a haze nobody sees. On a dark ground the specks must be light: change the matrix's first three rows to `0 0 0 0 1` so each speck is white, keep the opacity. One plate, one accent card, or the page at 0.08 or less when the theme names grain.
+颜色矩阵把噪声变成离散斑点（alpha = 噪声 × 9 − 4），颗粒因此在预算内 1x 就能读出；未处理的 `feTurbulence` 在这些不透明度下是一层没人看得见的雾。暗色地面上斑点必须是亮的：把矩阵前三行改成 `0 0 0 0 1`，让每个斑点是白色，不透明度保持。用在版面、一张强调卡上，或主题点名颗粒时全页 0.08 及以下。
 
-## 2 · Halftone (dot field)
+## 2 · 半调网（点阵）
 
-A dot screen with a size token:
+一个带尺寸令牌的网点屏：
 
 ```css
 :root { --halftone-size: 12px; --halftone-dot: 1.5px; }
@@ -36,11 +40,11 @@ A dot screen with a size token:
   background-size: var(--halftone-size) var(--halftone-size); }
 ```
 
-Plate fills and section bands. Never under or overlapping type. Dot in ink or one spot colour, never the accent at full field strength.
+用于版面填充与区块色带。绝不在文字之下或与文字重叠。圆点用墨色或一个专色，强调色绝不整面铺满。
 
-## 3 · Misregistration (chromatic echo)
+## 3 · 套印错位（色差回声）
 
-Riso's signature, portable to any print-lineage custom run:
+Riso 的招牌，可移植到任何印刷血统的自定义方案：
 
 ```css
 .misreg { position: relative; display: inline-block; isolation: isolate; }
@@ -52,11 +56,11 @@ Riso's signature, portable to any print-lineage custom run:
 .misreg::after  { color: var(--color-accent-2, var(--color-focus)); transform: translate(2px, 2px); }
 ```
 
-**One focal word per page, in the hero, under the theme's `waive 38iii`; never every heading.** The span is an inline block so the copies sit on the glyphs whatever the head's line-height, and they print behind the ink so the word keeps its colour; only the fringes carry the echoes. The echo colours are the theme's declared spot inks (`--color-accent` and `--color-accent-2` here, or the theme's own echo tokens); the offset stays 1 to 3px (more reads broken, not printed). It may settle once on load over `--dur-long` at most, static under reduced motion; it never loops.
+**每页一个焦点词，放在首屏，在主题的 `waive 38iii` 之下；绝不用于每个标题。**span 是行内块，无论标题行高如何，副本都贴在字形上；它们印在墨色之后，词保住自己的颜色，只有边缘带走回声。回声色是主题声明的专色油墨（此处为 `--color-accent` 与 `--color-accent-2`，或主题自己的回声令牌）；偏移保持 1 到 3px（再大读起来就是坏的，不像印出来的）。至多在加载时随 `--dur-long` 落定一次，减少动效下保持静止；绝不循环。
 
-## 4 · Scanline (CRT)
+## 4 · 扫描线（CRT）
 
-Arcade's recipe; the retro signal is atmosphere, never a drawn monitor bezel (47a):
+Arcade 的配方；复古信号是氛围，绝不是画出来的显示器外壳（47a）：
 
 ```css
 :root { --scanline: oklch(from var(--color-ink) l c h / 0.06); }
@@ -65,11 +69,11 @@ body::after { content: ""; position: fixed; inset: 0; z-index: var(--z-raised);
   background: repeating-linear-gradient(transparent 0 2px, var(--scanline) 2px 3px); }
 ```
 
-`--scanline` is a page-local decorative token at low alpha. Arcade and arcade-adjacent customs only.
+`--scanline` 是低透明度的页内装饰令牌。仅限 Arcade 及其近似血统的自定义方案。
 
-## 5 · Deckle (paper edge)
+## 5 · 毛边（纸缘）
 
-For plates, tickets, and stubs on print-lineage pages:
+用于印刷血统页面上的版面、票券与票根：
 
 ```css
 .deckled { box-shadow: inset 0 0 0 1px var(--color-rule);
@@ -77,14 +81,14 @@ For plates, tickets, and stubs on print-lineage pages:
   mask-size: 12px 24px; mask-repeat: repeat-y; mask-position: left; }
 ```
 
-One edge, one element class per page (a ticket edge, a stamp perforation). Never on cards generally; it is an artifact, not a border style.
+每页一条边、一个元素类（票券边缘、邮票齿孔）。一般绝不用在卡片上；它是质感件，不是边框样式。
 
-## Affinity: who earns texture
+## 亲和：谁配得上纹理
 
-A theme earns texture when its Surfaces section names one; a custom draw earns it when its lineage is print (risograph, letterpress, ticket stock, line printer), and then it picks the one artifact that lineage used. The budget above binds every theme, whatever its file says: page-wide grain at 0.08 or less, 0.15 inside one plate, 0.05 or nothing under running text. Examples: Riso (grain and misregistration), Halftone (a dot screen), Paste-up (a fibre wash), Darkroom (film grain), Arcade (scanlines).
+主题在其表面章节点名某种质感，才算配得上；自定义绘制的血统是印刷（risograph、活版印刷、票券纸、行式打印机）才算配得上，并选用该血统用过的那一件质感。上面的预算约束每个主题，无论其文件怎么写：全页颗粒 0.08 及以下，单个版面内 0.15，行文之下 0.05 或为零。例子：Riso（颗粒与套印错位）、Halftone（网点屏）、Paste-up（纤维薄染）、Darkroom（胶片颗粒）、Arcade（扫描线）。
 
-**Never:** a texture a theme does not name, grain on a modern-minimal page, two artifact families on one page, or a texture as ambience over everything because the page felt flat.
+**绝不做：**主题未点名的质感、modern-minimal 页面上的颗粒、一页两个质感家族，或因为页面显得平而把质感当氛围铺满一切。
 
-## Reduced motion and accessibility
+## 减少动效与无障碍
 
-The settle-once misregistration and nothing else moves; everything here ships identical under `prefers-reduced-motion: reduce` because nothing animates. Texture never lowers text contrast below the gate-40/41 thresholds: measure contrast on the textured result, not the flat token.
+只有落定一次的套印错位会动，其余一律不动；这里的一切在 `prefers-reduced-motion: reduce` 下表现完全一致，因为没有任何动画。纹理绝不把文本对比度降到 gate-40/41 阈值之下：在加了质感的最终结果上测对比度，不是在平色令牌上。

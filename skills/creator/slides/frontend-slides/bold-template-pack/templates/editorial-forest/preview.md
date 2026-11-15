@@ -1,55 +1,59 @@
-# Editorial Forest Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/editorial-forest/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Editorial Forest 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/editorial-forest/design.md`
-- Preview card: `bold-template-pack/templates/editorial-forest/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/editorial-forest/design.md`
+- 预览卡：`bold-template-pack/templates/editorial-forest/preview.md`
 
-- Slug: `editorial-forest`
-- Tagline: Forest green, dusty pink, and warm cream meet Source Serif 4 in a quiet, intentional quarterly-review deck.
-- Mood: editorial, quiet, considered, warm, intentional
-- Tone: literary, thoughtful, warm, low-pressure
-- Formality: medium
-- Density: medium
-- Scheme: mixed
-- Best for: Anything that should feel like a considered editorial — quarterly reviews, internal readouts, studio updates, creative-agency presentations. Equally good for any deck that wants to feel warm and unhurried rather than corporate, including research recaps, book or program announcements, and team retrospectives.
-- Avoid for: Contexts that need to feel urgent, punchy, or sales-driven — the palette and rhythm are intentionally quiet.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`editorial-forest`
+- Tagline：森林绿、灰粉与暖米白，配上 Source Serif 4，构成一套安静而用心的季报式演示文稿。
+- Mood：editorial、quiet、considered、warm、intentional
+- Tone：literary、thoughtful、warm、low-pressure
+- Formality：medium
+- Density：medium
+- Scheme：mixed
+- 适合：一切应当像一篇用心编辑的文章的内容：季度评审、内部汇报、工作室动态、创意代理商演示。同样适合任何想要温暖从容、而非企业感的演示文稿，包括研究回顾、图书或项目发布、团队复盘。
+- 避免：需要紧迫感、冲击力或销售驱动感的场景：配色与节奏刻意保持安静。
 
-A serif-led editorial presentation system in the register of a literary quarterly or art-book monograph. Display type runs in Source Serif 4 at weight 500 with optical-size axis engaged, scaling up to 220px for cover and stat moments. The palette pairs a deep forest green (#2e4a2a) with a dusty rose pink (#e89cb1) over an oat-cream paper ground (#efe7d4), with JetBrains Mono as the editorial chrome (labels, captions, axis ticks). The aesthetic is closer to a Penguin classic, Apartamento spread, or quiet annual report than a tech keynote — confident, paper-feeling, and committed to a small color vocabulary.
+## 视觉速览
 
-Editorial Forest is a serif-led editorial presentation system in the tonal register of a Penguin classic, a quiet annual report, or an art-book spread. The system's foundational premise is a single, confident typographic voice — Source Serif 4 — used at extreme scale (up to 220px) for headlines and stat figures, with JetBrains Mono playing the supporting role of editorial chrome (labels, captions, axis ticks, page footlines).
+一套以衬线为主导的编辑演示系统，语域接近文学季刊或艺术书专著。展示字体用 Source Serif 4，字重 500，开启光学尺寸轴，封面与统计时刻放大到 220px。配色把深森林绿（#2e4a2a）与灰玫瑰粉（#e89cb1）铺在燕麦米白的纸面底色（#efe7d4）上，JetBrains Mono 担任编辑界面装饰（标签、图注、坐标轴刻度）。美学更接近企鹅经典书封、Apartamento 杂志跨页或安静的年报，而非技术主题演讲：自信、纸感、坚守一套很小的色彩词表。
 
-## Preview Ingredients
+Editorial Forest 是一套以衬线为主导的编辑演示系统，声调语域接近企鹅经典、安静年报或艺术书跨页。系统的奠基性前提是单一而自信的排印声音：Source Serif 4，以极端字号（最高 220px）承担标题与统计数字，JetBrains Mono 扮演编辑界面装饰的配角（标签、图注、坐标轴刻度、页脚线）。
 
-- Palette: green #2E4A2A; green-deep #243A21; green-lite #3A5A36; pink #E89CB1; pink-deep #D27E96; cream #EFE7D4; cream-2 #E6DCC4; ink #1A1A17
-- Typography: JetBrains Mono
-- Signature move: Three-color editorial palette: deep forest green, dusty rose pink, oat cream paper. Two surface tones per slide is typical; three is loud.
-- Signature move: Source Serif 4 at weight 500 for every headline, body, and display moment. Optical-size axis engaged for size-aware letterforms.
-- Signature move: JetBrains Mono at weight 500 uppercase with wide tracking (0.14em–0.18em) for every label, caption, axis tick, and footline.
-- Signature move: Display type scales to 220px for cover and stat-figure moments; 96px for primary headlines; 56–84px for card titles.
-- Signature move: 2px hairline rules separate stacked sections — never thicker, never colored beyond region context.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：green #2E4A2A; green-deep #243A21; green-lite #3A5A36; pink #E89CB1; pink-deep #D27E96; cream #EFE7D4; cream-2 #E6DCC4; ink #1A1A17
+- Typography：JetBrains Mono
+- Signature move：三色编辑配色：深森林绿、灰玫瑰粉、燕麦米白纸张。每页两种表面色调是常态；三种就是喧闹。
+- Signature move：所有标题、正文与展示时刻用 Source Serif 4 字重 500。开启光学尺寸轴以获得随字号变化的字形。
+- Signature move：所有标签、图注、坐标轴刻度与页脚线用 JetBrains Mono 字重 500 大写，配宽字距（0.14em–0.18em）。
+- Signature move：展示字号在封面与统计数字时刻放大到 220px；主标题 96px；卡片标题 56–84px。
+- Signature move：2px 发丝线分隔堆叠的分节，永不加粗，颜色也从不脱离区域语境。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

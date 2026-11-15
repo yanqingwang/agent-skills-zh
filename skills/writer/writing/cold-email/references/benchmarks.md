@@ -1,87 +1,91 @@
-# Benchmarks, Data & Expert Methods
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/benchmarks.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Core Performance Metrics
+# 基准、数据与专家方法
 
-Almost every public cold email benchmark comes from a vendor that sells sending, data, or agency services, and each measures differently (some count auto-replies as replies, some don't). Use these as ranges, and judge yourself against your own baseline.
+## 核心表现指标
 
-| Metric | Average | Good | Excellent | Source |
+几乎每个公开的冷邮件基准都来自卖发送、数据或代理服务的厂商，各家口径不一（有的把自动回复计入回复，有的不计）。把这些当区间看，用自己的基线评判自己。
+
+| 指标 | 平均 | 良好 | 优秀 | 来源 |
 |--------|---------|------|-----------|--------|
-| Reply rate | ~3.4% | 5.5%+ (top quartile) | 10%+ (top decile) | Instantly, 2025 sends (published 2026) |
-| Reply rate (signal-based, small segments) | — | 2–3× your static-list rate | — | Inferred from several 2025–26 vendor datasets; claims of 15–25% are unverified |
-| Share of replies from email 1 | ~58% | — | — | Instantly 2026 |
-| Meetings booked | 0.5–1% of contacts | 1–2% | 2.5%+ | Reachoutly, Cleverly |
-| Bounce rate | — | under 2% | under 1% | Mailbox-provider guidance; see deliverability.md |
-| Spam complaints | — | under 0.1% | — | Google sender guidelines |
+| 回复率 | ~3.4% | 5.5%+（前四分之一） | 10%+（前十分之一） | Instantly，2025 年发送量（2026 年发布） |
+| 回复率（信号驱动、小细分） | — | 静态名单率的 2–3 倍 | — | 由多份 2025–26 厂商数据集推断；15–25% 的说法未经核实 |
+| 第一封邮件产生的回复占比 | ~58% | — | — | Instantly 2026 |
+| 约到会议 | 联系人的 0.5–1% | 1–2% | 2.5%+ | Reachoutly、Cleverly |
+| 退信率 | — | 2% 以下 | 1% 以下 | 邮箱服务商指南；见 deliverability.md |
+| 垃圾投诉 | — | 0.1% 以下 | — | Google 发件人指南 |
 
-**Don't use open rate.** Apple Mail Privacy Protection opens tracked emails automatically, many filters treat the tracking pixel as a spam signal, and one large sender dataset found reply rates roughly doubled with open tracking off. Measure replies, positive replies, and meetings.
+**不要用打开率。**Apple Mail Privacy Protection 会自动打开被追踪的邮件，许多过滤器把追踪像素当作垃圾信号，一份大型发件方数据集显示关闭打开追踪后回复率大约翻倍。衡量回复数、正向回复数和会议数。
 
-## Realistic Funnel Model
+## 现实漏斗模型
 
-1,000 contacts → ~34 replies (3.4%) → ~10–15 positive (30–45% of replies) → ~5–8 meetings → 1–2 customers. Roughly **100–200 contacts per meeting** on a static list; signal-based segments often need 30–60 (an estimate from the ranges above, not a measured benchmark).
+1,000 个联系人 → 约 34 个回复（3.4%）→ 约 10–15 个正向（回复的 30–45%）→ 约 5–8 个会议 → 1–2 个客户。静态名单大约**每 100–200 个联系人换 1 个会议**；信号驱动的细分常常只需 30–60（由上文区间推算，不是实测基准）。
 
-## Performance Levers (ranked by impact)
+## 表现杠杆（按影响排序）
 
-1. **Hook type** — Timeline hooks outperform problem hooks by 3.4x in meetings
-2. **Personalization depth** — Up to 250% more replies
-3. **Brevity** — 25–75 words optimal, 83% more replies under 75 words
-4. **Targeting precision** — ≤50 contacts per campaign = 2.76x higher reply rates
-5. **Follow-up strategy** — First follow-up adds 49% more replies
-6. **Reading level** — 3rd–5th grade = 67% more replies
-7. **Send timing** — Thursday peaks at 6.87% reply rate
+1. **钩子类型**：时间线钩子在约到会议上是问题钩子的 3.4 倍
+2. **个性化深度**：回复最多提升 250%
+3. **简短**：25–75 词最优，75 词以内回复多 83%
+4. **定向精度**：每场活动 ≤50 个联系人，回复率高 2.76 倍
+5. **跟进策略**：第一次跟进多带来 49% 的回复
+6. **阅读难度**：3–5 年级水平，回复多 67%
+7. **发送时机**：周四回复率峰值 6.87%
 
-## Declining Effectiveness Trend
+## 有效性下滑趋势
 
-Reply rates fell from 7–8% (2020–2022) to roughly 3.5–5.8% (2024–2025 datasets). Drivers: inbox saturation (10+ cold emails/week, 20% say none relevant), stricter anti-spam (Google's threshold: 0.1% complaints), AI email flood (more volume, less quality signal). Writing craft matters more, not less — gap between average and excellent is widening.
+回复率从 7–8%（2020–2022）跌到约 3.5–5.8%（2024–2025 数据集）。驱动因素：收件箱饱和（每周 10+ 封冷邮件，20% 的人说没有一封相关）、反垃圾更严（Google 阈值：投诉 0.1%）、AI 邮件泛滥（量更大，质量信号更弱）。写作功力更重要了，不是更不重要：平均与优秀之间的差距在拉大。
 
-## Response Rates by Seniority
+## 按层级看回复率
 
-- **Entry-level:** Highest engagement at 8% reply, 50% open
-- **C-level:** 23% more likely to respond than non-C-suite when they engage (6.4% vs 5.2%)
-- **CTOs/VP Tech:** 7.68% reply
-- **CEOs/Founders:** 7.63% reply
-- **Heads of Sales:** 6.60% (most targeted role, highest saturation)
+- **初级：**互动最高，回复 8%，打开 50%
+- **C 级高管：**一旦互动，回复概率比非高管高 23%（6.4% 对 5.2%）
+- **CTO/技术 VP：**回复 7.68%
+- **CEO/创始人：**回复 7.63%
+- **销售负责人：**6.60%（被开发最多的角色，饱和度最高）
 
-## Industry Variation
+## 行业差异
 
-**Highest responding:** Nonprofits (16.5%+), legal (10%), EdTech (7.8%), chemical (7.3%), manufacturing (6.1%).
-**Lowest responding:** SaaS (3.5%), financial services (3.4%), IT services (3.5%).
+**回复最高：**非营利组织（16.5%+）、法律（10%）、教育科技（7.8%）、化工（7.3%）、制造业（6.1%）。
+**回复最低：**SaaS（3.5%）、金融服务（3.4%）、IT 服务（3.5%）。
 
-## Top 15 Mistakes (ranked by impact)
+## 十五大错误（按影响排序）
 
-1. **Too long** — 70% of emails above 10th-grade level. Under 75 words = 83% more replies
-2. **Too self-focused** — "We are a leading..." signals sales pitch. Count I/We sentences
-3. **No clear value prop** — 71% of decision-makers ignore irrelevant emails
-4. **Generic templates** — {{FirstName}} isn't personalization. Recipients detect instantly
-5. **Feature dumping** — "Great reps lead with problems" (Lavender). One proof point beats ten features
-6. **False personalization** — "Loved your post!" without specifics is transparent
-7. **Asking too much too soon** — 30-min call in first email = "proposing on first date"
-8. **Pushy language** — "Act Now" stacking increases spam flagging by 67%
-9. **No CTA** — Without a clear next step, momentum dies
-10. **"Just checking in" follow-ups** — "I never heard back" = 12% drop in bookings
-11. **Wrong tone for audience** — Founder ≠ RevOps lead ≠ sales leader
-12. **Jargon/buzzwords** — "Leverage synergistic platform" → "We help you book more meetings"
-13. **Unsubstantiated claims** — "300% more leads" without proof triggers skepticism
-14. **Too many contacts per company** — 1–2 people = 7.8% reply; 10+ = 3.8%
-15. **Fake urgency** — Fake "Re:" / "Fwd:" / countdown timers destroy trust
+1. **太长**：70% 的邮件超过 10 年级阅读水平。75 词以内回复多 83%
+2. **太以自我为中心**："We are a leading..."一开口就是推销。数一数 I/We 开头的句子
+3. **没有清晰价值主张**：71% 的决策者无视不相关邮件
+4. **通用模板**：{{FirstName}} 不是个性化，收件人秒识别
+5. **功能倾倒**："Great reps lead with problems"（Lavender）。一个证据点胜过十个功能
+6. **虚假个性化**：没有细节的"Loved your post!"一眼假
+7. **要得太急**：第一封邮件就约 30 分钟通话，等于"第一次约会就求婚"
+8. **逼迫式语言**："Act Now" 堆叠让垃圾邮件标记增加 67%
+9. **没有 CTA**：没有清晰的下一步，势头就断
+10. **"Just checking in"式跟进**："I never heard back" 让约会议率下降 12%
+11. **对错人群用错语调**：创始人 ≠ RevOps 负责人 ≠ 销售主管
+12. **行话/流行词**："Leverage synergistic platform" → "We help you book more meetings"
+13. **无凭据的声明**："300% more leads"没有证据只会招来怀疑
+14. **单家公司联系太多人**：1–2 人回复 7.8%；10+ 人回复 3.8%
+15. **假紧迫感**：伪造的 "Re:" / "Fwd:" / 倒计时摧毁信任
 
-## Cultural Calibration
+## 文化校准
 
-| Factor       | US              | UK                       | Germany/DACH         | Scandinavia             |
+| 因素       | 美国              | 英国                       | 德国/DACH         | 北欧             |
 | ------------ | --------------- | ------------------------ | -------------------- | ----------------------- |
-| Tone         | Direct, casual  | Polite, professional     | Precise, data-driven | Fact-based, egalitarian |
-| Length       | Shorter, blunt  | Longer, insight-led      | Detail-oriented      | Concise but substantive |
-| Social proof | Outcome numbers | Research-led credibility | Technical precision  | Shared values           |
+| 语调         | 直接、随意  | 礼貌、专业     | 精确、数据驱动 | 事实导向、平等 |
+| 篇幅       | 更短、直白  | 更长、以洞见领衔      | 注重细节      | 简洁但有实质 |
+| 社会证明 | 结果数字 | 研究背书 | 技术精确  | 共同价值观           |
 
-North America: 4.1% response. Europe: 3.1%. Asia-Pacific: 2.8%. Shorter, more direct sequences work better in US. UK needs more insight/personality. GDPR affects European tone.
+北美：回复 4.1%。欧洲：3.1%。亚太：2.8%。更短、更直接的序列在美国更好用。英国需要更多洞见/个性。GDPR 影响欧洲的语调。
 
-## Expert Quick Reference
+## 专家速查表
 
-| Expert         | Core Method                                                     | Best For                                        |
+| 专家         | 核心方法                                                     | 最适合                                        |
 | -------------- | --------------------------------------------------------------- | ----------------------------------------------- |
-| Alex Berman    | 3C's: Compliment → Case Study → CTA                             | High-ticket B2B services, agencies              |
-| Josh Braun     | "Poke the Bear" — neutral questions exposing invisible problems | Empathy-driven consultative selling             |
-| Kyle Coleman   | Systematic research + AI personalization at scale               | Bridging mass outreach and deep personalization |
-| Becc Holland   | Psychographic personalization, Premise Buckets                  | Combining personalization with relevance        |
-| Will Allred    | Data-driven coaching, Mouse Trap, Vanilla Ice Cream             | Any context; universal frameworks               |
-| Justin Michael | 1–3 sentence hyper-brevity, quote their own words               | High-velocity SDR teams at scale                |
-| Sam Nelson     | Agoge Sequence — Triple on Day 1 (email + LinkedIn + call)      | Multi-channel, tiered personalization           |
+| Alex Berman    | 3C's：赞美 → 案例研究 → CTA                             | 高客单价 B2B 服务、代理机构              |
+| Josh Braun     | "Poke the Bear"：用中性问题暴露看不见的问题 | 共情驱动的顾问式销售             |
+| Kyle Coleman   | 系统化研究 + 规模化 AI 个性化               | 连接海量触达与深度个性化 |
+| Becc Holland   | 心理特征个性化、Premise Buckets                  | 把个性化与相关性结合        |
+| Will Allred    | 数据驱动教练、Mouse Trap、Vanilla Ice Cream             | 任何场景；通用框架               |
+| Justin Michael | 1–3 句的超简短，引用对方原话               | 高节奏、大规模的 SDR 团队                |
+| Sam Nelson     | Agoge 序列：第一天三连击（邮件 + LinkedIn + 电话）      | 多渠道、分层个性化           |

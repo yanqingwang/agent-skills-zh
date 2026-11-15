@@ -1,8 +1,12 @@
-# Token Architecture
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/design-system/references/token-architecture.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Three-layer token system for scalable, themeable design systems.
+# Token 架构
 
-## Layer Overview
+面向可扩展、可换主题设计系统的三层 token 体系。
+
+## 层级总览
 
 ```
 ┌─────────────────────────────────────────┐
@@ -17,17 +21,17 @@ Three-layer token system for scalable, themeable design systems.
 └─────────────────────────────────────────┘
 ```
 
-## Why Three Layers?
+## 为什么三层？
 
-| Layer | Purpose | When to Change |
+| 层 | 用途 | 何时变更 |
 |-------|---------|----------------|
-| Primitive | Base values (colors, sizes) | Rarely - foundational |
-| Semantic | Meaning assignment | Theme switching |
-| Component | Component customization | Per-component needs |
+| Primitive | 基础值（颜色、尺寸） | 极少变更，属于地基 |
+| Semantic | 赋予含义 | 切换主题时 |
+| Component | 组件定制 | 按组件需要 |
 
-## Layer 1: Primitive Tokens
+## 第 1 层：Primitive Token
 
-Raw design values without semantic meaning.
+不带语义的原始设计值。
 
 ```css
 :root {
@@ -59,9 +63,9 @@ Raw design values without semantic meaning.
 }
 ```
 
-## Layer 2: Semantic Tokens
+## 第 2 层：Semantic Token
 
-Purpose-based aliases that reference primitives.
+基于用途的别名，引用 primitive。
 
 ```css
 :root {
@@ -91,9 +95,9 @@ Purpose-based aliases that reference primitives.
 }
 ```
 
-## Layer 3: Component Tokens
+## 第 3 层：Component Token
 
-Component-specific tokens referencing semantic layer.
+引用语义层的组件专属 token。
 
 ```css
 :root {
@@ -120,9 +124,9 @@ Component-specific tokens referencing semantic layer.
 }
 ```
 
-## Dark Mode
+## 暗色模式
 
-Override semantic tokens for dark theme:
+暗色主题下覆盖语义 token：
 
 ```css
 .dark {
@@ -134,7 +138,7 @@ Override semantic tokens for dark theme:
 }
 ```
 
-## Naming Convention
+## 命名约定
 
 ```
 --{category}-{item}-{variant}-{state}
@@ -146,9 +150,9 @@ Examples:
 --space-section-sm        # category-semantic-variant
 ```
 
-## Categories
+## 类别
 
-| Category | Examples |
+| 类别 | 示例 |
 |----------|----------|
 | color | primary, secondary, muted, destructive |
 | space | 1, 2, 4, 8, section, component |
@@ -157,7 +161,7 @@ Examples:
 | shadow | sm, default, lg |
 | duration | fast, normal, slow |
 
-## File Organization
+## 文件组织
 
 ```
 tokens/
@@ -167,7 +171,7 @@ tokens/
 └── index.css          # Imports all
 ```
 
-Or single file with layer comments:
+或用单文件加层级注释：
 
 ```css
 /* === PRIMITIVES === */
@@ -183,15 +187,15 @@ Or single file with layer comments:
 .dark { ... }
 ```
 
-## Migration from Flat Tokens
+## 从扁平 token 迁移
 
-Before (flat):
+迁移前（扁平）：
 ```css
 --button-primary-bg: #2563EB;
 --button-secondary-bg: #F3F4F6;
 ```
 
-After (three-layer):
+迁移后（三层）：
 ```css
 /* Primitive */
 --color-blue-600: #2563EB;
@@ -206,9 +210,9 @@ After (three-layer):
 --button-secondary-bg: var(--color-secondary);
 ```
 
-## W3C DTCG Alignment
+## 对齐 W3C DTCG
 
-Token JSON format (W3C Design Tokens Community Group):
+token 的 JSON 格式（W3C Design Tokens Community Group）：
 
 ```json
 {

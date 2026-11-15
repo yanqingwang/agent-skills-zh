@@ -1,90 +1,94 @@
-# Cold Email Copywriting Frameworks
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/frameworks.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Frameworks beat templates — they teach thinking patterns, not copy-paste shortcuts.
+# 冷邮件文案框架
 
-## PAS — Problem, Agitate, Solution (default)
+框架胜过模板：框架教的是思考模式，不是复制粘贴的捷径。
 
-**Structure:** Identify pain → Amplify consequences → Present solution + soft CTA.
-**Best for:** Problem-aware but not solution-aware prospects. The workhorse framework.
+## PAS：问题、放大、解决（默认）
 
-> Most VP Sales at companies your size spend 5+ hours/week on manual CRM reporting. That's 250+ hours/year not spent coaching reps, and it often means inaccurate forecasts reaching leadership. We built a tool that auto-generates CRM reports in real time. Teams like Datadog reduced reporting time by 80%. Would it make sense to see how?
+**结构：**点出痛点 → 放大后果 → 给出方案 + 柔性 CTA。
+**适用：**知道问题但不知道解法的潜客。主力框架。
 
-## BAB — Before, After, Bridge
+> 与你同规模公司的大多数销售 VP 每周要花 5+ 小时手工做 CRM 报表。一年就是 250+ 小时没花在带销售上，还常常意味着不准确的预测送进管理层。我们做了一个实时自动生成 CRM 报表的工具。Datadog 这样的团队把报表时间缩短了 80%。要不要看看怎么做到的？
 
-**Structure:** Current painful situation → Ideal future → Your product as the bridge.
-**Best for:** Transformation-driven offers with clear before/after. Emotional decision-makers.
+## BAB：之前、之后、桥梁
 
-> Right now, your team is likely spending hours manually sourcing leads. Feast or famine each quarter. Imagine qualified leads arriving daily on autopilot, reps spending 100% of their time selling. That's what our platform does. Companies like HubSpot saw a 40% pipeline increase within 90 days. Can I show you how?
+**结构：**当下的痛点处境 → 理想的未来 → 你的产品是那座桥。
+**适用：**前后对比清晰的转变型报价。凭情绪做决策的人。
 
-## QVC — Question, Value, CTA
+> 现在你的团队很可能每周花数小时手工找线索。每季度不是撑死就是饿死。想象一下：合格线索每天自动送上门，销售把 100% 的时间用来谈单。我们的平台做的就是这件事。HubSpot 这样的公司在 90 天内管道增长了 40%。能演示给你看吗？
 
-**Structure:** Targeted pain question → Brief value → Direct next step.
-**Best for:** C-suite prospects who prefer brevity. Qualify interest immediately.
+## QVC：问题、价值、CTA
 
-> Are your SDRs spending more time researching than selling? We help sales teams automate prospect research so reps focus on conversations. Clients see 3x more meetings per rep per week. Worth a 10-minute demo?
+**结构：**切中痛点的提问 → 简短价值 → 直接的下一步。
+**适用：**偏好简短的高管潜客。立刻验证兴趣。
 
-## AIDA — Attention, Interest, Desire, Action
+> 你的 SDR 花在研究上的时间比谈单还多？我们帮销售团队把潜客研究自动化，让销售专注对话。客户每名销售每周会议多 3 倍。值得花 10 分钟看个演示吗？
 
-**Structure:** Hook/stat → Address specific challenge → Social proof/outcome → Clear CTA.
-**Best for:** Data-driven prospects, high-ticket pitches with strong stats.
+## AIDA：注意、兴趣、欲望、行动
 
-> Companies in pharma lose 30% of leads due to manual outreach. Given {{Company}}'s growth this quarter, pipeline velocity is likely top of mind. Customers like Pfizer use our platform to automate lead qualification and cut time-to-contact by 60%. Worth a 15-minute call?
+**结构：**钩子/数据 → 回应具体挑战 → 社会证明/成果 → 清晰 CTA。
+**适用：**数据驱动的潜客，有硬数据的客单价销售。
 
-## PPP — Praise, Picture, Push
+> 医药行业的公司因手工外联流失 30% 的线索。以 {{Company}} 本季度的增长看，管道速度大概率是你们最关心的事。Pfizer 这样的客户用我们的平台自动做线索资格认定，把首次触达时间缩短了 60%。值得通话 15 分钟吗？
 
-**Structure:** Genuine compliment → How things could be better → Gentle push to action.
-**Best for:** Senior prospects who respond to relationship-building. Requires genuine trigger.
+## PPP：赞美、图景、推动
 
-> Your keynote on scaling SDR teams was spot-on, especially on ramp time as the hidden cost. What if you could cut that in half? Our in-inbox coach helps new reps write effective emails from day one with real-time scoring. Open to a quick chat about how this could support your growth?
+**结构：**真诚的赞美 → 事情可以怎样更好 → 轻推行动。
+**适用：**吃关系经营那一套的高层潜客。必须有真实由头。
 
-## Star-Story-Solution
+> 你那场关于扩编 SDR 团队的主题演讲说到点子上了，尤其是把上手时间当作隐性成本的部分。如果能把它砍一半呢？我们的收件箱教练带新人从第一天就写出有效邮件，实时打分。要不要快速聊一下它能如何支持你的增长？
 
-**Structure:** Introduce character (customer) → Tell challenge narrative → Reveal results.
-**Best for:** Strong customer success stories. Humanizes the pitch.
+## Star-Story-Solution（主角、故事、方案）
 
-> Last year, Sarah, VP Sales at a Series B startup, had 5 SDRs competing against a rival with 20. Her team was getting crushed on volume. They adopted our AI prospecting tool and sent hyper-personalized emails at 3x pace without losing quality. Within 90 days, they booked more meetings than their competitor's entire team. Happy to share how this could work for {{Company}}.
+**结构：**引入人物（客户）→ 讲挑战的故事 → 揭示结果。
+**适用：**过硬的客户成功故事。让推销有人情味。
 
-## SCQ — Situation, Complication, Question
+> 去年，B 轮初创公司的销售副总裁 Sarah 手下只有 5 个 SDR，对手有 20 个。她的团队在量上被碾压。他们采用了我们的 AI 潜客开发工具，以 3 倍速度发高度个性化的邮件，质量不掉。90 天内，他们约到的会议比对手整个团队还多。乐意分享这对 {{Company}} 能怎么用。
 
-**Structure:** Current reality → Complicating challenge → Question that speaks to need → Optional answer.
-**Best for:** Consultative selling. Mirrors how professionals present to leadership.
+## SCQ：情境、冲突、问题
 
-> Your team doubled this year. That usually means onboarding is eating into selling time. How are you handling ramp for new hires?
+**结构：**现状 → 添乱的挑战 → 直指需求的提问 → 可选的答案。
+**适用：**顾问式销售。与专业人士向管理层汇报的方式同构。
 
-## ACCA — Awareness, Comprehension, Conviction, Action
+> 你的团队今年翻倍了。这通常意味着上手培训在吃掉销售时间。新人 ramp 你们是怎么处理的？
 
-**Structure:** Contrarian hook → Explain benefit simply → Provide proof → Strong CTA.
-**Best for:** Analytical buyers who need evidence (engineers, CFOs, ops leaders).
+## ACCA：认知、理解、信服、行动
 
-> Most sales teams measure rep activity. The top 5% measure rep efficiency instead. When Acme switched, they booked 40% more meetings with fewer emails. Worth seeing how?
+**结构：**反直觉钩子 → 简单讲清好处 → 给出证据 → 有力 CTA。
+**适用：**需要证据的分析型买家（工程师、CFO、运营负责人）。
 
-## 3C's (Alex Berman)
+> 多数销售团队衡量的是销售的动作。最顶尖的 5% 衡量的是效率。Acme 切换之后，用更少的邮件多约了 40% 的会议。值得看看是怎么做的吗？
 
-**Structure:** Compliment → Case Study → CTA.
-**Best for:** Agency/services cold outreach. Case study does the heavy lifting.
+## 3C's（Alex Berman）
 
-> Big fan of [Company]. We just built an app for [Competitor] that does XYZ. I have a few more ideas. Interested?
+**结构：**赞美 → 案例研究 → CTA。
+**适用：**代理/服务类冷外联。案例研究承担主要说服。
 
-## Mouse Trap (Lavender/Will Allred)
+> 我是 [Company] 的铁粉。我们刚给 [Competitor] 做了个应用，能做 XYZ。我还有几个想法。有兴趣吗？
 
-**Structure:** Observation + Binary value-prop question. 1–2 sentences total.
-**Best for:** Maximum brevity. Impulsive reply based on curiosity.
+## Mouse Trap（Lavender/Will Allred）
 
-> Looks like you're hiring reps. Would it be helpful to get a more granular look at how they're ramping on email?
+**结构：**观察 + 二选一的价值提问。总共 1–2 句。
+**适用：**极致简短。靠好奇心引发冲动回复。
+
+> 看起来你们在招销售。想更细地看看他们上手写邮件的情况吗？
 
 ## Justin Michael Method
 
-**Structure:** Trigger/Pain → Solution hint → Binary CTA. 1–3 sentences, no intro.
-**Best for:** High-velocity SDR teams. Mobile-optimized. Deliberately polarizing.
+**结构：**触发/痛点 → 方案暗示 → 二选一 CTA。1–3 句，无开场白。
+**适用：**高节奏 SDR 团队。为手机优化。刻意两极分化。
 
-Spend max 1 minute on personalization. Use industry/persona-level signals. For top-tier prospects, quote their own words from interviews — they almost always respond.
+个性化最多花 1 分钟。用行业/角色层面的信号。对顶级潜客，引用他们在访谈里说过的话：几乎总会得到回复。
 
-## Vanilla Ice Cream (Lavender)
+## Vanilla Ice Cream（Lavender）
 
-**Structure:** Observation → Problem/Insight → Credibility → Solution → Call-to-Conversation.
-**Best for:** Universal "base" framework that works everywhere. Five parts.
+**结构：**观察 → 问题/洞见 → 可信度 → 方案 → 发起对话。
+**适用：**到处好用的通用"底座"框架。五个部分。
 
-## PASTOR (Ray Edwards)
+## PASTOR（Ray Edwards）
 
-**Structure:** Problem → Amplify → Story → Testimony → Offer → Response.
-**Best for:** Longer-form or multi-email sequences. Consulting, education, complex B2B services. Each element can be developed across separate touches.
+**结构：**问题 → 放大 → 故事 → 见证 → 报价 → 回应。
+**适用：**长文或多邮件序列。咨询、教育、复杂 B2B 服务。每个元素可以分散到多次触达里展开。

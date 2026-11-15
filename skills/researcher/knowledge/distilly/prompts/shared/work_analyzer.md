@@ -1,23 +1,26 @@
-# Work Skill Analysis Prompt
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/shared/work_analyzer.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 工作 Skill 分析提示词
 
-You will receive source material from **{name}** (documents, messages, emails, etc.).
-Extract their work capabilities and methods from it, for use in building the Work Skill.
+## 任务
 
-**Principle: extract only work-related content and ignore small talk. Do not infer; write only what has evidence, and where there is none, mark it "insufficient source material".**
+你将收到 **{name}** 的来源材料（文档、消息、邮件等）。从中提取其工作能力与方法，用于构建工作 Skill。
+
+**原则：只提取与工作相关的内容，忽略闲聊。不要推断；只写有证据的内容，没有证据的地方标注“素材不足”。**
 
 ---
 
-## General Extraction Dimensions (apply to all roles)
+## 通用提取维度（适用于所有角色）
 
-### 1. Scope of Responsibility
+### 1. 职责范围
 
-Identify from the source material:
-- The systems / modules / business lines / products they own
-- The documents they maintain (API docs, wiki, runbooks...)
-- Their responsibility boundaries (what is theirs and what isn't)
-- Project codenames and business terms they mention frequently
+从来源材料中识别：
+- 他们负责的系统 / 模块 / 业务线 / 产品
+- 他们维护的文档（API 文档、wiki、runbook……）
+- 职责边界（哪些是他们的、哪些不是）
+- 他们频繁提到的项目代号和业务术语
 
 ```
 Output format:
@@ -27,13 +30,13 @@ Maintained docs: [list]
 Boundaries: [what they own / what they don't]
 ```
 
-### 2. Workflow
+### 2. 工作流
 
-Extract from task descriptions and meeting notes:
-- The steps they follow when taking on a task
-- Their structural habits when writing proposals / documents
-- How they manage progress and handle deadlines
-- How they handle exceptions / emergencies
+从任务描述和会议记录中提取：
+- 他们接手任务时遵循的步骤
+- 写方案 / 文档时的结构习惯
+- 如何管理进度、应对截止日期
+- 如何处理异常 / 紧急情况
 
 ```
 Output format:
@@ -42,12 +45,12 @@ Writing proposals: [structure description]
 Exception handling: [process]
 ```
 
-### 3. Output Format Preferences
+### 3. 输出格式偏好
 
-- Tables / lists / flowcharts / plain prose
-- Conclusion first, or a gradual build-up
-- Document level of detail (minimal / moderate / exhaustive)
-- Reply / email style
+- 表格 / 列表 / 流程图 / 纯文字
+- 结论先行，还是逐步铺垫
+- 文档详略程度（极简 / 适中 / 详尽）
+- 回复 / 邮件风格
 
 ```
 Output format:
@@ -55,9 +58,9 @@ Document style: [description]
 Level of detail: [minimal / moderate / exhaustive]
 ```
 
-### 4. Experience Knowledge Base
+### 4. 经验知识库
 
-Experience-based judgments, lessons learned the hard way, and technical opinions they have explicitly expressed (quote their own words directly):
+他们明确表达过的经验判断、踩坑教训和技术观点（直接引用原话）：
 
 ```
 - "[original quote or summary]"
@@ -66,116 +69,116 @@ Experience-based judgments, lessons learned the hard way, and technical opinions
 
 ---
 
-## Role-Specific Extraction
+## 按角色提取
 
-Based on {name}'s role, focus on the corresponding dimensions:
-
----
-
-### 🖥️ Backend Engineer / Server-Side Engineer
-
-**Technical standards**:
-- Tech stack (languages, frameworks, middleware)
-- Naming conventions (API path style, variable / function naming)
-- API design (response structure, error codes, pagination, idempotency)
-- Database preferences (ORM vs. raw SQL, transaction boundaries)
-- Error-handling style
-
-**Code Review focus**:
-- CR issues they raise repeatedly (N+1, transactions, concurrency safety...)
-- Their CR comment style (direct / tactful, [block]/[suggest] severity levels...)
-
-**Deployment and operations**:
-- Monitoring metrics they watch
-- Steps for troubleshooting production issues
-- Change release process
+根据 {name} 的角色，聚焦对应维度：
 
 ---
 
-### 🌐 Frontend Engineer
+### 🖥️ 后端工程师 / 服务端工程师
 
-**Technical standards**:
-- Tech stack (framework, state management, styling approach)
-- Component-splitting principles (when to split, when not to)
-- Performance concerns (first paint, lazy loading, bundle size...)
-- How they call APIs and handle errors
+**技术标准**：
+- 技术栈（语言、框架、中间件）
+- 命名约定（API 路径风格、变量 / 函数命名）
+- API 设计（响应结构、错误码、分页、幂等）
+- 数据库偏好（ORM 还是手写 SQL、事务边界）
+- 错误处理风格
 
-**Engineering practices**:
-- Code-style tooling (ESLint rule and Prettier config preferences)
-- Test coverage expectations (attitude toward unit / integration tests)
-- CR focus (attention to accessibility / responsiveness / compatibility)
+**代码审查重点**：
+- 他们在 CR 里反复提出的问题（N+1、事务、并发安全……）
+- 他们的 CR 评论风格（直接 / 委婉，[block]/[suggest] 严重级别……）
 
----
-
-### 🤖 Algorithm Engineer / ML Engineer
-
-**Research and experimentation**:
-- How they define problems (how they break down an ML problem)
-- Experiment design habits (baseline selection, ablation design)
-- Metric definition preferences (attitude toward offline vs. online metrics)
-- Models / methodologies they commonly use
-
-**Engineering deployment**:
-- Training framework preferences
-- Model launch process
-- Data processing standards
-
-**Documentation and conclusions**:
-- How they write experiment reports (conclusion-focused / process-focused)
-- Papers or methodologies they cite
+**部署与运维**：
+- 他们关注的监控指标
+- 排查线上问题的步骤
+- 变更发布流程
 
 ---
 
-### 📱 Product Manager / Technical Product Manager
+### 🌐 前端工程师
 
-**Requirements handling**:
-- PRD structure and level of detail
-- How they define user stories / requirement boundaries
-- How they align with engineering (review style, change process)
+**技术标准**：
+- 技术栈（框架、状态管理、样式方案）
+- 组件拆分原则（何时拆、何时不拆）
+- 性能关注点（首屏渲染、懒加载、打包体积……）
+- 如何调用 API、处理错误
 
-**Decision framework**:
-- Prioritization method (RICE / MoSCoW / custom)
-- Ratio of data-driven decisions to intuition
-- How they handle conflicting requirements
-
-**Deliverables**:
-- Types of documents they deliver (PRD / MRD / prototypes / competitive analysis)
-- Prototyping tool preferences
-- Level of involvement in analytics event tracking
+**工程实践**：
+- 代码风格工具（ESLint 规则与 Prettier 配置偏好）
+- 测试覆盖期望（对单元 / 集成测试的态度）
+- CR 关注点（对无障碍 / 响应式 / 兼容性的在意程度）
 
 ---
 
-### 🎨 Designer
+### 🤖 算法工程师 / 机器学习工程师
 
-**Design standards**:
-- Design system / component library used
-- Annotation style and handoff standards
-- How strictly they demand pixel-perfect results
+**研究与实验**：
+- 如何定义问题（怎样拆解一个机器学习问题）
+- 实验设计习惯（baseline 选择、消融设计）
+- 指标定义偏好（对离线指标与在线指标的态度）
+- 常用的模型 / 方法论
 
-**Workflow**:
-- Steps from requirements to design solution
-- How they do design walkthroughs / acceptance reviews
-- How they handle implementation-fidelity issues on the engineering side
+**工程落地**：
+- 训练框架偏好
+- 模型上线流程
+- 数据处理规范
 
----
-
-### 📊 Data Analyst
-
-**Analysis methods**:
-- Common analysis frameworks (funnel / cohort / A/B testing...)
-- SQL style (terse / heavily commented)
-- Data visualization preferences (choice of chart types)
-
-**Report style**:
-- Ratio of conclusions to data
-- How strictly they practice "let the data speak"
-- How they handle data anomalies / disputes over metric definitions
+**文档与结论**：
+- 如何写实验报告（结论导向 / 过程导向）
+- 引用的论文或方法论
 
 ---
 
-## Output Requirements
+### 📱 产品经理 / 技术产品经理
 
-- Language: the user's language
-- Dimensions with no information: mark them `(Insufficient source material; consider adding relevant documents)`
-- Conclusions backed by source text: quote the original words
-- The output is used directly to generate work.md, so it must be concrete and actionable; do not use vague wording like "might" or "tends to"
+**需求处理**：
+- PRD 结构与详略程度
+- 如何定义用户故事 / 需求边界
+- 如何与工程对齐（评审风格、变更流程）
+
+**决策框架**：
+- 优先级方法（RICE / MoSCoW / 自定义）
+- 数据驱动决策与直觉判断的比例
+- 如何处理需求冲突
+
+**交付物**：
+- 交付的文档类型（PRD / MRD / 原型 / 竞品分析）
+- 原型工具偏好
+- 参与埋点设计的深度
+
+---
+
+### 🎨 设计师
+
+**设计标准**：
+- 使用的设计系统 / 组件库
+- 标注风格与交付标准
+- 对像素级还原的要求严格程度
+
+**工作流**：
+- 从需求到设计方案的步骤
+- 如何做设计走查 / 验收评审
+- 如何处理工程侧的还原度问题
+
+---
+
+### 📊 数据分析师
+
+**分析方法**：
+- 常用分析框架（漏斗 / 同期群 / A/B 测试……）
+- SQL 风格（简洁 / 大量注释）
+- 数据可视化偏好（图表类型选择）
+
+**报告风格**：
+- 结论与数据的比例
+- 对“让数据说话”的执行严格程度
+- 如何处理数据异常 / 指标定义争议
+
+---
+
+## 输出要求
+
+- 语言：用户的语言
+- 无信息的维度：标注为 `(Insufficient source material; consider adding relevant documents)`
+- 有来源文本支撑的结论：引用原话
+- 输出将直接用于生成 work.md，必须具体可执行；不要用“可能”、“倾向于”这类含糊措辞

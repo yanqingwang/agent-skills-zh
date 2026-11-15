@@ -1,33 +1,37 @@
-# Input Schema for Code Tool (Structured Mode)
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-code-tool/INPUT_SCHEMA.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-How to turn `@n8n/n8n-nodes-langchain.toolCode` into a **DynamicStructuredTool** so the LLM passes typed arguments instead of a free-form string.
+# Code Tool 的输入 Schema（结构化模式）
 
----
-
-## Why use a schema?
-
-Without a schema, the Code Tool is a LangChain `DynamicTool`:
-- LLM sees: "one string argument called query"
-- You must parse whatever the LLM sends
-- Typos, missing fields, wrong types are your problem at runtime
-
-With a schema, the Code Tool becomes a `DynamicStructuredTool`:
-- LLM sees: a typed object with named fields and descriptions
-- Runtime rejects invalid calls before your code runs
-- Numeric fields stay numeric (no more `Number(params.price)` for every field)
-- Tool calls are more reliable — most modern LLMs handle structured tools better than "here's a JSON string please"
-
-**Cost**: a little config to define the schema, and the node must be on a version that supports it.
+如何把 `@n8n/n8n-nodes-langchain.toolCode` 变成 **DynamicStructuredTool**，让 LLM 传带类型的参数，而不是自由格式的字符串。
 
 ---
 
-## Enabling the schema
+## 为什么要用 schema？
 
-Set `specifyInputSchema: true` on the `toolCode` parameters. Two schema-definition styles:
+没有 schema 时，Code Tool 是 LangChain 的 `DynamicTool`：
+- LLM 看到的是："一个叫 query 的字符串参数"
+- LLM 发来什么你都得自己解析
+- 拼错、缺字段、类型错，都成了你运行时的问题
 
-### Style A: `fromJson` — paste a representative example (v≥1.3, recommended)
+有 schema 时，Code Tool 变成 `DynamicStructuredTool`：
+- LLM 看到的是：带命名字段和描述的带类型对象
+- 运行时在你的代码跑之前就拒绝无效调用
+- 数值字段保持数值（不用再对每个字段写 `Number(params.price)`）
+- 工具调用更可靠——多数现代 LLM 处理结构化工具，比"给你个 JSON 字符串自己看着办"更在行
 
-The easiest. Give n8n an example JSON, and it infers the schema for you.
+**代价**：定义 schema 要一点配置，且节点版本必须支持该功能。
+
+---
+
+## 启用 schema
+
+在 `toolCode` 参数上设 `specifyInputSchema: true`。两种 schema 定义风格：
+
+### 风格 A：`fromJson`（粘一个代表性示例，v≥1.3，推荐）
+
+最简单。给 n8n 一个示例 JSON，它替你推断 schema。
 
 ```json
 {
@@ -46,11 +50,11 @@ The easiest. Give n8n an example JSON, and it infers the schema for you.
 }
 ```
 
-**How it works**: n8n looks at the example, infers `{price: number, down_payment: number, ...}`, and generates a JSON Schema. The LLM sees that schema and passes a validated object.
+**工作原理**：n8n 看示例，推断出 `{price: number, down_payment: number, ...}`，生成一份 JSON Schema。LLM 看到这份 schema，传过来的是校验过的对象。
 
-### Style B: `manual` — write the JSON Schema yourself
+### 风格 B：`manual`（自己写 JSON Schema）
 
-Use when you need descriptions per field, enums, min/max constraints, or optional fields.
+需要逐字段描述、枚举、min/max 约束或可选字段时用它。
 
 ```json
 {
@@ -69,43 +73,43 @@ Use when you need descriptions per field, enums, min/max constraints, or optiona
 }
 ```
 
-**When `manual` is worth it**:
-- You want per-field `description` strings (the LLM reads these)
-- You need `enum` values (e.g. currency: `["SEK", "EUR", "USD"]`)
-- You need numeric constraints (`minimum`, `maximum`)
-- You want to mark fields as optional cleanly
+**什么时候值得用 `manual`**：
+- 想要逐字段的 `description` 字符串（LLM 会读）
+- 需要 `enum` 取值（如币种：`["SEK", "EUR", "USD"]`）
+- 需要数值约束（`minimum`、`maximum`）
+- 想干净地标记可选字段
 
 ---
 
-## How `query` behaves with a schema
+## 有 schema 时 `query` 的行为
 
-Source of truth from the ToolCode sandbox:
+来自 ToolCode 沙箱的原始依据：
 
 ```typescript
 const sandbox = new JsTaskRunnerSandbox(workflowMode, ctx, undefined, { query });
 ```
 
-The sandbox always receives `{ query }`. The difference is what `query` holds:
+沙箱总是收到 `{ query }`。区别在于 `query` 里装的是什么：
 
-| Mode | Type of `query` | How to use |
+| 模式 | `query` 的类型 | 怎么用 |
 |---|---|---|
-| No schema | `string` | `JSON.parse(query)` if you want structure |
-| With schema | `object` (validated) | Destructure: `const { price, months } = query;` |
+| 无 schema | `string` | 想要结构就 `JSON.parse(query)` |
+| 有 schema | `object`（已校验） | 解构：`const { price, months } = query;` |
 
-In Python, the same applies — `_query` is a string without schema, a dict with schema.
-
----
-
-## Schema version compatibility
-
-- `specifyInputSchema` and `schemaType: "manual"` with `inputSchema`: available in v1.2
-- `schemaType: "fromJson"` with `jsonSchemaExample`: requires v≥1.3
-
-Set `typeVersion: 1.3` on the node if you want `fromJson`. Older installs should use `manual`.
+Python 同理：无 schema 时 `_query` 是字符串，有 schema 时是 dict。
 
 ---
 
-## Picking a pattern
+## schema 的版本兼容性
+
+- `specifyInputSchema` 与 `schemaType: "manual"` 加 `inputSchema`：v1.2 起可用
+- `schemaType: "fromJson"` 加 `jsonSchemaExample`：需要 v≥1.3
+
+要用 `fromJson` 就把节点设为 `typeVersion: 1.3`。旧安装请用 `manual`。
+
+---
+
+## 怎么选
 
 ```
 Does your tool need more than one input field?
@@ -121,12 +125,12 @@ Does your tool need more than one input field?
 
 ---
 
-## Gotcha: schema must be valid JSON
+## 坑：schema 必须是合法 JSON
 
-`jsonSchemaExample` and `inputSchema` are **strings containing JSON**, not objects. Watch the escaping when you paste them into workflow JSON. If the node won't save or the LLM doesn't see the fields, validate the JSON separately first.
+`jsonSchemaExample` 和 `inputSchema` 是**含 JSON 的字符串**，不是对象。粘进工作流 JSON 时小心转义。如果节点保存不了或 LLM 看不到字段，先单独校验一遍 JSON。
 
 ---
 
-## Gotcha: schema changes don't retroactively fix old agent runs
+## 坑：改 schema 不会追溯修复旧的 Agent 运行
 
-If an agent was already started with an unstructured tool and you flip it to structured, the agent's system prompt may still reflect the old contract until it's reloaded. Force a re-run / re-open the agent node after changing schema settings.
+如果 Agent 已经带着无结构工具跑起来，你再切成结构化，Agent 的系统提示词在重新加载之前可能还反映旧契约。改完 schema 设置后，强制重跑 / 重开 Agent 节点。

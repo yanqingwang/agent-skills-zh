@@ -1,32 +1,36 @@
-# three.js scene graph, cameras & cleanup (r150+)
+> **中文汉化版** · 上游：[gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) · 原文件：`skills/web-engines/threejs-scene-setup/references/scene-graph.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Depth behind the scene-setup skill: coordinate conventions, the `Object3D`
-hierarchy, the orthographic camera, resource disposal, and the resolution budget.
+# three.js 场景图、相机与资源清理（r150+）
 
-Contents:
+scene-setup skill 背后的底层细节：坐标约定、`Object3D`
+层级结构、正交相机、资源释放，以及分辨率预算。
 
-- Coordinates & conventions
-- The Object3D hierarchy
-- PerspectiveCamera vs OrthographicCamera
-- Disposing of resources (avoiding leaks)
-- Stopping and restarting the loop
-- Render-on-demand
-- Adaptive resolution
+目录：
 
-## Coordinates & conventions
+- 坐标与约定
+- Object3D 层级结构
+- PerspectiveCamera 与 OrthographicCamera 的对比
+- 释放资源（避免内存泄漏）
+- 停止与重启渲染循环
+- 按需渲染
+- 自适应分辨率
 
-- Right-handed coordinate system: **+X right, +Y up, +Z toward the viewer**. A fresh
-  `PerspectiveCamera` looks down **-Z**.
-- Rotations are in **radians** (except `PerspectiveCamera`'s `fov`, which is degrees).
-  Use `THREE.MathUtils.degToRad(deg)` when you think in degrees.
-- Units are arbitrary but be consistent. glTF models are authored in metres; pick a
-  scale and stick to it across the project.
+## 坐标与约定
 
-## The Object3D hierarchy
+- 右手坐标系：**+X 向右，+Y 向上，+Z 朝向观察者**。新建的
+  `PerspectiveCamera` 朝 **-Z** 方向看。
+- 旋转用**弧度**表示（`PerspectiveCamera` 的 `fov` 例外，单位是度）。
+  如果你习惯用度思考，请用 `THREE.MathUtils.degToRad(deg)` 换算。
+- 单位可以任选，但必须保持一致。glTF 模型以米为单位制作；选定一个
+  比例后在整个项目中坚持使用。
 
-Every visual thing (`Mesh`, `Group`, `Camera`, `Light`) extends `Object3D` and has
-`position`, `rotation`, `quaternion`, and `scale`. Children inherit their parent's
-transform.
+## Object3D 层级结构
+
+一切可见对象（`Mesh`、`Group`、`Camera`、`Light`）都继承自 `Object3D`，都拥有
+`position`、`rotation`、`quaternion` 和 `scale`。子对象继承父对象的
+变换。
 
 ```js
 import * as THREE from 'three';
@@ -40,7 +44,7 @@ barrelMesh.removeFromParent();            // detach (r129+)
 scene.add(barrelMesh);                    // re-parent to the scene root
 ```
 
-Useful traversal/lookup helpers:
+实用的遍历/查找辅助方法：
 
 ```js
 scene.getObjectByName('Player');          // first descendant with that .name
@@ -48,16 +52,16 @@ root.traverse((obj) => { /* visit every descendant */ });
 obj.getWorldPosition(new THREE.Vector3()); // world-space position
 ```
 
-Avoid scaling parents of physics/gameplay objects: non-unit parent scale compounds
-through children and makes world-space math (raycasts, distances) error-prone.
+不要缩放物理/玩法对象的父级：非单位缩放会沿子级层层叠加，
+让世界坐标计算（射线检测、距离）容易出错。
 
-## PerspectiveCamera vs OrthographicCamera
+## PerspectiveCamera 与 OrthographicCamera 的对比
 
-- **PerspectiveCamera(fov, aspect, near, far)** — objects shrink with distance.
-  Default for 3D. Keep `near`/`far` as tight as the scene allows; a huge far/near
-  ratio wrecks depth precision (z-fighting).
-- **OrthographicCamera(left, right, top, bottom, near, far)** — no perspective;
-  ideal for 2.5D, isometric, or CAD-like views. Size the frustum to the aspect:
+- **PerspectiveCamera(fov, aspect, near, far)**：物体随距离增加而缩小。
+  3D 场景的默认选择。`near`/`far` 在场景允许的前提下尽量收紧；far/near
+  比值过大会毁掉深度精度（z-fighting）。
+- **OrthographicCamera(left, right, top, bottom, near, far)**：没有透视效果；
+  适合 2.5D、等距（isometric）或类 CAD 视图。视锥体尺寸要按宽高比来定：
 
 ```js
 const aspect = window.innerWidth / window.innerHeight;
@@ -66,14 +70,14 @@ const cam = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, 0.1, 10
 // On resize, recompute left/right from the new aspect, then updateProjectionMatrix().
 ```
 
-After changing any projection property (`aspect`, `fov`, frustum extents, `zoom`)
-call `camera.updateProjectionMatrix()`.
+修改任何投影属性（`aspect`、`fov`、视锥体范围、`zoom`）之后，
+都要调用 `camera.updateProjectionMatrix()`。
 
-## Disposing of resources (avoiding leaks)
+## 释放资源（避免内存泄漏）
 
-three.js cannot garbage-collect GPU memory for you. Removing an object from the
-scene frees nothing on the GPU; you must dispose geometries, materials, and
-textures explicitly.
+three.js 不会替你垃圾回收 GPU 显存。把对象从场景中移除
+不会释放任何 GPU 资源；你必须显式 dispose 几何体、材质和
+纹理。
 
 ```js
 // Disposes everything under obj. Skip geometries/materials/textures that other
@@ -97,26 +101,26 @@ function disposeObject(obj) {
 }
 ```
 
-`Object3D.dispose()` is on every object since r186 (before that only lights,
-`InstancedMesh`, and `BatchedMesh` had it — guard with `node.dispose?.()` on older
-releases). The base method frees no geometry, materials, or textures; those stay
-manual (`BatchedMesh` is the exception: it owns and disposes its own geometry).
+自 r186 起，每个对象都带 `Object3D.dispose()`（更早的版本只有灯光、
+`InstancedMesh` 和 `BatchedMesh` 才有；旧版本请用 `node.dispose?.()` 做防护）。
+基类方法不释放几何体、材质或纹理；这些仍需手动处理
+（`BatchedMesh` 是例外：它自己持有并 dispose 自己的几何体）。
 
-Also dispose render targets (`renderTarget.dispose()`) and, on full teardown, the
-renderer (`renderer.dispose()`). When swapping levels, dispose the old level's
-subtree before loading the next, or memory grows every transition.
+渲染目标也要 dispose（`renderTarget.dispose()`），整体拆除时还要
+dispose 渲染器（`renderer.dispose()`）。切换关卡时，先 dispose 旧关卡的
+子树再加载下一关，否则显存会随每次切换持续增长。
 
-## Stopping and restarting the loop
+## 停止与重启渲染循环
 
-`renderer.setAnimationLoop(fn)` starts the loop; `setAnimationLoop(null)` stops it
-(e.g. when the tab is hidden via the Page Visibility API, or a menu is open). This
-is also the loop required by WebXR — `requestAnimationFrame` does not drive XR
-frames.
+`renderer.setAnimationLoop(fn)` 启动循环；`setAnimationLoop(null)` 停止它
+（例如标签页经 Page Visibility API 隐藏时，或菜单打开时）。WebXR 也要求
+使用这种循环；`requestAnimationFrame` 无法驱动 XR
+帧。
 
-## Render-on-demand
+## 按需渲染
 
-For static scenes or editors, you don't need a continuous loop. Render only when
-something changes (input, controls' `change` event, a tween step):
+静态场景或编辑器不需要持续循环。只在发生变化时渲染
+（输入、controls 的 `change` 事件、补间动画的一步）：
 
 ```js
 let needsRender = true;
@@ -129,20 +133,20 @@ renderer.setAnimationLoop(() => {
 });
 ```
 
-This cuts GPU/battery use dramatically for non-animated content.
+对非动画内容，这能大幅降低 GPU 与电量消耗。
 
-## Adaptive resolution
+## 自适应分辨率
 
-Pixel ratio is a fill-rate budget: a ratio of 2 draws four times the pixels of 1 at the same
-CSS size. Lowering it helps when the GPU is the bottleneck, not when the simulation is.
+像素比就是填充率预算：同样 CSS 尺寸下，比值为 2 时绘制的像素是 1 的四倍。
+瓶颈在 GPU 时调低它有用；瓶颈在模拟运算时则没用。
 
-To adapt it at runtime:
+运行时自适应方法：
 
-- Measure several seconds of frame time after assets load and shaders warm up. Ignore
-  hidden-tab intervals and loading stalls.
-- If sustained GPU pressure exceeds the budget, lower the ratio in 0.25 steps down to a
-  chosen floor (for example 1). Never go above the device ratio or the user's setting.
-- Wait out a cooldown and use a separate, higher recovery threshold before raising it again,
-  or the ratio oscillates.
-- Reapply the chosen ratio when the display or `devicePixelRatio` changes, and resize render
-  targets and post-processing buffers to match the renderer.
+- 在资源加载完毕、着色器预热完成后，测量数秒的帧时间。忽略
+  标签页隐藏的时间段和加载卡顿。
+- 如果 GPU 持续超出预算，按 0.25 的步长下调比值，降到设定的下限
+  （例如 1）。绝不能高于设备比值或用户自己设置的值。
+- 再次上调前，先等待冷却期，并使用单独的、更高的恢复阈值，
+  否则比值会来回震荡。
+- 显示器或 `devicePixelRatio` 变化时，重新应用选定的比值，并按渲染器
+  同步调整渲染目标和后处理缓冲区的尺寸。

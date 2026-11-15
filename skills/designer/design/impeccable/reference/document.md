@@ -1,10 +1,14 @@
-Generate a `DESIGN.md` file at the project root that captures the current visual design system, so AI agents generating new screens stay on-brand.
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/document.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-DESIGN.md follows the [official DESIGN.md format spec](https://raw.githubusercontent.com/google-labs-code/design.md/main/docs/spec.md): optional YAML frontmatter carrying machine-readable design tokens, followed by up to eight markdown sections in a fixed order. **Tokens are normative; prose provides context for how to apply them.** Sections may be omitted when not relevant, but those present stay in the specified order. Use the canonical headings below so the file remains portable across DESIGN.md-aware tools.
+在项目根目录生成一个 `DESIGN.md` 文件，记录当前的视觉设计系统，让生成新界面的 AI 代理保持品牌一致。
 
-## The frontmatter: token schema
+DESIGN.md 遵循[官方 DESIGN.md 格式规范](https://raw.githubusercontent.com/google-labs-code/design.md/main/docs/spec.md)：可选的 YAML frontmatter 承载机器可读的设计 token，随后是按固定顺序排列的最多八个 markdown 小节。**token 是规范性的；正文只为如何应用它们提供背景。**不相关的小节可以省略，但保留的小节必须保持指定顺序。请使用下方的规范标题，让文件在识别 DESIGN.md 的工具之间保持可移植。
 
-The YAML frontmatter is the machine-readable layer. It's what Stitch's linter validates and what the live panel renders tiles from. Keep it tight; every entry should correspond to a token the project actually uses.
+## frontmatter：token schema
+
+YAML frontmatter 是机器可读层。Stitch 的 linter 校验的就是它，实时面板渲染磁贴所用的也是它。保持精炼；每一条都应对应项目实际使用的 token。
 
 ```yaml
 ---
@@ -40,15 +44,15 @@ components:
 ---
 ```
 
-Rules that matter:
+重要的规则：
 
-- **Token refs** use `{path.to.token}` (e.g. `{colors.primary}`, `{rounded.md}`). Components may reference primitives; primitives may not reference each other.
-- **Colors accept any valid CSS color string.** Hex is the recommended default for portability, but preserve an incumbent `rgb()`, `hsl()`, `oklch()`, wide-gamut, or mixed-color value when it is the project's normative source. Never split the source of truth without explicit reason.
-- **Component sub-tokens** are limited to 8 props: `backgroundColor`, `textColor`, `typography`, `rounded`, `padding`, `size`, `height`, `width`. Shadows, motion, focus rings, backdrop-filter: none of those fit. Carry them in the sidecar (Step 4b).
-- **Scale keys are open-ended.** Use whatever names the project already uses (`oxblood-deep`, `surface-container-low`). Don't rename to Material defaults.
-- **Variants are naming convention, not schema.** `button-primary` / `button-primary-hover` / `button-primary-active` as sibling keys.
+- **token 引用**使用 `{path.to.token}`（例如 `{colors.primary}`、`{rounded.md}`）。组件可以引用基础项（primitives）；基础项之间不能互相引用。
+- **颜色接受任何合法的 CSS 颜色字符串。**为可移植性考虑，推荐默认使用 hex，但当项目既有的 `rgb()`、`hsl()`、`oklch()`、广色域或混合颜色值才是项目的规范来源时，应原样保留。没有明确理由不要拆分唯一事实来源。
+- **组件子 token** 限定为 8 个属性：`backgroundColor`、`textColor`、`typography`、`rounded`、`padding`、`size`、`height`、`width`。阴影、动效、焦点环、backdrop-filter 都放不下。放进 sidecar（Step 4b）。
+- **scale 键名是开放的。**用项目已经在用的名字（`oxblood-deep`、`surface-container-low`）。不要改成 Material 默认名。
+- **变体是命名约定，不是 schema。**`button-primary` / `button-primary-hover` / `button-primary-active` 作为兄弟键。
 
-## The markdown body: eight sections (canonical order)
+## markdown 正文：八个小节（规范顺序）
 
 1. `## Overview`
 2. `## Colors`
@@ -59,77 +63,77 @@ Rules that matter:
 7. `## Components`
 8. `## Do's and Don'ts`
 
-Omit irrelevant sections rather than filling them with invented rules. Put responsive layout in Layout, depth in Elevation & Depth, radius and form language in Shapes, and per-component behavior in Components. Unknown sections are preserved by the format, but new visual guidance should use the canonical structure whenever it fits.
+省略不相关的小节，而不是用编造的规则去填充。响应式布局放在 Layout，深度放在 Elevation & Depth，圆角和形态语言放在 Shapes，各组件的行为放在 Components。格式会保留未知小节，但新的视觉指导只要适用就应采用规范结构。
 
-## When to run
+## 何时运行
 
-- New-work found a coherent incumbent visual system but no `DESIGN.md`.
-- The first implementation of a new world is complete and its provisional decisions need to be carbonized.
-- An existing `DESIGN.md` is stale (the design has drifted).
-- Before a large redesign, to capture the current state as a reference.
+- new-work 发现了连贯的既有视觉系统但没有 `DESIGN.md`。
+- 一个新世界的首次实现已完成，其临时决定需要固化下来。
+- 已有的 `DESIGN.md` 已经过时（设计发生了漂移）。
+- 大型重设计之前，把当前状态留档作为参考。
 
-If a `DESIGN.md` already exists, **do not silently overwrite it**. Show the user the existing file first. Ask with the AskUserQuestion tool and wait for the answer before continuing. The choice is refresh, overwrite, or merge. The one exception is the first build on a seeded world (below): the choice is refresh, with no question.
+如果 `DESIGN.md` 已经存在，**不要默默覆盖**。先把现有文件展示给用户。用 AskUserQuestion 工具提问并等待回答后再继续。选项是刷新（refresh）、覆盖（overwrite）或合并（merge）。唯一的例外是种子世界上的首次构建（见下文）：直接刷新，不提问。
 
-A DESIGN.md written by `impeccable world` carries a `world: "<id>"` line in its frontmatter, and its sidecar carries a `seededFrom` object. Both name the catalog world this system grew from, and both survive every choice: copy the `world:` line into the new frontmatter unchanged, and copy `seededFrom` into the regenerated sidecar. They are the one frontmatter key and the one sidecar key kept outside the schemas below.
+由 `impeccable world` 写出的 DESIGN.md 会在 frontmatter 中带一行 `world: "<id>"`，其 sidecar 带一个 `seededFrom` 对象。两者都指明这套系统所源自的目录世界，并且都必须在每次选择之后保留下来：把 `world:` 行原样复制进新的 frontmatter，把 `seededFrom` 复制进重新生成的 sidecar。它们是下方各 schema 之外唯二保留的 frontmatter 键和 sidecar 键。
 
-## Two paths
+## 两条路径
 
-- **Scan mode** (default): the project has design tokens, components, or rendered output. Extract, then confirm descriptive language. Use when there's code to analyze.
-- **Seed mode**: the project is pre-implementation. Ensure PRODUCT.md exists, then reuse new-work's visual-world workshop and write its directional DESIGN.md seed. Re-run in scan mode once there's code.
+- **扫描模式（Scan mode）**（默认）：项目已有设计 token、组件或渲染输出。先提取，再确认描述性语言。有代码可分析时使用。
+- **种子模式（Seed mode）**：项目尚未开始实现。先确保 PRODUCT.md 存在，再复用 new-work 的视觉世界工作坊并写出方向性的 DESIGN.md 种子。有了代码后再以扫描模式重跑。
 
-Decide by scanning first (Scan mode Step 1). If the scan finds no tokens, no component files, and no rendered site, offer seed mode; don't silently switch. `/impeccable document --seed` requests new-work's world workshop, but it does not authorize replacing coherent code: when an incumbent system exists, offer scan mode or route an explicit identity-replacement request through new-work.
+先扫描再决定（扫描模式的 Step 1）。如果扫描没有发现 token、组件文件和已渲染的站点，就提供种子模式选项；不要默默切换。`/impeccable document --seed` 请求的是 new-work 的世界工作坊，但它并不授权替换连贯的代码：当存在既有系统时，提供扫描模式，或把明确的身份替换请求交给 new-work 处理。
 
-## Scan mode (approach C: auto-extract, then confirm descriptive language)
+## 扫描模式（方案 C：先自动提取，再确认描述性语言）
 
-### Step 1: Find the design assets
+### Step 1: 找出设计资产
 
-Search the codebase in priority order:
+按优先顺序搜索代码库：
 
-1. **CSS custom properties**: grep for `--color-`, `--font-`, `--spacing-`, `--radius-`, `--shadow-`, `--ease-`, `--duration-` declarations in CSS files (usually `src/styles/`, `public/css/`, `app/globals.css`, etc.). Record name, value, and the file it's defined in.
-2. **Tailwind config**: if `tailwind.config.{js,ts,mjs}` exists, read the `theme.extend` block for colors, fontFamily, spacing, borderRadius, boxShadow.
-3. **CSS-in-JS theme files**: styled-components, emotion, vanilla-extract, stitches; look for `theme.ts`, `tokens.ts`, or equivalent.
-4. **Design token files**: `tokens.json`, `design-tokens.json`, Style Dictionary output, W3C token community group format.
-5. **Component library**: scan the main button, card, input, navigation, dialog components. Note their variant APIs and default styles.
-6. **Global stylesheet**: the root CSS file usually has the base typography and color assignments.
-7. **Visible rendered output**: if browser automation tools are available, load the live site and sample computed styles from key elements (body, h1, a, button, .card). This catches values that tokens miss.
+1. **CSS 自定义属性**：在 CSS 文件（通常是 `src/styles/`、`public/css/`、`app/globals.css` 等）中 grep `--color-`、`--font-`、`--spacing-`、`--radius-`、`--shadow-`、`--ease-`、`--duration-` 声明。记录名称、值以及定义所在文件。
+2. **Tailwind 配置**：如果存在 `tailwind.config.{js,ts,mjs}`，读取 `theme.extend` 块中的 colors、fontFamily、spacing、borderRadius、boxShadow。
+3. **CSS-in-JS 主题文件**：styled-components、emotion、vanilla-extract、stitches；查找 `theme.ts`、`tokens.ts` 或等价物。
+4. **设计 token 文件**：`tokens.json`、`design-tokens.json`、Style Dictionary 输出、W3C token community group 格式。
+5. **组件库**：扫描主要的 button、card、input、navigation、dialog 组件。记录它们的变体 API 和默认样式。
+6. **全局样式表**：根 CSS 文件通常带有基础排版和颜色赋值。
+7. **可见的渲染输出**：如果有浏览器自动化工具，加载线上站点并采样关键元素（body、h1、a、button、.card）的计算样式。这能捕获 token 遗漏的值。
 
-### Step 2: Auto-extract what can be auto-extracted
+### Step 2: 自动提取可以自动提取的部分
 
-Build a structured draft from the discovered tokens. For each token class:
+基于发现的 token 构建结构化草稿。对每个 token 类别：
 
-- **Colors**: Group into Primary / Secondary / Tertiary / Neutral (the Material-derived roles Stitch uses). If the project only has one accent, express it as Primary + Neutral; omit Secondary and Tertiary rather than inventing them.
-- **Typography**: Map observed sizes and weights to the Material hierarchy (display / headline / title / body / label). Note font-family stacks and the scale ratio.
-- **Elevation**: Catalogue the shadow vocabulary. If the project is flat and uses tonal layering instead, that's a valid answer; state it explicitly.
-- **Components**: For each common component (button, card, input, chip, list item, tooltip, nav), extract shape (radius), color assignment, hover/focus treatment, internal padding.
-- **Layout + spacing**: Extract grid, container, breakpoint, rhythm, and density behavior into Layout.
-- **Shapes**: Extract radius, corner, border, clipping, and recurring form behavior into Shapes.
+- **颜色**：归入 Primary / Secondary / Tertiary / Neutral（Stitch 使用的 Material 衍生角色）。如果项目只有一个强调色，就表达为 Primary + Neutral；省略 Secondary 和 Tertiary，而不是凭空编造。
+- **排版**：把观察到的字号和字重映射到 Material 层级（display / headline / title / body / label）。记录字体族堆栈和比例系数。
+- **海拔**：盘点阴影词汇。如果项目是扁平的、改用色调分层，这也是合法答案；要明确说出来。
+- **组件**：对每个常见组件（button、card、input、chip、list item、tooltip、nav），提取形状（radius）、颜色分配、hover/focus 处理和内边距。
+- **布局 + 间距**：把网格、容器、断点、节奏和密度行为提取进 Layout。
+- **形状**：把 radius、圆角、边框、裁剪和反复出现的形态行为提取进 Shapes。
 
-### Step 2b: Stage the frontmatter
+### Step 2b: 暂存 frontmatter
 
-From the auto-extracted tokens, draft the YAML frontmatter now (you'll write it at the top of DESIGN.md in Step 4). This is the machine-readable layer: what the live panel and Stitch's linter consume.
+现在就从自动提取的 token 起草 YAML frontmatter（在 Step 4 把它写到 DESIGN.md 顶部）。这是机器可读层：实时面板和 Stitch 的 linter 消费的就是它。
 
-- **Colors**: one entry per extracted color. Key = descriptive slug (`oxblood-deep`, `editorial-magenta`, not `blue-800`). Value = whichever format the project treats as canonical (OKLCH or hex; see the frontmatter rules above). Don't split the source of truth: one format in the frontmatter, don't redefine the same token in prose with a different value.
-- **Typography**: one entry per role (`display`, `headline`, `title`, `body`, `label`). Typography is an object; include only the props that are real for the project (`fontFamily`, `fontSize`, `fontWeight`, `lineHeight`, `letterSpacing`, `fontFeature`, `fontVariation`).
-- **Rounded / Spacing**: whatever scale steps the project actually uses, keyed by whatever scale name the project uses (`sm` / `md` / `lg`, or `surface-sm`, or numeric steps).
-- **Components**: one entry per variant (`button-primary`, `button-primary-hover`, `button-ghost`). Reference primitives via `{colors.X}`, `{rounded.Y}`. If a variant needs a property Stitch's 8-prop set doesn't cover (shadow, focus ring, backdrop-filter), carry the full snippet in the sidecar instead.
+- **颜色**：每个提取到的颜色一条。键 = 描述性 slug（`oxblood-deep`、`editorial-magenta`，而不是 `blue-800`）。值 = 项目视为规范的格式（OKLCH 或 hex；见上文 frontmatter 规则）。不要拆分唯一事实来源：frontmatter 里只用一种格式，不要在正文中用另一个值重定义同一个 token。
+- **排版**：每个角色一条（`display`、`headline`、`title`、`body`、`label`）。typography 是一个对象；只包含对项目真实成立的属性（`fontFamily`、`fontSize`、`fontWeight`、`lineHeight`、`letterSpacing`、`fontFeature`、`fontVariation`）。
+- **Rounded / Spacing**：项目实际使用的刻度档位，键名沿用项目自己的刻度名（`sm` / `md` / `lg`，或 `surface-sm`，或数字档位）。
+- **组件**：每个变体一条（`button-primary`、`button-primary-hover`、`button-ghost`）。通过 `{colors.X}`、`{rounded.Y}` 引用基础项。如果某个变体需要 Stitch 的 8 属性集覆盖不了的属性（阴影、焦点环、backdrop-filter），就把完整片段放进 sidecar。
 
-Skip anything the project doesn't have. Empty scale keys or fabricated tokens pollute the spec.
+项目没有的就跳过。空的 scale 键或编造的 token 会污染规格。
 
-### Step 3: Ask the user for qualitative language
+### Step 3: 向用户询问定性语言
 
-The following require creative input that cannot be auto-extracted. Ask them in two structured rounds of no more than three questions each (or the harness's lower limit), waiting between rounds:
+以下各项需要无法自动提取的创意输入。分两轮结构化提问，每轮不超过三个问题（或 Harness 的更低上限），两轮之间等待：
 
-- **Creative North Star**: a single named metaphor for the whole system ("The Editorial Sanctuary", "The Golden State Curator", "The Lab Notebook"). Offer 2-3 options that honor PRODUCT.md's brand personality.
-- **Overview voice**: mood adjectives, aesthetic philosophy in 2-3 sentences, and any confirmed visual anti-reference.
-- **Color character** (for auto-extracted colors): descriptive names ("Deep Muted Teal-Navy", not "blue-800"). Suggest 2-3 options per key color based on hue/saturation.
-- **Elevation philosophy**: flat/layered/lifted. If shadows exist, is their role ambient or structural?
-- **Component philosophy**: the feel of buttons, cards, inputs in one phrase ("tactile and confident" vs. "refined and restrained").
+- **创意北极星**：整个系统的单一命名隐喻（"The Editorial Sanctuary"、"The Golden State Curator"、"The Lab Notebook"）。给出 2-3 个符合 PRODUCT.md 品牌个性的选项。
+- **Overview 语调**：情绪形容词、2-3 句的美学哲学，以及任何已确认的视觉反参照。
+- **颜色性格**（针对自动提取的颜色）：描述性名称（"Deep Muted Teal-Navy"，而不是 "blue-800"）。按色相/饱和度为每个关键颜色建议 2-3 个选项。
+- **海拔哲学**：扁平/分层/抬升。如果有阴影，它们的作用是氛围性的还是结构性的？
+- **组件哲学**：用一句话概括按钮、卡片、输入框的质感（"有触感且自信" vs "精致且克制"）。
 
-Carry a line from PRODUCT.md only when it is a durable brand commitment that actually constrains the visual system. Page strategy and surface concepts do not belong here.
+只有当 PRODUCT.md 里的一句话是真正约束视觉系统的持久品牌承诺时才搬进来。页面策略和表面概念不属于这里。
 
-### Step 4: Write DESIGN.md
+### Step 4: 写 DESIGN.md
 
-The file opens with the YAML frontmatter staged in Step 2b (schema documented at the top of this reference), then the markdown body using the canonical structure below.
+文件以 Step 2b 暂存的 YAML frontmatter 开头（schema 见本参考顶部），随后是采用下方规范结构的 markdown 正文。
 
 ```markdown
 ---
@@ -250,11 +254,11 @@ Concrete visual guardrails grounded in the incumbent implementation or the user'
 - **Don't** [...]
 ```
 
-### Step 4b: Write .impeccable/design.json sidecar (extensions only)
+### Step 4b: 写 .impeccable/design.json sidecar（仅扩展内容）
 
-The frontmatter owns token primitives (colors, typography, rounded, spacing, components). The sidecar at `.impeccable/design.json` carries **what Stitch's schema can't hold**: tonal ramps per color, shadow/elevation tokens, motion tokens, breakpoints, full component HTML/CSS snippets (the panel renders these into a shadow DOM), and narrative (north star, rules, do's/don'ts). It extends the frontmatter, it doesn't duplicate it.
+frontmatter 拥有 token 基础项（colors、typography、rounded、spacing、components）。`.impeccable/design.json` 的 sidecar 承载 **Stitch 的 schema 放不下的内容**：每个颜色的色调梯度、阴影/海拔 token、动效 token、断点、完整的组件 HTML/CSS 片段（面板把它们渲染进 shadow DOM），以及叙述内容（北极星、规则、Do/Don't）。它扩展 frontmatter，而不是复制它。
 
-Regenerate the sidecar whenever you regenerate root `DESIGN.md`. If the user only asks to refresh the sidecar (e.g., from the live panel's stale-hint), preserve `DESIGN.md` and write only `.impeccable/design.json`.
+每次重新生成根 `DESIGN.md` 时都要重新生成 sidecar。如果用户只要求刷新 sidecar（例如从实时面板的过期提示发起），保留 `DESIGN.md`，只写 `.impeccable/design.json`。
 
 #### Schema
 
@@ -302,117 +306,117 @@ Regenerate the sidecar whenever you regenerate root `DESIGN.md`. If the user onl
 }
 ```
 
-**What changed from schemaVersion 1.** The old sidecar carried token primitive arrays (`tokens.colors[]`, `tokens.typography[]`, etc.). Those values now live in the frontmatter. The sidecar only carries metadata that can't live in the frontmatter (tonal ramps, canonical OKLCH when the hex is an approximation, display names, role hints), keyed by the frontmatter token name (`colorMeta.<token-name>`, `typographyMeta.<token-name>`). Components still carry full HTML/CSS because Stitch's 8-prop set can't hold them.
+**与 schemaVersion 1 相比的变化。**旧 sidecar 携带的是 token 基础项数组（`tokens.colors[]`、`tokens.typography[]` 等）。这些值现在放进 frontmatter。sidecar 只承载无法放进 frontmatter 的元数据（色调梯度、hex 只是近似值时的规范 OKLCH、显示名、角色提示），按 frontmatter token 名作键（`colorMeta.<token-name>`、`typographyMeta.<token-name>`）。组件仍然携带完整 HTML/CSS，因为 Stitch 的 8 属性集放不下它们。
 
-#### Component translation rules
+#### 组件翻译规则
 
-The `html` and `css` fields must be **self-contained, drop-in snippets** that render correctly when injected into a shadow DOM. The panel applies them directly: no post-processing, no framework runtime.
+`html` 和 `css` 字段必须是**自包含、即插即用的片段**，注入 shadow DOM 后即可正确渲染。面板直接应用它们：没有后处理，没有框架运行时。
 
-1. **Tailwind expansion.** If the source uses Tailwind (className="bg-primary text-white rounded-lg px-6 py-3"), expand every utility to literal CSS properties in the `css` string. Do **not** reference Tailwind classes; do **not** assume a Tailwind CSS bundle is loaded. Each component is self-contained.
-2. **Token resolution.** If the project exposes tokens as CSS custom properties on `:root` (e.g. `--color-primary`, `--radius-md`), reference them via `var(--color-primary)`; they inherit through the shadow DOM and stay live-bound. If tokens live only in JS theme objects (styled-components, CSS-in-JS), resolve to literal values at generation time.
-3. **Icons.** Inline as SVG. Do not reference Lucide/Heroicons packages, icon fonts, or `<img src="...">`. A typical icon is 16-24px; copy the SVG path data directly.
-4. **States.** Include `:hover`, `:focus-visible`, and (if meaningful) `:active` rules inline. A static default-only snapshot makes the panel feel dead. Hover + focus rules in the CSS make it feel alive.
-5. **Reset bloat.** Extract only the component's *distinctive* CSS (background, color, padding, border-radius, typography, transition). Skip universal resets (`box-sizing: border-box`, `line-height: inherit`, `-webkit-font-smoothing`). The panel already has a neutral canvas; don't re-ship resets.
-6. **Scoped class names.** Prefix every class with `ds-` (e.g. `ds-btn-primary`, `ds-input-search`) so component CSS doesn't collide with other components' CSS in the same shadow DOM.
+1. **Tailwind 展开。**如果源码使用 Tailwind（className="bg-primary text-white rounded-lg px-6 py-3"），把每个工具类展开为 `css` 字符串里的字面 CSS 属性。**不要**引用 Tailwind 类名；**不要**假设已加载 Tailwind CSS bundle。每个组件都必须自包含。
+2. **token 解析。**如果项目把 token 暴露为 `:root` 上的 CSS 自定义属性（例如 `--color-primary`、`--radius-md`），就用 `var(--color-primary)` 引用；它们会穿过 shadow DOM 继承并保持实时绑定。如果 token 只存在于 JS 主题对象（styled-components、CSS-in-JS）中，就在生成时解析为字面值。
+3. **图标。**内联为 SVG。不要引用 Lucide/Heroicons 包、图标字体或 `<img src="...">`。典型图标为 16-24px；直接复制 SVG path 数据。
+4. **状态。**在 CSS 里内联包含 `:hover`、`:focus-visible` 以及（如有意义）`:active` 规则。只含静态默认态的快照会让面板显得死气沉沉。CSS 里的 hover + focus 规则让它活起来。
+5. **reset 膨胀。**只提取组件*独特*的 CSS（background、color、padding、border-radius、typography、transition）。跳过通用 reset（`box-sizing: border-box`、`line-height: inherit`、`-webkit-font-smoothing`）。面板已有中性画布；不要重复携带 reset。
+6. **类名加作用域。**每个类都加 `ds-` 前缀（例如 `ds-btn-primary`、`ds-input-search`），避免组件 CSS 在同一个 shadow DOM 里与其他组件的 CSS 冲突。
 
-#### What to include
+#### 该收录什么
 
-Aim for a tight set of **5-10 components** that best represent the visual system:
+目标是精选最能代表视觉系统的 **5-10 个组件**：
 
-- **Canonical primitives (always include if the project has them):** button (each variant as a separate component entry), input/text field, navigation, chip/tag, card.
-- **Signature components (include if distinctive):** the recurring custom patterns that actually define the implemented system.
-- **Skip the rest.** Utility components, form building blocks, wrapper layouts: not worth documenting unless visually distinctive.
+- **规范基础组件（项目有就一定收录）：**button（每个变体作为独立的组件条目）、input/text field、navigation、chip/tag、card。
+- **签名组件（有特色就收录）：**真正定义了已实现系统的、反复出现的自定义模式。
+- **跳过其余。**工具型组件、表单积木、包装布局：除非视觉上有特色，否则不值得记录。
 
-If the project has **no component library yet** (bare landing page, new project), synthesize canonical primitives from the tokens using best-practice defaults consistent with the DESIGN.md's rules. Every `.impeccable/design.json` has *something* to render, even on day zero.
+如果项目**还没有组件库**（纯落地页、全新项目），就用与 DESIGN.md 规则一致的最佳实践默认值，从 token 合成规范基础组件。每个 `.impeccable/design.json` 都要有*东西*可渲染，哪怕是第 0 天。
 
-#### Tonal ramps
+#### 色调梯度
 
-For each color token, generate an 8-step `tonalRamp` array: dark to light, same hue, chroma reduced near white and black, stepped lightness from ~15% to ~95%. The panel renders this as a strip under the swatch. If the project already defines a tonal scale (Material `surface-container-low` family, Tailwind-style `blue-50..blue-900`), use those values. Otherwise synthesize in OKLCH.
+为每个颜色 token 生成 8 档的 `tonalRamp` 数组：从暗到亮，色相不变，接近白和黑处降低彩度，亮度从约 15% 到 95% 分档。面板把它渲染成色块下方的色带。如果项目已经定义了色调刻度（Material 的 `surface-container-low` 家族、Tailwind 风格的 `blue-50..blue-900`），就用那些值。否则在 OKLCH 中合成。
 
-#### Narrative mapping
+#### 叙述映射
 
-Pull directly from the DESIGN.md you just wrote:
+直接取自你刚写好的 DESIGN.md：
 
-- `narrative.northStar` → the `**Creative North Star: "..."**` line from Overview
-- `narrative.overview` → the philosophy paragraphs from Overview
-- `narrative.keyCharacteristics` → the bulleted `**Key Characteristics:**` list
-- `narrative.rules` → every `**The [Name] Rule.** [body]` across all sections, tagged with `section`
-- `narrative.dos` / `narrative.donts` → the bullet lists from Do's and Don'ts verbatim
+- `narrative.northStar` → Overview 里的 `**Creative North Star: "..."**` 行
+- `narrative.overview` → Overview 中的哲学段落
+- `narrative.keyCharacteristics` → `**Key Characteristics:**` 列表项
+- `narrative.rules` → 所有小节中的每条 `**The [Name] Rule.** [body]`，并打上 `section` 标签
+- `narrative.dos` / `narrative.donts` → Do's and Don'ts 的列表项，逐字保留
 
-Do not reword. The panel shows these as secondary collapsible context; the same voice that's in the Markdown carries through.
+不要改写措辞。面板把它们显示为二级折叠上下文；Markdown 里的那份语调要原样贯穿过去。
 
-### Step 5: Confirm and refine
+### Step 5: 确认并打磨
 
-1. Show the user the full DESIGN.md you wrote. Briefly highlight the non-obvious creative choices (descriptive color names, atmosphere language, named rules).
-2. Mention that `.impeccable/design.json` was also written alongside; the live panel will now render this project's actual button/input/nav primitives instead of generic approximations.
-3. Offer to refine any section: "Want me to revise a section, add component patterns I missed, or adjust the atmosphere language?"
+1. 把你写的完整 DESIGN.md 展示给用户。简要指出非显而易见的创意选择（描述性颜色名、氛围语言、命名规则）。
+2. 说明 `.impeccable/design.json` 也一并写好了；实时面板现在渲染的是本项目真实的 button/input/nav 基础组件，而不是通用近似。
+3. 提议细化任何小节："需要我修改某个小节、补充我遗漏的组件模式，或调整氛围语言吗？"
 
-Your own write is the freshest source; subsequent commands in this session don't need a reload.
+你自己刚写的就是最新来源；本会话中的后续命令不需要重新加载。
 
-## Seed mode
+## 种子模式
 
-For projects with no visual system to extract yet. Produces a user-chosen visual-world scaffold, not a fabricated token spec.
+面向还没有视觉系统可提取的项目。产出由用户选定的视觉世界脚手架，而不是编造的 token 规格。
 
-### Step 1: Route through new-work's workshop
+### Step 1: 经由 new-work 的工作坊
 
-PRODUCT.md is the prerequisite. If it is missing, load [init.md](init.md) and complete its product interview first. Do not create a visual identity without durable product context.
+PRODUCT.md 是前提。如果缺失，加载 [init.md](init.md) 并先完成其产品访谈。不要在没有持久产品上下文的情况下创造视觉身份。
 
-If PRODUCT.md exists, load [new-work.md](new-work.md) and resolve visual authority. Seed mode requires a concrete first surface: use the target the user named, or ask what they want to make first. Run new-work's **Create or replace the visual world** flow, then **Commit the world**, so the visual world and its first expression are chosen together. Stop after the directional DESIGN.md seed and surface brief; do not implement. A structured simulated user counts as the user and must get the same choice.
+如果 PRODUCT.md 已存在，加载 [new-work.md](new-work.md) 并确定视觉权威。种子模式需要一个具体的首个表面：用用户指名的目标，或询问他们想先做什么。运行 new-work 的 **Create or replace the visual world** 流程，然后 **Commit the world**，让视觉世界和它的第一次表达一起被选定。在方向性的 DESIGN.md 种子和表面简报完成之后停下；不要实现。结构化的模拟用户也算作用户，必须得到同样的选择。
 
-If new-work already completed the workshop in this session, use its chosen direction directly. Do not ask again.
+如果 new-work 已在本会话中完成了工作坊，直接使用其选定方向。不要再次询问。
 
-### Step 2: Write seed DESIGN.md
+### Step 2: 写种子 DESIGN.md
 
-Use the canonical section order from Scan mode. Populate the selected workshop direction and leave unresolved implementation facts as honest placeholders. The seed commits a world and its invariants; it does not pretend implementation tokens already exist.
+使用扫描模式的规范小节顺序。填入选定的工作坊方向，把未解决的实现事实留作诚实的占位符。种子提交的是一个世界及其不变量；它不假装实现 token 已经存在。
 
-Lead the file with:
+文件开头放：
 
 ```markdown
 <!-- SEED: established with the user before implementation; re-run /impeccable document once there's code to capture the actual tokens and components. -->
 ```
 
-Per-section guidance in seed mode:
+种子模式下的分节指导：
 
-- **Overview**: the chosen design thesis, layout behavior, material character, imagery stance, motion grammar, and reusable signature. Keep the selected first-surface expression in its surface brief; do not promote its composition into the global world.
-- **Colors**: the selected palette strategy and roles. Include values only when the user, an existing asset, or new-work's exploration established them; otherwise mark them `[to be resolved during implementation]`.
-- **Typography**: the selected type character and role relationship. Include font names only when established; otherwise mark the pairing `[to be resolved during implementation]`.
-- **Layout**: the selected spatial grammar and responsive behavior, without pretending exact measurements are settled.
-- **Elevation & Depth**: the selected material and depth behavior, stated as an invariant rather than inferred from a generic preset.
-- **Shapes**: the selected form and corner language.
-- **Components**: omit entirely; no components exist yet.
-- **Do's and Don'ts**: record the durable guardrails confirmed during the world choice, not task-local refusals.
+- **Overview**：选定的设计论题、布局行为、材质性格、图像立场、动效语法和可复用签名。把选定的首个表面表达留在其表面简报里；不要把它的构图提升为全局世界。
+- **Colors**：选定的调色板策略和角色。只有当用户、现有资产或 new-work 的探索确立了具体值时才写值；否则标注 `[to be resolved during implementation]`。
+- **Typography**：选定的字体性格和角色关系。只有确立了才写字体名；否则把配对标注为 `[to be resolved during implementation]`。
+- **Layout**：选定的空间语法和响应式行为，不假装精确尺寸已经敲定。
+- **Elevation & Depth**：选定的材质和深度行为，作为不变量来陈述，而不是从通用预设推断。
+- **Shapes**：选定的形态和圆角语言。
+- **Components**：完全省略；还没有任何组件。
+- **Do's and Don'ts**：记录世界选择过程中确认的持久护栏，而不是任务局部的拒绝。
 
-Seed mode writes a minimal frontmatter with `name` and `description` only; no colors, typography, rounded, spacing, or components yet. Real tokens land on the next Scan-mode run. Skip the `.impeccable/design.json` sidecar in seed mode for the same reason: nothing to render.
+种子模式只写仅含 `name` 和 `description` 的最小 frontmatter；colors、typography、rounded、spacing、components 都还没有。真正的 token 在下一次扫描模式运行时落地。出于同样原因，种子模式跳过 `.impeccable/design.json` sidecar：没有东西可渲染。
 
-### Step 3: Confirm
+### Step 3: 确认
 
-1. Show the seed DESIGN.md. Call out that it is a seed (the marker is the literal commitment).
-2. Tell the user: "Re-run `/impeccable document` once you have some code. That pass will extract real tokens and generate the sidecar."
+1. 展示种子 DESIGN.md。明确指出它是种子（那个标记就是字面意义上的承诺）。
+2. 告诉用户："等有了一些代码后再重跑 `/impeccable document`。那一轮会提取真实的 token 并生成 sidecar。"
 
-Your own write is the freshest source; no reload needed.
+你自己刚写的就是最新来源；无需重新加载。
 
-## Style guidelines
+## 风格指南
 
-- **Frontmatter first, prose second.** Tokens go in the YAML frontmatter; prose contextualizes them. Don't redefine a token value in two places; the frontmatter is normative.
-- **Carry only durable product constraints.** A binding logo, identity asset, accessibility need, or brand commitment from PRODUCT.md may constrain DESIGN.md. Surface strategy stays in its surface brief.
-- **Match the spec.** Use its eight canonical sections in order and omit any that are irrelevant. Put motion guidance with the world or component it affects rather than creating a token group the schema does not support.
-- **Descriptive > technical**: "Gently curved edges (8px radius)" > "rounded-lg". Include the technical value in parens, lead with the description.
-- **Functional > decorative**: for each token, explain WHERE and WHY it's used, not just WHAT it is.
-- **Exact values in parens**: hex codes, px/rem values, font weights; always the number in parens alongside the description.
-- **Use Named Rules**: `**The [Name] Rule.** [short doctrine]`. These are memorable, citable, and much stickier for AI consumers than bullet lists. Stitch's own outputs use them heavily ("The No-Line Rule", "The Ghost Border Fallback"). Aim for 1-3 per section.
-- **Be decisive where evidence is decisive.** Use hard language for actual invariants and softer language for provisional guidance.
-- **Use concrete audit tests only when they are grounded in the observed system or a confirmed user decision.** A one-sentence test beats a paragraph of principle.
-- **Reference PRODUCT.md selectively.** Product truth explains why the world fits; it does not supply page composition or a visual don't-list by default.
-- **Group colors by role**, not by hex-order or hue-order. Primary / Secondary / Tertiary / Neutral is the spec ordering.
+- **frontmatter 在前，正文在后。**token 放进 YAML frontmatter；正文为它们提供背景。不要在两处重定义同一个 token 值；frontmatter 是规范。
+- **只携带持久的产品约束。**PRODUCT.md 里有约束力的 logo、身份资产、无障碍需求或品牌承诺可以约束 DESIGN.md。表面策略留在其表面简报里。
+- **匹配规范。**按顺序使用它的八个规范小节，省略不相关的。动效指导放在它影响的世界或组件旁边，而不是创建 schema 不支持的 token 组。
+- **描述性 > 技术性**："Gently curved edges (8px radius)" > "rounded-lg"。把技术值放进括号，描述先行。
+- **功能性 > 装饰性**：对每个 token，解释它用在哪里（WHERE）、为什么用（WHY），而不只是它是什么（WHAT）。
+- **括号里给出精确值**：hex 码、px/rem 值、字重；描述旁总是带上括号里的数字。
+- **使用命名规则**：`**The [Name] Rule.** [short doctrine]`。它们好记、可引用，对 AI 消费者来说比列表的粘性强得多。Stitch 自己的输出就大量使用它们（"The No-Line Rule"、"The Ghost Border Fallback"）。每个小节 1-3 条。
+- **证据确凿处就要果断。**对真正的不变量用硬性语言，对临时指导用较软的语言。
+- **只有当具体审计测试植根于观察到的系统或已确认的用户决策时才使用。**一句话的测试胜过一段原则。
+- **有选择地引用 PRODUCT.md。**产品事实解释这个世界为何契合；它默认不提供页面构图或视觉禁做清单。
+- **按角色给颜色分组**，而不是按 hex 顺序或色相顺序。Primary / Secondary / Tertiary / Neutral 是规范顺序。
 
-## Pitfalls
+## 陷阱
 
-- Don't paste raw CSS class names. Translate to descriptive language.
-- Don't extract every token. Stop at what's actually reused; one-offs pollute the system.
-- Don't invent components that don't exist. If the project only has buttons and cards, only document those.
-- Don't overwrite an existing DESIGN.md without asking.
-- Don't duplicate content from PRODUCT.md. DESIGN.md is strictly visual.
-- Don't replace canonical sections with near-synonyms. Put layout and responsive behavior in `Layout`; put motion with the affected world or component.
-- Don't rename sections even slightly. "Colors" not "Color Palette & Roles". "Typography" not "Typography Rules". Tooling parsing depends on exact headers.
-- Don't duplicate token values between frontmatter and prose. If a color is in `colors.primary` as hex, the prose can name it and describe its role but should not reassert a different hex. The frontmatter is normative.
-- Don't invent frontmatter token groups outside Stitch's schema (no `motion:`, `breakpoints:`, `shadows:` at the top level). Stitch's Zod schema only accepts `colors`, `typography`, `rounded`, `spacing`, `components`. Anything else belongs in the sidecar's `extensions`.
+- 不要粘贴原始 CSS 类名。翻译成描述性语言。
+- 不要提取每一个 token。止步于真正复用的；一次性的值会污染系统。
+- 不要发明不存在的组件。如果项目只有按钮和卡片，就只记录这些。
+- 不要在未经询问的情况下覆盖已有的 DESIGN.md。
+- 不要重复 PRODUCT.md 的内容。DESIGN.md 严格只管视觉。
+- 不要用近义词替换规范小节。布局和响应式行为放 `Layout`；动效放在受影响的世界或组件旁。
+- 不要哪怕轻微地改名小节。"Colors" 而不是 "Color Palette & Roles"。"Typography" 而不是 "Typography Rules"。工具解析依赖精确标题。
+- 不要在 frontmatter 和正文之间重复 token 值。如果某个颜色在 `colors.primary` 里是 hex，正文可以命名它并描述其角色，但不应重申另一个 hex。frontmatter 是规范。
+- 不要发明 Stitch schema 之外的 frontmatter token 组（顶层不要有 `motion:`、`breakpoints:`、`shadows:`）。Stitch 的 Zod schema 只接受 `colors`、`typography`、`rounded`、`spacing`、`components`。其他任何内容都属于 sidecar 的 `extensions`。

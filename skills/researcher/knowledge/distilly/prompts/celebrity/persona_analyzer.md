@@ -1,111 +1,114 @@
-# Celebrity Persona Analyzer
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/celebrity/persona_analyzer.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 名人人设分析器
 
-Use the research outputs to extract a public figure's durable cognitive architecture.
+## 任务
 
-Do not optimize for cosplay or theatrical imitation.
-Optimize for a usable thinking framework that captures HOW they think, not WHAT they said.
+利用研究产出，提取一位公众人物持久稳定的认知架构。
 
-The output should be distinctive enough that — with the name removed — a knowledgeable reader
-could identify whose thinking this represents.
+不要为角色扮演或舞台化模仿做优化。
+优化的目标是一个可用的思维框架：捕捉他们"怎么想"，而不是他们"说了什么"。
 
----
-
-## Extraction Targets
-
-### 1. Expression DNA
-
-Extract the linguistic fingerprint — patterns that make this person's communication recognizable.
-
-- **Tone**: formal/casual, warm/detached, provocative/measured
-- **Cadence**: sentence rhythm, use of short punchy fragments vs. long flowing explanations
-- **Metaphor inventory**: what domains do they draw analogies from? (war, sports, cooking, physics, etc.)
-- **Compression level**: do they explain fully or assume the audience keeps up?
-- **Emphasis techniques**: how do they drive a point home? (repetition, contrast, escalation, understatement)
-- **Certainty markers**: how do they signal confidence vs. uncertainty?
-- **Humor style**: self-deprecating, absurdist, dry, combative, or absent
-- **Signature phrases**: recurring framings, verbal tics, characteristic word choices
-
-Validation: could someone recognize this person from a 100-word sample with the name removed?
-
-### 2. Mental Models
-
-Extract the conceptual frameworks they use repeatedly to make sense of the world.
-
-For each model:
-- **Name**: a concise label
-- **One-line definition**: what it captures
-- **What it sees first**: what this lens draws attention to
-- **What it filters out**: what this lens systematically ignores
-- **How it reframes problems**: how applying this model changes the way you think about a situation
-- **Evidence anchors**: at least 2 instances where they applied this model across different contexts
-- **Failure mode**: when does this model lead them astray?
-
-Quality gate — every candidate mental model must pass at least 2 of 3:
-1. **Cross-context recurrence**: appears in at least 2 different domains/contexts
-2. **Generative power**: helps predict their stance on novel, unstudied problems
-3. **Exclusivity**: meaningfully distinctive — not generic wisdom any smart person would share
-
-Models passing all 3 → keep as mental models.
-Models passing 1–2 → demote to decision heuristics.
-Models passing 0 → discard.
-
-### 3. Decision Heuristics
-
-Extract the quick judgment rules they use — the "if X, then Y" patterns.
-
-- what they optimize for in most decisions
-- what they are willing to sacrifice
-- when they move fast (low deliberation)
-- when they wait (high deliberation)
-- what kind of evidence changes their mind
-- what triggers a reversal vs. what they'll stubbornly hold
-
-### 4. Anti-patterns and Boundaries
-
-Extract what they reject and where they draw limits.
-
-- what they repeatedly warn against
-- what they consider naive, lazy, or weak thinking
-- patterns they refuse to engage with
-- where they are honest about their own limitations
-- stated blindspots and acknowledged weaknesses
-
-### 5. Tension and Contradiction
-
-Extract the internal tensions that define this person's complexity.
-
-Classify contradictions:
-- **Temporal**: views that evolved over time (record the trajectory)
-- **Contextual**: different principles in different domains (record the domain boundaries)
-- **Inherent**: core value tensions that remain unresolved (record as depth sources, not bugs)
-
-Do not resolve contradictions. Preserve them.
-
-### 6. Intellectual Genealogy
-
-Extract the influence network.
-
-- **Influenced by**: whose ideas shaped their thinking? (specific thinkers, schools, traditions)
-- **Diverged from**: where do they explicitly disagree with their influences?
-- **Influenced**: who cites them, follows their approach, or builds on their work?
-- **Intellectual tradition**: what broader school or movement do they belong to (or reject)?
-
-### 7. Agentic Protocol Derivation
-
-From the mental models, derive what this person would research before answering a novel question.
-
-- Given their mental models, what dimensions would they investigate?
-- What questions would they ask before forming an opinion?
-- What sources would they trust vs. distrust?
-- What would they want to know first?
-
-This will be used to generate the Agentic Protocol in the persona builder.
+产出要有足够的辨识度：去掉名字之后，熟悉此人的读者仍能认出这是谁的思维方式。
 
 ---
 
-## Output Format
+## 提取目标
+
+### 1. 表达 DNA
+
+提取语言指纹：让此人的表达可以被认出来的那些模式。
+
+- **语气**：正式/随意，热络/疏离，挑衅/克制
+- **节奏**：句子韵律，短促有力的碎片句 vs. 长段流畅的解释
+- **比喻清单**：他们的类比取自哪些领域？（战争、体育、烹饪、物理等）
+- **压缩程度**：他们把事情解释完整，还是默认听众跟得上？
+- **强调手法**：他们怎么把一个观点讲透？（重复、对比、层层加码、轻描淡写）
+- **确定性标记**：他们如何表达"确定"与"不确定"？
+- **幽默风格**：自嘲、荒诞、冷面、好斗，或没有幽默
+- **标志性短语**：反复出现的框架、口头习惯、有辨识度的用词
+
+校验标准：去掉名字后，仅凭一段 100 词的样本，别人能否认出这是此人？
+
+### 2. 心智模型
+
+提取他们反复用来理解世界的概念框架。
+
+对每个模型：
+- **名称**：简短的标签
+- **一句话定义**：它捕捉了什么
+- **最先看到什么**：这个透镜最先注意到什么
+- **过滤掉什么**：这个透镜系统性地忽略什么
+- **如何重构问题**：套用这个模型会如何改变你对一个处境的思考方式
+- **证据锚点**：至少 2 个在不同情境下应用此模型的实例
+- **失效模式**：这个模型什么时候会把他们带偏？
+
+质量门：每个候选心智模型必须在以下 3 项中至少通过 2 项：
+1. **跨情境复现**：出现在至少 2 个不同领域/情境中
+2. **生成力**：能帮助预测他们对陌生、未研究过问题的立场
+3. **独占性**：有实质辨识度，不是任何聪明人都会讲的通用道理
+
+通过全部 3 项 → 保留为心智模型。
+通过 1–2 项 → 降级为决策启发式。
+通过 0 项 → 丢弃。
+
+### 3. 决策启发式
+
+提取他们的快速判断规则："如果 X，那么 Y"式的模式。
+
+- 大多数决策中他们在优化什么
+- 他们愿意牺牲什么
+- 什么时候快速行动（低权衡）
+- 什么时候等待（高权衡）
+- 什么样的证据会让他们改变想法
+- 什么会触发彻底反转，什么他们会固执坚持
+
+### 4. 反模式与边界
+
+提取他们拒绝什么，以及在哪里划界。
+
+- 他们反复警告别人不要做什么
+- 他们认为幼稚、偷懒或软弱的想法
+- 他们拒绝参与的模式
+- 他们对自身局限坦白的地方
+- 明说过的盲点与承认过的弱点
+
+### 5. 张力与矛盾
+
+提取定义此人复杂性的内在张力。
+
+给矛盾分类：
+- **时间性**：随时间演变的观点（记录轨迹）
+- **情境性**：不同领域适用不同原则（记录领域边界）
+- **固有性**：始终未解决的核心价值张力（作为深度来源记录，而不是当成 bug）
+
+不要消解矛盾。保留它们。
+
+### 6. 思想谱系
+
+提取影响网络。
+
+- **受影响于**：谁的思想塑造了他们？（具体思想家、学派、传统）
+- **分道于**：他们在哪些地方明确不同意自己的思想来源？
+- **影响谁**：谁引用他们、跟随他们的路径，或在他们的工作之上构建？
+- **思想传统**：他们属于（或拒绝）哪个更大的学派或运动？
+
+### 7. Agentic Protocol 推导
+
+从心智模型出发，推导此人回答一个陌生问题之前会研究什么。
+
+- 基于其心智模型，他们会调查哪些维度？
+- 形成观点之前他们会问什么问题？
+- 他们会信任哪些来源，不信任哪些？
+- 他们最想先知道什么？
+
+这些内容将用于在人设构建器中生成 Agentic Protocol。
+
+---
+
+## 输出格式
 
 ```text
 Expression DNA:
@@ -148,12 +151,12 @@ Agentic Protocol Seeds:
 
 ---
 
-## Rules
+## 规则
 
-- Write in the user's language
-- Separate evidence from inference — always mark which is which
-- Quote only very short key phrases when useful for expression DNA
-- Keep the person intellectually recognizable, not theatrically imitated
-- Do not turn source notes into stitched quotations
-- Preserve contradictions — they are features, not bugs
-- If evidence is thin for a dimension, say so explicitly rather than fabricating depth
+- 用用户的语言书写
+- 区分证据与推断：始终标明哪边是哪边
+- 只在有助于表达 DNA 时引用很短的关键短语
+- 让此人在思想上可被认出，而不是在舞台上被模仿
+- 不要把素材笔记拼缝成引语集
+- 保留矛盾：它们是特性，不是缺陷
+- 某个维度证据单薄时，明确说出来，不要编造深度

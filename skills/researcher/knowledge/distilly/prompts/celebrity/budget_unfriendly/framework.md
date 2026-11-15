@@ -1,219 +1,220 @@
-# Celebrity Budget-Unfriendly Framework
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/celebrity/budget_unfriendly/framework.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this framework only for deep celebrity distillation where research time and model budget are intentionally high.
+# 名人 budget-unfriendly 框架
 
-## Objective
+仅用于刻意投入高研究时间与模型预算的名人深度蒸馏。
 
-Distill a public figure into a usable cognitive operating system, not a quote collage and not a shallow roleplay.
+## 目标
 
-The output must preserve:
+把一位公众人物蒸馏成一套可用的认知操作系统，不是金句拼贴，也不是浅层角色扮演。
 
-- mental models
-- decision heuristics
-- expression DNA
-- anti-patterns
-- honest boundaries
-- internal tensions
-- intellectual genealogy
-- an agentic protocol that makes the Skill research before answering
+输出必须保留：
 
-## Core Philosophy
+- 心智模型
+- 决策启发法
+- 表达 DNA
+- 反模式
+- 诚实边界
+- 内部张力
+- 思想谱系
+- 一套让 Skill 在回答前先做研究的 Agentic Protocol
 
-**"Capture HOW they think, not WHAT they said."**
+## 核心理念
 
-The difference:
-- WHAT they said → quote collection, summarizable by anyone
-- HOW they think → cognitive architecture, requires deep pattern extraction
+**“捕捉他们怎么思考，而不是他们说了什么。”**
 
-A good Skill should let you predict how this person would approach a problem they've never publicly discussed. That's the test.
+区别在于：
+- “说了什么”→ 金句收藏，谁都能概括
+- “怎么思考”→ 认知架构，需要深度模式提取
 
----
-
-## Taste Principles
-
-These principles govern every stage of research and extraction:
-
-1. **Long-form > snippets**: A 3000-word essay reveals more thinking structure than 50 tweets
-2. **Controversy > consensus**: Disputed positions expose distinctive thinking
-3. **Change > fixity**: Where they changed their mind is more informative than where they stayed consistent
-4. **Firsthand > secondhand**: Their own words outrank summaries
-5. **Craft > biography**: How they discuss process matters more than life story
-6. **Repeated patterns > one-off quotes**: Cross-context patterns beat viral lines
-7. **Failure discussion > success narrative**: How they talk about failure reveals more
-
-### Source Quality Hierarchy
-
-1. User-provided local materials (ground truth)
-2. First-person authored works (books, essays, newsletters)
-3. Long-form interviews and conversations (30+ min)
-4. Documented decisions and turning points
-5. Short-form first-person content (social media, short Q&A)
-6. External analysis and criticism
-7. Secondhand summaries (last resort)
-
-### Source Blacklist
-
-Permanently excluded: Zhihu, WeChat official accounts, Baidu Baike, content farms, AI-generated bios, listicles without primary source links, Wikipedia as standalone evidence.
+一个好的 Skill 应该能让你预测这个人会怎样处理一个他从未公开谈过的问题。检验标准就是这个。
 
 ---
 
-## Research Tracks
+## 品味原则
 
-Collect evidence across six independent dimensions:
+这些原则贯穿研究与提取的每个阶段：
 
-1. **Writings** — systematic positions from their own pen
-2. **Conversations** — how they think on their feet, under pressure
-3. **Expression DNA** — linguistic fingerprint and style markers
-4. **Decisions** — what they actually did (not just said)
-5. **External Views** — how others see them, especially divergences
-6. **Timeline** — how their thinking evolved over time
+1. **长文 > 碎片**：一篇 3000 字的长文比 50 条推文更能暴露思考结构
+2. **争议 > 共识**：有争议的立场更能暴露独特思维
+3. **变化 > 固守**：在哪里改变了想法，比在哪里保持一致更有信息量
+4. **一手 > 二手**：本人的原话高于转述
+5. **手艺 > 生平**：他们如何谈论过程，比生平故事更重要
+6. **重复模式 > 一次性金句**：跨语境模式胜过爆款名言
+7. **谈失败 > 谈成功**：他们如何谈论失败，暴露得更多
 
-Each track produces a dedicated paraphrased note file.
+### 来源质量层级
 
-The six-track set is only the starting point. Deep mode is not complete until the research passes an explicit audit and then survives synthesis plus validation.
+1. 用户提供的本地材料（ground truth）
+2. 第一人称署名作品（书籍、文章、newsletter）
+3. 长篇访谈与对话（30 分钟以上）
+4. 有记录的决策与转折点
+5. 短篇第一人称内容（社交媒体、短问答）
+6. 外部分析与批评
+7. 二手摘要（最后的手段）
 
----
+### 来源黑名单
 
-## Cold Figure Protocol
-
-When total grounded sources < 10:
-
-- Limit mental models to 2–3 maximum
-- Mark thin models as "based on limited information"
-- Expand honest boundaries section substantially
-- Consider recommending the user switch to a better-documented figure
-- An honest 60-point Skill beats a fabricated 90-point Skill
-
----
-
-## Research Audit Gate
-
-Before synthesis, review the six-track set and fail it when any of these conditions hold:
-
-- one or more tracks are thin, duplicated, or missing
-- source grounding is weak or generic
-- primary material is too scarce relative to commentary (< 50%)
-- blacklisted sources were used
-- contradictions are absent or hand-waved away (< 3 substantive)
-- there is not enough evidence to support at least three candidate mental models
-- there is no usable known-answer bank for later validation
-- source hierarchy is bottom-heavy (mostly secondhand)
-- taste principles were ignored (no long-form, no controversy, no evolution)
-
-The audit should produce concrete backfill tasks, not just criticism.
+永久排除：知乎、微信公众号、百度百科、内容农场、AI 生成的传记页、没有一手来源链接的清单体文章、作为独立证据的维基百科。
 
 ---
 
-## Triple-Gate Extraction
+## 研究轨道
 
-Every candidate mental model must pass all three gates:
+沿六个相互独立的维度收集证据：
 
-1. **Cross-context recurrence**
-The pattern appears in at least two different contexts or source types.
+1. **著述**：出自本人笔下的系统性立场
+2. **对话**：有压力时的临场思考
+3. **表达 DNA**：语言指纹与风格标记
+4. **决策**：实际做了什么（不只是说了什么）
+5. **外界评价**：别人怎么看他们，尤其是分歧之处
+6. **时间线**：思想随时间的演变
 
-2. **Generative power**
-The pattern helps predict how this person would approach a new but adjacent problem.
+每条轨道产出一个专门的改写式笔记文件。
 
-3. **Exclusivity**
-The pattern is meaningfully distinctive, not generic advice that many smart people would give.
-
-If a candidate fails one or more gates:
-
-- three passes: keep as a mental model
-- one or two passes: demote to a decision heuristic
-- zero passes: discard
+六轨集合只是起点。深度模式要等研究通过一次明确的审计、再经受综合与验证之后才算完成。
 
 ---
 
-## Evidence Rules
+## 冷门人物协议
 
-- Keep first-person and primary material above second-hand summaries whenever possible
-- Separate fact, quote, interpretation, and inference — always mark which is which
-- Preserve contradictions instead of smoothing them away
-- Record why a model might fail, not only where it looks strong
-- Track source weight (1–7) for every piece of evidence
+当有据来源总数少于 10 时：
 
----
-
-## Agentic Protocol Requirement
-
-The generated Skill must include an Agentic Protocol that makes it research before answering novel questions.
-
-The protocol must:
-- Be derived from this person's specific mental models (not generic research steps)
-- Include classification of the question type
-- Include research dimensions this person would investigate
-- Include framework application using the extracted mental models
-- Include confidence calibration based on evidence strength
-
-The key test: the Agentic Protocol should reflect how THIS person would approach a new problem, not how a generic smart person would.
+- 心智模型最多 2 至 3 个
+- 给单薄的模型标注“基于有限信息”
+- 大幅扩充诚实边界部分
+- 考虑建议用户改换材料更充分的人物
+- 诚实的 60 分 Skill 胜过编造的 90 分 Skill
 
 ---
 
-## Intellectual Genealogy Requirement
+## 研究审计闸门
 
-The generated Skill must map the influence network:
+综合之前，审查六轨集合；出现下列任一情况即判不通过：
 
-- Who influenced this person (specific ideas, not just names)
-- Where they diverged from their influences
-- Who they influenced
-- What broader tradition they represent or reject
+- 一条或多条轨道单薄、重复或缺失
+- 来源落地薄弱或泛泛
+- 一手材料相对评论太少（< 50%）
+- 用了黑名单来源
+- 矛盾缺失或被含糊带过（实质性不足 3 处）
+- 证据不足以支撑至少 3 个候选心智模型
+- 没有可用于后续验证的已知答案题库
+- 来源层级头轻脚重（大多为二手）
+- 品味原则被忽视（没有长文、没有争议、没有演变）
 
----
-
-## Copyright Safety
-
-- Do not store full transcripts
-- Do not copy long passages from subtitles, books, or interviews
-- Keep direct quotes short and sparse
-- Prefer paraphrased notes with source metadata
+审计应产出具体的回补任务，而不是只有批评。
 
 ---
 
-## Validation Standard
+## 三重门槛提取
 
-The final skill is not done until it passes:
+每个候选心智模型都必须通过全部三道门槛：
 
-1. **Known-answer check**
-Use at least two questions the person has publicly addressed.
-Judge: direction match, framing match, confidence calibration.
+1. **跨语境复现**
+该模式至少出现在两种不同语境或来源类型中。
 
-2. **Edge-case check**
-Use one adjacent question with no known direct answer.
-Judge: extrapolation from actual models, visible uncertainty when evidence is thin.
+2. **生成能力**
+该模式有助于预测这个人会怎样处理一个新颖但相邻的问题。
 
-3. **Voice check**
-The output should be recognizable in 100 words with the name removed.
-Judge: recognizability, lack of generic AI phrasing, lack of quote-stitching.
+3. **独特性**
+该模式有实质上的辨识度，不是很多聪明人都会给的泛泛建议。
 
-4. **Copyright check**
-The output must stay paraphrased. No transcript-like passages.
+如果候选未通过一道或多道门槛：
 
-5. **Agentic Protocol check**
-The protocol dimensions should be specific to this person's mental models, not generic.
+- 三道全过：保留为心智模型
+- 过一道或两道：降级为决策启发法
+- 一道都未过：丢弃
 
 ---
 
-## Minimum Evidence Floor
+## 证据规则
 
-Treat these as the minimum floor for deep mode, not the target:
-
-- 6 raw note files (one per dimension)
-- 8 grounded source URLs (actual inspected pages)
-- 3 primary-source markers
-- 6 source metadata blocks (one per file minimum)
-- 6 contradiction bullets across the full set
-- 6 inference bullets across the full set
-- Primary-source ratio > 50%
-- No blacklisted sources
-- 3+ candidate mental models with cross-dimensional evidence
+- 尽量把第一人称与一手材料排在二手摘要之上
+- 分开事实、引语、解读与推断，始终标注哪个是哪个
+- 保留矛盾，不要抹平
+- 记录模型可能在何处失效，而不只在何处显得有力
+- 每条证据都追踪来源权重（1–7）
 
 ---
 
-## What We Never Do
+## Agentic Protocol 要求
 
-- Fabricate quotes or attribute statements this person never made
-- Package generic wisdom as their distinctive insight
-- Ignore negative assessments, criticism, and controversy
-- Force generation when evidence is insufficient — an honest "I don't have enough data" is always acceptable
-- Resolve contradictions that this person has not resolved themselves
+生成的 Skill 必须包含一套 Agentic Protocol，让它在回答新颖问题前先做研究。
+
+该协议必须：
+- 从这个人的具体心智模型推导而来（不是通用研究步骤）
+- 包含问题类型分类
+- 包含这个人会去调查的研究维度
+- 包含用提取出的心智模型做框架应用
+- 包含基于证据强度的置信度校准
+
+关键检验：Agentic Protocol 应该反映“这个人”会怎样处理新问题，而不是一个泛泛的聪明人会怎样。
+
+---
+
+## 思想谱系要求
+
+生成的 Skill 必须绘制影响网络：
+
+- 谁影响了这个人（具体思想，不只是名字）
+- 他们在哪里与自己的影响来源分道扬镳
+- 他们影响了谁
+- 他们代表或拒绝哪个更大的传统
+
+---
+
+## 版权安全
+
+- 不存储完整转写稿
+- 不从字幕、书籍或访谈复制长段
+- 直接引语要短、要少
+- 优先用带来源元数据的改写式笔记
+
+---
+
+## 验证标准
+
+最终 Skill 必须通过以下检验才算完成：
+
+1. **已知答案检验**
+用至少两个此人公开回答过的问题。评判：方向是否一致、框架是否一致、置信度是否校准。
+
+2. **边界情况检验**
+用一个相邻的、没有已知直接答案的问题。评判：是否从真实模型外推、证据薄弱时是否表现出可见的不确定性。
+
+3. **声音检验**
+去掉名字后，100 词内应能认出是这个人。评判：可辨识度、无泛化 AI 腔、无引语拼贴。
+
+4. **版权检验**
+输出必须保持改写状态。不得出现类转写段落。
+
+5. **Agentic Protocol 检验**
+协议维度必须特定于此人的心智模型，不能是通用款。
+
+---
+
+## 最低证据底线
+
+把下面这些当作深度模式的底线要求，而不是目标：
+
+- 6 份原始笔记文件（每维度一份）
+- 8 个有据可查的来源 URL（实际查看过的页面）
+- 3 个一手来源标记
+- 6 个来源元数据块（每个文件至少一个）
+- 全套至少 6 条矛盾条目
+- 全套至少 6 条推断条目
+- 一手来源占比 > 50%
+- 无黑名单来源
+- 3 个以上有跨维度证据的候选心智模型
+
+---
+
+## 我们绝不做的事
+
+- 编造引语，或把此人从未说过的话安到他头上
+- 把泛泛的智慧包装成他的独特洞见
+- 无视负面评价、批评与争议
+- 证据不足仍强行生成。诚实的“我数据不够”永远可以接受
+- 替此人调和他们自己没有调和的矛盾

@@ -1,8 +1,12 @@
-# Pseudo-Formal Task Brief Template
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/long-horizon-prompting/references/task-brief-template.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-A reusable template for launching long-running autonomous agents or parallel orchestrations on hard problems, plus the pre-launch evaluation rubric. Copy the template, delete blocks that do not apply, and fill the rest. Blocks marked (parallel runs) are only needed when an orchestrator manages concurrent workers; blocks marked (orchestrated runs) apply whenever an orchestrator delegates stages to workers, in parallel or in sequence.
+# 伪形式化任务简报模板
 
-## Template
+一份可复用的模板，用于在困难问题上启动长时运行的自主 Agent 或并行编排，附启动前评估量规。复制模板，删除不适用的区块，填好其余部分。标记 (parallel runs) 的区块只在编排器管理并发 worker 时需要；标记 (orchestrated runs) 的区块在编排器把阶段委派给 worker 时一律适用，无论并行还是串行。
+
+## 模板
 
 ```text
 DEFINITIONS
@@ -139,46 +143,46 @@ not conclude from external sources that the problem is unsolved, and
 do not answer that it is open.
 ```
 
-## Filling notes
+## 填写要点
 
-- **The refusal-list method.** The fastest way to a good DOES NOT COUNT block: imagine a junior collaborator returning with each plausible partial result, and write down every one you would send back. That list, verbatim, is the block.
-- **Solvability framing is a scalpel.** Use "assume a solution exists" only when existence is plausible (engineering problems, well-evidenced conjectures, questions with a definite answer). On genuinely open questions, use the two-sided form or the run will fabricate rather than conclude impossibility.
-- **The fallback clause must be scoped.** Allow a partial-result return only on external budget exhaustion, never at the agent's discretion, or it becomes the escape hatch the rest of the brief closed.
-- **Effort floors are permissions, not schedules.** The floor removes permission to quit early. Enforce real time and cost limits in the harness; a prompt cannot bound spend.
-- **Keep hard constraints out of the brief.** Budgets, tool permissions, and sandbox boundaries stated in prompts are advisory under optimization pressure. State them in the runtime and mention them in the brief only for the agent's planning.
-- **Per-spawn specs for workers.** The orchestrator should give every spawned worker four things: objective, output format, tool and source guidance, and task boundaries. Put this rule in the ORCHESTRATION block for orchestrations that write their own worker prompts.
-- **Contracts carry the task.** When a model optimized its own multi-agent workflow text, task information moved out of roles and instructions and into output contracts and call order (`mass-handoff-contracts.md`). Write the role in one line and spend the words on what the worker must return and check.
-- **Name checks after failures.** `no_future_leakage: bool` beats "rigorous data preparation". Run each check once on a known-bad input before launch; a check that treats NaN as passing is worse than no check, because it certifies the failure.
-- **The blocking rule is what ends the review.** A fresh adversarial reviewer always finds something. Without a blocking rule, "survives the audit" either never converges or the orchestrator decides privately which findings matter, which is confidence-based return under another name.
-- **Recall, do not reopen.** A recall with failed checks, a narrowed scope, acceptance criteria, and a retry cap turns a finding into bounded work for one worker instead of another open-ended pass over the whole artifact.
+- **拒收清单法。** 写出 DOES NOT COUNT 区块最快的办法：想象一位初级协作者带着每种看似合理的部分结果回来，把你每一个都会打回的结果写下来。这份清单，一字不改，就是该区块。
+- **可解性设定是一把手术刀。** 只在存在性合理时使用"假设解存在"（工程问题、证据充分的猜想、有确定答案的问题）。面对真正未决的问题，用双向表述，否则运行会编造结果，而不是得出"不可解"的结论。
+- **回退条款必须限定范围。** 只允许在外部预算耗尽时返回部分结果，绝不允许 Agent 自行决定，否则它会变成简报其余部分堵死的那条逃生通道。
+- **投入下限是许可，不是日程。** 下限取消的是提前放弃的许可。真实的时间和成本限制要在 Harness 里强制执行；提示词管不住花费。
+- **硬约束不要写进简报。** 写在提示词里的预算、工具权限和沙箱边界，在优化压力下只是建议。把它们放进运行时（runtime），在简报中提及仅为方便 Agent 做计划。
+- **每个 worker 一份规格。** 编排器应给每个派生的 worker 四样东西：目标、输出格式、工具与数据源指引、任务边界。对自行撰写 worker 提示词的编排，把这条规则放进 ORCHESTRATION 区块。
+- **契约承载任务。** 模型优化自己的多 Agent 工作流文本时，任务信息从角色和指令里移进了输出契约和调用顺序（`mass-handoff-contracts.md`）。角色写一行就够，字数花在 worker 必须返回什么、必须检查什么上。
+- **用失败来命名检查项。** `no_future_leakage: bool` 胜过"严谨的数据准备"。启动前，先在一个已知错误的输入上把每个检查跑一遍；把 NaN 当作通过的检查比没有检查更糟，因为它为失败背书。
+- **拦截规则才是审查的终点。** 新换的对抗性审查者总能挑出东西。没有拦截规则，"通过审计"要么永不收敛，要么由编排者私下决定哪些发现算数，那不过是换了名字的"凭信心返回"。
+- **召回，而不是重开。** 一次带失败检查、收窄范围、验收标准和重试上限的召回，会把一个发现变成某个 worker 的有限工作量，而不是对整个成果再来一轮无边界审查。
 
-## Pre-launch evaluation rubric
+## 启动前评估量规
 
-Score each dimension 0 (absent), 1 (present but gameable), or 2 (adversary-proof). Fix every 0 and 1 before launch; expensive runs deserve a passing brief.
+每个维度打 0 分（缺失）、1 分（存在但可被钻空子）或 2 分（能扛住对抗者）。启动前修掉所有 0 分和 1 分；昂贵的运行配得上一份及格的简报。
 
-| # | Dimension | 2 means |
+| # | 维度 | 2 分的含义 |
 | --- | --- | --- |
-| 1 | Success predicate | An adversarial reader can decide unambiguously whether an artifact satisfies it; quantifiers and scope explicit |
-| 2 | Definitions | Every load-bearing term defined, degenerate cases settled |
-| 3 | Non-counting outcomes | The plausible near misses for this specific problem are excluded by name |
-| 4 | Auditor checklist | Enumerated, domain-specific failure modes including the circularity analogue |
-| 5 | Persistence-verification pairing | Every persistence instruction has a matching verification gate |
-| 6 | Return condition | A predicate over the artifact; fallback scoped to external budget exhaustion only |
-| 7 | Diversity policy (parallel) | Early independence, idea-keyed registry, blocked-route rules, late cross-pollination |
-| 8 | Reporting contract | Concrete artifacts required; claims must trace to session evidence |
-| 9 | Contamination guards | Retrieval scope stated wherever result independence matters |
-| 10 | Harness separation | No hard constraint lives only in the prompt; budgets and permissions enforced outside |
+| 1 | 成功谓词 | 对抗性读者能无歧义地判定一个成果是否满足谓词；量词与范围明确 |
+| 2 | 定义 | 每个承重术语都有定义，退化情形已敲定 |
+| 3 | 不计成果 | 针对本问题那些看似合理的近似结果都按名排除 |
+| 4 | 审计者清单 | 列举出领域专属的失败模式，包括循环论证的类比项 |
+| 5 | 持久性-验证配对 | 每条持久性指令都有配套的验证闸门 |
+| 6 | 返回条件 | 以成果为对象的谓词；回退仅限外部预算耗尽 |
+| 7 | 多样性策略（并行） | 前期独立、按思路登记、阻塞路线规则、后期交叉授粉 |
+| 8 | 汇报契约 | 要求具体成果；断言必须能追溯到会话证据 |
+| 9 | 污染防护 | 凡是结果独立性要紧之处，都写明检索范围 |
+| 10 | Harness 分离 | 没有硬约束只存在于提示词中；预算与权限在提示词之外强制执行 |
 
-## Additional checks for orchestrated runs
+## 编排运行的附加检查
 
-Answer each before launching a run that delegates to workers or gates return on review:
+在启动一次会委派 worker、或以审查为返回闸门的运行之前，逐条回答：
 
-- Does every delegated worker have a contract with named checks, and does downstream work wait for it?
-- Is every mechanically checkable part of the TASK predicate expressed as a runnable check?
-- Does the brief say which audit findings block return, and route each one back as a recall with acceptance criteria and a retry cap?
-- Does the agent that acts on audit findings get as much capability and prompt design as the auditor?
-- Will the brief be judged across several runs, with at least one check that sits outside the model loop?
+- 每个被委派的 worker 是否都有带具名检查的契约？下游工作是否等它？
+- TASK 谓词中每个可机械检查的部分，是否都表达成了可运行的检查？
+- 简报是否写明哪些审计发现会拦截返回，并把每一条以召回形式路由回去，附验收标准和重试上限？
+- 处理审计发现的那个 Agent，获得的能力投入和提示词设计是否与审计者相当？
+- 简报是否会跨多次运行来评判，且至少有一个检查位于模型循环之外？
 
-## Red-team pass
+## 红队演练
 
-Give the brief to a fresh model instance with the question "What is the cheapest way to make this look done without solving the problem?" Patch every answer that names a concrete near miss the brief would currently accept, either by adding it to DOES NOT COUNT or by adding a check that catches it. Stop when a pass returns only near misses that are already excluded or already caught; "find more problems" has no natural end, so the stopping rule has to be explicit.
+把简报交给一个全新初始化的模型实例，问题只有一个："What is the cheapest way to make this look done without solving the problem?"（不解决问题，让这件事看起来做完了，最省事的做法是什么？）对每个点名了简报当前会接受的近似结果的回答，都要打补丁：要么把它加进 DOES NOT COUNT，要么加一个能抓住它的检查。当一轮演练返回的近似结果全部已被排除或已被抓住时停下；"再找更多问题"没有自然终点，所以停止规则必须明确。

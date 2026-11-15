@@ -1,8 +1,12 @@
-# Brand Guidelines Template
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/brand/references/brand-guideline-template.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this template to create comprehensive brand guidelines for any project.
+# 品牌指南模板
 
-## Document Structure
+用这个模板为任何项目创建全面的品牌指南。
+
+## 文档结构
 
 ```markdown
 # Brand Guidelines v{X.Y}
@@ -124,17 +128,17 @@ Minimum clear space = height of logo mark
 - Corner radius: {value}px
 ```
 
-## Usage
+## 用法
 
-1. Copy template above
-2. Fill in brand-specific values
-3. Save as `docs/brand-guidelines.md`
-4. Reference in content workflows
+1. 复制上面的模板
+2. 填入品牌专属的值
+3. 保存为 `docs/brand-guidelines.md`
+4. 在内容工作流中引用
 
-## Extractable Fields
+## 可提取字段
 
-Scripts can extract:
-- `colors.primary`, `colors.secondary`, `colors.neutral`
-- `typography.heading`, `typography.body`
-- `voice.traits`, `voice.prohibited`
-- `logo.variants`, `logo.minSize`
+脚本可提取：
+- `colors.primary`、`colors.secondary`、`colors.neutral`
+- `typography.heading`、`typography.body`
+- `voice.traits`、`voice.prohibited`
+- `logo.variants`、`logo.minSize`

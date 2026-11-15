@@ -1,10 +1,14 @@
-# Tailwind Integration
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/design-system/references/tailwind-integration.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Map design system tokens to Tailwind CSS configuration.
+# Tailwind 集成
 
-## CSS Variables Setup
+把设计系统 token 映射到 Tailwind CSS 配置。
 
-### Base Layer
+## CSS 变量设置
+
+### 基础层
 
 ```css
 /* globals.css */
@@ -56,7 +60,7 @@ Map design system tokens to Tailwind CSS configuration.
 }
 ```
 
-## Tailwind Config
+## Tailwind 配置
 
 ### tailwind.config.ts
 
@@ -112,9 +116,9 @@ const config: Config = {
 export default config
 ```
 
-## HSL Format Benefits
+## HSL 格式的好处
 
-Using HSL without function allows opacity modifiers:
+HSL 值不带函数写法才能使用透明度修饰符：
 
 ```tsx
 // With HSL format (space-separated)
@@ -125,9 +129,9 @@ Using HSL without function allows opacity modifiers:
 background-color: hsl(217 91% 60% / 0.5);
 ```
 
-## Component Classes
+## 组件类
 
-### Button Example
+### 按钮示例
 
 ```css
 @layer components {
@@ -171,7 +175,7 @@ background-color: hsl(217 91% 60% / 0.5);
 }
 ```
 
-## Spacing Integration
+## 间距集成
 
 ```typescript
 // tailwind.config.ts
@@ -186,7 +190,7 @@ theme: {
 }
 ```
 
-## Animation Tokens
+## 动画 Token
 
 ```typescript
 // tailwind.config.ts
@@ -215,7 +219,7 @@ theme: {
 }
 ```
 
-## Dark Mode Toggle
+## 深色模式切换
 
 ```typescript
 // Toggle dark mode
@@ -229,16 +233,16 @@ if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 }
 ```
 
-## shadcn/ui Alignment
+## 与 shadcn/ui 对齐
 
-This configuration aligns with shadcn/ui conventions:
+这份配置与 shadcn/ui 约定对齐：
 
-- Same CSS variable naming
-- Same HSL format
-- Same color scale structure
-- Compatible with `npx shadcn@latest add` commands
+- 相同的 CSS 变量命名
+- 相同的 HSL 格式
+- 相同的颜色刻度结构
+- 兼容 `npx shadcn@latest add` 命令
 
-### Using with shadcn/ui
+### 配合 shadcn/ui 使用
 
 ```bash
 # Initialize (uses same token structure)
@@ -248,4 +252,4 @@ npx shadcn@latest init
 npx shadcn@latest add button card input
 ```
 
-Components will automatically use your design system tokens.
+组件会自动使用你的设计系统 token。

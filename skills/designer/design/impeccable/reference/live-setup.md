@@ -1,8 +1,12 @@
-One-time live-mode project setup. Loaded from [live.md](live.md) only when `impeccable live` reports `config_missing` / `config_invalid`, when `configDrift` needs handling, or when the config lacks `cspChecked`. Not part of the per-session hot path.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/live-setup.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Write the config
+一次性的 live 模式项目设置。仅当 `impeccable live` 报出 `config_missing` / `config_invalid`、需要处理 `configDrift`，或配置缺少 `cspChecked` 时，才从 [live.md](live.md) 加载本文件。不属于每会话的热路径。
 
-Create the file at the `path` the boot reported (default `.impeccable/live/config.json`):
+## 写入配置
+
+在 boot 报告的 `path` 处创建文件（默认 `.impeccable/live/config.json`）：
 
 ```json
 {
@@ -14,65 +18,65 @@ Create the file at the `path` the boot reported (default `.impeccable/live/confi
 }
 ```
 
-`files` is the inject target: **the HTML files the browser actually loads**, not necessarily source (tracked vs generated does not matter here; wrap has its own generated-file guard). Entries are literal paths or globs. `exclude` (optional) skips files a `files` glob would otherwise include (email templates, demo fixtures). `cspChecked` records that the CSP step below has run; absent on first setup.
+`files` 是注入目标：**浏览器实际加载的 HTML 文件**，不一定是源码（这里不区分受版本控制的还是生成的；wrap 自带生成文件守卫）。条目是字面路径或 glob。`exclude`（可选）跳过 `files` 的 glob 本会包含的文件（邮件模板、演示 fixture）。`cspChecked` 记录下面的 CSP 步骤已经跑过；首次设置时没有这个键。
 
-**Hard-excluded paths (cannot be overridden):** `**/node_modules/**` and `**/.git/**`; injecting there would instrument third-party code.
+**硬排除路径（不可覆盖）：**`**/node_modules/**` 与 `**/.git/**`；往那里注入等于给第三方代码插桩。
 
-**Glob syntax:** `**` matches any number of segments (including zero), `*` matches within a segment, `?` matches one character. Paths are project-root-relative with forward slashes.
+**Glob 语法：**`**` 匹配任意多段（含零段），`*` 在单段内匹配，`?` 匹配一个字符。路径相对项目根，用正斜杠。
 
-| Framework | `files` | `insertBefore` | `commentSyntax` |
+| 框架 | `files` | `insertBefore` | `commentSyntax` |
 |-----------|---------|----------------|-----------------|
-| SPA with single shell (Vite / React / Plain HTML) | `["index.html"]` | `</body>` | `html` |
-| Next.js (App Router) | `["app/layout.tsx"]` | `</body>` | `jsx` |
-| Next.js (Pages) | `["pages/_document.tsx"]` | `</body>` | `jsx` |
+| 单 shell 的 SPA（Vite / React / 纯 HTML） | `["index.html"]` | `</body>` | `html` |
+| Next.js（App Router） | `["app/layout.tsx"]` | `</body>` | `jsx` |
+| Next.js（Pages） | `["pages/_document.tsx"]` | `</body>` | `jsx` |
 | Nuxt | `["app.vue"]` | `</body>` | `html` |
 | Svelte / SvelteKit | `["src/app.html"]` | `</body>` | `html` |
-| TanStack Router (SPA, Vite) | `["index.html"]` | `</body>` | `html` |
-| TanStack Start (SSR) | `["src/routes/__root.tsx"]` | `<Scripts` | `jsx` |
+| TanStack Router（SPA，Vite） | `["index.html"]` | `</body>` | `html` |
+| TanStack Start（SSR） | `["src/routes/__root.tsx"]` | `<Scripts` | `jsx` |
 | Astro | `[" <root layout .astro>"]` | `</body>` | `html` |
-| Multi-page (separate HTML per route) | `["public/**/*.html"]` glob over the served dir | `</body>` | `html` |
+| 多页（每路由独立 HTML） | `["public/**/*.html"]`，在对外服务的目录上做 glob | `</body>` | `html` |
 
-Pick an anchor that exists in every file (`</body>` almost always works); `insertAfter` matches after a line instead. For multi-page sites prefer a glob so new pages are picked up automatically. For sites whose pages are rebuilt by a generator, the inject survives only until the next regeneration: re-run `impeccable live` after each build (accept is unaffected; it writes true source via the fallback flow).
+选一个每个文件里都存在的锚点（`</body>` 几乎总有效）；`insertAfter` 则在一行之后匹配。多页站点优先用 glob，新页面就能自动纳入。页面由生成器重建的站点，注入只能活到下一次重新生成：每次构建后重新运行 `impeccable live`（accept 不受影响；它经 fallback 流程写真正的源码）。
 
-**Framework adapters (auto-detected at inject time).** Every inject records what it wrote in `.impeccable/live/inject-journal.json`; the next inject or remove heals artifacts a crash or wrong-directory stop left behind. SvelteKit, Nuxt, and TanStack Start server-render their document shell, so a raw `<script>` in the entry template will not execute reliably; `impeccable live-inject` detects them and routes to a dedicated adapter (SvelteKit: dev-only root component from `+layout.svelte`; Nuxt: dev-only `.client.ts` plugin; TanStack Start: a generated dev-only `ImpeccableLiveRoot` component in `__root`). The `files` value stays a valid detection/CSP hint but is not the literal insertion site. A plain TanStack Router SPA takes the baseline Vite path.
+**框架适配器（注入时自动检测）。**每次注入都把写入内容记录在 `.impeccable/live/inject-journal.json`；下一次注入或移除会修复崩溃或停错目录留下的残留。SvelteKit、Nuxt 与 TanStack Start 会对文档壳做服务端渲染，入口模板里的裸 `<script>` 未必可靠执行；`impeccable live-inject` 会识别它们并转给专用适配器（SvelteKit：基于 `+layout.svelte` 的仅开发期根组件；Nuxt：仅开发期的 `.client.ts` 插件；TanStack Start：在 `__root` 里生成仅开发期的 `ImpeccableLiveRoot` 组件）。`files` 的值仍是有效的检测/CSP 提示，但不再是字面插入点。普通 TanStack Router SPA 走基线 Vite 路径。
 
-## Config drift
+## 配置漂移
 
-On every boot the project is scanned for HTML files under common page roots (`public/`, `src/`, `app/`, `pages/`) that the resolved `files` list does not cover; they surface as `configDrift.orphans` with a hint. Tell the user once per session which files are uncovered and offer to add them or switch `files` to a glob. Never auto-update the config; the user decides. `configDrift` is `null` when there is no drift.
+每次 boot 都会扫描常见页面根（`public/`、`src/`、`app/`、`pages/`）下、解析后的 `files` 列表未覆盖的 HTML 文件；它们以 `configDrift.orphans` 连同提示浮出。每会话告诉用户一次哪些文件未被覆盖，并提议补充或把 `files` 换成 glob。绝不自动改配置；由用户决定。无漂移时 `configDrift` 为 `null`。
 
-## CSP detection (first-time only)
+## CSP 检测（仅首次）
 
-Keep all allowances below development-only, including manual middleware and meta-tag edits. Do not change a deployed production site's CSP to load the localhost helper; see [live.md](live.md) for production inspection alternatives.
+下面所有放行一律仅限开发环境，手动改中间件和 meta 标签也一视同仁。不要为了让 localhost 助手加载而去改已部署生产站点的 CSP；生产环境检查的替代办法见 [live.md](live.md)。
 
-If `config.cspChecked === true`, skip this whole section; the user was already asked once.
+若 `config.cspChecked === true`，整节跳过；用户已被问过一次。
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable detect-csp
 ```
 
-Output `{ shape, signals }`; the shape names the *patch mechanism*, so one template covers many frameworks:
+输出 `{ shape, signals }`；shape 指明*补丁机制*，因此一个模板覆盖多个框架：
 
-- **`null`**: no CSP; write the config with `cspChecked: true` and stop here.
-- **`append-arrays`**: CSP as structured directive arrays; auto-patchable (monorepo helpers with `additionalScriptSrc`/`additionalConnectSrc`, SvelteKit `kit.csp.directives`, Nuxt `nuxt-security`).
-- **`append-string`**: CSP as a literal value string; auto-patchable (inline `next.config.*` `headers()`, Nuxt `routeRules`).
-- **`middleware`** / **`meta-tag`**: detected but not auto-patched. Show the user the detected files, ask them to add `http://localhost:8400` to `script-src` and `connect-src` manually, then mark `cspChecked: true` and proceed.
+- **`null`**：无 CSP；写入配置并带上 `cspChecked: true`，到此为止。
+- **`append-arrays`**：CSP 是结构化的指令数组；可自动打补丁（带 `additionalScriptSrc`/`additionalConnectSrc` 的 monorepo 助手、SvelteKit `kit.csp.directives`、Nuxt `nuxt-security`）。
+- **`append-string`**：CSP 是字面值字符串；可自动打补丁（`next.config.*` 内联的 `headers()`、Nuxt `routeRules`）。
+- **`middleware`** / **`meta-tag`**：检测到但不自动打补丁。把检测到的文件展示给用户，请其手动把 `http://localhost:8400` 加进 `script-src` 与 `connect-src`，然后标记 `cspChecked: true` 并继续。
 
-### Consent prompt (use this phrasing)
+### 同意提示（照用这段话）
 
-> **CSP patch needed.** I detected a Content Security Policy in your project that blocks `http://localhost:8400`: the live picker won't load without an allowance. Here's the change I'd make:
+> **需要打 CSP 补丁。**我在你的项目里检测到一个内容安全策略（CSP），它拦着 `http://localhost:8400`：没有放行，live 取色器加载不了。我要做的改动是：
 >
 > ```diff
 > [file: <patchTarget>]
 > [exact diff, 2-5 lines]
 > ```
 >
-> It's guarded by `NODE_ENV === "development"` so the extra entry only appears in dev and never reaches production. You can remove it any time by reverting this file. Apply? [y/n]
+> 它由 `NODE_ENV === "development"` 守护，所以这条额外条目只出现在开发环境，绝不会进入生产。你随时可以通过回退这个文件移除它。要应用吗？[y/n]
 
-On "no": skip the patch, note that live will not work until the allowance is added manually, and still write `cspChecked: true` (the question has been asked). On "yes": apply the shape's patch below, then write `cspChecked: true`. The helper's port is not known until the first successful boot, so the allowance names 8400, the helper's first choice; if that boot then reports a different `serverPort` (another project's helper held 8400), add that port to the same allowance before picking.
+回答"否"：跳过补丁，说明在手动加放行之前 live 无法工作，但仍写入 `cspChecked: true`（问题已问过）。回答"是"：按下文该 shape 的补丁执行，然后写入 `cspChecked: true`。助手的端口要到首次成功 boot 才知道，所以放行写的是 8400，即助手的首选端口；如果那次 boot 报出不同的 `serverPort`（别的项目的助手占了 8400），在选择取色点之前把该端口加进同一条放行。
 
 ### append-arrays
 
-Declare near the top of the file that holds the CSP arrays, then append `...__impeccableLiveDev` to the script-src and connect-src arrays:
+在持有 CSP 数组的文件顶部附近声明，然后往 script-src 与 connect-src 数组追加 `...__impeccableLiveDev`：
 
 ```ts
 // Dev-only allowance so impeccable live mode can load. Guarded by NODE_ENV.
@@ -80,11 +84,11 @@ const __impeccableLiveDev =
   process.env.NODE_ENV === "development" ? ["http://localhost:8400"] : [];
 ```
 
-Per-framework: Next.js + monorepo helper: edit the *app's* `next.config.*` (not the shared helper), appending to `additionalScriptSrc` / `additionalConnectSrc`. SvelteKit: `svelte.config.js`, `kit.csp.directives['script-src']` and `['connect-src']`. Nuxt + nuxt-security: `nuxt.config.*`, `security.headers.contentSecurityPolicy['script-src']` and `['connect-src']`. Reference outputs: [nextjs-turborepo/expected-after-patch.ts](https://github.com/pbakaus/impeccable/blob/8dac6ae7e020c43ab10ce9b41939f6fd42627b96/tests/framework-fixtures/nextjs-turborepo/expected-after-patch.ts), [sveltekit-csp/expected-after-patch.js](https://github.com/pbakaus/impeccable/blob/8dac6ae7e020c43ab10ce9b41939f6fd42627b96/tests/framework-fixtures/sveltekit-csp/expected-after-patch.js). Idempotency: if `__impeccableLiveDev` already exists in the file, the patch is applied; just mark `cspChecked: true`.
+分框架：Next.js + monorepo 助手：改*应用自己的* `next.config.*`（不是共享助手），往 `additionalScriptSrc` / `additionalConnectSrc` 追加。SvelteKit：`svelte.config.js` 的 `kit.csp.directives['script-src']` 与 `['connect-src']`。Nuxt + nuxt-security：`nuxt.config.*` 的 `security.headers.contentSecurityPolicy['script-src']` 与 `['connect-src']`。参考产出：[nextjs-turborepo/expected-after-patch.ts](https://github.com/pbakaus/impeccable/blob/8dac6ae7e020c43ab10ce9b41939f6fd42627b96/tests/framework-fixtures/nextjs-turborepo/expected-after-patch.ts)、[sveltekit-csp/expected-after-patch.js](https://github.com/pbakaus/impeccable/blob/8dac6ae7e020c43ab10ce9b41939f6fd42627b96/tests/framework-fixtures/sveltekit-csp/expected-after-patch.js)。幂等性：若 `__impeccableLiveDev` 已存在于文件中，即视为补丁已应用；只需标记 `cspChecked: true`。
 
 ### append-string
 
-Two-point patch: declare a dev-only string, interpolate it into the CSP value at both directives (leading space so it concatenates cleanly; convert literals to template strings as part of the edit):
+两点式补丁：声明一个仅开发期的字符串，把它内插进两条指令的 CSP 值（带前导空格以便干净拼接；作为编辑的一部分，把字面量改成模板字符串）：
 
 ```ts
 // Dev-only allowance so impeccable live mode can load.
@@ -92,13 +96,13 @@ const __impeccableLiveDev =
   process.env.NODE_ENV === "development" ? " http://localhost:8400" : "";
 ```
 
-- `script-src 'self' 'unsafe-inline'` becomes `` `script-src 'self' 'unsafe-inline'${__impeccableLiveDev}` ``
-- `connect-src 'self'` becomes `` `connect-src 'self'${__impeccableLiveDev}` ``
+- `script-src 'self' 'unsafe-inline'` 变为 `` `script-src 'self' 'unsafe-inline'${__impeccableLiveDev}` ``
+- `connect-src 'self'` 变为 `` `connect-src 'self'${__impeccableLiveDev}` ``
 
-Per-framework: Next.js inline `headers()` in `next.config.*`; Nuxt `routeRules['/**'].headers['Content-Security-Policy']` in `nuxt.config.*`. Reference outputs: [nextjs-inline-csp/expected-after-patch.js](https://github.com/pbakaus/impeccable/blob/8dac6ae7e020c43ab10ce9b41939f6fd42627b96/tests/framework-fixtures/nextjs-inline-csp/expected-after-patch.js), [nuxt-csp/expected-after-patch.ts](https://github.com/pbakaus/impeccable/blob/8dac6ae7e020c43ab10ce9b41939f6fd42627b96/tests/framework-fixtures/nuxt-csp/expected-after-patch.ts).
+分框架：Next.js 是 `next.config.*` 里内联的 `headers()`；Nuxt 是 `nuxt.config.*` 里的 `routeRules['/**'].headers['Content-Security-Policy']`。参考产出：[nextjs-inline-csp/expected-after-patch.js](https://github.com/pbakaus/impeccable/blob/8dac6ae7e020c43ab10ce9b41939f6fd42627b96/tests/framework-fixtures/nextjs-inline-csp/expected-after-patch.js)、[nuxt-csp/expected-after-patch.ts](https://github.com/pbakaus/impeccable/blob/8dac6ae7e020c43ab10ce9b41939f6fd42627b96/tests/framework-fixtures/nuxt-csp/expected-after-patch.ts)。
 
-## Troubleshooting
+## 排障
 
-If the user said "no" to the CSP patch and later reports live not working: their dev CSP blocks `http://localhost:8400`. Delete `cspChecked` from `.impeccable/live/config.json` and re-run `impeccable live`; setup asks again.
+若用户对 CSP 补丁答了"否"、之后报告 live 不可用：是他们的开发环境 CSP 拦着 `http://localhost:8400`。从 `.impeccable/live/config.json` 删掉 `cspChecked`，重新运行 `impeccable live`；设置流程会再问一次。
 
-After setup, re-run `impeccable live`.
+设置完成后，重新运行 `impeccable live`。

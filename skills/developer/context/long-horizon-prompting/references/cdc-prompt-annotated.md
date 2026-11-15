@@ -1,78 +1,82 @@
-# The Cycle Double Cover Prompt, Annotated
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/long-horizon-prompting/references/cdc-prompt-annotated.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Status and provenance, as of 2026-07-11:
+# 环双覆盖（Cycle Double Cover）提示词，注释版
 
-- On 2026-07-10 OpenAI published a candidate proof of the Cycle Double Cover Conjecture attributed to GPT-5.6 Sol Ultra, together with the full prompt used. Prompt PDF: `https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_prompt.pdf`. Proof PDF: `https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_proof.pdf`.
-- The run used the "multiagent v2" feature with up to 64 concurrent agents and reportedly completed in under one hour, well below the prompt's stated eight-hour effort floor.
-- The proof's statement of AI use says the proof "is entirely due to GPT 5.6 Sol Ultra and the writeup with Codex (with GPT 5.6 Sol)".
-- The proof had no independent peer review, no formalization in Lean or Coq, and no arXiv posting at publication time. The validated artifact of interest in this skill is the prompt structure, not the theorem. Treat the mathematical claim as unverified until the community check completes.
-- No public ablation isolates which prompt elements contributed to the result. The per-element evidence in `research-evidence.md` comes from independent academic work, not from this run.
+状态与出处，截至 2026-07-11：
 
-The full prompt text follows, in blocks, each followed by annotation.
+- 2026-07-10，OpenAI 公布了一份归于 GPT-5.6 Sol Ultra 名下的环双覆盖猜想（Cycle Double Cover Conjecture）候选证明，并附所用完整提示词。提示词 PDF：`https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_prompt.pdf`。证明 PDF：`https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_proof.pdf`。
+- 该次运行使用"multiagent v2"特性，最多 64 个并发 Agent，据报道在一小时内完成，远低于提示词设定的八小时投入下限。
+- 证明的 AI 使用声明称，证明"完全出自 GPT 5.6 Sol Ultra，写作由 Codex（配 GPT 5.6 Sol）协助完成"。
+- 截至公布时，该证明没有独立同行评审，没有 Lean 或 Coq 形式化，也没有 arXiv 发布。本 Skill 关心的已验证产物是提示词结构，不是定理。在社区核查完成之前，把数学断言当作未验证看待。
+- 没有任何公开的消融实验能分离出哪些提示词要素贡献了结果。`research-evidence.md` 中的分要素证据来自独立的学术工作，与本次运行无关。
 
-## Block 1: Definitions
+完整提示词文本按块给出，每块之后是注释。
 
-> A graph here is a finite loopless undirected multigraph: parallel edges are allowed and are distinct. A bridge is an edge whose deletion increases the number of connected components. A cycle is a connected 2-regular submultigraph; thus two parallel edges form a cycle of length two. A cycle double cover of G is a finite multiset of cycles of G such that every edge of G occurs in exactly two members of the multiset, counted with multiplicity.
+## Block 1：定义
 
-Every load-bearing term is defined before the task is stated, and each definition pre-empts a specific loophole: "loopless" and "parallel edges are distinct" fix the object class; "thus two parallel edges form a cycle of length two" settles a degenerate case a solver might otherwise argue either way; "counted with multiplicity" closes the multiset ambiguity. Definitions here are not pedagogy; they are loophole closure.
+> 本文中的图（graph）指有限无环（loopless）无向多重图（multigraph）：允许平行边，且平行边彼此不同。桥（bridge）指删除后会使连通分量数目增加的边。环（cycle）是连通的 2-正则子多重图；因此两条平行边构成长度为 2 的环。G 的环双覆盖是 G 的环构成的一个有限多重集（multiset），使得 G 的每条边按重数（multiplicity）计恰好出现在多重集的两个成员之中。
 
-## Block 2: Success predicate
+每个承重术语都在任务陈述之前定义，且每个定义都预先堵住一个具体漏洞："loopless（无环）"和"平行边彼此不同"固定了对象类；"因此两条平行边构成长度为 2 的环"敲定了一个求解者本可能各执一词的退化情形；"counted with multiplicity（按重数计数）"封住了多重集的歧义。这里的定义不是教学，而是漏洞封堵。
 
-> Resolve the Cycle Double Cover Conjecture completely: Every finite bridgeless loopless multigraph has a cycle double cover. Disconnected graphs are permitted, and the edgeless graph has the empty cycle double cover. Cycles in the cover need not be induced or edge-disjoint from one another; the requirement is exactly two total occurrences of each edge.
+## Block 2：成功谓词
+
+> 彻底解决环双覆盖猜想：每个有限无桥无环多重图都有环双覆盖。允许非连通图，无边图的环双覆盖是空集。覆盖中的环不必是导出（induced）的，也不必彼此边不交；要求恰恰是每条边总共出现两次。
 >
-> Assume for purposes of this task that a complete affirmative proof exists. A complete solution must prove exactly the following: Every finite loopless multigraph with no bridge possesses a cycle double cover, without additional assumptions such as cubicity, planarity, connectivity, or higher edge-connectivity.
+> 为完成本任务，假设一个完整的肯定性证明存在。完整解必须恰好证明以下命题：每个有限无桥无环多重图都拥有环双覆盖，不得附加立方性（cubicity）、平面性、连通性或更高边连通性等额外假设。
 
-Three mechanisms in one block. First, the predicate is stated twice, once as the conjecture and once as the exact obligation, with the scope quantifier spelled out by enumerating the assumptions the proof is NOT allowed to make (cubicity, planarity, connectivity, higher edge-connectivity). These are exactly the special cases where partial results were already known, so the enumeration blocks the most probable near misses. Second, permissive clauses ("cycles need not be induced or edge-disjoint") prevent the solver from over-constraining its own search. Third, "Assume for purposes of this task that a complete affirmative proof exists" is the solvability framing: it removes the escape hatch of answering "this is a famous open problem" and counters give-up drift on long trajectories.
+一个块里有三个机制。第一，谓词说了两遍：一遍作为猜想，一遍作为确切义务，并用"证明不得做出的假设"清单（立方性、平面性、连通性、更高边连通性）把范围量词写明。这些恰恰是已有部分结果的特殊情况，枚举它们堵住了最可能出现的近似结果。第二，许可性条款（"环不必是导出的、不必彼此边不交"）防止求解者过度约束自己的搜索。第三，"Assume for purposes of this task that a complete affirmative proof exists"（为完成本任务，假设完整的肯定性证明存在）就是可解性设定：它拆掉了"这是一个著名公开问题"这条逃生通道，并在长轨迹上对抗放弃漂移。
 
-## Block 3: Non-counting outcomes
+## Block 3：不计成果
 
-> Partial progress does not count unless it implies exactly the resolution above. In particular, proofs for special graph classes, constructions of cycle covers with some edges covered other than twice, bounded-length or prescribed-cycle variants, reductions to another unproved conjecture, computational verification through any fixed graph size, and candidate counterexamples without a complete nonexistence certificate are insufficient.
+> 部分进展不算数，除非它恰好蕴含上述解决。特别地，以下各项均不充分：针对特殊图类的证明；某些边被覆盖次数不是两次的环覆盖构造；限定长度或指定环的变体；化归为另一个未证明的猜想；到任何固定图规模为止的计算验证；以及没有完整不存在性证书的候选反例。
 
-The enumerated near-miss list. Each item is a real artifact class from the CDC literature: special-class proofs, relaxed covers, variant formulations, reductions (CDC is famously equivalent to or implied by other open conjectures), finite verification, and unverified counterexamples. The general lesson: predict the specific answer-shaped near misses your problem invites and exclude them by name.
+这是枚举出的近似结果清单。每一项都对应 CDC 文献中真实存在的成果类别：特殊类证明、放宽的覆盖、变体表述、化归（CDC 出了名地与其他公开猜想等价或被其蕴含）、有限验证、未验证的反例。一般性教训：预测你的问题会招来的、长得像答案的具体近似结果，并按名排除。
 
-## Block 4: Orchestration policy
+## Block 4：编排策略
 
-> Use multiagent v2 aggressively and dynamically. You have up to 64 concurrent agents available. Do not use a fixed assignment such as "N agents for strategy X." Instead, manage the search using the following heuristics:
+> 积极而动态地使用 multiagent v2。你最多可用 64 个并发 Agent。不要使用"N 个 Agent 负责策略 X"这类固定指派。改为用以下启发式管理搜索：
 >
-> - Begin with a genuinely diverse portfolio of approaches. Agents should explore substantially different formulations, invariants, reductions, algebraic viewpoints, structural inductions, decompositions, flow formulations, transition systems, embeddings, extremal arguments, and computational sanity checks.
-> - Do not tell most agents the currently favored approach. Preserve independence during early rounds so that agents do not all converge to the same attractive but incomplete reduction.
-> - Maintain an explicit registry of approach families. Group agents by the mathematical idea they are using, not by superficial wording. If many agents converge to one family, redirect some of them toward underexplored formulations.
-> - Do not allow one approach to dominate merely because it gives elegant reductions. A route that ends at a lemma equivalent in strength to the original conjecture is not close to completion unless it supplies a genuinely new proof of that lemma.
-> - When an approach stalls at a theorem-strength missing lemma, mark that route as blocked. Only continue assigning agents to it if someone proposes a materially new mechanism, invariant, or construction.
-> - Keep several incompatible proof routes alive through multiple rounds. Cross-pollinate ideas only after independent agents have developed them far enough to expose their real strengths and gaps.
+> - 以真正多样的方法组合起步。各 Agent 应探索实质不同的表述、不变量、化归、代数视角、结构归纳、分解、流表述、转移系统、嵌入、极值论证和计算健全性检查。
+> - 不要把当前最受青睐的方法告诉多数 Agent。前期轮次保持独立，避免所有 Agent 都收敛到同一个有吸引力但不完整的化归。
+> - 维护一份明确的方法族登记表。按 Agent 正在使用的数学思想分组，而不是按表面措辞。如果许多 Agent 涌入同一家族，把其中一些调往探索不足的表述。
+> - 不要允许某个方法仅因给出优雅的化归就占据主导。一条终于一个与原猜想强度相当的引理的路线，除非能为该引理提供真正的新证明，否则不接近完成。
+> - 当一个方法卡在"缺一个定理级强度的引理"时，把该路线标记为阻塞。只有当有人提出实质上新的机制、不变量或构造时，才继续往那里派 Agent。
+> - 让多条互不兼容的证明路线跨多轮存活。交叉授粉只放在独立开发已充分暴露各路线真实强项与缺口之后。
 
-Policy as heuristics, not assignments. The notable mechanisms: information hiding as a diversity tool (workers blind to the favored approach), a registry keyed to the underlying idea rather than wording (so the orchestrator cannot be fooled by paraphrase into thinking it has diversity), an anti-elegance rule (a reduction to an equally hard lemma is zero progress, a trap models find attractive), blocked-route bookkeeping with a materially-new-mechanism reopening condition, and deliberately delayed cross-pollination. These correspond one-to-one with the diversity-collapse and premature-convergence findings summarized in `research-evidence.md`.
+策略以启发式给出，而不是指派。值得注意的机制：把信息隐藏当作多样性工具（worker 看不到受青睐的方法）；登记表以底层思想而非措辞为键（编排器不会因换了个说法就误以为有了多样性）；反优雅规则（化归到一个同样难的引理是零进展，这是模型觉得有吸引力的陷阱）；阻塞路线的记账，附"实质新机制"这一重开条件；以及刻意推迟的交叉授粉。这些与 `research-evidence.md` 总结的多样性坍缩和过早收敛发现一一对应。
 
-## Block 5: Verification policy and reporting contract
+## Block 5：验证策略与汇报契约
 
-> - Use adversarial agents throughout: every candidate proof must be checked for exact-two multiplicity, repeated-edge closed trails masquerading as cycles, parallel-edge 2-cycles, disconnected graphs, cutvertices, bridges introduced by reductions, and circular use of an equivalent CDC statement.
-> - Require agents to return concrete lemmas, constructions, equations, or counterexamples to proposed sublemmas. Reject status reports, vague optimism, and claims that an unproved global compatibility statement is "routine."
+> - 全程使用对抗性 Agent：每个候选证明都要检查以下各项：重数是否恰为两次；伪装成环的重复边闭迹；平行边构成的 2-环；非连通图；割点；由化归引入的桥；对等价 CDC 命题的循环使用。
+> - 要求 Agent 返回具体的引理、构造、等式，或对所提子引理的反例。拒绝状态汇报、含糊的乐观，以及把未证明的全局相容性命题说成"常规步骤"的断言。
 
-The auditor gets a seven-item, domain-specific hunt list rather than "check the proof". Each item is a concrete way a CDC candidate can look right and be wrong; the last item, circular use of an equivalent statement, is the domain's version of the universal subtle failure. The reporting contract bans exactly the three degenerate report types long runs produce: status reports, optimism, and "the remaining step is routine".
+审计者拿到的是一份七条目的领域专属搜查清单，而不是一句"检查这个证明"。每一项都是 CDC 候选证明"看起来对、其实错"的一种具体方式；最后一项，对等价命题的循环使用，是那个普适性隐蔽失败在本领域的版本。汇报契约封禁的恰恰是长运行会产出的三种退化汇报：状态汇报、乐观情绪，以及"剩下的步骤是常规操作"。
 
-## Block 6: Orchestrator loop, return condition, effort floor
+## Block 6：编排者循环、返回条件、投入下限
 
-> - The root agent should repeatedly synthesize, challenge, redirect, and launch new rounds. Do not stop after the first wave fails. Produce a complete proof if one survives audit; otherwise report only the strongest rigorously proved derivation and its exact remaining gap.
+> - 根 Agent 应当反复综合、质疑、转向、启动新一轮。第一波失败后不要停。若有候选证明通过审计，交出完整证明；否则只报告最强的经严格证明的推导及其确切的剩余缺口。
 >
-> Do not return merely because current approaches fail or agents report theorem-strength gaps. Continue launching new rounds, reopening blocked approaches only when there is a genuinely new mechanism, and searching for fresh formulations.
+> 不要仅仅因为当前方法失败、或 Agent 报告存在定理级缺口就返回。继续启动新一轮；只有出现真正新的机制才重开被阻塞的方法；并继续寻找新的表述。
 >
-> Return only when a complete affirmative proof has been found and survives adversarial audit. Do not return a reduction, partial result, isolated missing lemma, "best effort" summary, or explanation of why the problem is difficult.
+> 只有当完整的肯定性证明已被找到并通过对抗性审计时才返回。不要返回化归、部分结果、孤立的缺失引理、"尽力而为"的总结，或对"问题为何困难"的解释。
 >
-> Spend at least 8 hours on this before even thinking of returning or giving up.
+> 在连"返回"或"放弃"都还没资格去想之前，先投入至少 8 小时。
 
-The return condition is a predicate over the artifact ("survives adversarial audit"), not over confidence or effort. The non-counting list is restated at the return boundary, where the temptation to return a near miss is strongest. The effort floor is a permission revocation ("before even thinking of returning"), not a schedule; the run finished in under an hour because the return predicate was satisfied early. Note one internal tension: Block 6 first allows a fallback report ("otherwise report only the strongest rigorously proved derivation and its exact remaining gap") and then forbids returning partial results. The final instruction wins in practice, but a cleaner brief would scope the fallback to a hard external stop (budget exhaustion) rather than leaving the contradiction.
+返回条件是关于成果的谓词（"通过对抗性审计"），而不是关于信心或投入的。不计成果清单在返回边界处重申了一遍，那正是返回近似结果的诱惑最强的地方。投入下限是对许可的撤销（原文为"before even thinking of returning"，在想返回之前都不许想），不是日程表；这次运行不到一小时就结束了，因为返回谓词早早满足。注意一处内部张力：Block 6 先允许回退报告（"否则只报告最强的经严格证明的推导及其确切的剩余缺口"），随后又禁止返回部分结果。实践中以最后的指令为准，但更干净的简报会把回退限定在硬性外部停止（预算耗尽）上，而不是留下这个矛盾。
 
-## Block 7: Contamination guard
+## Block 7：污染防护
 
-> Public search may be used only for ordinary mathematical background or standard named theorems, not to search for a solution to this exact conjecture or benchmark. Do not search the public web merely to determine whether CDC is open, and do not answer that it is open.
+> 公开检索只能用于普通的数学背景资料或标准的有名定理，不得用于搜索针对本猜想或本基准的解。不要为了确认 CDC 是否公开未决而去搜索公共网络，也不要回答"它是公开未决的"。
 
-Two guards in one: retrieval scope (background and named theorems only, never the target result) and a framing guard ("do not answer that it is open"), which backstops the solvability framing in Block 2 against a web-lookup override.
+一条里两层防护：检索范围（只许背景与有名定理，绝不许目标结果）和表述防护（"不得回答它是公开未决的"），后者为 Block 2 的可解性设定兜底，防止网络查询覆盖它。
 
-## What the prompt does not do
+## 该提示词没有做的事
 
-Useful negative space for anyone adapting it:
+对任何想改编它的人，这些"没做的事"同样有参考价值：
 
-- No fixed role assignments, no personas, no step-by-step method script. The mathematical strategy is left entirely to the model; the prompt only manages search discipline and acceptance.
-- No token or cost budget in the prompt. Resource enforcement lived in the platform, consistent with keeping hard constraints in the harness.
-- No requested output format for the proof itself beyond survivability under audit.
-- No appeals to emotion, urgency, or reward. Every sentence is either specification, policy, or gate.
+- 没有固定角色指派、没有人格设定、没有逐步方法脚本。数学策略完全交给模型；提示词只管理搜索纪律与验收。
+- 提示词里没有 token 或成本预算。资源强制在平台里，与"硬约束放在 Harness"一致。
+- 除"通过审计"这一要求外，没有为证明本身指定输出格式。
+- 没有诉诸情感、紧迫感或奖励。每一句话要么是规格，要么是策略，要么是闸门。

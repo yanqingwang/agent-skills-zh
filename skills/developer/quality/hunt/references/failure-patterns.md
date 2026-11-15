@@ -1,206 +1,210 @@
-# Failure Pattern Reference
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/hunt/references/failure-patterns.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this when a bug has repeated, a first fix did not hold, or the symptom smells like runtime state rather than local code syntax.
+# 失败模式参考
 
-## Stale Verifier Or Tool Cache
+当一个 bug 反复出现、第一次修复没有生效，或症状更像运行时状态问题而非局部代码语法问题时，使用本参考。
 
-Signals: verifier output points at deleted temp worktrees, old generated files, or paths outside the current repo; rerunning after a clean checkout changes the file path but not the current code.
+## 过期的验证器或工具缓存
 
-Checks:
-- Confirm the reported path exists.
-- Clear the tool cache only after proving the path is stale.
-- Re-run the same verifier from the current repo root.
+信号：验证器输出指向已删除的临时 worktree、旧的生成文件，或当前仓库之外的路径；干净 checkout 后重跑，文件路径变了，但代码不是当前代码。
 
-## Worker Queue Or DB Boundary
+检查：
+- 确认报告的路径存在。
+- 先证明路径已过期，再清空工具缓存。
+- 从当前仓库根目录重跑同一个验证器。
 
-Signals: UI says work is running but no worker processes it; logs show scheduler activity but no queued row; retry fixes one item but not the pipeline.
+## Worker 队列或数据库边界
 
-Checks:
-- Trace request -> enqueue -> worker pickup -> persistence -> UI refresh.
-- Inspect queue rows or job state directly.
-- Add a regression test around the enqueue boundary, not only the worker body.
+信号：UI 显示任务正在运行，却没有 worker 在处理；日志显示调度器有活动，队列表里却没有记录行；重试能修好一条数据，却修不好整条流水线。
 
-## Generated Rebuild Boundary
+检查：
+- 追踪：请求 -> 入队 -> worker 取件 -> 持久化 -> UI 刷新。
+- 直接检查队列行或任务状态。
+- 在入队边界处添加回归测试，而不是只测 worker 本体。
 
-Signals: source changed but generated output, app bundle, CLI artifact, archive, checksum, or release package still contains old behavior.
+## 生成物重建边界
 
-Checks:
-- Identify the source-to-artifact rule.
-- Verify the build system watches the source path.
-- Inspect the generated artifact contents, not just the source diff.
+信号：源码改了，但生成的输出、应用 bundle、CLI 产物、压缩包、校验和或发布包仍然带着旧行为。
 
-## Guard Lifetime Race
+检查：
+- 弄清从源码到产物的生成规则。
+- 验证构建系统是否监视该源码路径。
+- 检查生成产物的内容，而不只是源码 diff。
 
-Signals: permission, auth, or state guard looks correct locally but a delayed callback, app relaunch, or alternate entry point bypasses it.
+## 守护生命周期竞态
 
-Checks:
-- Trace guard creation, retention, invalidation, and every alternate entry point.
-- Verify cold launch, warm launch, deep link/file open, and retry paths when applicable.
-- Prefer explicit durable state over transient flags when the guard must survive relaunch.
+信号：权限、认证或状态守护在本地看是对的，但一个延迟回调、一次应用重启或另一个入口点绕过了它。
 
-## Atomic Temp Filename
+检查：
+- 追踪守护的创建、保留、失效，以及每一个替代入口点。
+- 适用时验证冷启动、热启动、深链/文件打开和重试路径。
+- 当守护必须跨重启存活时，优先用显式的持久状态，而不是瞬态标志。
 
-Signals: concurrent runs collide, cleanup removes the wrong file, or a partially written output is observed.
+## 原子临时文件名
 
-Checks:
-- Use unique temp directories or atomic rename.
-- Keep cleanup scoped to files created by the current run.
-- Test two concurrent or back-to-back runs when the tool supports it.
+信号：并发运行相互冲突，清理删错了文件，或观察到写了一半的输出。
 
-## Path, Cwd, Or Symlink Escape
+检查：
+- 使用唯一临时目录或原子重命名。
+- 把清理范围限定在本次运行创建的文件。
+- 工具支持时，测试两次并发或背靠背的运行。
 
-Signals: an operation intended for one root touches a sibling directory, follows a symlink unexpectedly, or behaves differently from another working directory.
+## 路径、cwd 或符号链接逃逸
 
-Checks:
-- Resolve and compare canonical roots before writing or deleting.
-- Reject paths outside the allowed root after symlink resolution.
-- Reproduce from a non-default cwd and through any UI entry point that supplies paths.
+信号：本应作用于某个根目录的操作触到了同级目录，意外跟随了符号链接，或在另一个工作目录下行为不同。
 
-## CLI Effect Scope Drift
+检查：
+- 写入或删除之前，解析并比较规范化根路径。
+- 符号链接解析之后，拒绝允许根之外的路径。
+- 从非默认 cwd 复现，并经过任何会提供路径的 UI 入口复现。
 
-Signals: preview, dry-run, size, count, or report output is computed from one predicate, but execution mutates a broader or different set.
+## CLI 效果范围漂移
 
-Checks:
-- Trace display, dry-run, and mutation predicates to the same source of truth.
-- Compare planned paths or records with executor input in a regression test.
-- Assert partial failures report the exact skipped and completed items.
+信号：预览、dry-run、大小、计数或报告输出按一个谓词计算，但实际执行修改的是更大或不同的一批对象。
 
-## CLI Wrapper Or PATH Drift
+检查：
+- 把显示、dry-run 和修改三个谓词追踪到同一个事实来源。
+- 在回归测试中比较计划路径/记录与执行器的输入。
+- 断言部分失败时报告确切的跳过项和完成项。
 
-Signals: source-tree invocation works, but the installed command, package wrapper, PATH shim, completion, or package-manager install path runs old code or a different binary.
+## CLI 包装器或 PATH 漂移
 
-Checks:
-- Inspect built package contents, shebang, executable bit, and wrapper target.
-- Reproduce through a temp prefix or package-manager install path, not only from source.
-- Check PATH order and use absolute system-tool paths where wrappers should not intercept.
+信号：从源码树调用正常，但安装后的命令、包包装器、PATH shim、补全或包管理器安装路径跑的是旧代码或另一个二进制。
 
-## Interactive Stdin Or TTY Hang
+检查：
+- 检查构建出的包内容、shebang、可执行位和包装器目标。
+- 通过临时前缀或包管理器安装路径复现，而不只是从源码复现。
+- 检查 PATH 顺序；在包装器不该拦截的地方使用系统工具的绝对路径。
 
-Signals: CI stalls, spinner never finishes, a subprocess reads from the script body, or an auth prompt appears in non-interactive mode.
+## 交互式 stdin 或 TTY 挂起
 
-Checks:
-- Reproduce with stdin redirected and with TTY/non-TTY paths separated.
-- Add test-mode or no-auth guards around real prompts and system changes.
-- Stub external prompt tools through PATH when timeout wrappers exec real binaries.
+信号：CI 卡住，spinner 永远不结束，子进程从脚本主体读取输入，或非交互模式下弹出认证提示。
 
-## Subprocess Pipe Backpressure
+检查：
+- 在 stdin 重定向以及 TTY/非 TTY 分离的路径下复现。
+- 在真实提示和系统改动周围加上 test-mode 或无认证守卫。
+- 当超时包装器会 exec 真实二进制时，通过 PATH 对外部提示工具做 stub。
 
-Signals: a long-running child process hangs only on large output, small fixtures pass, or the parent waits for exit before reading stdout/stderr. The child may be blocked on a full pipe buffer while the parent is blocked on `wait`.
+## 子进程管道背压
 
-Checks:
-- Drain stdout and stderr while the process runs, or explicitly inherit/redirect streams when output is not needed.
-- Test with output larger than a typical pipe buffer, not only tiny fixtures.
-- Preserve stderr tails or structured error output for diagnostics without holding the whole stream in memory.
+信号：长时运行的子进程只在大输出时挂起，小 fixture 能通过；或父进程先等退出再读 stdout/stderr。子进程可能阻塞在写满的管道缓冲区上，而父进程阻塞在 `wait` 上。
 
-## Signal Or Partial-Failure Mapping
+检查：
+- 进程运行期间持续排空 stdout 和 stderr，或在不需要输出时显式继承/重定向流。
+- 用大于典型管道缓冲区的输出测试，不要只用小 fixture。
+- 保留 stderr 尾部或结构化错误输出用于诊断，而不是把整个流留在内存里。
 
-Signals: cancel, timeout, SIGINT, or SIGTERM is reported as success or as a normal business failure; temp files, locks, or operation logs make retries look complete.
+## 信号或部分失败映射
 
-Checks:
-- Classify interrupted execution separately from success and expected validation failures.
-- Assert temp cleanup, lock release, and operation-log state after interruption.
-- Test retry and idempotency after a partial write.
+信号：取消、超时、SIGINT 或 SIGTERM 被报告为成功或普通业务失败；临时文件、锁或操作日志让重试看起来像是已完成。
 
-## CLI Stream Contract Regression
+检查：
+- 把被中断的执行与成功、预期的校验失败区分归类。
+- 中断之后断言临时文件清理、锁释放和操作日志状态。
+- 部分写入之后测试重试与幂等性。
 
-Signals: automation breaks after human logs, progress output, JSON shape, stdout/stderr routing, or exit-code behavior changes.
+## CLI 流契约回归
 
-Checks:
-- Assert exit code, stdout, and stderr separately in CLI tests.
-- Keep human diagnostics off stdout for machine-readable modes.
-- Snapshot or parse JSON/schema output and include non-interactive coverage.
+信号：人工日志、进度输出、JSON 形状、stdout/stderr 路由或退出码行为发生变化之后，自动化随之中断。
 
-## Snapshot Rebuild Drops Carried Field
+检查：
+- 在 CLI 测试中分别断言退出码、stdout 和 stderr。
+- 机器可读模式下，人类诊断信息不要放上 stdout。
+- 对 JSON/schema 输出做快照或解析，并覆盖非交互场景。
 
-Signals: live data shows up at the data source and on the wire but a downstream view sees it empty; the field has a default value (`var x: [T] = []`, `var y: Int? = nil`) that lets memberwise init compile without it; the symptom appears only on the path where the snapshot is rebuilt (icon resolution, decoration, redaction), not on a fresh fetch.
+## 快照重建丢失携带字段
 
-Checks:
-- Trace whether every code path that constructs the snapshot type passes the field. The Swift compiler does not warn on default-value omission in memberwise init.
-- Add a unit test that fetches the snapshot, runs the rebuild path, and asserts the carried field equals the input.
-- Prefer `with(...)` mutating helpers or `inout` mutation over fresh memberwise init when only one field is changing.
+信号：实时数据在数据源和线路上都有，下游视图看到的却是空值；该字段有默认值（`var x: [T] = []`、`var y: Int? = nil`），缺了它逐成员构造器照样编译通过；症状只出现在重建快照的路径上（图标解析、装饰、脱敏），全新拉取时不出现。
 
-## Multi-Sample Command Cold Start
+检查：
+- 追踪构造该快照类型的每一个代码路径是否都传了这个字段。Swift 编译器对逐成员构造器省略默认值字段不告警。
+- 添加单元测试：拉取快照、跑重建路径、断言携带字段等于输入。
+- 只有一个字段变化时，优先用 `with(...)` 可变辅助方法或 `inout` 修改，而不是重新逐成员构造。
 
-Signals: a CLI tool that takes `-l N` / `--samples N` / `--repeat N` returns one block of zeros and one block of real data; aggregating all blocks yields zeros; only the second sample carries real measurements.
+## 多样本命令冷启动
 
-Checks:
-- Read the tool's man page for cold-start semantics. `top -l 2`, `iostat -d 2`, `vm_stat 1 2`, etc. all share this shape.
-- Slice the output to the latest sample (`.suffix(perSampleSize)` on parsed lines, or look for the second instance of the header row).
-- When in doubt, raise `-l` to 3 and confirm sample 2 and 3 agree; sample 1 stays zero.
+信号：接受 `-l N` / `--samples N` / `--repeat N` 的 CLI 工具返回一段全零数据块和一段真实数据块；聚合所有块得到零；只有第二个样本带真实测量值。
 
-## Locale-Dependent Subprocess Output
+检查：
+- 读工具的 man page 了解冷启动语义。`top -l 2`、`iostat -d 2`、`vm_stat 1 2` 等都是这个形状。
+- 把输出切到最后一个样本（对解析后的行取 `.suffix(perSampleSize)`，或找第二次出现的表头行）。
+- 拿不准时把 `-l` 提到 3，确认样本 2 和样本 3 一致；样本 1 保持为零。
 
-Signals: numbers parse correctly for the author and come back zero, truncated, or wildly wrong for some users; a percentage, size, or duration is right in one region and broken in another; the same parser was already patched once for a different field.
+## 依赖 locale 的子进程输出
 
-Checks:
-- Force a fixed locale on every subprocess whose output is parsed (`LC_ALL=C` or the platform equivalent) rather than repairing each parser for comma decimal separators, digit grouping, or translated field labels.
-- Fix this at the spawn boundary, not per call site. This shape arrives as three or four separate reports (one metric, then another, then a rendered summary) and each pointwise patch hides how many parsers are still exposed.
-- Treat translated output as a format change, not a string change: field order, units, and label names can all move.
+信号：数字在作者机器上解析正确，在某些用户那里变成零、截断或完全错误；百分比、大小或时长在一个地区正确，在另一个地区出错；同一个解析器已经为另一个字段打过一次补丁。
 
-## Single-Probe Existence Check
+检查：
+- 对每个输出要被解析的子进程强制固定 locale（`LC_ALL=C` 或平台等价物），而不是为逗号小数分隔符、数字分组或翻译过的字段标签逐个修解析器。
+- 在 spawn 边界修这个问题，不要逐调用点修。这个形状会以三四份独立报告的形式出现（一个指标，然后另一个，然后一个渲染汇总），每个点状补丁都会掩盖还有多少解析器暴露在外。
+- 把翻译过的输出当作格式变化，而不是字符串变化：字段顺序、单位和标签名都可能移动。
 
-Signals: a "is it installed / running / registered / active" verdict is wrong for a subset of users, and the wrong verdict then drives a destructive or user-visible action (flagged as orphaned, offered for deletion, a feature silently disabled). The subset shares an install method, a packaging convention, or an OS feature the probe does not know about.
+## 单点探测存在性检查
 
-Checks:
-- List every legitimate way the subject can exist, then confirm the probe sees all of them. One index query, one PATH lookup, one process name, or one interface-name prefix is a partial view: system indexes can be disabled or skip a packaging convention, nested or embedded components are not registered where top-level ones are, and OS-owned interfaces borrow the naming a third-party feature also uses.
-- Distinguish "probe timed out" from "subject absent". A slow index is unknown, not proof of absence; a timed-out fast path must fall through to a direct check, never to a negative verdict.
-- Weight the failure asymmetrically: when the verdict authorizes removal, a false "absent" destroys data while a false "present" only leaves something behind. Require corroboration from a second source before the destructive branch.
+信号："是否已安装/运行/注册/激活"的判定对一部分用户是错的，错误判定又驱动了破坏性或用户可见的动作（被标记为孤儿、被建议删除、某功能被静默禁用）。这部分用户共享一种安装方式、打包约定，或探测逻辑不认识的系统特性。
 
-## Aggregation Key Variant
+检查：
+- 列出主体存在的每一种合法方式，然后确认探测都能看到。一次索引查询、一次 PATH 查找、一个进程名或一个接口名前缀都只是局部视图：系统索引可能被禁用或跳过某种打包约定；嵌套或内嵌组件不在顶层组件注册的地方注册；系统自有接口会借用第三方特性也在用的命名。
+- 区分"探测超时"与"主体不存在"。慢索引是未知，不是不存在的证据；快速路径超时必须落到直接检查，绝不能落到否定判定。
+- 不对称地权衡失败：当判定会授权删除时，假的"不存在"会毁掉数据，假的"存在"只是留下残留。在破坏性分支之前，要求第二来源佐证。
 
-Signals: a count, log roll-up, event tally, or per-category breakdown is short by some entries; the missing items share a trait (a system-derived path, a localized string, a prefixed command name); the base-form key matches but a derived variant (`<base>-system`, a suffix, a prefix) is silently dropped.
+## 聚合键变体
 
-Checks:
-- Before adding a category, grep every write site that produces this class of key and enumerate the real variants, not just the base form.
-- Match with `hasPrefix` / a regex / an explicit variant list rather than exact equality on the base key.
-- Add a fixture row for each known variant so a future key shape that escapes the matcher fails the test instead of the aggregate.
+信号：计数、日志汇总、事件统计或按类别分解少了一部分条目；缺失的条目共享某个特征（系统派生的路径、本地化的字符串、带前缀的命令名）；基础形式的键能匹配上，派生变体（`<base>-system`、后缀、前缀）却被静默丢弃。
 
-## Whole-Buffer Decode Collapse
+检查：
+- 添加类别之前，grep 每个产生这类键的写入点，枚举真实的变体，而不只是基础形式。
+- 用 `hasPrefix` / 正则 / 显式变体列表匹配，而不是对基础键做精确相等比较。
+- 为每个已知变体添加 fixture 行，让未来逃过匹配器的键形状让测试失败，而不是让聚合悄悄出错。
 
-Signals: a parser that works on your machine returns nothing on someone else's; the affected user has an accented device name, a non-ASCII filename, or an unusual process argument; the failure is total (every row gone) rather than partial (one row garbled). Distinct from pipe backpressure: the bytes arrived, the decode threw them away.
+## 整缓冲区解码崩溃
 
-Checks:
-- Find every strict decode of bytes produced by a child process, a device, or the filesystem (`String(data:encoding:)`, `from_utf8`, `decode('utf-8')` with no `errors=`). One invalid byte nils the entire buffer, and callers that coalesce nil to empty turn it into "the command produced nothing".
-- Decode leniently wherever the bytes are a report to parse; keep the strict decode only where the bytes are a signature or checksum being verified, and fail closed there. Both stances belong in one codebase for different call sites.
-- Check what the empty result means downstream. A safety guard that reads an empty process list as "nothing is running" fails open, which is the dangerous direction on a destructive path.
-- Real failure is reported by exit status and timeout, not by decode success. Point callers at those instead.
+信号：在你机器上正常的解析器，在别人机器上一无所获；受影响用户的设备名带重音符号、文件名非 ASCII，或进程参数不常见；失败是整体性的（每行都没了），不是局部的（一行乱码）。区别于管道背压：字节到了，是解码把它们扔掉了。
 
-## Denied Read Returns A Plausible Value
+检查：
+- 找出每一处对子进程、设备或文件系统产生的字节做严格解码的地方（`String(data:encoding:)`、`from_utf8`、不带 `errors=` 的 `decode('utf-8')`）。一个无效字节会把整个缓冲区变成 nil，把 nil 合并为空的调用方就把它变成"命令什么都没产出"。
+- 只要字节是待解析的报告，就用宽松解码；只在字节是被验证的签名或校验和时保留严格解码，并在那里失败关闭（fail closed）。两种立场可以共存于同一个代码库的不同调用点。
+- 检查空结果在下游意味着什么。把空进程列表读成"没有进程在运行"的安全守卫是失败开放（fail open）的，这在破坏性路径上是最危险的方向。
+- 真实失败由退出状态和超时报告，而不是由解码成功与否。让调用方看那两处。
 
-Signals: a metric is right for some subjects and wrong for others, and the split follows ownership: your own processes/files are correct, root-owned or other-user ones read zero, stale, or absent. No error is logged because the API answered.
+## 被拒读取返回貌似合理的值
 
-Checks:
-- Measure the boundary instead of reading the docs: run the call across owned and non-owned subjects and count how many succeed in each group. Those two counts are the evidence; a guess is not.
-- Check whether the fallback for a denied read carries the same meaning as the primary source. Two different meanings in one column is the bug, even when each value is individually defensible.
-- Prefer a source that answers uniformly for every subject (a tool that reports all processes regardless of owner) over a precise one that silently degrades for some.
+信号：一个指标对某些主体正确、对另一些错误，且划分与所有权一致：自己的进程/文件正确，root 所有或其他用户的读到零、过期或不存在的值。没有记录错误，因为 API 应答了。
 
-## Recovery Gated On The Artifact It Restores
+检查：
+- 直接测量边界，而不是读文档：对自有和非自有主体分别调用，统计每组有多少次成功。这两个数字就是证据，猜测不是。
+- 检查被拒读取的回退值与主来源是否同义。同一列里出现两种含义就是 bug，即使每个值单独看都说得过去。
+- 优先选择对每个主体一致应答的来源（能报告所有进程、不管所有者的工具），而不是对某些主体静默降级的精确来源。
 
-Signals: a repair, reinstall, or self-heal path reports the same dead end no matter how many times it runs; the broken state persists across reinstalls; the repair "has always been there" but no evidence exists that it ever succeeded.
+## 恢复流程被它要恢复的产物卡住
 
-Checks:
-- Read the repair path's own precondition and ask whether it is true in the broken state it exists to fix. A recovery gated on the file that is missing can never fire.
-- Verify every absolute tool path in a repair command actually exists on the platform. A wrong path exits non-zero, an `&&` chain silently stops, and the repair no-ops on every machine forever. Add a test that walks each path in the command and asserts it is executable.
-- Do not let a test assert the source shape of the repair command; that pins the broken form as correct. Assert the observable end state instead (the service is registered, the file exists, the probe answers).
-- Make the repair own the outcome rather than assume it: write the artifact, then prove it by querying the system, and log the query's raw output instead of discarding it.
+信号：修复、重装或自愈路径无论跑多少次都报告同一个死胡同；损坏状态在重装之后依旧存在；修复流程"一直都在"，却没有任何它成功过的证据。
 
-## Watchdog Tuned To The Fast Path
+检查：
+- 读修复路径自己的前置条件，问它在它要修的损坏状态下是否成立。以缺失文件为前提的恢复永远不会触发。
+- 验证修复命令中每个绝对工具路径在目标平台上确实存在。错误路径会非零退出，`&&` 链会静默中断，修复在每台机器上永远空转。加一个测试，遍历命令中的每个路径并断言它可执行。
+- 不要让测试断言修复命令的源码形状；那会把坏形式钉死为正确。改为断言可观察的最终状态（服务已注册、文件存在、探测有应答）。
+- 让修复流程对结果负责，而不是假设结果：写出产物，然后通过查询系统证明它，并记录查询的原始输出而不是丢弃。
 
-Signals: an operation is reported as failed, stalled, or "no progress" while it was actually healthy; the report comes from users on slow links, cold caches, network volumes, or large payloads; retrying makes it fail at the same elapsed time every run.
+## 面向快路径调校的看门狗
 
-Checks:
-- For each timeout constant, name the slowest *healthy* case (a several-hundred-MB download on a slow link, a first-of-day index rebuild, a tool rebuilding its cache after a cleanup) and confirm the constant clears it with margin. This is the inverse of magic-wait coupling: there the timer is too loose to be a real signal, here it is too tight to allow a healthy slow case.
-- A detector threshold has the same two directions as a timeout. Take the measurement from the incident that motivated the check and set the threshold below it; a rounder number chosen by taste excludes the one case the check exists for. Then confirm it against the healthy population so it does not fire on everything, and check what the detector prints when nothing crosses the line, since a floor that reports "nothing found" exactly when a name was needed is the same defect facing the other way.
-- Replace "no output for N seconds" with a real liveness probe (a growing temp file, a byte counter, a heartbeat) and keep the timeout as the genuine stall guard.
-- For each watchdog, enumerate every exit from the region it guards, including thrown errors and forks into an alternate path. A watchdog that survives a fork fires in the middle of the path that replaced it.
-- Check whether a second bound already covers a genuinely hung run. If so, the extra timer can only ever fire early.
+信号：操作实际是健康的，却被报告为失败、停滞或"无进展"；报告来自慢链路、冷缓存、网络卷或大负载的用户；重试之后，每次都在同样的耗时点失败。
 
-## Display-String Comparison
+检查：
+- 对每个超时常量，指出最慢的*健康*场景（慢链路上几百 MB 的下载、当天第一次索引重建、清理后重建缓存的工具），确认常量留有余量地覆盖它。这与魔法等待耦合正好相反：那里计时器松到不构成真实信号，这里紧到容不下健康的慢场景。
+- 检测器阈值与超时有同样的两个方向。从触发这项检查的事故中取测量值，把阈值设在其下方；凭品味选的更整的数字会恰好排除这项检查为之存在的那个场景。然后对照健康总体确认它不会对所有东西报警，并检查检测器在没有任何东西越线时打印什么：恰好在需要名字时报"什么都没找到"的下限，是同一个缺陷的反方向。
+- 把"N 秒无输出"换成真实的存活探测（增长的临时文件、字节计数、心跳），把超时留作真正的停滞守卫。
+- 对每个看门狗，枚举它守护区域的所有退出方式，包括抛出的错误和 fork 进另一条路径。在 fork 之后仍存活的看门狗会在替代路径的中间触发。
+- 检查是否已有第二个界限覆盖真正挂死的运行。如果有，多余的计时器只可能提前误触发。
 
-Signals: a comparison based on user-facing text produces a verdict that never resolves: a perpetual "update available" that installs nothing, a diff that always reports changed, a match that never fires. The two sides format the same underlying value differently.
+## 展示字符串比较
 
-Checks:
-- Ask whether the compared value's *format* is part of a contract or something the producer restyles at will. Version display strings, filenames derived from a URL tail, and localized labels are all free-form.
-- Find the machine-facing identity the platform intends for ordering or equality (a build number, a content hash, an id) and compare that, falling back to the display form only when the identity is absent on either side.
-- When the fallback must stay, suppress the verdict where both strings carry the identical token sequence in a different arrangement; no genuinely newer or changed value can satisfy that.
-- Fix every channel that repeats the comparison, not the one that produced the report. This shape is almost always duplicated.
+信号：基于面向用户的文本的比较产生一个永远无法解决的判定：永远提示"有可用更新"却装不了任何东西、总是报告有变化的 diff、永不命中的匹配。两侧用不同方式格式化同一个底层值。
+
+检查：
+- 问自己：被比较值的*格式*是契约的一部分，还是生产方可以随意改样式的东西。版本展示字符串、从 URL 尾部派生的文件名、本地化标签都是自由格式。
+- 找到平台为排序或相等而设定的机器可读标识（构建号、内容哈希、id），比较那个；只有任一侧缺少该标识时，才回退到展示形式。
+- 当回退必须保留时，在两侧字符串携带相同 token 序列但排列不同的情况下抑制判定；真正更新或变化的值不可能满足这个条件。
+- 修复每一个重复这个比较的通道，而不是只修产出报告的那一个。这个形状几乎总是被复制的。

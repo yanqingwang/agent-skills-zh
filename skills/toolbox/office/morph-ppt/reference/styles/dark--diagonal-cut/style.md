@@ -1,71 +1,75 @@
-# 09 Diagonal Cut — Industrial Diagonal Cut
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/dark--diagonal-cut/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 09 Diagonal Cut（工业斜切）
 
-Bold diagonal rectangle cuts and sharp lines on a near-black background create an industrial sense of power.
+## 风格概览
 
-- **Scene**: Industrial, engineering, architecture, manufacturing
-- **Mood**: Rugged, powerful, industrial, bold
-- **Color Tone**: Dark background, high-contrast warm accent colors
+近黑底色上的大胆斜切矩形与锐利线条，营造工业力量感。
 
-## Color Palette
+- **场景**：工业、工程、建筑、制造
+- **气质**：粗犷、有力、工业感、大胆
+- **色调**：暗底，高对比暖色点缀
 
-| Name              | Hex     | Usage                                            |
+## 配色
+
+| 名称              | Hex     | 用途                                             |
 | ----------------- | ------- | ------------------------------------------------ |
-| Near Black        | #1A1A1A | Page background                                  |
-| Industrial Orange | #FF6600 | Primary accent color, diagonal strips, cut lines |
-| Pure White        | #FFFFFF | Title text, secondary diagonal strips            |
-| Warning Yellow    | #FFCC00 | Secondary accent color, diagonal strips          |
-| Dark Gray         | #333333 | Secondary diagonal strips                        |
-| Light Gray        | #CCCCCC | Body/subtitle text                               |
+| 近黑              | #1A1A1A | 页面背景                                         |
+| 工业橙            | #FF6600 | 主点缀色，斜切条、切割线                         |
+| 纯白              | #FFFFFF | 标题文字，次级斜切条                             |
+| 警示黄            | #FFCC00 | 次点缀色，斜切条                                 |
+| 深灰              | #333333 | 次级斜切条                                       |
+| 浅灰              | #CCCCCC | 正文/副标题文字                                  |
 
-## Typography
+## 字体排印
 
-| Element        | Font           | Size    |
+| 元素           | 字体           | 字号    |
 | -------------- | -------------- | ------- |
-| Main Title     | Segoe UI Black | 64-72pt |
-| Data Numbers   | Segoe UI Black | 48-64pt |
-| Section Titles | Segoe UI Black | 28-40pt |
-| Body/Subtitle  | Segoe UI       | 14-24pt |
+| 主标题         | Segoe UI Black | 64-72pt |
+| 数据数字       | Segoe UI Black | 48-64pt |
+| 区块标题       | Segoe UI Black | 28-40pt |
+| 正文/副标题    | Segoe UI       | 14-24pt |
 
-## Design Techniques
+## 设计手法
 
-- **Diagonal rectangles**: 4 large rect elements rotated 30-45 degrees spanning across the canvas, creating diagonal cut effects
-- **Cut lines**: 2 ultra-thin rects (height 0.1-0.15cm) crossing the full width, simulating industrial cutting marks
-- **Circle decorations**: 2 ellipses as corner accents, balancing geometric composition
-- **Morph choreography**: Diagonal strips rotate 20-25 degrees + shift 8-12cm between pages, producing dynamic "cut-flip" effects; Slide 3 diagonal strips transform into nearly vertical column dividers, creating a "scattered → orderly" transformation
-- **Transparency layering**: Primary colors 0.85-0.9, secondary colors 0.15-0.3, gray 0.5-0.7, creating depth hierarchy
+- **斜切矩形**：4 个大 rect 元素旋转 30-45 度横跨画布，制造斜切效果
+- **切割线**：2 条超细 rect（height 0.1-0.15cm）横贯全宽，模拟工业切割痕
+- **圆形装饰**：2 个椭圆作角落点缀，平衡几何构图
+- **Morph 编排**：斜切条跨页旋转 20-25 度 + 位移 8-12cm，产生动态的"切变翻页"效果；Slide 3 斜切条变成近乎垂直的栏分隔，完成"散乱 → 有序"的转变
+- **透明度分层**：主色 0.85-0.9，次色 0.15-0.3，灰色 0.5-0.7，营造纵深层级
 
-## Scene Elements
+## 场景元素
 
-| Name             | Type              | Description                                               |
+| 名称             | 类型              | 描述                                                      |
 | ---------------- | ----------------- | --------------------------------------------------------- |
-| `!!slash-orange` | rect              | Primary orange diagonal strip, largest and most prominent |
-| `!!slash-white`  | rect              | White semi-transparent diagonal strip, creating depth     |
-| `!!slash-yellow` | rect              | Yellow diagonal strip, secondary accent                   |
-| `!!slash-gray`   | rect              | Dark gray diagonal strip, adding layers                   |
-| `!!cut-line-1`   | rect (ultra-thin) | Orange crossing cut line                                  |
-| `!!cut-line-2`   | rect (ultra-thin) | White semi-transparent cut line                           |
-| `!!dot-orange`   | ellipse           | Orange circle decoration                                  |
-| `!!dot-yellow`   | ellipse           | Yellow circle decoration                                  |
+| `!!slash-orange` | rect              | 主橙色斜切条，最大最醒目                                  |
+| `!!slash-white`  | rect              | 白色半透明斜切条，制造纵深                                |
+| `!!slash-yellow` | rect              | 黄色斜切条，次点缀                                        |
+| `!!slash-gray`   | rect              | 深灰斜切条，增加层次                                      |
+| `!!cut-line-1`   | rect (ultra-thin) | 橙色横贯切割线                                            |
+| `!!cut-line-2`   | rect (ultra-thin) | 白色半透明切割线                                          |
+| `!!dot-orange`   | ellipse           | 橙色圆形装饰                                              |
+| `!!dot-yellow`   | ellipse           | 黄色圆形装饰                                              |
 
-## Page Structure (5 pages)
+## 页面结构（5 页）
 
-| Slide | Type      | Elements                                                                                     | Description |
+| 页码  | 类型      | 元素                                                                                         | 描述 |
 | ----- | --------- | -------------------------------------------------------------------------------------------- | ----------- |
-| S1    | hero      | Cover — diagonal strips scattered + centered large title "CUT THROUGH"                       |
-| S2    | statement | Statement — diagonal strips rotate and shift significantly + centered text                   |
-| S3    | pillars   | Three columns — diagonal strips become nearly vertical column dividers, three-column content |
-| S4    | evidence  | Data — diagonal strips asymmetrically frame data, three groups of large numbers              |
-| S5    | cta       | Closing — diagonal strips return to scattered diagonal orientation, call to action           |
+| S1    | hero      | 封面：斜切条散布 + 居中大标题 "CUT THROUGH"                                                  |             |
+| S2    | statement | 宣言：斜切条大幅旋转平移 + 居中文字                                                          |             |
+| S3    | pillars   | 三栏：斜切条变成近乎垂直的栏分隔，三栏内容                                                   |             |
+| S4    | evidence  | 数据：斜切条非对称框住数据，三组大数字                                                       |             |
+| S5    | cta       | 结尾：斜切条回归散乱斜向，行动号召                                                           |             |
 
-## Reference Script
+## 参考脚本
 
-Full build script available in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (hero)** — Initial layout and rotation angles of 8 scene actors
-- **Slide 3 (pillars)** — How diagonal strips transform into nearly vertical column dividers, understanding morph transformation magnitude
+- **Slide 1（hero）**：8 个场景 actor 的初始布局与旋转角度
+- **Slide 3（pillars）**：斜切条如何变成近乎垂直的栏分隔，理解 morph 变形幅度
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

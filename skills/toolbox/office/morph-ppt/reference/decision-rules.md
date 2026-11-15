@@ -1,95 +1,99 @@
 ---
 name: decision-rules
-description: "Planning prompt for PPT — infer audience, purpose, narrative, then emit brief.md. Run before the main recipes when the deck's audience or purpose is underspecified."
+description: "PPT 规划提示词——推断受众、目的与叙事，然后输出 brief.md。当幻灯片的受众或目的未明确指定时，在主配方之前运行。"
 ---
 
-# PPT Planner
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/decision-rules.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**How to use.** Read this file during `SKILL.md` §Morph Pair Planning, **before** writing any `officecli add / set` command. Infer audience, purpose, and narrative from the user's topic; emit a single `brief.md` that the main recipes will consume. A morph arc without a narrative spine collapses into "slide with motion" instead of "story with motion" — the planning below prevents that.
+# PPT 规划器
 
-Role: Think deeply about the user's topic and produce a high-quality PPT plan.
+**使用方法。** 在 `SKILL.md` §Morph Pair Planning 阶段、**写下任何** `officecli add / set` 命令**之前**读本文件。从用户的主题推断受众、目的与叙事；输出单个 `brief.md`，供主配方使用。缺少叙事主线的 morph 弧线会退化成"带动画的幻灯片"，而不是"有故事的运动"。下面的规划正是为了防止这一点。
 
-Output: A single `brief.md` containing extraction summary, outline, and detailed page briefs.
+角色：深入思考用户的主题，产出一份高质量的 PPT 规划。
 
----
-
-## Infer Audience
-
-**Thinking Method**: Based on topic keywords and usage context, ask "Who will view this PPT? What do they care about most?"
-
-**Common Patterns (examples, not exhaustive)**:
-
-- Fundraising / Roadshow → Investors
-- Teaching / Training → Students
-- Product Introduction → Clients
-- Analysis / Report → Executives
-- Internal Sharing → Colleagues
-- Cannot determine → General Business
+输出：单个 `brief.md`，包含抽取摘要、大纲和详细页面简报。
 
 ---
 
-## Infer Purpose
+## 推断受众
 
-**Thinking Method**: Based on topic keywords, ask "What outcome does the user want to achieve with this PPT?"
+**思考方法**：基于主题关键词和使用场景，问"谁会看这份 PPT？他们最关心什么？"
 
-**Common Patterns (examples, not exhaustive)**:
+**常见模式（示例，非穷举）**：
 
-- Fundraising / Roadshow → Persuade Investment
-- Product Introduction → Demonstrate Value
-- Analysis / Report → Deliver Insights
-- Training / Teaching → Impart Knowledge
-- Cannot determine → Present Information
+- 融资 / 路演 → 投资人
+- 教学 / 培训 → 学员
+- 产品介绍 → 客户
+- 分析 / 报告 → 高管
+- 内部分享 → 同事
+- 无法判断 → 通用商务
 
 ---
 
-## Infer Narrative Structure
+## 推断目的
 
-**Thinking Method**: Choose an appropriate narrative thread based on the purpose.
+**思考方法**：基于主题关键词，问"用户想用这份 PPT 达成什么结果？"
 
-**Common Structures (examples, not exhaustive)**:
+**常见模式（示例，非穷举）**：
 
-| Applicable Scenario           | Narrative Structure | Page Sequence Example                                 |
+- 融资 / 路演 → 说服投资
+- 产品介绍 → 展示价值
+- 分析 / 报告 → 输出洞察
+- 培训 / 教学 → 传授知识
+- 无法判断 → 呈现信息
+
+---
+
+## 推断叙事结构
+
+**思考方法**：根据目的选择合适的叙事主线。
+
+**常见结构（示例，非穷举）**：
+
+| 适用场景           | 叙事结构            | 页面顺序示例                                          |
 | ----------------------------- | ------------------- | ----------------------------------------------------- |
-| Fundraising / Sales / Bidding | problem_solution    | hero → statement → pillars → evidence → cta           |
-| Reporting / Analysis          | insight_driven      | hero → statement → evidence → pillars → cta           |
-| Promotion / Speech            | vision_driven       | hero → quote → pillars → evidence → cta               |
-| Teaching / Training           | educational         | hero → statement → pillars → pillars → showcase → cta |
+| 融资 / 销售 / 投标 | problem_solution    | hero → statement → pillars → evidence → cta           |
+| 汇报 / 分析          | insight_driven      | hero → statement → evidence → pillars → cta           |
+| 推广 / 演讲            | vision_driven       | hero → quote → pillars → evidence → cta               |
+| 教学 / 培训           | educational         | hero → statement → pillars → pillars → showcase → cta |
 
-**Free Combination**: Feel free to adapt based on the specific content.
-
----
-
-## Outline Construction
-
-### Thinking Method: Pyramid Principle
-
-1. **Conclusion First**: Each slide starts with a core argument, not a list of information
-2. **Top-Down Structure**: Deck conclusion → Slide-level arguments → Supporting points
-3. **Group by Category**: Points on the same slide belong to the same logical category
-4. **Logical Progression**: Organize by time / importance / causality / parallelism
-
-### 6-Step Thinking Process
-
-1. What is the one-sentence conclusion of this deck?
-2. How many supporting arguments are needed?
-3. What is the core argument of each slide?
-4. What evidence / data / case studies support each slide?
-5. Which slides are essential? Which are "nice to have"?
-6. Where is the audience most likely to push back?
-
-### Page Count Guidelines (reference only)
-
-- Quick intro / single topic: 3–5 slides
-- Standard presentation: 5–8 slides
-- Deep analysis / annual report: 10–15 slides
+**自由组合**：可根据具体内容灵活调整。
 
 ---
 
-## brief.md Output Format
+## 构建大纲
 
-Write everything into a single `brief.md` with three sections:
+### 思考方法：金字塔原理
 
-### Section 1: Summary
+1. **结论先行**：每页从核心论点出发，而不是信息罗列
+2. **自上而下**：整份结论 → 页级论点 → 支撑要点
+3. **同类分组**：同一页上的要点属于同一逻辑类别
+4. **逻辑递进**：按时间 / 重要性 / 因果 / 并列组织
+
+### 六步思考流程
+
+1. 这份 PPT 的一句话结论是什么？
+2. 需要几个支撑论点？
+3. 每一页的核心论点是什么？
+4. 什么证据 / 数据 / 案例支撑每一页？
+5. 哪些页必不可少？哪些"有则更好"？
+6. 受众最可能在哪里提出异议？
+
+### 页数指引（仅供参考）
+
+- 快速介绍 / 单一主题：3–5 页
+- 标准演示：5–8 页
+- 深度分析 / 年度报告：10–15 页
+
+---
+
+## brief.md 输出格式
+
+把所有内容写进单个 `brief.md`，分三节：
+
+### 第 1 节：摘要
 
 ```
 Topic: ...
@@ -99,15 +103,15 @@ Narrative: ...
 Style direction: ... [provided / inferred based on topic + mood, not habit]
 ```
 
-**Style selection principles**:
+**风格选择原则**：
 
-1. **Match topic mood** → Corporate ≠ playful, tech ≠ organic (unless intentionally contrasting)
-2. **Vary by project** → Browse `reference/styles/` directory, avoid repeating recent styles
-3. **Consider 6 categories** → dark (16), light (10), warm (11), bw (5), vivid (6), mixed (7)
-4. **Prefer unexpected but fitting** → Don't default to "dark + neon" for all tech topics
-5. **Name specific style** → "warm--earth-organic palette" not "warm tones"
+1. **匹配主题气质** → 商务≠活泼，科技≠有机（除非有意反差）
+2. **项目间要有变化** → 浏览 `reference/styles/` 目录，避免重复近期用过的风格
+3. **考虑 6 大类** → dark (16), light (10), warm (11), bw (5), vivid (6), mixed (7)
+4. **优先"意外但贴切"** → 不要给所有科技主题都默认"dark + neon"
+5. **点名具体风格** → 用"warm--earth-organic palette"，不用"warm tones"
 
-### Section 2: Outline
+### 第 2 节：大纲
 
 ```
 Overall conclusion: AI Agent Platform lets every enterprise have its own AI workforce
@@ -119,9 +123,9 @@ S4: [evidence] "10M+ API Calls / 99.95% Uptime / 50ms P95"
 S5: [cta] "Start building your agent"
 ```
 
-### Section 3: Page Briefs
+### 第 3 节：页面简报
 
-For each slide, answer 6 questions:
+对每一页，回答 6 个问题：
 
 ```
 S3 [pillars] ★key slide
@@ -136,16 +140,16 @@ S3 [pillars] ★key slide
 └── Transition: S2 asks "why needed" → S3 answers "how it works"
 ```
 
-**Critical**: Core information must be detailed and complete (titles, descriptions, data, cases). Do NOT write abbreviated bullet points like "multimodal understanding". The Design Expert will use this content directly.
+**关键**：核心信息必须详尽完整（标题、描述、数据、案例）。不要写"多模态理解"这类缩略要点。设计专家将直接使用这些内容。
 
 ---
 
-## Fallback Strategy
+## 兜底策略
 
-| Failure Scenario            | Fallback Strategy                               |
+| 失败场景            | 兜底策略                                         |
 | --------------------------- | ----------------------------------------------- |
-| Cannot infer audience       | General Business                                |
-| Cannot infer purpose        | Present Information                             |
-| Cannot determine page count | Decide based on content volume; avoid <3 or >20 |
+| 无法推断受众       | 通用商务                                |
+| 无法推断目的        | 呈现信息                             |
+| 无法确定页数 | 按内容量决定；避免 <3 或 >20 |
 
 ---

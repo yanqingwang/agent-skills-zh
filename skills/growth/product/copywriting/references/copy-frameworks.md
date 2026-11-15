@@ -1,217 +1,221 @@
-# Copy Frameworks Reference
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/copywriting/references/copy-frameworks.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Headline formulas, page section types, and structural templates.
+# 文案框架参考
 
-## Contents
-- Headline Formulas (outcome-focused, problem-focused, audience-focused, differentiation-focused, proof-focused, additional formulas)
-- Landing Page Section Types (core sections, supporting sections)
-- Page Structure Templates (feature-heavy page, varied engaging page, compact landing page, enterprise/B2B landing page, product launch page)
-- Section Writing Tips (problem section, benefits section, how it works section, testimonial selection)
-- Clarity & Message-Market Fit (the "Now you can" test, Human Action Model, the Perception Gap, the SavvyCal case, clarity metrics)
+标题公式、页面区块类型与结构模板。
 
-## Headline Formulas
+## 目录
+- 标题公式（结果导向、问题导向、受众导向、差异化导向、证明导向、其他公式）
+- 落地页区块类型（核心区块、辅助区块）
+- 页面结构模板（功能堆砌型页面、多样吸引型页面、紧凑型落地页、企业/B2B 落地页、产品发布页）
+- 区块写作技巧（痛点区块、收益区块、运作方式区块、客户见证筛选）
+- 清晰度与信息-市场契合（"Now you can" 测试、人类行为模型、感知差距、SavvyCal 案例、清晰度指标）
 
-These are starting points. Fill every slot with specifics, and check the result against [ai-tells.md](ai-tells.md): a "without" or "Never X again" headline is fine once, but don't follow it with a negation list.
+## 标题公式
 
-### Outcome-Focused
+这些只是起点。每个槽位都要填入具体细节，并用 [ai-tells.md](ai-tells.md) 检查结果："without"（无需）或 "Never X again"（再也不 X）式标题用一次没问题，但别在后面跟一串否定句。
 
-**{Achieve desirable outcome} without {pain point}**
-> Understand how users are really experiencing your site without drowning in numbers
+### 结果导向
 
-**{Achieve desirable outcome} by {how product makes it possible}**
-> Generate more leads by seeing which companies visit your site
+**{实现理想结果}，无需 {痛点}**
+> 不用淹没在数字里，也能了解用户在你网站上的真实体验
 
-**Turn {input} into {outcome}**
-> Turn your hard-earned sales into repeat customers
+**{实现理想结果}，靠 {产品如何让它成为可能}**
+> 看到哪些公司访问了你的网站，获得更多线索
 
-**[Achieve outcome] in [timeframe]**
-> Get your tax refund in 10 days
+**把 {输入} 变成 {结果}**
+> 把辛苦挣来的订单变成回头客
 
----
-
-### Problem-Focused
-
-**Never {unpleasant event} again**
-> Never miss a sales opportunity again
-
-**{Question highlighting the main pain point}**
-> Hate returning stuff to Amazon?
-
-**Stop [pain]. Start [pleasure].**
-> Stop chasing invoices. Start getting paid on time.
+**[实现结果]，[时间范围内]**
+> 10 天拿到你的退税
 
 ---
 
-### Audience-Focused
+### 问题导向
 
-**{Key feature/product type} for {target audience}**
-> Advanced analytics for Shopify e-commerce
+**再也不 {不愉快事件}**
+> 再也不错过销售机会
 
-**{Key feature/product type} for {target audience} to {what it's used for}**
-> An online whiteboard for teams to ideate and brainstorm together
+**{点出核心痛点的问题}**
+> 讨厌在 Amazon 上退货？
 
-**You don't have to {skills or resources} to {achieve desirable outcome}**
-> With Ahrefs, you don't have to be an SEO pro to rank higher and get more traffic
-
----
-
-### Differentiation-Focused
-
-**The {opposite of usual process} way to {achieve desirable outcome}**
-> The easiest way to turn your passion into income
-
-**The [category] that [key differentiator]**
-> The CRM that updates itself
+**停止 [痛苦]。开始 [愉悦]。**
+> 别再追着发票跑。开始按时收款。
 
 ---
 
-### Proof-Focused
+### 受众导向
 
-**[Number] [people] use [product] to [outcome]**
-> 50,000 marketers use Drip to send better emails
+**{核心功能/产品类型}，专为 {目标受众}**
+> 为 Shopify 电商打造的高级分析
 
-**{Key benefit of your product}**
-> Sound clear in online meetings
+**{核心功能/产品类型}，让 {目标受众} 用来 {用途}**
+> 供团队一起构思和头脑风暴的在线白板
 
----
-
-### Additional Formulas
-
-**The simple way to {outcome}**
-> The simple way to track your time
-
-**Finally, {category} that {benefit}**
-> Finally, accounting software that doesn't suck
-
-**{Outcome} without {common pain}**
-> Build your website without writing code
-
-**Get {benefit} from your {thing}**
-> Get more revenue from your existing traffic
-
-**{Action verb} your {thing} like {admirable example}**
-> Market your SaaS like a Fortune 500
-
-**What if you could {desirable outcome}?**
-> What if you could close deals 30% faster?
-
-**The {adjective} {category} built for {audience}**
-> The lightweight CRM built for startups
+**你不必 {具备某种技能或资源}，也能 {实现理想结果}**
+> 用 Ahrefs，你不必是 SEO 高手，也能排名更高、流量更多
 
 ---
 
-## Landing Page Section Types
+### 差异化导向
 
-### Core Sections
+**用 {与常规流程相反的方式} {实现理想结果}**
+> 把热爱变成收入的最简单方法
 
-**Hero (Above the Fold)**
-- Headline + subheadline
-- Primary CTA
-- Supporting visual (product screenshot, hero image)
-- Optional: Social proof bar
-
-**Social Proof Bar**
-- Customer logos (recognizable > many)
-- Key metric ("10,000+ teams")
-- Star rating with review count
-- Short testimonial snippet
-
-**Problem/Pain Section**
-- Articulate their problem better than they can
-- Create recognition ("that's exactly my situation")
-- Hint at cost of not solving it
-
-**Solution/Benefits Section**
-- Bridge from problem to your solution
-- 3-5 key benefits (not 10)
-- Each: headline + explanation + proof if available
-
-**How It Works**
-- 3-4 numbered steps
-- Reduces perceived complexity
-- Each step: action + outcome
-
-**Final CTA Section**
-- Recap value proposition
-- Repeat primary CTA
-- Risk reversal (guarantee, free trial)
+**[关键差异点] 的 [品类]**
+> 会自己更新的 CRM
 
 ---
 
-### Supporting Sections
+### 证明导向
 
-**Testimonials**
-- Full quotes with names, roles, companies
-- Photos when possible
-- Specific results over vague praise
-- Formats: quote cards, video, tweet embeds
+**[数量] [人群] 用 [产品] 来 [实现结果]**
+> 50,000 名营销人员用 Drip 发出更好的邮件
 
-**Case Studies**
-- Problem → Solution → Results
-- Specific metrics and outcomes
-- Customer name and context
-- Can be snippets with "Read more" links
-
-**Use Cases**
-- Different ways product is used
-- Helps visitors self-identify
-- "For marketers who need X" format
-
-**Personas / "Built For" Sections**
-- Explicitly call out target audience
-- "Perfect for [role]" blocks
-- Addresses "Is this for me?" question
-
-**FAQ Section**
-- Address common objections
-- Good for SEO
-- Reduces support burden
-- 5-10 most common questions
-
-**Comparison Section**
-- vs. competitors (name them or don't)
-- vs. status quo (spreadsheets, manual processes)
-- Tables or side-by-side format
-
-**Integrations / Partners**
-- Logos of tools you connect with
-- "Works with your stack" messaging
-- Builds credibility
-
-**Founder Story / Manifesto**
-- Why you built this
-- What you believe
-- Emotional connection
-- Differentiates from faceless competitors
-
-**Demo / Product Tour**
-- Interactive demos
-- Video walkthroughs
-- GIF previews
-- Shows product in action
-
-**Pricing Preview**
-- Teaser even on non-pricing pages
-- Starting price or "from $X/mo"
-- Moves decision-makers forward
-
-**Guarantee / Risk Reversal**
-- Money-back guarantee
-- Free trial terms
-- "Cancel anytime"
-- Reduces friction
-
-**Stats Section**
-- Key metrics that build credibility
-- "10,000+ customers"
-- "4.9/5 rating"
-- "$2M saved for customers"
+**{产品核心收益}**
+> 在线上会议里声音清晰
 
 ---
 
-## Page Structure Templates
+### 其他公式
 
-### Feature-Heavy Page (Weak)
+**{实现结果} 的简单方法**
+> 追踪时间的简单方法
+
+**终于，{带来 {收益}} 的 {品类}**
+> 终于，一款不烂的会计软件
+
+**{实现结果}，没有 {常见痛点}**
+> 不写代码，也能建好网站
+
+**从 {你的东西} 中获得 {收益}**
+> 从现有流量中赚取更多收入
+
+**像 {令人羡慕的范例} 一样 {动作动词} {你的东西}**
+> 像财富 500 强一样营销你的 SaaS
+
+**如果你能 {实现理想结果} 呢？**
+> 如果成单速度能快 30% 呢？
+
+**为 {受众} 打造的 {形容词} {品类}**
+> 为初创公司打造的轻量 CRM
+
+---
+
+## 落地页区块类型
+
+### 核心区块
+
+**Hero 区（首屏）**
+- 标题 + 副标题
+- 主 CTA
+- 支撑视觉（产品截图、主视觉图）
+- 可选：社会证明条
+
+**社会证明条**
+- 客户 logo（认知度高 > 数量多）
+- 关键指标（"10,000+ 团队"）
+- 星级评分加评价数
+- 简短的客户见证摘录
+
+**痛点区块**
+- 比用户自己更能说清他们的问题
+- 制造认同感（"这说的就是我"）
+- 暗示不解决的代价
+
+**方案/收益区块**
+- 从问题过渡到你的方案
+- 3-5 条核心收益（不是 10 条）
+- 每条：小标题 + 说明 + 有的话加证明
+
+**运作方式**
+- 3-4 个编号步骤
+- 降低感知复杂度
+- 每步：动作 + 结果
+
+**最终 CTA 区块**
+- 重述价值主张
+- 重复主 CTA
+- 风险逆转（保证、免费试用）
+
+---
+
+### 辅助区块
+
+**客户见证**
+- 完整引述，含姓名、职位、公司
+- 尽量配照片
+- 具体结果优于空泛夸奖
+- 形式：引述卡片、视频、推文嵌入
+
+**案例研究**
+- 问题 → 方案 → 结果
+- 具体指标和成果
+- 客户名称与背景
+- 可做成带"阅读更多"链接的片段
+
+**使用场景**
+- 产品的不同用法
+- 帮访客对号入座
+- "为需要 X 的营销人员"句式
+
+**人群画像 / "为谁打造"区块**
+- 明确点名目标受众
+- "非常适合 [角色]"区块
+- 回答"这适合我吗？"
+
+**FAQ 区块**
+- 回应常见异议
+- 利于 SEO
+- 减轻客服负担
+- 最常见的 5-10 个问题
+
+**对比区块**
+- 对比竞品（点名或不点名）
+- 对比现状（表格、手工流程）
+- 表格或并排形式
+
+**集成 / 合作伙伴**
+- 所连接工具的 logo
+- "兼容你的技术栈"的信息传达
+- 建立可信度
+
+**创始人故事 / 宣言**
+- 你为什么做这个
+- 你相信什么
+- 情感连接
+- 与无人格的竞品区分开
+
+**演示 / 产品导览**
+- 交互式演示
+- 视频走查
+- GIF 预览
+- 展示产品实战
+
+**价格预览**
+- 非定价页也放预告
+- 起价或"每月 $X 起"
+- 推动决策者前进
+
+**保证 / 风险逆转**
+- 退款保证
+- 免费试用条款
+- "随时取消"
+- 降低摩擦
+
+**数据区块**
+- 建立可信度的关键指标
+- "10,000+ 客户"
+- "4.9/5 评分"
+- "为客户省下 200 万美元"
+
+---
+
+## 页面结构模板
+
+### 功能堆砌型页面（弱）
 
 ```
 1. Hero
@@ -222,11 +226,11 @@ These are starting points. Fill every slot with specifics, and check the result 
 6. CTA
 ```
 
-This is a list, not a persuasive narrative.
+这是一份清单，不是有说服力的叙事。
 
 ---
 
-### Varied, Engaging Page (Strong)
+### 多样、抓人的页面（强）
 
 ```
 1. Hero with clear value prop
@@ -242,11 +246,11 @@ This is a list, not a persuasive narrative.
 11. Final CTA with guarantee
 ```
 
-This tells a story and addresses objections.
+它在讲故事，并回应了异议。
 
 ---
 
-### Compact Landing Page
+### 紧凑型落地页
 
 ```
 1. Hero (headline, subhead, CTA, image)
@@ -257,11 +261,11 @@ This tells a story and addresses objections.
 6. Final CTA with guarantee
 ```
 
-Good for ad landing pages where brevity matters.
+适合讲究简洁的广告落地页。
 
 ---
 
-### Enterprise/B2B Landing Page
+### 企业/B2B 落地页
 
 ```
 1. Hero (outcome-focused headline)
@@ -276,11 +280,11 @@ Good for ad landing pages where brevity matters.
 10. Contact/demo CTA
 ```
 
-Addresses enterprise buyer concerns.
+回应企业买家的顾虑。
 
 ---
 
-### Product Launch Page
+### 产品发布页
 
 ```
 1. Hero with launch announcement
@@ -292,141 +296,141 @@ Addresses enterprise buyer concerns.
 7. CTA with urgency
 ```
 
-Good for ProductHunt, launches, or announcements.
+适合 ProductHunt、发布或公告场景。
 
 ---
 
-## Section Writing Tips
+## 区块写作技巧
 
-### Problem Section
+### 痛点区块
 
-Start with phrases like:
-- "You know the feeling..."
-- "If you're like most [role]..."
-- "Every day, [audience] struggles with..."
-- "We've all been there..."
+用这样的句子开头：
+- "你知道那种感觉……"
+- "如果你和大多数 [角色] 一样……"
+- "每天，[受众] 都在和……搏斗"
+- "我们都经历过……"
 
-Then describe:
-- The specific frustration
-- The time/money wasted
-- The impact on their work/life
+然后描述：
+- 具体的挫败感
+- 浪费的时间/金钱
+- 对其工作/生活的影响
 
-### Benefits Section
+### 收益区块
 
-For each benefit, include:
-- **Headline**: The outcome they get
-- **Body**: How it works (1-2 sentences)
-- **Proof**: Number, testimonial, or example (optional)
+每条收益包含：
+- **小标题**：他们得到的结果
+- **正文**：如何实现（1-2 句）
+- **证明**：数字、客户见证或示例（可选）
 
-### How It Works Section
+### 运作方式区块
 
-Each step should be:
-- **Numbered**: Creates sense of progress
-- **Simple verb**: "Connect," "Set up," "Get"
-- **Outcome-oriented**: What they get from this step
+每个步骤应当：
+- **编号**：制造推进感
+- **简单动词**："连接""设置""获取"
+- **结果导向**：这一步他们得到什么
 
-Example:
-1. Connect your tools (takes 2 minutes)
-2. Set your preferences
-3. Get automated reports every Monday
+示例：
+1. 连接你的工具（2 分钟搞定）
+2. 设置偏好
+3. 每周一收到自动化报告
 
-### Testimonial Selection
+### 客户见证筛选
 
-Best testimonials include:
-- Specific results ("increased conversions by 32%")
-- Before/after context ("We used to spend hours...")
-- Role + company for credibility
-- Something quotable and specific
+最好的客户见证包含：
+- 具体结果（"转化率提升 32%"）
+- 前后对比（"我们以前要花几个小时……"）
+- 职位 + 公司，增加可信度
+- 可引用且具体的内容
 
-Avoid testimonials that just say:
-- "Great product!"
-- "Love it!"
-- "Easy to use!"
+避免只说这种话的见证：
+- "产品很棒！"
+- "太喜欢了！"
+- "简单好用！"
 
 ---
 
-## Clarity & Message-Market Fit
+## 清晰度与信息-市场契合
 
-Headline formulas give you the shape of a line. These tools tell you whether the line is actually *working*: whether it's clear, whether it maps to how the reader already thinks, and whether it lands with the right person. Positioning is the prologue to your novel: it sets up everything that follows. Get it clear and the rest of the page writes itself.
+标题公式给你的是一句话的形状。这些工具告诉你这句话是否真的*有效*：是否清晰，是否贴合读者已有的思维方式，是否打中了正确的人。定位是小说的序章：它铺垫后面的一切。定位清晰了，页面剩下的部分自然就写出来了。
 
-### The "Now you can" Test
+### "Now you can" 测试
 
-A fast gut-check for any headline or benefit line. Mentally prefix it with **"Now you can…"**. If the result is both **compelling** and **true**, the line is doing its job. If it reads as vague, obvious, or a stretch, rewrite it.
+对任何标题或收益句的快速直觉检验。在心里给它加上前缀 **"Now you can…"**（现在你可以……）。如果加完之后既**抓人**又**真实**，这句话就合格。如果读起来模糊、平淡或夸张，就重写。
 
-The test works because "Now you can…" forces the copy into the reader's world. It has to name a concrete new ability they didn't have before. Feature-speak and buzzwords collapse under it.
+这个测试有效，是因为 "Now you can…" 把文案拽进读者的世界。它必须说出一个读者以前没有的具体新能力。功能腔和流行语在它面前会现出原形。
 
-| Original line | "Now you can…" version | Verdict |
+| 原句 | "Now you can…" 版本 | 判定 |
 |---------------|------------------------|---------|
-| "Powerful analytics platform" | Now you can… have a powerful analytics platform | Fails. not a new ability, just a description |
-| "See which companies visit your site" | Now you can… see which companies visit your site | Works. compelling + true |
-| "Streamline your workflow" | Now you can… streamline your workflow | Fails. vague, unfalsifiable |
-| "Send unlimited docs, images, and audio in one place" | Now you can… send unlimited docs, images, and audio in one place | Works. concrete + true |
+| "强大的分析平台" | Now you can… 拥有一个强大的分析平台 | 不通过。不是新能力，只是描述 |
+| "看到哪些公司访问你的网站" | Now you can… 看到哪些公司访问你的网站 | 通过。抓人 + 真实 |
+| "优化你的工作流" | Now you can… 优化你的工作流 | 不通过。模糊，无法证伪 |
+| "在一个地方发送不限量的文档、图片和音频" | Now you can… 在一个地方发送不限量的文档、图片和音频 | 通过。具体 + 真实 |
 
-Use it as a filter, not a formula: draft with the headline formulas above, then run each candidate through "Now you can…" and keep the survivors.
+把它当过滤器，不是公式：先用上面的标题公式起草，再让每个候选句过一遍 "Now you can…"，留下活下来的。
 
-### The Human Action Model (landing-page narrative spine)
+### 人类行为模型（落地页叙事主轴）
 
-Ludwig von Mises' Human Action Model explains *why* anyone acts: a person acts only when three things line up. Every above-the-fold that converts follows the same three-beat spine:
+路德维希·冯·米塞斯的人类行为模型（Human Action Model）解释了人*为什么*行动：只有三件事同时对齐，一个人才会行动。每个能转化的首屏都遵循同样的三拍主轴：
 
-1. **Current discomfort**: the felt problem, named in the reader's own words. They have to recognize their situation ("that's exactly me").
-2. **Better vision**: a clearly imagined, more satisfying state. What life looks like once the discomfort is gone.
-3. **Path to action**: the belief that *this specific step* closes the gap between the two. The product is the bridge, and the CTA is how they cross it.
+1. **当下的不适**：被感知到的问题，用读者自己的话命名。他们必须认出自己的处境（"说的就是我"）。
+2. **更好的愿景**：清晰想象的、更令人满意的状态。不适消失之后生活是什么样。
+3. **行动路径**：相信*这具体的一步*能弥合两者之间的差距。产品是桥，CTA 是过桥的方式。
 
-Miss any beat and the reader stalls. No discomfort = no reason to move. No vision = no destination. No path = no reason to believe *you're* the way there.
+缺任何一拍，读者就会停住。没有不适 = 没有行动的理由。没有愿景 = 没有目的地。没有路径 = 没有理由相信*你*就是那条路。
 
-**Mapping it onto the hero:**
+**映射到首屏：**
 
-| Beat | Where it usually lives | Example |
+| 节拍 | 通常放在哪 | 示例 |
 |------|------------------------|---------|
-| Current discomfort | Eyebrow, subhead, or problem-framed headline | "You shouldn't have to feel awkward sending out your scheduling link" |
-| Better vision | Headline or subhead | "Scheduling that feels considerate, not one-sided" |
-| Path to action | CTA + supporting proof | "Start scheduling free" |
+| 当下的不适 | 眉题、副标题或问题式标题 | "你不该在发出自己的排期链接时感到尴尬" |
+| 更好的愿景 | 标题或副标题 | "让排期变得体贴，而不是单方面迁就" |
+| 行动路径 | CTA + 支撑证明 | "免费开始排期" |
 
-This is the transformation spine underneath the "6 essential sections" of a landing page (hero, social proof, problem, solution, how-it-works, and final CTA). The hero states the transformation; the rest of the page substantiates each beat.
+这就是落地页"6 大核心区块"（hero 首屏、社会证明、痛点、方案、运作方式、最终 CTA）底下的转变主轴。首屏宣告转变，页面其余部分为每一拍提供实据。
 
-### The Perception Gap
+### 感知差距
 
-The same benefit can read as a **selling point to one segment and a red flag to another**. The gap is between what *you* think you're saying and what a given reader hears through their own risk tolerance.
+同一条收益，对一个人群是**卖点**，对另一个人群是**危险信号**。差距在于：*你*以为自己在说什么，和具体某个读者透过自身风险承受力听到什么。
 
-The fix is **matching the value prop to the reader's risk tolerance**. Segment first, then swap the framing.
+解法是**让价值主张匹配读者的风险承受力**。先分人群，再换说法。
 
-| Benefit as written | Startup / early-adopter hears | Enterprise / risk-averse hears |
+| 写出来的收益 | 初创/早期采用者听到 | 企业/风险厌恶者听到 |
 |--------------------|-------------------------------|--------------------------------|
-| "Move fast. Ship in a weekend." | Speed, momentum (✅) | Immature, unstable (🚩) |
-| "Brand-new approach" | Innovative edge (✅) | Unproven, risky (🚩) |
-| "Enterprise-grade security & SLAs" | Bloated, slow, expensive (🚩) | Safe, trustworthy (✅) |
-| "Trusted by the Fortune 500" | Not built for me (🚩) | Proven, de-risked (✅) |
+| "快速行动，一个周末就发布上线。" | 速度、势头（✅） | 不成熟、不稳定（🚩） |
+| "全新方法" | 创新锐气（✅） | 未经验证、有风险（🚩） |
+| "企业级安全与 SLA" | 臃肿、缓慢、昂贵（🚩） | 安全、可信（✅） |
+| "财富 500 强信赖之选" | 不是为我造的（🚩） | 经过验证、已降险（✅） |
 
-**Value-prop swap in practice** (same product, two audiences):
+**价值主张切换实例**（同一产品，两类受众）：
 
-- *Startup landing page:* "Ship your first integration this afternoon. Pay by card and skip the sales call."
-- *Enterprise landing page:* "SOC 2 Type II, 99.99% uptime SLA, and a named implementation lead. Roll out with confidence."
+- *初创落地页：*"今天下午就发出你的第一个集成。刷卡支付，不用跟销售开会。"
+- *企业落地页：*"SOC 2 Type II、99.99% 可用性 SLA，以及一位专属实施负责人。放心推广。"
 
-When a page has to serve both, don't average them into mush. Segment the traffic (separate pages, or a persona split) and let each read its own version of the truth.
+如果一个页面必须同时服务两类人，别把它们平均成一锅粥。分流（分开的页面，或按画像拆分），让每类人读到属于自己的那版真话。
 
-### Worked Example: SavvyCal (message-market fit)
+### 实战案例：SavvyCal（信息-市场契合）
 
-SavvyCal (a scheduling tool) originally led with feature-forward copy. They rewrote the hero around a single felt discomfort:
+SavvyCal（一款排期工具）最初用的是功能先行的文案。后来他们围绕一个被真切感知的不适重写了首屏：
 
-> **"You shouldn't have to feel awkward sending out your scheduling link."**
+> **"你不该在发出自己的排期链接时感到尴尬。"**
 
-That one line **roughly tripled (3×) conversions**. It works because it hits all three beats of the Human Action Model at once:
+这一句让转化率**大约翻了三倍（3×）**。它有效，是因为同时打中了人类行为模型的全部三拍：
 
-- **Discomfort:** the small social awkwardness of "here's my link, pick a time," named exactly as users feel it.
-- **Vision:** scheduling that feels considerate to *both* people.
-- **Path:** SavvyCal's overlay-your-calendar mechanic is the bridge, so the CTA feels like the obvious next step.
+- **不适：**"这是我的链接，你挑个时间"里那点社交尴尬，按用户真实感受原样点破。
+- **愿景：**让*双方*都觉得被体贴的排期。
+- **路径：**SavvyCal 的日历叠加机制就是那座桥，CTA 便成了顺理成章的下一步。
 
-The lesson: message-market fit beats feature lists. The winning line named a real feeling the reader hadn't heard a scheduling tool acknowledge before. Run your own hero through "Now you can…" and the Human Action Model to find that line.
+教训：信息-市场契合胜过功能清单。那句赢家文案说出了一个真实感受，而读者从没听排期工具承认过这种感受。用 "Now you can…" 和人类行为模型检验你自己的首屏，找到那句话。
 
-### Clarity Beats Cleverness (the metrics)
+### 清晰胜过聪明（相关指标）
 
-When teams measure it, clarity is what moves the numbers. Figures cited in Corey Haines's *Founding Marketing* (Ch. 3) associate clearer positioning and copy with:
+一旦团队去度量，真正推动数字的是清晰度。Corey Haines《Founding Marketing》第 3 章引用的数据，把更清晰的定位与文案和这些结果关联起来：
 
-- **+81% conversions**
-- **−38% sales cycle** (shorter time to close)
-- **−28% CAC** (lower customer acquisition cost)
-- **+175% referrals**
+- **转化率 +81%**
+- **销售周期 −38%**（成交更快）
+- **获客成本（CAC）−28%**（获客成本更低）
+- **转介绍 +175%**
 
-The mechanism: clear copy lets the *right* buyer self-qualify fast and the wrong one bounce early, so every downstream metric improves. Clever copy that requires decoding does the opposite. It adds a comprehension tax at the exact moment attention is scarcest.
+机制：清晰的文案让*对的*买家快速自我合格，让错的买家早早离开，于是每个下游指标都变好。需要解码的聪明文案正好相反：它在注意力最稀缺的时刻加收一笔理解税。
 
-**Practical rule:** if a reader has to pause to figure out what you mean, you've already lost. When forced to choose between a clever line and a clear one, ship the clear one, then use the tests above ("Now you can…", the Human Action Model, the Perception Gap) to make the clear line compelling too.
+**实操规则：**如果读者得停下来琢磨你的意思，你已经输了。当聪明的句子和清晰的句子只能二选一时，先发布上线清晰的那句，再用上面的测试（"Now you can…"、人类行为模型、感知差距）把清晰的句子也变得抓人。

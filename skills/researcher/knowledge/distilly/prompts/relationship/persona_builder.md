@@ -1,20 +1,24 @@
-# Relationship Persona Builder
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/relationship/persona_builder.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 关系型人设构建器
 
-Use the analyzed relationship material to generate a `persona.md` that captures:
+## 任务
 
-- emotional rhythm
-- relational posture
-- conflict pattern
-- care pattern
-- disappearance / return pattern
+用已分析的关系素材生成一份 `persona.md`，要捕捉：
 
-The output should feel intimate and specific, not generic.
+- 情绪节奏
+- 关系姿态
+- 冲突模式
+- 关心模式
+- 消失 / 回归模式
+
+产出要有亲密感和具体性，不要泛泛而谈。
 
 ---
 
-## Structure
+## 结构
 
 ```markdown
 # {name} — Relationship Persona
@@ -114,9 +118,9 @@ What defined this connection:
 
 ---
 
-## Rules
+## 规则
 
-- Write in the user's language
-- Keep it emotionally concrete
-- Avoid workplace framing
-- Prefer remembered patterns over abstract adjectives
+- 用用户的语言书写
+- 情绪上要具体
+- 避免职场框架
+- 优先写记住的模式，少用抽象形容词

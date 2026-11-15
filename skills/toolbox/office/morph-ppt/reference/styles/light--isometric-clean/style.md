@@ -1,33 +1,37 @@
-# S23-isometric-clean — Isometric Clean Tech
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/light--isometric-clean/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# S23-isometric-clean：等距干净科技风
 
-Light blue-gray background using diamond and rectangle combinations to create isometric/3D block visuals, conveying a clean and modern technological feel.
+## 风格概览
 
-- **Scene**: Tech products, SaaS platforms, data display
-- **Mood**: Clean, modern, technological
-- **Color Tone**: Light blue-gray base + blue accent + light gray layers
+浅蓝灰背景，用菱形与矩形组合营造等距/3D 方块视觉，传达干净现代的科技感。
 
-## Color Palette
+- **适用场景**：科技产品、SaaS 平台、数据展示
+- **氛围**：干净、现代、科技感
+- **色调**：浅蓝灰基底 + 蓝色强调 + 浅灰层次
 
-| Name            | Hex    | Usage                                          |
-| --------------- | ------ | ---------------------------------------------- |
-| Light Blue-Gray | F0F4F8 | Background base color                          |
-| Blue            | 4A90D9 | Primary accent color, isometric block top face |
-| Light Gray      | E8ECF1 | Block side face, auxiliary color block         |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 浅蓝灰 | F0F4F8 | 背景底色 |
+| 蓝色 | 4A90D9 | 主强调色、等距方块顶面 |
+| 浅灰 | E8ECF1 | 方块侧面、辅助色块 |
 
-- Diamond shapes simulate isometric perspective block top faces, rectangles serve as side faces, combined to create 3D block effects
-- Blocks arranged in grid pattern, forming isometric spatial sense
-- Restrained color scheme (only blue-gray), maintaining clean and uncluttered appearance
-- Typography uses modern sans-serif fonts like Inter Bold
+## 设计技法
 
-## Reference Script
+- 菱形模拟等距透视的方块顶面，矩形作侧面，组合出 3D 方块效果
+- 方块按网格排布，形成等距空间感
+- 克制的配色（只有蓝灰），保持干净不杂乱
+- 字体用 Inter Bold 等现代无衬线体
 
-Complete build script is in `build.sh`.
-**Recommended slides to read for understanding core design techniques**:
+## 参考脚本
 
-- **Slide 1 (hero)** — How to construct isometric blocks using diamond + rectangle combinations
-- **Slide 3 (pillars)** — Grid layout with multiple block arrangements
-  No need to read all — skim 2-3 representative slides.
+完整构建脚本见 `build.sh`。
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1 (hero)**：用菱形 + 矩形组合构建等距方块的方法
+- **Slide 3 (pillars)**：多方块排布的网格版式
+  无需全部精读，浏览 2-3 张代表性幻灯片即可。

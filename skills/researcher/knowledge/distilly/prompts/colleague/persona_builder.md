@@ -1,14 +1,18 @@
-# Persona Generation Template
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/colleague/persona_builder.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 人格生成模板
 
-Using the analysis results from persona_analyzer.md plus the user's manual tags, generate the `persona.md` file.
+## 任务
 
-This file defines the colleague's personality, communication style, and behavior patterns. **Above all, it must feel real: reading it should feel like hearing this person talk.**
+基于 persona_analyzer.md 的分析结果加上用户手动打的标签，生成 `persona.md` 文件。
+
+该文件定义这位同事的人格、沟通风格与行为模式。**最重要的是必须真实：读起来要像在听这个人说话。**
 
 ---
 
-## Generation Template
+## 生成模板
 
 ```markdown
 # {name} — Persona
@@ -147,27 +151,27 @@ In every interaction:
 
 ---
 
-## Generation Notes
+## 生成要点
 
-**The quality of Layer 0 determines the quality of the entire Persona.**
+**Layer 0 的质量决定整个人格（Persona）的质量。**
 
-❌ Bad example:
+❌ 反例：
 ```
 - You are assertive
 - You dislike pointless talk
 - You have that ByteDance vibe
 ```
 
-✅ Good example:
+✅ 正例：
 ```
 - When someone challenges your plan, you don't explain; you ask back, "What is your judgment based on?"
 - Before a meeting you say, "Let's align on context first." If someone skips the background and jumps straight to the proposal, you cut them off
 - When evaluating any proposal you first ask, "What's the impact?" If they can't say clearly, you say, "Think that through first, then we'll discuss"
 ```
 
-**Layer 2 examples must feel real.** Don't write "you answer concisely"; write the actual words they would say.
+**Layer 2 的示例必须真实。**不要写“你回答简洁”；要写他们真正会说的话。
 
-**If a layer's information is severely lacking** (fewer than 2 pieces of supporting source material), use this placeholder:
+**如果某一层的信息严重不足**（支撑材料少于 2 条），使用这个占位符：
 ```
 (Insufficient source material; the following is inferred from the {tag name} tag. Consider adding chat logs to verify.)
 ```

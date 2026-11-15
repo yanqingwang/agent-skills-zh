@@ -1,21 +1,25 @@
-# Velvet Rose — Luxury Brand
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--velvet-rose/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Velvet Rose：奢华品牌
 
-Deep plum background with ghost large letterforms and thin arc decorations. Gold textFill fade creates elegant depth.
+## 风格概览
 
-- **Scenario**: Luxury brands, premium fashion, high-end retail, elegant showcases
-- **Mood**: Luxurious, elegant, sophisticated, refined
-- **Tone**: Deep plum with gold accents
+深李紫背景，幽灵大字母造型与细弧线装饰。金色 textFill 渐隐营造优雅纵深。
 
-## Design Techniques
+- **适用场景**：奢侈品牌、高级时装、高端零售、优雅展示
+- **氛围**：奢华、优雅、精致、考究
+- **色调**：深李紫，配金色点缀
 
-- Ghost large letterforms
-- Thin arc shapes as elegant decoration
-- GOLD textFill fade (partially vanishes into dark bg)
-- Split warm/cool panels
-- Breathable open layouts
+## 设计技法
 
-## Reference Script
+- 幽灵大字母造型
+- 细弧线形作优雅装饰
+- GOLD textFill 渐隐（金色，部分隐入深色背景）
+- 暖/冷分区面板
+- 通透开阔的版式
 
-Complete build script available in `build.py`.
+## 参考脚本
+
+完整构建脚本见 `build.py`。

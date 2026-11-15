@@ -1,8 +1,12 @@
-# fastapi-templates — detailed worked examples
+> **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/api-scaffolding/skills/fastapi-templates/references/details.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Implementation Patterns
+# fastapi-templates：详细实战示例
 
-### Pattern 1: Complete FastAPI Application
+## 实现模式
+
+### 模式 1：完整的 FastAPI 应用
 
 ```python
 # main.py
@@ -97,7 +101,7 @@ async def get_db() -> AsyncSession:
             await session.close()
 ```
 
-### Pattern 2: CRUD Repository Pattern
+### 模式 2：CRUD 仓储模式
 
 ```python
 # repositories/base_repository.py
@@ -198,7 +202,7 @@ class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):
 user_repository = UserRepository(User)
 ```
 
-### Pattern 3: Service Layer
+### 模式 3：服务层
 
 ```python
 # services/user_service.py
@@ -272,7 +276,7 @@ class UserService:
 user_service = UserService()
 ```
 
-### Pattern 4: API Endpoints with Dependencies
+### 模式 4：带依赖注入的 API 端点
 
 ```python
 # api/v1/endpoints/users.py
@@ -352,7 +356,7 @@ async def delete_user(
         raise HTTPException(status_code=404, detail="User not found")
 ```
 
-### Pattern 5: Authentication & Authorization
+### 模式 5：认证与授权
 
 ```python
 # core/security.py

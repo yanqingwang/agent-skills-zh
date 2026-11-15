@@ -1,97 +1,101 @@
-# Competitive Scoring Rubric
+> **中文汉化版** · 上游：[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) · 原文件：`product-team/skills/competitive-teardown/references/scoring-rubric.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Overview
+# 竞争对手评分量表
 
-This rubric provides a standardized framework for evaluating competitors across key dimensions. Consistent scoring enables meaningful comparisons and tracks competitive position changes over time.
+## 概述
 
-## Scoring Scale (1-10)
+这份量表为跨关键维度评估竞争对手提供了一个标准化框架。评分口径一致，才能做出有意义的对比，并追踪竞争地位随时间的变化。
 
-| Score | Label | Definition |
+## 评分标度（1-10）
+
+| 得分 | 标签 | 定义 |
 |-------|-------|-----------|
-| 1-2 | Poor | Significant gaps, major usability issues, or missing capability |
-| 3-4 | Below Average | Basic functionality with notable limitations |
-| 5-6 | Average | Meets market expectations, no standout qualities |
-| 7-8 | Above Average | Strong execution with clear advantages |
-| 9-10 | Exceptional | Industry-leading, sets the standard for others |
+| 1-2 | 差 | 有重大缺口、严重易用性问题，或能力缺失 |
+| 3-4 | 低于平均 | 有基础功能，但存在明显限制 |
+| 5-6 | 平均 | 达到市场预期，没有突出之处 |
+| 7-8 | 高于平均 | 执行扎实，优势清晰 |
+| 9-10 | 卓越 | 行业领先，为他人树立标准 |
 
-## Dimension Categories
+## 维度分类
 
-### 1. User Experience (UX) - Weight: 20%
-- **Onboarding**: Time to first value, setup complexity, guided flows
-- **Navigation**: Information architecture, discoverability, consistency
-- **Visual Design**: Modern aesthetics, brand coherence, accessibility
-- **Performance**: Page load times, responsiveness, offline capability
-- **Mobile Experience**: Native app quality, responsive design, feature parity
+### 1. 用户体验（UX） - 权重：20%
+- **Onboarding**：首次价值到达时间、配置复杂度、引导流程
+- **导航**：信息架构、可发现性、一致性
+- **视觉设计**：现代审美、品牌一致性、无障碍
+- **性能**：页面加载时间、响应速度、离线能力
+- **移动端体验**：原生 App 质量、响应式设计、功能对等
 
-### 2. Feature Completeness - Weight: 25%
-- **Core Features**: Coverage of essential use cases
-- **Advanced Features**: Power user capabilities, automation, customization
-- **Workflow Support**: End-to-end process coverage without workarounds
-- **API & Extensibility**: API coverage, webhook support, SDK quality
-- **Innovation**: Unique capabilities not found in competitors
+### 2. 功能完备度  - 权重：25%
+- **核心功能**：对必备使用场景的覆盖
+- **高级功能**：高级用户能力、自动化、自定义
+- **工作流支持**：端到端流程覆盖，无需变通
+- **API 与可扩展性**：API 覆盖、webhook 支持、SDK 质量
+- **创新**：竞品没有的独特能力
 
-### 3. Pricing & Value - Weight: 15%
-- **Transparency**: Clear pricing without hidden costs
-- **Flexibility**: Plan options matching different customer sizes
-- **Value-to-Cost Ratio**: Feature access relative to price point
-- **Free Tier / Trial**: Quality of free offering for evaluation
-- **Contract Terms**: Lock-in requirements, cancellation ease
+### 3. 定价与价值  - 权重：15%
+- **透明度**：定价清晰，没有隐藏成本
+- **灵活性**：套餐选项匹配不同规模的客户
+- **价值成本比**：相对价格点能获得的功能
+- **免费档 / 试用**：免费提供的质量，能否支撑评估
+- **合同条款**：锁定要求、取消难度
 
-### 4. Integrations - Weight: 10%
-- **Native Integrations**: Number and quality of built-in connectors
-- **Marketplace**: Third-party app ecosystem breadth
-- **API Quality**: Documentation, reliability, rate limits
-- **Data Import/Export**: Migration ease, format support
-- **Workflow Automation**: Zapier, Make, native automation support
+### 4. 集成  - 权重：10%
+- **原生集成**：内置连接器的数量与质量
+- **应用市场**：第三方应用生态的广度
+- **API 质量**：文档、可靠性、速率限制
+- **数据导入/导出**：迁移难易、格式支持
+- **工作流自动化**：Zapier、Make、原生自动化支持
 
-### 5. Support & Documentation - Weight: 10%
-- **Documentation Quality**: Completeness, searchability, freshness
-- **Support Channels**: Chat, email, phone, community availability
-- **Response Time**: SLA adherence, resolution speed
-- **Self-Service**: Knowledge base, video tutorials, community forums
-- **Onboarding Support**: Dedicated CSM, implementation assistance
+### 5. 支持与文档  - 权重：10%
+- **文档质量**：完整性、可搜索性、新鲜度
+- **支持渠道**：聊天、邮件、电话、社区的可用性
+- **响应时间**：SLA 达成情况、解决速度
+- **自助服务**：知识库、视频教程、社区论坛
+- **Onboarding 支持**：专属 CSM、实施协助
 
-### 6. Performance & Reliability - Weight: 10%
-- **Uptime**: Historical availability, SLA commitments
-- **Speed**: Application responsiveness under normal load
-- **Scalability**: Performance at high volume, enterprise readiness
-- **Data Handling**: Large dataset support, bulk operations
-- **Global Performance**: CDN, regional deployments, latency
+### 6. 性能与可靠性  - 权重：10%
+- **正常运行时间**：历史可用性、SLA 承诺
+- **速度**：正常负载下的应用响应
+- **可扩展性**：高负载下的表现、企业级就绪度
+- **数据处理**：大数据集支持、批量操作
+- **全球性能**：CDN、区域部署、延迟
 
-### 7. Security & Compliance - Weight: 10%
-- **Authentication**: SSO, MFA, RBAC granularity
-- **Data Protection**: Encryption at rest and in transit, data residency
-- **Certifications**: SOC 2, ISO 27001, GDPR, HIPAA compliance
-- **Audit Trail**: Activity logging, access monitoring
-- **Privacy Controls**: Data retention policies, right to deletion
+### 7. 安全与合规  - 权重：10%
+- **身份认证**：SSO、MFA、RBAC 粒度
+- **数据保护**：静态与传输加密、数据驻留
+- **认证**：SOC 2、ISO 27001、GDPR、HIPAA 合规
+- **审计追踪**：活动日志、访问监控
+- **隐私控制**：数据保留策略、删除权
 
-## Weighting Guidelines
+## 权重设置指南
 
-Default weights above suit most B2B SaaS evaluations. Adjust based on:
+上面的默认权重适合大多数 B2B SaaS 评估。按场景调整：
 
-- **Enterprise buyers**: Increase Security (15%), Support (15%), reduce Pricing (10%)
-- **Developer tools**: Increase Integrations (20%), Features (30%), reduce UX (10%)
-- **SMB products**: Increase Pricing (25%), UX (25%), reduce Security (5%)
-- **Regulated industries**: Increase Security (25%), reduce Features (15%)
+- **企业买家**：提高安全（15%）、支持（15%），降低定价（10%）
+- **开发者工具**：提高集成（20%）、功能（30%），降低 UX（10%）
+- **SMB 产品**：提高定价（25%）、UX（25%），降低安全（5%）
+- **受监管行业**：提高安全（25%），降低功能（15%）
 
-## Calibration Process
+## 校准流程
 
-1. **Anchor scoring** - Score your own product first to establish baseline
-2. **Multiple scorers** - Have 2-3 team members score independently
-3. **Discuss outliers** - Reconcile scores that differ by more than 2 points
-4. **Document evidence** - Record specific examples justifying each score
-5. **Normalize quarterly** - Re-calibrate as market expectations evolve
+1. **锚定评分**：先给自己产品打分，建立基线
+2. **多人评分**：让 2-3 名团队成员独立打分
+3. **讨论离群值**：对分差超过 2 分的项目做调和
+4. **记录证据**：为每个得分记下具体例证
+5. **每季度归一化**：随市场预期演变重新校准
 
-## Bias Mitigation
+## 偏差控制
 
-- **Avoid halo effect** - Score each dimension independently, not influenced by overall impression
-- **Use evidence, not feelings** - Every score must link to observable data points
-- **Include competitor strengths** - Resist tendency to under-score competitors
-- **Rotate scorers** - Different team members bring fresh perspectives
-- **Blind scoring** - When possible, evaluate features without knowing which competitor
-- **Customer validation** - Compare internal scores against user review sentiment
+- **避免光环效应**：每个维度独立打分，不受整体印象影响
+- **用证据，不用感觉**：每个得分都必须挂钩可观察的数据点
+- **计入竞争对手的优势**：克制给竞品压低分的倾向
+- **轮换评分人**：不同成员带来新鲜视角
+- **盲评**：可能时，在不知道是哪家竞品的情况下评估功能
+- **客户验证**：把内部得分与用户评论情绪做对照
 
-## Composite Score Calculation
+## 综合得分计算
 
 ```
 Weighted Score = SUM(Dimension Score x Dimension Weight)
@@ -108,9 +112,9 @@ Security(8) x 0.10 = 0.80
 Total = 7.45 / 10
 ```
 
-## Output Format
+## 输出格式
 
-Present results as a comparison matrix with color coding:
-- Green (8-10): Competitive advantage
-- Yellow (5-7): Market parity
-- Red (1-4): Competitive gap
+结果以带颜色编码的对比矩阵呈现：
+- 绿色（8-10）：竞争优势
+- 黄色（5-7）：市场持平
+- 红色（1-4）：竞争差距

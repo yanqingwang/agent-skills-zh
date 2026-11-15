@@ -1,6 +1,10 @@
-# JSON Canvas Complete Examples
+> **中文汉化版** · 上游：[kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) · 原文件：`skills/json-canvas/references/EXAMPLES.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Simple Canvas with Text and Connections
+# JSON Canvas 完整示例
+
+## 带文本与连线的简单画布
 
 ```json
 {
@@ -52,7 +56,7 @@
 }
 ```
 
-## Project Board with Groups
+## 带分组的项目看板
 
 ```json
 {
@@ -120,7 +124,7 @@
 }
 ```
 
-## Research Canvas with Files and Links
+## 带文件与链接的研究画布
 
 ```json
 {
@@ -211,7 +215,7 @@
 }
 ```
 
-## Flowchart
+## 流程图
 
 ```json
 {

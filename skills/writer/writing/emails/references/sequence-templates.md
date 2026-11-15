@@ -1,168 +1,172 @@
-# Email Sequence Templates
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/emails/references/sequence-templates.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Detailed templates for common email sequences.
+# 邮件序列模板
 
-## Contents
-- Welcome Sequence (Post-Signup)
-- Lead Nurture Sequence (Pre-Sale)
-- Re-Engagement Sequence
-- Onboarding Sequence (Product Users)
+常见邮件序列的详细模板。
 
-## Welcome Sequence (Post-Signup)
+## 目录
+- 欢迎序列（注册后）
+- 线索培育序列（售前）
+- 再互动序列
+- 激活序列（产品用户）
 
-**Email 1: Welcome (Immediate)**
-- Subject: Welcome to [Product]. Here's your first step
-- Deliver what was promised (lead magnet, access, etc.)
-- Single next action
-- Set expectations for future emails
+## 欢迎序列（注册后）
 
-**Email 2: Quick Win (Day 1-2)**
-- Subject: Get your first [result] in 10 minutes
-- Enable small success
-- Build confidence
-- Link to helpful resource
+**邮件 1：欢迎（立即发送）**
+- 主题：欢迎使用 [Product]。这是你的第一步
+- 兑现承诺的东西（lead magnet、访问权限等）
+- 单一下一步动作
+- 为后续邮件设定预期
 
-**Email 3: Story/Why (Day 3-4)**
-- Subject: Why we built [Product]
-- Origin story or mission
-- Connect emotionally
-- Show you understand their problem
+**邮件 2：快速见效（第 1-2 天）**
+- 主题：10 分钟拿到你的第一个 [result]
+- 促成一次小成功
+- 建立信心
+- 链接到有用的资源
 
-**Email 4: Social Proof (Day 5-6)**
-- Subject: How [Customer] achieved [Result]
-- Case study or testimonial
-- Relatable to their situation
-- Soft CTA to explore
+**邮件 3：故事/初心（第 3-4 天）**
+- 主题：我们为什么做 [Product]
+- 起源故事或使命
+- 建立情感连接
+- 展示你理解他们的问题
 
-**Email 5: Overcome Objection (Day 7-8)**
-- Subject: "I don't have time for X." Sound familiar?
-- Address common hesitation
-- Reframe the obstacle
-- Show easy path forward
+**邮件 4：社会证明（第 5-6 天）**
+- 主题：[Customer] 如何实现 [Result]
+- 案例研究或用户证言
+- 与他们的处境相关
+- 软性 CTA 引导探索
 
-**Email 6: Core Feature (Day 9-11)**
-- Subject: Have you tried [Feature] yet?
-- Highlight underused capability
-- Show clear benefit
-- Direct CTA to try it
+**邮件 5：化解顾虑（第 7-8 天）**
+- 主题："我没时间搞 X。"听着耳熟吗？
+- 回应常见犹豫
+- 换个角度讲这个障碍
+- 展示轻松的前进路径
 
-**Email 7: Conversion (Day 12-14)**
-- Subject: Ready to [upgrade/buy/commit]?
-- Summarize value
-- Clear offer
-- Urgency if appropriate
-- Risk reversal (guarantee, trial)
+**邮件 6：核心功能（第 9-11 天）**
+- 主题：试过 [Feature] 了吗？
+- 突出未被充分使用的能力
+- 展示明确的收益
+- 直达 CTA 引导试用
 
----
-
-## Lead Nurture Sequence (Pre-Sale)
-
-**Email 1: Deliver + Introduce (Immediate)**
-- Deliver the lead magnet
-- Brief intro to who you are
-- Preview what's coming
-
-**Email 2: Expand on Topic (Day 2-3)**
-- Related insight to lead magnet
-- Establish expertise
-- Light CTA to content
-
-**Email 3: Problem Deep-Dive (Day 4-5)**
-- Articulate their problem deeply
-- Show you understand
-- Hint at solution
-
-**Email 4: Solution Framework (Day 6-8)**
-- Your approach/methodology
-- Educational, not salesy
-- Builds toward your product
-
-**Email 5: Case Study (Day 9-11)**
-- Real results from real customer
-- Specific and relatable
-- Soft CTA
-
-**Email 6: Differentiation (Day 12-14)**
-- Why your approach is different
-- Address alternatives
-- Build preference
-
-**Email 7: Objection Handler (Day 15-18)**
-- Common concern addressed
-- FAQ or myth-busting
-- Reduce friction
-
-**Email 8: Direct Offer (Day 19-21)**
-- Clear pitch
-- Strong value proposition
-- Specific CTA
-- Urgency if available
+**邮件 7：转化（第 12-14 天）**
+- 主题：准备好 [升级/购买/承诺] 了吗？
+- 总结价值
+- 清楚的报价
+- 视情况加入紧迫感
+- 风险逆转（保证、试用）
 
 ---
 
-## Re-Engagement Sequence
+## 线索培育序列（售前）
 
-**Email 1: Check-In (Day 30-60 of inactivity)**
-- Subject: Is everything okay, [Name]?
-- Genuine concern
-- Ask what happened
-- Easy win to re-engage
+**邮件 1：交付 + 介绍（立即发送）**
+- 交付 lead magnet
+- 简要介绍你是谁
+- 预告接下来的内容
 
-**Email 2: Value Reminder (Day 2-3 after)**
-- Subject: Remember when you [achieved X]?
-- Remind of past value
-- What's new since they left
-- Quick CTA
+**邮件 2：展开话题（第 2-3 天）**
+- 与 lead magnet 相关的洞察
+- 建立专业权威
+- 轻量 CTA 指向内容
 
-**Email 3: Incentive (Day 5-7 after)**
-- Subject: We miss you. Here's something special
-- Offer if appropriate
-- Limited time
-- Clear CTA
+**邮件 3：问题深挖（第 4-5 天）**
+- 把他们的问题讲透
+- 展示你懂
+- 暗示解法
 
-**Email 4: Last Chance (Day 10-14 after)**
-- Subject: Should we stop emailing you?
-- Honest and direct
-- One-click to stay or go
-- Clean the list if no response
+**邮件 4：解法框架（第 6-8 天）**
+- 你的路径/方法论
+- 教育性，不推销
+- 铺向你的产品
+
+**邮件 5：案例研究（第 9-11 天）**
+- 真实客户的真实成果
+- 具体、有代入感
+- 软性 CTA
+
+**邮件 6：差异化（第 12-14 天）**
+- 你的路径为什么不同
+- 回应其他选项
+- 建立偏好
+
+**邮件 7：顾虑处理（第 15-18 天）**
+- 回应常见顾虑
+- FAQ 或破除误解
+- 减少阻力
+
+**邮件 8：直接报价（第 19-21 天）**
+- 清楚的推销
+- 有力的价值主张
+- 明确的 CTA
+- 有条件就加紧迫感
 
 ---
 
-## Onboarding Sequence (Product Users)
+## 再互动序列
 
-Coordinate with in-app onboarding. Email supports, doesn't duplicate.
+**邮件 1：问候（不活跃第 30-60 天）**
+- 主题：一切都好吗，[Name]？
+- 真诚的关心
+- 问问发生了什么
+- 用容易达成的小胜利拉回互动
 
-**Email 1: Welcome + First Step (Immediate)**
-- Confirm signup
-- One critical action
-- Link directly to that action
+**邮件 2：价值提醒（之后第 2-3 天）**
+- 主题：还记得你 [实现 X] 的时候吗？
+- 提醒过去的价值
+- 他们离开后有什么新东西
+- 快速 CTA
 
-**Email 2: Getting Started Help (Day 1)**
-- If they haven't completed step 1
-- Quick tip or video
-- Support option
+**邮件 3：激励（之后第 5-7 天）**
+- 主题：我们想你了。这是点特别的
+- 视情况给优惠
+- 限时
+- 清楚的 CTA
 
-**Email 3: Feature Highlight (Day 2-3)**
-- Key feature they should know
-- Specific use case
-- In-app link
+**邮件 4：最后机会（之后第 10-14 天）**
+- 主题：要不要我们别再给你发邮件了？
+- 诚实且直接
+- 一键选择留下或离开
+- 无回应就清理列表
 
-**Email 4: Success Story (Day 4-5)**
-- Customer who succeeded
-- Relatable journey
-- Motivational
+---
 
-**Email 5: Check-In (Day 7)**
-- How's it going?
-- Ask for feedback
-- Offer help
+## 激活序列（产品用户）
 
-**Email 6: Advanced Tip (Day 10-12)**
-- Power feature
-- For engaged users
-- Level-up content
+与应用内上手流程协同。邮件是支持，不是重复。
 
-**Email 7: Upgrade/Expand (Day 14+)**
-- For trial users: conversion push
-- For free users: upgrade prompt
-- For paid: expansion opportunity
+**邮件 1：欢迎 + 第一步（立即发送）**
+- 确认注册
+- 一个关键动作
+- 直达该动作的链接
+
+**邮件 2：上手帮助（第 1 天）**
+- 如果他们还没完成第一步
+- 快速技巧或视频
+- 支持选项
+
+**邮件 3：功能亮点（第 2-3 天）**
+- 他们该知道的关键功能
+- 具体使用场景
+- 应用内链接
+
+**邮件 4：成功故事（第 4-5 天）**
+- 成功了的客户
+- 有代入感的历程
+- 有激励性
+
+**邮件 5：问候（第 7 天）**
+- 进展如何？
+- 征求反馈
+- 主动提供帮助
+
+**邮件 6：进阶技巧（第 10-12 天）**
+- 高阶功能
+- 给活跃用户
+- 升级型内容
+
+**邮件 7：升级/扩展（第 14 天起）**
+- 试用用户：推动转化
+- 免费用户：升级提示
+- 付费用户：扩展机会

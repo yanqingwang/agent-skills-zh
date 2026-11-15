@@ -1,77 +1,81 @@
-# 08-bold-type — Bold Typography
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/light--bold-type/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 08-bold-type（粗体排印）
 
-Using oversized text (200pt/300pt) to replace geometric shapes as visual protagonists, driven by editorial typography tension.
+## 风格概览
 
-- **Scene**: Editorial typography, magazine style, brand manual
-- **Mood**: Bold, modern, dynamic, editorial
-- **Color Tone**: Warm gray base + near black + red accent
+用超大文字（200pt/300pt）取代几何形状充当视觉主角，由编辑排印的张力驱动。
 
-## Color Palette
+- **场景**：编辑排印、杂志风、品牌手册
+- **气质**：大胆、现代、动感、编辑风
+- **色调**：暖灰底 + 近黑 + 红色点缀
 
-| Name            | Hex      | Usage                                                |
+## 配色
+
+| 名称            | Hex      | 用途                                                  |
 | --------------- | -------- | ---------------------------------------------------- |
-| Warm Light Gray | `F2F2F2` | Background                                           |
-| Near Black      | `1A1A1A` | Title text, giant numbers (opacity 0.06), thin lines |
-| Light Gray      | `E8E8E8` | Giant letters (opacity 0.08)                         |
-| Red Accent      | `FF3C38` | Red lines, red dots, accent text                     |
+| 暖浅灰          | `F2F2F2` | 背景                                                 |
+| 近黑            | `1A1A1A` | 标题文字、巨型数字（透明度 0.06）、细线              |
+| 浅灰            | `E8E8E8` | 巨型字母（透明度 0.08）                              |
+| 红色点缀        | `FF3C38` | 红线、红点、强调文字                                 |
 
-## Typography
+## 字体排印
 
-| Role                       | Font           | Size    | Color                |
+| 角色                       | 字体           | 字号    | 颜色                 |
 | -------------------------- | -------------- | ------- | -------------------- |
-| Giant Numbers (decorative) | Segoe UI Black | 200pt   | 1A1A1A, opacity 0.06 |
-| Giant Letters (decorative) | Segoe UI Black | 300pt   | E8E8E8, opacity 0.08 |
-| Large Title                | Segoe UI Black | 72pt    | 1A1A1A               |
-| Section Title              | Segoe UI Black | 36pt    | 1A1A1A               |
-| Number                     | Segoe UI Black | 48pt    | FF3C38               |
-| Section Subtitle           | Segoe UI Black | 28pt    | 1A1A1A               |
-| Data Numbers               | Segoe UI Black | 72pt    | 1A1A1A / FF3C38      |
-| Subtitle/Body              | Segoe UI Light | 16-24pt | 1A1A1A               |
-| Accent Subtitle            | Segoe UI Black | 72pt    | FF3C38               |
+| 巨型数字（装饰）           | Segoe UI Black | 200pt   | 1A1A1A, opacity 0.06 |
+| 巨型字母（装饰）           | Segoe UI Black | 300pt   | E8E8E8, opacity 0.08 |
+| 大标题                     | Segoe UI Black | 72pt    | 1A1A1A               |
+| 区块标题                   | Segoe UI Black | 36pt    | 1A1A1A               |
+| 数字                       | Segoe UI Black | 48pt    | FF3C38               |
+| 区块副标题                 | Segoe UI Black | 28pt    | 1A1A1A               |
+| 数据数字                   | Segoe UI Black | 72pt    | 1A1A1A / FF3C38      |
+| 副标题/正文                | Segoe UI Light | 16-24pt | 1A1A1A               |
+| 强调副标题                 | Segoe UI Black | 72pt    | FF3C38               |
 
-## Design Techniques
+## 设计手法
 
-- **Giant Text as Scene Actor**: Using 200pt numbers (01-05) and 300pt letters (B/N/M/P/X) to replace traditional geometric decorations, extremely low opacity (0.06/0.08) forms background texture
-- **Red Line System**: Red horizontal lines (height=0.1cm) and vertical lines (width=0.1cm) serve as editorial grid markers
-- **Black Thin Lines**: Ultra-thin black lines (height=0.04cm) as auxiliary separators
-- **Red Dots**: 1.5cm red `ellipse` as visual punctuation/focal points
-- **Each Page Independently Created**: Unlike other templates, 5 pages are created separately (not copied from Slide 1), each page has independent giant text content
-- **Morph Transition**: Giant numbers and letters morph across pages under the same `!!name`, when number changes from 01 to 02 the position transitions smoothly
+- **巨型文字作场景 actor**：用 200pt 数字（01-05）和 300pt 字母（B/N/M/P/X）取代传统几何装饰，极低透明度（0.06/0.08）形成背景肌理
+- **红线体系**：红色横线（height=0.1cm）与竖线（width=0.1cm）充当编辑网格标记
+- **黑色细线**：超细黑线（height=0.04cm）作辅助分隔
+- **红色圆点**：1.5cm 红色 `ellipse` 作视觉标点/焦点
+- **每页独立创建**：与其他模板不同，5 页分别创建（不是从 Slide 1 复制），每页有独立的巨型文字内容
+- **Morph 切换**：巨型数字与字母在相同 `!!name` 下跨页 morph，数字从 01 变 02 时位置平滑过渡
 
-## Scene Elements
+## 场景元素
 
-6 scene elements total (same name on each page but different content):
+共 6 个场景元素（每页同名但内容不同）：
 
-| Name             | Type       | Fill                 | Description                                                          |
+| 名称             | 类型       | 填充                 | 描述                                                                 |
 | ---------------- | ---------- | -------------------- | -------------------------------------------------------------------- |
-| `!!giant-num`    | text shape | 1A1A1A, opacity 0.06 | 200pt page number (01/02/03/04/05), different position on each page  |
-| `!!giant-letter` | text shape | E8E8E8, opacity 0.08 | 300pt decorative letter (B/N/M/P/X), different position on each page |
-| `!!line-red-h`   | rect       | FF3C38               | Red horizontal line, length and position vary per page               |
-| `!!line-red-v`   | rect       | FF3C38               | Red vertical line, length and position vary per page                 |
-| `!!line-gray-h`  | rect       | 1A1A1A               | Black ultra-thin line, auxiliary separator                           |
-| `!!dot-red`      | ellipse    | FF3C38               | 1.5cm red dot, drifts to different positions per page                |
+| `!!giant-num`    | text shape | 1A1A1A, opacity 0.06 | 200pt 页码（01/02/03/04/05），每页位置不同                           |
+| `!!giant-letter` | text shape | E8E8E8, opacity 0.08 | 300pt 装饰字母（B/N/M/P/X），每页位置不同                            |
+| `!!line-red-h`   | rect       | FF3C38               | 红色横线，长度与位置每页不同                                         |
+| `!!line-red-v`   | rect       | FF3C38               | 红色竖线，长度与位置每页不同                                         |
+| `!!line-gray-h`  | rect       | 1A1A1A               | 黑色超细线，辅助分隔                                                 |
+| `!!dot-red`      | ellipse    | FF3C38               | 1.5cm 红点，每页漂移到不同位置                                       |
 
-## Page Structure
+## 页面结构
 
-5 pages total, Slides 2-5 set `transition=morph`:
+共 5 页，第 2-5 页设置 `transition=morph`：
 
-| Slide   | Type               | Giant Text | Description                                                                                |
+| 页码    | 类型               | 巨型文字   | 描述                                                                                       |
 | ------- | ------------------ | ---------- | ------------------------------------------------------------------------------------------ |
-| Slide 1 | Hero               | 01 + B     | "MAKE IT BOLD" large title left-aligned, red line L-shape frames title area                |
-| Slide 2 | Statement          | 02 + N     | "Less Noise. / More Signal." double-line large text, second line in red                    |
-| Slide 3 | 3-Column Pillars   | 03 + M     | Red and black lines as column separators, three columns Identity/Motion/Print              |
-| Slide 4 | Evidence / Metrics | 04 + P     | Asymmetric layout, left side 340+ large number, right side 28/2015, red lines divide zones |
-| Slide 5 | CTA / Closing      | 05 + X     | Centered "Get in Touch" + red email, red line frames bottom                                |
+| Slide 1 | Hero               | 01 + B     | "MAKE IT BOLD" 大标题左对齐，红线 L 形框住标题区                                           |
+| Slide 2 | Statement          | 02 + N     | "Less Noise. / More Signal." 双行大字，第二行红色                                          |
+| Slide 3 | 3-Column Pillars   | 03 + M     | 红线与黑线作栏分隔，三栏 Identity/Motion/Print                                             |
+| Slide 4 | Evidence / Metrics | 04 + P     | 非对称布局，左侧 340+ 大数字，右侧 28/2015，红线划分区域                                   |
+| Slide 5 | CTA / 结尾         | 05 + X     | 居中 "Get in Touch" + 红色邮箱，红线框住底部                                               |
 
-## Reference Script
+## 参考脚本
 
-Complete build script is in `build.sh`.
-**Recommended slides to read for understanding core design techniques**:
+完整构建脚本见 `build.sh`。
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (Hero)** — Core innovation of giant numbers+letters as scene actors, red line L-shape composition
-- **Slide 3 (Pillars)** — Editorial typography technique using red/black lines as column separators
-- **Slide 4 (Evidence)** — Asymmetric data layout, red vertical line runs through entire page
+- **Slide 1（Hero）**：巨型数字+字母作场景 actor 的核心创新，红线 L 形构图
+- **Slide 3（Pillars）**：用红/黑线作栏分隔的编辑排印技巧
+- **Slide 4（Evidence）**：非对称数据布局，红色竖线纵贯整页
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

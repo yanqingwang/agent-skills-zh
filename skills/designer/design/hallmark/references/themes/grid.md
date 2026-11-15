@@ -7,14 +7,18 @@ display: grotesk-sans Radio Canada Big
 accent: cool 266
 posture: full-palette
 keywords: identity, brand system, wayfinding, signage, design studio, type specimen, editorial grid, institution, museum, archive, index, directory, systems, modular, swiss, grotesque, manual, programme, poster, collection
-material: white poster stock, blue-black ink, Radio Canada Big 700 in sentence case over Radio Canada, flat fields of ultramarine and one Swiss red mark, no strokes
+material: 白色海报纸、蓝黑墨色、Radio Canada 上压句首大写的 Radio Canada Big 700、群青色平涂场域与一个瑞士红标记、无描边
 pictured: Poster Sequence, Poster hero
 photo: duotone ink paper-2 con=12
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/grid.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Grid
 
-Swiss international style as it is practised now: a white sheet, a blue-black ink, one neo-grotesque in two optical cuts, and two flat colours with separate jobs, an ultramarine that floods fields and a Swiss red that marks the one chosen thing. Structure comes from the column system itself: type hung from column lines, fields that start and stop on them, jumps of three or four steps in scale and white held on purpose. No strokes part the sections and nothing is boxed; a page reads as a run of composed sheets. It is not a nostalgic poster pastiche, not a red-and-black template and not a minimal product page.
+当下实践的瑞士国际主义风格：一张白纸、一种蓝黑墨色、一款带两个光学字号的新怪诞体、两种分工明确的平涂色，一片漫过场域的群青，和一个标记唯一被选中之物的瑞士红。结构来自栏系统本身：文字挂在栏线上，场域在栏线上起止，字号三级四级地跳，留白是有意守住的。没有线条分隔区块，没有任何东西装盒；一页读起来是一连串排好的版面。它不是怀旧海报的仿作，不是红黑模板，也不是极简产品页。
 
 ## Tokens
 
@@ -33,53 +37,53 @@ Swiss international style as it is practised now: a white sheet, a blue-black in
 }
 ```
 
-Three roles and the paper, one job each. **Field**, the ultramarine: the flood a sheet is printed on, full width or from a column line to the bleed. **Mark**, the Swiss red: what is chosen or current (a letter, a year, a hovered link) and at most one red field a page. **Ink**: type on paper and the primary control. Red never sits on the ultramarine, and two fields never touch.
+三个角色加纸张，各司一职。**Field**，群青：版面印在其上的那片漫色，通栏或从某条栏线延伸到出血。**Mark**，瑞士红：被选中或当前之物（一个字母、一个年份、一个 hover 的链接），每页至多一片红色场域。**Ink**：纸上的文字和主控件。红绝不压在群青上，两片场域绝不相触。
 
-## Type
+## 字体
 
-- **Display:** Radio Canada Big 700, sentence case (a capital first letter and proper nouns, nothing else), `--tracking-display`, line-height 0.9 at poster size, 1.0 at section size. Lines start on a column line, flush left, ragged right; never centred. One weight and one colour a head; a head that crosses from paper onto a field switches to field-ink at the field's edge, as an overprint would, the only change it may carry.
-- **Poster scale:** a poster head sizes with the screen, `clamp(4.5rem, 10.2vw, 10rem)`, tracking -0.045em, held at 1920. Figures and index letters take the display cut and may run larger than any head beside them; a statement takes the display at 400.
-- **Body:** Radio Canada 400 at 17px, line-height 1.5. Labels, field names, captions and nav links are Radio Canada 500 a step smaller, sentence case, untracked, `--color-muted` on paper and field-ink on a field. No mono, no capitals in a label.
-- **Wordmark:** the name in two lines at one size, the first word in the display at 700, the second at 400, leading 0.92; it may hang beside a square of the mark red exactly two lines tall.
+- **展示字体：**Radio Canada Big 700、句首大写（首字母大写加专有名词，仅此而已）、`--tracking-display`，海报字号行高 0.9、区块字号 1.0。行从栏线起、左齐右参差；绝不居中。每个标题一种字重、一种颜色；标题从纸上越过到场域上时，在场域边缘切换为 field-ink，像叠印那样，这是它唯一允许的变化。
+- **海报字号：**海报标题随屏幕缩放，`clamp(4.5rem, 10.2vw, 10rem)`，字距 -0.045em，到 1920 封顶。数字与索引字母用 display 切片，可以排得比旁边的任何标题都大；宣言用 display 的 400。
+- **正文：**Radio Canada 400、17px、行高 1.5。标签、字段名、题注与导航链接用 Radio Canada 500 小一档，句首大写，不加字距，纸上用 `--color-muted`、场域上用 field-ink。不用等宽，标签里不用大写。
+- **字标：**名字排两行、同一字号，第一个词用 display 700，第二个词用 400，行距 0.92；它旁边可以挂一个恰好两行高的 mark 红方块。
 
-## Surfaces
+## 表面
 
-- No strokes: sections part by space, a change of paper or a field, never a rule. The only lines are 1px hairlines between table rows and under an input.
-- Radius 0 and no shadow anywhere; depth is scale and colour. A well is `--color-paper-2` with no border.
-- Fields: a page takes two or three, one of them may be the red; each runs edge to edge or from a column line off the page, and abuts white.
-- Photographs: objective and frontal in even light, of print and its tools (type, presses, sheets, drawers), printing in the blue-black on `--color-paper-2` (the `photo:` duotone), so the frame is a step of tone, never a line. Square, both edges on column lines; never type over a picture.
-- Texture: none. The white is the material.
+- 无描边：区块之间靠留白、换纸或一片场域分隔，绝不用线条。仅有的线是表格行间的 1px 细线和输入框下的一条。
+- 圆角 0、任何地方无阴影；纵深靠字号层级与颜色。well 是无边框的 `--color-paper-2`。
+- 场域：一页两到三片，其中一片可以是红的；每片要么通到边，要么从一条栏线延伸出页外，并与白色相接。
+- 照片：均匀光下的客观正面视角，拍印刷及其工具（活字、印刷机、纸张、字盘抽屉），以蓝黑印在 `--color-paper-2` 上（`photo:` 双色调），于是画框是一档色调，绝不是一条线。方形，两条边都落在栏线上；绝不在图片上压文字。
+- 纹理：没有。白色就是材质。
 
 ## Range
 
-- **The overprint sheet:** a head at poster scale hung from column 1 and running across a field that starts on a later column line, its letters turning field-ink where they cross, one real figure set large at the field's foot.
-- **The index as a specimen:** letters, decades or names at display size as a ragged line of buttons, the chosen one in the mark red and repeated at full height beside the line as the figure.
-- **A field that holds a control:** a range, a choice or a set of inputs on the ultramarine or the red, the value set at poster scale in field-ink and changing as it moves; inputs on a field are type at `--text-3xl` over a hairline.
-- **A statement hung asymmetric:** one sentence at statement size from column 3 or 4, the columns to its left white, its key nouns as links.
+- **叠印版面：**海报字号的标题从第 1 栏挂下，横越过一片从更靠后的栏线开始的场域，字母交叉处转为 field-ink，场域脚下排一个真实的大数字。
+- **索引当字体样张：**字母、年代或名字用 display 字号排成一排参差的按钮，选中的那个用 mark 红，并在这排按钮旁以通高重复出现，作为大数字。
+- **装着控件的场域：**群青或红上放一个区间、一个选择或一组输入，数值用 field-ink、海报字号，随操作即时变化；场域上的输入是 `--text-3xl` 的文字压在一条细线上。
+- **不对称悬挂的宣言：**一句话用宣言字号从第 3 或第 4 栏起，左边各栏留白，关键名词做成链接。
 
-## Controls
+## 控件
 
-- Primary: a square block of ink with paper text, 52px tall, the same on paper and on either field. Secondary: text with a 1px underline that turns mark red on hover.
-- Inputs: square, no box; a 1px line beneath in `--color-muted` on paper, field-ink at 60% on a field. The focus ring is 2px `--color-focus`, field-ink on the ultramarine and ink on the red.
-- `::selection` is the mark red with paper text. Otherwise red marks only a chosen value, a hover and its one field.
+- 主按钮：墨色方块、纸张色文字，52px 高，在纸上与任何场域上都一样。次级：文字带 1px 下划线，hover 转 mark 红。
+- 输入框：方形、无外框；纸上下方一条 1px `--color-muted` 线，场域上用 60% 的 field-ink。焦点圈是 2px `--color-focus`，群青上为 field-ink、红上为墨色。
+- `::selection` 是 mark 红配纸张色文字。除此之外，红只标记选中的值、一次 hover 和它那一片场域。
 
-## Motion
+## 动效
 
-State only, `--dur-short` on `--ease-out`: a letter or link turns red, a value at poster scale swaps in place. No scroll reveals, no parallax.
+只有状态，`--dur-short` 时长、`--ease-out` 缓动：一个字母或链接转红，海报字号的数值原位切换。无滚动显现、无视差。
 
-## Voice
+## 语气
 
-Exact and plain, sentence case: name the record, the field, the year and the press in the order a catalogue lists them, and leave the adjectives out.
+精确、平实、句首大写：按目录条目的顺序说出记录、字段、年份与印刷厂，形容词一律省去。
 
-## Do-nots
+## 禁止事项
 
-- Never a rule above a section, a black stroke round a control or a boxed card.
-- Never red on the ultramarine, never two fields touching, never a second blue.
-- Never a lowercase or an all-capitals head.
-- Never a photograph in colour, toned in a field colour, framed, or under type.
-- Never a centred head or a centred block of text.
+- 区块上方绝不用线，控件四周绝不用黑描边，绝不做盒装卡片。
+- 红绝不压群青，两片场域绝不相触，绝不引入第二种蓝。
+- 标题绝不全小写，也绝不全大写。
+- 照片绝不用彩色、绝不用场域色调色、绝不加框，也绝不压文字。
+- 标题绝不居中，文本块绝不居中。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:wght@400;700&family=Radio+Canada:wght@400;500&display=swap" rel="stylesheet">

@@ -1,34 +1,38 @@
-# JSON Language Prompt Snippet
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/researcher/analysis/understand/languages/json.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Key Concepts
+# JSON 语言提示词片段
 
-- **Strict Syntax**: No trailing commas, no comments (unlike JSONC or JSON5), double-quoted strings only
-- **Data Types**: Objects, arrays, strings, numbers, booleans, and null — no undefined or date types
-- **Nested Structure**: Arbitrary nesting depth for hierarchical configuration or data
-- **Schema Validation**: JSON Schema (`$schema` keyword) for validating structure and types
-- **JSONC**: JSON with Comments variant used by VS Code, tsconfig.json, and other tooling
-- **JSON5**: Extended JSON allowing comments, trailing commas, unquoted keys, and more
-- **JSON Lines** (`.jsonl`): One JSON object per line for streaming data processing
+## 核心概念
 
-## Notable File Patterns
+- **严格语法**：不允许尾逗号、不允许注释（JSONC、JSON5 除外），字符串必须双引号
+- **数据类型**：对象、数组、字符串、数字、布尔与 null，没有 undefined 或日期类型
+- **嵌套结构**：任意嵌套深度，用于层级化配置或数据
+- **Schema 校验**：JSON Schema（`$schema` 关键字）校验结构与类型
+- **JSONC**：带注释的 JSON 变体，VS Code、tsconfig.json 等工具使用
+- **JSON5**：扩展 JSON，允许注释、尾逗号、不带引号的键等
+- **JSON Lines**（`.jsonl`）：每行一个 JSON 对象，面向流式数据处理
 
-- `package.json` — Node.js project manifest with dependencies, scripts, and metadata
-- `tsconfig.json` — TypeScript compiler configuration (actually JSONC)
-- `.eslintrc.json` — ESLint linting rules and configuration
-- `*.schema.json` — JSON Schema definitions for validation
-- `composer.json` — PHP Composer project manifest
-- `appsettings.json` — .NET application configuration
-- `manifest.json` — Browser extension or PWA manifest
+## 重要文件模式
 
-## Edge Patterns
+- `package.json`：Node.js 项目清单，含依赖、脚本与元数据
+- `tsconfig.json`：TypeScript 编译器配置（实为 JSONC）
+- `.eslintrc.json`：ESLint 规则与配置
+- `*.schema.json`：用于校验的 JSON Schema 定义
+- `composer.json`：PHP Composer 项目清单
+- `appsettings.json`：.NET 应用配置
+- `manifest.json`：浏览器扩展或 PWA 清单
 
-- `package.json` `configures` the build toolchain and defines project dependencies
-- `tsconfig.json` `configures` TypeScript compilation for all `.ts` files
-- JSON Schema files `defines_schema` for API request/response validation
-- Config JSON files `configures` the runtime behavior of the application
+## 边模式
 
-## Summary Style
+- `package.json` 对构建工具链建立 `configures` 边，并定义项目依赖
+- `tsconfig.json` 对所有 `.ts` 文件的 TypeScript 编译建立 `configures` 边
+- JSON Schema 文件为 API 请求/响应校验建立 `defines_schema` 边
+- 配置 JSON 文件对应用运行时行为建立 `configures` 边
 
-> "Node.js project manifest defining N dependencies, build scripts, and project metadata."
-> "TypeScript compiler configuration enabling strict mode with path aliases for monorepo packages."
-> "JSON Schema defining the request/response structure for the user API endpoint."
+## 摘要风格
+
+> "Node.js 项目清单：定义 N 个依赖、构建脚本与项目元数据。"
+> "TypeScript 编译器配置：启用严格模式，并为 monorepo 包配置路径别名。"
+> "JSON Schema：定义用户 API 端点的请求/响应结构。"

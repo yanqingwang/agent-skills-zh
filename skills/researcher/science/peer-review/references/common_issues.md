@@ -1,257 +1,261 @@
-# Common Issues in Manuscript Review
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/peer-review/references/common_issues.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this reference as a prompt for inquiry, not a defect checklist. A possible issue becomes a review comment only when it is relevant to the study and supported by a manuscript location, supplied artifact, or applicable method principle.
+# 稿件评审中的常见问题
 
-Do not infer misconduct, poor quality, or manuscript merit from a missing reporting item. Separate:
+把这份参考当作提问的提示词，而不是缺陷核对清单。一个可能的问题，只有在与研究相关、且有稿件位置、随稿产物或适用方法原则支撑时，才成为评审意见。
 
-- **Not reported:** the manuscript does not provide enough information to assess the point.
-- **Potential design or analysis problem:** the reported method may not answer the stated question.
-- **Demonstrated inconsistency:** two supplied artifacts or manuscript locations conflict.
-- **Integrity concern:** credible evidence should be described neutrally and routed through the journal process, normally in confidential editor notes.
+不要从某项报告内容的缺失推断学术不端、质量低下或稿件价值。区分以下几类：
 
-## Claim–evidence alignment
+- **未报告：**稿件未提供足够信息来评估该要点。
+- **潜在的设计或分析问题：**所报告的方法可能回答不了所声明的问题。
+- **已证实的矛盾：**两份随稿产物或两处稿件内容相互冲突。
+- **完整性疑虑：**有可信证据时应中性描述，并经由期刊流程处理，通常写入机密的编辑备注。
 
-Check each central claim against the design, analysis, result, and uncertainty that support it.
+## 论断与证据的对应
 
-Common mismatches:
+对照支持它的设计、分析、结果与不确定性，逐一检查每个核心论断。
 
-- Causal wording from an observational or otherwise non-identifying design
-- Mechanistic conclusions supported only by association or prediction
-- Conclusions based on a secondary, exploratory, or post hoc outcome without labeling
-- Directionally correct claims that overstate magnitude or precision
-- Population, setting, intervention, comparator, outcome, or time-horizon extrapolation
-- “No effect,” “equivalent,” or “safe” conclusions from imprecise or non-significant results
-- Abstract or conclusion claims that omit material harms, uncertainty, subgroup caveats, or null findings
-- Novelty claims that are broader than the search or cited literature supports
+常见的不对应：
 
-Constructive response:
+- 观察性或其他无法识别因果的设计使用因果表述
+- 机制性结论仅有相关性或预测结果支撑
+- 基于次要、探索性或事后（post hoc）结局下结论却未标注
+- 方向正确但夸大效应量或精度的论断
+- 对人群、情境、干预、对照、结局或时间范围的外推
+- 由不精确或不显著结果得出"无效应""等效""安全"的结论
+- 摘要或结论遗漏重要危害、不确定性、亚组注意事项或阴性结果
+- 新颖性声明超出检索或所引文献能支撑的范围
 
-1. Identify the claim and its location.
-2. Identify the relevant result or missing evidence.
-3. Explain the alignment problem.
-4. Request a bounded remedy: narrow wording, add uncertainty, clarify exploratory status, provide the prespecified analysis, or justify the inference.
+建设性的回应方式：
 
-Use `scripts/validate_claim_evidence.py` for a local identifier-based matrix. Its report never echoes claim text.
+1. 指出论断及其位置。
+2. 指出相关结果或缺失的证据。
+3. 说明不对应之处。
+4. 提出有限度的补救：收窄表述、补充不确定性、标明探索性性质、提供预先设定的分析，或论证该推断的合理性。
 
-## Study question, design, and units
+可用 `scripts/validate_claim_evidence.py` 生成本地的基于标识符的对照矩阵。其报告不会回显论断文本。
 
-### Question–design mismatch
+## 研究问题、设计与分析单元
 
-Check whether the population, intervention or exposure, comparator, outcomes, timing, and target quantity align from objectives through interpretation. For trials, identify the estimand when relevant. For prediction, distinguish model development from performance evaluation. For diagnostic studies, distinguish diagnostic accuracy from clinical utility.
+### 问题与设计不匹配
 
-### Experimental or observational unit
+检查人群、干预或暴露、对照、结局、时点与目标量从研究目的到结果解读是否一以贯之。对试验，如相关应明确估计目标（estimand）。对预测研究，区分模型开发与性能评估。对诊断研究，区分诊断准确度与临床效用。
 
-Potential issues include:
+### 实验或观察单元
 
-- Technical replicates treated as independent biological units
-- Multiple cells, images, lesions, eyes, visits, or samples per subject analyzed as independent
-- Cluster assignment analyzed at the individual level without accounting for clustering
-- Paired or repeated observations analyzed as unpaired
-- Site, operator, batch, family, spatial, or temporal dependence ignored
+可能的问题包括：
 
-Request a clear definition of the unit, nesting, repeated measures, and analysis that reflects dependence. Do not assume a mixed model is always the correct remedy; the model must match the design and question.
+- 技术重复被当作独立的生物学单元
+- 每个受试者的多个细胞、图像、病灶、眼、就诊或样本被当作独立样本分析
+- 整群分配在个体层面分析而未考虑群组聚集
+- 配对或重复观测被当作非配对分析
+- 中心、操作者、批次、家系、空间或时间上的相关性被忽略
 
-### Selection, allocation, and masking
+要求作者明确定义分析单元、嵌套结构、重复测量，以及能反映这种相关性的分析。不要认定混合模型总是正确的补救；模型必须与设计和问题匹配。
 
-Assess, as applicable:
+### 选择、分配与盲法
 
-- Sampling frame, recruitment, eligibility, and exclusions
-- Sequence generation and allocation concealment
-- Prospective stopping rules
-- Blinding or masking of participants, personnel, outcome assessors, and analysts
-- Consequences and mitigation when masking is infeasible
-- Baseline measurement timing and post-allocation exclusions
+如适用，评估：
 
-Avoid treating baseline significance tests as proof of successful randomization. Focus on chance imbalance, clinically important imbalance, prespecified adjustment, and departures from the randomized comparison.
+- 抽样框、招募、合格标准与排除
+- 随机序列生成与分配隐藏
+- 前瞻性停止规则
+- 对受试者、研究人员、结局评估者与分析人员的设盲
+- 无法设盲时的后果与缓解措施
+- 基线测量时点与分配后的排除
 
-### Confounding and causal identification
+不要把基线显著性检验当作随机化成功的证明。关注偶然性失衡、有临床意义的失衡、预先设定的调整，以及对随机化比较的偏离。
 
-For causal claims, ask:
+### 混杂与因果识别
 
-- What target causal contrast is intended?
-- Which assumptions connect the design and analysis to that contrast?
-- Were confounders selected using subject-matter reasoning rather than outcome-driven screening?
-- Could adjustment introduce collider or mediator bias?
-- Are time-varying treatment, censoring, immortal time, or informative observation processes relevant?
-- Are negative controls, sensitivity analyses, or alternative explanations appropriate?
+对因果性论断，追问：
 
-Do not demand a specific causal method without showing why it fits the data-generating process.
+- 目标的因果对照是什么？
+- 哪些假设把设计与分析连接到该因果对照？
+- 混杂因素是否基于领域知识选定，而非依据结局来筛选？
+- 调整是否会引入碰撞偏倚或中介偏倚？
+- 时变处理、删失、不朽时间或信息性观测过程是否相关？
+- 阴性对照、敏感性分析或替代解释是否恰当？
 
-## Sample size, precision, and replication
+不要在未说明为何适合数据生成过程的情况下，要求使用某个特定的因果方法。
 
-Avoid fixed heuristics such as “n < 30 is too small” or “three replicates are sufficient.” Adequacy depends on the target effect or precision, variability, design effect, event count, model complexity, multiplicity, attrition, and decision context.
+## 样本量、精度与重复
 
-Check:
+不要套用固定经验规则，如"n < 30 太小"或"三次重复足够"。是否充分取决于目标效应或精度、变异程度、设计效应、事件数、模型复杂度、多重性、脱落以及决策情境。
 
-- Prospective rationale for sample size or precision
-- Inputs, assumptions, software or method, and allowance for attrition or clustering
-- Whether the primary outcome and analysis match the calculation
-- Event and outcome information relative to model complexity
-- Effective sample size after dependence, missingness, weighting, or splitting
-- Independent biological replication and validation where the claim requires it
-- Precision of estimates, not only nominal power
+检查：
 
-Observed or post hoc power calculated from the observed effect generally adds little beyond the estimate and its interval. Request effect estimates and uncertainty rather than “achieved power.”
+- 样本量或精度的事前依据
+- 输入、假设、所用软件或方法，以及对脱落或群组聚集的预留
+- 主要结局与分析是否与计算匹配
+- 相对模型复杂度而言的事件数与结局信息量
+- 相关性、缺失、加权或拆分后的有效样本量
+- 论断需要处的独立生物学重复与验证
+- 估计的精度，而不仅是名义功效
 
-## Statistical analysis
+由观察到的效应计算的事后（post hoc）功效，一般不比效应估计及其区间多提供什么。应要求给出效应估计与不确定性，而不是"已达成功效"。
 
-### Analysis–design alignment
+## 统计分析
 
-Check whether the analysis respects:
+### 分析与设计的匹配
 
-- Outcome scale and distribution
-- Pairing, clustering, repeated measures, censoring, and competing events
-- Sampling design, weights, matching, stratification, or blocking
-- Outcome hierarchy and prespecified estimand
-- Non-inferiority or equivalence margins and analysis populations
-- Longitudinal timing and informative dropout
+检查分析是否尊重以下方面：
 
-Do not prescribe “parametric” or “non-parametric” methods from sample size alone.
+- 结局的尺度与分布
+- 配对、群组聚集、重复测量、删失与竞争事件
+- 抽样设计、权重、匹配、分层或区组化
+- 结局层级与预先设定的估计目标
+- 非劣效或等效性界值与分析人群
+- 纵向时点与信息性脱落
 
-### Assumptions and diagnostics
+不要仅凭样本量就指定"参数"或"非参数"方法。
 
-The relevant assumptions depend on the estimand and model. A standalone normality test is not a universal gatekeeper and can be uninformative in very small or large samples. Look for design-aware diagnostics, residual behavior, influential observations, functional form, calibration, proportional hazards where applicable, and sensitivity to reasonable alternatives.
+### 假设与诊断
 
-Comments should identify the assumption at risk and why it matters. “Check normality” without specifying the modeled quantity or consequence is not actionable.
+相关假设取决于估计目标与模型。单独的正态性检验不是通用守门人，在极小或极大样本中可能没有信息量。应关注结合设计的诊断、残差行为、强影响观测、函数形式、校准、如适用的比例风险，以及对合理替代方案的敏感性。
 
-### Effect estimates and uncertainty
+评审意见应指出有风险的假设及其为何重要。"检查正态性"而不说明所建模的量或后果，不具可操作性。
 
-Flag:
+### 效应估计与不确定性
 
-- Thresholded interpretation of p-values
-- P-values used as effect size, importance, or probability that a hypothesis is true
-- “Significant” versus “not significant” used as evidence of a difference between effects
-- Missing effect estimates, compatible intervals, denominators, or units
-- Excessive precision or inconsistent rounding
-- Confidence, credible, or prediction intervals described incorrectly
-- Clinical or practical importance conflated with statistical compatibility
+标记：
 
-Prefer estimates, uncertainty, assumptions, and context. The ASA p-value principles and SAMPL reporting guidance are indexed in `assets/source_ledger.csv`.
+- 对 p 值的阈值化解读
+- 把 p 值当作效应量、重要性或假设为真的概率
+- 用"显著"与"不显著"的对比作为两个效应存在差异的证据
+- 缺失效应估计、兼容区间、分母或单位
+- 精度过度或舍入不一致
+- 置信区间、可信区间或预测区间描述有误
+- 把临床或实际重要性与统计兼容性混为一谈
 
-### Multiplicity and analysis flexibility
+优先要效应估计、不确定性、假设与情境。ASA p 值原则与 SAMPL 报告指南已索引在 `assets/source_ledger.csv`。
 
-Assess:
+### 多重性与分析灵活性
 
-- Number and hierarchy of outcomes, time points, subgroups, contrasts, and models
-- Interim looks, adaptive changes, or repeated data inspection
-- Family or false-discovery control when required by the inferential aim
-- Transparent labeling of confirmatory and exploratory analyses
-- Consistency with protocol, registration, and statistical analysis plan
-- Complete reporting rather than selective presentation of favorable analyses
+评估：
 
-Not every collection of analyses requires the same correction. Ask authors to state the inferential family and rationale instead of automatically demanding Bonferroni adjustment.
+- 结局、时点、亚组、对比与模型的数量和层级
+- 期中查看、适应性修改或反复查看数据
+- 推断目标需要时的家族错误率或错误发现率控制
+- 确证性与探索性分析的透明标注
+- 与方案、注册和统计分析计划的一致性
+- 完整报告，而非只挑有利的分析展示
 
-### Missing data and intercurrent events
+并非所有分析集合都需要同一种校正。应要求作者说明推断族及其理由，而不是自动要求 Bonferroni 校正。
 
-Check:
+### 缺失数据与伴发事件
 
-- Amount and reasons by group and time
-- Distinction between intercurrent events and missing observations when relevant
-- Assumptions behind complete-case, imputation, weighting, likelihood, or other methods
-- Inclusion of variables and uncertainty in multiple imputation
-- Sensitivity analyses to plausible departures from assumptions
-- Alignment between the target quantity, data collection, and missing-data strategy
+检查：
 
-Do not require a test that data are “missing completely at random”; missingness assumptions are not generally established by a single diagnostic test.
+- 按组和时间的缺失数量与原因
+- 如相关，区分伴发事件与缺失观测
+- 完整病例、插补、加权、似然或其他方法背后的假设
+- 多重插补中纳入的变量与不确定性
+- 针对假设的合理偏离所做的敏感性分析
+- 目标量、数据收集与缺失数据策略之间的一致
 
-### Outliers, transformations, and limits
+不要要求做"完全随机缺失"检验；缺失机制的假设通常无法由单个诊断检验确立。
 
-Check whether exclusions, transformations, winsorization, detection-limit handling, and influential-observation rules were prespecified or transparently justified. Request sensitivity analyses when conclusions depend materially on discretionary handling. Do not demand deletion merely because a value is extreme.
+### 离群值、变换与检出限
 
-### Subgroups and heterogeneity
+检查排除、变换、缩尾处理、检出限处理与强影响观测规则是否预先设定或有透明理由。当结论实质上依赖自由裁量的处理时，要求做敏感性分析。不要仅因数值极端就要求删除。
 
-Look for prespecification, adequate interaction analysis, multiplicity, uncertainty, biological or clinical rationale, and consistency of direction. Within-group significance and between-group non-significance do not establish subgroup differences.
+### 亚组与异质性
 
-### Prediction and machine learning
+关注是否预先设定、交互作用分析是否充分、多重性、不确定性、生物学或临床理由，以及方向一致性。组内显著而组间不显著，并不能确立亚组差异。
 
-Check:
+### 预测与机器学习
 
-- Clear target population, outcome, prediction time, and intended use
-- Separation of training, tuning, and evaluation without leakage
-- Representative evaluation data and transportability
-- Handling of missing values and preprocessing within resampling folds
-- Calibration as well as discrimination when relevant
-- Uncertainty around performance and decision consequences
-- Overfitting, optimism correction, and external evaluation
-- Model and preprocessing availability, versioning, and human oversight
-- Fairness analyses tied to intended use, not demographic metrics without context
+检查：
 
-TRIPOD+AI applies to regression and machine-learning prediction models; STARD-AI applies when diagnostic accuracy is the primary evaluation target.
+- 目标人群、结局、预测时点与预期用途是否清晰
+- 训练、调参与评估是否分离且无泄露
+- 评估数据是否有代表性、是否可迁移
+- 缺失值处理与预处理是否在重采样折内完成
+- 如相关，校准与区分度是否都报告
+- 性能与决策后果的不确定性
+- 过拟合、乐观度校正与外部评估
+- 模型与预处理的可用性、版本管理与人工监督
+- 与预期用途挂钩的公平性分析，而非脱离情境的人口学指标
 
-## Reproducibility and transparency
+TRIPOD+AI 适用于回归与机器学习预测模型；当诊断准确度是主要评估目标时适用 STARD-AI。
 
-Check whether another qualified researcher could understand and, where permissions allow, repeat the work:
+## 可复现性与透明度
 
-- Protocol, registration, amendments, and analysis plan
-- Data provenance, processing stages, exclusions, and versioned identifiers
-- Reagents, materials, instruments, software, package versions, parameters, and seeds
-- Code, environment or lock file, run order, and computational resources
-- Data, code, model, and material availability statements
-- Repository accession numbers and persistent identifiers
-- Clear, justified restrictions for privacy, consent, security, licensing, or community governance
+检查另一位合格研究者能否理解这项工作，并在许可允许时重复它：
 
-“Available on request” is not automatically invalid, and open release is not always ethical or lawful. Evaluate whether the access route is specific, feasible, and consistent with governance.
+- 方案、注册、修订与分析计划
+- 数据溯源、处理阶段、排除与带版本的标识
+- 试剂、材料、仪器、软件、包版本、参数与随机种子
+- 代码、环境或 lock 文件、运行顺序与计算资源
+- 数据、代码、模型与材料的可用性声明
+- 仓库登录号与持久标识符
+- 因隐私、知情同意、安全、许可或社区治理而设的清晰且有理由的限制
 
-Do not claim to have reproduced an analysis unless it was actually run with documented inputs, environment, commands, and outputs.
+"可应要求提供"并非自动无效，公开发布也不总是符合伦理或法律。评估获取途径是否具体、可行，并与治理要求一致。
 
-## Figures, tables, and images
+除非真的用记录在案的输入、环境、命令与输出运行过，否则不要声称复现了某项分析。
 
-Assess the supplied artifact directly; do not infer manipulation from low-resolution rendering alone.
+## 图、表与图像
 
-Check:
+直接评估随稿产物；不要仅凭低分辨率渲染推断存在操纵。
 
-- Axes, units, denominators, scales, legends, and uncertainty definitions
-- Individual data or distribution display when summary graphics conceal relevant structure
-- Accessibility and redundant encoding beyond color alone
-- Consistency among text, tables, figures, and supplements
-- Sample sizes and exclusions for each panel or analysis
-- Image acquisition, processing, normalization, scale bars, and representative-image selection
-- Disclosed splicing or adjustments and availability of source images when policy requires
-- Avoidance of deceptive truncation, area/volume encoding, or dual-axis implication
+检查：
 
-Possible duplication or manipulation should be documented neutrally by location and referred to the editor under the journal’s image-integrity process. Do not accuse authors of fabrication.
+- 坐标轴、单位、分母、刻度、图例与不确定性定义
+- 汇总图掩盖相关结构时是否展示个体数据或分布
+- 超越单一颜色的无障碍性与冗余编码
+- 正文、表、图与补充材料之间的一致
+- 每个分图或分析对应的样本量与排除情况
+- 图像采集、处理、归一化、比例尺与代表性图像的选取
+- 拼接或调整的披露，以及政策要求时的原始图像可得性
+- 是否避免了误导性截断、以面积/体积编码数值或双轴误导
 
-## Ethics, welfare, privacy, and integrity
+疑似重复或操纵时，应按位置中性记录，并走期刊图像完整性流程提交编辑。不要指控作者编造数据。
 
-Check what is applicable:
+## 伦理、福利、隐私与完整性
 
-- Ethics committee or institutional review and identifiers
-- Consent, assent, waiver, or lawful basis
-- Trial registration and prospective protocol availability
-- Animal welfare, humane endpoints, and relevant ARRIVE items
-- Privacy, identifiability, community governance, and controlled access
-- Funding, sponsor role, author conflicts, and contributor roles
-- Dual-use, biosafety, environmental, or security considerations
-- Prior publication, overlapping reports, and transparent secondary analyses
+检查适用的条目：
 
-If a concern cannot safely be raised with authors, use the confidential editor channel. State the evidence and uncertainty; do not investigate people, contact institutions, or reveal the manuscript outside the authorized process.
+- 伦理委员会或机构审查及其批准标识
+- 知情同意、赞同、豁免或合法性依据
+- 试验注册与前瞻性方案的可得性
+- 动物福利、人道终点与相关 ARRIVE 条目
+- 隐私、可识别性、社区治理与受控访问
+- 资助、申办方角色、作者利益冲突与贡献者角色
+- 两用性、生物安全、环境或安全考量
+- 此前发表、重叠报道与透明的二次分析
 
-## Citations and references
+若疑虑不适合向作者提出，使用机密的编辑渠道。陈述证据与不确定性；不要调查个人、联系机构，或在授权流程之外透露稿件。
 
-Check:
+## 引用与参考文献
 
-- Every consequential literature claim has an appropriate source
-- The cited source supports the stated proposition
-- Primary sources are used for methods, data, and policies when available
-- Retracted or corrected work is handled appropriately
-- Contradictory and relevant evidence is represented fairly
-- Self-citation requests are necessary, specific, and not coercive
-- Citation identifiers and reference entries are internally consistent
+检查：
 
-The local `scripts/audit_citations.py` checks Pandoc-style keys such as `[@ref-id]` against a CSV. It does not verify source existence or support and must not be described as doing so.
+- 每个关键的文献论断都有合适的来源
+- 所引来源确实支持所声明的命题
+- 有原始文献可用时，方法、数据与政策引用原始文献
+- 已撤稿或已更正的工作得到恰当处理
+- 矛盾证据与相关证据得到公平呈现
+- 自引要求是必要的、具体的、不具强制性的
+- 引用标识符与参考文献条目内部一致
 
-## Writing actionable comments
+本地脚本 `scripts/audit_citations.py` 依据 CSV 检查 `[@ref-id]` 这类 Pandoc 风格的键。它不验证来源是否存在或是否支持论断，也不得把它描述成能做这些验证。
 
-For each major or minor comment, include:
+## 撰写可操作的评审意见
 
-- **Location**
-- **Observation**
-- **Evidence or criterion**
-- **Why it matters**
-- **Requested action**
+每条主要或次要意见都应包含：
 
-Prefer: “At Methods, paragraph 3, the experimental unit is unclear. Because three measurements appear to come from each participant, please define the unit and explain how within-participant dependence was handled.”
+- **位置**
+- **观察**
+- **证据或依据**
+- **为何重要**
+- **要求的行动**
 
-Avoid: “The statistics are bad.”
+好的写法："在方法部分第 3 段，实验单元不清晰。由于三项测量似乎来自每位参与者，请定义分析单元，并说明如何在分析中处理参与者内部的关联。"
 
-Requests for new experiments should be necessary to support an existing central claim, ethically and practically proportionate, and distinguished from optional future work. Often the appropriate remedy is to narrow a claim, add a limitation, provide missing analysis detail, or share an existing artifact.
+应避免："统计做得不好。"
+
+要求补做新实验时，应当确实是为了支撑某个既有核心论断、在伦理和现实上成比例，并与可选的未来工作区分开。恰当的补救往往只是收窄论断、补充局限说明、提供缺失的分析细节，或公开一份既有产物。

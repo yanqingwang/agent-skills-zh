@@ -30,26 +30,30 @@ spacing:
   sourceScale: "4/8/12/16/24/32"
 ---
 
-## Overview
+> **中文汉化版** · 上游：[bergside/awesome-design-skills](https://github.com/bergside/awesome-design-skills) · 原文件：`skills/bento/DESIGN.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Modular grid layout with card-like blocks, clear hierarchy, soft spacing, and subtle visual contrast for organized, scannable interfaces.
+## 概述
 
-## Style Foundations
+模块化网格布局，卡片式区块、清晰的层级、柔和的间距与细腻的视觉对比，构成有组织、可扫读的界面。
 
-- **Visual style:** modern, clean
+## 风格基础
+
+- **Visual style:** 现代、干净
 - **Typography scale:** 12/14/16/20/24/32
 - **Typography fonts:** primary=Inter, display=Inter, mono=JetBrains Mono
 - **Typography weights:** 100, 200, 300, 400, 500, 600, 700, 800, 900
 - **Color palette:** primary, neutral, success, warning, danger
 - **Spacing scale:** 4/8/12/16/24/32
 
-## Colors
+## 颜色
 
-- **Primary (#FAD4C0):** Token from style foundations.
-- **Secondary (#80A1C1):** Token from style foundations.
-- **Success (#16A34A):** Token from style foundations.
-- **Warning (#D97706):** Token from style foundations.
-- **Danger (#DC2626):** Token from style foundations.
-- **Surface (#FFF5E6):** Token from style foundations.
-- **Text (#111827):** Token from style foundations.
-- **Neutral (#FFF5E6):** Derived from the surface token for official format compatibility.
+- **Primary (#FAD4C0):** 来自风格基础的 token。
+- **Secondary (#80A1C1):** 来自风格基础的 token。
+- **Success (#16A34A):** 来自风格基础的 token。
+- **Warning (#D97706):** 来自风格基础的 token。
+- **Danger (#DC2626):** 来自风格基础的 token。
+- **Surface (#FFF5E6):** 来自风格基础的 token。
+- **Text (#111827):** 来自风格基础的 token。
+- **Neutral (#FFF5E6):** 为官方格式兼容性而由 surface token 派生。

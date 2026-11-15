@@ -12,11 +12,15 @@ photo: duotone ink paper con=20
 pictured: Stat-Led, Poster hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/sport.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Sport
 
-A results-sheet material: cool concrete paper, blue-black ink, Saira Condensed 800 in capitals over an Albert Sans body, big condensed figures and JetBrains Mono times, hairlines and one heavier bar rule, and volt as the only colour. Volt is a fill: ink sits on it, and it never sets a letter on paper. Photographs print in the ink, like a race programme. It reads fast because of the condensed caps, the numbers and the action, never a slant or a gradient; it is not a sportswear advert and not a neon gaming page.
+一张成绩单式的材料：冷调混凝土纸面、蓝黑墨色、大写 Saira Condensed 800 压在 Albert Sans 正文之上，大号窄体数字与 JetBrains Mono 计时，发丝线加一条更重的墨线，唯一颜色是电光黄绿（volt）。volt 是填色：墨字压在它上面，它绝不做纸面上的文字。照片印在墨色里，像一本秩序册。它读得快，靠的是窄体大写、数字与动作，绝不靠倾斜或渐变；它不是运动服广告，也不是霓虹电竞页。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -33,52 +37,52 @@ A results-sheet material: cool concrete paper, blue-black ink, Saira Condensed 8
 }
 ```
 
-## Type
+## 字体（Type）
 
-- **Display:** Saira Condensed 800, uppercase, `--tracking-display`, line-height 1.02, upright, roman. A true condensed design, so the caps stack without crowding, even at poster scale over a photograph; the speed is in the caps, never a slant.
-- **Body:** Albert Sans 400 and 500, sentence case.
-- **Figures:** at statement size (a distance, a field size, a price, a date) Saira Condensed 800 with `tabular-nums`, from `--text-display-s` up, the label in Albert Sans beneath. In columns and live data (times, splits, bibs) JetBrains Mono 500, a step or more larger than its label. Mono is a stopwatch, never a label or a head.
-- **Labels, captions, table heads, units:** Albert Sans 500 a step smaller, sentence case, untracked, `--color-muted`; on a volt fill every word is the ink.
+- **展示字体：**Saira Condensed 800，全大写，`--tracking-display`，行高 1.02，正体、不倾斜。真正的窄体设计，大写叠排也不拥挤，海报字号压在照片上也成立；速度感在大写里，绝不靠倾斜。
+- **正文：**Albert Sans 400 与 500，句首大写。
+- **数字：**陈述字号（一段距离、一块场地、一个价格、一个日期）用 Saira Condensed 800 加 `tabular-nums`，从 `--text-display-s` 起，下方配一行 Albert Sans 标签。分栏与实时数据（计时、分段、号码布）用 JetBrains Mono 500，比其标签大至少一档。等宽字体是秒表，绝不做标签或标题。
+- **标签、图注、表头、单位：**Albert Sans 500 小一档，句首大写，不加字距，用 `--color-muted`；volt 填色之上每个字都用墨色。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Two rule weights, never boxed cards: `--rule-hair` in `--color-rule` rules rows and grids; the `--rule-bar` in `--color-rule-2` opens and closes a table and breaks a section.
-- Radius 4px on controls, inputs and photographs; no pills.
-- Depth from rules and paper steps, never shadows: a well is `--color-paper-2` under a bar rule.
-- Bands: a `--color-paper-2` band, or one `--color-ink` band with paper type; two a page at most, never a volt band.
-- Photographs: race photography at the runner's eye or lower: a pack mid-stride, legs and shoes on tarmac, a road climbing a valley side, a number being pinned on; hard daylight, the motion sharp, cropped tight, nobody posing. Printed in the ink on the paper (the `photo:` duotone), 4px radius, an inset ink hairline at 8%. Type on a photograph is paper over an ink scrim from its edge; a volt figure may hold a frame's corner with a fact (the mile, the time).
-- No texture, no gradient but a photograph's scrim, no hard-offset shadow.
+- 两种线宽，绝不用装框卡片：`--color-rule` 的 `--rule-hair` 划分行与网格；`--color-rule-2` 的 `--rule-bar` 开合一张表、切分一个章节。
+- 控件、输入框与照片圆角 4px；不用胶囊。
+- 深度来自线条与纸面分层，绝不来自阴影：凹槽是墨线之下的 `--color-paper-2`。
+- 色带：`--color-paper-2` 色带，或一条 `--color-ink` 色带配纸色文字；每页至多两条，绝不用 volt 色带。
+- 照片：以跑者视线或更低的角度拍比赛：步频中段的一群人、沥青上的腿与鞋、爬上山谷一侧的公路、正被别上的号码布；硬朗日光、动作清晰、裁切紧凑，无人摆拍。以墨色印在纸面上（`photo:` 双色调），4px 圆角，8% 的内嵌墨色发丝线。照片上的文字用纸色、从边缘压一层墨色暗化；一个 volt 数字可以带着一个事实压住画框一角（那一英里、那个计时）。
+- 无纹理，除照片暗化层外无渐变，无硬偏移阴影。
 
-## Range
+## 版式（Range）
 
-- **The race in figures:** three or four of the prompt's numbers in condensed caps at display size under the bar rule, parted by hairlines, one at most sitting on a volt fill.
-- **A working control on the race's facts:** a pace or time planner on the ink band, the chosen time in mono at display size, every mile in a ruled grid that changes in place, the finish cell in volt.
-- **Results as a sheet:** the bar rule opening and closing a table of bibs and times in mono, the followed runner's row lifted a paper step and its latest split in volt.
-- **The course as stages:** start to finish as numbered stages on one bar rule, a condensed-cap title and one line each, the live stage on volt.
+- **比赛化作数字：**提示词的三四个数字用窄体大写排成展示字号，压在墨线之下，发丝线分隔，至多一个落在 volt 填色上。
+- **比赛事实之上的可用控件：**墨色色带上的配速或计时规划器，选定的时间用等宽字体排展示字号，每一英里都在划线网格中原位变化，终点格用 volt。
+- **成绩排成一张单子：**墨线开合一张号码布与计时的表格，数字用等宽字体；被关注跑者的行抬高一档纸面，其最新分段用 volt。
+- **赛道化作赛段：**起点到终点排成一条墨线上的编号赛段，各配一个窄体大写标题与一行文字，进行中的赛段用 volt。
 
-## Controls
+## 控件（Controls）
 
-- The control pair: a volt-filled block with ink text beside one bordered 2px in ink, both 4px, set in the display face's capitals with no added tracking; on a photograph the second takes paper.
-- Links grow a `--color-accent-deep` underline on hover (3:1 on paper); inputs are 4px with a 1px `--color-rule` border and the `--color-focus` ring.
-- The volt is always a fill under ink and under 5% of a screen: the primary control, an active row, one highlighted figure.
+- 控件对：volt 填充的方块配墨色文字，旁边是 2px 墨色描边的另一个，两者 4px，用展示字面的大写、不另加字距；照片上的次按钮取纸色。
+- 链接悬停时长出 `--color-accent-deep` 下划线（纸上 3:1）；输入框 4px，1px `--color-rule` 边框，焦点环用 `--color-focus`。
+- volt 永远是墨字之下的填色，且不超过一块屏幕的 5%：主控件、活动行、一个高亮数字。
 
-## Motion
+## 动效（Motion）
 
-Nothing moves except state and live data: a deep-volt underline grows under a link on hover, a row lifts one paper step, a live split changes in place, never counting up. No reveal, no parallax.
+除状态与实时数据外皆不动：链接悬停时一条深 volt 下划线长出，一行抬高一档纸面，实时分段原位变化，绝不计数上跳。无显现，无视差。
 
-## Voice
+## 语气（Voice）
 
-Race-briefing plain: the distance, the time, the place, as a marshal calls them. Imperative heads in capitals, sentence case below, numerals over words, verbs over adjectives.
+赛道广播的平实：距离、计时、地点，像裁判长喊出来那样。标题用大写祈使句，其下句首大写，数字优先于文字，动词优先于形容词。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never slant or italicise the display; the upright condensed cap is the speed.
-- Never loosen the display tracking past zero, or tighten it until two capitals touch.
-- Never warm paper; the ground is cool concrete, hue 250.
-- Never volt type, a volt hairline on paper or a second accent; photographs print in the ink, never in their own colour.
-- Never a medal, trophy, podium or jersey texture, drawn or photographed; the race is the road and the runners.
+- 绝不倾斜或斜体化展示字体；正体的窄体大写就是速度感。
+- 绝不把展示字距放宽过零，也不收紧到两个大写字母相碰。
+- 绝不用偏暖的纸面；地面是冷调混凝土，色相 250。
+- 绝不用 volt 文字、纸面上的 volt 发丝线或第二种强调色；照片印在墨色里，绝不保留自己的颜色。
+- 绝不要奖牌、奖杯、领奖台或球衣纹理，画的拍的都不要；比赛就是公路与跑者。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@800&family=Albert+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">

@@ -1,33 +1,34 @@
-# Signal & group patterns reference (Godot 4.7)
+> **中文汉化版** · 上游：[gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) · 原文件：`skills/godot/godot-signals-groups/references/signal-patterns.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Depth companion to `godot-signals-groups`.
+# 信号与分组模式参考（Godot 4.7）
 
-Contents: connection flags · bind vs unbind · custom signals with typed arguments ·
-awaiting a signal with a timeout · disconnecting safely · groups API · signals vs direct
-calls · global event bus (autoload)
+`godot-signals-groups` 的深度配套参考。
 
-## Connection flags
+目录：连接标志 · bind 与 unbind · 带类型参数的自定义信号 ·
+带超时等待信号 · 安全断开连接 · 分组 API · 信号与直接调用 ·
+全局事件总线（autoload）
 
-`Object.connect` / `Signal.connect` accept a flags bitmask:
+## 连接标志
 
-- `CONNECT_ONE_SHOT` — disconnect automatically after the first emission.
-- `CONNECT_DEFERRED` — invoke the callback at idle time (end of frame) instead of
-  immediately. Useful when the handler modifies the tree during physics.
-- `CONNECT_PERSIST` — the connection is saved with the scene (editor-made connections).
-- `CONNECT_REFERENCE_COUNTED` — multiple identical connections are reference-counted so
-  the matching number of disconnects is required.
+`Object.connect` / `Signal.connect` 接受一个标志位掩码：
+
+- `CONNECT_ONE_SHOT`：首次发出后自动断开连接。
+- `CONNECT_DEFERRED`：在空闲时间（帧末）调用回调，而不是立即调用。回调要在物理处理期间修改场景树时很有用。
+- `CONNECT_PERSIST`：连接随场景一起保存（编辑器中建立的连接）。
+- `CONNECT_REFERENCE_COUNTED`：多个相同的连接按引用计数，需要断开相同次数才能全部解除。
 
 ```gdscript
 sig.connect(cb, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
 ```
 
-## bind vs unbind
+## bind 与 unbind
 
-- `cb.bind(a, b)` — appends `a, b` to the end of the argument list when called.
-- `cb.unbind(n)` — drops the last `n` signal arguments. Handy when the handler ignores
-  the signal's payload: `sig.connect(_refresh.unbind(sig_arg_count))`.
+- `cb.bind(a, b)`：调用时把 `a, b` 追加到参数列表末尾。
+- `cb.unbind(n)`：丢弃末尾 `n` 个信号参数。回调要忽略信号负载时很好用：`sig.connect(_refresh.unbind(sig_arg_count))`。
 
-## Custom signals with typed arguments
+## 带类型参数的自定义信号
 
 ```gdscript
 signal stat_changed(stat_name: String, old_value: int, new_value: int)
@@ -40,14 +41,11 @@ func set_stat(stat: String, value: int) -> void:
     stat_changed.emit(stat, old, value)
 ```
 
-Typed parameters are documentation and let the editor's connection dialog show argument
-names. `emit()` does not check them against the declaration; a mismatch shows up as an
-error when a connected handler is called with the wrong number of arguments.
+类型参数起文档作用，还能让编辑器的连接对话框显示参数名。`emit()` 不会对照声明检查实参；如果已连接的处理函数被以错误的参数数量调用，不匹配会以报错形式暴露出来。
 
-## Awaiting a signal with a timeout
+## 带超时等待信号
 
-`await` has no built-in timeout. Race the signal against a timer by having both finish one
-helper signal, and await that:
+`await` 没有内置超时。让信号与计时器赛跑：让两者无论谁先完成都发出同一个辅助信号，然后 await 它：
 
 ```gdscript
 signal _race_finished(signal_won: bool)
@@ -69,29 +67,20 @@ func await_signal_or_timeout(sig: Signal, seconds: float) -> bool:
 # Usage: if not await await_signal_or_timeout($Door.opened, 2.0): print("door stuck")
 ```
 
-The `..._args` rest parameter (Godot 4.5+) lets one helper accept signals with any number
-of arguments. Run one race at a time per node; two overlapping calls share
-`_race_finished`.
+`..._args` 剩余参数（Godot 4.5+）让一个辅助函数能接受任意参数数量的信号。每个节点一次只跑一个竞争；两个重叠的调用会共用 `_race_finished`。
 
-For most gameplay, awaiting `animation_finished`, `timeout`, or `tween_finished`
-directly is cleaner.
+大多数玩法场景下，直接 await `animation_finished`、`timeout` 或 `tween_finished` 更简洁。
 
-## Disconnecting safely
+## 安全断开连接
 
 ```gdscript
 if sig.is_connected(cb):
     sig.disconnect(cb)
 ```
 
-A connection is removed automatically when the emitter or the object that owns the
-Callable is freed. A **lambda** is owned by the object whose script created it, not by the
-nodes it captures: if a captured node is freed, the lambda stays connected and errors
-("Lambda capture at index 0 was freed") the next time the signal fires. Each `func():`
-expression is also a new Callable, so `is_connected()` cannot spot a repeat and every
-re-connect stacks another call. Keep the lambda in a variable so you can disconnect it, or
-connect a method on the listener instead.
+发出者或持有 Callable 的对象被释放时，连接会自动移除。**lambda** 由创建它的脚本所在对象持有，而不是由它捕获的节点持有：如果被捕获的节点被释放，lambda 仍保持连接，下次信号发出时会报错（"Lambda capture at index 0 was freed"）。每个 `func():` 表达式也都是新的 Callable，因此 `is_connected()` 无法识别重复，每次重新连接都会多叠一层调用。把 lambda 存进变量以便之后断开连接，或者改为连接监听方上的方法。
 
-## Groups: full API
+## 分组：完整 API
 
 ```gdscript
 add_to_group("saveable")                       # optional 2nd arg: persistent
@@ -103,20 +92,16 @@ get_tree().call_group("enemies", "method", arg)
 get_tree().set_group("enemies", "modulate", Color.RED)  # set a property on all
 ```
 
-`call_group` has flag variants (`call_group_flags`) for deferred/unique-only calls.
+`call_group` 有标志变体（`call_group_flags`），支持延迟调用与唯一调用。
 
-## Signals vs direct calls — when to use which
+## 信号与直接调用：何时用哪个
 
-- **Signal** when the emitter should not know or care who listens (reusable scenes,
-  one-to-many, decoupling UI from logic).
-- **Direct call** when there is a clear owner→owned relationship and coupling is fine
-  (a controller calling a method on a component it created). Over-using signals for
-  tightly coupled code adds indirection without benefit.
+- **信号**：发出者不该知道也不必关心谁在监听时使用（可复用场景、一对多、UI 与逻辑解耦）。
+- **直接调用**：存在明确的拥有者→被拥有者关系、耦合可以接受时使用（控制器调用自己创建的组件上的方法）。对紧耦合代码过度使用信号只会徒增间接层。
 
-## Global event bus (autoload)
+## 全局事件总线（autoload）
 
-For events that cross scenes, declare signals on an autoload and have any scene emit or
-connect:
+跨场景的事件，在 autoload 上声明信号，任何场景都可以发出或连接：
 
 ```gdscript
 # Events.gd (autoload). Emit: Events.player_died.emit(). Listen: Events.player_died.connect(...)

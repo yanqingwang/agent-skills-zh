@@ -1,207 +1,211 @@
-> **Additional context needed**: the "aha moment" you want users to reach, and users' experience level.
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/onboard.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Get users to first value as fast as possible. Onboarding's job is not to teach the product. Its job is to get people to the moment that proves the product is worth their time.
+> **需要补充的上下文**：你希望用户到达的“顿悟时刻（aha moment）”，以及用户的使用经验水平。
 
-## Assess Onboarding Needs
+尽快让用户获得第一次价值。新用户引导（onboarding）的职责不是教产品，而是把人带到那个证明产品值得花时间的时刻。
 
-Understand what users need to learn and why:
+## 评估引导需求
 
-1. **Identify the challenge**:
-   - What are users trying to accomplish?
-   - What's confusing or unclear about current experience?
-   - Where do users get stuck or drop off?
-   - What's the "aha moment" we want users to reach?
+弄清用户需要学什么、为什么：
 
-2. **Understand the users**:
-   - What's their experience level? (Beginners, power users, mixed?)
-   - What's their motivation? (Excited and exploring? Required by work?)
-   - What's their time commitment? (5 minutes? 30 minutes?)
-   - What alternatives do they know? (Coming from competitor? New to category?)
+1. **明确挑战**：
+   - 用户想完成什么？
+   - 现有体验哪里令人困惑或不清楚？
+   - 用户在哪里卡住或流失？
+   - 我们想让用户到达的“顿悟时刻”是什么？
 
-3. **Define success**:
-   - What's the minimum users need to learn to be successful?
-   - What's the key action we want them to take? (First project? First invite?)
-   - How do we know onboarding worked? (Completion rate? Time to value?)
+2. **了解用户**：
+   - 他们的经验水平如何？（新手、熟练用户、混合？）
+   - 他们的动机是什么？（兴致勃勃地探索？工作要求？）
+   - 他们能投入多少时间？（5 分钟？30 分钟？）
+   - 他们知道哪些替代品？（从竞品转来？初次接触这个品类？）
 
-Onboarding should get users to value as quickly as possible, not teach everything possible.
+3. **定义成功**：
+   - 用户至少要学会什么才算成功？
+   - 我们希望他们完成的关键动作是什么？（第一个项目？第一次邀请？）
+   - 怎么判断引导起了作用？（完成率？达到价值的时间？）
 
-## Onboarding Principles
+引导应该让用户尽快获得价值，而不是把能教的都教一遍。
 
-Follow these core principles:
+## 引导原则
 
-### Show, Don't Tell
-- Demonstrate with working examples, not just descriptions
-- Provide real functionality in onboarding, not separate tutorial mode
-- Use progressive disclosure, teach one thing at a time
+遵循以下核心原则：
 
-### Make It Optional (When Possible)
-- Let experienced users skip onboarding
-- Don't block access to product
-- Provide "Skip" or "I'll explore on my own" options
+### 展示，而非说教
+- 用能跑的示例演示，而不只是描述
+- 引导里用真实功能，不做独立的教程模式
+- 用渐进式披露，一次只教一件事
 
-### Time to Value
-- Get users to their "aha moment" ASAP
-- Front-load most important concepts
-- Teach 20% that delivers 80% of value
-- Save advanced features for contextual discovery
+### 尽可能让它可选
+- 让有经验的用户跳过引导
+- 不挡住产品入口
+- 提供“跳过”或“我自己逛逛”选项
 
-### Context Over Ceremony
-- Teach features when users need them, not upfront
-- Empty states are onboarding opportunities
-- Tooltips and hints at point of use
+### 尽快到达价值
+- 尽快把用户带到“顿悟时刻”
+- 把最重要的概念放在最前面
+- 先教那能带来 80% 价值的 20%
+- 高级功能留到具体场景中再发现
 
-### Respect User Intelligence
-- Don't patronize or over-explain
-- Be concise and clear
-- Assume users can figure out standard patterns
+### 场景优先于仪式
+- 在用户需要时才教功能，不提前灌输
+- 空状态就是引导机会
+- 在使用现场给提示与气泡说明
 
-## Design Onboarding Experiences
+### 尊重用户智力
+- 不居高临下，不过度解释
+- 简洁清楚
+- 相信用户能自己看懂常规模式
 
-Create appropriate onboarding for the context:
+## 设计引导体验
 
-### Initial Product Onboarding
+为具体场景设计合适的引导：
 
-**Welcome Screen**:
-- Clear value proposition (what is this product?)
-- What users will learn/accomplish
-- Time estimate (honest about commitment)
-- Option to skip (for experienced users)
+### 首次产品引导
 
-**Account Setup**:
-- Minimal required information (collect more later)
-- Explain why you're asking for each piece of information
-- Smart defaults where possible
-- Social login when appropriate
+**欢迎屏**：
+- 清楚的价值主张（这个产品是什么？）
+- 用户将学会/完成什么
+- 时间预估（如实说明投入）
+- 可跳过（给有经验的用户）
 
-**Core Concept Introduction**:
-- Introduce 1-3 core concepts (not everything)
-- Use simple language and examples
-- Interactive when possible (do, don't just read)
-- Progress indication (step 1 of 3)
+**账号设置**：
+- 只收集最少必要信息（之后再补）
+- 对每条信息说明为什么要收集
+- 尽可能用智能默认值
+- 合适时提供社交登录
 
-**First Success**:
-- Guide users to accomplish something real
-- Pre-populated examples or templates
-- Celebrate completion (but don't overdo it)
-- Clear next steps
+**核心概念介绍**：
+- 介绍 1 到 3 个核心概念（不是全部）
+- 用简单的语言和示例
+- 尽可能交互（动手做，而不是只读）
+- 显示进度（第 1 步，共 3 步）
 
-### Feature Discovery & Adoption
+**首次成功**：
+- 引导用户完成一件真实的事
+- 预填的示例或模板
+- 庆祝完成（但别过头）
+- 清晰的下一步
 
-**Empty States**:
-Instead of blank space, show:
-- What will appear here (description + screenshot/illustration)
-- Why it's valuable
-- Clear CTA to create first item
-- Example or template option
+### 功能发现与采用
 
-Example:
+**空状态**：
+别留一片空白，改为展示：
+- 这里会出现什么（说明 + 截图/插图）
+- 为什么有价值
+- 清晰的 CTA，引导创建第一个条目
+- 示例或模板选项
+
+示例：
 ```
 No projects yet
 Projects help you organize your work and collaborate with your team.
 [Create your first project] or [Start from template]
 ```
 
-**Contextual Tooltips**:
-- Appear at relevant moment (first time user sees feature)
-- Point directly at relevant UI element
-- Brief explanation + benefit
-- Dismissable (with "Don't show again" option)
-- Optional "Learn more" link
+**情境气泡提示**：
+- 在恰当时机出现（用户第一次见到该功能时）
+- 直接指向相关 UI 元素
+- 简短说明 + 好处
+- 可关闭（带“不再显示”选项）
+- 可选的“了解更多”链接
 
-**Feature Announcements**:
-- Highlight new features when they're released
-- Show what's new and why it matters
-- Let users try immediately
-- Dismissable
+**功能公告**：
+- 新功能发布时加以突出
+- 说明有什么新、为什么重要
+- 让用户立即试
+- 可关闭
 
-**Progressive Onboarding**:
-- Teach features when users encounter them
-- Badges or indicators on new/unused features
-- Unlock complexity gradually (don't show all options immediately)
+**渐进式引导**：
+- 在用户碰到功能时才教
+- 新功能/未用功能上挂徽标或指示点
+- 逐步解锁复杂度（不要立刻展示全部选项）
 
-### Guided Tours & Walkthroughs
+### 引导游览与流程演示
 
-**When to use**:
-- Complex interfaces with many features
-- Significant changes to existing product
-- Industry-specific tools needing domain knowledge
+**何时使用**：
+- 功能繁多的复杂界面
+- 现有产品发生重大变化
+- 需要领域知识的行业专用工具
 
-**How to design**:
-- Spotlight specific UI elements (dim rest of page)
-- Keep steps short (3-7 steps max per tour)
-- Allow users to click through tour freely
-- Include "Skip tour" option
-- Make replayable (help menu)
+**如何设计**：
+- 聚焦特定 UI 元素（页面其余压暗）
+- 步骤要短（每次游览至多 3 到 7 步）
+- 允许用户在游览中自由点击
+- 提供“跳过游览”选项
+- 可重播（放进帮助菜单）
 
-**Best practices**:
-- Interactive over passive (let users click real buttons)
-- Focus on workflow, not features ("Create a project" not "This is the project button")
-- Provide sample data so actions work
+**最佳实践**：
+- 交互优于旁观（让用户点真实按钮）
+- 聚焦工作流而非功能（说“创建一个项目”，不说“这是项目按钮”）
+- 提供示例数据，让动作真正可执行
 
-### Interactive Tutorials
+### 交互式教程
 
-**When to use**:
-- Users need hands-on practice
-- Concepts are complex or unfamiliar
-- High stakes (better to practice in safe environment)
+**何时使用**：
+- 用户需要动手练习
+- 概念复杂或陌生
+- 高风险（最好在安全环境里练）
 
-**How to design**:
-- Sandbox environment with sample data
-- Clear objectives ("Create a chart showing sales by region")
-- Step-by-step guidance
-- Validation (confirm they did it right)
-- Graduation moment (you're ready!)
+**如何设计**：
+- 带示例数据的沙盒环境
+- 明确目标（“创建一张按地区展示销售的图表”）
+- 逐步指引
+- 校验（确认他们做对了）
+- 出师时刻（你已经准备好了！）
 
-### Documentation & Help
+### 文档与帮助
 
-**In-product help**:
-- Contextual help links throughout interface
-- Keyboard shortcut reference
-- Search-able help center
-- Video tutorials for complex workflows
+**产品内帮助**：
+- 界面各处的情境帮助链接
+- 快捷键参考
+- 可搜索的帮助中心
+- 复杂工作流的视频教程
 
-**Help patterns**:
-- `?` icon near complex features
-- "Learn more" links in tooltips
-- Keyboard shortcut hints (`⌘K` shown on search box)
+**帮助模式**：
+- 复杂功能旁放 `?` 图标
+- 气泡提示里放“了解更多”链接
+- 快捷键提示（搜索框上显示 `⌘K`）
 
-## Empty State Design
+## 空状态设计
 
-A first-use empty state carries all five parts below. The other types listed after them need fewer: a user-cleared state stays light, and a no-results state mostly needs a way out.
+首次使用的空状态要具备下面五个部分。后文列出的其他类型可以少一些：用户清空的状态保持轻量，无结果的状态主要需要一条出路。
 
-### What Will Be Here
-"Your recent projects will appear here"
+### 这里会出现什么
+“你最近的项目会显示在这里”
 
-### Why It Matters
-"Projects help you organize your work and collaborate with your team"
+### 为什么重要
+“项目帮你整理工作，并与团队协作”
 
-### How to Get Started
-[Create project] or [Import from template]
+### 如何开始
+[创建项目] 或 [从模板导入]
 
-### Visual Interest
-Illustration or icon (not just text on blank page)
+### 视觉趣味
+插图或图标（不要空白页上只放文字）
 
-### Contextual Help
-"Need help getting started? [Watch 2-min tutorial]"
+### 情境帮助
+“上手需要帮助？[观看 2 分钟教程]”
 
-**Empty state types**:
-- **First use**: Never used this feature (emphasize value, provide template)
-- **User cleared**: Intentionally deleted everything (light touch, easy to recreate)
-- **No results**: Search or filter returned nothing (suggest different query, clear filters)
-- **No permissions**: Can't access (explain why, how to get access)
-- **Error state**: Failed to load (explain what happened, retry option)
+**空状态类型**：
+- **首次使用**：从未用过该功能（强调价值，提供模板）
+- **用户清空**：有意删除了全部内容（轻描淡写，便于重建）
+- **无结果**：搜索或筛选没有命中（建议换个查询、清除筛选）
+- **无权限**：无法访问（解释原因，说明如何获得权限）
+- **错误状态**：加载失败（解释发生了什么，提供重试）
 
-## Implementation Patterns
+## 实现模式
 
-### Technical approaches:
+### 技术方案：
 
-**Tooltip libraries**: Floating UI, Tippy.js
-**Tour libraries**: Driver.js, React Joyride (both MIT)
-**Modal patterns**: Focus trap, backdrop, ESC to close
-**Progress tracking**: LocalStorage for "seen" states
-**Analytics**: Track completion, drop-off points
+**气泡提示库**：Floating UI、Tippy.js
+**游览库**：Driver.js、React Joyride（均为 MIT）
+**弹窗模式**：焦点圈定（focus trap）、背景遮罩、按 ESC 关闭
+**进度记录**：用 LocalStorage 存“已看过”状态
+**分析**：跟踪完成率、流失点
 
-**Storage patterns**:
+**存储模式**：
 ```javascript
 // Namespace keys by account id + onboarding version, so a shared browser
 // doesn't let one account's progress hide onboarding for another.
@@ -209,27 +213,27 @@ localStorage.setItem('onboarding-completed:v1:' + userId, 'true');
 localStorage.setItem('feature-tooltip-seen-reports:v1:' + userId, 'true');
 ```
 
-Show onboarding once: track completion and respect dismissals.
+引导只展示一次：记录完成情况，尊重用户的关闭操作。
 
-**Avoid**:
-- Force users through long onboarding before they can use product
-- Patronize users with obvious explanations
-- Show same tooltip repeatedly (respect dismissals)
-- Block all UI during tour (let users explore)
-- Create separate tutorial mode disconnected from real product
-- Overwhelm with information upfront (progressive disclosure!)
-- Hide "Skip" or make it hard to find
-- Forget about returning users (don't show initial onboarding again)
+**避免**：
+- 逼用户走完冗长引导才能用产品
+- 用显而易见的解释把用户当外行
+- 反复弹同一个气泡提示（尊重关闭操作）
+- 游览期间锁死整个 UI（让用户自由探索）
+- 搞一个与真实产品脱节的独立教程模式
+- 一上来就信息轰炸（要用渐进式披露！）
+- 藏起“跳过”或让它难找
+- 忘了回头客（不要再次展示首次引导）
 
-## Verify Onboarding Quality
+## 验证引导质量
 
-Test with real users:
+用真实用户测试：
 
-- **Time to completion**: Can users complete onboarding quickly?
-- **Comprehension**: Do users understand after completing?
-- **Action**: Do users take desired next step?
-- **Skip rate**: Are too many users skipping? (Maybe it's too long or not valuable)
-- **Completion rate**: Are users completing? (If low, simplify)
-- **Time to value**: How long until users get first value?
+- **完成耗时**：用户能否快速完成引导？
+- **理解程度**：完成后用户理解了吗？
+- **行动**：用户有没有走下一步？
+- **跳过率**：跳过的人是否太多？（可能太长或没价值）
+- **完成率**：用户有没有完成？（偏低就简化）
+- **达到价值时间**：用户多久拿到第一次价值？
 
-When users hit the aha moment fast and don't drop off, hand off to `/impeccable polish` for the final pass.
+当用户很快到达顿悟时刻且不再流失，就交接给 `/impeccable polish` 做最后打磨。

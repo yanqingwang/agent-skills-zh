@@ -1,243 +1,247 @@
-# Gates
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/gates.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The one list of what Hallmark refuses. § 1 to § 4 load at Step 4 (§ 1 to § 3 drive the pre-emit pass, § 4 the build); § 5, the Finish checks and the judged clauses, waits for the Step 7 walk, § 6 for the two reviews. `scripts/sloplint.mjs` implements every gate tagged M and derives its tier map from this file, which wins on any disagreement.
+# 闸门
 
-## 1. How a gate binds
+这份清单列出 Hallmark 拒绝的一切。§ 1 至 § 4 在 Step 4 载入（§ 1 至 § 3 驱动输出前自评，§ 4 驱动构建）；§ 5（Finish 检查与评判条款）等到 Step 7 走查时才载入，§ 6 用于两次评审。`scripts/sloplint.mjs` 实现所有标记为 M 的闸门，并从本文件推导它的层级映射；两者不一致时以本文件为准。
 
-Every gate carries a **tier**, which says whether you may disagree with it:
+## 1. 闸门如何约束
 
-- **Floor.** Never waivable. A gate is Floor when no admired page breaks it on purpose (correctness, access, honesty, the bans), or when it is a **house rule**, a reflex so reliably machine-made that Hallmark is stricter than the field: 54 (the eyebrow), 58 (the screen budget), 63 (template punctuation) and 67 (the tracked-caps label), and no others.
-- **Reflex.** A default a language model falls into. A build with a real reason may waive one on the record; past three waivers sloplint notes a house style, which belongs in a `design.md`.
-- **Finish.** Craft detail, invisible at arm's length: the F-checks (§ 5). Reported and answered, never blocking.
-- **Ledger.** Bookkeeping about repetition (32). Reports at `NOTE`, never counts toward the verdict.
+每个闸门都有一个**层级（tier）**，标明你能否对它提出异议：
 
-**Class** says who checks it: **M** sloplint's static tier (CSS and markup, Tailwind utilities in components included); **M/R** a static half plus the render tier (`--render`, or `--url` for a dev server); **R** the render tier alone; **R/J** render or judge; **J** judged at Step 7. When sloplint has run, walk only the J and R/J gates and the judged halves of M/R gates.
+- **Floor。** 永不可豁免。当没有任何受推崇的页面会故意违反它（正确性、可访问性、诚实、各类禁令），或者它属于**本库规约（house rule）**，即机器生成时几乎必然踩中的反射式默认、因此 Hallmark 在此比业界更严格，此时该闸门为 Floor：54（眉标）、58（屏幕字数预算）、63（模板标点）、67（加字距大写标签），仅此四条。
+- **Reflex。** 语言模型容易落入的默认做法。构建若有真实理由，可以在记录在案的前提下豁免一条；同一闸门豁免超过三次，sloplint 会把它记为本库风格，应写进 `design.md`。
+- **Finish。** 一臂之外看不出的工艺细节：F 检查（§ 5）。只报告并答复，永不阻塞。
+- **Ledger。** 关于重复的记账（32）。以 `NOTE` 级别报告，不计入裁决。
 
-**Grades:** `FAIL` (Floor, nothing ships) · `REFLEX` (an unanswered Reflex: fix or waive) · `WAIVED` (guard satisfied, visible) · `WARN` (suspected: confirm or dismiss; a dismissal reports as `DISMISSED`) · `ANSWERED` (a Finish finding with a recorded reason) · `NOTE` (bookkeeping). `FAIL` and `REFLEX` report separately, so "0 FAIL" stays a true statement about the Floor. A finding marked `kept` comes from a redesign's record of what the page had (`redesign.md` § After) and binds like the Floor.
+**类别（Class）** 说明由谁来检查：**M** 由 sloplint 的静态层负责（CSS 与标记，含组件内的 Tailwind 工具类）；**M/R** 静态一半加渲染层（`--render`，或用 `--url` 指向开发服务器）；**R** 仅渲染层；**R/J** 渲染或人工评判；**J** 在 Step 7 人工评判。sloplint 跑过之后，只需走查 J 与 R/J 闸门，以及 M/R 闸门中归评判的那一半。
 
-**Retired numbers stay retired:** 5, 13, 14, 21, 31, 35, 36, 43, 45, 51, 52, 57, 60 and 61 are never reused, so an older stamp still reads.
+**评级：** `FAIL`（Floor，什么都不能发布上线）· `REFLEX`（未处理的 Reflex：修复或豁免）· `WAIVED`（豁免依据已满足且可见）· `WARN`（疑似：确认或排除；排除后报告为 `DISMISSED`）· `ANSWERED`（Finish 发现项，已记录答复理由）· `NOTE`（记账）。`FAIL` 与 `REFLEX` 分开报告，这样“0 FAIL”才始终是对 Floor 的真实陈述。标记为 `kept` 的发现项来自重设计对页面原状的存档（`redesign.md` § After），约束力与 Floor 相同。
 
-## 2. Waivers and answers
+**已退役的编号永不复用：** 5、13、14、21、31、35、36、43、45、51、52、57、60、61 永不重新启用，因此旧印戳仍能读通。
 
-A Reflex gate is waived in the CSS stamp block, below the critique line:
+## 2. 豁免与答复
+
+Reflex 闸门在 CSS 印戳块中豁免，写在自评（critique）行之下：
 
 ```css
 /* Hallmark · waive 47b · one frame, a real terminal capture inside · the terminal is the product being sold */
 ```
 
-Three fields: the gate, the **guard evidence**, the reason. sloplint re-derives the guard; a build that cannot state its guard usually finds it does not hold. A waiver naming a Floor gate is rejected and the gate fires. One waiver per gate, named by its clause (`47b`, not `47`). The reason is about this page and shares a word with it; one under 24 characters, boilerplate, or reused word for word on another waiver is rejected. The log entry's `waived` field records them; the same gate waived on three consecutive builds is a house style, not an exception.
+三个字段：闸门、**豁免依据（guard evidence）**、理由。sloplint 会重新推导豁免依据；说不出豁免依据的构建，通常会发现这条依据根本站不住。给 Floor 闸门写的豁免会被拒绝，且闸门照常触发。每个闸门只豁免一次，按其条款命名（`47b`，不是 `47`）。理由必须针对本页面，并与其共享至少一个词；少于 24 个字符、样板话术、或在其他豁免中原样复用的理由会被拒绝。这些记录写入日志条目的 `waived` 字段；同一闸门连续三次构建都被豁免，就成了本库风格，不再是例外。
 
-A Finish finding is answered the same way, `/* Hallmark · answered F3 · the display head is one word and cannot wrap */`; a `WARN` is confirmed and fixed, or dismissed on the record, `/* Hallmark · dismissed 58 · the window holds a five-row table, counted twice across the sticky pane */`.
+Finish 发现项用同样方式答复，如 `/* Hallmark · answered F3 · the display head is one word and cannot wrap */`；`WARN` 则要么确认并修复，要么记录在案后排除，如 `/* Hallmark · dismissed 58 · the window holds a five-row table, counted twice across the sticky pane */`。
 
-Words the user insists on are material, not output: `copy: verbatim` in the stamp reports the copy gates (19, 58, 69) as notes. A redesign records what it gives up with `dropped` (`redesign.md` § After).
+用户坚持要用的词句是素材，不是产出：印戳中的 `copy: verbatim` 会把文案类闸门（19、58、69）以 NOTE 级报告。重设计用 `dropped` 记录它放弃了什么（`redesign.md` § After）。
 
-## 3. Pre-emit critique
+## 3. 输出前自评
 
-Before the sweep, score the planned page 1 to 5 on six axes; anything under 3 triggers a revision first.
+全面检查之前，先按六个维度给计划中的页面打 1 到 5 分；任何一项低于 3 分都先改再继续。
 
-| Axis | 3 | 5 |
+| 维度 | 3 分 | 5 分 |
 | --- | --- | --- |
-| **P**hilosophy | has a tone | has an argument a reader could disagree with |
-| **H**ierarchy | needs a second look | survives the squint test |
-| **E**xecution | two or three loose details | would pass the gates first time |
-| **S**pecificity | fits the category | could belong to no other product |
-| **R**estraint | keeps one decoration too many | lost something you liked |
-| **V**ariety | differs from the log on three of six structural axes | shares almost nothing with the last three runs |
+| **P**hilosophy（理念） | 有一个基调 | 有一个读者可以反驳的主张 |
+| **H**ierarchy（层级） | 要再看一眼才看懂 | 眯眼测试能过关 |
+| **E**xecution（执行） | 有两三处松散细节 | 能一次通过所有闸门 |
+| **S**pecificity（专属度） | 符合品类常规 | 不可能属于任何其他产品 |
+| **R**estraint（克制） | 多留了一处本可去掉的装饰 | 已经砍掉了你喜欢的东西 |
+| **V**ariety（变化） | 六个结构维度中至少三个与日志不同 | 与最近三次产出几乎没有共同点 |
 
-Stamp: `/* Hallmark · pre-emit critique: P5 H4 E5 S3 R5 V4 · weakest: S, hero could be any dev tool; led with the real deploy log instead of a stock dashboard */`. Name the weakest axis and the fix taken; straight 5s name what was cut to earn them. Never invent a weakness to fill the field.
+印戳：`/* Hallmark · pre-emit critique: P5 H4 E5 S3 R5 V4 · weakest: S, hero could be any dev tool; led with the real deploy log instead of a stock dashboard */`。写出最弱维度与采取的修正；全 5 分时说明为此砍掉了什么。绝不为了填字段而编造弱点。
 
-## 4. The gates
+## 4. 闸门清单
 
-One line each. `a`/`b` clauses share a number and carry their own tier. Genre notes: **ed** editorial, **mm** modern-minimal, **at** atmospheric, **pl** playful.
+每条一行。`a`/`b` 条款共用编号，但各自带层级。品类注记：**ed** 编辑风（editorial）、**mm** 极简风（modern-minimal）、**at** 氛围风（atmospheric）、**pl** 俏皮风（playful）。
 
-### Colour and surface
+### 颜色与表面
 
-| Gate | Tier | Class | The tell | The fix |
+| 闸门 | 层级 | 类别 | 特征 | 修正 |
 | --- | --- | --- | --- | --- |
-| 2a | Floor | M | Purple-to-blue, purple-to-pink or cyan-on-dark gradient anywhere, `background-clip: text` included | one anchor hue, solid ink |
-| 2b | Reflex | M | Gradient text in any other hue. Guard: a single-hue ramp (stops within 40°), both stops tokens, 40 and 41 pass | solid ink; weight or a display face |
-| 7a | Floor | M | `#000`, `#fff`, `oklch(0% …)` or `oklch(100% …)` as a colour outside the token block | tint toward the anchor hue, chroma 0.005 or more |
-| 7b | Reflex | M | A surface token that resolves to a pure absolute. Guard: stamp says `surface: absolute`, 40 and 41 pass. **mm** allows `#fff` paper | tint the paper |
-| 22 | Reflex | M | Zero-chroma neutrals on a page with an anchor hue. **mm** exempt | chroma 0.005 or more |
-| 23 | Reflex | M/R | Accent past ~5% of any viewport without a declared posture; the render tier fails past 8% (**at** 30%). A declared surface colour under a stated posture is not accent | retreat, or declare the posture in the stamp |
-| 29 | Reflex | M/J | Glow and wash: aurora or mesh blobs behind text, floating blurred orbs, a chromatic radial halo or spotlight, a coloured zero-offset glow shadow on dark. **at** allows two fixed radial blooms, each 20 to 30% of the canvas, never animated | a solid or grained surface; elevation by lightness, shadows with offset and blur |
-| 65 | Reflex | M/J | The named look on a custom or unthemed build: cream paper (L 90 or over, hue 55 to 105), a high-contrast serif display and a terracotta or clay accent (hue 15 to 55). A catalog theme carrying it is dealt only on its keywords. Guard: the prompt pins it | move one axis: the accent first, the paper second, the display last |
-| 74 | Reflex | M | The stock swatch: a framework's default palette (Tailwind's indigo-500, violet-600, slate-900 and kin) as a token or utility. Guard: the pre-flight found it in the project | a colour mixed for the page in OKLCH |
+| 2a | Floor | M | 任何位置出现紫到蓝、紫到粉或暗底青色的渐变，`background-clip: text` 也算 | 确定一个锚定色相，用纯色墨色 |
+| 2b | Reflex | M | 其他色相的渐变文字。豁免依据：单一色相的渐变（两端色标相差 40° 以内），两端色标均用 token，且 40、41 通过 | 改纯色；用字重或展示字体 |
+| 7a | Floor | M | 在 token 块之外使用 `#000`、`#fff`、`oklch(0% …)` 或 `oklch(100% …)` 这类颜色 | 向锚定色相偏调，色度不低于 0.005 |
+| 7b | Reflex | M | 表面 token 最终解析为纯绝对色。豁免依据：印戳写明 `surface: absolute`，且 40、41 通过。**mm** 允许 `#fff` 纸面 | 给纸面加色调 |
+| 22 | Reflex | M | 页面有锚定色相却用零色度中性色。**mm** 豁免 | 色度不低于 0.005 |
+| 23 | Reflex | M/R | 强调色占据视口约 5% 以上却未声明姿态（posture）；渲染层在超过 8% 时判失败（**at** 为 30%）。已声明姿态下的表面色不算强调色 | 收敛用量，或在印戳中声明姿态 |
+| 29 | Reflex | M/J | 光晕与晕染：文字背后的极光或网格光斑、漂浮的模糊光球、彩色径向光环或聚光灯、暗底上的彩色零偏移发光阴影。**at** 允许两个固定径向光斑，各占画布 20% 到 30%，永不加动画 | 用纯色或带颗粒的表面；用明度做层级，阴影带偏移和模糊 |
+| 65 | Reflex | M/J | 定制或未套主题的构建里出现这套标志性外观：奶油色纸面（L 90 以上，色相 55 到 105）、高对比衬线展示字体，以及陶土色强调（色相 15 到 55）。主题目录里自带它的主题，只按其关键词放行。豁免依据：提示词明确指定了它 | 挪动一个轴：先改强调色，再改纸面，最后改展示字体 |
+| 74 | Reflex | M | 现成色板：框架默认调色板（Tailwind 的 indigo-500、violet-600、slate-900 等）作为 token 或工具类使用。豁免依据：预检发现项目里本来就在用它 | 用 OKLCH 为页面调一个专属色 |
 
-### Type
+### 字体排印
 
-| Gate | Tier | Class | The tell | The fix |
+| 闸门 | 层级 | 类别 | 特征 | 修正 |
 | --- | --- | --- | --- | --- |
-| 1 | Reflex | M | Inter, Roboto, Open Sans, Poppins, Lato or a system face as the display | a display face from the theme or `fonts.md` |
-| 25 | Reflex | M/R | Running prose `max-width` outside 45 to 75ch, or rendered lines of about 88 characters or more over three lines; a lede or caption of two sentences or fewer may sit from 28ch | `max-width: 65ch` |
-| 37 | Reflex | M | More than three font families. Guard: a font slot (`craft.md` § 8) with its stand-in waived on the record | display, body, one outlier |
-| 38i | Floor | M | One italic word inside an otherwise roman heading | a line break, or the whole head set one way |
-| 38ii | Reflex | M | An italic display system. Guard: declared on `--font-display`, on every head at that level, true italic with `font-synthesis: none` | roman display |
-| 38iii | Reflex | M/J | The accented word: one word or phrase in a heading set apart by colour, weight, a highlight or an underline. Guard: the theme names it as its signature and it appears once, in the hero | the whole head one way; a line break; a second line at a second size |
-| 55a | Floor | M | An uppercase display head that can wrap with `line-height` under 1.0 | 1.0 at least, 1.02 to 1.08 recommended |
-| 55b | Reflex | M | A single-line caps lockup under 1.02. Guard: it cannot wrap at 320px | leave it |
-| 64 | Reflex | M | Mono as costume: monospace on labels, captions, meta rows, table heads or small type when neither display nor body is mono and the content is not code, a figure or a measurement. Guard: the theme's material is mono, or the text is code | labels in the body face, a step smaller, normal case |
-| 75 | Reflex | R | Text that strains: running text under 12px, functional text under 11px, multi-line prose leaded under 1.3 | body 16px at 1.5 to 1.65; labels one step smaller |
-| 67 | Floor | M | The tracked-caps label: a label, caption, table head, nav link, tag, chip or any text at 15px or under set uppercase or in small caps, or letter-spaced past 0.03em. House rule. Legal: a wordmark; a control on a page whose display is itself uppercase, tracked 0.04em or less | the body face, a step smaller, sentence case, untracked |
+| 1 | Reflex | M | 用 Inter、Roboto、Open Sans、Poppins、Lato 或系统字体做展示字体 | 从主题或 `fonts.md` 选展示字体 |
+| 25 | Reflex | M/R | 正文段落的 `max-width` 超出 45 到 75ch，或渲染后连续三行左右达到约 88 字符以上；不超过两句的导语或说明文字可放宽到 28ch 起 | `max-width: 65ch` |
+| 37 | Reflex | M | 字体家族超过三个。豁免依据：字体槽位（`craft.md` § 8）的替身字体已记录在案豁免 | 展示、正文，外加一个特例 |
+| 38i | Floor | M | 标题里只有一个词是斜体，其余都是正体 | 换行，或整个标题统一字体样式 |
+| 38ii | Reflex | M | 整套斜体展示系统。豁免依据：在 `--font-display` 上声明，该层级每个标题都用，且为真斜体并设置 `font-synthesis: none` | 改回正体展示 |
+| 38iii | Reflex | M/J | 强调词：标题中的一个词或短语用颜色、字重、高亮或下划线单独突出。豁免依据：主题将其列为招牌手法，且全页只在首屏出现一次 | 整个标题统一样式；或换行；或第二行用另一字号 |
+| 55a | Floor | M | 会换行的大写展示标题，`line-height` 却低于 1.0 | 至少 1.0，建议 1.02 到 1.08 |
+| 55b | Reflex | M | 单行大写组合，行高低于 1.02。豁免依据：320px 下不会换行 | 保留即可 |
+| 64 | Reflex | M | 等宽字体当戏服：在展示与正文都不是等宽字体、内容也不是代码、数字或计量值时，把等宽字体用在标签、说明文字、元信息行、表头或小号字上。豁免依据：主题材质本来就是等宽字体，或文本本身是代码 | 标签用正文字体，小一号，正常大小写 |
+| 75 | Reflex | R | 费眼的小字：正文低于 12px、功能性文字低于 11px，或多行段落行距低于 1.3 | 正文 16px、行距 1.5 到 1.65；标签小一号 |
+| 67 | Floor | M | 加字距大写标签：15px 及以下的标签、说明文字、表头、导航链接、标签件、胶囊标签或任何文字，被设为大写或小型大写，或字距超过 0.03em。本库规约。允许：品牌字标；展示字体本身为大写的页面上的控件，字距不超过 0.04em | 正文字体，小一号，句首大写，无字距 |
 
-### Structure and layout
+### 结构与布局
 
-| Gate | Tier | Class | The tell | The fix |
+| 闸门 | 层级 | 类别 | 特征 | 修正 |
 | --- | --- | --- | --- | --- |
-| 3 | Reflex | M/R | Card tells: three equal columns of icon-above-heading tiles, an icon in a rounded tile above a heading, a thick coloured side stripe on a card | vary widths and heights, inline icons, hairline or no border |
-| 4 | Floor | M | A card inside a card | one containment layer |
-| 6a | Floor | M | A hero sized in `vh` | `dvh` or `svh` |
-| 6b | Reflex | J | A hero 92dvh or taller with no stamped `hero:` posture, or title, lede, action and mark all on one centred axis. Guard: 44b passes. **at** and **pl** reach the centred canvas as their normal answer | at most two centred elements; break one alignment |
-| 8 | Reflex | J | The AI template (hero, three features, call to action, footer), or the same shape as one of the last three logged builds | build differently; read `.hallmark/log.json` |
-| 9 | Reflex | J | Every section separated the same way with the same gap | climb different rungs of the surface ladder in different places |
-| 24a | Floor | M | A raw `padding`, `margin` or `gap` length where a `--space-*` token exists | the token |
-| 24b | Reflex | M | Off-scale spacing. Guard: three at most, each an optical nudge | the scale |
-| 34 | Floor | M/R | Horizontal scroll at any width 320 to 1920; `overflow-x` missing on `html` and `body`; `100vw` widths | `overflow-x: clip` on both, `width: 100%` |
-| 44a | Reflex | R/J | Hero content off centre for its posture, measured on what is painted (nav to first content, against last content to the next section): Settled, Banner, Corridor and Stage want the second 1.0 to 1.5 times the first; Ledge inverts; Poster waives when anchored; a custom hero is free | centre the content in its screen (`layout.md` § 6) |
-| 44b | Floor | R/J | Headline, lede, primary action and the visual's focal point not all visible at 1280 x 800 without scrolling | pull the display clamp down, tighten leading, a two-line lede, trim padding |
-| 44c | Reflex | R/J | At 1440 x 900 the next section starts above y 760 or below y 900, or the hero visual's centre is more than 60px from the text block's, or it stands more than 120px from the text or is pinned to the viewport edge. Guard: a Poster, Ledge or Banner posture, a Stage visual bleeding off the outer edge (the edge clause only), or a custom run | the visual beside the text; the hero fills its screen and only its screen |
-| 44d | Floor | M/R | At 1920 x 1080 the container has no `max-width`, gutters under 120px, a grid gains columns, or the hero no longer fits | cap 1360 to 1520 and centre; hold column counts; cap `vw` visuals |
-| 50 | Floor | M | An image-bearing grid track on bare `1fr`; a display head without `overflow-wrap: break-word; min-width: 0` | `minmax(0, 1fr)`; `break-word`, never `anywhere` |
-| 53 | Floor | M | CSS-only radio tabs at `position: absolute; top: 0` with no JS guard (the page jumps on every click) | radios in flow at zero size, or a handler with `preventScroll` |
-| 56 | Floor | M/R | Two `position: sticky; top: 0` elements (a section head sliding under the nav) | `top: var(--banner-height)` on the second; `--z-sticky-nav` above `--z-sticky` |
-| 58 | Floor | M/R | More than about 80 words in any 900px window at 1440, or a hero with more than two text blocks before its actions. House rule | headline, one sentence, actions; a section is a head block, then its composition (`layout.md` § 4) |
-| 59 | Reflex | M/R | A gap under 120px between sections at 1440 (64px where the paper changes), or every gap the same. Guard: a dense macrostructure that separates with rules and colour | 120px at least, varied |
-| 71 | Reflex | R | The crowded head: two or more h2 to h4 nearer what precedes them than what they head (the space above under 0.75 times the space below and 12px or more short). Heads in a box under 200px tall are exempt | at least twice the space above a head as below it |
-| 72 | Reflex | R | The cramped box: text in a filled or side-bordered box over 100 x 30px closer than max(8px, 0.5em) to its sides or max(4px, 0.3em) to its top and bottom (the em part capped at 24 and 12px), or running text within 8px of a phone's edge | pad the box; a 16px gutter |
-| 77 | Reflex | R | The thin section: below the hero, a body spanning under three quarters of the container at 1440 that is not a statement, or a section with no mass (no visual 300px tall, no set of three across, no list or table of three rows, no statement at the section size). Guard: a band of one line and an action, once a page | widen the body to ten columns, add a visual, set a statement, or merge the section (`layout.md` § 4) |
-| 78 | Reflex | R | Section heads too small: the median `h2` below the hero renders under 40px at 1440. Guard: a Long Document, Letter or Photographic shape, whose heads are inline or annotation | `h2` at `--text-section`, item titles at `--text-title` (`layout.md` § 2) |
-| 79 | Reflex | R | The dead band: at 1440 x 900, more than 160px of nothing between the hero's lowest content and the fold or the hero's foot, whichever comes first. Guard: a Ledge or Poster posture | centre the content and grow the visual or the head; never fill with copy |
-| 80 | Reflex | R/J | The drawn illustration: an inline SVG or CSS figure of an object, plant, animal, person, product, building, landscape or scene past icon size (the render tier flags an SVG of 120px or more with three curves or three fills and no text). Guard: a chart, map or diagram of real data or a real system, named as one (`class` or `aria-label`), or the user's logo | a photograph from the library or the user, the product built, or type at scale (`imagery.md`) |
-| 81 | Reflex | R | The empty picture: a `data-slot`, or a gradient block 300 x 200px or larger, showing nothing but its wash: no image, video or built sample | the user's image, a library photograph (`theme.mjs photos`) or the product at full fidelity (`imagery.md` § 3) |
-| 82 | Reflex | R | The counting device: 24 or more identical marks (ticks, dots, bars, squares) standing for a quantity, one for each bottle, identity or day. Guard: a chart whose marks differ in value or colour | set the number in type |
-| 83 | Reflex | R | The photo wall: below the hero, photographs cover more than about a third of the page at 1440 (45% on a Photographic or Portfolio Grid shape), so it reads as a stock gallery. Guard: a gallery or portfolio of the user's own work | keep the strongest pictures, set big; carry the rest in the theme's material: type, figures, the product, a table (`imagery.md` § 5) |
-| 84 | Reflex | J | The fake product: the page shows a built mock of a product that exists and could be reached (a URL, a running dev server, a project in the folder, an app on the machine), or a drawn interface where a screenshot belonged. Guard: the product does not run yet, or capturing it would show private data | run it, put it in a telling state and capture it with `scripts/capture.mjs` or the OS; frame the captures in the theme (`imagery.md` § 4) |
-| 85 | Reflex | R | The stock close: the last section before the footer, or the footer, is an email sign-up (a form of one or two fields, one an email) on a page whose job is not one where a mailing list is native (subscribe, join, attend, listen, visit), or whose stamp names no `job:`. Guard: the user asked for a sign-up; a form whose button books, enquires, orders or starts the product | end on what the visitor came to do, in the form the job takes (the booking, the buy box, the download, the next date and the address, the latest issue), or on the last strong section (`anatomy.md`) |
+| 3 | Reflex | M/R | 卡片特征：三列等宽、图标在上标题在下的方块阵列；圆角底座里的图标悬在标题上方；卡片带粗彩色侧边条 | 宽度高度错落，图标行内放置，边线用发丝线或不要边框 |
+| 4 | Floor | M | 卡片套卡片 | 只留一层容器 |
+| 6a | Floor | M | 首屏高度用 `vh` 定 | 改用 `dvh` 或 `svh` |
+| 6b | Reflex | J | 首屏高 92dvh 及以上却未在印戳声明 `hero:` 姿态，或标题、导语、动作按钮与标识全部居中在同一轴线。豁免依据：44b 通过。**at** 与 **pl** 以居中画布为常规答案 | 居中元素至多两个，并打破其中一处对齐 |
+| 8 | Reflex | J | AI 模板结构（首屏、三特性、行动号召、页脚），或与最近三次已记录构建同形 | 换个方式构建；读 `.hallmark/log.json` |
+| 9 | Reflex | J | 每个区块的分隔方式和间距都一样 | 在不同位置使用表面阶梯的不同层级 |
+| 24a | Floor | M | 存在 `--space-*` token 却用裸写的 `padding`、`margin` 或 `gap` 数值 | 用 token |
+| 24b | Reflex | M | 脱档的间距。豁免依据：至多三处，每处都是视觉微调 | 回归间距档位 |
+| 34 | Floor | M/R | 320 到 1920 任何宽度出现横向滚动；`html` 与 `body` 缺 `overflow-x`；宽度用 `100vw` | 两者都设 `overflow-x: clip`，宽度用 `width: 100%` |
+| 44a | Reflex | R/J | 首屏内容偏离其姿态应取的居中比例，按实际绘制结果测量（导航到首段内容的距离，对比末段内容到下一区块的距离）：Settled、Banner、Corridor、Stage 要求后者是前者的 1.0 到 1.5 倍；Ledge 反过来；Poster 锚定时豁免；自定义首屏自由 | 让内容在其屏幕内居中（`layout.md` § 6） |
+| 44b | Floor | R/J | 1280 x 800 下不滚动就看不到标题、导语、主操作与视觉焦点全部 | 下调展示字号钳制值、收紧行距、导语限两行、削减内边距 |
+| 44c | Reflex | R/J | 1440 x 900 下下一区块起于 y 760 以上或 y 900 以下；或首屏视觉中心与文本块中心相距超过 60px；或它与文本相距超过 120px 或被钉死在视口边缘。豁免依据：Poster、Ledge 或 Banner 姿态；Stage 视觉溢出外缘（仅此条款）；或自定义处理 | 视觉放在文本旁边；首屏正好占满且只占满它的屏幕 |
+| 44d | Floor | M/R | 1920 x 1080 下容器没有 `max-width`、两侧留白低于 120px、栅格增加列数，或首屏放不下 | 上限设在 1360 到 1520 并居中；列数不变；`vw` 视觉设上限 |
+| 50 | Floor | M | 含图栅格轨道直接用裸 `1fr`；展示标题缺 `overflow-wrap: break-word; min-width: 0` | 用 `minmax(0, 1fr)`；用 `break-word`，不用 `anywhere` |
+| 53 | Floor | M | 纯 CSS 单选按钮标签页设成 `position: absolute; top: 0` 又没有 JS 兜底（每次点击页面都会跳） | 单选按钮留在文档流中尺寸归零，或加带 `preventScroll` 的事件处理 |
+| 56 | Floor | M/R | 两个 `position: sticky; top: 0` 元素（区块标题从导航下滑过） | 第二个设 `top: var(--banner-height)`；`--z-sticky-nav` 高于 `--z-sticky` |
+| 58 | Floor | M/R | 1440 下任意 900px 窗口超过约 80 个词，或首屏在操作按钮之前文本块超过两个。本库规约 | 标题、一句话、操作按钮；区块先标题块，后内容编排（`layout.md` § 4） |
+| 59 | Reflex | M/R | 1440 下区块间距低于 120px（换纸面处为 64px），或所有间距一律相同。豁免依据：致密的宏观结构，靠分隔线和颜色区分 | 至少 120px，且有所变化 |
+| 71 | Reflex | R | 拥挤的标题：两个及以上 h2 到 h4 距离前方内容比距离自己统领的内容更近（上方间距不足下方的 0.75 倍，且差 12px 以上）。装在 200px 高以内的盒子里的标题豁免 | 标题上方间距至少是下方的两倍 |
+| 72 | Reflex | R | 局促的盒子：100 x 30px 以上的实底或侧边框盒子里的文本，距左右小于 max(8px, 0.5em)、距上下小于 max(4px, 0.3em)（em 部分上限为 24px 与 12px），或正文距手机屏幕边缘小于 8px | 给盒子加内边距；留 16px 边距 |
+| 77 | Reflex | R | 单薄的区块：首屏之下，1440 下正文宽度不足容器四分之三又不是宣言句；或区块没有体量（没有 300px 高的视觉、没有三联排、没有三行的列表或表格、没有区块级大小的宣言句）。豁免依据：一行加一个动作的横条，全页至多一次 | 正文加宽到十列、补一个视觉、放一句宣言句，或并入相邻区块（`layout.md` § 4） |
+| 78 | Reflex | R | 区块标题太小：首屏之下 `h2` 渲染尺寸的中位数在 1440 下低于 40px。豁免依据：长文档（Long Document）、信函（Letter）或摄影（Photographic）形态，其标题本就是行内或批注性质 | `h2` 用 `--text-section`，条目标题用 `--text-title`（`layout.md` § 2） |
+| 79 | Reflex | R | 死区：1440 x 900 下首屏最低内容与首屏底部或页脚（先到者为准）之间出现超过 160px 的空白。豁免依据：Ledge 或 Poster 姿态 | 内容居中并放大视觉或标题；绝不拿文案填充 |
+| 80 | Reflex | R/J | 手绘式插图：超过图标尺寸的内联 SVG 或 CSS 图形，画的是物品、植物、动物、人物、产品、建筑、风景或场景（渲染层对 120px 以上、含三条曲线或三个填充且无文字的 SVG 打标）。豁免依据：真实数据或真实系统的图表、地图或示意图，且已声明身份（`class` 或 `aria-label`）；或用户的 logo | 改用图库或用户提供的照片、把产品真的做出来，或用大号字体排版（`imagery.md`） |
+| 81 | Reflex | R | 空画：一个 `data-slot`，或 300 x 200px 以上的渐变色块，除了底色一无所有：没有图片、视频或做出来的样例 | 用户的图片、图库照片（`theme.mjs photos`），或全保真度的产品实做（`imagery.md` § 3） |
+| 82 | Reflex | R | 计数装置：24 个及以上完全相同的记号（刻度、圆点、条、方块）代表一个数量，一个对应一瓶、一个身份或一天。豁免依据：图表中记号在数值或颜色上有区分 | 用字体把数字排出来 |
+| 83 | Reflex | R | 照片墙：首屏之下，1440 下照片覆盖超过页面约三分之一（Photographic 或 Portfolio Grid 形态为 45%），读起来像图库陈列。豁免依据：用户自己作品的画廊或作品集 | 保留最有力的照片并放大排；其余交给主题材质：字体排版、图形、产品、表格（`imagery.md` § 5） |
+| 84 | Reflex | J | 假产品：页面给一个真实存在、拿得到的产品（有 URL、有跑着的开发服务器、文件夹里有项目、机器上装了应用）配了手搓 mock，或在本该放截图的地方画了个界面。豁免依据：产品还没法跑起来，或截屏会暴露隐私数据 | 把产品跑起来，调到能说明问题的状态，用 `scripts/capture.mjs` 或系统截屏；再按主题框起来（`imagery.md` § 4） |
+| 85 | Reflex | R | 套路收尾：页脚前最后一节或页脚本身是邮件订阅表单（一到两个字段，其中一个是邮箱），而页面业务本身不天然带邮件列表（订阅、加入、参加、收听、到访），或印戳未声明 `job:`。豁免依据：用户明确要求订阅；或表单按钮是预约、咨询、下单或启动产品 | 以访客来访要做的事收尾，用业务本来的形态（预约、购买盒、下载、下个日期与地址、最新一期），或收在最后一个有力区块（`anatomy.md`） |
 
-### Chrome and copy
+### 界面框与文案
 
-| Gate | Tier | Class | The tell | The fix |
+| 闸门 | 层级 | 类别 | 特征 | 修正 |
 | --- | --- | --- | --- | --- |
-| 19 | Floor | M | Copy tells: placeholder names (Jane Doe), startup clichés (Acme, Nexus), buzzwords (seamless, robust, empower, supercharge, elevate, effortless, unlock, unleash, next-generation, world-class, best-in-class, industry-leading, mission-critical, future-proof), the rebuttal cadence three or more times ("Not a feature. A platform."), "quietly trusted by", em or en dashes, filler openers ("Built for the modern team", "In today's landscape"), a stock second action beside the primary (*Learn more*, *Get started*, *Book a demo*). A stock footer line (*All rights reserved*) is a `WARN`; the page's own name is never a cliché | say what the product does, in its own nouns |
-| 20 | Floor | M | The Hallmark stamp missing from the first lines of CSS (build form or checked form) | write it |
-| 42 | Reflex | M | Chrome by reflex: the AI nav (wordmark left, inline links, button right, hairline under) or the AI footer (four link columns, social row, copyright) without the stamp naming it | decide it and name it (`nav:`, `footer:`), or build another shape |
-| 46a | Floor | M | An invented metric, testimonial, logo wall or case-study count | the user's number, a text slot (`craft.md` § 8), or nothing |
-| 46b | Reflex | J | A bare figure as the hero's only headline. Guard: user-supplied and labelled | pair it with the line that says what it means |
-| 47a | Floor | M | A hand-drawn browser bar (traffic lights, URL pill) or OS window title bar | a real screenshot in a `<figure>`, or no chrome |
-| 47b | Reflex | M | A phone, laptop, terminal or editor frame. Guard: one frame, real content inside | one frame or none |
-| 47c | Reflex | J | Imitation material: a hero "product UI" of styled divs outside a `data-slot`, a many-vertex `clip-path` standing in for a photo's edge, CSS bevels or embossing faking a physical object, a decorative grid or stripe background with nothing under it. Guard: the theme's material is geometry and the drawn thing is geometry, not a picture | the product built inside a slot, a real asset, or nothing |
-| 54 | Floor | M | The eyebrow: short inert type before a heading that announces it, in any geometry (stacked, beside, pill, ordinal, category tag over a card, `TRUSTED BY` over logos). House rule. Legal: `<figcaption>`, `<th>`, `<label>`, a nav or tab label, a byline or `<time>`, a unit after its figure, a real filename, a live `role="status"` chip, one linked announcement going somewhere real | open the section another way (`craft.md` § Opening a section) |
-| 63 | Floor | M/J | Template punctuation: meta strings joined with middle dots (`A · B · C`), an arrow glued to link or button text (`Learn more →`), decorative status dots before labels, `WORD - fragment` labels. House rule. Legal: one dot in a byline, a caption or a live state, a marquee's repeating separator. The script fires from two dots; one dot is judged | line breaks, columns, hairlines; a verb as the label |
-| 66 | Reflex | J | Decoration text: rotated vertical text with nothing to say, scroll cues, a version badge or `BETA` pill in the hero, a weather or locale strip, a mono-caps strip under the hero, credit captions under stand-ins, a `01 / 4` count on tiles. Guard: the prompt is a launch, a venue or a distributed studio and the text is a fact | delete it; a lost fact becomes a caption or a footer line |
-| 68 | Reflex | M | The wireframe page: more than five empty `data-slot`s on one page (a slot holding an image or a built sample is not empty), or four or more in one row (a team of blank portraits, a range of blank bottles). Guard: the user asked for that many slots and named them | set the set in type (names, roles, facts in a list or table); a slot that stays holds a library photo or the product (`imagery.md` § 3) |
-| 69 | Reflex | M/J | The echo: one fact (a price, a time, a date, a count) printed in four or more sections (repeats inside one section count once), or a section's last line restating its heading. Guard: a ledger or table whose rows repeat a value by nature | say each fact once, where it does work |
-| 70 | Floor | M/J | The fake send: a form or control that prints success ("Sent", "Reserved", "You're on the list", "Thanks") with no request behind it, or confirms something the prompt never offered | an empty `data-endpoint` and no success state until the form is wired; the handoff names the endpoint |
+| 19 | Floor | M | 文案特征：占位人名（Jane Doe）、创业套话（Acme、Nexus）、营销空词（seamless、robust、empower、supercharge、elevate、effortless、unlock、unleash、next-generation、world-class、best-in-class、industry-leading、mission-critical、future-proof）、反驳式排比出现三次及以上（“Not a feature. A platform.”）、“quietly trusted by”、em 或 en 破折号、空洞开场白（“Built for the modern team”、“In today's landscape”）、主按钮旁边放套路的次级动作（*Learn more*、*Get started*、*Book a demo*）。页脚套路句（*All rights reserved*）只是 `WARN`；页面自己的名字永远不算套话 | 用产品自己的名词，说清它做什么 |
+| 20 | Floor | M | CSS 开头几行没有 Hallmark 印戳（构建版或检查版） | 补上 |
+| 42 | Reflex | M | 条件反射式界面框：AI 式导航（左边字标、中间行内链接、右边按钮、下方发丝线）或 AI 式页脚（四列链接、社交行、版权行），而印戳没有点名它 | 要么决定用它并在印戳声明（`nav:`、`footer:`），要么换一种结构 |
+| 46a | Floor | M | 编造的指标、证言、logo 墙或案例数量 | 用户提供的数字、文字槽位（`craft.md` § 8），或干脆不要 |
+| 46b | Reflex | J | 裸数字充当首屏唯一标题。豁免依据：用户提供且带标注 | 配上说明其含义的一句话 |
+| 47a | Floor | M | 手绘的浏览器栏（红绿灯、URL 胶囊）或系统窗口标题栏 | 用 `<figure>` 放真实截图，或不要界面框 |
+| 47b | Reflex | M | 手机、笔记本、终端或编辑器外框。豁免依据：只一框，框内是真实内容 | 要么一框，要么不框 |
+| 47c | Reflex | J | 仿制材质：`data-slot` 之外用样式 div 拼出的首屏“产品 UI”、用多顶点 `clip-path` 冒充照片边缘、CSS 斜面或浮雕伪造实体、底下什么都没有的装饰性网格或条纹背景。豁免依据：主题材质本来就是几何，画出来的也是几何而非图画 | 在槽位里实做产品、用真实素材，或什么都不放 |
+| 54 | Floor | M | 眉标：标题之前的短小静态文字，用来报出标题，任何几何形式都算（上下堆叠、并排、胶囊、序号、卡片上的分类标签、logo 上方的 `TRUSTED BY`）。本库规约。允许：`<figcaption>`、`<th>`、`<label>`、导航或标签页文字、署名或 `<time>`、数字后的单位、真实文件名、活动的 `role="status"` 徽标、链到真实去向的一条公告 | 换别的方式打开区块（`craft.md` § Opening a section） |
+| 63 | Floor | M/J | 模板标点：中点连接的元字符串（`A · B · C`）、粘在链接或按钮文字后的箭头（`Learn more →`）、标签前的装饰状态点、`WORD - fragment` 式标签。本库规约。允许：署名、说明文字或活动状态里的一个中点，走马灯的重复分隔符。脚本从两个点起触发；一个点交人工评判 | 用换行、分栏、发丝线；用动词做标签 |
+| 66 | Reflex | J | 装饰文字：没有信息量的旋转竖排文字、滚动提示、首屏里的版本徽标或 `BETA` 胶囊、天气或地区条、首屏下的等宽大写小条、替身物下的署名说明、方块上的 `01 / 4` 计数。豁免依据：提示词是发布会、场馆或分布式工作室，且该文字是事实 | 删掉；丢失的事实改写成说明文字或页脚一行 |
+| 68 | Reflex | M | 线框页：一页上超过五个空 `data-slot`（装了图片或实做样例的槽位不算空），或一行里四格及以上全空（一排空白头像组成的团队、一排空白瓶身）。豁免依据：用户要求这么多槽位并逐一命名 | 用文字把这组内容排出来（名单、角色、事实进列表或表格）；保留的槽位放图库照片或实做的产品（`imagery.md` § 3） |
+| 69 | Reflex | M/J | 回声：同一事实（价格、时间、日期、数量）印在四个及以上区块（同一区块内重复只算一次），或区块最后一行复述自己的标题。豁免依据：账本或表格，行内天然要重复某个值 | 每个事实只说一次，放在它发挥作用的地方 |
+| 70 | Floor | M/J | 假发送：表单或控件背后没有请求却显示成功（“Sent”、“Reserved”、“You're on the list”、“Thanks”），或确认了提示词从未提供的东西 | `data-endpoint` 留空，表单接通前不提供成功状态；交接说明里写明端点 |
 
-### Motion and interaction
+### 动效与交互
 
-| Gate | Tier | Class | The tell | The fix |
+| 闸门 | 层级 | 类别 | 特征 | 修正 |
 | --- | --- | --- | --- | --- |
-| 10a | Floor | M | `transition: all`; animating `width`, `height`, `top` or `left` | list the properties; `transform` and `opacity` |
-| 10b | Reflex | M | Transitioning `margin` or `padding`. Guard: a morph whose outer height is invariant (the scroll-morphing nav) | `transform` |
-| 11 | Reflex | M/J | Hover effects: the same lift or scale on every card, more than one effect on one element, an image scaling or rotating on hover, a hover state on a non-interactive element | one signal per element, on the container, not the image |
-| 12 | Reflex | M | Bounce or overshoot easing on UI state. **pl** with a declared spring posture may use it on the primary action and one character moment | exponential ease-out |
-| 15 | Floor | M | A focus ring that fades in | instant |
-| 16 | Reflex | J | A celebratory toast for an effect the user already sees | silent success |
-| 17 | Floor | M | Tooltip focus delay equal to hover delay | hover 800 to 1000ms, focus 0 |
-| 18 | Floor | M | Auto-rotating content with no pause on hover and focus | pause on hover and focus, and a visible pause control on anything moving past 5 seconds |
-| 26a | Floor | M/R | An interactive element with no `:focus-visible`, a ring under 3:1 against what it is drawn over, or an outline removed with nothing in its place | a ring at 3:1 or better, instant |
-| 26b | Reflex | M | Missing `:active` or `:disabled`. Guard: not a form control, no `aria-disabled` anywhere | all eight states |
-| 27 | Floor | M | A keyframe or transform transition without a `prefers-reduced-motion: reduce` fallback (`transition: all` over a hover transform counts) | add it |
-| 28a | Floor | M | A video autoplaying without `muted`; `loading="lazy"` on the LCP element | `autoplay muted loop playsinline`; `fetchpriority="high"` on an LCP image, a preloaded poster for an LCP video |
-| 28b | Reflex | M | Video without `poster` or a priority hint. Guard: below the fold and not the LCP | add them |
-| 39a | Floor | M | Input states that break: border width shifting between states, a focus ring built from `border`, an input taller or shorter than its adjacent button, disabled by opacity alone | constant border, `outline`, shared height, three disabled channels (opacity, `cursor: not-allowed`, the native attribute) |
-| 39b | Reflex | M | Control height outside 44 to 52px on a marketing page. Guard: app UI at 32 to 40px with the hit-target expansion | the number |
-| 62 | Floor | M | Content hidden at rest: a reveal class setting `opacity: 0` or `visibility: hidden` that depends on JavaScript to show it, with no `.js` scoping, no self-running CSS animation and no `@starting-style`, so the page ships blank when a script fails | visible by default; hide only under a `.js` class, or animate from visible with `@starting-style` |
+| 10a | Floor | M | `transition: all`；给 `width`、`height`、`top` 或 `left` 加动画 | 逐项列出属性；用 `transform` 和 `opacity` |
+| 10b | Reflex | M | 给 `margin` 或 `padding` 加过渡。豁免依据：外层高度不变的形变（随滚动形变的导航） | 用 `transform` |
+| 11 | Reflex | M/J | 悬停特效：每张卡片同样的抬升或缩放、一个元素上叠多种效果、图片悬停时缩放或旋转、非交互元素带悬停态 | 每个元素一个信号，放在容器上，而不是图片上 |
+| 12 | Reflex | M | UI 状态用回弹或过冲缓动。声明了 spring 姿态的 **pl** 可在主操作和一个性格化瞬间上使用 | 指数式 ease-out |
+| 15 | Floor | M | 焦点环淡入出现 | 瞬时出现 |
+| 16 | Reflex | J | 用户已经看见的效果再弹庆祝 toast | 成功保持安静 |
+| 17 | Floor | M | 工具提示的键盘焦点延迟等于悬停延迟 | 悬停 800 到 1000ms，焦点 0 |
+| 18 | Floor | M | 自动轮播内容，悬停和焦点时不暂停 | 悬停与焦点时暂停；任何持续超过 5 秒的运动都配可见的暂停控件 |
+| 26a | Floor | M/R | 交互元素没有 `:focus-visible`、焦点环对比所叠背景不足 3:1，或去掉了 outline 又没补任何东西 | 3:1 以上的焦点环，瞬时出现 |
+| 26b | Reflex | M | 缺 `:active` 或 `:disabled`。豁免依据：不是表单控件，且页面任何地方都没有 `aria-disabled` | 八种状态齐备 |
+| 27 | Floor | M | 关键帧或 transform 过渡没有 `prefers-reduced-motion: reduce` 兜底（悬停 transform 上盖 `transition: all` 也算） | 补上 |
+| 28a | Floor | M | 视频自动播放却没加 `muted`；LCP 元素上用 `loading="lazy"` | 用 `autoplay muted loop playsinline`；LCP 图片设 `fetchpriority="high"`，LCP 视频预载海报帧 |
+| 28b | Reflex | M | 视频缺 `poster` 或优先级提示。豁免依据：位于首屏之下且非 LCP | 补上 |
+| 39a | Floor | M | 会破的输入态：边框宽度随状态变化、用 `border` 搭焦点环、输入框比相邻按钮高或矮、仅靠透明度表现禁用 | 边框宽度恒定、用 `outline`、高度一致、禁用三通道齐上（透明度、`cursor: not-allowed`、原生属性） |
+| 39b | Reflex | M | 营销页控件高度超出 44 到 52px。豁免依据：应用界面 32 到 40px 并扩大热区补偿 | 回到规定数值 |
+| 62 | Floor | M | 静止即隐藏：reveal 类把内容设成 `opacity: 0` 或 `visibility: hidden`，全靠 JavaScript 显示，没有 `.js` 作用域限定、没有自动运行的 CSS 动画、也没有 `@starting-style`，脚本一失败页面就空白上线 | 默认可见；只在 `.js` 类下隐藏，或用 `@starting-style` 从可见态起做动画 |
 
-### Assets and access
+### 素材与可访问性
 
-| Gate | Tier | Class | The tell | The fix |
+| 闸门 | 层级 | 类别 | 特征 | 修正 |
 | --- | --- | --- | --- | --- |
-| 30a | Floor | M | An emoji standing in for an icon | one icon library, custom SVG, or typography |
-| 30b | Reflex | M | Two icon libraries on one page. Guard: the second is a brand or platform mark in two slots at most | one library |
-| 33 | Floor | M | A decorative `<svg>`, `<canvas>` or CSS-art element with neither `aria-hidden="true"` nor a label | hide it or name it |
-| 76 | Floor | M/R | A broken image: an `<img>` with no source or one that does not load; a library photo with no credit on the page; a paid stock photo (a free stock hotlink is a WARN) | the real file, or a library photo credited in the footer (`imagery.md` § 2) |
-| 73 | Floor | R | Text painted under another element: an opaque box, an image or another run of text covers a line of it (sticky and fixed chrome excepted) | give the text its own space, or its own surface above the cover |
-| 40 | Floor | M/R | Text, icon, focus ring or a field's edge under its contrast threshold against its computed background (body 4.5:1 or APCA Lc 60; large text, icons, rings and field edges 3:1 or Lc 45) | fix the pair; a field edge takes `--color-muted` |
-| 41 | Floor | M/R | Button text within 5% L and 0.05 chroma of its fill; `--color-accent-ink` missing where the accent carries text; a dark panel that does not swap its text colour; grey text on a coloured surface | the paired ink token |
-| 48 | Floor | M | A colour or `font-family` literal outside the token block | lift it into the tokens |
-| 49a | Floor | M/R | A button label or primary nav link wrapping at any width 320 to 1920 | shorten it; `white-space: nowrap` |
-| 49b | Reflex | M/R | A footer link, tab or breadcrumb wrapping. Guard: a real phrase that cannot shorten, two lines at most | shorten it |
-| 32 | Ledger | J | The same section compositions in the same order as a logged build; a fingerprint sharing more than three of six axes with a logged entry | change a composition or the order; say the delta in the stamp |
+| 30a | Floor | M | 拿 emoji 当图标 | 一个图标库、自绘 SVG，或字体排版 |
+| 30b | Reflex | M | 一页混用两个图标库。豁免依据：第二个是品牌或平台标志，至多出现在两个位置 | 只用一个库 |
+| 33 | Floor | M | 装饰性的 `<svg>`、`<canvas>` 或 CSS 图形元素，既没有 `aria-hidden="true"` 也没有标签 | 要么隐藏，要么命名 |
+| 76 | Floor | M/R | 坏图：没有 source 或加载失败的 `<img>`；页面没有署名的图库照片；付费图库照片（免费图库热链只是 `WARN`） | 用真实文件，或在页脚给图库照片署名（`imagery.md` § 2） |
+| 73 | Floor | R | 文字被画在其他元素下面：不透明盒子、图片或另一段文字盖住了它的一行（sticky 与 fixed 界面框除外） | 给文字留出专属空间，或给它一块盖过遮挡物的表面 |
+| 40 | Floor | M/R | 文字、图标、焦点环或输入框边缘对实际计算背景的对比度低于阈值（正文 4.5:1 或 APCA Lc 60；大字、图标、焦点环与输入框边缘 3:1 或 Lc 45） | 调整该配对；输入框边缘用 `--color-muted` |
+| 41 | Floor | M/R | 按钮文字与其底色在 5% L 与 0.05 色度之内；强调色承载文字处缺 `--color-accent-ink`；深色面板没有换文字颜色；彩色表面上的灰字 | 用成对的墨色 token |
+| 48 | Floor | M | token 块之外写死颜色或 `font-family` 字面量 | 提升进 token |
+| 49a | Floor | M/R | 按钮文字或主导航链接在 320 到 1920 任何宽度下换行 | 缩短文字；用 `white-space: nowrap` |
+| 49b | Reflex | M/R | 页脚链接、标签页或面包屑换行。豁免依据：确实无法再缩短的真实短语，至多两行 | 缩短 |
+| 32 | Ledger | J | 与已记录构建相同的区块编排与顺序；指纹与某条日志在六个维度中超过三个相同 | 改一处编排或顺序；在印戳里说明差异 |
 
-## 5. Finish checks and judged clauses
+## 5. Finish 检查与评判条款
 
-Loaded at Step 7, with the sweep's findings in hand.
+在 Step 7 载入，此时全面检查的发现已在手。
 
-### Finish (F-checks, never block)
+### Finish（F 检查，永不阻塞）
 
-F1 straight quotes in prose · F2 `...` for an ellipsis · F3 no `text-wrap: balance` on display heads · F4 more than one filled-primary button recipe on a page (dialogs count as their own page), or two filled buttons side by side · F5 an icon in a coloured coin · F6 display-size figures without tabular numerals · F7 one container recipe stamped on six or more selectors, or the pill radius on five or more selectors that are not controls, tags or badges · F8 more than one scroll-choreography pattern · F9 fake-human avatar hotlinks (this half is a FAIL) or person-keyword stock URLs · F10 a Lottie where CSS or SVG would do · F11 a highlighter band at the baseline instead of behind the x-height, or an underline thicker than 2px or offset more than 0.25em · F12 a flex row of unequal heights without `align-items: center` · F13 the outlier face carrying more than one role · F14 a helper-text slot with no reserved `min-height: 1lh` · F15 page invariants broken: more than one primary button style, container width, column gap below the hero or radius per nesting level, or more centred heading groups than left-aligned ones · F16 browser surfaces unthemed: no `::selection`, `caret-color` or `scrollbar-color` on a page with a committed palette · F17 a text block squeezed into a sliver at 1440 (under about 16 characters wide over four lines or more) (render) · F18 a `data-slot` rendering under 40px in either dimension at 1440, or a page with slots and no `hallmarkSlots` script (render) · F19 more than three font weights in running use, display and body together (render) · F20 a grid or wrapping row leaving one item alone on its last row under a fuller row (render) · F21 a heading level skipped · F22 justified text without `hyphens: auto` · F23 a document without `lang`, a `<title>` or a meta description · F24 a hairline border under a wide soft shadow (24px or more of blur after a negative spread) on one surface · F25 content a phone never gets: about 40 words or more shown at 1440 and hidden at 375, navigation aside, or a table opening with two or more columns off-screen (render). · F26 a paragraph that leaves one word on its last line, or a head of two or three lines ending on a stub, at 375 or 1280 (balance the head, `pretty` the copy, or rewrite)
+F1 正文里用直引号 · F2 用 `...` 当省略号 · F3 展示标题没用 `text-wrap: balance` · F4 一页上实底主按钮配方超过一种（对话框算独立页面），或两个实底按钮并排 · F5 图标放在彩色圆底上 · F6 展示级数字没用表格数字（tabular numerals） · F7 同一容器配方盖在六个及以上选择器上，或胶囊圆角用在五个及以上非控件、非标签件、非徽章的选择器上 · F8 滚动编排模式多于一种 · F9 热链假人头像（这一半按 FAIL 处理）或带人名关键词的图库 URL · F10 该用 CSS 或 SVG 的地方上了 Lottie · F11 高亮条压在基线上而不是 x 高度后面，或下划线粗于 2px 或偏移超过 0.25em · F12 flex 行内高度不齐却没有 `align-items: center` · F13 特例字体承担了不止一个角色 · F14 辅助文字槽位没有预留 `min-height: 1lh` · F15 页面不变量被破坏：主按钮样式、容器宽度、首屏之下栏距或每层圆角出现不止一种，或居中标题组多于左对齐的 · F16 浏览器表面未主题化：已定调色板的页面没有 `::selection`、`caret-color` 或 `scrollbar-color` · F17 1440 下文本块被挤成细条（宽约不足 16 字符还占四行以上）（渲染） · F18 1440 下 `data-slot` 任一维度渲染小于 40px，或页面有槽位却没有 `hallmarkSlots` 脚本（渲染） · F19 展示与正文合计实际使用超过三种字重（渲染） · F20 栅格或换行行在前一满行之下让一个条目孤零零落在末行（渲染） · F21 跳级标题 · F22 两端对齐文本没有 `hyphens: auto` · F23 文档缺 `lang`、`<title>` 或 meta description · F24 同一表面上发丝线边框下面压着大范围柔和阴影（负 spread 后模糊达 24px 以上） · F25 手机永远看不到的内容：1440 显示约 40 词以上而 375 隐藏的正文，导航除外；或表格打开时就有两列以上在屏幕外（渲染）。 · F26 375 或 1280 下段落末行只剩一个词，或两三行的标题末行只剩残段（平衡标题、对正文用 `pretty`，或改写）
 
-### Judged clauses
+### 评判条款
 
-The gates above that a script cannot settle, with enough to judge them well.
+以上闸门中脚本无法判定的那部分，附上足以作出良好判断的说明。
 
-**6b, the hero shape.** A hero built around one centred object is a composition; four things stacked on the centre line is a default. Prefer at most two centred elements with one breaking alignment (margin-aligned, right-flush, numeral-anchored). A hero with a stamped posture fills its screen (`layout.md` § 6); an unstamped one stops short of 92dvh.
+**6b，首屏形态。** 围绕一个居中对象构建的首屏是构图；四个东西堆在中线上就是默认模板。至多两个居中元素，其中一处打破对齐（margin 对齐、右端齐平、数字锚定）。印戳声明了姿态的首屏占满它的屏幕（`layout.md` § 6）；未声明的不得超过 92dvh。
 
-**8 and 32, repetition.** Read `.hallmark/log.json` newest first. The page's shape must differ from the last three; the six structural axes in `macrostructures.md` § The fingerprint are the ruler, and the log's `fingerprint` field is what you compare against, never memory. The same composition twice in a row on one page is the template; across pages, a different order or a different lead composition is enough.
+**8 与 32，重复。** 读 `.hallmark/log.json`，从最新往前读。页面形态必须与最近三次都不同；标尺是 `macrostructures.md` § The fingerprint 的六个结构维度，比对对象是日志的 `fingerprint` 字段，绝不靠记忆。同一页面上连续两次相同编排是模板；跨页面时，顺序不同或主打编排不同即可。
 
-**9, section rhythm.** Whitespace, hairline, tinted well, card: the surface ladder in `craft.md`. A page that climbs the same rung at every seam reads as a template; one that climbs different rungs in different places reads as set.
+**9，区块节奏。** 留白、发丝线、着色凹槽、卡片：见 `craft.md` 的表面阶梯。每道接缝都爬同一级，读起来就是模板；在不同位置爬不同的层级，读起来才像刻意布置过的。
 
-**11, hover by judgement.** One signal per element. Feedback belongs to the container, never to an image. Non-interactive things do not react to the pointer.
+**11，悬停靠判断。** 每个元素一个信号。反馈属于容器，绝不属于图片。非交互的东西不对指针作出反应。
 
-**16, toasts.** If the effect is visible, no toast. Toasts are for failures and invisible effects.
+**16，toast。** 效果看得见，就不弹 toast。toast 留给失败和看不见的效果。
 
-**23, footprint by eye.** Count solid fills, large accent headings and full-bleed accent bands against the 1280 x 800 fold. A declared Committed, Full-palette or Drenched posture moves the colour into surface tokens; undeclared sprawl still fails.
+**23，用眼睛量占地。** 对照 1280 x 800 折叠线，数一数实底填充、大号强调色标题和通栏强调色横条。声明了 Committed、Full-palette 或 Drenched 姿态的，颜色已进入表面 token；未声明的铺张仍然判负。
 
-**29, glow and wash.** The bloom is the tell whether it is drawn with a shadow or a gradient. Atmospheric earns two fixed blooms because the canvas is the design; everywhere else the surface is paper or ground, and depth comes from lightness steps and shadows with offset and blur.
+**29，光晕与晕染。** 光斑就是特征，无论用阴影还是渐变画出来的。氛围风（Atmospheric）可以有两个固定光斑，因为画布本身就是设计；其他地方的表面是纸或地面，纵深来自明度阶梯和带偏移、带模糊的阴影。
 
-**38iii, the accented word.** One word in the accent colour, in bold or on a highlighter band: after the eyebrow, the most common machine-made head. A head is one weight, one style and one colour. Three themes carry an accented word as their signature (Manifesto's red word, Lumen's coloured verb, Riso's misregistered word); they stamp the waiver and place it once, in the hero.
+**38iii，强调词。** 标题里一个词用强调色、加粗或垫高亮条：这是继眉标之后最常见的机器腔标题。一个标题只有一种字重、一种样式、一种颜色。有三个主题以强调词为招牌（Manifesto 的红词、Lumen 的变色动词、Riso 的错位套印词）；它们在印戳里声明豁免，并只在首屏用一次。
 
-**44, the fold.** Three widths, one question each: at 1280 x 800 is everything the hero has to say inside the screen; at 1440 x 900 is the hero exactly one screen, its content centred in it, with its visual beside the text; at 1920 x 1080 does the container hold and the hero still fit. A custom hero answers the first and the last. Fill a short hero with the visual or the headline, never with more copy.
+**44，折叠线。** 三个宽度，各问一个问题：1280 x 800 时，首屏要说的话是否都在屏幕内；1440 x 900 时，首屏是否正好一屏、内容在其中居中、视觉放在文本旁边；1920 x 1080 时，容器是否守得住、首屏是否还放得下。自定义首屏只需回答第一问和最后一问。首屏偏短就用视觉或标题补，绝不补文案。
 
-**46b, the bare number.** A figure is a headline only when the page is built around it and it carries its unit and its source.
+**46b，裸数字。** 数字只有当页面围绕它构建、且带着单位与来源时，才配做标题。
 
-**47c, imitation material.** The question is whether the thing pretends. A sample of the product inside a `data-slot`, its values reading as samples and named in the handoff, does not pretend; a styled-div dashboard with invented figures standing as proof does. Geometry that is geometry (a diagram, a chart, an animated line) is a first-class medium; geometry pretending to be a picture is the tell. Grids and stripes need a canvas, a map or a measuring tool under them.
+**47c，仿制材质。** 关键在于它是否在装。`data-slot` 里的产品样例，数值读起来就是样例、交接说明里也写明了，这不算装；用样式 div 搭的仪表盘、拿编造数字冒充证据，这算装。几何就是几何（示意图、图表、动画线条），是一等媒介；几何冒充图画才是破绽。网格和条纹下面要有画布、地图或测量工具。
 
-**54, the eyebrow test.** Small type before a heading survives only when it carries a fact, a destination or an identifier the reader would otherwise lack. Delete the line and read the page: if nothing was lost but a name for what comes next, it was an eyebrow. The fix is never bare deletion; `craft.md` § Opening a section has twelve other ways in, and where the heading under it is figurative the plain label becomes the heading.
+**54，眉标测试。** 标题前的小字，只有当它提供读者本会缺失的事实、去向或标识符时才留得下来。删掉这行再读页面：如果什么都没少，只少了对下文的称呼，那它就是眉标。修正绝不是一删了之；`craft.md` § Opening a section 给了十二种别的开场方式，且当下方标题本身是比喻时，平实的标签就升为标题。
 
-**58, the screen budget.** Nobody reads a landing page. A visitor takes one idea per screen or leaves. About 80 words per 900px window, labels and cells included; the hero is a headline, one sentence and its actions.
+**58，屏幕预算。** 没有人细读落地页。访客要么每屏拿走一个想法，要么离开。每 900px 窗口约 80 个词，标签和单元格都算进去；首屏就是标题、一句话和操作按钮。
 
-**62, hidden at rest.** Reveal patterns must be visible with scripting off. The safe shapes: `.js .reveal { opacity: 0 }` with the class added by the script, or a CSS animation from visible that reduced-motion collapses, or `@starting-style`.
+**62，静止即隐藏。** reveal 手法必须在脚本关闭时也可见。安全形态：`.js .reveal { opacity: 0 }` 且类由脚本添加；或从可见态起步、在 reduced motion 下收起的 CSS 动画；或 `@starting-style`。
 
-**63, template punctuation.** The middle dot as a universal separator, the arrow as a universal suffix and the coloured dot as a universal prefix are the punctuation of generated pages. One dot in a byline, a marquee's separator and a dot that conveys live state are legal.
+**63，模板标点。** 万能分隔的中点、万能后缀的箭头、万能前缀的彩色圆点，是生成式页面的标点符号。署名里的一个中点、走马灯的分隔符、传达实时状态的圆点，都是允许的。
 
-**65, the named look.** Cream, high-contrast serif, terracotta: the most recognised generated look, and the one a warm, bookish or family prompt pulls a model toward hardest. A catalog theme that carries it was vetted as a material and is dealt only when the prompt's keywords ask for it, so the gate reads custom and unthemed builds; there `direction.md` refuses it first.
+**65，被点名的外观。** 奶油底、高对比衬线、陶土色：这是最容易被认出的生成式外观，也是温暖、书卷气或家庭类提示词最能把模型拽过去的那一种。主题目录里自带它的主题，已作为材质通过审查，只在提示词关键词要求时才放行，因此该闸门只盯定制与未套主题的构建；在那里 `direction.md` 会先一步拒绝它。
 
-**66, decoration text.** The agency-portfolio tics: rotated labels, scroll cues, version pills, city-and-weather strips, mono-caps strips under the hero, credit lines under stock images. Each says "designed" without carrying a fact. A fact stays; a decoration goes.
+**66，装饰文字。** 代理商作品集式的小动作：旋转标签、滚动提示、版本胶囊、城市加天气条、首屏下的等宽大写小条、图库图片下的署名行。每一个都在喊“有设计”，却一个事实也不带。事实留下；装饰走人。
 
-**67, tracked caps.** The small uppercase line with its letters spread apart, whether it sits above a heading, heads a table, names a tag or runs the nav. Delete the transform and the tracking and read it again: a label in the body face at a step smaller says the same thing without announcing that a machine set it. Capitals survive as a wordmark, and as the display voice of a theme built on them, where a control may follow.
+**67，加字距大写。** 那条字母被撑开的小号大写行，无论放在标题上方、领着表格、命名标签件还是贯穿导航。去掉 transform 和字距再读一遍：正文字体小一号的标签说的是同样的意思，却不宣告“这是机器排的”。大写字母以品牌字标的形式留存，也作为以大写立身的主题的展示声音存在，此时控件可以跟进。
 
-**68, the wireframe page.** A page that promises material it does not have shows it as frames: six blank portraits under "Six instructors", four tall empty phones in a row, four grey bottles. Each frame is honest on its own; together they read as a wireframe somebody forgot to finish. Set the set in type, and keep a slot or two where the user's images will land, each holding a library photograph or the product built.
+**68，线框页。** 页面承诺了自己拿不出的素材时，就会用空框展示：“Six instructors” 标题下的六张空白头像、一排四台高高的空白手机、四只灰色瓶子。每个框单独看都诚实；凑在一起就像某个忘了收尾的线框图。把这组内容用文字排出来，留一两个槽位等用户的图片落位，每个槽位放图库照片或实做的产品。
 
-**69, the echo.** A thin prompt tempts a builder to say its few facts again: the price in the hero, on every card, in the FAQ and the footer. Each repetition reads as filler. Say a fact once, where it does work.
+**69，回声。** 提示词单薄时，构建者忍不住把仅有的几个事实反复说：价格出现在首屏、每张卡片、FAQ 和页脚。每次重复读起来都是凑数。每个事实只说一次，放在它发挥作用的地方。
 
-**70, the fake send.** A form that answers "Sent" to nobody is an invented outcome, as dishonest as an invented metric. Until the endpoint exists, the form validates, posts nowhere, and says so plainly ("Nothing was sent; this form is not connected yet").
+**70，假发送。** 对谁都没发送却回答 “Sent” 的表单，是编造的结果，和编造指标一样不诚实。端点存在之前，表单可以校验，不向任何地方提交，并且直说（“Nothing was sent; this form is not connected yet”）。
 
-**77 to 79, a full page.** The failure these catch is the opposite of clutter: a page of small things on a wide canvas. A screen that holds only a heading and a line, a narrow column with the right half empty, a 36px section head under an 84px hero, a hero whose content stops at 60% of the screen. The fix is mass, never more words and never a smaller gap: a bigger visual, a wider body, a head at the section size, a statement set large. `layout.md` § 4 and § 5 hold the compositions that fill a section within the 80-word screen.
+**77 到 79，撑满页面。** 这几条抓的是拥挤的反面：宽画布上摆一堆小东西。一屏只有标题加一句话；窄栏右边空一半；84px 首屏标题下压着 36px 的区块标题；首屏内容只到屏幕的 60%。修正靠体量，绝不靠加字，也绝不靠缩小间距：更大的视觉、更宽的正文、区块级大小的标题、大字排出的宣言句。`layout.md` § 4 和 § 5 存有能在 80 词预算内撑满区块的构图。
 
-**80 to 82, pictures.** A page that shows nothing real reaches for three substitutes: a drawing of the thing (a loaf, a sprig, a mascot, a mountain in strokes), a coloured box where the photograph should be, and a row of marks that counts what the copy could state. Each reads as generated at a glance. The library has the photograph; the product can be built; the number can be set large.
+**80 到 82，图画。** 拿不出真实东西的页面会抓三种替代品：给东西画一幅图（一个面包、一枝嫩芽、一个吉祥物、用线条画的山）、在照片该在的地方放一块色块、用一排记号数出文案本可以直接说出的数量。每种一眼就能看出是生成的。图库里有照片；产品可以实做；数字可以大字排出。
 
-**83, the photo wall.** The opposite failure: a page that is all photographs, one after another, reads as a stock gallery, and the theme never gets to speak. Keep the pictures that carry a fact, set them big, and build the sections between them from the theme's material (its Range).
+**83，照片墙。** 反向的失败：满页照片一张接一张，读起来像图库陈列，主题永远没机会开口。留下承载事实的照片，放大来排，中间的区块用主题材质（它的 Range）构建。
 
-**84, the fake product.** Ask where the product is before building one. A prompt that names an app, a site or a tool that exists, a folder holding its code, or a URL means the page shows captures of it: the main screen, a detail, a second screen, the phone view. A built mock is right only for a product not built yet, and its handoff names the screens to capture later.
+**84，假产品。** 动手做 mock 之前，先问产品在哪。提示词点到一个真实存在的应用、网站或工具、一个装着其代码的文件夹或一个 URL，就说明页面应展示它的截屏：主屏、细节屏、第二屏、手机视图。手搓 mock 只适用于尚未做出来的产品，且交接说明要写明之后补截哪些屏。
 
-**85 and the stock anatomy.** The close is the visible part of a deeper habit: hero beside a picture, a figure row, three steps, a split, a showcase, an email band. Judge the whole page against `anatomy.md`: is the job's action where real sites in the category put it, are the category's own sections here (the menu, the lineup, the issues, the record), and could this exact sequence of sections sit under a different business's name? If it could, the page has no anatomy of its own yet.
+**85 与套路骨架。** 收尾只是更深的习惯中看得见的那部分：首屏旁边一张图、一排数字、三步流程、左右分栏、橱窗展示、邮件横条。对照 `anatomy.md` 评判整页：业务的关键动作是否放在该品类真实网站放置的位置，品类自有的区块是否在场（菜单、阵容、期刊、记录），这一整串区块顺序换上另一家商号的名字是否照样成立？如果成立，页面就还没有自己的骨架。
 
-## 6. The reviews, in fresh context
+## 6. 两次评审，全新上下文
 
-The thread that built the page is its weakest reviewer. Two reviews run with no inherited transcript (a subagent in Claude Code): the **hero review** once at Step 6, before any section below the fold exists, and the **finish review** at Step 7. When a subagent can run them, do not read their prompts yourself: start the reviewer with *Read `<skill-dir>/references/review-hero.md` (or `review-finish.md`) and follow it* and pass these, files as paths and lines as quoted text. The hero review: the four `hero-*` screenshots, the stamp's first two lines, the Picks block's Material and Signature rows, the theme's picture. The finish review: the render tier's screenshots, the page's HTML or component source, the stamp's theme or idea line, the theme file and its picture, the hero review's findings with how each was settled, `gates.md` § 4, and on a redesign the `before` screenshots. Run it in the foreground, since the build waits on its first word (in Claude Code, `run_in_background: false`), never behind a timer or a wake-up.
+构建页面的那个线程是它最弱的评审员。两次评审都以无继承上下文的方式运行（Claude Code 里起子代理）：**首屏评审（hero review）**在 Step 6 跑一次，此时折叠线以下还没有任何区块；**收尾评审（finish review）**在 Step 7 跑。能起子代理时，不要自己去读它们的提示词：用 *Read `<skill-dir>/references/review-hero.md`（或 `review-finish.md`）并照着执行* 这句话启动评审员，并传入以下材料，文件给路径，行文给引用原文。首屏评审：四张 `hero-*` 截图、印戳前两行、Picks 块的 Material 与 Signature 行、主题图片。收尾评审：渲染层的截图、页面的 HTML 或组件源码、印戳的主题或创意行、主题文件及其图片、首屏评审的发现项及各项的处理结果、`gates.md` § 4，重设计时再加 `before` 截图。在前台运行，因为构建在等它的第一个词（Claude Code 中为 `run_in_background: false`），绝不放进定时器或唤醒任务。
 
-Act on its first word. `recapture` means the screenshots were wrong (a fallback face, a blank frame): retake them and start the review again; it does not use up the one round. Otherwise fix what is real, recapture the same shots (`--stage hero` for the hero), and score each finding yourself against its recapture: `resolved`, `partial` or `unresolved`, with a reason. Send the recaptures back for one scoring round only when the first word was `rebuild` or a finding named a Floor gate; scoring is not a second review. Record the outcome in the stamp, hero first: `hero-review: fix · 4 findings · 4 resolved`, then `finish-review: subagent · 5 findings · 4 resolved 1 unresolved · gap: none`. No subagents: then, and only then, read the prompt, re-read the artifact cold, run the prompt against yourself, and record `in-thread`.
+照它的第一个词行动。`recapture` 表示截图有问题（字体回退、空白帧）：重拍并重新启动评审，这不算消耗那一轮评分。否则修掉真实的问题，重拍同几处截图（首屏用 `--stage hero`），然后自己对照重拍图给每条发现项打分：`resolved`、`partial` 或 `unresolved`，并写明理由。只有第一个词是 `rebuild`、或某条发现项点名了 Floor 闸门时，才把重拍图发回去做一轮评分；评分不是第二次评审。把结果记进印戳，首屏在前：`hero-review: fix · 4 findings · 4 resolved`，然后 `finish-review: subagent · 5 findings · 4 resolved 1 unresolved · gap: none`。没有子代理时，且只有这时，才去读提示词，不带成见地重新审视产物，对自己执行提示词，并记录 `in-thread`。
 
-**Nothing ships with an open `FAIL` or an open `REFLEX`.** A Floor finding is fixed; a Reflex finding is fixed or waived; a Finish finding is read and answered.
+**任何开着 `FAIL` 或 `REFLEX` 的页面都不得发布上线。** Floor 发现项必须修复；Reflex 发现项修复或豁免；Finish 发现项读取并答复。

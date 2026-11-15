@@ -1,31 +1,35 @@
-# BDI Framework Integration Patterns
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/bdi-mental-states/references/framework-integration.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Integration patterns for connecting BDI ontology with executable agent frameworks.
+# BDI 框架集成模式
 
-## SEMAS Rule Translation
+把 BDI 本体与可执行 Agent 框架连接起来的集成模式。
 
-Map BDI ontology constructs to SEMAS production rules.
+## SEMAS 规则转换
 
-### Ontology-to-Rule Mapping
+把 BDI 本体构件映射到 SEMAS 产生式规则。
 
-| BDI Construct | SEMAS Element | Example |
+### 本体到规则的映射
+
+| BDI 构件 | SEMAS 元素 | 示例 |
 |---------------|---------------|---------|
-| Belief | HEAD fact | `belief(agent_a, store_open)` |
-| Supporting beliefs | CONDITIONALS | `[CONDITIONALS: time(weekday)]` |
-| Desire generation | TAIL action | `generate_desire(agent, goal)` |
-| Intention commitment | TAIL action | `commit_intention(agent, goal)` |
-| Plan specification | TAIL action | `create_plan(agent, plan_id)` |
+| Belief（信念） | HEAD fact | `belief(agent_a, store_open)` |
+| Supporting beliefs（支撑信念） | CONDITIONALS | `[CONDITIONALS: time(weekday)]` |
+| Desire generation（生成愿望） | TAIL action | `generate_desire(agent, goal)` |
+| Intention commitment（承诺意图） | TAIL action | `commit_intention(agent, goal)` |
+| Plan specification（指定计划） | TAIL action | `create_plan(agent, plan_id)` |
 
-### Rule Templates
+### 规则模板
 
-**Belief triggers desire formation:**
+**Belief 触发愿望的形成：**
 ```prolog
 [HEAD: belief(Agent, Fact)] / 
 [CONDITIONALS: context_condition(Agent, Context)] » 
 [TAIL: generate_desire(Agent, DesiredState)].
 ```
 
-**Desire triggers intention commitment:**
+**Desire 触发意图承诺：**
 ```prolog
 [HEAD: desire(Agent, Goal)] / 
 [CONDITIONALS: belief(Agent, SupportingFact1), 
@@ -33,21 +37,21 @@ Map BDI ontology constructs to SEMAS production rules.
 [TAIL: commit_intention(Agent, Goal)].
 ```
 
-**Intention triggers planning:**
+**Intention 触发规划：**
 ```prolog
 [HEAD: intention(Agent, Goal)] / 
 [CONDITIONALS: goal(GoalSpec)] » 
 [TAIL: create_plan(Agent, PlanId)].
 ```
 
-**Plan triggers execution:**
+**Plan 触发执行：**
 ```prolog
 [HEAD: plan(Agent, PlanId)] / 
 [CONDITIONALS: ready_to_execute(Agent)] » 
 [TAIL: execute_plan(Agent, PlanId)].
 ```
 
-### Complete SEMAS Example
+### 完整 SEMAS 示例
 
 ```prolog
 % ============================================================
@@ -92,7 +96,7 @@ Map BDI ontology constructs to SEMAS production rules.
        remove_intention(agent_a, buy_groceries)].
 ```
 
-### Python Translation Layer
+### Python 转换层
 
 ```python
 from rdflib import Graph, Namespace, RDF
@@ -155,11 +159,11 @@ def format_plan(plan_uri, graph):
     return f"plan({label or plan_uri.split('/')[-1]})"
 ```
 
-## Logic Augmented Generation (LAG)
+## 逻辑增强生成（LAG）
 
-Augment LLM outputs with BDI ontological constraints.
+用 BDI 本体约束增强 LLM 输出。
 
-### LAG Pipeline Architecture
+### LAG 管线架构
 
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
@@ -174,7 +178,7 @@ Augment LLM outputs with BDI ontological constraints.
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
 
-### LAG Implementation
+### LAG 实现
 
 ```python
 from rdflib import Graph, Namespace
@@ -297,7 +301,7 @@ Context: {context}
             raise ValueError(f"Failed to generate valid mental states: {result['errors']}")
 ```
 
-### Inconsistency Detection Example
+### 不一致性检测示例
 
 ```python
 def detect_location_inconsistency(graph: Graph) -> list[str]:
@@ -336,11 +340,11 @@ def detect_location_inconsistency(graph: Graph) -> list[str]:
     return inconsistencies
 ```
 
-## JADE/JADEX Integration
+## JADE/JADEX 集成
 
-Map BDI ontology to JADE/JADEX agent platform structures.
+把 BDI 本体映射到 JADE/JADEX Agent 平台结构。
 
-### JADE Agent Structure
+### JADE Agent 结构
 
 ```java
 public class BDIAgent extends Agent {
@@ -400,7 +404,7 @@ public class BDIAgent extends Agent {
 }
 ```
 
-### JADEX Goal Mapping
+### JADEX 目标映射
 
 ```java
 // Map BDI ontology goals to JADEX goals
@@ -451,9 +455,9 @@ public class OntologyBackedGoal {
 }
 ```
 
-## RDF Triple Store Integration
+## RDF 三元组存储集成
 
-### Triple Store Configuration
+### 三元组存储配置
 
 ```python
 from rdflib import Graph
@@ -529,9 +533,9 @@ class BDIMentalStateStore:
         return None
 ```
 
-## FIPA ACL Integration
+## FIPA ACL 集成
 
-Map BDI mental states to FIPA Agent Communication Language.
+把 BDI 心智状态映射到 FIPA Agent 通信语言。
 
 ```python
 from fipa_acl import ACLMessage, Performative

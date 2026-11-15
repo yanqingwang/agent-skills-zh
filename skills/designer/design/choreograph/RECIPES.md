@@ -1,10 +1,14 @@
-# Choreography Recipes
+> **中文汉化版** · 上游：[emilkowalski/skills](https://github.com/emilkowalski/skills) · 原文件：`skills/choreograph/RECIPES.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Copy-ready patterns for the relationships in [SKILL.md](SKILL.md). The values are starting points, so tune them on a recording.
+# 编排配方
 
-## Overlap: CSS stagger with an index variable
+[SKILL.md](SKILL.md) 中各种关系的拿来即用模式。这些数值只是起点，请对着录像调到合适为止。
 
-For one-shot entrances (a hero, a personal site intro). The delay is computed per element from a custom property, so you don't need one class per item.
+## Overlap：用索引变量做 CSS stagger
+
+用于一次性入场（hero 区、个人网站首页）。每个元素的 delay 由 custom property 计算得出，所以不需要每个条目单独一个类。
 
 ```tsx
 <div className="stagger">
@@ -40,11 +44,11 @@ For one-shot entrances (a hero, a personal site intro). The delay is computed pe
 }
 ```
 
-- `both` is required. `backwards` applies the first keyframe during the delay, so later items don't flash their final state before they animate. `forwards` keeps the end state.
-- Omitting `to` makes the keyframe animate to the element's own styles.
-- Changing a custom property on a parent recalculates styles for every descendant. That's fine for a one-shot entrance, but don't drive per-frame values (a drag) through an inherited variable on a large tree.
+- 必须用 `both`。`backwards` 让第一帧 keyframe 在 delay 期间就生效，后面的条目才不会在动画开始前闪现最终状态。`forwards` 保留结束状态。
+- 省略 `to` 会让 keyframe 动画到元素自身的样式。
+- 在父元素上改 custom property 会让每个后代重算样式。一次性入场没问题，但不要在大树上通过继承变量驱动逐帧变化的值（比如拖拽）。
 
-## Overlap: Motion variants with a non-uniform stagger
+## Overlap：用 Motion variants 做非均匀 stagger
 
 ```tsx
 import { motion, stagger } from "motion/react";
@@ -82,14 +86,14 @@ const decoration = {
 </motion.section>
 ```
 
-- Each role gets its own variant (distance, duration). The stagger only sets *when* each one starts.
-- `stagger(0.05, { from: "center" })` radiates out from the middle. Use a number index to radiate from the item the user interacted with.
-- Older Motion versions use `staggerChildren: 0.06` instead of `delayChildren: stagger(...)`.
-- For long lists, give items beyond the first ~6 the same delay as the 6th, so the group never takes longer than ~300ms.
+- 每个角色有自己的 variant（距离、时长）。stagger 只决定每个角色*何时*开始。
+- `stagger(0.05, { from: "center" })` 从中间向外辐射。传入数字索引，就能从用户交互的那个条目向外辐射。
+- 旧版 Motion 用 `staggerChildren: 0.06` 代替 `delayChildren: stagger(...)`。
+- 长列表里，前 ~6 个之后的条目沿用第 6 个的 delay，整组就不会超过 ~300ms。
 
-## Together: remove the exiting element from the flow
+## Together：把退场元素从文档流里拿出来
 
-Siblings close the gap *while* the removed item fades, not after.
+被移除的条目 fade 的*同时*，兄弟元素就在补上空缺，而不是等它结束。
 
 ```tsx
 <ul>
@@ -108,11 +112,11 @@ Siblings close the gap *while* the removed item fades, not after.
 </ul>
 ```
 
-Without a library: before running the exit, read the element's offset, set `position: absolute` with that `top`/`left` on it (the parent needs `position: relative`), then animate it out. Animate the siblings with FLIP or let them reflow.
+不用库的做法：执行退场之前，先读出元素的 offset，把它设为 `position: absolute` 并赋上对应的 `top`/`left`（父元素需要 `position: relative`），然后把它动画移出。兄弟元素可以用 FLIP 做动画，或者直接让它们回流。
 
-## Together: crossfade views in a resizing container
+## Together：在变尺寸的容器里 crossfade 视图
 
-The container's height and the content swap are one object: same duration, same easing family.
+容器的高度与内容切换是同一个整体：相同时长，同一个 easing family。
 
 ```tsx
 import useMeasure from "react-use-measure";
@@ -154,11 +158,11 @@ const fadeDuration = useMemo(() => {
 </motion.div>
 ```
 
-- The height uses a strong `ease-out`, and the content uses a lighter curve from the same family, so the swap stays visible without falling out of sync.
-- `key` on the child is what tells `AnimatePresence` a view left. A missing key is the first thing to check when an exit doesn't play.
-- If the container is part of a larger component (a drawer), bring that component's own open duration in line with this one so the whole thing feels like one entity.
+- 高度用强的 `ease-out`，内容用同族更轻的曲线，切换既能被看见，又不会失去同步。
+- 子元素上的 `key` 是告诉 `AnimatePresence` 有视图离开的依据。退场没播放时，第一个要查的就是缺 `key`。
+- 如果容器是更大组件的一部分（比如 drawer），把那个组件自身的打开时长对齐到这里，让整体读作一个实体。
 
-## Direction-aware steps
+## 感知方向的步进切换
 
 ```tsx
 const [[step, direction], setStep] = useState([0, 0]);
@@ -187,11 +191,11 @@ const variants = {
 </MotionConfig>
 ```
 
-`custom` goes on **both** `AnimatePresence` and the child. The exiting child reads the latest direction from `AnimatePresence`. Without that, it uses the direction it had when it mounted.
+`custom` 要同时加在 **`AnimatePresence` 和子元素**两处。退场的子元素从 `AnimatePresence` 读取最新方向。不加的话，它用的是自己挂载时的方向。
 
-For small containers or similar views, swap the 110% slide for a crossfade with an 8px shift and a light blur. The eyes barely move and the change still reads.
+小容器或内容相近的视图，把 110% 的滑动换成带 8px 位移和轻微模糊的 crossfade。眼睛几乎不用动，变化照样读得出来。
 
-## Sequence: one draw after another
+## Sequence：一笔接一笔
 
 ```css
 .square {
@@ -208,19 +212,19 @@ For small containers or similar views, swap the 110% slide for a crossfade with 
 }
 ```
 
-With `pathLength="100"` on both paths, `stroke-dasharray: 100; stroke-dashoffset: 100` hides each one with round numbers. To make the handoff read as one gesture, start the checkmark slightly before the square finishes (e.g. 0.5s).
+两条路径都设 `pathLength="100"` 之后，`stroke-dasharray: 100; stroke-dashoffset: 100` 用整数就能把各自藏起来。要让交接读作同一个手势，让对勾在方块结束前一点点启动（比如 0.5s）。
 
-## Sequence: morph between two rich states with a crossfade
+## Sequence：用 crossfade 在两个富状态之间 morph
 
-`mode="wait"` is the safe default when a container changes width *and* height between dense views. To keep a crossfade anyway:
+容器在信息密集的视图之间同时改变宽度和高度时，`mode="wait"` 是稳妥的默认选择。如果仍想用 crossfade：
 
-1. Render the active view twice. Copy A animates only the **enter**. Copy B is `position: absolute`, sits at `opacity: 0`, and only becomes visible while **exiting**: its exit is a keyframe that starts at `opacity: 1` and fades out.
-2. Give the exiting copy its own transform depending on where the container is going. Scale it up if the next state is larger and down if it's smaller, with `scaleX` pulling it toward the center when the container narrows so it doesn't bleed out of the edges.
-3. With a handful of states, hardcode these values (and the spring bounce) per state pair, and pass them through `custom`. Smaller states get more bounce.
+1. 把激活视图渲染两份。副本 A 只做**入场**动画。副本 B 是 `position: absolute`，常态 `opacity: 0`，只在**退场**时可见：它的退场是一个从 `opacity: 1` 开始淡出的 keyframe。
+2. 按容器的去向给退场副本单独的 transform。下一个状态更大就放大，更小就缩小；容器变窄时用 `scaleX` 把它往中心收，免得溢出边缘。
+3. 状态不多时，把这些值（以及 spring 的 bounce）按状态对硬编码，通过 `custom` 传入。状态越小，bounce 越多。
 
-## Carry: steer a shared layout animation through its parent
+## Carry：通过父元素引导 shared layout 动画
 
-You can't customize the path a `layoutId` animation takes, but you can move the container it lands in.
+你无法自定义 `layoutId` 动画走过的路径，但可以移动它最终落入的容器。
 
 ```tsx
 <motion.div
@@ -233,11 +237,11 @@ You can't customize the path a `layoutId` animation takes, but you can move the 
 </motion.div>
 ```
 
-The images morph into the bin *and* drop with it. Show the bin's front face with a delay timed to when the images have almost landed, so they never visibly pass through it.
+图片在 morph 进垃圾桶*的同时*跟着它一起下落。垃圾桶的正面带 delay 显示，时机对准图片即将落定的瞬间，图片就不会在视觉上穿过它。
 
-## Imperative orchestration (`useAnimate`)
+## 命令式编排（`useAnimate`）
 
-Use this only when several elements coordinate across several events and you need to await completion.
+只有当多个元素要跨多个事件协同、而且你需要 await 完成时才用它。
 
 ```tsx
 const [scope, animate] = useAnimate();
@@ -288,5 +292,5 @@ function startIdle() {
 }
 ```
 
-- Target elements with `data-animate` selectors inside `scope` instead of keeping a ref per element.
-- Await `Promise.all` when the durations differ. Awaiting just one animation is only safe when they all share a duration.
+- 在 `scope` 里用 `data-animate` 选择器定位元素，而不是每个元素存一个 ref。
+- 时长不一致时要 await `Promise.all`。只 await 单个动画，只有在所有动画时长相同时才安全。

@@ -1,46 +1,50 @@
-# Common Patterns - JavaScript Code Node
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-code-javascript/COMMON_PATTERNS.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Production-tested patterns for n8n Code nodes. These patterns are proven in real workflows.
+# 常用模式：JavaScript Code 节点
 
-> **Native first.** Every pattern below opens with the native nodes that do the same job. Use the Code version only
-> when the job passed the gate in SKILL.md (no native node fits, and it is on the closed list), and give the node a
-> `Why Code:` note. The job-to-node table in `using-n8n-mcp-skills` lists the native nodes.
+经过生产环境验证的 n8n Code 节点模式。这些模式已在真实工作流中得到检验。
 
----
-
-## Overview
-
-This guide covers the 10 most useful Code node patterns for n8n workflows. Each pattern includes:
-- **Use Case**: When to use this pattern
-- **Key Techniques**: Important coding techniques demonstrated
-- **Complete Example**: Working code you can adapt
-- **Variations**: Common modifications
-
-**Pattern Categories:**
-- Data Aggregation (Patterns 1, 5, 10)
-- Content Processing (Patterns 2, 3)
-- Data Validation & Comparison (Patterns 4)
-- Data Transformation (Patterns 5, 6, 7)
-- Output Formatting (Pattern 8)
-- Filtering & Ranking (Pattern 9)
+> **Native first.** 下面每个模式都以能完成同样工作的原生节点开头。只有当任务通过了 SKILL.md 中的闸门
+> （没有原生节点适用，且它在封闭清单上）时才使用 Code 版本，并给节点加一条 `Why Code:` 备注。
+> `using-n8n-mcp-skills` 中的 job-to-node 对照表列出了这些原生节点。
 
 ---
 
-## Pattern 1: Multi-Source Data Aggregation
+## 概览
 
-> **Native first:** Merge (`append`, or `combineByFields` on a shared key) joins sources; Edit Fields gives each source the same shape. Use this pattern when the sources' shapes differ too much for one Merge.
+本指南覆盖 n8n 工作流中最有用的 10 个 Code 节点模式。每个模式包含：
+- **适用场景**：何时使用本模式
+- **关键技术**：所演示的重要编码技术
+- **完整示例**：可改造使用的可运行代码
+- **变体**：常见的修改方式
 
-**Use Case**: Combining data from multiple APIs, RSS feeds, webhooks, or databases
+**模式分类：**
+- 数据聚合（Pattern 1、5、10）
+- 内容处理（Pattern 2、3）
+- 数据校验与比较（Pattern 4）
+- 数据转换（Pattern 5、6、7）
+- 输出格式化（Pattern 8）
+- 过滤与排名（Pattern 9）
 
-**When to use:**
-- Collecting data from multiple services
-- Normalizing different API response formats
-- Merging data sources into unified structure
-- Building aggregated reports
+---
 
-**Key Techniques**: Loop iteration, conditional parsing, data normalization
+## Pattern 1：多来源数据聚合
 
-### Complete Example
+> **Native first:** Merge（`append`，或在共享键上用 `combineByFields`）负责连接多个来源；Edit Fields 让每个来源变成相同的形状。当各来源的形状差异太大、单个 Merge 处理不了时，才使用本模式。
+
+**适用场景**：合并来自多个 API、RSS 源、webhook 或数据库的数据
+
+**何时使用：**
+- 从多个服务收集数据
+- 归一化不同的 API 响应格式
+- 把多个数据源合并成统一结构
+- 构建聚合报告
+
+**关键技术**：循环迭代、条件解析、数据归一化
+
+### 完整示例
 
 ```javascript
 // Process and structure data collected from multiple sources
@@ -101,7 +105,7 @@ processedArticles.sort((a, b) => b.score - a.score);
 return processedArticles.map(article => ({json: article}));
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Add source weighting
@@ -131,21 +135,21 @@ processedArticles = processedArticles.filter(article => {
 
 ---
 
-## Pattern 2: Regex Filtering & Pattern Matching
+## Pattern 2：正则过滤与模式匹配
 
-> **Native first:** a Filter or IF condition with the `regex` / `contains` string operator keeps or routes matching items. Use this pattern when you need to count or extract many matches per item.
+> **Native first:** 用 Filter 或 IF 条件配合 `regex` / `contains` 字符串运算符，即可保留或分流匹配的条目。当需要在每个条目内统计或提取大量匹配时，使用本模式。
 
-**Use Case**: Content analysis, keyword extraction, mention tracking, text parsing
+**适用场景**：内容分析、关键词提取、提及追踪、文本解析
 
-**When to use:**
-- Extracting mentions or tags from text
-- Finding patterns in unstructured data
-- Counting keyword occurrences
-- Validating formats (emails, phone numbers)
+**何时使用：**
+- 从文本中提取提及或标签
+- 在非结构化数据中查找模式
+- 统计关键词出现次数
+- 校验格式（邮箱、电话号码）
 
-**Key Techniques**: Regex matching, object aggregation, sorting/ranking
+**关键技术**：正则匹配、对象聚合、排序/排名
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Extract and track mentions using regex patterns
@@ -210,7 +214,7 @@ return Object.entries(etfMentions)
   .sort((a, b) => b.json.mentions - a.json.mentions);
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Email extraction
@@ -236,21 +240,21 @@ const urls = text.match(urlPattern) || [];
 
 ---
 
-## Pattern 3: Markdown Parsing & Structured Data Extraction
+## Pattern 3：Markdown 解析与结构化数据提取
 
-> **Native first:** Markdown (to HTML) + HTML `extractHtmlContent` with CSS selectors, or Extract From File for CSV / XLSX / PDF. This pattern is for free-form text no node parses (a parsing exception).
+> **Native first:** Markdown 节点（转 HTML）+ HTML 节点用 CSS 选择器做 `extractHtmlContent`；CSV / XLSX / PDF 用 Extract From File。本模式只用于没有任何节点能解析的自由格式文本（属于解析例外）。
 
-**Use Case**: Parsing formatted text, extracting structured fields, content transformation
+**适用场景**：解析格式化文本、提取结构化字段、内容转换
 
-**When to use:**
-- Parsing markdown or HTML
-- Extracting data from structured text
-- Converting formatted content to JSON
-- Processing documentation or articles
+**何时使用：**
+- 解析 markdown 或 HTML
+- 从结构化文本中提取数据
+- 把格式化内容转成 JSON
+- 处理文档或文章
 
-**Key Techniques**: Regex grouping, helper functions, data normalization, while loops for iteration
+**关键技术**：正则分组、辅助函数、数据归一化、用 while 循环迭代
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Parse markdown and extract structured information
@@ -303,7 +307,7 @@ ads.sort((a, b) => a.timeInMinutes - b.timeInMinutes);
 return ads.map(ad => ({json: ad}));
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Parse HTML table to JSON
@@ -356,21 +360,21 @@ if (frontmatterMatch) {
 
 ---
 
-## Pattern 4: JSON Comparison & Validation
+## Pattern 4：JSON 比较与校验
 
-> **Native first:** Compare Datasets (outputs: in A only / same / different / in B only) diffs two lists on a key. Use this pattern for a deep diff inside one pair of objects.
+> **Native first:** Compare Datasets（输出：in A only / same / different / in B only）按一个键对比两个列表。要在同一对对象内部做深度差异比较时，使用本模式。
 
-**Use Case**: Workflow versioning, configuration validation, change detection, data integrity
+**适用场景**：工作流版本管理、配置校验、变更检测、数据完整性
 
-**When to use:**
-- Comparing two versions of data
-- Detecting changes in configurations
-- Validating data consistency
-- Checking for differences
+**何时使用：**
+- 比较数据的两个版本
+- 检测配置中的变更
+- 校验数据一致性
+- 检查差异
 
-**Key Techniques**: JSON ordering, base64 decoding, deep comparison, object manipulation
+**关键技术**：JSON 键排序、base64 解码、深度比较、对象操作
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Compare and validate JSON objects from different sources
@@ -433,7 +437,7 @@ return [{
 }];
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Simple equality check
@@ -495,21 +499,21 @@ function validateSchema(data, schema) {
 
 ---
 
-## Pattern 5: CRM Data Transformation
+## Pattern 5：CRM 数据转换
 
-> **Native first:** Edit Fields with short expressions maps a form to a CRM shape, or the CRM node's own field slots do it directly. Use this pattern only when the mapping needs loops or several statements per field.
+> **Native first:** Edit Fields 配合短表达式就能把表单映射成 CRM 所需的形状；CRM 节点自身的字段槽位也能直接完成映射。只有当映射需要循环、或每个字段需要多条语句时，才使用本模式。
 
-**Use Case**: Lead enrichment, data normalization, API preparation, form data processing
+**适用场景**：线索数据补全、数据归一化、API 准备、表单数据处理
 
-**When to use:**
-- Processing form submissions
-- Preparing data for CRM APIs
-- Normalizing contact information
-- Enriching lead data
+**何时使用：**
+- 处理表单提交
+- 为 CRM API 准备数据
+- 归一化联系人信息
+- 补全线索数据
 
-**Key Techniques**: Object destructuring, data mapping, format conversion, field splitting
+**关键技术**：对象解构、数据映射、格式转换、字段拆分
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Transform form data into CRM-compatible format
@@ -562,7 +566,7 @@ return [{
 }];
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Multiple contact processing
@@ -613,21 +617,21 @@ function calculateLeadScore(data) {
 
 ---
 
-## Pattern 6: Release Information Processing
+## Pattern 6：Release 信息处理
 
-> **Native first:** the GitHub node fetches releases; Sort + Limit picks the latest; Edit Fields shapes them. Use this pattern for semver comparison or changelog parsing.
+> **Native first:** GitHub 节点负责抓取 releases；Sort + Limit 挑出最新的；Edit Fields 给它们整形。需要做 semver 比较或解析 changelog 时，使用本模式。
 
-**Use Case**: Version management, changelog parsing, release notes generation, GitHub API processing
+**适用场景**：版本管理、changelog 解析、发布说明生成、GitHub API 处理
 
-**When to use:**
-- Processing GitHub releases
-- Filtering stable versions
-- Generating changelog summaries
-- Extracting version information
+**何时使用：**
+- 处理 GitHub releases
+- 过滤稳定版本
+- 生成 changelog 摘要
+- 提取版本信息
 
-**Key Techniques**: Array filtering, conditional field extraction, date formatting, string manipulation
+**关键技术**：数组过滤、条件字段提取、日期格式化、字符串操作
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Extract and filter stable releases from GitHub API
@@ -670,7 +674,7 @@ const stableReleases = allReleases
 return stableReleases.map(release => ({json: release}));
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Version comparison
@@ -713,21 +717,21 @@ if (match) {
 
 ---
 
-## Pattern 7: Array Transformation with Context
+## Pattern 7：带上下文的数组转换
 
-> **Native first:** this is usually Edit Fields — computed fields are short expressions (`{{ $json.price * $json.qty }}`), with Split Out / Aggregate around it for arrays. Code only if the fields need multi-statement logic.
+> **Native first:** 这通常就是 Edit Fields 能做的事：计算字段用短表达式（`{{ $json.price * $json.qty }}`），数组场景在外面配合 Split Out / Aggregate。只有当字段需要多语句逻辑时才用 Code。
 
-**Use Case**: Quick data transformation, field mapping, adding computed fields
+**适用场景**：快速数据转换、字段映射、添加计算字段
 
-**When to use:**
-- Transforming arrays with additional context
-- Adding calculated fields
-- Simplifying complex objects
-- Pluralization logic
+**何时使用：**
+- 带附加上下文转换数组
+- 添加计算字段
+- 简化复杂对象
+- 单复数处理逻辑
 
-**Key Techniques**: Array methods chaining, ternary operators, computed properties
+**关键技术**：数组方法链式调用、三元运算符、计算属性
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Transform releases with contextual information
@@ -747,7 +751,7 @@ const releases = $input.first().json
 return releases.map(release => ({json: release}));
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Add ranking
@@ -788,21 +792,21 @@ const categorized = $input.all().map(item => ({
 
 ---
 
-## Pattern 8: Slack Block Kit Formatting
+## Pattern 8：Slack Block Kit 格式化
 
-> **Native first:** the Slack node takes the blocks as an expression in its Blocks field (`={{ { "blocks": [...] } }}`, see NODE_FAMILY_GOTCHAS.md in n8n-node-configuration). Build blocks in Code only when their number depends on loops over data.
+> **Native first:** Slack 节点可以在其 Blocks 字段里用表达式传入 blocks（`={{ { "blocks": [...] } }}`，参见 n8n-node-configuration 中的 NODE_FAMILY_GOTCHAS.md）。只有当 blocks 的数量取决于对数据的循环时，才在 Code 里构建。
 
-**Use Case**: Chat notifications, rich message formatting, interactive messages
+**适用场景**：聊天通知、富文本消息格式化、交互式消息
 
-**When to use:**
-- Sending formatted Slack messages
-- Creating interactive notifications
-- Building rich content for chat platforms
-- Status reports and alerts
+**何时使用：**
+- 发送格式化的 Slack 消息
+- 创建交互式通知
+- 为聊天平台构建富内容
+- 状态报告与告警
 
-**Key Techniques**: Template literals, nested objects, Block Kit syntax, date formatting
+**关键技术**：模板字符串、嵌套对象、Block Kit 语法、日期格式化
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Create Slack-formatted message with structured blocks
@@ -863,7 +867,7 @@ return [{
 }];
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Interactive buttons
@@ -912,21 +916,21 @@ function truncate(text, maxLength = 3000) {
 
 ---
 
-## Pattern 9: Top N Filtering & Ranking
+## Pattern 9：Top N 过滤与排名
 
-> **Native first:** Filter (threshold) → Sort (by score, descending) → Limit (N). Use this pattern when the score itself needs a multi-step calculation.
+> **Native first:** Filter（设阈值）→ Sort（按分数降序）→ Limit（取 N 条）。当分数本身需要多步计算时，使用本模式。
 
-**Use Case**: RAG pipelines, ranking algorithms, result filtering, leaderboards
+**适用场景**：RAG 管道、排名算法、结果过滤、排行榜
 
-**When to use:**
-- Getting top results by score
-- Filtering best/worst performers
-- Building leaderboards
-- Relevance ranking
+**何时使用：**
+- 按分数获取前几名结果
+- 过滤表现最好/最差的条目
+- 构建排行榜
+- 相关性排名
 
-**Key Techniques**: Sorting, slicing, null coalescing, score calculations
+**关键技术**：排序、切片、空值合并、分数计算
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Filter and rank by similarity score, return top results
@@ -950,7 +954,7 @@ return [{
 }];
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Top N with minimum threshold
@@ -983,21 +987,21 @@ const topPercentile = $input.all().filter(item => item.json.score >= percentile9
 
 ---
 
-## Pattern 10: String Aggregation & Reporting
+## Pattern 10：字符串聚合与报告
 
-> **Native first:** Summarize with `concatenate` (per group) or Aggregate, then one expression with `.join('\n')` in the message field. Use this pattern for multi-section reports with loops.
+> **Native first:** 用 Summarize 节点的 `concatenate`（按分组）或 Aggregate 节点完成聚合，再在消息字段里放一个带 `.join('\n')` 的表达式。需要带循环、分多个章节的报告时，使用本模式。
 
-**Use Case**: Report generation, log aggregation, content concatenation, summary creation
+**适用场景**：报告生成、日志聚合、内容拼接、摘要创建
 
-**When to use:**
-- Combining multiple text outputs
-- Generating reports from data
-- Aggregating logs or messages
-- Creating formatted summaries
+**何时使用：**
+- 合并多个文本输出
+- 从数据生成报告
+- 聚合日志或消息
+- 创建格式化摘要
 
-**Key Techniques**: Array joining, string concatenation, template literals, timestamp handling
+**关键技术**：数组合并、字符串拼接、模板字符串、时间戳处理
 
-### Complete Example
+### 完整示例
 
 ```javascript
 // Aggregate multiple text inputs into formatted report
@@ -1023,7 +1027,7 @@ return [{
 }];
 ```
 
-### Variations
+### 变体
 
 ```javascript
 // Variation 1: Numbered list
@@ -1069,26 +1073,26 @@ const summary = {
 
 ---
 
-## Choosing the Right Pattern
+## 如何选择合适的模式
 
-### Pattern Selection Guide
+### 模式选择指南
 
-| Your Goal | Use Pattern |
+| 你的目标 | 使用模式 |
 |-----------|-------------|
-| Combine multiple API responses | Pattern 1 (Multi-source Aggregation) |
-| Extract mentions or keywords | Pattern 2 (Regex Filtering) |
-| Parse formatted text | Pattern 3 (Markdown Parsing) |
-| Detect changes in data | Pattern 4 (JSON Comparison) |
-| Prepare form data for CRM | Pattern 5 (CRM Transformation) |
-| Process GitHub releases | Pattern 6 (Release Processing) |
-| Add computed fields | Pattern 7 (Array Transformation) |
-| Format Slack messages | Pattern 8 (Block Kit Formatting) |
-| Get top results | Pattern 9 (Top N Filtering) |
-| Create text reports | Pattern 10 (String Aggregation) |
+| 合并多个 API 响应 | Pattern 1（多来源聚合） |
+| 提取提及或关键词 | Pattern 2（正则过滤） |
+| 解析格式化文本 | Pattern 3（Markdown 解析） |
+| 检测数据中的变更 | Pattern 4（JSON 比较） |
+| 为 CRM 准备表单数据 | Pattern 5（CRM 转换） |
+| 处理 GitHub releases | Pattern 6（Release 处理） |
+| 添加计算字段 | Pattern 7（数组转换） |
+| 格式化 Slack 消息 | Pattern 8（Block Kit 格式化） |
+| 获取前几名结果 | Pattern 9（Top N 过滤） |
+| 创建文本报告 | Pattern 10（字符串聚合） |
 
-### Combining Patterns
+### 组合多个模式
 
-Many real workflows combine multiple patterns:
+很多真实工作流会组合多个模式：
 
 ```javascript
 // Example: Multi-source aggregation + Top N filtering
@@ -1114,30 +1118,30 @@ return [{json: {report, items: top10}}];
 
 ---
 
-## Summary
+## 总结
 
-**Most Useful Patterns**:
-1. Multi-source Aggregation - Combining data from APIs, databases
-2. Top N Filtering - Rankings, leaderboards, best results
-3. Data Transformation - CRM data, field mapping, enrichment
+**最有用的模式**：
+1. 多来源聚合 - 合并来自 API、数据库的数据
+2. Top N 过滤 - 排名、排行榜、最佳结果
+3. 数据转换 - CRM 数据、字段映射、数据补全
 
-**Key Techniques Across Patterns**:
-- Array methods (map, filter, reduce, sort, slice)
-- Regex for pattern matching
-- Object manipulation and destructuring
-- Error handling with optional chaining
-- Template literals for formatting
+**各模式共用的关键技术**：
+- 数组方法（map、filter、reduce、sort、slice）
+- 用正则表达式做模式匹配
+- 对象操作与解构
+- 用可选链做错误处理
+- 用模板字符串做格式化
 
-**See Also**:
-- [DATA_ACCESS.md](DATA_ACCESS.md) - Data access methods
-- [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - Avoid common mistakes
-- [BUILTIN_FUNCTIONS.md](BUILTIN_FUNCTIONS.md) - Built-in helpers
+**另见**：
+- [DATA_ACCESS.md](DATA_ACCESS.md) - 数据访问方法
+- [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - 避免常见错误
+- [BUILTIN_FUNCTIONS.md](BUILTIN_FUNCTIONS.md) - 内置辅助函数
 
 ---
 
-## Best Practices
+## 最佳实践
 
-### 1. Always Validate Input Data
+### 1. 始终校验输入数据
 
 ```javascript
 const items = $input.all();
@@ -1155,7 +1159,7 @@ if (!items[0].json) {
 // Continue processing...
 ```
 
-### 2. Use Try-Catch for Error Handling
+### 2. 用 Try-Catch 处理错误
 
 ```javascript
 try {
@@ -1174,7 +1178,7 @@ try {
 }
 ```
 
-### 3. Prefer Array Methods Over Loops
+### 3. 优先用数组方法而非循环
 
 ```javascript
 // ✅ GOOD: Functional approach
@@ -1191,7 +1195,7 @@ for (const item of $input.all()) {
 }
 ```
 
-### 4. Filter Early, Process Late
+### 4. 尽早过滤，延后处理
 
 ```javascript
 // ✅ GOOD: Filter first to reduce processing
@@ -1205,7 +1209,7 @@ const processed = $input.all()
   .filter(item => item.json.status === 'active');
 ```
 
-### 5. Use Descriptive Variable Names
+### 5. 使用见名知义的变量名
 
 ```javascript
 // ✅ GOOD: Clear intent
@@ -1217,7 +1221,7 @@ const a = $input.all().filter(item => item.json.active);
 const t = a.reduce((s, u) => s + u.json.revenue, 0);
 ```
 
-### 6. Debug with console.log()
+### 6. 用 console.log() 调试
 
 ```javascript
 // Debug statements appear in browser console

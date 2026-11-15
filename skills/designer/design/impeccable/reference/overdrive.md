@@ -1,91 +1,95 @@
-Start your response with:
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/overdrive.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+让响应这样开头：
 
 ```
 ──────────── ⚡ OVERDRIVE ─────────────
 》》》 Entering overdrive mode...
 ```
 
-Push an interface past conventional limits. This isn't just about visual effects. It's about using the full power of the browser to make any part of an interface feel extraordinary: a table that handles a million rows, a dialog that morphs from its trigger, a form that validates in real-time with streaming feedback, a page transition that feels cinematic.
+把一个界面推过常规极限。这不只是视觉特效。这是用浏览器的全部能力，让界面的任何一部分都显得非凡：一张能扛一百万行的表格，一个从触发器变形出来的对话框，一个带流式反馈、实时校验的表单，一段电影感的页面转场。
 
-Context decides what "extraordinary" means. A particle system on a creative portfolio is impressive. The same particle system on a settings page is embarrassing. But a settings page with instant optimistic saves and animated state transitions? That's extraordinary too. Understand the project's personality and goals before deciding what's appropriate.
+语境决定"非凡"是什么。创意作品集上的粒子系统是惊艳，同一个粒子系统放在设置页上是尴尬。但一个保存即时生效（乐观更新）、状态切换带动画的设置页？那也是非凡。先理解项目的个性和目标，再决定什么才合适。
 
-### Propose Before Building
+### 动手前先提案
 
-This command has the highest potential to misfire. Do NOT jump straight into implementation. You MUST:
+本命令是错发概率最高的一个。不要直接冲进实现。你必须：
 
-1. **Think through 2-3 different directions**: consider different techniques, levels of ambition, and aesthetic approaches. For each direction, briefly describe what the result would look and feel like.
-2. **Get the user's pick before writing any code.** Ask with the AskUserQuestion tool and wait for the answer before continuing. Carry each direction's description and its trade-offs (browser support, performance cost, complexity) inside the option itself, so the user is choosing between things they can read. A structured question blocks the message it rides in until the user answers, so directions written alongside the question stay invisible while the user is being asked to choose between them.
-3. Only proceed with the direction the user confirms.
+1. **想清楚 2-3 个不同方向**：考虑不同技术、不同野心级别、不同美学路线。每个方向都简要描述结果会是什么样、什么感觉。
+2. **写任何代码之前先拿到用户的选择。** 用 AskUserQuestion 工具提问，等答案出来再继续。把每个方向的描述和它的代价（浏览器支持、性能开销、复杂度）写进选项本身，让用户选的是读得懂的东西。结构化提问会阻塞它所在的那条消息，直到用户作答，所以和问题写在一起的那些方向描述，在用户做选择时根本看不见。
+3. 只做用户确认的那个方向。
 
-Skipping this step risks building something embarrassing that needs to be thrown away.
+跳过这一步，代价是造出一个尴尬的、只好扔掉的东西。
 
-### Verify in the Browser
+### 在浏览器里验证
 
-Ambitious effects rarely work on the first try, so verify them in the browser rather than from code: an effect that technically runs can still stutter, ease wrong, or land on the wrong frame. Aim the checks at timing, easing, and smoothness, batch the fixes between looks, and keep refining until the effect is extraordinary.
+野心大的特效很少一次就成，所以要在浏览器里验证，而不是只看代码：一个"能跑"的特效照样可能卡顿、缓动不对、落帧不准。把检查对准时机、缓动和顺滑度，修一批看一次，持续打磨，直到特效真的非凡。
 
 ---
 
-## Assess What "Extraordinary" Means Here
+## 先判断"非凡"在这里指什么
 
-The right kind of technical ambition depends entirely on what you're working with. Before choosing a technique, ask: **what would make a user of THIS specific interface say "wow, that's nice"?**
+合适的技术野心完全取决于你在做什么。选技术之前先问：**这个具体界面的用户，会因为什么说一句"哇，真不错"？**
 
-### For visual/marketing surfaces
-Pages, hero sections, landing pages, portfolios: the "wow" is often sensory: a scroll-driven reveal, a shader background, a cinematic page transition, generative art that responds to the cursor.
+### 视觉/营销表面
+页面、hero 区、落地页、作品集：这里的"哇"通常是感官的：滚动驱动的 reveal、shader 背景、电影感页面转场、跟随光标的生成艺术。
 
-### For functional UI
-Tables, forms, dialogs, navigation: the "wow" is in how it FEELS: a dialog that morphs from the button that triggered it via View Transitions, a data table that renders 100k rows at 60fps via virtual scrolling, a form with streaming validation that feels instant, drag-and-drop with spring physics.
+### 功能型 UI
+表格、表单、对话框、导航：这里的"哇"在于手感：一个经 View Transitions 从按钮变形出来的对话框，一张靠虚拟滚动以 60fps 渲染十万行的数据表，一个即时感十足的流式校验表单，带弹簧物理的拖拽。
 
-### For performance-critical UI
-The "wow" is invisible but felt: a search that filters 50k items without a flicker, a complex form that never blocks the main thread, an image editor that processes in near-real-time. The interface just never hesitates.
+### 性能关键型 UI
+这里的"哇"看不见但摸得到：一次过滤五万条目毫无闪动的搜索，一个从不阻塞主线程的复杂表单，一个近乎实时处理的图像编辑器。界面就是从不迟疑。
 
-### For data-heavy interfaces
-Charts and dashboards: the "wow" is in fluidity: GPU-accelerated rendering via Canvas/WebGL for massive datasets, animated transitions between data states, force-directed graph layouts that settle naturally.
+### 数据密集型界面
+图表和仪表盘：这里的"哇"在于流畅：用 Canvas/WebGL 做 GPU 加速渲染吃下海量数据，数据状态之间的动画转场，自然收拢的力导向图布局。
 
-**The common thread**: something about the implementation goes beyond what users expect from a web interface. The technique serves the experience, not the other way around.
+**共同点**：实现的某处超出了用户对一个网页界面的预期。技术服务于体验，而不是反过来。
 
-## The Toolkit
+## 工具箱
 
-Organized by what you're trying to achieve, not by technology name.
+按你想达成什么来组织，不按技术名词。
 
-### Make transitions feel cinematic
-- **View Transitions API** (same-document: all browsers; cross-document: no Firefox): shared element morphing between states. A list item expanding into a detail page. A button morphing into a dialog. This is the closest thing to native FLIP animations.
-- **`@starting-style`** (all browsers): animate elements from `display: none` to visible with CSS only, including entry keyframes
-- **Spring physics**: natural motion with mass, tension, and damping instead of cubic-bezier. Libraries: motion (formerly Framer Motion), GSAP, or roll your own spring solver.
+### 让转场有电影感
+- **View Transitions API**（同文档：所有浏览器；跨文档：Firefox 不支持）：状态之间的共享元素变形。一个列表项展开成详情页。一个按钮变形成对话框。这是最接近原生 FLIP 动画的东西。
+- **`@starting-style`**（所有浏览器）：纯 CSS 把元素从 `display: none` 动画到可见，包括入场关键帧。
+- **弹簧物理**：用质量、张力和阻尼做自然运动，而不是 cubic-bezier。库：motion（前 Framer Motion）、GSAP，或自己写弹簧求解器。
 
-### Tie animation to scroll position
-- **Scroll-driven animations** (`animation-timeline: scroll()`): CSS-only, no JS. Parallax, progress bars, reveal sequences all driven by scroll position. (Chrome/Edge/Safari; Firefox: flag only; always provide a static fallback)
+### 把动画绑到滚动位置
+- **滚动驱动动画**（`animation-timeline: scroll()`）：纯 CSS，不用 JS。视差、进度条、reveal 序列全都由滚动位置驱动。（Chrome/Edge/Safari；Firefox 仅限旗标之后；始终提供静态后备）
 
-### Render beyond CSS
-- **WebGL** (all browsers): shader effects, post-processing, particle systems. Libraries: Three.js, OGL (lightweight), regl. Use for effects CSS can't express.
-- **WebGPU** (Chrome/Edge; Safari 26+; Firefox on Windows/macOS; flag only on Firefox Linux/Android): next-gen GPU compute, more powerful than WebGL. Always fall back to WebGL2; gate it behind API detection plus a `navigator.gpu.requestAdapter()` null check, so a blocklisted or headless GPU still reaches the fallback.
-- **Canvas 2D / OffscreenCanvas**: custom rendering, pixel manipulation, or moving heavy rendering off the main thread entirely via Web Workers + OffscreenCanvas.
-- **SVG filter chains**: displacement maps, turbulence, morphology for organic distortion effects. CSS-animatable.
+### 渲染到 CSS 之外
+- **WebGL**（所有浏览器）：shader 特效、后处理、粒子系统。库：Three.js、OGL（轻量）、regl。用在 CSS 表达不了的效果上。
+- **WebGPU**（Chrome/Edge；Safari 26+；Windows/macOS 的 Firefox；Linux/Android 的 Firefox 仅限旗标）：新一代 GPU 计算，比 WebGL 更强。始终回退到 WebGL2；用 API 检测加一个 `navigator.gpu.requestAdapter()` 空值检查把它圈起来，让被拉黑或无头 GPU 也能走到后备路径。
+- **Canvas 2D / OffscreenCanvas**：自定义渲染、像素操作，或用 Web Workers + OffscreenCanvas 把重渲染整个挪出主线程。
+- **SVG filter 链**：置换贴图、湍流、形态学，做有机扭曲效果。可用 CSS 动画。
 
-### Make data feel alive
-- **Virtual scrolling**: render only visible rows for tables/lists with tens of thousands of items. No library required for simple cases; TanStack Virtual for complex ones.
-- **GPU-accelerated charts**: Canvas or WebGL-rendered data visualization for datasets too large for SVG/DOM. Libraries: deck.gl, regl-based custom renderers.
-- **Animated data transitions**: morph between chart states rather than replacing. D3's `transition()` or View Transitions for DOM-based charts.
+### 让数据活起来
+- **虚拟滚动**：几万条目的表格/列表只渲染可见行。简单场景不需要库；复杂场景用 TanStack Virtual。
+- **GPU 加速图表**：数据集大到 SVG/DOM 扛不住时，用 Canvas 或 WebGL 渲染数据可视化。库：deck.gl、基于 regl 的自研渲染器。
+- **动画数据转场**：在图表状态之间变形，而不是替换。DOM 图表用 D3 的 `transition()` 或 View Transitions。
 
-### Animate complex properties
-- **`@property`** (all browsers): register custom CSS properties with types, enabling animation of gradients, colors, and complex values that CSS can't normally interpolate.
-- **Web Animations API** (all browsers): JavaScript-driven animations with the performance of CSS. Composable, cancellable, reversible. The foundation for complex choreography.
+### 动画化复杂属性
+- **`@property`**（所有浏览器）：给自定义 CSS 属性注册类型，让渐变、颜色和 CSS 平时插值不了的复杂值变得可动画。
+- **Web Animations API**（所有浏览器）：JavaScript 驱动、性能却像 CSS。可组合、可取消、可逆。复杂编排的基础。
 
-### Push performance boundaries
-- **Web Workers**: move computation off the main thread. Heavy data processing, image manipulation, search indexing: anything that would cause jank.
-- **OffscreenCanvas**: render in a Worker thread. The main thread stays free while complex visuals render in the background.
-- **WASM**: near-native performance for computation-heavy features. Image processing, physics simulations, codecs.
+### 推高性能边界
+- **Web Workers**：把计算挪出主线程。重数据处理、图像操作、搜索索引：任何会卡的东西。
+- **OffscreenCanvas**：在 Worker 线程里渲染。复杂视觉在后台渲染，主线程保持空闲。
+- **WASM**：计算密集特性拿到接近原生的性能。图像处理、物理模拟、编解码。
 
-### Interact with the device
-- **Web Audio API**: spatial audio, audio-reactive visualizations, sonic feedback. Requires user gesture to start.
-- **Device APIs**: orientation, ambient light, geolocation. Use sparingly and always with user permission.
+### 与设备交互
+- **Web Audio API**：空间音频、声音驱动的可视化、音效反馈。需要用户手势才能启动。
+- **设备 API**：方向、环境光、地理位置。节制使用，永远先征得用户许可。
 
-**NOTE**: This command is about enhancing how an interface FEELS, not changing what a product DOES. Adding real-time collaboration, offline support, or new backend capabilities are product decisions, not UI enhancements. Focus on making existing features feel extraordinary.
+**注意**：本命令是让界面的手感更好，不是改产品做什么。加实时协作、离线支持或新的后端能力是产品决策，不是 UI 增强。专注把已有功能做得非凡。
 
-## Implement with Discipline
+## 有纪律地实现
 
-### Progressive enhancement is non-negotiable
+### 渐进增强不容商量
 
-Every technique must degrade gracefully. The experience without the enhancement must still be good.
+每个技术都必须优雅降级。没有增强时的体验也必须依然良好。
 
 ```css
 @supports (animation-timeline: scroll()) {
@@ -99,29 +103,29 @@ else if (canvas.getContext('webgl2')) { /* WebGL2 fallback */ }
 /* CSS-only fallback must still look good */
 ```
 
-### Performance rules
+### 性能规则
 
-- Target 60fps. If dropping below 50, simplify.
-- Lazy-initialize heavy resources (WebGL contexts, WASM modules) only when near viewport.
-- Pause off-screen rendering. Kill what you can't see.
-- Test on real mid-range devices, not just your development machine.
+- 目标 60fps。掉到 50 以下就做减法。
+- 重资源（WebGL 上下文、WASM 模块）延迟初始化，靠近视口才初始化。
+- 屏幕外暂停渲染。看不见的杀掉。
+- 在真实的中端设备上测，不只在你的开发机上。
 
-### Polish is the difference
+### 打磨才是差距
 
-The gap between "cool" and "extraordinary" is in the last 20% of refinement: the easing curve on a spring animation, the timing offset in a staggered reveal, the subtle secondary motion that makes a transition feel physical. Don't ship the first version that works; ship the version that feels inevitable.
+"酷"和"非凡"之间的差距在最后 20% 的精修：弹簧动画的缓动曲线，交错 reveal 的时序错位，让转场有物理感的细微次级运动。不要把第一个能跑的版本发布上线；把那个感觉"必然如此"的版本发布上线。
 
-**NEVER**:
-- Ship effects that cause jank on mid-range devices
-- Use bleeding-edge APIs without a functional fallback
-- Add sound without explicit user opt-in
-- Use technical ambition to mask weak design fundamentals; fix those first with other commands
-- Layer multiple competing extraordinary moments. Focus creates impact, excess creates noise
+**绝不**：
+- 发布上线会在中端设备上卡顿的特效
+- 用没有功能后备的前沿 API
+- 没有用户明确同意就加声音
+- 用技术野心掩盖薄弱的设计基本功；先用其他命令把基本功修好
+- 叠多个互相争抢的非凡时刻。专注制造冲击，过量制造噪音
 
-## Verify the Result
+## 验证结果
 
-- **The wow test**: Show it to someone who hasn't seen it. Do they react?
-- **The removal test**: Take it away. Does the experience feel diminished, or does nobody notice?
-- **The device test**: Run it on a phone, a tablet, a Chromebook. Still smooth?
-- **The context test**: Does this make sense for THIS brand and audience?
+- **哇测试**：给没见过的人看。有没有反应？
+- **移除测试**：拿掉它。体验是变差了，还是根本没人注意？
+- **设备测试**：在手机、平板、Chromebook 上跑。还顺滑吗？
+- **语境测试**：对这个品牌和这群受众，这合理吗？
 
-"Technically extraordinary" isn't about using the newest API. It's about making an interface do something users didn't think a website could do.
+"技术上非凡"不在于用最新 API。而在于让界面做出用户本以为网站做不到的事。

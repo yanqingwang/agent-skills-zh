@@ -12,11 +12,15 @@ photo: natural
 pictured: Portfolio Index, Ledge hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/studio.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Studio
 
-A design studio's proof sheet, caught mid-build: cool studio-white paper with an ink dot grid and a fine grain, blue-black ink, Hedvig Letters Serif for the heads (a contemporary serif with a calligraphic hand in its joins), a clean Geist body, crop marks at the corners of every printed piece, and one cadmium orange that both fills the action and draws the construction: metric guides, clear-space boxes, redlines. It reads as considered because the type is shown being measured. It is not a warm cream portfolio with a terracotta accent, and not a grey minimal template.
+一张设计工作室的打样纸，逮住搭建中途的样子：冷调工作室白纸、墨点网格与细颗粒、蓝黑墨色、Hedvig Letters Serif 作标题（一款当代衬线、接笔处带书法手迹）、干净的 Geist 正文、每件印出的作品四角带角线，以及一个既填满动作又画施工图的镉橙：字体度量参考线、留白框、红线标注。它读起来考究，因为字体正在被测量给你看。它不是带陶土色强调的暖奶油作品集，也不是灰色极简模板。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -34,53 +38,53 @@ A design studio's proof sheet, caught mid-build: cool studio-white paper with an
 }
 ```
 
-## Type
+## 字体（Type）
 
-- **Display:** Hedvig Letters Serif 400, its one weight, `--tracking-display`, line-height 0.98 to 1.04, sentence case, `font-optical-sizing: auto`. The hand holds from a 200px wordmark down to a 25px item title (tracking -0.005em there). Heads, figures and the wordmark only.
-- **Body:** Geist 400 and 500, line-height 1.55, ink-2 for running text.
-- **Labels, captions, guide readouts:** Geist 500 a step smaller, sentence case, `--color-muted`, tabular figures for any measurement. No mono.
-- **Specimen face:** Sofia Sans Extra Condensed 500, only inside a specimen that shows an alternative system; never a head or label of the page itself.
+- **展示字体：**Hedvig Letters Serif 400，它唯一的字重，`--tracking-display`，行高 0.98 至 1.04，句首大写，`font-optical-sizing: auto`。书法手迹从 200px 的字标一直保持到 25px 的条目标题（那里字距 -0.005em）。只用于标题、数字与字标。
+- **正文：**Geist 400 与 500，行高 1.55，行文用 ink-2。
+- **标签、图注、辅助线读数：**Geist 500 小一档，句首大写，`--color-muted`，任何测量数字用表格数字。不用等宽字体。
+- **字例字体：**Sofia Sans Extra Condensed 500，只出现在展示另一套系统的字例里；绝不做页面自己的标题或标签。
 
-## Surfaces
+## 表面（Surfaces）
 
-- The ground is a generated proof, never a picture: a 24px radial-gradient dot grid in `--color-dot` under an `feTurbulence` grain (`--grain`), on the hero, nav and footer, masked to fade before the next section; the rest of the page is clean paper.
-- Crop marks on every printed piece (a sheet, a photograph, a card, a control, a focused field): eight 1px `--color-mark` ticks drawn with background gradients on a `::before`, set off the corners by a small gap, larger on a sheet. Registration targets may sit at a sheet's sides.
-- Orange draws construction: 1px `--color-accent` guides at the font's real ascender, cap height, x-height, baseline and descender with their readouts in the label voice, a clear-space box in x units, redlines with dimensions. Rules only, never orange type.
-- Two rules: 1px `--color-rule` between rows; 1px `--color-ink` opening a set. Radius 3px.
-- One shadow, for paper objects only (a card, a sheet), lit from the top left: `--shadow-sheet`. Everything else lies flat.
-- Bands: paper-2, or one ink band with paper type; never an orange field.
-- Photographs: the work where it is used, level, daylight, verticals straight, true colour, crop-marked, a ratio redline beside it; never a mockup.
+- 地面是生成的打样，绝不是图片：`feTurbulence` 颗粒（`--grain`）之上一层 24px 径向渐变墨点网格（`--color-dot`），铺在 Hero、导航与页脚上，蒙版淡出、在下一节开始前消失；页面其余是干净纸面。
+- 每件印出的东西（一张纸、一张照片、一张卡、一个控件、聚焦的字段）四角带角线：八个 1px `--color-mark` 刻度，用背景渐变画在 `::before` 上，离角留一个小空隙，纸张上的更大。套准靶可以放在纸张两侧。
+- 橙色画施工：1px `--color-accent` 辅助线标在字体的真实 ascender、大写字高、x 字高、基线与 descender 上，读数用标签语气；一个以 x 为单位的留白框；带尺寸的红线标注。只有线，绝无橙色文字。
+- 两种线：行间 1px `--color-rule`；一组内容的开头 1px `--color-ink`。圆角 3px。
+- 唯一的阴影，只给纸做的物体（一张卡、一张纸），从左上打光：`--shadow-sheet`。其余一律平放。
+- 色带：paper-2，或一条墨色色带配纸色文字；绝不用橙色场。
+- 照片：作品在它被使用的地方，水平、日光、垂直线笔直、真实色彩、带角线，旁边一条比例红线；绝不用样机。
 
-## Range
+## 版式（Range）
 
-- **A wordmark under construction:** the name set huge in Hedvig with its metric guides, clear-space box and readouts on the dot grid; the pointer measures a letter's advance in font units.
-- **Systems as specimen cards:** two or three alternatives as crop-marked cards (face line, `Aa Gg Rr 0123456789`, hex swatches) that switch one board set by type, colour or grid.
-- **An index that opens:** rows under an ink rule, Hedvig at item size, each opening into a case with its photograph held at a stated ratio.
-- **A size test:** one line at falling sizes (banner, poster, ticket), each on its own orange guides with its live size beside it.
+- **施工中的字标：**名字用 Hedvig 排到巨大，度量参考线、留白框与读数都在墨点网格上；指针以字体单位测量一个字母的字宽。
+- **系统化作字例卡：**两三个备选方案做成带角线的卡（字体行、`Aa Gg Rr 0123456789`、hex 色样），按字体、颜色或网格切换一块展示板。
+- **会展开的索引：**墨线之下的行，Hedvig 条目字号，每行展开成一个案例，其照片锁定在给定比例。
+- **一次字号测试：**一行字逐级缩小（横幅、海报、票券），各自压在自己的橙色辅助线上，旁边是它的实时字号。
 
-## Controls
+## 控件（Controls）
 
-- Printed controls: a 1px ink border at 2px radius, a second rule inset 2px inside it, crop marks at the corners that open slightly on hover; the primary is filled orange with ink text. Geist 500, 48px.
-- Fields: 3px, a 1px `--color-muted` border, crop marks appear on focus. Links take an orange underline on hover.
-- Orange fill stays on the one action; orange lines are construction and may be many but thin.
+- 印出来的控件：1px 墨色边框、2px 圆角，内侧 2px 再嵌一条线，四角带角线、悬停时微微张开；主按钮橙色填充配墨色文字。Geist 500，48px。
+- 字段：3px 圆角，1px `--color-muted` 边框，聚焦时出现角线。链接悬停出现橙色下划线。
+- 橙色填色只给那一个动作；橙线是施工，可以多，但要细。
 
-## Motion
+## 动效（Motion）
 
-Guides draw in once along their length. A set of systems may turn every few seconds while in view and stops on any choice. State changes at `--dur-short` on `--ease-out`. Reduced motion: the full construction, still.
+辅助线沿自身长度画入一次。在视野内时，一组系统可以每几秒轮换一次，一旦选择即停。状态变化时长 `--dur-short`、缓动 `--ease-out`。Reduced motion（减少动效）：整套施工图静止呈现。
 
-## Voice
+## 语气（Voice）
 
-Spare and exact, a little literary. Verbs over adjectives; name the work, the institution, the surface it lives on, the measurement. Never "creative solutions" or "brands brought to life".
+克制而精确，略带文学气。动词优先于形容词；说出作品、机构、它所在的表面、那个度量。绝不说"创意解决方案"或"让品牌活起来"。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never Hedvig in running text, never the specimen face outside a specimen.
-- Never an orange flood, orange type or a second warm colour.
-- Never warm paper; the ground is cool, hue 215.
-- Never a guide that is not true to the font's metrics or a dimension that is not the real one.
-- Never the dot grid behind a whole page or running text.
+- 绝不让 Hedvig 进入行文，绝不让字例字体走出字例。
+- 绝不用橙色泛滥、橙色文字或第二种暖色。
+- 绝不用暖调纸面；地面是冷调，色相 215。
+- 绝不用与字体度量不符的辅助线，也绝不用不真实的尺寸。
+- 绝不让墨点网格铺满整页或压在正文之下。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Geist:wght@400;500&family=Sofia+Sans+Extra+Condensed:wght@500&display=swap" rel="stylesheet">

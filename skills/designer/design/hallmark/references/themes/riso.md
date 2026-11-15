@@ -12,11 +12,15 @@ photo: duotone ink paper-2 con=14
 pictured: Job Sheet, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/riso.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Riso
 
-A small-press run from two drums and nothing else: bright uncoated stock, a medium blue drum that sets every word and a fluorescent pink drum for the fills, crossing in a purple nobody mixed. Cabinet Grotesk 800 heads over a Literata body, grain where the ink skips, one word a hair out of register. It reads handmade because the imperfection is in the ink, not in tape and scribbles. It is not clean vector flatness, not a neon zine, and never black.
+两只滚筒印出的一趟小印量活，再无其他：明亮的非涂布纸，一只中蓝滚筒排下每一个字、一只荧光粉滚筒印所有填色，交叠处是一种没人调过的紫。Cabinet Grotesk 800 标题压 Literata 正文，油墨跳断处有颗粒，一个词稍稍脱版一丝。它读起来是手工的，因为不完美住在油墨里，不在胶带与涂鸦。它不是干净的矢量平涂，不是霓虹 zine，而且永远没有黑。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -31,51 +35,51 @@ A small-press run from two drums and nothing else: bright uncoated stock, a medi
 }
 ```
 
-## Type
+## 字体（Type）
 
-- **Display:** Cabinet Grotesk 800, `--tracking-display`, sentence case, in the blue; `h1` leads 0.92, `h2` 0.98. A head is one weight and one colour. Figures that are the offer set in it, tabular.
-- **The misregistered word** (stamp `waive 38iii`): one focal word in the hero head prints in both drums, a pink copy behind the blue nudged 2 to 3px down and right, so only its fringe shows (`texture.md` § 3). Once a page.
-- **Body and lede:** Literata 400, opsz following size, in the blue.
-- **Labels, captions, table heads, nav:** Literata 500 a step smaller, sentence case, `--color-muted` or the blue. No mono: figures take Literata's tabular numerals.
+- **展示字体：**Cabinet Grotesk 800，`--tracking-display`，句首大写，印在蓝色里；`h1` 行高 0.92，`h2` 0.98。一个标题一个字重、一种颜色。作为报价的数字用它排，表格数字。
+- **错版的那个词**（stamp `waive 38iii`）：Hero 标题里一个焦点词经两只滚筒各印一次，粉色副本藏在蓝色后面、向右下挪 2 至 3px，只露出边缘（`texture.md` § 3）。每页一次。
+- **正文与导语：**Literata 400，opsz 随字号，印在蓝色里。
+- **标签、图注、表头、导航：**Literata 500 小一档，句首大写，用 `--color-muted` 或蓝色。不用等宽：数字用 Literata 的表格数字。
 
-## Surfaces
+## 表面（Surfaces）
 
-- No black: every word, rule and icon prints in the blue drum, every fill in the pink; where pink overprints blue (`mix-blend-mode: multiply`) the purple shows, and nobody paints it.
-- Screens of the pink drum are the papers: `--color-paper-2` (a light screen) under any text, `--color-paper-3` (half strength) under display type only, the solid pink with `--color-accent-ink`. The blue drum may print solid, with type knocked out to the stock. Two bands a page.
-- Hairlines in `--color-rule`, 1.5px blue where a rule frames a figure, 2px radius, no shadow; depth is overprint.
-- Photographs: the work and the room in even light, cropped close, with real tonal range. Each prints in both drums, blue shadows into a light pink screen (the `photo:` duotone), 2px radius, grain over it, captions beneath in Literata.
-- Grain, declared: paper specks where the ink skips (`texture.md` § 1, light specks) on fills, bands and photographs at `--texture-opacity`, never under running text; grain and misregistration are one drum's family.
+- 无黑：每个字、每条线、每个图标都由蓝滚筒印，所有填色由粉滚筒印；粉色叠印蓝色之处（`mix-blend-mode: multiply`）紫就显形，没人去画它。
+- 粉滚筒的网屏就是纸面：`--color-paper-2`（浅网屏）垫在任何文字下，`--color-paper-3`（半强度）只垫展示文字，实心粉配 `--color-accent-ink`。蓝滚筒可以实心印，文字镂空到纸底。每页两条色带。
+- 发丝线用 `--color-rule`，框住数字的线用 1.5px 蓝，2px 圆角，无阴影；深度就是叠印。
+- 照片：作品与房间在均匀光下，裁切紧凑，保留真实影调范围。每张经两只滚筒印，蓝暗部落进浅粉网屏（`photo:` 双色调），2px 圆角，上面盖颗粒，图注在下方用 Literata。
+- 颗粒，声明在先：油墨跳断处的纸面斑点（`texture.md` § 1，浅斑）以 `--texture-opacity` 铺在填色、色带与照片上，绝不压正文；颗粒与错版是同一滚筒家族。
 
-## Range
+## 版式（Range）
 
-- **Figures** set as a two-ink overprint: the number in blue Cabinet 800 at display size, a solid pink shape multiplied across part of it, so the purple prints only where the drums cross. A price or a date carries a screen this way.
-- **Steps** as separations: the same artwork shown as the blue layer alone, the pink layer alone, then the sheet with both, three plates on the stock in hairline frames; the process is the picture.
-- **Rows and forms** on the light pink screen: a price list or an order as blue hairline rows in Literata tabular figures, a live total in the display face, the chosen row on the half screen.
-- **Bands** in one drum at full strength: the solid blue with a statement knocked out to the stock and the pink primary on it, or the solid pink with deep blue type; a statement at display size is the loudest thing this material makes.
+- **数字**排成两色叠印：数字用蓝色 Cabinet 800 排展示字号，一块实心粉形状以 multiply 压过它的一部分，紫色只在滚筒交叠处印出。一个价格或日期就这样带一层网屏。
+- **步骤**化作分色：同一幅图先只看蓝色版，再只看粉色版，然后看双版齐全的成品，三块印版收在发丝线框里压在纸底上；流程就是那幅画。
+- **行与表单**压在浅粉网屏上：价目表或订单是 Literata 表格数字的蓝色发丝线行，实时合计用展示字面，选中的行压在半强度网屏上。
+- **色带**满强度只用一只滚筒：实心蓝配镂空到纸底的宣言和压在其上的粉色主按钮，或实心粉配深蓝文字；展示字号的宣言是这种材料能发出的最响的声音。
 
-## Controls
+## 控件（Controls）
 
-- The pair: a pink-filled rectangle with `--color-accent-ink` type beside one outlined 1.5px in the blue, both at 2px radius in Cabinet Grotesk 800 at 15px; pressed, a control drops 1px down and right, the way a sheet lands.
-- Links underline in pink, thicker on hover; inputs 48px tall at 2px radius with a 1.5px blue border on the stock, the value in Cabinet 800.
-- Pink sits on the primary, link underlines and one fill a screen; the focus ring is blue.
+- 一对：粉色填充矩形配 `--color-accent-ink` 文字，旁边是 1.5px 蓝描边的另一个，两者 2px 圆角、Cabinet Grotesk 800、15px；按下时控件向右下沉 1px，像一张纸落定。
+- 链接粉色下划线，悬停加粗；输入框 48px 高、2px 圆角，纸底上 1.5px 蓝边框，值用 Cabinet 800。
+- 粉落在主按钮、链接下划线与每屏一个填色上；焦点环是蓝。
 
-## Motion
+## 动效（Motion）
 
-One reveal: the pink drum settles into its offset once on load over `--dur-long` on `--ease-out`, and never loops. Controls change colour over `--dur-short`; nothing else moves.
+一次显现：加载时粉滚筒以 `--ease-out`、`--dur-long` 落进它的错位一次，绝不循环。控件以 `--dur-short` 变色；其余一律不动。
 
-## Voice
+## 语气（Voice）
 
-Specific and hand-set: name the ink, the sheet, the drum and the price; verbs over adjectives. Imperfect on purpose.
+具体、手工排版：说出油墨、纸、滚筒与价格；动词优先于形容词。不完美是故意的。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never black ink or a grey; the only third colour is the purple the drums make.
-- Never a registered, ungrained flat gradient; that is vector, not riso.
-- Never pink as type on the stock; the pink drum fills, the blue one writes.
-- Never the misregistration on a second head; one word, then rest.
-- Never a page of duotone photographs back to back; the drums need a page of their own between pulls.
+- 绝不用黑墨或灰色；唯一的第三色是滚筒交叠出来的紫。
+- 绝不用套准精确、无颗粒的平涂渐变；那是矢量，不是 riso。
+- 绝不在纸底上用粉色文字；粉滚筒管填色，蓝滚筒管写字。
+- 绝不让错版出现在第二个标题上；一个词，其余安分。
+- 绝不让双色调照片页连排；两次拉纸之间，滚筒需要一页自己的。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500&display=swap" rel="stylesheet">

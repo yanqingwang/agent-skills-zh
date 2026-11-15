@@ -1,143 +1,147 @@
-Run systematic **technical** quality checks on a native app (`ios` / `android` / `adaptive`) and generate a comprehensive report. Don't fix issues; document them for other commands to address.
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/audit.native.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This is a code-level audit, not a design critique. Audit from source (SwiftUI / UIKit / Compose / React Native / Flutter); no browser tooling or `impeccable detect` applies. Score against the platform reference(s): [ios.md](ios.md) / [android.md](android.md), both for `adaptive`. Read them before scoring if Setup hasn't already. The report skeleton mirrors [audit.md](audit.md); keep the two in sync when changing it.
+对原生应用（`ios` / `android` / `adaptive`）运行系统化的**技术**质量检查并生成综合报告。不要修复问题；把问题记录下来，交给其他命令处理。
 
-## Diagnostic Scan
+这是代码级审计，不是设计批评。从源码审计（SwiftUI / UIKit / Compose / React Native / Flutter）；浏览器工具和 `impeccable detect` 都不适用。按平台参照打分：[ios.md](ios.md) / [android.md](android.md)，`adaptive` 两者都要。Setup 没读的话，打分之前先读。报告骨架镜像 [audit.md](audit.md)；改动时保持两者同步。
 
-Run comprehensive checks across 5 dimensions. Score each dimension 0-4 using the criteria below.
+## 诊断扫描
 
-### 1. Accessibility (VoiceOver / TalkBack)
+围绕 5 个维度运行综合检查。按下述标准给每个维度打 0-4 分。
 
-**Check for**:
-- **Missing labels**: interactive elements without accessibility labels, traits/roles, or state announcements
-- **Reading and focus order**: illogical traversal, unreachable controls, focus lost on navigation
-- **Text scaling**: fixed point sizes defeating Dynamic Type (iOS) or px instead of sp (Android); layouts that clip or overlap at large sizes
-- **Touch targets**: below 44 pt (iOS) / 48 dp (Android), or crammed without spacing
-- **Reduce Motion ignored**: parallax and large slides with no crossfade alternative
-- **Contrast**: text failing contrast in either appearance, light or dark
+### 1. 可访问性（VoiceOver / TalkBack）
 
-**Score 0-4**: 0=Screen reader unusable, 1=Major gaps (unlabeled controls, no scaling), 2=Partial (labels exist, order or scaling breaks), 3=Good (minor gaps), 4=Excellent (labeled, ordered, scales cleanly, Reduce Motion honored)
+**检查项**：
+- **缺少标签**：交互元素没有无障碍标签、traits/role 或状态播报
+- **阅读与焦点顺序**：遍历顺序不合逻辑、控件不可达、导航中焦点丢失
+- **文本缩放**：固定 pt 尺寸让 Dynamic Type（iOS）失效，或用 px 而非 sp（Android）；大字号下裁切或重叠的布局
+- **触控目标**：小于 44 pt（iOS）/ 48 dp（Android），或拥挤无间距
+- **无视 Reduce Motion**：视差与大幅滑动没有交叉淡化的替代
+- **对比度**：文本在浅色或深色任一外观下不达标
 
-### 2. Performance
+**评分 0-4**：0=屏幕阅读器不可用，1=重大缺口（控件无标签、无缩放），2=部分（标签存在、顺序或缩放出问题），3=良好（小缺口），4=优秀（有标签、有序、缩放干净、Reduce Motion 受到尊重）
 
-**Check for**:
-- **Slow startup**: heavy work on launch before first frame
-- **Unvirtualized lists**: long content without FlatList / LazyColumn / List recycling
-- **Main-thread jank**: synchronous work in scroll or gesture paths, dropped frames on 60/120 Hz
-- **Wasted rendering**: unnecessary re-renders (React Native) or recompositions (Compose); missing memoization/keys
-- **Image handling**: full-size images decoded for thumbnails, no caching
-- **App weight**: bloated JS bundle or binary, unused dependencies
+### 2. 性能
 
-**Score 0-4**: 0=Janky everywhere, 1=Major problems (unvirtualized lists, slow launch), 2=Partial, 3=Good (minor improvements possible), 4=Excellent (fast launch, smooth scroll, lean)
+**检查项**：
+- **启动慢**：首帧之前在启动时做重活
+- **列表未虚拟化**：长内容没有 FlatList / LazyColumn / List 回收
+- **主线程卡顿**：滚动或手势路径中的同步工作，60/120 Hz 掉帧
+- **浪费渲染**：不必要的重渲染（React Native）或重组（Compose）；缺少 memoization/keys
+- **图片处理**：缩略图解码全尺寸图，没有缓存
+- **应用体积**：JS bundle 或二进制臃肿、未使用的依赖
 
-### 3. Appearance & Theming
+**评分 0-4**：0=处处卡顿，1=重大问题（列表未虚拟化、启动慢），2=部分，3=良好（可小幅改进），4=优秀（启动快、滚动顺、精瘦）
 
-**Check for**:
-- **Hard-coded colors**: raw hex instead of semantic system colors (iOS) / Material color roles (Android) / design tokens
-- **Broken dark appearance**: missing dark variants, poor contrast in dark, quick inverts
-- **Dynamic Color** (Android 12+): no static fallback scheme, or ignored where it fits
-- **Off-platform materials**: hand-rolled visual materials where system materials or tonal elevation are expected
+### 3. 外观与主题化
 
-**Score 0-4**: 0=Hard-coded everything, 1=Minimal tokens, 2=Partial (tokens exist, inconsistently used), 3=Good (minor hard-coded values), 4=Excellent (semantic throughout, both appearances first-class)
+**检查项**：
+- **硬编码颜色**：裸 hex 而非语义系统色（iOS）/ Material 颜色角色（Android）/ 设计 token
+- **深色外观损坏**：缺少深色变体、深色下对比度差、简单反转
+- **Dynamic Color**（Android 12+）：没有静态回退方案，或在合适之处被忽略
+- **脱离平台的材质**：在应有系统材质或色调海拔（tonal elevation）之处手搓视觉材质
 
-### 4. Platform Conformance (CRITICAL)
+**评分 0-4**：0=全部硬编码，1=极少 token，2=部分（token 存在、使用不一致），3=良好（少量硬编码值），4=优秀（全程语义化、两种外观都是一等公民）
 
-Score against the loaded platform reference(s), including their slop tests. **Check for**:
-- **Broken system gestures**: edge-swipe back disabled (iOS), predictive Back hijacked (Android)
-- **Inset violations**: content under the notch, Dynamic Island, home indicator, status bar, or keyboard
-- **Off-platform navigation**: custom global nav, overloaded tab bars, iOS patterns on Android or vice versa
-- **Web-shaped controls**: HTML-style buttons, custom toggles, hover-dependent affordances
-- **Icon drift**: mixed icon sets instead of SF Symbols / Material Symbols
-- **System drift**: repeated shortcuts or decorative patterns that conflict with the product, platform, or established design system
+### 4. 平台符合性（关键）
 
-**Score 0-4**: 0=Web port (nothing native), 1=Heavy violations (3-4 kinds), 2=Some (1-2 noticeable), 3=Mostly conformant (subtle issues), 4=Fully native (a fluent user trusts every screen)
+按已加载的平台参照打分，包括其中的 slop 测试。**检查项**：
+- **系统手势损坏**：边缘滑动返回被禁用（iOS）、predictive Back 被劫持（Android）
+- **Inset 违例**：内容压到刘海、灵动岛、home indicator、状态栏或键盘之下
+- **脱离平台的导航**：自定义全局导航、过载的标签栏、Android 上用 iOS 模式或反之
+- **Web 形状的控件**：HTML 式按钮、自制开关、依赖悬停的示能
+- **图标漂移**：图标集混用而不是 SF Symbols / Material Symbols
+- **系统漂移**：与产品、平台或既有设计系统冲突的反复出现的捷径或装饰模式
 
-### 5. Adaptivity
+**评分 0-4**：0=Web 搬运（毫无原生），1=重度违例（3-4 类），2=有一些（1-2 处明显），3=基本符合（问题轻微），4=完全原生（熟练用户信任每一屏）
 
-**Check for**:
-- **Stretched phone layouts**: tablet/iPad rendering a scaled-up phone UI instead of using size classes / window size classes
-- **Orientation breakage**: landscape clipping, ignored, or locked without reason
-- **Keyboard/IME handling**: inputs hidden behind the keyboard, no inset adjustment
-- **Multitasking**: iPad Split View / Android multi-window breaking layout
-- **Foldables**: hinge-unaware layouts on posture change (Android)
+### 5. 自适应
 
-**Score 0-4**: 0=One screen size only, 1=Major breakage (landscape or tablet broken), 2=Partial, 3=Good (minor edge cases), 4=Excellent (adapts across sizes, orientations, and windowing)
+**检查项**：
+- **手机布局拉伸**：平板/iPad 渲染放大的手机 UI，而不是使用 size classes / window size classes
+- **方向损坏**：横屏裁切、被忽略或无理由锁定
+- **键盘/IME 处理**：输入框被键盘遮住、没有 inset 调整
+- **多任务**：iPad Split View / Android 多窗口破坏布局
+- **折叠屏**：姿态变化时布局无感于铰链（Android）
 
-## Generate Report
+**评分 0-4**：0=只有一种屏幕尺寸，1=重大破版（横屏或平板坏掉），2=部分，3=良好（轻微边界情况），4=优秀（跨尺寸、方向与窗口化自适应）
 
-### Audit Health Score
+## 生成报告
 
-| # | Dimension | Score | Key Finding |
+### 审计健康分
+
+| # | 维度 | 得分 | 关键发现 |
 |---|-----------|-------|-------------|
-| 1 | Accessibility | ? | [most critical issue or "--"] |
-| 2 | Performance | ? | |
-| 3 | Appearance & Theming | ? | |
-| 4 | Platform Conformance | ? | |
-| 5 | Adaptivity | ? | |
-| **Total** | | **??/20** | **[Rating band]** |
+| 1 | 可访问性 | ? | [最关键的问题或 "--"] |
+| 2 | 性能 | ? | |
+| 3 | 外观与主题化 | ? | |
+| 4 | 平台符合性 | ? | |
+| 5 | 自适应 | ? | |
+| **总计** | | **??/20** | **[评分档]** |
 
-**Rating bands**: 18-20 Excellent (minor polish), 14-17 Good (address weak dimensions), 10-13 Acceptable (significant work needed), 6-9 Poor (major overhaul), 0-5 Critical (fundamental issues)
+**评分档**：18-20 优秀（小幅打磨），14-17 良好（补齐弱项维度），10-13 可接受（需要大量工作），6-9 差（需要大改），0-5 危急（根本性问题）
 
-### Platform Conformance Verdict
-**Start here.** Pass/fail: does this read as a native app or a ported website? List specific violations. Be brutally honest.
+### 平台符合性判定
+**从这里开始。** 通过/不通过：读起来是原生应用还是搬运的网站？列出具体违例。要毫不留情地诚实。
 
-### Executive Summary
-- Audit Health Score: **??/20** ([rating band])
-- Total issues found (count by severity: P0/P1/P2/P3)
-- Top 3-5 critical issues
-- Recommended next steps
+### 执行摘要
+- 审计健康分：**??/20**（[评分档]）
+- 发现问题总数（按严重度计数：P0/P1/P2/P3）
+- 前 3-5 个关键问题
+- 建议的下一步
 
-### Detailed Findings by Severity
+### 按严重度排列的详细发现
 
-Tag every issue with **P0-P3 severity**:
-- **P0 Blocking**: Prevents task completion. Fix immediately
-- **P1 Major**: Significant difficulty or platform-guideline violation. Fix before release
-- **P2 Minor**: Annoyance, workaround exists. Fix in next pass
-- **P3 Polish**: Nice-to-fix, no real user impact. Fix if time permits
+给每个问题标 **P0-P3 严重度**：
+- **P0 阻断**：阻止任务完成。立即修复
+- **P1 重大**：显著困难或平台指南违例。发布前修复
+- **P2 轻微**：令人恼火、存在变通。下一轮修复
+- **P3 打磨**：修了更好，对真实用户无影响。有空再修
 
-For each issue, document:
-- **[P?] Issue name**
-- **Location**: Screen, file, line
-- **Category**: Accessibility / Performance / Theming / Conformance / Adaptivity
-- **Impact**: How it affects users
-- **Guideline**: The HIG / Material rule it violates (if applicable)
-- **Recommendation**: How to fix it
-- **Suggested command**: Which command to use (prefer: /impeccable adapt, /impeccable animate, /impeccable audit, /impeccable bolder, /impeccable clarify, /impeccable colorize, /impeccable critique, /impeccable delight, /impeccable distill, /impeccable document, /impeccable harden, /impeccable layout, /impeccable onboard, /impeccable optimize, /impeccable overdrive, /impeccable polish, /impeccable quieter, /impeccable shape, /impeccable typeset)
+每个问题记录：
+- **[P?] 问题名**
+- **位置**：屏幕、文件、行
+- **类别**：可访问性 / 性能 / 主题化 / 符合性 / 自适应
+- **影响**：对用户的影响
+- **指南**：违反的 HIG / Material 规则（如适用）
+- **建议**：如何修复
+- **建议命令**：用哪个命令（优先从这些里选：/impeccable adapt、/impeccable animate、/impeccable audit、/impeccable bolder、/impeccable clarify、/impeccable colorize、/impeccable critique、/impeccable delight、/impeccable distill、/impeccable document、/impeccable harden、/impeccable layout、/impeccable onboard、/impeccable optimize、/impeccable overdrive、/impeccable polish、/impeccable quieter、/impeccable shape、/impeccable typeset）
 
-### Patterns & Systemic Issues
+### 模式与系统性问题
 
-Identify recurring problems that indicate systemic gaps rather than one-off mistakes:
-- "Hard-coded colors appear in 15+ screens, should use semantic colors"
-- "Touch targets consistently below 44 pt throughout the tab bar and list rows"
+指出反复出现、指向系统性缺口而非一次性失误的问题：
+- "15+ 个屏幕出现硬编码颜色，应使用语义色"
+- "标签栏与列表行全程触控目标低于 44 pt"
 
-### Positive Findings
+### 正面发现
 
-Note what's working well: good practices to maintain and replicate.
+记录做得好的部分：值得保持和复制的实践。
 
-## Recommended Actions
+## 建议行动
 
-List recommended commands in priority order (P0 first, then P1, then P2):
+按优先级列出建议命令（P0 在前，然后 P1、P2）：
 
-1. **[P?] `/command-name`**: Brief description (specific context from audit findings)
-2. **[P?] `/command-name`**: Brief description (specific context)
+1. **[P?] `/command-name`**：简述（来自审计发现的具体上下文）
+2. **[P?] `/command-name`**：简述（具体上下文）
 
-**Rules**: Only recommend commands from: /impeccable adapt, /impeccable animate, /impeccable audit, /impeccable bolder, /impeccable clarify, /impeccable colorize, /impeccable critique, /impeccable delight, /impeccable distill, /impeccable document, /impeccable harden, /impeccable layout, /impeccable onboard, /impeccable optimize, /impeccable overdrive, /impeccable polish, /impeccable quieter, /impeccable shape, /impeccable typeset. Map findings to the most appropriate command. End with `/impeccable polish` as the final step if any fixes were recommended.
+**规则**：只能推荐这些命令：/impeccable adapt、/impeccable animate、/impeccable audit、/impeccable bolder、/impeccable clarify、/impeccable colorize、/impeccable critique、/impeccable delight、/impeccable distill、/impeccable document、/impeccable harden、/impeccable layout、/impeccable onboard、/impeccable optimize、/impeccable overdrive、/impeccable polish、/impeccable quieter、/impeccable shape、/impeccable typeset。把发现映射到最合适的命令。若推荐了任何修复，最后以 `/impeccable polish` 收尾。
 
-After presenting the summary, tell the user:
+呈现摘要之后，告诉用户：
 
-> You can ask me to run these one at a time, all at once, or in any order you prefer.
+> 你可以让我逐条运行这些命令、一次性全部运行，或按你偏好的任意顺序运行。
 >
-> Re-run `/impeccable audit` after fixes to see your score improve.
+> 修复后重新运行 `/impeccable audit`，就能看到分数提升。
 
-Keep P3s few: a long tail of minor issues buries the ones that matter.
+P3 要少：一大串小问题会淹没真正要紧的那些。
 
-**Avoid**:
-- Report issues without explaining impact (why does this matter?)
-- Provide generic recommendations (be specific and actionable)
-- Skip positive findings (celebrate what works)
-- Forget to prioritize (everything can't be P0)
-- Report false positives without verification
+**避免**：
+- 报告问题却不解释影响（这事为什么重要？）
+- 给出泛泛的建议（要具体、可执行）
+- 跳过正面发现（做得好的要肯定）
+- 忘了排优先级（不可能所有事都是 P0）
+- 报告未经核实的误报
 
-## Save the Report
+## 保存报告
 
-After the report is delivered, save a copy so the findings outlive this conversation: write it, from the score table through Recommended Actions, to a temp file, then run `.claude/skills/impeccable/scripts/impeccable audit-storage write "<resolved target, or . for the whole project>" <temp-file>` and delete the temp file. The helper prints the path it wrote, which you mention in one line; `REPORTS OFF:` means the project opted out, and you mention nothing. Saving never replaces delivering: the user reads the report in chat first.
+报告交付之后，另存一份让发现活过这次对话：把从得分表到建议行动的部分写入临时文件，然后运行 `.claude/skills/impeccable/scripts/impeccable audit-storage write "<解析后的目标，整个项目则用 .>" <temp-file>` 并删除临时文件。辅助命令会打印写入路径，你用一行提及；`REPORTS OFF:` 表示项目选择不保存，什么都不要提。保存绝不替代交付：用户先在聊天里读到报告。

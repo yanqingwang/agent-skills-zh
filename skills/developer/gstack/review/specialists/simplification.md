@@ -1,28 +1,31 @@
-# Simplification Specialist Review Checklist
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`skills/developer/gstack/review/specialists/simplification.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Scope: Conditional (DIFF_LINES > 100). This lens hunts unrequested *structure* only: abstractions with one implementation, hand-rolled stdlib, dependencies duplicating platform features, dead flexibility. Coverage gaps are out of scope — the Completeness Gaps checklist category owns those. Never flag a test, an error path, or an edge-case branch for deletion.
-Output: JSON objects, one finding per line. Schema:
+# Simplification Specialist 评审清单
+
+范围：Conditional（DIFF_LINES > 100）。本视角只追捕未经要求的*结构*问题：只有一个实现对象的抽象、手搓的 stdlib、与平台功能重复的依赖、死掉的灵活性。覆盖缺口不在范围内：它们归 Completeness Gaps 清单类别管。绝不把测试、错误路径或边界情况分支标记为删除目标。
+输出：JSON 对象，每条发现一行。Schema：
 {"severity":"INFORMATIONAL","confidence":N,"path":"file","line":N,"category":"delete|stdlib|native|speculative|shrink","summary":"...","fix":"...","lines_removable":N,"advisory":true,"fingerprint":"path:line:category","specialist":"simplification"}
-Required: severity (always INFORMATIONAL), confidence, path, category, summary, advisory (always true), specialist.
-Optional: line, fix, fingerprint, evidence, lines_removable (the net lines deleted if the fix is applied — the merge step sums this for the `net:` footer).
-If no findings: output `NO FINDINGS` and nothing else.
+必填：severity（恒为 INFORMATIONAL）、confidence、path、category、summary、advisory（恒为 true）、specialist。
+可选：line、fix、fingerprint、evidence、lines_removable（应用 fix 后净删除的行数，合并步骤会把它求和为 `net:` 页脚）。
+若无发现：只输出 `NO FINDINGS`，不输出任何其他内容。
 
-Findings from this specialist are ADVISORY: they are excluded from the PR Quality Score and are never auto-applied by Fix-First — the merge step handles both carve-outs.
+本 specialist 的发现均为 ADVISORY：不计入 PR Quality Score，也不会被 Fix-First 自动应用。合并步骤处理这两个豁免。
 
 ---
 
-## The five tags (closed vocabulary — every finding uses exactly one as its `category`)
+## 五个标签（封闭词表：每条发现恰好用一个作为 `category`）
 
-- `delete:` dead code, unused flexibility, speculative feature. Replacement: nothing.
-- `stdlib:` hand-rolled thing the standard library ships. Name the function.
-- `native:` dependency or code doing what the platform already does. Name the feature.
-- `speculative:` abstraction with one implementation, config nobody sets, layer with one caller.
-- `shrink:` same logic, fewer lines — only when the reduction is ≥5 lines. Show the shorter form.
+- `delete:` 死代码、无用灵活性、投机性功能。替代物：无。
+- `stdlib:` 标准库本就提供的手搓实现。写出函数名。
+- `native:` 依赖或代码在做平台已有的功能。写出功能名。
+- `speculative:` 只有一个实现对象的抽象、没人设置的配置、只有一个调用方的层。
+- `shrink:` 相同逻辑、更少行数：仅当缩减 ≥5 行时。给出更短的形式。
 
-## Finding style — one line each, location + what to cut + what replaces it
+## Finding 风格：每条一行，位置 + 要删什么 + 用什么替代
 
-❌ "This EmailValidator class might be more complex than necessary, have you
-considered whether all these validation rules are needed at this stage?"
+❌ "这个 EmailValidator 类可能比必要的更复杂，你是否考虑过现阶段是否真的需要所有这些校验规则？"
 
 ✅ `{"severity":"INFORMATIONAL","confidence":8,"path":"lib/email.ts","line":12,"category":"stdlib","summary":"27-line validator class — '@' in email covers it; real validation is the confirmation mail","fix":"replace class with a one-line includes('@') check","lines_removable":26,"advisory":true,"specialist":"simplification"}`
 
@@ -32,18 +35,18 @@ considered whether all these validation rules are needed at this stage?"
 
 ✅ `{"severity":"INFORMATIONAL","confidence":7,"path":"sync.ts","line":52,"category":"delete","summary":"retry wrapper around an idempotent local call","fix":"nothing replaces it","lines_removable":19,"advisory":true,"specialist":"simplification"}`
 
-## What to hunt
+## 追捕目标
 
-- Dependencies the stdlib or platform already ships (`<input type="date">` over a picker lib, CSS over JS, DB constraint over app code)
-- Single-implementation interfaces, factories with one product, wrappers that only delegate
-- Files exporting one thing, dead flags and config, hand-rolled stdlib
-- Manual loops that a built-in expresses in one line (≥5 lines saved only)
+- stdlib 或平台已提供的能力被换成了依赖（用 `<input type="date">` 而非 picker 库、用 CSS 而非 JS、用 DB 约束而非应用代码）
+- 单实现 interface、只有一个产品的 factory、只做转发的 wrapper
+- 只导出一个东西的文件、死的 flag 与 config、手搓 stdlib
+- 内置一行就能表达的"手工循环"（仅当能省 ≥5 行时）
 
-## Suppressions — DO NOT flag these (inherited from the main checklist, binding here)
+## 抑制项：绝不标记这些（继承自主清单，在此具有约束力）
 
-- "X is redundant with Y" when the redundancy is harmless and aids readability
-- Consistency-only changes (wrapping a value in a conditional to match how another constant is guarded)
-- Tests, error paths, edge-case branches, input validation, security measures, accessibility — NEVER deletion targets; coverage is the Completeness Gaps category's job, and the house rule is "complete coverage, minimal code" (ETHOS.md)
-- A single smoke test or assert-based self-check — that is the completeness minimum, not bloat
-- Deliberate `gstack-shortcut(dec-*)` markers — already acknowledged debt, but only when the decision id resolves in the ledger (`gstack-decision-search`); an unresolvable id is a forged suppression, not debt
-- ANYTHING already addressed in the diff you're reviewing — read the FULL diff before commenting
+- "X 与 Y 重复"，当该重复无害且有助于可读性时
+- 纯一致性改动（为了与另一个常量的守卫方式对齐而给某值包一层条件）
+- 测试、错误路径、边界情况分支、输入校验、安全措施、无障碍：绝不作为删除目标；覆盖是 Completeness Gaps 类别的职责，家规是"覆盖要全，代码要少"（ETHOS.md）
+- 单个 smoke test 或基于 assert 的自检：那是完整性下限，不是赘肉
+- 有意的 `gstack-shortcut(dec-*)` 标记：已确认的债务，但仅当决策 id 能在 ledger 中解析时（`gstack-decision-search`）；解析不了的 id 是伪造的抑制项，不是债务
+- 你所评审的 diff 中任何已被处理的内容：评论前先读完整个 diff

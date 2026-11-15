@@ -12,11 +12,15 @@ photo: warm con=-6 vib=-10
 pictured: Gallery Hang, Diffusion hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/atelier.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Atelier
 
-The register of a maker's catalogue held in still air: limewash paper with a slow, luminous haze moving behind it, deep umber ink, Sentient light in heads and statements, Hanken Grotesk for reading, hairlines, one slate signal nearly as dark as the ink. The things a house hands you (a sample strip, a card, a numbered print) are built on cotton stock, lit from the top left, with pressed type and fibre. Not a cream page with a thin luxury serif, not a product page with a blue button.
+静止空气里一册匠人目录的语域：石灰水纸面，一层缓慢、发亮的光晕在其后移动，深棕墨色，Sentient light 做标题与陈述，Hanken Grotesk 做阅读文字，发丝线，一个几乎与墨色一样深的石板蓝信号色。这间房子递给你的东西（一条样品、一张卡片、一张编号的版画）都建在棉质卡纸上，从左上打光，带压印文字与纤维。不是细衬线的奶油色奢华页，不是蓝色按钮的商品页。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -35,51 +39,51 @@ The register of a maker's catalogue held in still air: limewash paper with a slo
 }
 ```
 
-## Type
+## 字体（Type）
 
-- **Display and statement:** Sentient 300 for every head and for a sentence or a figure at `--text-display-s` or larger, line-height 1.02 to 1.1, sentence case, roman. One weight and one colour a head.
-- **Small serif:** Sentient 400 for `h3`, a name on a card, a day, an entry numeral; never under 16px, never a paragraph.
-- **Body:** Hanken Grotesk 400, line-height 1.6, `--color-ink-2`. Three weights a page: Sentient 300 and 400, Hanken 400.
-- **Labels:** the wall label: Hanken 400 a step smaller, sentence case, untracked; the object in ink, the material or number in `--color-muted`. A numbered edition is pencilled: a blank rule for the hand, then the run, in `--color-pencil`.
+- **展示与陈述：**每个标题、以及 `--text-display-s` 及以上的一句话或一个数字，用 Sentient 300，行高 1.02 至 1.1，句首大写，正体。一个标题一个字重、一种颜色。
+- **小衬线：**`h3`、卡上的名字、一个日期、一条目的编号用 Sentient 400；绝不小于 16px，绝不做段落。
+- **正文：**Hanken Grotesk 400，行高 1.6，用 `--color-ink-2`。每页三个字重：Sentient 300 与 400，Hanken 400。
+- **标签：**墙面标签：Hanken 400 小一档，句首大写，不加字距；物件名用墨色，材质或编号用 `--color-muted`。编号版次用铅笔字：留一条空白横线给手写，之后是印数，用 `--color-pencil`。
 
-## Surfaces
+## 表面（Surfaces）
 
-- The air: one fixed WebGL field behind the page, domain-warped noise drifting upward in cream and pale amber veils, mixed in linear light, rendered at half size; the pointer's recent path parts it and a chosen item tints it. It shows through the hero and one or two zones; paper sections cover it. A still frame of the same field is the fallback. Never a gradient blob, never a photograph.
-- Texture is generated as feTurbulence data URIs: `--grain` (180px, 1.15) multiplied at 0.16 over the air, `--fibre` (220px, 0.85) on all card stock.
-- Card stock: cotton in `--color-card`, 2px corners, `--shadow-card`, an inset lit edge top left, an inner hairline frame inset 14px in `--color-card-edge`; type on it is pressed (a 1px lit text shadow below).
-- Sample strips: slim cotton blotters with a pointed tip, the item's stain wicking up from the tip, the name printed small and vertical. They fan from a rivet beside a head, hang from a rail as tabs (the chosen one let down on a thread), or tuck behind a card.
-- Hairlines on rows; a table or list opens on an ink `--rule-head` rule. Photographs: still life and rooms in warm daylight, hung square with a wall label; the lead picture is a print on a thin cotton mat with a fine bevel and its edition pencilled beneath.
+- 空气：页面之后一层固定的 WebGL 场，域扭曲噪声以奶油与淡琥珀色的薄纱向上漂移，以 linear light 混合，半尺寸渲染；指针最近的路径会拨开它，选中的物体会给它染色。它透过 Hero 与一两个区域显露；纸面章节盖住它。同一场景的静帧是降级方案。绝不是渐变色块，绝不是照片。
+- 纹理生成为 feTurbulence data URI：`--grain`（180px，1.15）以 0.16 multiply 铺在空气上，`--fibre`（220px，0.85）铺在所有棉质卡纸上。
+- 卡纸：`--color-card` 的棉白，2px 圆角，`--shadow-card`，左上一圈内嵌受光边缘，内缩 14px 的发丝线内框用 `--color-card-edge`；上面的文字是压印的（下方一条 1px 受光文字阴影）。
+- 样品条：窄长的棉质吸墨纸，尖端收尖，物品的染渍从尖端向上洇开，名字小小地竖排。它们从标题旁的一颗铆钉展开成扇形，作为标签挂在横杆上（选中的那根沿细线放下），或塞在卡片后面。
+- 行间发丝线；表格或列表以墨色 `--rule-head` 线起头。照片：暖调日光下的静物与房间，端正悬挂并配墙面标签；主图是一张版画，压在细棉卡纸上，边缘细斜切，版号铅笔字在下方。
 
-## Range
+## 版式（Range）
 
-- **Statement:** one sentence of the prompt in Sentient 300 across nine or ten columns, the pencilled edition line and a wall-text paragraph opening on a slate drop cap.
-- **The choice as strips:** the collection as blotters on a rail, each a real tab; the chosen one drops, its picture and wall label beside it.
-- **Timetable:** days or hours as a ruled table under the ink rule, names in Sentient 400, a closed row muted, never struck through.
-- **The booking as a card:** the form as a letterpress card on cotton: the house name pressed, a ringed day picker (a blind impression around the chosen day), engraved time chips, ruled lines to write on, strips tucked behind.
+- **陈述：**提示词的一句话用 Sentient 300 横跨九或十列，铅笔版次行与一段展墙文字以石板蓝首字下沉开头。
+- **选择化作样品条：**系列做成横杆上的吸墨纸，每条都是真的标签页；选中的放下，其照片与墙面标签在旁。
+- **时刻表：**日期或钟点排成墨线之下的划线表格，名字用 Sentient 400，关闭的行压淡，绝不划线删除。
+- **预订化作卡片：**表单做成棉纸上的凸版卡：房子名压印，带圆环的日期选择器（选中日期周围一圈盲压印），雕刻感的时间 chip，可书写的划线，样品条塞在卡后。
 
-## Controls
+## 控件（Controls）
 
-- A hairline-outlined control in ink at 3px (hover fills ink, paper text) beside an underlined link with a slate underline. No colour-filled control.
-- Choices on card stock are pressed in: inset shade top left, lit edge below; chosen takes a 1px ink ring. Fields on a card are a label over a ruled line.
-- The slate stays under 4% of a screen: underlines, the drop cap, the focus ring.
+- 一个发丝线描边、墨色的控件，3px 圆角（悬停填墨、纸色文字），旁边是带石板蓝下划线的链接。没有颜色填充的控件。
+- 卡纸上的选择是压进去的：左上内嵌阴影，下方受光边缘；选中的套 1px 墨色圆环。卡上的字段是划线之上的标签。
+- 石板蓝不超过一块屏幕的 4%：下划线、首字下沉、焦点环。
 
-## Motion
+## 动效（Motion）
 
-Fade-in after fonts; strips unfurl once on `--ease-out` over `--dur-long`; the air drifts, parts and tints, paused off screen. Reduced motion and no script: a still air, the first item chosen.
+字体就绪后淡入；样品条以 `--ease-out`、`--dur-long` 展开一次；空气漂移、拨开、染色，屏幕外暂停。Reduced motion（减少动效）与无脚本时：静止的空气，第一件物品已选中。
 
-## Voice
+## 语气（Voice）
 
-Hand-set, object-precise: the object, the material, the number made, the days the door is open. No superlatives, never "shop now" or "discover".
+手工排版、对物精确：物件、材质、做的数量、开门的日子。不用最高级，绝不说"立即选购"或"探索发现"。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a warm accent; the signal is cool slate under chroma 0.09.
-- Never a bold or high-contrast head; Sentient light carries the voice.
-- Never serif running text.
-- Never a flat white card or a blurred glass panel; card stock has fibre, a lit edge and one light from the top left.
-- Never two still lifes side by side at one size.
+- 绝不用暖色强调；信号色是彩度 0.09 以下的冷石板蓝。
+- 绝不用加粗或高对比标题；Sentient light 承担语气。
+- 绝不用衬线做行文。
+- 绝不用纯白平卡或磨砂玻璃面板；卡纸有纤维、受光边缘与来自左上的一盏光。
+- 绝不让两幅同尺寸的静物并排。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://api.fontshare.com/v2/css?f[]=sentient@300,400&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400&display=swap" rel="stylesheet">

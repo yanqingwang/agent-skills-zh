@@ -1,127 +1,131 @@
-# Review Dimension Checklists
+> **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/agent-teams/skills/multi-reviewer-patterns/references/review-dimensions.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Detailed checklists for each review dimension that reviewers follow during parallel code review.
+# 审查维度清单
 
-## Security Review Checklist
+并行代码审查中各审查维度遵循的详细清单。
 
-### Input Handling
+## 安全审查清单
 
-- [ ] All user inputs are validated and sanitized
-- [ ] SQL queries use parameterized statements (no string concatenation)
-- [ ] HTML output is properly escaped to prevent XSS
-- [ ] File paths are validated to prevent path traversal
-- [ ] Request size limits are enforced
+### 输入处理
 
-### Authentication & Authorization
+- [ ] 所有用户输入都经过校验和净化
+- [ ] SQL 查询使用参数化语句（不用字符串拼接）
+- [ ] HTML 输出正确转义以防 XSS
+- [ ] 文件路径经过校验以防路径穿越
+- [ ] 请求大小限制得到执行
 
-- [ ] Authentication is required for all protected endpoints
-- [ ] Authorization checks verify user has permission for the action
-- [ ] JWT tokens are validated (signature, expiry, issuer)
-- [ ] Password hashing uses bcrypt/argon2 (not MD5/SHA)
-- [ ] Session management follows best practices
+### 认证与授权
 
-### Secrets & Configuration
+- [ ] 所有受保护端点都要求认证
+- [ ] 授权检查核实用户拥有该操作的权限
+- [ ] JWT token 经过校验（签名、过期时间、签发者）
+- [ ] 密码哈希使用 bcrypt/argon2（不用 MD5/SHA）
+- [ ] 会话管理遵循最佳实践
 
-- [ ] No hardcoded secrets, API keys, or passwords
-- [ ] Secrets are loaded from environment variables or secret manager
-- [ ] .gitignore includes sensitive file patterns
-- [ ] Debug/development endpoints are disabled in production
+### 机密与配置
 
-### Dependencies
+- [ ] 没有硬编码的机密、API key 或密码
+- [ ] 机密从环境变量或密钥管理器加载
+- [ ] .gitignore 包含敏感文件模式
+- [ ] 调试/开发端点在生产环境已禁用
 
-- [ ] No known CVEs in direct dependencies
-- [ ] Dependencies are pinned to specific versions
-- [ ] No unnecessary dependencies that increase attack surface
+### 依赖
 
-## Performance Review Checklist
+- [ ] 直接依赖中没有已知 CVE
+- [ ] 依赖锁定到具体版本
+- [ ] 没有增大攻击面的多余依赖
 
-### Database
+## 性能审查清单
 
-- [ ] No N+1 query patterns
-- [ ] Queries use appropriate indexes
-- [ ] No SELECT \* on large tables
-- [ ] Pagination is implemented for list endpoints
-- [ ] Connection pooling is configured
+### 数据库
 
-### Memory & Resources
+- [ ] 没有 N+1 查询模式
+- [ ] 查询使用合适的索引
+- [ ] 大表上没有 SELECT \*
+- [ ] 列表端点实现了分页
+- [ ] 连接池已配置
 
-- [ ] No memory leaks (event listeners cleaned up, streams closed)
-- [ ] Large data sets are streamed, not loaded entirely into memory
-- [ ] File handles and connections are properly closed
-- [ ] Caching is used for expensive operations
+### 内存与资源
 
-### Computation
+- [ ] 没有内存泄漏（事件监听器已清理，流已关闭）
+- [ ] 大数据集用流式处理，不整体载入内存
+- [ ] 文件句柄和连接正确关闭
+- [ ] 代价高的操作使用了缓存
 
-- [ ] No unnecessary re-computation or redundant operations
-- [ ] Appropriate algorithm complexity for the data size
-- [ ] Async operations used where I/O bound
-- [ ] No blocking operations on the main thread
+### 计算
 
-## Architecture Review Checklist
+- [ ] 没有不必要的重复计算或冗余操作
+- [ ] 算法复杂度与数据规模匹配
+- [ ] I/O 密集处使用异步操作
+- [ ] 主线程上没有阻塞操作
 
-### Design Principles
+## 架构审查清单
 
-- [ ] Single Responsibility: each module/class has one reason to change
-- [ ] Open/Closed: extensible without modification
-- [ ] Dependency Inversion: depends on abstractions, not concretions
-- [ ] No circular dependencies between modules
+### 设计原则
 
-### Structure
+- [ ] 单一职责：每个模块/类只有一个变化理由
+- [ ] 开闭原则：不改代码即可扩展
+- [ ] 依赖倒置：依赖抽象而非具体实现
+- [ ] 模块之间没有循环依赖
 
-- [ ] Clear separation of concerns (UI, business logic, data)
-- [ ] Consistent error handling strategy across the codebase
-- [ ] Configuration is externalized, not hardcoded
-- [ ] API contracts are well-defined and versioned
+### 结构
 
-### Patterns
+- [ ] 关注点清晰分离（UI、业务逻辑、数据）
+- [ ] 错误处理策略在代码库中保持一致
+- [ ] 配置外置，不硬编码
+- [ ] API 契约定义清晰且有版本
 
-- [ ] Consistent patterns used throughout (no pattern mixing)
-- [ ] Abstractions are at the right level (not over/under-engineered)
-- [ ] Module boundaries align with domain boundaries
-- [ ] Shared utilities are actually shared (no duplication)
+### 模式
 
-## Testing Review Checklist
+- [ ] 全程使用一致的模式（不混用模式）
+- [ ] 抽象层级恰当（不过度设计也不欠设计）
+- [ ] 模块边界与领域边界对齐
+- [ ] 共享工具真正共享（没有重复）
 
-### Coverage
+## 测试审查清单
 
-- [ ] Critical paths have test coverage
-- [ ] Edge cases are tested (empty input, null, boundary values)
-- [ ] Error paths are tested (what happens when things fail)
-- [ ] Integration points have integration tests
+### 覆盖
 
-### Quality
+- [ ] 关键路径有测试覆盖
+- [ ] 边界情况已测试（空输入、null、边界值）
+- [ ] 错误路径已测试（失败时会发生什么）
+- [ ] 集成点有集成测试
 
-- [ ] Tests are deterministic (no flaky tests)
-- [ ] Tests are isolated (no shared state between tests)
-- [ ] Assertions are specific (not just "no error thrown")
-- [ ] Test names clearly describe what is being tested
+### 质量
 
-### Maintainability
+- [ ] 测试是确定性的（没有 flaky 测试）
+- [ ] 测试相互隔离（测试之间不共享状态）
+- [ ] 断言具体（不是只断言"没抛错"）
+- [ ] 测试名清楚描述被测内容
 
-- [ ] Tests don't duplicate implementation logic
-- [ ] Mocks/stubs are minimal and accurate
-- [ ] Test data is clear and relevant
-- [ ] Tests are easy to understand without reading the implementation
+### 可维护性
 
-## Accessibility Review Checklist
+- [ ] 测试不复刻实现逻辑
+- [ ] mock/stub 最小且准确
+- [ ] 测试数据清晰且相关
+- [ ] 不读实现也能看懂测试
 
-### Structure
+## 可访问性审查清单
 
-- [ ] Semantic HTML elements used (nav, main, article, button)
-- [ ] Heading hierarchy is logical (h1 → h2 → h3)
-- [ ] ARIA roles and properties used correctly
-- [ ] Landmarks identify page regions
+### 结构
 
-### Interaction
+- [ ] 使用语义化 HTML 元素（nav、main、article、button）
+- [ ] 标题层级合理（h1 → h2 → h3）
+- [ ] ARIA 角色与属性使用正确
+- [ ] landmark 标识页面区域
 
-- [ ] All functionality accessible via keyboard
-- [ ] Focus order is logical and visible
-- [ ] No keyboard traps
-- [ ] Touch targets are at least 44x44px
+### 交互
 
-### Content
+- [ ] 所有功能可经键盘访问
+- [ ] 焦点顺序合理且可见
+- [ ] 没有键盘陷阱
+- [ ] 触摸目标至少 44x44px
 
-- [ ] Images have meaningful alt text
-- [ ] Color is not the only means of conveying information
-- [ ] Text has sufficient contrast ratio (4.5:1 for normal, 3:1 for large)
-- [ ] Content is readable at 200% zoom
+### 内容
+
+- [ ] 图片有有意义的 alt 文本
+- [ ] 颜色不是传达信息的唯一手段
+- [ ] 文本对比度充足（常规 4.5:1，大字号 3:1）
+- [ ] 内容在 200% 缩放下可读

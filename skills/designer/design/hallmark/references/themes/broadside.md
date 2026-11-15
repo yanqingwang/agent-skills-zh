@@ -12,11 +12,15 @@ photo: duotone ink paper con=20
 pictured: Marquee Hero, Settled hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/broadside.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Broadside
 
-A printer's bill: grained buff stock, near-black ink, Six Caps fitted to the measure over Bevan, Archivo Narrow small print, rules at one point or five, one vermilion. It is loud because the capitals are tall and the rules heavy, never because anything is drawn; photographs print plainly in the ink, like the plate on a sale bill. Not a western pastiche, nor a soft cream editorial page.
+一张印刷商的告示单：带颗粒纹理的米黄纸、近黑的墨色、撑满版心宽的 Six Caps 压在 Bevan 之上，Archivo Narrow 排小字，横线只有一点或五点两种粗细，外加一处朱红。它响亮，是因为大写字母够高、横线够重，绝不是因为画了什么东西；照片以墨色平实印刷，就像拍卖告示单上的那块印版。不是西部片仿古，也不是柔软的奶油色编辑页。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -34,60 +38,60 @@ A printer's bill: grained buff stock, near-black ink, Six Caps fitted to the mea
 }
 ```
 
-One dial, the colourway, stated in the stamp (`broadside: bill`).
+只有一个拨盘，即配色，写入 stamp（印记）：`broadside: bill`。
 
-| Colourway | Stock | Ink | Accent |
+| 配色 | 纸张 | 墨色 | 强调色 |
 | --- | --- | --- | --- |
-| `bill` (default) | the block above | ink | vermilion |
-| `inked` | oklch(17% 0.01 60), grain screened | buff oklch(92% 0.028 88) | vermilion at oklch(63% 0.19 33); paper band dark |
-| `red-bill` | the vermilion | buff oklch(95.5% 0.018 88), 5.5:1 | buff; posture drenched |
+| `bill`（默认） | 上面的代码块 | 墨色 | 朱红 |
+| `inked` | oklch(17% 0.01 60)，颗粒改为滤色 | 米黄 oklch(92% 0.028 88) | 朱红提亮为 oklch(63% 0.19 33)；纸色横带转暗 |
+| `red-bill` | 以朱红作纸 | 米黄 oklch(95.5% 0.018 88)，对比 5.5:1 | 米黄；姿态取 Drenched |
 
-## Type
+## 字体（Type）
 
-- **Six Caps** 400, uppercase, line-height 0.88, `--tracking-display`, for the h1, big figures and fitted lines. It is fitted, not stepped: each line its own element that never wraps (`white-space: nowrap`, the 55b guard), its size set from its measured width in `cqi` so it fills its column exactly; lines stacked in one block differ in size, as type set by hand does.
-- **Bevan** 400 for section heads, item titles, the wordmark and short lines of fact; uppercase, untracked, line-height 1.
-- **Archivo Narrow** 400 and 600, line-height 1.5, for everything read; labels, table heads, captions and meta in its 500 a step smaller, sentence case, untracked, `--color-muted`. Figures are Six Caps, or Archivo Narrow tabular in a row.
-- Three families, no outlier: one case of wood type, the gothic for scale and the slab for weight.
+- **Six Caps** 400，大写，行高 0.88，`--tracking-display`，用于 h1、大数字与撑满版心的行。它是撑排（fitted）而非阶梯字号：每一行是独立的元素且绝不换行（`white-space: nowrap`，55b 闸门），其字号由 `cqi` 度量出的行宽决定，恰好填满所在列；同一块内堆叠的行字号各不相同，正如手工排字。
+- **Bevan** 400 用于区块标题、条目标题、字标与简短的事实句；大写，不加字距，行高 1。
+- **Archivo Narrow** 400 与 600，行高 1.5，用于一切供阅读的文字；标签、表头、图注与元信息用它的 500，小一号，句首大写，不加字距，`--color-muted`。数字用 Six Caps，或一行之内用 Archivo Narrow 的表格数字。
+- 三个字族，无 outlier（异类字体）：一副木活字，哥特体管尺度，粗衬线体担分量。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Rules: `--rule-bar` in ink above a section, a table or between two columns of a bill, `--rule-hair` in ink under a running head, `--rule-hair` in `--color-rule` between rows. Nothing between one and five.
-- Square corners everywhere, no shadow. A frame is a double rule, a `--rule-frame` ink border with a 1px ink keyline 3px inside it, round a well or a photograph.
-- Bands: `--color-paper-2`, ink with buff type, or one vermilion band with buff type; two a page at most.
-- Photographs: plain daylight documentary at eye level, the thing for sale whole and side-on, a detail at arm's length; nobody facing the lens. Printed in the ink on the stock (the `photo:` duotone), square, in the double-rule frame; type never sits on one, and a caption under it carries a fact.
-- Grain, the only texture: the speck layer (`texture.md` § 1) at `--grain`, multiplied on buff and screened on ink, on bands, wells and photograph frames, never under running text.
+- 横线：区块、表格之上或告示单两列之间压墨色 `--rule-bar`，页眉（running head）之下压墨色 `--rule-hair`，行与行之间用 `--color-rule` 的 `--rule-hair`。一点与五点之间没有其他粗细。
+- 到处直角，无阴影。边框即双线：`--rule-frame` 的墨色边框，向内 3px 处再压一条 1px 墨色细线，围住内嵌面板或照片。
+- 色带：`--color-paper-2`、墨底米黄字，或一条米黄字的朱红色带；每页至多两条。
+- 照片：平实的日光纪实、平视角度，待售之物完整侧面入镜，细节在臂距之内拍摄；没有人正对镜头。以墨色印在纸面上（`photo:` 的 duotone 双色调），直角，装在双线边框里；文字绝不压在照片上，照片下方的图注要承载一个事实。
+- 颗粒，唯一的纹理：斑点层（`texture.md` § 1）以 `--grain` 应用，米黄上正片叠底、墨色上滤色，用在色带、内嵌面板与照片边框上，绝不压在正文之下。
 
-## Range
+## 版式（Range）
 
-- A timetable as a bill: each day a column under a five-point rule, its name fitted in Six Caps to the column, the hour in Bevan, the small print under a 1pt rule; columns parted by a five-point vertical rule.
-- A count or a date fitted to the full measure in Six Caps, the one vermilion line of its screen, its small print beneath.
-- Particulars as rows: a Bevan label on the left, the fact in Archivo Narrow 600 on the right, hair rules between, a five-point rule over the first; a fact not yet known prints as a muted fill, never invented.
-- A form on the vermilion band: buff fields with an ink keyline, the ink block as its action, the head in Bevan.
+- 排成告示单的时刻表：每一天一列，列顶压一条五点横线，列名用 Six Caps 撑满列宽，钟点用 Bevan，小字压在 1 点横线之下；列与列之间用五点竖线分隔。
+- 一个数字或日期用 Six Caps 撑满整个版心，作为它所在屏幕唯一的一行朱红，小字缀于其下。
+- 细目作行：左侧 Bevan 标签，右侧 Archivo Narrow 600 的事实，行间发丝线，首行之上压一条五点横线；尚未得知的事实印作弱化的占位，绝不编造。
+- 朱红色带上放表单：米黄底色字段加墨色细线，墨色块作提交动作，标题用 Bevan。
 
-## Controls
+## 控件（Controls）
 
-- An ink-filled block in Archivo Narrow 600, untracked capitals (legal under an uppercase display), beside the same block as an unfilled double-rule frame; square, 48px, one fill a page.
-- Links in ink, underlined, vermilion on hover; inputs square, 48px, a 1px ink border.
-- Vermilion sets one whole display line (its own element, never part of a head) or one figure a screen, on buff or `--color-paper-2`.
+- 墨色填充块，Archivo Narrow 600，不加字距的大写（在大写展示字体之下是合法的），旁边是同样的块但作未填充的双线边框样式；直角，48px，每页只允许一处填充。
+- 链接用墨色、带下划线，悬停转朱红；输入框直角，48px，1px 墨色边框。
+- 朱红只用于一整行展示文字（独立元素，绝不作标题的一部分），或每屏一个数字，底为米黄或 `--color-paper-2`。
 
-## Motion
+## 动效（Motion）
 
-Printed, so still: a live figure updates in place, a fitted line fits once when the fonts load. No marquee, no hover growth, no reveal.
+印刷品，所以是静的：实时数字原地更新，撑排行在字体加载完成时撑一次。没有跑马灯，没有悬停放大，没有显现动效。
 
-## Voice
+## 语气（Voice）
 
-A sale bill read aloud: the date, the place, the lot and the hour, each said once. Shouted in capitals, explained in the small print, in the words of the trade it sells to.
+像朗读一张拍卖告示：日期、地点、拍品与钟点，每样只说一次。用大写字母喊，用小字解释，说的是它所面向行业的行话。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a ragged big line; a Six Caps line that does not fill its measure is fitted or cut.
-- Never a fourth face outside code: the case is Six Caps, Bevan and the narrow.
-- Never a rounded corner; frames, controls and photographs are square.
-- Never a second colour, in type or in a picture; photographs print in the ink.
-- Never a drawn gavel, star or ornament; the capitals and the photograph are the loud things.
-- Never a photograph on every fold; half the bill is type, and the type is the loud half.
+- 绝不让大字行参差不齐；填不满版心的 Six Caps 行要么撑满，要么删掉。
+- 代码之外绝无第四种字体：排字盘里只有 Six Caps、Bevan 和窄体。
+- 绝无圆角；边框、控件与照片都是直角。
+- 绝无第二种颜色，文字与照片皆然；照片以墨色印刷。
+- 绝不画法槌、星形或纹饰；大写字母与照片才是响亮的东西。
+- 绝不每一屏都是照片；告示单有一半是文字，文字正是响亮的那一半。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Six+Caps&family=Bevan&family=Archivo+Narrow:wght@400;500;600&display=swap" rel="stylesheet">

@@ -12,11 +12,15 @@ photo: natural con=10 vib=15
 pictured: Morning Report, Poster hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/piste.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Piste
 
-A mountain morning in print: snow-white paper, cold near-black ink, Barlow Condensed 800 in capitals for every head and figure, square edges on 2px ink rules, and one cobalt doing all the colour work, from the primary control to a full field. Photographs bring the mountain in, crisp and in full colour, cut square, and the paper is the snow they open onto. It reads bold because the type is loud and the colour one cold blue; it is not a lens-flare resort brochure, a sporty gradient or a rounded app.
+印在纸上的山间清晨：雪白纸面、冷调近黑墨色，每个标题与数字都用 Barlow Condensed 800 大写，2px 墨线收出方正边缘，一个钴蓝承担所有颜色工作，从主控件到整面色场。照片把山带进来，清晰、全彩、方正裁切，纸面就是它们展开其上的雪原。它显得大胆，因为字大声、颜色只有一种冷蓝；它不是带镜头光晕的度假区手册，不是运动感渐变，也不是圆润的应用。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -32,52 +36,52 @@ A mountain morning in print: snow-white paper, cold near-black ink, Barlow Conde
 }
 ```
 
-Committed: cobalt is `--color-field` and may fill a band; on controls and links it is the signal, `--color-accent-deep` its hover and pressed step. Three grounds, stated in the stamp (`piste: snow`): `snow` (the block above), `blue-run` (the page is the cobalt field under white ink; white takes the controls and focus) and `night-piste` (`oklch(14% 0.01 260)` under white ink, 2px white rules, cobalt at 56%, focus red at 60%).
+committed（全力以赴）：钴蓝即 `--color-field`，可以灌满一条色带；在控件与链接上它是信号色，`--color-accent-deep` 是它的悬停与按压阶。三种地面，写入 stamp（印记）：`piste: snow` 为 `snow`（上面的代码块）、`blue-run`（页面即钴蓝色场、覆白墨；白色承担控件与焦点）与 `night-piste`（`oklch(14% 0.01 260)` 之上覆白墨，2px 白线，钴蓝 56%，焦点红 60%）。
 
-## Type
+## 字体（Type）
 
-- **Display:** Barlow Condensed 800, uppercase, roman, `--tracking-display`; line-height 1.0 on any head that can wrap, 0.9 only on a single line that cannot. Condensed, so it sets one step larger than the shared scale: a section head at `--text-display-s` and up, the hero head up to 8rem.
-- **Figures:** the display face at 800, tabular, from `--text-display` to twice it; a figure on paper takes cobalt, a figure on the field takes paper. The label beneath is Barlow 500.
-- **Body:** Barlow 400 and 500, 17 to 19px, line-height 1.5; it is read outdoors, so never lighter.
-- **Buttons:** Barlow Condensed 800 in capitals at 18px, untracked (legal under 67 on an uppercase display). Nav links, table heads, captions: Barlow 500 a step smaller, sentence case.
+- **展示字体：**Barlow Condensed 800，全大写，正体，`--tracking-display`；任何可能换行的标题行高 1.0，不能换行的单行才用 0.9。窄体，所以比共享字阶大一级排：章节标题从 `--text-display-s` 起，Hero 标题到 8rem。
+- **数字：**展示字面 800，表格数字，从 `--text-display` 到两倍；纸上的数字用钴蓝，色场上的数字用纸色。下方标签用 Barlow 500。
+- **正文：**Barlow 400 与 500，17 至 19px，行高 1.5；要在户外读，绝不变浅。
+- **按钮：**Barlow Condensed 800 大写，18px，不加字距（大写展示之下 67 条允许）。导航链接、表头、图注：Barlow 500 小一档，句首大写。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Rules: `--rule-bar` ink above a list, a figure row or a table's head, and under a floating bar; `--rule-hair` in `--color-rule` between rows. Ruled, never boxed.
-- Radius 0 on everything: wells, photographs, inputs, controls and tags are cut square. Depth is flat: a raised surface is a paper step or the cobalt field, never a shadow.
-- Bands: the cobalt field with `--color-accent-ink` type, or `--color-paper-2` under a form or a dense table; two a page at most.
-- Photographs: the mountain in daylight and colour: a group on a slope seen from behind, a line of children after an instructor, skis standing in fresh snow, a lift against the sky; crisp and high-key, never a dusk grade or a flare. Cut square with an inset ink hairline at 8%. Ink sits straight on bright snow; paper sits on sky only over a cold ink scrim.
-- No texture, no gradient but a scrim, no blur.
+- 横线：`--rule-bar` 墨线压在列表、数字行或表头之上，以及浮动条之下；行间用 `--color-rule` 的 `--rule-hair`。划线，绝不装框。
+- 一切圆角 0：凹槽、照片、输入框、控件与标签都方正裁切。深度是平的：抬起的表面是一档纸面或钴蓝色场，绝不靠阴影。
+- 色带：`--color-accent-ink` 文字的钴蓝色场，或表单与密表之下的 `--color-paper-2`；每页至多两条。
+- 照片：日光与全彩下的山：背影中的一群人坡上同行、教练身后排队的孩子、立在新雪里的雪板、衬着天空的缆车；清晰高调，绝不用黄昏调或光晕。方正裁切，8% 内嵌墨色发丝线。墨色直接压在亮雪上；纸色只许压在天空上，且必须隔着冷调墨色暗化层。
+- 无纹理，除暗化层外无渐变，无模糊。
 
-## Range
+## 版式（Range）
 
-- **A figure row as a lift board:** the prompt's numbers in the condensed face at up to twice `--text-display`, cobalt on snow, under a `--rule-bar` ink rule and parted by hairlines, each with one Barlow line.
-- **Statement on the field:** one short line in condensed capitals at display size and beyond, paper on cobalt edge to edge, the line the morning report would shout.
-- **Steps or a timetable:** an `<ol>` with each numeral in the condensed face at `--text-display` in cobalt over a 2px ink rule, a capital title and one line; or a ruled table of times and groups with the head rule in ink.
-- **Forms as a ticket desk:** square 52px inputs and ink steppers on paper-2, the cobalt primary the only colour on the band.
+- **数字行化作吊椅告示板：**提示词的数字用窄体字面排到两倍 `--text-display`，雪上钴蓝，压在 `--rule-bar` 墨线之下、发丝线分隔，各配一行 Barlow。
+- **色场上的宣言：**一行短句用窄体大写排展示字号及以上，纸色钴蓝铺满边到边，那是晨报会喊出来的话。
+- **步骤或时刻表：**`<ol>` 的每个数字用窄体字面排 `--text-display`、钴蓝压在 2px 墨线之上，配大写标题与一行文字；或一张划线表格，时间与队伍分组，表头横线用墨色。
+- **表单化作售票窗口：**方正 52px 输入框与墨色步进器压在 paper-2 上，钴蓝主按钮是色带上唯一的颜色。
 
-## Controls
+## 控件（Controls）
 
-- The pair: a cobalt fill with `--color-accent-ink` text beside a 2px inset ink outline, both square, in condensed capitals; on a scrim or the field the outline turns paper. Hover takes `--color-accent-deep`; active takes ink.
-- Links are ink and underlined, cobalt on hover; inputs square, 52px, a 1px ink border; a stepper is two square ink-bordered buttons around a tabular count.
-- Cobalt sits on the primary, a link's hover, a field band and figures; red is the focus ring and nothing else.
+- 一对：钴蓝填充配 `--color-accent-ink` 文字，旁边是 2px 内嵌墨色描边，两者方正，用窄体大写；在暗化层或色场上描边转纸色。悬停取 `--color-accent-deep`；按下取墨色。
+- 链接用墨色带下划线，悬停转钴蓝；输入框方正，52px，1px 墨色边框；步进器是两个方正墨边按钮夹着一个表格数字。
+- 钴蓝落在主按钮、链接悬停、色场色带与数字上；红色是焦点环，此外什么都不是。
 
-## Motion
+## 动效（Motion）
 
-Still. A control steps one shade on hover over `--dur-micro` on `--ease-out`; nothing draws in, loops or follows the scroll.
+静止。控件悬停时深一档，时长 `--dur-micro`、缓动 `--ease-out`；无描画、无循环、不跟随滚动。
 
-## Voice
+## 语气（Voice）
 
-The morning report: the hour, the group, the week booked, called across the snow. Never a slogan about freedom or powder.
+晨报：钟点、队伍、预订的那一周，隔着雪地喊过来。绝不说关于自由或粉雪的口号。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never lowercase display or a light condensed; Barlow Condensed at 800.
-- Never a rounded corner, a pill or a soft card.
-- Never a second accent hue, never cobalt on running text or as a card fill on snow paper.
-- Never a sky gradient, a sunset grade, or a drawn mountain, snowflake or piste map.
+- 绝不用小写展示字体或细的窄体；Barlow Condensed 就是 800。
+- 绝不用圆角、胶囊或软卡片。
+- 绝不用第二种强调色相，绝不把钴蓝压在正文上、或作为雪白纸上的卡片填色。
+- 绝不用天空渐变、日落调，也绝不画山、雪花或雪道图。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;500&display=swap" rel="stylesheet">

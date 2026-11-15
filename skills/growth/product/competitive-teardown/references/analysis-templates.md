@@ -1,203 +1,207 @@
-# Competitive Analysis Templates
+> **中文汉化版** · 上游：[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) · 原文件：`product-team/skills/competitive-teardown/references/analysis-templates.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## 1. SWOT Analysis Template
+# 竞争分析模板
 
-### Company/Product: [Competitor Name]
-**Date:** [Analysis Date] | **Analyst:** [Name] | **Version:** [1.0]
+## 1. SWOT 分析模板
 
-#### Strengths (Internal Advantages)
-| # | Strength | Evidence | Impact |
+### 公司/产品：[竞争对手名称]
+**日期：**[分析日期] | **分析人：**[姓名] | **版本：**[1.0]
+
+#### 优势（内部有利因素）
+| # | 优势 | 证据 | 影响 |
 |---|----------|----------|--------|
-| 1 | [e.g., Strong brand recognition] | [Source/data point] | High/Med/Low |
+| 1 | [如：品牌认知度高] | [来源/数据点] | High/Med/Low |
 | 2 | | | |
 | 3 | | | |
 
-#### Weaknesses (Internal Limitations)
-| # | Weakness | Evidence | Exploitability |
+#### 劣势（内部限制）
+| # | 劣势 | 证据 | 可利用性 |
 |---|----------|----------|---------------|
-| 1 | [e.g., Limited API capabilities] | [Source/data point] | High/Med/Low |
+| 1 | [如：API 能力有限] | [来源/数据点] | High/Med/Low |
 | 2 | | | |
 | 3 | | | |
 
-#### Opportunities (External Favorable)
-| # | Opportunity | Timeframe | Our Advantage |
+#### 机会（外部有利）
+| # | 机会 | 时间跨度 | 我方优势 |
 |---|------------|-----------|---------------|
-| 1 | [e.g., Competitor slow to adopt AI] | Short/Med/Long | [How we capitalize] |
+| 1 | [如：竞品拥抱 AI 迟缓] | Short/Med/Long | [我方如何利用] |
 | 2 | | | |
 | 3 | | | |
 
-#### Threats (External Unfavorable)
-| # | Threat | Likelihood | Mitigation |
+#### 威胁（外部不利）
+| # | 威胁 | 可能性 | 应对 |
 |---|--------|-----------|-----------|
-| 1 | [e.g., Competitor acquired by larger company] | High/Med/Low | [Our response plan] |
+| 1 | [如：竞品被大公司收购] | High/Med/Low | [我方应对方案] |
 | 2 | | | |
 | 3 | | | |
 
 ---
 
-## 2. Porter's Five Forces (Product Application)
+## 2. 波特五力（产品场景应用）
 
-### Market: [Your Product Category]
+### 市场：[你的产品品类]
 
-#### Force 1: Competitive Rivalry (Intensity: High/Med/Low)
-- Number of direct competitors: ___
-- Market growth rate: ___% annually
-- Product differentiation level: High/Med/Low
-- Switching costs for customers: High/Med/Low
-- Exit barriers: High/Med/Low
-- **Assessment:** [Summary of competitive rivalry intensity]
+#### 力量 1：同业竞争（强度：High/Med/Low）
+- 直接竞争对手数量：___
+- 市场年增长率：___%
+- 产品差异化程度：High/Med/Low
+- 客户切换成本：High/Med/Low
+- 退出壁垒：High/Med/Low
+- **评估：**[同业竞争强度的总结]
 
-#### Force 2: Threat of New Entrants (Intensity: High/Med/Low)
-- Capital requirements: High/Med/Low
-- Technology barriers: High/Med/Low
-- Network effects strength: Strong/Moderate/Weak
-- Regulatory barriers: High/Med/Low
-- Brand loyalty in market: Strong/Moderate/Weak
-- **Assessment:** [Summary of new entrant threat]
+#### 力量 2：新进入者威胁（强度：High/Med/Low）
+- 资金门槛：High/Med/Low
+- 技术壁垒：High/Med/Low
+- 网络效应强度：Strong/Moderate/Weak
+- 监管壁垒：High/Med/Low
+- 市场品牌忠诚度：Strong/Moderate/Weak
+- **评估：**[新进入者威胁的总结]
 
-#### Force 3: Threat of Substitutes (Intensity: High/Med/Low)
-- Alternative solutions: [List substitutes]
-- Price-performance of substitutes: Better/Same/Worse
-- Switching costs to substitutes: High/Med/Low
-- Customer propensity to switch: High/Med/Low
-- **Assessment:** [Summary of substitute threat]
+#### 力量 3：替代品威胁（强度：High/Med/Low）
+- 替代方案：[列出替代品]
+- 替代品性价比：Better/Same/Worse
+- 转向替代品的切换成本：High/Med/Low
+- 客户切换意愿：High/Med/Low
+- **评估：**[替代品威胁的总结]
 
-#### Force 4: Bargaining Power of Buyers (Power: High/Med/Low)
-- Buyer concentration: Concentrated/Fragmented
-- Price sensitivity: High/Med/Low
-- Information availability: Full/Partial/Limited
-- Switching costs: High/Med/Low
-- Volume of purchases: High/Med/Low
-- **Assessment:** [Summary of buyer power]
+#### 力量 4：买方议价能力（议价力：High/Med/Low）
+- 买方集中度：Concentrated/Fragmented
+- 价格敏感度：High/Med/Low
+- 信息可得性：Full/Partial/Limited
+- 切换成本：High/Med/Low
+- 采购量：High/Med/Low
+- **评估：**[买方议价能力的总结]
 
-#### Force 5: Bargaining Power of Suppliers (Power: High/Med/Low)
-- Key technology dependencies: [List]
-- Cloud provider lock-in: High/Med/Low
-- Talent market tightness: Tight/Balanced/Loose
-- Data source dependencies: Critical/Important/Optional
-- **Assessment:** [Summary of supplier power]
+#### 力量 5：卖方议价能力（议价力：High/Med/Low）
+- 关键技术依赖：[列出]
+- 云厂商锁定：High/Med/Low
+- 人才市场松紧：Tight/Balanced/Loose
+- 数据源依赖：Critical/Important/Optional
+- **评估：**[卖方议价能力的总结]
 
-#### Overall Industry Attractiveness: [Score 1-10]
+#### 行业整体吸引力：[1-10 分]
 
 ---
 
-## 3. Competitive Positioning Map
+## 3. 竞争定位图
 
-### Axis Definitions
-- **X-Axis:** [e.g., Ease of Use] (Low to High)
-- **Y-Axis:** [e.g., Feature Completeness] (Low to High)
+### 坐标轴定义
+- **X 轴：**[如：易用性]（低到高）
+- **Y 轴：**[如：功能完整度]（低到高）
 
-### Competitor Positions
+### 竞争对手位置
 
-| Competitor | X Score (1-10) | Y Score (1-10) | Quadrant |
+| 竞争者 | X 得分（1-10） | Y 得分（1-10） | 象限 |
 |-----------|---------------|---------------|----------|
-| Your Product | ___ | ___ | ___ |
-| Competitor A | ___ | ___ | ___ |
-| Competitor B | ___ | ___ | ___ |
-| Competitor C | ___ | ___ | ___ |
-| Competitor D | ___ | ___ | ___ |
+| 你的产品 | ___ | ___ | ___ |
+| 竞争对手 A | ___ | ___ | ___ |
+| 竞争对手 B | ___ | ___ | ___ |
+| 竞争对手 C | ___ | ___ | ___ |
+| 竞争对手 D | ___ | ___ | ___ |
 
-### Quadrant Definitions
-- **Top-Right (Leaders):** High on both axes - market leaders
-- **Top-Left (Feature-Rich):** High features, lower ease of use - complex tools
-- **Bottom-Right (Simple):** Easy to use, fewer features - niche players
-- **Bottom-Left (Laggards):** Low on both axes - disruption candidates
+### 象限定义
+- **右上（领导者）：**两轴得分都高，市场领导者
+- **左上（功能丰富）：**功能多、易用性低，复杂工具
+- **右下（简单）：**易用但功能少，利基玩家
+- **左下（落后者）：**两轴得分都低，潜在的颠覆对象
 
-### Positioning Insights
-- **White space opportunities:** [Areas with no competitor presence]
-- **Crowded areas:** [Where competition is fiercest]
-- **Our trajectory:** [Direction we're moving on the map]
+### 定位洞察
+- **空白机会：**[没有竞争对手覆盖的区域]
+- **拥挤地带：**[竞争最激烈的地方]
+- **我方轨迹：**[我们在图上的移动方向]
 
 ---
 
-## 4. Win/Loss Analysis Template
+## 4. 赢单/丢单分析模板
 
-### Deal: [Opportunity Name]
-**Date:** [Close Date] | **Result:** Won / Lost | **Competitor:** [Name]
+### 交易：[商机名称]
+**日期：**[成交日期] | **结果：**Won / Lost | **竞争对手：**[名称]
 
-#### Deal Context
-- **Deal Size:** $___
-- **Sales Cycle:** ___ days
-- **Segment:** SMB / Mid-Market / Enterprise
-- **Industry:** ___
-- **Decision Makers:** [Roles involved]
-- **Evaluation Criteria:** [What mattered most to buyer]
+#### 交易背景
+- **交易金额：**$___
+- **销售周期：**___ 天
+- **细分市场：**SMB / Mid-Market / Enterprise
+- **行业：**___
+- **决策人：**[参与的角色]
+- **评估标准：**[买家最看重什么]
 
-#### Competitive Comparison (Buyer Perspective)
+#### 竞争对比（买家视角）
 
-| Factor | Us (Score 1-5) | Competitor (Score 1-5) | Decisive? |
+| 因素 | 我方（1-5 分） | 竞品（1-5 分） | 是否决定性？ |
 |--------|---------------|----------------------|-----------|
-| Product Fit | | | Yes/No |
-| Pricing | | | Yes/No |
-| Ease of Use | | | Yes/No |
-| Support Quality | | | Yes/No |
-| Integration | | | Yes/No |
-| Brand/Trust | | | Yes/No |
-| Implementation | | | Yes/No |
+| 产品匹配 | | | Yes/No |
+| 定价 | | | Yes/No |
+| 易用性 | | | Yes/No |
+| 支持质量 | | | Yes/No |
+| 集成 | | | Yes/No |
+| 品牌/信任 | | | Yes/No |
+| 实施落地 | | | Yes/No |
 
-#### Win/Loss Factors
-- **Primary reason for outcome:** [Single most important factor]
-- **Secondary factors:** [Supporting reasons]
-- **Buyer quotes:** ["Direct quotes from debrief"]
+#### 赢单/丢单因素
+- **结果的首要原因：**[最重要的单一因素]
+- **次要因素：**[辅助原因]
+- **买家原话：**["复盘中的直接引述"]
 
-#### Action Items
-| # | Action | Owner | Due Date |
+#### 行动项
+| # | 行动 | 负责人 | 截止日期 |
 |---|--------|-------|----------|
-| 1 | [e.g., Improve onboarding flow] | [Name] | [Date] |
+| 1 | [如：改进上手流程] | [姓名] | [日期] |
 | 2 | | | |
 
 ---
 
-## 5. Battle Card Template
+## 5. 作战卡（Battle Card）模板
 
-### Competitor: [Name]
-**Last Updated:** [Date] | **Confidence:** High/Med/Low
+### 竞争对手：[名称]
+**最后更新：**[日期] | **置信度：**High/Med/Low
 
-#### Quick Facts
-- **Founded:** ___
-- **Funding:** $___
-- **Employees:** ___
-- **Customers:** ___
-- **HQ:** ___
+#### 快速事实
+- **成立时间：**___
+- **融资：**$___
+- **员工数：**___
+- **客户数：**___
+- **总部：**___
 
-#### Elevator Pitch (Their Positioning)
-> [How the competitor describes themselves in one sentence]
+#### 一句话推介（对方的定位）
+> [竞品如何用一句话描述自己]
 
-#### Our Positioning Against Them
-> [How we differentiate - our one-liner against this competitor]
+#### 我方针对它的定位
+> [我们如何差异化，即针对这家竞品的一句话]
 
-#### Where They Win
-| Strength | Our Counter |
+#### 对方占优的地方
+| 对方优势 | 我方反击 |
 |----------|------------|
-| [e.g., Lower price point] | [e.g., Emphasize TCO including implementation costs] |
-| [e.g., Larger integration marketplace] | [e.g., Highlight quality over quantity, key integrations] |
+| [如：价格更低] | [如：强调包含实施成本的总拥有成本（TCO）] |
+| [如：集成市场更大] | [如：强调质量胜于数量，突出关键集成] |
 | | |
 
-#### Where We Win
-| Our Strength | Evidence |
+#### 我方占优的地方
+| 我方优势 | 证据 |
 |-------------|----------|
-| [e.g., Superior onboarding experience] | [Metric or customer quote] |
-| [e.g., Better enterprise security] | [Certification or feature] |
+| [如：上手体验更佳] | [指标或客户原话] |
+| [如：企业级安全更强] | [认证或功能] |
 | | |
 
-#### Landmines to Set
-Questions to ask prospects that expose competitor weaknesses:
-1. "Have you evaluated how [specific capability] scales beyond [threshold]?"
-2. "What's their approach to [area where competitor is weak]?"
-3. "Can you share their uptime SLA and historical performance?"
+#### 布置地雷式提问
+向潜在客户提这些问题，暴露竞品弱点：
+1. "你评估过[具体能力]在超过[阈值]之后的表现吗？"
+2. "他们在[竞品薄弱的领域]是怎么做的？"
+3. "能分享他们的在线率 SLA 和历史表现吗？"
 
-#### Objection Handling
-| Objection | Response |
+#### 异议处理
+| 异议 | 回应 |
 |-----------|----------|
-| "[Competitor] is cheaper" | [Value-based response] |
-| "[Competitor] has more features" | [Quality/relevance response] |
-| "We already use [Competitor]" | [Migration/coexistence story] |
+| "[竞品]更便宜" | [基于价值的回应] |
+| "[竞品]功能更多" | [质量/相关性回应] |
+| "我们已经在用[竞品]" | [迁移/共存叙事] |
 
-#### Trap Questions They Set
-Questions competitors ask about us, and how to respond:
-1. **Q:** "[Our known weakness]?" **A:** [Honest, redirect response]
-2. **Q:** "[Feature gap]?" **A:** [Roadmap or alternative approach]
+#### 对方设下的陷阱问题
+竞品会问我们的问题，以及如何回应：
+1. **Q:**"[我方已知弱点]？" **A:**[诚实回应，再引开话题]
+2. **Q:**"[功能缺口]？" **A:**[路线图或替代方案]
 
-#### Recent Intel
-- [Date]: [Notable change - pricing, feature, hire, funding]
-- [Date]: [Notable change]
+#### 最新情报
+- [日期]：[显著变化：定价、功能、人员、融资]
+- [日期]：[显著变化]

@@ -1,89 +1,93 @@
-## Description: <br>
-Official NVIDIA-authored guidance for NVIDIA cuDF GPU DataFrames, pandas acceleration, dask-cuDF, ETL, joins, groupby, CSV/Parquet I/O, nullable semantics, and multi-GPU DataFrame workloads. <br>
+> **中文汉化版** · 上游：[NVIDIA/skills](https://github.com/NVIDIA/skills) · 原文件：`skills/accelerated-computing-cudf/skill-card.md` · License: CC-BY-4.0 AND Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This skill is ready for commercial/non-commercial use. <br>
+## 描述： <br>
+NVIDIA 官方编写的指南，覆盖 NVIDIA cuDF GPU DataFrame、pandas 加速、dask-cuDF、ETL、join、groupby、CSV/Parquet I/O、可空语义与多 GPU DataFrame 工作负载。 <br>
 
-## Owner
+本 Skill 可用于商业/非商业用途。 <br>
+
+## 所有者
 NVIDIA <br>
 
-### License/Terms of Use: <br>
+### 许可证/使用条款： <br>
 CC-BY-4.0 AND Apache 2.0 <br>
-## Use Case: <br>
-Developers and data engineers use this skill to have an agent migrate or accelerate pandas DataFrame code on NVIDIA GPUs with cudf.pandas, explicit cuDF, or dask-cuDF, covering ETL, joins, groupby, reshape, nullable semantics, CSV/Parquet I/O, memory management, and CPU/GPU parity validation. <br>
+## 使用场景： <br>
+开发者和数据工程师使用本 Skill 让 agent 用 cudf.pandas、显式 cuDF 或 dask-cuDF 在 NVIDIA GPU 上迁移或加速 pandas DataFrame 代码，覆盖 ETL、join、groupby、reshape、可空语义、CSV/Parquet I/O、内存管理以及 CPU/GPU 一致性验证。 <br>
 
-### Deployment Geography for Use: <br>
-Global <br>
+### 使用地域： <br>
+全球 <br>
 
-## Requirements / Dependencies: <br>
-**Requires API Key or External Credential:** [Not Specified] <br>
-**Credential Type(s):** [None identified] <br>
+## 要求 / 依赖： <br>
+**是否需要 API Key 或外部凭证：** [未指定] <br>
+**凭证类型：** [未识别] <br>
 
-Do not include secrets in prompts/logs/output; use least-privilege credentials; rotate keys as appropriate. <br>
+不要把密钥放进提示词/日志/输出；使用最小权限凭证；按需轮换密钥。 <br>
 
-## Known Risks and Mitigations: <br>
-Risk: Review before execution as proposals could introduce incorrect or misleading guidance into skills. <br>
-Mitigation: Review and scan skill before deployment. <br>
+## 已知风险与缓解措施： <br>
+风险：提案可能把不正确或有误导性的指引带进 Skill，执行前请审查。 <br>
+缓解：部署前审查并扫描 Skill。 <br>
 
-## Reference(s): <br>
-- [cuDF API Patterns, Gaps, and Semantic Differences](references/api-patterns.md) <br>
-- [cudf.pandas Accelerator — Deep Dive](references/cudf-pandas-accelerator.md) <br>
-- [dask-cuDF Patterns](references/dask-cudf-patterns.md) <br>
-- [cuDF Documentation](https://docs.nvidia.com/cudf/) <br>
-- [dask-cuDF API Reference](https://docs.nvidia.com/dask-cudf/) <br>
-- [Installation System Requirements](https://docs.nvidia.com/datascience/install/#system-req) <br>
+## 参考资料： <br>
+- [cuDF API 模式、缺口与语义差异](references/api-patterns.md) <br>
+- [cudf.pandas 加速器：深入解析](references/cudf-pandas-accelerator.md) <br>
+- [dask-cuDF 模式](references/dask-cudf-patterns.md) <br>
+- [cuDF 文档](https://docs.nvidia.com/cudf/) <br>
+- [dask-cuDF API 参考](https://docs.nvidia.com/dask-cudf/) <br>
+- [安装系统要求](https://docs.nvidia.com/datascience/install/#system-req) <br>
 - [cuDF GitHub](https://github.com/NVIDIA/cudf) <br>
 - [cuDF CHANGELOG](https://github.com/NVIDIA/cudf/blob/main/CHANGELOG.md) <br>
 
 
-## Skill Output: <br>
-**Output Type(s):** [Code, Shell commands, Configuration instructions, Analysis] <br>
-**Output Format:** [Markdown with inline Python and bash code blocks] <br>
-**Output Parameters:** [1D] <br>
-**Other Properties Related to Output:** [None] <br>
+## Skill 输出： <br>
+**输出类型：** [代码、Shell 命令、配置说明、分析] <br>
+**输出格式：** [带内联 Python 和 bash 代码块的 Markdown] <br>
+**输出参数：** [1D] <br>
+**其他与输出相关的属性：** [无] <br>
 
-## Evaluation Agents Used: <br>
+## 评估使用的 Agent： <br>
 - Claude Code (`aws/anthropic/bedrock-claude-opus-4-8`) <br>
 - Codex (`openai/openai/gpt-5.5`) <br>
 
 
 
-## Evaluation Tasks: <br>
-13 evaluation tasks (12 positive, 1 negative), one attempt per task, each run in an isolated k8s sandbox pod and compared against a no-skill baseline. Overall verdict: PASS — recommended for publication (evaluation date 2026-10-15, evaluator version 1.5.6). <br>
+## 评估任务： <br>
+13 个评估任务（12 个正例、1 个反例），每任务尝试一次，每次运行都在隔离的 k8s 沙箱 pod 中进行，并与无 Skill 基线对比。总体判定：PASS，建议发布（评估日期 2026-10-15，评估器版本 1.5.6）。 <br>
 
-## Evaluation Metrics Used: <br>
-Reported benchmark dimensions: <br>
-- Security: Is it safe to use? Scored from the security signal. <br>
-- Correctness: Is the answer correct? Scored from final-answer accuracy. <br>
-- Discoverability: Was the right skill loaded when needed? Scored from skill execution. <br>
-- Effectiveness: Did the skill help complete the task? Equal-weight mean of goal accuracy and behavior check. <br>
-- Efficiency: Did it avoid wasted tool calls and token usage? 50% tool-call productivity and 50% token efficiency. <br>
+## 评估使用的指标： <br>
+报告的基准维度： <br>
+- Security（安全性）：使用是否安全？由 security 信号计分。 <br>
+- Correctness（正确性）：答案是否正确？由最终答案准确率计分。 <br>
+- Discoverability（可发现性）：需要时是否加载了正确的 Skill？由 skill execution 计分。 <br>
+- Effectiveness（有效性）：Skill 是否帮助完成了任务？goal accuracy 与 behavior check 的等权平均。 <br>
+- Efficiency（效率）：是否避免了浪费的工具调用与 token 用量？50% 工具调用生产力 + 50% token 效率。 <br>
 
-Underlying evaluation signals used in this run: <br>
-- `security`: Unsafe operations, secret leakage, and unauthorized access. <br>
-- `skill_execution`: Whether the expected skill was selected, decoys were avoided, and the workflow executed. <br>
-- `skill_efficiency`: Tool-call productivity. <br>
-- `accuracy`: Final-answer correctness against the reference answer. <br>
-- `goal_accuracy`: Whether the user's goal was achieved. <br>
-- `behavior_check`: Whether the expected workflow behavior was followed. <br>
-- `token_efficiency`: Actual uncached prompt plus completion token usage. <br>
+本次运行使用的底层评估信号： <br>
+- `security`：不安全操作、密钥泄露与未授权访问。 <br>
+- `skill_execution`：是否选择了预期的 Skill、避开了诱饵并执行了工作流。 <br>
+- `skill_efficiency`：工具调用生产力。 <br>
+- `accuracy`：最终答案相对参考答案的正确性。 <br>
+- `goal_accuracy`：用户目标是否达成。 <br>
+- `behavior_check`：是否遵循了预期的工作流行为。 <br>
+- `token_efficiency`：实际的未缓存提示词加完成 token 用量。 <br>
 
 
 
-## Evaluation Results: <br>
-| Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
+## 评估结果： <br>
+| 指标 | Claude Code（基线 → Skill 提升） | Codex（基线 → Skill 提升） |
 |---|---:|---:|
-| Overall | 76.8% — baseline ran, but no comparable score was available; uplift unavailable | 89.3% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 23.1% → 38.5% (+15.4 points) | 38.5% → 92.3% (+53.8 points) |
-| Correctness | 100.0% → 100.0% (±0.0 points) | 100.0% → 100.0% (±0.0 points) |
-| Discoverability | 79.2% — baseline ran, but no comparable score was available; uplift unavailable | 78.8% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 92.5% → 94.9% (+2.4 points) | 88.5% → 92.1% (+3.6 points) |
-| Efficiency | 71.4% — baseline ran, but no comparable score was available; uplift unavailable | 83.3% — baseline ran, but no comparable score was available; uplift unavailable |
+| 总体 | 76.8%（基线已运行，但无可比分数；无法计算提升） | 89.3%（基线已运行，但无可比分数；无法计算提升） |
+| 安全性 | 23.1% → 38.5%（+15.4 个百分点） | 38.5% → 92.3%（+53.8 个百分点） |
+| 正确性 | 100.0% → 100.0%（±0.0 个百分点） | 100.0% → 100.0%（±0.0 个百分点） |
+| 可发现性 | 79.2%（基线已运行，但无可比分数；无法计算提升） | 78.8%（基线已运行，但无可比分数；无法计算提升） |
+| 有效性 | 92.5% → 94.9%（+2.4 个百分点） | 88.5% → 92.1%（+3.6 个百分点） |
+| 效率 | 71.4%（基线已运行，但无可比分数；无法计算提升） | 83.3%（基线已运行，但无可比分数；无法计算提升） |
 
-## Skill Version(s): <br>
-26.12.00 development release (source: repo VERSION file and SKILL.md compatibility section; latest CHANGELOG release 26.10.00, git SHA 62921dda53 committed 2026-10-14) <br>
+## Skill 版本： <br>
+26.12.00 开发版（来源：仓库 VERSION 文件与 SKILL.md 兼容性小节；最近的 CHANGELOG 发布为 26.10.00，git SHA 62921dda53，提交于 2026-10-14） <br>
 
-## Ethical Considerations: <br>
-NVIDIA believes Trustworthy AI is a shared responsibility and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their internal team to ensure this skill meets requirements for the relevant industry and use case and addresses unforeseen product misuse. <br>
+## 伦理考量： <br>
+NVIDIA 相信可信 AI（Trustworthy AI）是共同的责任，并已建立相应的政策与实践，支持广泛 AI 应用的开发。在按照我们的服务条款下载或使用时，开发者应与内部团队协作，确保本 Skill 满足相关行业与用例的要求，并应对无法预见的产品滥用。 <br>
 
-(For Release on NVIDIA Platforms Only) <br>
-Please report quality, risk, security vulnerabilities or NVIDIA AI Concerns [here](https://app.intigriti.com/programs/nvidia/nvidiavdp/detail). <br>
+（仅适用于 NVIDIA 平台发布） <br>
+请[在此](https://app.intigriti.com/programs/nvidia/nvidiavdp/detail)报告质量问题、风险、安全漏洞或 NVIDIA AI 顾虑。 <br>

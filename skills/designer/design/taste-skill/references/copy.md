@@ -1,193 +1,199 @@
-# Copy
+> **中文汉化版** · 上游：[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · 原文件：`skills/taste-skill/references/copy.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Say what it is and what it does, in words a stranger understands in five seconds. Every sentence is
-one you would say out loud to a customer. No metaphors, poetry, invented terms or ad wording (the one
-brand line of rule 3 aside). Every studied site is a description only: copy how the examples are
-written (plain, category first), never their words, code, pictures or signature effect.
+# 文案（Copy）
 
-## The copy layer
+用陌生人在五秒内就能听懂的话，说清它是什么、能做什么。每一句都该是你会对顾客
+当面说出口的话。不用比喻、诗意表达、生造词或广告用语（规则 3 里那一行品牌句
+除外）。每个研读过的站点都只当描述素材：模仿示例的写法（平实、品类先行），
+绝不照抄它们的用词、代码、图片或招牌特效。
 
-This file holds the rules every page keeps. What the words say and how they sound is the copy layer, read at step 2
-before the first sentence:
+## 文案层（The copy layer）
 
-- `copy-voice.md`: the fact sheet from the brief, the voice card, the page's shape from the reader's
-  questions, the device budget, the checks. Start here.
-- `copy-registers.md`: the voices to choose from, and which suit which trade.
-- `copy-moves.md`: the move for each part of the page: hero forms that name the category, headings,
-  the story, features, proof, prices, buttons, microcopy, the footer.
-- `copy-tells.md`: what gives model copy away and the fix for each, what over-correction breeds, and
-  what is not a tell.
+本文件收录每个页面都要遵守的规则。文案说什么、听起来是什么腔调，属于文案层，
+在第 2 步、写下第一句话之前先读：
 
-Where they differ, this file wins: nothing invented, nothing bracketed or left open on the page, no
-captions, the h1 names the category, buttons are a verb and an object.
+- `copy-voice.md`：来自简报的事实清单、语气卡片、由读者问题确定的页面形态、
+  手法预算、各项检查。从这里开始。
+- `copy-registers.md`：可选的语气风格，以及各自适合哪一行。
+- `copy-moves.md`：页面每个部分的手法：点明品类的 hero 表单、标题、故事、
+  特性、佐证、价格、按钮、微文案、页脚。
+- `copy-tells.md`：哪些特征会暴露模型腔文案及其修法，过度矫正会催生什么，
+  以及哪些不算破绽。
 
-**copy-lint.** `node <skill>/scripts/copy-lint.mjs index.html --kind <kind>` counts the countable
-tells in well under a second a page (no browser). FAIL: residue (a `[NEED]`, a template token,
-markdown, chatbot lines), the old slop words and stock lines, and a device used more than twice its
-budget plus one (three two-fragment headings, five contrast frames, five virtue words): fix every
-one. WARN: a device over its budget, a strip of figures, a default-cast name, a footer sign-off, a
-response-time promise worded twice, proof figures, exclamation marks, puffery, a stale year: fix it or
-keep it and say why in the report. Several pages at once also print their first headings side by side
-and the heading phrases they share. `--json` for scripts; exit 1 on a FAIL. The gate runs it on the
-page as a static check: its FAILs block like the checker's (ids `copy-*`), its WARNs do not.
+它们与本文件不一致时，以本文件为准：不生造任何内容、页面上不留方括号或空白、
+不加图注、h1 点明品类、按钮是动词加宾语。
 
-## Five rules
+**copy-lint。** `node <skill>/scripts/copy-lint.mjs index.html --kind <kind>` 数出
+一页可计数的破绽，每页远不到一秒（不开浏览器）。FAIL：残留物（`[NEED]`、模板
+token、markdown、聊天机器人式语句）、陈旧的注水词与套话，以及用量超过其预算
+两倍加一的手法（三个双片段标题、五个对比框架、五个美德词）：每一项都要修。
+WARN：超出预算的手法、一排数字、默认选角的名字、页脚落款、把响应时间承诺
+说了两遍、佐证数字、感叹号、浮夸吹捧、过时年份：要么修掉，要么保留并在报告中
+说明理由。一次检查多页时，还会并排打印各页第一个标题以及它们共享的标题短语。
+`--json` 供脚本调用；FAIL 时退出码为 1。门禁把它作为静态检查跑在页面上：
+它的 FAIL 与检查器的一样阻断（id 为 `copy-*`），WARN 不阻断。
 
-1. **The h1 names the category, and for a brand nobody knows, the buyer or the place,** in 2 to 8
-   words: payroll app, dental clinic, standing desk, plus who it is for or where. A place: what and
-   where in 40 characters at most ("Bakery on Mill Street, Leith"; "Six-room guesthouse on a fjord").
-   A game: its name and genre ("Kelpmoor, a co-op sailing game"), or its wordmark over an h1 naming
-   the genre; the launch date or status the brief gives is the hard fact. Never a riddle, a command, a mood, or a brand line over a plain sub-line.
-2. **The first screen holds one hard fact:** a number, a place, a price or a date.
-3. **Every heading has a noun that names a thing:** the product, a part of it, the place, a section
-   noun (prices, rooms, menu, opening hours, questions, getting here, visit) or a digit. One brand
-   line a page at most, never the h1: it is the page's one figure of speech or pun, with a fact in
-   the line under it.
-4. **Buttons are a verb plus what the visitor gets,** 1 to 5 words, starting with book, buy, order,
-   pre-order, reserve, try, start, get, download, compare, see, watch, read, find, join, subscribe,
-   sign up, contact, configure, add, send, email or request; a bare noun only where the link opens
-   that thing. Never "Learn more", "Read more", "Discover", "Explore", "More" or "Click here".
-5. **Few actions, each with one wording:** at most 2 in the hero (one on a place), 10 different
-   labels a page at most. The main action names the transaction (Book a room, Order a cake, Start a
-   free trial; on a place the brief's order or booking, else Get directions, never a side event) and
-   reads the same in the nav, the hero, the close and the phone bar, and nowhere else. One screen
-   shows it twice at most: the nav's button and the hero's on a desktop (the checker WARNs it, so
-   look that nothing else repeats it), the hero's on a phone (system.js keeps the phone bar away
-   from a screen that already shows its action); a third copy on one screen FAILs [action-repeat].
+## 五条规则
 
-## Plain versions
+1. **h1 点明品类；品牌无人知晓时，还要点出买家或所在地点**，用 2 到 8 个词：
+   payroll app、dental clinic、standing desk，再加上面向谁或在哪里。地点类：
+   40 个字符以内说清是什么、在哪里（"Bakery on Mill Street, Leith"；
+   "Six-room guesthouse on a fjord"）。游戏类：名字加类型（"Kelpmoor, a co-op
+   sailing game"），或者把 wordmark 压在一个点明类型的 h1 上；简报给出的发布
+   日期或状态是硬事实。绝不许谜语、命令句、氛围句，或把品牌句压在平实副句上。
+2. **首屏必须有一个硬事实：** 一个数字、一个地点、一个价格或一个日期。
+3. **每个标题都有一个指名实物的名词：** 产品、产品的部件、地点、区块名词
+   （prices、rooms、menu、opening hours、questions、getting here、visit）或一个
+   数字。每页最多一句品牌句，且绝不放在 h1：它是该页唯一的修辞或双关，其下
+   一行要带一个事实。
+4. **按钮是动词加访客得到的东西，** 1 到 5 个词，以 book、buy、order、
+   pre-order、reserve、try、start、get、download、compare、see、watch、read、
+   find、join、subscribe、sign up、contact、configure、add、send、email 或
+   request 开头；只有当链接打开的就是那个东西本身时才用光杆名词。绝不用
+   "Learn more"、"Read more"、"Discover"、"Explore"、"More" 或 "Click here"。
+5. **动作要少，每个动作只有一种措辞：** hero 区最多 2 个（地点类 1 个），
+   每页最多 10 个不同标签。主动作点名交易本身（Book a room、Order a cake、
+   Start a free trial；地点类用简报里的下单或预订说法，否则用 Get directions，
+   绝不是某个附带活动），并在导航、hero、结尾与手机栏里保持同一措辞，其余
+   地方不用。一屏最多出现两次：桌面端是导航按钮与 hero 按钮（检查器对此
+   WARN，所以要确认没有别的元素在重复它）；手机端是 hero 按钮（system.js
+   会把手机栏避开已展示该动作的屏幕）；同一屏出现第三处则 FAIL [action-repeat]。
 
-When a line is vague: the category noun first, then one count, place or price from the brief, no
-figure of speech.
+## 平实版本
 
-| Vague | Plain |
+句子含糊时：品类名词在前，然后接简报里的一个数量、地点或价格，不用修辞。
+
+| 含糊 | 平实 |
 | --- | --- |
 | "Every shift, sorted" | Shift planning for restaurant teams |
 | "Where the city climbs" | Climbing gym with 180 routes in Leipzig-Plagwitz |
 | "Come climb" | Day pass 14 €, shoes included |
 | "A second read of every word" | AI proofreader for book publishers |
 
-## Headlines and text
+## 标题与正文
 
-- **Hero sub-line:** software, product and service: how it works and the main benefit, 15 to 30
-  words, one line to two sentences. A place: the fact, 80 characters at most, with today's hours
-  ("Sourdough, rye and cardamom buns from 7:30, Tuesday to Sunday."); a hotel the rooms and the town.
-- **Section headings** name the thing ("Rooms and prices", "Works with your tools") or make a short
-  plain claim ("Pays staff on the same day"), 1 to 6 words, at most two lines. A noun phrase, "we
-  do X for Y", or a verb with the thing it acts on ("Send invoices from the van"); never a bare
-  command ("Get started", "Come climb"), a question (FAQ entries may be questions), a colon heading
-  or a line that only makes sense after the page ("Continuity slips", "It reads everything you
-  decide"). Two fragments ("Twelve rooms. Three ways to stay.") once a page at most (`copy-tells.md`).
-  **Card titles:** a verb and an object ("Warns about double shifts"), one line, real words, never a
-  coy label ("The market run"). A heading with a grey second half is two sentences: the first ends
-  with a full stop before the `.muted` span ("Rooms and prices. <span class="muted">Breakfast
-  included.</span>"), never two phrases that run into one [run-on].
-- **Under a heading** one line to two sentences (10 to 40 words); a card body 1 or 2 sentences, 25
-  words at most, in the buyer's words with one concrete detail; no paragraph over five lines at
-  1440. A price does the selling, not a mood heading ("Rooms from 140 € a night, breakfast
-  included").
-- **Words per screen** stay low: product 47, place 44, service 34; a page about 900 words at most,
-  the footer aside. Long copy goes to sub-pages.
-- **The tech word budget** (software, gaming, hardware): 60 to 80 words a screen at 1440, counted
-  outside UI mocks, diagrams and code (headings, lines, card titles and bodies, buttons, labels);
-  over 80 the checker WARNs (in testing: a fintech page at 117 words a screen read as wordy). Cut in
-  this order: a second sentence under a heading, card bodies to one sentence of 12 to 18 words, a
-  fourth card, a list a fragment already shows. The UI says the rest.
-- **Numbers** sit in sentences with their unit ("4.5 hours a week"), uneven where real (212, 38%).
-  A real claim from the brief that needs a source gets a numbered footnote near the footer (13px
-  and up).
-- **Pictures** stand beside short copy, never in place of it, and words never stand where a
-  photograph fits. Every word is live text.
-- **Form words:** a label says what goes in ("Arrival", "Guests"), never a question or a
-  placeholder in its place; an error names the field and what to type ("Write the day you want to
-  come"); the sent line names what was sent in the button's own words ("Your table request is in. We
-  reply within a day."). The rest of the recipe: `system.md`, Forms.
-- **Self-check:** read each line aloud to a customer. Is it clear what the product does? If not,
-  rewrite it. Then the copy layer's checks (`copy-voice.md` section 6), copy-lint first.
+- **Hero 副句：** 软件、产品与服务：写明工作方式与主要收益，15 到 30 个词，
+  一行到两句。地点类：陈述事实，80 字符以内，带今日营业时间（"Sourdough, rye
+  and cardamom buns from 7:30, Tuesday to Sunday."）；酒店写房型与城镇。
+- **区块标题** 点名事物（"Rooms and prices"、"Works with your tools"）或做一个
+  简短平实的断言（"Pays staff on the same day"），1 到 6 个词，最多两行。用名词
+  短语、"we do X for Y" 或动词加其作用对象（"Send invoices from the van"）；
+  绝不用光杆命令（"Get started"、"Come climb"）、疑问句（FAQ 条目可以是疑问句）、
+  冒号式标题，或读完页面才说得通的句子（"Continuity slips"、"It reads everything
+  you decide"）。双片段（"Twelve rooms. Three ways to stay."）每页至多一次
+  （`copy-tells.md`）。**卡片标题：** 动词加宾语（"Warns about double shifts"），
+  一行，用真实的话，绝不用故作俏皮的标签（"The market run"）。标题后半段是
+  灰色的，那就是两句话：第一句在 `.muted` span 前以句号收尾（"Rooms and prices.
+  <span class="muted">Breakfast included.</span>"），绝不是连成一体的两个短语
+  [run-on]。
+- **标题之下** 一行到两句（10 到 40 个词）；卡片正文 1 到 2 句、最多 25 个词，
+  用买家的话，带一个具体细节；1440 宽度下没有超过五行的段落。价格自己会卖货，
+  不用氛围标题（"Rooms from 140 € a night, breakfast included"）。
+- **每屏字数** 保持低位：产品 47、地点 44、服务 34；每页约 900 词封顶，页脚
+  不计。长文案放到子页面。
+- **技术词预算**（软件、游戏、硬件）：1440 宽度下每屏 60 到 80 个词，计数
+  排除 UI 模型图、示意图与代码（标题、正文行、卡片标题与正文、按钮、标签）；
+  超过 80 检查器会 WARN（实测：某金融科技页每屏 117 词，读起来冗长）。按此
+  顺序删：标题下的第二句、卡片正文删到一句 12 到 18 个词、第四张卡片、某个
+  片段已表达过的列表。其余让 UI 去说。
+- **数字** 带着单位嵌在句子里（"4.5 hours a week"），真实数据要参差（212、38%）。
+  需要出处的真实断言（来自简报）在页脚附近加编号脚注（13px 及以上）。
+- **图片** 与短文案并置，绝不替代文案；文字也绝不站本该放照片的位置。每个
+  词都是活文本。
+- **表单用语：** label 写明该填什么（"Arrival"、"Guests"），绝不用提问，也不让
+  占位符顶替 label；错误信息点名字段并说明该填什么（"Write the day you want to
+  come"）；发送后的那句话用按钮自己的措辞点名发送了什么（"Your table request
+  is in. We reply within a day."）。其余做法见 `system.md` 的 Forms 一节。
+- **自检：** 把每句话念给顾客听。能听清产品做什么吗？听不清就重写。然后跑
+  文案层的检查（`copy-voice.md` 第 6 节），先跑 copy-lint。
 
-## What may be assumed
+## 哪些可以假设
 
-- **Prices, address, hours and dates come from the brief;** the report lists any you assumed. Only
-  two things may be assumed when the brief lacks them: a coined brand name (below), and on a place
-  plausible hours and prices for the trade, uneven and in the local currency (3.60, not 4.00).
-  Nothing else is invented: a product or service with no price in the brief says "Price on
-  request" or shows none. Each assumed price, hour, date or place carries `data-assumed` on its own
-  element (`<span class="rows__value" data-assumed>3.60 €</span>`, `<dl class="hours"
-  data-assumed>`); the checker lists every one for the report [assumed], and assumed hours never
-  drive an open-now line [open-now].
-- **No invented proof:** no invented reviews, ratings, review counts, quotes, testimonials,
-  statistics, customer counts, customer names, portraits, clients, awards, press lines or products.
-  Customer logos only for real customers the brief names and that may be shown; a real tool the
-  product works with keeps its real icon in its own colours (`icons.md`), never a drawn imitation.
-  Without proof, a strip of plain facts from the brief, or nothing.
-- **No sample notes:** no "sample", "(sample)", "examples", "illustrative" tag, note or asterisk
-  footnote anywhere. A target value the brief itself gives is worded inside it ("target 2 days").
-- **No placeholders:** no square brackets, "lorem ipsum", "your name here", "to be added", TODO,
-  kit sample text, and no link to `#` or an empty href. Write the real words, or leave the element
-  out. "Coming soon" only for what the brief says is coming.
-- **No caption, label or description under or on any visual** (house rule): not "A drawing made in code",
-  "Photographs follow", "Representative image", not a name, price or link line under a bare picture,
-  no hashtags. A heading names the set; a sold item's name and price sit inside its card's padding.
-  The picture shows the thing or is left out; the report lists the photographs the client must
-  supply.
-- **Credits:** one short line at the end of the footer naming only the sources used, never the
-  photographers: "Photographs via Unsplash and Wikimedia Commons" (as `photos.mjs credits` prints
-  it; 110 characters at most, one line from 1024) that links or opens the credits list. Paste the
-  line and the list exactly as `photos.mjs credits` prints them; never write a credit link per
-  photograph into the footer (in testing: 18 and 20 credit links in a footer read as a credit wall).
-  Map data credits join it. A page that shows real logos
-  adds "Product names and logos are trademarks of their owners".
-- **Each fact once:** an opening time, a price or an address has one value and one wording,
-  repeated word for word only where it belongs (the hero, the visit panel, the phone sheet, the
-  close, the footer); never two hours for one day.
+- **价格、地址、营业时间与日期来自简报；** 报告要列出你自行假设的每一项。
+  简报缺失时只有两样可以假设：一个生造的品牌名（见下），以及地点类按行业
+  给出合理、参差、用当地货币（3.60，不是 4.00）的营业时间与价格。其余一律
+  不生造：简报里没有价格的产品或服务写 "Price on request"，或干脆不显示价格。
+  每个假设的价格、时间、日期或地点，在自己的元素上带 `data-assumed`
+  （`<span class="rows__value" data-assumed>3.60 €</span>`、
+  `<dl class="hours" data-assumed>`）；检查器把每一处列进报告 [assumed]，且
+  假设的营业时间绝不驱动"现在营业"的判断 [open-now]。
+- **不生造佐证：** 不虚构评论、评分、评论数、引语、推荐语、统计数据、客户数、
+  客户名、人物肖像、客户名单、奖项、媒体报道或产品。客户 logo 只用于简报点名
+  且允许展示的真实客户；产品能对接的真实工具保留其真实图标与原色（`icons.md`），
+  绝不画仿制版。没有佐证时，放一段来自简报的平实事实，或什么都不放。
+- **不带样例标注：** 任何地方都不出现 "sample"、"(sample)"、"examples"、
+  "illustrative" 之类的标签、注记或星号脚注。简报自身给出的目标值写进句子里
+  （"target 2 days"）。
+- **不用占位物：** 不用方括号、"lorem ipsum"、"your name here"、"to be added"、
+  TODO、套件样例文本，也不链到 `#` 或空 href。要么写真词，要么删掉该元素。
+  "Coming soon" 只用于简报确实说了即将上线的对象。
+- **任何视觉物之下或之上不加图注、标签或说明**（内部规则）：不写 "A drawing
+  made in code"、"Photographs follow"、"Representative image"，光秃图片下面不放
+  名称、价格或链接行，不加话题标签。一个标题为整组图片命名；已售品的名称与
+  价格放在其卡片的内边距之内。图片要么展示实物，要么删掉；报告列出客户必须
+  供图的照片。
+- **署名：** 页脚末尾一行短句，只点名用到的素材来源，绝不点名摄影师：
+  "Photographs via Unsplash and Wikimedia Commons"（按 `photos.mjs credits` 打印
+  的样式；110 字符以内，1024 起单行），链接或打开署名清单。这行字与清单都按
+  `photos.mjs credits` 的输出原样粘贴；绝不给每张照片在页脚写署名链接（实测：
+  页脚 18 条与 20 条署名链接读起来像署名墙）。地图数据署名并入其中。页面
+  展示真实 logo 时加一句 "Product names and logos are trademarks of their owners"。
+- **每个事实只出现一次：** 营业时间、价格或地址只有一个值、一种措辞，仅在
+  属于它的位置逐字重复（hero、到访面板、手机页、结尾、页脚）；绝不为同一天
+  写两套时间。
 
-## Contacts the brief does not give
+## 简报没给的联系方式
 
-What the brief gives is printed exactly as given. Each kind is separate: a brief that gives only a
-phone number still gets the address, email and imprint rules.
+简报给的内容按原样打印。各类别相互独立：只给了电话号码的简报，依然适用
+地址、邮箱与 Imprint 规则。
 
-- **Address: a street and a district only** ("Elmgatan, Malmö-Möllevången"). Never a house number,
-  a postcode or map coordinates. One street address a page (the visit block and the footer, at 390
-  too), never readable only on a sign in a photograph. Several shops: each name, then its street. A
-  studio by appointment says so.
-- **A brief with no street:** print the district only ("Eimsbüttel, Hamburg"), the town when no district is named,
-  and never an invented street or number; the type moment `address` sets that district. List the missing street in the report
-  as the client's to supply.
-- **Maps:** no map loads with the page. Get directions opens
-  `https://www.openstreetmap.org/search?query=<street>+<district>`, with no coordinates and no
-  route; on the phone the address opens the same search. No street given: the link says "See the
-  area" and opens `?query=<district>+<town>`; only a town: no map link and no directions button at
-  all, since a search for a whole city shows nobody the door [map-link]. A map is drawn only for a street the brief gives (`fx-map` baked still, the pin on the
-  street line, never a building); a builder's real street never gets a real map, since it pins a
-  stranger's door. Never an iframe.
-- **Phone: none, unless the brief gives one.** No number, no `tel:` link, no Call button. A
-  "Request a call" form may stand in.
-- **No imprint page and no company details:** no register number (HRB), VAT or tax id, company
-  number, managing director or court. The legal row holds the brand, the current year, Privacy,
-  Terms and the credits line; an Imprint link only when the brief gives the company's own details.
-- **Email and web:** a form (`system.md`, Forms: it posts to the client's form address when the
-  brief gives one, else its `mailto:` on `.example` stands in and the report lists it), or a button
-  ("Email us") whose `mailto:` is on `.example` (`hello@brand.example`). Never print an email
-  address, a domain or a social handle, not even a `.example` one. `.socials` stays empty unless the brief gives the accounts.
-- **Names are coined,** not dictionary words and not a business that exists, unless the brief gives
-  the name, and never one that models keep coining (Kestrel, Halcyon, Lumen, Nimbus, Fieldnote:
-  `copy-tells.md`; copy-lint FAILs one as the page's own name, in its title or h1, and WARNs one
-  anywhere else, a logo wall or a mock); person names come only from the brief. Search a coined name with its trade ("name
-  coffee") and as a domain; if a business of that trade or a famous person has that exact name in
-  the first 10 results, coin another. Write each query and result in `names.json` beside the page
-  (`"searched": false` with no search tool).
-- **Links** go where their label says: a part of the page (`#rooms`) or a page that exists; never
-  "here", never two different labels to one target, never a link to a closed answer.
-- **Newsletter:** asked once, in or just above the footer, "Subscribe" or "Sign up", an email field
-  only; never in a modal, never twice.
+- **地址：只写街道和街区**（"Elmgatan, Malmö-Möllevången"）。绝不写门牌号、
+  邮编或地图坐标。每页一个街道地址（到访区块与页脚，390 宽度下也一样），
+  绝不只是出现在照片里的招牌上。多家店：先各店名，再跟其街道。需预约的
+  工作室要写明。
+- **简报没给街道：** 只打印街区（"Eimsbüttel, Hamburg"），没提街区就写城镇，
+  绝不生造街道或门牌；type moment `address` 输出该街区。把缺失的街道列入
+  报告，标注为客户需提供。
+- **地图：** 页面不加载任何地图。Get directions 打开
+  `https://www.openstreetmap.org/search?query=<street>+<district>`，不带坐标、
+  不带路线；手机上点地址打开同样的搜索。没给街道：链接写 "See the area"，
+  打开 `?query=<district>+<town>`；只有城镇：不放地图链接，也不放路线按钮，
+  因为全城搜索不会把任何人带到门口 [map-link]。只有简报给出的街道才画地图
+  （`fx-map` 烘焙成静态图，图钉压在街道线上，绝不在建筑物上）；建筑商的
+  真实街道绝不配真实地图，因为图钉会钉到陌生人的门口。绝不用 iframe。
+- **电话：一律没有，除非简报给了。** 不放号码、不放 `tel:` 链接、不放 Call
+  按钮。可以用 "Request a call" 表单顶上。
+- **不做 Imprint 页、不放公司信息：** 不放注册号（HRB）、增值税号或税号、
+  公司编号、董事总经理或法院信息。法律行放品牌名、当前年份、Privacy、Terms
+  与署名行；只有简报给出公司自身信息时才放 Imprint 链接。
+- **邮箱与网页：** 用表单（`system.md` 的 Forms 一节：简报给了表单地址就发到
+  客户的表单地址，否则其 `.example` 的 `mailto:` 顶上，并在报告中列出），或用
+  按钮（"Email us"），其 `mailto:` 落在 `.example`（`hello@brand.example`）。绝不
+  打印邮箱地址、域名或社交账号，`.example` 的也不行。`.socials` 保持为空，
+  除非简报给了账号。
+- **名字是生造的，** 不能是词典词，也不能是实际存在的商家，除非简报给了
+  名字；绝不反复用模型惯造的那些名字（Kestrel、Halcyon、Lumen、Nimbus、
+  Fieldnote：`copy-tells.md`；copy-lint 对作为页面自身名字（title 或 h1）的这类
+  词判 FAIL，在 logo 墙或 mock 等其他位置则 WARN）；人名只来自简报。生造的
+  名字要连同行业一起搜索（"name coffee"），并作为域名搜索；若前 10 条结果里
+  有同行业商家或名人恰用此名，另造一个。把每次查询与结果写进页面旁的
+  `names.json`（没有搜索工具时写 `"searched": false`）。
+- **链接** 落在其标签所说的地方：页面的某个部分（`#rooms`）或一个真实存在的
+  页面；绝不写 "here"，绝不用两个不同标签指向同一目标，绝不链接到已关闭的
+  答案。
+- **订阅邮件（Newsletter）：** 只问一次，放在页脚内或页脚正上方，用
+  "Subscribe" 或 "Sign up"，只有一个邮箱输入框；绝不放弹窗里，绝不问两次。
 
-## Banned
+## 禁用
 
-Metaphors and "where X meets Y"; slogans, greetings and boasts in the hero; questions as headlines;
-exclamation marks; all-caps labels; invented capitalised concepts ("the Proof Layer"); unexplained
-programme names; jokes or slang in labels; mood paragraphs; a literary quote as a full-screen band;
-filler (seamless, effortless, cutting-edge, unlock, elevate, supercharge, reimagine,
-next-generation, game-changing, powerful, robust, and the rest of `copy-tells.md`); virtue words about the client (honest, calm, quiet, actually, simply); a sign-off or a pun
-in the footer; the model's default voice (`copy-voice.md` section 2). copy-lint FAILs the old slop words,
-the stock phrases, left residue and a device used past twice its budget; it WARNs the rest it can
-count, and the rival's-name check and the read-aloud (`copy-voice.md` section 6) catch what it cannot.
+比喻和 "where X meets Y"；hero 里的口号、问候与自夸；疑问句当大标题；感叹号；
+全大写标签；生造的大写概念（"the Proof Layer"）；来路不明的项目名；标签里玩
+笑话或俚语；氛围段落；全屏横幅里放文学引语；填充词（seamless、effortless、
+cutting-edge、unlock、elevate、supercharge、reimagine、next-generation、
+game-changing、powerful、robust，以及 `copy-tells.md` 里的其余词条）；形容客户
+的美德词（honest、calm、quiet、actually、simply）；页脚里的落款或双关；模型的
+默认腔调（`copy-voice.md` 第 2 节）。copy-lint 对陈旧注水词、套话、残留物和
+用量超过两倍预算的手法判 FAIL；其余能数出来的判 WARN，数不出来的由同行竞名
+排查与朗读检查（`copy-voice.md` 第 6 节）兜住。

@@ -1,6 +1,10 @@
-# System Design Template
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/architecture-designer/references/system-design.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Design Template
+# 系统设计模板
+
+## 设计模板
 
 ```markdown
 # System: {System Name}
@@ -89,12 +93,12 @@
 | Auth down | No new logins | Cache valid tokens |
 ```
 
-## Quick Reference
+## 快速参考
 
-| Section | Key Questions |
+| 节 | 关键问题 |
 |---------|---------------|
-| Requirements | What must it do? How well? |
-| Architecture | What components? How connected? |
-| Decisions | Why these choices? |
-| Scaling | How to grow? |
-| Failures | What can break? How to recover? |
+| Requirements | 它必须做什么？做到什么程度？ |
+| Architecture | 有哪些组件？如何连接？ |
+| Decisions | 为什么选这些方案？ |
+| Scaling | 如何增长？ |
+| Failures | 什么会坏？如何恢复？ |

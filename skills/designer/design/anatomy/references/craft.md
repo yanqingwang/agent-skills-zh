@@ -1,56 +1,60 @@
-# Craft
+> **中文汉化版** · 上游：[wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) · 原文件：`references/craft.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-How a figure comes to read as a crafted object rather than a diagram. Every rule here came from a figure that was rejected or approved by a demanding reviewer.
+# 工艺
 
-## Contents
-1. What "crafted" means
-2. Anti-patterns
-3. Parts vocabulary, with recipes
-4. Tones
-5. Painter's order
-6. Camera and composition
-7. Themes
-8. Round parts and pipes
-9. Exploded views
-10. Screens and things on faces
-11. Shaders
+图形如何读作一件手工制品而非示意图。这里的每条规则都来自一个被严苛评审否决或批准的图形。
 
-## 1. What "crafted" means
+## 目录
+1. "crafted" 是什么意思
+2. 反模式
+3. 部件词汇与配方
+4. 色调
+5. 画家序
+6. 相机与构图
+7. 主题
+8. 圆形部件与管道
+9. 爆炸图
+10. 屏幕与面上的东西
+11. 着色器
 
-The approved figures share five qualities.
+## 1. "crafted" 是什么意思
 
-1. **A real object you could build.** The reader names it at a glance: a test rig, a dial indicator, a chest of drawers, a gantry plotter, a lock. It is invented for the subject, never traced from a reference.
-2. **Many small, precise parts.** A good inline figure has 30–60 solids and 300–500 paths. A hero subject that really has more parts can carry far more: the desk computer has about 85 solids, and the Raptor about 270 solids in 478 depth-sorted items. Every part rests on another part, aligns to its neighbours and has a job. Density comes from structure (feet, rails, stops, bushings, knobs), not from texture.
-3. **Volume.** Parts have real thickness, sides shaded in four tones, lighter tops, bevels that catch light, and a soft halo underneath.
-4. **Calm.** Thin 0.6 px lines and a restrained palette. One lit accent tells the eye where to look. Motion is eased and slow enough to follow.
-5. **Truth.** The readout shows live, correct numbers, and the motion follows the real model: springs with real stiffness, true sizes and thresholds.
+获批的图形共有五个特质。
 
-## 2. Anti-patterns
+1. **一件你能真造出来的实物。** 读者一眼叫出名字：试验台、千分表、抽屉柜、龙门绘图仪、锁。它为主体而发明，绝不描摹参考图。
+2. **许多小而精确的部件。** 好的行内图形有 30–60 个实体、300–500 条路径。部件真正更多的主角主体可以承载更多：台式电脑约 85 个实体，Raptor 在 478 个深度排序条目中约 270 个实体。每个部件搭在另一个部件上、与邻件对齐、各有职责。密度来自结构（支脚、导轨、限位块、轴衬、旋钮），不来自纹理。
+3. **体积。** 部件有真实厚度，侧面用四种色调着色，顶面更浅，倒角受光，底部有柔和光晕。
+4. **平静。** 0.6 px 的细线与克制的色板。一个 lit 强调告诉眼睛看哪里。运动经缓动、慢到能跟上。
+5. **真实。** 读数区显示实时的正确数字，运动遵循真实模型：弹簧有真实刚度，尺寸与阈值为真。
 
-Reviewers rejected each of these, so don't do them:
+## 2. 反模式
 
-- **Abstract stacks.** Floating plates, slabs or tiles standing for "layers" are too abstract to read as anything. If you need layers, make them drawers, trays in a rack, plates on guide pillars, or cards in a holder.
-- **One big plain slab.** A large surface with a few lines is too flat and bland. Break it into a base, a carriage and parts; add a groove, screws, a ruler and a label plate.
-- **Blueprint furniture.** Leader lines, balloons with numbers, dimension arrows, hatching, dashed hidden edges and floating labels belong in the legend and caption, not the drawing.
-- **Lines that stop in mid-air.** Guide fans, connectors that end short of a part, or a crease that stops before the silhouette corner. Every line must land on something.
-- **Wireframes.** See-through boxes where the back edges show.
-- **Colour everywhere.** Keep it monochrome unless colour is the subject: one lit accent plus true RGB only for colour channels. A fluid is not colour by default: oil in a sight glass, water in a tank and coolant in a pipe are tints of the figure's own inks, and the `--no-webgl` fallback draws the same tint the shader does. A blind-test bench painted its oil saturated orange in an otherwise grey figure, and its fallback oil was grey.
-- **Text in the drawing.** Allow at most one tiny engraved label (`FaceText` on a face). Everything else goes in the card corners, legend or caption.
-- **Copying a reference.** Take mood and finish from a reference, then invent the object.
-- **Raw pointer jumps.** Parts that snap to the cursor. Ease everything.
-- **Pipes through pipes.** On the first Raptor the owner zoomed in and found cables and lines passing through the main ducts and through each other, "which makes no sense". At 1× it looked fine. Every pipe and cable keeps clear of everything but its own connection, every crossing is drawn in true depth order, and `kit/audit.mjs` proves both (section 8, "Clearance and crossings").
-- **Textures that stop.** On the same close-up, rows of bolt dots on the chamber stopped dead in the middle of the surface, and the bell and throat were shaded as a staircase of flat tone blocks. Both read as broken. The owner's words: if a texture has to end, "we'd rather fade them out at the end than an instant stop". Shade curved surfaces smoothly, and make a texture end on a real edge or fade out (section 8, "Shading and textures on curved surfaces").
-- **Shaders that pop or are cut.** The first Raptor plume changed colour instantly between its phases, "as if cut out", and a glow ended in a straight line at the canvas edge. Every shader term rides an envelope and reaches zero before any bound (`webgl.md`, section 7).
-- **Textures that stop, on flat faces too.** The same fault came back on a later figure's boxes, where no curved-surface rule reached it: a tank's weld seam inset 6 units from each rounded corner, a manifold face line inset 4, a row of faint ticks floating on a bare bedplate with no ruler under them, cooling ribs that stopped 2 units short of the seam arcs at both ends, and a hose braid drawn as a dashed stroke down the centreline that ended in two straight hard edges along the hose and broke at every chunk joint. A seam on a box runs edge to edge round the visible corners (`k.sideSeam`), ribs end on seams at the same `s` (`ribsOf(…, { seams: true })`), ticks hang from a ruler strip's edge, and a texture on a pipe comes from `tubePieces(…, { rings })`. `node scripts/lines.mjs page.html` fails every line end that touches nothing (`verify.md`, "Line ends").
-- **Stand-in shapes.** To quiet the audit a builder recorded a 0.45-thick disc at the tip of each of five overlapping rod copies, and a sliver for a second rod that was drawn sunk into its cylinder head. The audit passed and said nothing about either rod, and the lit rod's outline was notched every 12 units while it moved. Record the true shape of what you draw; the audit's stand-in check fails an item whose recorded shapes cover less than 60% of its drawing. A rod that slides out of a gland is one rod (section 3, "Rod out of a gland").
-- **Dark-theme glows pasted on white.** The owner made light the shipping theme for every site figure, and seven shader figures built on a dark plate had to be converted. Taking a dark glow and darkening it gave "red ink smoke" (the Raptor's light plume). It also gave flames drawn as outlines, sparks that looked like dirt, salmon-coloured cooling glass, grey fades and cavities that got heavier as the fire went out. On paper, light reads through saturation and a darker physical ground (section 7, and `webgl.md`, section 8).
-- **Fixing one close-up by eye.** Tuning a painter's key or nudging a waypoint until one screenshot looks right breaks another frame or another theme. The Raptor's hand-set keys looked right at 1× and had 323 depth-order problems. Measure (section 8, "Clearance and crossings"), then look.
+评审否决过以下每一种，所以别做：
 
-## 3. Parts vocabulary, with recipes
+- **抽象堆叠。** 漂浮的板、板片或瓦片来代表"层"，抽象到读不出任何东西。需要层时，做成抽屉、架子里的托盘、导柱上的板，或卡座里的卡片。
+- **一大块光板。** 只有几条线的大表面太平淡。拆成底座、滑座和部件；加凹槽、螺钉、刻度尺和标签牌。
+- **蓝图家具。** 引出线、编号气泡、尺寸箭头、剖面线、虚线隐藏边和漂浮标签属于图例与图注，不属于图画。
+- **停在半空的线。** 呈扇形散开的指引线、停在部件之前的连接线，或在外轮廓拐角之前停住的折线。每条线必须落在什么东西上。
+- **线框。** 后面边缘透出来的透视盒子。
+- **到处是颜色。** 保持单色，除非颜色本身是主题：一个 lit 强调，外加只给颜色通道用真 RGB。流体默认不是颜色：视镜里的油、水箱里的水、管道里的冷却剂都是图形自身墨色的色调，`--no-webgl` 后备画的色调与着色器相同。盲测台把油画成饱和橙色，图形其余部分都是灰色，而它的后备油是灰色的。
+- **图画里放文字。** 至多允许一个极小的镌刻标签（面上的 `FaceText`）。其余放进卡面角落、图例或图注。
+- **照抄参考图。** 从参考图取氛围与质感，然后发明实物。
+- **指针生硬跳变。** 部件吸附到光标。一切都要缓动。
+- **管穿管。** 第一版 Raptor 上，拥有者放大后发现电缆与线条穿过主管道并互相穿过，"which makes no sense"。1× 下看起来没问题。每根管道与电缆只避开自己的连接对象之外的一切，每个交叉按真实深度顺序绘制，`kit/audit.mjs` 证明这两点（第 8 节，"Clearance and crossings"）。
+- **停住的纹理。** 同一张特写上，燃烧室上的螺栓圆点行停在表面正中间戛然而止，钟形件与喉部的着色是一级级平坦色块组成的阶梯。两者读作坏了。拥有者的话：纹理必须结束时，"we'd rather fade them out at the end than an instant stop"。曲面平滑着色，纹理终止在真实边缘或淡出（第 8 节，"Shading and textures on curved surfaces"）。
+- **突变或被切断的着色器。** 第一版 Raptor 尾焰在相位之间瞬间变色，"as if cut out"，一处辉光在 canvas 边缘以一条直线收尾。每个着色器项都骑在包络上，在任何边界之前归零（`webgl.md`，第 7 节）。
+- **停住的纹理，平面上也一样。** 同样的毛病在后来某个图形的盒面上再次出现，那里没有曲面规则管它：水箱的焊缝从每个圆角缩进 6 个单位，歧管面线缩进 4，一排浅色刻度悬空在光秃的底板上、下面没有刻度尺，冷却 rib 两端都停在离接缝弧 2 个单位处，还有一根软管编织画成沿中心线的虚线描边，沿软管以两条笔直生硬的边收尾，并在每个分段接头断开。盒面接缝贯穿整面、绕过可见拐角（`k.sideSeam`），rib 终止在同 `s` 处的接缝上（`ribsOf(…, { seams: true })`），刻度挂在刻度条的边上，管道纹理来自 `tubePieces(…, { rings })`。`node scripts/lines.mjs page.html` 会让每个无所依附的线端失败（`verify.md`，"Line ends"）。
+- **替身形状。** 为了让审计闭嘴，某位构建者在五根重叠杆副本的端头各记录了一个 0.45 厚的圆盘，并为第二根被画得埋进气缸盖里的杆记录了一条细条。审计通过，对两根杆都一言不发，而通电杆运动时外轮廓每 12 个单位出现一个缺口。记录你所画的真实形状；审计的替身检查会让记录形状覆盖其绘制不足 60% 的条目失败。滑出密封套的杆是一根杆（第 3 节，"Rod out of a gland"）。
+- **贴在白底上的深色主题辉光。** 拥有者把浅色定为每个站点图形的发布主题，七个建在深色底板上的着色器图形不得不转换。把深色辉光拿来加深，得到"red ink smoke"（Raptor 的浅色尾焰）。还得到：画成描边的火焰、像污渍的火花、橙红色的冷却玻璃、灰蒙蒙的淡出，以及火熄灭时反而变重的腔体。在纸上，浅色靠饱和度与更深的物理底色表达（第 7 节，及 `webgl.md`，第 8 节）。
+- **凭眼睛修一张特写。** 调画家键或挪航点直到一张截图看着顺眼，会弄坏另一帧或另一个主题。Raptor 的手调键在 1× 下看着没问题，却有 323 个深度顺序问题。先测量（第 8 节，"Clearance and crossings"），再看。
 
-`P` is the projection and `k` is the kit, as in `import * as k from "./iso-kit"`. Heights are in world units, with z up. Draw each recipe's solids in the order listed.
+## 3. 部件词汇与配方
 
-### Base plate on feet
+`P` 是投影，`k` 是 kit，如 `import * as k from "./iso-kit"`。高度用世界单位，z 朝上。每个配方的实体按列出的顺序绘制。
+
+### 带支脚的底板
 ```js
 const PLATE = { x: -128, y: -64, w: 262, d: 128, r: 8 };
 halo:  `<path class="iso-halo" d="${k.haloOf(PLATE, -17, 12, P)}"/>`
@@ -62,9 +66,9 @@ slab:  k.slabOf(PLATE, -12, 12, P, 8, 1.6)                // tone mid, bevel 1.6
 groove: k.planOutline(k.insetPlan(PLATE, 5), 0, P)         // line lo
 screws: k.corners(PLATE, 10) → k.ring(x, y, 2.2, 0, P, 16) (line lo) + dots size .5
 ```
-Sort feet with `byDepth = (pts) => [...pts].sort((a, b) => k.depthOf([a[0], a[1], 0], P) - k.depthOf([b[0], b[1], 0], P))`.
+用 `byDepth = (pts) => [...pts].sort((a, b) => k.depthOf([a[0], a[1], 0], P) - k.depthOf([b[0], b[1], 0], P))` 给支脚排序。
 
-### Ruler strip and label plate
+### 刻度条与标签牌
 ```js
 const strip = { x: -110, y: PLATE.y + PLATE.d - 15, w: 230, d: 7, r: 1 };
 k.slabOf(strip, 0, 0.6, P, 3)                                   // tone lo, crease none
@@ -73,26 +77,26 @@ t.minor → line lo, t.major → line mid
 label plate: k.slabOf(plan, 0, 0.8, P, 4) + k.planOutline(k.insetPlan(plan, 1.6), 0.8, P) (faint)
              + three k.lineOnTop rule lines of different lengths (lo, { free: true }) + two screw dots
 ```
-Ticks only live on a ruler strip or a dial face, rooted on its edge: `topTicks` grows each tick from `edge`, so put `edge` on (or within 1 unit of) the strip's edge, and `sideTicks` hangs them from `top`, so pass the face's top edge, not 2 units below it. A row of marks on a bare plate is a texture that floats at both ends. The label plate's rule lines stand for printed text, so they are the one place a line may stop on a bare face: pass `free: true` so the line check knows it was meant.
+刻度只活在刻度条或表盘面上，在其边缘生根：`topTicks` 让每根刻度从 `edge` 长出，所以把 `edge` 放在条的边上（或距边 1 个单位以内），`sideTicks` 让它们从 `top` 垂下，所以传面的顶边，不要传顶边下方 2 个单位处。光板上一排刻度是两端悬空的纹理。标签牌上的刻度线代表印刷文本，所以那是线可以停在光面上的唯一场所：传 `free: true`，让线端检查知道这是有意的。
 
-### Seams, welds and trim lines on a box
+### 盒面接缝、焊线与装饰线
 ```js
 const seam = k.sideSeam(TANK, 14, P, 6);                         // visible near half of the plan at z = 14, round the corners
 k.solidSvg(k.slabOf(TANK, 6, 98, P, 6, 1.2), { tone: "mid", inner: k.lineSvg(seam, { tone: "faint" }) })
 ```
-A seam, weld bead, band or lid line on a box wraps the visible corners and ends exactly on the vertical silhouette edges, like `sideArc` on a cylinder. Pass the slab's own `steps` so the seam follows the same facets, and pass it as `inner` so its ends sit under the outline. A line that belongs to one face only (a stiffener, a panel joint) runs the full face, edge to edge: `segment([x, y, z0], [x, y, z1])` with `z0` and `z1` the face's bottom and top, never `z0 + 3`. Slots and vents are closed outlines (a `planOutline` of a thin rounded plan, or the same in a face plane), so they have no ends at all. Never inset a line by a few units from its corners: at 4× it reads as a texture that stops.
+盒面上的接缝、焊道、带或盖线绕过可见拐角，恰好终止在竖直轮廓边上，就像圆柱上的 `sideArc`。传平板自己的 `steps` 让接缝走同样的分面，并作为 `inner` 传入让两端坐在外轮廓之下。只属于一个面的线（加强筋、面板接缝）贯穿整面、从边到边：`segment([x, y, z0], [x, y, z1])`，`z0` 与 `z1` 是面的底与顶，绝不是 `z0 + 3`。槽与通风口是闭合轮廓（细圆角平面的 `planOutline`，或同一东西放在面平面内），所以根本没有端点。绝不让线从角落缩进几个单位：4× 下读作停住的纹理。
 
-### Rod out of a gland
-A piston rod, a plunger or a slide whose visible length changes as it moves is one rod, built once at full length (visible plus stroke), with the part inside the gland clipped away:
+### 出密封套的杆
+活塞杆、柱塞或滑动件，可见长度随运动变化，是一根杆：一次按全长（可见段加行程）构建，套在密封套内的部分被裁掉：
 ```js
 const ROD = G.rodOut(F, gland, tip, r, P, { stroke });           // F.a points out of the gland
 svg = `<clipPath id="rod"><path data-hold d="${ROD.clip}"/></clipPath><g clip-path="url(#rod)">${k.solidSvg(ROD.paths, { lit: true })}</g>`
 R.put({ ..., move: G.mul3(F.a, stroke), svg, shapes: [R.solid(A.slide(F, gland, tip, r, { name: "rod" }))] })
 live: el.setAttribute("transform", `translate(${dx} ${dy})`); holdStill(el, [dx, dy])   // dx, dy: the item's screen offset this frame
 ```
-`rodOut` returns the rod's paths from `gland − stroke` to `tip` and a clip that covers it from the gland face to `tip + stroke`. The clip path carries `data-hold`; whatever moves the item calls `holdStill(el, [dx, dy])` with the same screen offset, which moves the clip the other way, so the gland face stays put while the rod slides through it. The same helper retracts a rod into a gland (a load cylinder) when its item moves the other way. Draw a faint seal ring (`circleOf` at the gland face, radius `r + 0.4`) on the gland. Record it with `A.slide`, which the audit poses by stretching the rod from the gland face instead of translating it, so clearances, depth and solid checks see the true rod in every frame. Never fake the extension with overlapping copies: each copy's lit edge stops where the next one's fill starts, and the outline is notched every few units while it moves.
+`rodOut` 返回从 `gland − stroke` 到 `tip` 的杆路径，以及一个从密封套面盖到 `tip + stroke` 的裁剪。裁剪路径带 `data-hold`；移动该条目的代码用同一屏幕偏移调 `holdStill(el, [dx, dy])`，它把裁剪往反方向移，杆滑过时密封套面保持不动。同一 helper 在条目反向移动时把杆缩回密封套（加载油缸）。在密封套上画一圈浅色密封环（`circleOf` 在密封套面，半径 `r + 0.4`）。用 `A.slide` 记录，审计摆位时从密封套面拉伸杆而不是平移它，间隙、深度与实体检查在每帧看到的都是真实的杆。绝不用重叠副本伪造伸出：每根副本的 lit 边停在下根副本填充开始处，运动时外轮廓每隔几个单位出现缺口。
 
-### Rails, end stops and a carriage
+### 导轨、限位块与滑座
 ```js
 rails:  for y of [-20, 15]: k.slabOf({ x: 2, y, w: 122, d: 5, r: 1 }, 0, 3, P, 3, 0.4)   // mid
 stops:  k.slabOf({ x, y: -23, w: 5, d: 46, r: 1.2 }, 0, 7, P, 3, 0.5) + 2 screw dots on top
@@ -103,7 +107,7 @@ carriage (built at x = 0, moved with translateAlong):
         handle: a small neck slab plus a knurled cylinder on the front face
 ```
 
-### Post, collar, clamp and thumb screw
+### 立柱、套环、夹箍与拇指螺钉
 ```js
 k.cylinder(px, py, 5, z0, 4, P, 28)              // collar
 k.cylinder(px, py, 3.2, z0 + 4, h, P, 28)        // post, crease none
@@ -112,23 +116,23 @@ k.slabOf({ x: px - 7, y: py - 7, w: 14, d: 14, r: 2.5 }, zc, 12, P, 4, 0.6)   //
 thumb screw: a 2.8 × 3 neck slab from the clamp face + k.cylinder(r 2.6, h 6) + k.knurl(..., 18)
 ```
 
-### Knurled knob with a pointer
+### 带指针的滚花旋钮
 ```js
 k.cylinder(cx, cy, 6, z, 4, P, 32)                          // mid
 k.knurl(cx, cy, 6, z, z + 4, 36, P)                         // line lo
 k.lineOnTop([cx - 3, cy], [cx + 4.6, cy], z + 4, P)         // pointer, line hi
 ```
 
-### Coil spring around a rod (split for painter's order)
+### 绕杆的螺旋弹簧（为画家序拆分）
 ```js
 const c = k.coil(xFrom, xTo, [rodY, rodZ], 4.2, 6, "x", P);
 c.back  → line lo, drawn BEFORE the rod
 rod     → k.slabOf({ x, y: rodY - 2, w, d: 4, r: 1.8 }, rodZ - 2, 4, P, 3)
 c.front → line mid, drawn AFTER the rod
 ```
-Rebuild the coil each frame when it compresses, by changing `xFrom`/`xTo`. It is cheap.
+压缩时每帧重建弹簧，改 `xFrom`/`xTo` 即可。开销很小。
 
-### Dial gauge (face up)
+### 表盘仪表（面朝上）
 ```js
 k.cylinder(x, y, R, z, 10, P, 64, 0.8)                       // puck, tone hi, crease lo
 k.knurl(x, y, R, top - 3.4, top, 84, P, 0.3)                 // knurled bezel band, lo
@@ -140,7 +144,7 @@ needle: k.lineOnTop(tail, tip, top + 0.2, P), tone lit, stroke-width 1.1, rebuil
 hub: k.ring(x, y, 1.6, top, P, 16)
 ```
 
-### Drawer with a pull and label holder
+### 带拉手与标签座的抽屉
 ```js
 case:   k.slabOf(casePlan, z, h, P, 4, 0.8)
 front:  a thin slab on the near face; pull: two posts plus a bar (small slabs)
@@ -149,177 +153,178 @@ open:   translate the drawer along its axis with translateAlong; its box (floor 
         is drawn before the front, and its contents are engraved on the floor
 ```
 
-### Turntable with degree ticks
+### 带角度刻度的转台
 ```js
 k.cylinder(cx, cy, R, z, 4, P, 72, 0.8)
 k.radialTicks(cx, cy, R - 1, 72, 6, z + 4, [1.2, 2.6], P)
 rotate: rebuild only what turns (or the object on top) at the new angle each frame
 ```
 
-### Perforations, vents and a pulsing dot grid
+### 孔阵、通风口与脉动点阵
 ```js
 k.dotGrid(x, y, cols, rows, gap, zTop, P) → dotsSvg(points, { size: .45, tone: "lo" })
 // add { pulse: true } for a slow pulsing grid on an "active" part
 ```
 
-### Lamp, probe and finger
-These are stacks of cylinders: housing, cap ring, collar, stem, pad. Seam rings come from `sideArc`, and the lock screw is a small slab plus a cylinder head on the side.
+### 灯、探针与手指
+它们是圆柱的堆叠：壳体、帽环、套环、轴杆、垫片。接缝环来自 `sideArc`，锁紧螺钉是小平板加侧面上的圆柱头。
 
-## 4. Tones
+## 4. 色调
 
-| Element | Tone |
+| 元素 | 色调 |
 |---|---|
-| Base, feet, floors | `lo` |
-| Structure: posts, rails, frame, carriage, case | `mid` |
-| The subject: the thing being explained | `hi` |
-| The part the reader should watch now | `lit` (one only) |
-| Grooves, inset outlines, floor grid | `faint` |
-| Minor ticks | `lo` |
-| Major ticks | `mid` |
-| Zero mark, pointer line | `hi` |
-| Screws and rivets | dots `mid` at 0.4–0.55 |
-| Crease (top/side join) | `faint` (default), `lo` on hi parts |
+| 基座、支脚、地面 | `lo` |
+| 结构：立柱、导轨、框架、滑座、壳体 | `mid` |
+| 主体：被解释的东西 | `hi` |
+| 读者此刻该盯着的部件 | `lit`（仅一个） |
+| 凹槽、缩进轮廓、地面网格 | `faint` |
+| 次刻度 | `lo` |
+| 主刻度 | `mid` |
+| 零位标记、指针线 | `hi` |
+| 螺钉与铆钉 | 圆点 `mid`，0.4–0.55 |
+| 折线（顶/侧交界） | `faint`（默认），hi 部件上用 `lo` |
 
-A `Solid` with `lit` gets a white edge and a lighter top. Use it for the moving subject, the plunger or a picked drawer.
+带 `lit` 的 `Solid` 有白色边缘与更浅的顶面。用于运动主体、柱塞或被选中的抽屉。
 
-## 5. Painter's order
+## 5. 画家序
 
-- Draw the base first, then everything resting on it.
-- Within a level, sort by `depthOf(centre, P)`, ascending: far before near.
-- **Split wrapping parts.** For a spring or a frame around a carriage, draw the back half, then the inner part, then the front half. In the test rig: back frame bars → rods with the back coil halves → carriage → glass → front coil halves → front bars → dial.
-- **Moving parts** are drawn at their slot in the order, inside a `<g transform>` that moves them. If a moving part can pass in front of and behind the same neighbour, split the neighbour or bound the motion so the order never changes.
-- **Things standing on a stepped surface.** Order the steps so the taller ones are further back. A probe resting on a lower step then can't be hidden by a taller one in front of it.
-- Vertical parts that pass through a horizontal one (a post through a clamp) are drawn in two segments, below and above, around the horizontal part.
-- **A clip cut is an edge.** Where a clip ends one part against another (a cable-chain run entering its loop, a rod at a gland), make the clip's section flush with the joint plane, and draw a stroked edge along the cut that moves with the clip (`data-clip`). On the plasma cutter, a run's clip section reached past the joint. The run's top face and slot bars were drawn 26 units into the loop's hollow and ended on a vertical cut with no stroke, which is a line stopping in mid-air. Re-ordering the painter's keys wouldn't have fixed it: the loop link's end face really is behind the run.
-- **Dense figures settle their keys from geometry.** Past a few dozen overlapping parts, hand-set biases fight each other. Give every item its true shape and let `kit/audit.mjs` measure which surface is nearer wherever two items overlap, then `orderKeys` raises each key just enough to satisfy every pair (`kit.md`, section 12). What it can't satisfy is a pair that interlocks, which needs a split. The first Raptor's hand-set keys left 190 pairs drawn the wrong way round assembled and 133 apart; measured keys took both to zero.
-- **Crossings sort per chunk.** A pipe or cable is drawn as `tubePieces` chunks, each its own item at its own depth, so one line can pass in front of one part and behind the next. Where two lines cross on screen, the chunk nearer the camera is drawn later; a crossing can only be ordered if neither chunk also runs behind the other somewhere else, so break long chunks at a crossing (`breaks`).
+- 先画基座，再画搭在它上面的一切。
+- 同一层内按 `depthOf(centre, P)` 升序排：先远后近。
+- **拆分包裹部件。** 绕滑座的弹簧或框架：先画后半，再画内部部件，再画前半。试验台上：后框架条 → 带后半弹簧圈的杆 → 滑座 → 玻璃 → 前半弹簧圈 → 前框架条 → 表盘。
+- **运动部件**按其在顺序中的槽位绘制，包在移动它们的 `<g transform>` 里。运动部件若能跑到同一邻居的前面与后面，拆分邻居或限制运动范围，让顺序永不改变。
+- **立在阶梯表面上的东西。** 排列阶梯让高者靠后。停在低阶上的探针就不会被前方更高者挡住。
+- 穿过水平部件的竖直部件（穿过夹箍的立柱）分两段画：下段与上段，水平部件画在中间。
+- **裁剪切口是一条边。** 裁剪在一部件对另一部件处截断时（进入环圈的链式管段、密封套处的杆），让裁剪断面与接合面齐平，沿切口画一条随裁剪移动的描边（`data-clip`）。等离子切割机上，一段管线的裁剪断面越过了接合处。管段的顶面与槽条画进了环圈空腔 26 个单位，终止在无描边的竖直切口上，这就是一条停在半空的线。重排画家键修不了它：环圈连杆的端面确实在那段管线的后面。
+- **密集图形的键由几何定。** 超过几十个重叠部件后，手调偏置互相打架。给每个条目真实形状，让 `kit/audit.mjs` 测量重叠处哪个表面更近，然后 `orderKeys` 把每个键抬到刚好满足每一对（`kit.md`，第 12 节）。它满足不了的是互锁对，那需要拆分。第一版 Raptor 的手调键留下 190 对装配态画反、133 对分离态画反；测量出的键把两者都归零。
+- **交叉按分段排序。** 管道或电缆画成 `tubePieces` 分段，各成条目、各有深度，一条线可以从一个部件前过、从下一个部件后过。两条线在屏幕上交叉处，离相机更近的分段后画；只有当两个分段都不在其他地方跑到对方后面时交叉才能排序，所以在交叉处打断长分段（`breaks`）。
 
-## 6. Camera and composition
+## 6. 相机与构图
 
-- Default camera: azimuth 45°, elevation 30°. Rotate the azimuth (35–60°) so the face that carries the mechanism points at the viewer. The test rig uses 57° to show the long side. Raise the elevation to look into something open: the ripple tank uses 44° so the water surface and the paper under the tank both read.
-- Fit with `fitProjection(boxCorners(...) ∪ tallest points, width, height, { pad: 24–34, azimuth })`. Typical viewBoxes are 600 × 340–380.
-- The object fills about 55–65% of the card. Leave air around it, don't let it touch the corner labels, and keep sizes consistent across a set of figures.
-- On phones (390 px), check it still reads. If parts get too small, scale the SVG up to about 110–118% inside a card with `overflow: hidden` and a negative margin, as `stretch.css` does in the test-rig example.
+- 默认相机：方位角 45°，仰角 30°。旋转方位角（35–60°）让承载机构的面对着观察者。试验台用 57° 露出长边。要看进开口的东西就抬高仰角：水波槽用 44°，水面与槽下的纸都看得见。
+- 用 `fitProjection(boxCorners(...) ∪ tallest points, width, height, { pad: 24–34, azimuth })` 适配。典型 viewBox 为 600 × 340–380。
+- 物体约占卡面 55–65%。四周留白，别让它碰到角落标签，一组图形的尺寸保持一致。
+- 手机上（390 px）检查是否仍可读。部件太小时，把 SVG 在 `overflow: hidden` 加负 margin 的卡内放大到约 110–118%，如试验台示例中的 `stretch.css`。
 
-## 7. Themes
+## 7. 主题
 
-`ISO_CSS` defines tokens on `.iso`, with dark as the default and `.iso[data-theme="light"]` for light. Every fill and stroke reads a token, so a theme is just a token set. To tune one:
+`ISO_CSS` 在 `.iso` 上定义 token，深色为默认，浅色用 `.iso[data-theme="light"]`。每个填充与描边都读 token，所以主题就是一套 token。调主题时：
 
-- **Paper** (`--anatomy-paper`) equals the card colour, so fills hide what is behind without showing as patches.
-- **Shades.** Four steps from darkest (0, facing away from the light) to lightest (3). Keep them close: about 3% apart in luminance.
-- **Lines.** In dark mode, `hi` is near-white and `faint` barely above the paper. Light mode inverts this.
-- **Halo.** A blurred dark fill under the base: strong in dark mode, about 30% in light.
+- **纸面**（`--anatomy-paper`）等于卡面色，填充因此能盖住背后之物而不显出补丁。
+- **明暗。** 从最暗（0，背光面）到最亮（3）四档。保持接近：亮度约差 3%。
+- **线条。** 深色模式下 `hi` 近白、`faint` 略高于纸面。浅色模式反转。
+- **光晕。** 基座下的模糊深色填充：深色模式强，浅色约 30%。
 
-**Light ships.** Every figure on the isometrics site is light, and that includes its shaders. Design light first and keep dark working where that is cheap. What the seven shader conversions taught about the drawing:
-- **Every colour is a token.** A colour typed into a figure's CSS or its shader is a theme bug waiting to happen. Give it a light value and a dark override (`.x { --x: … }`, then `.iso[data-theme="dark"] .x { --x: … }`). Where the shader needs the same colour, read it from the token (`webgl.md`, section 8.3).
-- **Cavities get their own token set.** The inside of a furnace mouth, a ladle, a vessel seen through a cutaway, a water column or a duct window is darker for a reason: soot, refractory, depth, shadow. Give its group a class that redefines `--anatomy-paper`, `--anatomy-face`, `--anatomy-top`, the four shades and the line tones to darker, warmer or bluer greys. Keep all the tones so it still has form, mix it toward the light's hue by a variable the live code writes, and set the tokens to `inherit` in dark. Glows then have a ground, without a black box.
-- **Mind nested themes.** A dark plate can sit on a light page. A rule written `.iso:not([data-theme="dark"]) .x` also matches through the page around it. Order the dark rule after the light one, or key on the plate's own theme.
-- **Opacity fades a pale colour to grey.** Anything that fades by opacity in light (a fallback glow, a lit accent) gets a saturated token, and its tints are multiply-blended so the lines under them stay visible.
+**浅色发布。** isometrics 站点上每个图形都是浅色，着色器也是。先设计浅色，深色在代价低的地方保持可用。七次着色器转换教会我们关于图画的事：
 
-## 8. Round parts and pipes
+- **每个颜色都是 token。** 打进图形 CSS 或着色器里的颜色是迟早发作的主题 bug。给它浅色值加深色覆盖（`.x { --x: … }`，然后 `.iso[data-theme="dark"] .x { --x: … }`）。着色器需要同一颜色时，从 token 读（`webgl.md`，第 8.3 节）。
+- **腔体有自己的 token 集。** 炉口内侧、料勺、剖视看到的容器内部、水柱或管道窗口更暗是有原因的：烟灰、耐火材料、纵深、阴影。给它的组一个 class，把 `--anatomy-paper`、`--anatomy-face`、`--anatomy-top`、四档明暗与线条色调重定义为更深、更暖或更蓝的灰。保留全部色调让它仍有形体，用实时代码写的变量把它向光的色相混合，深色下把 token 设为 `inherit`。辉光于是有地面，而无黑盒。
+- **注意嵌套主题。** 深色底板可以放在浅色页面上。写成 `.iso:not([data-theme="dark"]) .x` 的规则也会穿过周边页面命中它。把深色规则排在浅色规则之后，或以底板自身主题为键。
+- **透明度会把浅色淡成灰。** 浅色下任何按透明度淡出的东西（后备辉光、lit 强调）用饱和 token，其色调用正片叠底混合，下面的线条保持可见。
 
-Engines, pumps, valves, lamps and instruments are mostly turned parts and pipes. `kit/lathe.mjs` and `kit/tube.mjs` build them along any axis (`references/kit.md`, sections 10 and 11). `examples/raptor-engine/build.mjs` has every recipe below in working form.
+## 8. 圆形部件与管道
 
-### Turned parts: think in meridians
-Write a part as its half-section: a list of `[s, r]` from one end to the other, and turn it with `G.solidOf(profile, F, P)`.
-- **Steps and shoulders** are where the radius jumps at one `s`: `[6, 12], [6, 9]`. They make the crease lines that read as machining.
-- **Curves** are many points marked smooth (`[s, r, 1]`), so no crease is drawn across them: a bell, a dome, a fillet into a flange. The kit shades any profile with a smooth vertex smoothly on its own (`smooth: "auto"`), so the shading follows the curve instead of stepping facet by facet; pass `smooth: false` only to opt out.
-- **A waisted body is never hulled.** A profile that narrows in the middle (a throat, a spool) has a concave outline. `lathe` notices when its true silhouette lies more than half a pixel inside the hull of its rings and then fills and outlines it with the silhouette and the visible end arcs instead (`fill: "auto"`, or force `"surface"`). Drawn as a hull, the Raptor throat was a straight cone with a pale unshaded strip and a seam that stopped 8 px short of the outline.
-- **Seams and weld lines** on a curved surface are `G.arcOf(F, s, r, P, { slope })`, with the profile's slope at that ring, drawn `faint` and passed as the solid's `inner` (`solidSvg(paths, { inner: lineSvg(arcOf(…), { tone: "faint" }) })`; the Raptor's `S` and `Ln` are one-line wrappers over these), so they sit under the outline. They end exactly at the limb, a little short of it. Concatenated after the solid, each seam's round cap lands on the edge stroke and the dark-theme outline of the Raptor's actuator barrels looked dashed at 4×.
-- **A long body** (a nozzle, a barrel) is cut into bands with `G.bandsOf(profile, cuts, F, P, { radius, slope })`, so each band depth-sorts against the pipes that wrap it. The bands share one `steps`, one normal field and one surface, their own outlines come cleared, and `sidesOf` draws one continuous outline for the whole body (`kit.md`, section 10), so the tone curves run through every joint without a step and the sides don't kink. Without an analytic `radius` and `slope` it fits one curve through the whole profile, never one per band.
-- **A ring around a band** (a stiffening ring on a chamber, a collar) splits the band: band, ring, band. Drawn as one long band with the ring on top, the ring's back half paints over the band (or the band hides the ring's front); split, each piece orders itself. The Raptor chamber jacket is three bands between its two rings.
-- **An open end** is a `ringBand` lip, with a filled void (`circleOf`) for the dark inside and the inside arc from `arcOf(..., { inward: true, least: -1 })`. Bolt dots go around the lip.
+发动机、泵、阀门、灯和仪表大多是回转件与管道。`kit/lathe.mjs` 与 `kit/tube.mjs` 沿任意轴构建它们（`references/kit.md`，第 10、11 节）。`examples/raptor-engine/build.mjs` 有下文每个配方的可用形态。
 
-### Parts on a round body
-- **Flange:** its back face sits on the route end, so the route ends exactly on the mount's surface and the disc runs from there back along the pipe (`centre = end − tangent · t/2`). `disc(-t/2, t/2, r, frameAlong(centre, axis), P)`, with a bolt circle `dotsOf(F, faceS, 0.74r, 8, P, { all: true })` on the face that points at the viewer. Skip the bolts when the face is edge-on (`|dot(a, V)| < 0.12`).
-- **Boss or port** on a curved wall: a short `disc` along the outward normal, with a `faint` face ring (`circleOf`) when it faces you. This is where a sense line, igniter or plug lands. Make it at least as wide as the flange that lands on it; a flange that overhangs its boss floats at the rim.
-- **Saddle pad.** A flat flange on a curved body leaves a gap at its rim (the sagitta, `R − √(R² − a²)`): an 11.6 flange on an 18.4 pump body stood 4 units off at the sides. Wherever that gap would be more than about 0.15, seat the flange on a pad: a short cylinder whose base follows the host surface (`G.saddleOf(F, a, start, h, P)` with `start(angle)` found from the host's shape, the Raptor's `padOn`/`boss(..., { host })`). Record it as a disc `cut` by its host and marked `seated`, so the audit sees its true shape. Keep the pad inside one band of the host (an overhang under a step is drawn in front of the band that hides it; a Raptor pad lowered until its rim touched the step below became an interlock in every frame) and off the host's silhouette: a pad that straddles the silhouette is half in front of and half behind its host, and no painter's order draws it. The Raptor's LOX duct moved from 130° to 150° for that reason. **A saddle belongs to its host's assembly.** Its base is cut to the host's curve, so if it flies out with the pipe the cut base is on show apart: the Raptor's hot-gas pad, cut to the methane pump's turbine and ring, became a jagged shard with a pointed tail. Give the pad to the host's piece (`boss("ftp", …, { host: FTP_TURBINE })`) and let the moving pipe's flange leave its flat top; the audit's `seats` lists every seated shape whose host moves with another assembly.
-- **Igniter plug, one terminal.** A plug carries either the igniter line (leaving its outer face along its axis) or the exciter cable, never both. The cable lands on its own small boss beside it.
-- **Valve on a pipe:** a bulged `lathe` profile on `frameAlong(point, tangent)` turned with `smooth: true`, with bolt dots on both end faces, a round neck and an actuator box with a lid outline and two screws. It sits on a straight leg (body length plus both fillet cuts), the pipe is gapped under its body, and the actuator stands perpendicular to the pipe: up on a level pipe, sideways (a round can) on a vertical one, never along the pipe.
-- **Volute:** `spiral(F, s, r0, r1, a0, a1)` fed to `tubePieces` with a radius that grows along it. Keep its centreline at housing radius plus tube radius plus 0.3, so it wraps the housing tangentially; a volute sunk into the housing is a pipe through a solid.
-- **Ball joints and tees** are spheres (`sphereOf`): a rod-end bearing on an actuator, a cast tee where a branch meets a manifold.
-- **Knurls, ribs and fins on a tilted axis:** `ribsOf`. Vanes on a face: `spokesOf` with a `sweep`.
+### 回转件：按子午线思考
+把部件写成它的半剖面：从一端到另一端的 `[s, r]` 列表，用 `G.solidOf(profile, F, P)` 旋转成体。
+- **台阶与凸肩**是半径在同一个 `s` 处跳变的地方：`[6, 12], [6, 9]`。它们造出读作机加工的折线。
+- **曲线**是许多标为 smooth 的点（`[s, r, 1]`），其上不画折线：钟形件、穹顶、圆角过渡到法兰。kit 对任何带平滑顶点的轮廓自动平滑着色（`smooth: "auto"`），着色沿曲线走而非逐面台阶；只有要退出时才传 `smooth: false`。
+- **收腰体绝不取包络。** 中间收窄的轮廓（喉部、阀芯）有凹轮廓。`lathe` 发现真实轮廓落在圆环包络内超过半像素时，改用轮廓与可见端弧来填充和描边（`fill: "auto"`，或强制 `"surface"`）。按包络画时，Raptor 喉部是带一条浅色无着色条的直锥，接缝停在离外轮廓 8 px 处。
+- **曲面上的接缝与焊线**用 `G.arcOf(F, s, r, P, { slope })`，带该环处轮廓的坡度，画成 `faint` 并作为实体的 `inner` 传入（`solidSvg(paths, { inner: lineSvg(arcOf(…), { tone: "faint" }) })`；Raptor 的 `S` 与 `Ln` 是这些的一行包装），让它们坐在外轮廓之下。它们恰好终止在轮廓缘，略差一点。若拼接到实体之后，每条接缝的圆头会落在边描边上，Raptor 作动筒的深色主题外轮廓在 4× 下看起来像虚线。
+- **长体**（喷管、筒体）用 `G.bandsOf(profile, cuts, F, P, { radius, slope })` 切成带，让每条带与包裹它的管道做深度排序。各带共享一套 `steps`、一个法向场与一个曲面，自身外轮廓已清好，`sidesOf` 为整个体画一条连续外轮廓（`kit.md`，第 10 节），色调曲线无台阶地穿过每个接缝，侧面不拐折。没有解析 `radius` 与 `slope` 时，它对整个轮廓拟合一条曲线，绝不每带一条。
+- **带外的环**（燃烧室上的加强环、套环）把带切开：带、环、带。画成一整条带、环画在上面时，环的后半会盖住带（或带盖住环的前半）；切开之后，各片自己排序。Raptor 燃烧室外套是两个环之间的三条带。
+- **开口端**是 `ringBand` 的唇边，配一个填充的空腔（`circleOf`）表示暗色内里，以及来自 `arcOf(..., { inward: true, least: -1 })` 的内弧。螺栓圆点沿唇边排布。
 
-### Pipes
-- Lay out a route as a few straight legs between real ports, then `fillet` it with a bend of about 2.6 × the pipe radius. Pipes bend; they don't kink.
-- End every pipe on a port with a flange, or on a block with a terminal dot. A pipe that stops in the air is a line that stops in the air.
-- Add the parts a real line has: bands where it is clamped or welded (`bands: [0.5]`), a bellows where it must flex (a run of thin `disc`s, `bellows: [from, to, count]`), and a valve where flow is controlled. These are the Raptor `pipe()` helper's options (`kit.md`, section 11).
-- Use few sizes, all big enough to tell apart: main ducts (r 5–8), feed lines (r 2–4), sense lines (r 0.9–1.5), cables (r 0.5–0.65).
+### 圆形身体上的部件
+- **法兰：** 背面坐在 route 端头，所以 route 恰好终止在安装面上，圆盘从那里沿管道往回延伸（`centre = end − tangent · t/2`）。`disc(-t/2, t/2, r, frameAlong(centre, axis), P)`，朝向观察者的面上加螺栓圆 `dotsOf(F, faceS, 0.74r, 8, P, { all: true })`。面侧对视线时省掉螺栓（`|dot(a, V)| < 0.12`）。
+- **曲面壁上的凸台或端口：** 沿外法向的短 `disc`，朝向你时加 `faint` 面环（`circleOf`）。传感线、点火器或火花塞落在这里。把它做得至少与落在上面的法兰一样宽；悬出凸台的法兰在轮缘处悬空。
+- **鞍形垫块。** 曲面上的平法兰在轮缘处留缝（矢高，`R − √(R² − a²)`）：18.4 泵体上的 11.6 法兰在两侧悬空 4 个单位。缝隙会超过约 0.15 的地方，把法兰安在垫块上：底面贴着宿主表面的短圆柱（`G.saddleOf(F, a, start, h, P)`，`start(angle)` 从宿主形状求出，Raptor 的 `padOn`/`boss(..., { host })`）。把它记录为被宿主 `cut` 的圆盘并标 `seated`，审计因此看到真实形状。垫块保持在宿主的一条带之内（台阶下方的悬出会被画在遮它的那带前面；一个 Raptor 垫块降到轮缘碰到下方的台阶后，每帧都是互锁），并避开宿主的外轮廓：跨在外轮廓上的垫块一半在前一半在后，任何画家序都画不出它。Raptor 的 LOX 导管为此从 130° 挪到 150°。**鞍形垫块属于宿主的装配体。** 它的底面按宿主曲线切出，若随管道飞出，分离态会露出被切的底面：Raptor 的热气垫块按甲烷泵的涡轮与环切出，分离时成了一块带尖尾的锯齿碎片。把垫块归给宿主的部件（`boss("ftp", …, { host: FTP_TURBINE })`），让移动管道的法兰离开它的平顶；审计的 `seats` 列出每个宿主随另一装配体移动的被切形状。
+- **点火塞，一个端子。** 塞要么带点火线（沿其轴从外面离开），要么带激励器电缆，绝不两者都带。电缆落在旁边自己的小凸台上。
+- **管道上的阀门：** `frameAlong(point, tangent)` 上的鼓包 `lathe` 轮廓、以 `smooth: true` 旋转成型，两端面上有螺栓圆点，圆颈，以及带盖外轮廓与两颗螺钉的作动箱。它坐在直腿上（体长加两处圆角切口），管道在其体下留隙，作动器垂直于管道：水平管上朝上，竖直管上侧向（圆罐形），绝不沿管道方向。
+- **蜗壳：** `spiral(F, s, r0, r1, a0, a1)` 喂给 `tubePieces`，半径沿程增大。中心线保持在机壳半径加管半径加 0.3，让它与机壳相切包裹；陷进机壳的蜗壳是穿实体的管道。
+- **球接头与三通**是球（`sphereOf`）：作动器上的杆端轴承，支管接歧管处的铸造三通。
+- **斜轴上的滚花、rib 与散热片：** `ribsOf`。面上的叶片：带 `sweep` 的 `spokesOf`。
 
-### Choosing waypoints
-Route the big lines first (ducts, downcomers, manifolds), then feed lines, then sense lines, then cables, so each smaller line routes round what is already there. For each route:
-- **Start on the port's normal.** The first leg leaves the port straight out along its surface normal, long enough for the flange, then the bend: `fillet` takes at most 0.48 of the shorter leg, so a leg shorter than about twice the bend radius gives a tight bend, and a turn right at a port facing the viewer pinches ("Clearance and crossings", step 5).
-- **Follow structure.** Legs run parallel to the body they follow (along a chamber, up a downcomer) or round it on a ring at a fixed radius (`arcPoints`), offset from its skin by the body's own clearance: skin radius plus about 1.5 × the line's radius. The owner's close-up showed sense lines fanning across the chamber's face and over the main duct to reach their block; on the new build the long line from the nozzle manifold runs up the left side, the fuel-valve cable runs up beside the downcomer, and the harness comes down from the controller in parallel drops into clamped lanes.
-- **Stay on your side of the subject.** A line that serves a port on the far side goes round the back or round the side at a ring, never diagonally across the front of the thing being explained.
-- **Prefer legs across the screen.** A leg that runs straight toward or away from the viewer projects short and makes every turn at its ends a cusp or a V ("Clearance and crossings", steps 4 and 5).
-- **Leave room for fittings.** A valve, bellows or clamp needs a straight leg at least its body plus both bend allowances (`r_bend · tan(turn / 2)` each). On a bend the straight body cuts into the pipe; the Raptor's downcomer was rerouted so its valve sits on a straight run, and the oxygen duct gained a vertical straight for its valve.
-- **Don't land on a rod.** A pipe's last leg must not run along a rod, tie rod, post or rail on screen, and its end fitting must not sit on one's outline: the blind-test bench's hose ran its last leg parallel to a tie rod, 2 px above it, so the rod read as plugged into the hose fitting. Approach the port across the rods, or turn the elbow so the leg lies across the screen. The audit's `crowding` treats every slender solid (length over 4× its radius or half-width) as a line, so it fails these. Check every pose too: a ferrule that sits on a moving plate's edge at the end of the stroke reads as touching it.
-- **Cross deliberately.** If two lines must cross on screen, they cross once, on straights, at a clear angle, and far enough apart in depth that the clearance check passes with room to spare. A crossing near a bend or an end reads as a joint ("Clearance and crossings", step 6).
-- **Split, don't overlap.** Where something wraps a pipe (flange, band, bellows disc, clamp, valve body), the pipe is gapped there and a piece ends on each face (`tubePieces` `gaps`, `crossingsOf` for clamps). Run through it as one chunk, the pipe is both behind and in front of the collar and no key can order it. The Raptor chamber jacket was split at its two rings for the same reason.
+### 管道
+- 把 route 布成真实端口之间的几条直腿，然后用约 2.6 × 管半径的弯 `fillet`。管道是弯的，不打折。
+- 每根管道终止在带法兰的端口上，或带端点圆的块体上。停在空中的管道就是停在空中的线。
+- 加上真实管线有的部件：被夹持或焊接处加带（`bands: [0.5]`），必须屈曲处加波纹管（一串薄 `disc`，`bellows: [from, to, count]`），控制流量处加阀门。这些是 Raptor `pipe()` helper 的选项（`kit.md`，第 11 节）。
+- 用少量规格，全部大到能区分：主管道（r 5–8）、供给线（r 2–4）、传感线（r 0.9–1.5）、电缆（r 0.5–0.65）。
 
-### Contacts and junctions
-Every place two parts meet is either a flat face on a flat face, a tangent contact, or a rim landing on a round body. Nothing is sunk into anything: a sunk part is both in front of and behind its host, and no painter's order can draw it.
-- **Flush.** A rod ends on the face of its clevis; a boss starts on the surface it stands on; a lug is a short pin from the housing to the ball.
-- **Rim on a round body.** A cylinder of radius `a` meeting a sphere or tube of radius `R` ends where its rim lies on the surface, `sqrt(R² − a²)` from the centre. Its end face is then hidden inside the host and nothing shows through. This is how the Raptor's actuator rods meet their ball joints and how the manifold tube and the downcomer meet their tee.
-- **Tees.** A branch into a pipe is a sphere fitting a little larger than both: the run is gapped where its rim meets the sphere and the branch ends on the sphere. Size the sphere so neither pipe's rim pokes into the other: for a branch of radius `b` into a run of radius `a`, `R ≥ sqrt(a² + b²)`.
-- **Stand-offs.** A ring that would have to sink into a curved body to touch it (a manifold round a bell) stands clear by at least half its tube radius on small radial pads.
-- **Valves and bellows on straights.** A straight lathe on a curved pipe cuts into it at both ends. Put them where the route is straight for their whole length.
-- **Two flanges, one joint.** Where a duct bolts to a pump outlet flange, the duct's own flange meets the outlet flange face to face; two flanges in the same place interlock. Each part then keeps a flange when the figure comes apart.
-- **Branches have fittings.** A branch leaves its run from a tee (a ball the run is gapped under, the branch starting where its rim meets the ball) or from a saddle pad on the run, never from a bare spot on the run's skin.
-- **Struts end in ball joints.** A strut's eye disc laid along an oblique axis sinks into whatever it meets. Give each end a short stem along the host's normal, a ball on the stem, and the rod between the balls (rim on sphere at all four joints).
-- **Balls with flats for joints that move.** In a 3D figure a rim landing on a sphere can't be ordered at every angle. Give the ball a flat (`T.ball({ flats: [{ n, d }] })`, recorded as `A.ball(c, r, { flats })`) and land the rim on the flat, or use coaxial knuckle discs. `references/3d.md`, section 5.
-- **Everything is held.** Every solid is connected through contacts to the stand: brackets carry boxes, studs carry harness clamps, a gearbox plate joins a motor to its actuator. A clamp that touches only the cable it holds floats.
+### 选航点
+先布大线（管道、下降管、歧管），再供给线，再传感线，再电缆，让每条更细的线绕开已有的东西。每条 route：
+- **沿端口法向出发。** 第一腿沿表面法向直出端口，长到够放法兰，然后才转弯：`fillet` 最多取较短腿的 0.48，所以短于约两倍弯半径的腿会出急弯，正对着观察者的端口处转弯会收缩（"Clearance and crossings"，第 5 步）。
+- **沿结构走。** 腿与所沿的身体平行（沿燃烧室、沿下降管上行），或以固定半径在环上绕行（`arcPoints`），离其表面留出身体自身的间隙：表面半径加约 1.5 × 线半径。拥有者的特写显示传感线扇形横过燃烧室表面、越过主管道去够自己的块体；新构建上，从喷管歧管出来的长线沿左侧上行，燃料阀电缆沿下降管旁边上行，线束从控制器成平行落线下进夹箍通道。
+- **留在主体自己的那一侧。** 服务远侧端口的线绕后面或以环绕侧面，绝不斜穿被解释之物的正面。
+- **优先横过屏幕的腿。** 正对或背对观察者的腿投影很短，其两端的每个转弯都成尖角或 V（"Clearance and crossings"，第 4、5 步）。
+- **给接头件留地方。** 阀门、波纹管或夹箍需要至少体长加两处转弯余量的直腿（每处 `r_bend · tan(turn / 2)`）。坐在弯上时直体会切进管道；Raptor 的下降管被改道让阀门坐在直段上，氧管道为阀门加了一段竖直直段。
+- **别落在杆上。** 管道最后一腿不得在屏幕上沿杆、连杆、立柱或导轨走，其端部接头件不得落在它们的外轮廓上：盲测台的软管最后一腿与连杆平行、高出 2 px，杆读作插进了软管接头件。横过各杆接近端口，或转动弯头让腿横过屏幕。审计的 `crowding` 把每个细长实体（长于半径或半宽 4 倍）当作线，所以会判这些失败。每个位姿也要查：行程末端坐在运动板边上的卡套读作碰到了板。
+- **有意识地交叉。** 两条线必须在屏幕上交叉时，只交叉一次、在直段、以清晰角度，深度上分得足够开让间隙检查有富余地通过。弯头或端头附近的交叉读作接头（"Clearance and crossings"，第 6 步）。
+- **拆分，不重叠。** 某物包裹管道处（法兰、带、波纹管片、夹箍、阀体），管道在那里留隙，一段终止在每个面上（`tubePieces` 的 `gaps`，夹箍用 `crossingsOf`）。以一整段穿过时，管道既在套环后又在前，任何键都排不了序。Raptor 燃烧室外套在两个环处切开，理由相同。
 
-### Clearance and crossings
-A pipe keeps about 1.5 radii between its centreline and anything but its own connection, so a 0.6 cable passes 0.3 clear of a duct's skin and a duct keeps half its radius off its neighbours. Where two lines must cross on screen, they cross in depth, one well in front of the other, and the chunk keys order them; where a pipe passes through a collar, clamp or valve it is gapped there (`kit.md`, section 11). Prove it rather than eyeballing it:
-1. Record a shape for every item and every tube as you build, into one `A.recorder(P, { order, spring })` (`kit.md`, section 12): `R.put` for drawn items with their `shapes`, `R.solid` for each shape, `R.route` for each pipe and cable. Make the helpers do it, so nothing escapes. There is a recorded shape for everything the kit draws: `A.slab`, `A.extruded` and `A.cylinder` for floor prisms, `A.solid`, `A.lathe` and `A.disc` for turned parts (traced along the same curve the drawing uses), `A.prism` for `prismOf`, `A.ball`, and tubes.
-2. Settle the painter's keys with `A.settle(R, P)` on every build: it measures the overlaps in every state the figure rests in (assembled and apart) and in every frame of its real explode (`explodeStates` replays the live springs and stagger) and runs `orderKeys`.
-3. End the build with `A.auditOrExit(R, P)` and run `node build.mjs --audit` until every failing line prints zero. An interlocked pair is a geometry bug (a split, a gap or a tangent contact fixes it); don't bias it away.
-4. Lines don't double back on screen. A horizontal leg that runs away from the viewer reads as going up, so a pipe that runs away and then drops reads as a cusp, a pipe ending in mid-air. Route the leg sideways on screen first (the audit's `folds` finds every case: a screen turn over 140° within 4 radii while the real turn is under 110°).
-5. No outline folds back on itself, and no bend pinches to a point on screen. A leg that points at the viewer and then turns (a sense line leaving a jacket boss radially and climbing to a block, a pigtail leaving a transducer tip and hooking back) projects its fillet edge-on, and the two legs meet in a V with no visible radius. `folds` measures the screen radius of every visible bend over 90° and fails it when it is under twice the tube's screen radius. Fixes, in order of preference: let the turn happen inside a fitting (a ball tee on the boss, the line leaving it toward its next point: the Raptor's `elbow`, used by sense0, sense2, sense5 and the fuel-rich igniter line); bend in a plane that faces the viewer (the Raptor's pigtails loop in the transducer's own radial plane, which faces the camera; its local helper `sideOn(d) = unit3(cross3(unit3(V − d·(V·d)), d))`, with `V = G.viewOf(P)`, gives the direction across the screen from a leg along `d`, so a bend in the plane of `d` and `sideOn(d)` faces the viewer); move the port to where its normal lies across the screen. A bend in a plane whose normal makes `f = |n·V|` with the view projects to a screen radius of about `R·f²`; once that is under the tube's screen half-width, the inner edge of a single chunk runs backwards and the outline crosses itself in a little knot (the audit's `selfOverlaps`). `fillet(…, { P, tube })` raises each corner's radius to clear that, but only as far as the legs allow, so give a turn next to a port at least `R + 3r` of straight leg. A port that faces the viewer squarely (the Raptor's speed pickup on the methane pump) makes every approach a hairpin: move it.
-6. Crossings happen on straights, clearly. Where one line's bend or end lands on another's outline on screen (touching, or overlapping by any amount), the eye reads a joint or a line threaded through another, whatever the true depth: a pigtail hook that peeks out from behind a sense-line elbow, a flange that lands on another line's band in the apart pose, a cable that runs along a short duct on screen and over its end flange. A fitting counts too: a harness clamp whose outline lands on another line reads as that line growing out of the clamp, as the Raptor's clamp did on the oxygen-to-preburner line apart. The audit's `crowding` lists every visible case, assembled and apart; reroute one line so the meeting is a clear crossing of two straights or a visible gap of at least a pixel (two for a clamp). Excuse a pair only after you have looked at it at 8× (`CROWD_OK`).
+### 接触与接合
+两个部件相遇的每个地方，要么平面对平面，要么相切接触，要么轮缘落在圆形身体上。没有任何东西埋进任何东西：下沉的部件既在宿主前又在宿主后，任何画家序都画不出它。
+- **齐平。** 杆终止在其叉形接头的面上；凸台从其立足的表面起；耳片是从壳体到球的短销。
+- **轮缘落在圆形身体上。** 半径 `a` 的圆柱与半径 `R` 的球或管相遇，终止在其轮缘落在表面之处，距中心 `sqrt(R² − a²)`。端面于是藏在宿主内部，什么也不透出。Raptor 的作动杆就是这样接球接头，歧管管与下降管就是这样接三通。
+- **三通。** 支管接管道是一个比两者都略大的球：干管在其轮缘接球处留隙，支管终止在球上。球的大小要让任何一侧的轮缘都不戳进另一侧：支管半径 `b` 接干管半径 `a`，`R ≥ sqrt(a² + b²)`。
+- **支承间隔。** 必须陷进曲面才能碰到它的环（绕钟形件的歧管）在小型径向垫块上保持至少半个管半径的间距。
+- **阀门与波纹管放在直段。** 曲管上的直 lathe 在两端切进管道。把它们放在 route 全长都直的地方。
+- **两片法兰，一个接合。** 管道栓到泵出口法兰处，管道自己的法兰与出口法兰面对面相接；同一位置两片法兰会互锁。这样分离后每个部件仍保留一片法兰。
+- **支管带接头件。** 支管从三通离开干管（干管在其下留隙的球，支管从其轮缘接球处起步），或从干管上的鞍形垫块，绝不从干管表面的光秃处。
+- **支撑杆终止在球接头。** 沿斜轴铺放的撑杆孔盘会陷进它碰到的东西。每端给一根沿宿主法向的短轴杆、轴杆上的球，杆在球之间（四个接点都是轮缘落球面）。
+- **会动的关节用带平切面的球。** 3D 图形中轮缘落球面在任何角度都排不了序。给球一个平切面（`T.ball({ flats: [{ n, d }] })`，记录为 `A.ball(c, r, { flats })`），把轮缘落在平切面上，或用同轴铰接圆盘。`references/3d.md`，第 5 节。
+- **一切都悬持着。** 每个实体都经接触连到底座：支架托盒体、螺柱托线束夹箍、变速箱板把电机连到作动器。只碰它所持电缆的夹箍是浮空的。
 
-The first Raptor had 54 clearance problems (39 pass-throughs) and 323 depth-order problems; the routes in this section took both to zero.
+### 间隙与交叉
+管道中心线与自身连接对象之外的一切保持约 1.5 个半径，所以 0.6 的电缆离管道表面 0.3 通过，管道与邻居保持半个半径。两条线必须在屏幕上交叉时在深度上交叉，一个远远在另一个之前，分段键给它们排序；管道穿过套环、夹箍或阀门处在那里留隙（`kit.md`，第 11 节）。要证明，不要目测：
+1. 构建时为每个条目与每根管记录形状，写进同一个 `A.recorder(P, { order, spring })`（`kit.md`，第 12 节）：画出的条目带 `shapes` 用 `R.put`，每个形状用 `R.solid`，每根管道与电缆用 `R.route`。让 helper 代劳，不漏一个。kit 画的每样东西都有记录形状：地面棱柱用 `A.slab`、`A.extruded` 与 `A.cylinder`，回转件用 `A.solid`、`A.lathe` 与 `A.disc`（沿绘图同一条曲线描出），`prismOf` 用 `A.prism`，还有 `A.ball` 与管道。
+2. 每次构建都用 `A.settle(R, P)` 安定画家键：它测量图形静止的每个状态（装配态与分离态）及真实爆炸的每一帧（`explodeStates` 回放实时弹簧与错峰）中的重叠，并运行 `orderKeys`。
+3. 构建以 `A.auditOrExit(R, P)` 结尾，跑 `node build.mjs --audit` 直到每个失败行打印零。互锁对是几何 bug（拆分、留隙或相切接触能修它）；不要用偏置糊弄过去。
+4. 线不在屏幕上折返。背向观察者走的水平腿读作向上，于是先走远再下落的管道读作尖角、停在半空。先让腿在屏幕上走侧向（审计的 `folds` 找出每种情况：屏幕转弯超过 140° 而 4 个半径内真实转弯不到 110°）。
+5. 没有外轮廓自折返，没有弯在屏幕上收缩成点。指向观察者然后转弯的腿（从外套凸台径向离开再爬升到块体的传感线、从传感器尖端离开又勾回的盘绕短管）把圆角侧向投影，两腿以无可见半径的 V 相遇。`folds` 测量每个超过 90° 的可见弯的屏幕半径，低于管屏幕半径两倍时判失败。修法，按优先级：让转弯发生在接头件内（凸台上的球三通，线朝下一点离开：Raptor 的 `elbow`，sense0、sense2、sense5 与富燃点火线都用它）；在朝向观察者的平面内弯（Raptor 的盘绕短管在传感器自身的径向平面内成环，该平面朝向相机；其局部 helper `sideOn(d) = unit3(cross3(unit3(V − d·(V·d)), d))`，`V = G.viewOf(P)`，给出沿 `d` 的腿在屏幕上的横向方向，所以 `d` 与 `sideOn(d)` 平面内的弯朝向观察者）；把端口挪到法向横过屏幕的地方。法向与视线成 `f = |n·V|` 的平面内的弯投影出约 `R·f²` 的屏幕半径；一旦低于管的屏幕半宽，单段的内边倒着走，外轮廓在一个小结里自交（审计的 `selfOverlaps`）。`fillet(…, { P, tube })` 把每个角的半径抬高以避开它，但只在腿允许的范围内，所以端口旁的转弯至少给 `R + 3r` 的直腿。正对观察者的端口（Raptor 在甲烷泵上的测速接头）让每次接近都成发夹：挪走它。
+6. 交叉发生在直段上，清清楚楚。一条线的弯或端在屏幕上落在另一条的外轮廓上（相触或有任意重叠）时，无论真实深度如何，眼睛读出接头或一条穿入另一条的线：从传感线弯头后探出的盘绕短管钩、分离位姿落在另一条线的带上的法兰、在屏幕上沿一小段管道走又越过其端法兰的电缆。接头件也算：外轮廓落在另一条线上的线束夹箍读作那条线从夹箍上长出来，就像 Raptor 的夹箍在氧到预燃室的管线分离时那样。审计的 `crowding` 列出每个可见案例，装配态与分离态；重布一条线让相遇成为两条直段的清晰交叉或至少 1 px 的可见间隙（夹箍 2 px）。先在 8× 下看过才豁免某对（`CROWD_OK`）。
 
-### Shading and textures on curved surfaces
-- **Smooth shading** (automatic on any profile with a smooth knot; `smooth: { slope }` or `{ slope, radius }` for an analytic curve; `bandsOf` for a body in bands; `sphereOf` for balls) on every curved surface: bells, throats, domes, cones, valve bulges, balls. A flat facet tone per row is only right on a cylinder. Each tone is one polygon over the whole body for as long as its region count holds, so no row seams show.
-- **A texture ends on an edge or fades, along the axis too.** Each rib's `s0` and `s1` land exactly on a drawn step, crease or seam arc at the same `s`: pass `seams: true` and `ribsOf` returns the two seam arcs with the ribs, so they can't drift apart (the blind-test motor ran its ribs from 26 to 88 with seams at 24 and 90, and every rib stopped 2 units short at both ends). Where a rib row has no seam, let it run onto the face that ends the band (`s0`, `s1` equal to the band's ends) or fade it.
-- **A texture on a pipe follows its cross-section.** Braid, corrugation, tape wrap and armour come from `tubePieces(route, r, P, { rings: { pitch, twist, cross, fade } })`: rings (or with `twist`, helices, and with `cross: true`, a braid of both hands) placed by 3D arc length along the whole route, each drawn as the visible front arc of its cross-section, fading toward both limbs and ending on the ferrule and gap faces. Never a `stroke-dasharray` along a chunk's centreline: it ends in straight hard edges along the hose, doesn't wrap the round section, piles up on the inside of bends, and restarts at every chunk joint.
-- **Textures end on an edge or fade.** Ribs and bolt circles that are limited to the side facing you stop wherever the cut-off falls, in the middle of the surface: the bolt circles on the Raptor's chamber rings did, in the owner's close-up. Use `ribsOf(..., { fade })` with `fadedSvg`, and `dotsOf(..., { fade })`, so they fade out toward the turn (the Raptor uses `fade: [0.04, 0.42]` for bolt dots and `[0.1, 0.55]` for ribs). Seam arcs and band lines already end on the silhouette. A single texture line that has to stop in the middle of a face (a groove that runs out, a weld bead short of a corner) is drawn with `fadeLineSvg(points, { fade: [start, end] })`, which ramps it out over a few px with a gradient along the line; never let it end on a bare cut. Choose the cut-off from the way the feature faces, not from the ring it sits on: spray holes on top of a deluge ring face up and are seen all the way round, so they take `all: true`. Culled by the ring's outward normal (`least: -0.2`), the Raptor's row stopped at full strength just past the ring's sides while the ring ran on round the back, bare. Never cut a row on an up-facing feature with a radial `least`; if part of it really is hidden, `fade` toward the turn.
-- **Smooth tones taper.** Where a tone band appears or disappears along a curved profile, it is born at zero width and grows (`smooth` refines rows by screen error until each boundary is within 0.35 px and every change of band count happens in a sliver). A band that ends on a straight cut across the surface, or a pale wedge of bare fill, is the bug the reviewer finds first.
-- **Shape and shading describe one curve.** Smooth runs of a profile are interpolated with a monotone cubic Hermite curve (Fritsch–Carlson), and the kit uses that same curve for the normals, the tone sheets, the silhouette and the hull. A natural spline overshoots near a peak: on the Raptor's valves it put three sign changes of slope into a body that rises and falls once, and the tone bands zig-zagged across the bulge like wood grain while the outline stayed a polyline with a nub at every profile point. A monotone curve can only turn where the profile turns.
-- **The monotone Hermite is only C1.** Its `dr/ds` is a piecewise quadratic: with hand-typed knots it plateaus at each knot and overshoots between them, and tone bands, which follow the slope, stall and then lurch, a staircase in scallops. The Raptor throat had extrema of slope at five places on a profile that bends one way; its deck cone wobbled more mildly. Any curved body larger than a fitting needs an analytic profile `r(s)` and its derivative passed as `smooth: { slope }`, sampled at 20–30 knots: the throat is `√(24.2² + (c·(s − 146))²)`, the cone `48·(1 − x)^0.8` closed to `r = 0` at its tip with a vertical tangent, so the outline rounds over the tip instead of peaking above a flat tip disc. The audit's `wobble` fails any profile smoothed without a `slope` whose `dr/ds` turns between its ends.
-- **Outlines are ellipses, not facet polygons.** Facet counts are for tone fills only (about 3 px per facet on screen, `stepsFor(r, 32, 160, scale)`); every silhouette, rim and crease is sampled from the analytic circle at about 1.5 px, and creases and bevels end exactly where the faces turn away. A 20-sided flange outline next to a 96-sample torus reads as a notch at 4×.
-- **Tube stripes.** Shine and shade bands run continuously through chunk joints and on to the very end: at every capped end they follow the outward half of the end ellipse, and at an end face turned toward you they stop on its inner rim, which is drawn. At a joint the stripes overhang the body by a further 0.5 (bodies overlap by 0.5, stripes by 1), and every frame is computed from the whole route, so the later chunk's stripe covers its own body's anti-aliased cut and ends on an identical stripe. With body and stripe cut on one line, a hairline crossed the volute's shade band at every joint, light in light theme and dark in dark. Check them at 4× at every bend, tee, bellows and flange, and on a strongly curved tapered tube. Anything you draw on a chunk yourself (a texture, flow marks) follows the same rule: compute it from the whole route, phase it by 3D arc length from the route's start, and extend it over the chunk's stripe overhang (1 unit past each joint), or the joint shows as a half-dash, a doubled mark or a notch. The `rings` option does this for you.
+第一版 Raptor 有 54 个间隙问题（39 个穿透）与 323 个深度顺序问题；本节的布线把两者都归零。
 
-### Harness routing
-Cables are the easiest way to ruin a figure: a cable drawn across the subject's face reads as a scribble. Route them like a real harness:
-- **Lanes.** Run cables in parallel lanes on a ring around the body (`arcPoints` at a fixed `s`, each lane offset 1.4 units out and 0.2 along for r 0.62 cables). They leave the lane only to branch to their plug.
-- **Enter in order.** Cables come down from the connectors in parallel drops and join the ring where their drop meets their lane (at `acos(x / laneR)`), so the innermost lane is fed by the connector nearest the front and no drop crosses another.
-- **Leave in order.** The outermost lane leaves the ring first; an inner cable that turns outward while outer lanes still run beside it has to cross them.
-- **Follow structure.** A cable that has to climb runs up beside a pipe (the Raptor's valve cable runs up the downcomer) instead of crossing open space in front of the engine.
-- **Short branches.** Go from the lane straight to the port. Don't run diagonally across the subject's face.
-- **Clamps** (`disc(-0.9, 0.9, r, frameAlong(point, tangent))`, tone `mid`) hold the lanes to the body at regular angles. Gap each cable where it passes through a clamp (`crossingsOf`), or the clamp and the cable interlock.
-- **Ends land.** Each cable starts at a connector on the controller or a junction box and ends on a plug, sensor tip, valve lid or bulkhead connector, never on a clamp or in the air beside the bundle. An end that stays with its own assembly gets a terminal dot; an end on another assembly gets a connector shell (`cable(..., { shells: [false, true] })`) that moves with the cable.
-- **Count what you draw.** Push every route into a list (`CABLES`) and build the readout from its length. The first Raptor readout claimed 8 cables while 11 were drawn.
+### 曲面上的着色与纹理
+- **平滑着色**（任何带平滑节点的轮廓自动启用；解析曲线用 `smooth: { slope }` 或 `{ slope, radius }`；分带的体用 `bandsOf`；球用 `sphereOf`）用在每个曲面上：钟形件、喉部、穹顶、锥体、阀门鼓包、球。逐行的平坦分面色调只在圆柱上才对。只要区域数不变，每种色调是盖住整个体的一块多边形，所以不显行缝。
+- **纹理终止在边上或淡出，沿轴也一样。** 每条 rib 的 `s0` 与 `s1` 恰好落在同一 `s` 处画出的台阶、折线或接缝弧上：传 `seams: true`，`ribsOf` 随 rib 返回两条接缝弧，它们不会错开（盲测电机的 rib 从 26 跑到 88，接缝在 24 与 90，每条 rib 两端都差 2 个单位停住）。rib 行没有接缝时，让它延伸到终止带的面（`s0`、`s1` 取带的两端）或让它淡出。
+- **管道上的纹理沿其横截面。** 编织、波纹、缠带与铠装来自 `tubePieces(route, r, P, { rings: { pitch, twist, cross, fade } })`：环（加 `twist` 成螺旋线，加 `cross: true` 成双手编织）按 3D 弧长沿整条 route 放置，每个画成其横截面的可见前弧，向两侧轮廓缘淡出，终止在卡套与留隙面上。绝不沿分段中心线用 `stroke-dasharray`：它沿软管以笔直生硬的边收尾，不包裹圆截面，在弯道内侧堆积，并在每个分段接头重新开始。
+- **纹理终止在边上或淡出。** 限定在朝你这侧的 rib 与螺栓圆会停在截断点落下的地方、表面中间：Raptor 燃烧室环上的螺栓圆就是这样，在拥有者的特写里。用带 `fadedSvg` 的 `ribsOf(..., { fade })` 与 `dotsOf(..., { fade })`，让它们向转弯处淡出（Raptor 螺栓圆点用 `fade: [0.04, 0.42]`，rib 用 `[0.1, 0.55]`）。接缝弧与带线本来就终止在轮廓上。不得不停在面中间的单条纹理线（跑完的凹槽、离拐角还差的焊道）用 `fadeLineSvg(points, { fade: [start, end] })` 画，它沿线用渐变在几 px 内淡出；绝不让它终止在裸切口上。截断按特征朝向选，不按它坐的环选：喷淋环顶上的喷孔朝上、整圈可见，所以用 `all: true`。按环的外法向剔除（`least: -0.2`）时，Raptor 那一行在刚过环侧面的地方以全强度停住，而环本身继续绕到背面，上面空无一孔。绝不给朝上的特征用径向 `least` 截行；确实有部分被遮挡时，向转弯方向 `fade`。
+- **平滑色调收窄。** 色调带沿曲轮廓出现或消失处，以零宽度诞生并逐渐变宽（`smooth` 按屏幕误差细化行，直到每个边界在 0.35 px 内、每次带数变化都发生在一丝之内）。终止在横过表面的直线切口上的带，或裸填充的浅色楔形，是评审最先找到的 bug。
+- **形状与着色描述同一条曲线。** 轮廓的平滑段用单调三次 Hermite 曲线（Fritsch–Carlson）插值，kit 对法向、色调面、轮廓与包络都用同一条曲线。自然样条在峰附近过冲：在 Raptor 的阀门上，它给一个只升落一次的体塞进三次坡度变号，色调带像木纹一样在鼓包上锯齿穿行，而外轮廓仍是带节的多段线，每个轮廓点上一个疙瘩。单调曲线只在轮廓转弯的地方转弯。
+- **单调 Hermite 只有 C1。** 它的 `dr/ds` 是分段二次的：手打节点时在每个节点出现平台、节点之间过冲，跟随坡度的色调带于是停滞再突跳，扇贝状的阶梯。Raptor 喉部在一个单向弯曲的轮廓上有五处坡度极值；它的甲板锥晃动得较轻。任何大于接头件的曲体都需要解析轮廓 `r(s)` 及其导数，以 `smooth: { slope }` 传入、按 20–30 个节点采样：喉部是 `√(24.2² + (c·(s − 146))²)`，锥是 `48·(1 − x)^0.8` 并在尖端以竖直切线收闭到 `r = 0`，外轮廓于是绕过尖端，而不是在平的尖端圆盘上方出一个峰。审计的 `wobble` 会让任何未带 `slope` 平滑、`dr/ds` 在两端之间转向的轮廓失败。
+- **外轮廓是椭圆，不是分面多边形。** 分面数只用于色调填充（屏幕上每面约 3 px，`stepsFor(r, 32, 160, scale)`）；每条轮廓、轮缘与折线都从解析圆以约 1.5 px 采样，折线与倒角恰好在面转开的地方终止。96 采样的环面旁边的 20 边法兰外轮廓，在 4× 下读作一个缺口。
+- **导管条纹。** 亮带与暗带连续穿过分段接头直到最末端：每个加盖的端沿端椭圆的外半走，端面朝向你时终止在其内缘上，内缘是画出来的。接头处条纹比体再外挑 0.5（体重叠 0.5，条纹重叠 1），每帧都从整条 route 计算，所以后一分段的条纹盖住自己体的抗锯齿切口，终止在一条一模一样的条纹上。体与条纹在同一条线上切断时，蜗壳暗带在每个接头处被一条发丝线横过，浅色主题下呈浅色、深色主题下呈深色。在每个弯、三通、波纹管与法兰处 4× 检查，强弯锥管上也要。你自己画在分段上的任何东西（纹理、流痕）遵守同一规则：从整条 route 计算，以距 route 起点的 3D 弧长定相位，并延伸过分段的条纹外挑（每个接头外 1 个单位），否则接头显出半个虚线、双重记号或缺口。`rings` 选项替你做好这一切。
 
-## 9. Exploded views
-An exploded view earns its place when the parts are the explanation (what feeds what, in what order):
-- Choose the assemblies the real thing comes apart into (the Raptor has 11), not single solids.
-- Move each assembly along its real disassembly direction, far enough that its silhouette clears its neighbours: down along the axis for stacked stages, out radially for side units.
-- Every part keeps a home. Parts that bridge two assemblies (actuators, cables) go with the one they stay attached to, and when apart they still end on something of their own: a flange, a coupling nut at a quick-disconnect, a connector shell on a cable. Strut ends are ball studs on their hosts with the rod leaving with its assembly, and saddle pads stay on their hosts. Mark each end that comes off its mount when apart (`free: [true, false]`); the audit's `looseEnds` fails every other end that touches nothing of another owner in the apart state, and lists the free ones so each is a choice.
-- Highlight and motion are separate. A sensor bolted to the chamber highlights with the plumbing but rides the chamber's spring (`ride`, emitted as `data-ride`). Moved with another assembly's vector on its own spring, it slides along its mount and sinks into it mid-flight.
-- Choose explode vectors and the stagger so nothing passes through anything, in any frame: `references/motion.md` ("Order the stagger so nothing has to pass through") has the rules, and the audit replays every frame of the real springs, opening, closing and reversing halfway, and fails on any pass-through.
-- List the assemblies in the legend as numbered buttons (`01 Gimbal and thrust puck`…) that select, the same as hovering does.
-- Springs, staggering and per-frame depth re-sorting are in `references/motion.md`.
+### 线束布线
+电缆是毁掉图形的最容易方式：横过主体表面的电缆读作乱涂。像真实线束那样布线：
+- **通道。** 电缆在绕体环上的平行通道里走（固定 `s` 的 `arcPoints`，r 0.62 电缆每条通道向外偏 1.4、沿程偏 0.2）。只在分支去插头时离开通道。
+- **按序进入。** 电缆从连接器平行落下，在落点接到自己通道的汇入处（`acos(x / laneR)`），最内圈通道由最靠前的连接器供给，没有落线交叉另一条。
+- **按序离开。** 最外圈通道先离开环；外圈通道还在旁边走时向外转的内圈电缆必然穿过它们。
+- **沿结构。** 必须爬高的电缆沿管道旁边上行（Raptor 的阀电缆沿下降管上行），而不是横穿发动机前的开阔空间。
+- **短分支。** 从通道直奔端口。不要斜穿主体表面。
+- **夹箍**（`disc(-0.9, 0.9, r, frameAlong(point, tangent))`，色调 `mid`）以规律角度把通道压在身体上。每根电缆穿过夹箍处留隙（`crossingsOf`），否则夹箍与电缆互锁。
+- **端点落地。** 每根电缆从控制器或接线盒上的连接器出发，终止在插头、传感器尖、阀盖或穿壁连接器上，绝不停在夹箍上或线束旁的空中。留在自己装配体的端点给端点圆；落在另一装配体的端点给连接器外壳（`cable(..., { shells: [false, true] })`），随电缆移动。
+- **数你画的。** 每条 route 压进一个列表（`CABLES`），读数区从其长度生成。第一版 Raptor 的读数区声称 8 根电缆，实际画了 11 根。
 
-## 10. Screens and things on faces
-A screen, a dial face or a display is drawn in the plane of the face it sits on (`examples/desk-computer/`):
-- **The face plane.** `sideMatrix([0, y], 0, P, "left")` maps a group's local `(x, −z)` coordinates onto the vertical face at `y`. Draw everything on the screen (the glow, scanlines, a mark, `<text>` and a cursor) in those flat coordinates inside that `<g transform>`.
-- **A recess.** Clip the screen to its rounded outline with a `clipPath` in the same plane, and draw the recess's inner sides as quads between the face and the face moved `depth` back. Shade the sides by facing (tops `iso-top`, sides by shade). Draw the outline `lo` on the face and `faint` at the back.
-- **Motion on the face** is a transform in face coordinates. The CRT power-off scales the picture about the screen centre to a line, then to a dot, with a beam line and a fading dot.
-- **Text the machine displays** (a typed line, a counter's digits) is part of the object, not a label, so the one-label rule doesn't apply. Keep it in the screen's own type and size, and fit it: the cap height is about 0.55 of the window's height and the widest string you will ever show (`8.88`, the longest unit) must fit its width with a margin of about a tenth of the height. Clip it to the window like any screen. A blind-test flow meter set 5.6 px digits in a 12.8 × 8 window, so the leading digit crossed the window's left border and the digit tops ran into the unit label.
-- **Content seen through an opening** (a sight glass, a gauge window, a recess) sits behind the face, so draw the opening's inner walls between the face and the back plane, shaded by facing, and clip the content to the opening in the face plane as well as its own. A strip of bare face inside the opening reads as a hole drawn on the surface. For a shader behind an opening, `webgl.md`, section 5.
+## 9. 爆炸图
+部件本身就是解释（什么供给什么、按什么顺序）时，爆炸图才有资格存在：
+- 选实物真正拆分出的装配体（Raptor 有 11 个），不是单个实体。
+- 每个装配体沿其真实拆卸方向移动，远到轮廓离开邻居：堆叠级沿轴向下，侧向单元沿径向向外。
+- 每个部件都有归处。桥接两个装配体的部件（作动器、电缆）跟着保持附着的那一个，分离后仍终止在自己的某个东西上：法兰、快卸接头上的连接螺母、电缆上的连接器外壳。撑杆端是宿主上的球头螺柱、杆随其装配体离开，鞍形垫块留在宿主上。分离时离开安装座的每个端点都标记（`free: [true, false]`）；审计的 `looseEnds` 会判分离态下没有接触任何其他所有者的端点失败，并把自由的列出来让每个都成为选择。
+- 高亮与运动分离。栓在燃烧室上的传感器随管路高亮，但骑燃烧室的弹簧（`ride`，以 `data-ride` 输出）。若用另一装配体的向量配自己的弹簧移动，它会沿安装座滑动并在中途陷进去。
+- 选爆炸向量与错峰让任何帧都没有东西穿过任何东西：`references/motion.md`（"Order the stagger so nothing has to pass through"）有规则，审计回放真实弹簧的每一帧、打开、关闭与中途反转，任何穿透都失败。
+- 图例里把装配体列成带编号的按钮（`01 Gimbal and thrust puck`…）供选择，与悬停等效。
+- 弹簧、错峰与逐帧深度重排在 `references/motion.md`。
 
-## 11. Shaders
-Some subjects can't be drawn with lines: fire, exhaust, water, caustics, real lamp light, steam. These go in a WebGL layer *inside* the drawing, in world space and in the same camera, between a back SVG and a front SVG. `references/webgl.md` has the layer stack, the camera contract, the craft rules (nothing pops, no hard cut-offs, tonemap and dither, blending per theme) and how to verify them. Everything in this page still applies to the SVG around the effect. Its section 8 covers the light theme, which ships: inks solved from the colour the paper should show, ink that grows with the light, a dark physical ground for every glow, recipes for hot metal, glass, sparks, flame, steam, plasma and Cherenkov light, and a no-WebGL fallback that matches the shader.
+## 10. 屏幕与面上的东西
+屏幕、表盘面或显示器画在它所在的面的平面内（`examples/desk-computer/`）：
+- **面平面。** `sideMatrix([0, y], 0, P, "left")` 把组的局部 `(x, −z)` 坐标映射到 `y` 处的竖直面。屏幕上的一切（辉光、扫描线、标记、`<text>` 与光标）都画在那个 `<g transform>` 内的平面坐标里。
+- **凹槽。** 用同一平面内的 `clipPath` 把屏幕裁到圆角轮廓，凹槽内壁画成面与后移 `depth` 的面之间的四边形。壁按朝向着色（顶 `iso-top`，侧按明暗）。外轮廓在面上画 `lo`，在后部画 `faint`。
+- **面上的运动**是面坐标里的变换。CRT 断电把画面绕屏幕中心缩成一条线、再缩成一个点，配一条电子束线与一个渐隐的点。
+- **机器显示的文本**（打出的行、计数器的数字）是实物的一部分，不是标签，所以一标签规则不适用。保持屏幕自己的字体与字号，并适配好：大写高度约是窗口高度的 0.55，你可能显示的最宽字符串（`8.88`，最长的单位）必须留约高度十分之一的边距装进其宽度。像任何屏幕一样裁剪到窗口。盲测的流量计把 5.6 px 数字放进 12.8 × 8 窗口，首位数字越过了窗口左边界，数字顶部撞进了单位标签。
+- **透过开口看到的内容**（视镜、仪表窗、凹槽）在面之后，所以在面与后平面之间画开口内壁、按朝向着色，并把内容裁剪到开口，既在面平面内也在其自身平面内。开口内一条裸面读作画在表面上的一个洞。开口后面的着色器见 `webgl.md`，第 5 节。
+
+## 11. 着色器
+有些主体画不成线条：火、排气、水、焦散、真实灯光、蒸汽。它们放进图画**内部**的 WebGL 层，世界空间、同一相机，在背景 SVG 与前景 SVG 之间。`references/webgl.md` 有层叠栈、相机契约、工艺规则（无突变、无硬截断、tonemap 与抖动、按主题混合）与验证方法。本页的一切仍适用于效果周边的 SVG。其第 8 节覆盖发布用的浅色主题：从纸面应显颜色求解的墨、随光增长的墨、每处辉光的深色物理地面、热金属、玻璃、火花、火焰、蒸汽、等离子体与切伦科夫光的配方，以及与着色器匹配的无 WebGL 后备。

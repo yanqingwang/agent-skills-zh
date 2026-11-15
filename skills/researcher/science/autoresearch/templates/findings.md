@@ -1,43 +1,47 @@
-# Research Findings
+> **中文汉化版** · 上游：[Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) · 原文件：`0-autoresearch-skill/templates/findings.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Research Question
+# 研究发现
 
-<!-- What are we trying to discover? One clear sentence. -->
+## 研究问题
 
-## Current Understanding
+<!-- 我们想发现什么？一句话说清。 -->
 
-<!-- Updated after each outer loop cycle. What do we know so far?
-     What patterns explain our results? What's the mechanism?
-     This section should read like the core argument of a paper. -->
+## 当前理解
 
-## Key Results
+<!-- 每个外层循环周期后更新。目前我们知道了什么？
+     哪些模式能解释我们的结果？机制是什么？
+     本节读起来应当像一篇论文的核心论证。 -->
 
-<!-- Significant experimental findings. Include metrics, comparisons, and
-     brief interpretation. Link to experiment directories for full details. -->
+## 关键结果
 
-## Patterns and Insights
+<!-- 重要的实验发现。包含指标、对比与简短解读。
+     完整细节链接到实验目录。 -->
 
-<!-- What emerges across multiple experiments? What types of changes
-     consistently work or fail? Why? -->
+## 模式与洞见
 
-## Lessons and Constraints
+<!-- 跨多个实验浮现出了什么？哪类改动持续有效或持续失败？
+     为什么？ -->
 
-<!-- Specific actionable learnings that should guide future experiments.
-     Things you tried that didn't work and WHY, so you don't repeat them.
-     Constraints you discovered about the problem space.
+## 经验与约束
 
-     Examples:
-     - Weight decay > 0.1 causes training instability at 125M param scale
-     - SwiGLU and RoPE improvements stack because they're orthogonal (FFN vs positional)
-     - Baseline only reproduces published numbers with batch_size=64, not 32
-     - Sleep phases before memorization completion hurt — model needs memories to consolidate -->
+<!-- 应当指导未来实验的具体可执行经验。
+     试过但没奏效的东西及其原因，避免重蹈覆辙。
+     你发现的问题空间约束。
 
-## Open Questions
+     示例：
+     - weight decay > 0.1 在 125M 参数规模下导致训练不稳定
+     - SwiGLU 与 RoPE 的改进能叠加，因为二者正交（FFN vs 位置编码）
+     - 只有 batch_size=64（而非 32）时，基线才能复现已发表的数字
+     - 记忆完成前的睡眠阶段有害：模型需要先有记忆才能巩固 -->
 
-<!-- What remains unanswered? What would strengthen or challenge
-     our current understanding? -->
+## 未决问题
 
-## Optimization Trajectory
+<!-- 还有什么没有解答？什么会强化或挑战
+     我们当前的理解？ -->
 
-<!-- Summary of inner loop progress. How has the metric evolved?
-     Note inflection points and what caused them. -->
+## 优化轨迹
+
+<!-- 内层循环进展摘要。指标如何演化？
+     记录拐点及其成因。 -->

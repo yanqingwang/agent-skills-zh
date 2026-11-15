@@ -1,73 +1,77 @@
-# 10 Candy Stripe — Rainbow Candy Stripes
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/vivid--candy-stripe/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 10 Candy Stripe（彩虹糖果条纹）
 
-Six full-width rainbow stripes slide, stretch, and gather across pages on white background, creating festive joyful atmosphere.
+## 风格概览
 
-- **Scene**: Celebrations, festivals, children's education, creative marketing
-- **Mood**: Joyful, lively, festive, rainbow
-- **Tone**: White base, six-color rainbow accents
+六条全宽彩虹条纹在白底上跨页滑动、拉伸、聚拢，营造节日般的欢快氛围。
 
-## Color Palette
+- **场景**：庆典、节日、儿童教育、创意营销
+- **气质**：欢乐、活泼、节日感、彩虹
+- **基调**：白底，六色彩虹点缀
 
-| Name         | Hex     | Usage            |
+## 配色
+
+| 名称         | Hex     | 用途             |
 | ------------ | ------- | ---------------- |
-| Pure White   | #FFFFFF | Page background  |
-| Candy Red    | #FF5252 | Rainbow stripe 1 |
-| Orange       | #FF7B39 | Rainbow stripe 2 |
-| Lemon Yellow | #FFD740 | Rainbow stripe 3 |
-| Mint Green   | #69F0AE | Rainbow stripe 4 |
-| Sky Blue     | #40C4FF | Rainbow stripe 5 |
-| Violet       | #7C4DFF | Rainbow stripe 6 |
-| Title Black  | #1A1A1A | Title text       |
-| Body Gray    | #555555 | Body text        |
+| 纯白         | #FFFFFF | 页面背景         |
+| 糖果红       | #FF5252 | 彩虹条纹 1       |
+| 橙色         | #FF7B39 | 彩虹条纹 2       |
+| 柠檬黄       | #FFD740 | 彩虹条纹 3       |
+| 薄荷绿       | #69F0AE | 彩虹条纹 4       |
+| 天蓝         | #40C4FF | 彩虹条纹 5       |
+| 紫罗兰       | #7C4DFF | 彩虹条纹 6       |
+| 标题黑       | #1A1A1A | 标题文字         |
+| 正文灰       | #555555 | 正文文字         |
 
-## Typography
+## 字体排印
 
-| Element       | Font           | Size    |
+| 元素          | 字体           | 字号    |
 | ------------- | -------------- | ------- |
-| Main Title    | Segoe UI Black | 54-64pt |
-| Data Numbers  | Segoe UI Black | 48-72pt |
-| Column Title  | Segoe UI Black | 28-40pt |
-| Body/Subtitle | Segoe UI       | 16-28pt |
+| 主标题        | Segoe UI Black | 54-64pt |
+| 数据数字      | Segoe UI Black | 48-72pt |
+| 栏目标题      | Segoe UI Black | 28-40pt |
+| 正文/副标题   | Segoe UI       | 16-28pt |
 
-## Design Techniques
+## 设计手法
 
-- **Full-width rainbow stripes**: 6 full-width rect (width=34cm), creating visual rhythm through y position and height changes only
-- **Vertical sliding**: Stripes slide up and down between pages, morph produces smooth vertical movement
-- **Stretch variation**: Stripe height changes from 2cm (evenly spread) to 0.3cm (compressed into thin lines) to 8cm (expanded into large color block backgrounds)
-- **Opacity adjustment**: 0.12 (faded as card background) to 0.85 (normal display) to 1.0 (deepened when compressed)
-- **Functional transformation**: S1 evenly distributed → S2 compressed into top color bar → S3 becomes three-column card backgrounds → S4 blue expands as data background → S5 gathers into bottom gradient color bar
+- **全宽彩虹条纹**：6 条全宽 rect（width=34cm），仅靠 y 位置和高度变化制造视觉节奏
+- **纵向滑动**：条纹跨页上下滑动，morph 产生流畅的纵向运动
+- **拉伸变化**：条纹高度从 2cm（均匀铺开）变到 0.3cm（压缩成细线）再变到 8cm（扩成大色块背景）
+- **透明度调整**：0.12（淡化作卡片底）到 0.85（正常显示）到 1.0（压缩时加深）
+- **功能性变形**：S1 均匀分布 → S2 压成顶部色条 → S3 变三栏卡片底 → S4 蓝条扩为数据背景 → S5 聚成底部渐变色条
 
-## Scene Elements
+## 场景元素
 
-| Name              | Type | Description                      |
+| 名称              | 类型 | 描述                             |
 | ----------------- | ---- | -------------------------------- |
-| `!!stripe-red`    | rect | Red full-width rainbow stripe    |
-| `!!stripe-orange` | rect | Orange full-width rainbow stripe |
-| `!!stripe-yellow` | rect | Yellow full-width rainbow stripe |
-| `!!stripe-green`  | rect | Green full-width rainbow stripe  |
-| `!!stripe-blue`   | rect | Blue full-width rainbow stripe   |
-| `!!stripe-purple` | rect | Purple full-width rainbow stripe |
+| `!!stripe-red`    | rect | 红色全宽彩虹条纹                 |
+| `!!stripe-orange` | rect | 橙色全宽彩虹条纹                 |
+| `!!stripe-yellow` | rect | 黄色全宽彩虹条纹                 |
+| `!!stripe-green`  | rect | 绿色全宽彩虹条纹                 |
+| `!!stripe-blue`   | rect | 蓝色全宽彩虹条纹                 |
+| `!!stripe-purple` | rect | 紫色全宽彩虹条纹                 |
 
-## Page Structure (5 pages)
+## 页面结构（5 页）
 
-| Slide | Type      | Elements                                                                                                 | Description |
+| 页码  | 类型      | 元素                                                                                                     | 描述 |
 | ----- | --------- | -------------------------------------------------------------------------------------------------------- | ----------- |
-| S1    | hero      | Cover — 6 rainbow stripes evenly distributed (3.4cm spacing), centered title                             |
-| S2    | statement | Statement — 6 stripes compressed to top 4cm forming color title bar, white space below for text          |
-| S3    | pillars   | Three-column — stripes paired into three column card backgrounds (red+orange, yellow+green, blue+purple) |
-| S4    | evidence  | Data — blue stripe expands to 8cm high data background, other stripes retreat to top and bottom edges    |
-| S5    | cta       | Closing — stripes gather at bottom forming inverted rainbow gradient footer                              |
+| S1    | hero      | 封面：6 条彩虹条纹均匀分布（间距 3.4cm），标题居中                                                       |             |
+| S2    | statement | 宣言：6 条条纹压缩到顶部 4cm 形成色彩标题条，下方留白放文字                                              |             |
+| S3    | pillars   | 三栏：条纹两两配对作三栏卡片底（红+橙、黄+绿、蓝+紫）                                                    |             |
+| S4    | evidence  | 数据：蓝条扩成 8cm 高的数据背景，其余条纹退到上下边缘                                                    |             |
+| S5    | cta       | 结尾：条纹聚到底部，形成倒置彩虹渐变页脚                                                                 |             |
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (hero)** — Initial even layout of 6 rainbow stripes
-- **Slide 2 (statement)** — Stripe compression effect, understanding height and y position change logic
-- **Slide 4 (evidence)** — Technique for expanding single stripe into large area background
+- **Slide 1（hero）**：6 条彩虹条纹的初始均匀布局
+- **Slide 2（statement）**：条纹压缩效果，理解高度与 y 位置的变化逻辑
+- **Slide 4（evidence）**：单条条纹扩展成大面积背景的技巧
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

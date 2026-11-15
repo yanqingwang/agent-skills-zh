@@ -1,59 +1,63 @@
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/shape.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Shape
 
-Discover what should be made and how it should work, then return a confirmed design brief without code.
+弄清应当做什么、它应当如何工作，然后返回一份经过确认的设计简报，不带代码。
 
-## Phase 1: Discovery interview
+## Phase 1: 发现访谈
 
-Do not write code or choose visual direction yet.
+先不要写代码，也不要选择视觉方向。
 
-### Cadence
+### 节奏
 
-- Use the structured question tool when available; otherwise ask and stop.
-- Ask two or three related questions per round, then wait. One round is the default; add a second only when the answers expose a material gap.
-- Do not dump a questionnaire, repeat settled facts, or turn obvious facts into menus. Assert the likely reading and invite correction.
-- A sparse prompt requires at least one answer round. A precise prompt may need only a compact confirmation.
+- 有结构化提问工具时使用它；否则提问后停下。
+- 每轮问两到三个相关的问题，然后等待。默认一轮；只有当回答暴露出实质性缺口时才加第二轮。
+- 不要甩出一份问卷，不要重复已确定的事实，不要把显而易见的事实变成选择题。直接说出最可能的理解，邀请对方纠正。
+- 稀疏的提示词至少需要一轮回答。精确的提示词可能只需要一次简短确认。
 
-### Round 1: purpose, people, and outcome
+### Round 1: 目的、人群与结果
 
-Choose the two or three questions that most change the result:
+选出最能改变结果的两三个问题：
 
-- What is this surface or feature for, and what problem must it solve?
-- Who specifically reaches it, in what situation and state of mind?
-- What is the primary thing they must understand or do? What would success look like?
-- What is uniquely true here that a neighboring product or generic template could not claim?
+- 这个界面或功能是做什么的？它必须解决什么问题？
+- 具体是谁在到达它？在什么情境、什么状态下？
+- 他们必须理解或完成的首要之事是什么？成功看起来是什么样？
+- 这里有什么独特的真实之处，是隔壁产品或通用模板无法声称的？
 
-### Round 2: material, behavior, and boundaries
+### Round 2: 素材、行为与边界
 
-Run only for material unresolved decisions:
+只针对尚未解决的重大决策进行：
 
-- What real content, evidence, data, and assets must the experience carry? What are realistic minimum, typical, and maximum ranges?
-- Which states and transitions matter: first-run, empty, loading, error, success, permissions, overflow, or expert use?
-- What is the intended fidelity, breadth, and interactivity: exploration, production-ready screen, full flow, or broader surface?
-- What must remain untouched? What would make the result feel wrong even if it looked polished?
-- Which platform, framework, performance, accessibility, localization, or delivery constraints are binding?
+- 体验必须承载哪些真实内容、证据、数据和素材？现实的最小、典型、最大区间是什么？
+- 哪些状态与过渡重要：首次运行、空、加载、错误、成功、权限、溢出，还是专家使用？
+- 预期的保真度、广度与交互性是什么：探索、可上线的屏幕、完整流程，还是更大的界面？
+- 什么必须保持不动？即使成品看起来精致，什么仍会让结果感觉不对？
+- 哪些平台、框架、性能、无障碍、本地化或交付约束是硬性的？
 
-Never ask for CSS values or canned aesthetic lanes. New-work owns visual-world and concept choices.
+绝不询问 CSS 取值或预设的审美赛道。视觉世界与概念的选择归 New-work 管。
 
-## Phase 2: Resolve the design direction
+## Phase 2: 确定设计方向
 
-For new surfaces, brand expansion, or replacement, follow [new-work.md](new-work.md) through visual authority, any world workshop, and concept choice. Reuse discovery, then return before its contract, persistence, or implementation. Inside an established world, use its concept process only when composition or interaction remains materially open.
+对于新界面、品牌扩展或替换，遵循 [new-work.md](new-work.md) 走完视觉权威、可能的世界工作坊与概念选择。复用发现阶段的产出，然后在其契约、持久化或实现之前返回。在已确立的世界内部，只有当构图或交互仍然实质性地开放时，才使用它的概念流程。
 
-## Phase 3: Write the brief
+## Phase 3: 撰写简报
 
-Write the smallest useful brief:
+写出最小但有用的简报：
 
-1. **Job and audience:** who arrives, their context, need, and visitor mode.
-2. **Outcome and proof:** primary task/action, success, real evidence, and product-specific truth.
-3. **Selected direction:** visual authority, structural/interaction thesis, sequence, focal moment, and implementation consequence.
-4. **Scope and boundaries:** fidelity, breadth, interactivity, named target, what remains untouched, and explicit anti-goals.
-5. **States and ranges:** realistic content/data ranges and material states.
-6. **Interaction and layout:** hierarchy, topology, responsiveness, affordances, feedback, and transitions; intent, not CSS.
-7. **Constraints and open decisions:** platform, delivery, accessibility, localization, reusable components, and choices a builder must not invent.
+1. **Job and audience:** 谁会到来，他们的情境、需求与访客模式。
+2. **Outcome and proof:** 首要任务/动作、成功标准、真实证据与产品专属的真实。
+3. **Selected direction:** 视觉权威、结构/交互主张、序列、焦点时刻与实现后果。
+4. **Scope and boundaries:** 保真度、广度、交互性、点名的目标、什么保持不动，以及明确的反目标。
+5. **States and ranges:** 现实的内容/数据区间与重大状态。
+6. **Interaction and layout:** 层级、拓扑、响应式、可供性、反馈与过渡；讲意图，不讲 CSS。
+7. **Constraints and open decisions:** 平台、交付、无障碍、本地化、可复用组件，以及构建者不得擅自发明的选择。
 
-Use three to five bullets when the task is settled; use the full structure only for ambiguous, multi-screen, or standalone planning. Do not restate the conversation.
+任务已确定时用三到五条要点；只有含糊、多屏或独立规划时才用完整结构。不要复述对话内容。
 
-## Confirm and stop
+## 确认并停止
 
-Present the brief for explicit confirmation or one correction round, then stop: shape never writes code or a direction contract.
+把简报呈给用户做明确确认，或做一轮修正，然后停下：shape 绝不写代码，也不写方向契约。
 
-When no human or structured answer mechanism exists, mark assumptions plainly, return the brief, and stop.
+当不存在真人或结构化的回答机制时，清楚标出假设，交回简报，然后停下。

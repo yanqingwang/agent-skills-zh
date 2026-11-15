@@ -1,76 +1,80 @@
-# Tier Structure and Packaging
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/pricing/references/tier-structure.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Contents
-- How Many Tiers?
-- Good-Better-Best Framework
-- Tier Differentiation Strategies
-- Example Tier Structure
-- Packaging for Personas (Identifying Pricing Personas, Persona-Based Packaging)
-- Freemium vs. Free Trial (When to Use Freemium, When to Use Free Trial, Hybrid Approaches)
-- Enterprise Pricing (When to Add Custom Pricing, Enterprise Tier Elements, Enterprise Pricing Strategies)
+# 档位结构与打包
 
-## How Many Tiers?
+## 目录
+- 需要几个档位？
+- Good-Better-Best 框架
+- 档位差异化策略
+- 档位结构示例
+- 按画像打包（识别定价画像、基于画像的打包）
+- 免费增值 vs. 免费试用（何时用 Freemium、何时用免费试用、混合方案）
+- 企业定价（何时加定制定价、企业档要素、企业定价策略）
 
-**2 tiers:** Simple, clear choice
-- Works for: Clear SMB vs. Enterprise split
-- Risk: May leave money on table
+## 需要几个档位？
 
-**3 tiers:** Industry standard
-- Good tier = Entry point
-- Better tier = Recommended (anchor to best)
-- Best tier = High-value customers
+**2 档：** 选择简单清晰
+- 适用：SMB 与企业的界线分明时
+- 风险：可能把利润留在桌上（少收钱）
 
-**4+ tiers:** More granularity
-- Works for: Wide range of customer sizes
-- Risk: Decision paralysis, complexity
+**3 档：** 行业标准
+- Good 档 = 入口
+- Better 档 = 推荐档（向 Best 锚定）
+- Best 档 = 高价值客户
 
----
-
-## Good-Better-Best Framework
-
-**Good tier (Entry):**
-- Purpose: Remove barriers to entry
-- Includes: Core features, limited usage
-- Price: Low, accessible
-- Target: Small teams, try before you buy
-
-**Better tier (Recommended):**
-- Purpose: Where most customers land
-- Includes: Full features, reasonable limits
-- Price: Your "anchor" price
-- Target: Growing teams, serious users
-
-**Best tier (Premium):**
-- Purpose: Capture high-value customers
-- Includes: Everything, advanced features, higher limits
-- Price: Premium (often 2-3x "Better")
-- Target: Larger teams, power users, enterprises
+**4 档以上：** 粒度更细
+- 适用：客户规模跨度大时
+- 风险：决策瘫痪、复杂度上升
 
 ---
 
-## Tier Differentiation Strategies
+## Good-Better-Best 框架
 
-**Feature gating:**
-- Basic features in all tiers
-- Advanced features in higher tiers
-- Works when features have clear value differences
+**Good 档（入门）：**
+- 目的：扫清进入门槛
+- 包含：核心功能，用量有限
+- 价格：低，易接受
+- 目标用户：小团队，先试后买
 
-**Usage limits:**
-- Same features, different limits
-- More users, storage, API calls at higher tiers
-- Works when value scales with usage
+**Better 档（推荐）：**
+- 目的：大多数客户的落点
+- 包含：全功能，限额合理
+- 价格：你的"锚点"价格
+- 目标用户：成长中的团队，重度用户
 
-**Support level:**
-- Email support → Priority support → Dedicated success
-- Works for products with implementation complexity
-
-**Access and customization:**
-- API access, SSO, custom branding
-- Works for enterprise differentiation
+**Best 档（高端）：**
+- 目的：捕获高价值客户
+- 包含：全部功能，高级功能，更高限额
+- 价格：高端（常为 Better 档的 2-3 倍）
+- 目标用户：更大的团队，高阶用户，企业
 
 ---
 
-## Example Tier Structure
+## 档位差异化策略
+
+**功能门控：**
+- 基础功能全档位开放
+- 高级功能放在高档位
+- 适用于功能之间价值差异明显的产品
+
+**用量限制：**
+- 功能相同，限额不同
+- 高档位给更多用户数、存储、API 调用
+- 适用于价值随用量增长的产品
+
+**支持等级：**
+- 邮件支持 → 优先支持 → 专属成功经理
+- 适用于实施复杂度高的产品
+
+**访问与定制：**
+- API 访问、SSO、自定义品牌
+- 适用于做企业级差异化
+
+---
+
+## 档位结构示例
 
 ```
 ┌────────────────┬─────────────────┬─────────────────┬─────────────────┐
@@ -91,142 +95,142 @@
 
 ---
 
-## Packaging for Personas
+## 按画像打包
 
-### Identifying Pricing Personas
+### 识别定价画像
 
-Different customers have different:
-- Willingness to pay
-- Feature needs
-- Buying processes
-- Value perception
+不同客户的这些方面各不相同：
+- 付费意愿
+- 功能需求
+- 购买流程
+- 价值感知
 
-**Segment by:**
-- Company size (solopreneur → SMB → enterprise)
-- Use case (marketing vs. sales vs. support)
-- Sophistication (beginner → power user)
-- Industry (different budget norms)
+**按以下维度细分：**
+- 公司规模（一人公司 → SMB → 企业）
+- 用例（营销 vs. 销售 vs. 客服）
+- 熟练度（新手 → 高阶用户）
+- 行业（预算标准不同）
 
-### Persona-Based Packaging
+### 基于画像的打包
 
-**Step 1: Define personas**
+**第 1 步：定义画像**
 
-| Persona | Size | Needs | WTP | Example |
+| 画像 | 规模 | 需求 | 付费意愿 | 示例 |
 |---------|------|-------|-----|---------|
-| Freelancer | 1 person | Basic features | Low | $19/mo |
-| Small Team | 2-10 | Collaboration | Medium | $49/mo |
-| Growing Co | 10-50 | Scale, integrations | Higher | $149/mo |
-| Enterprise | 50+ | Security, support | High | Custom |
+| 自由职业者 | 1 人 | 基础功能 | 低 | $19/mo |
+| 小团队 | 2-10 | 协作 | 中 | $49/mo |
+| 成长型公司 | 10-50 | 规模化、集成 | 较高 | $149/mo |
+| 企业 | 50+ | 安全、支持 | 高 | 定制报价 |
 
-**Step 2: Map features to personas**
+**第 2 步：把功能映射到画像**
 
-| Feature | Freelancer | Small Team | Growing | Enterprise |
+| 功能 | 自由职业者 | 小团队 | 成长型 | 企业 |
 |---------|------------|------------|---------|------------|
-| Core features | ✓ | ✓ | ✓ | ✓ |
-| Collaboration | — | ✓ | ✓ | ✓ |
-| Integrations | — | Limited | Full | Full |
-| API access | — | — | ✓ | ✓ |
+| 核心功能 | ✓ | ✓ | ✓ | ✓ |
+| 协作 | — | ✓ | ✓ | ✓ |
+| 集成 | — | Limited | Full | Full |
+| API 访问 | — | — | ✓ | ✓ |
 | SSO/SAML | — | — | — | ✓ |
-| Audit logs | — | — | — | ✓ |
-| Custom contract | — | — | — | ✓ |
+| 审计日志 | — | — | — | ✓ |
+| 定制合同 | — | — | — | ✓ |
 
-**Step 3: Price to value for each persona**
-- Research willingness to pay per segment
-- Set prices that capture value without blocking adoption
-- Consider segment-specific landing pages
-
----
-
-## Freemium vs. Free Trial
-
-### When to Use Freemium
-
-**Freemium works when:**
-- Product has viral/network effects
-- Free users provide value (content, data, referrals)
-- Large market where % conversion drives volume
-- Low marginal cost to serve free users
-- Clear feature/usage limits for upgrade trigger
-
-**Freemium risks:**
-- Free users may never convert
-- Devalues product perception
-- Support costs for non-paying users
-- Harder to raise prices later
-
-### When to Use Free Trial
-
-**Free trial works when:**
-- Product needs time to demonstrate value
-- Onboarding/setup investment required
-- B2B with buying committees
-- Higher price points
-- Product is "sticky" once configured
-
-**Trial best practices:**
-- 7-14 days for simple products
-- 14-30 days for complex products
-- Full access (not feature-limited)
-- Clear countdown and reminders
-- Credit card optional vs. required trade-off
-
-**Credit card upfront:**
-- Higher trial-to-paid conversion (40-50% vs. 15-25%)
-- Lower trial volume
-- Better qualified leads
-
-### Hybrid Approaches
-
-**Freemium + Trial:**
-- Free tier with limited features
-- Trial of premium features
-- Example: Zoom (free 40-min, trial of Pro)
-
-**Reverse trial:**
-- Start with full access
-- After trial, downgrade to free tier
-- Example: See premium value, live with limitations until ready
+**第 3 步：按价值为每个画像定价**
+- 调研每个细分人群的付费意愿
+- 定价既要收取价值，又不挡住采用
+- 考虑为细分人群做专属落地页
 
 ---
 
-## Enterprise Pricing
+## 免费增值 vs. 免费试用
 
-### When to Add Custom Pricing
+### 何时用免费增值（Freemium）
 
-Add "Contact Sales" when:
-- Deal sizes exceed $10k+ ARR
-- Customers need custom contracts
-- Implementation/onboarding required
-- Security/compliance requirements
-- Procurement processes involved
+**Freemium 适用场景：**
+- 产品有病毒式/网络效应
+- 免费用户能创造价值（内容、数据、推荐）
+- 市场够大，转化率乘以流量才有量
+- 服务免费用户的边际成本低
+- 有清晰的功能/用量限制作为升级触发点
 
-### Enterprise Tier Elements
+**Freemium 的风险：**
+- 免费用户可能永远不转化
+- 拉低产品的价值感
+- 为不付费用户承担支持成本
+- 以后更难涨价
 
-**Table stakes:**
+### 何时用免费试用
+
+**免费试用适用场景：**
+- 产品需要时间才能展示价值
+- 需要投入上手/配置
+- 有采购决策委员会的 B2B
+- 价格较高
+- 产品配置好后有"黏性"
+
+**试用最佳实践：**
+- 简单产品 7-14 天
+- 复杂产品 14-30 天
+- 全量权限（不做功能阉割）
+- 清晰的倒计时和提醒
+- 信用卡可选 vs. 必填的取舍
+
+**要求先填信用卡：**
+- 试用转付费率更高（40-50% vs. 15-25%）
+- 试用量更少
+- 线索质量更高
+
+### 混合方案
+
+**Freemium + 试用：**
+- 功能受限的免费档
+- 高级功能试用
+- 示例：Zoom（免费 40 分钟，Pro 试用）
+
+**反向试用：**
+- 先给全量权限
+- 试用结束后降到免费档
+- 示例：先看到高级版价值，再在限制中过日子，直到准备好升级
+
+---
+
+## 企业定价
+
+### 何时加定制定价
+
+满足以下条件时加"联系销售"：
+- 单笔金额超过 $10k+ ARR
+- 客户需要定制合同
+- 需要实施/上手服务
+- 有安全/合规要求
+- 涉及采购流程
+
+### 企业档要素
+
+**入场必备：**
 - SSO/SAML
-- Audit logs
-- Admin controls
-- Uptime SLA
-- Security certifications
+- 审计日志
+- 管理员控制
+- 在线率 SLA
+- 安全认证
 
-**Value-adds:**
-- Dedicated support/success
-- Custom onboarding
-- Training sessions
-- Custom integrations
-- Priority roadmap input
+**增值项：**
+- 专属支持/成功服务
+- 定制上手服务
+- 培训场次
+- 定制集成
+- 路线图优先发言权
 
-### Enterprise Pricing Strategies
+### 企业定价策略
 
-**Per-seat at scale:**
-- Volume discounts for large teams
-- Example: $15/user (standard) → $10/user (100+)
+**规模化的按席位定价：**
+- 大团队给批量折扣
+- 示例：$15/用户（标准）→ $10/用户（100 人以上）
 
-**Platform fee + usage:**
-- Base fee for access
-- Usage-based above thresholds
-- Example: $500/mo base + $0.01 per API call
+**平台费 + 用量：**
+- 访问权收基础费
+- 超过阈值按用量计费
+- 示例：$500/月基础费 + 每次 API 调用 $0.01
 
-**Value-based contracts:**
-- Price tied to customer's revenue/outcomes
-- Example: % of transactions, revenue share
+**基于价值的合同：**
+- 价格与客户收入/成果挂钩
+- 示例：按交易额抽成、收入分成

@@ -1,8 +1,12 @@
-# Patterns
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/patterns.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The parts every page repeats, written to pass the gates. Take the code's shape; the names, copy, values and composition are yours. `tokens.css`, `base.css` and the slot script come from the scaffold.
+# 模式（Patterns）
 
-## Controls, all eight states
+每个页面都会重复的部分，写法都能通过检查关卡。代码的形状照抄即可；名称、文案、数值与构图由你决定。`tokens.css`、`base.css` 与占位脚本来自脚手架。
+
+## 控件：全部八种状态
 
 ```css
 .btn { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: 48px; padding: 0 var(--space-lg); border: 1px solid var(--color-ink); border-radius: var(--radius-input, var(--radius-pill)); background: var(--color-ink); color: var(--color-paper); font: 500 var(--text-md)/1 var(--font-body); white-space: nowrap; text-decoration: none; cursor: pointer; transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
@@ -16,9 +20,9 @@ The parts every page repeats, written to pass the gates. Take the code's shape; 
 @media (prefers-reduced-motion: reduce) { .btn { transition: background-color var(--dur-short) linear; } }
 ```
 
-One filled primary a page (F4); the quiet one goes somewhere else. Error and success belong to the form, below.
+每页一个实心主按钮（F4）；quiet 按钮放在别处。错误与成功状态属于表单，见下文。
 
-## A photograph in a slot
+## 槽位里的一张照片
 
 ```html
 <figure class="photo" data-slot="hero" data-alt="The orchard in October, rows of trees heavy with fruit">
@@ -35,9 +39,9 @@ One filled primary a page (F4); the quiet one goes somewhere else. Error and suc
 .caption { margin-top: var(--space-sm); font-size: var(--text-sm); color: var(--color-ink-2); }
 ```
 
-The `<img>` comes from `theme.mjs photos`; `base.css` supplies the cover fit, the loading wash and the theme's treatment. The credit goes in the footer's *Photographs* line; the caption is a fact from the prompt, outside the frame. A product sample takes the same kind of slot with no `<img>`: the interface built at full size (`imagery.md` § 4).
+其中的 `<img>` 来自 `theme.mjs photos`；`base.css` 提供封面式裁切、加载遮罩和主题的特有处理。署名放在页脚的 *Photographs* 行里；图注是来自提示词的事实，不在画面框内。产品样张用同一种槽位但不放 `<img>`：按实际尺寸构建的界面（`imagery.md` § 4）。
 
-## A choice between a few
+## 少数几个选项的选择
 
 ```html
 <fieldset class="seg"><legend>Size</legend>
@@ -53,9 +57,9 @@ The `<img>` comes from `theme.mjs photos`; `base.css` supplies the cover fit, th
 .seg input:focus-visible + label { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 ```
 
-The radios stay in the flow at one pixel (53); the label carries the state and the ring, in the body face, sentence case.
+单选按钮以一像素大小留在文档流里（53）；状态和焦点圈由 label 承担，用正文字体，句首大写。
 
-## A rail and a switcher
+## 横向轨道（rail）与切换器（switcher）
 
 ```html
 <ul class="rail" tabindex="0" aria-label="Upcoming dates">
@@ -75,9 +79,9 @@ The radios stay in the flow at one pixel (53); the label carries the state and t
 .rail:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
 ```
 
-The rail scrolls by touch, wheel and arrow keys once focused, and sits outside the container's padding so its edge cuts the next item. The switcher's tabs move with the arrow keys (a few lines of script set `aria-selected`, `tabindex` and `hidden`); without script every panel shows in order. A pinned pair is `position: sticky; top: var(--space-2xl)` on the visual's column, released under 60rem.
+轨道在获得焦点后可用触屏、滚轮和方向键滚动，并放在容器内边距之外，让边缘截断下一项。切换器的标签页用方向键移动（几行脚本负责设置 `aria-selected`、`tabindex` 与 `hidden`）；没有脚本时所有面板按顺序显示。固定成对出现时，在视觉列上加 `position: sticky; top: var(--space-2xl)`，60rem 以下解除。
 
-## A fact the prompt did not give
+## 提示词没给的一个事实
 
 ```html
 <p>Doors at <span class="fill" data-fill="time">time to be announced</span>, at <a href="#venue">the venue</a>.</p>
@@ -87,9 +91,9 @@ The rail scrolls by touch, wheel and arrow keys once focused, and sits outside t
 .fill { padding: 0 0.25em; border: 1px dashed color-mix(in oklch, var(--color-muted) 70%, transparent); border-radius: 3px; color: var(--color-muted); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 ```
 
-Two a page at most, each named in the handoff (`craft.md` § 8).
+每页最多两个，每个都要在交接说明中点名（`craft.md` § 8）。
 
-## A form that posts nowhere yet
+## 暂时无处提交的表单
 
 ```html
 <form class="signup" data-endpoint="" novalidate>
@@ -126,7 +130,7 @@ document.querySelectorAll('form[data-endpoint]').forEach((form) => {
 .signup__help { min-height: 1lh; margin-top: var(--space-2xs); font-size: var(--text-sm); color: var(--color-muted); }
 ```
 
-## One reveal that survives no script
+## 无脚本也能成立的一次显现动画
 
 ```html
 <script>document.documentElement.classList.add('js');</script>
@@ -143,9 +147,9 @@ const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersec
 document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
 ```
 
-Visible with scripting off (62), at its end state under reduced motion, once, and only where the theme lets something move.
+关掉脚本时也可见（62），在减少动效偏好下直接呈现终态，只播放一次，且只用在主题允许动效的地方。
 
-## Figures that compare
+## 用于对比的数字
 
 ```css
 .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -155,11 +159,11 @@ Visible with scripting off (62), at its end state under reduced motion, once, an
 @media (max-width: 60rem) { .stats { grid-template-columns: minmax(0, 1fr); } .stats > * { padding: var(--space-md) 0; border-left: 0; border-top: 1px solid var(--color-rule); } .stats > :first-child { border-top: 0; } }
 ```
 
-Only figures the user gave (46a), each with its unit and what it counts.
+只用用户给出的数字（46a），每个都带上单位和计量对象。
 
-## A loop that can pause
+## 可暂停的循环
 
-Anything moving past 5 seconds (a marquee, an ambient loop, a looping video) holds still until the script runs, stops off-screen and under reduced motion, pauses on hover and focus, and carries a visible pause control (18, WCAG 2.2.2).
+任何持续移动超过 5 秒的东西（跑马灯、环境动效循环、循环播放的视频）在脚本运行前保持静止，移出视口或开启减少动效时停止，悬停或聚焦时暂停，并带一个可见的暂停控件（18、WCAG 2.2.2）。
 
 ```html
 <figure data-loop>
@@ -190,7 +194,7 @@ document.querySelectorAll('[data-loop]').forEach((el) => {
 });
 ```
 
-## A way past the nav
+## 绕过导航的途径
 
 ```html
 <a class="skip" href="#main">Skip to content</a>

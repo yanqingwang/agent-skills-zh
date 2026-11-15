@@ -1,109 +1,114 @@
-# Motion
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/taste-skill/references/motion.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Every page loads the micro-interaction layer: `<html data-motion>`, `assets/motion/motion.css`
-after `ui/cards.css`, `assets/motion/motion.js` (module) after `system.js` (`starter.html` has all
-three). **It is not optional:** never remove, skip or override it; if a check complains about it,
-fix the markup, not the layer. A missing or invisible hover layer is a fault on every kind (round
-C: a fintech, a cafe and a guesthouse page lost motion points because a hovered card or button
-showed no change), and since 2.5.1 so is a page without its hero entrance or its dealt moment. Give it markup to act on: a linked card is a `.card`
-holding its link (never `.m-nolift`), a photograph that leads somewhere is `<a class="m-zoom">`
-round its `<img>` (or `img.frame__img` inside a linked frame), buttons are `.btn`, links in
-running text `.link`. Shoot a hovered card and a hovered photograph at 1440 and see
-them change: the card 2px up, the photograph at 1.03. `assets/motion/demo.html` shows every interaction. This file
-holds every hover, press, loop and reduced-motion number; other files point here.
+# 动效
 
-## The rule: every page moves, in three places
+每个页面都要加载微交互层：`<html data-motion>`，`assets/motion/motion.css` 紧跟 `ui/cards.css` 之后，
+`assets/motion/motion.js`（module）紧跟 `system.js` 之后（`starter.html` 已备齐三者）。**这不是可选项：**
+绝不删除、跳过或覆盖它；检查项对它有意见时，改标记结构，而不是改这一层。
+悬停层缺失或不可见，在任何品类都是扣分项（C 轮：一个金融科技页、一个咖啡馆页和一个民宿页
+都因悬停卡片或按钮毫无变化丢了动效分），自 2.5.1 起缺首屏入场或缺派发时刻（dealt moment）的页面同样扣分。
+给它可作用的标记结构：带链接的卡片是包住链接的 `.card`（绝不用 `.m-nolift`），
+会带人去别处的照片用 `<a class="m-zoom">` 包住它的 `<img>`（或在已链接的 frame 里用 `img.frame__img`），
+按钮是 `.btn`，正文里的链接是 `.link`。
+在 1440 下截一张悬停中的卡片和一张悬停中的照片，确认它们变了：卡片上移 2px，照片 1.03。
+`assets/motion/demo.html` 演示了所有交互。
+本文件收录全部悬停、按压、循环与 reduced motion 数值；其他文件都指向这里。
 
-Every page, every kind, has the same three layers of motion, and nothing else moves:
+## 规则：每个页面都动，只在这三处
 
-1. **The hero's entrance** on load, once (below): the h1 line by line, then its lead and buttons, the
-   picture settling. About 1.1 s, then the hero stands.
-2. **One dealt moment** in a section of its own (two on a long page: eight sections or more), big
-   enough to remember: `moments.mjs pick --page <kind>` deals it (`moments.md`). On a place, product
-   or service page it is photo- or type-led (photographs that change in place, a photograph that
-   develops, a statement that lights up); shader and WebGL
-   effects stay on tech, gaming and software (house rule 8: a cafe, bakery, guesthouse or shop gets
-   photographs, never a shader).
-3. **The hover and press layer** below, on every link, button, linked card and linked photograph,
-   and the swaps a click or a tap makes (a tab on software, a peek-list's photograph).
+每个页面、每个品类，都有同样的三层动效，此外什么都不动：
 
-On tech, gaming and software pages also: loops inside a card's visual (diagram pulses included),
-one timed loop in the hero or the `[data-visual]` frame, one count, and the effect and scene
-`effects-usage.md` deals. Other pages have none of those: no ticker, marquee, slideshow, looping
-picture, pulsing dot or count. An open-now line may be filled once at load; the panel reads right
-without it. A product render is a still by default; live only when asked
-(`data-product-mode="live"`), at most one live context, with its pause button in the corner, a still
-on a phone and under reduced motion (`effects-objects.md`).
+1. **首屏入场**：加载时播放一次（见下文）：h1 逐行出现，随后是导语和按钮，
+   图片落定。约 1.1 秒，之后首屏静止。
+2. **一个派发时刻**，放在一个专属区块里（长页面上两个：八个区块及以上），
+   要大到让人记得住：由 `moments.mjs pick --page <kind>` 派发（`moments.md`）。
+   place、product、service 页面上以照片或文字为主
+   （照片原地变化、一张照片逐渐显影、一句宣言亮起）；
+   shader 与 WebGL 效果只留给 tech、gaming、software
+   （本库规约 8：咖啡馆、烘焙店、民宿或商店用照片，不用 shader）。
+3. 下文的**悬停与按压层**，作用于每个链接、按钮、带链接的卡片和带链接的照片，
+   以及点击或轻触引发的切换（software 页的标签页、peek-list 的照片）。
 
-**Scrolling moves nothing but the dealt moment.** No card, row or tile ever fades, rises or staggers
-in as the page scrolls (stock reveals), no text moves at another speed than the page (parallax on
-text), and the page is never held or steered by script (scroll-jacking, smooth-scroll libraries).
-A moment may hold its own section on screen with `position: sticky` while the page scrolls natively.
+tech、gaming、software 页面另加：卡片视觉内的循环（含示意图脉冲）、
+首屏或 `[data-visual]` frame 里的一个定时循环、一个计数，
+以及 `effects-usage.md` 派发的效果与场景。其他页面一概没有：
+没有跑马灯（ticker）、走马灯（marquee）、幻灯片、循环图片、脉动圆点或计数。
+“营业中”一行可以在加载时点亮一次；没有它，面板照样读得通。
+产品渲染图默认是静帧；只有被要求时才动（`data-product-mode="live"`），
+至多一个动态场景，角落配暂停按钮，手机端与 reduced motion 下仍为静帧（`effects-objects.md`）。
 
-**Why it moves.** The plan names each motion and its purpose in a few words, one line each: "hero
-entrance: the name arrives first, then what to do"; "photo-chapters in Rooms: three rooms shown in
-the space of one"; "hover: every link answers". A motion with no purpose is cut. Content is
-readable at rest, without script and under reduced motion: motion only ever adds to a page that is
-already whole.
+**滚动只动派发时刻，别的什么都不动。** 没有任何卡片、行或方块随页面滚动淡入、升起或错落入场
+（套路 reveal），没有任何文字以不同于页面的速度移动（文字视差），
+页面也绝不被脚本按住或操纵（scroll-jacking、平滑滚动库）。
+某个时刻可以用 `position: sticky` 把自己的区块按在屏幕上，页面本身照常原生滚动。
 
-## Tokens
+**为什么动。** 计划里为每个动效写明用途，一行一条：“首屏入场：名字先到，再告诉访客做什么”；
+“Rooms 照片章节：一屏空间看三间房”；“悬停：每个链接都有回应”。
+没有用途的动效砍掉。
+内容在静止时、无脚本时、reduced motion 下都必须可读：
+动效只给一个本来就完整的页面做加法。
 
-`--m-in` 150ms (hover in), `--m-out` 120ms (hover out), `--m-press` 90ms, `--m-panel` 200ms (a menu opening), `--m-close` 120ms, `--m-slide`
-240ms (an indicator travelling), `--m-image` 600ms in and `--m-image-out` 400ms, `--m-cycle` 3.2s;
-tech loop tokens: `--m-roll` 700ms, `--m-count` 1000ms, `--m-level` .6s, `--m-bob` 3.2s.
-Curves: one UI ease-out, `--ease` in `system.css` = cubic-bezier(.2,.8,.2,1) (`--m-ease` and the
-fragments' `--u-ease` read it) for every UI step; `--m-ease-enter` cubic-bezier(.22,1,.36,1) for
-an entrance settling (the hero, a moment, a digit roll; `--u-spring` in `ui/base.css` is the same
-curve); `--m-ease-io` cubic-bezier(.65,0,.35,1) only for travel; linear for loops and drifts. No
-curve passes its mark: no bounce, no overshoot. The motion layer moves transform, scale and opacity
-only (a hover also changes colours) and never animates width, height, top, left, margin or padding.
-Inside a dealt moment a few more cheap properties move, each named in its `meta.json`: a clip-path
-(a wipe), a filter (a photograph developing), the colour of words (a statement lighting up) and,
-on tech only, a background position (a photograph passing through type). Distances: card lift 2px, photo zoom 1.02 to 1.03, arrow 3px, menu drop 6px, button step 1px
-up (2px on `.btn--xl`; none on the text-link secondary of the `arrow` and `block` looks), press 1px
-down and scale .985 (that secondary: scale only); no others (`assets/motion/motion.css`, buttons).
+## Token
 
-## The hover layer
+`--m-in` 150ms（悬停进入），`--m-out` 120ms（悬停离开），`--m-press` 90ms，`--m-panel` 200ms（菜单展开），
+`--m-close` 120ms，`--m-slide` 240ms（指示器移动），`--m-image` 进入 600ms、`--m-image-out` 400ms，
+`--m-cycle` 3.2s；tech 循环 token：`--m-roll` 700ms，`--m-count` 1000ms，`--m-level` .6s，`--m-bob` 3.2s。
+曲线：UI 只用一个 ease-out，`system.css` 的 `--ease` = cubic-bezier(.2,.8,.2,1)（`--m-ease` 与
+fragments 的 `--u-ease` 都读它），用于每个 UI 步骤；
+`--m-ease-enter` cubic-bezier(.22,1,.36,1) 用于入场落定
+（首屏、派发时刻、数字滚动；`ui/base.css` 的 `--u-spring` 是同一条曲线）；
+`--m-ease-io` cubic-bezier(.65,0,.35,1) 只用于位移；循环与漂移用 linear。
+任何曲线都不过冲：不回弹、不越过目标。动效层只动 transform、scale 和 opacity
+（悬停还可改颜色），绝不给 width、height、top、left、margin、padding 加动画。
+派发时刻内部另有几个廉价属性可动，逐一写进各自的 `meta.json`：
+clip-path（擦除）、filter（照片显影）、文字颜色（宣言亮起），
+以及仅 tech 可用的 background position（照片从文字中穿过）。距离：卡片抬升 2px，
+照片缩放 1.02 到 1.03，箭头 3px，菜单下落 6px，按钮上移 1px（`.btn--xl` 为 2px；`arrow` 与 `block` 两种按钮样式的文字链接次级按钮不动），
+按压下沉 1px 并缩放 .985（那个次级按钮：只缩放）；其余一律不许（`assets/motion/motion.css`，buttons 节）。
 
-Hover moves only for a fine pointer (`(hover: hover) and (pointer: fine)`; keyboard focus shows the
-same state anywhere); every hover control also works by tap and keyboard and has a focus state; nothing resizes or pushes a neighbour; no rotate, skew, glow, shine sweep or chip glide.
+## 悬停层
 
-| Part | Motion | Time |
+悬停动效只对精确指针生效（`(hover: hover) and (pointer: fine)`；键盘焦点在任何地方都呈现同一状态）；
+每个悬停控件同样支持轻触与键盘，并有焦点态；任何东西都不改变尺寸、不推挤邻居；
+不许 rotate、skew、发光、扫光或标签滑行。
+
+| 部件 | 动效 | 时长 |
 |---|---|---|
-| Button | on hover the fill steps 14% toward the ink (an outline gains a faint fill and a stronger border) and the box steps up 1px (2px on `.btn--xl`); press sinks it to 1px below rest and scales .985, so a hover shot and a press shot each show a move; the text-link secondary of the `arrow` and `block` button looks keeps its underline and does not step (its press scales .985 only); fine pointer only; page CSS never sets a `.btn`'s `transform` or `transition` | 150ms in, 120ms out, 90ms press |
-| Arrow | `svg.m-arrow` moves 3px right and settles back; one arrow style a page | 150 / 120ms |
-| Link | one underline style at regular weight: running text and `.link` rest on a faint 1px hairline and an ink line draws left to right, leaving to the right; nav and footer words rest bare, darken and draw a 1px line 4px under the word | 150 / 120ms |
-| Nav | the words take the drawn underline (no gliding pill on any kind); the panel opens after 150ms of intent, fades in with a 6px drop with its columns together (one surface, never column after column), closes in 120ms; with one open the next word swaps it at once; the chevron turns 180 degrees on tech, flips at once on other | 200ms, 120ms |
-| Current page | a 2px bar under its nav word (`aria-current="page"`) | still |
-| Tabs (software, click only) | one indicator slides to the clicked tab by transform alone (it takes the new tab's size at once, starts scaled to the old one and settles to scale 1): the ink pill `system.css` draws, its label in the ground colour; the panel swaps (200ms at most); every panel one fixed height; on other no tabs | 240ms |
-| Card with a link | lifts 2px, its border darkens a step, an optional soft shadow (blur 24px, 10% ink at most, only on hover) | 180ms in, 120ms out |
-| Card without a link | nothing (`.m-nolift`) | |
-| Photograph in a linked card or link | scales 1.02 to 1.03 inside its frame (`overflow: hidden`); the frame, card and boxes never grow; never dims, fades or takes an overlay; a product card's name underlines with it (`.m-zoom` for any other wrapper) | 600ms in, 400ms out |
-| Focus | a 2px ring in the action colour, 2px off the control, drawn in full in the frame the focus lands; no transition | none |
-| Field | the action border and a 3px soft ring | 140ms |
-| `.m-switch`, `.m-check` (tech) | the knob slides 16px and stretches 4px while pressed, both by transform; the tick fades in as it grows from 70% to full size; on other they jump | 180, 90, 160ms |
-| Copy button (tech) | the glyph swaps to a check in place, holds 1.5 to 2 s, returns | 150ms |
+| 按钮 | 悬停时底色向墨色推进 14%（outline 按钮获得淡底色和更深的边框），盒子整体上移 1px（`.btn--xl` 为 2px）；按压下沉到静止位以下 1px 并缩放 .985，这样悬停截图与按压截图各有一处变化；`arrow` 与 `block` 两种按钮样式的文字链接次级按钮保留下划线、不位移（其按压只缩放 .985）；仅限精确指针；页面 CSS 绝不设置 `.btn` 的 `transform` 或 `transition` | 150ms 进入，120ms 离开，90ms 按压 |
+| 箭头 | `svg.m-arrow` 右移 3px 后回落；全页只用一种箭头样式 | 150 / 120ms |
+| 链接 | 常规字重只一种下划线样式：正文与 `.link` 静止时压一条淡 1px 发丝线，悬停时一条墨色线从左向右画出、离开时向右收回；导航和页脚的字静止时无线，悬停变深并在字下 4px 画出 1px 线 | 150 / 120ms |
+| 导航 | 文字使用画出的下划线（任何品类都不用滑动胶囊）；悬停意图满 150ms 后面板才展开，以 6px 下落淡入，各栏一起出现（一个表面，绝不一栏接一栏），120ms 收起；一个面板开着时，下一个词立即切换；tech 上箭头旋转 180 度，其他品类立即翻转 | 200ms，120ms |
+| 当前页 | 导航词下方一条 2px 短杠（`aria-current="page"`） | 静止 |
+| 标签页（software，仅点击触发） | 指示器仅靠 transform 滑到被点的标签页（尺寸立即变成新标签页的，起始缩放成旧标签页的形状，然后落回 scale 1）：墨色胶囊由 `system.css` 画出，标签文字用底色；面板切换（至多 200ms）；每个面板高度固定；其他品类没有标签页 | 240ms |
+| 带链接的卡片 | 抬升 2px，边框加深一档，可选柔和阴影（模糊 24px，墨色不超过 10%，仅悬停时） | 180ms 进入，120ms 离开 |
+| 不带链接的卡片 | 无动效（`.m-nolift`） | |
+| 带链接的卡片或链接里的照片 | 在其 frame 内缩放 1.02 到 1.03（frame 设 `overflow: hidden`）；frame、卡片和盒子绝不变大；绝不变暗、淡出或加盖遮罩；产品卡片的名字随之下划线（其他包裹用 `.m-zoom`） | 600ms 进入，400ms 离开 |
+| 焦点 | 行动色 2px 焦点环，距控件 2px，焦点落下的那一帧就完整画出；无过渡 | 无 |
+| 输入框 | 行动色边框加 3px 柔和焦点环 | 140ms |
+| `.m-switch`、`.m-check`（tech） | 按住时滑块位移 16px 并拉伸 4px，都靠 transform；对勾从 70% 长到全尺寸时淡入；其他品类直接跳变 | 180, 90, 160ms |
+| 复制按钮（tech） | 图标原地换成对勾，停留 1.5 到 2 秒，再换回来 | 150ms |
 
-FAQs show every answer open (`system.css`): no accordion, and nothing ever animates height,
-max-height or padding. Hooks: `[data-m-loop]` (your own CSS loop, tech), `data-ui-loop` (a card
-group's one fragment loop, tech), `data-m-count` (tech hero only), `.m-link`, `.m-zoom`, `.m-nolift`.
+FAQ 全部答案默认展开（`system.css`）：不做手风琴，
+绝不给 height、max-height 或 padding 加动画。
+钩子：`[data-m-loop]`（自己的 CSS 循环，tech）、
+`data-ui-loop`（一个卡片组的一个 fragment 循环，tech）、`data-m-count`（仅 tech 首屏）、`.m-link`、`.m-zoom`、`.m-nolift`。
 
-## The hero's entrance (every kind)
+## 首屏入场（所有品类）
 
-Once on load the hero arrives, then stands: the h1 rises line by line out of word masks (700ms each,
-the lines 80ms apart, at most 240ms between the first and the last; each word starts wholly under
-its mask), then whatever follows it in its column (the lead, each button, the facts) fades up 12px,
-520ms each, 60ms apart, starting as the last line is half way up; a line above the h1 (a notice, a
-pill) comes with its first line. The hero's picture is never hidden and never fades: a photograph
-settles from 1.05 to 1 over 1.1 s inside its frame (a full-bleed one inside the hero), a window,
-object or collage from .98 over 900ms, each as one block (the words on a menu card or a note in it
-never step on their own); a panel the words sit on stands from the first paint. All of it about
-1.1 s, ease-out (`--m-ease-enter`), transform, scale and opacity only, once a visit, never again on
-scroll.
-An h1 that `layout.js` reworks (a live word, letters that answer the pointer, a picture in the
-line) rises whole instead of line by line.
+加载时入场一次，之后首屏就静止：h1 从词遮罩中逐行升起
+（每行 700ms，各行间隔 80ms，首行到末行至多 240ms；每个词起初完整藏在遮罩下），
+随后它所在列里其余内容（导语、每个按钮、事实信息）各上浮 12px、各 520ms、间隔 60ms，
+从末行升到一半时开始；h1 之上的一行（通知、胶囊标签）随第一行一起出现。
+首屏图片绝不隐藏、绝不淡入：照片在 frame 内用 1.1 秒从 1.05 落到 1（首屏内的通栏照片也是），
+窗口、物件或拼贴用 900ms 从 .98 落定，各作为一个整块出现
+（菜单卡片上的字或其中的便签绝不自行分步出现）；
+文字所在的面板从首帧绘制起就立在那。全部约 1.1 秒，ease-out（`--m-ease-enter`），
+只用 transform、scale 和 opacity，每次访问一次，滚动时绝不重播。
+被 `layout.js` 改造过的 h1（live word、响应指针的字母、行内嵌图）整块升起，不逐行。
 
-The builder writes two things, and nothing else (`starter.html` has both):
+构建者只写两处，别的都不写（`starter.html` 两处都有）：
 
 ```html
 <!-- in <head>, after the stylesheets (where starter.html has it): the words wait for motion.js instead of flashing -->
@@ -112,123 +117,125 @@ The builder writes two things, and nothing else (`starter.html` has both):
 <section class="hero hero--split" data-enter aria-labelledby="hero-h">
 ```
 
-Optional: `data-enter-media` on the hero's picture when it is none of the layouts' own
-(`.hero__bg`, `.hero__media`, `.hero__stage`, `.hero__art`, `.hero__window`, `.hero-visual`,
-`.ly-collage`); `data-enter-whole` on an h1 that must rise as one; `data-enter="off"` on a hero
-that holds a big scene with its own load motion (the checker takes the scene as the entrance, and only
-inside such a hero). `motion.js` does the rest (`enter()`): it lends
-the h1 its word masks for the length of the entrance and gives the h1 its own nodes back afterwards
-(`.is-entering` while it runs, `.is-entered` after). Only the words are hidden, and only while
-`html.m-enter` is on and before `motion.js` takes over or the 700ms mark passes: without script,
-under reduced motion, in print and with `data-motion="off"` the hero stands as written; when the
-script is later than the mark, the words fade in over 400ms and the picture settles by CSS alone. A headless screenshot sees the hero at rest (as it sees a count's final number)
-unless `<html data-motion="live">`. Never a loader, a gate, a delay before reading, or a second
-entrance (`headline-arrives` is retired for it).
+可选：首屏图片不属于任何布局自带类（`.hero__bg`、`.hero__media`、`.hero__stage`、`.hero__art`、
+`.hero__window`、`.hero-visual`、`.ly-collage`）时，给它加 `data-enter-media`；
+必须整体升起的 h1 加 `data-enter-whole`；
+自带大场景加载动效的首屏加 `data-enter="off"`
+（检查器把该场景当作入场，且只认这类首屏内部的场景）。
+其余交给 `motion.js`（`enter()`）：入场期间借给 h1 词遮罩，
+结束后把 h1 自己的节点还回去（运行中加 `.is-entering`，结束后 `.is-entered`）。
+只有文字被隐藏，且只在 `html.m-enter` 开着、`motion.js` 接管之前或 700ms 期限未过时：
+无脚本、reduced motion、打印和 `data-motion="off"` 时，首屏按写好的样子静止显示；
+脚本晚于期限时，文字用 400ms 淡入，图片仅靠 CSS 落定。
+无头截图看到的是静止的首屏（正如它看到计数的最终数字），除非 `<html data-motion="live">`。
+绝不放加载器、门禁、阅读前的延迟，也不做第二次入场（`headline-arrives` 因此退役）。
 
-## Loops inside a card's visual (tech)
+## 卡片视觉内的循环（tech）
 
-House rule: a bit faster, and repeating.
+本库规约：节奏稍快，且重复播放。
 
-- One cycle is 2.5 to 4 s (`--m-cycle`, 3.2 s default), then it starts again. It is seeded on its
-  finished picture and never shows an empty window: a ui.js fragment rests 600ms on it before the
-  first cycle; a `[data-m-loop]` starts at once; the last 10 to 15% of each cycle holds the finished
-  picture, and a reset dims and rewrites, never blanks.
-- The pointer or keyboard focus entering its card restarts it from the top (not in its first
-  800ms). A paused loop stays paused. The card, its panel and the window never move: no zoom, tilt
-  or camera pan inside the window.
-- One subject per cycle (a pointer clicks, a status turns, a bar fills, a line is written): one
-  change every 1 to 2 s, each change 300ms or less. Several subjects: the next one each cycle. A
-  changing label never shows two words at once.
-- One fragment loop per card group (`data-ui-loop`); the other fragments hold their finished
-  picture and play while the pointer rests on their card. A small diagram card's pulse is that
-  card's own loop, on the same cycle, restart and pause rules (house rule: pulses running along the
-  lines); system.js never holds it (`data-ui-still` does not reach a diagram). Below the hero, two
-  loops are never on one screen: in a group with a pulsing diagram, give the fragments
-  `data-ui-still` too, or hold the diagram with `data-dg-still` (it then plays under the pointer).
-- A page's own CSS loop sits in `[data-m-loop]`, every keyframe on `var(--m-cycle)`, `--m-still`
-  (0 to 1) the finished frame, a 48px band (`--m-safe`) kept clear for the pause button.
-- Life signs inside the looping visual only: spinner 1s (12 to 16px, then a check), live dot 2.4s
-  (the dot still, a ring grows and fades), caret 1s with a hard step inside a field, level bars .6s.
-  No typing dots, no lone pulsing dot elsewhere, no block cursor after a headline.
-- Kinds of card story (each in a box of fixed height): a prompt types at 12 to 20 characters a
-  second and holds; an answer streams about a bubble a second; a notification enters at the top and
-  the oldest leaves through the fade; a checklist ticks about once a second; a calendar's events
-  fade in one by one; a pointer glides about 200px in 1 s, presses (scale .96 at least, a 28px ring)
-  and holds. A speaker or avatar front item changes no more than every 3 s. A chart stays still.
-- Not yet placed, so not used: a stepping slot strip, a before/after divider, path-following items,
-  a dock tab that grows, a pointer-linked mascot, a comet along a hero strand.
+- 一个周期 2.5 到 4 秒（`--m-cycle`，默认 3.2 秒），然后重新开始。循环以成品画面为种子，绝不出现空窗口：
+ui.js fragment 在第一个周期前先在成品画面上停 600ms；`[data-m-loop]` 立即开始；
+每个周期的最后 10% 到 15% 固定显示成品画面，重置时变暗重写，绝不留白。
+- 指针或键盘焦点进入卡片时，循环从头重放（进入后前 800ms 内除外）。已暂停的循环保持暂停。
+卡片、它的面板和窗口绝不移动：窗口内不缩放、不倾斜、不运镜。
+- 每周期一个主题（指针点击、状态翻转、进度条充满、写出一条线）：每 1 到 2 秒一个变化，
+每个变化不超过 300ms。主题有多个时，每周期推进到下一个。
+变化中的标签绝不同时显示两个词。
+- 每个卡片组一个 fragment 循环（`data-ui-loop`）；组内其他 fragment 保持成品画面，
+指针停在各自卡片上时才播放。小示意图卡的脉冲是该卡自己的循环，
+遵守同样的周期、重放与暂停规则（本库规约：脉冲沿线跑）；
+system.js 绝不替它暂停（`data-ui-still` 管不到示意图）。
+首屏之下，一块屏幕上绝不同时出现两个循环：
+带脉冲示意图的组，给其余 fragment 也加 `data-ui-still`，
+或用 `data-dg-still` 按住示意图（此时指针悬停才播放）。
+- 页面自己的 CSS 循环放进 `[data-m-loop]`，所有关键帧以 `var(--m-cycle)` 计时，
+`--m-still`（0 到 1）为成品帧，留出一条 48px 的带（`--m-safe`）给暂停按钮。
+- 活动迹象只出现在循环视觉内部：spinner 1 秒（12 到 16px，完成后变对勾）、
+live dot 2.4 秒（点不动，环长出又消散）、输入框内 1 秒硬切换的光标、进度条 .6 秒。
+不要打字圆点、其他位置不要孤零零的脉动圆点、标题后不要方块光标。
+- 卡片故事的种类（各自装在固定高度的盒子里）：提示词以每秒 12 到 20 字符打出后停住；
+回答约每秒流出一个气泡；新通知从顶部进入，最旧的经淡出离开；
+清单约每秒勾一项；日历事件逐个淡入；
+指针约 1 秒滑行 200px，按下（scale 至少 .96，配 28px 圆环）并保持。
+发言人或头像前排条目至多每 3 秒换一次。图表保持静止。
+- 尚未落地、因此不用的：步进的槽位条、前后对比分隔条、沿路径行进的元素、
+会变宽的 dock 标签、跟随指针的吉祥物、沿首屏线条跑的彗星。
 
-## Tech budget
+## Tech 预算
 
-- **One timed loop** a page, in the hero or the `[data-visual]` frame, in whatever form (a story, a
-  reel, a lit border, a live ground, a turning object, a marquee); its life signs are part of it.
-  One timed loop plus the one effect at most; with a live effect in the hero, no other timed loop
-  runs. Never two self-moving things in one 900px window, never two loops in one panel. Card loops
-  (one per card group), diagram pulses (one per diagram card) and the dealt moments are outside
-  this count.
-- **A count** once a page (`data-m-count` or the `counter-rolls` moment, never both): on load in the
-  hero (1000ms, 1.2 s at most), or as the dealt counter moment in its own section. On the open
-  ground, never in a card, panel or `[data-visual]`; its width reserved; the final figure in the
-  HTML, shown under reduced motion, without script and on phones; never a year, price or phone
-  number. A live counter changes only its last one to three digits.
-- **Load:** the hero's entrance above, on every kind. On tech also at most one load-once motion
-  inside the `[data-visual]` frame (a visual assembling, 600 to 1200ms), settled by 1.5 s; a click
-  swap 400 to 600ms. No gate, loader or intro.
-- **Pause:** anything still moving 5 s after it is seen has one round pause button per panel: a
-  solid 32px disc, 12px in from the bottom-right (in a card beside its title), always shown or
-  fading in on hover and focus, the same size and place on every card, never over copy, never on a
-  still. A click freezes the frame and swaps to a play glyph (`ui.pausable(panel, ctrl)` for your
-  own movers). Scroll-driven moments need none.
-- **Timed loops start on load** and never start, stop or resume on scroll; an IntersectionObserver
-  only mounts lazily. A canvas may skip drawing off screen only on a clock from load, so no visible
-  start shows on return. A hidden tab may pause everything.
+- **一个定时循环**：每页一个，放在首屏或 `[data-visual]` frame，形式不限
+（故事、胶片卷、发光边框、动态底景、旋转物件、走马灯）；
+它的活动迹象算作它的一部分。一个定时循环至多再配一个效果；
+首屏里有动态效果时，不再跑其他定时循环。
+一个 900px 窗口内绝不出现两个自行动的东西，一个面板内绝不出现两个循环。
+卡片循环（每组一个）、示意图脉冲（每张示意图卡一个）和派发时刻不在此计数内。
+- **一个计数**：每页一次（`data-m-count` 或 `counter-rolls` 时刻，二者绝不并用）：
+加载时在首屏（1000ms，至多 1.2 秒），或作为派发的计数时刻放在专属区块。
+放在开放地面上，绝不放进卡片、面板或 `[data-visual]`；预留宽度；
+最终数字写进 HTML，reduced motion、无脚本和手机端都直接显示；
+绝不用年份、价格或电话号码。动态计数器只变换最后一位到三位数字。
+- **加载：**所有品类都有上文的首屏入场。tech 另允许 `[data-visual]` frame 内至多一个一次性加载动效
+（视觉组装起来，600 到 1200ms），1.5 秒内落定；
+点击切换 400 到 600ms。不做门禁、加载器或片头。
+- **暂停：**出现 5 秒后仍在动的东西，每个面板配一个圆形暂停按钮：
+实心 32px 圆盘，距右下角 12px（卡片里放在标题旁），
+常显或悬停与聚焦时淡入，每张卡片同尺寸同位置，
+绝不压住文字，静止物上不放。
+点击即冻结画面并换成播放图标（自己的运动体用 `ui.pausable(panel, ctrl)`）。滚动驱动的时刻不需要。
+- **定时循环随加载启动**，绝不因滚动启动、停止或恢复；IntersectionObserver 只用于懒挂载。
+canvas 只能按加载起点的时钟跳过屏幕外的绘制，返回视口时不得露出可见的启动过程。
+隐藏标签页可以全部暂停。
 
-## Scroll
+## 滚动
 
-- **Outside the dealt moment's section (and the tech page's big scene), on every kind:** nothing
-  animates on scroll. No card, row or tile reveal of any kind (fade, rise, stagger, mask wipe), no
-  parallax or drift, no scroll-snap, scroll-tinted ground, progress line, scroll-spy marker or count
-  on view.
-- **Every kind:** the one or two dealt moments may follow the scroll, each inside its own section
-  (`data-moment`; on tech also the big scene, `data-big-scene` with `{"hold": 1}`), which stays 1H
-  or 2H (`scenes.md`, Its height; `photo-chapters` is 3H or 4H live, about two thirds of a screen a
-  chapter, `moments.md`), pinned only with `position: sticky` inside that box. A scroll
-  moment is scrubbed to the scrollbar (it runs back on the way up) and shows a finished state at both
-  ends; an enter moment (`picture-develops`) runs once, 1.6 to 1.8 s. Its text is live and visible without the motion (opacity 1,
-  4.5:1 at every step); reduced motion and no script show the finished still; phones run the light
-  ones (`word-highlight`, the film develop, `photo-chapters`: transform, clip, filter or colour, no
-  WebGL) and get the still of the rest; `perf.mjs` passes. It never moves a card, a
-  photograph, pricing, an FAQ, a quote block or the footer. Driven by native `animation-timeline`, a
-  passive scroll read written to a custom property once a frame, or GSAP ScrollTrigger scoped to that
-  section without its pin (tech only). No smooth-scroll library (Lenis, Locomotive, ScrollSmoother)
-  on any page, no animation library at all on other: the kit's moments need none.
-- The header and the phone bar look the same at every scroll position; the bar only comes up once
-  the hero's button has scrolled away and steps down while the screen shows one of its actions
-  (system.js, 240ms, at once under reduced motion).
+- **派发时刻所在区块（及 tech 页的大场景）之外，所有品类：**滚动不触发任何动画。
+没有任何卡片、行或方块的 reveal（淡入、升起、错落、遮罩擦除），
+没有视差或漂移，没有 scroll-snap、随滚动变色的底景、
+进度线、scroll-spy 标记或入视口计数。
+- **所有品类：**那一两个派发时刻可以跟随滚动，各自放在专属区块里（`data-moment`；
+tech 上大场景也算，`data-big-scene` 配 `{"hold": 1}`），
+区块保持 1H 或 2H 高（`scenes.md`，Its height 一节；`photo-chapters` 动态时为 3H 或 4H，
+每章约占三分之二屏，`moments.md`），只在该盒内用 `position: sticky` 钉住。
+滚动时刻被滚动条擦洗（向上滚会倒放），两端都呈现完成态；
+入场时刻（`picture-develops`）只播一次，1.6 到 1.8 秒。
+它的文字在无动效时也实时可见（opacity 1，每一步都保持 4.5:1）；
+reduced motion 与无脚本时显示成品静帧；
+手机跑轻量款（`word-highlight`、胶片显影、`photo-chapters`：只用 transform、clip、filter 或颜色，
+不用 WebGL），其余拿到静帧；`perf.mjs` 通过。
+它绝不移动卡片、照片、定价、FAQ、引述块或页脚。
+驱动方式用原生 `animation-timeline`、每帧把被动读取的滚动值写入自定义属性，
+或把 GSAP ScrollTrigger 限定在该区块且不用 pin（仅 tech）。
+任何页面都不用平滑滚动库（Lenis、Locomotive、ScrollSmoother），其他品类连动画库都不用：套件里的时刻不需要。
+- 头部与手机底栏在任何滚动位置都长一个样；
+底栏只在首屏按钮滚出屏幕后升起，屏幕停在它的某个动作上时又落下去
+（system.js，240ms，reduced motion 下即时切换）。
 
-## Reduced motion, no script, phones
+## Reduced motion、无脚本、手机
 
-Colours still change; menus fade; a press shows as a deeper tone instead of a move; the tab
-indicator and the switch knob jump to their place; the tick appears at full size; the underline
-appears without travelling (`motion.css`, reduced motion: `transition-property` limited to
-opacity and colours on links, `.m-tab-ind`, `.m-switch::before`, `.m-check::before`). The hero
-stands as written. Every loop, effect, moment and scene shows its finished frame, marquees stand as a still row, numbers show their final text, pause buttons are hidden. On a
-phone card loops and effects hold their finished picture or poster, heavy canvases become stills,
-there are no hover states and no pointer simulations; the hero still enters, and the moments light
-enough for a phone run there (`moments.md`, The still rule), so a phone page moves in two places too.
+颜色照常变化；菜单淡入淡出；按压表现为颜色加深而不是位移；
+标签页指示器与开关滑块直接跳到位；对勾以全尺寸出现；下划线直接出现、不滑动
+（`motion.css` 的 reduced motion 部分：链接、`.m-tab-ind`、`.m-switch::before`、
+`.m-check::before` 的 `transition-property` 只限 opacity 和颜色）。
+首屏按写好的样子静止。
+每个循环、效果、时刻和场景显示成品帧，走马灯停成一排静帧，数字显示最终文本，暂停按钮隐藏。
+手机上卡片循环与效果保持成品画面或海报帧，重型 canvas 变成静帧，
+没有悬停态、没有指针模拟；首屏仍然入场，
+足够轻的手机款时刻照常运行（`moments.md`，The still rule 一节），
+因此手机页面同样在两处动。
 
-## Never
+## 永不
 
-- A card, row or tile that reveals, staggers, slides or fades in as the page scrolls; parallax on
-  text; a scroll scrub outside the dealt moment's section (and the tech page's scene); a shader or
-  WebGL moment on a place, product or service page.
-- A section heading that rises on every section, a second hero entrance, an entrance longer than
-  about 1.1 s, or an entrance that hides text a visitor could already be reading.
-- A card that tilts, flips, scales, follows the pointer or glows at the cursor; a magnetic button.
-- A carousel, a slider that advances by itself, timed tabs, a rotating notice, a logo marquee.
-- Blinking at random: twinkling dots, glitter, flicker, hue cycling, scrambled text; every change
-  shows a state, a step or real data.
-- A loop that plays once (outside a card story's replay), a card loop's cycle over 4 s, two loops in
-  one panel.
-- A hover slower than its token, an overshooting ease, a delay before a button reacts, a focus ring
-  that animates, a second underline or indicator style, an animated width, height or margin.
+- 随页面滚动 reveal、错落、滑入或淡入的卡片、行或方块；文字视差；
+派发时刻区块（及 tech 页场景）之外的滚动擦洗；
+place、product、service 页面上的 shader 或 WebGL 时刻。
+- 每个区块标题都升起；第二次首屏入场；超过约 1.1 秒的入场；
+或把访客本已在读的文字藏起来的入场。
+- 倾斜、翻转、缩放、跟随指针或在光标处发光的卡片；磁吸按钮。
+- 轮播（carousel）、自动前进的滑块、定时切换的标签页、轮转公告、logo 走马灯。
+- 随机闪烁：闪烁圆点、亮片、频闪、色相循环、乱码文字；
+每次变化都必须呈现一个状态、一个步骤或真实数据。
+- 只播一次的循环（卡片故事的重放除外）；卡片循环周期超过 4 秒；
+一个面板里两个循环。
+- 比其 token 更慢的悬停；过冲缓动；按钮反应前的延迟；带动画的焦点环；
+第二种下划线或指示器样式；带动画的 width、height 或 margin。

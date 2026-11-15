@@ -1,33 +1,34 @@
-# vibe-team Protocol
+> **中文汉化版** · 上游：[foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills) · 原文件：`protocols/team.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-> **What this protocol does -- plain language overview**
+# vibe-team 协议
+
+> **本协议的作用（通俗概述）**
 >
-> This is the multi-agent orchestration protocol. It governs how VibeSkills
-> coordinates multiple AI agents working on large (XL-grade) tasks.
+> 这是多智能体编排协议。它规定 VibeSkills 如何协调多个 AI Agent，共同完成大型（XL 级）任务。
 >
-> You do not need to read this to use VibeSkills. It is reference material for
-> contributors and advanced users building on VibeSkills or investigating how
-> large tasks are coordinated internally.
+> 使用 VibeSkills 不需要读本文件。它是参考材料，面向在 VibeSkills 上构建的贡献者与高级用户，或想了解大型任务在内部如何协调的人。
 >
-> **Key terms used below:**
-> - **Root/Child lane**: One coordinator (root lane) and multiple workers (child lanes). Only root makes the final completion claim for the whole task.
-> - **Wave-sequential execution**: Large tasks are split into sequential "waves." Within a wave, independent sub-tasks may run in parallel.
-> - **Scatter-gather**: Fan-out (assign task variants to multiple agents in parallel) then fan-in (collect all results and synthesize one output).
-> - **Agent Skill work**: The current Agent follows an assigned skill (for example `tdd-guide` or `code-review`) while completing one bounded module. Vibe assigns and validates the work; it does not run the skill itself.
-> - **Dialectic mode**: A structured design analysis where two groups of agents argue different perspectives, then a coordinator synthesizes the best ideas from both.
-> - **ruflo**: An optional memory and workflow orchestration component for vector memory, session persistence, and formal consensus.
-> - **spawn_agent / send_input / wait / close_agent**: Internal XL orchestration API calls. Users do not call these directly.
+> **下文用到的关键术语：**
+> - **Root/Child lane（根通道/子通道）**：一个协调者（root lane）加多个工作者（child lanes）。只有 root 能对整个任务做出最终完成声明。
+> - **Wave-sequential execution（波次顺序执行）**：大任务拆分为顺序的"波次"（wave）。同一波次内，相互独立的子任务可以并行。
+> - **Scatter-gather（发散-汇聚）**：先扇出（把任务变体并行分派给多个 Agent），再扇入（收集全部结果并综合成一份输出）。
+> - **Agent Skill 工作**：当前 Agent 在完成一个有界模块时遵循被指派的 skill（例如 `tdd-guide` 或 `code-review`）。Vibe 负责指派并校验工作，它自己不运行 skill。
+> - **Dialectic mode（辩证模式）**：一种结构化设计分析，两组 Agent 分别从不同视角论证，随后由协调者综合双方的最优想法。
+> - **ruflo**：可选的记忆与工作流编排组件，提供向量记忆、会话持久化与正式共识。
+> - **spawn_agent / send_input / wait / close_agent**：内部 XL 编排 API 调用。用户不直接调用它们。
 
 
-Protocol for XL-grade multi-agent tasks requiring coordination.
+用于需要协调的 XL 级多智能体任务的协议。
 
-## Governed Runtime Position
+## 治理运行时定位
 
-This protocol describes how the current Agent may coordinate XL work after
-runtime stage 5 `plan_execute` emits `agent-execution-handoff.json`.
-It is not a separate user entrypoint.
+本协议描述在运行时第 5 阶段 `plan_execute` 发出 `agent-execution-handoff.json` 之后，
+当前 Agent 可以如何协调 XL 工作。
+它不是独立的用户入口。
 
-The fixed user-facing runtime path remains:
+固定的用户可见运行时路径保持不变：
 
 1. `skeleton_check`
 2. `deep_interview`
@@ -36,198 +37,196 @@ The fixed user-facing runtime path remains:
 5. `plan_execute`
 6. `phase_cleanup`
 
-This protocol only activates after the requirement and plan are already frozen.
-The active work contract is `module-work-plan.json -> agent-execution-handoff.json
--> module-execution.json`.
-`plan_execute` does not perform the assigned work. It hands the approved modules
-to the current Agent, which returns one complete `module-execution.json` through
-canonical `vibe` re-entry before `phase_cleanup` can begin.
+本协议只在需求与计划均已冻结之后激活。
+现行工作契约是 `module-work-plan.json -> agent-execution-handoff.json
+-> module-execution.json`。
+`plan_execute` 不执行被指派的工作。它把已批准的模块交给当前 Agent，
+后者通过规范 `vibe` 重入返回一份完整的 `module-execution.json`，然后 `phase_cleanup` 才能开始。
 
-subagent-driven-development is treated as an absorbed method here, not as a route-owning specialist. The decision to use child lanes belongs to `vibe.plan_execute` and must follow the frozen M/L/XL plan.
+subagent-driven-development 在这里被视为一种被吸收的方法，而不是拥有路由的专家。是否使用 child lane 由 `vibe.plan_execute` 决定，且必须遵循已冻结的 M/L/XL 计划。
 
-## Scope
-Activated for XL grade tasks that require:
-- Multi-agent coordination with dependency-aware waves
-- Step-level bounded parallelism for independent units (not blanket always-on concurrency)
-- Workflow-based execution with phases
-- Swarm or hive-mind coordination
-- Long-running iterative tasks
+## 适用范围
+在需要以下能力的 XL 级任务上激活：
+- 具备依赖感知波次的多智能体协调
+- 针对独立单元的步骤级有界并行（不是一刀切的常开并发）
+- 按阶段的工作流式执行
+- Swarm 或 hive-mind 协调
+- 长时间运行的迭代任务
 
-## Hybrid Architecture: Codex Native Team + ruflo Collaboration
+## 混合架构：Codex 原生团队 + ruflo 协作
 
-Codex native agent APIs manage lifecycle + task assignment (primary path).
-ruflo remains optional for workflow/memory enhancements.
+Codex 原生 Agent API 负责生命周期与任务指派（主路径）。
+ruflo 保持可选，用于工作流/记忆增强。
 
-All spawned subagent prompts must end with `$vibe` so the governed runtime remains the active contract inside delegated work.
+所有派生的子代理提示词必须以 `$vibe` 结尾，从而让治理运行时在被委派工作中始终是生效契约。
 
-## Root/Child Authority Model
+## Root/Child 权限模型
 
-XL delegation uses two governance scopes:
+XL 委派使用两个治理范围：
 
-- `root_governed`: one lane per user task; owns canonical requirement/plan truth and final completion claims
-- `child_governed`: delegated lane; inherits frozen context and emits local execution evidence
+- `root_governed`：每个用户任务一条通道；拥有规范的需求/计划真相与最终完成声明
+- `child_governed`：被委派的通道；继承冻结的上下文，并产出本地执行证据
 
-Child-governed lanes keep `vibe` discipline but are not new top-level governors.
+child-governed 通道保持 `vibe` 纪律，但不是新的顶层治理者。
 
-Runtime enforcement for child lanes:
+child lane 的运行时强制：
 
-- root emits a `delegation-envelope.json` before delegated child execution
-- child startup validates inherited requirement/plan truth against that envelope
-- child records delegation validation before starting the bounded unit
+- root 在被委派的子执行开始前发出 `delegation-envelope.json`
+- 子代理启动时对照该 envelope 校验继承的需求/计划真相
+- 子代理在开始有界单元之前记录委派校验
 
-Child-governed lanes must not:
+child-governed 通道不得：
 
-- create a second canonical requirement surface
-- create a second canonical execution-plan surface
-- emit final completion claims for the full root task
-- change the root-frozen `agent_skill_organization`
+- 创建第二个规范需求表面
+- 创建第二个规范执行计划表面
+- 为整个 root 任务发出最终完成声明
+- 更改 root 冻结的 `agent_skill_organization`
 
-## Agent Work Coordination Truth
+## Agent 工作协调事实
 
-- `L` work is completed serially by the current Agent; this protocol covers the XL coordination case.
-- `XL` execution is wave-sequential by dependency.
-- Parallel work in `XL` is step-scoped and bounded to independent units only.
-- The Agent-confirmed `agent_skill_organization` is frozen before XL planning; route candidates remain compatibility audit evidence rather than execution authority.
-- Module skill work is phase-bound: `pre_execution`, `in_execution`, `post_execution`, `verification`.
-- In `XL`, module work-unit lanes may join bounded parallel windows only when their write scopes are disjoint and their lane policy allows it.
+- `L` 工作由当前 Agent 串行完成；本协议覆盖的是 XL 协调场景。
+- `XL` 执行按依赖以波次顺序进行。
+- `XL` 中的并行工作以步骤为范围，且仅限于独立单元。
+- Agent 确认的 `agent_skill_organization` 在 XL 规划之前冻结；route 候选始终只是兼容性审计证据，而不是执行权威。
+- 模块 skill 工作绑定到阶段：`pre_execution`、`in_execution`、`post_execution`、`verification`。
+- 在 `XL` 中，模块工作单元通道只有在其写入范围互不相交且通道策略允许时才能进入有界并行窗口。
 
-### Role Division
+### 角色分工
 
-| Concern | Provider | Tool |
+| 关注点 | 提供方 | 工具 |
 |---------|----------|------|
-| Agent spawning | Codex native | `spawn_agent` |
-| Task assignment & follow-up | Codex native | `send_input` |
-| Agent synchronization | Codex native | `wait` |
-| Agent shutdown | Codex native | `close_agent` |
-| Workflow definition (optional) | ruflo | `workflow_create`, `workflow_execute` |
-| Vector memory (optional) | ruflo | `memory_store`, `memory_search` |
-| Session persistence (optional) | ruflo | `session_save`, `session_restore` |
-| Consensus algorithms (optional) | ruflo | `hive-mind_consensus` |
+| Agent 派生 | Codex 原生 | `spawn_agent` |
+| 任务指派与跟进 | Codex 原生 | `send_input` |
+| Agent 同步 | Codex 原生 | `wait` |
+| Agent 关闭 | Codex 原生 | `close_agent` |
+| 工作流定义（可选） | ruflo | `workflow_create`, `workflow_execute` |
+| 向量记忆（可选） | ruflo | `memory_store`, `memory_search` |
+| 会话持久化（可选） | ruflo | `session_save`, `session_restore` |
+| 共识算法（可选） | ruflo | `hive-mind_consensus` |
 
-## Anti-Drift Handoff Contract
+## 防漂移交契约
 
-Every XL subtask handoff should preserve:
+每次 XL 子任务移交都应保留：
 
-- the primary objective,
-- the declared scope,
-- the current completion-state target,
-- any report-only anti-drift warnings already known,
-- whether the work is a bounded specialization or a generalized capability claim.
+- 首要目标，
+- 声明的范围，
+- 当前的完成状态目标，
+- 任何已知的 report-only 防漂警告，
+- 该工作是有界的专门化，还是泛化能力声明。
 
-Lead-agent rules:
-- subagents may surface report-only warnings, but must not invent a new hard gate,
-- if an existing approved policy or failed gate truly blocks progress, cite that exact surface,
-- aggregation must not flatten bounded-specialization outputs into generalized completion claims.
-- when a Skill is assigned, preserve the relevant instructions from its `SKILL.md` instead of replacing them with generic lead-agent prose.
-- only root-governed aggregation may publish final completion claims for the full task.
+Lead Agent 规则：
+- 子代理可以提出 report-only 警告，但不得发明新的硬门禁，
+- 如果某个已批准策略或已失败门禁确实阻塞了进展，必须引用那个确切的表面，
+- 聚合不得把有界专门化的输出抹平成泛化完成声明。
+- 指派 Skill 时，保留其 `SKILL.md` 中的相关指令，而不是用泛泛的 lead Agent 文字替换它们。
+- 只有 root-governed 聚合可以发布整个任务的最终完成声明。
 
-## Agent Skill Work
+## Agent Skill 工作
 
-A selected Skill guides a bounded module. Vibe organizes the work and checks the
-returned result; it does not directly run the Skill.
+被选中的 Skill 指导一个有界模块。Vibe 组织工作并检查返回结果；它不直接运行 Skill。
 
-Read bounded work first:
+先读有界工作：
 
-- `agent_skill_organization` is the root-frozen task-skill truth
-- `module_assignments` is the validated work projection of that organization
-- `agent-execution-handoff.json` carries those root-approved work units to the current Agent
-- child lanes should inherit bounded work contracts, not improvise a second skill-selection story
+- `agent_skill_organization` 是 root 冻结的任务-skill 真相
+- `module_assignments` 是该组织经校验的工作投影
+- `agent-execution-handoff.json` 把这些 root 批准的工作单元带给当前 Agent
+- child lane 应继承有界工作契约，而不是即兴编造第二套 skill 选择叙事
 
-Rules:
+规则：
 
-- `vibe` keeps final control of stage order, plan authority, and completion claims
-- route candidates may be surfaced as compatibility audit evidence, but they never auto-promote into approved module work units
-- when module Skill work exists, `plan_execute` must emit one `agent-execution-handoff.json` naming each module, work-unit role, assigned Skill, and `skill_entrypoint`
-- the current Agent reads each assigned `SKILL.md` and completes its bounded work under the frozen requirement context
-- the Agent returns expected outputs, result summaries, failures, blocking reasons, and module states in one `module-execution.json`
-- each work unit also carries phase binding, lane policy, write scope, and review mode
-- lead aggregation may summarize module results, but must not erase Skill-specific verification notes
-- a new skill can enter execution only through a user-approved plan revision that freezes an updated `agent_skill_organization`
+- `vibe` 保持对阶段顺序、计划权威与完成声明的最终控制
+- route 候选可以作为兼容性审计证据呈现，但它们绝不会自动晋升为已批准的模块工作单元
+- 存在模块 Skill 工作时，`plan_execute` 必须发出一份 `agent-execution-handoff.json`，逐项写明每个模块、工作单元角色、被指派的 Skill 与 `skill_entrypoint`
+- 当前 Agent 读取每份被指派的 `SKILL.md`，在冻结的需求上下文下完成其有界工作
+- Agent 在一份 `module-execution.json` 中返回预期输出、结果摘要、失败、阻塞原因与模块状态
+- 每个工作单元还携带阶段绑定、通道策略、写入范围与审查模式
+- lead 聚合可以汇总模块结果，但不得抹掉 Skill 特定的验证记录
+- 新 skill 只能通过用户批准的计划修订进入执行，该修订冻结更新后的 `agent_skill_organization`
 
-Hierarchy-specific work semantics:
+层级特定的工作语义：
 
-- `agent-execution-handoff.json`: root-approved bounded work from `module_assignments`; child lanes may receive only those inherited units
-- `local_suggestion`: residual child-lane skill suggestion that remains audit or escalation evidence until root governance freezes an approved revision
+- `agent-execution-handoff.json`：来自 `module_assignments` 的 root 批准有界工作；child lane 只能接收这些继承单元
+- `local_suggestion`：child lane 残留的 skill 建议，在 root 治理冻结已批准修订之前，它始终只是审计或升级证据
 
-Escalation rule:
+升级规则：
 
-- child lanes needing a non-approved Skill must return an explicit escalation to root
-- no silent skill activation is allowed in child lanes
+- 需要未批准 Skill 的 child lane 必须向 root 返回一次显式升级
+- child lane 不允许静默激活 skill
 
-## Orchestration Options
+## 编排选项
 
-### Option A: Codex Native Team + ruflo Collaboration (Preferred)
-1. Define decomposition plan (owners + interfaces + deliverables)
-2. Spawn agents via `spawn_agent` with role-specific prompts
-3. Assign work and clarifications via `send_input`
-4. Store intermediate state via ruflo `memory_store` (milestone summaries, handoff artifacts)
-5. Use ruflo `workflow_create` / `workflow_execute` when explicit step orchestration is needed
-6. Synchronize via `wait` at each milestone
-7. Use ruflo `hive-mind_consensus` when formal consensus is required
-8. Aggregate and reconcile outputs in lead agent/context
-9. Close agents via `close_agent`
+### 选项 A：Codex 原生团队 + ruflo 协作（首选）
+1. 定义分解计划（负责人 + 接口 + 交付物）
+2. 通过 `spawn_agent` 用角色专属提示词派生 Agent
+3. 通过 `send_input` 指派工作与澄清
+4. 通过 ruflo `memory_store` 存储中间状态（里程碑摘要、移交产物）
+5. 需要显式步骤编排时使用 ruflo `workflow_create` / `workflow_execute`
+6. 在每个里程碑通过 `wait` 同步
+7. 需要正式共识时使用 ruflo `hive-mind_consensus`
+8. 在 lead Agent/上下文中聚合并对齐输出
+9. 通过 `close_agent` 关闭 Agent
 
-### Option B: Codex Native Team Only (When ruflo Unavailable)
-1. Run native lifecycle only: `spawn_agent` → `send_input` → `wait` → `close_agent`
-2. Use runtime-neutral state_store + conversation context for milestone state
-3. Keep the same staged confirmations and validation gates
+### 选项 B：仅用 Codex 原生团队（ruflo 不可用时）
+1. 只跑原生生命周期：`spawn_agent` → `send_input` → `wait` → `close_agent`
+2. 用运行时中立的 state_store + 会话上下文保存里程碑状态
+3. 保持同样的分阶段确认与验证门禁
 
-### Option C: Ralph-loop (Iterative Tasks)
-When task requires repeated iteration on same prompt:
-1. User explicitly invokes /ralph-loop
-2. Choose engine:
-   - `compat` (default): local state loop, manual `--next`, stable and low-dependency
-   - `open`: delegates to external open-ralph-wiggum CLI for auto-iteration
-3. Define completion promise (exit condition)
-4. Set max iterations (safety limit)
-5. For `open` engine, prefer no-commit mode during active loop and run VCO quality gates before any manual commit
+### 选项 C：Ralph-loop（迭代任务）
+当任务需要对同一提示词反复迭代时：
+1. 用户显式调用 /ralph-loop
+2. 选择引擎：
+   - `compat`（默认）：本地状态循环，手动 `--next`，稳定且低依赖
+   - `open`：委托外部 open-ralph-wiggum CLI 自动迭代
+3. 定义完成承诺（退出条件）
+4. 设置最大迭代次数（安全上限）
+5. 对 `open` 引擎，活动循环期间优先使用 no-commit 模式，并在任何手动提交之前运行 VCO 质量门禁
 
-IMPORTANT: Ralph-loop is MUTUALLY EXCLUSIVE with active team orchestration.
+重要：Ralph-loop 与活跃的团队编排互斥。
 
-## Agent Type Selection
+## Agent 类型选择
 
-| Role | Native Agent Type | Notes |
+| 角色 | 原生 Agent 类型 | 说明 |
 |------|-------------------|-------|
-| Researcher | `explorer` | Read/search-heavy investigation |
-| Planner | `default` | Planning + decomposition |
-| Implementer | `worker` | Implementation ownership with isolated scope |
-| Reviewer | `worker` or `default` | Review prompt enforces bug/risk-first output |
-| Security | `worker` or `default` | Security-focused prompt and checklist |
+| 研究者 | `explorer` | 以读取/搜索为主的调查 |
+| 规划者 | `default` | 计划 + 分解 |
+| 实现者 | `worker` | 拥有实现所有权且范围隔离 |
+| 审查者 | `worker` 或 `default` | 审查提示词强制先输出 bug/风险 |
+| 安全 | `worker` 或 `default` | 安全聚焦的提示词与检查清单 |
 
-## Team Templates
-See references/team-templates.md for predefined compositions:
+## 团队模板
+预定义组合见 references/team-templates.md：
 - feature-team, debug-team, research-team, review-team, full-stack-team
-- supervisor-scatter-gather (Agent-Squad-style Supervisor + Specialists)
+- supervisor-scatter-gather（Agent-Squad 风格的 Supervisor + Specialists）
 - dialectic-design
 
-If `local-vco-roles` is installed, you may also use:
-- local-vco-dialectic-review (Template 7)
-- Role prompts sourced from the installed skills root resolved from `CODEX_HOME` when set, otherwise the host default Codex home (commonly `~/.codex`)
+如果安装了 `local-vco-roles`，还可以使用：
+- local-vco-dialectic-review（模板 7）
+- 角色提示词来自已安装 skills 根目录：设置了 `CODEX_HOME` 时从其解析，否则用宿主默认 Codex home（通常为 `~/.codex`）
 
-## Supervisor-Style Dispatch Pattern (Agent-as-Tools)
+## Supervisor 式派发模式（Agent 即工具）
 
-Agent Squad's `SupervisorAgent` uses an "agent-as-tools" model: a lead agent fans out tasks in parallel, then fuses results with a bounded shared memory (`<agents_memory>`).
+Agent Squad 的 `SupervisorAgent` 采用"agent-as-tools"模型：lead Agent 并行扇出任务，然后用一个有界共享内存（`<agents_memory>`）融合结果。
 
-In VCO XL, the equivalent primitive is:
+在 VCO XL 中，等价原语是：
 
 ```
 spawn_agent × N → send_input (fan-out) → wait (fan-in) → close_agent
 ```
 
-### Scatter-Gather Fan-out/Fan-in (Agent Squad `send_messages`)
+### Scatter-Gather 扇出/扇入（Agent Squad `send_messages`）
 
-Agent Squad provides a single built-in tool (`send_messages`) that takes an array of `{recipient, content}` and executes the fan-out in parallel, then returns gathered responses.
+Agent Squad 提供一个内置工具（`send_messages`），接受 `{recipient, content}` 数组并并行执行扇出，然后返回汇聚的响应。
 
-In VCO XL, keep the same *contract shape*, but implement it with native team primitives:
-- **Fan-out**: `send_input` to each agent (one subtask per role/agent)
-- **Fan-in**: one `wait` barrier per milestone
-- **Gather**: Lead updates `<agents_memory>` once per milestone (not continuously)
+在 VCO XL 中，保持同样的*契约形状*，但用原生团队原语实现：
+- **扇出**：对每个 Agent 执行 `send_input`（每个角色/Agent 一个子任务）
+- **扇入**：每个里程碑一个 `wait` 屏障
+- **汇聚**：Lead 每个里程碑更新一次 `<agents_memory>`（而不是持续更新）
 
-Rule of thumb: **one milestone == one scatter-gather round**.
+经验法则：**一个里程碑 == 一轮 scatter-gather**。
 
-### Dispatch Envelope (Recommended)
+### 派发信封（推荐）
 
-When using `send_input`, wrap each subtask in a small envelope so that reliability + memory become mechanical (instead of ad-hoc).
+使用 `send_input` 时，把每个子任务包进一个小信封，让可靠性 + 记忆变成机械动作（而不是临时即兴）。
 
 ```yaml
 run_id: "{yyyy-mm-dd}#{short}"
@@ -243,15 +242,15 @@ memory:
   shared_key: "team/{run_id}/shared/agents_memory"
 ```
 
-Notes:
-- Keep `deliverable.sections` stable so Lead can aggregate quickly.
-- `private_key` is per-agent; `shared_key` is the only cross-agent memory.
+说明：
+- 保持 `deliverable.sections` 稳定，Lead 才能快速聚合。
+- `private_key` 是每个 Agent 私有的；`shared_key` 是唯一的跨 Agent 记忆。
 
-### Task Contract (Subtask Interface / DoD)
+### 任务契约（子任务接口 / DoD）
 
-The dispatch envelope is *transport*. The task contract is *correctness*.
+派发信封是*传输*。任务契约是*正确性*。
 
-Before fan-out, each subtask SHOULD include a compact contract so specialists do not drift or guess:
+扇出之前，每个子任务应当（SHOULD）包含一份紧凑契约，避免专家跑偏或瞎猜：
 
 ```yaml
 task_id: "T-1"
@@ -272,32 +271,32 @@ handoff_questions:
 status: "todo|doing|blocked|done"
 ```
 
-Contract rules:
-- Prefer `verification` that is command-shaped (copy/paste runnable).
-- If required info is missing, return `status=blocked` with `handoff_questions` (do not guess).
-- The same contract maps cleanly to the GSD wave contract (`entry_criteria`/`exit_criteria`/`verify_commands`).
-- If the subtask has an assigned Skill, keep the contract narrow enough that the child can follow that `SKILL.md` without improvising a new method.
+契约规则：
+- 优先选择命令形态的 `verification`（可直接复制粘贴运行）。
+- 缺少必要信息时，返回 `status=blocked` 并附 `handoff_questions`（不要瞎猜）。
+- 同一份契约可干净映射到 GSD 波次契约（`entry_criteria`/`exit_criteria`/`verify_commands`）。
+- 子任务已指派 Skill 时，契约要足够窄，让 child 能照着那份 `SKILL.md` 执行而无需即兴发明新方法。
 
-## Shared Memory Contract (3-Tier)
+## 共享内存契约（3 层）
 
-To keep XL coordination coherent while avoiding context bloat, treat memory as three tiers:
+为了让 XL 协调保持连贯同时避免上下文膨胀，把记忆分为三层：
 
-1. **User ↔ Lead memory**: the main conversation (source of truth for user intent + decisions).
-2. **Lead ↔ Agent private memory**: per-agent working notes (NOT broadcast by default).
-3. **Shared agents memory**: a bounded, continuously refreshed "what we know so far" block owned by Lead.
+1. **User ↔ Lead 记忆**：主对话（用户意图 + 决策的真相来源）。
+2. **Lead ↔ Agent 私有记忆**：每个 Agent 的工作笔记（默认不广播）。
+3. **共享 Agent 记忆**：由 Lead 拥有的有界、持续刷新的"目前已知信息"块。
 
-Mapping to Agent Squad terminology:
-- **User ↔ Lead memory** ≈ User-Supervisor Memory
-- **Lead ↔ Agent private memory** ≈ Supervisor-Team Memory
-- **Shared agents memory** ≈ Combined Memory (`<agents_memory>`)
+对应到 Agent Squad 术语：
+- **User ↔ Lead 记忆** ≈ User-Supervisor Memory
+- **Lead ↔ Agent 私有记忆** ≈ Supervisor-Team Memory
+- **共享 Agent 记忆** ≈ Combined Memory（`<agents_memory>`）
 
-Bounded history rule (pair-safe):
-- Cap per-agent private history (e.g., last 10–20 message pairs).
-- When trimming, preserve complete user/assistant pairs (avoid orphan half-turns).
+有界历史规则（成对安全）：
+- 限制每个 Agent 的私有历史上限（例如最近 10–20 对消息）。
+- 裁剪时保留完整的 user/assistant 消息对（避免出现孤儿半轮）。
 
-### Shared Memory Format (Supervisor-style)
+### 共享内存格式（Supervisor 式）
 
-Lead maintains a rolling block (in conversation context, or via ruflo `memory_store` when available):
+Lead 维护一个滚动块（放在会话上下文中，可用时也可通过 ruflo `memory_store`）：
 
 ```text
 <agents_memory>
@@ -309,121 +308,121 @@ Lead maintains a rolling block (in conversation context, or via ruflo `memory_st
 </agents_memory>
 ```
 
-Rules:
-- Update only at milestone boundaries (after `wait`), not on every message.
-- Prefer facts + artifacts over prose. Link to file paths or commands when applicable.
-- Hard cap: if it grows beyond what can fit comfortably in-context, summarize and overwrite (do not append forever).
+规则：
+- 只在里程碑边界（`wait` 之后）更新，不是每条消息都更新。
+- 优先事实 + 产物，少写散文。适用时链接到文件路径或命令。
+- 硬上限：一旦增长到上下文里放不下，就摘要并覆盖（不要无限追加）。
 
-## Reliability & Failure Handling (Timeout + Retry Budget)
+## 可靠性与失败处理（超时 + 重试预算）
 
-Borrowing from Agent Squad's orchestration patterns (bounded history, explicit error messages), XL teams should treat failures as first-class:
+借鉴 Agent Squad 的编排模式（有界历史、显式错误信息），XL 团队应把失败当作一等公民：
 
-1. **Timeout**
-   - If an agent misses its `deadline_minutes`, send one reminder via `send_input`.
-   - If still no response: proceed with partial results and record the missing deliverable in `<agents_memory>`.
+1. **超时**
+   - 某个 Agent 错过 `deadline_minutes` 时，通过 `send_input` 发送一次提醒。
+   - 仍无响应：带着部分结果继续，并在 `<agents_memory>` 中记录缺失的交付物。
 
-2. **Retry**
-   - Respect `retry_budget`. A retry must change *something* (prompt constraint, narrower scope, more context, or a different role).
-   - If retry budget is exhausted: either degrade scope or respawn a replacement agent with a simplified task, but only with an explicit hazard alert and a non-authoritative status.
+2. **重试**
+   - 遵守 `retry_budget`。每次重试必须改变*某些东西*（提示词约束、更窄的范围、更多上下文，或换一个角色）。
+   - 重试预算耗尽时：要么缩小范围，要么用简化任务重生一个替补 Agent，但必须伴随显式 hazard alert，并把状态标记为 non-authoritative。
 
-3. **Contradiction**
-   - When two agents disagree, Lead runs V2/V6: demand concrete evidence (file path, log line, command output) before choosing.
+3. **矛盾**
+   - 两个 Agent 意见相左时，Lead 执行 V2/V6：先要求具体证据（文件路径、日志行、命令输出），再做选择。
 
-4. **Degraded Mode**
-   - If multiple agents fail or outputs are low-quality, do not silently fall back to Option B (native only). Any degraded path must emit a standalone hazard alert, reduce parallelism deliberately, and mark the result non-authoritative until the primary path is restored.
+4. **降级模式**
+   - 多个 Agent 失败或输出质量低时，不得静默回退到选项 B（仅原生）。任何降级路径都必须发出独立的 hazard alert，有意降低并行度，并在主路径恢复之前把结果标记为 non-authoritative。
 
-## Staged Confirmation
-Always confirm with user at these points:
-1. After workflow definition (before spawning agents)
-2. After each major phase completion
-3. Before final integration of results
-4. Before committing changes
+## 分阶段确认
+在以下节点必须与用户确认：
+1. 工作流定义之后（派生 Agent 之前）
+2. 每个主要阶段完成之后
+3. 结果最终集成之前
+4. 提交变更之前
 
-Mode-aware interpretation:
-- `interactive_governed`: the four confirmation points above remain user-visible by default
+模式感知的解释：
+- `interactive_governed`：上述四个确认点默认保持用户可见
 
-## GSD-Lite Wave Contract Hook (Optional)
+## GSD-Lite 波次契约钩子（可选）
 
-Policy source: `config/gsd-overlay.json`
+策略来源：`config/gsd-overlay.json`
 
-When `enabled=true`, `mode != off`, and `wave_contract.enabled=true`, apply this hook as orchestration metadata only.
+当 `enabled=true`、`mode != off` 且 `wave_contract.enabled=true` 时应用此钩子，但仅作为编排元数据。
 
-Activation:
-- XL planning: enabled by default
-- XL coding: enabled when the lead expects dependency-sensitive multi-wave execution
-- If `wave_contract.xl_only=true`, never run for M/L
+激活条件：
+- XL 规划：默认启用
+- XL 编码：lead 预期会出现依赖敏感的多波次执行时启用
+- 若 `wave_contract.xl_only=true`，M/L 绝不运行
 
-Contract output:
-- Generate `waves.json` (or configured artifact) with:
+契约输出：
+- 生成 `waves.json`（或配置的产物），包含：
   - `wave_id`
-  - `units` (task ids / owners)
+  - `units`（任务 id / 负责人）
   - `depends_on`
   - `entry_criteria`
   - `exit_criteria`
   - `verify_commands`
 
-Execution semantics:
-1. Independent units may run in bounded parallel within a wave.
-2. Waves run sequentially by dependency.
-3. Verification gates must pass before advancing to next wave.
-4. This contract does not alter grade/task assignment.
+执行语义：
+1. 同一波次内，独立单元可以在有界并行中运行。
+2. 波次按依赖顺序执行。
+3. 验证门禁必须全部通过才能进入下一波次。
+4. 此契约不改变级别/任务指派。
 
-Failure semantics:
-- If wave contract generation fails or is incomplete, do not silently fall back to standard Option A/B orchestration. If a degraded path is used, emit a standalone hazard alert and record that the resulting execution is non-authoritative.
-- Do not block the entire XL flow unless strict policy explicitly requires a regenerated contract.
+失败语义：
+- 波次契约生成失败或不完整时，不得静默回退到标准选项 A/B 编排。若使用了降级路径，必须发出独立的 hazard alert，并记录由此产生的执行为 non-authoritative。
+- 除非 strict 策略明确要求重新生成契约，否则不要阻塞整个 XL 流程。
 
-## Quality Injection: Enhanced Tier (XL Default)
+## 质量注入：增强层（XL 默认）
 
-In addition to Core Tier (P5, V2, V7 + task-type-specific from vibe-do):
+在核心层（P5、V2、V7 + 来自 vibe-do 的任务类型专属模式）之外：
 
-### Additional Enhanced Patterns
-- **P2**: Effort Allocation. 验证阶段的投入应与执行阶段相当，不可跳过。顺序：理解 → 规划 → 执行 → 验证，每阶段都应有明确产出。
-- **P6**: PDCA Cycle. Plan -> Do -> Check -> Act. Never retry without understanding WHY it failed.
-- **V4**: Red Flags Self-Check. REJECT: "Quick fix for now", "Just try changing X", "Might work".
-- **V5**: Rationalization Blocker. "Should work now" -> demand verification. "I am confident" -> confidence != evidence.
-- **V6**: Agent Trust-But-Verify. After agent returns: check VCS diff independently, run verification, compare claim vs evidence.
+### 附加增强模式
+- **P2**：投入分配。验证阶段的投入应与执行阶段相当，不可跳过。顺序：理解 → 规划 → 执行 → 验证，每阶段都应有明确产出。
+- **P6**：PDCA 循环。Plan -> Do -> Check -> Act。不理解为何失败就绝不重试。
+- **V4**：危险信号自查。拒绝："先临时修一下"、"试试改改 X"、"也许能行"。
+- **V5**：合理化阻断。"现在应该能行" -> 要求验证。"我有信心" -> 信心 != 证据。
+- **V6**：Agent 信任但要验证。Agent 返回后：独立检查 VCS diff，运行验证，对比声明与证据。
 
-### XL Injection Matrix
+### XL 注入矩阵
 
-| Task Type | Pre-Injection | Post-Validation |
+| 任务类型 | 注入前 | 验证后 |
 |-----------|--------------|-----------------|
-| Planning | P3, P5, P6 | V2, V5, V6, V7 |
-| Coding | P5, P6 | V2, V3, V5, V6, V7 |
-| Review | P3, P5 | V2, V5, V6, V7 |
-| Debug | P1, P4, P5, P6 | V2, V4, V5, V6, V7 |
-| Research | P2, P3, P5, P6 | V1, V2, V5, V6, V7 |
+| 计划 | P3, P5, P6 | V2, V5, V6, V7 |
+| 编码 | P5, P6 | V2, V3, V5, V6, V7 |
+| 审查 | P3, P5 | V2, V5, V6, V7 |
+| 调试 | P1, P4, P5, P6 | V2, V4, V5, V6, V7 |
+| 研究 | P2, P3, P5, P6 | V1, V2, V5, V6, V7 |
 
-## Dialectic Mode
+## 辩证模式
 
-Structured multi-perspective design analysis. Activated only when user explicitly requests dialectic think-tank mode (`dialectic_team_requested = true`).
+结构化多视角设计分析。仅在用户显式请求辩证智囊团模式时激活（`dialectic_team_requested = true`）。
 
-### When to Use
+### 适用场景
 
-- Multiple viable architectural approaches with unclear trade-offs
-- High-stakes design decisions where blind spots are costly
-- User explicitly requests "使用辩证智囊团", "启用辩证智囊团", "`$vibe dialectic`", or "dialectic-design"
+- 存在多个可行的架构方案但权衡不明
+- 盲区代价高昂的高风险设计决策
+- 用户显式请求"使用辩证智囊团"、"启用辩证智囊团"、"`$vibe dialectic`" 或 "dialectic-design"
 
-### Not For
+### 不适用场景
 
-- Implementation tasks (use standard coding flow)
-- Single correct answer questions (use sc:research)
-- Trivial design choices (use think.md B2 Self-Check instead)
-- Debugging (use debug-team template)
+- 实现任务（用标准编码流程）
+- 单一正确答案的问题（用 sc:research）
+- 琐碎设计选择（改用 think.md B2 Self-Check）
+- 调试（用 debug-team 模板）
 
-### XL Execution (Codex Native Team)
+### XL 执行（Codex 原生团队）
 
-Uses dialectic-design template from team-templates.md.
+使用 team-templates.md 中的 dialectic-design 模板。
 
-**Step 1 — Prepare context**
-Lead reads relevant code/docs, formulates the design question, selects perspective pair from team-templates.md Perspective Assignment table.
+**Step 1 — 准备上下文**
+Lead 阅读相关代码/文档，拟定设计问题，并从 team-templates.md 的 Perspective Assignment 表中选择视角配对。
 
-**Step 2 — Create team**
+**Step 2 — 创建团队**
 ```
 spawn_agent × 4: one per thinker agent
 ```
 
-**Step 3 — Send role prompt template**
-Each agent receives this prompt (Lead fills `{placeholders}`):
+**Step 3 — 发送角色提示词模板**
+每个 Agent 收到这段提示词（`{placeholders}` 由 Lead 填写）：
 
 ```
 你是 {role} ({group} 组)。
@@ -448,29 +447,29 @@ Each agent receives this prompt (Lead fills `{placeholders}`):
 - 从伙伴方案吸收的要素
 ```
 
-**Step 4 — Context isolation**
-Group A receives context slice emphasizing perspective A's concerns.
-Group B receives context slice emphasizing perspective B's concerns.
-Groups do NOT share context or communicate cross-group.
+**Step 4 — 上下文隔离**
+A 组收到强调视角 A 关注点的上下文切片。
+B 组收到强调视角 B 关注点的上下文切片。
+两组不共享上下文，也不跨组通信。
 
-**Memory note (keep isolation real)**
-- Do NOT maintain a single shared `<agents_memory>` while groups are executing.
-- If you need rollups, keep **two separate blocks** (Group A only / Group B only) owned by Lead, and merge only after Step 6.
+**记忆注意事项（保持隔离真实）**
+- 两组执行期间不要维护单一的共享 `<agents_memory>`。
+- 如果需要汇总，由 Lead 维护**两个独立块**（仅 A 组 / 仅 B 组），并且只在 Step 6 之后合并。
 
-**Step 5 — Execute**
-4 agents run 6-phase workflow. Intra-group communication via `send_input` (A1↔A2, B1↔B2). Max 1 round.
+**Step 5 — 执行**
+4 个 Agent 运行 6 阶段工作流。组内通信通过 `send_input`（A1↔A2、B1↔B2）。最多 1 轮。
 
-**Step 6 — Collect**
-Lead waits for 4 Phase-6 outputs.
+**Step 6 — 收集**
+Lead 等待 4 份 Phase-6 输出。
 
-**Step 7 — Timeout handling**
-If any agent does not respond within reasonable time:
-- Send reminder via `send_input`
-- If still no response: proceed with available outputs (minimum 2 from different groups)
-- If <2 outputs: abort dialectic, fall back to think.md B2 Self-Check
+**Step 7 — 超时处理**
+任一 Agent 在合理时间内未响应时：
+- 通过 `send_input` 发送提醒
+- 仍无响应：用现有输出继续（至少 2 份，且来自不同组）
+- 不足 2 份：中止辩证，回退到 think.md B2 Self-Check
 
-**Step 8 — Output processing**
-Lead analyzes 4 final syntheses:
+**Step 8 — 输出处理**
+Lead 分析 4 份最终综合：
 
 ```
 1. Extract consensus: 所有方案一致同意的决策点
@@ -483,18 +482,18 @@ Lead analyzes 4 final syntheses:
    - 风险清单（含 blind spot 来源标注）
 ```
 
-**Step 9 — User decision**
-Present synthesis to user. User may:
-- Accept synthesis as-is → proceed to implementation
-- Choose one group's approach → proceed with that direction
-- Request deeper analysis on specific divergence point
+**Step 9 — 用户决策**
+把综合结果呈现给用户。用户可以：
+- 原样接受综合方案 → 进入实现
+- 选择某一组的方案 → 沿该方向推进
+- 就某个具体分歧点要求更深入分析
 
-**Step 10 — Shutdown**
-Close all 4 agents via `close_agent`.
+**Step 10 — 关闭**
+通过 `close_agent` 关闭全部 4 个 Agent。
 
-### L-Grade Adaptation
+### L 级适配
 
-L grade does not use XL team orchestration. Use 2 host agents sequentially:
+L 级不使用 XL 团队编排。顺序使用 2 个宿主 Agent：
 
 ```
 1. Agent-A: spawn_agent(agent_type="default" or "worker", prompt="{question} 从 {perspective_A} 视角分析")
@@ -502,23 +501,23 @@ L grade does not use XL team orchestration. Use 2 host agents sequentially:
 3. Lead synthesizes both outputs using the same output processing algorithm (Step 8)
 ```
 
-Limitations vs XL: no intra-group dialogue (only 1 agent per perspective), no Phase 3-5 refinement. Suitable for moderate-complexity design decisions.
+相比 XL 的局限：没有组内对话（每个视角仅 1 个 Agent），没有 Phase 3-5 精炼。适合中等复杂度的设计决策。
 
-### Integration with think.md
+### 与 think.md 的集成
 
-- If `dialectic_team_requested = true` AND grade = L/XL → skip think.md B2 Self-Check, use Dialectic Mode instead
-- If `dialectic_team_requested = true` AND grade = M → use think.md B2 Self-Check (team dialectic is overkill for M)
-- Dialectic Mode output feeds into `vibe.xl_plan` as the design foundation
+- 若 `dialectic_team_requested = true` 且级别 = L/XL → 跳过 think.md B2 Self-Check，改用辩证模式
+- 若 `dialectic_team_requested = true` 且级别 = M → 使用 think.md B2 Self-Check（团队辩证对 M 级是杀鸡用牛刀）
+- 辩证模式输出作为设计基础汇入 `vibe.xl_plan`
 
-## Conflict Avoidance
-- Do NOT use Everything-CC agents as the primary XL executor (use Codex native team)
-- Do NOT use Superpowers subagent-driven-dev for XL tasks
-- Ralph-loop and active team orchestration are mutually exclusive
-- Only one team active per project at a time
-- Prefer native agent communication via `send_input`
-- Do NOT bypass canonical re-entry; XL work must return a complete `module-execution.json` before `phase_cleanup`
+## 冲突规避
+- 不要把 Everything-CC agents 当作 XL 主执行者（用 Codex 原生团队）
+- XL 任务不要用 Superpowers subagent-driven-dev
+- Ralph-loop 与活跃的团队编排互斥
+- 每个项目同一时间只允许一个团队活跃
+- Agent 间通信优先用 `send_input`
+- 不要绕过规范重入；XL 工作必须在 `phase_cleanup` 之前返回完整的 `module-execution.json`
 
-## BrowserOps / DesktopOps Governance Hooks
+## BrowserOps / DesktopOps 治理钩子
 
 在 Wave24–30 之后，XL 团队执行涉及真实浏览器或 open-world GUI 任务时，必须额外遵守以下边界：
 
@@ -534,7 +533,7 @@ Limitations vs XL: no intra-group dialogue (only 1 agent per perspective), no Ph
 - `docs/governance/cross-plane-conflict-governance.md`
 - `docs/promotion-board-governance.md`
 
-## Wave19-30 Specialist Roles
+## Wave19-30 专项角色
 
 在 XL 多智能体执行中，Wave19-30 新增以下"治理型角色"，它们提供建议与验证，不接管 VCO 总编排：
 

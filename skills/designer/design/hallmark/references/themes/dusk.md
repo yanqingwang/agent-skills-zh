@@ -12,11 +12,15 @@ photo: natural con=4 vib=6
 pictured: Narrative Workflow, Stage hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/dusk.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Dusk
 
-Money software at the calm end of the day: a real photograph of land at dusk behind the hero, the head set dark on its palest part, the product beside it in smoked glass. Below, the page turns to slate and light surfaces are bone wells. It reads as expensive and unhurried, never a neon trading screen or a dashboard of tiles.
+一天将尽时分的资金软件：Hero 背后是一张真实的暮色大地照片，标题以深色压在照片最亮的部分，产品在旁边以烟熏玻璃呈现。往下，页面转入板岩色，浅色表面是骨白色内嵌面板。它读起来贵气而不慌不忙，绝不是霓虹交易屏，也不是方块瓷砖仪表盘。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -37,58 +41,58 @@ Money software at the calm end of the day: a real photograph of land at dusk beh
 }
 ```
 
-Three dials, each stated in the stamp (`dusk: fog/periwinkle-apricot/glass`); two Dusk pages in one run differ on two.
+三个拨盘，各自写入 stamp（印记）：`dusk: fog/periwinkle-apricot/glass`；同一次运行中的两个 Dusk 页面在其中两处不同。
 
-| Dial | Options |
+| 拨盘 | 选项 |
 | --- | --- |
-| **Hour** (the hero photograph) | `fog` (default): a valley of fog under an apricot sky. `shore`: water at dusk, boats or a quay. `ridge`: mountain ridges in haze at first light |
-| **Signals** (matched, then open) | `periwinkle-apricot` (default). `sage-apricot`: `oklch(80% 0.07 160)` as the first signal |
-| **Product surface** | `glass` (default): smoked glass on slate. `well`: bone wells carry the hero product too, glass only over photographs |
+| **钟点**（Hero 照片） | `fog`（默认）：杏色天空下的雾谷。`shore`：暮色水面，小船或码头。`ridge`：破晓薄雾中的山脊 |
+| **信号色**（先成对，后开放） | `periwinkle-apricot`（默认）。`sage-apricot`：以 `oklch(80% 0.07 160)` 作第一信号色 |
+| **产品表面** | `glass`（默认）：板岩上的烟熏玻璃。`well`：骨白内嵌面板也承载 Hero 产品，玻璃只出现在照片之上 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Wix Madefor Display 500, `--tracking-display`, line-height 1.02 to 1.1, sentence case. Heads stay modest; the photograph and the product are the loud parts.
-- **Body:** Wix Madefor Text 400 and 500 at 17px, line-height 1.55; leads in `--color-ink-2` or `--color-muted`.
-- **Figures:** the same faces, `tabular-nums`; cents in `--color-muted` at the same size, never raised. A figure set as a statement goes to Display 500 at 34 to 44px with its cents at 0.6em.
-- **Labels, column heads, status:** Text 500 a step smaller, sentence case, `--color-muted`. Never mono, never tracked capitals.
+- **展示字体：**Wix Madefor Display 500，`--tracking-display`，行高 1.02 至 1.1，句首大写。标题保持克制；照片与产品才是响亮的部分。
+- **正文：**Wix Madefor Text 400 与 500，17px，行高 1.55；导语用 `--color-ink-2` 或 `--color-muted`。
+- **数字：**同样的字体，`tabular-nums`；分位（cents）用 `--color-muted`、同字号，绝不上标。排成陈述的数字用 Display 500，34 至 44px，分位取 0.6em。
+- **标签、列头、状态：**Text 500，小一号，句首大写，用 `--color-muted`。绝不用等宽字体，绝不用加字距的大写。
 
-## Surfaces
+## 表面（Surfaces）
 
-- **The hour:** a library photograph of land at the turn of the light fills the hero, the head in `--color-day-ink` on its palest part over a fog scrim (`--color-fog` at 40 to 78%, radial, behind the text only), the product in glass on its darker side, the foot fading to `--color-paper`. A second photograph of the same hour may close the page behind the form; two at most.
-- **Glass:** the product's surface, `--glass` blurred, `--glass-hi` for the lit edge, `--shadow-card`. Rows inside split on `--color-light` at 7%; inner parts sit on it at 4 to 6% with `--radius-inner`.
-- **Wells:** a light surface is a bone well at 5:4 holding one white `--color-card`; the caption sits under it, a title and one muted line.
-- **Slate:** every band below the hero is `--color-paper`; the nav turns to slate glass once it leaves the photograph.
+- **钟点：**一张暮色转换时分的图库大地照片铺满 Hero，标题用 `--color-day-ink` 压在照片最亮处，文字之下只垫雾面蒙版（`--color-fog` 取 40 至 78%，径向），产品以玻璃质感放在照片较暗一侧，页脚淡出到 `--color-paper`。同一钟点的第二张照片可以在表单背后收尾页面；至多两张。
+- **玻璃：**产品表面，`--glass` 加模糊，`--glass-hi` 作受光边缘，`--shadow-card` 投影。内部行以 7% 的 `--color-light` 分隔；内部部件以 4 至 6% 叠在其上，圆角 `--radius-inner`。
+- **内嵌面板：**浅色表面是一块 5:4 的骨白内嵌面板，承载一张白色 `--color-card`；图注放在其下，一个标题加一行弱化文字。
+- **板岩：**Hero 之下每条色带都是 `--color-paper`；导航一旦离开照片就转为板岩色玻璃。
 
-## Range
+## 版式（Range）
 
-- **A run as an account list:** accounts with a round initial, line counts in muted, a status word with its icon, balances right-aligned with muted cents; the open item closes the list as an apricot strip with its action.
-- **A tour as a list beside one pane:** four jobs in a ruled list, the chosen one marked by a periwinkle dot and opened to one line, one glass pane beside it that changes with it.
-- **A month as a strip of nights:** one slim rounded bar a day in periwinkle, its height the work done, a flagged day marked by an apricot dot above its bar, the open day in apricot, days still to come hatched; a ruled tally of four figures under it.
-- **A hand-off in a well:** the note or message the product sends, set as the real card on bone.
+- **一次运行排成账户列表：**账户带圆形首字母，行数用弱化色，状态词配图标，余额右对齐、分位弱化；待办项以杏色横条收尾列表，带它的操作按钮。
+- **导览排成列表加单窗格：**四项任务排成划线列表，选中项以长春花色圆点标记并展开一行，旁边一个玻璃窗格随之切换。
+- **一个月排成夜晚条带：**每天一条细圆角条，长春花色，高度即完成的工作量；被标记的日子在其条上方加一颗杏色圆点，打开的一天用杏色，未到的日子画斜线阴影；下方一条划线合计，含四个数字。
+- **交接放进内嵌面板：**产品发出的便签或消息，排成骨白底上的那张真实卡片。
 
-## Controls
+## 控件（Controls）
 
-- One periwinkle pill (`--color-accent` under `--color-accent-ink`, a light inset top edge); hover lifts to `--color-accent-hi` with a soft periwinkle ring. A ghost pill beside it in `--color-light` at 4%.
-- An email field and its button share one pill: frosted fog over a photograph, smoked glass on slate.
-- Tabs are a ruled list with a dot, never boxed segments. Switches are periwinkle when on.
-- Two signals, two jobs: periwinkle is done, matched, on and focused; apricot is open, waiting or owed. Neither is ever a large fill.
+- 一枚长春花色胶囊（`--color-accent` 底、`--color-accent-ink` 字，顶部一条浅色内嵌高光边）；悬停提亮为 `--color-accent-hi`，加柔和长春花色描边环。旁边一枚幽灵胶囊，`--color-light` 取 4%。
+- 邮箱输入框与它的按钮合用一个胶囊：照片上为磨砂雾面，板岩上为烟熏玻璃。
+- 标签页是带圆点的划线列表，绝不是分格盒。开关开启时为长春花色。
+- 两种信号色，两种职责：长春花色表示已完成、已对平、开启与聚焦；杏色表示待办、等待或欠付。两者都不作大面积填充。
 
-## Motion
+## 动效（Motion）
 
-The hero photograph drifts 6% over 48 seconds; the product's rows rise in once, staggered; the open dot breathes; panes cross-fade; bars grow from their feet when seen. Reduced motion: all still.
+Hero 照片在 48 秒内漂移 6%；产品的行错峰上升一次；打开状态的圆点呼吸；窗格交叉淡切；条带被看到时从底部生长。减弱动效：全部静止。
 
-## Voice
+## 语气（Voice）
 
-Calm and exact: what ran, when, what is left.
+平静而精确：跑了什么、何时、还剩什么。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a drawn or generated sky, and never text on the busy part of a photograph.
-- Never a gradient button, a third signal colour or a red debit.
-- Never a grid of stat tiles; figures live in rows, lists and one ruled tally.
-- Never glass on glass, never a glow behind glass, never glass without its lit edge.
+- 绝不用手绘或生成的天空，文字也绝不压在照片繁杂的部分。
+- 绝不用渐变按钮、第三种信号色或红色的借记。
+- 绝不用统计瓦片网格；数字活在行、列表与那条划线合计里。
+- 玻璃绝不叠玻璃，玻璃背后绝无辉光，玻璃绝不能没有受光边缘。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600&family=Wix+Madefor+Text:wght@400;500;600&display=swap" rel="stylesheet">

@@ -1,30 +1,34 @@
-# Skill Benchmark: nvidia-skill-finder
+> **中文汉化版** · 上游：[NVIDIA/skills](https://github.com/NVIDIA/skills) · 原文件：`plugins/nvidia-skills/skills/nvidia-skill-finder/BENCHMARK.md` · License: CC-BY-4.0 AND Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-> ✅ **Overall verdict: PASS — Recommended for publication**
+# Skill 评测基准：nvidia-skill-finder
 
-## Publication Recommendation
+> ✅ **总体结论：PASS（建议发布）**
 
-Recommended for publication based on the completed evaluation evidence in this report.
+## 发布建议
 
-## Evaluation Metadata
+基于本报告已完成的评测证据，建议发布。
 
-- Skill: `nvidia-skill-finder`
-- Validation status: `passed`
-- Evaluation date: 2026-11-10
-- Evaluator version: `1.6.9`
-- Agents: Claude Code (`aws/anthropic/bedrock-claude-opus-5-5`), Codex (`openai/openai/gpt-6.1-sol`)
-- Tasks: 18 evaluation tasks (13 positive, 5 negative)
-- Dataset digest: `sha256:75b2b97f4c0057ea5bbadcfcd92d5561919ce56e7f03a93f629cb8bdd8f01281` (skill-evaluator-dataset-snapshot/1)
-- Attempts per task: 1
-- Environment: `k8s-sandbox`
-- Tier 2 evidence: required for publication
-- Tier 3 evidence: required for publication
+## 评测元数据
 
-Each task attempt ran in its own isolated sandbox pod.
+- Skill：`nvidia-skill-finder`
+- 校验状态：`passed`
+- 评测日期：2026-11-10
+- 评测器版本：`1.6.9`
+- Agent：Claude Code（`aws/anthropic/bedrock-claude-opus-5-5`）、Codex（`openai/openai/gpt-6.1-sol`）
+- 任务：18 个评测任务（13 个正向，5 个负向）
+- 数据集摘要：`sha256:75b2b97f4c0057ea5bbadcfcd92d5561919ce56e7f03a93f629cb8bdd8f01281`（skill-evaluator-dataset-snapshot/1）
+- 每任务尝试次数：1
+- 环境：`k8s-sandbox`
+- Tier 2 证据：发布必需
+- Tier 3 证据：发布必需
 
-## Tier 1 LLM Provenance
+每次任务尝试都在各自隔离的 sandbox pod 中运行。
 
-SkillSpector provider, model, analyzer revision, and determinism evidence retained for this scan.
+## Tier 1 LLM 溯源
+
+本次扫描保留了 SkillSpector 的 provider、模型、分析器版本与确定性证据。
 
 | Skill | Provider | Adapter | Analyzer | Model | Revision | Determinism |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -34,53 +38,53 @@ SkillSpector provider, model, analyzer revision, and determinism evidence retain
 | nvidia-skill-finder | nv_inference | openai | semantic_security_discovery | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.4` | nondeterministic / provider_defaults |
 | nvidia-skill-finder | nv_inference | openai | meta_analyzer | `aws/anthropic/bedrock-claude-opus-5-5` | `2.13.4` | nondeterministic / provider_defaults |
 
-- Controls for `nvidia-skill-finder`: temperature=not set (source=provider_default, forwarded=no); seed=not set (source=unset, forwarded=no); reasoning_effort=not set (source=provider_default, forwarded=no)
+- `nvidia-skill-finder` 的控制参数：temperature=未设置（source=provider_default，forwarded=no）；seed=未设置（source=unset，forwarded=no）；reasoning_effort=未设置（source=provider_default，forwarded=no）
 
-## What This Report Answers
+## 本报告回答什么
 
-The three-tier evaluation checks whether the skill:
+三层评测检查该 Skill 是否：
 
-- is safe to use;
-- produces correct answers;
-- is discovered and activated when needed;
-- helps the agent complete the user's goal and expected workflow; and
-- avoids wasted skill and tool usage.
+- 使用安全；
+- 产出正确的答案；
+- 需要时能被发现并激活；
+- 帮助 Agent 完成用户目标与预期工作流；以及
+- 避免浪费 Skill 与工具调用。
 
-## Results at a Glance
+## 结果速览
 
-| Measure | Claude Code (Baseline → Skill Uplift) | Codex (Baseline → Skill Uplift) |
+| 指标 | Claude Code（基线 → Skill 提升） | Codex（基线 → Skill 提升） |
 |---|---:|---:|
-| Overall | 94.2% — baseline ran, but no comparable score was available; uplift unavailable | 89.3% — baseline ran, but no comparable score was available; uplift unavailable |
-| Security | 97.2% → 97.2% (±0.0 points) | 100.0% → 91.7% (-8.3 points) |
-| Correctness | 64.4% → 96.7% (+32.3 points) | 74.4% → 96.7% (+22.3 points) |
-| Discoverability | 100.0% — baseline ran, but no comparable score was available; uplift unavailable | 95.0% — baseline ran, but no comparable score was available; uplift unavailable |
-| Effectiveness | 36.4% → 95.8% (+59.4 points) | 58.6% → 98.6% (+40.0 points) |
-| Efficiency | 81.3% — baseline ran, but no comparable score was available; uplift unavailable | 64.4% — baseline ran, but no comparable score was available; uplift unavailable |
+| 总体 | 94.2%：基线运行过，但没有可比分数；提升不可得 | 89.3%：基线运行过，但没有可比分数；提升不可得 |
+| 安全性 | 97.2% → 97.2%（±0.0 个百分点） | 100.0% → 91.7%（-8.3 个百分点） |
+| 正确性 | 64.4% → 96.7%（+32.3 个百分点） | 74.4% → 96.7%（+22.3 个百分点） |
+| 可发现性 | 100.0%：基线运行过，但没有可比分数；提升不可得 | 95.0%：基线运行过，但没有可比分数；提升不可得 |
+| 有效性 | 36.4% → 95.8%（+59.4 个百分点） | 58.6% → 98.6%（+40.0 个百分点） |
+| 效率 | 81.3%：基线运行过，但没有可比分数；提升不可得 | 64.4%：基线运行过，但没有可比分数；提升不可得 |
 
-**How to read this table:** baseline is the same task attempted without the target skill. Scores are rounded to one decimal; threshold-adjacent values use additional precision so their displayed band matches the verdict. Uplift is derived from those displayed scores and shown in percentage points.
+**如何读此表：** 基线是不带目标 Skill 的同一任务尝试。分数四舍五入到一位小数；临近阈值的数值使用更高精度，保证显示的档位与结论一致。提升由这些显示分数推得，以百分点计。
 
-Example: `47.0% → 92.0% (+45.0 points)` means the skill-assisted run scored 92.0%, 45.0 percentage points above its 47.0% no-skill baseline.
+示例：`47.0% → 92.0% (+45.0 points)` 表示带 Skill 运行得分 92.0%，比 47.0% 的无 Skill 基线高 45.0 个百分点。
 
-A partial dimension was calculated from only the available configured signals; review the detailed report before relying on it.
+部分维度的分数只基于可用的已配置信号计算；依赖它之前请先查看详细报告。
 
-### Comparison details
+### 对比详情
 
-Shared-source comparisons use the same signals and weights on both conditions. They do not replace the full dimension scores above or change the publication verdict.
+同源对比在两种条件下使用相同的信号与权重。它们不替代上方的完整维度分数，也不改变发布结论。
 
-| Agent | Dimension | Basis | Baseline → With skill (uplift) | Explanation |
+| Agent | 维度 | 依据 | 基线 → 带 Skill（提升） | 说明 |
 | --- | --- | --- | --- | --- |
-| claude-code | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| claude-code | Efficiency | Token-only comparison | 98.2% → 96.4% (-1.8 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
-| codex | Discoverability | Dimension comparison | N/A | Discoverability is not applicable to the no-skill baseline; there is no installed skill to discover. |
-| codex | Efficiency | Token-only comparison | 90.3% → 88.9% (-1.4 points) | Only Token Efficiency is comparable; the full dimension scores use different evaluator sources. |
+| claude-code | 可发现性 | 维度对比 | N/A | 可发现性不适用于无 Skill 基线：没有已安装的 Skill 可供发现。 |
+| claude-code | 效率 | 仅 Token 对比 | 98.2% → 96.4%（-1.8 个百分点） | 仅 Token 效率可比；完整维度分数使用的评测源不同。 |
+| codex | 可发现性 | 维度对比 | N/A | 可发现性不适用于无 Skill 基线：没有已安装的 Skill 可供发现。 |
+| codex | 效率 | 仅 Token 对比 | 90.3% → 88.9%（-1.4 个百分点） | 仅 Token 效率可比；完整维度分数使用的评测源不同。 |
 
-## Token Usage
+## Token 用量
 
-Actual Tier 3 execution usage is reported for every observed agent/case pair and both conditions.
+对每个观测到的 Agent/用例组合与两种条件，都报告实际 Tier 3 执行用量。
 
-| Agent | Dataset case | With skill | Without skill | Delta | Change | Coverage |
+| Agent | 数据集用例 | 带 Skill | 不带 Skill | 差值 | 变化 | 覆盖 |
 |---|---|---:|---:|---:|---:|---|
-| claude-code | All cases | 2,745,616 | 1,880,457 | +865,159 | +46.01% | skill 18/18; base 18/18 |
+| claude-code | 全部用例 | 2,745,616 | 1,880,457 | +865,159 | +46.01% | skill 18/18; base 18/18 |
 | claude-code | nvidia-skill-finder-diff-bare-invocation | 158,578 | 107,454 | +51,124 | +47.58% | skill 1/1; base 1/1 |
 | claude-code | nvidia-skill-finder-diff-browse-no-keywords | 160,580 | 71,104 | +89,476 | +125.84% | skill 1/1; base 1/1 |
 | claude-code | nvidia-skill-finder-diff-deep-research | 153,995 | 35,277 | +118,718 | +336.53% | skill 1/1; base 1/1 |
@@ -99,7 +103,7 @@ Actual Tier 3 execution usage is reported for every observed agent/case pair and
 | claude-code | nvidia-skill-finder-pos-multigpu-training | 154,720 | 193,877 | -39,157 | -20.20% | skill 1/1; base 1/1 |
 | claude-code | nvidia-skill-finder-pos-openusd-optimization | 154,034 | 70,646 | +83,388 | +118.04% | skill 1/1; base 1/1 |
 | claude-code | nvidia-skill-finder-pos-vehicle-routing | 153,225 | 35,338 | +117,887 | +333.60% | skill 1/1; base 1/1 |
-| codex | All cases | 1,217,904 | 634,064 | +583,840 | +92.08% | skill 18/18; base 18/18 |
+| codex | 全部用例 | 1,217,904 | 634,064 | +583,840 | +92.08% | skill 18/18; base 18/18 |
 | codex | nvidia-skill-finder-diff-bare-invocation | 81,560 | 35,508 | +46,052 | +129.69% | skill 1/1; base 1/1 |
 | codex | nvidia-skill-finder-diff-browse-no-keywords | 85,718 | 74,582 | +11,136 | +14.93% | skill 1/1; base 1/1 |
 | codex | nvidia-skill-finder-diff-deep-research | 86,248 | 41,228 | +45,020 | +109.20% | skill 1/1; base 1/1 |
@@ -118,64 +122,64 @@ Actual Tier 3 execution usage is reported for every observed agent/case pair and
 | codex | nvidia-skill-finder-pos-multigpu-training | 73,752 | 22,455 | +51,297 | +228.44% | skill 1/1; base 1/1 |
 | codex | nvidia-skill-finder-pos-openusd-optimization | 68,934 | 65,372 | +3,562 | +5.45% | skill 1/1; base 1/1 |
 | codex | nvidia-skill-finder-pos-vehicle-routing | 70,309 | 43,694 | +26,615 | +60.91% | skill 1/1; base 1/1 |
-| ALL AGENTS | Dataset aggregate | 3,963,520 | 2,514,521 | +1,448,999 | +57.63% | skill 36/36; base 36/36 |
+| ALL AGENTS | 数据集聚合 | 3,963,520 | 2,514,521 | +1,448,999 | +57.63% | skill 36/36; base 36/36 |
 
-Prompt tokens include cached reads, so total tokens are `prompt + completion` (cached is not added twice). The Efficiency score uses `(prompt - cached) + completion`. Change is `100 * (with - without) / without`; negative means fewer tokens. N/A comparisons include their reason in the coverage column; coverage is never estimated.
+Prompt token 包含缓存读取，因此总 token 数为 `prompt + completion`（缓存不会重复计入）。效率分数使用 `(prompt - cached) + completion`。变化率按 `100 * (with - without) / without` 计算；负值表示 token 更少。N/A 的对比会在覆盖列写明原因；覆盖数据从不估算。
 
-## Tier Status
+## Tier 状态
 
-| Tier | Purpose | Status | Evidence |
+| Tier | 用途 | 状态 | 证据 |
 |---|---|---|---|
-| Tier 1 | Static validation | **PASSED WITH OBSERVATIONS** | 11 validator(s); 15 finding(s) |
-| Tier 2 | Semantic deduplication | **PASSED** | 2 validator(s); 0 finding(s) |
-| Tier 3 | Live agent evaluation | **PASS** | 2 agent(s); 18 task(s) |
+| Tier 1 | 静态校验 | **PASSED WITH OBSERVATIONS** | 11 个校验器；15 条发现 |
+| Tier 2 | 语义去重 | **PASSED** | 2 个校验器；0 条发现 |
+| Tier 3 | 实际 Agent 评测 | **PASS** | 2 个 Agent；18 个任务 |
 
-## Findings and Observations
+## 发现与观察
 
 <details>
-<summary>Show detailed findings and successful checks</summary>
+<summary>查看详细发现与通过的检查</summary>
 
-- **MEDIUM** SCHEMA/body_recommended_section: Missing recommended section: '## Examples' (`skills/nvidia-skill-finder/SKILL.md`)
-- **MEDIUM** SECURITY/MCP Rug Pull (RP1): MCP Rug Pull: npx commands without a version suffix (e.g. @1.0.0) create a rug-pull risk if the upstream server is compromised and pub (`SKILL.md:74`)
-- **MEDIUM** SECURITY/MCP Rug Pull (RP1): MCP Rug Pull: npx commands without a version suffix (e.g. @1.0.0) create a rug-pull risk if the upstream server is compromised and pub (`SKILL.md:103`)
-- **MEDIUM** SECURITY/MCP Rug Pull (RP1): MCP Rug Pull: npx commands without a version suffix (e.g. @1.0.0) create a rug-pull risk if the upstream server is compromised and pub (`SKILL.md:183`)
-- **MEDIUM** SECURITY/MCP Rug Pull (RP1): MCP Rug Pull: npx commands without a version suffix (e.g. @1.0.0) create a rug-pull risk if the upstream server is compromised and pub (`SKILL.md:113`)
-- 10 additional finding(s) are available in the full evaluation artifacts.
+- **MEDIUM** SCHEMA/body_recommended_section：缺少推荐章节：'## Examples'（`skills/nvidia-skill-finder/SKILL.md`）
+- **MEDIUM** SECURITY/MCP Rug Pull (RP1)：MCP Rug Pull：不带版本后缀（如 @1.0.0）的 npx 命令在上游服务器被攻破并 pub 时会带来 rug-pull 风险（`SKILL.md:74`）
+- **MEDIUM** SECURITY/MCP Rug Pull (RP1)：MCP Rug Pull：不带版本后缀（如 @1.0.0）的 npx 命令在上游服务器被攻破并 pub 时会带来 rug-pull 风险（`SKILL.md:103`）
+- **MEDIUM** SECURITY/MCP Rug Pull (RP1)：MCP Rug Pull：不带版本后缀（如 @1.0.0）的 npx 命令在上游服务器被攻破并 pub 时会带来 rug-pull 风险（`SKILL.md:183`）
+- **MEDIUM** SECURITY/MCP Rug Pull (RP1)：MCP Rug Pull：不带版本后缀（如 @1.0.0）的 npx 命令在上游服务器被攻破并 pub 时会带来 rug-pull 风险（`SKILL.md:113`）
+- 完整评测产物中另有 10 条发现。
 
 </details>
 
-## Scoring Methodology
+## 评分方法
 
 <details>
-<summary>Show dimension definitions, source signals, and thresholds</summary>
+<summary>查看维度定义、来源信号与阈值</summary>
 
-| Dimension | Question | Scored signals |
+| 维度 | 问题 | 计分信号 |
 |---|---|---|
-| Security | Is it safe to use? | `security` (100%) |
-| Correctness | Is the answer correct? | `accuracy` (100%) |
-| Discoverability | Was the right skill loaded when needed? | `skill_execution` (100%) |
-| Effectiveness | Did the skill help complete the task? | `goal_accuracy` (50%) + `behavior_check` (50%) |
-| Efficiency | Did it avoid wasted tool calls and token usage? | `skill_efficiency` (50%) + `token_efficiency` (50%) |
+| 安全性 | 使用是否安全？ | `security` (100%) |
+| 正确性 | 答案是否正确？ | `accuracy` (100%) |
+| 可发现性 | 需要时是否加载了正确的 Skill？ | `skill_execution` (100%) |
+| 有效性 | Skill 是否帮助完成了任务？ | `goal_accuracy` (50%) + `behavior_check` (50%) |
+| 效率 | 是否避免了浪费的工具调用与 token 用量？ | `skill_efficiency` (50%) + `token_efficiency` (50%) |
 
-- Dimension bands: PASS at 50% or above; NEUTRAL from 40% to below 50%; FAIL below 40%.
-- Overall Tier 3 lift: PASS at +5 points or more; FAIL at -10 points or less; values between those bands are NEUTRAL.
-- Overall verdict: PASS only when every configured dimension passes for at least one supported agent. Lift is reported as diagnostic evidence and does not override this gate.
-- The 50% attempt pass threshold is a separate per-task gate; it is not the dimension pass threshold.
-- Effectiveness is the equal-weight mean of goal completion (`goal_accuracy`) and expected workflow adherence (`behavior_check`).
-- Efficiency is 50% tool-call productivity (the backward-compatible `skill_efficiency` wire id) and 50% `token_efficiency`. Positive-case skill routing is scored under Discoverability, not Efficiency; a negative case without a routing target is N/A. N/A sources are omitted, remaining weights are renormalized, and the dimension is marked partial.
+- 维度档位：50% 及以上为 PASS；40% 到低于 50% 为 NEUTRAL；低于 40% 为 FAIL。
+- Tier 3 总体提升：+5 个百分点及以上为 PASS；-10 个百分点及以下为 FAIL；两者之间为 NEUTRAL。
+- 总体结论：仅当每个已配置维度对至少一个受支持的 Agent 通过时才为 PASS。提升作为诊断证据报告，不推翻该门槛。
+- 50% 的尝试通过阈值是独立的每任务门槛，不是维度通过阈值。
+- 有效性是目标完成（`goal_accuracy`）与预期工作流遵循（`behavior_check`）的等权均值。
+- 效率由 50% 工具调用生产率（向后兼容的 `skill_efficiency` wire id）与 50% `token_efficiency` 组成。正向用例的 Skill 路由计入可发现性，不计入效率；没有路由目标的负向用例为 N/A。N/A 的来源被剔除，剩余权重重新归一化，该维度标记为部分。
 
-Signals present in this run:
+本次运行包含的信号：
 
-- `security` (Security): unsafe operations, secret leakage, and unauthorized access.
-- `skill_execution` (Skill Execution): whether the expected skill was selected, decoys were avoided, and the workflow executed.
-- `skill_efficiency` (Tool Productivity): tool-call productivity (legacy wire id; routing is scored under Discoverability).
-- `accuracy` (Accuracy): final-answer correctness against the reference answer.
-- `goal_accuracy` (Goal Accuracy): whether the user's goal was achieved.
-- `behavior_check` (Behavior Check): whether the expected workflow behavior was followed.
-- `token_efficiency` (Token Efficiency): actual uncached prompt plus completion usage (50% of Efficiency).
+- `security`（安全性）：不安全操作、秘密泄露与未授权访问。
+- `skill_execution`（Skill 执行）：是否选中了预期 Skill、避开了诱饵、执行了工作流。
+- `skill_efficiency`（工具生产率）：工具调用生产率（旧 wire id；路由计入可发现性）。
+- `accuracy`（准确率）：最终答案相对参考答案的正确性。
+- `goal_accuracy`（目标达成）：用户目标是否达成。
+- `behavior_check`（行为检查）：是否遵循了预期的工作流行为。
+- `token_efficiency`（Token 效率）：实际的未缓存 prompt 加 completion 用量（占效率 50%）。
 
 </details>
 
-## Freshness
+## 新鲜度
 
-Regenerate this benchmark when the skill, evaluation dataset, target agent/model, evaluator version, environment, or scoring policy changes.
+当 Skill、评测数据集、目标 Agent/模型、评测器版本、环境或评分策略发生变化时，请重新生成本评测基准。

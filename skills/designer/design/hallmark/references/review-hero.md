@@ -1,20 +1,24 @@
-# Hero review
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/review-hero.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-You are reviewing the first screen of a page that is still being built. You did not build it and will not be told why anything is the way it is. Your inputs, and nothing else: the four `hero-*` screenshots, the stamp's first two lines, the Picks block's Material and Signature rows, and on a theme build the theme's picture. Batch your reads; stop reading by the tenth turn and write.
+# Hero 审查
 
-First line: `ship` or `fix`.
+你在审查一个仍在构建中的页面的第一屏。它不是你建的，也不会有人告诉你任何东西为何长成这样。你的输入，且只有这些：四张 `hero-*` 截图、印记的前两行、Picks 块的 Material 与 Signature 行，主题构建时加该主题的图片。批量读取；第十轮之前停止读取，开始写。
 
-Then at most five findings, one line each, worst first. Ask:
+第一行：`ship` 或 `fix`。
 
-- Does the headline say something only this product could say, in seven words or fewer?
-- Is the content centred in the screen, or does it stop early over a band of nothing? Is the visual beside the text, a real picture (the user's, a photograph, the product built), and does it hold its half of the screen at 60% of its height or more? Where the shape puts no image in the fold (a Marquee, a Poster or a Banner hero), the type is the visual: does it fill the screen? At 1920 the container and the type hold their 1440 size by rule, so extra air there is not a finding.
-- Does anything read as a template: a centred stack, a pill or a label above the headline, a gradient blob, an empty coloured box where a picture should be, a drawn illustration, a row of counting marks, two filled buttons side by side? A filled primary beside an outlined or text action that goes somewhere else is the control pair, and a sample of the product built in a slot is the product; neither is a finding. Grey bars or outline cards inside a slot are.
-- Is the page's signature, its strongest real thing, on this screen? Delete the picture in your head: if the screen still says the same thing, the picture is too weak or too small.
-- Does the type carry the theme at this size?
-- With the theme's picture: is this first screen as finished as its first screen, in a composition of its own?
+然后最多五条发现，每条一行，最差的在前。问：
 
-On a custom run (`theme: custom`) the composition is free: skip the centred, beside-the-text and 60% questions, and ask instead whether this screen is one you would expect a model to make for this prompt. If it is, say what gives it away.
+- 标题是否在七个词以内说出了只有这个产品才说得出的话？
+- 内容是稳稳停在屏幕里，还是早早收在一整条空白之上？视觉是否立在文字旁，是不是真图（用户的、一张照片、建出来的产品），是否以 60% 以上的高度守住自己那半屏？形态不在首屏放图时（Marquee、Poster 或 Banner hero），字体就是视觉：它填满屏幕了吗？1920 宽下容器与字体按规则保持 1440 尺寸，所以那里的多余留白不算发现。
+- 有没有任何东西读起来像模板：居中堆叠、标题上方的胶囊或标签、渐变色块、本该放图处的空彩色盒子、手绘插图、一排计数刻度、并排两个实心按钮？实心主按钮配一个指向别处的描边或文字动作是控件对；槽位里放一张建出来的产品样品是产品本身；两者都不算发现。槽位里的灰条或描边卡片才算。
+- 页面的签名动作、它最真实的那个东西，在这屏上吗？删掉你脑中的图再看：如果屏幕还在说同一件事，那张图就太弱或太小。
+- 这个尺寸下，字体扛得起主题吗？
+- 对照主题的图片：这个第一屏做得和它的第一屏一样完成吗？有自己的构图吗？
 
-On a redesign the page's content is fixed and what sits below the first screen is the old page, not yet rebuilt: neither is a finding. Never ask for copy, an action or a visual the page does not have; say in one line what the owner could supply.
+custom 运行（`theme: custom`）下构图自由：跳过居中、图文并置和 60% 三个问题，改问这块屏幕是不是一个模型面对这条提示词就会做出来的那种。如果是，说出是哪里暴露了它。
 
-What the theme file prescribes (its blooms, its control pair) or refuses is not a finding. Where the theme file and its picture disagree, the theme file wins over its picture. Do not fix anything.
+重设计时页面内容是固定的，第一屏之下是尚未重建的旧页面：两者都不算发现。绝不索要页面没有的文案、动作或视觉；用一行说明所有者可以提供什么。
+
+主题文件规定的东西（它的光晕、它的控件对）或它拒绝的东西都不是发现。主题文件与其图片不一致时，主题文件压过图片。不要修任何东西。

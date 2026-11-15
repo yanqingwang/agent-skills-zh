@@ -7,16 +7,20 @@ display: grotesk-heavy Libre Franklin
 accent: chromatic-yellow 105
 posture: committed
 keywords: brutalist, raw, bold, high-contrast, statement, agency, design studio, portfolio, streetwear, drop, zine, type-forward, graphic design, poster, festival, collective, no-nonsense, uncompromising
-material: near-white poster stock, near-black ink as 3px rules, boxed cells and solid fills, uppercase Libre Franklin 900 over its 400, zero radius, one acid-yellow fill
+material: 近白海报纸，近黑墨色化作 3px 线，格子单元与实心填充，全大写 Libre Franklin 900 叠在其 400 之上，零圆角，一抹酸性黄填充
 photo: duotone ink paper con=24
 pictured: Marquee Hero, Poster hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/brutal.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Brutal
 
-A raw, engineered sheet: near-white poster stock, near-black ink that arrives as 3px rules, boxed cells and solid fills, Libre Franklin at its blackest in tight capitals, zero radius, and one acid yellow that only ever fills. The grid is drawn, not implied: cells share their rules, and a number or a word set big inside a box is the page's ornament. Photographs print hard in the ink. It is not a dark hacker page, not a decorated zine and not a sticker sheet of offset shadows.
+一张粗粝、工程感的纸：近白海报纸，近黑墨色以 3px 线到场，格子单元与实心填充，Libre Franklin 用到最黑的字重配紧排大写，零圆角，唯一的酸性黄只用于填充。网格是画出来的，不是暗示的：单元格共享线框，装在盒子里的一个大号数字或单词就是页面的装饰。照片以墨色硬印。它不是暗黑黑客页面，不是装饰化的 zine，也不是错位阴影贴纸堆。
 
-## Tokens
+## 令牌
 
 ```css
 :root {
@@ -31,51 +35,51 @@ A raw, engineered sheet: near-white poster stock, near-black ink that arrives as
 }
 ```
 
-## Type
+## 字体
 
-- **Display:** Libre Franklin 900, uppercase, `--tracking-display`, line-height 1.0 (the floor for capitals that wrap), one weight per head. A statement or the hero head may run to the display cap and past it; set it to fill the measure, not to sit politely inside it. Uppercase belongs to heads, the wordmark and a word or number set as a cell's whole content.
-- **Body:** Libre Franklin 400 at 17 to 18px, line-height 1.5, sentence case, in ink; item titles and controls at 700, sentence case. Three weights in all: 400, 700, 900.
-- **Numbers:** index numbers, counts and dates in 900 with `tabular-nums`, at `--text-section` or larger when they carry a row.
-- **Labels, captions, table heads:** Libre Franklin 400 a step smaller, sentence case, in `--color-muted`; mono appears only inside code.
+- **标题字：**Libre Franklin 900，全大写，`--tracking-display`，行高 1.0（大写换行的下限），每个标题一个字重。宣言句或首屏标题可以冲到展示上限甚至更远；按行宽排满，而不是礼貌地缩在行宽里。大写属于标题、字标，以及作为单元格全部内容的单词或数字。
+- **正文字：**Libre Franklin 400，17 到 18px，行高 1.5，句首大写，用墨色；条目标题与控件用 700，句首大写。总共三个字重：400、700、900。
+- **数字：**序号、计数与日期用 900 配 `tabular-nums`，承载一行时用 `--text-section` 或更大。
+- **标签、图注、表头：**Libre Franklin 400，小一档，句首大写，用 `--color-muted`；等宽只出现在代码里。
 
-## Surfaces
+## 表面
 
-- Two rule weights and no others: `--rule-bar` in `--color-rule` boxes a well, a table, a cell or a photograph; `--rule-hair` splits rows inside them. Neighbouring cells share one 3px rule, never two.
-- Zero radius on everything. Depth is fill and border, never shadow: bordered paper, an ink fill with paper text, or the one yellow fill under ink; nothing floats above the paper.
-- Bands: an `--color-ink` band with paper text, or a `--color-paper-2` band ruled top and bottom with `--rule-bar`; two a page at most. The yellow never runs as a band.
-- Photographs: raw documentary of the thing in use, lit by whatever was there (stage light, flash, a street at night): the crowd from inside it, a room before doors, a stage screen; never a posed face. They print hard in the ink (the `photo:` duotone), cropped tight and flush inside a `--rule-bar` frame, or full-bleed where the page is loudest. Type meets a photograph only on a solid ink or paper block set flush against the frame; never a scrim.
-- No texture, no ornament, no gradient.
+- 只有两个线宽，再无其他：`--rule-bar` 用 `--color-rule` 给井格、表格、单元格或照片画框；`--rule-hair` 分隔其内的行。相邻单元格共享一条 3px 线，绝不用两条。
+- 一切零圆角。深度是填充与边框，绝不是阴影：带边框的纸、墨色填充配纸色文字，或墨色之下的那一个黄色填充；没有任何东西浮在纸面之上。
+- 色带：`--color-ink` 色带配纸色文字，或上下用 `--rule-bar` 划线的 `--color-paper-2` 色带；一页最多两条。黄色绝不做色带。
+- 照片：事物使用中的原始纪实，光源就是现场有的（舞台灯、闪光灯、夜晚的街道）：人群内部拍的人群、开门前的房间、舞台屏；绝不要摆拍面孔。以墨色硬印（`photo:` 双色调），紧凑裁切、平齐嵌入 `--rule-bar` 画框，或页面最响亮处整幅出血。文字只在与画框平齐的实心墨块或纸块上接触照片；绝不用遮罩。
+- 无纹理、无装饰、无渐变。
 
-## Range
+## 适用手法
 
-- **An index as a boxed table:** rows inside one 3px box, hairlines between, the number in 900 at section size in its own cell, the entry in 700 at title size, one line in 400; the hovered or current row fills yellow under its ink.
-- **A statement:** one blunt sentence in 900 capitals across all twelve columns at display size or larger, sitting on a 3px rule, nothing else on the screen but its attribution.
-- **Cells as a bento:** facts set as words or numbers in 900 capitals inside boxed cells that share their rules, one lead cell twice the size, an ink cell for contrast, a photograph flush in one cell.
-- **The form as the grid:** fields as boxed cells sharing their rules, a choice set as two big word cells that fill yellow when chosen, the send button an ink cell.
+- **索引排成带框表格：**行装在一个 3px 盒子里，行间发丝线，数字用 900、区块级字号、独占一格，条目用 700、标题级字号，一行 400；悬停或当前行以黄填充、其上覆墨。
+- **宣言句：**一句直白的话，900 大写，横跨全部十二列，展示级字号或更大，坐在一条 3px 线上，屏上除署名外别无他物。
+- **单元格拼 bento：**事实作为 900 大写的单词或数字装进共享线框的盒式单元格，一个两倍大的主格，一个做对比的墨格，一格嵌一张照片。
+- **表单即网格：**字段作为共享线框的盒式单元格，选项是两个大号单词格，选中时填黄，发送按钮是一个墨格。
 
-## Controls
+## 控件
 
-- The pair: a `--rule-bar` bordered paper button beside a solid ink button with paper text, Libre Franklin 700 in sentence case, 48 to 52px; hover inverts either in one frame.
-- Links are ink, underlined; hover fills yellow under the ink. Inputs: zero radius, a `--rule-bar` border, ink on paper, 52px.
-- The yellow is a fill, never type, a rule or a ring: a chosen option, a `mark` in running text, a hovered row or link. Always under ink, never over a photograph, under 5% of a screen. Focus takes the deep olive `--color-focus`.
+- 成对出现：`--rule-bar` 描边纸面按钮，旁边是实心墨色按钮配纸色文字，Libre Franklin 700 句首大写，48 到 52px；悬停一帧内反转任意一个。
+- 链接用墨色加下划线；悬停在墨色之下填黄。输入框：零圆角，`--rule-bar` 边框，纸上墨字，52px。
+- 黄色是填充，绝不是文字、线条或圆环：选中的选项、行文中的 `mark`、悬停的行或链接。永远垫在墨色之下，绝不在照片之上，占屏 5% 以下。焦点用深橄榄 `--color-focus`。
 
-## Motion
+## 动效
 
-Nothing glides. State flips in one frame: a surface inverts to ink with paper text, or fills yellow under its ink. No reveal, no bounce, no parallax.
+没有任何滑动。状态一帧内翻转：表面反转成墨底纸字，或在墨色之下填黄。无入场、无弹跳、无视差。
 
-## Voice
+## 语气
 
-Blunt, declarative: capitals in the heads, sentence case everywhere else; the trade's own words, no hedging, no hype. Say the thing flat.
+直白、陈述式：标题用大写，其余句首大写；用行业自己的话，不含糊其辞，不夸大。把事情平平地说出来。
 
-## Do-nots
+## 禁忌
 
-- Never a rounded corner or a shadow, blurred or hard-offset; depth is border and fill.
-- Never an ornament, a fleuron or a layered offset stack; Brutal is raw, not decorated.
-- Never black paper; this is a light sheet with black structure.
-- Never a second colour: photographs print in the ink, and the yellow only fills.
-- Never two rules where cells meet; a doubled 6px seam reads as a mistake, not as structure.
+- 绝不用圆角或阴影（模糊的或硬偏移的）；深度靠边框与填充。
+- 绝不用装饰、花饰或叠层错位堆；Brutal 是粗粝，不是装饰。
+- 绝不用黑纸；这是带黑色结构的浅色纸面。
+- 绝不引入第二颜色：照片以墨色印刷，黄色只做填充。
+- 单元格相接处绝不用两条线；加倍的 6px 接缝读起来是错误，不是结构。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700;900&display=swap" rel="stylesheet">

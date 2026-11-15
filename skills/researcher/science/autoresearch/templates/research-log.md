@@ -1,40 +1,44 @@
-# Research Log
+> **中文汉化版** · 上游：[Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) · 原文件：`0-autoresearch-skill/templates/research-log.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Chronological record of research decisions and actions. Append-only.
+# 研究日志
 
-| # | Date | Type | Summary |
+按时间顺序记录研究决策与动作。只追加。
+
+| # | 日期 | 类型 | 摘要 |
 |---|------|------|---------|
 | | | | |
 
-<!-- Entry types:
-  bootstrap    — initial scoping, literature search, hypothesis formation
-  inner-loop   — experiment run and result
-  outer-loop   — synthesis, reflection, direction decision
-  pivot        — change in research direction
-  report       — progress presentation generated
-  conclude     — decision to finalize and write paper
+<!-- 条目类型：
+  bootstrap    ：初始范围界定、文献检索、假设形成
+  inner-loop   ：实验运行与结果
+  outer-loop   ：综合、反思、方向决策
+  pivot        ：研究方向变更
+  report       ：生成进度汇报
+  conclude     ：决定定稿并撰写论文
 
-Example entries:
-| 1 | 2026-03-15 | bootstrap | Searched Semantic Scholar + arXiv for efficient transformer architectures. Found 8 relevant papers. Gap: no systematic comparison of GLU variants on small models. Formed 3 hypotheses. Baseline: NanoGPT 5-min run, val_loss=4.82. |
-| 2 | 2026-03-15 | inner-loop | H1 run_001: swapped ReLU for SwiGLU in FFN. 5-min training run. val_loss=4.61 (baseline 4.82, delta -0.21). Kept. |
-| 3 | 2026-03-15 | inner-loop | H1 run_002: increased FFN hidden dim from 4x to 5.3x to match SwiGLU param count. val_loss=4.58 (-0.03 vs run_001). Marginal — SwiGLU benefit mostly from gating, not extra params. |
-| 4 | 2026-03-15 | inner-loop | H1 run_003: tried GEGLU instead of SwiGLU. val_loss=4.63. Slightly worse than SwiGLU. SwiGLU wins for this scale. |
-| 5 | 2026-03-15 | inner-loop | H2 run_004: replaced learned positional embeddings with RoPE. val_loss=4.55 (-0.06 vs SwiGLU baseline). Promising — stacks with SwiGLU. |
-| 6 | 2026-03-15 | inner-loop | H2 run_005: RoPE + SwiGLU combined. val_loss=4.41 (-0.41 vs original baseline). Best so far. |
-| 7 | 2026-03-16 | outer-loop | Reviewed 5 runs. Pattern: gating mechanisms (SwiGLU) and rotary embeddings (RoPE) give independent gains that stack. Combined improvement ~9%. But WHY do they stack? Hypothesis: they operate on orthogonal aspects (FFN expressiveness vs positional encoding). Direction: DEEPEN — test if adding RMSNorm also stacks independently. |
-| 8 | 2026-03-16 | inner-loop | H3 run_006: replaced LayerNorm with RMSNorm. val_loss=4.39 (-0.02). Small gain. Stacks but diminishing returns on normalization. |
-| 9 | 2026-03-17 | outer-loop | 8 runs complete. Optimization plateau around val_loss=4.38. The easy architectural wins (SwiGLU, RoPE) are captured. Searched literature on training dynamics — found papers on warmup schedules at small scale. Direction: BROADEN — shift from architecture to training recipe. |
-| 10 | 2026-03-17 | report | Generated progress-001.html with trajectory plot showing 9% improvement from architectural changes. |
+示例条目：
+| 1 | 2026-03-15 | bootstrap | 检索 Semantic Scholar + arXiv 上高效 transformer 架构的文献。找到 8 篇相关论文。空白：小模型上缺少 GLU 变体的系统对比。形成 3 个假设。基线：NanoGPT 5 分钟训练，val_loss=4.82。 |
+| 2 | 2026-03-15 | inner-loop | H1 run_001：FFN 中把 ReLU 换成 SwiGLU。5 分钟训练。val_loss=4.61（基线 4.82，delta -0.21）。保留。 |
+| 3 | 2026-03-15 | inner-loop | H1 run_002：FFN 隐藏维度从 4x 提到 5.3x，以匹配 SwiGLU 的参数量。val_loss=4.58（比 run_001 -0.03）。收益边际：SwiGLU 的好处主要来自门控，而非额外参数。 |
+| 4 | 2026-03-15 | inner-loop | H1 run_003：尝试用 GEGLU 替代 SwiGLU。val_loss=4.63。略差于 SwiGLU。该规模下 SwiGLU 更优。 |
+| 5 | 2026-03-15 | inner-loop | H2 run_004：把可学习的位置嵌入换成 RoPE。val_loss=4.55（比 SwiGLU 基线 -0.06）。有前景：可与 SwiGLU 叠加。 |
+| 6 | 2026-03-15 | inner-loop | H2 run_005：RoPE + SwiGLU 组合。val_loss=4.41（比最初基线 -0.41）。目前最佳。 |
+| 7 | 2026-03-16 | outer-loop | 复盘 5 次运行。规律：门控机制（SwiGLU）与旋转位置编码（RoPE）带来独立且可叠加的收益。合计提升约 9%。但为什么能叠加？假设：二者作用于正交的方面（FFN 表达能力 vs 位置编码）。方向：DEEPEN，测试加入 RMSNorm 是否也能独立叠加。 |
+| 8 | 2026-03-16 | inner-loop | H3 run_006：把 LayerNorm 换成 RMSNorm。val_loss=4.39（-0.02）。小幅收益。可以叠加，但归一化方面收益递减。 |
+| 9 | 2026-03-17 | outer-loop | 8 次运行完成。优化在 val_loss=4.38 附近进入平台期。容易拿到的架构收益（SwiGLU、RoPE）已经到手。检索训练动力学文献，找到几篇小规模下 warmup 调度的论文。方向：BROADEN，从架构转向训练配方。 |
+| 10 | 2026-03-17 | report | 生成 progress-001.html，其中的轨迹图显示架构改动带来 9% 提升。 |
 
-Example entries (discovery-type research — understanding grokking):
-| 1 | 2026-03-20 | bootstrap | Searched literature on grokking and delayed generalization. Found Nanda et al. progress measures, Grokfast spectral filtering. Gap: no connection to memory consolidation theory from neuroscience. 3 hypotheses formed. |
-| 2 | 2026-03-20 | inner-loop | H1 run_001: trained modular addition transformer to memorization (100% train acc, 0% test). Steps to memorize: 1200. Baseline established. |
-| 3 | 2026-03-20 | inner-loop | H1 run_002: continued training with standard weight decay. Grokking at step 48000. Measured progress measure throughout — sharp transition at step 44000. |
-| 4 | 2026-03-20 | inner-loop | H1 run_003: inserted "sleep phase" at step 20000 (elevated weight decay + oscillatory LR for 500 steps). Grokking now at step 31000. 35% acceleration. |
-| 5 | 2026-03-20 | inner-loop | H1 run_004: sleep phase at step 10000. Grokking at step 27000. Earlier sleep = earlier grokking. |
-| 6 | 2026-03-20 | inner-loop | H1 run_005: sleep phase at step 5000 (before full memorization). Grokking at step 38000. Too early hurts — model hadn't memorized enough for consolidation to work. |
-| 7 | 2026-03-21 | outer-loop | Reviewed 5 runs. Clear pattern: sleep phases accelerate grokking but only AFTER memorization is complete. This matches memory consolidation theory exactly — you need memories formed before consolidation can reorganize them. Searched for neural slow-wave sleep literature. The weight decay + oscillatory LR during sleep phases mimics synaptic downscaling. Direction: DEEPEN — sweep sleep timing relative to memorization completion. |
-| 8 | 2026-03-21 | inner-loop | H1.1 run_006-010: swept sleep insertion at 80%, 100%, 120%, 150%, 200% of memorization step. Sweet spot at 110-120%. Consistent across 3 seeds. |
-| 9 | 2026-03-22 | outer-loop | 10 runs complete. The story is clear: neural networks "dream to learn" just like brains — consolidation after encoding, not during. Grokfast achieves similar acceleration through a different mechanism (gradient spectral filtering). Next: compare gradient spectra during our sleep phases vs Grokfast filtering to see if they converge on the same signal. Direction: BROADEN. |
-| 10 | 2026-03-22 | report | Generated progress-001.html with sleep timing vs grokking step plot. Key visual: sweet spot curve mirrors neuroscience memory consolidation window. |
+示例条目（发现型研究：理解 grokking）：
+| 1 | 2026-03-20 | bootstrap | 检索 grokking 与延迟泛化的文献。找到 Nanda et al. 的进展度量、Grokfast 谱滤波。空白：与神经科学的记忆巩固理论没有建立联系。形成 3 个假设。 |
+| 2 | 2026-03-20 | inner-loop | H1 run_001：训练模加法 transformer 直到记忆完成（训练准确率 100%，测试 0%）。记忆所需步数：1200。基线已建立。 |
+| 3 | 2026-03-20 | inner-loop | H1 run_002：用标准 weight decay 继续训练。第 48000 步出现 grokking。全程记录进展度量：第 44000 步出现急剧转变。 |
+| 4 | 2026-03-20 | inner-loop | H1 run_003：在第 20000 步插入"睡眠阶段"（升高 weight decay + 振荡学习率，持续 500 步）。grokking 提前到第 31000 步。加速 35%。 |
+| 5 | 2026-03-20 | inner-loop | H1 run_004：睡眠阶段放在第 10000 步。grokking 出现在第 27000 步。睡眠越早，grokking 越早。 |
+| 6 | 2026-03-20 | inner-loop | H1 run_005：睡眠阶段放在第 5000 步（记忆尚未完成）。grokking 反而推迟到第 38000 步。太早有害：模型记得还不够多，巩固无从发挥作用。 |
+| 7 | 2026-03-21 | outer-loop | 复盘 5 次运行。规律清晰：睡眠阶段能加速 grokking，但只在记忆完成之后。这与记忆巩固理论完全吻合：先有记忆形成，巩固才能重组它们。检索了神经慢波睡眠文献。睡眠阶段中的 weight decay + 振荡学习率模拟的是突触缩减（synaptic downscaling）。方向：DEEPEN，围绕记忆完成时点扫描睡眠插入时机。 |
+| 8 | 2026-03-21 | inner-loop | H1.1 run_006-010：按记忆步数的 80%、100%、120%、150%、200% 扫描睡眠插入时机。最佳区间在 110-120%。3 个随机种子结果一致。 |
+| 9 | 2026-03-22 | outer-loop | 10 次运行完成。故事已经清晰：神经网络像大脑一样"以梦助学"，巩固发生在编码之后，而非编码期间。Grokfast 用另一机制（梯度谱滤波）达到相近的加速。下一步：比较我们睡眠阶段与 Grokfast 滤波期间的梯度谱，看二者是否收敛到同一信号。方向：BROADEN。 |
+| 10 | 2026-03-22 | report | 生成 progress-001.html，含睡眠时机与 grokking 步数的关系图。关键视觉：最佳区间曲线与神经科学的记忆巩固窗口形状吻合。 |
 -->

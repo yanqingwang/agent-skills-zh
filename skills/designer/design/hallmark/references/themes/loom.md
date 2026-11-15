@@ -12,11 +12,15 @@ photo: natural sat=-12 con=-4
 pictured: Narrative Workflow, Poster hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/loom.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Loom
 
-A weaving studio speaking quietly: ecru paper, Caslon cut for display with a book's calm over a plain Hanken Grotesk, thin rules, and one deep indigo, the colour of dyed yarn, that arrives as a band or a button and never as a wash. The cloth is photographed close in window light; nothing is drawn to stand in for it. It reads crafted because the page is ruled like a pattern book. It is not a cream-and-terracotta craft page and not a linen photograph behind everything.
+一间安静说话的织造工作室：米白纸、为展示而裁的 Caslon，带着书籍的沉静，压在朴素的 Hanken Grotesk 之上，细线横线，外加一处深靛蓝，即染好的纱线的颜色，只以色带或按钮出现，绝不做罩染。布料在窗光下近拍；绝不画任何东西来代替它。页面像花样册一样划线，所以读起来有手作感。它不是奶油配红陶的手工页，也不是在一切背后垫亚麻照片的页面。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -32,60 +36,60 @@ A weaving studio speaking quietly: ecru paper, Caslon cut for display with a boo
 }
 ```
 
-Three colourways, stated in the stamp (`loom: ecru`).
+三种配色，写入 stamp（印记）：`loom: ecru`。
 
-| Colourway | Paper, ink, indigo |
+| 配色 | 纸、墨、靛蓝 |
 | --- | --- |
-| `ecru` (default) | the block above |
-| `indigo` | paper `oklch(34% 0.10 266)`, ink ecru `oklch(95% 0.015 85)`, rule `oklch(50% 0.09 266)`; the button turns ecru with indigo text |
-| `oat` | paper `oklch(88% 0.04 80)`, ink `oklch(15% 0.01 60)`, rules in the ink at 1px, indigo `oklch(38% 0.10 266)` kept to a rule and a button |
+| `ecru`（默认） | 上面的代码块 |
+| `indigo` | 纸 `oklch(34% 0.10 266)`，墨用米白 `oklch(95% 0.015 85)`，横线 `oklch(50% 0.09 266)`；按钮转为米白底靛蓝字 |
+| `oat` | 纸 `oklch(88% 0.04 80)`，墨 `oklch(15% 0.01 60)`，横线用墨色 1px，靛蓝 `oklch(38% 0.10 266)` 只用于一条线和一个按钮 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Libre Caslon Display 400 for the h1, every h2 and any price or figure at 40px or more, `--tracking-display`, line-height 1.04 (1.0 on a hero head of two lines), sentence case, roman. The face has one weight and no italic; never synthesise either, and never set it under 32px, where its hairlines break up.
-- **Item titles (h3):** Hanken Grotesk 500 at `--text-title`, line-height 1.25, the ink.
-- **Body:** Hanken Grotesk 400 and 500 at 16 to 18px, line-height 1.5; the lead in `--color-muted`.
-- **Labels, captions, tags, table heads:** Hanken Grotesk 500 a step smaller, sentence case, untracked, in `--color-muted`. DM Mono only for figures that compare in a row (widths in centimetres, grams per metre, metres on the beam) and for code.
+- **展示字体：**Libre Caslon Display 400 用于 h1、每个 h2，以及 40px 以上的价格或数字，`--tracking-display`，行高 1.04（两行的 Hero 标题用 1.0），句首大写，正体。这款字只有一个字重、无斜体；绝不仿造两者，也绝不用在 32px 以下，那时它的发丝笔画会断裂。
+- **条目标题（h3）：**Hanken Grotesk 500，`--text-title`，行高 1.25，用墨色。
+- **正文：**Hanken Grotesk 400 与 500，16 至 18px，行高 1.5；导语用 `--color-muted`。
+- **标签、图注、标记、表头：**Hanken Grotesk 500，小一号，句首大写，不加字距，用 `--color-muted`。DM Mono 只用于行内比较的数字（厘米计的幅宽、每米克重、织轴上的米数）和代码。
 
-## Surfaces
+## 表面（Surfaces）
 
-- 1px rules: `--color-rule` between rows; a `--rule-ink` line in the ink above a list's first row, under a table's head and under the nav; no borders on wells.
-- Square everywhere: radius 0 on wells, photographs, inputs and controls.
-- Flat: depth is a paper step, `--color-paper-2` as a band or well and sand (`--color-paper-3`) as a deeper well; nothing casts a shadow.
-- Bands: a `--color-paper-2` band, or one indigo band (`--color-accent` ground, `--color-accent-ink` text). Two a page at most.
-- Photographs: the cloth and the loom, close and in side light from a window: the weave filling the frame, warp on the beam, a folded length, yarn on cones; the studio wide once. Colour kept true and softened a little (the `photo:` line). Square, an inset outline of ink at 8%, no shadow; captions beneath in the label style carry a fact (the fibre, the price a metre); type sits on a photograph only over an ink scrim at its calmest edge.
-- No texture: the photographs carry the weave.
+- 1px 横线：行间用 `--color-rule`；列表首行之上、表头之下、导航之下各压一条墨色 `--rule-ink`；内嵌面板无边框。
+- 到处直角：内嵌面板、照片、输入框与控件圆角均为 0。
+- 平坦：深度靠纸色分档，`--color-paper-2` 作色带或内嵌面板，沙色（`--color-paper-3`）作更深的内嵌面板；任何东西都不投影。
+- 色带：`--color-paper-2` 色带，或一条靛蓝色带（`--color-accent` 底、`--color-accent-ink` 字）。每页至多两条。
+- 照片：布与织机，近拍、窗侧光：织纹撑满画框、织轴上的经线、叠好的布匹、锥筒上的纱线；工作室全景只出现一次。颜色保持真实并稍作柔化（`photo:` 一行）。直角，向内 8% 的墨色描边，无阴影；下方图注用标签样式、承载一个事实（纤维、每米价格）；文字压在照片上时，必须垫在照片最平静一侧边缘的墨色蒙版之上。
+- 无纹理：织纹交给照片。
 
-## Range
+## 版式（Range）
 
-- **The specification as ruled rows:** fibre, width, weight, lead time and price as a pattern-book sheet, the label on the left in Hanken, the value in Caslon at title size and up, the price row set largest; an ink rule above the first row.
-- **The price as a figure:** the price a metre in Caslon at display size beside the sum worked out in rows (metres, rate, total), on a sand well or on the indigo band where the order is placed.
-- **Time as a ruled scale:** a lead time drawn as weeks on a hairline scale in DM Mono, the span the cloth is on the loom as a sand bar and the window it lands in as an indigo line; a chart of the prompt's own weeks, never a drawn thread.
-- **A comparison in two columns:** linen beside wool, parted by one ink rule, rows aligned.
+- **规格排成划线行：**纤维、幅宽、克重、交期与价格排成花样册单页，左侧标签用 Hanken，右侧值用 Caslon、标题字号起步，价格行排最大；首行之上压一条墨线。
+- **价格作为数字：**每米价格用 Caslon 排展示字号，旁边是逐行算出的合计（米数、单价、总额），放在沙色内嵌面板上，或放在下单所在的靛蓝色带上。
+- **时间排成刻度尺：**交期以周为单位画在 DM Mono 的发丝刻度上，布在机上的时段画成沙色横条，交付窗口画成靛蓝线；图表用提示词自己的周数，绝不画一根线头来代替。
+- **两列对比：**亚麻对羊毛，中间一条墨线分隔，行对齐。
 
-## Controls
+## 控件（Controls）
 
-- The pair: an indigo-filled square button in Hanken Grotesk 500 with ecru text beside a text link with a 2px bottom border in the text colour. On indigo the button turns ecru with indigo text.
-- Links lift their 2px underline into `--color-accent` on hover; inputs are square with a 1px `--color-rule` border and the indigo focus ring, ecru on the indigo band.
-- Indigo is a fill or a line: the primary, one band, an underline on hover, the focus ring.
+- 控件对：靛蓝填充的直角按钮，Hanken Grotesk 500，米白字；旁边是文字链接，带 2px 文字色底边框。在靛蓝底上，按钮转为米白底靛蓝字。
+- 链接悬停时 2px 下划线转为 `--color-accent`；输入框直角，1px `--color-rule` 边框，靛蓝焦点环，靛蓝色带上为米白。
+- 靛蓝只作填充或线条：主按钮、一条色带、悬停下划线、焦点环。
 
-## Motion
+## 动效（Motion）
 
-Nothing moves except state: an underline turns indigo and the primary lightens to `--color-accent-2`, over `--dur-short` on `--ease-out`, once.
+除状态外皆不动：下划线转靛蓝、主按钮变亮为 `--color-accent-2`，`--ease-out` 配 `--dur-short`，只此一次。
 
-## Voice
+## 语气（Voice）
 
-The weaver speaking plainly at the loom: the fibre, the metre, the weeks, the room the cloth is for. Prices and times said once, nothing sold hard.
+织工在织机旁平实地说话：纤维、米数、周数、布要去的那个房间。价格与时间只说一次，绝不硬卖。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never indigo as a page wash or a tint on the ecru colourway; it is a band, a line or a fill.
-- Never a mono label voice; widths and weights earn the mono, the captions do not.
-- Never a ruler, a warp or a thread pattern drawn on the page; the cloth is photographed and the metre priced in type.
-- Never a warm accent (rust, clay, terracotta) next to the ecru; sand is a paper, not an accent.
-- Never a radius, a shadow or a soft card; Loom is rules, squares and paper steps.
+- ecru 配色下绝不用靛蓝做整页罩染或淡色调；它只能是色带、线条或填充。
+- 标签绝不用等宽腔；幅宽与克重配得上等宽字，图注配不上。
+- 绝不在页面上画尺子、经线或纱线图案；布靠照片，米数靠字体标价。
+- 米白旁边绝不用暖色强调（铁锈、陶土、红陶）；沙色是纸，不是强调色。
+- 绝无圆角、阴影或软卡片；Loom 只有横线、直角与纸色分档。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Hanken+Grotesk:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">

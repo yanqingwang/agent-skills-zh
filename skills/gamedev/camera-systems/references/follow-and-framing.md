@@ -1,42 +1,39 @@
-# Follow and framing
+> **中文汉化版** · 上游：[gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) · 原文件：`skills/disciplines/camera-systems/references/follow-and-framing.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Contents:
-1. Why `1 - exp(-rate*dt)` (frame-rate-independent smoothing)
-2. Full 2D rig: deadzone, look-ahead, bounds
-3. 3D third-person orbit
-4. First-person look
-5. Multi-target and group framing, split-screen
-6. Cinematic blends and transitions
-7. Per-engine rig summary (Godot 4.7, Cinemachine 3)
+# 跟随与构图
 
-Snippets target Godot 4.7 and Unity 6.3 LTS with Cinemachine 3.
+目录：
+1. 为什么用 `1 - exp(-rate*dt)`（帧率无关平滑）
+2. 完整 2D 装置：死区、前瞻、边界
+3. 3D 第三人称环绕
+4. 第一人称视角
+5. 多目标与群体构图、分屏
+6. 电影化混合与转场
+7. 各引擎装置对照（Godot 4.7、Cinemachine 3）
 
-## 1. Why `1 - exp(-rate*dt)` (frame-rate-independent smoothing)
+代码片段针对 Godot 4.7 与 Unity 6.3 LTS（含 Cinemachine 3）。
 
-A naive `pos = lerp(pos, target, k)` applies `k` *per frame*, so at 144 FPS it smooths far more
-per second than at 30 FPS — the feel changes with hardware. Exponential smoothing fixes the rate
-*per second*:
+## 1. 为什么用 `1 - exp(-rate*dt)`（帧率无关平滑）
+
+朴素的 `pos = lerp(pos, target, k)` 是*每帧*应用一次 `k`，144 FPS 下每秒的平滑量远大于 30 FPS，手感随硬件而变。指数平滑把速率按*每秒*固定：
 
 ```text
 t = 1 - exp(-rate * dt)      # rate ≈ 5 (floaty) .. 12 (snappy)
 pos = lerp(pos, target, t)   # identical convergence at any frame rate
 ```
 
-A critically-damped spring (Unity `Vector3.SmoothDamp`, or a hand-rolled spring with `smoothTime`)
-gives the same frame-rate independence plus velocity continuity (no overshoot). Prefer the
-engine's built-in spring/smoothing before hand-rolling.
+临界阻尼弹簧（Unity 的 `Vector3.SmoothDamp`，或用 `smoothTime` 手写的弹簧）同样帧率无关，还带速度连续性（不会过冲）。优先用引擎内置的弹簧/平滑，别急着手写。
 
-## 2. Full 2D rig: deadzone + look-ahead + bounds
+## 2. 完整 2D 装置：死区 + 前瞻 + 边界
 
-Order of operations each frame, after the target moves:
+目标移动后，每帧的处理顺序：
 
-1. Compute target overflow beyond the **deadzone** (box or circle) → move the focus by the
-   overflow only.
-2. Add **look-ahead**: `focus += dir_of_motion * lookAheadDist`, but **ease the look-ahead offset
-   itself** toward its goal so a direction flip doesn't snap the view.
-3. **Smooth** the camera toward the focus (section 1).
-4. **Clamp** so the *visible rectangle* stays in bounds: clamp camera center to
-   `[min + halfView, max - halfView]` per axis (clamp the view, not the center).
+1. 计算目标超出**死区**（矩形或圆形）的部分 → 焦点只移动这个超出量。
+2. 加**前瞻**：`focus += dir_of_motion * lookAheadDist`，但要让**前瞻偏移本身**朝目标值缓动，这样方向反转时视图不会猛跳。
+3. 把相机**平滑**地移向焦点（第 1 节）。
+4. **钳制**，让*可见矩形*留在边界内：每个轴把相机中心钳到 `[min + halfView, max - halfView]`（钳制的是视野，不是中心）。
 
 ```gdscript
 # Godot 4.7: clamp the VIEW, accounting for zoom and viewport size.
@@ -48,59 +45,44 @@ func _clamp_to_level(center: Vector2) -> Vector2:
 # If the level is smaller than the view on an axis, center on that axis instead of clamping.
 ```
 
-Tunables: deadzone `32–64 px`, look-ahead `40–120 px` eased over `0.2–0.4 s`, smoothing
-`rate 6–10`.
+可调参数：死区 `32–64 px`；前瞻 `40–120 px`，用 `0.2–0.4 s` 缓动；平滑 `rate 6–10`。
 
-## 3. 3D third-person orbit
+## 3. 3D 第三人称环绕
 
-- **Rig:** an invisible pivot at the character's shoulder/head height; yaw on the pivot, pitch on
-  a child; the camera sits at `-springLength` on local Z.
-- **Collision:** a spring arm (Godot `SpringArm3D`) or occlusion ray casts from pivot to desired
-  camera position and shortens to the first hit so the camera never clips through walls.
-- **Pitch clamp:** ~`[-80°, +45°]` so the camera can't flip or bury into the floor.
-- **Sensitivity & invert:** expose look sensitivity and invert-Y (see `input-systems`).
-- **Cinemachine 3 (Unity 6.3 LTS):** a `CinemachineCamera` (namespace `Unity.Cinemachine`) with an
-  **Orbital Follow** component and a **Cinemachine Deoccluder** (collision); the
-  `CinemachineBrain` on the `Camera` blends between cameras. This replaces the v2
-  `CinemachineVirtualCamera` / `CinemachineCollider` names.
+- **装置（rig）：** 在角色肩部/头部高度放一个不可见的枢轴（pivot）；偏航（yaw）放在枢轴上，俯仰（pitch）放在子节点上；相机位于本地 Z 轴的 `-springLength` 处。
+- **碰撞：** 弹簧臂（Godot 的 `SpringArm3D`）或遮挡射线，从枢轴投向期望的相机位置，并缩短到第一个命中点，相机就永远不会穿墙。
+- **俯仰限制：** 约 `[-80°, +45°]`，这样相机既不会翻转，也不会钻进地板。
+- **灵敏度与反转：** 暴露视角灵敏度和反转 Y 轴选项（见 `input-systems`）。
+- **Cinemachine 3（Unity 6.3 LTS）：** 一个 `CinemachineCamera`（命名空间 `Unity.Cinemachine`），挂 **Orbital Follow** 组件和 **Cinemachine Deoccluder**（碰撞处理）；`Camera` 上的 `CinemachineBrain` 负责在相机之间做混合。这组名字取代了 v2 的 `CinemachineVirtualCamera` / `CinemachineCollider`。
 
-## 4. First-person look
+## 4. 第一人称视角
 
-- Yaw rotates the body (so movement aligns with view); pitch rotates only the camera head.
-- Clamp pitch; never let roll accumulate.
-- Mouse: capture the cursor (`Input.mouse_mode = Input.MOUSE_MODE_CAPTURED`) and read
-  `InputEventMouseMotion.screen_relative`, which is not scaled by the stretch settings.
-- Stick: apply a response curve + deadzone (see `input-systems`) and frame-rate-scaled turn rate.
+- 偏航旋转身体（这样移动方向与视角一致）；俯仰只旋转相机头节点。
+- 限制俯仰角；绝不让滚转（roll）累积。
+- 鼠标：捕获光标（`Input.mouse_mode = Input.MOUSE_MODE_CAPTURED`），读取 `InputEventMouseMotion.screen_relative`，该值不受拉伸（stretch）设置缩放。
+- 摇杆：应用响应曲线 + 死区（见 `input-systems`），转向速率按帧率缩放。
 
-## 5. Multi-target / group framing
+## 5. 多目标 / 群体构图
 
-- Compute the bounding box of all targets; place the camera at the box center.
-- **2D:** set zoom so the box (plus padding) fits the viewport; clamp zoom min/max.
-- **3D:** dolly the camera back / adjust FOV to fit the box. In Cinemachine 3, point the camera's
-  Tracking Target at a `CinemachineTargetGroup` and add `CinemachineGroupFraming`.
-- **Split-screen:** one camera per player rendering to a viewport rectangle; budget the extra
-  render cost (`performance-optimization`).
+- 计算所有目标的包围盒；把相机放在包围盒中心。
+- **2D：** 设置缩放，让包围盒（含留白）适配视口；钳制缩放的上下限。
+- **3D：** 把相机后移（dolly）/ 调整 FOV 来容纳包围盒。Cinemachine 3 中，把相机的 Tracking Target 指向 `CinemachineTargetGroup`，再加 `CinemachineGroupFraming`。
+- **分屏：** 每个玩家一台相机，各自渲染到一个视口矩形；把额外渲染开销计入预算（`performance-optimization`）。
 
-## 6. Cinematic blends & transitions
+## 6. 电影化混合与转场
 
-- Blend between gameplay and cutscene cameras over a short time (ease-in-out). Cinemachine blends
-  automatically when you change the active camera's priority; in Godot, tween a rig between marker
-  transforms or swap `current` cameras with a fade.
-- Reset smoothing state on hard cuts/teleports so the camera doesn't slingshot across the map.
+- 在玩法相机与过场相机之间做短时混合（缓入缓出）。改变活跃相机的优先级时 Cinemachine 会自动混合；Godot 中则在标记（marker）变换之间对装置做补间，或带淡入淡出地切换 `current` 相机。
+- 硬切/传送时重置平滑状态，避免相机横穿整张地图。
 
-## 7. Per-engine rig summary
+## 7. 各引擎装置对照
 
-Unity column: Cinemachine 3.x, namespace `Unity.Cinemachine`. The v2 components (`CinemachineVirtualCamera`, `CinemachineCollider`,
-`CinemachineFramingTransposer`) are marked deprecated in 3.x and point to `CinemachineCamera`,
-`CinemachineDeoccluder` and `CinemachinePositionComposer`; do not use them in new code.
-`CinemachineDeoccluder` keeps the target in line of sight; `CinemachineDecollider` only pulls the
-camera out of geometry it intersects.
+Unity 列对应 Cinemachine 3.x，命名空间 `Unity.Cinemachine`。v2 组件（`CinemachineVirtualCamera`、`CinemachineCollider`、`CinemachineFramingTransposer`）在 3.x 中已标记弃用，弃用提示指向 `CinemachineCamera`、`CinemachineDeoccluder` 与 `CinemachinePositionComposer`；新代码不要再用它们。`CinemachineDeoccluder` 让目标保持在视线内；`CinemachineDecollider` 只把相机从与之相交的几何体中拉出来。
 
-| Need | Godot 4.7 | Unity 6.3 LTS |
+| 需求 | Godot 4.7 | Unity 6.3 LTS |
 |------|-----------|---------|
-| 2D follow + smoothing + limits | `Camera2D` (`position_smoothing_*`, `limit_*`, `drag_*`) | `CinemachineCamera` + `CinemachinePositionComposer` (Damping, Dead Zone, Lookahead) + `CinemachineConfiner2D` |
-| 3D follow/orbit | pivot + `SpringArm3D` + `Camera3D` | `CinemachineCamera` + `CinemachineOrbitalFollow` + `CinemachineDeoccluder` (or `CinemachineDecollider`) |
-| Shake | additive `offset` from `game-feel` | `CinemachineBasicMultiChannelPerlin` (noise); `CinemachineImpulseSource` + `CinemachineImpulseListener` (impacts) |
-| Bounds | `limit_*` / manual clamp | `CinemachineConfiner2D/3D` |
-| Group framing | manual bounding box + zoom | `CinemachineTargetGroup` + `CinemachineGroupFraming` |
-| Addon option | `PhantomCamera` (declarative 2D/3D rigs) | built-in Cinemachine |
+| 2D 跟随 + 平滑 + 限制 | `Camera2D`（`position_smoothing_*`、`limit_*`、`drag_*`） | `CinemachineCamera` + `CinemachinePositionComposer`（Damping、Dead Zone、Lookahead）+ `CinemachineConfiner2D` |
+| 3D 跟随/环绕 | 枢轴 + `SpringArm3D` + `Camera3D` | `CinemachineCamera` + `CinemachineOrbitalFollow` + `CinemachineDeoccluder`（或 `CinemachineDecollider`） |
+| 抖动 | 来自 `game-feel` 的叠加式 `offset` | `CinemachineBasicMultiChannelPerlin`（噪声）；`CinemachineImpulseSource` + `CinemachineImpulseListener`（冲击） |
+| 边界 | `limit_*` / 手动钳制 | `CinemachineConfiner2D/3D` |
+| 群体构图 | 手动包围盒 + 缩放 | `CinemachineTargetGroup` + `CinemachineGroupFraming` |
+| 插件选项 | `PhantomCamera`（声明式 2D/3D 装置） | 内置 Cinemachine |

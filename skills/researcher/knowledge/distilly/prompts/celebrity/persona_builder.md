@@ -1,21 +1,24 @@
-# Celebrity Persona Builder
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/celebrity/persona_builder.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 名人人格构建器
 
-Generate a `persona.md` for a public figure based on research findings and persona analysis.
+## 任务
 
-The output must preserve the person's cognitive signature — not just their tone, but how they
-actually think, decide, and approach problems.
+基于研究发现与人格分析，为一位公众人物生成 `persona.md`。
 
-The generated persona must be:
-- **Distinctive**: recognizable without the name attached
-- **Operative**: usable for real thinking tasks, not just roleplay
-- **Honest**: clear about what it can and cannot represent
-- **Agentic**: capable of researching before answering, not just reciting trained knowledge
+输出必须保留此人的认知签名：不只是语气，还有他们实际上如何思考、决策和处理问题。
+
+生成的人格必须：
+- **有辨识度**：不挂名字也能认出
+- **可操作**：能用于真实思考任务，不只是角色扮演
+- **诚实**：清楚说明它能代表什么、不能代表什么
+- **Agentic**：能在回答前先做研究，不只是复述训练知识
 
 ---
 
-## Structure
+## 结构
 
 ```markdown
 # {name} — Celebrity Persona
@@ -202,14 +205,13 @@ When evidence conflicts, say so — do not force coherence.
 
 ---
 
-## Rules
+## 规则
 
-- Write in the user's language
-- Prefer durable thinking patterns over biographical details
-- Keep contradictions if they matter — they are depth, not flaws
-- Avoid shallow impersonation — the person should be intellectually recognizable, not caricatured
-- Keep source use paraphrased except for very short phrases essential to expression DNA
-- Never dump transcript-like source text into the output
-- The Agentic Protocol dimensions must be derived from this specific person's mental models,
-  not generic research steps that any smart person would follow
-- If evidence was thin for any section, mark it explicitly rather than filling with generic content
+- 用用户的语言写作
+- 优先持久的思维模式，而非传记细节
+- 重要的矛盾要保留：它们是深度，不是缺陷
+- 避免浅薄模仿：应该在智识上可辨认，而不是漫画化
+- 来源使用保持改写，仅对捕捉表达 DNA 必需的极短短语例外
+- 绝不把类转写的来源文本倒进输出
+- Agentic Protocol 的维度必须从这个具体人物的心智模型推导而来，而不是任何聪明人都会走的通用研究步骤
+- 任何一节证据单薄就明确标注，不要用泛泛内容填充

@@ -1,10 +1,14 @@
-# Common Hook Patterns
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/plugin-dev/skills/hook-development/references/patterns.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This reference provides common, proven patterns for implementing Claude Code hooks. Use these patterns as starting points for typical hook use cases.
+# 常见 Hook 模式
 
-## Pattern 1: Security Validation
+本参考提供实现 Claude Code Hook 的常用成熟模式。典型 Hook 用例可以直接以这些模式为起点。
 
-Block dangerous file writes using prompt-based hooks:
+## 模式 1：安全验证
+
+用 prompt 型 Hook 拦截危险的文件写入：
 
 ```json
 {
@@ -22,11 +26,11 @@ Block dangerous file writes using prompt-based hooks:
 }
 ```
 
-**Use for:** Preventing writes to sensitive files or system directories.
+**适用场景：** 防止写入敏感文件或系统目录。
 
-## Pattern 2: Test Enforcement
+## 模式 2：测试强制执行
 
-Ensure tests run before stopping:
+确保停止前跑过测试：
 
 ```json
 {
@@ -44,11 +48,11 @@ Ensure tests run before stopping:
 }
 ```
 
-**Use for:** Enforcing quality standards and preventing incomplete work.
+**适用场景：** 强制执行质量标准，防止工作未完成就收尾。
 
-## Pattern 3: Context Loading
+## 模式 3：上下文加载
 
-Load project-specific context at session start:
+会话开始时加载项目专属上下文：
 
 ```json
 {
@@ -66,7 +70,7 @@ Load project-specific context at session start:
 }
 ```
 
-**Example script (load-context.sh):**
+**示例脚本（load-context.sh）：**
 ```bash
 #!/bin/bash
 cd "$CLAUDE_PROJECT_DIR" || exit 1
@@ -81,11 +85,11 @@ elif [ -f "Cargo.toml" ]; then
 fi
 ```
 
-**Use for:** Automatically detecting and configuring project-specific settings.
+**适用场景：** 自动检测并配置项目专属设置。
 
-## Pattern 4: Notification Logging
+## 模式 4：通知记录
 
-Log all notifications for audit or analysis:
+记录所有通知，用于审计或分析：
 
 ```json
 {
@@ -103,11 +107,11 @@ Log all notifications for audit or analysis:
 }
 ```
 
-**Use for:** Tracking user notifications or integration with external logging systems.
+**适用场景：** 跟踪用户通知，或对接外部日志系统。
 
-## Pattern 5: MCP Tool Monitoring
+## 模式 5：MCP 工具监控
 
-Monitor and validate MCP tool usage:
+监控并校验 MCP 工具使用：
 
 ```json
 {
@@ -125,11 +129,11 @@ Monitor and validate MCP tool usage:
 }
 ```
 
-**Use for:** Protecting against destructive MCP operations.
+**适用场景：** 防护破坏性 MCP 操作。
 
-## Pattern 6: Build Verification
+## 模式 6：构建验证
 
-Ensure project builds after code changes:
+确保代码改动后项目完成构建：
 
 ```json
 {
@@ -147,11 +151,11 @@ Ensure project builds after code changes:
 }
 ```
 
-**Use for:** Catching build errors before committing or stopping work.
+**适用场景：** 在提交或收尾前发现构建错误。
 
-## Pattern 7: Permission Confirmation
+## 模式 7：权限确认
 
-Ask user before dangerous operations:
+危险操作前先询问用户：
 
 ```json
 {
@@ -169,11 +173,11 @@ Ask user before dangerous operations:
 }
 ```
 
-**Use for:** User confirmation on potentially destructive commands.
+**适用场景：** 对潜在破坏性命令做用户确认。
 
-## Pattern 8: Code Quality Checks
+## 模式 8：代码质量检查
 
-Run linters or formatters on file edits:
+文件编辑后运行 linter 或格式化工具：
 
 ```json
 {
@@ -191,7 +195,7 @@ Run linters or formatters on file edits:
 }
 ```
 
-**Example script (check-quality.sh):**
+**示例脚本（check-quality.sh）：**
 ```bash
 #!/bin/bash
 input=$(cat)
@@ -203,11 +207,11 @@ if [[ "$file_path" == *.js ]] || [[ "$file_path" == *.ts ]]; then
 fi
 ```
 
-**Use for:** Automatic code quality enforcement.
+**适用场景：** 自动执行代码质量要求。
 
-## Pattern Combinations
+## 模式组合
 
-Combine multiple patterns for comprehensive protection:
+组合多个模式实现全面防护：
 
 ```json
 {
@@ -256,11 +260,11 @@ Combine multiple patterns for comprehensive protection:
 }
 ```
 
-This provides multi-layered protection and automation.
+这样就能获得多层防护与自动化。
 
-## Pattern 9: Temporarily Active Hooks
+## 模式 9：临时启用的 Hook
 
-Create hooks that only run when explicitly enabled via flag files:
+创建仅在通过标志文件显式启用时才运行的 Hook：
 
 ```bash
 #!/bin/bash
@@ -280,7 +284,7 @@ file_path=$(echo "$input" | jq -r '.tool_input.file_path')
 security-scanner "$file_path"
 ```
 
-**Activation:**
+**启用方式：**
 ```bash
 # Enable the hook
 touch .enable-security-scan
@@ -289,17 +293,17 @@ touch .enable-security-scan
 rm .enable-security-scan
 ```
 
-**Use for:**
-- Temporary debugging hooks
-- Feature flags for development
-- Project-specific validation that's opt-in
-- Performance-intensive checks only when needed
+**适用场景：**
+- 临时调试 Hook
+- 开发用功能开关
+- 需显式开启的项目专属校验
+- 只在需要时才做的高开销检查
 
-**Note:** Must restart Claude Code after creating/removing flag files for hooks to recognize changes.
+**注意：** 创建或删除标志文件后必须重启 Claude Code，Hook 才能识别变更。
 
-## Pattern 10: Configuration-Driven Hooks
+## 模式 10：配置驱动的 Hook
 
-Use JSON configuration to control hook behavior:
+用 JSON 配置控制 Hook 行为：
 
 ```bash
 #!/bin/bash
@@ -330,7 +334,7 @@ if [ "$file_size" -gt "$max_file_size" ]; then
 fi
 ```
 
-**Configuration file (.claude/my-plugin.local.json):**
+**配置文件（.claude/my-plugin.local.json）：**
 ```json
 {
   "strictMode": true,
@@ -339,8 +343,8 @@ fi
 }
 ```
 
-**Use for:**
-- User-configurable hook behavior
-- Per-project settings
-- Team-specific rules
-- Dynamic validation criteria
+**适用场景：**
+- 用户可配置的 Hook 行为
+- 每项目独立设置
+- 团队专属规则
+- 动态校验判据

@@ -12,11 +12,15 @@ photo: warm con=6
 pictured: Trade Ledger, Poster hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/vellum.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Vellum
 
-An old printing house: a parchment ground, umber ink, Grenze Gotisch for the heads, its roman sibling Grenze for a sentence set large, a plain Hanken Grotesk for everything read, hairlines and double rules, and ultramarine as the one pigment. The gothic face carries the age, so nothing else is ornamented: no tavern, no distressed pastiche, no cream-and-serif editorial page.
+一间老印刷所：羊皮纸底色、赭褐墨色，Grenze Gotisch 作标题，它的正体同胞 Grenze 用于放大的句子，朴素的 Hanken Grotesk 承担一切阅读文字，发丝线与双线，群青是唯一的颜料。哥特字体承载年代感，其余一切不加装饰：没有小酒馆，没有做旧仿古，也没有奶油配衬线的编辑页。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -32,58 +36,58 @@ An old printing house: a parchment ground, umber ink, Grenze Gotisch for the hea
 }
 ```
 
-Three colourways, stated in the stamp (`vellum: parchment`).
+三种配色，写入 stamp（印记）：`vellum: parchment`。
 
-| Colourway | Ground, ink, pigment |
+| 配色 | 底色、墨色、颜料 |
 | --- | --- |
-| **parchment** (default) | the tokens above |
-| **oxblood, reversed** | ground `oklch(27% 0.09 20)`, ink `oklch(94% 0.02 80)`, pigment gold `oklch(84% 0.11 85)` texted in the ground, rule `oklch(44% 0.08 20)`, fibre at 0.25 |
-| **indigo, the ledger** | ground `oklch(93% 0.012 240)`, ink `oklch(24% 0.035 265)`, the same ultramarine, rule `oklch(76% 0.02 250)`, fibre at 0.14 |
+| **parchment**（默认） | 上面的 token |
+| **oxblood, reversed** | 底 `oklch(27% 0.09 20)`，墨 `oklch(94% 0.02 80)`，颜料为金色 `oklch(84% 0.11 85)` 压底色之上，横线 `oklch(44% 0.08 20)`，纤维强度 0.25 |
+| **indigo, the ledger** | 底 `oklch(93% 0.012 240)`，墨 `oklch(24% 0.035 265)`，同一群青，横线 `oklch(76% 0.02 250)`，纤维强度 0.14 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Grenze Gotisch 600 for `h1` and `h2`, line-height 0.92, `--tracking-display`, sentence case. It closes up below 30px, so `h3` and smaller set in Hanken Grotesk 600.
-- **Outlier, Grenze 400:** the roman sibling, for one sentence set at `--text-display-s` and for figures at display size, line-height 1.02. Never for running text.
-- **Body:** Hanken Grotesk 400 and 500, line-height 1.55; nav links at 600. Three weights a page at most: 400, 500, 600.
-- **Labels, captions, table heads, meta:** Hanken Grotesk 500 a step smaller, sentence case, untracked. Figures that a table compares (weights, lots, dates) take Hanken's tabular figures, right-aligned.
+- **展示字体：**Grenze Gotisch 600 用于 `h1` 与 `h2`，行高 0.92，`--tracking-display`，句首大写。它在 30px 以下会挤作一团，所以 `h3` 及更小字号改用 Hanken Grotesk 600。
+- **Outlier 字体，Grenze 400：**正体同胞，用于一句话排到 `--text-display-s`，以及展示字号的数字，行高 1.02。绝不用于正文。
+- **正文：**Hanken Grotesk 400 与 500，行高 1.55；导航链接用 600。每页至多三种字重：400、500、600。
+- **标签、图注、表头、元信息：**Hanken Grotesk 500，小一号，句首大写，不加字距。表格中互相比较的数字（重量、批号、日期）用 Hanken 的表格数字，右对齐。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Rules: 1px `--color-rule` hairlines between rows, 1px ink along a section's top, and a `--rule-double` double ink rule where a printer would double one: over a table's head, under the masthead, along the top of a band.
-- Radius 2px everywhere, no pills, no shadows: the page is printed flat.
-- Bands: a `--color-paper-2` band carrying the fibre wash, and one ultramarine `--color-field`; two a page at most, never touching.
-- Photographs: the trade in its own light (the drum, the cooling tray, sacks, the counter, hands at the bench), close, no face to the lens; warmed, 2px radius, a 1px `--color-rule` edge. Captions beneath carry a fact; a head sits on one only over an umber scrim.
-- Texture, the fibre wash: long tan fibres of SVG turbulence, stitched so they never tile, multiplied at `--fibre` (`texture.md`, the low-frequency wash), on a band or a well only.
+- 横线：行间 1px `--color-rule` 发丝线，区块顶端 1px 墨线，以及印刷工会加双线的地方用 `--rule-double` 双墨线：表头之上、报头之下、色带顶端。
+- 圆角处处 2px，无胶囊，无阴影：页面是平版印刷的。
+- 色带：一条带纤维罩染的 `--color-paper-2` 色带，和一条群青 `--color-field`；每页至多两条，绝不相连。
+- 照片：这门手艺自己的光（烘焙滚筒、冷却盘、麻袋、柜台、工作台前的双手），近拍，没有正对镜头的脸；偏暖，2px 圆角，1px `--color-rule` 边缘。图注在下、承载一个事实；标题压在照片上时必须垫赭褐蒙版。
+- 纹理，纤维罩染：SVG turbulence 生成的长条棕褐纤维，拼接处理使它永不平铺，以 `--fibre` 正片叠底（`texture.md` 的低频罩染），只用于色带或内嵌面板。
 
-## Range
+## 版式（Range）
 
-- **Table as a day book:** the week's list as a full-width ruled table under a double rule, pigment numerals indexing the rows, the name in Hanken 600 at title size, values in tabular figures; a hovered row takes `--color-accent-soft`.
-- **Statement with figures:** one sentence of the prompt in Grenze 400 across nine or ten columns on the fibre band, and beneath it, parted by a hairline, the prompt's own numbers in Grenze Gotisch at display size in pigment with a plain label under each.
-- **Form on the field:** the ultramarine band holding a working choice (a size, a frequency) as square cells joined edge to edge, the running answer in Grenze Gotisch at section size.
-- **Rows as an index:** three to five ruled rows, the title in Grenze Gotisch at section size, one line of Hanken beside it: terms, visits, ways to buy.
+- **表格当日记账簿：**本周清单排成横贯全宽的划线表格，压在双线之下，颜料色数字为行编序，名称用 Hanken 600 标题字号，数值用表格数字；悬停行取 `--color-accent-soft`。
+- **陈述配数字：**提示词中的一句话用 Grenze 400 横跨九或十列，排在纤维色带上；其下以一条发丝线分隔，提示词自己的数字用 Grenze Gotisch 排展示字号、颜料色，每个数字下配一个朴素的标签。
+- **色场上的表单：**群青色带承载一个可用的选择（尺寸、频率），作边贴边的直角单元格，当前答案用 Grenze Gotisch 排区块字号。
+- **行作索引：**三到五行划线行，标题用 Grenze Gotisch 排区块字号，旁边一行 Hanken：条款、到访、购买方式。
 
-## Controls
+## 控件（Controls）
 
-- A pigment-filled primary (`--color-accent-ink` on `--color-accent`) that deepens to `--color-accent-deep` on hover, beside a ghost with a 1px ink border, both 2px radius, Hanken Grotesk 500.
-- Links underline in pigment on hover; inputs take 2px radius and a 1px ink border.
-- Ultramarine is the one pigment: the primary, a link's hover, the focus ring, the numerals that index a list, the figures, one band.
+- 颜料色填充主按钮（`--color-accent` 底、`--color-accent-ink` 字），悬停加深为 `--color-accent-deep`，旁边是 1px 墨色边框的幽灵按钮；两者 2px 圆角，Hanken Grotesk 500。
+- 链接悬停时下划线转颜料色；输入框 2px 圆角，1px 墨色边框。
+- 群青是唯一的颜料：主按钮、链接悬停、焦点环、为列表编序的数字、大数字，以及那一条色带。
 
-## Motion
+## 动效（Motion）
 
-Still. A hover underline in pigment, a row's soft wash and the primary deepening over `--dur-micro`; no reveal, no parallax.
+静止。悬停下划线转颜料色、行的柔和罩染与主按钮加深在 `--dur-micro` 内完成；无显现动效，无视差。
 
-## Voice
+## 语气（Voice）
 
-Ledger-plain and dated: the item, the weight, the year, the town, as a clerk would enter them. Never *artisanal*, *curated*, or a story the prompt did not give.
+账簿式的平实并注明日期：品项、重量、年份、城镇，如书记员录入。绝不用 *artisanal*、*curated*，也绝不讲提示词没有给出的故事。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never clay, terracotta or oxblood as the pigment on parchment; oxblood is a ground only.
-- Never Grenze Gotisch below 30px, at paragraph length, or opening a head on a capital I, which reads as J.
-- Never a deckled edge, a vignette, a coffee ring, a burn or a second texture.
-- Never the founding year alone as the hero's head; it sits in a sentence, a row or a figure with its label.
+- parchment 配色下绝不用陶土、红陶或牛血红作颜料；牛血红只能是底色。
+- Grenze Gotisch 绝不用在 30px 以下、段落长度，或让标题以大写 I 开头，它会被读成 J。
+- 绝不用毛边、暗角、咖啡渍、烧痕或第二种纹理。
+- 绝不把创立年份单独作 Hero 标题；它要待在句子里、一行里，或作为带标签的数字。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@600&family=Grenze:wght@400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">

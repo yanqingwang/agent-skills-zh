@@ -1,32 +1,36 @@
-# Error Patterns - JavaScript Code Node
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-code-javascript/ERROR_PATTERNS.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete guide to avoiding the most common Code node errors.
+# 错误模式 - JavaScript Code 节点
 
----
-
-## Overview
-
-This guide covers the **top 5 error patterns** encountered in n8n Code nodes. Understanding and avoiding these errors will save you significant debugging time.
-
-**Error frequency (roughly ordered)**:
-1. Empty Code / Missing Return - the dominant error n8n itself rejects
-2. Expression Syntax used as Code - `{{ }}` written where JavaScript belongs
-3. Return Shape - primitive/`null` returns (bare objects auto-wrap)
-4. Broken Strings / Escaping - unbalanced quotes/brackets throw a JS syntax error
-5. Missing Null Checks - common runtime error
+避开 Code 节点最常见错误的完整指南。
 
 ---
 
-## Error #1: Empty Code or Missing Return Statement
+## 概述
 
-**Frequency**: Most common error (38% of all validation failures)
+本指南覆盖 n8n Code 节点中**最常见的 5 类错误模式**。理解并避开它们，能省下大量调试时间。
 
-**What Happens**:
-- Workflow execution fails
-- Next nodes receive no data
-- Error: "Code cannot be empty" or "Code must return data"
+**错误频率（大致排序）**：
+1. 代码为空 / 缺 return：n8n 自己就会拒绝的最主要错误
+2. 把表达式语法当代码：`{{ }}` 出现在该写 JavaScript 的地方
+3. 返回结构：返回原始值/`null`（裸对象会自动包装）
+4. 字符串断裂 / 转义：引号或括号不配对会抛 JS 语法错误
+5. 缺空值检查：常见运行时错误
 
-### The Problem
+---
+
+## 错误 #1：代码为空或缺少 return 语句
+
+**频率**：最常见错误（占全部校验失败的 38%）
+
+**现象**：
+- 工作流执行失败
+- 下游节点收不到数据
+- 报错 "Code cannot be empty" 或 "Code must return data"
+
+### 问题所在
 
 ```javascript
 // ❌ ERROR: No code at all
@@ -59,7 +63,7 @@ const processed = items.map(item => ({json: item.json}));
 // ❌ Forgot to return processed!
 ```
 
-### The Solution
+### 解决方法
 
 ```javascript
 // ✅ CORRECT: Always return data
@@ -103,29 +107,29 @@ if (items.length === 0) {
 // All paths covered
 ```
 
-### Checklist
+### 检查清单
 
-- [ ] Code field is not empty
-- [ ] Return statement exists
-- [ ] ALL code paths return data (if/else branches)
-- [ ] Return format is correct (`[{json: {...}}]`)
-- [ ] Return happens even on errors (use try-catch)
+- [ ] 代码字段不为空
+- [ ] 存在 return 语句
+- [ ] 所有代码路径都返回数据（if/else 各分支）
+- [ ] 返回格式正确（`[{json: {...}}]`）
+- [ ] 出错时也要返回（用 try-catch）
 
 ---
 
-## Error #2: Expression Syntax Confusion
+## 错误 #2：表达式语法混淆
 
-**What Happens** — there are two distinct cases, and only one is a syntax error:
-- **`{{ }}` inside a string literal**: valid JavaScript that runs fine, but you get the *literal text* `{{ ... }}` instead of a value — n8n does not evaluate expressions inside Code-node code. A logic bug, not a validation error. (n8n-mcp ≥ 2.63.0 no longer flags `{{ }}` inside string literals — prompt templates, payload placeholders, and `.replace()` tokens are legitimate.)
-- **`{{ }}` written as bare code** (e.g. `return {{ $json.x }}`): a genuine JavaScript syntax error. The validator reports "Expression syntax {{...}} is not valid in Code nodes" and n8n throws "Unexpected token".
+**现象**：分两种情况，只有其中一种是语法错误：
+- **字符串字面量里的 `{{ }}`**：是合法 JavaScript，能正常跑，但你得到的是 `{{ ... }}` 这段*字面文本*而不是值：n8n 不会在 Code 节点代码里求值表达式。这是逻辑 bug，不是校验错误。（n8n-mcp ≥ 2.63.0 不再标记字符串字面量里的 `{{ }}`：提示词模板、payload 占位符、`.replace()` 用的 token 都是合法的。）
+- **`{{ }}` 当裸代码写**（如 `return {{ $json.x }}`）：真正的 JavaScript 语法错误。校验器报 "Expression syntax {{...}} is not valid in Code nodes"，n8n 抛 "Unexpected token"。
 
-### The Problem
+### 问题所在
 
-n8n has TWO distinct syntaxes:
-1. **Expression syntax** `{{ }}` - Used in OTHER nodes (Set, IF, HTTP Request)
-2. **JavaScript** - Used in CODE nodes
+n8n 有两套截然不同的语法：
+1. **表达式语法** `{{ }}` - 用于其他节点（Set、IF、HTTP Request）
+2. **JavaScript** - 用于 Code 节点
 
-Many developers mistakenly reach for expression syntax inside a Code node when they want a *value*. Putting `{{ }}` in a string does not interpolate it:
+很多开发者想要一个*值*时，会误在 Code 节点里用表达式语法。把 `{{ }}` 放进字符串并不会插值：
 
 ```javascript
 // ❌ LOGIC BUG: n8n never evaluates {{ }} in Code-node strings
@@ -148,7 +152,7 @@ return [{
 const value = {{ $now.toFormat('yyyy-MM-dd') }};  // "Unexpected token"
 ```
 
-### The Solution
+### 解决方法
 
 ```javascript
 // ✅ CORRECT: Use JavaScript directly (no {{ }})
@@ -187,17 +191,17 @@ return [{
 }];
 ```
 
-### Comparison Table
+### 对比表
 
-| Context | Syntax | Example |
+| 场景 | 语法 | 示例 |
 |---------|--------|---------|
-| Set node | `{{ }}` expressions | `{{ $json.name }}` |
-| IF node | `{{ }}` expressions | `{{ $json.age > 18 }}` |
-| HTTP Request URL | `{{ }}` expressions | `{{ $json.userId }}` |
-| **Code node** | **JavaScript** | `$json.name` |
-| **Code node strings** | **Template literals** | `` `Hello ${$json.name}` `` |
+| Set 节点 | `{{ }}` 表达式 | `{{ $json.name }}` |
+| IF 节点 | `{{ }}` 表达式 | `{{ $json.age > 18 }}` |
+| HTTP Request URL | `{{ }}` 表达式 | `{{ $json.userId }}` |
+| **Code 节点** | **JavaScript** | `$json.name` |
+| **Code 节点字符串** | **模板字面量** | `` `Hello ${$json.name}` `` |
 
-### Quick Fix Guide
+### 快速修复指南
 
 ```javascript
 // WRONG → RIGHT conversions
@@ -217,17 +221,17 @@ return [{
 
 ---
 
-## Error #3: Return Shape
+## 错误 #3：返回结构
 
-**What actually happens** — n8n is more forgiving than the old advice implied:
-- In *Run Once for All Items* mode, n8n **auto-normalizes** a single bare object, or an array of bare objects, by wrapping each under a `json` property. So these run.
-- What genuinely fails, with "Code doesn't return items properly", is returning a **primitive** (string/number/boolean) or **`null`/`undefined`** — there is nothing to wrap.
+**实际情况**：n8n 比旧建议所暗示的更宽容：
+- 在 *Run Once for All Items* 模式下，n8n 会**自动规范化**单个裸对象或裸对象数组：给每个对象套一层 `json` 属性。所以这些写法能跑。
+- 真正会失败、报 "Code doesn't return items properly" 的，是返回**原始值**（string/number/boolean）或 **`null`/`undefined`**：没有东西可包。
 
-(n8n-mcp ≥ 2.63.0 no longer errors "Return value must be an array of objects" on a bare-object return; the earlier claim contradicted n8n's auto-wrap behavior.)
+（n8n-mcp ≥ 2.63.0 不再对裸对象返回报 "Return value must be an array of objects" 错误；旧说法与 n8n 的自动包装行为相矛盾。）
 
-### Prefer the Canonical Form
+### 优先用规范形式
 
-The canonical `[{json: {...}}]` is unambiguous and behaves identically in both execution modes, so make it your default even though looser shapes are auto-wrapped:
+规范形式 `[{json: {...}}]` 无歧义，且在两种执行模式下行为完全一致，尽管更松散的写法会被自动包装，仍应把它作为默认：
 
 ```javascript
 // ⚠️ Auto-wrapped → [{json: {result: 'success'}}]. Runs, but prefer the array + json form.
@@ -261,7 +265,7 @@ return "processed";
 return null;
 ```
 
-### The Solution
+### 解决方法
 
 ```javascript
 // ✅ CORRECT: Single result
@@ -310,14 +314,14 @@ if (shouldProcess) {
 }
 ```
 
-### Return Format Checklist
+### 返回格式检查清单
 
-- [ ] Return value is an **array** `[...]` (canonical — preferred)
-- [ ] Each array element has a **`json` property**
-- [ ] Structure is `[{json: {...}}]` or `[{json: {...}}, {json: {...}}]`
-- [ ] Not a primitive (string/number/boolean) or `null`/`undefined` — those are the shapes that actually fail
+- [ ] 返回值是**数组** `[...]`（规范形式，首选）
+- [ ] 数组每个元素都有 **`json` 属性**
+- [ ] 结构为 `[{json: {...}}]` 或 `[{json: {...}}, {json: {...}}]`
+- [ ] 不是原始值（string/number/boolean），也不是 `null`/`undefined`：真正会失败的就是这些形状
 
-### Common Scenarios
+### 常见场景
 
 ```javascript
 // Scenario 1: Single object from API
@@ -360,20 +364,20 @@ return null;
 
 ---
 
-## Error #4: Broken Strings & Escaping (JavaScript syntax errors)
+## 错误 #4：字符串断裂与转义（JavaScript 语法错误）
 
-**What Happens**:
-- The Code node throws a JavaScript syntax error at execution: "Unexpected token" or "Unexpected end of input"
-- Cause is your own JS — unbalanced quotes or a raw newline inside a plain quoted string
+**现象**：
+- Code 节点在执行时抛出 JavaScript 语法错误："Unexpected token" 或 "Unexpected end of input"
+- 原因是你自己的 JS：引号不配对，或普通引号字符串里有裸换行
 
-This is a plain JavaScript concern, **not** a validator check. The validator (n8n-mcp ≥ 2.63.0) does not flag balanced apostrophes, `{ }` in regex, or `{{ }}` sitting inside a string literal — those are all valid JavaScript. Only genuinely malformed JS throws, and it throws at runtime.
+这只是普通 JavaScript 层面的问题，**不是**校验器的检查项。校验器（n8n-mcp ≥ 2.63.0）不会标记配对的单引号、正则里的 `{ }`、或字符串字面量里的 `{{ }}`，这些都是合法 JavaScript。只有真正残缺的 JS 才会抛错，而且在运行时抛。
 
-### The Problem
+### 问题所在
 
-This happens when:
-1. A quote inside a same-quoted string is left unescaped
-2. A plain (non-template) string spans multiple lines
-3. Backslashes in paths/regex are not escaped
+发生条件：
+1. 同种引号字符串内的引号没转义
+2. 普通（非模板）字符串跨多行
+3. 路径/正则里的反斜杠没转义
 
 ```javascript
 // ✅ FINE: an apostrophe inside a double-quoted string is valid JavaScript
@@ -392,7 +396,7 @@ const html = "
 ";
 ```
 
-### The Solution
+### 解决方法
 
 ```javascript
 // ✅ Mix quote styles or escape, whichever reads cleaner
@@ -420,17 +424,17 @@ const html = `
 const path = "C:\\\\Users\\\\Documents\\\\file.txt";
 ```
 
-### Escaping Guide
+### 转义指南
 
-| Character | Escape As | Example |
+| 字符 | 转义为 | 示例 |
 |-----------|-----------|---------|
-| Single quote in single-quoted string | `\\'` | `'It\\'s working'` |
-| Double quote in double-quoted string | `\\"` | `"She said \\"hello\\""` |
-| Backslash | `\\\\` | `"C:\\\\path"` |
-| Newline | `\\n` | `"Line 1\\nLine 2"` |
-| Tab | `\\t` | `"Column1\\tColumn2"` |
+| 单引号字符串里的单引号 | `\\'` | `'It\\'s working'` |
+| 双引号字符串里的双引号 | `\\"` | `"She said \\"hello\\""` |
+| 反斜杠 | `\\\\` | `"C:\\\\path"` |
+| 换行符 | `\\n` | `"Line 1\\nLine 2"` |
+| 制表符 | `\\t` | `"Column1\\tColumn2"` |
 
-### Best Practices
+### 最佳实践
 
 ```javascript
 // ✅ BEST: Use template literals for complex strings
@@ -453,17 +457,17 @@ const jsonString = `{
 
 ---
 
-## Error #5: Missing Null Checks / Undefined Access
+## 错误 #5：缺空值检查 / 访问 undefined
 
-**Frequency**: Very common runtime error
+**频率**：非常常见的运行时错误
 
-**What Happens**:
-- Workflow execution stops
-- Error: "Cannot read property 'X' of undefined"
-- Error: "Cannot read property 'X' of null"
-- Crashes on missing data
+**现象**：
+- 工作流执行停止
+- 报错 "Cannot read property 'X' of undefined"
+- 报错 "Cannot read property 'X' of null"
+- 数据缺失时崩溃
 
-### The Problem
+### 问题所在
 
 ```javascript
 // ❌ WRONG: No null check - crashes if user doesn't exist
@@ -485,7 +489,7 @@ const city = $json.address.city;
 const names = $json.users.map(user => user.name);
 ```
 
-### The Solution
+### 解决方法
 
 ```javascript
 // ✅ CORRECT: Optional chaining
@@ -535,7 +539,7 @@ try {
 }
 ```
 
-### Safe Access Patterns
+### 安全访问模式
 
 ```javascript
 // Pattern 1: Optional chaining (modern, recommended)
@@ -561,7 +565,7 @@ try {
 }
 ```
 
-### Webhook Data Safety
+### Webhook 数据安全
 
 ```javascript
 // Webhook data requires extra safety
@@ -581,7 +585,7 @@ const name = $json.body?.user?.name || 'Unknown';
 const email = $json.body?.user?.email || 'no-email';
 ```
 
-### Array Safety
+### 数组安全
 
 ```javascript
 // ❌ RISKY: No length check
@@ -603,7 +607,7 @@ const firstItem = $input.first();
 const firstId = firstItem.json.id;  // Built-in safety
 ```
 
-### Object Property Safety
+### 对象属性安全
 
 ```javascript
 // ❌ RISKY: Direct access
@@ -621,18 +625,18 @@ const timeout = $json.settings?.advanced?.timeout ?? 30000;
 
 ---
 
-## Error #6: UnsupportedFunctionError (Auth Helpers Blocked)
+## 错误 #6：UnsupportedFunctionError（鉴权 helper 被禁）
 
-**Frequency**: The most common "this worked yesterday in old n8n" error after upgrading to v2.0+
+**频率**：升级到 v2.0+ 之后，最常见的"昨天在旧版 n8n 还能跑"类错误
 
-**What Happens**:
-- Error: `UnsupportedFunctionError: The function "helpers.httpRequestWithAuthentication" is not supported in the Code Node`
-- Same for `helpers.requestWithAuthenticationPaginated`
-- Throws on execution, not on save
+**现象**：
+- 报错 `UnsupportedFunctionError: The function "helpers.httpRequestWithAuthentication" is not supported in the Code Node`
+- `helpers.requestWithAuthenticationPaginated` 同样如此
+- 执行时抛出，保存时不抛
 
-### The Problem
+### 问题所在
 
-Since n8n v2.0, Code nodes execute in the **task runner sandbox** which deliberately blocks the auth helpers. The legacy vm2 sandbox used to bind them, which is why old forum posts and tutorials show them working. n8n's source comment explains why: the Code node has no credential of its own, so the helper had nothing to authenticate against — it was always semantically broken, just not always loud about it.
+从 n8n v2.0 起，Code 节点在 **task runner 沙箱**中执行，沙箱有意禁用了鉴权 helper。旧的 vm2 沙箱曾经绑定这些 helper，所以老帖子和教程里它们看起来能用。n8n 源码注释解释了原因：Code 节点自己没有凭据，helper 无从鉴权；这个写法在语义上一直是坏的，只是一直没大声报出来。
 
 ```javascript
 // ❌ BLOCKED in task runner sandbox (default since v2.0)
@@ -643,15 +647,15 @@ const data = await this.helpers.httpRequestWithAuthentication.call(
 );
 ```
 
-### The Solution
+### 解决方法
 
-There is **no env flag** to re-enable these in the runner — the deny-list is compiled-in. Pick one of:
+runner 里**没有任何环境变量**能重新启用它们：deny-list 是编译进去的。从下面三选一：
 
-**Option A — Replace the Code node with an HTTP Request node** (best):
+**方案 A：把 Code 节点换成 HTTP Request 节点**（最佳）：
 
-The HTTP Request node natively supports credential attachment with full expression support for URL/body/headers. Most "Code-node-makes-an-API-call" patterns are leftovers from before HTTP Request had pagination and expression support.
+HTTP Request 节点原生支持挂凭据，URL/body/headers 都支持完整表达式。多数"Code 节点调 API"的写法，都是 HTTP Request 还没有分页和表达式支持时的遗留产物。
 
-**Option B — Sub-workflow with HTTP Request node** (when you need code-level logic before/after):
+**方案 B：子工作流加 HTTP Request 节点**（前后需要代码级逻辑时）：
 
 ```javascript
 // Parent Code node — prepare payloads, then delegate
@@ -662,9 +666,9 @@ return $input.all().map(i => ({ json: {
 }}));
 ```
 
-Then wire to **Execute Workflow** → child workflow with **Execute Workflow Trigger** → **HTTP Request** node using `={{ $json.url }}`, `={{ $json.body }}`, with the credential attached natively.
+然后接到 **Execute Workflow** → 带 **Execute Workflow Trigger** 的子工作流 → **HTTP Request** 节点，使用 `={{ $json.url }}`、`={{ $json.body }}`，凭据原生挂载。
 
-**Option C — Token as runtime data** (only when the token genuinely flows through the workflow):
+**方案 C：token 作为运行时数据**（仅当 token 确实随工作流数据流转时）：
 
 ```javascript
 // ✅ Works — manual auth header, token came from upstream
@@ -676,37 +680,37 @@ const data = await this.helpers.httpRequest({
 });
 ```
 
-### Decision Guide
+### 决策指南
 
-| Need | Use |
+| 需求 | 做法 |
 |------|-----|
-| Single authenticated API call | HTTP Request node directly |
-| Many API calls + pre/post processing | Sub-workflow pattern (Option B) |
-| Token already in the data flow | Manual `this.helpers.httpRequest()` with header |
-| `httpRequestWithAuthentication` | **Doesn't work — pick A, B, or C above** |
+| 单次鉴权 API 调用 | 直接用 HTTP Request 节点 |
+| 多次 API 调用 + 前后处理 | 子工作流模式（方案 B） |
+| token 已在数据流里 | 手动 `this.helpers.httpRequest()` 加 header |
+| `httpRequestWithAuthentication` | **不可用：从上面 A、B、C 里选** |
 
 ---
 
-## Error #7: $env is not defined / Cannot access $env
+## 错误 #7：$env is not defined / 无法访问 $env
 
-**Frequency**: Common in hardened production instances
+**频率**：在加固过的生产实例中常见
 
-**What Happens**:
-- Error: `$env is not defined` or `ReferenceError: $env is not defined`
-- Code looks correct, runs fine on dev instance, throws in production
+**现象**：
+- 报错 `$env is not defined` 或 `ReferenceError: $env is not defined`
+- 代码看着没问题，开发实例上正常跑，生产上抛错
 
-### The Problem
+### 问题所在
 
-`$env` access is gated by the **`N8N_BLOCK_ENV_ACCESS_IN_NODE`** environment variable. When set to `true` (a common production hardening setting), `$env` is removed from the Code node sandbox entirely. This is increasingly the default in security-conscious deployments.
+`$env` 访问由 **`N8N_BLOCK_ENV_ACCESS_IN_NODE`** 环境变量把关。设为 `true`（常见的生产加固配置）时，`$env` 会从 Code 节点沙箱中彻底移除。注重安全的部署越来越多默认这么配。
 
 ```javascript
 // ❌ Throws if N8N_BLOCK_ENV_ACCESS_IN_NODE=true
 const apiKey = $env.API_KEY;
 ```
 
-### The Solution
+### 解决方法
 
-Treat secrets as a **credential concern**, not a Code-node concern:
+把密钥当成**凭据问题**，而不是 Code 节点问题：
 
 ```javascript
 // ✅ Token arrives as data from an upstream node that used a credential
@@ -716,72 +720,72 @@ const apiKey = $('Set Secret').first().json.apiKey;
 // — your Code node never sees the raw secret, which is the whole point
 ```
 
-For values you genuinely need to inject from outside the workflow (config, not secrets), use:
-- A **Set** node at the top of the workflow with hardcoded constants, or
-- An **n8n credential** referenced by an HTTP Request node, or
-- The **External Secrets** integration (`$secrets`) if your edition supports it.
+确实需要从工作流外部注入的值（配置，而非密钥），用：
+- 在工作流顶部放一个 **Set** 节点写死常量，或
+- 用 HTTP Request 节点引用一个 **n8n 凭据**，或
+- 你的版本支持的话，用 **External Secrets** 集成（`$secrets`）。
 
-### Why This Matters
+### 为什么这件事重要
 
-Skills and tutorials written before 2024 routinely use `$env.API_KEY` because it was the path of least resistance. Modern n8n setups block it because letting Code nodes read arbitrary env vars is a privilege escalation surface — any user with workflow-edit access could exfiltrate `DB_PASSWORD`, `N8N_ENCRYPTION_KEY`, etc. Don't fight the restriction; route secrets through credentials.
-
----
-
-## Error Prevention Checklist
-
-Use this checklist before deploying Code nodes:
-
-### Code Structure
-- [ ] Code field is not empty
-- [ ] Return statement exists
-- [ ] All code paths return data
-
-### Return Format
-- [ ] Returns items, not a primitive/`null`
-- [ ] Canonical shape `[{json: {...}}]` (bare objects auto-wrap, but be explicit)
-
-### Syntax
-- [ ] No `{{ }}` written as code (it's for other nodes' fields; in a string it's just literal text)
-- [ ] Template literals use backticks: `` `${variable}` ``
-- [ ] All quotes and brackets balanced
-- [ ] Strings properly escaped
-
-### Data Safety
-- [ ] Null checks for optional properties
-- [ ] Array length checks before access
-- [ ] Webhook data accessed via `.body`
-- [ ] Try-catch for risky operations
-- [ ] Default values for missing data
-
-### Testing
-- [ ] Test with empty input
-- [ ] Test with missing fields
-- [ ] Test with unexpected data types
-- [ ] Check browser console for errors
+2024 年之前写的 Skill 和教程常直接用 `$env.API_KEY`，因为那是最省事的路。现代 n8n 配置把它禁掉：允许 Code 节点读任意环境变量等于开了一个提权面，任何有工作流编辑权限的用户都能把 `DB_PASSWORD`、`N8N_ENCRYPTION_KEY` 等偷走。别跟限制较劲，让密钥走凭据。
 
 ---
 
-## Quick Error Reference
+## 错误预防清单
 
-| Error Message | Likely Cause | Fix |
+部署 Code 节点前，先过一遍这个清单：
+
+### 代码结构
+- [ ] 代码字段不为空
+- [ ] 存在 return 语句
+- [ ] 所有代码路径都返回数据
+
+### 返回格式
+- [ ] 返回条目，不是原始值/`null`
+- [ ] 规范形状 `[{json: {...}}]`（裸对象会自动包装，但仍要写明确）
+
+### 语法
+- [ ] 没有 `{{ }}` 当代码写（它是给其他节点字段用的；放进字符串只是字面文本）
+- [ ] 模板字面量用反引号：`` `${variable}` ``
+- [ ] 引号与括号全部配对
+- [ ] 字符串正确转义
+
+### 数据安全
+- [ ] 可选属性做空值检查
+- [ ] 访问数组前检查长度
+- [ ] Webhook 数据经 `.body` 访问
+- [ ] 有风险的操作用 try-catch
+- [ ] 缺失数据给默认值
+
+### 测试
+- [ ] 用空输入测试
+- [ ] 用缺失字段测试
+- [ ] 用意外数据类型测试
+- [ ] 检查浏览器控制台报错
+
+---
+
+## 错误速查表
+
+| 报错信息 | 可能原因 | 修复 |
 |---------------|--------------|-----|
-| "Code cannot be empty" | Empty code field | Add meaningful code |
-| "Code must return data" | Missing return statement | Add `return [...]` |
-| "Code doesn't return items properly" | Returned a primitive (string/number) or `null` | Return `[{json:{...}}]` (objects/arrays auto-wrap; primitives don't) |
-| "Not all items have a json key" | Mixed return — some items wrapped, some bare | Wrap every item: `{json: {...}}` |
-| "Expression syntax {{...}} is not valid in Code nodes" / "Unexpected token" | `{{ }}` written as code (not inside a string) | Use JavaScript: `$json.x` or `` `${$json.x}` `` |
-| "Cannot read property X of undefined" | Missing null check | Use optional chaining `?.` |
-| "Cannot read property X of null" | Null value access | Add guard clause or default |
-| "Unexpected end of input" | Unbalanced quotes/brackets in your JS | Escape strings or use backtick template literals |
-| "UnsupportedFunctionError ... httpRequestWithAuthentication" | Auth helper blocked in task runner | Use HTTP Request node + credential, or sub-workflow pattern (Error #6) |
-| "$env is not defined" | `N8N_BLOCK_ENV_ACCESS_IN_NODE=true` | Route secrets through credentials, not `$env` (Error #7) |
-| "Cannot find module 'crypto'" | `require()` allowlist not set | Move logic out of Code node, or set `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES` |
+| "Code cannot be empty" | 代码字段为空 | 写入有意义的代码 |
+| "Code must return data" | 缺 return 语句 | 加上 `return [...]` |
+| "Code doesn't return items properly" | 返回了原始值（string/number）或 `null` | 返回 `[{json:{...}}]`（对象/数组会自动包装；原始值不会） |
+| "Not all items have a json key" | 混合返回：有的条目带包装，有的裸 | 每个条目都包上 `{json: {...}}` |
+| "Expression syntax {{...}} is not valid in Code nodes" / "Unexpected token" | `{{ }}` 当代码写（不在字符串里） | 用 JavaScript：`$json.x` 或 `` `${$json.x}` `` |
+| "Cannot read property X of undefined" | 缺空值检查 | 用可选链 `?.` |
+| "Cannot read property X of null" | 访问了 null 值 | 加卫语句或默认值 |
+| "Unexpected end of input" | JS 里引号/括号不配对 | 转义字符串，或用反引号模板字面量 |
+| "UnsupportedFunctionError ... httpRequestWithAuthentication" | task runner 里鉴权 helper 被禁 | 用 HTTP Request 节点 + 凭据，或子工作流模式（错误 #6） |
+| "$env is not defined" | `N8N_BLOCK_ENV_ACCESS_IN_NODE=true` | 密钥走凭据，不走 `$env`（错误 #7） |
+| "Cannot find module 'crypto'" | `require()` 白名单未设置 | 把逻辑移出 Code 节点，或设置 `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES` |
 
 ---
 
-## Debugging Tips
+## 调试技巧
 
-### 1. Use console.log()
+### 1. 用 console.log()
 
 ```javascript
 const items = $input.all();
@@ -791,7 +795,7 @@ console.log('First item:', items[0]);
 // Check browser console (F12) for output
 ```
 
-### 2. Return Intermediate Results
+### 2. 返回中间结果
 
 ```javascript
 // Debug by returning current state
@@ -802,7 +806,7 @@ const processed = items.map(item => ({json: item.json}));
 return processed;
 ```
 
-### 3. Try-Catch for Troubleshooting
+### 3. 用 Try-Catch 排查问题
 
 ```javascript
 try {
@@ -820,7 +824,7 @@ try {
 }
 ```
 
-### 4. Validate Input Structure
+### 4. 校验输入结构
 
 ```javascript
 const items = $input.all();
@@ -833,25 +837,25 @@ console.log('Input structure:', JSON.stringify(items[0], null, 2));
 
 ---
 
-## Summary
+## 小结
 
-**Top 7 Errors to Avoid**:
-1. **Empty code / missing return** - Always return data
-2. **Expression syntax as code** - Use JavaScript, not `{{ }}` (in-string `{{ }}` is just literal text)
-3. **Return shape** - prefer `[{json: {...}}]`; primitives/`null` fail (bare objects auto-wrap)
-4. **Broken strings** - unbalanced quotes/brackets throw a JS syntax error; escape or use template literals
-5. **Missing null checks** - Use optional chaining `?.`
-6. **`httpRequestWithAuthentication` blocked** - Use HTTP Request node + credential
-7. **`$env` blocked** - Route secrets through credentials, not env access
+**最需要避开的 7 个错误**：
+1. **代码为空 / 缺 return**：始终返回数据
+2. **表达式语法当代码**：用 JavaScript，别用 `{{ }}`（字符串里的 `{{ }}` 只是字面文本）
+3. **返回结构**：优先 `[{json: {...}}]`；原始值/`null` 会失败（裸对象自动包装）
+4. **字符串断裂**：引号/括号不配对会抛 JS 语法错误；转义或用模板字面量
+5. **缺空值检查**：用可选链 `?.`
+6. **`httpRequestWithAuthentication` 被禁**：用 HTTP Request 节点 + 凭据
+7. **`$env` 被禁**：密钥走凭据，不走环境变量访问
 
-**Quick Prevention**:
-- Prefer the canonical `[{json: {...}}]` return; never return a primitive or `null`
-- Write JavaScript — don't put `{{ }}` where code belongs
-- Check for null/undefined before accessing
-- Test with empty and invalid data
-- Use browser console for debugging
+**快速预防**：
+- 优先用规范的 `[{json: {...}}]` 返回；绝不返回原始值或 `null`
+- 写 JavaScript：别在该写代码的地方放 `{{ }}`
+- 访问前检查 null/undefined
+- 用空数据和非法数据测试
+- 用浏览器控制台调试
 
-**See Also**:
-- [SKILL.md](SKILL.md) - Overview and best practices
-- [DATA_ACCESS.md](DATA_ACCESS.md) - Safe data access patterns
-- [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - Working examples
+**另见**：
+- [SKILL.md](SKILL.md) - 概述与最佳实践
+- [DATA_ACCESS.md](DATA_ACCESS.md) - 安全的数据访问模式
+- [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - 可用的完整示例

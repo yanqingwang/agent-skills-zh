@@ -1,10 +1,14 @@
-# SPARQL Competency Queries
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/bdi-mental-states/references/sparql-competency.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Validation queries for BDI ontology implementations based on competency questions.
+# SPARQL 能力问题查询
 
-## Mental Entity Queries
+基于能力问题（competency questions）对 BDI 本体实现进行验证的查询。
 
-### CQ1: What are all mental entities?
+## 心智实体查询
+
+### CQ1: 所有心智实体有哪些？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -17,7 +21,7 @@ SELECT DISTINCT ?entity ?type WHERE {
 }
 ```
 
-### CQ2: What beliefs does an agent hold?
+### CQ2: Agent 持有哪些信念？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -29,7 +33,7 @@ SELECT ?belief ?label WHERE {
 }
 ```
 
-### CQ3: What desires does an agent have?
+### CQ3: Agent 有哪些愿望？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -41,7 +45,7 @@ SELECT ?desire ?label WHERE {
 }
 ```
 
-### CQ4: What intentions has an agent committed to?
+### CQ4: Agent 承诺了哪些意图？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -53,9 +57,9 @@ SELECT ?intention ?label WHERE {
 }
 ```
 
-## Motivational Chain Queries
+## 动机链查询
 
-### CQ5: What beliefs motivated formation of a given desire?
+### CQ5: 哪些信念促成了某个愿望的形成？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -67,7 +71,7 @@ SELECT ?belief ?beliefLabel WHERE {
 }
 ```
 
-### CQ6: Which desire does a particular intention fulfill?
+### CQ6: 某个意图实现的是哪个愿望？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -79,7 +83,7 @@ SELECT ?desire ?desireLabel WHERE {
 }
 ```
 
-### CQ7: What beliefs support a given intention?
+### CQ7: 哪些信念支撑某个意图？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -91,7 +95,7 @@ SELECT ?belief ?label WHERE {
 }
 ```
 
-### CQ8: Trace complete cognitive chain for an intention
+### CQ8: 追踪某个意图的完整认知链
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -105,9 +109,9 @@ SELECT ?intention ?desire ?belief ?worldState WHERE {
 }
 ```
 
-## Mental Process Queries
+## 心智过程查询
 
-### CQ9: Which mental process generated a belief?
+### CQ9: 哪个心智过程生成了某个信念？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -120,7 +124,7 @@ SELECT ?process ?processType WHERE {
 }
 ```
 
-### CQ10: What triggered a mental process?
+### CQ10: 什么触发了心智过程？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -132,7 +136,7 @@ SELECT ?process ?trigger ?triggerType WHERE {
 }
 ```
 
-### CQ11: What did a mental process reason upon?
+### CQ11: 心智过程对什么进行了推理？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -143,9 +147,9 @@ SELECT ?process ?input WHERE {
 }
 ```
 
-## Plan and Goal Queries
+## 计划与目标查询
 
-### CQ12: What plan does an intention specify?
+### CQ12: 意图指定了什么计划？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -157,7 +161,7 @@ SELECT ?intention ?plan ?goal WHERE {
 }
 ```
 
-### CQ13: What is the ordered sequence of tasks in a plan?
+### CQ13: 计划中任务的有序序列是什么？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -170,7 +174,7 @@ SELECT ?plan ?task ?nextTask WHERE {
 ORDER BY ?task
 ```
 
-### CQ14: What is the first and last task of a plan?
+### CQ14: 计划的第一个和最后一个任务是什么？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -182,7 +186,7 @@ SELECT ?plan ?firstTask ?lastTask WHERE {
 }
 ```
 
-### CQ15: Which actions executed which tasks?
+### CQ15: 哪些动作执行了哪些任务？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -194,9 +198,9 @@ SELECT ?action ?task ?time WHERE {
 ORDER BY ?time
 ```
 
-## Temporal Queries
+## 时间查询
 
-### CQ16: What mental states are valid at a specific time?
+### CQ16: 哪些心智状态在特定时间点有效？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -212,7 +216,7 @@ SELECT ?mentalState ?type WHERE {
 }
 ```
 
-### CQ17: When was a belief formed?
+### CQ17: 信念是在什么时候形成的？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -224,7 +228,7 @@ SELECT ?belief ?formationTime WHERE {
 }
 ```
 
-### CQ18: What is the temporal validity of an intention?
+### CQ18: 意图的时间有效期是怎样的？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -237,9 +241,9 @@ SELECT ?intention ?start ?end WHERE {
 }
 ```
 
-## Justification Queries
+## 证成查询
 
-### CQ19: What justifies a belief?
+### CQ19: 什么证成了信念？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -251,7 +255,7 @@ SELECT ?belief ?justification ?justLabel WHERE {
 }
 ```
 
-### CQ20: What justifies an intention?
+### CQ20: 什么证成了意图？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -263,9 +267,9 @@ SELECT ?intention ?justification ?justLabel WHERE {
 }
 ```
 
-## Compositional Queries
+## 组成查询
 
-### CQ21: What parts comprise a complex belief?
+### CQ21: 复杂信念由哪些部分组成？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -277,7 +281,7 @@ SELECT ?belief ?part ?partLabel WHERE {
 }
 ```
 
-### CQ22: Find composite mental entities
+### CQ22: 查找组合式心智实体
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -289,9 +293,9 @@ GROUP BY ?composite
 HAVING (COUNT(?part) > 1)
 ```
 
-## World State Queries
+## 世界状态查询
 
-### CQ23: What world state does a belief refer to?
+### CQ23: 信念指向的是哪个世界状态？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -303,7 +307,7 @@ SELECT ?belief ?worldState ?wsComment WHERE {
 }
 ```
 
-### CQ24: What actions brought about a world state?
+### CQ24: 哪些动作造就了某个世界状态？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -314,7 +318,7 @@ SELECT ?action ?worldState WHERE {
 }
 ```
 
-### CQ25: What world states has an agent perceived?
+### CQ25: Agent 感知到了哪些世界状态？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -325,9 +329,9 @@ SELECT ?agent ?worldState ?time WHERE {
 }
 ```
 
-## Validation Queries (OWLUnit Style)
+## 验证查询（OWLUnit 风格）
 
-### V1: Every intention must fulfill exactly one desire
+### V1: 每个意图必须恰好实现一个愿望
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -339,7 +343,7 @@ SELECT ?intention WHERE {
 # Expected: Empty result set
 ```
 
-### V2: Every belief must reference a world state
+### V2: 每个信念必须指向一个世界状态
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -351,7 +355,7 @@ SELECT ?belief WHERE {
 # Expected: Empty result set (or only abstract beliefs)
 ```
 
-### V3: Mental processes must reason upon something
+### V3: 心智过程必须有推理对象
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -363,7 +367,7 @@ SELECT ?process WHERE {
 # Expected: Empty result set
 ```
 
-### V4: BeliefProcess must generate only Beliefs
+### V4: BeliefProcess 只能生成 Belief
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -376,7 +380,7 @@ SELECT ?process ?generated WHERE {
 # Expected: Empty result set
 ```
 
-### V5: Plans must have begin and end tasks
+### V5: 计划必须有起始任务和结束任务
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -391,9 +395,9 @@ SELECT ?plan WHERE {
 # Expected: Empty result set
 ```
 
-## Multi-Agent Queries
+## 多 Agent 查询
 
-### CQ26: What beliefs are shared across agents?
+### CQ26: 哪些信念被多个 Agent 共享？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -406,7 +410,7 @@ GROUP BY ?belief
 HAVING (COUNT(DISTINCT ?agent) > 1)
 ```
 
-### CQ27: Which agents share the same desire?
+### CQ27: 哪些 Agent 共享同一个愿望？
 
 ```sparql
 PREFIX bdi: <https://w3id.org/fossr/ontology/bdi/>
@@ -417,4 +421,3 @@ SELECT ?desire ?agent1 ?agent2 WHERE {
     FILTER(?agent1 != ?agent2)
 }
 ```
-

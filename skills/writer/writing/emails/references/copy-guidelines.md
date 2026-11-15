@@ -1,113 +1,117 @@
-# Email Copy Guidelines
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/emails/references/copy-guidelines.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Contents
-- Structure
-- Formatting
-- Tone
-- Length
-- CTA Buttons vs. Links
-- Personalization (merge fields, dynamic content, triggered emails)
-- Segmentation Strategies (by behavior, by stage, by profile)
-- Testing and Optimization (what to test, how to test, metrics to track)
+# 邮件文案指南
 
-## Structure
+## 目录
+- 结构
+- 排版
+- 语气
+- 长度
+- CTA 按钮与链接
+- 个性化（合并字段、动态内容、触发邮件）
+- 分群策略（按行为、按阶段、按画像）
+- 测试与优化（测什么、怎么测、跟踪哪些指标）
 
-1. **Hook**: First line grabs attention
-2. **Context**: Why this matters to them
-3. **Value**: The useful content
-4. **CTA**: What to do next
-5. **Sign-off**: Human, warm close
+## 结构
 
-## Formatting
+1. **钩子**：第一行抓住注意力
+2. **背景**：为什么这对他们重要
+3. **价值**：有用的内容
+4. **CTA**：下一步做什么
+5. **落款**：有人味、温暖的收尾
 
-- Short paragraphs (1-3 sentences)
-- White space between sections
-- Bullet points for scanability
-- Bold for emphasis (sparingly)
-- Mobile-first (most read on phone)
+## 排版
 
-## Tone
+- 短段落（1-3 句）
+- 段落之间留白
+- 用要点便于扫读
+- 加粗强调（节制使用）
+- 移动优先（多数人在手机上读）
 
-- Conversational, not formal
-- First-person (I/we) and second-person (you)
-- Active voice
-- Match your brand but lean friendly
-- Read it out loud—does it sound human?
+## 语气
 
-## Length
+- 口语化，不正式
+- 第一人称（我/我们）和第二人称（你）
+- 主动语态
+- 贴合品牌，但偏友好
+- 朗读一遍：听起来像人吗？
 
-- Shorter is usually better
-- 50-125 words for transactional
-- 150-300 words for educational
-- 300-500 words for story-driven
-- If it's long, it better be good
+## 长度
 
-## CTA Buttons vs. Links
+- 通常越短越好
+- 事务类 50-125 词
+- 教育类 150-300 词
+- 故事类 300-500 词
+- 要写长，就得足够好
 
-- Buttons: Primary actions, high-visibility
-- Links: Secondary actions, in-text
-- One clear primary CTA per email
-- Button text: Action + outcome
+## CTA 按钮与链接
 
----
-
-## Personalization
-
-### Merge Fields
-- First name (fallback to "there" or "friend")
-- Company name (B2B)
-- Relevant data (usage, plan, etc.)
-
-### Dynamic Content
-- Based on segment
-- Based on behavior
-- Based on stage
-
-### Triggered Emails
-- Action-based sends
-- More relevant than time-based
-- Examples: Feature used, milestone hit, inactivity
+- 按钮：主要动作，高可见度
+- 链接：次要动作，嵌在正文里
+- 每封邮件一个清楚的主 CTA
+- 按钮文字：动作 + 结果
 
 ---
 
-## Segmentation Strategies
+## 个性化
 
-### By Behavior
-- Openers vs. non-openers
-- Clickers vs. non-clickers
-- Active vs. inactive
+### 合并字段
+- 名字（回退用 "there" 或 "friend"）
+- 公司名（B2B）
+- 相关数据（用量、套餐等）
 
-### By Stage
-- Trial vs. paid
-- New vs. long-term
-- Engaged vs. at-risk
+### 动态内容
+- 按分群
+- 按行为
+- 按阶段
 
-### By Profile
-- Industry/role (B2B)
-- Use case / goal
-- Company size
+### 触发邮件
+- 按动作触发发送
+- 比按时间更相关
+- 示例：用了某功能、达到里程碑、不活跃
 
 ---
 
-## Testing and Optimization
+## 分群策略
 
-### What to Test
-- Subject lines (highest impact)
-- Send times
-- Email length
-- CTA placement and copy
-- Personalization level
-- Sequence timing
+### 按行为
+- 打开者与非打开者
+- 点击者与非点击者
+- 活跃与不活跃
 
-### How to Test
-- A/B test one variable at a time
-- Sufficient sample size
-- Statistical significance
-- Document learnings
+### 按阶段
+- 试用与付费
+- 新用户与老用户
+- 高互动与流失风险
 
-### Metrics to Track
-- Open rate (benchmark: 20-40%)
-- Click rate (benchmark: 2-5%)
-- Unsubscribe rate (keep under 0.5%)
-- Conversion rate (specific to sequence goal)
-- Revenue per email (if applicable)
+### 按画像
+- 行业/角色（B2B）
+- 用例/目标
+- 公司规模
+
+---
+
+## 测试与优化
+
+### 测什么
+- 主题行（影响最大）
+- 发送时间
+- 邮件长度
+- CTA 位置与文案
+- 个性化程度
+- 序列时序
+
+### 怎么测
+- A/B 测试一次只变一个变量
+- 样本量足够
+- 统计显著性
+- 记录结论
+
+### 要跟踪的指标
+- 打开率（基准：20-40%）
+- 点击率（基准：2-5%）
+- 退订率（控制在 0.5% 以下）
+- 转化率（对应序列目标）
+- 单封邮件收入（如适用）

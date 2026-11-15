@@ -1,15 +1,19 @@
-# Visual Identity Basics
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/brand/references/visual-identity.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Core Visual Elements
+# 视觉识别基础
 
-### Logo
-- **Primary:** Full logo (horizontal/stacked)
-- **Secondary:** Abbreviated version
-- **Icon/Mark:** Symbol only
-- **Clear space:** Minimum padding around logo
-- **Minimum size:** Smallest readable size
+## 核心视觉元素
 
-### Color Palette
+### 标志
+- **主标志：**完整标志（横版/竖版堆叠）
+- **次级标志：**缩写版本
+- **图标/符号：**仅符号
+- **净空：**标志周围的最小留白
+- **最小尺寸：**可读的最小规格
+
+### 色板
 ```
 Primary Colors (1-2)
 ├── Main brand color
@@ -25,15 +29,15 @@ Neutrals (3-4)
 └── UI elements
 ```
 
-### Typography
-| Usage | Font | Weight | Size |
+### 字体排印
+| 用途 | 字体 | 字重 | 字号 |
 |-------|------|--------|------|
-| H1 | [Font] | Bold | 32-48px |
-| H2 | [Font] | Semibold | 24-32px |
-| Body | [Font] | Regular | 16-18px |
-| Caption | [Font] | Regular | 12-14px |
+| H1 | [Font] | 粗体 | 32-48px |
+| H2 | [Font] | 半粗体 | 24-32px |
+| 正文 | [Font] | 常规 | 16-18px |
+| 图注 | [Font] | 常规 | 12-14px |
 
-## Visual Guidelines Template
+## 视觉规范模板
 
 ```markdown
 ## Logo Usage
@@ -77,20 +81,20 @@ Neutrals (3-4)
 - [Corner radius]
 ```
 
-## Quick Checks
+## 快速检查
 
-### Logo
-- [ ] Correct version for context
-- [ ] Sufficient clear space
-- [ ] Legible at size used
-- [ ] Correct color for background
+### 标志
+- [ ] 上下文使用了正确的版本
+- [ ] 净空充足
+- [ ] 在所用尺寸下清晰可读
+- [ ] 背景下颜色正确
 
-### Colors
-- [ ] From approved palette
-- [ ] Accessible contrast
-- [ ] Consistent across materials
+### 颜色
+- [ ] 来自已批准的色板
+- [ ] 对比度达到无障碍要求
+- [ ] 各物料之间一致
 
-### Typography
-- [ ] Correct fonts
-- [ ] Appropriate hierarchy
-- [ ] Readable size
+### 字体排印
+- [ ] 字体正确
+- [ ] 层级得当
+- [ ] 字号可读

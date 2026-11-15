@@ -12,11 +12,15 @@ photo: tint accent con=10
 pictured: Workbench, Stage hero, in the night colourway
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/ultraviolet.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Ultraviolet
 
-A producer's tool in one pigment: a paper tinted the same hue as the ink, one saturated violet in two strengths, Outfit set lowercase on every head and control, pills throughout, depth held to a hairline, photographs pulled into the violet. It reads quick, exact and young without raising its voice. It is not a purple-gradient startup page and not a neon club flyer.
+单色颜料里的制作人工具：纸与墨取同一色相的浅染，一种饱和紫以两档深浅出现，Outfit 以小写排每个标题与控件，处处胶囊形，深度收在发丝线内，照片被拉进紫色里。它读起来快、准、年轻，却不提高嗓门。它不是紫渐变创业页，也不是霓虹夜店传单。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -33,59 +37,59 @@ A producer's tool in one pigment: a paper tinted the same hue as the ink, one sa
 }
 ```
 
-Three colourways, set once per page and stated in the stamp (`ultraviolet: lavender`). A nocturnal prompt takes `night`, which may carry one band in the `record` colours.
+三种配色，每页设定一次，写入 stamp（印记）：`ultraviolet: lavender`。夜感提示词取 `night`，它可携带一条 `record` 配色的色带。
 
-| Colourway | Paper, ink, accent |
+| 配色 | 纸、墨、强调色 |
 | --- | --- |
-| `lavender` (default) | the block above |
-| `record` | ground `oklch(50% 0.25 290)`, ink `oklch(95% 0.02 300)`, the accent turns white `oklch(99% 0.005 300)` with violet text on it, rule `oklch(72% 0.14 292)` |
-| `night` | ground `oklch(14% 0.02 290)`, paper-2 `17.5% 0.025 290`, paper-3 `21% 0.03 290`, ink `92% 0.04 300`, ink-2 `80% 0.05 300`, muted `68% 0.06 300`, rule `28% 0.04 290`, rule-2 `44% 0.07 292`, accent `55% 0.25 290`, deep `48% 0.24 290`, soft `36% 0.09 293`, focus `62% 0.22 290` |
+| `lavender`（默认） | 上面的代码块 |
+| `record` | 底 `oklch(50% 0.25 290)`，墨 `oklch(95% 0.02 300)`，强调色转为白色 `oklch(99% 0.005 300)`，其上压紫字，横线 `oklch(72% 0.14 292)` |
+| `night` | 底 `oklch(14% 0.02 290)`，paper-2 `17.5% 0.025 290`，paper-3 `21% 0.03 290`，墨 `92% 0.04 300`，ink-2 `80% 0.05 300`，muted `68% 0.06 300`，横线 `28% 0.04 290`，rule-2 `44% 0.07 292`，强调色 `55% 0.25 290`，deep `48% 0.24 290`，soft `36% 0.09 293`，focus `62% 0.22 290` |
 
-## Type
+## 字体（Type）
 
-- **Display:** Outfit 500, lowercase, `--tracking-display`, line-height 1. Lowercase is the material: heads, nav links, buttons and pills never carry a capital.
-- **Figures:** Outfit 300 at `--text-display` and over, lowercase units beside them in the label voice, tabular; the thin geometric numeral is the one place the display goes light.
-- **Body:** Onest 400, sentence case, line-height 1.55. Prose is the one place a capital appears.
-- **Labels, captions, table heads:** Outfit 500 a step smaller, lowercase, untracked, in `--color-muted`. Mono only inside code.
+- **展示字体：**Outfit 500，小写，`--tracking-display`，行高 1。小写就是材质：标题、导航链接、按钮与胶囊绝不含大写字母。
+- **数字：**Outfit 300，`--text-display` 起步，单位以标签语气小写缀旁，表格数字；细几何数字是展示字体唯一变轻的地方。
+- **正文：**Onest 400，句首大写，行高 1.55。正文是全页唯一出现大写字母的地方。
+- **标签、图注、表头：**Outfit 500，小一号，小写，不加字距，用 `--color-muted`。等宽字体只出现在代码里。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Hairlines: 1px `--color-rule` between rows; pills and outlined controls carry 1.5px of `--color-rule-2`. No borders on cards; a surface is a step to `--color-paper-2`.
-- Radius: `--radius-pill` on every control and tag, 16px on surfaces, screens and photographs; nothing square.
-- Depth: none on paper, the whisper `--shadow-card` under a raised surface. No blur, no glow, no gradient.
-- Bands: a `--color-paper-2` band, an ink band, or one violet field in the `record` colours; two a page at most.
-- The product sits plain on `--color-paper-2` or bleeds off its edge, never in a bezel; a waveform is real line work, its played part in the violet, its rest in `--color-accent-soft`.
-- Photographs: the night around the music (hands on a mixer, a booth, a crowd lit from the stage seen from behind), tinted violet, 16px radius, a 1px inset ring of ink at 8%; type over one only on an ink scrim. Faces never lead. No texture.
+- 发丝线：行间 1px `--color-rule`；胶囊与描边控件带 1.5px 的 `--color-rule-2`。卡片无边框；表面就是向 `--color-paper-2` 退一档。
+- 圆角：一切控件与标记用 `--radius-pill`，表面、界面与照片 16px；没有直角。
+- 深度：纸面无深度，凸起表面下只有耳语般的 `--shadow-card`。无模糊，无辉光，无渐变。
+- 色带：`--color-paper-2` 色带、墨色色带，或 `record` 配色下的一条紫色色场；每页至多两条。
+- 产品平放在 `--color-paper-2` 上或出血到边缘，绝不装进边框壳；波形是真实的线条绘制，已播放段用紫色，未播段用 `--color-accent-soft`。
+- 照片：音乐周遭的夜（调音台上的手、台上的隔间、被舞台照亮的人群背影），染紫，16px 圆角，向内 1px 8% 墨色描边环；压在照片上的文字必须垫墨色蒙版。绝不以人脸为主角。无纹理。
 
-## Range
+## 版式（Range）
 
-- **Lanes as the picture:** the product's own waveforms across ten or twelve columns, one stem to a row under hairlines, a bar ruler above in the label voice; the played part violet, the rest soft. It carries a section with no photograph and no frame.
-- **Figures in light Outfit:** the prompt's real numbers at display size in the 300, parted by hairlines, one of them in the violet, each unit lowercase beside it.
-- **A table of uses:** a full-width Table in lowercase, the use at title size, the stems it takes as small pills, one line of what you hear; a price list takes the same rows.
-- **The record field:** one band in the violet holding a working drop zone or a form, the white pill its only fill.
+- **音轨即画面：**产品自己的波形横跨十到十二列，每行一条分轨（stem），压在发丝线下，上方一条小节标尺用标签语气；已播段紫色，其余用 soft。它独自撑起一个区块，无照片也无边框。
+- **细体 Outfit 数字：**提示词的真实数字用 300 字重排展示字号，发丝线分隔，其中一个用紫色，单位以小写缀旁。
+- **用途表：**横贯全宽的表格全用小写，用途排标题字号，所需分轨（stem）作小胶囊，一句话说明听到的内容；价目表沿用同样的行。
+- **record 色场：**一条紫色色带，装一个真正可用的投放区或表单，白色胶囊是它唯一的填充。
 
-## Controls
+## 控件（Controls）
 
-- A violet-filled pill (`--color-accent-ink` on `--color-accent`, `--color-accent-deep` on hover) beside an inset-outlined one (1.5px of `--color-ink`), both Outfit 500 lowercase; inside a violet field the filled pill turns white with violet text.
-- Links underline in violet on hover; inputs are pills with a 1.5px `--color-rule-2` inset ring that turns ink on focus. Toggles (solo, mute) are small pills that fill violet when pressed.
-- The violet is one pigment: one filled control, the focus ring, a link's hover, a progress fill, a played waveform, one figure.
+- 紫色填充胶囊（`--color-accent` 底 `--color-accent-ink` 字，悬停转 `--color-accent-deep`），旁边是内嵌描边胶囊（1.5px 的 `--color-ink`）；两者都 Outfit 500 小写。紫色色场内，填充胶囊转为白底紫字。
+- 链接悬停时下划线转紫；输入框是胶囊，带 1.5px `--color-rule-2` 内嵌环，聚焦转墨色。开关（solo、mute）是小胶囊，按下时紫色填充。
+- 紫是一种颜料：一个填充控件、焦点环、链接悬停、进度填充、已播波形、一个数字。
 
-## Motion
+## 动效（Motion）
 
-Quick and dry: `--dur-micro` colour transitions on pills over `--ease-out`, a lane that dims or lights as a toggle moves, and at most one settle on load over `--dur-long` from an already-visible default. Nothing spins or loops.
+快而干脆：胶囊的颜色过渡用 `--ease-out` 配 `--dur-micro`，开关切换时音轨变暗或点亮，加载时至多一次收尾，从已可见的默认态以 `--dur-long` 过渡。无旋转，无循环。
 
-## Voice
+## 语气（Voice）
 
-Lowercase, short, exact: the stem, the bar, the minute, the track count. It talks like a producer, not a label.
+小写、短、准：分轨、小节、分钟、曲目数。说话像制作人，不像唱片公司。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a capital in a head, a nav link or a button.
-- Never a second chromatic colour, in a photograph either; the violet is the only one.
-- Never a purple-to-pink gradient, a mesh behind text or a glow.
-- Never square controls or 4px radii; Ultraviolet is round.
+- 标题、导航链接、按钮里绝无大写字母。
+- 绝无第二种彩色，照片里也一样；紫是唯一。
+- 绝不用紫到粉的渐变、文字背后的网格光晕或辉光。
+- 绝不用直角控件或 4px 圆角；Ultraviolet 是圆的。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500&family=Onest:wght@400&display=swap" rel="stylesheet">

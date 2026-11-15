@@ -1,39 +1,43 @@
-# Sage Grain — Creative Agency
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--sage-grain/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Sage Grain：创意机构
 
-Organic creative agency design with dark green-grey background, grain noise texture, and sparkle cross elements. Features extreme bold titles with textFill fade and white card panels for content sections.
+## 风格概览
 
-- **Scenario**: Creative agencies, design studios, boutique consultancies, organic brands, wellness companies
-- **Mood**: Organic, sophisticated, grounded, artisanal
-- **Tone**: Dark sage-grey with white and warm accents
+有机的创意机构设计：深绿灰背景、颗粒噪点纹理与星光十字元素。特色是超粗标题配 textFill 渐隐，以及承载内容分区的白色卡片面板。
 
-## Color Palette
+- **适用场景**：创意机构、设计工作室、精品咨询、有机品牌、健康养生企业
+- **氛围**：有机、精致、沉稳、匠意
+- **色调**：深鼠尾草灰绿，配白色与暖色点缀
 
-| Name       | Hex     | Usage                                |
-| ---------- | ------- | ------------------------------------ |
-| Background | #1E2720 | Dark sage-grey (organic feel)        |
-| White      | #FFFFFF | Cards, primary text                  |
-| Warm       | #D9B88F | Warm beige for accents               |
-| Gold       | #C9A86A | Muted gold for highlights            |
-| Sage       | #6B7F69 | Mid-tone sage green                  |
-| Dim        | #8A9088 | Muted grey-green for supporting text |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 背景 | #1E2720 | 深鼠尾草灰绿（有机感） |
+| 白色 | #FFFFFF | 卡片、主文字 |
+| 暖米色 | #D9B88F | 暖米色，用于点缀 |
+| 哑光金 | #C9A86A | 哑光金，用于高亮 |
+| 鼠尾草绿 | #6B7F69 | 中调鼠尾草绿 |
+| 暗文字 | #8A9088 | 灰绿色，用于辅助文字 |
 
-- **Grain noise texture**: Scattered small ellipses at low opacity (0.02-0.03) for analog feel
-- **Sparkle cross element**: 4-line cross shape (0.08cm thickness) as decorative motif
-- **Extreme bold titles**: 56-64pt titles with textFill gradient fade
-- **White card panels**: Elevated rect panels (roundRect) with content on dark background
-- **Small section labels**: 9-10pt uppercase labels for hierarchy
-- **Alternating layouts**: Dark-full → white-card → stat-hero pattern creates rhythm
+## 设计技法
 
-## Key Morph Patterns
+- **颗粒噪点纹理**：低透明度（0.02-0.03）散布的小椭圆，营造模拟质感
+- **星光十字元素**：四线十字形（0.08cm 粗细），作装饰母题
+- **超粗标题**：56-64pt 标题，配 textFill 渐变渐隐
+- **白色卡片面板**：深色底上的浮起矩形面板（roundRect），承载内容
+- **小节标签**：9-10pt 全大写标签，构建层级
+- **交替版式**：深色整页 → 白卡片 → 数据主视觉的模式，形成节奏
 
-- White panels morph in size and position across slides
-- Grain texture stays consistent (organic continuity)
-- Sparkle crosses reposition as decorative accents
+## 关键 Morph 模式
 
-## Reference Script
+- 白色面板跨幻灯片改变尺寸与位置
+- 颗粒纹理保持一致（有机连续性）
+- 星光十字作为装饰点缀跨页重新定位
 
-Complete build script available in `build.py` (Python with officecli).
+## 参考脚本
+
+完整构建脚本见 `build.py`（Python，配合 officecli）。

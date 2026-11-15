@@ -1,27 +1,31 @@
-# Release Surface Review Methods
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/check/references/release-surfaces.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Loaded on demand from `/check` when a diff or release question touches one of these surfaces. The fill-in template shapes live in `project-context.md`; this file owns the review method.
+# 发布表面审查方法
 
-## CLI Command Surface
+当 diff 或发布问题触及下列表面之一时，由 `/check` 按需加载。填空模板的形态在 `project-context.md`；本文件负责审查方法。
 
-Check command contract and installed-runtime behavior, not just library tests: help/version, subcommands/flags, exit codes, stdout/stderr, JSON/schema output, TTY/non-interactive paths, env/config precedence, shebang/executable bit, PATH shim, and package-manager install path when applicable.
+## CLI 命令表面
 
-For mutating CLI commands, also run the Safety Sink Review (see `project-context.md`): dry-run or confirmation path, operation log or rollback story, retry/idempotency, signal/partial-failure handling, and test-mode guards for auth prompts or real system changes. For cleanup, uninstall, prune, reset, or cache-removal commands, add two checks before approval: can a normal user verify each selected item is safe, and is the deleted content locally rebuildable rather than a downloaded dependency or user data? If either answer is no, require narrower matching, explicit user selection, or leave the item visible but non-destructive.
+检查命令契约与已安装运行时的行为，而不只是库测试：help/version、子命令/标志、退出码、stdout/stderr、JSON/schema 输出、TTY/非交互路径、env/config 优先级、shebang/可执行位、PATH shim，以及适用时的包管理器安装路径。
 
-## Packaged Install Surface
+对有变更效果的 CLI 命令，还要运行 Safety Sink Review（见 `project-context.md`）：dry-run 或确认路径、操作日志或回滚方案、重试/幂等、信号/部分失败处理，以及针对认证提示或真实系统变更的测试模式守卫。对清理、卸载、prune、reset 或缓存清除类命令，批准前加两项检查：普通用户能否核实每个被选项是安全的；被删内容能否在本地重建，而不是下载来的依赖或用户数据？任一答案为否，就要求更窄的匹配、显式的用户选择，或让条目保持可见但不可破坏。
 
-Verify the installed runtime contract, not just the source tree:
+## 打包安装表面
 
-1. Identify the install path a real user will get: package manager, release archive, marketplace entry, plugin source path, or installer script default ref.
-2. Build or regenerate the package exactly as project docs require, then inspect the archive or generated mirror for every new script, reference, template, rule, manifest, and executable bit. When a build or test pass is cached, trace newly bundled resources and test fixtures into the cache key too. In a disposable copy, change one new input and one known-covered input separately as controls: a changed package or test input must invalidate the reused pass, even if the verifier and key share the same incomplete list.
-3. Run an isolated install smoke when the surface is installable: fresh temp home/config/cache, add the marketplace or package, install the skill or plugin, list it, and invoke the smallest command or entrypoint that proves scripts and references resolve from the installed path.
-4. Filter generated mirrors and archives for cache/noise files such as `__pycache__`, `*.pyc`, `.pytest_cache`, `.ruff_cache`, `.mypy_cache`, `.DS_Store`, local logs, and screenshots unless the project explicitly ships them.
-5. If network, auth, or host tooling prevents the install smoke, state the missing layer as a blocker or gap. Do not replace installed-runtime proof with manifest JSON, source tests, or a successful local import.
+核实已安装的运行时契约，而不只是源码树：
 
-## Reworked Or Cancelled Release Gate
+1. 确定真实用户会得到的安装路径：包管理器、发布压缩包、marketplace 条目、插件源路径或安装脚本默认 ref。
+2. 严格按项目文档要求构建或重新生成包，然后检查压缩包或生成镜像中的每个新脚本、引用、模板、规则、manifest 与可执行位。构建或测试通过被缓存时，把新捆绑的资源与测试 fixture 一并纳入缓存键追踪。在一次性副本中，分别改动一个新输入和一个已知被覆盖的输入作为对照：包或测试输入的变化必须使复用的通过记录失效，即使验证器与键共享同一份不完整清单。
+3. 表面可安装时，运行隔离的安装冒烟：全新的临时 home/config/cache，添加 marketplace 或包，安装 Skill 或插件，列出它，并调用能证明脚本与引用能从安装路径解析的最小命令或入口。
+4. 过滤生成镜像与压缩包中的缓存/噪音文件，例如 `__pycache__`、`*.pyc`、`.pytest_cache`、`.ruff_cache`、`.mypy_cache`、`.DS_Store`、本地日志与截图，除非项目明确要发布它们。
+5. 网络、认证或宿主工具阻碍安装冒烟时，把缺失的一层报告为阻塞项或缺口。不要用 manifest JSON、源码测试或本地 import 成功来替代已安装运行时的证据。
 
-1. Lock the review base to the last public stable tag or release artifact, then review through current `HEAD`. Do not limit the review to recent commits or the latest local diff.
-2. Record the exact base, `HEAD`, dirty state, origin sync, version fields, generated artifacts, release notes, package contents, CI, and remote distribution state. If any state changes mid-review, refresh the range and rerun the fast gates.
-3. Review by shipped risk surface: user-reported regressions, crash or hang paths, destructive operations, privilege or permission boundaries, background workers, startup or first-frame work, update feeds, package contents, and public support claims.
-4. Output two release decisions, not one: whether the preview or beta can keep taking user testing, and whether stable release prep can start.
-5. Every conclusion must name blockers, deferrable maintenance, commands that ran, and runtime or user-smoke coverage. Source tests alone cannot prove a reworked UI/native release ready.
+## 重做或取消的发布闸门
+
+1. 把审查基线锁定到上一个公开 stable tag 或发布产物，然后审查到当前 `HEAD`。不要把审查限制在最近的 commit 或最新本地 diff。
+2. 记录确切基线、`HEAD`、脏状态、origin 同步、版本字段、生成产物、release notes、包内容、CI 与远端分发状态。审查中途任何状态变化，都刷新范围并重跑快速闸门。
+3. 按已发布的风险表面审查：用户报告的回归、崩溃或挂起路径、破坏性操作、特权或权限边界、后台 worker、启动或首帧工作、更新源、包内容与公开支持承诺。
+4. 输出两个发布决定，而不是一个：preview 或 beta 能否继续接受用户测试，stable 发布准备能否开始。
+5. 每个结论都要列明阻塞项、可延后维护、已运行的命令，以及运行时或用户冒烟覆盖。仅源码测试不能证明重做过的 UI/原生发布已就绪。

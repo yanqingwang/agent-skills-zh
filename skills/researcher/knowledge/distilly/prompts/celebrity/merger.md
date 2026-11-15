@@ -1,149 +1,115 @@
-# Celebrity Merger
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/celebrity/merger.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 名人人格合并
 
-Evolve an existing celebrity-based skill when new material arrives or the user
-issues a correction. Preserve the person's complexity — do not flatten them into
-a cleaner but less-true version.
+## 任务
 
-The persona already has structure. Your job is to thread new evidence into the
-right layer without damaging what is already calibrated.
+当新材料到达或用户提出修正时，演进已有的名人 Skill。保留此人的复杂性：不要把他压扁成一个更“干净”却更失真的版本。
 
----
-
-## Two Evolution Modes
-
-### Mode A — Material-driven update
-
-Triggered when the user supplies fresh research (new interviews, talks,
-writings, subtitles, transcripts via `tools/research/transcribe_audio.py`).
-
-Sequence:
-
-1. Run the intake / research pipeline for the **new** material only (keep it
-   in a dated subfolder under `knowledge/research/raw/` so provenance is clear).
-2. Re-run `tools/research/merge_research.py <skill_dir>` to refresh the merged
-   summary with the added files.
-3. Diff the new extraction against the existing `persona.md` before rewriting
-   anything. Most material will confirm what is there; only a minority will
-   change the shape.
-
-### Mode B — Correction-driven update
-
-Triggered when the user says "this is wrong", "you got that wrong", provides a direct
-quote that contradicts current output, or demands a tone/boundary fix.
-
-Sequence:
-
-1. Write the correction verbatim into the Correction Log with a timestamp and
-   the triggering user phrase.
-2. Trace the correction to the specific layer it touches (mental model,
-   heuristic, expression DNA, genealogy, etc.).
-3. Adjust that layer minimally. Do not cascade edits into layers the user did
-   not correct.
+人格已有结构。你的任务是把新证据穿进正确的层，同时不破坏已经校准好的内容。
 
 ---
 
-## Merge Priorities (by Persona Layer)
+## 两种演进模式
 
-### Layer 1 — Identity
+### 模式 A：材料驱动的更新
 
-Only change when the new material reveals a stable self-description the current
-identity blurb misses, or when the user corrects the activation disclaimer.
+触发条件：用户提供新研究材料（新访谈、演讲、文章、字幕，或经 `tools/research/transcribe_audio.py` 得到的转写稿）。
 
-### Layer 2 — Expression DNA
+流程：
 
-Update when new material supplies:
+1. 只对**新**材料跑采集 / 研究流水线（放在 `knowledge/research/raw/` 下带日期的子文件夹里，保证来源清晰）。
+2. 重跑 `tools/research/merge_research.py <skill_dir>`，用新增文件刷新合并摘要。
+3. 重写任何内容之前，先把新提取结果与现有 `persona.md` 做对比。多数材料只会印证已有内容，只有少数会改变形态。
 
-- Additional voice samples that pass the 100-word blind test
-- A recurring metaphor or framing device with clear domain source
-- A certainty-language marker or forbidden-vocabulary item confirmed across
-  three or more contexts
+### 模式 B：修正驱动的更新
 
-Do not replace existing samples with newer ones unless the older ones fail the
-triple-gate (cross-context, generative, exclusive). Diversity of anchor material
-matters more than recency.
+触发条件：用户说“这里错了”、“你理解错了”，给出与当前输出相矛盾的直接引语，或要求修正语气 / 边界。
 
-### Layer 3 — Mental Models
+流程：
 
-A new mental model qualifies for inclusion only if it passes the triple-gate:
+1. 把修正逐字写入 Correction Log（修正日志），附时间戳和触发的用户原话。
+2. 把修正定位到它触及的具体层（心智模型、启发法、表达 DNA、思想谱系等）。
+3. 只对该层做最小调整。不要把编辑扩散到用户没有纠正的层。
 
-1. **Cross-context recurrence** — appears in at least three independent sources
-   across different topics or time periods.
-2. **Generative** — can produce new reasoning, not just re-describe one past
-   take.
-3. **Exclusive** — someone with a different worldview would not land on it by
-   default.
+---
 
-When a new model is added, annotate:
+## 合并优先级（按人格层）
 
-- Evidence anchors (2+ instances from different contexts)
-- Failure mode
-- Application boundary
-- Whether it complements, refines, or tensions with an existing model
+### Layer 1：身份
 
-Do not delete existing models. If contradicted, mark the tension explicitly in
-Layer 6 (Internal Tensions).
+仅当新材料揭示了当前身份简介漏掉的稳定自我描述，或用户纠正了激活免责声明时才改。
 
-### Layer 4 — Decision Heuristics
+### Layer 2：表达 DNA
 
-Update when new material shows the person applying a consistent rule the
-current persona does not capture, or when a correction reveals the current
-phrasing over-generalizes.
+当新材料提供以下内容时更新：
 
-Maintain the "if X, then Y" structure with reasoning and context boundary.
+- 能通过 100 词盲测的更多声音样本
+- 有明确领域来源、反复出现的比喻或框架手法
+- 在三个以上语境中得到印证的确定性语言标记或禁用词项
 
-### Layer 5 — Anti-patterns and Boundaries
+不要用新样本替换旧样本，除非旧样本未通过三重门槛（跨语境、生成性、独特性）。锚点材料的多样性比新旧更重要。
 
-Strengthen with new repeated rejections or newly acknowledged blindspots.
-If the new material shows the person changing their mind on a prior rejection,
-record both — the prior rejection and the revised position — with dates.
+### Layer 3：心智模型
 
-### Layer 6 — Internal Tensions
+新心智模型只有通过三重门槛才能纳入：
 
-If the new material introduces a contradiction, add it to the tensions list.
-Classify as Temporal / Contextual / Inherent. Never silently reconcile a tension
-just because new material favors one side — note the tilt and the evidence for
-it, but keep the tension visible if it remains live.
+1. **跨语境复现**：出现在至少三个不同主题或时段的独立来源中。
+2. **生成性**：能产出新的推理，而不只是重新描述过去的某一个观点。
+3. **独特性**：持不同世界观的人不会默认得出同样的结论。
 
-### Layer 7 — Intellectual Genealogy
+新增模型时，标注：
 
-Update `Influenced by` / `Diverged from` / `Influenced` / `Tradition` when:
+- 证据锚点（来自不同语境的 2 个以上实例）
+- 失效模式
+- 应用边界
+- 它与现有模型是互补、细化还是张力关系
 
-- The person explicitly names an influence the current persona does not record
-- Published criticism maps their work onto a tradition the persona misses
-- A successor figure publicly acknowledges drawing on this person's work
+不要删除现有模型。如果被反驳，在 Layer 6（内部张力）里明确标注张力。
 
-Keep the "diverged from" axis crisp — it is often the most compressed signal
-of what the person uniquely stands for.
+### Layer 4：决策启发法
 
-### Layer 8 — Agentic Protocol
+当新材料显示此人有一致的行为规则而当前人格没有捕捉到，或修正表明当前措辞过度泛化时更新。
 
-Update the Step 1 question categories when new material reveals a question
-type the current classifier does not handle. Update Step 2 research dimensions
-when the person has publicly described a research habit not yet reflected
-(e.g., "I always look at the bear case first", "I read the footnotes before
-the abstract").
+保持“如果 X，那么 Y”的结构，附推理和语境边界。
 
-Do not rewrite the protocol to match a single new interview. The protocol
-should stay stable across many sources; one-off quirks go into anti-patterns
-instead.
+### Layer 5：反模式与边界
 
-### Cognitive Timeline
+用新出现的重复拒绝或新近承认的盲区来充实。如果新材料显示此人在此前的拒绝事项上改变了想法，把两者都记录下来：先前的拒绝和修改后的立场，并附日期。
 
-Add a new phase entry only when the new material reveals a genuine turning
-point, not a restatement. If the person publicly named the shift, quote the
-phrase that named it.
+### Layer 6：内部张力
 
-### Validation Anchors
+如果新材料引入了矛盾，把它加进张力清单。分类为 Temporal / Contextual / Inherent（时间性 / 语境性 / 固有）。绝不要因为新材料偏向某一方就悄悄调和一处张力：记下倾斜方向和支撑证据，但只要张力仍然成立，就让它保持可见。
 
-When new material gives a clean known-answer case, consider swapping it in if
-the existing anchors have grown stale or if the new case exercises a mental
-model that was under-tested.
+### Layer 7：思想谱系
 
-### Correction Log
+当出现以下情况时，更新 `Influenced by` / `Diverged from` / `Influenced` / `Tradition`：
 
-Mode B entries land here. Format:
+- 此人明确提到一位当前人格未记录的影响者
+- 公开的批评把其工作归入人格漏掉的传统
+- 有后继者公开承认借鉴了此人的工作
+
+“diverged from”这一轴要保持清晰：它往往是此人独特立场最浓缩的信号。
+
+### Layer 8：Agentic Protocol
+
+当新材料揭示出当前分类器处理不了的问题类型时，更新 Step 1 的问题类别。当此人公开描述过尚未体现的研究习惯时，更新 Step 2 的研究维度（例如“我总是先看空头论点”、“我读摘要之前先读脚注”）。
+
+不要为了迎合某一次新访谈重写协议。协议应在大量来源间保持稳定；一次性的怪癖放进反模式里。
+
+### 认知时间线
+
+只有当新材料揭示出真正的转折点（而非重复表述）时，才添加新的阶段条目。如果此人公开给这个转变起过名，引用那个命名短语。
+
+### 验证锚点
+
+当新材料给出一个干净的已知答案案例时，如果现有锚点已经陈旧，或新案例能锻炼某个测试不足的心智模型，考虑换入。
+
+### Correction Log（修正日志）
+
+模式 B 的条目落在这里。格式：
 
 ```text
 - [YYYY-MM-DD] User correction: "{user phrase}"
@@ -153,27 +119,22 @@ Mode B entries land here. Format:
   source, contradiction with existing anchor, etc.}
 ```
 
-Never delete correction-log entries, even when superseded. They are the audit
-trail.
+绝不删除修正日志条目，即使已被取代。它们是审计轨迹。
 
 ---
 
-## Rules
+## 规则
 
-- Prefer first-person material over commentary.
-- Carry source weights (1–7) forward; when weights conflict, weight the higher
-  tier.
-- Mark recency-sensitive updates clearly (e.g., "as of 2026-04" for positions
-  that may drift).
-- Preserve evolution across time — do not collapse it into the current state.
-- If the new material contradicts an existing anchor, keep both and mark the
-  contradiction, unless a Mode-B correction explicitly overrides.
-- Re-run `tools/research/quality_check.py <skill_dir> --profile <profile>`
-  after merging. All previously-passing checks should still pass.
+- 第一人称材料优先于评论。
+- 逐级携带来源权重（1–7）；权重冲突时，以更高层级为准。
+- 明确标注时效敏感的更新（例如对可能变化的立场标注“截至 2026-04”）。
+- 保留跨时间的演变：不要把它压扁成当前状态。
+- 如果新材料与现有锚点矛盾，两者都保留并标注矛盾，除非模式 B 修正明确覆盖。
+- 合并后重跑 `tools/research/quality_check.py <skill_dir> --profile <profile>`。之前通过的检查必须仍然通过。
 
 ---
 
-## Output Format
+## 输出格式
 
 ```text
 === mode ===

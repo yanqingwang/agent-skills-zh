@@ -1,6 +1,10 @@
-# Plan Template
+> **中文汉化版** · 上游：[emilkowalski/skills](https://github.com/emilkowalski/skills) · 原文件：`skills/improve-animations/PLAN-TEMPLATE.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Every plan written by `improve-animations` follows this structure. The executor may be a less capable model with zero context and zero taste — the plan must contain everything, exactly. No references to "the audit above" or "the easing we discussed."
+# 计划模板（Plan Template）
+
+由 `improve-animations` 写出的每份计划都遵循这一结构。执行者可能是一个上下文为零、品味为零、能力较弱的模型，所以计划必须把一切内容精确包含在内。不要出现"上文审计"或"我们讨论过的缓动"这类指代。
 
 ```markdown
 # NNN — <Short imperative title>
@@ -65,9 +69,9 @@ imitate (token names, file placement, prop patterns):
 - **Done when**: <machine- or eye-checkable completion criteria>.
 ```
 
-## Notes for the plan author
+## 给计划作者的备注
 
-- One plan per finding. If two findings share every file and the same fix pattern (e.g. the same easing token swap across components), they may merge into one plan.
-- Pull every value from [AUDIT.md](AUDIT.md) — never approximate from memory.
-- The feel check is not optional. Motion can be mechanically correct and still feel wrong; give the executor (or the human reviewing the executor's diff) concrete things to watch for in slow motion.
-- After writing plans, create or update `plans/README.md` with: a table of plans (number, title, severity, status), the recommended execution order, and any dependencies between plans.
+- 一份计划对应一个发现。若两个发现涉及完全相同的文件集合和相同的修复模式（例如在多个组件间替换同一个缓动 token），可以合并为一份计划。
+- 每个取值都从 [AUDIT.md](AUDIT.md) 拉取，绝不要凭记忆近似。
+- Feel check 不可省略。动效可以在机械上正确，但感觉仍然不对；要给执行者（或审查执行者 diff 的人）在慢放时应当盯住的具体观察点。
+- 写完计划后，创建或更新 `plans/README.md`，内容包括：计划一览表（编号、标题、严重度、状态）、建议的执行顺序，以及计划之间的依赖关系。

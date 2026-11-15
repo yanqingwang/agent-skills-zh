@@ -1,10 +1,12 @@
-# dask-cuDF Patterns
+> **中文汉化版** · 上游：[NVIDIA/skills](https://github.com/NVIDIA/skills) · 原文件：`skills/accelerated-computing-cudf/references/dask-cudf-patterns.md` · License: CC-BY-4.0 AND Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Preferred API: dask.dataframe Backend
+# dask-cuDF 模式
 
-Prefer the `dask.dataframe` backend configuration for new code. Current
-dask-cuDF uses Dask expression query planning for predicate and projection
-pushdown. Direct `dask_cudf.read_*` calls also delegate to that backend.
+## 首选 API：dask.dataframe 后端
+
+新代码优先使用 `dask.dataframe` 后端配置。当前的 dask-cuDF 使用 Dask 表达式查询规划来实现谓词与投影下推。直接调用 `dask_cudf.read_*` 也会委托给该后端。
 
 ```python
 import dask
@@ -20,17 +22,15 @@ ddf = dd.read_csv("data/*.csv")
 result = ddf.groupby("key")["value"].sum()
 ```
 
-**Explicit `dask_cudf` reads also use query planning:**
+**显式调用 `dask_cudf` 读取同样会走查询规划：**
 ```python
 import dask_cudf
 ddf = dask_cudf.read_parquet("data/*.parquet")
 ```
 
-## Cluster Setup
+## 集群配置
 
-Use `LocalCUDACluster` for local GPU workers and `enable_cudf_spill=True`
-for worker-side cuDF spilling. Multi-node deployments need their own scheduler
-and GPU worker setup:
+本地 GPU worker 使用 `LocalCUDACluster`，并用 `enable_cudf_spill=True` 启用 worker 侧的 cuDF 溢写。多节点部署需要自行配置调度器与 GPU worker：
 
 ```python
 from dask_cuda import LocalCUDACluster
@@ -53,14 +53,14 @@ cluster = LocalCUDACluster(
 )
 ```
 
-## Partition Sizing
+## 分区大小
 
-Partition size is the most impactful tuning parameter:
+分区大小是影响最大的调优参数：
 
-| Workload | Target Partition Size |
+| 工作负载 | 目标分区大小 |
 |---|---|
-| General ETL | 1/32 – 1/8 of single GPU memory |
-| Shuffle-intensive (groupby, join, sort) | 1/32 – 1/16 of GPU memory |
+| 通用 ETL | 单张 GPU 显存的 1/32 – 1/8 |
+| Shuffle 密集（groupby、join、sort） | GPU 显存的 1/32 – 1/16 |
 
 ```python
 # Check current partitions
@@ -73,9 +73,9 @@ ddf = dd.read_parquet("data/", blocksize="256MB")  # adjust to hit target partit
 ddf = ddf.repartition(npartitions=64)
 ```
 
-## Reading Data
+## 读取数据
 
-### Local Parquet (Recommended)
+### 本地 Parquet（推荐）
 
 ```python
 import dask.dataframe as dd
@@ -87,7 +87,7 @@ ddf = dd.read_parquet("data/*.parquet", columns=["col1", "col2", "key"])
 ddf = dd.read_parquet("data/", aggregate_files=True, blocksize="512MB")
 ```
 
-### Remote Storage (S3, GCS)
+### 远端存储（S3、GCS）
 
 ```python
 # Use blocksize=None to avoid slow metadata collection on remote stores
@@ -99,22 +99,22 @@ ddf = dd.read_parquet(
 )
 ```
 
-## Aggregation Patterns
+## 聚合模式
 
-### Low-cardinality groupby
+### 低基数 groupby
 
 ```python
 # split_out=1 avoids unnecessary shuffle for few output groups
 result = ddf.groupby("status_code")["amount"].sum(split_out=1)
 ```
 
-### High-cardinality groupby (default)
+### 高基数 groupby（默认）
 
 ```python
 result = ddf.groupby("customer_id").agg({"amount": "sum", "count": "count"})
 ```
 
-## Join / Merge Patterns
+## Join / Merge 模式
 
 ```python
 # Standard join (both datasets distributed)
@@ -129,7 +129,7 @@ merged = large_ddf.merge(
 )
 ```
 
-## Sort vs. Shuffle
+## Sort 与 Shuffle
 
 ```python
 # Global ordering requires an expensive shuffle; use it only when needed.
@@ -139,7 +139,7 @@ sorted_ddf = ddf.sort_values("timestamp")   # use sparingly
 shuffled = ddf.shuffle(on="customer_id")
 ```
 
-## Building Distributed Collections
+## 构建分布式集合
 
 ```python
 # Preferred: from_map enables column projection pushdown
@@ -163,21 +163,20 @@ parts = [delayed(cudf.read_parquet)(f) for f in files]
 ddf = from_delayed(parts)
 ```
 
-## Execution and Materialization Costs
+## 执行与物化成本
 
-Distinguish calls that execute immediately from lazy operations that require
-expensive shuffles when computed:
+要区分立即执行的调用与惰性操作，后者在被真正计算时需要代价高昂的 shuffle：
 
-| Call | Why it's expensive |
+| 调用 | 为何昂贵 |
 |---|---|
-| `.compute()` on large collection | Pulls all data to one GPU |
-| `.persist()` | Starts computation asynchronously with a distributed client; retains partitions on workers |
-| `len(ddf)` | Full scan |
-| `ddf.head()` / `ddf.tail()` | Materializes first/last partition |
-| `ddf.sort_values(...)` | Lazy graph with a full shuffle when executed |
-| `ddf.set_index(col)` | May compute divisions eagerly; shuffle and sort when executed |
+| 对大型集合调用 `.compute()` | 把全部数据拉到一张 GPU 上 |
+| `.persist()` | 用分布式客户端异步启动计算；把分区保留在 worker 上 |
+| `len(ddf)` | 全量扫描 |
+| `ddf.head()` / `ddf.tail()` | 物化第一个/最后一个分区 |
+| `ddf.sort_values(...)` | 惰性图，执行时带一次完整 shuffle |
+| `ddf.set_index(col)` | 可能急切地计算 divisions；执行时做 shuffle 和排序 |
 
-**Persist pattern** (when you query the same data multiple times):
+**Persist 模式**（对同一份数据反复查询时）：
 ```python
 from dask.distributed import wait
 
@@ -187,11 +186,9 @@ result1 = ddf[ddf["a"] > 0].compute()
 result2 = ddf[ddf["b"] > 0].compute()  # fast — data already in memory
 ```
 
-Calling `.compute()` collects the result onto one GPU. Keep large outputs
-partitioned with `to_parquet()` rather than relying on spilling to make a
-single-GPU result fit.
+调用 `.compute()` 会把结果收集到一张 GPU 上。大型输出应保持分区并用 `to_parquet()` 写出，而不是靠溢写让结果硬塞进单卡显存。
 
-## Writing Results
+## 写出结果
 
 ```python
 # Parquet (recommended — partitioned output)
@@ -204,7 +201,7 @@ result_cudf = ddf.compute()
 result_pd = result_cudf.to_pandas()
 ```
 
-## OOM Diagnosis
+## OOM 诊断
 
 ```python
 # Step 1: Check worker memory pressure from dashboard
@@ -222,11 +219,9 @@ ddf = ddf[ddf["amount"] > 0]                      # filter early
 result = ddf.groupby("key")["needed_col1"].sum().compute()
 ```
 
-## Anti-Patterns
+## 反模式
 
-For new dask-cuDF code, use the backend setup shown in the Preferred API
-section above. The examples here focus on execution and materialization
-mistakes after the backend has been selected.
+新的 dask-cuDF 代码请采用上文"首选 API"小节展示的后端配置。本节示例聚焦于选定后端之后的执行与物化错误。
 
 ```python
 # AVOID: calling .compute() mid-pipeline

@@ -12,11 +12,15 @@ photo: natural vib=12 exp=4
 pictured: Workbench, Settled hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/hum.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Hum
 
-Cut paper made by hand, cheerful without turning childish: cream paper with a visible grain and fibre, sheets torn along their edges so a pale core shows, card stock you can press, all lit from the top left. Chillax runs from head to label (its single-storey a and g read like an early reader's page) in a blue-black ink. Three accents never blend: pear for the action, blue for links, coral for one loud moment; mint is growth. Not a pastel nursery template, not a rainbow page, not clip-art.
+手工剪出的纸，欢快而不幼稚：可见纹理与纤维的奶油纸，纸页沿边缘撕开、露出浅色纸芯，可以按下去的卡纸控件，全部从左上方打光。Chillax 从标题一路用到标签（它的单层 a 与 g 读起来像启蒙读物的一页），墨水是蓝黑。三个强调色绝不混色：梨黄给动作，蓝给链接，珊瑚红给一个响亮的时刻；薄荷绿是成长。不是粉彩育儿模板，不是彩虹页，也不是剪贴画图库。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -39,50 +43,50 @@ Cut paper made by hand, cheerful without turning childish: cream paper with a vi
 }
 ```
 
-## Type
+## 字体（Type）
 
-- **Display:** Chillax 600, `--tracking-display`, line-height 1.02 to 1.05, sentence case. Figures at `--text-display` or larger, their unit at `--text-title`.
-- **Body:** Chillax 500 at 17 to 19px, line-height 1.5; emphasis is a pear highlighter band behind the words, never inside a head. Two weights, 500 and 600.
-- **Labels, captions, units:** Chillax 500 a step smaller, sentence case, `--color-muted`. Geist Mono only inside code.
+- **展示字体：**Chillax 600，`--tracking-display`，行高 1.02 至 1.05，句首大写。数字排到 `--text-display` 或更大，其单位用 `--text-title`。
+- **正文：**Chillax 500，17 至 19px，行高 1.5；强调是文字背后一条梨黄荧光笔带，绝不放进标题。两个字重，500 与 600。
+- **标签、图注、单位：**Chillax 500 小一档，句首大写，用 `--color-muted`。Geist Mono 只在代码里。
 
-## Surfaces
+## 表面（Surfaces）
 
-- The paper is generated, never a picture: two `feTurbulence` data URIs, a fine fractal grain (`--grain`) and a long turbulence fibre (`--fibre`), under every paper, card and accent fill.
-- Torn edges: a band, a nav bar, a photograph or a sheet ends in a `clip-path` polygon from seeded value noise, its fibre twin (`--color-fringe`) standing a pixel proud beneath. Grounds may layer: far hills in `--color-hill-*`, soil in `--color-leaf`, a kraft strip, a blue sugar-paper mat.
-- Light comes from the top left: stacked `--shadow-paper` drop shadows fall down and right on every cut sheet; a card may lift one corner in a page curl.
-- Round everywhere: 24px surfaces (28 to 32px for children), 16px card stock, no square corner.
-- Bands: paper-2, a torn ink sheet with paper text, or one pear field. Two a page at most.
-- Photographs: bright daylight at a child's height, never a face to camera; torn on one edge, one or two a page.
+- 纸是生成的，绝不是图片：两条 `feTurbulence` data URI，细颗粒 fractal grain（`--grain`）与长条湍流纤维（`--fibre`），垫在每张纸、每张卡与每个强调填色之下。
+- 撕边：一条色带、一条导航栏、一张照片或一张纸，以带种子的值噪声 `clip-path` 多边形收边，其纤维孪生（`--color-fringe`）在下方凸出一像素。地面可以分层：远山用 `--color-hill-*`，土壤用 `--color-leaf`，一条牛皮纸条，一张蓝色糖纸垫。
+- 光从左上来：层叠的 `--shadow-paper` 投影在每个剪出的纸面上向右下落；一张卡可以掀起一角，像卷页。
+- 处处圆：24px 表面（儿童场景 28 至 32px），16px 卡纸，没有直角。
+- 色带：paper-2、撕开的墨色纸配纸色文字，或一块梨黄色场。每页至多两条。
+- 照片：儿童高度取景的明亮日光，绝不正对镜头的脸；一边撕边，每页一或两张。
 
-## Range
+## 版式（Range）
 
-- **The product as card stock:** the app's own moment built large, words as card-stock tiles on a torn kraft strip, each pressed one popping into its accent.
-- **Growth set in type:** a bed of plants made of Chillax glyphs (stems of l, bracket leaves, letter heads) on torn soil, filling as the prompt's numbers say, shown in states a row of pills switches.
-- **Figures on the pear field:** three or four of the prompt's numbers at display size in ink on one pear sheet, each unit beneath in 500.
-- **A choice as card-stock pills:** a working control on the prompt's facts, the result a sentence with its key value in a pear highlighter band.
+- **产品化作卡纸：**应用自己的时刻放大呈现，文字做成卡纸贴片压在撕开的牛皮纸条上，每按一下弹进自己的强调色。
+- **成长用文字表现：**一片由 Chillax 字形组成的植物（茎是 l、叶是括号、字头是花）长在撕开的土壤上，随提示词的数字长满，一排胶囊按钮切换它的状态。
+- **梨黄色场上的数字：**提示词的三四个数字排展示字号，墨色印在一张梨黄纸上，每个单位在下方用 500。
+- **选择化作卡纸胶囊：**提示词事实之上的可用控件，结果是一句话，其关键值压在梨黄荧光笔带里。
 
-## Controls
+## 控件（Controls）
 
-- Card stock: 54px controls at `--radius-stock`, grain and fibre on the fill, an inset highlight on top and a solid 5px edge below (`--color-accent-deep` on the pear primary, `--color-edge` on the secondary card); hover raises the edge to 7px, active presses it to 1px. The spring runs on the primary only.
-- Each accent owns a job: pear the primary and the one pear field; blue links and the focus ring; coral one loud fill; mint growth. A chosen pill is ink with paper type. One die-cut sticker may carry the offer.
-- Inputs: 14px radius, 52px tall, a 1px `--color-muted` border, the blue focus ring.
+- 卡纸：54px 控件、`--radius-stock` 圆角，填色带颗粒与纤维，顶部一圈内嵌高光、底部一圈实心 5px 边（梨黄主按钮用 `--color-accent-deep`，次卡用 `--color-edge`）；悬停把边抬到 7px，按下压到 1px。弹簧缓动只用在主按钮上。
+- 每个强调色只管一件事：梨黄管主按钮与唯一一块梨黄色场；蓝管链接与焦点环；珊瑚红管一次响亮的填色；薄荷绿管成长。选中的胶囊是墨色配纸色文字。一枚模切贴纸可以承载报价。
+- 输入框：14px 圆角，52px 高，1px `--color-muted` 边框，蓝色焦点环。
 
-## Motion
+## 动效（Motion）
 
-Spring posture declared (gate 12): `--ease-spring` on the primary control only; everything else on `--ease-snap`, never `scale()`. A word pops in its accent and its plant grows; a timer may tear off a scrap of paper as it runs, paused off screen. Reduced motion or no script: the end state.
+声明弹簧姿态（gate 12）：`--ease-spring` 只用在主控件；其余全部 `--ease-snap`，绝不用 `scale()`。一个词弹进自己的强调色，一棵植物生长；计时器运行时可以撕下一角纸，暂停在屏幕之外。Reduced motion（减少动效）或无脚本：呈现最终状态。
 
-## Voice
+## 语气（Voice）
 
-Warm, smart, casual, direct, written to the grown-up beside the child. Sentence case, verbs over nouns, honest numbers only.
+温暖、聪明、随意、直接，写给孩子身边的大人。句首大写，动词优先于名词，只用诚实的数字。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a serif, never pure white paper, never a square corner.
-- Never a clean vector edge on a cut sheet or a shadow that falls up or left.
-- Never a gradient between two accents and never a rainbow ground.
-- Never emoji, stock icons or a drawn character; type, paper and the product carry it.
+- 绝不用衬线，绝不用纯白纸，绝不用直角。
+- 绝不给剪出的纸用干净的矢量边，也绝不让影子向上或向左落。
+- 绝不在两个强调色之间做渐变，绝不用彩虹地面。
+- 绝不用 emoji、素材图标或画出来的角色；文字、纸与产品自己承担。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://api.fontshare.com/v2/css?f[]=chillax@500,600&display=swap" rel="stylesheet">

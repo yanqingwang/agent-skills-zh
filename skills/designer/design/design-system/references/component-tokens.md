@@ -1,8 +1,12 @@
-# Component Tokens
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/design-system/references/component-tokens.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Component-specific tokens referencing semantic layer.
+# 组件令牌（Component Tokens）
 
-## Button Tokens
+引用语义层的组件级令牌。
+
+## 按钮令牌
 
 ```css
 :root {
@@ -46,7 +50,7 @@ Component-specific tokens referencing semantic layer.
 }
 ```
 
-## Input Tokens
+## 输入框令牌
 
 ```css
 :root {
@@ -78,7 +82,7 @@ Component-specific tokens referencing semantic layer.
 }
 ```
 
-## Card Tokens
+## 卡片令牌
 
 ```css
 :root {
@@ -101,7 +105,7 @@ Component-specific tokens referencing semantic layer.
 }
 ```
 
-## Badge Tokens
+## 徽章令牌
 
 ```css
 :root {
@@ -129,7 +133,7 @@ Component-specific tokens referencing semantic layer.
 }
 ```
 
-## Alert Tokens
+## 提示框（Alert）令牌
 
 ```css
 :root {
@@ -148,7 +152,7 @@ Component-specific tokens referencing semantic layer.
 }
 ```
 
-## Dialog/Modal Tokens
+## 对话框/模态框（Dialog/Modal）令牌
 
 ```css
 :root {
@@ -168,7 +172,7 @@ Component-specific tokens referencing semantic layer.
 }
 ```
 
-## Table Tokens
+## 表格令牌
 
 ```css
 :root {
@@ -190,7 +194,7 @@ Component-specific tokens referencing semantic layer.
 }
 ```
 
-## Usage Example
+## 使用示例
 
 ```css
 .button {

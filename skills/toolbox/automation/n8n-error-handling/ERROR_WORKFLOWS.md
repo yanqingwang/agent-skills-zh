@@ -1,21 +1,25 @@
-# Workflow-Level Error Workflows
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-error-handling/ERROR_WORKFLOWS.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Per-node error outputs handle the failures you anticipated on the nodes you remembered to wire. A **workflow-level error workflow** is the catch-all for everything else — and for an unattended workflow (scheduled, cron, queue worker), it's the difference between "the job silently stopped three days ago" and "an alert arrived the moment it broke".
+# 工作流级错误工作流
 
-What per-node outputs **don't** catch:
+节点级错误输出处理的是你预判到、且记得接线的那部分失败。**工作流级错误工作流**是其余一切的兜底——对无人值守的工作流（定时、cron、队列 worker）而言，它决定了你是"任务三天前就悄悄停了"，还是"一出问题警报就到了"。
 
-- Failures on nodes you forgot to wire.
-- Crashes between nodes.
-- Whole-workflow timeouts.
-- Trigger failures.
+节点级输出**接不住**的：
 
-When an unhandled error escapes any of those, n8n invokes the designated **error workflow** with the failure context. You build that workflow once; it serves every workflow that points at it.
+- 你忘了接线的节点上的失败。
+- 节点之间的崩溃。
+- 整个工作流超时。
+- 触发器失败。
+
+当未被处理的错误从上述任何一处漏出，n8n 会带着失败上下文调用指定的**错误工作流**。这个工作流建一次，就能服务于所有指向它的工作流。
 
 ---
 
-## What the error workflow receives
+## 错误工作流收到什么
 
-It starts with an **Error Trigger** node, which fires with roughly this payload:
+它以一个 **Error Trigger** 节点开头，触发时的负载大致如下：
 
 ```json
 {
@@ -36,41 +40,41 @@ It starts with an **Error Trigger** node, which fires with roughly this payload:
 }
 ```
 
-Note what's **not** there: the payload carries the error message and the failed node's *name* (`lastNodeExecuted`), but **not the input data** that caused the failure. Recovering that takes an extra step (below).
+注意**没有**什么：负载里有错误消息和失败节点的*名称*（`lastNodeExecuted`），但**没有导致失败的输入数据**。拿回它要多走一步（见下）。
 
 ---
 
-## Minimal error workflow (capture → notify)
+## 最小错误工作流（捕获 → 通知）
 
-For most workflows, this is enough:
+对多数工作流，这就够了：
 
 ```
 Error Trigger → Slack / email (post to #incidents)
 ```
 
-Two nodes: the alert text is built with expressions right in the message field (below), so no Set is needed. Fast, hard to get wrong, and it turns silence into a message. Build it with `n8n_create_workflow` (or the partial-update ops), then assign it in the UI (see "Assigning it" below).
+两个节点：警报文本直接用表达式写在消息字段里（见下），所以不需要 Set 节点。快、不容易错，还把沉默变成了消息。用 `n8n_create_workflow`（或部分更新 ops）建好，然后在 UI 里指派（见下文"指派"一节）。
 
 ---
 
-## What to put in the alert
+## 警报里放什么
 
-A good notification lets on-call act without opening n8n first. Pull these from the payload:
+一条好的通知能让值班人员不开 n8n 就能行动。从负载里取这些：
 
-| Field | Expression |
+| 字段 | 表达式 |
 |---|---|
-| Workflow name | `{{ $json.workflow.name }}` |
-| Workflow ID | `{{ $json.workflow.id }}` |
-| Editor link | `{{ $json.execution.url.split('/executions/')[0] }}` |
-| Execution ID | `{{ $json.execution.id }}` |
-| Execution link | `{{ $json.execution.url }}` |
-| Failed node | `{{ $json.execution.lastNodeExecuted }}` |
-| Error message | `{{ $json.execution.error.message }}` |
-| Error description | `{{ $json.execution.error.description }}` (often empty, useful when set) |
-| Timestamp | `{{ DateTime.fromMillis($json.execution.error.timestamp).toISO() }}` |
+| 工作流名称 | `{{ $json.workflow.name }}` |
+| 工作流 ID | `{{ $json.workflow.id }}` |
+| 编辑器链接 | `{{ $json.execution.url.split('/executions/')[0] }}` |
+| 执行 ID | `{{ $json.execution.id }}` |
+| 执行链接 | `{{ $json.execution.url }}` |
+| 失败节点 | `{{ $json.execution.lastNodeExecuted }}` |
+| 错误消息 | `{{ $json.execution.error.message }}` |
+| 错误描述 | `{{ $json.execution.error.description }}`（常常为空，有值时很有用） |
+| 时间戳 | `{{ DateTime.fromMillis($json.execution.error.timestamp).toISO() }}` |
 
-The `timestamp` is a Unix-ms number — format it with Luxon's `DateTime.fromMillis(...)`. The execution `url` is `{base}/workflow/{id}/executions/{execId}`, so stripping the `/executions/...` tail gives the editor URL.
+`timestamp` 是 Unix 毫秒数，用 Luxon 的 `DateTime.fromMillis(...)` 格式化。执行 `url` 是 `{base}/workflow/{id}/executions/{execId}`，去掉 `/executions/...` 尾部就得到编辑器 URL。
 
-A useful Slack body:
+一段实用的 Slack 正文：
 
 ```
 Workflow failure: *{{ $json.workflow.name }}* (`{{ $json.workflow.id }}`)
@@ -81,13 +85,13 @@ Execution: {{ $json.execution.url }}
 Time: {{ DateTime.fromMillis($json.execution.error.timestamp).toISO() }}
 ```
 
-Two links matter: the **editor link** so on-call can start fixing, and the **execution link** so they can see the exact failed run. Skipping either costs a step. "Workflow failed." is not an alert — it's a notification that you'll have to investigate from scratch.
+两个链接很关键：**编辑器链接**让值班人员开始修复，**执行链接**让他们看到确切失败的这次运行。少一个就多一步。"Workflow failed."不算警报，只是提醒你接下来要从零排查。
 
 ---
 
-## Featureful version: recover the failing input
+## 加强版：找回失败的输入
 
-The Error Trigger payload tells you *which* node failed, not *what data* broke it. To get the offending payload, fetch the execution with the **n8n** node:
+Error Trigger 负载告诉你*哪个*节点失败，不包括*什么数据*弄坏了它。要拿到肇事负载，用 **n8n** 节点取回这次执行：
 
 ```
 Error Trigger
@@ -102,77 +106,77 @@ Error Trigger
   → Data Table (log for tracking)
 ```
 
-"Include Execution Details: true" hits `GET /executions/{id}?includeData=true` and returns the full run data, so you can pluck the failed node's input out of `data.resultData.runData[<lastNodeExecuted>]`. Now the on-call message can carry the actual offending payload (which customer, which order id), not just "node X errored".
+"Include Execution Details: true" 会请求 `GET /executions/{id}?includeData=true` 并返回完整运行数据，你可以从 `data.resultData.runData[<lastNodeExecuted>]` 里取出失败节点的输入。这样值班消息就能带上真正的肇事负载（哪个客户、哪个订单号），而不只是"节点 X 报错了"。
 
-Caveats, all of which can turn the error workflow itself into a *new* silent failure:
+注意事项，每一条都可能让错误工作流自己变成*新的*静默失败：
 
-- **Requires an n8n API credential** on this workflow (Settings → API → personal access token, then attach it to the n8n node). Without it the node throws a 401 — an unhandled error *inside the error workflow*.
-- **Requires the failing workflow to persist execution data** (Save Execution Data, instance default or per-workflow). If it doesn't, the API returns metadata only.
-- **The n8n node call can itself fail** (API down, rate-limited). Wire its error output (`sourceIndex: 1`) to a fallback that still notifies, or the original error vanishes behind a fetch failure.
+- **需要在这个工作流上配置 n8n API 凭据**（Settings → API → personal access token，然后挂到 n8n 节点上）。没有它，节点抛 401，这是*错误工作流内部*的未处理错误。
+- **要求失败的工作流持久化执行数据**（Save Execution Data，实例默认或按工作流设置）。否则 API 只返回元数据。
+- **n8n 节点调用本身可能失败**（API 宕机、限流）。把它的错误输出（`sourceIndex: 1`）接到一个仍会发通知的兜底上，否则原始错误会消失在取数失败背后。
 
-Minimal is enough most of the time. The featureful version earns its keep on production-critical workflows where on-call minutes matter.
-
----
-
-## Assigning it (UI only — the MCP can't)
-
-> The error workflow is assigned in the n8n **UI**: per workflow under **Workflow Settings → Error Workflow**, or as an instance-wide default. There is **no community-MCP tool** to set this assignment. `n8n_update_partial_workflow` exposes an `updateSettings` op, but the error-workflow setting is not reliably writable through it — confirm in the UI.
-
-So the agent's job is: **build the error workflow with the MCP, then hand the user the exact UI step** — "Open the failing workflow → Settings → Error Workflow → select '<name>'" — and remind them to do it for *every* unattended workflow (or set the instance default once). Building the workflow without assigning it does nothing; the trigger only fires for workflows that point at it.
+多数时候最小版就够。加强版的价值在生产关键工作流上，就是那些值班响应以分钟计的场景。
 
 ---
 
-## When the error workflow fires (and when it doesn't)
+## 指派（只能通过 UI，MCP 做不到）
 
-**Fires** when:
+> 错误工作流在 n8n **UI** 中指派：按工作流在 **Workflow Settings → Error Workflow** 下设置，或设为实例级默认。社区 MCP **没有**设置该指派的工具。`n8n_update_partial_workflow` 提供 `updateSettings` op，但错误工作流设置经它写入并不可靠，请在 UI 里确认。
 
-- A node throws unhandled (not routed via a wired per-node error output).
-- The workflow itself fails (timeout, OOM).
-- A trigger fails (rare, possible for non-webhook triggers).
-
-**Does NOT fire** when:
-
-- A node's error output is wired — even if the handler does nothing. n8n considers the error *handled*.
-- You manually stop an execution.
-- The workflow is paused / inactive.
-
-That second case is the subtle one: **a per-node error output wired to a no-op that drops the data will *suppress* the error workflow.** From n8n's perspective the error was handled, even though it was swallowed. So only catch per-node when you're genuinely acting on the error; if you want a failure to bubble up to the catch-all, leave it unwired.
+所以 Agent 的职责是：**用 MCP 建好错误工作流，然后把确切的 UI 步骤交给用户**（"打开失败的工作流 → Settings → Error Workflow → 选择 '<name>'"），并提醒对*每个*无人值守工作流都做一遍（或者一次性设好实例默认）。只建不指派等于白建；触发器只对指向它的工作流生效。
 
 ---
 
-## What the error workflow should NOT do
+## 错误工作流何时触发（何时不触发）
 
-- **Make external calls that can themselves fail without a fallback.** If the error workflow fails, the original error disappears — you've added a second silent failure on top of the first.
-- **Take significant time.** It runs synchronously; a slow error workflow compounds the original failure's impact.
+**触发**于：
 
-Keep it fast: parse, notify, return.
+- 某节点抛出未处理错误（没有接到已连线的节点级错误输出）。
+- 工作流本身失败（超时、OOM）。
+- 触发器失败（少见，非 webhook 触发器可能出现）。
 
----
+**不触发**于：
 
-## The recursion trap
+- 节点的错误输出已接线——即使处理器什么都不做。n8n 认为错误已被*处理*。
+- 你手动停止了执行。
+- 工作流处于暂停/未激活状态。
 
-If your monitored workflows alert Slack, and the *error* workflow also alerts Slack, then a Slack outage takes out both — the error workflow fails and the failure goes nowhere. n8n won't re-trigger on its own failure (no infinite loop), but you've lost the alert.
-
-Mitigations:
-
-- **Use a different channel than the monitored workflows.** If everything notifies Slack, the error workflow should use email (or vice versa).
-- **Add a fallback** — write to a Data Table (`n8n_manage_datatable`) if the primary notification fails, so there's always a trace.
-- **Lean on instance-level logging** (server logs, Sentry) so even an error-workflow failure surfaces somewhere outside n8n.
+第二种情况最隐蔽：**节点级错误输出接到一个丢弃数据的空操作上，会*压制*错误工作流。** 在 n8n 看来错误已被处理，尽管它被吞掉了。所以只有当你真的要对错误采取行动时才做节点级捕获；想让失败冒泡到兜底，就别接线。
 
 ---
 
-## Verifying it works
+## 错误工作流不应该做什么
 
-After building and assigning:
+- **发起自己也可能失败、且没有兜底的外部调用。** 错误工作流一旦失败，原始错误就消失了，你在第一个静默失败之上又加了一个。
+- **耗时明显。** 它同步运行；慢的错误工作流会放大原始失败的影响。
 
-1. Make a throwaway workflow that always fails — e.g. an HTTP Request to an invalid URL, with **no** error output wired so the failure is unhandled.
-2. Run it.
-3. Confirm the error workflow fires and the notification arrives.
-
-This catches the setup mistakes that otherwise stay invisible until a real incident: wrong workflow assigned, wrong channel, missing API credential. Do it once before you rely on the alerting.
+保持快：解析、通知、返回。
 
 ---
 
-## Drift watch
+## 递归陷阱
 
-The Error Trigger payload shape can shift between n8n versions. If a field isn't where this file says, check current n8n docs and update your expressions — a renamed field fails silently as an empty alert, not a thrown error.
+如果被监控的工作流向 Slack 发警报，而*错误*工作流也向 Slack 发警报，那 Slack 一宕机两个都完，错误工作流失败，失败无人知晓。n8n 不会因自身失败再次触发（不会无限循环），但警报丢了。
+
+缓解手段：
+
+- **用与被监控工作流不同的渠道。** 如果全都通知 Slack，错误工作流就该用邮件（反之亦然）。
+- **加兜底**，主通知失败时写入 Data Table（`n8n_manage_datatable`），保证总有痕迹。
+- **依赖实例级日志**（服务器日志、Sentry），让错误工作流的失败也能在 n8n 之外露出痕迹。
+
+---
+
+## 验证它真的有效
+
+建好并指派之后：
+
+1. 做一个一次性的必失败工作流——比如向无效 URL 发 HTTP Request，**不**接错误输出，让失败保持未处理。
+2. 运行它。
+3. 确认错误工作流触发、通知送达。
+
+这能抓住那些直到真实事故才现形的配置错误：指派错工作流、渠道不对、缺 API 凭据。在依赖这套警报之前做一次。
+
+---
+
+## 漂移观察
+
+Error Trigger 负载的字段结构可能随 n8n 版本变动。如果某个字段不在本文件所说的位置，查当前 n8n 文档并更新你的表达式，改名的字段会静默地表现为空警报，而不是抛错。

@@ -12,11 +12,15 @@ photo: natural sat=-12 con=10
 pictured: Station Sequence, Stage hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/wayfind.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Wayfind
 
-Public signage set as a page: cool grey paper, blue-black ink, every glyph in Chivo Mono (a sober grotesk cut to the fixed cell of a departure board), square 2px ink borders, ink plates that carry a sign, cobalt for what is live and amber for figures. The mono is the board's face and the borders mark the way. It reads in daylight, at a glance, from three metres; it is not a developer tool, not a dark terminal and not a retro departures pastiche.
+公共导视排成页面：冷灰纸、蓝黑墨色，每个字形都用 Chivo Mono（一种克制的怪诞体，按发车板的固定字格裁切），直角 2px 墨色边框，承载标牌的墨色牌面，钴蓝给实时信息，琥珀给数字。等宽字是那块牌子的字面，边框标出路线。它在日光下三米外一眼可读；它不是开发者工具，不是暗色终端，也不是复古发车板仿古。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -31,60 +35,60 @@ Public signage set as a page: cool grey paper, blue-black ink, every glyph in Ch
 }
 ```
 
-Three colourways, set once per page and stated in the stamp (`wayfind: platform`).
+三种配色，每页设定一次，写入 stamp（印记）：`wayfind: platform`。
 
-| Colourway | Paper, ink, rule |
+| 配色 | 纸、墨、横线 |
 | --- | --- |
-| `platform` (default) | the block above |
-| `night` | paper `oklch(15% 0.012 262)`, ink `oklch(96% 0.005 250)`, rule `oklch(31% 0.014 262)`, cobalt lifts to `oklch(62% 0.2 264)` |
-| `signal` | paper `oklch(51% 0.22 264)` cobalt, ink white, rule `oklch(75% 0.12 264)`; the cobalt button becomes the ink one |
+| `platform`（默认） | 上面的代码块 |
+| `night` | 纸 `oklch(15% 0.012 262)`，墨 `oklch(96% 0.005 250)`，横线 `oklch(31% 0.014 262)`，钴蓝提亮为 `oklch(62% 0.2 264)` |
+| `signal` | 纸取钴蓝 `oklch(51% 0.22 264)`，墨为白色，横线 `oklch(75% 0.12 264)`；钴蓝按钮转为墨色按钮 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Chivo Mono 800, `--tracking-display`, line-height 0.98, sentence case. A mono line runs wide, so `h1` caps at 4.75rem and a head stays short enough to read in one look.
-- **Body:** Chivo Mono 400, line-height 1.55, `tabular-nums` on everything. Mono is the material here (waive 64): the board's face sets the whole page. Three weights: 400, 500 and 800.
-- **Figures:** minutes, platforms and exits in 800, at `--text-display-s` or larger when a figure is the section's reason; amber on ink, ink on paper.
-- **Labels, table heads, pills, buttons:** Chivo Mono 500 a step smaller (buttons 800), sentence case, untracked; the signage reads through the mono and the borders, never through capitals.
+- **展示字体：**Chivo Mono 800，`--tracking-display`，行高 0.98，句首大写。等宽一行占宽很多，所以 `h1` 封顶 4.75rem，标题保持一眼读完的长度。
+- **正文：**Chivo Mono 400，行高 1.55，一切数字用 `tabular-nums`。等宽字在这里就是材质（waive 64）：发车板的字面定了整页的调。三种字重：400、500、800。
+- **数字：**分钟、站台与出口用 800，当数字是区块存在的理由时排到 `--text-display-s` 或更大；墨底上用琥珀，纸面上用墨色。
+- **标签、表头、胶囊、按钮：**Chivo Mono 500，小一号（按钮用 800），句首大写，不加字距；导视靠等宽字与边框读懂，绝不靠大写字母。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Rules: `--rule-bar` ink borders on every surface (wells, plates, buttons, the underside of a nav, a table's head rule); row dividers `--rule-hair` in `--color-rule`, or `--color-ink-rule` on ink.
-- Radius 0 everywhere except pills. Depth is borders; `--shadow-card` only under a surface that floats over another.
-- The plate: a square field of ink (or amber under ink text) inside a 2px border, holding one instruction and its figure, the way a sign holds a platform number.
-- Bands: `--color-paper-2`, an `--color-ink` band where figures turn amber, or one cobalt field in the `signal` colours; two bands a page at most.
-- Photographs: the network at eye level: platforms, tiled walls, a train in, stairs up to daylight; people only from behind and moving. Square, inside the 2px ink border; type never sits on the picture, only on a plate inside the frame. Captions name the station or the line. A phone screen built from the product takes a 9:19.5 frame in that border, never a drawn bezel.
-- No texture, no gradient.
+- 横线：每个表面都用 `--rule-bar` 墨色边框（内嵌面板、牌面、按钮、导航下沿、表头线）；行分隔用 `--color-rule` 的 `--rule-hair`，墨底上用 `--color-ink-rule`。
+- 圆角除胶囊外处处为 0。深度靠边框；`--shadow-card` 只允许浮在其他表面之上的表面使用。
+- 牌面：2px 边框内一块方形墨色色场（或琥珀色场压墨色文字），承载一条指令与它的数字，就像标牌承载站台号。
+- 色带：`--color-paper-2`，一条数字转琥珀的 `--color-ink` 色带，或 `signal` 配色下的一块钴蓝色场；每页至多两条色带。
+- 照片：平视看到的路网：站台、瓷砖墙、进站的列车、通向日光的楼梯；人物只从背后拍且在移动中。直角，装进 2px 墨色边框；文字绝不压在照片上，只压在画框内的牌面上。图注写明车站或线路。用产品搭建的手机屏幕按 9:19.5 装进同款边框，绝不用手绘手机壳。
+- 无纹理，无渐变。
 
-## Range
+## 版式（Range）
 
-- **A departure board as a Table** on the ink band: destination in 500, the line as a small square in the network's own colour, minutes in 800 amber at title size or larger, a late row as an amber fill under ink text, a 2px paper head rule.
-- **A route as Steps:** the way out as three or four plates in a row, each a 2px bordered square holding one instruction (carriage, stairs, exit) and its figure, joined by a 2px ink rule like a corridor sign.
-- **Status as Rows:** each line or service a full-width row, its swatch, its name in 800, its ends in 400, its state at the right edge; one cobalt live dot on the row that just changed.
-- **A figure as a sign:** one number in 800 at display size inside a bordered plate, its unit beside it, and a station picker of square cells joined edge to edge that changes it.
+- **发车板排成表格**，放在墨色色带上：目的地用 500，线路画成路网自身颜色的小方块，分钟用 800 琥珀、标题字号起步，晚点行以琥珀填充压墨色文字，表头线为 2px 纸色。
+- **路线排成步骤：**出去的路是排成一行的三四块牌面，每块是 2px 边框的方形，承载一条指令（车厢、楼梯、出口）与它的数字，块间以 2px 墨线相连，如走廊指示牌。
+- **状态排成行：**每条线路或班次一整行，色样、名称用 800、起讫用 400、状态放在右端；刚更新的那一行加一颗钴蓝实时圆点。
+- **数字作标牌：**一个数字用 800 排展示字号，装在带边框的牌面里，单位缀旁，下方是边贴边直角单元格的车站选择器，可切换它。
 
-## Controls
+## 控件（Controls）
 
-- A cobalt-filled button beside a transparent one with a `--rule-bar` ink border, both square, Chivo Mono 800, sentence case, 48 to 52px.
-- A choice set is square cells sharing 2px borders; the chosen cell fills ink with paper text. Links are ink, underlined, cobalt on hover; inputs are square, 2px ink border on `--color-paper-3`.
-- Cobalt is for what is live (the current stop, a clock, the primary action); amber colours figures only on ink or as a fill under ink text.
+- 钴蓝填充按钮，旁边是透明按钮加 `--rule-bar` 墨色边框；两者直角，Chivo Mono 800，句首大写，高 48 至 52px。
+- 选项组是共享 2px 边框的直角单元格；选中格墨色填充配纸色文字。链接用墨色、带下划线，悬停转钴蓝；输入框直角，2px 墨色边框，置于 `--color-paper-3`。
+- 钴蓝只给实时之物（当前站点、时钟、主操作）；琥珀只给墨底上的数字，或作压墨色文字的填充。
 
-## Motion
+## 动效（Motion）
 
-Departure-board stiff: `--dur-micro` colour changes in `steps(1)`, rows updating in place, no reveal on scroll. A live dot blinks once when a row updates; it never loops.
+发车板式的硬朗：颜色变化用 `steps(1)` 配 `--dur-micro`，行原地更新，滚动无显现动效。行更新时实时圆点闪一次；它绝不循环。
 
-## Voice
+## 语气（Voice）
 
-Signage: the platform, the exit, the minute, the carriage. Imperative and short; a head reads in one look.
+导视口吻：站台、出口、分钟、车厢。祈使句，短；标题一眼读完。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a proportional face anywhere, not even for prose.
-- Never amber as a text colour on the paper; it belongs on ink or under ink text.
-- Never a third bright colour, except a network's own line colours as small squares beside their names.
-- Never rounded cards or soft shadows on cards; Wayfind is bordered.
-- Never a drawn platform, train or carriage row standing in for the place; photograph the station, build the screen.
+- 任何地方绝不用比例字体，正文也不行。
+- 纸面上绝不用琥珀作文字色；它只出现在墨底上，或作压墨色文字的填充。
+- 绝无第三种亮色，除非是路网自身的线路色，作名称旁的小方块。
+- 绝不用圆角卡片或卡片柔影；Wayfind 靠边框说话。
+- 绝不手绘站台、列车或车厢序列来顶替真实场所；车站靠照片，屏幕靠搭建。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;500;800&display=swap" rel="stylesheet">

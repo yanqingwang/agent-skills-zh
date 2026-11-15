@@ -1,17 +1,21 @@
-# OpenAPI 3.1 Specification
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/api-designer/references/openapi.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## What is OpenAPI?
+# OpenAPI 3.1 规格
 
-OpenAPI (formerly Swagger) is a standard for describing REST APIs. It enables:
-- Interactive documentation
-- Code generation (SDKs, clients, servers)
-- API testing tools
-- Contract validation
-- Mock servers
+## 什么是 OpenAPI？
 
-## Basic Structure
+OpenAPI（前身为 Swagger）是描述 REST API 的标准。它支持：
+- 交互式文档
+- 代码生成（SDK、客户端、服务端）
+- API 测试工具
+- 契约校验
+- mock 服务器
 
-### Minimal OpenAPI 3.1 Spec
+## 基本结构
+
+### 最小 OpenAPI 3.1 规格
 
 ```yaml
 openapi: 3.1.0
@@ -77,9 +81,9 @@ components:
           example: John Doe
 ```
 
-## Info Object
+## Info 对象
 
-Metadata about the API:
+API 的元数据：
 
 ```yaml
 info:
@@ -110,9 +114,9 @@ info:
   x-audience: external
 ```
 
-## Servers
+## 服务器（Servers）
 
-Define API base URLs:
+定义 API 基础 URL：
 
 ```yaml
 servers:
@@ -136,9 +140,9 @@ servers:
           - dev
 ```
 
-## Paths and Operations
+## 路径与操作
 
-### Complete Endpoint Example
+### 完整端点示例
 
 ```yaml
 paths:
@@ -310,11 +314,11 @@ paths:
           $ref: '#/components/responses/NotFound'
 ```
 
-## Components
+## 组件（Components）
 
-Reusable components for your API spec.
+API 规格中可复用的组件。
 
-### Schemas
+### Schema（Schemas）
 
 ```yaml
 components:
@@ -424,7 +428,7 @@ components:
               example: req_abc123
 ```
 
-### Security Schemes
+### 安全方案（Security Schemes）
 
 ```yaml
 components:
@@ -453,7 +457,7 @@ components:
             users:delete: Delete users
 ```
 
-Apply security globally or per-operation:
+全局或按操作应用安全设置：
 
 ```yaml
 # Global security
@@ -469,9 +473,9 @@ paths:
         - apiKey: []  # Alternative auth method
 ```
 
-### Responses
+### 响应（Responses）
 
-Reusable response definitions:
+可复用的响应定义：
 
 ```yaml
 components:
@@ -540,7 +544,7 @@ components:
             $ref: '#/components/schemas/Error'
 ```
 
-### Examples
+### 示例（Examples）
 
 ```yaml
 components:
@@ -572,9 +576,9 @@ components:
         name: New User
 ```
 
-## Data Types
+## 数据类型
 
-### Primitive Types
+### 基本类型
 
 ```yaml
 # String
@@ -621,7 +625,7 @@ format: uri
 example: "https://example.com/users/123"
 ```
 
-### Arrays
+### 数组
 
 ```yaml
 type: array
@@ -638,7 +642,7 @@ items:
   $ref: '#/components/schemas/User'
 ```
 
-### Objects
+### 对象
 
 ```yaml
 type: object
@@ -663,7 +667,7 @@ additionalProperties:        # Extra properties must be strings
   type: string
 ```
 
-### Enums
+### 枚举
 
 ```yaml
 type: string
@@ -696,9 +700,9 @@ allOf:
         type: integer
 ```
 
-## Validation
+## 校验
 
-### String Validation
+### 字符串校验
 
 ```yaml
 type: string
@@ -708,7 +712,7 @@ pattern: "^[a-zA-Z0-9_-]+$"
 format: email
 ```
 
-### Number Validation
+### 数字校验
 
 ```yaml
 type: integer
@@ -718,7 +722,7 @@ exclusiveMinimum: true  # > 0 instead of >= 0
 multipleOf: 5
 ```
 
-### Array Validation
+### 数组校验
 
 ```yaml
 type: array
@@ -727,9 +731,9 @@ maxItems: 10
 uniqueItems: true
 ```
 
-## Tags
+## 标签（Tags）
 
-Organize endpoints into logical groups:
+将端点组织为逻辑分组：
 
 ```yaml
 tags:
@@ -747,9 +751,9 @@ paths:
         - Users
 ```
 
-## Documentation
+## 文档
 
-### Markdown Support
+### Markdown 支持
 
 ```yaml
 description: |
@@ -774,9 +778,9 @@ description: |
   ```
 ```
 
-## Code Generation
+## 代码生成
 
-Generate SDKs from OpenAPI spec:
+从 OpenAPI 规格生成 SDK：
 
 ```bash
 # Generate TypeScript client
@@ -798,9 +802,9 @@ openapi-generator-cli generate \
   -o ./server
 ```
 
-## Validation Tools
+## 校验工具
 
-Validate OpenAPI spec:
+校验 OpenAPI 规格：
 
 ```bash
 # Using Swagger CLI
@@ -810,15 +814,15 @@ swagger-cli validate openapi.yaml
 spectral lint openapi.yaml
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Use components** - Reuse schemas, responses, parameters
-2. **Add examples** - Include realistic examples for all schemas
-3. **Document thoroughly** - Every endpoint, parameter, response
-4. **Version your spec** - Track changes to the specification
-5. **Validate regularly** - Use tools to catch errors
-6. **Use $ref** - Reference components instead of duplicating
-7. **Include error responses** - Document all possible errors
-8. **Add operationId** - Unique ID for each operation (for code gen)
-9. **Tag endpoints** - Organize into logical groups
-10. **Provide security schemes** - Document authentication clearly
+1. **使用组件** - 复用 Schema、响应与参数
+2. **添加示例** - 为所有 Schema 提供贴近真实的示例
+3. **充分编写文档** - 覆盖每个端点、参数、响应
+4. **为规格做版本管理** - 跟踪规格文档的变更
+5. **定期校验** - 用工具捕获错误
+6. **使用 $ref** - 引用组件而非重复复制
+7. **包含错误响应** - 记录所有可能的错误
+8. **添加 operationId** - 为每个操作提供唯一 ID（供代码生成使用）
+9. **为端点打标签** - 组织成逻辑分组
+10. **提供安全方案** - 清晰记录认证方式

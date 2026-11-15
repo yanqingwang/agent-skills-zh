@@ -1,104 +1,108 @@
-# Competitive Data Collection Guide
+> **中文汉化版** · 上游：[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) · 原文件：`product-team/skills/competitive-teardown/references/data-collection-guide.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Overview
+# 竞争数据收集指南
 
-This guide outlines systematic approaches for gathering competitive intelligence from publicly available sources. All methods described here are ethical and rely on information that competitors have made publicly accessible.
+## 概述
 
-## Public Data Sources
+本指南给出从公开来源系统性收集竞争情报的方法。这里描述的所有方法都是合乎伦理的，只依赖竞争对手已公开的信息。
 
-### Review Platforms
-- **G2**: Enterprise software reviews, feature comparisons, satisfaction scores
-- **Capterra**: SMB-focused reviews, pricing transparency, deployment details
-- **TrustRadius**: In-depth reviews with verified users, TrustMaps
-- **Product Hunt**: Launch positioning, early adopter sentiment, feature highlights
-- **App Store / Google Play**: Mobile app ratings, review themes, update frequency
+## 公开数据来源
 
-### Company Publications
-- **Pricing Pages**: Tier structure, feature gating, enterprise vs self-serve
-- **Changelogs / Release Notes**: Development velocity, feature priorities, tech direction
-- **Blog Posts**: Strategic messaging, thought leadership topics, market positioning
-- **Case Studies**: Target customer profiles, value propositions, success metrics
-- **Help Documentation**: Feature depth, API capabilities, integration ecosystem
+### 评论平台
+- **G2**：企业软件评论、功能对比、满意度评分
+- **Capterra**：面向 SMB 的评论、定价透明度、部署细节
+- **TrustRadius**：经过实名验证用户的深度评论、TrustMaps
+- **Product Hunt**：发布定位、早期采用者情绪、功能亮点
+- **App Store / Google Play**：移动应用评分、评论主题、更新频率
 
-### Talent & Organization Signals
-- **Job Postings**: Technology stack, team growth areas, strategic initiatives
-- **LinkedIn**: Team size, org structure, key hires, department ratios
-- **Glassdoor**: Company culture, internal challenges, growth trajectory
+### 公司出版物
+- **定价页**：档位结构、功能门槛、企业版 vs 自助版
+- **Changelog / 发布说明**：研发速度、功能优先级、技术方向
+- **博客文章**：战略性信息传达、思想领导力主题、市场定位
+- **案例研究**：目标客户画像、价值主张、成功指标
+- **帮助文档**：功能深度、API 能力、集成生态
 
-### Financial & Legal
-- **Patent Filings**: Innovation direction, defensive IP, technology differentiation
-- **SEC Filings (public companies)**: Revenue, growth rate, customer count, churn
-- **Crunchbase / PitchBook**: Funding rounds, investors, valuation trends
+### 人才与组织信号
+- **招聘职位**：技术栈、团队扩张方向、战略举措
+- **LinkedIn**：团队规模、组织结构、关键招聘、部门配比
+- **Glassdoor**：公司文化、内部问题、增长轨迹
 
-### Technical Intelligence
-- **BuiltWith / Wappalyzer**: Technology stack detection
-- **GitHub**: Open-source contributions, SDK quality, developer engagement
-- **API Documentation**: Integration capabilities, rate limits, data models
-- **Status Pages**: Uptime history, incident frequency, infrastructure maturity
+### 财务与法律
+- **专利文件**：创新方向、防御性 IP、技术差异化
+- **SEC 文件（上市公司）**：收入、增速、客户数、流失
+- **Crunchbase / PitchBook**：融资轮次、投资人、估值趋势
 
-## Data Points to Collect Per Competitor
+### 技术情报
+- **BuiltWith / Wappalyzer**：技术栈探测
+- **GitHub**：开源贡献、SDK 质量、开发者参与度
+- **API 文档**：集成能力、速率限制、数据模型
+- **状态页**：历史可用性、事故频率、基础设施成熟度
 
-### Product
-- Core features and capabilities (feature-by-feature matrix)
-- Unique differentiators and proprietary technology
-- Platform support (web, mobile, desktop, API)
-- Integration ecosystem (number and quality of integrations)
-- Performance benchmarks (if available from reviews)
+## 每个竞争对手要收集的数据点
 
-### Business
-- Pricing tiers and per-seat/usage costs
-- Target customer segments (SMB, mid-market, enterprise)
-- Estimated customer count and notable logos
-- Geographic focus and localization
-- Go-to-market model (PLG, sales-led, hybrid)
+### 产品
+- 核心功能与能力（逐功能对比矩阵）
+- 独特差异化点与专有技术
+- 平台支持（Web、移动、桌面、API）
+- 集成生态（集成的数量与质量）
+- 性能基准（如果评论中有）
 
-### Team & Technology
-- Estimated team size and engineering ratio
-- Technology stack and infrastructure choices
-- Development velocity (release frequency)
-- Open-source involvement and developer relations
+### 业务
+- 定价档位与按席位/用量的成本
+- 目标客户细分（SMB、中型市场、企业）
+- 估算客户数与知名客户标志
+- 地域重心与本地化
+- GTM 模式（PLG、销售驱动、混合）
 
-### Market Position
-- Market share estimates
-- Brand perception and NPS (from reviews)
-- Analyst coverage (Gartner, Forrester positioning)
-- Partnership and channel strategy
+### 团队与技术
+- 估算团队规模与工程占比
+- 技术栈与基础设施选型
+- 研发速度（发布频率）
+- 开源参与度与开发者关系
 
-## Ethical Guidelines
+### 市场地位
+- 市场份额估算
+- 品牌认知与 NPS（来自评论）
+- 分析师覆盖（Gartner、Forrester 定位）
+- 合作伙伴与渠道战略
 
-1. **Use only public information** - Never access private systems, NDA-protected content, or internal documents
-2. **No deception** - Do not misrepresent yourself to obtain information (e.g., fake sales inquiries)
-3. **Respect terms of service** - Follow scraping policies and API usage terms
-4. **Attribute sources** - Document where each data point came from for verification
-5. **No employee poaching for intelligence** - Hiring decisions should be talent-driven, not intelligence-driven
-6. **Legal compliance** - Ensure data collection complies with local regulations
+## 伦理准则
 
-## Update Cadence Recommendations
+1. **只用公开信息**：绝不访问私有系统、NDA 保护的内容或内部文档
+2. **不欺骗**：不以虚假身份获取信息（例如假装销售询价）
+3. **遵守服务条款**：遵守抓取政策和 API 使用条款
+4. **标注来源**：记录每个数据点的出处，便于核验
+5. **不为情报挖人**：招聘决策应该由人才需求驱动，不是情报驱动
+6. **合法合规**：确保数据收集符合当地法规
 
-| Data Type | Frequency | Trigger Events |
+## 更新节奏建议
+
+| 数据类型 | 频率 | 触发事件 |
 |-----------|-----------|---------------|
-| Pricing | Monthly | Competitor pricing page changes |
-| Features | Bi-weekly | Changelog updates, product launches |
-| Reviews | Monthly | Batch review analysis |
-| Job Postings | Monthly | Hiring surge detection |
-| Financials | Quarterly | Earnings reports, funding rounds |
-| Tech Stack | Quarterly | Major platform changes |
-| Full Teardown | Quarterly | Strategic planning cycles |
+| 定价 | 每月 | 竞争对手定价页变更 |
+| 功能 | 每两周 | Changelog 更新、产品发布 |
+| 评论 | 每月 | 批量评论分析 |
+| 招聘职位 | 每月 | 招聘潮探测 |
+| 财务 | 每季度 | 财报、融资轮次 |
+| 技术栈 | 每季度 | 重大平台变更 |
+| 完整拆解 | 每季度 | 战略规划周期 |
 
-## Collection Workflow
+## 收集工作流
 
-1. **Set up monitoring** - Google Alerts, competitor RSS feeds, social listening
-2. **Schedule regular sweeps** - Calendar recurring data collection tasks
-3. **Centralize data** - Use a shared competitive intelligence database or spreadsheet
-4. **Validate findings** - Cross-reference multiple sources for accuracy
-5. **Tag and categorize** - Apply consistent taxonomy for easy retrieval
-6. **Share insights** - Distribute relevant findings to product, sales, and marketing teams
-7. **Archive versions** - Maintain historical snapshots for trend analysis
+1. **建立监控**：Google Alerts、竞争对手 RSS、社交聆听
+2. **定期巡检**：把数据收集任务排进日历
+3. **集中数据**：使用共享的竞争情报数据库或表格
+4. **校验发现**：交叉核对多个来源以保证准确
+5. **打标签分类**：用统一的分类体系便于检索
+6. **分享洞察**：把相关发现分发给产品、销售和市场团队
+7. **归档版本**：保留历史快照，用于趋势分析
 
-## Tools for Automation
+## 自动化工具
 
-- **Google Alerts**: Free monitoring for competitor mentions
-- **Visualping**: Website change detection (pricing pages, feature pages)
-- **Feedly**: RSS aggregation for competitor blogs and news
-- **SimilarWeb**: Traffic estimates and audience overlap
-- **SEMrush / Ahrefs**: SEO positioning and content strategy analysis
+- **Google Alerts**：免费监控竞争对手提及
+- **Visualping**：网页变更检测（定价页、功能页）
+- **Feedly**：RSS 聚合竞争对手博客与新闻
+- **SimilarWeb**：流量估算与受众重合
+- **SEMrush / Ahrefs**：SEO 排名与内容策略分析

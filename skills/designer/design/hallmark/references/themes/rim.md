@@ -7,16 +7,20 @@ display: grotesk-sans Switzer
 accent: warm 45
 posture: committed
 keywords: space, satellite, earth observation, orbit, imagery, ground station, telemetry, hardware, schedule, utc, infrastructure, mission, sensor, monitoring, instrument, night, dark, measured
-material: warm black paper, warm off-white ink, Switzer 500 with Geist Mono for every measurement, square hairline surfaces, the earth photographed straight down, an orange signal and a sky-blue second
+material: 暖黑纸张，暖米白墨色，Switzer 500 配 Geist Mono 用于所有度量值，方正的发丝线表面，正上方俯拍地球照片，橙色信号与天蓝次色
 photo: natural sat=-20 con=10
 pictured: Map / Diagram, Ledge hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/rim.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Rim
 
-An instrument at night: warm black paper, warm off-white ink, Switzer at a medium weight for every head, Geist Mono for every number that measures something, square surfaces parted by hairlines, an orange signal and a sky-blue second, and the earth shown the way an instrument sees it, from straight above. It reads as exact because every edge is hard and every time carries its zone. It is not a glowing sci-fi page of starfields and halos, and not a neon dashboard.
+夜间的仪器：暖黑纸张，暖米白墨色，每个标题用中等字重的 Switzer，每个度量数字用 Geist Mono，方正表面由发丝线分隔，一抹橙色信号与天蓝次色，地球以仪器的方式呈现：正上方俯视。它读起来精确，因为每条边都硬朗，每个时间都带时区。它不是星光与光晕的科幻发光页面，也不是霓虹仪表盘。
 
-## Tokens
+## 令牌
 
 ```css
 :root {
@@ -31,51 +35,51 @@ An instrument at night: warm black paper, warm off-white ink, Switzer at a mediu
 }
 ```
 
-Two colourways, both dark, stated in the stamp: `rim: night` (the block above) or `rim: station` (navy `oklch(19% 0.055 262)`, rules `oklch(32% 0.060 262)`, the signals swapped to ice `oklch(84% 0.10 200)` and amber `oklch(76% 0.14 55)`).
+两种配色，均为暗色，由 stamp 声明：`rim: night`（上面的区块）或 `rim: station`（海军蓝 `oklch(19% 0.055 262)`，分隔线 `oklch(32% 0.060 262)`，信号色换成冰蓝 `oklch(84% 0.10 200)` 与琥珀 `oklch(76% 0.14 55)`）。
 
-## Type
+## 字体
 
-- **Display:** Switzer 500, `--tracking-display` on the hero head and -0.03em on section heads, line-height 1.02, sentence case, roman. Medium, never bold; one colour per head.
-- **Body:** Switzer 400 at 16 to 17px, line-height 1.55, in `--color-ink-2`; labels, captions and table heads are 500 a step smaller in `--color-muted`, sentence case, untracked, never mono.
-- **Measurements (mono as material):** Geist Mono 400, tabular, for every time, coordinate, area, price and duration. A time always carries its zone, UTC by default. A measurement that is the point sets at `--text-display-s` to `--text-display` at -0.03em, its unit or zone at half the size in `--color-muted`. Mono never sets a head, a label or a paragraph.
+- **标题字：**Switzer 500，首屏标题用 `--tracking-display`，区块标题用 -0.03em，行高 1.02，句首大写，正体。中等字重，绝不用粗体；每个标题只用一种颜色。
+- **正文字：**Switzer 400，16 到 17px，行高 1.55，用 `--color-ink-2`；标签、图注与表头用小一档的 500 与 `--color-muted`，句首大写，不加字距，绝不用等宽。
+- **度量值（等宽即材质）：**Geist Mono 400，表列数字，用于每个时间、坐标、面积、价格与时长。时间永远带时区，默认 UTC。作为主角的度量值排在 `--text-display-s` 到 `--text-display`，字距 -0.03em，其单位或时区用一半字号与 `--color-muted`。等宽绝不排标题、标签或段落。
 
-## Surfaces
+## 表面
 
-- Hairlines do the dividing: 1px `--color-rule` above every section head, around wells and under a table's head; rows on `--color-rule-2`.
-- Zero radius on everything; nothing on the page is round. Depth by lightness only: `--color-paper-2` lifts a well, `--color-paper-3` sinks one. No shadow, glass, blur or halo.
-- A well or a photograph may drop its border for two 12px corner ticks, 1px L shapes in `--color-muted` at opposite corners, set just outside the frame.
-- Bands: `--color-paper-2` or `--color-paper-3`, edged by hairlines; two a page at most, never a light band.
-- Photographs: the earth straight down at the scale a capture delivers: a field, a coastline, roofs, a river mouth, sharp edge to edge, with no horizon, no sky and no planet. Square, a 1px inset ring of ink at 8%. Its measurements (the site, the pass, the delivery) ride on a strip of `--color-paper` at 78% along its foot, in Geist Mono with the zone.
+- 分隔全靠发丝线：每个区块标题上方 1px `--color-rule`，井格四周与表头下方也是；行与行之间用 `--color-rule-2`。
+- 一切零圆角；页面上没有任何圆形。深度只靠明度：`--color-paper-2` 抬升一个井格，`--color-paper-3` 下沉一个。无阴影、无玻璃、无模糊、无光晕。
+- 井格或照片可以去掉边框，换成两个 12px 的角标：1px 的 L 形，用 `--color-muted`，位于对角，落在画框外侧一点。
+- 色带：`--color-paper-2` 或 `--color-paper-3`，以发丝线镶边；一页最多两条，绝不用浅色带。
+- 照片：正上方俯视的地球，清晰度以原始捕捉为准：一片田、一条海岸线、屋顶、河口，边缘到边缘锐利，无地平线、无天空、无星球轮廓。方形，1px 内缩墨环，8% 透明度。它的度量值（地点、过境时刻、交付）落在底部一条 78% 透明度的 `--color-paper` 横带上，用 Geist Mono 加时区。
 
-## Range
+## 适用手法
 
-- **Measurements as figures:** two to four real quantities in Geist Mono at display size across the twelve columns, parted by vertical hairlines, the unit half size in muted: a range, a window, a price.
-- **A diagram of real time:** a horizontal UTC axis in hairlines with ticks, the window as a 10px sky-blue band and each event a 1px pin in its signal with its time in mono beside it; a chart of the system, never decoration.
-- **The product built:** the order or the queue on a `--color-paper-2` well with corner ticks, fields in mono, the chosen row on `--color-paper-3` with an orange square.
-- **Ruled rows and a form-first close:** hairline rows with a Switzer title on the left and the line on the right; a form on paper-2 whose values type in mono.
+- **度量值作大数字：**两到四个真实量值，Geist Mono，展示级字号，横跨十二列，由竖向发丝线分隔，单位用一半字号的 muted：一个量程、一个时间窗、一个价格。
+- **真实时间的图示：**一条水平 UTC 轴，发丝线加刻度，时间窗是 10px 天蓝色带，每个事件是一根 1px 信号色别针，时间用等宽字排在其旁；这是系统的图表，绝不是装饰。
+- **已建成的产品：**订单或队列放在 `--color-paper-2` 井格上并配角标，字段用等宽，选中行落在 `--color-paper-3` 上带一个橙色方块。
+- **刻线行与表单优先的收尾：**发丝线行，左侧 Switzer 标题，右侧一行说明；纸-2 上的表单，其值用等宽输入。
 
-## Controls
+## 控件
 
-- The pair: a square orange-filled primary with `--color-accent-ink` text beside a square secondary outlined in 1px `--color-rule`, both Switzer 500.
-- Links are ink, underlined on hover; inputs square on `--color-paper` with a 1px `--color-muted` border, a value that measures typed in Geist Mono.
-- Orange marks the action and the current state, sky-blue the second state or a window; nothing else is coloured.
+- 成对出现：方形橙色实心主按钮配 `--color-accent-ink` 文字，旁边是 1px `--color-rule` 描边的方形次级按钮，都用 Switzer 500。
+- 链接用墨色，悬停加下划线；输入框方正在 `--color-paper` 上，1px `--color-muted` 边框，需要度量的值用 Geist Mono 输入。
+- 橙色标记动作与当前状态，天蓝标记第二状态或时间窗；其余不着色。
 
-## Motion
+## 动效
 
-Steady and exact: a state changes over `--dur-short` on `--ease-out`; a live time ticks once a minute. Nothing pulses, loops or reveals.
+稳定而精确：状态在 `--dur-short` 配 `--ease-out` 内切换；实时时间每分钟跳一次。无脉冲、无循环、无入场。
 
-## Voice
+## 语气
 
-Measured and exact: the site, the pass, the time in UTC, the area in square kilometres. No wonder, no frontier.
+克制而精确：地点、过境时刻、UTC 时间、以平方公里计的面积。不惊叹，不谈前沿。
 
-## Do-nots
+## 禁忌
 
-- Never anything round: no pill, no avatar circle, no rounded button or frame.
-- Never a bare time; `09:30` without a zone is the theme lying.
-- Never bold display; Switzer 500 is the ceiling and the black does the weight.
-- Never the planet from space, a starfield, a glow or an orbit traced round a globe.
+- 绝无任何圆形：无胶囊、无圆形头像、无圆角按钮或画框。
+- 绝无裸时间；不带时区的 `09:30` 是主题在撒谎。
+- 绝不用粗体标题；Switzer 500 就是上限，重量感由黑色地面承担。
+- 绝不从太空看星球、绝无星野、绝无光晕、绝不绕地球画轨道线。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&display=swap" rel="stylesheet">

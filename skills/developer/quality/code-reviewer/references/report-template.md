@@ -1,6 +1,10 @@
-# Report Template
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/code-reviewer/references/report-template.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Full Review Report Template
+# 报告模板
+
+## 完整审查报告模板
 
 ```markdown
 # Code Review: [PR Title]
@@ -73,37 +77,37 @@ db.query(query, [id]);
 - [x] Documentation is present
 ```
 
-## Verdict Guidelines
+## 结论指南
 
-| Verdict | When to Use |
+| 结论 | 使用时机 |
 |---------|-------------|
-| **Approve** | No blocking issues, minor suggestions only |
-| **Request Changes** | Critical or major issues must be fixed |
-| **Comment** | Questions need answers, no blocking issues |
+| **Approve** | 没有阻断性问题，只有少量建议 |
+| **Request Changes** | 存在必须修复的严重或重要问题 |
+| **Comment** | 有问题需要答复，但无阻断性问题 |
 
-## Severity Definitions
+## 严重级别定义
 
-| Severity | Definition | Examples |
+| 严重级别 | 定义 | 示例 |
 |----------|------------|----------|
-| **Critical** | Security risk, data loss, crashes | SQL injection, auth bypass |
-| **Major** | Significant performance, maintainability | N+1 queries, god functions |
-| **Minor** | Style, naming, small improvements | Variable names, formatting |
+| **Critical** | 安全风险、数据丢失、崩溃 | SQL 注入、鉴权绕过 |
+| **Major** | 明显的性能或可维护性问题 | N+1 查询、上帝函数 |
+| **Minor** | 风格、命名、小幅改进 | 变量名、格式 |
 
-## Time Boxing
+## 时间盒
 
-| Section | Suggested Time |
+| 环节 | 建议时长 |
 |---------|----------------|
-| Context & understanding | 5 minutes |
-| Critical/security review | 10 minutes |
-| Logic & performance | 15 minutes |
-| Tests review | 10 minutes |
-| Writing report | 10 minutes |
-| **Total** | ~50 minutes |
+| 背景与理解 | 5 分钟 |
+| 严重问题/安全审查 | 10 分钟 |
+| 逻辑与性能 | 15 分钟 |
+| 测试审查 | 10 分钟 |
+| 撰写报告 | 10 分钟 |
+| **总计** | 约 50 分钟 |
 
-## Quick Checks Before Submitting
+## 提交前快速检查
 
-- [ ] All critical issues have clear remediation
-- [ ] Major issues explain the impact
-- [ ] At least one positive comment included
-- [ ] Questions are specific and answerable
-- [ ] Verdict matches the issues found
+- [ ] 所有严重问题都有明确的修复办法
+- [ ] 重要问题都说明了影响
+- [ ] 至少包含一条正面评价
+- [ ] 问题具体且可回答
+- [ ] 结论与发现的问题一致

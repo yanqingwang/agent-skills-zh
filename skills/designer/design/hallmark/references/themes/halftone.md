@@ -12,11 +12,15 @@ photo: natural vib=25 sat=10 con=6
 pictured: Back of the Can, Settled hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/halftone.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Halftone
 
-A loud one-colour print voice: butter-cream stock, brown-black ink, a fat Ultra slab for heads, Chivo for everything else, 3px ink rules and one vermilion that prints solid on controls and as a dot screen on a band or a well. Photographs are the only full colour, close and bright like a label's product shot. It feels screen-printed because there is one ink and its dots fade from solid to nothing, not because anything is drawn. It is not a comic-book pop-art page and not a pastel snack brand.
+响亮的单色印刷口吻：奶油黄纸、棕黑墨色，肥厚的 Ultra 粗衬线作标题，Chivo 负责其余一切，3px 墨色横线，外加一处朱红：在控件上实地印刷，在色带或内嵌面板上则过网点。照片是唯一的全彩，近拍且明亮，像包装标签上的产品照。它有丝网印刷感，因为墨只有一种、网点从实到无渐隐，而不是因为画了什么。它不是漫画波普页，也不是马卡龙色零食品牌。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -32,59 +36,59 @@ A loud one-colour print voice: butter-cream stock, brown-black ink, a fat Ultra 
 }
 ```
 
-Committed: the spot carries the screen, the controls and a field band. Three stocks, stated in the stamp (`halftone: cream`).
+Committed 姿态：专色承担网点、控件与一条色场色带。三种纸张，写入 stamp（印记）：`halftone: cream`。
 
-| Stock | Paper and ink | The spot |
+| 纸张 | 纸与墨 | 专色 |
 | --- | --- | --- |
-| **Cream and vermilion** (default) | the tokens above | `oklch(54.5% 0.215 33)` |
-| **Lemon on black** | `oklch(19% 0.01 60)` under `oklch(96% 0.02 90)` | yellow `oklch(88% 0.17 95)` with dark ink on it |
-| **Blood orange** | the colour goes into the stock: `oklch(72% 0.17 45)` under plum `oklch(24% 0.06 25)` | the plum ink is also the spot, so the dots print dark |
+| **Cream and vermilion**（默认） | 上面的 token | `oklch(54.5% 0.215 33)` |
+| **Lemon on black** | 底 `oklch(19% 0.01 60)`，上覆 `oklch(96% 0.02 90)` | 黄色 `oklch(88% 0.17 95)`，其上压深墨字 |
+| **Blood orange** | 颜色进入纸里：底 `oklch(72% 0.17 45)`，上覆紫红 `oklch(24% 0.06 25)` | 紫红墨兼作专色，网点因此印成深色 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Ultra 400, its only weight, roman, sentence case, line-height 1.08 (Ultra's descenders touch the next line any tighter), `--tracking-display`; one colour per head. Ultra's figures are its loudest letters: a number at 200px and over may print solid in the spot, tracked -0.02em, line-height 0.9 when it stands alone on its line.
-- **Body:** Chivo 400, 17px, line-height 1.55, in `--color-ink-2`; Chivo 700 on controls and on the names in a label panel.
-- **Labels, tags, table heads, captions:** Chivo 500 a step smaller, sentence case, untracked; the 3px rules give them authority. No mono.
+- **展示字体：**Ultra 400，唯一字重，正体，句首大写，行高 1.08（再紧 Ultra 的下降部就会碰到下一行），`--tracking-display`；每个标题一种颜色。Ultra 的数字是它最响的字母：200px 以上的数字可以在专色中实地印刷，字距 -0.02em，独占一行时行高 0.9。
+- **正文：**Chivo 400，17px，行高 1.55，用 `--color-ink-2`；控件与标签面板中的名称用 Chivo 700。
+- **标签、标记、表头、图注：**Chivo 500，小一号，句首大写，不加字距；3px 横线给它们撑腰。不用等宽字体。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Rules do the work of borders: `--rule-bar` in ink across the top of a section, a table or a list, `--rule-hair` in `--color-rule` between rows.
-- A well is the one boxed surface: `--color-paper-2` inside a `--rule-bar` ink border, square, with nothing boxed inside it. No shadow anywhere.
-- Radii: 3px on buttons and inputs, a full pill on a chip; wells, tags and photographs are square.
-- Bands: `--color-paper-2`, a spot field with cream type knocked out of it, or `--color-ink` with cream text. Two a page at most. `--color-accent-deep` is the spot pressed: hover, the focus ring and any spot type under 24px.
-- Photographs: the product and what goes into it, close and bright (a cut lemon, a knuckle of ginger, bubbles in a glass), hard daylight on a plain light ground. The page's only full colour; square, a 1px ink hairline, a caption beneath naming what is in it. The spot never tints a picture.
-- The screen (`texture.md` § Halftone): a `--halftone-dot` dot on a `--halftone-size` cell in the spot, masked to fade from solid to nothing, on a band or a well; one screened field per section, never under or across type or a photograph.
+- 横线代替边框工作：区块、表格或列表顶端压墨色 `--rule-bar`，行间用 `--color-rule` 的 `--rule-hair`。
+- 内嵌面板是唯一的加框表面：`--color-paper-2` 装在 `--rule-bar` 墨色边框里，直角，内部不再套任何框。任何地方都无阴影。
+- 圆角：按钮与输入框 3px，chip 用完整胶囊；内嵌面板、标记与照片都是直角。
+- 色带：`--color-paper-2`、专色色场反白米黄字，或墨底米黄字。每页至多两条。`--color-accent-deep` 是压暗的专色：悬停、焦点环，以及一切小于 24px 的专色文字。
+- 照片：产品与它的原料，近拍、明亮（切开的柠檬、一块姜、杯中的气泡），硬日光、素净浅底。页面上唯一的全彩；直角，1px 墨色发丝线，下方图注写明拍了什么。专色绝不给照片加色罩。
+- 网点（`texture.md` § Halftone）：专色的 `--halftone-dot` 圆点落在 `--halftone-size` 网格上，用蒙版从实到无渐隐，用在色带或内嵌面板上；每个区块只允许一处网点色场，绝不压在文字或照片之下或之上。
 
-## Range
+## 版式（Range）
 
-- **A figure as a poster:** one real number (the calories, the size, the price) in Ultra at 240px and over, solid spot on the cream, its unit and its one line in Ultra ink at section size beside it.
-- **The label as a panel:** a 3px ink rule over full-width rows, the name in Chivo 700, the value in Ultra at item size, hairlines between, the way a can's back reads; never shrunk into a box.
-- **The order on the spot:** a spot band with a cream knockout head, a stepper and its running total in Ultra, the screen fading in from one edge behind the empty side.
-- **A statement knocked out:** one blunt sentence in Ultra at display size, cream out of the ink or the spot, nothing else on the field but its links.
+- **数字当海报：**一个真实数字（卡路里、容量、价格）用 Ultra 排到 240px 以上，米黄纸上实地专色，单位与它的一句话用墨色 Ultra 排区块标题字号，放在旁边。
+- **标签排成面板：**一条 3px 墨线压在全宽行组之上，名称用 Chivo 700，数值用 Ultra 的条目字号，行间发丝线，就像罐身背标那样读；绝不缩进盒子里。
+- **专色上下单：**专色色带反白米黄标题，步进器与累计金额用 Ultra，网点从空侧边缘向内渐显。
+- **反白陈述：**一句直白话用 Ultra 排展示字号，米黄字从墨底或专色底里镂空出来，色场上除链接外别无他物。
 
-## Controls
+## 控件（Controls）
 
-- A spot-filled button in Chivo 700 at 3px beside a plain `--rule-bar` spot underline with no box.
-- Links in ink with a spot underline; inputs at 3px, 1px ink border.
-- The spot sits on controls, the screen, a field band and the focus ring; never on body type.
+- 专色填充按钮，Chivo 700，3px 圆角，旁边是无框的 `--rule-bar` 专色下划线。
+- 链接用墨色配专色下划线；输入框 3px 圆角，1px 墨色边框。
+- 专色只落在控件、网点、色场色带与焦点环上；绝不落在正文上。
 
-## Motion
+## 动效（Motion）
 
-State only, `--dur-short` on `--ease-out`: a button darkens one step. The screen never moves.
+只动状态，`--ease-out` 配 `--dur-short`：按钮加深一档。网点永不移动。
 
-## Voice
+## 语气（Voice）
 
-The label: the fruit, the calories, the size of the can, the price of the box. Blunt, sweet and specific; never a lifestyle.
+像标签说话：水果、卡路里、罐的容量、整箱的价钱。直白、甜、具体；绝不谈生活方式。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a second ink; one spot does dots, buttons and fields, and a blue link on the cream is a different printer.
-- Never a gradient that is not dots; a fade is a screen from solid to nothing.
-- Never dots under or across type or a photograph.
-- Never a synthesised bold Ultra, a soft shadow or a rounded well.
-- Never spot type smaller than a section head on the cream; it prints weak, so small spot type takes the deep spot.
+- 绝无第二种墨色；一处专色包办网点、按钮与色场，米黄纸上的蓝色链接等于换了印刷厂。
+- 绝不用非网点的渐变；淡出就是从实到无的网点。
+- 网点绝不压在文字或照片之下或之上。
+- 绝不用仿粗的 Ultra、柔和阴影或圆角内嵌面板。
+- 米黄纸上绝不出现小于区块标题的专色文字；专色印小了会发虚，所以小号专色文字改用加深专色。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Ultra&family=Chivo:wght@400;500;700&display=swap" rel="stylesheet">

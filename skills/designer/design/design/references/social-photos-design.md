@@ -1,10 +1,14 @@
-# Social Photos Design Guide
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/design/references/social-photos-design.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Design social media images via HTML/CSS rendering + screenshot export. Orchestrates the bundled `ui-ux-pro-max`, `brand`, and `design-system` skills; screenshot export runs through Chrome headless, Playwright, or Puppeteer.
+# 社交图片设计指南
 
-## Platform Sizes
+通过 HTML/CSS 渲染 + 截图导出来设计社交媒体图片。编排内置的 `ui-ux-pro-max`、`brand` 和 `design-system` Skill；截图导出经 Chrome headless、Playwright 或 Puppeteer 完成。
 
-| Platform | Type | Size (px) | Aspect |
+## 平台尺寸
+
+| 平台 | 类型 | 尺寸 (px) | 宽高比 |
 |----------|------|-----------|--------|
 | Instagram | Post | 1080 x 1080 | 1:1 |
 | Instagram | Story/Reel | 1080 x 1920 | 9:16 |
@@ -20,48 +24,48 @@ Design social media images via HTML/CSS rendering + screenshot export. Orchestra
 | TikTok | Cover | 1080 x 1920 | 9:16 |
 | Threads | Post | 1080 x 1080 | 1:1 |
 
-## Workflow
+## 工作流
 
-### Step 1: Plan the Work
+### 第 1 步：规划工作
 
-Create TODO tasks with the runtime's native task list. Break down into:
-- Requirement analysis task
-- Idea generation task(s)
-- HTML design task(s) — can parallelize per size/variant
-- Screenshot export task(s) — can parallelize per file
-- Report generation task
+用运行时原生的任务清单创建 TODO 任务。拆分为：
+- 需求分析任务
+- 创意生成任务（一个或多个）
+- HTML 设计任务（可按尺寸/变体并行）
+- 截图导出任务（可按文件并行）
+- 报告生成任务
 
-Spawn parallel subagents for independent tasks (e.g., multiple HTML files for different sizes).
+为独立任务派生并行子代理（例如为不同尺寸生成多个 HTML 文件）。
 
-### Step 2: Analyze Requirements
+### 第 2 步：分析需求
 
-Parse user input for:
-- **Subject/topic** — what the social photo represents
-- **Target platforms** — which sizes needed (default: Instagram Post 1:1 + Story 9:16)
-- **Visual style** — minimalist, bold, gradient, photo-based, etc.
-- **Brand context** — read from `docs/brand-guidelines.md` if exists
-- **Content elements** — headline, subtext, CTA, images, icons
-- **Quantity** — how many variations (default: 3)
+从用户输入解析：
+- **主题/话题**：社交图片要表达什么
+- **目标平台**：需要哪些尺寸（默认：Instagram Post 1:1 + Story 9:16）
+- **视觉风格**：极简、大胆、渐变、照片系等
+- **品牌语境**：如存在则读取 `docs/brand-guidelines.md`
+- **内容元素**：标题、副文、CTA、图片、图标
+- **数量**：要多少个变体（默认：3）
 
-### Step 3: Generate Ideas
+### 第 3 步：生成创意
 
-Create 3-5 concept ideas that:
-- Match the input prompt/requirements
-- Consider platform-specific best practices
-- Vary in composition, color, typography approach
-- Align with brand guidelines if available
+产出 3-5 个概念创意，要求：
+- 匹配输入的提示词/需求
+- 考虑平台特有的最佳实践
+- 在构图、配色、字体排印方案上有变化
+- 如有品牌指南则与其对齐
 
-Present ideas to user via `AskUserQuestion` for approval before designing.
+设计之前，通过 `AskUserQuestion` 向用户展示创意并请求确认。
 
-### Step 4: Design HTML Files
+### 第 4 步：设计 HTML 文件
 
-Use these bundled skills in sequence:
+依次使用这些内置 Skill：
 
-1. **`brand`** — Extract brand colors, fonts, voice from user's project
-2. **`design-system`** — Get design tokens (spacing, typography scale, color palette)
-3. **`ui-ux-pro-max`** — Layout, hierarchy, visual balance; search a different style, palette, or font pairing per concept for design variety.
+1. **`brand`**：从用户项目中提取品牌色、字体、语气
+2. **`design-system`**：获取设计 token（间距、字体阶梯、配色板）
+3. **`ui-ux-pro-max`**：布局、层级、视觉平衡；每个概念搜索不同的风格、配色或字体搭配，制造设计多样性。
 
-For each approved idea + each target size, create an HTML file:
+对每个已确认创意 + 每个目标尺寸，创建一个 HTML 文件：
 
 ```
 output/social-photos/
@@ -72,18 +76,18 @@ output/social-photos/
 └── ...
 ```
 
-#### HTML Design Rules
+#### HTML 设计规则
 
-- **Viewport** — Set exact pixel dimensions matching target size
-- **Self-contained** — Inline all CSS, embed fonts via Google Fonts CDN
-- **No scrolling** — Everything fits in one viewport
-- **High contrast** — Text readable at thumbnail size
-- **Brand-aligned** — Use extracted brand colors/fonts
-- **Safe zones** — Critical content within central 80% area
-- **Typography** — Min 24px for headlines, min 16px for body at 1080px width
-- **Visual hierarchy** — One focal point, clear reading flow
+- **视口**：设置与目标尺寸一致的精确像素尺寸
+- **自包含**：内联全部 CSS，字体经 Google Fonts CDN 嵌入
+- **无滚动**：所有内容装进一个视口
+- **高对比**：文本在缩略图尺寸下可读
+- **贴合品牌**：使用提取出的品牌色/字体
+- **安全区**：关键内容放在中央 80% 区域内
+- **字体排印**：1080px 宽度下标题至少 24px，正文至少 16px
+- **视觉层级**：一个焦点，清晰的阅读动线
 
-#### HTML Template Structure
+#### HTML 模板结构
 
 ```html
 <!DOCTYPE html>
@@ -117,13 +121,13 @@ output/social-photos/
 </html>
 ```
 
-### Step 5: Screenshot Export
+### 第 5 步：截图导出
 
-Use Chrome headless, Playwright, or Puppeteer to capture exact-size screenshots.
+用 Chrome headless、Playwright 或 Puppeteer 截取精确尺寸的截图。
 
-**IMPORTANT:** Always add a delay (3-5s) after page load for fonts/images to fully render before capture.
+**重要：** 页面加载后务必加一段延迟（3-5 秒），让字体/图片在截图前完整渲染。
 
-#### Option A: Chrome Headless CLI (Recommended — zero dependencies)
+#### 方案 A：Chrome Headless CLI（推荐，零依赖）
 
 ```bash
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
@@ -140,21 +144,21 @@ DELAY=5  # seconds for fonts/images to load
   "file:///path/to/file.html"
 ```
 
-Key flags:
-- `--virtual-time-budget=5000` — waits 5s virtual time for assets (Google Fonts, images) to load
-- `--hide-scrollbars` — prevents scrollbar artifacts in screenshots
-- `--window-size=WxH` — sets exact pixel dimensions
+关键 flag：
+- `--virtual-time-budget=5000`：等 5 秒虚拟时间，让资源（Google Fonts、图片）加载
+- `--hide-scrollbars`：避免滚动条残影出现在截图里
+- `--window-size=WxH`：设置精确像素尺寸
 
-#### Option B: Browser automation provided by the runtime
+#### 方案 B：运行时提供的浏览器自动化
 
-If the runtime offers a browser-automation or screenshot capability (for example a browser MCP server), use it to:
-1. Open each HTML file in browser
-2. Set viewport to exact target dimensions
-3. Wait 3-5s for fonts/images to fully load
-4. Screenshot full page to PNG
-5. Save to `output/social-photos/exports/`
+如果运行时提供浏览器自动化或截图能力（例如浏览器 MCP 服务器），用它来：
+1. 在浏览器打开每个 HTML 文件
+2. 把视口设为精确目标尺寸
+3. 等 3-5 秒让字体/图片完整加载
+4. 全页截图为 PNG
+5. 保存到 `output/social-photos/exports/`
 
-#### Option C: Playwright script
+#### 方案 C：Playwright 脚本
 
 ```javascript
 const { chromium } = require('playwright');
@@ -180,7 +184,7 @@ async function captureScreenshots(htmlFiles) {
 }
 ```
 
-#### Option D: Puppeteer script
+#### 方案 D：Puppeteer 脚本
 
 ```javascript
 const puppeteer = require('puppeteer');
@@ -206,30 +210,30 @@ async function captureScreenshots(htmlFiles) {
 }
 ```
 
-**IMPORTANT:** Use `deviceScaleFactor: 2` for retina-quality output (Puppeteer only).
+**重要：** 用 `deviceScaleFactor: 2` 获得视网膜品质输出（仅 Puppeteer）。
 
-### Step 6: Verify & Fix Designs
+### 第 6 步：校验并修复设计
 
-Open each exported PNG in an available browser or image viewer and inspect it:
+在可用的浏览器或图片查看器中打开每张导出的 PNG 并检查：
 
-1. Open exported screenshots and check for layout/styling issues
-2. Verify: fonts rendered correctly, colors match brand, text readable at thumbnail size
-3. Check: no overflow, no cut-off content, safe zones respected, visual hierarchy clear
-4. If issues found → fix HTML source → re-export screenshot → verify again
-5. Repeat until all designs pass visual QA
+1. 打开导出的截图，检查布局/样式问题
+2. 核验：字体正确渲染、颜色符合品牌、文本在缩略图尺寸下可读
+3. 检查：无溢出、无内容被裁、安全区合规、视觉层级清晰
+4. 发现问题 → 修 HTML 源码 → 重新导出截图 → 再核验
+5. 重复，直到所有设计通过视觉 QA
 
-**Common issues to check:**
-- Fonts not loaded (fallback to system fonts)
-- Text overflow or clipping
-- Elements outside safe zone (central 80%)
-- Low contrast text (below WCAG AA 4.5:1)
-- Misaligned elements or broken layouts
+**需检查的常见问题：**
+- 字体未加载（回退到系统字体）
+- 文本溢出或被裁
+- 元素越出安全区（中央 80%）
+- 低对比文本（低于 WCAG AA 4.5:1）
+- 元素错位或布局破碎
 
-### Step 7: Generate Summary Report
+### 第 7 步：生成总结报告
 
-Save the report as `plans/reports/{YYMMDD}-social-photos-{topic}.md`.
+把报告保存为 `plans/reports/{YYMMDD}-social-photos-{topic}.md`。
 
-Report structure:
+报告结构：
 
 ```markdown
 # Social Photos Design Report
@@ -267,51 +271,51 @@ Report structure:
 - {Iteration opportunities}
 ```
 
-### Step 8: Organize Output
+### 第 8 步：整理产出
 
-Organize all output files and reports:
-- Move/copy exported PNGs to proper asset directories
-- Ensure reports are in `plans/reports/` under the name from Step 7
-- Clean up intermediate HTML files if requested
-- Tag outputs with metadata (platform, size, concept name)
+整理所有输出文件与报告：
+- 把导出的 PNG 移动/复制到正确的素材目录
+- 确保报告按第 7 步的命名放在 `plans/reports/` 下
+- 如有要求，清理中间 HTML 文件
+- 给产出打上元数据标签（平台、尺寸、创意名）
 
-## Design Best Practices
+## 设计最佳实践
 
-### Platform-Specific Tips
+### 平台特有技巧
 
-- **Instagram** — Visual-first, minimal text (<20%), strong colors, lifestyle feel
-- **Facebook** — Informative, can have more text, eye-catching in feed
-- **Twitter/X** — Bold headlines, contrast for dark/light mode, clear message
-- **LinkedIn** — Professional, clean, data-driven visuals, thought leadership
-- **Pinterest** — Vertical format, text overlay on images, how-to style
-- **YouTube** — Face close-ups perform best, bright colors, readable at small size
-- **TikTok** — Trendy, energetic, bold typography, youth-oriented
+- **Instagram**：视觉优先，少文字（<20%），强色彩，生活方式感
+- **Facebook**：信息型，可以多些文字，信息流里抓眼球
+- **Twitter/X**：大胆标题，深/浅色模式都要有对比，信息清晰
+- **LinkedIn**：专业、干净、数据型视觉，思想领导力
+- **Pinterest**：竖版构图，图上叠文字，教程风格
+- **YouTube**：人脸特写效果最好，亮色，小尺寸下可读
+- **TikTok**：潮流、有活力、大胆字体排印，面向年轻人
 
-### Art Direction Styles (Reuse from Banner)
+### 美术风格（沿用 Banner 的分类）
 
-| Style | Best For | Key Elements |
+| 风格 | 适用 | 关键元素 |
 |-------|----------|--------------|
-| Minimalist | SaaS, tech, luxury | Whitespace, single accent color, clean type |
-| Bold Typography | Announcements, quotes | Large type, high contrast, minimal imagery |
-| Gradient Mesh | Modern brands, apps | Fluid color transitions, floating elements |
-| Photo-Based | Lifestyle, e-commerce | Hero image, subtle overlay, text on image |
-| Geometric | Tech, fintech | Shapes, patterns, structured layouts |
-| Glassmorphism | SaaS, modern apps | Frosted glass, blur effects, transparency |
-| Flat Illustration | Education, health | Custom illustrations, friendly, approachable |
-| Duotone | Creative, editorial | Two-color treatment on photos |
-| Collage | Fashion, culture | Mixed media, overlapping elements |
-| 3D/Isometric | Tech, product | Depth, shadows, modern perspective |
+| Minimalist | SaaS、科技、奢侈品牌 | 留白、单一强调色、干净字体 |
+| Bold Typography | 公告、语录 | 大字号、高对比、少图像 |
+| Gradient Mesh | 现代品牌、App | 流动色彩过渡、悬浮元素 |
+| Photo-Based | 生活方式、电商 | 主视觉图、轻微叠色、图上文字 |
+| Geometric | 科技、金融科技 | 形状、图案、结构化布局 |
+| Glassmorphism | SaaS、现代 App | 磨砂玻璃、模糊效果、透明感 |
+| Flat Illustration | 教育、健康 | 定制插画、友好、亲和 |
+| Duotone | 创意、编辑出版 | 照片的双色处理 |
+| Collage | 时尚、文化 | 混合媒介、元素叠放 |
+| 3D/Isometric | 科技、产品 | 纵深、阴影、现代透视 |
 
-### Color & Contrast
+### 颜色与对比
 
-- Ensure WCAG AA contrast ratio (4.5:1 min) for all text
-- Test designs at 50% size to verify readability
-- Consider platform dark/light mode compatibility
-- Use brand primary color as dominant, secondary as accent
+- 所有文本保证 WCAG AA 对比度（最低 4.5:1）
+- 以 50% 尺寸测试设计，验证可读性
+- 考虑平台深色/浅色模式兼容
+- 品牌主色作主导，辅色作强调
 
-### Typography Hierarchy
+### 字体层级
 
-| Element | Min Size (at 1080px) | Weight |
+| 元素 | 最小字号（1080px 下） | 字重 |
 |---------|---------------------|--------|
 | Headline | 48px | Bold/Black |
 | Subheadline | 32px | Semibold |
@@ -319,11 +323,11 @@ Organize all output files and reports:
 | Caption | 18px | Regular/Light |
 | CTA | 28px | Bold |
 
-## Security & Scope
+## 安全与边界
 
-This sub-skill handles social media image design only. Does NOT handle:
-- Video content creation
-- Animation/motion graphics
-- Print production files (CMYK, bleed)
-- Direct social media posting/scheduling
-- AI image generation (supply images, or generate them with a separate authorized capability)
+这个子 Skill 只负责社交媒体图片设计。不负责：
+- 视频内容制作
+- 动画/动态图形
+- 印刷生产文件（CMYK、出血）
+- 直接发布/排期到社交媒体
+- AI 图像生成（提供图片，或用另一个获得授权的能力生成）

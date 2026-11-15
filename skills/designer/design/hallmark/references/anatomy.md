@@ -1,71 +1,75 @@
-# Anatomy
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/anatomy.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-What a page is built around, by the visitor's job. Read the one job the prompt names at Step 2, before the shape: it sets where the action lives, which sections are the category's own, and how the page ends. The theme dresses this anatomy; the shape orders it; neither replaces it. Drawn from the homepages of about fifty real independent sites across these jobs; the pattern Hallmark slipped into (text beside a picture, a figure row, three steps, an email band) is how software pages look and almost nothing else.
+# 解剖（Anatomy）
 
-**When the prompt gives none of a section's content,** build it as a sample the user replaces, the way the product is built when it cannot be captured (`imagery.md` § 4): an example issue with its parts, dishes typical of the cuisine, three candles named plainly, track titles as placeholders, each marked in the handoff. A sample shows the shape of the real thing; it never states a fact a visitor could take as true (a price, a date, a person's name, a count, a review). A section whose whole content would be facts nobody gave (a lineup, a tour) is one line and a text slot, or it waits. Practical facts the job wants and the prompt lacks (hours, an address, dates) share the page's two missing-fact slots (`craft.md` § 8): slot the two a visitor needs to act.
+按访客的任务，看一个页面围绕什么而建。在 Step 2 读取提示词点名的那个任务，先于形态（shape）：它决定了动作住在哪里、哪些区块是这个品类固有的，以及页面如何收尾。主题为这个解剖穿上外衣；形态给它排序；两者都不能取代它。以下规律取自约五十个真实独立站点的首页，覆盖这些任务；Hallmark 自己惯用的那套（图文并排、一排数字、三个步骤、一条邮件横条）是软件页面的长相，几乎只属于软件页面。
 
-Every job: the nav carries the job's own action word (Book, Tickets, Shop, Listen, Start free), the hero shows the thing itself (the room, the cover, the dates, the screen), and proof comes in the category's own form, never a generic band of numbers.
+**当提示词没有提供某个区块的任何内容时，**把它做成用户之后会替换的样例，就像产品无法实拍时的构建方式（`imagery.md` § 4）：一个带各组成部分的示例 issue、该菜系的典型菜品、三根朴素命名的蜡烛、占位的曲目名，并在交接说明中逐一标注。样例展示真实事物的形状；它绝不停留在一个访客可能当真的事实上（价格、日期、人名、数量、评价）。整个内容都会是无人提供的事实的区块（演出阵容、巡演日程），就写成一行字加一个文本槽，或者暂缓。任务需要而提示词缺少的实用事实（营业时间、地址、日期）共用页面的两个缺失事实槽位（`craft.md` § 8）：把访客需要据以行动的那两个放进去。
 
-## subscribe (a newsletter, a waitlist, a podcast)
+每个任务通用：导航栏带该任务自己的动作词（Book、Tickets、Shop、Listen、Start free），首屏展示事物本身（房间、封面、日期、屏幕），证明以该品类自己的形式出现，绝不是一条通用的数字横幅。
 
-- **Action:** in the hero, and often it is the hero: the name, one line, the email field. A podcast puts the latest episode with its play control under it.
-- **Sections:** a sample issue or the latest one, set as it arrives; who writes it; the archive as an Index of issues or episodes with dates; the reader count only if given, set like a circulation figure under the masthead.
-- **Ends:** a second field under the archive, or the archive itself. The one job whose close may be an email field.
+## subscribe（newsletter、等待名单、播客）
 
-## book (a restaurant, a class, a clinic, a studio)
+- **Action:** 放在首屏，而且常常就是首屏：名称、一句话、邮件输入框。播客在其下方附最新一期与播放控件。
+- **Sections:** 一期样刊或最新一期，按其送达样式排版；作者是谁；档案区，以带日期的 Index 形式列出各期或各集；读者数只在有数据时给出，排成报头下的发行量数字。
+- **Ends:** 档案下再放一个输入框，或档案本身。这是唯一一个可以以邮件输入框收尾的任务。
 
-- **Action:** a booking picker (party, date, time) opened from the nav and the hero, or the next free times as buttons; repeated beside the menu or the classes, never only at the foot.
-- **Sections:** the room or the food as a photograph with little or no head; the menu (a Switcher by lunch and dinner, or rows with prices); for classes the timetable as a Schedule; how to find it; hours and address as a section of their own.
-- **Ends:** hours, address and the booking again. A fine room may have almost nothing: one photograph, the menu, the booking.
+## book（餐厅、课程、诊所、工作室）
 
-## visit (a shop, a gallery, a venue, a place)
+- **Action:** 从导航和首屏打开的预订选择器（人数、日期、时间），或以下一个空闲时段为按钮；在菜单或课程旁再次出现，绝不只在页脚。
+- **Sections:** 空间或食物的照片，头部文字极少或没有；菜单（按午餐与晚餐分 Switcher，或带价格的行）；课程则以 Schedule 呈现课表；怎么找过来；营业时间与地址单独成区。
+- **Ends:** 营业时间、地址，然后是预订。好的空间可以几乎什么都不放：一张照片、菜单、预订。
 
-- **Action:** today's hours and the address, in the nav or the hero; tickets or donate only if the prompt has them.
-- **Sections:** what is on now as the lead picture; what is coming as dated rows (an Index or a Schedule, a This week and Next week switch); for a shop, the shelves (a Rail or a Grid of the prompt's own things); getting there.
-- **Ends:** visit information and the address, or the mailing list for what is on next.
+## visit（商店、画廊、场馆、地点）
 
-## attend (an event, a festival, a race, a conference)
+- **Action:** 今日营业时间与地址，放导航或首屏；prompt 中有票务或捐赠时才放票务/捐赠。
+- **Sections:** 正在进行的展览作为主图；即将到来的作为带日期的行（Index 或 Schedule，配 This week 与 Next week 切换）；商店则陈列货架（用 Rail 或 Grid 呈现 prompt 里自己的商品）；如何抵达。
+- **Ends:** 参观信息与地址，或下一个展览的邮件列表。
 
-- **Action:** tickets in the nav from the first screen; the date and the place are the headline.
-- **Sections:** the lineup or the speakers (an Index or a dense Grid, the names set large); the days as a Schedule; ticket tiers with prices; the venue and travel; questions. Figures (stages, acts, miles) only when the prompt gives them.
-- **Ends:** tickets again, the questions, or the mailing list for the next edition. Between editions the whole page is the date, the place and the list.
+## attend（活动、节庆、比赛、会议）
 
-## buy (a physical product, a small shop)
+- **Action:** 从第一屏起导航里就有票务；日期与地点就是标题。
+- **Sections:** 阵容或讲者（Index 或密集的 Grid，名字用大字号）；各天议程以 Schedule 呈现；带价格的票档；场馆与交通；答疑。数字（舞台数、演员数、英里数）只在 prompt 给出时使用。
+- **Ends:** 再次出现票务、答疑，或下一届的邮件列表。两届之间，整页就是日期、地点与名单。
 
-- **Action:** the product with its price and options (an Offer), often as the hero; a buy action after the sections that earn it, or a sticky bar with the price.
-- **Sections:** the range as tiles or a Rail with prices; the product in use, close; how it is made; delivery and the guarantee as plain facts; reviews only if given.
-- **Ends:** the offer again, new arrivals, or the guarantee. An email field belongs in the footer, not as the close.
+## buy（实体商品、小店）
 
-## try (an app, a game, a desktop tool)
+- **Action:** 带价格与选项的商品（一个 Offer），常作首屏；购买动作放在那些撑得起它的区块之后，或带价格的吸底栏。
+- **Sections:** 商品系列以带价格的磁贴或 Rail 呈现；使用中的商品特写；它如何被制造；配送与保修作为朴素事实；评价只在有数据时给出。
+- **Ends:** 再次出现 offer、新品，或保修。邮件输入框属于页脚，不作为收尾。
 
-- **Action:** the store or download buttons right under the head, one per platform the prompt names.
-- **Sections:** the key art, trailer or main screen captured from the product (`imagery.md` § 4); features as named moments shown in screens (a Pinned run or a Switcher), not icon tiles; a before and after where the product changes something; platforms.
-- **Ends:** the download again beside one last screen. Games are short: five or six blocks is a full page.
+## try（应用、游戏、桌面工具）
 
-## sign up (software, an API, a developer tool)
+- **Action:** 商店或下载按钮紧跟头部，prompt 点名的每个平台各一个。
+- **Sections:** 主视觉、预告片或主界面，从产品实拍（`imagery.md` § 4）；功能作为在屏幕中展示的具名时刻（一个 Pinned run 或 Switcher），而不是图标磁贴；产品改变某事时给出前后对比；平台列表。
+- **Ends:** 下载按钮在最后一张屏幕旁再次出现。游戏页面很短：五六个区块就是完整一页。
 
-- **Action:** start free in the nav and the hero with its terms in one line under it; for a developer tool the install command may be the action.
-- **Sections:** the product at work (captured or built); what it does as named moments; a code sample or the integration; the pricing table with its period switch; questions.
-- **Ends:** the hero's action again in a short band, or the code sample. Never a newsletter.
+## sign up（软件、API、开发者工具）
 
-## hire (a studio, a freelancer, an architect)
+- **Action:** 导航和首屏都有 start free，条款以一行字放在其下方；开发者工具可以以安装命令作为动作。
+- **Sections:** 工作中的产品（实拍或搭建）；功能作为具名时刻；一段代码示例或集成方式；带计费周期切换的定价表；答疑。
+- **Ends:** 首屏动作在一条短横带里再次出现，或代码示例。绝不放 newsletter。
 
-- **Action:** a plain contact (an email, a phone, "Talk to us") in the nav and once more after the work; no form needed.
-- **Sections:** the work as the page: a list or Index of projects (name, client, year, place) with pictures, one opened as a case; what the studio does as a short list; where it is.
-- **Ends:** contact details, per office if there are several.
+## hire（工作室、自由职业者、建筑师）
 
-## join (a club, a community, a membership)
+- **Action:** 朴素的联系方式（邮箱、电话、"Talk to us"）放导航，并在作品之后再出现一次；不需要表单。
+- **Sections:** 作品就是页面本身：项目列表或 Index（名称、客户、年份、地点）配图，其中一个展开为案例；工作室做什么以短列表呈现；在哪里。
+- **Ends:** 联系方式，有多处办公地点时按办公室分别给出。
 
-- **Action:** join or "your first visit" in the hero.
-- **Sections:** what a session is like, shown; when and where as a Schedule or a list of places; membership options as rows with prices; first-visit guidance; people in the prompt's own pictures only.
-- **Ends:** the first visit, the membership options, or a sign-up field.
+## join（俱乐部、社区、会员制）
 
-## listen (a band, a film, a podcast, a publication)
+- **Action:** join 或"你的第一次到访"放首屏。
+- **Sections:** 展示一次活动是什么样的；时间与地点以 Schedule 或地点列表呈现；会员选项作为带价格的行；首次到访指引；人物只用 prompt 自带的照片。
+- **Ends:** 第一次到访、会员选项，或一个注册输入框。
 
-- **Action:** the new release or current issue with its listen, watch or order buttons side by side.
-- **Sections:** the record, film or issue (its cover, its tracks or contents as an Index); dates (tour, screenings) as rows with ticket links; earlier work as covers in a Rail or Grid; videos.
-- **Ends:** the dates, more of the catalogue, or the mailing list. Artist pages can be very short: one picture, the release, the dates. With no release in the prompt, the act leads instead (the players, how it sounds described plainly, where it plays) and the page's job is booking them: the close is the enquiry.
+## listen（乐队、电影、播客、出版物）
 
-## How pages end
+- **Action:** 新发行物或最新一期，其 listen、watch 或 order 按钮并排放置。
+- **Sections:** 专辑、电影或期刊（封面，曲目或目录以 Index 呈现）；日期（巡演、放映）作为带票务链接的行；更早的作品以封面排进 Rail 或 Grid；视频。
+- **Ends:** 日期、更多曲库，或邮件列表。艺人页可以非常短：一张图、一张发行物、几个日期。prompt 里没有发行物时，改为以"人"领起（成员、直白描述的声音、在哪里演出），页面的任务变成预约他们：收尾是 enquiry。
 
-In the order real sites use them: the hero's action again in a short band; practical details (hours, address, contacts); more of the catalogue (the archive, new arrivals, more work); a short trust tail (a guarantee, press, awards the prompt gives); a mailing list, for things that recur (issues, editions, releases, events). The last is one close in five, never the default (85).
+## 页面如何收尾
+
+按真实站点使用的顺序：首屏动作在一条短横带里再次出现；实用信息（营业时间、地址、联系方式）；更多内容（档案、新品、更多作品）；一条短的信任尾段（prompt 给出的保修、媒体、奖项）；邮件列表，用于会重复出现的事物（期刊、届次、发行物、活动）。最后一种是五种收尾之一，绝不是默认（85）。

@@ -1,91 +1,95 @@
-# LinkedIn Outreach
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/linkedin-outreach.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-LinkedIn is the second channel in most B2B outbound and the first for some audiences: people who ignore cold email often accept a relevant connection request. It also has the tightest limits and the highest account risk of any channel. This reference covers the profile, the limits, the sequence, the copy, and the automation decision.
+# LinkedIn 外联
 
-Figures below come mostly from LinkedIn automation vendors' and agencies' own datasets (2025–26). Use them as ranges.
+LinkedIn 是多数 B2B 外联的第二渠道，对某些受众则是第一渠道：不理冷邮件的人往往接受一条相关的加好友请求。它的限制也最紧，账号风险在所有渠道里最高。本参考文档涵盖个人主页、限制、触达序列、文案和自动化决策。
 
-## Fix the profile first
+以下数字大多来自 LinkedIn 自动化厂商和代理机构自己的数据集（2025–26）。当作区间参考。
 
-Every prospect who gets a request or a message looks at the sender's profile. Before outreach:
-- **Headline** says who you help and how.
-- **About** opens with the problem you solve, then proof.
-- **Featured** holds one case study, teardown, or resource a prospect would actually click.
-- **Recent activity** shows posts or thoughtful comments from the last few weeks. Accounts that post regularly see noticeably higher acceptance rates.
-- A real photo and a banner that reinforces what you do.
+## 先修好个人主页
 
-## Limits
+收到请求或消息的每个潜客都会看发送者的主页。外联之前：
+- **头衔（Headline）**说清你帮谁、怎么帮。
+- **About** 以你解决的问题开头，再上证据。
+- **Featured** 放一个潜客真会点开的案例研究、拆解或资源。
+- **近期动态**展示最近几周的帖子或有见地的评论。定期发帖的账号接受率明显更高。
+- 一张真实照片，以及强化你做什么的横幅图。
 
-| Action | Safe range |
+## 限制
+
+| 动作 | 安全区间 |
 |--------|-----------|
-| Connection requests | About 100 a week per account; 15–25 a day. New or low-activity accounts start at 20–30 a week |
-| Messages to connections | Roughly 50–100 a day, spread out |
-| Profile views | A few hundred a day at most |
-| InMail | Limited by your Sales Navigator or Premium credits |
+| 加好友请求 | 每账号每周约 100 个；每天 15–25 个。新号或低活跃号从每周 20–30 个起步 |
+| 给好友发消息 | 大致每天 50–100 条，分散发送 |
+| 浏览他人主页 | 每天至多数百次 |
+| InMail | 受 Sales Navigator 或 Premium 额度限制 |
 
-Volume isn't the only thing LinkedIn looks at. In 2026 it also flags unusual behavior: activity from data-center IP addresses, identical timing between actions, and low acceptance rates. A 15% acceptance rate tells LinkedIn your requests are unwanted. Keep acceptance above about 25–30% by sending fewer, better-targeted requests.
+量级不是 LinkedIn 看的唯一指标。2026 年它还会标记异常行为：来自数据中心 IP 的活动、动作间隔完全一致、接受率偏低。15% 的接受率等于告诉 LinkedIn 你的请求不受欢迎。少发、发得更准，把接受率保持在约 25–30% 以上。
 
-Withdraw requests that are still pending after 2–3 weeks; a large pending pile counts against you.
+2–3 周后仍处于待处理的请求要撤回；积压一大堆对你不利。
 
-## The sequence
+## 触达序列
 
-Warm up the account's visibility before asking for anything:
+先让账号曝光热起来，再开口要东西：
 
-1. **Day 1:** view their profile, follow them, and react to or comment on a recent post (a real comment, not "Great post!").
-2. **Day 2–3:** connection request. A note is optional (see below).
-3. **After acceptance:** a short first message tied to why you connected. No pitch.
-4. **3–5 days later:** a message with value: an insight, a resource, a relevant example.
-5. **5–7 days later:** a light ask, or a voice note.
+1. **第 1 天：**浏览对方主页、关注，并对近期帖子点赞或评论（真评论，不是"Great post!"）。
+2. **第 2–3 天：**发加好友请求。可附一句留言（见下文）。
+3. **通过之后：**第一条短消息，紧扣你们建立联系的理由。不推销。
+4. **3–5 天后：**一条有价值的信息：洞见、资源或相关案例。
+5. **5–7 天后：**轻轻提一个请求，或发一条语音。
 
-Stop at three messages without a reply. Vendor data shows replies falling sharply beyond that.
+发了三条还没回复就停。厂商数据显示再往后回复率骤降。
 
-Run LinkedIn alongside email, not instead of it, and stop both the moment either gets a reply. See [multichannel-cadence.md](multichannel-cadence.md).
+LinkedIn 与邮件并行，不是替代邮件；任一渠道收到回复就同时停掉两边。见 [multichannel-cadence.md](multichannel-cadence.md)。
 
-## Copy
+## 文案
 
-**Connection request**
-- Notes cut acceptance slightly but raise replies once accepted (one 2025 agency study: about 25% vs 28% acceptance, 8% vs 5% reply). Use a note when you have a specific, credible reason; skip it when you don't.
-- Under ~200 characters. The reason you're connecting, nothing else.
-- AI-written notes underperform human ones by a measurable margin in vendor data. Write these yourself, or edit hard.
+**加好友请求**
+- 附留言会略降接受率，但通过后能提升回复率（一份 2025 年代理机构研究：接受率约 25% 对 28%，回复率 8% 对 5%）。有具体可信的理由就附，没有就不附。
+- 约 200 字符以内。只写你为何要加好友，别无其他。
+- 厂商数据显示 AI 写的留言明显逊于人写的。这类留言自己写，或下重手改。
 
-> Saw your post on moving pricing tests off the homepage. We've run a few of those for SaaS teams; would be good to connect.
+> 看到你那篇把定价测试从首页挪走的帖子。我们为 SaaS 团队跑过几次这类实验；加个好友挺合适。
 
-**First message after acceptance**
-- 150–200 characters performs best in vendor datasets.
-- Reference the reason you connected. Ask something easy to answer.
+**通过后的第一条消息**
+- 在厂商数据集中，150–200 字符表现最好。
+- 呼应建立联系的理由。问一个容易回答的问题。
 
-> Thanks for connecting. Curious how you're deciding what to test first on the new pricing page. Is that sitting with you or with product?
+> 谢谢通过。好奇你们怎么决定新版定价页先测什么。这事归你管还是归产品管？
 
-**Voice notes** (mobile app only) stand out in a text inbox. Keep them under 45 seconds, say their name and the specific reason, and never read a script. Public data on voice notes is thin, so test them.
+**语音消息**（仅手机 App）在文字收件箱里很显眼。控制在 45 秒以内，说出对方名字和具体理由，绝不照稿念。语音的公开数据很少，所以要自己测。
 
-**InMail** suits senior people you can't reach any other way. It gets the same rules as cold email: short, specific, one ask.
+**InMail** 适合那些其他方式都够不着的高层。规则与冷邮件相同：短、具体、只要一个动作。
 
-Everything in the main cold-email skill about voice and AI tells applies here, even more strongly: LinkedIn messages sit next to the sender's face and name.
+主冷邮件 skill 里关于声音和 AI 腔痕迹的一切在这里都适用，而且更严格：LinkedIn 消息紧挨着发送者的脸和名字。
 
-## The automation decision
+## 自动化决策
 
-**Every third-party LinkedIn automation tool violates LinkedIn's User Agreement.** That includes cloud tools, browser extensions, and APIs that operate your account through its session. LinkedIn has escalated from restricting individual users to acting against vendors: it removed company pages for Apollo and Seamless in 2025 and HeyReach in March 2026, and sued scraping vendors.
+**所有第三方 LinkedIn 自动化工具都违反 LinkedIn 用户协议。**包括云工具、浏览器扩展，以及通过会话操纵你账号的 API。LinkedIn 已从限制个人用户升级为对厂商出手：2025 年下架了 Apollo 和 Seamless 的公司页面，2026 年 3 月下架了 HeyReach，并起诉了抓取类厂商。
 
-Make the decision deliberately:
+认真做出决策：
 
-| Option | Risk | When it fits |
+| 方案 | 风险 | 适用场景 |
 |--------|------|--------------|
-| **Manual** (Sales Navigator, phone, a daily routine) | None beyond normal limits | Tier 1 accounts; founders; anyone whose personal profile is a business asset |
-| **Assisted** (tools that queue tasks for a human to do, CRM reminders) | Low | Most teams |
-| **Automated** (HeyReach, Expandi, La Growth Machine, Dripify, Waalaxy, Unipile-based tools) | Account restriction, and the vendor itself can disappear | High-volume Tier 3 programs, on profiles the business can afford to lose |
+| **手动**（Sales Navigator、电话、每日例行动作） | 正常限度之外无风险 | Tier 1 账户；创始人；个人主页本身是业务资产的人 |
+| **辅助**（把任务排给人工去做的工具、CRM 提醒） | 低 | 大多数团队 |
+| **自动化**（HeyReach、Expandi、La Growth Machine、Dripify、Waalaxy、基于 Unipile 的工具） | 账号被限制，厂商本身也可能消失 | 高量级 Tier 3 项目，用业务损失得起的账号 |
 
-If you automate:
-- Use only real profiles owned by the people they represent. Never rent or buy accounts.
-- Stay well under the limits above, with randomized timing.
-- Prefer tools with dedicated residential IPs per account.
-- Keep a plan for losing the tool overnight: export your data regularly.
+如果自动化：
+- 只用由其本人拥有的真实主页。绝不租用或购买账号。
+- 远低于上述限额，动作时间随机化。
+- 优先选每个账号配独立住宅 IP 的工具。
+- 备好工具一夜失效的预案：定期导出数据。
 
-For agents: HeyReach and Unipile expose APIs (and HeyReach an MCP), which makes them the most scriptable options. The terms-of-service risk is the same as any other automation.
+对 Agent 而言：HeyReach 和 Unipile 提供 API（HeyReach 还有 MCP），这让它们成为最容易脚本化的选择。服务条款风险与任何其他自动化相同。
 
-## Measure
+## 衡量
 
-| Metric | Typical range (vendor data, 2025–26) |
+| 指标 | 典型区间（厂商数据，2025–26） |
 |--------|--------------------------------------|
-| Acceptance rate | 25–30% average; 30%+ for active, followed profiles |
-| Reply rate to messages | 7–10% |
+| 接受率 | 平均 25–30%；活跃且被关注的账号 30%+ |
+| 消息回复率 | 7–10% |
 
-Track positive replies and meetings, the same as email. A high acceptance rate with no replies means the targeting is fine and the messages aren't.
+和邮件一样，追踪正向回复和会议。接受率高但没有回复，说明定向没问题，消息有问题。

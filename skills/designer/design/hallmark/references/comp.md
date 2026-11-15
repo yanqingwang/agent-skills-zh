@@ -1,87 +1,91 @@
-# Comp before build: composing in pixels before composing in CSS
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/comp.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Loaded **only** when the pre-flight found `TOGETHER_API_KEY` (signal 9): at the comp step after the Picks block, and for a generated still (§ Generated stills, at the end). With no key this file never loads and the build goes from the Picks block straight to Step 6. The comp step is never a blocker and never something to apologise for skipping.
+# 构建之前先 Comp：先在像素里构图，再进 CSS
 
-A rendered comp carries mass, interval and alignment at a glance, which prose cannot; reproducing an approved image is easier than inventing a composition from a paragraph.
+**仅**当 pre-flight 检测到 `TOGETHER_API_KEY`（信号 9）时才加载本文件：用在 Picks 块之后的 comp 步骤，以及生成静态图时（见文末 § Generated stills）。没有 key 时本文件永不加载，构建从 Picks 块直接跳到 Step 6。comp 步骤永远不是阻塞项，跳过它也无需致歉。
+
+一张渲染好的 comp 能一眼呈现体量、间距与对齐，文字做不到这一点；照着一张已获认可的图复现，比从一段话凭空捏造构图容易得多。
 
 ---
 
-## § What the comp is, and is not
+## § Comp 是什么，不是什么
 
-| It is | It is not |
+| 它是 | 它不是 |
 | --- | --- |
-| a composition proposal: mass, interval, alignment, where the eye lands first | a design system; the palette and pairing were settled in the Picks block and do not move |
-| the first viewport only, at the surface's own dimensions | a full page; comping below the fold buys nothing and costs a call per region |
-| a target to reproduce in code, measured against | a texture source; nothing from the comp is ever embedded in the page |
-| disposable once the build matches it | an asset; comps are not shipped and not committed |
+| 一份构图提案：体量、间距、对齐、视线最先落在哪里 | 设计系统；配色与字体搭配在 Picks 块已定，不再变动 |
+| 仅首屏，按该表面自身的尺寸 | 整页；对首屏以下做 comp 毫无收益，还每个区域多花一次调用 |
+| 要用代码复现的靶子，用来对照 | 纹理来源；comp 里的任何东西都不会嵌入页面 |
+| 构建匹配之后即可丢弃 | 资产；comp 不随产品发布、也不提交入库 |
 
-**The comp does not get a vote on the Floor.** An image generator will hand you eyebrows, a violet-to-cyan gradient, glassmorphism, and a fake browser window, because nothing in it has read the gates. Same rule as an archive exemplar: **take its composition, not its compliance.** A comp is never evidence that a gate is wrong, and "the comp had it" is not a waiver reason.
+**Comp 在 Floor 上没有投票权。**图像生成器会给你端上眉题、紫到青的渐变、玻璃拟态和假浏览器窗口，因为它内部没有任何东西读过那些闸门。与档案范例同一规则：**取它的构图，不取它的合规。**Comp 永远不能证明某个闸门错了，"comp 里有它"也不是豁免理由。
 
 ---
 
-## § The call
+## § 调用
 
-Two comps, three when the direction genuinely forks. One is not a choice and four is a shopping trip.
+出两张 comp，方向真正分叉时出三张。一张算不上选择，四张就成了逛街。
 
 ```
 node <skill-dir>/scripts/imagegen.mjs "<prompt>" --size 1280x800 --n 1 --out .hallmark/comps/c1.png
 ```
 
-The prompt is built from the Picks block and the stamp's idea or theme line, not from the prompt. A prompt that reads like the prompt produces the category default in pixels, the page `direction.md` sets aside. Carry, in this order: the **first viewport** as you planned it (what sits where, how large), the **idea** in a few plain words, the **ground and accent** as plain colour words, the **display class** (not the face name; no generator knows Erode), and the **macrostructure** as a compositional instruction. Then one negative clause naming what the category does, so the generator is pushed off it too.
+图像提示词由 Picks 块和 stamp 里的 idea 或 theme 行构成，不是从页面 prompt 里照搬。一条读起来像页面 prompt 的图像提示词，只会把品类默认样式搬进像素，也就是 `direction.md` 绕开的那套。按这个顺序组织：先写计划好的**首屏**（什么放在哪、多大），再用几句平实话写**idea**，用直白的颜色词写**底色与强调色**，写**展示字体类别**（不写具体字体名；没有生成器认识 Erode），把**宏观结构**写成一条构图指令。最后加一个否定从句，点出该品类的惯用做法，把生成器也从那条路上推开。
 
-> *"Web page hero, top 1280x800 only. A rowing club's season set as one large race timetable, the next race the biggest line on the screen. White ground, deep green ink, one signal-yellow mark. Heavy grotesk headline flush left on five columns, two lines; the timetable on the other seven. A thin rule under the headline, nothing else above the fold. Flat, printed, no depth. Not a centred hero, no cards, no gradient, no device mockup."*
+> *“网页 hero，只画顶部 1280x800。把一个赛艇俱乐部的赛季做成一张大型赛程表，下一场比赛是屏幕上最大的一行字。白色底，深绿墨色，一处信号黄记号。粗壮 grotesk 标题左对齐齐平，占五栏、两行；赛程表占其余七栏。标题下一条细线，首屏之上再无其他。扁平、印刷感、无纵深。不要居中 hero，不要卡片，不要渐变，不要设备样机。”*
 
-**Vary the comps on one axis only.** Two comps that differ in everything are two prompts, and comparing them tells you nothing about the decision you are actually making. Vary the composition (where the weight sits, symmetry against asymmetry, type-led against image-led) and hold the system fixed.
-
----
-
-## § The approval point
-
-Show both, side by side, at their own size. One line each on what differs. Then stop and ask which one, or whether neither.
-
-This is the second and last redirect window (the Picks block was the first) and it is much cheaper than the one after the build. **Do not build past a comp the user has not chosen.** "I'll build A and we can adjust" is how the approval point turns into decoration.
-
-If the user picks neither, ask which was closer on composition, change that axis, and re-call once. Two rounds is the ceiling; after that, build without a comp and say so in one line.
+**两张 comp 只在一个轴上变化。**处处不同的两张 comp 其实是两个 prompt，比较它们对你真正要做的决定毫无帮助。变的是构图（重量落在哪、对称对不对称、以文字为主还是以图像为主），系统保持不变。
 
 ---
 
-## § Reproduction discipline
+## § 认可点
 
-**A model reliably believes its recreation succeeded when it did not.** This is the failure mode that makes the whole step worthless if unguarded, because the belief is what stops you looking.
+把两张并排、按各自尺寸展示。各用一行说明差异。然后停下来，问用户选哪张，还是都不选。
 
-So, before building anything below the fold:
+这是第二个也是最后一个纠偏窗口（第一个是 Picks 块），比构建之后再纠偏便宜得多。**用户没有选中的 comp，绝不要越过它继续构建。**"我先做 A，回头再调"就是让认可点沦为摆设的做法。
 
-1. Screenshot the built page at **exactly the comp's dimensions** (1280x800).
-2. Put the two side by side and answer three questions in writing, one line each:
-   - **Mass.** Does the weight sit in the same place, at the same size, relative to the viewport?
-   - **Interval.** Are the gaps between the major elements the same proportion of the height?
-   - **Entry.** Does the eye land on the same element first?
-3. Name the largest divergence and fix it, or state in one line why the built version is right and the comp was wrong. Both are legitimate. Silence is not.
-
-The comp is the target, not the authority: reproducing a comp that misjudged the copy length is worse than diverging from it deliberately. What is banned is diverging without noticing.
-
-Record it in the stamp: `comp: 2 rendered · c1 approved · reproduced (checked at 1280x800)`, or `comp: skipped (no key)`, or `comp: 2 rendered · none approved · built unconstrained`.
+若两张都不选，就问哪张在构图上更接近，只改那个轴，再调用一次。两轮是上限；之后直接不做 comp 构建，并用一行说明。
 
 ---
 
-## § The medium inventory
+## § 复现纪律
 
-Before writing a line of the build, every region of the approved comp gets a written implementation medium. Six or eight regions, one line each, and it takes about a minute.
+**模型会笃定地相信自己的复刻成功了，而实际并没有。**这个失败模式若不加防护，会让整个步骤失去价值，因为正是这种自信让你不再去看。
 
-**The gate: a CSS gradient or a layered background is not a texture.** Writing "CSS" against a woven cloth, a sculpted panel, a printed halftone, a photographed material, or anything with grain is how a committed comp silently becomes a flat page with the same section order and none of its ambition. The inventory exists to make that substitution visible while it is still cheap.
+所以，在构建首屏以下任何东西之前：
 
-| Medium | What it is right for |
+1. 按 **comp 的精确尺寸**（1280x800）给构建出的页面截图。
+2. 把两者并排放，逐条书面回答三个问题，每条一行：
+   - **体量。**相对于视口，视觉重量是否落在同一位置、同一大小？
+   - **间距。**主要元素之间的间隙占高度的比例是否一致？
+   - **入口。**视线是否最先落在同一个元素上？
+3. 指出最大的偏差并修复它，或用一行说明为什么构建版是对的、comp 是错的。两种结论都成立，沉默不成立。
+
+Comp 是靶子，不是权威：复现一张误判文案长度的 comp，还不如有意偏离它。被禁止的是没有察觉的偏离。
+
+把结果记进 stamp：`comp: 2 rendered · c1 approved · reproduced (checked at 1280x800)`，或 `comp: skipped (no key)`，或 `comp: 2 rendered · none approved · built unconstrained`。
+
+---
+
+## § 媒介清单
+
+在写第一行构建代码之前，获认可的 comp 的每个区域都要写明实现媒介。六到八个区域，每个一行，大约一分钟。
+
+**闸门：CSS 渐变或分层背景不是纹理。**对着编织布料、雕塑面板、印刷网点、实拍材质或任何带颗粒感的东西写下"CSS"，就是让一张笃定的 comp 悄悄变成一张区块顺序相同、野心全无的扁平页面。媒介清单的存在，就是让这种偷换在代价还低的时候暴露出来。
+
+| 媒介 | 适合什么 |
 | --- | --- |
-| **Code** (CSS/SVG) | what the page *draws*: rules, type, geometry, diagrams, anything that animates or reacts, anything that must reflow |
-| **Raster** (generated or supplied) | what the world *paints*: material, grain, cloth, paper fibre, photography, painted or sculpted surfaces, real depth |
-| **Neither** | the region the comp invented and the copy does not support. Cut it here, not after building it |
+| **代码**（CSS/SVG） | 页面*画出来*的东西：线条、文字、几何、图表，任何会动或会响应的东西，任何必须重排的东西 |
+| **位图**（生成或提供） | 世界*涂出来*的东西：材质、颗粒、布料、纸纤维、摄影、绘制或雕塑的表面，真实的纵深 |
+| **两者都不是** | comp 凭空发明、文案撑不起来的区域。在这里砍掉，而不是构建完再砍 |
 
-Two rules on top:
+另有两条规则：
 
-- **A raster region needs a real source:** a user-supplied asset, a library photograph (`imagery.md` § 2) or a generated still (§ Generated stills). A photograph from memory is not a source, and a region the comp painted as a picture never becomes a drawing (80).
-- **A region cannot change medium silently during the build.** Downgrading raster to CSS mid-build is the whole failure this section catches. Change it if the code argues for it, and say so in one line.
+- **位图区域必须有真实来源：**用户提供的素材、图库照片（`imagery.md` § 2）或生成的静态图（§ Generated stills）。凭记忆"想"出来的照片不是来源；comp 画成图片的区域永远不许变成绘图（80）。
+- **构建过程中区域不得悄悄更换媒介。**把位图中途降级成 CSS，正是本节要抓的全部失败。如果代码确实有理由换，就换，并用一行说明。
 
-Ship the inventory as part of the comp message, under the comps:
+把清单作为 comp 消息的一部分输出，放在 comps 下面：
 
 ```
 Timetable          code      a real table, must reflow
@@ -95,10 +99,10 @@ Rower photograph   raster    library photo; the comp's crew is not a real crew
 
 ## § Generated stills
 
-A picture for the page itself, outside the comp step: only when `TOGETHER_API_KEY` is set and the user asked for generated images, or for a subject the library cannot reach (`imagery.md` § 1).
+为页面本身配的图，不属于 comp 步骤：仅当已设置 `TOGETHER_API_KEY` 且用户要求生成图片，或题材是图库够不着的（`imagery.md` § 1）时使用。
 
 ```
 node <skill-dir>/scripts/imagegen.mjs "<prompt>" --size 1536x1024 --out <project>/images/<name>.png
 ```
 
-Prompt like a photographer's prompt: one concrete subject, the place, the light and the lens (*a stack of rye loaves on a flour-dusted steel counter, early window light from the left, 50mm, shallow depth*), with *no text, no people facing the camera*. Look at every result; six fingers, doubled furniture and melted labels go back. Treatment and frame as for a library photo. Stamp `generated: <model> via imagegen.mjs`. Never auto-fire it.
+提示词要像摄影师的提示词：一个具体主体、所在场所、光线与镜头（*撒着面粉的钢台面上摞着几个黑麦面包，左侧清晨窗光，50mm，浅景深*），并写明*无文字、无正对镜头的人物*。每张结果都要看；六根手指、重影家具和融化变形的标签一律退回。处理方式与画框规则同图库照片。在 stamp 里记 `generated: <model> via imagegen.mjs`。绝不自动触发。

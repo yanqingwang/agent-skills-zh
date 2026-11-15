@@ -7,14 +7,18 @@ display: geometric-sans Chakra Petch
 accent: neutral 240
 posture: drenched
 keywords: architecture, architect, engineering, construction, structural, interiors, planning, surveying, cad, drafting, fabrication, prefab, developer, technical, spec, permit, renovation, build, drawings, architecture studio, timber
-material: prussian-blue sheet, white line ink, Chakra Petch capitals over IBM Plex Sans with mono measurements, square double keylines and dimension strings, photographs printed as cyanotypes, the white line as the only signal
+material: 普鲁士蓝图纸、白色线条墨色、IBM Plex Sans 上压 Chakra Petch 大写、等宽字测量值、方形双细线框与尺寸标注串、照片印成蓝晒图、白色线条是唯一信号
 photo: duotone paper-3 ink con=30 exp=-10
 pictured: Bento Grid, Poster hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/blueprint.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Blueprint
 
-A drafting sheet as a material: Prussian-blue paper, a white line for ink, Chakra Petch drafted capitals over IBM Plex Sans, mono measurements with their units, keylines instead of cards, and photographs printed as cyanotypes, the sheet's blue in the shadows and its white in the light. It reads technical because everything is a line, a dimension or a print on one ground and the line is the only signal. It is not a dark product page with a blue gradient, not a neon wireframe.
+把制图纸当材质用：普鲁士蓝纸张、白色线条充当墨色、IBM Plex Sans 上压 Chakra Petch 制图大写、带单位的等宽测量值、细线框代替卡片、照片印成蓝晒图，阴影里是图纸的蓝、亮部是纸的白。它读起来是技术图纸，因为一切都是同一个底上的线、尺寸或印刷，而线是唯一信号。它不是带蓝色渐变的深色产品页，也不是霓虹线框。
 
 ## Tokens
 
@@ -32,58 +36,58 @@ A drafting sheet as a material: Prussian-blue paper, a white line for ink, Chakr
 }
 ```
 
-Three sheets, stated in the stamp (`blueprint: cyanotype`).
+三种图纸，写进 stamp（`blueprint: cyanotype`）。
 
-| Sheet | Ground, line, muted |
+| 图纸 | 底色、线条、muted |
 | --- | --- |
-| **cyanotype** (default) | the tokens above |
-| **whiteprint** | ground `oklch(97.5% 0.006 240)`, ink `oklch(35% 0.105 256)`, muted `oklch(52% 0.07 255)` |
-| **brownline** | ground `oklch(86% 0.045 80)`, ink `oklch(28% 0.05 50)`, muted `oklch(45% 0.05 55)`, a red pencil `oklch(45% 0.19 28)` for annotation only |
+| **cyanotype**（默认） | 上面的 token |
+| **whiteprint** | 底色 `oklch(97.5% 0.006 240)`，墨色 `oklch(35% 0.105 256)`，muted `oklch(52% 0.07 255)` |
+| **brownline** | 底色 `oklch(86% 0.045 80)`，墨色 `oklch(28% 0.05 50)`，muted `oklch(45% 0.05 55)`，一支仅用于批注的红铅笔 `oklch(45% 0.19 28)` |
 
-## Type
+## 字体
 
-- **Display:** Chakra Petch 600 for every head, `--tracking-display`, roman, one weight a head: the h1 and h2 uppercase at line-height 1.02 (55a), the h3 in sentence case.
-- **Body:** IBM Plex Sans 400 for prose and 500 for labels and controls; reversed on the sheet, nothing lighter than 400.
-- **Labels, captions, table heads, meta:** IBM Plex Sans 500 a step smaller, sentence case. IBM Plex Mono 500 sets a measurement with its unit, a stage or drawing number, a year on a dimension string and code, nothing else.
+- **展示字体：**所有标题用 Chakra Petch 600、`--tracking-display`、正体，每个标题一种字重：h1 与 h2 大写、行高 1.02（55a），h3 句首大写。
+- **正文：**散文用 IBM Plex Sans 400，标签与控件用 500；浅色图纸上反转使用，最细不低于 400。
+- **标签、题注、表头、元信息：**IBM Plex Sans 500 小一档，句首大写。IBM Plex Mono 500 只排带单位的测量值、阶段或图号、尺寸标注串上的年份和代码，别的什么都不排。
 
-## Surfaces
+## 表面
 
-- Lines only: 1px `--color-rule` keylines on every surface, and a second keyline in `--color-rule-2` 5px inside on a figure or a photograph. Radius 0, no shadows; depth is a second line, a `--rule-heavy` line or a one-step darker ground.
-- The dimension string: a hairline with a 45° tick (`--tick` long) at each end and short extension lines, its value set above it. It measures something real, never a decoration.
-- The grid: 24px minor lines in `--color-grid`, 120px major in `--color-grid-2`, offset by `--sheet-inset`, only under a drawing, a schedule or a chart of real data.
-- Bands: `--color-paper-2` or `--color-paper-3`, two a page at most; the sheet is already the colour (drenched), so there is no other field.
-- Photographs: structures built and building, shot square-on so they read like drawings (a frame going up, a roof from below, a model on a table), printed as cyanotypes inside the double keyline; pick frames with a real white and a real shadow, since grey prints flat. Type over one sits on a `--color-paper-3` scrim from its edge.
+- 只有线：每个表面 1px `--color-rule` 细线框，figure 或照片内部 5px 处再加一圈 `--color-rule-2` 细线框。圆角 0，无阴影；纵深是第二条线、一条 `--rule-heavy` 线，或深一档的底色。
+- 尺寸标注串：一条细线，两端各有一个 45° 刻度（长 `--tick`）加短延长线，数值排在它上方。它量的是真实的东西，绝不是装饰。
+- 网格：24px 小格线用 `--color-grid`，120px 大格线用 `--color-grid-2`，按 `--sheet-inset` 内缩，只垫在图纸、进度表或真实数据图表之下。
+- 色带：`--color-paper-2` 或 `--color-paper-3`，每页至多两条；图纸本身就是颜色（drenched），没有别的场域。
+- 照片：建成与在建的结构，正面平拍让它们读起来像图纸（正在升起的框架、从下方看的屋架、桌上的模型），在双细线框内印成蓝晒图；挑有真实白色与真实阴影的画面，灰色印出来是平的。照片上的文字从边缘起坐在 `--color-paper-3` 压暗层上。
 
 ## Range
 
-- **Figures as dimensions:** the prompt's one number in Chakra Petch at display size, set on a dimension string that spans ten or twelve columns between its two real ends (a first year and now, a smallest and largest span), the ends in mono.
-- **Tables as drawing registers:** a stage schedule, a deliverables list or a price list as a keylined table, stage numbers in mono in their own column, the row title one weight heavier, a `--rule-heavy` line under the head row; on `--color-paper-2` it reads as the register sheet of a set.
-- **Forms as a title block:** fields set as cells of a keylined block, each label at the cell's top left, the cells sized by what they hold, the submit in the ink fill at the block's foot.
-- **Comparisons and steps as elevations:** two options side by side as columns parted by one heavy line, or stages as a run along one long dimension string with a tick at each stage, each stage a numeral, a title and a line.
+- **数字当尺寸标注：**prompt 的那一个数字用 Chakra Petch、display 字号，排在一个横跨十或十二栏的尺寸标注串上，两端是它的两个真实端点（起始年份与现在、最小与最大跨度），端点用等宽字。
+- **表格当图纸目录：**阶段进度表、交付物清单或价目表排成细线框表格，阶段号用等宽字单列一栏，行标题字重加一档，表头行下一条 `--rule-heavy` 线；放在 `--color-paper-2` 上读起来就是整套图的目录页。
+- **表单当图签栏（title block）：**字段排成细线框块的单元格，每个标签在单元格左上，单元格大小由内容决定，提交按钮用墨色填充放在块底。
+- **对比与步骤当立面图：**两个选项并排成列、中间一条重线分隔；或步骤沿一条长尺寸标注串排开、每步一个刻度，每步含数字、标题和一行字。
 
-## Controls
+## 控件
 
-- An ink-filled primary with sheet-coloured text beside a 1px-outlined secondary in ink, both square, 48px, IBM Plex Sans 500.
-- Links in ink with a 1px underline that clears on hover; inputs square, 48px, a 1px `--color-rule` keyline on `--color-paper-2`, the white focus ring, never a glow.
-- The line is the accent: white on blue, in rules, the primary fill and the focus ring.
+- 主按钮墨色填充、图纸色文字，旁边次级按钮墨色 1px 描边，两者方形、48px、IBM Plex Sans 500。
+- 链接墨色、1px 下划线、hover 时消失；输入框方形、48px，`--color-paper-2` 底上加 1px `--color-rule` 细线框，焦点圈用白色，绝不用辉光。
+- 线就是强调色：蓝底上的白，用在线条、主按钮填充和焦点圈上。
 
-## Motion
+## 动效
 
-Static, drafted. A rule or a dimension string may draw itself once a page (scaleX from its left tick over `--dur-long` on `--ease-out`); hover on a keylined surface that links darkens its ground one step.
+静态，制图感。一条线或一个尺寸标注串每页可自绘一次（scaleX 从左侧刻度起，时长 `--dur-long`、缓动 `--ease-out`）；可点击的细线框表面 hover 时底色加深一档。
 
-## Voice
+## 语气
 
-Specification voice: the building type, the stage, the year, the format, a unit on every figure; nothing a drawing note could not carry.
+规格说明的语气：建筑类型、阶段、年份、格式，每个数字带单位；图纸注记装不下的东西一概不写。
 
-## Do-nots
+## 禁止事项
 
-- Never a filled card, a blur or a lifted panel; the sheet has lines, not layers.
-- Never a second colour on the cyanotype, in type or in a photograph; the red pencil belongs to the brownline sheet.
-- Never a building, frame or section drawn to stand in for a project, and never a dimension string with an invented value; a drawing is real project data or it is absent.
-- Never the grid as wallpaper behind prose, and never a lowercase h1 or h2.
-- Never a rounded corner, anywhere.
+- 绝不用填充卡片、模糊或浮起的面板；图纸只有线，没有层。
+- cyanotype 上绝无第二种颜色，文字与照片都是；红铅笔只属于 brownline 图纸。
+- 绝不用画出来的建筑、框架或剖面顶替真实项目，绝不用编造数值的尺寸标注串；图纸要么是真实项目数据，要么不出现。
+- 绝不把网格当正文背后的壁纸；h1 与 h2 绝不小写。
+- 绝无圆角，任何地方。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">

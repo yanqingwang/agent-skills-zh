@@ -1,55 +1,59 @@
-# Biennale Yellow Preview Card
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/biennale-yellow/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Biennale Yellow 预览卡
 
-## Files
+本文件仅用于标题页预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/biennale-yellow/design.md`
-- Preview card: `bold-template-pack/templates/biennale-yellow/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/biennale-yellow/design.md`
+- 预览卡：`bold-template-pack/templates/biennale-yellow/preview.md`
+
+## 选型元数据
 
 - Slug: `biennale-yellow`
-- Tagline: Solar yellow on warm parchment with deep indigo serif and atmospheric sun-glow gradients.
-- Mood: editorial, atmospheric, warm, cultural-institution, poster-like
-- Tone: literary, considered, contemplative, warm-modern, Dutch-editorial
-- Formality: high
-- Density: medium
-- Scheme: light
-- Best for: Anything that should feel like an art-biennale poster or a museum's annual programme: exhibition decks, arts-institution announcements, design conference brochures, curatorial pitches, literary publications, studio retrospectives. Equally good for any deck wanting Dutch-editorial atmosphere with an unmistakable single-color signature.
-- Avoid for: Decks that need visual punch or saturated multi-color energy — the warm-paper canvas and one-yellow palette are intentionally quiet and atmospheric.
+- Tagline: 暖羊皮纸上的日光黄，配深靛蓝衬线与氛围感日晕渐变。
+- Mood: 编辑感、有氛围、温暖、文化机构感、海报感
+- Tone: 文学、审慎、沉静、温润现代、荷兰编辑风
+- Formality: 高
+- Density: 中
+- Scheme: 浅色
+- Best for: 一切该有艺术双年展海报或博物馆年度项目册质感的内容：展览演示、艺术机构公告、设计会议手册、策展提案、文学出版物、工作室回顾。同样适合任何想要荷兰编辑氛围、又要有醒目单色印记的演示。
+- Avoid for: 需要视觉冲击或饱和多色能量的演示。暖纸底与单一黄色配色刻意安静、重氛围。
 
-## Visual Snapshot
+## 视觉速览
 
-A literary-editorial presentation system in the visual register of an art biennale catalogue or quiet exhibition poster. The aesthetic is built on warm parchment grounds (#E9E5DB) flooded with soft solar yellow (#F1EE2E) radial blooms, set against a single deep indigo navy ink color. Display type is Instrument Serif — a contemporary high-contrast serif with tall ascenders and elegant italics — paired with Archivo for sans-serif chrome and JetBrains Mono for numerical and metadata callouts. No drop shadows, no rounded corners, no bordered cards: the only structural lines are hairline 1px rules in ink. The mood sits between a folded museum brochure, a slow-reading literary quarterly, and a Mediterranean exhibition poster — confident, atmospheric, and deeply restrained.
+一套文学编辑风演示系统，视觉语域取自艺术双年展图录或安静的展览海报。美学建立在暖羊皮纸底（#E9E5DB）之上，铺开柔和日光黄（#F1EE2E）的径向光晕，衬以单一的深靛蓝墨色。展示字体是 Instrument Serif：一款当代高对比衬线，升部修长、斜体优雅，配 Archivo 作无衬线边框装饰，JetBrains Mono 负责数字与元数据标注。没有投影、没有圆角、没有带边框的卡片：唯一的结构线是墨色的 1px 发丝线。气质介于折起的博物馆手册、慢读的文学季刊与地中海展览海报之间：自信、有氛围、克制到底。
 
-Biennale Yellow is a literary-editorial presentation system modeled on the visual language of European art biennale catalogues, slow exhibition posters, and quarterly literary publications. There are no cards, no buttons, no shadows, no rounded corners. The structural vocabulary is just three things: paper, ink, and yellow.
+Biennale Yellow 是一套文学编辑风演示系统，取法欧洲艺术双年展图录、慢节奏展览海报与文学季刊的视觉语言。没有卡片、没有按钮、没有阴影、没有圆角。结构语汇只有三样：纸、墨、黄。
 
-## Preview Ingredients
+## 预览要素
 
 - Palette: paper #E9E5DB; paper-deep #DCD6C4; sun #F1EE2E; sun-soft #F8F39B; haze #F0DA7C; ink #1B2566; ember #E26B4A
-- Typography: See full design doc after selection.
-- Signature move: Warm parchment ground ({colors.paper}) on every surface; never white, never gray.
-- Signature move: Single ink color ({colors.ink}) for all text and all rules — no secondary text colors.
-- Signature move: Solar yellow ({colors.sun}) deployed three ways: as a flooded panel, as a soft radial bloom, as a translucent geometric tile underprint.
-- Signature move: Instrument Serif handles every display moment at scales from 40px to 720px+.
-- Signature move: Archivo Bold uppercase + 0.16–0.32em tracking is the universal label voice.
+- Typography: 选定后阅读完整设计文档。
+- Signature move: 每一处表面都用暖羊皮纸底（{colors.paper}）；绝不用白，绝不用灰。
+- Signature move: 所有文字与所有分隔线只用单一墨色（{colors.ink}），不设次级文字色。
+- Signature move: 日光黄（{colors.sun}）以三种方式使用：铺满的面板、柔和的径向光晕、半透明几何色块衬底。
+- Signature move: 所有展示场合都由 Instrument Serif 承担，字号从 40px 到 720px+。
+- Signature move: Archivo Bold 全大写配 0.16–0.32em 字距，是通用的标签声部。
 
-## International / CJK Preview Note
+## 国际化 / CJK 预览注意
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-## Preview Rules
+## 预览规则
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

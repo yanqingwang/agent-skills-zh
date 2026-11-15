@@ -1,248 +1,252 @@
-# Page CRO Experiment Ideas
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/cro/references/experiments.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Comprehensive list of A/B tests and experiments organized by page type.
+# 页面 CRO 实验点子
 
-## Contents
-- Homepage Experiments (Hero Section, Trust & Social Proof, Features & Content, Navigation & UX)
-- Pricing Page Experiments (Price Presentation, Pricing UX, Objection Handling, Trust Signals)
-- Demo Request Page Experiments (Form Optimization, Page Content, CTA & Routing)
-- Resource/Blog Page Experiments (Content CTAs, Resource Section)
-- Landing Page Experiments (Message Match, Conversion Focus, Page Length)
-- Feature Page Experiments (Feature Presentation, Conversion Path)
-- Cross-Page Experiments (Site-Wide Tests, Navigation Tests)
+按页面类型整理的 A/B 测试与实验完整清单。
 
-## Homepage Experiments
+## 目录
+- 首页实验（首屏区、信任与社会证明、功能与内容、导航与 UX）
+- 定价页实验（价格呈现、定价 UX、异议处理、信任信号）
+- 演示申请页实验（表单优化、页面内容、CTA 与分流）
+- 资源/博客页实验（内容 CTA、资源专区）
+- 落地页实验（信息匹配、转化聚焦、页面长度）
+- 功能页实验（功能呈现、转化路径）
+- 跨页面实验（全站测试、导航测试）
 
-### Hero Section
+## 首页实验
 
-| Test | Hypothesis |
+### 首屏区（Hero Section）
+
+| 测试 | 假设 |
 |------|------------|
-| Headline variations | Specific vs. abstract messaging |
-| Subheadline clarity | Add/refine to support headline |
-| CTA above fold | Include or exclude prominent CTA |
-| Hero visual format | Screenshot vs. GIF vs. illustration vs. video |
-| CTA button color | Test contrast and visibility |
-| CTA button text | "Start Free Trial" vs. "Get Started" vs. "See Demo" |
-| Interactive demo | Engage visitors immediately with product |
+| 主标题变体 | 具体信息 vs. 抽象信息 |
+| 副标题清晰度 | 增加/打磨副标题以支撑主标题 |
+| 首屏以上放 CTA | 是否放显眼的 CTA |
+| 首屏视觉形式 | 截图 vs. GIF vs. 插画 vs. 视频 |
+| CTA 按钮颜色 | 测试对比度与可见性 |
+| CTA 按钮文案 | "开始免费试用" vs. "立即开始" vs. "观看演示" |
+| 交互式演示 | 让访客立刻与产品互动 |
 
-### Trust & Social Proof
+### 信任与社会证明
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Logo placement | Hero section vs. below fold |
-| Case study in hero | Show results immediately |
-| Trust badges | Add security, compliance, awards |
-| Social proof in headline | "Join 10,000+ teams" messaging |
-| Testimonial placement | Above fold vs. dedicated section |
-| Video testimonials | More engaging than text quotes |
+| 客户 Logo 位置 | 首屏区 vs. 首屏以下 |
+| 首屏放案例研究 | 立刻展示成果 |
+| 信任徽章 | 增加安全、合规、奖项标识 |
+| 主标题里的社会证明 | "已有 10,000+ 团队加入"类文案 |
+| 用户评价位置 | 首屏以上 vs. 独立专区 |
+| 视频用户评价 | 比文字引用更有吸引力 |
 
-### Features & Content
+### 功能与内容
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Feature presentation | Icons + descriptions vs. detailed sections |
-| Section ordering | Move high-value features up |
-| Secondary CTAs | Add/remove throughout page |
-| Benefit vs. feature focus | Lead with outcomes |
-| Comparison section | Show vs. competitors or status quo |
+| 功能呈现方式 | 图标+简述 vs. 详细分节 |
+| 板块顺序 | 把高价值功能往前放 |
+| 次级 CTA | 全页增/删次级 CTA |
+| 卖收益 vs. 卖功能 | 以结果开篇 |
+| 对比板块 | 与竞品或现状对比 |
 
-### Navigation & UX
+### 导航与 UX
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Sticky navigation | Persistent nav with CTA |
-| Nav menu order | High-priority items at edges |
-| Nav CTA button | Add prominent button in nav |
-| Support widget | Live chat vs. AI chatbot |
-| Footer optimization | Clearer secondary conversions |
-| Exit intent popup | Capture abandoning visitors |
+| 吸顶导航 | 常驻导航栏带 CTA |
+| 导航菜单顺序 | 高优先级项放边缘位置 |
+| 导航栏 CTA 按钮 | 在导航栏加显眼按钮 |
+| 支持组件 | 人工在线客服 vs. AI 聊天机器人 |
+| 页脚优化 | 更清晰的次级转化 |
+| 离站意图弹窗 | 挽留即将离开的访客 |
 
 ---
 
-## Pricing Page Experiments
+## 定价页实验
 
-### Price Presentation
+### 价格呈现
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Annual vs. monthly display | Highlight savings or simplify |
-| Price points | $99 vs. $100 vs. $97 psychology |
-| "Most Popular" badge | Highlight target plan |
-| Number of tiers | 3 vs. 4 vs. 2 visible options |
-| Price anchoring | Order plans to anchor expectations |
-| Custom enterprise tier | Show vs. "Contact Sales" |
+| 按年 vs. 按月展示 | 突出优惠力度或做简化 |
+| 价格点位 | $99 vs. $100 vs. $97 的定价心理学 |
+| "最受欢迎"徽章 | 突出目标套餐 |
+| 档位数量 | 3 个 vs. 4 个 vs. 2 个可见选项 |
+| 价格锚定 | 调整套餐顺序来锚定预期 |
+| 定制企业档 | 直接展示 vs. "联系销售" |
 
-### Pricing UX
+### 定价 UX
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Pricing calculator | For usage-based pricing clarity |
-| Guided pricing flow | Multistep wizard vs. comparison table |
-| Feature comparison format | Table vs. expandable sections |
-| Monthly/annual toggle | With savings highlighted |
-| Plan recommendation quiz | Help visitors choose |
-| Checkout flow length | Steps required after plan selection |
+| 定价计算器 | 让按量计费更清晰 |
+| 引导式定价流程 | 多步向导 vs. 对比表格 |
+| 功能对比形式 | 表格 vs. 可展开分节 |
+| 月付/年付切换 | 突出年付优惠 |
+| 套餐推荐问答 | 帮访客做选择 |
+| 结账流程长度 | 选定套餐后还需要几步 |
 
-### Objection Handling
+### 异议处理
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| FAQ section | Address pricing objections |
-| ROI calculator | Demonstrate value vs. cost |
-| Money-back guarantee | Prominent placement |
-| Per-user breakdowns | Clarity for team plans |
-| Feature inclusion clarity | What's in each tier |
-| Competitor comparison | Side-by-side value comparison |
+| FAQ 板块 | 回应价格异议 |
+| ROI 计算器 | 展示价值相对成本 |
+| 退款保证 | 放在显眼位置 |
+| 按人拆分价格 | 让团队套餐更透明 |
+| 功能包含说明 | 讲清每个档位有什么 |
+| 竞品对比 | 并排对比价值 |
 
-### Trust Signals
+### 信任信号
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Value testimonials | Quotes about ROI specifically |
-| Customer logos | Near pricing section |
-| Review scores | G2/Capterra ratings |
-| Case study snippet | Specific pricing/value results |
+| 价值向用户评价 | 专讲 ROI 的引用语 |
+| 客户 Logo | 放在定价区附近 |
+| 平台评分 | G2/Capterra 评分 |
+| 案例研究摘要 | 具体的价格/价值成果 |
 
 ---
 
-## Demo Request Page Experiments
+## 演示申请页实验
 
-### Form Optimization
+### 表单优化
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Field count | Fewer fields, higher completion |
-| Multi-step vs. single | Progress bar encouragement |
-| Form placement | Above fold vs. after content |
-| Phone field | Include vs. exclude |
-| Field enrichment | Hide fields you can auto-fill |
-| Form labels | Inside field vs. above |
+| 字段数量 | 字段越少，完成率越高 |
+| 多步 vs. 单步 | 用进度条给用户打气 |
+| 表单位置 | 首屏以上 vs. 内容之后 |
+| 电话字段 | 收 vs. 不收 |
+| 字段富化 | 能自动填充的字段就藏起来 |
+| 表单标签 | 放字段内 vs. 放字段上方 |
 
-### Page Content
+### 页面内容
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Benefits above form | Reinforce value before ask |
-| Demo preview | Video/GIF showing demo experience |
-| "What You'll Learn" | Set expectations clearly |
-| Testimonials near form | Reduce friction at decision point |
-| FAQ below form | Address common objections |
-| Video vs. text | Format for explaining value |
+| 表单上方先讲收益 | 提出要求前先强化价值 |
+| 演示预览 | 用视频/GIF 展示演示体验 |
+| "你将学到什么" | 清晰设定预期 |
+| 表单附近放用户评价 | 降低决策点的摩擦 |
+| 表单下方放 FAQ | 回应常见异议 |
+| 视频 vs. 文字 | 解释价值的形式选择 |
 
-### CTA & Routing
+### CTA 与分流
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| CTA text | "Book Your Demo" vs. "Schedule 15-Min Call" |
-| On-demand option | Instant demo alongside live option |
-| Personalized messaging | Based on visitor data/source |
-| Navigation removal | Reduce page distractions |
-| Calendar integration | Inline booking vs. external link |
-| Qualification routing | Self-serve for some, sales for others |
+| CTA 文案 | "预约演示" vs. "安排 15 分钟通话" |
+| 即时演示选项 | 在真人演示之外提供即时演示 |
+| 个性化文案 | 基于访客数据/来源 |
+| 移除导航 | 减少页面干扰 |
+| 日历集成 | 页内预约 vs. 外部链接 |
+| 资质分流 | 一部分自助，一部分转销售 |
 
 ---
 
-## Resource/Blog Page Experiments
+## 资源/博客页实验
 
-### Content CTAs
+### 内容 CTA
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Floating CTAs | Sticky CTA on blog posts |
-| CTA placement | Inline vs. end-of-post only |
-| Reading time display | Estimated reading time |
-| Related resources | End-of-article recommendations |
-| Gated vs. free | Content access strategy |
-| Content upgrades | Specific to article topic |
+| 浮动 CTA | 博客文章上的吸顶 CTA |
+| CTA 位置 | 文内 vs. 仅文末 |
+| 阅读时长展示 | 显示预计阅读时间 |
+| 相关资源 | 文末推荐 |
+| 门控 vs. 免费 | 内容获取策略 |
+| 内容升级包 | 与文章主题强相关 |
 
-### Resource Section
+### 资源专区
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Navigation/filtering | Easier to find relevant content |
-| Search functionality | Find specific resources |
-| Featured resources | Highlight best content |
-| Layout format | Grid vs. list view |
-| Topic bundles | Grouped resources by theme |
-| Download tracking | Gate some, track engagement |
+| 导航/筛选 | 更容易找到相关内容 |
+| 搜索功能 | 找到特定资源 |
+| 精选资源 | 突出最好的内容 |
+| 布局形式 | 网格 vs. 列表 |
+| 主题合集 | 按主题归组资源 |
+| 下载追踪 | 部分设门槛，追踪互动 |
 
 ---
 
-## Landing Page Experiments
+## 落地页实验
 
-### Message Match
+### 信息匹配
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Headline matching | Match ad copy exactly |
-| Visual matching | Match ad creative |
-| Offer alignment | Same offer as ad promised |
-| Audience-specific pages | Different pages per segment |
+| 主标题匹配 | 与广告文案完全一致 |
+| 视觉匹配 | 与广告素材一致 |
+| 优惠一致 | 与广告承诺的优惠一致 |
+| 分受众页面 | 每个细分人群不同页面 |
 
-### Conversion Focus
+### 转化聚焦
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Navigation removal | Single-focus page |
-| CTA repetition | Multiple CTAs throughout |
-| Form vs. button | Direct capture vs. click-through |
-| Urgency/scarcity | If genuine, test messaging |
-| Social proof density | Amount and placement |
-| Video inclusion | Explain offer with video |
+| 移除导航 | 单一焦点页面 |
+| CTA 重复出现 | 全页多个 CTA |
+| 表单 vs. 按钮 | 直接留资 vs. 点击跳转 |
+| 紧迫感/稀缺感 | 若真实存在，测试相应文案 |
+| 社会证明密度 | 数量与位置 |
+| 加入视频 | 用视频讲清优惠 |
 
-### Page Length
+### 页面长度
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Short vs. long | Quick conversion vs. complete argument |
-| Above-fold only | Minimal scroll required |
-| Section ordering | Most important content first |
-| Footer removal | Eliminate navigation |
+| 短页 vs. 长页 | 快速转化 vs. 完整论证 |
+| 仅首屏内容 | 几乎无需滚动 |
+| 板块顺序 | 最重要的内容放最前 |
+| 移除页脚 | 消除导航出口 |
 
 ---
 
-## Feature Page Experiments
+## 功能页实验
 
-### Feature Presentation
+### 功能呈现
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Demo/screenshot | Show feature in action |
-| Use case examples | How customers use it |
-| Before/after | Impact visualization |
-| Video walkthrough | Feature tour |
-| Interactive demo | Try feature without signup |
+| 演示/截图 | 展示功能实际运行 |
+| 用例示例 | 客户如何使用 |
+| 前后对比 | 把影响可视化 |
+| 视频讲解 | 功能逐项演示 |
+| 交互式演示 | 无需注册即可试用功能 |
 
-### Conversion Path
+### 转化路径
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Trial CTA | Feature-specific trial offer |
-| Related features | Cross-link to other features |
-| Comparison | vs. competitors' version |
-| Pricing mention | Connect to relevant plan |
-| Case study link | Feature-specific success story |
+| 试用 CTA | 与该功能挂钩的试用 |
+| 相关功能 | 交叉链接到其他功能 |
+| 对比 | 对比竞品的对应版本 |
+| 定价提示 | 关联到相关套餐 |
+| 案例研究链接 | 该功能的成功故事 |
 
 ---
 
-## Cross-Page Experiments
+## 跨页面实验
 
-### Site-Wide Tests
+### 全站测试
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Chat widget | Impact on conversions |
-| Cookie consent UX | Minimize friction |
-| Page load speed | Performance vs. features |
-| Mobile experience | Responsive optimization |
-| Accessibility | Impact on conversion |
-| Personalization | Dynamic content by segment |
+| 聊天组件 | 对转化的影响 |
+| Cookie 同意弹窗 UX | 尽量减少摩擦 |
+| 页面加载速度 | 性能 vs. 功能取舍 |
+| 移动端体验 | 响应式优化 |
+| 无障碍 | 对转化的影响 |
+| 个性化 | 按细分人群动态展示内容 |
 
-### Navigation Tests
+### 导航测试
 
-| Test | Hypothesis |
+| 测试 | 假设 |
 |------|------------|
-| Menu structure | Information architecture |
-| Search placement | Help visitors find content |
-| CTA in nav | Always-visible conversion path |
-| Breadcrumbs | Navigation clarity |
+| 菜单结构 | 信息架构 |
+| 搜索入口位置 | 帮访客找到内容 |
+| 导航栏 CTA | 始终可见的转化路径 |
+| 面包屑 | 导航清晰度 |

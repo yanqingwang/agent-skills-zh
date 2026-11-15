@@ -1,12 +1,16 @@
-# API Error Handling
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/api-designer/references/error-handling.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Error Response Design
+# API 错误处理
 
-Consistent, informative error responses are critical for API usability.
+## 错误响应设计
 
-## Standard Error Format
+一致且信息充分的错误响应，对 API 可用性至关重要。
 
-### Basic Error Response
+## 标准错误格式
+
+### 基础错误响应
 
 ```json
 {
@@ -20,7 +24,7 @@ Consistent, informative error responses are critical for API usability.
 
 ### RFC 7807 Problem Details
 
-Standardized error format (application/problem+json):
+标准化错误格式（application/problem+json）：
 
 ```http
 HTTP/1.1 404 Not Found
@@ -35,14 +39,14 @@ Content-Type: application/problem+json
 }
 ```
 
-**Fields:**
-- `type` - URI reference identifying error type
-- `title` - Short, human-readable summary
-- `status` - HTTP status code
-- `detail` - Human-readable explanation specific to this occurrence
-- `instance` - URI reference for this specific occurrence
+**字段：**
+- `type` - 标识错误类型的 URI 引用
+- `title` - 简短、人类可读的摘要
+- `status` - HTTP 状态码
+- `detail` - 针对本次错误的人类可读说明
+- `instance` - 本次具体错误的 URI 引用
 
-### Extended Error Response
+### 扩展错误响应
 
 ```json
 {
@@ -68,11 +72,11 @@ Content-Type: application/problem+json
 }
 ```
 
-## Error Categories
+## 错误分类
 
-### 1. Validation Errors (400 Bad Request)
+### 1. 验证错误（400 Bad Request）
 
-Client sent invalid data.
+客户端发送了无效数据。
 
 ```http
 POST /users
@@ -114,9 +118,9 @@ Response: 400 Bad Request
 }
 ```
 
-### 2. Authentication Errors (401 Unauthorized)
+### 2. 认证错误（401 Unauthorized）
 
-Missing or invalid authentication credentials.
+认证凭据缺失或无效。
 
 ```http
 GET /users/123
@@ -137,15 +141,15 @@ WWW-Authenticate: Bearer realm="api", error="invalid_token"
 }
 ```
 
-**Common auth error codes:**
-- `MISSING_TOKEN` - No auth token provided
-- `INVALID_TOKEN` - Token is malformed or invalid
-- `EXPIRED_TOKEN` - Token has expired
-- `REVOKED_TOKEN` - Token has been revoked
+**常见认证错误码：**
+- `MISSING_TOKEN` - 未提供认证令牌
+- `INVALID_TOKEN` - 令牌格式错误或无效
+- `EXPIRED_TOKEN` - 令牌已过期
+- `REVOKED_TOKEN` - 令牌已被吊销
 
-### 3. Authorization Errors (403 Forbidden)
+### 3. 授权错误（403 Forbidden）
 
-Authenticated but not authorized to perform action.
+已认证，但无权执行该操作。
 
 ```http
 DELETE /users/123
@@ -164,9 +168,9 @@ Response: 403 Forbidden
 }
 ```
 
-### 4. Not Found Errors (404 Not Found)
+### 4. 未找到错误（404 Not Found）
 
-Resource doesn't exist.
+资源不存在。
 
 ```http
 GET /users/99999
@@ -184,9 +188,9 @@ Response: 404 Not Found
 }
 ```
 
-### 5. Conflict Errors (409 Conflict)
+### 5. 冲突错误（409 Conflict）
 
-Request conflicts with current state.
+请求与当前状态冲突。
 
 ```http
 POST /users
@@ -211,9 +215,9 @@ Response: 409 Conflict
 }
 ```
 
-### 6. Rate Limiting (429 Too Many Requests)
+### 6. 速率限制（429 Too Many Requests）
 
-Client exceeded rate limit.
+客户端超出了速率限制。
 
 ```http
 GET /users
@@ -238,9 +242,9 @@ X-RateLimit-Reset: 1705320000
 }
 ```
 
-### 7. Server Errors (500 Internal Server Error)
+### 7. 服务器错误（500 Internal Server Error）
 
-Unexpected server error.
+意外的服务器错误。
 
 ```http
 GET /users/123
@@ -256,15 +260,15 @@ Response: 500 Internal Server Error
 }
 ```
 
-**Never expose:**
-- Stack traces
-- Database errors
-- Internal paths
-- Sensitive configuration
+**绝不暴露：**
+- 堆栈跟踪
+- 数据库错误
+- 内部路径
+- 敏感配置
 
-### 8. Service Unavailable (503 Service Unavailable)
+### 8. 服务不可用（503 Service Unavailable）
 
-Service temporarily unavailable.
+服务暂时不可用。
 
 ```http
 GET /users
@@ -284,9 +288,9 @@ Retry-After: 300
 }
 ```
 
-## Error Code Catalog
+## 错误码目录
 
-Define standard error codes for your API:
+为你的 API 定义标准错误码：
 
 ```json
 {
@@ -340,9 +344,9 @@ Define standard error codes for your API:
 }
 ```
 
-## Validation Error Details
+## 验证错误明细
 
-### Field-Level Validation
+### 字段级验证
 
 ```json
 {
@@ -374,7 +378,7 @@ Define standard error codes for your API:
 }
 ```
 
-### Cross-Field Validation
+### 跨字段验证
 
 ```json
 {
@@ -396,9 +400,9 @@ Define standard error codes for your API:
 }
 ```
 
-## Request ID Tracking
+## 请求 ID 追踪
 
-Always include request ID for debugging:
+始终包含请求 ID，便于调试：
 
 ```http
 Response Headers:
@@ -414,11 +418,11 @@ Response Body:
 }
 ```
 
-Clients can reference request ID in support tickets.
+客户端可在支持工单中引用请求 ID。
 
-## Error Documentation
+## 错误文档
 
-Document all possible errors for each endpoint:
+为每个端点记录所有可能的错误：
 
 ```yaml
 /users/{id}:
@@ -457,9 +461,9 @@ Document all possible errors for each endpoint:
                     message: User with ID 123 not found
 ```
 
-## Retry Guidance
+## 重试指引
 
-Help clients understand if they should retry:
+帮助客户端判断是否应该重试：
 
 ```json
 {
@@ -476,16 +480,16 @@ Help clients understand if they should retry:
 }
 ```
 
-### Retryable Errors
+### 可重试错误
 
 - 408 Request Timeout
-- 429 Too Many Requests (with Retry-After)
-- 500 Internal Server Error (sometimes)
+- 429 Too Many Requests（带 Retry-After）
+- 500 Internal Server Error（某些情况下）
 - 502 Bad Gateway
 - 503 Service Unavailable
 - 504 Gateway Timeout
 
-### Non-Retryable Errors
+### 不可重试错误
 
 - 400 Bad Request
 - 401 Unauthorized
@@ -494,9 +498,9 @@ Help clients understand if they should retry:
 - 409 Conflict
 - 422 Unprocessable Entity
 
-## Multi-Language Support
+## 多语言支持
 
-Support error messages in multiple languages:
+支持多语言的错误消息：
 
 ```http
 GET /users/invalid
@@ -512,30 +516,30 @@ Content-Language: es
 }
 ```
 
-Always include `code` so clients can implement their own translations.
+始终返回 `code` 字段，客户端可据此自行实现翻译。
 
-## Best Practices
+## 最佳实践
 
-1. **Use standard HTTP status codes** - Don't return 200 for errors
-2. **Include machine-readable codes** - Error codes for client logic
-3. **Provide human-readable messages** - Clear explanations
-4. **Be specific but safe** - Don't expose sensitive information
-5. **Include request ID** - For tracking and debugging
-6. **Document all errors** - Every possible error for each endpoint
-7. **Be consistent** - Same format across all endpoints
-8. **Help clients retry** - Indicate if error is retryable
-9. **Validate early** - Return validation errors immediately
-10. **Log errors server-side** - Track errors for monitoring
+1. **使用标准 HTTP 状态码** - 不要对错误返回 200
+2. **提供机器可读的错误码** - 供客户端逻辑判断
+3. **提供人类可读的消息** - 说明清晰
+4. **具体但安全** - 不暴露敏感信息
+5. **带上请求 ID** - 用于追踪与调试
+6. **记录所有错误** - 每个端点的每种可能错误
+7. **保持一致** - 所有端点用同一格式
+8. **帮助客户端重试** - 指明错误是否可重试
+9. **尽早验证** - 立即返回验证错误
+10. **在服务端记录错误日志** - 用于监控追踪
 
-## Anti-Patterns
+## 反模式
 
-Avoid these mistakes:
+避免这些错误：
 
-- **Generic error messages** - "Error occurred" without details
-- **Exposing stack traces** - Security risk
-- **Inconsistent error format** - Different structure per endpoint
-- **Missing error codes** - Only human-readable messages
-- **Wrong status codes** - Returning 200 with error in body
-- **No request ID** - Makes debugging impossible
-- **Undocumented errors** - Clients don't know what to expect
-- **Too much information** - Exposing internal implementation
+- **笼统的错误消息** - 只说"发生错误"而没有细节
+- **暴露堆栈跟踪** - 安全风险
+- **错误格式不一致** - 每个端点结构不同
+- **缺少错误码** - 只有人类可读消息
+- **状态码错误** - 返回 200 却在 body 里报错
+- **没有请求 ID** - 让调试无从下手
+- **错误未写入文档** - 客户端不知道会发生什么
+- **信息过多** - 暴露内部实现

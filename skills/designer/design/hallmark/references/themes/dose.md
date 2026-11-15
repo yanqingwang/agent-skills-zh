@@ -12,11 +12,15 @@ photo: natural sat=-15 con=-6
 pictured: Care Register, Organiser hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/dose.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Dose
 
-Translucent plastic and daylight: warm morning paper with a fine fibre grain, window light falling across it, bands of soft tinted plastic like a pill organiser, green-black ink, Schibsted Grotesk heads over Instrument Sans, and DM Mono for the time and the dose, set like a pharmacy label. One pharmacy green does every signal. It is trustworthy because it is exact and unhurried, and it lives in a kitchen, not a clinic. It is not a clinical blue portal, not a wellness pastel and not an alarm.
+半透明塑料与日光：带细纤维颗粒的暖调晨间纸面、横过的窗光、像分药盒一样的一条条软色塑料、绿黑墨色、Schibsted Grotesk 标题压 Instrument Sans，DM Mono 用于钟点与剂量、排成药房标签的样子。一种药房绿承担全部信号。它可信，因为它精确、从容，而且住在厨房里，不在诊所。它不是临床蓝门户，不是养生粉彩，也不是警报。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -37,51 +41,51 @@ Translucent plastic and daylight: warm morning paper with a fine fibre grain, wi
 }
 ```
 
-Committed: the paper is warm, the green tints and the plastic carry the colour, mint (`--color-accent-soft`) marks what is checked, and the accent proper stays on controls, focus, a stamp and one figure. Grounds, stated in the stamp (`dose: white`): **white** (default, the tokens above), **green** (drenched `oklch(46% 0.12 160)` under white ink, surfaces white inside, mint on the ground), **night** (`oklch(13% 0.01 170)` under `oklch(96% 0.01 160)`, plastic at 40% light, mint with dark ink).
+committed（全力以赴）：纸面是暖的，绿色调与塑料承担颜色，薄荷绿（`--color-accent-soft`）标记已确认的东西，强调色本身只落在控件、焦点、一枚图章与一个数字上。地面，写入 stamp（印记）：**white**（默认，即上面的 Token）、**green**（drenched（浸满），`oklch(46% 0.12 160)` 之上覆白墨，表面内部保持白色，薄荷绿铺在地面）、**night**（`oklch(13% 0.01 170)` 之上覆 `oklch(96% 0.01 160)`，塑料 40% 亮度，薄荷绿配深墨）。
 
-## Type
+## 字体（Type）
 
-- **Display:** Schibsted Grotesk 700, `--tracking-display`, line-height 1.02, sentence case, lining tabular figures.
-- **Body:** Instrument Sans 400 and 500, 16 to 18px, line-height 1.5.
-- **Labels, captions, table heads:** Instrument Sans 500 a step smaller, sentence case.
-- **Times, doses, pharmacy labels:** DM Mono 400 and 500 (`08:00`, `500 mg`), at text size inside a sentence, at title size where a timetable's first column is the time, and as the whole voice of a pharmacy label; never a tab, a table head or a display figure. Three weights a page: 400, 500, 700.
+- **展示字体：**Schibsted Grotesk 700，`--tracking-display`，行高 1.02，句首大写，等高表格数字。
+- **正文：**Instrument Sans 400 与 500，16 至 18px，行高 1.5。
+- **标签、图注、表头：**Instrument Sans 500 小一档，句首大写。
+- **钟点、剂量、药房标签：**DM Mono 400 与 500（`08:00`、`500 mg`），句内用正文字号，时刻表第一列是时间时用标题字号，药房标签整张用它发声；绝不做标签页、表头或展示数字。每页三个字重：400、500、700。
 
-## Surfaces
+## 表面（Surfaces）
 
-- The ground is generated, never a picture: the paper takes a fractal-noise fibre grain (an `feTurbulence` data URI under the paper colour), and the hero takes window light, four blurred panes of `--light` skewed across the paper, drifting over 90 seconds.
-- Plastic is the surface: a tint (`--p-*`, never a state) at about 62% alpha, a `--glint` line along the top edge, a deeper inner shade at the foot, and the coloured light it lets through pooled and blurred on the paper below. It makes bands, trays and compartments; CSS 3D may turn a set of them three-quarter on the paper.
-- A label is paper on plastic: grained white, 10px radius, a tear-off stub on a dashed rule, DM Mono throughout, a confirmation as a double-ringed green stamp rotated 2 degrees naming the time and who; missed or due is the same in grey.
-- Radii read as an app: 10px controls, 14px surfaces, 999 on tags, a phone screen at about 28px. White surfaces lift on `--shadow-lift`; one green-black ink band may carry a statement.
-- Photographs: the home where a dose is given, hands and rooms in soft daylight, never a face to camera or a clinic; 14px radius, captions beneath.
+- 地面是生成的，绝不是图片：纸面带分形噪声纤维颗粒（纸色之下的 `feTurbulence` data URI），Hero 带窗光：四片模糊的 `--light` 光斑斜跨纸面，漂移 90 秒。
+- 塑料即表面：一个色调（`--p-*`，绝不表示状态）约 62% 不透明度，顶边一条 `--glint` 高光线，底部一圈更深的内影，透出的彩色光在下方纸面上聚成模糊的一片。它构成色带、托盘与分格；CSS 3D 可以让一组塑料以四分之三视角立在纸上。
+- 标签是塑料上的纸：带颗粒的白，10px 圆角，虚线上一个可撕断的存根，通体 DM Mono，一枚双圈绿图章盖着确认、旋转 2 度、写明时间与谁；漏服或待服同样式但用灰色。
+- 圆角读起来像应用：控件 10px，表面 14px，标签 999，手机屏幕约 28px。白色表面以 `--shadow-lift` 抬起；一条绿黑墨色色带可以承载一句陈述。
+- 照片：给药发生的那个家，手与房间在柔和日光下，绝不正对镜头的脸，也绝不在诊所；14px 圆角，图注在下方。
 
-## Range
+## 版式（Range）
 
-- **A sequence as plastic bands:** each stage a full-width band in its own tint, the number in Schibsted at display size, two phone screens of the product on it, the minute each happened in DM Mono beside its line.
-- **A record as labels:** the photograph beside two pharmacy labels, one stamped given in green, one missed in grey, each stating the dose, time and person.
-- **Statement on the ink band:** one plain sentence in Schibsted 700 at `--text-display`, one line in mint beneath it.
-- **A first step in a tray:** the form on a sunken plastic tray, choices as plastic keys, the product's screen beside it answering live.
+- **流程化作塑料色带：**每段是通栏色带、各自的色调，编号用 Schibsted 排展示字号，带上放两块产品手机屏，每分钟发生的事用 DM Mono 写在它的行旁。
+- **记录化作标签：**照片旁两张药房标签，一张盖绿章"已给"，一张灰色"漏服"，各写明剂量、时间与人。
+- **墨色色带上的陈述：**一句平实的话，Schibsted 700，`--text-display` 字号，其下一行薄荷绿。
+- **托盘里的第一步：**表单在下陷的塑料托盘上，选项是塑料按键，旁边产品的屏幕实时作答。
 
-## Controls
+## 控件（Controls）
 
-- Moulded plastic: a 52px control at 10px with a 1px rim, a 3px rim below, a bevel of `--glint` on top and a soft cast shadow; it sinks 3px on press. The primary is green plastic, the secondary clear.
-- Choices are plastic keys, mint when checked. Links underline in green on hover. Inputs: 52px at 10px with a 1px `--color-muted` border.
+- 模压塑料：52px 控件、10px 圆角，1px 沿口、底部 3px 沿口，顶部一圈 `--glint` 斜切高光、一片柔和投影；按下下沉 3px。主按钮是绿塑料，次按钮是透明的。
+- 选项是塑料按键，勾选时转薄荷绿。链接悬停出现绿色下划线。输入框：52px、10px 圆角，1px `--color-muted` 边框。
 
-## Motion
+## 动效（Motion）
 
-Light drifts over 90 seconds and pauses off screen. Once in view: a lid lifts, a label rises, its stamp lands and a tick ripples to whoever else sees it. Reduced motion or no script: the end state, light still.
+光漂移 90 秒，屏幕外暂停。进入视野一次：盖子掀起、标签升起、图章落下、勾动向其他看到的人荡开一圈。Reduced motion（减少动效）或无脚本：呈现最终状态，光静止。
 
-## Voice
+## 语气（Voice）
 
-A pharmacist's plainness, spoken by a family: the name, the dose, the time, who gave it, in the words a son or daughter uses (Mum, your brother). Never a journey, never a warning in red.
+药剂师的平实，由一家人说出：药名、剂量、钟点、谁给的，用儿子或女儿的那个词（妈、你哥）。绝不说旅程，绝不用红色发警告。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never red or amber for a missed or late state; it is grey.
-- Never a plastic tint as a signal or a second brand colour; the green does every signal.
-- Never clinical stock: spilled pills, blister packs in close-up, white coats.
-- Never glossy toy plastic: tints stay pale, light is daylight, no gradients beyond the glint and the shade.
+- 绝不用红或琥珀表示漏服或迟到；那是灰色。
+- 绝不把塑料色调当信号或第二品牌色；绿承担一切信号。
+- 绝不用临床素材：撒落的药片、特写泡罩包装、白大褂。
+- 绝不用光亮的玩具塑料：色调保持浅淡，光是日光，除高光与内影外无渐变。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@700&family=Instrument+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">

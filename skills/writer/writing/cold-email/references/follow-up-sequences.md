@@ -1,81 +1,85 @@
-# Follow-Up Sequences
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/follow-up-sequences.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The first email draws most replies (about 58% in Instantly's 2026 benchmark), but the remaining ~42% arrive on follow-ups. A sequence that stops after one send gives up nearly half its replies.
+# 跟进序列
 
-## How Many: 3–5 Total Emails
+第一封邮件拿到大多数回复（Instantly 2026 年基准约 58%），但剩下约 42% 来自跟进。发一封就停的序列，等于放弃近一半回复。
 
-- Highest single-email reply rate: **8.4%** (Belkins).
-- 4–7 email campaigns achieve **27% reply rates** vs 9% for 1–3 emails (Woodpecker, 20M emails).
-- By 4th follow-up, response rates drop **55%** and spam complaints **triple**.
-- Resolution: longer sequences catch different timing windows. Cap at 4 follow-ups (5 total emails). Each must add genuinely new value.
+## 发几封：总共 3–5 封
 
-## Optimal Cadence
+- 单封邮件最高回复率：**8.4%**（Belkins）。
+- 4–7 封的活动达到 **27% 回复率**，1–3 封只有 9%（Woodpecker，2,000 万封邮件）。
+- 到第 4 次跟进，响应率下降 **55%**，垃圾投诉**翻三倍**。
+- 结论：更长的序列能捕捉不同的时机窗口。上限 4 次跟进（总共 5 封）。每一封都必须带来真正的新价值。
 
-Increase the gap between each touch:
+## 最佳节奏
 
-| Touch         | Day   | Notes                                          |
+每次触达之间的间隔逐次拉大：
+
+| 触达         | 天数   | 说明                                          |
 | ------------- | ----- | ---------------------------------------------- |
-| Initial email | 0     | Maximum personalization investment             |
-| Follow-up 1   | 3     | Waiting 3 days increases response by up to 31% |
-| Follow-up 2   | 7–8   | Different angle                                |
-| Follow-up 3   | 14    | New value piece                                |
-| Follow-up 4   | 21–28 | Breakup email                                  |
+| 首封邮件 | 0     | 个性化投入拉满             |
+| 跟进 1   | 3     | 等 3 天响应最多提升 31% |
+| 跟进 2   | 7–8   | 换个角度                                |
+| 跟进 3   | 14    | 一件新价值素材                                |
+| 跟进 4   | 21–28 | 分手邮件                                  |
 
-**Best days:** Tuesday–Thursday (Thursday peaks at 6.87% reply rate).
-**Best times:** 9–11 AM or 1–3 PM in prospect's local time.
-**Avoid:** Monday mornings (inbox overload), Friday afternoons (checked out).
+**最佳日期：**周二至周四（周四回复率峰值 6.87%）。
+**最佳时段：**潜客当地时间的 9–11 点或 13–15 点。
+**避开：**周一上午（收件箱过载）、周五下午（人在神游）。
 
-## Angle Rotation
+## 角度轮换
 
-Each follow-up must stand alone while building toward the goal. Never just "bump this up."
+每次跟进既要独立成立，又要朝目标推进。绝不要只发"顶一下"。
 
-| Email       | Angle                                                      | Purpose                    |
+| 邮件       | 角度                                                      | 目的                    |
 | ----------- | ---------------------------------------------------------- | -------------------------- |
-| Initial     | Personalized hook + core value prop + soft CTA             | Introduce problem/solution |
-| Follow-up 1 | Different angle, new value piece (stat, insight, resource) | Show additional benefit    |
-| Follow-up 2 | Social proof / case study from similar company             | Build credibility          |
-| Follow-up 3 | New insight, industry trend, or relevant resource          | Demonstrate expertise      |
-| Follow-up 4 | Breakup — acknowledge silence, leave door open             | Trigger loss aversion      |
+| 首封     | 个性化钩子 + 核心价值主张 + 柔性 CTA             | 引出问题/解决方案 |
+| 跟进 1 | 不同角度，新价值素材（数据、洞见、资源） | 展示额外好处    |
+| 跟进 2 | 同类公司的社会证明 / 案例研究             | 建立可信度          |
+| 跟进 3 | 新洞见、行业趋势或相关资源          | 展示专业      |
+| 跟进 4 | 分手信：承认沉默，留一扇门             | 触发损失厌恶      |
 
-Add only **one new value proposition per email** (SalesBread). This naturally forces different angles.
+每封邮件只加**一个新价值主张**（SalesBread）。这会自然逼出不同角度。
 
-## The Breakup Email
+## 分手邮件
 
-Leverages loss aversion — removing pressure while creating scarcity through withdrawal. Close.com reports **10–15% response rates** from breakup emails with cold prospects.
+利用损失厌恶：通过撤出在减压的同时制造稀缺。Close.com 报告分手邮件对冷潜客有 **10–15% 的响应率**。
 
-**Structure:**
+**结构：**
 
-1. Acknowledge you've reached out multiple times
-2. Validate their potential lack of interest
-3. State this is your final email for now
-4. Leave the door open
+1. 承认你已经联系多次
+2. 体谅他们可能确实没兴趣
+3. 说明这是你当前阶段的最后一封
+4. 留一扇门
 
-**Example:**
+**示例：**
 
-> I haven't heard back, so I'll assume now isn't the right time. Before I close the loop: [1-sentence insight or resource]. If that changes things, feel free to reply. Otherwise, no hard feelings. Good luck with [their goal].
+> 一直没收到回复，我就当现在不是合适的时机。收尾前留一句话：[1-sentence insight or resource]。如果这改变了局面，欢迎回复。否则，没有芥蒂。祝 [their goal] 顺利。
 
-**1-2-3 Format** (reduces friction to near zero):
+**1-2-3 格式**（把摩擦降到近零）：
 
-> Since I haven't heard back, I'll keep it simple. Reply with a number:
+> 一直没等到回复，那就简单点。回复一个数字即可：
 >
-> 1: Interested, let's talk
-> 2: Not now, check back in 3 months
-> 3: Not interested, please stop
+> 1: 有兴趣，聊聊
+> 2: 现在不要，3 个月后再来
+> 3: 没兴趣，请停止
 
-**Critical rule:** If you send a breakup email, honor it. Do not contact the prospect again.
+**铁律：**发了分手邮件就要兑现。不再联系这位潜客。
 
-## Phrases That Kill Response Rates
+## 扼杀响应率的话术
 
-- "I never heard back" → **12% drop** in meeting booking rate (Gong)
-- "Just checking in" → Zero value, signals laziness
-- "Bumping this to the top of your inbox" → Presumptuous
-- "Did you see my last email?" → Guilt-tripping
-- "Following up on my previous message" → Generic, adds nothing
+- "I never heard back"：约会议率**下降 12%**（Gong）
+- "Just checking in"：零价值，显得敷衍
+- "Bumping this to the top of your inbox"：自作主张
+- "Did you see my last email?"：道德绑架
+- "Following up on my previous message"：空洞，毫无增益
 
-## CTA Adjustment by Seniority
+## 按层级调整 CTA
 
-**Executives/founders:** Ultra-low-effort, curiosity-driven. "Curious?" or "Worth 2 min?"
+**高管/创始人：**极低投入、勾好奇心。"Curious?" 或 "Worth 2 min?"
 
-**Mid-level managers:** More specific value. "Want me to walk through how [Company] saved 15 hours/week?"
+**中层管理者：**价值更具体。"要不要我讲讲 [Company] 每周省下 15 小时是怎么做到的？"
 
-Higher in the org chart = less friction you can ask for.
+组织架构越高，能要求的摩擦越少。

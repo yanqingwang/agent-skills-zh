@@ -1,100 +1,104 @@
-# Partnership Types
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/co-marketing/references/partnership-types.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Adapted from Corey Haines's *Founding Marketing*, Ch. 11 — "Partnerships tap into existing audiences." The fastest way to reach customers is through companies that already have their attention.
+# 合作伙伴关系类型
 
-**Flagship proof:** HubSpot's partner program = **$100M ARR, ~40% of revenue, 3,400+ partners.** Mature partner programs average **~28% of revenue and 2× the growth** of companies without them.
+改编自 Corey Haines 的 *Founding Marketing* 第 11 章："合作伙伴关系接入现成受众"。触达客户最快的路径，是经由那些已经抓住他们注意力的公司。
 
-Co-marketing (in the SKILL.md) is one of five partnership types. Use this reference to place a given partnership in the right category and pick the right play. The types stack — most companies run several at once as the program matures.
+**旗舰证据：** HubSpot 的合作伙伴计划 = **$100M ARR，约占收入的 40%，3,400+ 合作伙伴。** 成熟的合作伙伴计划平均贡献 **约 28% 的收入，增速是未运营该计划的公司的 2 倍**。
 
-| Type | What it is | Primary payoff |
+联合营销（在 SKILL.md 中）是五种合作类型之一。用本参考文档把一个具体合作归入正确的类别、选对打法。这些类型会叠加：随着计划成熟，多数公司同时跑好几种。
+
+| 类型 | 它是什么 | 主要回报 |
 |------|-----------|----------------|
-| **Integrations** | Your product connects to another's | Retention, expansion, marketplace discovery |
-| **Reseller** | Partners sell your product for you | Distribution + services revenue |
-| **Affiliate** | Promoters earn commission on referrals | Low-risk, pay-for-performance reach |
-| **Co-marketing** | Joint content/campaigns with a peer | Borrowed audience, brand halo |
-| **App Store / Marketplace** | List inside a platform's ecosystem | Built-in distribution, effective CAC |
+| **集成（Integrations）** | 你的产品连接到对方的产品 | 留存、扩张、应用市场曝光 |
+| **分销（Reseller）** | 合作伙伴替你卖你的产品 | 分发渠道 + 服务收入 |
+| **联盟（Affiliate）** | 推广者按转化拿佣金 | 低风险、按效果付费的触达 |
+| **联合营销（Co-marketing）** | 与对等同行做联合内容/活动 | 借用受众、品牌光环 |
+| **应用商店 / 应用市场** | 进入某个平台生态上架 | 内置分发、更低的有效 CAC |
 
 ---
 
-## 1. Integrations
+## 1. 集成（Integrations）
 
-Integrations are the foundation — they make you sticky, unlock expansion, and earn a spot in the partner's marketplace.
+集成是地基：它让你变得粘手，打开扩张空间，还换来在对方应用市场的一席之地。
 
-**Four ways to build:**
-- **Native** — you build and maintain a direct connection. Best UX, highest cost.
-- **Platform via Zapier/Make** — ride an iPaaS to cover the long tail without building each one.
-- **API-first** — expose a clean public API and let partners build toward you.
-- **Embedded** — your product runs inside theirs (widget, SDK, iframe).
+**四种构建方式：**
+- **原生（Native）**：自己构建并维护直连。体验最好，成本最高。
+- **经由 Zapier/Make 平台**：借 iPaaS 覆盖长尾，不必逐个自建。
+- **API 优先**：公开一套干净的 API，让合作伙伴向你靠拢。
+- **嵌入式（Embedded）**：你的产品跑在对方产品里（widget、SDK、iframe）。
 
-**Calendly's staged integration ladder** — build integrations in order of buyer intent:
-1. **Calendar** (Google/Outlook) — table stakes, required to function.
-2. **Sales stack** (CRM, dialers, Salesforce/HubSpot) — where revenue teams live.
-3. **Marketing stack** (forms, ESP, automation) — top-of-funnel capture.
+**Calendly 的分阶段集成阶梯**：按买家意向的强弱顺序建集成：
+1. **日历**（Google/Outlook）：标配，没它没法用。
+2. **销售栈**（CRM、外呼工具、Salesforce/HubSpot）：收入团队的日常所在。
+3. **营销栈**（表单、ESP、自动化）：漏斗顶部的捕获。
 
-Each rung deepens the account and widens who inside the company depends on you.
+每上一级，账户就扎得更深，公司内部依赖你的人也更多。
 
-**Marketplace strategy + ASO.** Getting listed isn't enough — apps compete for placement. Treat a marketplace like an app store: optimize the listing (title, keywords, screenshots, reviews, category) the same way you'd do App Store Optimization. Shopify App Store and Salesforce AppExchange are discovery engines; ranking well there is a channel, not an afterthought.
+**应用市场策略 + ASO。** 上架只是开始：应用之间在争排位。把应用市场当作应用商店对待：像做 App Store Optimization 一样优化 listing（标题、关键词、截图、评论、类目）。Shopify App Store 和 Salesforce AppExchange 是发现引擎；在那里排到靠前位置是一条渠道，不是可有可无的点缀。
 
-**Why it matters:** **83% of enterprise buyers cite integrations as a purchase-decision factor.** Missing an integration a prospect needs can lose the deal outright.
-
----
-
-## 2. Reseller programs
-
-Turn other companies into a sales force. Partners resell your product and layer their own services on top.
-
-**Economics:** resellers typically earn **20–40% of LTV** on the software, plus **2–3× that amount in services** (implementation, training, retainers) they sell around it. The services margin is what makes the partner care.
-
-**HubSpot's agency playbook (Peter Caputa).** HubSpot turned marketing agencies into resellers by making the agency's own business better: give them a product to sell, certifications to differentiate on, and a co-selling motion. Agencies became a durable, compounding distribution channel — the engine behind the $100M ARR partner program.
-
-**Partner enablement is the work.** A reseller program lives or dies on enablement: onboarding, certification, sales collateral, deal registration, co-selling support, and a partner portal. Signing partners is easy; getting them to actually sell requires you to train and equip them.
+**为什么重要：** **83% 的企业买家把集成列为采购决策因素。** 缺一个潜在客户必需的集成，可能直接丢掉这单。
 
 ---
 
-## 3. Affiliate programs
+## 2. 分销商（Reseller）计划
 
-Pay-for-performance reach. Affiliates promote you and earn commission on conversions — low downside, since you pay only on results.
+把别的公司变成你的销售队伍。合作伙伴转售你的产品，并在其上叠加自己的服务。
 
-**Proof points:**
-- **ConvertKit + Pat Flynn** — a single trusted creator can become a top-of-funnel channel on their own.
-- **Demio** — **50% commissions** to make the program worth a promoter's real effort.
-- **Cometly** — **$251K in a single launch day**, driven by one top affiliate plus **Rewardful** for tracking and payouts.
+**经济账：** 分销商通常在软件上拿 **LTV 的 20-40%**，再围绕它卖出 **2-3 倍于此金额的服务**（实施、培训、retainer）。服务毛利才是让合作伙伴在乎的原因。
 
-**The 20/80 affiliate power law.** ~20% of affiliates drive ~80% of revenue. Don't spread effort evenly across a long tail — **identify super-promoters and invest disproportionately** in them (higher rates, custom assets, early access, direct relationship).
+**HubSpot 的代理商打法（Peter Caputa）。** HubSpot 把营销代理商变成分销商的方法，是让代理商自己的生意更好做：给他们一个可以卖的产品、可以拿来差异化的认证、一套共同销售的动作。代理商由此成为持久、复利的分发渠道：$100M ARR 合作伙伴计划背后的引擎。
 
-**Buyout clauses.** For a super-promoter you want to lock in (or eventually replace with owned channel), a buyout clause lets you pay out future commissions as a lump sum — commonly **~12× the monthly commission**. It caps long-term liability and gives the affiliate a clean exit.
-
-> Affiliate mechanics — commission structures, cookie windows, fraud, tooling (Rewardful/Tolt/PartnerStack) — belong in the **referrals** skill. Keep affiliate work here at the partnership-strategy level: which promoters to recruit, how to tier them, when to buy out.
+**合作伙伴赋能（enablement）才是真正的工作。** 分销计划的成败取决于赋能：onboarding、认证、销售物料、商机报备（deal registration）、共同销售支持、合作伙伴门户。签下合作伙伴很容易；让他们真的卖起来，需要你去培训和武装他们。
 
 ---
 
-## 4. Co-marketing
+## 3. 联盟（Affiliate）计划
 
-Joint campaigns with a non-competing peer who shares your audience. Covered in depth in the main SKILL.md (campaign types, partner scoring, agreements). Two ideas from the chapter worth calling out:
+按效果付费的触达。联盟客推广你，按转化拿佣金：下行风险低，因为只为结果付钱。
 
-**Permissionless co-marketing (Notion's coined move) — the single most actionable idea in the chapter.** You don't need a signed partnership to ride a bigger brand. Notion built and published templates *for* Airbnb, Amazon, and Tesla — no permission, no contract — capturing search demand and brand halo from companies far larger than itself. **Build assets around brands your audience already loves; let the association do the work.**
+**证据点：**
+- **ConvertKit + Pat Flynn**：一个可信的创作者，自己就能成为一条漏斗顶部渠道。
+- **Demio**：**50% 佣金**，让这个计划配得上推广者的真投入。
+- **Cometly**：单个发布日 **$251K**，由一位头部联盟客驱动，用 **Rewardful** 做追踪与结算。
 
-**Content ecosystems.** Gong earned reach by showing up consistently on **SaaStr** (the audience it wanted, hosted by someone else) rather than only building its own. Pair with the lowest-friction swaps — **newsletter swaps** and cross-promotion — where each side keeps its own leads and simply exposes the other to its audience.
+**联盟客的 20/80 幂律。** 约 20% 的联盟客带来约 80% 的收入。不要把力气均匀撒在长尾上：**识别出超级推广者，对他们不成比例地投入**（更高费率、定制素材、抢先体验、直接关系）。
 
----
+**买断条款（Buyout clauses）。** 对你想锁定（或最终替换为自有渠道）的超级推广者，买断条款让你把未来的佣金折成一笔总付，常见做法是**约等于月佣金的 12 倍**。它封顶了长期负债，也给联盟客一个干净的退出。
 
-## 5. App Store / Marketplace
-
-List your product inside a platform's ecosystem and inherit its distribution.
-
-- **Grammarly's Chrome Web Store extension** took it from **0 to 10M users** — the store *was* the acquisition channel.
-- **Model marketplace fees from the actual contract.** Typical cuts run 15–30% (Apple: 15% for small businesses and for subscriptions after year one, 30% standard; see [Apple's Small Business Program](https://developer.apple.com/app-store/small-business-program/)), but rates depend on platform, region, and program. A fee charged on every renewal is a recurring distribution cost, not a one-time acquisition cost. Include it in contribution margin and cash payback, then add actual upfront acquisition costs separately. For example, a $100 monthly subscription with a $30 marketplace fee and $20 serving cost contributes $50 per month; a separate $300 acquisition cost takes six months to recover before churn or cash delays. Avoid counting the same fee in both CAC and recurring costs.
-- **Go all-in on one platform when it maps to your ICP.** Arrows built its entire GTM around **HubSpot** — deep integration, presence in the [HubSpot Marketplace](https://www.hubspot.com/technology-partner-case-studies/arrows), and co-selling — rather than spreading thin across many ecosystems.
-
-**When to choose this:** if a single platform owns your buyer's daily workflow, being *inside* it beats trying to pull users out to your own site.
+> 联盟机制（佣金结构、cookie 窗口、作弊、工具 Rewardful/Tolt/PartnerStack）属于 **referrals** skill。联盟相关内容在本文件只停留在伙伴关系战略层面：招募哪些推广者、如何分层、何时买断。
 
 ---
 
-## Choosing where to start
+## 4. 联合营销（Co-marketing）
 
-- **Retention/expansion problem** → Integrations first (and the marketplace listing that comes with them).
-- **Need distribution without headcount** → Affiliate (fast, pay-on-results) or Reseller (slower, higher-touch, services upside).
-- **Have content but no reach** → Co-marketing, starting with permissionless assets and newsletter swaps.
-- **A platform owns your buyer's workflow** → App Store / Marketplace, all-in.
+与共享你受众的非竞争同行做联合活动。主 SKILL.md 已深入覆盖（活动类型、伙伴打分、协议）。这一章里有两个想法值得单独点名：
 
-Programs compound: integrations create marketplace presence, marketplace presence attracts resellers, resellers and affiliates create the case studies that fuel co-marketing.
+**无许可联合营销（Notion 自创的打法）：本章可执行性最强的一个想法。** 你不需要一纸协议也能借大品牌的光。Notion *为* Airbnb、Amazon 和 Tesla 构建并发布了模板：没有许可、没有合同，就从这些比它大得多的公司身上接住了搜索需求和品牌光环。**围绕你受众已经喜欢的品牌构建资产；让这种关联替你干活。**
+
+**内容生态。** Gong 靠在 **SaaStr** 上持续出现（那是它想要的受众，由别人主持）赢得了触达，而不是只经营自己的渠道。再配上最低摩擦的互换（**newsletter 互换**和交叉推广）：双方各自保留自己的 leads，只是把对方暴露给自己的受众。
+
+---
+
+## 5. 应用商店 / 应用市场
+
+把产品上架到平台生态里，继承它的分发。
+
+- **Grammarly 的 Chrome Web Store 扩展**从 **0 做到 1000 万用户**：这个商店*就是*获客渠道。
+- **按实际合同对市场费用建模。** 常见抽成为 15-30%（Apple：小型企业与订阅满一年后 15%，标准 30%；见 [Apple's Small Business Program](https://developer.apple.com/app-store/small-business-program/)），但费率取决于平台、地区和计划。对每次续费都抽的费用是经常性分发成本，不是一次性获客成本。把它计入边际贡献和现金回款周期，再把实际的前置获客成本单独加上。例如：$100 月订阅，$30 市场费、$20 服务成本，每月贡献 $50；另外 $300 的获客成本需要六个月回收（在流失或现金延迟之前）。不要把同一笔费用既算进 CAC 又算进经常性成本。
+- **当某个平台正好命中你的 ICP 时，就 all-in。** Arrows 把整个 GTM 押在 **HubSpot** 上：深度集成、进驻 [HubSpot Marketplace](https://www.hubspot.com/technology-partner-case-studies/arrows)、共同销售，而不是撒在多个生态里浅尝辄止。
+
+**何时选这条路：** 如果某个平台垄断了你买家的日常工作流，*待在里面*比把用户拽到你自己的网站上更有效。
+
+---
+
+## 从哪里起步
+
+- **留存/扩张问题**：先做集成（以及随之而来的市场上架）。
+- **要分发但不想加人手**：联盟（快、按结果付费）或分销商（慢、更高接触、有服务上行空间）。
+- **有内容没触达**：联合营销，从无许可资产和 newsletter 互换开始。
+- **某个平台垄断了买家工作流**：应用商店 / 应用市场，all-in。
+
+计划会复利：集成带来市场上架，市场上架吸引分销商，分销商和联盟客产出案例，案例再喂给联合营销。

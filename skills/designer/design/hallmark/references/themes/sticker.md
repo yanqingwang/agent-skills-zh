@@ -12,11 +12,15 @@ photo: natural vib=15 con=5
 pictured: Bento Grid, Stage hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/sticker.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Sticker
 
-A print shop's material: a warm off-white sheet, warm black ink, Bowlby One SC capitals over Sofia Sans, hot pink and lime fills, every raised surface edged in a thick white die-cut on a hard offset shadow. It feels loud and handmade because the depth is printed and the colours are fills, never tints. It is not a soft pastel shop with blurred shadows, and not a cartoon toy page.
+印刷店的物料：暖调米白纸、暖调黑墨，Bowlby One SC 大写压在 Sofia Sans 之上，热粉与青柠色填充，每一块凸起的表面都以厚白模切边收口、压在硬偏移阴影上。它响亮而手工感十足，因为深度是印出来的，颜色都是实色填充，绝不做淡色调。它不是阴影柔和的粉彩小店，也不是卡通玩具页。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -33,59 +37,59 @@ A print shop's material: a warm off-white sheet, warm black ink, Bowlby One SC c
 }
 ```
 
-Two colourways, stated in the stamp (`sticker: sheet`).
+两种配色，写入 stamp（印记）：`sticker: sheet`。
 
-| Colourway | Paper, ink, fills |
+| 配色 | 纸、墨、填充 |
 | --- | --- |
-| `sheet` (default) | the block above |
-| `vinyl` | ground `oklch(21% 0.011 81)`, cards `oklch(25.5% 0.013 72)`, ink `oklch(95.7% 0.013 82)`, rule `oklch(33% 0.016 75)`; pink and lime unchanged, the borders still white |
+| `sheet`（默认） | 上面的代码块 |
+| `vinyl` | 底 `oklch(21% 0.011 81)`，卡片 `oklch(25.5% 0.013 72)`，墨 `oklch(95.7% 0.013 82)`，横线 `oklch(33% 0.016 75)`；粉与青柠不变，白边保持白色 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Bowlby One SC 400, capitals only by design, `--tracking-display`, line-height 1.02. It is wide and heavy, so the `h1` caps at 4.5rem and section heads at 3.25rem. Never a paragraph.
-- **Figures:** prices, counts and step numbers set in Bowlby, and a lone figure on a fill may run to 12rem; it is the loudest thing the theme owns, so one a screen.
-- **Body:** Sofia Sans 400 and 600, line-height 1.5, `tabular-nums`.
-- **Labels, tags, captions, table heads:** Sofia Sans 700 a step smaller, sentence case, untracked, `--color-muted`. No third face: the outlier token is Sofia Sans.
+- **展示字体：**Bowlby One SC 400，设计上只有大写，`--tracking-display`，行高 1.02。它宽而重，所以 `h1` 封顶 4.5rem，区块标题 3.25rem。绝不用它排段落。
+- **数字：**价格、计数与步骤编号用 Bowlby，填充面上的孤立大数字可放到 12rem；它是主题最响的东西，所以每屏只允许一个。
+- **正文：**Sofia Sans 400 与 600，行高 1.5，`tabular-nums`。
+- **标签、标记、图注、表头：**Sofia Sans 700，小一号，句首大写，不加字距，用 `--color-muted`。没有第三种字体：outlier token 也是 Sofia Sans。
 
-## Surfaces
+## 表面（Surfaces）
 
-- The die-cut: a raised surface (a card, a fill that holds a fact, a tag, a photograph, the primary control) carries a 6px `--color-white` border and `--shadow-card`, a hard offset with no blur. Surfaces that are the sheet itself (a table, a band) stay borderless, parted by the dashed rule.
-- A raised surface may tilt between -6 and 6 degrees, never all one way; tables and inputs stay square.
-- Radii: `--radius-card` on cards, 22px on photographs, pills on controls and tags; a `--rule-bar` dashed `--color-rule` is the divider and the edge of a drop zone.
-- Bands: a `--color-paper-2` band, a `--color-ink` band with paper type, or one lime field with ink type; two a page at most.
-- Photographs: the product in use or held to the lens, close, colour kept loud; 22px radius inside the white die-cut, one a screen tilted 3 degrees or less. A tag may overlap a corner with a fact; type never sits on a picture.
-- No texture, no gradient behind type: depth is the hard offset alone.
+- 模切：凸起的表面（卡片、承载事实的填充块、标记、照片、主控件）带 6px `--color-white` 边框与 `--shadow-card`，即无模糊的硬偏移阴影。本身就是纸面的表面（表格、色带）保持无边框，由虚线分隔。
+- 凸起表面可在 -6 到 6 度之间倾斜，绝不全部倒向一边；表格与输入框保持端正。
+- 圆角：卡片用 `--radius-card`，照片 22px，控件与标记用胶囊；`--rule-bar` 粗细的 `--color-rule` 虚线用作分隔线与投放区边缘。
+- 色带：`--color-paper-2` 色带、墨色色带配纸色文字，或一块青柠色场配墨色文字；每页至多两条。
+- 照片：产品在使用中或被举到镜头前，近拍，颜色保持浓烈；白色模切边内 22px 圆角，每屏一张，倾斜不超过 3 度。标记可以压住一角并带一个事实；文字绝不压在照片上。
+- 无纹理，文字背后无渐变：深度只靠硬偏移阴影。
 
-## Range
+## 版式（Range）
 
-- **Facts as die-cut fills:** a Bento whose tiles are pink, lime, ink and white fills, each one fact in Bowlby with one Sofia line, edged white on the hard shadow and tilted a degree or two in alternate directions; the lead tile carries the lone figure.
-- **Steps as stuck-down cards:** three or four `<ol>` cards in a row, the numeral in Bowlby on a lime disc, the cards tilted against each other and overlapping the dashed rule they sit on.
-- **A working control on the lime field:** a stepper, a running total in Bowlby and a bar that fills toward a threshold the prompt gave, on a white die-cut card beside a dashed price ladder.
-- **A statement in Bowlby on the ink band**, ten columns wide, with one pink or lime tag stuck across its corner carrying the fact it argues.
+- **事实作模切填充：**一个 Bento 网格，其瓦片是粉、青柠、墨与白的填充块，每块承载一个事实，Bowlby 大字配一行 Sofia，白边压在硬阴影上，交替方向倾斜一两度；头块承载那个孤立大数字。
+- **步骤作贴住的卡片：**三四个 `<ol>` 卡片排成一行，数字用 Bowlby 放在青柠圆片上，卡片彼此反向倾斜，压住它们下方那条虚线。
+- **青柠色场上的可用控件：**步进器、Bowlby 的累计金额，以及一条朝提示词给出的门槛填充的进度条，放在白色模切卡片上，旁边是虚线价格阶梯。
+- **墨色色带上用 Bowlby 排陈述**，横跨十列，一枚粉或青柠标记斜贴在一角，写着它所主张的事实。
 
-## Controls
+## 控件（Controls）
 
-- The control pair: a pink pill with a 5px white ring and `--shadow-card`, beside a ghost pill with an inset 2px ink border. Chips are pills with a 2px inset rule, the chosen one ink-filled.
-- Links are ink with a pink underline on hover; inputs take a 2px ink edge at `--radius-card`.
-- Colour in thirds: pink for the fills that act (the primary, a price), lime for the fills that mark (a tag, a count, a highlight), ink for the type.
+- 控件对：粉色胶囊带 5px 白环与 `--shadow-card`，旁边是幽灵胶囊，带 inset 2px 墨色边框。chip 是带 2px 内嵌线的胶囊，选中者墨色填充。
+- 链接用墨色，悬停出现粉色下划线；输入框用 2px 墨色边缘，圆角 `--radius-card`。
+- 颜色三等分工：粉给起动作的填充（主按钮、价格），青柠给起标记作用的填充（标记、计数、高亮），墨给文字。
 
-## Motion
+## 动效（Motion）
 
-Sticker physics: a hover lifts a clickable raised surface 2px and turns it a degree; a press pushes it onto its shadow. `--dur-micro` on `--ease-out`, nothing on scroll.
+贴纸物理：悬停把可点击的凸起表面抬起 2px 并转一度；按下则把它压进阴影里。`--ease-out` 配 `--dur-micro`，滚动无动效。
 
-## Voice
+## 语气（Voice）
 
-Cheerful and exact: the price, the quantity, the size, the ship day. It sounds like the person at the cutter.
+快活而精确：价格、数量、尺寸、发货日。听起来像模切机旁那个人。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a soft blurred drop under a raised surface; the shadow is a hard offset or there is no shadow.
-- Never a die-cut border thinner than 4px, or in any colour but white.
-- Never pink text on the paper; pink is a fill with white on it.
-- Never a drawn sticker, mascot or doodle; the die-cut edges a real surface, a fact or a photograph, never a shape drawn to stand for a design.
-- Never a photograph that only stands near the subject (a bottle, a stapler, a pencil pot); without the product's own pictures, the fills carry the page.
+- 凸起表面下绝不用柔和模糊投影；要么硬偏移阴影，要么没有阴影。
+- 模切边绝不薄于 4px，也绝不用白色以外的颜色。
+- 纸面上绝不用粉色文字；粉是填充色，上面压白字。
+- 绝不手绘贴纸、吉祥物或涂鸦；模切收口的是真实表面、事实或照片，绝不是代替设计的图形。
+- 绝不用只在主体旁边摆拍的照片（一瓶东西、一台订书机、一个笔筒）；没有产品自己的照片时，靠填充块撑起页面。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Sofia+Sans:wght@400;600;700&display=swap" rel="stylesheet">

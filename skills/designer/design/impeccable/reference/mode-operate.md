@@ -1,21 +1,25 @@
-# Operate
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/mode-operate.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-`impeccable concept-seed --mode operate` prints the two sections below as its MODE RULES block. On an Operate surface the visitor came to get a job done, so the page is first a working product of its category and the world serves it.
+# Operate（操作）
 
-## Directions
+`impeccable concept-seed --mode operate` 把下面两节作为它的 MODE RULES 块打印。在 Operate 界面上，访客是来干活的，所以页面首先是一个能用的品类产品，世界为它服务。
 
-Someone who uses tools like this one should know where everything is before they notice the world. The world lends four things and only these: type, palette, density, and one signature move. It never supplies the layout, the navigation model, or the controls. Colour is part of the world's contribution, and it does real jobs: a committed palette for the shell (a coloured rail or header, a tinted ground), state colours, data series, selection, and the signature move. A grey screen with one accent colour is the category default without the category's polish, not restraint.
+## 方向
 
-Read every candidate, the assigned direction, and every challenger through that limit before you fuse or judge it. A world taken from a tool or instrument the audience operates (a terminal, a scope, a control panel, a cockpit) or from a fictional interface comes back as a costume of that tool on a working screen: take from it only what transfers as type, palette, density, and a signature move, or replace it from your list. When a catalog world's source is itself an interface language, the same limit holds: it lends type, density, palette, and one signature move, while navigation and controls stay the standard ones for the platform, web components on the web and native controls in an app.
+用这类工具的人，应该先知道每样东西在哪，然后才注意到世界。世界只借出四样东西：字体、色板、密度和一个签名动作。它绝不提供布局、导航模型或控件。颜色是世界贡献的一部分，而且干实事：壳层的贯彻色板（彩色侧栏或页头、着色的底面）、状态色、数据系列、选中态，以及签名动作。一块灰色屏幕加一个强调色，是丢了品类打磨的品类默认，不是克制。
 
-Write each direction's first viewport as the product's shell first: the navigation, the work areas and what each is for, the data the visitor reads first and its states, and then where the signature move lives. Expression may never obscure the task, state, or familiar affordance. Name the signature move concretely, so the comp and the build can find it: service health drawn as a transit map, a schedule set in a timetable's column rhythm. A direction whose world shows up only as a colour scheme has not found its move yet. When you weigh fused challengers, product clarity includes reading as a working product of this category.
+融合或评判之前，用这个限制去读每个候选、被指派的方向和每个挑战者。取自受众操作的某个工具或仪器（终端、示波器、控制面板、驾驶舱）或虚构界面的世界，会在一块能用的屏幕上变成那件工具的戏服：只取其中能转译为字体、色板、密度和一个签名动作的部分，其余从你的清单里替换。目录世界的来源本身就是一门界面语言时，同样的限制成立：它借出字体、密度、色板和一个签名动作，导航与控件仍是平台标准件，web 上是 web 组件，应用里是原生控件。
 
-## Comps
+把每个方向的首视口先写成产品壳层：导航、工作区及各自用途、访客最先读的数据及其状态，然后是签名动作住在哪里。表达永远不得遮住任务、状态或熟悉的可供性。把签名动作具体地叫出名字，让设计稿和构建都找得到它：把服务健康画成一张交通图，把日程排进时刻表的栏节奏。一个只在配色上露面的方向，还没找到自己的动作。掂量融合后的挑战者时，产品清晰度也包括读起来是不是这个品类里一件能用的产品。
 
-The comp is the product screen, in the direction's committed palette: its shell and navigation with a distinct area for each job and, where there is data, filters over what they scope and charts and tables with clear states. The world enters only through type, palette, density, and the one signature move; it never supplies the page's organisation, so a working screen never reads as a newspaper, a poster, or any other artifact of the world. Every control is a standard one the visitor already knows how to use, a web component on the web and the platform's native control in an app: buttons, tabs, inputs, selects, filters, tables with sortable headers, navigation that reads as navigation. Never a costume of the world's own interface: a terminal's function-key bar or command prompt, an instrument's bezel, ruled ledger paper standing in for a table. A comp an engineer could not build from the platform's standard components is a picture of the tool, not the tool. The finish bar is the best product in the category: an aligned grid, consistent spacing, a real type scale, and clear hierarchy. The signature move adds to a screen that is already that clean; it never stands in for it.
+## 设计稿
 
-Prompt with the screen's real content: the product name, realistic data with plausible values and units, real labels, and one state worth seeing (an alert, a degraded service, an empty filter result), never placeholder tiles. State colours (red for critical, amber for degraded) sit on top of the world's palette only where they carry meaning, and a headline number that moves over time shows its recent history, with the onset marked when something changed.
+设计稿就是产品屏幕，用该方向的贯彻色板：壳层与导航，每项工作有各自分明的区域；有数据时，过滤器盖住所辖范围，图表与表格状态分明。世界只经字体、色板、密度和那一个签名动作进入；它绝不提供页面的组织方式，于是一块能用的屏幕永远不会读成报纸、海报或世界的任何其他制品。每个控件都是访客已经会用的标准件，web 上是 web 组件，应用里是平台原生控件：按钮、标签页、输入框、下拉、过滤器、表头可排序的表格、读起来就是导航的导航。绝不用世界自身界面当戏服：终端的功能键栏或命令提示符、仪器的边框、顶替表格的账本横线纸。一张工程师无法用平台标准组件搭出来的设计稿，是那件工具的画像，不是工具。收尾标准是品类里最好的产品：对齐的网格、一致的间距、真实的字号阶梯、清晰的层级。签名动作加在已经这么干净的屏幕上；它从不顶替这份干净。
 
-Comps two and three vary the product's organisation, never its world coverage: the navigation model (side rail, top bar, command-first), how the work areas divide the screen, which data leads, the density, and where the signature move sits. Each must be recognisably different from the first at thumbnail size; a variant only its prompt can tell apart adds no choice. A variant that adds world material, texture, or ornament goes further in the wrong direction; on a working screen, more world is a costume.
+提示词用屏幕的真实内容：产品名、带可信数值与单位的真实数据、真实标签，以及一个值得一看的状态（一条告警、一个降级的服务、一次空过滤结果），绝不放占位方块。状态色（红为严重、黄为降级）只在承载意义时叠在世界色板之上；随时间变动的大数字要露出近况，事情发生变化的地方做出标记。
 
-Self-check every render: with the name covered, does it read as a product of its category, could the visitor do the task from it, and is it at least as clean as the category standard and more distinctive than it? If it reads as an artifact of the world first, regenerate with the shell and the work areas named region by region and the world held to its four contributions.
+第二、三张设计稿变的是产品的组织方式，不是世界覆盖度：导航模型（侧栏、顶栏、命令优先）、工作区怎么切分屏幕、哪个数据领先、密度、签名动作坐在哪。每张在缩略图尺寸下都要与第一张认得出差别；只有提示词能分辨的变体不增加选择。往变体里加世界素材、纹理或装饰，是在错误方向上走得更远；在能用的屏幕上，更多的世界就是戏服。
+
+每张渲染都自检：盖上名字，它读起来是不是这个品类的产品？访客能不能照着它完成任务？它至少和品类标准一样干净、且比它更有辨识度吗？如果它先读起来像世界的制品，就重新生成：逐区域点名壳层与工作区，把世界按住，只给四项贡献。

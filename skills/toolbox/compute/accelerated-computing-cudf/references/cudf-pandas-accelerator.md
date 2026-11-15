@@ -1,29 +1,33 @@
-# cudf.pandas Accelerator — Deep Dive
+> **中文汉化版** · 上游：[NVIDIA/skills](https://github.com/NVIDIA/skills) · 原文件：`skills/accelerated-computing-cudf/references/cudf-pandas-accelerator.md` · License: CC-BY-4.0 AND Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## How It Works
+# cudf.pandas 加速器：深入解析
 
-`cudf.pandas` replaces the pandas module with a proxy that routes operations to cuDF when supported, falling back to standard pandas on CPU silently for unsupported operations. The fallback is transparent — code continues to work correctly, but unsupported ops run on CPU.
+## 工作原理
 
-## Activation Methods
+`cudf.pandas` 用一个代理替换 pandas 模块：支持的运算被路由到 cuDF，不支持的运算则静默回退到 CPU 上的标准 pandas。回退是透明的：代码仍能正确运行，只是不支持的算子跑在 CPU 上。
 
-| Method | Use Case |
+## 激活方式
+
+| 方式 | 使用场景 |
 |---|---|
-| `%load_ext cudf.pandas` | Jupyter/IPython notebooks |
-| `python -m cudf.pandas script.py` | CLI script execution |
-| `import cudf.pandas; cudf.pandas.install()` | Programmatic, multiprocessing |
+| `%load_ext cudf.pandas` | Jupyter/IPython notebook |
+| `python -m cudf.pandas script.py` | CLI 脚本执行 |
+| `import cudf.pandas; cudf.pandas.install()` | 编程式调用、multiprocessing |
 
-**Critical**: Activation must happen BEFORE any pandas import, direct or transitive. If you're using IPython and pandas was already imported in the kernel, restart and run activation first. Direct usage of `cudf.pandas.install()` in a script cannot be undone and the script must be restarted.
+**关键**：激活必须在任何 pandas import 之前完成，直接和间接 import 都算。如果你在用 IPython 而 kernel 里已经 import 过 pandas，请重启并先执行激活。脚本里直接使用 `cudf.pandas.install()` 无法撤销，必须重启脚本。
 
-## Profiling for GPU vs CPU Ops
+## GPU 与 CPU 算子的性能分析
 
-### Cell-Level Profiling (Jupyter)
+### 单元级性能分析（Jupyter）
 
 ```python
 %load_ext cudf.pandas
 import pandas as pd
 ```
 
-Run the profiler magic at the start of a separate cell:
+在单独一个 cell 的开头运行 profiler magic：
 
 ```python
 %%cudf.pandas.profile
@@ -32,9 +36,9 @@ result = df.groupby("category")["amount"].sum()
 df.merge(lookup, on="id")
 ```
 
-Output shows each operation's execution path (GPU or CPU) and time.
+输出会显示每个运算的执行路径（GPU 还是 CPU）与耗时。
 
-### Line-Level Profiling
+### 行级性能分析
 
 ```python
 %%cudf.pandas.line_profile
@@ -43,17 +47,17 @@ result = df.groupby("a")["b"].sum()    # shows GPU time
 df.apply(lambda x: x + 1, axis=1)
 ```
 
-### CLI Profiling
+### CLI 性能分析
 
 ```bash
 python -m cudf.pandas --profile my_script.py
 ```
 
-### Detecting Silent Fallbacks
+### 检测静默回退
 
-The profiling tools are also a convenient way to detect silent fallback. If the profiles show tasks running on the CPU unexpectedly, you may be hitting unsupported GPU methods (limitations are discussed in depth in the api-patterns.md reference file). Try reproducing with raw cudf code without cudf.pandas to verify.
+性能分析工具也是检测静默回退的便捷手段。如果 profile 显示任务意外跑在 CPU 上，你可能撞上了不支持的 GPU 方法（相关局限在 api-patterns.md 参考文件中有深入讨论）。可以试着用不带 cudf.pandas 的原生 cudf 代码复现来验证。
 
-## Verifying GPU Is Actually Used
+## 验证确实用上了 GPU
 
 ```python
 # Method 1: Run nvidia-smi during execution
@@ -71,10 +75,9 @@ with Profiler() as profiler:
 profiler.print_per_function_stats()
 ```
 
-Low sampled GPU utilization alone does not prove fallback: short GPU operations
-can be missed. Diagnose with `%%cudf.pandas.profile` or `Profiler`.
+仅凭采样的 GPU 利用率偏低不能证明发生了回退：短暂的 GPU 运算可能没被采到。请用 `%%cudf.pandas.profile` 或 `Profiler` 来诊断。
 
-## multiprocessing Support
+## multiprocessing 支持
 
 ```python
 # Top-level activation also runs when spawned workers import this module.
@@ -93,18 +96,18 @@ if __name__ == "__main__":
         results = pool.map(process_chunk, file_list)
 ```
 
-## Limitations
+## 局限
 
-- **Usage of the NumPy C API**: Many projects have custom extension modules that interface with pandas dataframes via the NumPy C API for interacting with individual pandas columns. That will never work with cudf.pandas.
-- **Subclassed DataFrames**: code that subclasses `pd.DataFrame` may not work with cudf.pandas proxy
-- **Private pandas APIs** (`pd._libs.*`, etc.): not supported
-- **In-place operations with external code**: if third-party code holds references to pandas internals, proxy may not intercept correctly
-- **cudf.pandas does not speed up Python-level loops**: vectorize first, then accelerate
+- **使用 NumPy C API**：许多项目带有自定义扩展模块，通过 NumPy C API 与 pandas dataframe 交互、操作单个 pandas 列。这类代码在 cudf.pandas 下永远无法工作。
+- **子类化的 DataFrame**：继承 `pd.DataFrame` 的代码可能无法与 cudf.pandas 代理配合工作
+- **pandas 私有 API**（`pd._libs.*` 等）：不支持
+- **与外部代码进行原地操作**：如果第三方代码持有对 pandas 内部对象的引用，代理可能无法正确拦截
+- **cudf.pandas 不会加速 Python 层循环**：先向量化，再加速
 
-## When to Move to Explicit cuDF
+## 何时迁移到显式 cuDF
 
-Move from cudf.pandas to explicit cuDF when:
-1. Profile shows >30% CPU fallback rate on hot paths
-2. You need cuDF-specific features (e.g., `cudf.set_option("spill", True)`)
-3. You need explicit control over dtype casting (float32 optimization)
-4. You're building a cuDF-first library, not accelerating existing pandas code
+出现以下情况时，从 cudf.pandas 迁移到显式 cuDF：
+1. Profile 显示热路径上 CPU 回退率超过 30%
+2. 你需要 cuDF 专属特性（例如 `cudf.set_option("spill", True)`）
+3. 你需要对 dtype 转换做显式控制（float32 优化）
+4. 你在构建 cuDF 优先的库，而不是加速现有 pandas 代码

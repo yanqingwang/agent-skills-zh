@@ -1,55 +1,59 @@
-# Cobalt Grid Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/cobalt-grid/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Cobalt Grid 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/cobalt-grid/design.md`
-- Preview card: `bold-template-pack/templates/cobalt-grid/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/cobalt-grid/design.md`
+- 预览卡：`bold-template-pack/templates/cobalt-grid/preview.md`
 
-- Slug: `cobalt-grid`
-- Tagline: Electric cobalt serifs on a graph-paper canvas, anchored by stair-stepped pixel-glitch decorations and slim hairline rules.
-- Mood: editorial, design-research, studious, modernist, tech-print, monochrome
-- Tone: considered, literary, studious, quietly-modern, editorial
-- Formality: high
-- Density: medium
-- Scheme: light
-- Best for: Anything that should feel like a quietly serious design / research bulletin, art publication, or curated trend report. Strong for studio annuals, agency capabilities decks, design-research publications, architecture / art / academic decks, and any deck wanting one strict accent colour and a printed-ledger calmness rather than corporate polish.
-- Avoid for: Decks that need warmth, multi-colour energy, or a casual / playful voice — the strict cobalt + cream + grid palette is intentionally austere.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`cobalt-grid`
+- Tagline：图纸画布上的电光钴蓝衬线，以阶梯式像素故障装饰与纤细发丝线锚定。
+- Mood：editorial、design-research、studious、modernist、tech-print、monochrome
+- Tone：considered、literary、studious、quietly-modern、editorial
+- Formality：high
+- Density：medium
+- Scheme：light
+- 适合：一切应当像一份安静严肃的设计/研究简报、艺术出版物或精选趋势报告的内容。特别适合工作室年报、代理商能力介绍、设计研究出版物、建筑/艺术/学术演示，以及任何想要单一严格点缀色与印刷账本式沉静、而非企业光鲜感的演示文稿。
+- 避免：需要温暖感、多彩能量或随性/俏皮语气的演示文稿：严格的钴蓝 + 米白 + 网格配色刻意保持清冷克制。
 
-A Japanese-magazine trend-report system built on warm cream paper, electric cobalt ink, and a graph-paper grid that lives permanently behind every slide. Newsreader serif headlines tower at 18vh while DM Mono carries chrome and ticker text. The signature decoration is a pixel-glitch column — vertical scanlines stair-stepped down the right edge of declarative slides — paired with QR-style 8×8 grid patches. The cultural reference is WIRED Japan, Shift magazine, and architectural trend reports printed in two-color risograph: cream + one cobalt.
+## 视觉速览
 
-Cobalt Grid is a two-color trend-report editorial system built on three immovable foundations: a warm cream paper canvas ({colors.paper}), an electric cobalt ink ({colors.ink}), and a permanent graph-paper grid that sits behind every slide. The grid is not optional decoration — it is rendered via a ::before pseudo on every .stage and cannot be turned off. The aesthetic is "two-color risograph monograph": cream + cobalt only, with the grid lending the entire deck the feel of architectural tracing paper or a Japanese trend report.
+一套日系杂志趋势报告系统，建立在暖米白纸张、电光钴蓝油墨与永久存在于每页幻灯片背后的图纸网格之上。Newsreader 衬线标题以 18vh 的高度耸立，DM Mono 负责界面装饰与跑马灯文字。招牌装饰是一条像素故障列：竖直扫描线沿陈述式幻灯片的右缘阶梯式下行，并与二维码风格的 8×8 网格贴片搭配。文化参照是 WIRED Japan、Shift 杂志，以及用双色孔版印刷（米白 + 一种钴蓝）印制的建筑趋势报告。
 
-## Preview Ingredients
+Cobalt Grid 是一套双色趋势报告编辑系统，建立在三块不可动摇的基石上：暖米白纸张画布（{colors.paper}）、电光钴蓝油墨（{colors.ink}），以及永久位于每页幻灯片背后的图纸网格。网格不是可选装饰：它通过每个 .stage 上的 ::before 伪元素渲染，无法关闭。美学是"双色孔版印刷专著"：只有米白 + 钴蓝，网格让整套演示文稿带上建筑描图纸或日系趋势报告的质感。
 
-- Palette: paper #F0EBDE; paper-2 #E6E0CE; ink #1F2BE0; ink-soft #5560E5
-- Typography: Newsreader; Hanken Grotesk; DM Mono
-- Signature move: The 1.5px cobalt hairline frame (top and bottom of every slide).
-- Signature move: 1.5px cobalt topbar rule under section headers.
-- Signature move: 1px faint-cobalt row dividers between table or index entries.
-- Signature move: The 10%-opacity graph paper grid behind everything.
-- Signature move: The pixel-glitch and QR-block decorative SVG patches as compositional accents.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：paper #F0EBDE; paper-2 #E6E0CE; ink #1F2BE0; ink-soft #5560E5
+- Typography：Newsreader; Hanken Grotesk; DM Mono
+- Signature move：1.5px 钴蓝发丝线边框（每页幻灯片的顶部与底部）。
+- Signature move：分节标题下方 1.5px 钴蓝顶栏横线。
+- Signature move：表格或索引条目之间 1px 淡钴蓝行分隔线。
+- Signature move：置于一切内容背后的 10% 不透明度图纸网格。
+- Signature move：像素故障与二维码块装饰 SVG 贴片，作为构图点缀。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

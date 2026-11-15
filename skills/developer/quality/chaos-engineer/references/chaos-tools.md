@@ -1,6 +1,10 @@
-# Chaos Engineering Tools & Automation
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/chaos-engineer/references/chaos-tools.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Chaos Monkey (Netflix)
+# 混沌工程工具与自动化
+
+## Chaos Monkey（Netflix）
 
 ```python
 # Chaos Monkey configuration for Spinnaker
@@ -69,7 +73,7 @@ echo "$INSTANCES" | tr ' ' '\n' | shuf | head -n $TO_KILL | while read instance;
 done
 ```
 
-## Gremlin Integration
+## Gremlin 集成
 
 ```python
 import requests
@@ -206,7 +210,7 @@ gremlin.create_network_attack(
 )
 ```
 
-## CI/CD Integration
+## CI/CD 集成
 
 ```yaml
 # GitHub Actions workflow for chaos testing
@@ -290,7 +294,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 ```
 
-## Jenkins Pipeline
+## Jenkins 流水线
 
 ```groovy
 // Jenkinsfile for chaos testing
@@ -434,7 +438,7 @@ spec:
 }
 ```
 
-## Continuous Chaos Dashboard
+## 持续混沌仪表盘
 
 ```python
 # Flask app for chaos monitoring dashboard
@@ -499,13 +503,13 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 ```
 
-## Quick Reference
+## 速查表
 
-| Tool | Use Case | Integration |
+| 工具 | 使用场景 | 集成方式 |
 |------|----------|-------------|
-| Chaos Monkey | Random instance termination | Spinnaker/AWS ASG |
-| Gremlin | SaaS chaos platform | API/Web UI |
-| Litmus | Kubernetes chaos | Kubectl/Helm |
-| Chaos Mesh | Advanced K8s chaos | CRDs/Dashboard |
-| Toxiproxy | Network proxy chaos | Docker/API |
-| Pumba | Container chaos | Docker CLI |
+| Chaos Monkey | 随机实例终止 | Spinnaker/AWS ASG |
+| Gremlin | SaaS 混沌平台 | API/Web UI |
+| Litmus | Kubernetes 混沌 | Kubectl/Helm |
+| Chaos Mesh | 高级 K8s 混沌 | CRDs/Dashboard |
+| Toxiproxy | 网络代理混沌 | Docker/API |
+| Pumba | 容器混沌 | Docker CLI |

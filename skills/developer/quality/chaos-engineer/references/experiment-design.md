@@ -1,6 +1,10 @@
-# Chaos Experiment Design
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/chaos-engineer/references/experiment-design.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Experiment Template
+# 混沌实验设计
+
+## 实验模板
 
 ```yaml
 name: "Database Connection Pool Exhaustion"
@@ -51,7 +55,7 @@ success_criteria:
   - "System recovers within 60s of rollback"
 ```
 
-## Hypothesis Formulation
+## 假设表述
 
 ```python
 def create_hypothesis(component: str, failure: str, expected_behavior: str) -> dict:
@@ -82,7 +86,7 @@ hypothesis = create_hypothesis(
 )
 ```
 
-## Blast Radius Control
+## 爆炸半径（blast radius）控制
 
 ```python
 from dataclasses import dataclass
@@ -150,7 +154,7 @@ def progressive_rollout() -> list[BlastRadiusConfig]:
     ]
 ```
 
-## Safety Mechanisms
+## 安全机制
 
 ```python
 import asyncio
@@ -217,13 +221,13 @@ class ChaosExperimentSafety:
             await asyncio.sleep(5)  # Check every 5 seconds
 ```
 
-## Quick Reference
+## 速查表
 
-| Phase | Key Actions | Time Limit |
+| 阶段 | 关键动作 | 时限 |
 |-------|-------------|------------|
-| Design | Hypothesis, metrics, blast radius | 1 hour |
-| Review | Team review, safety check | 30 min |
-| Prepare | Setup monitoring, rollback | 1 hour |
-| Execute | Run experiment, monitor | 5-10 min |
-| Rollback | Restore steady state | < 30 sec |
-| Learn | Document findings, plan fixes | 2 hours |
+| 设计 | 假设、指标、爆炸半径 | 1 小时 |
+| 评审 | 团队评审、安全检查 | 30 分钟 |
+| 准备 | 搭建监控与回滚 | 1 小时 |
+| 执行 | 运行实验、监控 | 5-10 分钟 |
+| 回滚 | 恢复稳态 | < 30 秒 |
+| 复盘 | 记录发现、规划修复 | 2 小时 |

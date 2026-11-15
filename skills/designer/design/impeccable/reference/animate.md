@@ -1,89 +1,93 @@
-> **Additional context needed**: performance constraints.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/animate.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use motion to explain state, relationship, and hierarchy, or to create one authored moment the surface has earned. Decoration without purpose is animation debt.
+> **需要补充上下文**：性能约束。
+
+用动效解释状态、关系与层级，或创造一个界面挣来的、有署名感的瞬间。无目的的装饰就是动效债。
 
 ---
 
-## Visitor mode
+## 访客模式
 
-- **Persuade + Experience:** motion may carry the voice. Prefer one rehearsed focal sequence to repeated section reveals.
-- **Operate + Read:** motion serves feedback, state, and continuity. Keep routine transitions fast and do not make users wait through page-load choreography.
-- **Native (`ios` / `android` / `adaptive`):** follow the Motion section of [ios.md](ios.md) or [android.md](android.md), including the platform's Reduce Motion behavior. Do not apply the web tooling below.
+- **说服 + 体验：**动效可以承载声音。宁可一个排练过的焦点序列，也不要反复的区块入场。
+- **操作 + 阅读：**动效服务于反馈、状态与连续性。常规过渡保持快速，不让用户等页面加载的编排。
+- **原生（`ios` / `android` / `adaptive`）：**遵循 [ios.md](ios.md) 或 [android.md](android.md) 的 Motion 一节，包括平台的 Reduce Motion 行为。不要套用下文的 web 工具。
 
-## Find the job
+## 找到任务
 
-Inspect the existing motion language, interaction states, target devices, and performance budget. Find only the places where motion would:
+检查既有的动效语言、交互状态、目标设备与性能预算。只找动效能做到以下事情的地方：
 
-- acknowledge an action;
-- make a state change or spatial relationship legible;
-- preserve continuity through navigation or layout change;
-- direct attention at a meaningful moment;
-- embody the selected visual world.
+- 确认一个动作；
+- 让状态变化或空间关系清晰可读；
+- 在导航或布局变化中保持连续性；
+- 在有意义的时刻引导注意力；
+- 体现所选视觉世界。
 
-Ask only when a material constraint cannot be inferred. Do not animate a static area merely because it exists.
+只在关键约束无法推断时发问。不要因为一块静态区域存在就让它动起来。
 
-## Set the motion thesis
+## 设定动效主张
 
-Write a short plan before implementation:
+实现前写一个短计划：
 
-- **Focal moment:** the one sequence or interaction that deserves authorship, if any.
-- **Continuity:** the state, layout, or navigation changes that need explanation.
-- **Feedback:** the controls and outcomes that need acknowledgment.
-- **Budget:** which effects may be expensive and how often they run.
+- **焦点时刻：**值得署名的那一个序列或交互（如果有的话）。
+- **连续性：**需要解释的状态、布局或导航变化。
+- **反馈：**需要确认的控件与结果。
+- **预算：**哪些效果可能昂贵，以及运行频率。
 
-The focal moment must come from this product and surface concept. A generic fade-and-rise, hover lift, parallax layer, or scroll reveal is not a thesis.
+焦点时刻必须来自这个产品与这个界面的概念。通用的淡入上浮、悬停抬升、视差层或滚动入场都不算主张。
 
-## Choose material by meaning
+## 按含义选材料
 
-Transform and opacity are reliable foundations, not the entire palette. Choose properties for what the transition communicates:
+transform 与 opacity 是可靠的地基，不是全部调色盘。按过渡要传达的信息选择属性：
 
-- **Continuity and relationship:** shared-element motion, FLIP-style transforms, view transitions, or deliberate spatial movement.
-- **Focus and depth:** bounded blur, filter, backdrop, light, or shadow changes.
-- **Reveal and composition:** masks, clip paths, cropping, or controlled occlusion.
-- **Material and energy:** color, gradient position, texture, distortion, or shader effects when the world and runtime support them.
-- **State and feedback:** the smallest change that makes cause and result unmistakable.
+- **连续性与关系：**共享元素动效、FLIP 式 transform、view transitions 或有意图的空间移动。
+- **聚焦与纵深：**有边界的模糊、滤镜、背景、光或阴影变化。
+- **揭示与构图：**遮罩、clip path、裁切或受控遮挡。
+- **材质与能量：**世界与运行时支持时用颜色、渐变位置、纹理、扭曲或着色器效果。
+- **状态与反馈：**让因果一目了然的最小变化。
 
-Do not stack techniques for spectacle. One strong material idea, carried through the focal sequence and quiet supporting states, is usually enough.
+不要为奇观堆叠技巧。一个强的材质想法，贯穿焦点序列并安静地支撑各状态，通常就够了。
 
-Sibling stagger is appropriate when a list appears as a list. Cap the total delay, and never reinterpret every scrolled section as a staggered list.
+列表以列表形式出现时，同级错峰才合适。限制总延迟，绝不把每个滚动到的区块都重新解读成错峰列表。
 
-## Timing and easing
+## 时长与缓动
 
-Timing should express distance and consequence:
+时长应表达距离与后果：
 
-| Duration | Typical use |
+| 时长 | 典型用途 |
 |---|---|
-| 100–150 ms | immediate feedback |
-| 150–300 ms | routine state change |
-| 300–500 ms | layout, overlay, or view transition |
-| 500–800 ms | a deliberately authored focal entrance |
+| 100–150 ms | 即时反馈 |
+| 150–300 ms | 常规状态变化 |
+| 300–500 ms | 布局、覆盖层或视图过渡 |
+| 500–800 ms | 刻意署名的焦点入场 |
 
-Exit faster than entrance. Use natural deceleration such as `cubic-bezier(0.16, 1, 0.3, 1)` for confident arrivals; do not use bounce or elastic curves by reflex. Long feedback feels like latency.
+退场比入场快。自信的到达用自然减速，如 `cubic-bezier(0.16, 1, 0.3, 1)`；不要条件反射地用弹跳或弹性曲线。过长的反馈感觉像延迟。
 
-## Implement to the runtime
+## 按运行时实现
 
-- Use CSS transitions and keyframes for declarative state and bounded sequences.
-- Use Web Animations API or the project's existing motion library for interruption, sequencing, and dynamic values.
-- Use View Transitions or shared-element techniques when continuity across states is the point.
-- Use scroll-driven motion only when the scroll relationship itself carries meaning, with a robust fallback.
-- Do not add a dependency for an effect the existing stack can express cleanly.
+- 声明式状态与有界序列用 CSS transition 与 keyframes。
+- 中断、排序与动态值用 Web Animations API 或项目既有的动效库。
+- 跨状态连续性是重点时用 View Transitions 或共享元素技术。
+- 只在滚动关系本身承载含义时用滚动驱动动效，并带稳健的回退。
+- 现有技术栈能干净表达的效果，不要为此加依赖。
 
-Keep content visible in the default state so failed scripts do not hide the page. Avoid casually animating layout-driving properties such as `width`, `height`, `top`, `left`, and margins; use FLIP, transforms, or grid techniques when appropriate. Bound blur, filter, shadow, canvas, and shader work to isolated regions. Apply `will-change` only during known animation. Measure on target viewports and devices rather than assuming transform means fast.
+内容在默认状态下保持可见，脚本失败也不会藏起页面。不要随手动画 `width`、`height`、`top`、`left`、margin 这类驱动布局的属性；合适时用 FLIP、transform 或 grid 技术。模糊、滤镜、阴影、canvas 与着色器工作限制在隔离区域。`will-change` 只在已知动画期间启用。在目标视口与设备上实测，而不是默认 transform 就快。
 
-## Accessibility and control
+## 无障碍与控制
 
-Respect autoplay and sound preferences. Any nonessential loop must stop when offscreen or hidden.
+尊重自动播放与声音偏好。任何非必要循环在离屏或隐藏时必须停止。
 
-Every web animation needs a `prefers-reduced-motion` path with an intentional alternative. Remove or reduce spatial movement while preserving opacity, color, and state transitions that carry meaning. Reduced motion means fewer and gentler animations, not disabling all motion; feedback that confirms an action should remain legible.
+每个 web 动画都需要一条 `prefers-reduced-motion` 路径与一个有意图的替代。移除或削弱空间移动，同时保留承载含义的透明度、颜色与状态过渡。减少动效是指更少、更温和的动画，不是关闭所有动效；确认动作的反馈应保持清晰可读。
 
-## Verify
+## 验证
 
-- The focal motion is specific to the selected world and surface.
-- Every supporting animation explains feedback, state, or relationship.
-- Interruption and repeated use behave correctly.
-- Desktop, mobile, and keyboard paths remain usable.
-- The `prefers-reduced-motion` path reduces movement without erasing meaningful feedback or state changes.
-- Expensive effects stay smooth on the target device.
-- Removing an animation would lose meaning or authored character, not merely decoration.
+- 焦点动效是所选世界与界面特有的。
+- 每个辅助动画都在解释反馈、状态或关系。
+- 中断与重复使用表现正确。
+- 桌面、移动与键盘路径保持可用。
+- `prefers-reduced-motion` 路径削弱移动，但不抹掉有意义的反馈或状态变化。
+- 昂贵效果在目标设备上保持流畅。
+- 拿掉一个动画会失去含义或署名感，而不只是失去装饰。
 
-When motion earns its place, hand off to `/impeccable polish` for the final pass.
+动效挣得位置之后，交给 `/impeccable polish` 做最后一遍打磨。

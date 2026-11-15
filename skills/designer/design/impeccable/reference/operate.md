@@ -1,61 +1,65 @@
-# Operate mode depth (and Read notes)
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/operate.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-When design SERVES the product: app UIs, admin dashboards, settings panels, data tables, tools, authenticated surfaces, anything where the user is in a task. The essentials live in SKILL.md's modes and [craft-floor.md](craft-floor.md); this file is extended depth, written for Operate surfaces. Read surfaces (docs, guides, long-form) take SKILL.md's Read mode plus this file's typography and consistency rules; their prose measure and navigation matter more than component density.
+# Operate 模式详解（兼 Read 模式备注）
 
-## The product slop test
+当设计服务于产品时：应用 UI、管理后台、设置面板、数据表格、工具、登录后的界面，一切用户身处任务之中的场景。要点在 SKILL.md 的 modes 和 [craft-floor.md](craft-floor.md) 里；本文件是扩展深度，为 Operate 界面而写。Read 界面（文档、指南、长文）采用 SKILL.md 的 Read 模式加上本文件的字体排印与一致性规则；对它们来说，正文的行宽与导航比组件密度更重要。
 
-Familiarity is often a feature here. The test is whether a category-fluent user can trust the interface immediately or must pause at every subtly-off component.
+## 产品腔测试
 
-Product UI's failure mode isn't flatness, it's strangeness without purpose: over-decorated buttons, mismatched form controls, gratuitous motion, display fonts where labels should be, invented affordances for standard tasks. The bar is earned familiarity. The tool should disappear into the task.
+在这里，熟悉感往往是优点。测试在于：一个对该品类娴熟的用户能否立即信任这个界面，还是必须在每个不太对劲的组件前停顿。
 
-## Typography
+产品 UI 的失败模式不是平淡，而是没有目的的怪异：过度装饰的按钮、不匹配的表单控件、多余动效、该放标签的地方用了展示字体、为标准任务发明新交互。及格线是"挣来的熟悉感"。工具应当隐入任务之中。
 
-- **One family is often right.** Product UIs don't need display/body pairing. A well-tuned sans carries headings, buttons, labels, body, data.
-- **Fixed rem scale, not fluid.** Clamp-sized headings don't serve product UI. Users view at consistent DPI, and a fluid h1 that shrinks in a sidebar looks worse, not better.
-- **Tighter scale ratio.** 1.125–1.2 between steps is typical. More type elements here than on brand surfaces; exaggerated contrast creates noise.
-- **Line length still applies for prose** (65–75ch). Data and compact UI can run denser; tables at 120ch+ are fine.
+## 字体排印
 
-## Color
+- **一个字族往往就对了。** 产品 UI 不需要展示体/正文体的搭配。一款调校好的无衬线体可以同时承担标题、按钮、标签、正文、数据。
+- **固定 rem 刻度，不要流式。** 用 clamp 撑出来的标题不适合产品 UI。用户以稳定的 DPI 查看；侧栏里会缩水的流式 h1 只会更难看，不会更好。
+- **更紧的刻度比例。** 级差 1.125–1.2 是常态。这里的文字元素比品牌向界面多；夸张的对比只会制造噪音。
+- **正文行宽规则依然适用**（65–75ch）。数据和紧凑 UI 可以更密；表格 120ch 以上也没问题。
 
-Product defaults to Restrained. A single surface can earn Committed (a dashboard where one category color carries a report, an onboarding flow with a drenched welcome screen), but Restrained is the floor.
+## 颜色
 
-- State-rich semantic vocabulary: hover, focus, active, disabled, selected, loading, error, warning, success, info. Standardize these.
-- Accent color used for primary actions, current selection, and state indicators only, not decoration.
-- A second neutral layer for sidebars, toolbars, and panels (slightly cooler or warmer than the content surface).
+产品默认 Restrained（克制）。单个界面可以挣到 Committed（投入）（比如某个仪表盘靠一种类别色撑起整份报告，或某个引导流程用铺满的欢迎屏），但 Restrained 是底线。
 
-## Layout
+- 语义词汇要覆盖丰富的状态：hover、focus、active、disabled、selected、loading、error、warning、success、info。把它们标准化。
+- 强调色只用于主操作、当前选择和状态指示，不用于装饰。
+- 侧栏、工具栏和面板用第二层中性色（比内容表面稍冷或稍暖）。
 
-- Responsive behavior is structural (collapse sidebar, responsive table, breakpoint-driven columns), not fluid typography.
+## 布局
 
-## Components
+- 响应式行为是结构性的（折叠侧栏、响应式表格、由断点驱动的栏数），而不是流式字体排印。
 
-Every interactive component has: default, hover, focus, active, disabled, loading, error. Don't ship with half of these.
+## 组件
 
-- Skeleton states for loading, not spinners in the middle of content.
-- Empty states that teach the interface, not "nothing here."
-- Consistent affordances across the surface. Same button shape. Same form-control vocabulary. Same icon style.
-- Overlays escape their container. An absolutely positioned dropdown inside an `overflow: hidden` or `overflow: auto` ancestor gets clipped; reach for `<dialog>`, the popover API, `position: fixed`, or a portal.
+每个可交互组件都要有：default、hover、focus、active、disabled、loading、error。别带着一半状态就发布。
 
-## Motion
+- 加载用骨架屏，不要在内容中间放转圈。
+- 空状态要教会用户使用界面，而不是"这里什么都没有"。
+- 整个界面的可供性保持一致。同样的按钮形状。同样的表单控件词汇。同样的图标风格。
+- 覆盖层要能逃出容器。绝对定位的下拉菜单放进 `overflow: hidden` 或 `overflow: auto` 的祖先里会被裁切；改用 `<dialog>`、popover API、`position: fixed` 或 portal。
 
-- 150–250 ms on most transitions. Users are in flow; don't make them wait for choreography.
-- Motion conveys state, not decoration. State change, feedback, loading, reveal: nothing else.
-- No orchestrated page-load sequences. Product loads into a task; users don't want to watch it load.
+## 动效
 
-## Product constraints
+- 多数过渡 150–250 ms。用户在心流里；别让他们等你的编排。
+- 动效传达状态，不做装饰。状态变化、反馈、加载、展开：仅此而已。
+- 不要编排整页加载序列。产品是加载进一个任务的；用户不想看你加载。
 
-- Decorative motion that doesn't convey state.
-- Inconsistent component vocabulary across screens. If the "save" button looks different in two places, one is wrong.
-- Display fonts in UI labels, buttons, data.
-- Reinventing standard affordances for flavor (custom scrollbars, weird form controls, non-standard modals).
-- Heavy color or full-saturation accents on inactive states.
-- Modal as first thought. Modals are usually laziness. Exhaust inline / progressive alternatives first.
+## 产品约束
 
-## Product permissions
+- 不传达状态的装饰性动效。
+- 跨屏的组件词汇不一致。"保存"按钮在两处长得不一样，必有一处是错的。
+- UI 标签、按钮、数据里用展示字体。
+- 为了风味重新发明标准交互（自定义滚动条、怪异的表单控件、非标准弹窗）。
+- 非激活状态上的重颜色或全饱和强调色。
+- 弹窗作为第一反应。弹窗通常是懒惰。先穷尽内联/渐进式替代方案。
 
-Product can afford things brand surfaces can't.
+## 产品许可
 
-- System fonts and familiar sans defaults.
-- Standard navigation patterns: top bar + side nav, breadcrumbs, tabs, command palettes.
-- Density. Tables with many rows, panels with many labels, dense information when users need it.
-- Consistency over surprise. The same visual vocabulary screen to screen is a virtue; delight is saved for moments, not pages.
+产品可以做品牌向界面做不到的事。
+
+- 系统字体和熟悉的默认无衬线体。
+- 标准导航模式：顶栏 + 侧边导航、面包屑、标签页、命令面板。
+- 密度。多行的表格、多标签的面板，在用户需要时给足信息密度。
+- 一致性优先于惊喜。跨屏一致的视觉词汇是美德；愉悦感留给时刻，而不是整页。

@@ -1,19 +1,23 @@
-# Finish review
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/review-finish.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-You are reviewing a built page against a fixed list. You did not build it and will not be told why anything is the way it is. Read the page, not the intent. Your inputs, and nothing else: the screenshots the render tier wrote (the folds at 1280 x 800, 1440 x 900 and 1920 x 1080, the full page at 1440 and at 375), the page's HTML or component source, the theme or idea line from the stamp, on a theme build the theme file and its picture, the hero review's findings with how each was settled, and `gates.md` § 4. Look at the screenshots first; open the HTML only to quote copy or to locate a finding; the linter has already read the CSS. A pinned pane shows once in a full-page shot: the column beside its later screens is the pin, not an empty half. Batch your reads; stop reading by the tenth turn and write.
+# 收尾审查
 
-First line: one of `recapture` (a screenshot is missing, blank or shows the wrong thing; list what to recapture and stop), `rebuild` (the first viewport fails the idea or the theme wholesale), `fix` (findings follow), `ship` (nothing owed).
+你在对照一份固定清单审查一个已建好的页面。它不是你建的，也不会有人告诉你任何东西为何长成这样。读页面，不读意图。你的输入，且只有这些：渲染层写出的截图（1280 x 800、1440 x 900 和 1920 x 1080 的首屏，1440 与 375 的整页）、页面的 HTML 或组件源码、印记里的主题或想法行、主题构建时的主题文件及其图片、Hero 审查的发现及各条的处置结果，以及 `gates.md` § 4。先看截图；只有要引用文案或定位某条发现时才打开 HTML；linter 已经读过 CSS。吸顶面板在整页截图里只出现一次：它后续屏幕旁的那一栏是钉住的部分，不是空着的半栏。批量读取；第十轮之前停止读取，开始写。
 
-Then the findings, ranked by cost to the page, at most eight, one line each: the gate or the plain defect, where it is, what you would do. Not findings: a direction you would not have chosen; what the theme file prescribes or refuses (its blooms, a glow on a theme with none); an element the hero review settled, unless you name a new reason. The theme's picture is the bar for finish and never a model: is this page as finished as that one, in a composition of its own?
+第一行：以下之一：`recapture`（某张截图缺失、空白或展示的内容不对；列出要重摄的清单并停止）、`rebuild`（首视口整体上辜负了想法或主题）、`fix`（后跟发现清单）、`ship`（无所欠）。
 
-Scroll the 1440 full page one screen at a time before ranking: a screen with nothing big enough to be its reason (a head and a line adrift, a narrow column beside an empty half, a section head under 40px, an empty coloured box or a drawn illustration where a photograph or the product should be, a row of counting marks) outranks every detail finding (`layout.md` § 8). Then the copy: name any head that would pass unchanged on a competitor's page (`craft.md` § 6).
+然后是发现，按对页面的代价排序，至多八条，每条一行：是哪个 gate 或 plainly 的缺陷、在哪里、你会怎么做。不算发现的：你不会选的方向；主题文件规定或拒绝的东西（它的光晕、一个本无辉光主题上的辉光）；Hero 审查已了结的元素，除非你说出新的理由。主题的图片是完成度的标尺，绝不是范本：这一页做得和那一页一样完成吗？有自己的构图吗？
 
-Then one answer to the question no gate can: does the stamp's idea or theme describe the page in front of you? Name the largest gap, or say there is none.
+排序之前，把 1440 整页一屏一屏滚完：一块"没有大到足以成为其存在理由的东西"的屏幕（一个标题和一行字在漂、一条窄栏伴着空着的半栏、40px 以下的小节标题、本该放照片或产品之处的空彩色盒子或手绘插图、一排计数刻度），压过每一条细节发现（`layout.md` § 8）。然后看文案：点名任何放到竞品页面上也能原样通过的标题（`craft.md` § 6）。
 
-On a custom run (`theme: custom`) the page owes no shape, composition or hero layout: it was designed from nothing, so judge it as a design, never against `layout.md`. Before the idea line, write two lines of your own from the screenshots: what the page is about, and the one thing a visitor would remember. Then three findings when they fail. **Seen before:** the page, or a section, reads as a template, a catalog theme or a familiar site; name which and where. **Clean:** something is on the page without a job (a device repeated, a decoration, a box around nothing), or a screen has nothing worth looking at. **Carried:** the idea lives in the hero and stops there.
+然后回答一个任何 gate 都答不了的问题：印记里的想法或主题，描述的是你眼前这页吗？说出最大的差距，或说没有。
 
-On a redesign you also get the `before` screenshots, and the content is fixed: never ask for copy, an action or a visual the old page did not have. Add one answer: what did the old page do better? Name anything a visitor could do, read or find before that is harder now; if nothing, say so. On a polish you get only the full pages at 1440, before and after: the layout was kept on purpose, so ask one thing, whether anything still reads as machine-made, in at most five findings.
+custom 运行（`theme: custom`）下，页面不欠任何形态、构图或 hero 版式：它是从零设计的，所以要当一件设计来评，绝不对照 `layout.md`。在想法行之前，先从截图写下你自己的两行：这页关于什么，以及访客会记住的那一件事。然后，不达标时给三条发现。**似曾相识：**页面或某个小节读起来像模板、像目录里的主题、或像某个熟悉的站点；点名是哪个、在哪里。**干净：**页面上有无所事事的东西（重复的手法、一件装饰、围着空的盒子），或某一块屏幕没有任何值得看的东西。**只停留在 hero：**想法活在 hero 里，出了 hero 就停了。
 
-On an app screen (the stamp says `shape: app screen`) there is no hero, fold or section rhythm to judge, and the gates `flow.md` § App screens skips are not findings. Read the full screens at 1440 and 375 and ask what someone fluent in the category would: is the hierarchy clear, is the density even, does every control and table work on a phone, are the states there.
+重设计时你还会拿到 `before` 截图，且内容是固定的：绝不索要旧页面没有的文案、动作或视觉。多答一个问题：旧页面哪一点做得更好？点名任何访客以前能做、能读、能找到而如今更难的东西；没有就直说。polish 时你只拿到 1440 的整页前后图：版式是有意保留的，所以只问一件事，是否还有任何东西读起来像机器做的，至多五条发现。
 
-Close with one line naming what must not be diluted while fixing. Where the theme file and its picture disagree, the theme file wins over its picture. Do not fix anything.
+应用屏幕（印记写着 `shape: app screen`）没有 hero、首屏或小节节奏可评，`flow.md` § App screens 跳过的那些 gate 也不是发现。读 1440 和 375 的整屏，像品类里的老手那样问：层级清楚吗，密度均匀吗，每个控件和表格在手机上能用吗，状态都在吗。
+
+用一行收尾，点名修复时绝不能被稀释的东西。主题文件与其图片不一致时，主题文件压过图片。不要修任何东西。

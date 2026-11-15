@@ -1,46 +1,42 @@
-# Working under a Captain: approvals, plan asks and merge asks
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`skills/developer/gstack/capy/skill/gstack/captain.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This file belongs to gstack's Capy skill (the folder the owner copies into their Drive). It describes how a
-Capy thread running gstack asks for decisions, records answers and asks for a merge. The rules apply whether
-the thread reports to a Captain (a crew thread) or straight to a person. `gstack-skill-start` prints the
-short form as the `capy-asks` block whenever `GSTACK_CAPY=1` (the Capy launch line sets it).
-`GSTACK_CAPY_ASKS=0` drops that block for one session. This is the lane's side. The controller's side (the
-READY contract, merge trains, the digest, the daily flaky pass, and the templates for the crew rules file
-and the Captain's drive) is the `/captain` skill and `crew/docs/captain.md` in the gstack checkout.
+# 在 Captain 手下工作：审批、计划请求与合并请求
 
-## 1. How approvals work, per thread
+本文件属于 gstack 的 Capy skill（所有者复制进自己 Drive 的那个文件夹）。它描述运行 gstack 的
+Capy 线程如何请求决定、记录答复和请求合并。无论线程向 Captain（crew 线程）汇报还是直接向某人汇报，规则都适用。
+`gstack-skill-start` 在 `GSTACK_CAPY=1`（Capy 启动行会设置它）时打印简短版作为 `capy-asks` 块。
+`GSTACK_CAPY_ASKS=0` 让该块在一个会话内消失。这是 lane 这一侧的文件。控制者那一侧（READY 契约、合并列车、
+digest、每日 flaky 检查，以及 crew 规则文件与 Captain drive 的模板）是 `/captain` skill 与 gstack checkout 里的
+`crew/docs/captain.md`。
 
-- **One path.** A crew thread asks its Captain: a needs-you report through Capy's agent channel, never a
-  question to the person. The Captain relays it in plain language and sends back the person's exact words.
-  A thread with no Captain asks the person directly with a Capy question. Either way, never use a bare
-  question, gate codes or slot numbers.
-- **Scope.** An answer covers the thread and scope it was asked for. It is not a blanket approval for
-  later work.
-- **Standing approvals** are the ones the Captain lists in its own rules, for example "merge when green,
-  through a merge train", "paid eval gates are pre-approved" or "a single-case flaky rerun". Cite the rule
-  (with its date and words) instead of asking again. gstack ships no standing approvals of its own.
-- **Always a fresh ask:**
-  - a product or behaviour decision;
-  - spend over a stated cap;
-  - anything published outside the repository (advisories, releases, posts);
-  - a change to a threshold, budget, trial count or test kind;
-  - closing someone's contribution without landing it;
-  - anything destructive or irreversible.
-- **Observable questions are not the person's to answer.** A question a command, a render or a measurement
-  can settle locally, read-only and for free ("is the new path faster", "does the test endpoint take this
-  payload", "does the test still fail") is settled by the thread: it runs the thing and reports the result.
-  A call that changes state, reaches a live system or spends money is still an ask. Only a product or preference call
-  goes up, with the observation already made. A Captain that receives an observable question sends it
-  back with the check that answers it instead of relaying it.
-- **What a gstack workflow does in Capy.** Launched with `GSTACK_SESSION_KIND=unattended`, a workflow takes
-  each recommended option, writes everything else as a pending gate item, and stops. Your job is to carry
-  those pending items to the Captain or person in the shape below, then feed the answer back.
+## 1. 审批如何按线程运作
 
-## 2. The approval record
+- **一条路径。** crew 线程向它的 Captain 提出：经 Capy 的 agent 通道发"需要你"报告，绝不直接把问题抛给人。Captain
+  用平实的语言转达，并把人的原话带回。没有 Captain 的线程用 Capy 提问直接问人。无论哪种，都绝不使用光秃秃的问题、
+  门代码或槽位号。
+- **范围。** 一条答复覆盖它被请求的线程与范围。它不是对后续工作的空白授权。
+- **常设审批**是 Captain 列在自己规则里的那些，例如"绿了就合并，走合并列车"、"付费 eval 闸门预已批准"或
+  "单用例 flaky 重跑一次"。引用该规则（带日期与原文）而不是再次询问。gstack 自己不内置任何常设审批。
+- **永远重新请求：**
+  - 产品或行为决定；
+  - 超过既定上限的花费；
+  - 仓库之外的任何发布（advisory、release、帖子）；
+  - 对阈值、预算、试验次数或测试 kind 的任何变更；
+  - 不落地就关闭别人的贡献；
+  - 任何破坏性或不可逆的事。
+- **可观察的问题不由人来回答。** 一条命令、一次渲染或一次测量能在本地、只读且免费解决的问题
+  （"新路径是不是更快"、"测试端点接不接受这个载荷"、"测试是不是仍然失败"）由线程自己解决：它运行那个东西并报告结果。
+  会改变状态、触达活系统或花钱的调用仍然是请求。只有产品或偏好判断才向上提，且带着已经做好的观察。收到可观察问题的
+  Captain 会带着能回答它的检查把问题退回，而不是转达。
+- **gstack 工作流在 Capy 里做什么。** 以 `GSTACK_SESSION_KIND=unattended` 启动的工作流会采纳每一条建议选项，
+  把其余内容写成待处理闸门条目，然后停下。你的职责是把那些待处理条目以下面的格式带给 Captain 或人，再把答复带回来。
 
-Every answer gets a row: the date, what was asked, the person's exact words, who said them (and who relayed
-them), what the answer covers, what is still pending, and the outcome (approved, rejected, pending, or a
-cited standing approval).
+## 2. 审批记录
+
+每条答复一行：日期、问了什么、人的原话、谁说的（以及谁转达）、答复覆盖什么、还有什么待处理，以及结果
+（approved、rejected、pending，或引用的常设审批）。
 
 ```bash
 gstack-approvals add --ask "Spend up to \$40 on a paid eval rerun for the ship cases" \
@@ -52,63 +48,56 @@ gstack-approvals import --autoplan <run dir> --by Garry --stack b1,b2   # a stac
 gstack-approvals render                                    # the ## Approvals section
 ```
 
-- **Where it lives.** `<state root>/projects/<slug>/approvals/<branch key>.jsonl`, one file per branch,
-  because one thread ships one branch. `<slug>` is the repository's own slug (`gstack-slug --get
-  REPO_SLUG`); a `.gstack-project` marker never moves it. On Capy the state root is thrown away with the machine, so every write
-  is also mirrored to `GSTACK_APPROVALS_DIR`, else to the `approvals/` directory in the mounted Captain
-  drive (`<captain drive>/approvals/<slug>/`, readable by the whole crew), else to the private project-user
-  Drive folder. `gstack-approvals path` prints the chosen mirror and `READ_ALSO:` roots, which reads still
-  merge. `GSTACK_APPROVALS_MIRROR=0` turns the mirror off, and `gstack-approvals sync` restores the local copy.
-- **The durable copies** are the `## Approvals` sections in the thread's report and in the PR body. Paste
-  `render` output into them; never type rows by hand. On a public repository (or unknown visibility)
-  `render` prints only `Approved: yes|no (record <id>)`; `gstack-approvals list` shows the full record.
-- **Secret-free.** Every field passes gstack's secret scanner before it is written. A hit refuses the row
-  (`APPROVAL_RECORD_SECRET`, which names the field and rule, never the text). Write `[redacted]` in place of
-  the secret, or ask the person to restate.
-- **Display only.** The rendered table escapes mentions, links, images, HTML and anything shaped like an
-  `Approved by … via …` citation. gstack's enforced approval classes still need their own citation line
-  (docs/ship-policy.md#approval-classes).
-- An empty table means "No approvals recorded". On a fresh Capy machine with no record and no mirror it says
-  "Record unavailable" instead (`APPROVAL_RECORD_UNAVAILABLE`), because a lost record is not an empty one.
+- **存在哪里。** `<state root>/projects/<slug>/approvals/<branch key>.jsonl`，每分支一个文件，
+  因为一个线程只发一个分支。`<slug>` 是仓库自己的 slug（`gstack-slug --get
+  REPO_SLUG`）；`.gstack-project` 标记不改动它。Capy 上状态根随机器一起丢弃，所以每次写入同时镜像到 `GSTACK_APPROVALS_DIR`，否则镜像到挂载的 Captain
+  drive 里的 `approvals/` 目录（`<captain drive>/approvals/<slug>/`，全 crew 可读），否则镜像到私有的项目用户
+  Drive 文件夹。`gstack-approvals path` 打印所选镜像与 `READ_ALSO:` 根，读取会合并这些根。
+  `GSTACK_APPROVALS_MIRROR=0` 关闭镜像，`gstack-approvals sync` 恢复本地副本。
+- **耐久副本**是线程报告与 PR 正文里的 `## Approvals` 小节。把 `render` 输出粘贴进去；绝不手打行。在公开仓库
+  （或可见性未知）上 `render` 只打印 `Approved: yes|no (record <id>)`；`gstack-approvals list` 显示完整记录。
+- **无秘密。** 每个字段写入之前都过 gstack 的秘密扫描器。命中会拒绝该行
+  （`APPROVAL_RECORD_SECRET`，它指名字段与规则，绝不指名文本）。在秘密的位置写 `[redacted]`，或请对方换一种说法。
+- **仅展示。** 渲染出的表会转义 mention、链接、图片、HTML 以及任何形如
+  `Approved by … via …` 的引用。gstack 强制的审批类别仍需要自己的引用行
+  (docs/ship-policy.md#approval-classes)。
+- 空表意味着"No approvals recorded"。在既无记录也无镜像的全新 Capy 机器上，它显示
+  "Record unavailable"（`APPROVAL_RECORD_UNAVAILABLE`），因为丢失的记录不是空的记录。
 
-## 3. Plan approvals: the shape
+## 3. 计划审批：格式
 
-Under a Captain, a thread that builds something plans before any product code. A `/autoplan` run on its
-brief, sized to the work, is its first act, the gate goes up in the shape below, and the build starts only
-when the answer is in the run and it reports `APPROVED`. The short form every Capy thread follows, with the
-exempt work (read-only threads, flaky-pass repairs, slot stamps, CHANGELOG resolves, cap re-pins under a
-grant), is the "Plan, approve, ship" section of SKILL.md in this folder; the rule in full is `crew/docs/captain.md`,
-Plan before build.
+在 Captain 手下，构建东西的线程在任何产品代码之前先做计划。对它的 brief 跑一次大小与工作相称的
+`/autoplan` 是它的第一个动作，闸门以下面的格式向上提，只有答复进入 run 且它报告 `APPROVED` 之后才开工。每个 Capy
+线程都遵循的简短版（含豁免工作：只读线程、flaky 修复、槽位戳、CHANGELOG 解析、授权内的上限重设）是本文件夹
+SKILL.md 的"Plan, approve, ship"小节；完整规则是 `crew/docs/captain.md` 的 Plan before build。
 
-Every plan or gate you bring for approval has these parts, in this order, written so someone outside the
-project can follow it:
+你带来审批的每个计划或闸门都有这些部分，按此顺序，写法要让项目外人能看懂：
 
-1. **Before → after.** What the user or maintainer sees today and after, with concrete examples: a command
-   and its output, a screen, a cost or time number.
-2. **Why it matters.** Who is hurt today and how much, with numbers where possible.
-3. **What caused this work.** The trigger: an issue or PR link, a failed run, a user report, or the
-   person's request, quoted.
-4. **Big decisions.** For each: the options considered, the pick and why, and what would flip it.
-5. **What we need from you.** The ask format (`crew/docs/captain.md`, The ask format): the Captain's name, then one
-   lettered line per decision, letters unique across the list: "A: <code> hit problem p, which happens when h.
+1. **Before → after。** 用户或维护者今天看到的与之后看到的，配具体示例：一条命令及其输出、一个界面、
+   一个成本或时间数字。
+2. **为什么重要。** 今天谁受伤害、伤害多大，尽量带数字。
+3. **什么触发了这项工作。** 触发器：issue 或 PR 链接、一次失败的运行、一份用户报告，或此人的请求（引用原话）。
+4. **重大决定。** 每一项：考虑过的选项、选了哪个及为什么、什么会推翻它。
+5. **需要你做什么。** 请求格式（`crew/docs/captain.md` 的 The ask format）：Captain 的名字，然后每个决定
+   一行带字母，字母在全列表唯一："A: <code> hit problem p, which happens when h.
    We could fix it in these ways: 1) x; 2) y; 3) z. Recommendation: x because why. A1 to take recommendation."
-   The recommendation is option 1. Never offer "the plan as first written" as the default.
-6. **"do it".** Every ask ends with "do it": take every recommendation in the list at full scope, the follow-ons
-   the plan names (docs, trains, cleanups) included, and carry them through to done with no further ask. A named
-   option ("A2") takes that option instead. For an autoplan gate, "do it" answers as `rec`; record the words.
+   建议项是选项 1。绝不把"按最初写的计划"当默认选项。
+6. **"do it"。** 每个请求都以"do it"收尾：全范围采纳列表里的每条建议，包括计划点名的后续项
+   （docs、列车、清理），一路带到完成，不再追问。点名某选项（"A2"）则改取该选项。对 autoplan 闸门，"do it"
+   按 `rec` 应答；记录原话。
 
-For an autoplan run, open the plan with `## ELI5` (5-10 plain sentences), then write parts 1 to 4 as
-`## Before → after`, `## Why it matters`, `## What caused this work` and `## Big decisions` sections. Then, at the gate:
+对 autoplan run，用 `## ELI5`（5-10 句大白话）开计划，然后把第 1 到 4 部分写成
+`## Before → after`、`## Why it matters`、`## What caused this work` 与 `## Big decisions` 小节。然后，在闸门处：
 
 ```bash
 gstack-owner-brief render --captain --out <run dir> --captain-name "<Captain name>"
 ```
 
-It prints a header line ("Decision needed … Reply **do it** …"), the `### ELI5` summary (on a run whose gate
-carries `eli5`), the four plan sections (each capped, with a pointer to the plan for the rest), and "What we need from you", one lettered
-line per choice in the ask format, closed by "do it", then a `### Cost` section (spent so far, worst case, and the estimate for
-the phases `rec` can reopen). The last line, "For the relaying agent", carries the run, `gate_rev`, `rec_hash` and the exact
-`gstack-autoplan answer` command. Relay everything above that line. When the reply comes back:
+它打印一行头（"Decision needed … Reply **do it** …"）、`### ELI5` 小结（闸门带 `eli5` 的 run 上）、四个计划小节
+（每节有上限，并指向计划看其余内容），以及"What we need from you"，按请求格式每个选项一行带字母，以"do it"收尾，
+然后是 `### Cost` 小节（已花费、最坏情况，以及 `rec` 可重开阶段的估算）。最后一行"For the relaying agent"携带
+run、`gate_rev`、`rec_hash` 与确切的
+`gstack-autoplan answer` 命令。把该行之上的所有内容转达。答复回来时：
 
 ```bash
 gstack-autoplan answer --out <run dir> --gate-rev <n> --reply rec --rec-hash <h> \
@@ -116,55 +105,49 @@ gstack-autoplan answer --out <run dir> --gate-rev <n> --reply rec --rec-hash <h>
 gstack-approvals import --autoplan <run dir> --by <name>
 ```
 
-A later gate that asks nothing new is answered for you with the words you recorded (`CARRIED:`, then `APPROVED:`);
-the brief says "Nothing pending. Carried forward", so import and build without a second ask. `CARRY_CHECK:` means
-one reviewer from another model family reads the unreviewed delta first (`gstack-autoplan check`). Anything
-else prints `CARRY: no (<why>)` and goes to the person as today (`docs/unattended.md#carry-forward`).
+不再问新东西的后续闸门会用你记录的原话替你自动应答（`CARRIED:`，然后 `APPROVED:`）；
+brief 会说"Nothing pending. Carried forward"，直接 import 并开工，无需第二次请求。`CARRY_CHECK:` 表示
+先由另一个模型族的一位评审者阅读未评审的增量（`gstack-autoplan check`）。其他任何情况打印
+`CARRY: no (<why>)` 并像今天一样交给人（docs/unattended.md#carry-forward）。
 
-If the person answers in words ("split it into two PRs"), map the words to tokens, answer, and confirm in one
-line what you recorded ("Recorded: split into two PRs; everything else as recommended"). A named option ("B2")
-answers as `--reply "rec except <token>"`, with the token from the last line's letter map. A plan missing a
-section renders "Not ready for approval" with no reply invitation, and exits 1 (`CAPTAIN_BRIEF_INCOMPLETE`):
-add the sections, run `gstack-autoplan revise --plan <file>`, and render again. For a decision that is not an
-autoplan gate, write the same five parts by hand.
+如果此人用文字答复（"split it into two PRs"），把文字映射为 token，应答，并用一行确认你记录的内容
+（"Recorded: 拆成两个 PR；其余按建议执行"）。点名某选项（"B2"）按 `--reply "rec except <token>"` 应答，
+token 来自最后一行的字母映射。缺小节的计划渲染"Not ready for approval"且不带回复邀请，并以 exit 1 退出
+（`CAPTAIN_BRIEF_INCOMPLETE`）：补齐小节，运行 `gstack-autoplan revise --plan <file>`，再渲染一次。对不属于
+autoplan 闸门的决定，手写同样的五个部分。
 
-## 4. Merge asks: the shape
+## 4. 合并请求：格式
 
-Every PR you send READY on, and the READY report itself, has:
+你发送 READY 的每个 PR，以及 READY 报告本身，都包含：
 
-1. **What changed.** One to three before/after images, highest-signal first, each with a one-line caption
-   (what changed and why) and a collapsed text version under it.
-   - UI: screenshots at the base and on the branch, the same size.
-   - Skill or prompt: `gstack-pr-shots --path <file> --heading "<section>" --caption "<…>"`.
-   - CLI: `gstack-pr-shots --before <capture> --after <capture> --kind terminal --caption "<…>"`, where the
-     captures are files inside the repository.
-   - Internal: the source section or test output that best shows the change.
-   `gstack-pr-shots` reads text only, runs nothing, refuses secret-matching input, and prints `SHOT_PNG:`.
-   With no browser that line says `unavailable`: screenshot the printed `shot.html` with your own browser.
-   Upload each PNG with Capy's PR asset tool (`tools.pr.uploadAsset`), only for public repositories, and embed
-   the URL it returns with the caption as alt text.
-2. **Why.** The problem in the person's words first, then the cause and the effect the user will see,
-   in two or three sentences.
-3. **Blast radius.** What else the change touches and the one fact that makes that safe, with the
-   evidence-ladder rung that fact reached.
-4. **Approvals.** `gstack-approvals render`.
-5. **Evidence.** Checks green at the head, gate or train results, flaky cases, and an `Unverified:` line:
-   each claim you did not check yourself and why, or `none`. You write this item; /ship does not.
+1. **改了什么。** 一到三张前后对比图，信号最强的在前，每张配一行说明（改了什么、为什么），下面附折叠的文字版。
+   - UI：base 与分支上的截图，同尺寸。
+   - Skill 或提示词：`gstack-pr-shots --path <file> --heading "<section>" --caption "<…>"`。
+   - CLI：`gstack-pr-shots --before <capture> --after <capture> --kind terminal --caption "<…>"`，其中
+     capture 是仓库内的文件。
+   - 内部：最能展示该变更的源码小节或测试输出。
+   `gstack-pr-shots` 只读文本、不运行任何东西、拒绝匹配到秘密的输入，并打印 `SHOT_PNG:`。
+   没有浏览器时该行显示 `unavailable`：用你自己的浏览器截取打印出的 `shot.html`。
+   仅对公开仓库，用 Capy 的 PR 资产工具（`tools.pr.uploadAsset`）上传每张 PNG，并以其返回的 URL 配说明文字嵌入。
+2. **为什么。** 先用此人的话陈述问题，再用两三句话说明原因与用户将看到的效果。
+3. **影响半径。** 该变更还触碰什么，以及让这件事安全的那一个事实，连同该事实到达的 evidence-ladder 层级。
+4. **审批。** `gstack-approvals render`。
+5. **证据。** head 上为绿的检查、闸门或列车结果、flaky 用例，以及一行 `Unverified:`：
+   你没有亲自检查的每个主张及其原因，或 `none`。这一项由你写，/ship 不代写。
 
-The READY report attaches the key image (Capy message attachment), so the Captain can show it inline.
-/ship does items 1-4 when `GSTACK_CAPY=1` (its `capy-pr` section). Outside Capy, the PR body is unchanged.
+READY 报告附上关键图片（Capy 消息附件），Captain 可以内联展示它。
+当 `GSTACK_CAPY=1` 时 /ship 会做第 1-4 项（其 `capy-pr` 小节）。Capy 之外，PR 正文保持不变。
 
-**Who watches CI.** You own your PR's checks and review until READY: hold its watch yourself and fix what
-turns red (one rerun for a flake), so a check never wakes your Captain. A Captain whose PRs bring many check,
-review and merge wakes hands PR and CI watching to one merge-lane thread instead of subscribing itself, because
-every wake more than about five minutes after its last call rewrites its whole context cache at many times the
-warm price. The merge lane reports to the Captain only a landing, a decision or a blocker
-(`crew/docs/captain.md` in the gstack checkout, Roles).
+**谁盯 CI。** 直到 READY 为止，你拥有自己 PR 的检查与审查：自己盯住它并修好变红的东西（flake 重跑一次），
+让检查永远不要吵醒你的 Captain。其 PR 带来大量检查、审查与合并唤醒的 Captain，会把 PR 与 CI 盯守交给一个
+合并 lane 线程而不是自己订阅，因为每次在上次唤醒约五分钟之后的唤醒，都会以数倍于热价格的成本重写它的整个上下文缓存。
+合并 lane 只向 Captain 报告落地、决定或阻塞
+（gstack checkout 里的 `crew/docs/captain.md`，Roles）。
 
-A token cap in a brief goes to /ship as `--token-cap <n>`. Run each /ship in a fresh subagent titled
-`ship #<n> at <head7> <4-char nonce>` (unique), with `GSTACK_SHIP_TASK_TITLE=<that title>` in its brief and the instruction to
-take every reading (start, notes, close) from its own row of the root thread's `tasks` and start the budget with
-`--reading-from task`, so it caps at 100M by default; never message a finished /ship subagent to run another. When /ship stops on it (`STOP:
-reason=budget_exhausted`, `status=incomplete`), the lane reports the BUDGET and RECOVER lines and asks the
-owner; it never raises the cap itself. The owner's answer runs the RECOVER line with
-`--approved-by <who> --words "<their words>"`, and `gstack-approvals add` records the same words.
+brief 里的 token 上限以 `--token-cap <n>` 传给 /ship。每次 /ship 都在全新的子代理中运行，标题为
+`ship #<n> at <head7> <4-char nonce>`（唯一），brief 里带 `GSTACK_SHIP_TASK_TITLE=<that title>` 与指令：
+从根线程 `tasks` 的自己那一行读取每次读数（start、notes、close），并以
+`--reading-from task` 起算预算，使其默认封顶 100M；绝不给已完成的 /ship 子代理发消息让它再跑一个。当 /ship 因此停下时
+（`STOP:
+reason=budget_exhausted`、`status=incomplete`），lane 报告 BUDGET 与 RECOVER 行并询问所有者；它绝不自行提高上限。
+所有者的答复以 `--approved-by <who> --words "<their words>"` 运行 RECOVER 行，`gstack-approvals add` 记录同样的原话。

@@ -1,6 +1,10 @@
-# Infrastructure Chaos Engineering
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/chaos-engineer/references/infrastructure-chaos.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Network Latency Injection
+# 基础设施混沌工程
+
+## 网络延迟注入
 
 ```python
 # Using toxiproxy for network chaos
@@ -71,7 +75,7 @@ toxiproxy.create_proxy(
 toxiproxy.add_latency("postgres", latency_ms=200, jitter_ms=50)
 ```
 
-## AWS Zone Failure Simulation
+## AWS 可用区故障模拟
 
 ```python
 import boto3
@@ -159,7 +163,7 @@ class AWSChaosSimulator:
         }
 ```
 
-## Server Resource Exhaustion
+## 服务器资源耗尽
 
 ```bash
 #!/bin/bash
@@ -184,7 +188,7 @@ stress-ng --hdd 4 --hdd-bytes 1G --timeout 5m
 iperf3 -c target-server -t 300 -P 10  # 10 parallel streams for 5 minutes
 ```
 
-## Docker Container Chaos with Pumba
+## 使用 Pumba 对 Docker 容器注入混沌
 
 ```bash
 #!/bin/bash
@@ -223,7 +227,7 @@ pumba netem \
 pumba stop --duration 2m "re2:^production-.*"
 ```
 
-## DNS Failure Simulation
+## DNS 故障模拟
 
 ```python
 # Using dnsmasq or editing /etc/hosts for DNS chaos
@@ -278,7 +282,7 @@ with DNSChaos.block_domain('api.external-service.com', duration_seconds=120):
     print("DNS blocked - testing fallback behavior")
 ```
 
-## Certificate Expiry Simulation
+## 证书过期模拟
 
 ```python
 from datetime import datetime, timedelta
@@ -334,15 +338,15 @@ def create_expired_certificate(
     return cert_pem, key_pem
 ```
 
-## Quick Reference
+## 快速参考
 
-| Failure Type | Tool | Command/Method |
+| 故障类型 | 工具 | 命令/方法 |
 |--------------|------|----------------|
-| Network latency | toxiproxy | `add_latency(proxy, ms)` |
-| Packet loss | toxiproxy/pumba | `loss --percent 20` |
-| AZ failure | AWS API | `simulate_az_failure(az, asg)` |
-| CPU stress | stress-ng | `--cpu N --cpu-load 80` |
-| Memory exhaustion | stress-ng | `--vm 1 --vm-bytes XG` |
-| Container kill | pumba | `kill --signal SIGKILL` |
-| DNS failure | /etc/hosts | Block domain resolution |
-| Cert expiry | cryptography | Generate expired cert |
+| 网络延迟 | toxiproxy | `add_latency(proxy, ms)` |
+| 丢包 | toxiproxy/pumba | `loss --percent 20` |
+| AZ 故障 | AWS API | `simulate_az_failure(az, asg)` |
+| CPU 压力 | stress-ng | `--cpu N --cpu-load 80` |
+| 内存耗尽 | stress-ng | `--vm 1 --vm-bytes XG` |
+| 容器强杀 | pumba | `kill --signal SIGKILL` |
+| DNS 故障 | /etc/hosts | 阻止域名解析 |
+| 证书过期 | cryptography | 生成过期证书 |

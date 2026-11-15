@@ -1,42 +1,46 @@
-Designs that only work with perfect data aren't production-ready. Harden the interface against the inputs, errors, languages, and network conditions that real users will throw at it.
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/harden.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Assess Hardening Needs
+只对完美数据有效的设计算不上生产就绪。要让界面经得起真实用户抛来的各种输入、错误、语言和网络状况。
 
-Identify weaknesses and edge cases:
+## 评估加固需求
 
-1. **Test with extreme inputs**:
-   - Very long text (names, descriptions, titles)
-   - Very short text (empty, single character)
-   - Special characters (emoji, RTL text, accents)
-   - Large numbers (millions, billions)
-   - Many items (1000+ list items, 50+ options)
-   - No data (empty states)
+找出薄弱点和边界情况：
 
-2. **Test error scenarios**:
-   - Network failures (offline, slow, timeout)
-   - API errors (400, 401, 403, 404, 500)
-   - Validation errors
-   - Permission errors
-   - Rate limiting
-   - Concurrent operations
+1. **用极端输入测试**：
+   - 超长文本（姓名、描述、标题）
+   - 超短文本（空、单个字符）
+   - 特殊字符（emoji、RTL 文本、带变音符的字符）
+   - 大数字（百万、十亿）
+   - 大量条目（1000+ 个列表项、50+ 个选项）
+   - 无数据（空状态）
 
-3. **Test internationalization**:
-   - Long translations (German is often 30% longer than English)
-   - RTL languages (Arabic, Hebrew)
-   - Character sets (Chinese, Japanese, Korean, emoji)
-   - Date/time formats
-   - Number formats (1,000 vs 1.000)
-   - Currency symbols
+2. **测试错误场景**：
+   - 网络故障（离线、慢速、超时）
+   - API 错误（400、401、403、404、500）
+   - 校验错误
+   - 权限错误
+   - 限流
+   - 并发操作
 
-Designs that only work with perfect data aren't production-ready.
+3. **测试国际化**：
+   - 翻译文本变长（德语通常比英语长 30%）
+   - RTL 语言（阿拉伯语、希伯来语）
+   - 字符集（中文、日文、韩文、emoji）
+   - 日期/时间格式
+   - 数字格式（1,000 vs 1.000）
+   - 货币符号
 
-## Hardening Dimensions
+只对完美数据有效的设计算不上生产就绪。
 
-Systematically improve resilience:
+## 加固维度
 
-### Text Overflow & Wrapping
+系统地提升健壮性：
 
-**Long text handling**:
+### 文本溢出与换行
+
+**长文本处理**：
 ```css
 /* Single line with ellipsis */
 .truncate {
@@ -61,7 +65,7 @@ Systematically improve resilience:
 }
 ```
 
-**Flex/Grid overflow**:
+**Flex/Grid 溢出**：
 ```css
 /* Prevent flex items from overflowing */
 .flex-item {
@@ -76,19 +80,19 @@ Systematically improve resilience:
 }
 ```
 
-**Responsive text sizing**:
-- Use `clamp()` for fluid typography
-- Set minimum readable sizes (16px body on mobile, the same floor the typography guidance sets; 14px only for genuinely secondary text. iOS Safari force-zooms focused inputs under 16px, which breaks form layouts)
-- Test text scaling (zoom to 200%)
-- Ensure containers expand with text
+**响应式文字尺寸**：
+- 使用 `clamp()` 做流式排版
+- 设定最小可读字号（移动端正文 16px，与排版指导设定的下限一致；14px 只留给真正的次要文本。iOS Safari 会对字号低于 16px 的聚焦输入框强制缩放，破坏表单布局）
+- 测试文字缩放（放大到 200%）
+- 确保容器随文本扩展
 
-### Internationalization (i18n)
+### 国际化（i18n）
 
-**Text expansion**:
-- Add 30-40% space budget for translations
-- Use flexbox/grid that adapts to content
-- Test with longest language (usually German)
-- Avoid fixed widths on text containers
+**文本膨胀**：
+- 为翻译预留 30-40% 的空间预算
+- 使用能适应内容的 flexbox/grid
+- 用最长的语言测试（通常是德语）
+- 避免给文本容器设置固定宽度
 
 ```jsx
 // ❌ Bad: Assumes short English text
@@ -98,7 +102,7 @@ Systematically improve resilience:
 <button className="px-4 py-2">Submit</button>
 ```
 
-**RTL (Right-to-Left) support**:
+**RTL（从右到左）支持**：
 ```css
 /* Use logical properties */
 margin-inline-start: 1rem; /* Not margin-left */
@@ -109,10 +113,10 @@ border-inline-end: 1px solid; /* Not border-right */
 [dir="rtl"] .arrow { transform: scaleX(-1); }
 ```
 
-**Arabic-script specifics** (Arabic, Persian, Urdu, Pashto, Kurdish):
-- Preserve Zero-Width Non-Joiner (U+200C). Persian and Kurdish use ZWNJ between compound-word parts to break cursive joining while keeping the word together. A filter or sanitizer that strips it changes meaning. Never normalize it away.
-- Handle Yeh and Kaf variants. Persian uses ی (U+06CC) and ک (U+06A9), while Arabic uses ي (U+064A) and ك (U+0643). Preserve the original form in storage. For search and validation, treat the corresponding letters as equivalent so that Arabic-keyboard input matches Persian text. Rejecting one variant locks out users whose keyboard sends the other.
-- Support locale-aware digits. Persian (`fa-IR`) and Arabic locales use Eastern Arabic-Indic numerals (۰-۹ and ٠-٩). Use `Intl.NumberFormat` with the correct locale rather than hardcoding Western digits.
+**阿拉伯文字的特别处理**（阿拉伯语、波斯语、乌尔都语、普什图语、库尔德语）：
+- 保留零宽不连字（Zero-Width Non-Joiner, U+200C）。波斯语和库尔德语在复合词各部分之间用 ZWNJ 阻断连写、同时让词保持为一个整体。过滤器或消毒器把它剥掉会改变语义。绝不要把它归一化掉。
+- 处理 Yeh 和 Kaf 变体。波斯语用 ی（U+06CC）和 ک（U+06A9），阿拉伯语用 ي（U+064A）和 ك（U+0643）。存储时保留原始形态。在搜索与校验场景把对应字母视为等价，使阿拉伯键盘输入能匹配波斯语文本。拒绝其中一种变体，就会把用另一种键盘的用户挡在门外。
+- 支持随 locale 变化的数字。波斯语（`fa-IR`）和阿拉伯语 locale 使用东阿拉伯-印度数字（۰-۹ 和 ٠-٩）。使用带正确 locale 的 `Intl.NumberFormat`，不要硬编码西方数字。
 
 ```javascript
 // ✅ Locale-aware digit formatting
@@ -120,7 +124,7 @@ new Intl.NumberFormat('fa-IR').format(1234); // ۱٬۲۳۴
 new Intl.NumberFormat('ar-SA').format(1234); // ١٬٢٣٤
 ```
 
-- Respect calendar systems. Persian users expect the Solar Hijri (Jalali) calendar; many Arabic-speaking users expect the Hijri (Islamic) calendar. Use `Intl.DateTimeFormat` with the appropriate locale or calendar parameter.
+- 尊重历法体系。波斯用户期望 Solar Hijri（Jalali）历；许多阿拉伯语用户期望 Hijri（伊斯兰）历。使用带恰当 locale 或 calendar 参数的 `Intl.DateTimeFormat`。
 
 ```javascript
 // ✅ Locale-appropriate calendar
@@ -128,13 +132,13 @@ new Intl.DateTimeFormat('fa-IR').format(new Date());
 new Intl.DateTimeFormat('ar-SA-u-ca-islamic').format(new Date());
 ```
 
-**Character set support**:
-- Use UTF-8 encoding everywhere
-- Test with Chinese/Japanese/Korean (CJK) characters
-- Test with emoji (they can be 2-4 bytes)
-- Handle different scripts (Latin, Cyrillic, Arabic, etc.)
+**字符集支持**：
+- 各处都使用 UTF-8 编码
+- 用中日韩（CJK）字符测试
+- 用 emoji 测试（它们可能占 2-4 字节）
+- 处理不同文字系统（拉丁、西里尔、阿拉伯等）
 
-**Date/Time formatting**:
+**日期/时间格式化**：
 ```javascript
 // ✅ Use Intl API for proper formatting
 new Intl.DateTimeFormat('en-US').format(date); // 1/15/2024
@@ -146,7 +150,7 @@ new Intl.NumberFormat('en-US', {
 }).format(1234.56); // $1,234.56
 ```
 
-**Pluralization**:
+**复数形式**：
 ```javascript
 // ❌ Bad: Assumes English pluralization
 `${count} item${count !== 1 ? 's' : ''}`
@@ -155,14 +159,14 @@ new Intl.NumberFormat('en-US', {
 t('items', { count }) // Handles complex plural rules
 ```
 
-### Error Handling
+### 错误处理
 
-**Network errors**:
-- Show clear error messages
-- Provide retry button
-- Explain what happened
-- Offer offline mode (if applicable)
-- Handle timeout scenarios
+**网络错误**：
+- 显示清晰的错误信息
+- 提供重试按钮
+- 解释发生了什么
+- 提供离线模式（如适用）
+- 处理超时场景
 
 ```jsx
 // Error states with recovery
@@ -174,89 +178,89 @@ t('items', { count }) // Handles complex plural rules
 )}
 ```
 
-**Form validation errors**:
-- Inline errors near fields
-- Clear, specific messages
-- Suggest corrections
-- Don't block submission unnecessarily
-- Preserve user input on error
+**表单校验错误**：
+- 在字段旁内联显示错误
+- 消息清晰、具体
+- 建议修正方式
+- 不要不必要地阻止提交
+- 出错时保留用户已输入的内容
 
-**API errors**:
-- Handle each status code appropriately
-  - 400: Show validation errors
-  - 401: Redirect to login
-  - 403: Show permission error
-  - 404: Show not found state
-  - 429: Show rate limit message
-  - 500: Show generic error, offer support
+**API 错误**：
+- 按状态码分别处理
+  - 400：显示校验错误
+  - 401：重定向到登录
+  - 403：显示权限错误
+  - 404：显示未找到状态
+  - 429：显示限流提示
+  - 500：显示通用错误，并提供支持渠道
 
-**Graceful degradation**:
-- Core functionality works without JavaScript
-- Images have alt text
-- Progressive enhancement
-- Fallbacks for unsupported features
+**优雅降级**：
+- 核心功能在没有 JavaScript 时也能工作
+- 图片带有 alt 文本
+- 渐进增强
+- 为不支持的功能准备回退方案
 
-### Edge Cases & Boundary Conditions
+### 边界情况与边界条件
 
-**Empty states**:
-- No items in list
-- No search results
-- No notifications
-- No data to display
-- Provide clear next action
+**空状态**：
+- 列表没有条目
+- 没有搜索结果
+- 没有通知
+- 没有数据可展示
+- 提供明确的下一步操作
 
-**Loading states**:
-- Initial load
-- Pagination load
-- Refresh
-- Show what's loading ("Loading your projects...")
-- Time estimates for long operations
+**加载状态**：
+- 首次加载
+- 分页加载
+- 刷新
+- 显示正在加载的内容（"Loading your projects..."）
+- 为长时间操作给出时间预估
 
-**Large datasets**:
-- Pagination or virtual scrolling
-- Search/filter capabilities
-- Performance optimization
-- Don't load all 10,000 items at once
+**大数据集**：
+- 分页或虚拟滚动
+- 搜索/筛选能力
+- 性能优化
+- 不要一次加载全部 10,000 条
 
-**Concurrent operations**:
-- Prevent double-submission (disable button while loading)
-- Handle race conditions
-- Optimistic updates with rollback
-- Conflict resolution
+**并发操作**：
+- 防止重复提交（加载期间禁用按钮）
+- 处理竞态条件
+- 乐观更新并支持回滚
+- 冲突解决
 
-**Interrupted gestures** (custom sliders, drag surfaces, scrollable control strips):
-- A second finger or pointer lands mid-drag: the first drag keeps its pointer or ends cleanly, never jumps to the new one
-- The browser cancels the gesture to scroll (`pointercancel`), capture is lost (`lostpointercapture`), the pointer is released outside the control, or the window loses focus (`blur`) mid-drag: clear the dragging state and release capture
-- After each of these, the next tap or drag works without a reload
+**被打断的手势**（自定义滑块、拖拽表面、可滚动控制条）：
+- 第二根手指或第二个指针在拖拽中途落下：第一次拖拽保住自己的指针或干净地结束，绝不跳到新的指针上
+- 浏览器取消手势转而滚动（`pointercancel`）、捕获丢失（`lostpointercapture`）、指针在控件外释放，或拖拽中途窗口失焦（`blur`）：清除拖拽状态并释放捕获
+- 以上每种情况之后，下一次点按或拖拽无需刷新即可正常工作
 
-**Permission states**:
-- No permission to view
-- No permission to edit
-- Read-only mode
-- Clear explanation of why
+**权限状态**：
+- 没有查看权限
+- 没有编辑权限
+- 只读模式
+- 清楚解释原因
 
-**Browser compatibility**:
-- Polyfills for modern features
-- Fallbacks for unsupported CSS
-- Feature detection (not browser detection)
-- Test in target browsers
+**浏览器兼容性**：
+- 为现代特性提供 polyfill
+- 为不支持的 CSS 提供回退
+- 使用特性检测（而不是浏览器检测）
+- 在目标浏览器中测试
 
-### Input Validation & Sanitization
+### 输入校验与消毒
 
-**Client-side validation**:
-- Required fields
-- Format validation (email, phone, URL)
-- Length limits
-- Pattern matching
-- Custom validation rules
+**客户端校验**：
+- 必填字段
+- 格式校验（邮箱、电话、URL）
+- 长度限制
+- 模式匹配
+- 自定义校验规则
 
-**Server-side validation** (always):
-- Never trust client-side only
-- Validate and sanitize all inputs
-- Protect against injection attacks
-- Rate limiting
+**服务端校验**（永远要做）：
+- 绝不只依赖客户端
+- 校验并消毒所有输入
+- 防范注入攻击
+- 限流
 
-**Constraint handling**:
+**约束处理**：
 ```html
 <!-- Set clear constraints -->
 <input 
@@ -271,40 +275,40 @@ t('items', { count }) // Handles complex plural rules
 </small>
 ```
 
-### Accessibility Resilience
+### 无障碍韧性
 
-**Keyboard navigation**:
-- All functionality accessible via keyboard
-- Logical tab order
-- Focus management in modals
-- Skip links for long content
+**键盘导航**：
+- 所有功能都能通过键盘使用
+- 符合逻辑的 Tab 顺序
+- 模态框中的焦点管理
+- 为长内容提供跳转链接（skip links）
 
-**Screen reader support**:
-- Proper ARIA labels
-- Announce dynamic changes (live regions)
-- Descriptive alt text
-- Semantic HTML
+**屏幕阅读器支持**：
+- 恰当的 ARIA 标签
+- 播报动态变化（live regions）
+- 有描述性的 alt 文本
+- 语义化 HTML
 
-**High contrast mode**:
-- Test in Windows high contrast mode
-- Don't rely only on color
-- Provide alternative visual cues
+**高对比模式**：
+- 在 Windows 高对比模式下测试
+- 不要只依赖颜色
+- 提供替代性的视觉线索
 
-### Performance Resilience
+### 性能韧性
 
-**Slow connections**:
-- Progressive image loading
-- Skeleton screens
-- Optimistic UI updates
-- Offline support (service workers)
+**慢速连接**：
+- 渐进式图片加载
+- 骨架屏
+- 乐观 UI 更新
+- 离线支持（service worker）
 
-**Memory leaks**:
-- Clean up event listeners
-- Cancel subscriptions
-- Clear timers/intervals
-- Abort pending requests on unmount
+**内存泄漏**：
+- 清理事件监听器
+- 取消订阅
+- 清除定时器/interval
+- 组件卸载时中止进行中的请求
 
-**Throttling & Debouncing**:
+**节流与防抖**：
 ```javascript
 // Debounce search input
 const debouncedSearch = debounce(handleSearch, 300);
@@ -313,50 +317,50 @@ const debouncedSearch = debounce(handleSearch, 300);
 const throttledScroll = throttle(handleScroll, 100);
 ```
 
-## Testing Strategies
+## 测试策略
 
-**Manual testing**:
-- Test with extreme data (very long, very short, empty)
-- Test in different languages
-- Test offline
-- Test slow connection (throttle to 3G)
-- Test with screen reader
-- Test keyboard-only navigation
-- Test on old browsers
+**手动测试**：
+- 用极端数据测试（超长、超短、空）
+- 用不同语言测试
+- 离线测试
+- 慢速连接测试（限速到 3G）
+- 用屏幕阅读器测试
+- 只用键盘导航测试
+- 在旧浏览器上测试
 
-**Automated testing**:
-- Unit tests for edge cases
-- Integration tests for error scenarios
-- E2E tests for critical paths
-- A behavioral regression for each confirmed gesture fix, when the project's test runner can drive input
-- Visual regression tests
-- Accessibility tests (axe, WAVE)
+**自动化测试**：
+- 边界情况的单元测试
+- 错误场景的集成测试
+- 关键路径的 E2E 测试
+- 每个已确认的手势修复配一个行为回归测试（当项目的测试运行器能驱动输入时）
+- 视觉回归测试
+- 无障碍测试（axe、WAVE）
 
-**Avoid**:
-- Assume perfect input (validate everything)
-- Ignore internationalization (design for global)
-- Leave error messages generic ("Error occurred")
-- Forget offline scenarios
-- Trust client-side validation alone
-- Use fixed widths for text
-- Assume English-length text
-- Block entire interface when one component errors
+**避免**：
+- 假设输入是完美的（一切都要校验）
+- 无视国际化（面向全球设计）
+- 错误信息太笼统（"Error occurred"）
+- 忘记离线场景
+- 只信客户端校验
+- 给文本用固定宽度
+- 假设文本只有英语的长度
+- 一个组件出错就阻塞整个界面
 
-## Verify Hardening
+## 验证加固效果
 
-Test thoroughly with edge cases:
+用边界情况彻底测试：
 
-- **Long text**: Try names with 100+ characters
-- **Emoji**: Use emoji in all text fields
-- **RTL**: Test with Arabic or Hebrew
-- **CJK**: Test with Chinese/Japanese/Korean
-- **Network issues**: Disable internet, throttle connection
-- **Large datasets**: Test with 1000+ items
-- **Concurrent actions**: Click submit 10 times rapidly
-- **Interrupted gestures**: Add a second finger mid-drag, scroll across the control, release outside it, switch windows mid-drag; then drag again
-- **Errors**: Force API errors, test all error states
-- **Empty**: Remove all data, test empty states
+- **长文本**：试 100+ 字符的名字
+- **emoji**：在所有文本字段里用 emoji
+- **RTL**：用阿拉伯语或希伯来语测试
+- **CJK**：用中文/日文/韩文测试
+- **网络问题**：断网、给连接限速
+- **大数据集**：用 1000+ 条目测试
+- **并发操作**：快速连点提交 10 次
+- **被打断的手势**：拖拽中途加第二根手指、横跨控件滚动、在控件外释放、拖拽中切窗口；然后再次拖拽
+- **错误**：强制 API 出错，测试所有错误状态
+- **空数据**：清空所有数据，测试空状态
 
-For gestures, say what produced the evidence (emulated viewport, synthesized touch, which engine, physical device) and name what stayed untested.
+对手势，说明证据来自哪里（模拟视口、合成触摸、哪个引擎、物理设备），并指出哪些还没有测到。
 
-When edge cases are covered, hand off to `/impeccable polish` for the final pass.
+边界情况都覆盖之后，交给 `/impeccable polish` 做最后一遍打磨。

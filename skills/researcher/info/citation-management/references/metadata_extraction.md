@@ -1,23 +1,27 @@
-# Metadata Extraction Guide
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/citation-management/references/metadata_extraction.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Comprehensive guide to extracting accurate citation metadata from DOIs, PMIDs, arXiv IDs, and URLs using various APIs and services.
+# 元数据提取指南
 
-## Overview
+通过各类 API 与服务，从 DOI、PMID、arXiv ID 和 URL 提取准确引文元数据的全面指南。
 
-Accurate metadata is essential for proper citations. This guide covers:
-- Identifying paper identifiers (DOI, PMID, arXiv ID)
-- Querying metadata APIs (CrossRef, PubMed, arXiv, DataCite)
-- Required BibTeX fields by entry type
-- Handling edge cases and special situations
-- Validating extracted metadata
+## 概述
 
-## Paper Identifiers
+准确的元数据是规范引文的基础。本指南覆盖：
+- 识别论文标识符（DOI、PMID、arXiv ID）
+- 查询元数据 API（CrossRef、PubMed、arXiv、DataCite）
+- 各条目类型的必填 BibTeX 字段
+- 处理边界情况与特殊情形
+- 验证提取到的元数据
 
-### DOI (Digital Object Identifier)
+## 论文标识符
 
-**Format**: `10.XXXX/suffix`
+### DOI（数字对象标识符）
 
-**Examples**:
+**格式**：`10.XXXX/suffix`
+
+**示例**：
 ```
 10.1038/s41586-021-03819-2    # Nature article
 10.1126/science.aam9317       # Science article
@@ -25,115 +29,111 @@ Accurate metadata is essential for proper citations. This guide covers:
 10.1371/journal.pone.0123456  # PLOS ONE article
 ```
 
-**Properties**:
-- Permanent identifier
-- Most reliable for metadata
-- Resolves to current location
-- Publisher-assigned
+**特性**：
+- 永久标识符
+- 元数据最可靠的来源
+- 能解析到当前地址
+- 由出版商分配
 
-**Where to find**:
-- First page of article
-- Article webpage
-- CrossRef, Google Scholar, PubMed
-- Usually prominent on publisher site
+**在哪里找**：
+- 论文首页
+- 论文网页
+- CrossRef、Google Scholar、PubMed
+- 通常在出版商网站上很醒目
 
-### PMID (PubMed ID)
+### PMID（PubMed ID）
 
-**Format**: 8-digit number (typically)
+**格式**：8 位数字（通常如此）
 
-**Examples**:
+**示例**：
 ```
 34265844
 28445112
 35476778
 ```
 
-**Properties**:
-- Specific to PubMed database
-- Biomedical literature only
-- Assigned by NCBI
-- Permanent identifier
+**特性**：
+- 专属于 PubMed 数据库
+- 仅限生物医学文献
+- 由 NCBI 分配
+- 永久标识符
 
-**Where to find**:
-- PubMed search results
-- Article page on PubMed
-- Often in article PDF footer
-- PMC (PubMed Central) pages
+**在哪里找**：
+- PubMed 检索结果
+- PubMed 上的论文页面
+- 常出现在论文 PDF 页脚
+- PMC（PubMed Central）页面
 
-### PMCID (PubMed Central ID)
+### PMCID（PubMed Central ID）
 
-**Format**: PMC followed by numbers
+**格式**：PMC 后接数字
 
-**Examples**:
+**示例**：
 ```
 PMC8287551
 PMC7456789
 ```
 
-**Properties**:
-- Free full-text articles in PMC
-- Subset of PubMed articles
-- Open access or author manuscripts
+**特性**：
+- PMC 中免费全文的论文
+- PubMed 论文的子集
+- 开放获取或作者手稿
 
 ### arXiv ID
 
-**Format**: YYMM.NNNNN or archive/YYMMNNN
+**格式**：YYMM.NNNNN 或 archive/YYMMNNN
 
-**Examples**:
+**示例**：
 ```
 2103.14030        # New format (since 2007)
 2401.12345        # 2024 submission
 arXiv:hep-th/9901001  # Old format
 ```
 
-**Properties**:
-- Preprints (not peer-reviewed)
-- Physics, math, CS, q-bio, etc.
-- Version tracking (v1, v2, etc.)
-- Free, open access
+**特性**：
+- 预印本（未经同行评审）
+- 物理、数学、计算机、q-bio 等
+- 有版本追踪（v1、v2 等）
+- 免费、开放获取
 
-**Where to find**:
+**在哪里找**：
 - arXiv.org
-- Often cited before publication
-- Paper PDF header
+- 常在正式发表前被引用
+- 论文 PDF 页眉
 
-### Other Identifiers
+### 其他标识符
 
-**ISBN** (Books):
+**ISBN**（书籍）：
 ```
 978-0-12-345678-9
 0-123-45678-9
 ```
 
-**arXiv category**:
+**arXiv 分类**：
 ```
 cs.LG    # Computer Science - Machine Learning
 q-bio.QM # Quantitative Biology - Quantitative Methods
 math.ST  # Mathematics - Statistics
 ```
 
-## Metadata APIs
+## 元数据 API
 
 ### CrossRef API
 
-**Primary source for DOIs** - Most comprehensive metadata for journal articles.
+**DOI 的首选来源**：期刊论文元数据最全面。
 
-**Base URL**: `https://api.crossref.org/works/`
+**Base URL**：`https://api.crossref.org/works/`
 
-**No API key required**. Identify your application with `User-Agent`; add your
-own contact email as `mailto` for the polite pool. Single-record requests are
-limited to 5/s public or 10/s polite; list queries to 1/s or 3/s respectively.
-Read response rate/concurrency headers and back off on 429. See the current
-[Crossref limits](https://community.crossref.org/t/refining-rest-api-limits-for-improved-stability-and-reliability/16137).
+**无需 API key**。用 `User-Agent` 标明你的应用；把自己的联系邮箱作为 `mailto` 传入，进入 polite pool。单条记录请求限速：公共池 5 次/秒，polite pool 10 次/秒；列表查询分别为 1 次/秒与 3 次/秒。留意响应中的限速/并发响应头，收到 429 就退避。最新限速见 [Crossref 限速说明](https://community.crossref.org/t/refining-rest-api-limits-for-improved-stability-and-reliability/16137)。
 
-#### Basic DOI Lookup
+#### 基本 DOI 查询
 
-**Request**:
+**请求**：
 ```
 GET https://api.crossref.org/works/10.1038/s41586-021-03819-2
 ```
 
-**Response** (simplified):
+**响应**（简化）：
 ```json
 {
   "message": {
@@ -155,53 +155,53 @@ GET https://api.crossref.org/works/10.1038/s41586-021-03819-2
 }
 ```
 
-#### Fields Available
+#### 可用字段
 
-**Identity/type fields**:
-- `DOI`: Digital Object Identifier
-- `title`: Article title (array; may be absent or empty)
-- `type`: Content type (journal-article, book-chapter, etc.)
+**标识/类型字段**：
+- `DOI`: 数字对象标识符
+- `title`: 论文标题（数组；可能缺失或为空）
+- `type`: 内容类型（journal-article、book-chapter 等）
 
-**Usually present**:
-- `author`: Array of author objects
-- `container-title`: Journal/book title
-- `published-print`, `published-online`, `published`, or `issued`: Publication date (do not substitute registration/deposit dates)
-- `volume`, `issue`, `page`: Publication details
-- `publisher`: Publisher name
+**通常存在**：
+- `author`: 作者对象数组
+- `container-title`: 期刊/书名
+- `published-print`、`published-online`、`published` 或 `issued`: 出版日期（不要用注册/存档日期替代）
+- `volume`、`issue`、`page`: 出版细节
+- `publisher`: 出版商名称
 
-**Sometimes present**:
-- `abstract`: Article abstract
-- `subject`: Subject categories
-- `ISSN`: Journal ISSN
-- `ISBN`: Book ISBN
-- `reference`: Reference list
-- `is-referenced-by-count`: Citation count
+**有时存在**：
+- `abstract`: 论文摘要
+- `subject`: 学科分类
+- `ISSN`: 期刊 ISSN
+- `ISBN`: 书籍 ISBN
+- `reference`: 参考文献列表
+- `is-referenced-by-count`: 被引次数
 
-#### Content Types
+#### 内容类型
 
-CrossRef `type` field values:
-- `journal-article`: Journal articles
-- `book-chapter`: Book chapters
-- `book`: Books
-- `proceedings-article`: Conference papers
-- `posted-content`: Preprints
-- `dataset`: Research datasets
-- `report`: Technical reports
-- `dissertation`: Theses/dissertations
+CrossRef `type` 字段的取值：
+- `journal-article`: 期刊论文
+- `book-chapter`: 书籍章节
+- `book`: 书籍
+- `proceedings-article`: 会议论文
+- `posted-content`: 预印本
+- `dataset`: 研究数据集
+- `report`: 技术报告
+- `dissertation`: 学位论文
 
 ### PubMed E-utilities API
 
-**Specialized for biomedical literature** - Curated metadata with MeSH terms.
+**专为生物医学文献而设**：提供带 MeSH 主题词的编目元数据。
 
-**Base URL**: `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/`
+**Base URL**：`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/`
 
-**API key recommended** (free):
-- Higher rate limits
-- Better performance
+**建议申请 API key**（免费）：
+- 更高的限速额度
+- 更好的性能
 
-#### PMID to Metadata
+#### PMID 转元数据
 
-**Step 1: EFetch for full record**
+**第 1 步：用 EFetch 获取完整记录**
 
 ```
 GET https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?
@@ -211,11 +211,11 @@ GET https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?
   api_key=YOUR_KEY
 ```
 
-**Response**: XML with comprehensive metadata
+**响应**：包含全面元数据的 XML
 
-**Step 2: Parse XML**
+**第 2 步：解析 XML**
 
-Key fields:
+关键字段：
 ```xml
 <PubmedArticle>
   <MedlineCitation>
@@ -246,9 +246,9 @@ Key fields:
 </PubmedArticle>
 ```
 
-#### Unique PubMed Fields
+#### PubMed 特有字段
 
-**MeSH Terms**: Controlled vocabulary
+**MeSH 主题词**：受控词表
 ```xml
 <MeshHeadingList>
   <MeshHeading>
@@ -257,7 +257,7 @@ Key fields:
 </MeshHeadingList>
 ```
 
-**Publication Types**:
+**出版物类型**：
 ```xml
 <PublicationTypeList>
   <PublicationType UI="D016428">Journal Article</PublicationType>
@@ -265,7 +265,7 @@ Key fields:
 </PublicationTypeList>
 ```
 
-**Grant Information**:
+**资助信息**：
 ```xml
 <GrantList>
   <Grant>
@@ -278,20 +278,20 @@ Key fields:
 
 ### arXiv API
 
-**Preprints in physics, math, CS, q-bio** - Free, open access.
+**物理、数学、计算机、q-bio 领域的预印本**：免费、开放获取。
 
-**Base URL**: `https://export.arxiv.org/api/query`
+**Base URL**：`https://export.arxiv.org/api/query`
 
-**No API key required**
+**无需 API key**
 
-#### arXiv ID to Metadata
+#### arXiv ID 转元数据
 
-**Request**:
+**请求**：
 ```
 GET https://export.arxiv.org/api/query?id_list=1706.03762
 ```
 
-**Response**: Atom XML
+**响应**：Atom XML
 
 ```xml
 <!-- Illustrative response shape; namespaces are declared on the feed. -->
@@ -306,85 +306,68 @@ GET https://export.arxiv.org/api/query?id_list=1706.03762
 </entry>
 ```
 
-#### Key Fields
+#### 关键字段
 
 - `id`: arXiv URL
-- `title`: Preprint title
-- `author`: Author list
-- `published`: First version date
-- `updated`: Latest version date
-- `summary`: Abstract
-- `arxiv:doi`: Optional DOI; verify its registration metadata before calling it a journal version
-- `arxiv:journal_ref`: Journal reference if published
-- `category`: arXiv categories
+- `title`: 预印本标题
+- `author`: 作者列表
+- `published`: 首版日期
+- `updated`: 最新版本日期
+- `summary`: 摘要
+- `arxiv:doi`: 可选 DOI；在称其为期刊版本之前，先核验其注册元数据
+- `arxiv:journal_ref`: 已发表时的期刊引用信息
+- `category`: arXiv 分类
 
-#### Version Tracking
+#### 版本追踪
 
-arXiv tracks versions:
-- `v1`: Initial submission
-- `v2`, `v3`, etc.: Revisions
+arXiv 会追踪版本：
+- `v1`: 初次提交
+- `v2`、`v3` 等：修订版
 
-**Always check** for a journal version using publisher metadata and `arxiv:journal_ref`.
-A DOI alone does not prove peer review. The script preserves an explicit `vN`
-identifier; an unversioned request retrieves the current version. Make at most
-one request every three seconds over one connection across all your workers.
-The script enforces this interval within one extractor instance and rejects
-Atom error entries even when the transport returns HTTP 200.
+**务必检查**是否存在期刊版本：结合出版商元数据与 `arxiv:journal_ref` 判断。只有 DOI 不能证明经过同行评审。脚本会保留显式的 `vN` 标识符；不带版本号的请求返回当前版本。所有 worker 共用一条连接时，每 3 秒最多发一次请求。脚本在单个 extractor 实例内强制该间隔；即使传输层返回 HTTP 200，也会拒绝 Atom 错误条目。
 
 ### DataCite API
 
-**Research datasets, software, other outputs** - Assigns DOIs to non-traditional scholarly works.
+**研究数据集、软件和其他成果**：为非传统学术成果分配 DOI。
 
-**Base URL**: `https://api.datacite.org/dois/`
+**Base URL**：`https://api.datacite.org/dois/`
 
-**Similar to CrossRef** but for datasets, software, code, etc.
+**与 CrossRef 类似**，但面向数据集、软件、代码等。
 
-**Request**:
+**请求**：
 ```
 GET https://api.datacite.org/dois/10.5281/zenodo.1234567
 ```
 
-**Response**: JSON:API object at `data.attributes`, including `titles`, `creators`,
-`publicationYear`, and `types`; this is not Crossref's `message` schema. A public
-GET needs no credentials and retrieves findable records. A missing DataCite or
-Crossref record does not prove a DOI is invalid: other agencies register DOIs.
+**响应**：位于 `data.attributes` 的 JSON:API 对象，包含 `titles`、`creators`、`publicationYear` 和 `types`；这不是 Crossref 的 `message` 模式。公开 GET 无需凭证，可取回 findable 状态的记录。DataCite 或 Crossref 里查不到记录，并不能证明 DOI 无效：其他注册机构也在注册 DOI。
 
-`extract_metadata.py --doi` currently reads Crossref records only. For DataCite
-DOIs use `doi_to_bibtex.py` (DOI content negotiation); `validate_citations.py`
-also checks DataCite after a Crossref 404. See the
-[DataCite singleton guide](https://support.datacite.org/docs/api-get-doi).
+`extract_metadata.py --doi` 目前只读 Crossref 记录。DataCite DOI 请用 `doi_to_bibtex.py`（DOI 内容协商）；Crossref 返回 404 后，`validate_citations.py` 也会检查 DataCite。参见 [DataCite 单条记录指南](https://support.datacite.org/docs/api-get-doi)。
 
-### PMC ID conversion
+### PMC ID 转换
 
-`extract_metadata.py --pmcid PMC7611378` uses
-`GET https://pmc.ncbi.nlm.nih.gov/tools/idconv/api/v1/articles/` with `ids`,
-`format=json`, `tool`, and optional `email`. It reads `records[0].pmid` (which
-may be numeric), then uses PubMed; if no PMID exists, it tries the returned DOI.
-Only articles present in PMC can be mapped. The service accepts up to 200 IDs
-of the same type per call, without pagination; this helper sends one ID.
+`extract_metadata.py --pmcid PMC7611378` 使用 `GET https://pmc.ncbi.nlm.nih.gov/tools/idconv/api/v1/articles/`，带 `ids`、`format=json`、`tool` 和可选的 `email`。它读取 `records[0].pmid`（可能是纯数字），随后走 PubMed；若没有 PMID，则尝试返回的 DOI。只有收录在 PMC 的文章才能完成映射。该服务每次调用最多接受 200 个同类型 ID，不分页；本 helper 每次只发一个 ID。
 
-This active [ID converter](https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/)
-is separate from the retired PMC OA Web Service.
+这个仍在运行的 [ID 转换器](https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/) 与已停用的 PMC OA Web Service 是两套服务。
 
-## Required BibTeX Fields
+## BibTeX 必填字段
 
-### @article (Journal Articles)
+### @article（期刊论文）
 
-**Required**:
-- `author`: Author names
-- `title`: Article title
-- `journal`: Journal name
-- `year`: Publication year
+**必填**：
+- `author`: 作者姓名
+- `title`: 论文标题
+- `journal`: 期刊名称
+- `year`: 出版年份
 
-**Optional but recommended**:
-- `volume`: Volume number
-- `number`: Issue number
-- `pages`: Page range (e.g., 123--145)
-- `doi`: Digital Object Identifier
-- `url`: URL if no DOI
-- `month`: Publication month
+**可选但推荐**：
+- `volume`: 卷号
+- `number`: 期号
+- `pages`: 页码范围（如 123--145）
+- `doi`: 数字对象标识符
+- `url`: 无 DOI 时填 URL
+- `month`: 出版月份
 
-**Example**:
+**示例**：
 ```bibtex
 @article{Smith2024,
   author  = {Smith, John and Doe, Jane},
@@ -398,22 +381,22 @@ is separate from the retired PMC OA Web Service.
 }
 ```
 
-### @book (Books)
+### @book（书籍）
 
-**Required**:
-- `author` or `editor`: Author(s) or editor(s)
-- `title`: Book title
-- `publisher`: Publisher name
-- `year`: Publication year
+**必填**：
+- `author` 或 `editor`: 作者或编者
+- `title`: 书名
+- `publisher`: 出版社名称
+- `year`: 出版年份
 
-**Optional but recommended**:
-- `edition`: Edition number (if not first)
-- `address`: Publisher location
+**可选但推荐**：
+- `edition`: 版次（非初版时）
+- `address`: 出版地
 - `isbn`: ISBN
 - `url`: URL
-- `series`: Series name
+- `series`: 丛书名称
 
-**Example**:
+**示例**：
 ```bibtex
 @book{Kumar2021,
   author    = {Kumar, Vinay and Abbas, Abul K. and Aster, Jon C.},
@@ -425,23 +408,23 @@ is separate from the retired PMC OA Web Service.
 }
 ```
 
-### @inproceedings (Conference Papers)
+### @inproceedings（会议论文）
 
-**Required**:
-- `author`: Author names
-- `title`: Paper title
-- `booktitle`: Conference/proceedings name
-- `year`: Year
+**必填**：
+- `author`: 作者姓名
+- `title`: 论文标题
+- `booktitle`: 会议/论文集名称
+- `year`: 年份
 
-**Optional but recommended**:
-- `pages`: Page range
-- `organization`: Organizing body
-- `publisher`: Publisher
-- `address`: Conference location
-- `month`: Conference month
-- `doi`: DOI if available
+**可选但推荐**：
+- `pages`: 页码范围
+- `organization`: 主办机构
+- `publisher`: 出版商
+- `address`: 会议地点
+- `month`: 会议月份
+- `doi`: 有则填 DOI
 
-**Example**:
+**示例**：
 ```bibtex
 @inproceedings{Vaswani2017,
   author    = {Vaswani, Ashish and Shazeer, Noam and others},
@@ -453,23 +436,23 @@ is separate from the retired PMC OA Web Service.
 }
 ```
 
-### @incollection (Book Chapters)
+### @incollection（书籍章节）
 
-**Required**:
-- `author`: Chapter author(s)
-- `title`: Chapter title
-- `booktitle`: Book title
-- `publisher`: Publisher name
-- `year`: Publication year
+**必填**：
+- `author`: 章节作者
+- `title`: 章节标题
+- `booktitle`: 书名
+- `publisher`: 出版社名称
+- `year`: 出版年份
 
-**Optional but recommended**:
-- `editor`: Book editor(s)
-- `pages`: Chapter page range
-- `chapter`: Chapter number
-- `edition`: Edition
-- `address`: Publisher location
+**可选但推荐**：
+- `editor`: 书籍编者
+- `pages`: 章节页码范围
+- `chapter`: 章节编号
+- `edition`: 版次
+- `address`: 出版地
 
-**Example**:
+**示例**：
 ```bibtex
 @incollection{Brown2020,
   author    = {Brown, Peter O. and Botstein, David},
@@ -482,21 +465,21 @@ is separate from the retired PMC OA Web Service.
 }
 ```
 
-### @phdthesis (Dissertations)
+### @phdthesis（学位论文）
 
-**Required**:
-- `author`: Author name
-- `title`: Thesis title
-- `school`: Institution
-- `year`: Year
+**必填**：
+- `author`: 作者姓名
+- `title`: 论文标题
+- `school`: 授予机构
+- `year`: 年份
 
-**Optional**:
-- `type`: Type (e.g., "PhD dissertation")
-- `address`: Institution location
-- `month`: Month
+**可选**：
+- `type`: 类型（如 "PhD dissertation"）
+- `address`: 机构所在地
+- `month`: 月份
 - `url`: URL
 
-**Example**:
+**示例**：
 ```bibtex
 @phdthesis{Johnson2023,
   author = {Johnson, Mary L.},
@@ -507,19 +490,19 @@ is separate from the retired PMC OA Web Service.
 }
 ```
 
-### @misc (Preprints, Software, Datasets)
+### @misc（预印本、软件、数据集）
 
-**Required**:
-- `author`: Author(s)
-- `title`: Title
-- `year`: Year
+**必填**：
+- `author`: 作者
+- `title`: 标题
+- `year`: 年份
 
-**For preprints, add**:
-- `howpublished`: Repository (e.g., "bioRxiv")
-- `doi`: Preprint DOI
-- `note`: Preprint ID
+**预印本另加**：
+- `howpublished`: 仓库（如 "bioRxiv"）
+- `doi`: 预印本 DOI
+- `note`: 预印本 ID
 
-**Example (preprint)**:
+**示例（预印本）**：
 ```bibtex
 @misc{Zhang2024,
   author       = {Zhang, Yi and Chen, Li and Wang, Hui},
@@ -531,7 +514,7 @@ is separate from the retired PMC OA Web Service.
 }
 ```
 
-**Example (software)**:
+**示例（软件）**：
 ```bibtex
 @misc{AlphaFold2021,
   author       = {DeepMind},
@@ -543,11 +526,11 @@ is separate from the retired PMC OA Web Service.
 }
 ```
 
-## Extraction Workflows
+## 提取工作流
 
-### From DOI
+### 从 DOI 提取
 
-**Best practice** - Most reliable source:
+**最佳实践**，最可靠的来源：
 
 ```bash
 # Single DOI
@@ -560,17 +543,17 @@ python scripts/extract_metadata.py \
   --output refs.bib
 ```
 
-**Process**:
-1. Query CrossRef API with DOI
-2. Parse JSON response
-3. Extract required fields
-4. Determine entry type (@article, @book, etc.)
-5. Format as BibTeX
-6. Validate completeness
+**流程**：
+1. 用 DOI 查询 CrossRef API
+2. 解析 JSON 响应
+3. 提取必填字段
+4. 确定条目类型（@article、@book 等）
+5. 格式化为 BibTeX
+6. 校验完整性
 
-### From PMID
+### 从 PMID 提取
 
-**For biomedical literature**:
+**用于生物医学文献**：
 
 ```bash
 # Single PMID
@@ -583,49 +566,49 @@ python scripts/extract_metadata.py \
   --output refs.bib
 ```
 
-**Process**:
-1. Query PubMed EFetch with PMID
-2. Parse XML response
-3. Extract citation fields (the bundled extractor does not retain MeSH terms)
-4. Check for DOI in response
-5. If DOI exists, optionally query CrossRef for additional metadata
-6. Format as BibTeX
+**流程**：
+1. 用 PMID 查询 PubMed EFetch
+2. 解析 XML 响应
+3. 提取引文字段（随库附带的 extractor 不保留 MeSH 主题词）
+4. 检查响应中是否有 DOI
+5. 若有 DOI，可再查 CrossRef 补充元数据
+6. 格式化为 BibTeX
 
-### From arXiv ID
+### 从 arXiv ID 提取
 
-**For preprints**:
+**用于预印本**：
 
 ```bash
 python scripts/extract_metadata.py --arxiv 2103.14030
 ```
 
-**Process**:
-1. Query arXiv API with ID
-2. Parse Atom XML response
-3. Inspect journal reference and DOI for a possible published version
-4. If verified as published: explicitly re-extract publisher metadata by DOI
-5. If not published: Use preprint metadata
-6. Format as @misc with preprint note
+**流程**：
+1. 用 ID 查询 arXiv API
+2. 解析 Atom XML 响应
+3. 检查期刊引用信息和 DOI，判断是否已有正式发表版本
+4. 若确认已发表：用 DOI 重新显式提取出版商元数据
+5. 若未发表：使用预印本元数据
+6. 格式化为 @misc 并加预印本说明
 
-**Important**: Always check if preprint has been published!
+**重要**：务必检查预印本是否已正式发表！
 
-### From URL
+### 从 URL 提取
 
-**When you only have URL**:
+**手上只有 URL 时**：
 
 ```bash
 python scripts/extract_metadata.py \
   --url "https://www.nature.com/articles/s41586-021-03819-2"
 ```
 
-**Process**:
-1. Parse URL to extract identifier
-2. Identify type (DOI, PMID, arXiv)
-3. Extract identifier from URL
-4. Query appropriate API
-5. Format as BibTeX
+**流程**：
+1. 解析 URL，提取标识符
+2. 判断类型（DOI、PMID、arXiv）
+3. 从 URL 中提取标识符
+4. 查询相应的 API
+5. 格式化为 BibTeX
 
-**URL patterns**:
+**URL 模式**：
 ```
 # DOI URLs
 https://doi.org/10.1038/nature12345
@@ -641,9 +624,9 @@ https://arxiv.org/abs/2103.14030
 https://arxiv.org/pdf/2103.14030.pdf
 ```
 
-### Batch Processing
+### 批量处理
 
-**From file with mixed identifiers**:
+**从含混合标识符的文件提取**：
 
 ```bash
 # Create file with one identifier per line
@@ -658,25 +641,25 @@ python scripts/extract_metadata.py \
   --output references.bib
 ```
 
-**Process**:
-- Script auto-detects identifier type
-- Queries appropriate API
-- Combines all into single BibTeX file
-- Handles errors gracefully
+**流程**：
+- 脚本自动识别标识符类型
+- 查询相应的 API
+- 合并到单个 BibTeX 文件
+- 妥善处理错误
 
-## Special Cases and Edge Cases
+## 特殊情形与边界情况
 
-### Preprints Later Published
+### 预印本后正式发表
 
-**Issue**: Preprint cited, but journal version now available.
+**问题**：引的是预印本，但现在已有期刊版本。
 
-**Solution**:
-1. Check arXiv metadata for DOI field
-2. Verify the DOI points to a published version before replacing the preprint
-3. Update citation to journal article
-4. Note preprint version in comments if needed
+**解决**：
+1. 检查 arXiv 元数据中的 DOI 字段
+2. 替换预印本前，先核实该 DOI 指向已发表版本
+3. 把引文更新为期刊论文
+4. 需要时在注释中记下预印本版本
 
-**Example**:
+**示例**：
 ```bibtex
 % Example publisher citation; do not infer an arXiv-to-DOI mapping from this template.
 % Published as:
@@ -691,15 +674,15 @@ python scripts/extract_metadata.py \
 }
 ```
 
-### Multiple Authors (et al.)
+### 多作者（et al.）
 
-**Issue**: Many authors (10+).
+**问题**：作者很多（10 人及以上）。
 
-**BibTeX practice**:
-- Preserve the complete author list from the verified source.
-- Let the bibliography style truncate display names; use `and others` only when the source or style requires it.
+**BibTeX 做法**：
+- 保留核实过的来源给出的完整作者列表。
+- 显示名的截断交给参考文献样式处理；只有来源或样式要求时才用 `and others`。
 
-**Example**:
+**示例**：
 ```bibtex
 @article{LargeCollaboration2024,
   author = {First, Author and Second, Author and Third, Author and others},
@@ -707,11 +690,11 @@ python scripts/extract_metadata.py \
 }
 ```
 
-### Author Name Variations
+### 作者姓名变体
 
-**Issue**: Authors publish under different name formats.
+**问题**：同一作者以不同姓名格式发表。
 
-**Standardization**:
+**统一格式**：
 ```
 # Common variations
 John Smith
@@ -725,22 +708,22 @@ Smith, J. A.
 author = {Smith, John A.}
 ```
 
-**Extraction preference**:
-1. Use full name if available
-2. Include middle initial if available
-3. Format: Last, First Middle
+**提取时的取舍**：
+1. 有全名就用全名
+2. 有中间名缩写就带上
+3. 格式：Last, First Middle
 
-### No DOI Available
+### 无 DOI 可用
 
-**Issue**: Older papers or books without DOIs.
+**问题**：较老的论文或书籍没有 DOI。
 
-**Solutions**:
-1. Use PMID if available (biomedical)
-2. Use ISBN for books
-3. Use URL to stable source
-4. Include full publication details
+**解决**：
+1. 有 PMID 就用（生物医学）
+2. 书籍用 ISBN
+3. 用指向稳定来源的 URL
+4. 写全出版信息
 
-**Example**:
+**示例**：
 ```bibtex
 @article{OldPaper1995,
   author  = {Author, Name},
@@ -754,16 +737,16 @@ author = {Smith, John A.}
 }
 ```
 
-### Conference Papers vs Journal Articles
+### 会议论文与期刊论文
 
-**Issue**: Same work published in both.
+**问题**：同一成果同时有会议版和期刊版。
 
-**Best practice**:
-- Cite journal version if both available
-- Journal version is archival
-- Conference version for timeliness
+**最佳实践**：
+- 两者都有时引期刊版本
+- 期刊版本是存档版本
+- 会议版本胜在时效
 
-**If citing conference**:
+**引会议版时**：
 ```bibtex
 @inproceedings{Smith2024conf,
   author    = {Smith, John},
@@ -773,7 +756,7 @@ author = {Smith, John A.}
 }
 ```
 
-**If citing journal**:
+**引期刊版时**：
 ```bibtex
 @article{Smith2024journal,
   author  = {Smith, John},
@@ -783,17 +766,17 @@ author = {Smith, John A.}
 }
 ```
 
-### Book Chapters vs Edited Collections
+### 书籍章节与编辑文集
 
-**Extract correctly**:
-- Chapter: Use `@incollection`
-- Whole book: Use `@book`
-- Book editor: List in `editor` field
-- Chapter author: List in `author` field
+**正确提取**：
+- 章节：用 `@incollection`
+- 整本书：用 `@book`
+- 书籍编者：列入 `editor` 字段
+- 章节作者：列入 `author` 字段
 
-### Datasets and Software
+### 数据集与软件
 
-**Use @misc** with appropriate fields:
+**用 @misc**，字段填适当内容：
 
 ```bibtex
 @misc{DatasetName2024,
@@ -806,88 +789,87 @@ author = {Smith, John A.}
 }
 ```
 
-## Validation After Extraction
+## 提取后验证
 
-Always validate extracted metadata:
+提取的元数据务必验证：
 
 ```bash
 python scripts/validate_citations.py extracted_refs.bib
 ```
 
-**Check**:
-- All required fields present
-- DOI resolves correctly
-- Author names formatted consistently
-- Year is reasonable (4 digits)
-- Journal/publisher names correct
-- Page ranges use -- not -
-- Special characters handled properly
+**检查**：
+- 所有必填字段齐全
+- DOI 能正确解析
+- 作者姓名格式一致
+- 年份合理（4 位数字）
+- 期刊/出版商名称正确
+- 页码范围用 -- 而非 -
+- 特殊字符处理得当
 
-## Best Practices
+## 最佳实践
 
-### 1. Prefer DOI When Available
+### 1. 有 DOI 就优先用 DOI
 
-DOIs provide:
-- Permanent identifier
-- Best metadata source
-- Publisher-verified information
-- Resolvable link
+DOI 能提供：
+- 永久标识符
+- 最好的元数据来源
+- 出版商核实过的信息
+- 可解析的链接
 
-### 2. Verify Automatically Extracted Metadata
+### 2. 验证自动提取的元数据
 
-Spot-check:
-- Author names match publication
-- Title matches (including capitalization)
-- Year is correct
-- Journal name is complete
+抽查：
+- 作者姓名与出版物一致
+- 标题一致（含大小写）
+- 年份正确
+- 期刊名完整
 
-### 3. Handle Special Characters
+### 3. 处理特殊字符
 
-**LaTeX special characters**:
-- Protect capitalization: `{AlphaFold}`
-- Handle accents: `M{\"u}ller` or use Unicode
-- Chemical formulas: `H$_2$O` or `\ce{H2O}`
+**LaTeX 特殊字符**：
+- 保护大小写：`{AlphaFold}`
+- 处理重音：`M{\"u}ller` 或用 Unicode
+- 化学式：`H$_2$O` 或 `\ce{H2O}`
 
-### 4. Use Consistent Citation Keys
+### 4. 引用键保持一致
 
-**Convention**: `FirstAuthorYEARkeyword`
+**约定**：`FirstAuthorYEARkeyword`
 ```
 Smith2024protein
 Doe2023machine
 Johnson2024cancer
 ```
 
-### 5. Include DOI for Modern Papers
+### 5. 现代论文包含 DOI
 
-Include a DOI when one has been assigned; publication year does not guarantee one:
+已分配 DOI 就要包含；出版年份新不代表一定有 DOI：
 ```bibtex
 doi = {10.1038/nature12345}
 ```
 
-### 6. Document Source
+### 6. 注明来源
 
-For non-standard sources, add note:
+非标准来源要加 note：
 ```bibtex
 note = {Preprint, not peer-reviewed}
 note = {Technical report}
 note = {Dataset accompanying [citation]}
 ```
 
-## Summary
+## 总结
 
-Metadata extraction workflow:
+元数据提取工作流：
 
-1. **Identify**: Determine identifier type (DOI, PMID, arXiv, URL)
-2. **Query**: Use appropriate API (CrossRef, PubMed, arXiv)
-3. **Extract**: Parse response for required fields
-4. **Format**: Create properly formatted BibTeX entry
-5. **Validate**: Check completeness and accuracy
-6. **Verify**: Spot-check critical citations
+1. **识别**：判断标识符类型（DOI、PMID、arXiv、URL）
+2. **查询**：用相应的 API（CrossRef、PubMed、arXiv）
+3. **提取**：从响应中解析必填字段
+4. **格式化**：生成格式规范的 BibTeX 条目
+5. **验证**：检查完整性与准确性
+6. **核对**：抽查关键引文
 
-**Use scripts** to automate:
-- `extract_metadata.py`: Universal extractor
-- `doi_to_bibtex.py`: Quick DOI conversion
-- `validate_citations.py`: Verify accuracy
+**用脚本**自动化：
+- `extract_metadata.py`: 通用提取器
+- `doi_to_bibtex.py`: 快速 DOI 转换
+- `validate_citations.py`: 校验准确性
 
-**Always validate** extracted metadata before final submission!
-
+提交最终结果前，**务必验证**提取到的元数据！

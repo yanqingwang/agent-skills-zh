@@ -1,6 +1,10 @@
-# [Feature/Project Name]
+> **中文汉化版** · 上游：[google/elephant-goldfish-model](https://github.com/google/elephant-goldfish-model) · 原文件：`skills/egm-draft/references/design_doc.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-*   **Author:** [Author Name or GitHub Handle]
+# [功能/项目名称]
+
+*   **Author:** [作者姓名或 GitHub 用户名]
 *   **Status:** [Draft | Proposed | In Review | Approved]
 *   **Date:** [YYYY-MM-DD]
 
@@ -8,79 +12,74 @@
 
 ## Overview
 
-<!-- Provide a high-level summary of the feature, the business or technical
-problem it solves, and its context within the system. Keep it concise so both
-humans and agents can quickly parse the main objective.
+<!-- 提供该功能的高层摘要：它解决的业务或技术问题，以及它在系统中所处的位置。
+行文保持简洁，让人和 Agent 都能快速解析出主要目标。
 -->
 
 ## The Problem
 
-[Summarize the problem and the proposed solution here.]
+[在此总结问题与拟议的解决方案。]
 
 ## Goals
 
 <!--
-What will this feature achieve? Be specific, measurable, and clear.
-These goals represent the absolute criteria for success.
+这个功能要达成什么？要具体、可度量、清晰。
+这些目标是成功的绝对判定标准。
 -->
 
-*   Goal 1
-*   Goal 2
+*   目标 1
+*   目标 2
 
 ## Non-Goals
 
 <!--
-Explicitly state what is out of scope. This is crucial to prevent feature creep
-and to define strict boundaries for the implementation agent.
+明确写出不在范围内的内容。这对防止功能蔓延至关重要，
+也为实施 Agent 划定严格的边界。
 -->
 
-*   Non-Goal 1
-*   Non-Goal 2
+*   非目标 1
+*   非目标 2
 
-## Open Questions
+## 待解决问题
 
 <!--
-List unresolved design questions, technical unknowns, or dependencies requiring
-investigation. Unanswered questions are retained here across drafting sessions
-to preserve conversational memory and prevent future sessions from re-asking
-questions that were already discussed. Remove answered questions as they are
-resolved.
+列出尚未解决的设计问题、技术未知项，或需要调研的依赖项。未获解答的问题会跨
+起草会话保留在此处，以保存对话记忆，防止后续会话重复追问已经讨论过的问题。
+问题解决后，把已解答的问题从此处移除。
 -->
 
-*   **Question 1**: [Description of technical unknown or open question]
-*   **Question 2**: [Description of technical unknown or open question]
+*   **问题 1**：[对技术未知项或待决问题的描述]
+*   **问题 2**：[对技术未知项或待决问题的描述]
 
-## Critical User Journeys (CUJs)
+## 关键用户旅程（CUJ）
 
 <!--
-Define the end-to-end user journeys this design enables. Each CUJ must contain:
+定义本设计所支持的端到端用户旅程。每个 CUJ 必须包含：
 
-1. Given: Preconditions, starting state, and environment configurations.
-2. When: The trigger, user action, or system event.
-3. Then: The expected outcome, verification criteria, and postconditions.
+1. Given：前置条件、起始状态与环境配置。
+2. When：触发条件、用户操作或系统事件。
+3. Then：预期结果、验证标准与后置条件。
 -->
 
-### CUJ 1: [Journey Title]
+### CUJ 1: [旅程标题]
 
-*   **Given**: [Preconditions]
-*   **When**: [Actions]
-*   **Then**: [Expected Outcomes]
+*   **Given**: [前置条件]
+*   **When**: [操作]
+*   **Then**: [预期结果]
 
-### CUJ 2: [Journey Title]
+### CUJ 2: [旅程标题]
 
-*   **Given**: [Preconditions]
-*   **When**: [Actions]
-*   **Then**: [Expected Outcomes]
+*   **Given**: [前置条件]
+*   **When**: [操作]
+*   **Then**: [预期结果]
 
 ## Technical Plan (Architecture)
 
-<!-- Detail the high-level design, architectural choices, system data flows, and
-component interactions. Include ASCII or Mermaid diagrams to clearly model the
-relationships.
+<!-- 详述高层设计、架构选择、系统数据流与组件交互。加入 ASCII 或 Mermaid 图，
+清晰刻画各部分之间的关系。
 -->
 
-[Explain your architectural choices, data structures, and system component
-mapping here.]
+[在此说明你的架构选择、数据结构以及系统组件的对应关系。]
 
 ```text
 [Optional ASCII Architecture Diagram]
@@ -88,90 +87,79 @@ mapping here.]
 
 ## Alternatives Considered
 
-<!-- Document other architectural approaches or designs that were evaluated and
-rejected. Explain the pros, cons, and the technical reasoning for why the chosen
-plan is superior.
+<!-- 记录经过评估后被否决的其他架构方案或设计。说明各方案的优缺点，
+以及所选方案更优的技术理由。
 -->
 
-### Alternative A: [Alternative Title]
+### Alternative A: [备选方案标题]
 
-*   **Pros**: [List benefits]
-*   **Cons**: [List drawbacks]
-*   **Reason for Rejection**: [Why this option was not selected (e.g., "Rejected by author: technical rationale"). Do not attribute a rejection to a maintainer without linking their issue, discussion, or PR.]
+*   **优点**：[列出优点]
+*   **缺点**：[列出缺点]
+*   **否决原因**：[未选择该选项的原因（例如 "Rejected by author: technical rationale"）。在没有链接到维护者的 issue、讨论或 PR 时，不要把否决归因于某位维护者。]
 
 --------------------------------------------------------------------------------
 
-## Non-Functional Requirements
+## 非功能性需求
 
-<!-- Analyze non-functional concerns only if they represent critical risks for
-this design:
+<!-- 仅当非功能性关注点对本设计构成关键风险时才进行分析：
 
-- Security & Privacy: (Data sensitivity, auth/auth, secrets management).
-- Performance & Latency: (Execution runtime, storage footprint, LLM token
-  overhead).
-- Rollout & Rollback: (Feature flags, backward compatibility, rollback
-  commands).
+- 安全与隐私：（数据敏感度、认证/授权、密钥管理）。
+- 性能与延迟：（执行耗时、存储占用、LLM token 开销）。
+- 上线与回滚：（功能开关、向后兼容性、回滚命令）。
 -->
 
-[Detail any critical non-functional requirements here. If none are critical,
-this section can be omitted or stated as "None".]
+[在此详述关键的非功能性需求。若没有关键项，本节可省略，或写明 "None"。]
 
 --------------------------------------------------------------------------------
 
-### Additional Resources
+### 其他参考资源
 
-<!-- Specify the external resources and context that were used during the design
-discussion. Optional. If none were provided omit this section.-->
+<!-- 列出设计讨论中使用过的外部资源与背景材料。可选。若未提供，省略本节。-->
 
-*   Important project docs referenced
-*   Important docs/ referenced
-*   Related work
+*   引用过的重要项目文档
+*   引用过的重要 docs/ 文档
+*   相关工作
 
-### Future Improvements
+### 未来改进
 
-<!-- Specify areas that have room for future improvement here. If none were
-provided omit this section.-->
+<!-- 在此列出未来仍有改进空间的方面。若未提供，省略本节。-->
 
-*   **The idea**: What could be improved?
+*   **想法**：哪里还有改进空间？
 
 --------------------------------------------------------------------------------
 
 ## Detailed Implementation Plan
 
-<!-- Specify exactly which files must be created or modified. Do not use vague
-language or TBDs.
+<!-- 明确写出必须创建或修改的每一个文件。不要使用含糊措辞或 TBD。
 -->
 
-### Target Files to Create/Modify
+### 待创建/修改的目标文件
 
 #### 1. `[File Path 1]` ([Create | Modify])
 
-*   **Type / Scope**: [e.g., Python Service, C++ Library, TypeScript Module, Build
-    Configuration]
-*   **Proposed Changes**: [Describe the new APIs, class/function signatures, or
-    behavioral logic here. Focus on the minimal required details for
-    implementation.]
+*   **类型 / 范围**：[例如 Python 服务、C++ 库、TypeScript 模块、构建配置]
+*   **拟议改动**：[在此描述新增的 API、类/函数签名或行为逻辑。聚焦实现所需的
+    最低限度细节。]
 
 #### 2. `[File Path 2]` ([Create | Modify])
 
-*   **Type / Scope**: [e.g., Unit Test, E2E Test Driver]
-*   **Proposed Changes**: [Describe the test coverage, expected test cases, or
-    mock assertions.]
+*   **类型 / 范围**：[例如单元测试、端到端测试驱动]
+*   **拟议改动**：[描述测试覆盖范围、预期测试用例或 mock 断言。]
 
-### Verification Plan
+### 验证计划
 
-<!-- Specify what unit, integration, or manual tests must pass to validate the
-implementation. What metrics should be measured to verify success?
+<!-- 写明必须通过哪些单元、集成或人工测试才能验证实现。应度量哪些指标来确认
+成功？
 -->
 
-*   **Compilation/Build**: [e.g., `npm run build`, `cargo build`, `make`]
-*   **Unit Tests**: [e.g., `pytest`, `npm test`, `cargo test`]
-*   **Static Analysis & Linting**: [e.g., `eslint`, `ruff check`, `golangci-lint`]
-*   **Test Coverage Requirement**: [e.g., 85%+ branch coverage]
-*   **E2E/Integration**: [e.g., Integration test command or automated eval runner]
+*   **编译/构建**：[例如 `npm run build`、`cargo build`、`make`]
+*   **单元测试**：[例如 `pytest`、`npm test`、`cargo test`]
+*   **静态分析与 lint**：[例如 `eslint`、`ruff check`、`golangci-lint`]
+*   **测试覆盖率要求**：[例如分支覆盖率 85%+]
+*   **端到端/集成**：[例如集成测试命令或自动化评测运行器]
 
 --------------------------------------------------------------------------------
 
-<!-- Provenance: Indicates initial structural drafting via EGM. -->
+<!-- 来源标记：表示本文档的初始结构由 EGM 起草。 -->
 
 *Drafted with EGM*

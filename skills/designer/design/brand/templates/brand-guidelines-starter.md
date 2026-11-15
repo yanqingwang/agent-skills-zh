@@ -1,65 +1,69 @@
-# Brand Guidelines v1.0
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/brand/templates/brand-guidelines-starter.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-> Last updated: {DATE}
+# 品牌指南 v1.0
+
+> 最后更新：{DATE}
 > Status: Draft
 
-## Quick Reference
+## 快速参考
 
-| Element | Value |
+| 元素 | 值 |
 |---------|-------|
-| Primary Color | #2563EB |
-| Secondary Color | #8B5CF6 |
-| Primary Font | Inter |
-| Voice | Professional, Helpful, Clear |
+| 主色 | #2563EB |
+| 辅色 | #8B5CF6 |
+| 主字体 | Inter |
+| 语气 | 专业、乐于助人、清晰 |
 
 ---
 
-## 1. Color Palette
+## 1. 色板
 
-### Primary Colors
+### 主色
 
-| Name | Hex | RGB | Usage |
+| 名称 | Hex | RGB | 用途 |
 |------|-----|-----|-------|
-| Primary Blue | #2563EB | rgb(37,99,235) | CTAs, headers, links |
-| Primary Dark | #1D4ED8 | rgb(29,78,216) | Hover states, emphasis |
+| 主蓝 | #2563EB | rgb(37,99,235) | CTA、页头、链接 |
+| 主深蓝 | #1D4ED8 | rgb(29,78,216) | 悬停状态、强调 |
 
-### Secondary Colors
+### 辅色
 
-| Name | Hex | RGB | Usage |
+| 名称 | Hex | RGB | 用途 |
 |------|-----|-----|-------|
-| Secondary Purple | #8B5CF6 | rgb(139,92,246) | Accents, highlights |
-| Accent Green | #10B981 | rgb(16,185,129) | Success, positive states |
+| 辅紫 | #8B5CF6 | rgb(139,92,246) | 强调色、高亮 |
+| 强调绿 | #10B981 | rgb(16,185,129) | 成功、积极状态 |
 
-### Neutral Palette
+### 中性色
 
-| Name | Hex | RGB | Usage |
+| 名称 | Hex | RGB | 用途 |
 |------|-----|-----|-------|
-| Background | #FFFFFF | rgb(255,255,255) | Page backgrounds |
-| Surface | #F9FAFB | rgb(249,250,251) | Cards, sections |
-| Text Primary | #111827 | rgb(17,24,39) | Headings, body text |
-| Text Secondary | #6B7280 | rgb(107,114,128) | Captions, muted text |
-| Border | #E5E7EB | rgb(229,231,235) | Dividers, borders |
+| 背景 | #FFFFFF | rgb(255,255,255) | 页面背景 |
+| 表面 | #F9FAFB | rgb(249,250,251) | 卡片、区块 |
+| 主文本 | #111827 | rgb(17,24,39) | 标题、正文 |
+| 次文本 | #6B7280 | rgb(107,114,128) | 说明文字、弱化文本 |
+| 边框 | #E5E7EB | rgb(229,231,235) | 分隔线、边框 |
 
-### Semantic Colors
+### 语义色
 
-| State | Hex | Usage |
+| 状态 | Hex | 用途 |
 |-------|-----|-------|
-| Success | #22C55E | Positive actions, confirmations |
-| Warning | #F59E0B | Cautions, pending states |
-| Error | #EF4444 | Errors, destructive actions |
-| Info | #3B82F6 | Informational messages |
+| Success | #22C55E | 积极操作、确认 |
+| Warning | #F59E0B | 谨慎提示、待处理状态 |
+| Error | #EF4444 | 错误、破坏性操作 |
+| Info | #3B82F6 | 信息类消息 |
 
-### Accessibility
+### 可访问性
 
-- Text on white background: 7.2:1 contrast ratio (AAA)
-- Primary on white: 4.6:1 contrast ratio (AA)
-- All interactive elements meet WCAG 2.1 AA standards
+- 白底上的文本：7.2:1 对比度（AAA）
+- 白底上的主色：4.6:1 对比度（AA）
+- 所有交互元素达到 WCAG 2.1 AA 标准
 
 ---
 
-## 2. Typography
+## 2. 字体排印
 
-### Font Stack
+### 字体栈
 
 ```css
 --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
@@ -67,20 +71,20 @@
 --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 ```
 
-### Type Scale
+### 字号阶梯
 
-| Element | Size (Desktop) | Size (Mobile) | Weight | Line Height |
+| 元素 | 尺寸（桌面） | 尺寸（移动端） | 字重 | 行高 |
 |---------|----------------|---------------|--------|-------------|
 | H1 | 48px | 32px | 700 | 1.2 |
 | H2 | 36px | 28px | 600 | 1.25 |
 | H3 | 28px | 24px | 600 | 1.3 |
 | H4 | 24px | 20px | 600 | 1.35 |
-| Body | 16px | 16px | 400 | 1.5 |
-| Body Large | 18px | 18px | 400 | 1.6 |
-| Small | 14px | 14px | 400 | 1.5 |
-| Caption | 12px | 12px | 400 | 1.4 |
+| 正文 | 16px | 16px | 400 | 1.5 |
+| 大号正文 | 18px | 18px | 400 | 1.6 |
+| 小号 | 14px | 14px | 400 | 1.5 |
+| 说明文字 | 12px | 12px | 400 | 1.4 |
 
-### Font Loading
+### 字体加载
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,187 +93,187 @@
 
 ---
 
-## 3. Logo Usage
+## 3. Logo 使用
 
-### Variants
+### 变体
 
-| Variant | File | Use Case |
+| 变体 | 文件 | 使用场景 |
 |---------|------|----------|
-| Full Horizontal | logo-full-horizontal.svg | Headers, documents |
-| Stacked | logo-stacked.svg | Square spaces |
-| Icon Only | logo-icon.svg | Favicons, small spaces |
-| Monochrome | logo-mono.svg | Limited color contexts |
+| 全横式 | logo-full-horizontal.svg | 页头、文档 |
+| 竖排式 | logo-stacked.svg | 方形空间 |
+| 仅图标 | logo-icon.svg | favicon、小空间 |
+| 单色 | logo-mono.svg | 色彩受限场景 |
 
-### Clear Space
+### 净空
 
-Minimum clear space = height of the logo icon (mark)
+最小净空 = logo 图标（标志图形）的高度
 
-### Minimum Size
+### 最小尺寸
 
-| Context | Minimum Width |
+| 场景 | 最小宽度 |
 |---------|---------------|
-| Digital - Full Logo | 120px |
-| Digital - Icon | 24px |
-| Print - Full Logo | 35mm |
-| Print - Icon | 10mm |
+| 数字端 - 完整 Logo | 120px |
+| 数字端 - 图标 | 24px |
+| 印刷 - 完整 Logo | 35mm |
+| 印刷 - 图标 | 10mm |
 
-### Don'ts
+### 禁止事项
 
-- Don't rotate or skew the logo
-- Don't change colors outside approved palette
-- Don't add shadows or effects
-- Don't crop or modify proportions
-- Don't place on busy backgrounds without sufficient contrast
+- 不要旋转或倾斜 logo
+- 不要使用批准色板之外的颜色
+- 不要加阴影或特效
+- 不要裁切或修改比例
+- 不要放在对比度不足的花杂背景上
 
 ---
 
-## 4. Voice & Tone
+## 4. 语气与语调
 
-### Brand Personality
+### 品牌个性
 
-| Trait | Description |
+| 特质 | 描述 |
 |-------|-------------|
-| **Professional** | Expert knowledge, authoritative yet approachable |
-| **Helpful** | Solution-focused, actionable guidance |
-| **Clear** | Direct communication, jargon-free |
-| **Confident** | Assured without being arrogant |
+| **专业** | 专业知识扎实，权威而不失亲和 |
+| **乐于助人** | 聚焦解决方案，指导可执行 |
+| **清晰** | 直接表达，不用行话 |
+| **自信** | 有把握而不傲慢 |
 
-### Voice Chart
+### 语气对照表
 
-| Trait | We Are | We Are Not |
+| 特质 | 我们是 | 我们不是 |
 |-------|--------|------------|
-| Professional | Expert, knowledgeable | Stuffy, corporate |
-| Helpful | Supportive, empowering | Patronizing |
-| Clear | Direct, concise | Vague, wordy |
-| Confident | Assured, trustworthy | Arrogant, overselling |
+| 专业 | 专家、有见识 | 刻板、官腔 |
+| 乐于助人 | 支持、赋能 | 居高临下 |
+| 清晰 | 直接、简洁 | 含糊、啰嗦 |
+| 自信 | 有把握、可信 | 傲慢、过度推销 |
 
-### Tone by Context
+### 分场景语调
 
-| Context | Tone | Example |
+| 场景 | 语调 | 示例 |
 |---------|------|---------|
-| Marketing | Engaging, benefit-focused | "Create campaigns that convert." |
-| Documentation | Clear, instructional | "Run the command to start." |
-| Error messages | Calm, solution-focused | "Try refreshing the page." |
-| Success | Brief, celebratory | "Campaign published!" |
+| 营销 | 有感染力、聚焦收益 | “打造能带来转化的营销活动。” |
+| 文档 | 清晰、指导性 | “运行命令以启动。” |
+| 错误信息 | 平静、聚焦解决 | “试试刷新页面。” |
+| 成功 | 简短、带庆祝感 | “营销活动已发布！” |
 
-### Prohibited Terms
+### 禁用词
 
-| Avoid | Reason |
+| 禁用 | 原因 |
 |-------|--------|
-| Revolutionary | Overused |
-| Best-in-class | Vague claim |
-| Seamless | Overused |
-| Synergy | Corporate jargon |
-| Leverage | Use "use" instead |
+| Revolutionary | 用滥了 |
+| Best-in-class | 含糊的宣称 |
+| Seamless | 用滥了 |
+| Synergy | 企业空话 |
+| Leverage | 改用 “use” |
 
 ---
 
-## 5. Imagery Guidelines
+## 5. 图像指南
 
-### Photography Style
+### 摄影风格
 
-- **Lighting:** Natural, soft lighting preferred
-- **Subjects:** Real people, authentic scenarios
-- **Color treatment:** Maintain brand colors in post
-- **Composition:** Clean, focused subjects
+- **光线：**偏好自然、柔和的光线
+- **主体：**真实人物、真实场景
+- **色彩处理：**后期保持品牌色
+- **构图：**干净、主体突出
 
-### Illustrations
+### 插画
 
-- Style: Modern, flat design with subtle gradients
-- Colors: Brand palette only
-- Line weight: 2px consistent stroke
-- Corners: 4px rounded
+- 风格：现代、扁平设计，带细腻渐变
+- 颜色：只用品牌色板
+- 线宽：统一 2px 描边
+- 圆角：4px
 
-### Icons
+### 图标
 
-- Style: Outlined, 24px base grid
-- Stroke: 1.5px consistent
-- Corner radius: 2px
-- Fill: None (outline only)
+- 风格：线框式，24px 基础网格
+- 描边：统一 1.5px
+- 圆角半径：2px
+- 填充：无（仅线框）
 
 ---
 
-## 6. Design Components
+## 6. 设计组件
 
-### Buttons
+### 按钮
 
-| Type | Background | Text | Border Radius |
+| 类型 | 背景 | 文字 | 圆角 |
 |------|------------|------|---------------|
 | Primary | #2563EB | #FFFFFF | 8px |
 | Secondary | Transparent | #2563EB | 8px |
 | Tertiary | Transparent | #6B7280 | 8px |
 
-### Spacing Scale
+### 间距阶梯
 
-| Token | Value | Usage |
+| Token | 值 | 用途 |
 |-------|-------|-------|
-| xs | 4px | Tight spacing |
-| sm | 8px | Compact elements |
-| md | 16px | Standard spacing |
-| lg | 24px | Section spacing |
-| xl | 32px | Large gaps |
-| 2xl | 48px | Section dividers |
+| xs | 4px | 紧凑间距 |
+| sm | 8px | 紧凑元素 |
+| md | 16px | 标准间距 |
+| lg | 24px | 区块间距 |
+| xl | 32px | 大间隙 |
+| 2xl | 48px | 区块分隔 |
 
-### Border Radius
+### 圆角
 
-| Element | Radius |
+| 元素 | 半径 |
 |---------|--------|
-| Buttons | 8px |
-| Cards | 12px |
-| Inputs | 8px |
-| Modals | 16px |
-| Pills/Tags | 9999px |
+| 按钮 | 8px |
+| 卡片 | 12px |
+| 输入框 | 8px |
+| 弹窗 | 16px |
+| 胶囊/标签 | 9999px |
 
 ---
 
-## AI Image Generation
+## AI 图像生成
 
-### Base Prompt Template
+### 基础提示词模板
 
-Always prepend to image generation prompts:
+图像生成提示词开头总是先加：
 
 ```
 {DESCRIBE YOUR VISUAL STYLE HERE - mood, colors with hex codes, lighting, atmosphere}
 ```
 
-### Style Keywords
+### 风格关键词
 
-| Category | Keywords |
+| 类别 | 关键词 |
 |----------|----------|
-| **Lighting** | {e.g., soft lighting, dramatic, natural} |
-| **Mood** | {e.g., professional, energetic, calm} |
-| **Composition** | {e.g., centered, rule of thirds, minimal} |
-| **Treatment** | {e.g., high contrast, muted, vibrant} |
-| **Aesthetic** | {e.g., modern, vintage, minimalist} |
+| **光线** | {例如：柔光、戏剧感、自然光} |
+| **情绪** | {例如：专业、有活力、平静} |
+| **构图** | {例如：居中、三分法、极简} |
+| **处理** | {例如：高对比、低饱和、鲜艳} |
+| **审美** | {例如：现代、复古、极简主义} |
 
-### Visual Mood Descriptors
+### 视觉情绪描述词
 
-- {Mood descriptor 1}
-- {Mood descriptor 2}
-- {Mood descriptor 3}
+- {情绪描述词 1}
+- {情绪描述词 2}
+- {情绪描述词 3}
 
-### Visual Don'ts
+### 视觉禁忌
 
-| Avoid | Reason |
+| 避免 | 原因 |
 |-------|--------|
-| {Item to avoid} | {Why to avoid it} |
+| {要避免的项} | {避免的理由} |
 
-### Example Prompts
+### 提示词示例
 
-**Hero Banner:**
+**主视觉横幅：**
 ```
 {Example prompt for hero banners}
 ```
 
-**Social Media Post:**
+**社交媒体帖子：**
 ```
 {Example prompt for social graphics}
 ```
 
 ---
 
-## Changelog
+## 变更记录
 
-| Version | Date | Changes |
+| 版本 | 日期 | 变更 |
 |---------|------|---------|
-| 1.0 | {DATE} | Initial guidelines |
+| 1.0 | {DATE} | 初始指南 |

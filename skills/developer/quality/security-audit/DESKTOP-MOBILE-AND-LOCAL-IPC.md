@@ -1,12 +1,16 @@
-# Desktop, Mobile, and Local IPC Hunting
+> **中文汉化版** · 上游：[cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) · 原文件：`skills/security-audit/DESKTOP-MOBILE-AND-LOCAL-IPC.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-#### When to use this file
+# 桌面、移动与本地 IPC 审查
 
-Reach for this file when the target is a desktop or mobile app, privileged helper, updater, local daemon, webview host, deep-link handler, browser native-messaging host, or local IPC client/server. Relevant untrusted actors may be a downloaded document, remote web content, another local app, another OS user, a sandboxed process, or a lower-privilege account. State that starting capability instead of treating all local users as equivalent.
+#### 何时使用本文件
 
-Use `CLIENT-SIDE.md` for browser-side webview behavior, `MEMORY-SAFETY-AND-BINARY.md` for native memory and loader safety, and `SUPPLY-CHAIN-AND-RELEASE.md` for update authenticity.
+当目标是桌面或移动应用、特权 helper、更新器、本地守护进程、webview 宿主、deep-link 处理器、浏览器 native-messaging 宿主或本地 IPC 客户端/服务器时使用本文件。相关的不可信行为者可能是下载的文档、远程 Web 内容、另一个本地应用、另一个 OS 用户、沙箱化进程或更低权限账户。请陈述这一起始能力，而不是把所有本地用户等同视之。
 
-## Core discipline (include in every agent prompt for this domain)
+浏览器侧 webview 行为用 `CLIENT-SIDE.md`，native 内存与加载器安全用 `MEMORY-SAFETY-AND-BINARY.md`，更新真实性用 `SUPPLY-CHAIN-AND-RELEASE.md`。
+
+## 核心纪律（加入本领域的每个 agent 提示词）
 
 ```
 - Establish the realistic local or remote-content attacker: another app, another OS user, a sandboxed child, an untrusted document, or a remote origin. Self-harm within the same account and authority is not a boundary violation.
@@ -16,74 +20,74 @@ Use `CLIENT-SIDE.md` for browser-side webview behavior, `MEMORY-SAFETY-AND-BINAR
 - Use `confirmed` for source evidence plus bounded local/emulator tests. Use `needs_validation` when signing, manifest merge, OS version, device policy, installer ACL, or packaging is required but not observable.
 ```
 
-## Deep-link, callback, and navigation attack classes (subagent_type: `general`)
+## Deep-link、回调与导航攻击类别（subagent_type: `general`）
 
-**Custom-scheme and deep-link ambiguity**
-Another app or page can invoke a route that mutates state, imports data, completes authentication, or selects an account without a current-session and one-time callback binding. Review URI normalization, duplicate query fields, scheme/host/path matching, exported activity/handler policy, and stale/replayed links.
+**自定义 scheme 与 deep-link 歧义**
+另一个应用或页面可以调用一个会变更状态、导入数据、完成认证或选择账户的路由，而没有当前 session 与一次性回调绑定。审查 URI 规范化、重复查询字段、scheme/host/path 匹配、导出的 activity/handler 策略，以及过期/重放的链接。
 
-**App and account handoff confusion**
-OAuth, SSO, magic-link, invite, device pairing, passwordless, or payment callbacks return to the wrong installed app, profile, tenant, or pending transaction. Bind state to the initiating app identity, current session, account, provider, operation, and expiry.
+**应用与账户交接混淆**
+OAuth、SSO、magic-link、邀请、设备配对、免密或支付回调返回到了错误的应用、profile、租户或待处理事务。把状态绑定到发起应用的身份、当前 session、账户、提供方、操作和有效期。
 
-**File-open and intent authority confusion**
-An associated file, share intent, drag/drop item, pasteboard/clipboard record, notification action, or open-file event triggers a privileged operation without confirming content type, sender trust where applicable, current user intent, and final target.
+**文件打开与 intent 权限混淆**
+关联文件、分享 intent、拖放项、粘贴板/剪贴板记录、通知动作或文件打开事件在未确认内容类型、（适用时的）发送者信任、当前用户意图和最终目标的情况下触发特权操作。
 
-## Webview and native-bridge attack classes (subagent_type: `general`)
+## Webview 与 native 桥攻击类别（subagent_type: `general`）
 
-**Navigation-origin to bridge confusion**
-Remote or attacker-controlled frames can reach a JavaScript/native bridge intended only for packaged content. Validate origin at call time and after every navigation, redirect, subframe creation, popup, and error/fallback page. URL-prefix checks and initial-load checks are insufficient.
+**导航 origin 到桥的混淆**
+远程或攻击者可控的 frame 可以到达本应只面向打包内容的 JavaScript/native 桥。在调用时刻以及每次导航、重定向、子 frame 创建、弹窗和错误/后备页面之后验证 origin。URL 前缀检查和首载检查不够。
 
-**Over-broad native bridge capabilities**
-Web content can select arbitrary files, commands, IPC methods, credentials, or system actions through a generic bridge. Check method allowlists, normalized arguments, user/tenant authority, gesture/confirmation requirements, and return-value disclosure.
+**过宽的 native 桥能力**
+Web 内容可以通过通用桥选择任意文件、命令、IPC 方法、凭证或系统动作。检查方法 allowlist、参数规范化、用户/租户权限、手势/确认要求和返回值披露。
 
-**Webview file and universal access**
-Remote content can read app-local files, privileged custom schemes, or internal origins because file access, universal access, mixed content, debug interfaces, or custom protocol handlers join origins unexpectedly. Missing a restrictive setting without reachable protected content is hardening.
+**Webview 文件与 universal 访问**
+远程内容可以读取应用本地文件、特权自定义 scheme 或内部 origin，因为文件访问、universal 访问、混合内容、调试接口或自定义协议处理器意外地合并了 origin。缺失 restrictive 设置但无可达的受保护内容属于加固问题。
 
-## Local IPC and exported-component attack classes (subagent_type: `general`)
+## 本地 IPC 与导出组件攻击类别（subagent_type: `general`）
 
-**IPC peer-authentication gaps**
-Unix sockets, named pipes, XPC, Binder, D-Bus, native messaging, RPC, shared memory, or loopback listeners accept a lower-trust peer without checking OS credentials, code identity, sandbox token, or channel ownership. Require a meaningful method or disclosure behind the channel.
+**IPC 对端认证缺口**
+Unix socket、命名管道、XPC、Binder、D-Bus、native messaging、RPC、共享内存或 loopback 监听器在不检查 OS 凭证、代码身份、沙箱 token 或通道所有权的情况下接受更低信任的对端。要求通道之后有实质性的方法或披露。
 
-**Claimed principal versus channel identity**
-The authenticated process/channel belongs to one app or user, but request fields select another user, tenant, profile, or capability. Bind each method and resource to the peer credential rather than a caller-declared identifier.
+**声称的主体与通道身份不符**
+已认证的进程/通道属于一个应用或用户，但请求字段选择了另一个用户、租户、profile 或能力。把每个方法和资源绑定到对端凭证，而不是调用者声明的标识符。
 
-**Exported service, activity, receiver, or provider overreach**
-A mobile component or local automation endpoint is externally invokable and performs an operation intended for the app itself. Review final merged manifests, intent filters, permission/signature level, path grants, and alternate aliases. Manifest status unknown after packaging requires `needs_validation`.
+**导出的 service、activity、receiver 或 provider 越权**
+移动组件或本地自动化端点可被外部调用，却执行本应面向应用自身的操作。审查最终合并的 manifest、intent filter、权限/签名级别、路径授权和替代别名。打包后 manifest 状态未知要求 `needs_validation`。
 
-**IPC lifecycle and correlation confusion**
-Predictable request IDs, reused handles, stale channels, inherited descriptors, world-writable socket paths, or restart behavior lets one peer answer, cancel, or reuse another peer's operation. Review creation permissions and cleanup of socket files, locks, ports, and shared mappings.
+**IPC 生命周期与关联混淆**
+可预测的请求 ID、重用的句柄、过期通道、继承的描述符、全局可写的 socket 路径或重启行为，让一个对端可以应答、取消或重用另一个对端的操作。审查 socket 文件、锁、端口和共享映射的创建权限与清理。
 
-## Privileged-helper and local-file attack classes (subagent_type: `general`)
+## 特权 helper 与本地文件攻击类别（subagent_type: `general`）
 
-**Privileged helper as confused deputy**
-A low-privilege caller can select a privileged command, file, service, user, or system setting without per-operation authorization. Review sudo/polkit/UAC/XPC helper rules and ensure the helper independently validates normalized arguments.
+**特权 helper 成为糊涂代理人（confused deputy）**
+低权限调用者可以在没有按操作授权的情况下选择特权命令、文件、服务、用户或系统设置。审查 sudo/polkit/UAC/XPC helper 规则，并确保 helper 独立验证规范化后的参数。
 
-**Install, update, and repair path trust**
-A privileged installer/helper reads manifests, scripts, packages, symlinks, working directories, or repair state writable by a lower-trust actor after authorization. Bind authorization to immutable content and safe destination paths.
+**安装、更新与修复路径信任**
+特权安装器/helper 在授权之后读取更低信任行为者可写的 manifest、脚本、包、symlink、工作目录或修复状态。把授权绑定到不可变内容和安全的目标路径。
 
-**Local file ownership and TOCTOU**
-The app checks a file/path then follows replacement, symlink, mount, or case/normalization changes during a privileged read/write. Use descriptor-relative operations and verify final ownership. Focus `MEMORY-SAFETY-AND-BINARY.md` on parsing after the file is opened.
+**本地文件所有权与 TOCTOU**
+应用先检查文件/路径，然后在特权读写期间追上了替换、symlink、挂载或大小写/规范化变化。使用基于描述符的操作并验证最终所有权。文件打开之后的解析问题聚焦到 `MEMORY-SAFETY-AND-BINARY.md`。
 
-**Credential-store and local-secret boundary mismatch**
-A keychain/keystore item, token file, backup, log, clipboard, notification preview, or local config is readable by another app/profile/user with less authority. Plaintext readable only by the same intended OS account is not automatically a vulnerability; state the lower-trust reader and credential power.
+**凭证存储与本地秘密边界不匹配**
+keychain/keystore 条目、token 文件、备份、日志、剪贴板、通知预览或本地配置可被权限更低的另一个应用/profile/用户读取。仅同一预期 OS 账户可读的明文不自动构成漏洞；陈述更低信任的读取者和凭证权限。
 
-## Application-state and device-lifecycle attack classes (subagent_type: `general`)
+## 应用状态与设备生命周期攻击类别（subagent_type: `general`）
 
-**Account switch, logout, and device restore leakage**
-Cached data, background tasks, widgets, notifications, local databases, webview storage, or biometric approvals survive logout/account change and appear under a later account. Review backup/restore and multi-profile behavior.
+**账户切换、注销与设备恢复泄露**
+缓存数据、后台任务、widget、通知、本地数据库、webview 存储或生物识别批准在注销/换号后仍然存活，并出现在后来的账户之下。审查备份/恢复与多 profile 行为。
 
-**Pending-action and user-presence confusion**
-Notification, widget, shortcut, share sheet, biometric prompt, or deferred operation authorizes a different action than displayed, executes after expiry, or uses another profile's pending state. Bind confirmation to normalized action, resource, account, and current foreground state.
+**待处理动作与用户在场混淆**
+通知、widget、快捷方式、分享面板、生物识别提示或延迟操作授权了与显示不同的动作、在过期后执行，或使用另一个 profile 的待处理状态。把确认绑定到规范化动作、资源、账户和当前前台状态。
 
-## Universal moves (apply across the above)
+## 通用手法（适用于以上所有类别）
 
-- Enumerate every process, app component, local endpoint, URI scheme, file association, webview origin, and helper. Record OS identity, runtime privilege, caller, and callable operation.
-- Read final packaging inputs: merged manifest, entitlements, installer rules, native-messaging registration, protocol handlers, and ACL creation. Source declarations can be overwritten downstream.
-- Validate with dummy profiles and non-sensitive local fixtures on an isolated machine/emulator. Do not interact with other users' apps, credentials, or production services.
+- 枚举每个进程、应用组件、本地端点、URI scheme、文件关联、webview origin 和 helper。记录 OS 身份、运行时权限、调用者和可调用操作。
+- 读取最终打包输入：合并的 manifest、entitlements、安装器规则、native-messaging 注册、协议处理器和 ACL 创建。源码声明可能被下游覆盖。
+- 在隔离机器/模拟器上用 dummy profile 和非敏感本地 fixture 验证。不要与其他用户的应用、凭证或生产服务交互。
 
-## Validation rules (apply before reporting ANY finding here)
+## 验证规则（报告本文件任何发现之前先执行）
 
-1. Name the attacker starting capability, OS/app principal crossed, entry channel, accepted argument or state, and unauthorized operation or disclosure.
-2. Confirm OS sandbox, peer credential, signing, entitlement, permission, user-consent, and installer controls that apply. Unknown packaging/runtime facts require `needs_validation`.
-3. For webview bridges, cite both navigation/origin control and privileged native sink. For IPC, cite peer authentication and per-resource authorization. For helpers, verify final normalized destination.
-4. Keep local tests bounded and use dummy content/accounts. Stop after proving the boundary result; do not extend proof into persistence or broader system modification.
-5. Return `confirmed` only with a complete source and local evidence chain. Return `needs_validation` with the exact OS, manifest, signing, ACL, or device-lifecycle fact required.
+1. 点名攻击者起始能力、跨越的 OS/应用主体、入口通道、被接受的参数或状态，以及未授权的操作或披露。
+2. 确认适用的 OS 沙箱、对端凭证、签名、entitlement、权限、用户同意和安装器控件。未知的打包/运行时事实要求 `needs_validation`。
+3. 对 webview 桥，同时引用导航/origin 控件与特权 native 汇点（sink）。对 IPC，引用对端认证与按资源授权。对 helper，验证最终规范化目标。
+4. 本地测试保持有界并使用 dummy 内容/账户。证明边界结果即止；不要把证明延伸到持久化或更广的系统修改。
+5. 只有在完整的源码与本地证据链时才返回 `confirmed`。`needs_validation` 要给出所需的精确 OS、manifest、签名、ACL 或设备生命周期事实。

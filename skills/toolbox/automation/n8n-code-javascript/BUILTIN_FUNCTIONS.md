@@ -1,28 +1,32 @@
-# Built-in Functions - JavaScript Code Node
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-code-javascript/BUILTIN_FUNCTIONS.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete reference for n8n's built-in JavaScript functions and helpers.
+# 内置函数（JavaScript Code 节点）
 
----
-
-## Overview
-
-n8n Code nodes provide powerful built-in functions beyond standard JavaScript. This guide covers:
-
-1. **Sandbox restrictions** - What's blocked and why (READ FIRST)
-2. **this.helpers.httpRequest()** - Make HTTP requests (the bare `$helpers` global is undefined in the task runner)
-3. **DateTime (Luxon)** - Advanced date/time operations
-4. **$jmespath()** - Query JSON structures
-5. **$getWorkflowStaticData()** - Persistent storage
-6. **Standard JavaScript Globals** - Math, JSON, console, etc.
-7. **Available Node.js Modules** - crypto, Buffer, URL
+n8n 内置 JavaScript 函数与辅助工具的完整参考。
 
 ---
 
-## 0. Sandbox Restrictions (Critical)
+## 概述
 
-Since n8n v2.0, Code nodes execute inside a **task runner sandbox** (`JsTaskRunnerSandbox`) which deliberately blocks several APIs. The legacy vm2 sandbox is being removed. Knowing what's blocked saves hours of "why does this throw on activation but not in the editor preview."
+n8n Code 节点在标准 JavaScript 之外还提供强大的内置函数。本指南涵盖：
 
-### Blocked helpers
+1. **沙箱限制** - 哪些被禁用以及为什么（先读这节）
+2. **this.helpers.httpRequest()** - 发起 HTTP 请求（裸的 `$helpers` 全局变量在 task runner 中未定义）
+3. **DateTime (Luxon)** - 高级日期/时间操作
+4. **$jmespath()** - 查询 JSON 结构
+5. **$getWorkflowStaticData()** - 持久化存储
+6. **标准 JavaScript 全局对象** - Math、JSON、console 等
+7. **可用的 Node.js 模块** - crypto、Buffer、URL
+
+---
+
+## 0. 沙箱限制（关键）
+
+自 n8n v2.0 起，Code 节点运行在 **task runner 沙箱**（`JsTaskRunnerSandbox`）内，它刻意禁用了若干 API。旧的 vm2 沙箱正在被移除。弄清哪些被禁用，能省下数小时的排查："为什么激活后抛错，编辑器预览里却正常。"
+
+### 被禁用的 helper
 
 ```javascript
 // ❌ BLOCKED — throws UnsupportedFunctionError
@@ -30,40 +34,40 @@ await this.helpers.httpRequestWithAuthentication.call(this, 'credType', { ... })
 await this.helpers.requestWithAuthenticationPaginated.call(this, { ... }, 'credType');
 ```
 
-n8n's source comment explains why: *"these rely on checking the credentials from the current node type (Code Node), and Code Node doesn't have credentials."* There is **no env var to re-enable them** in the task runner — the deny-list is compiled-in (`packages/@n8n/task-runner/src/runner-types.ts`).
+n8n 源码注释解释了原因：*"这些 helper 依赖检查当前节点类型（Code Node）的凭据，而 Code Node 没有凭据。"* 在 task runner 里**没有任何环境变量能重新启用它们**，禁用名单是编译进去的（`packages/@n8n/task-runner/src/runner-types.ts`）。
 
-**Workaround**: don't try to authenticate from inside a Code node. Instead, either:
-- Replace the Code node with an HTTP Request node that has the credential attached (the canonical pattern), or
-- Have the Code node prepare a payload and delegate to a sub-workflow whose HTTP Request node holds the credential.
+**解决办法**：不要试图在 Code 节点内部做认证。改为以下二者之一：
+- 用挂了凭据的 HTTP Request 节点替换 Code 节点（标准做法），或者
+- 让 Code 节点准备好 payload，然后委托给子工作流，由其 HTTP Request 节点持有凭据。
 
-### `$env` may be blocked
+### `$env` 可能被禁用
 
-`$env` is gated by **`N8N_BLOCK_ENV_ACCESS_IN_NODE`**. When set to `true` (a common production hardening), any reference to `$env.SOMETHING` throws. Since you can't tell from inside the Code node whether it's enabled, **don't rely on `$env` for portable skills** — treat secrets as a credential concern (HTTP Request node) rather than a Code-node concern.
+`$env` 受 **`N8N_BLOCK_ENV_ACCESS_IN_NODE`** 控制。设为 `true` 时（生产环境常见的加固手段），任何对 `$env.SOMETHING` 的引用都会抛错。由于在 Code 节点内部无法判断它是否启用，**可移植的 Skill 不要依赖 `$env`**：把密钥当作凭据问题（交给 HTTP Request 节点），而不是 Code 节点的问题。
 
-### `require()` is gated by allowlists
+### `require()` 受白名单控制
 
 ```javascript
 // May throw "Cannot find module 'crypto'" — depends on env vars
 const crypto = require('crypto');
 ```
 
-Built-in modules need `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES` (or legacy `NODE_FUNCTION_ALLOW_BUILTIN`) set to `*` or a comma-list including `crypto`. External npm packages need `N8N_RUNNERS_ALLOWED_EXTERNAL_MODULES` plus the package being installed in the runner image. On default installs neither is set — `require()` throws.
+内置模块需要把 `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES`（或旧的 `NODE_FUNCTION_ALLOW_BUILTIN`）设为 `*`，或设为包含 `crypto` 的逗号分隔列表。外部 npm 包需要 `N8N_RUNNERS_ALLOWED_EXTERNAL_MODULES`，且该包要装进 runner 镜像。默认安装两者都没设置，`require()` 会抛错。
 
-`Buffer` and `URL` are globals (not `require`'d), so they always work.
+`Buffer` 和 `URL` 是全局变量（不需要 `require`），所以始终可用。
 
-### What's always safe
+### 始终安全的内容
 
-`$input.*`, `$json`, `$node[…]`, `this.helpers.httpRequest()` (without auth), `$jmespath()`, `$getWorkflowStaticData()`, `DateTime` (Luxon), and all standard JavaScript globals (`Math`, `JSON`, `Object`, `Array`, `console`, `Buffer`, `URL`, `URLSearchParams`).
+`$input.*`、`$json`、`$node[…]`、`this.helpers.httpRequest()`（不带认证）、`$jmespath()`、`$getWorkflowStaticData()`、`DateTime`（Luxon），以及所有标准 JavaScript 全局对象（`Math`、`JSON`、`Object`、`Array`、`console`、`Buffer`、`URL`、`URLSearchParams`）。
 
-> **Accessor gotcha**: the bare `$helpers` global is **undefined** in the task-runner sandbox — `$helpers.httpRequest()` throws `ReferenceError: $helpers is not defined`. The working accessor is **`this.helpers.httpRequest()`** (inside a nested async function where `this` is lost, call it as `await fn.call(this, ...)`). The n8n-mcp validator may wrongly suggest `$helpers` — ignore it. And for anything beyond a trivial unauthenticated GET (pagination, retries, credentials), prefer the **HTTP Request node** and keep Code nodes for pure logic.
+> **访问器陷阱**：裸的 `$helpers` 全局变量在 task runner 沙箱中是 **undefined** 的，`$helpers.httpRequest()` 会抛 `ReferenceError: $helpers is not defined`。可用的访问器是 **`this.helpers.httpRequest()`**（在丢失 `this` 的嵌套 async 函数里，用 `await fn.call(this, ...)` 调用）。n8n-mcp 校验器可能会错误地建议用 `$helpers`，忽略它。凡超出简单无认证 GET 的场景（分页、重试、凭据），优先用 **HTTP Request 节点**，Code 节点只留纯逻辑。
 
 ---
 
-## 1. this.helpers.httpRequest() - HTTP Requests
+## 1. this.helpers.httpRequest() - HTTP 请求
 
-Call an API from inside Code logic, for example one lookup per step of a recursive algorithm. A plain API call, paging, retries or credentials belong in the HTTP Request node. The accessor is `this.helpers.httpRequest()` — the bare `$helpers` global is undefined in the task-runner sandbox and throws `ReferenceError: $helpers is not defined`. For non-trivial calls (pagination, retries, credentials) prefer the HTTP Request node.
+在 Code 逻辑内部调用 API，例如递归算法的每一步做一次查询。单纯的一次 API 调用、翻页、重试或凭据，都应放进 HTTP Request 节点。访问器是 `this.helpers.httpRequest()`：裸的 `$helpers` 全局变量在 task runner 沙箱中未定义，会抛 `ReferenceError: $helpers is not defined`。非简单调用（分页、重试、凭据）请优先用 HTTP Request 节点。
 
-### Basic Usage
+### 基本用法
 
 ```javascript
 const response = await this.helpers.httpRequest({
@@ -74,7 +78,7 @@ const response = await this.helpers.httpRequest({
 return [{json: {data: response}}];
 ```
 
-### Complete Options
+### 完整选项
 
 ```javascript
 const response = await this.helpers.httpRequest({
@@ -100,7 +104,7 @@ const response = await this.helpers.httpRequest({
 });
 ```
 
-### GET Request
+### GET 请求
 
 ```javascript
 // Simple GET
@@ -127,7 +131,7 @@ const results = await this.helpers.httpRequest({
 return [{json: results}];
 ```
 
-### POST Request
+### POST 请求
 
 ```javascript
 // POST with JSON body
@@ -154,7 +158,7 @@ const newUser = await this.helpers.httpRequest({
 return [{json: newUser}];
 ```
 
-### PUT/PATCH Request
+### PUT/PATCH 请求
 
 ```javascript
 // Update resource
@@ -170,7 +174,7 @@ const updated = await this.helpers.httpRequest({
 return [{json: updated}];
 ```
 
-### DELETE Request
+### DELETE 请求
 
 ```javascript
 // Delete resource
@@ -185,9 +189,9 @@ await this.helpers.httpRequest({
 return [{json: {deleted: true, userId}}];
 ```
 
-### Authentication Patterns
+### 认证模式
 
-> **Strong preference**: don't authenticate from inside a Code node. Use an HTTP Request node with a credential attached, or delegate to a sub-workflow whose HTTP Request node holds the credential. The patterns below only apply when the token genuinely flows through the workflow as data.
+> **强烈建议**：不要在 Code 节点内做认证。用挂了凭据的 HTTP Request 节点，或委托给由 HTTP Request 节点持有凭据的子工作流。下面的模式只在 token 确实作为数据流经工作流时才适用。
 
 ```javascript
 // Bearer Token (token came from a previous node, not $env)
@@ -221,7 +225,7 @@ const response = await this.helpers.httpRequest({
 });
 ```
 
-### Error Handling
+### 错误处理
 
 ```javascript
 // Handle HTTP errors gracefully
@@ -253,7 +257,7 @@ try {
 }
 ```
 
-### Full Response Access
+### 完整响应访问
 
 ```javascript
 // Get full response including headers and status
@@ -274,11 +278,11 @@ return [{
 
 ---
 
-## 2. DateTime (Luxon) - Date & Time Operations
+## 2. DateTime (Luxon) - 日期与时间操作
 
-n8n includes Luxon for powerful date/time handling. Access via `DateTime` global.
+n8n 内置 Luxon，提供强大的日期/时间处理。通过 `DateTime` 全局对象访问。
 
-### Current Date/Time
+### 当前日期/时间
 
 ```javascript
 // Current time
@@ -300,7 +304,7 @@ return [{
 }];
 ```
 
-### Formatting Dates
+### 日期格式化
 
 ```javascript
 const now = DateTime.now();
@@ -322,7 +326,7 @@ return [{
 }];
 ```
 
-### Parsing Dates
+### 解析日期
 
 ```javascript
 // From ISO string
@@ -343,7 +347,7 @@ const dt5 = DateTime.fromMillis(1737384600000);
 return [{json: {parsed: dt1.toISO()}}];
 ```
 
-### Date Arithmetic
+### 日期运算
 
 ```javascript
 const now = DateTime.now();
@@ -369,7 +373,7 @@ return [{
 }];
 ```
 
-### Time Comparisons
+### 时间比较
 
 ```javascript
 const now = DateTime.now();
@@ -393,7 +397,7 @@ return [{
 }];
 ```
 
-### Timezone Operations
+### 时区操作
 
 ```javascript
 const now = DateTime.now();
@@ -417,7 +421,7 @@ return [{
 }];
 ```
 
-### Start/End of Period
+### 时间段的起点/终点
 
 ```javascript
 const now = DateTime.now();
@@ -436,7 +440,7 @@ return [{
 }];
 ```
 
-### Weekday & Month Info
+### 星期与月份信息
 
 ```javascript
 const now = DateTime.now();
@@ -464,33 +468,33 @@ return [{
 
 ---
 
-## 3. $jmespath() - JSON Querying
+## 3. $jmespath() - JSON 查询
 
-Query and transform JSON structures using JMESPath syntax.
+使用 JMESPath 语法查询和转换 JSON 结构。
 
-> **Consider an expression first.** `$jmespath` works the same inside `{{ }}`, so a query that only
-> feeds one field rarely needs a Code node. See **n8n-expression-syntax** → `$jmespath()`.
+> **先考虑表达式。** `$jmespath` 在 `{{ }}` 里用法相同，只喂一个字段的查询很少需要 Code 节点。
+> 见 **n8n-expression-syntax** → `$jmespath()`。
 
-### Rules that bite (verified on n8n 2.38)
+### 容易踩的规则（在 n8n 2.38 上验证）
 
-- **Argument order is `$jmespath(object, query)`**, the reverse of JMESPath's own docs
-  (`search(query, data)`). Reversed, or given a string/`undefined` as the object, it throws
-  `expected two arguments (Object, string) for this function`.
-- **String literals take single quotes** (`tier == 'premium'`), so wrap the query in a JS
-  **double-quoted** string. `"premium"` in double quotes inside the query is a *field name* and
-  silently returns `[]`.
-- **Numbers and booleans take backticks** (`` age >= `18` ``, `` inStock == `true` ``). A bare
-  `18` is a parse error.
-- Use `&&` `||` `!` `==`, not `and` / `or` / `=`.
-- **Over `$input.all()` items**, include the wrapper (`[?json.age >= \`18\`].json.name`) or map
-  first: `$jmespath($input.all().map(i => i.json), '[?age >= \`18\`].name')`.
-- **Parse errors throw in a Code node**, but the message comes out garbled by the task runner:
-  `Cannot assign to read only property 'name' of object 'Error: Invalid token (Number): "18"'`.
-  If you see that, check the query's literals first. (Inside `{{ }}` the same error silently
-  yields `null` instead.)
-- Missing path → `null`; filter with no match → `[]`.
+- **参数顺序是 `$jmespath(object, query)`**，与 JMESPath 官方文档（`search(query, data)`）相反。
+  顺序颠倒，或把字符串/`undefined` 当作对象传入，会抛
+  `expected two arguments (Object, string) for this function`。
+- **字符串字面量用单引号**（`tier == 'premium'`），所以要用 JS
+  **双引号**字符串包裹查询。查询里用双引号写的 `"premium"` 是*字段名*，会
+  静默返回 `[]`。
+- **数字和布尔值用反引号**（`` age >= `18` ``、`` inStock == `true` ``）。裸写的
+  `18` 是解析错误。
+- 用 `&&` `||` `!` `==`，不要用 `and` / `or` / `=`。
+- **对 `$input.all()` 的条目**，要带上包装层（`[?json.age >= \`18\`].json.name`），或先 map：
+  `$jmespath($input.all().map(i => i.json), '[?age >= \`18\`].name')`。
+- **解析错误在 Code 节点中会抛出**，但报错信息会被 task runner 弄乱：
+  `Cannot assign to read only property 'name' of object 'Error: Invalid token (Number): "18"'`。
+  看到它时先检查查询里的字面量。（在 `{{ }}` 里同样的错误会静默变成
+  `null`。）
+- 路径缺失 → `null`；过滤器无匹配 → `[]`。
 
-### Basic Queries
+### 基础查询
 
 ```javascript
 const data = $input.first().json;
@@ -507,7 +511,7 @@ const firstUser = $jmespath(data, 'users[0]');
 return [{json: {names, adults, firstUser}}];
 ```
 
-### Advanced Queries
+### 高级查询
 
 ```javascript
 const data = $input.first().json;
@@ -527,7 +531,7 @@ const premium = $jmespath(data, "users[?subscription.tier == 'premium']");
 return [{json: {top5, emails, simplified, premium}}];
 ```
 
-### Common Patterns
+### 常见模式
 
 ```javascript
 // Pattern 1: Filter and project
@@ -546,11 +550,11 @@ return [{json: {query1, query2, query3, query4, query5}}];
 
 ---
 
-## 4. $getWorkflowStaticData() - Persistent Storage
+## 4. $getWorkflowStaticData() - 持久化存储
 
-Store data that persists across workflow executions.
+存储跨工作流执行而持久保留的数据。
 
-### Basic Usage
+### 基本用法
 
 ```javascript
 // Get static data storage
@@ -571,7 +575,7 @@ return [{
 }];
 ```
 
-### Use Cases
+### 使用场景
 
 ```javascript
 // Use Case 1: Rate limiting
@@ -637,9 +641,9 @@ return [{
 
 ---
 
-## 5. Standard JavaScript Globals
+## 5. 标准 JavaScript 全局对象
 
-### Math Object
+### Math 对象
 
 ```javascript
 return [{
@@ -665,7 +669,7 @@ return [{
 }];
 ```
 
-### JSON Object
+### JSON 对象
 
 ```javascript
 // Parse JSON string
@@ -682,7 +686,7 @@ const pretty = JSON.stringify(obj, null, 2);
 return [{json: {parsed, stringified, pretty}}];
 ```
 
-### console Object
+### console 对象
 
 ```javascript
 // Debug logging (appears in browser console, press F12)
@@ -698,7 +702,7 @@ console.info('Info message');
 return [{json: {processed: true}}];
 ```
 
-### Object Methods
+### Object 方法
 
 ```javascript
 const obj = {name: "John", age: 30, city: "NYC"};
@@ -718,7 +722,7 @@ return [{
 }];
 ```
 
-### Array Methods
+### Array 方法
 
 ```javascript
 const arr = [1, 2, 3, 4, 5];
@@ -739,11 +743,11 @@ return [{
 
 ---
 
-## 6. Available Node.js Modules
+## 6. 可用的 Node.js 模块
 
-### crypto Module
+### crypto 模块
 
-> **Gated**: `require('crypto')` only works if `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES` (or legacy `NODE_FUNCTION_ALLOW_BUILTIN`) includes `crypto` (or is `*`). On default installs it throws "Cannot find module 'crypto'". For hashing, HMAC, signing or UUIDs use the **Crypto node** instead (typeVersion 2; HMAC and signing secrets come from a `crypto` credential) — no allowlist needed. Use `require('crypto')` only for what the Crypto node can't do, and only after confirming the instance allows it.
+> **受控**：`require('crypto')` 只有在 `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES`（或旧的 `NODE_FUNCTION_ALLOW_BUILTIN`）包含 `crypto`（或为 `*`）时才可用。默认安装会抛 "Cannot find module 'crypto'"。哈希、HMAC、签名或 UUID 请改用 **Crypto 节点**（typeVersion 2；HMAC 与签名密钥来自 `crypto` 凭据），不需要白名单。只在 Crypto 节点做不到、且确认实例允许时才用 `require('crypto')`。
 
 ```javascript
 const crypto = require('crypto');
@@ -764,7 +768,7 @@ const randomBytes = crypto.randomBytes(16).toString('hex');
 return [{json: {hash, md5, randomBytes}}];
 ```
 
-### Buffer (built-in)
+### Buffer（内置）
 
 ```javascript
 // Base64 encoding
@@ -804,46 +808,46 @@ return [{
 
 ---
 
-## What's NOT Available
+## 不可用的功能
 
-**External npm packages are NOT available** (unless explicitly allowlisted via `N8N_RUNNERS_ALLOWED_EXTERNAL_MODULES` *and* installed in the runner image — rare):
+**外部 npm 包不可用**（除非通过 `N8N_RUNNERS_ALLOWED_EXTERNAL_MODULES` 显式加入白名单*且*装进 runner 镜像，很少见）：
 - ❌ axios
 - ❌ lodash
-- ❌ moment (use DateTime/Luxon instead)
+- ❌ moment（改用 DateTime/Luxon）
 - ❌ request
-- ❌ Any other npm package
+- ❌ 其他任何 npm 包
 
-**Authentication helpers are blocked** in the task runner sandbox (see section 0):
+**认证 helper 在 task runner 沙箱中被禁用**（见第 0 节）：
 - ❌ `this.helpers.httpRequestWithAuthentication`
 - ❌ `this.helpers.requestWithAuthenticationPaginated`
 
-**Conditionally blocked** (depends on instance config):
-- ⚠️ `$env.*` — blocked when `N8N_BLOCK_ENV_ACCESS_IN_NODE=true`
-- ⚠️ `require('crypto')` / `require('fs')` / etc. — blocked unless `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES` includes them
+**有条件禁用**（取决于实例配置）：
+- ⚠️ `$env.*` — `N8N_BLOCK_ENV_ACCESS_IN_NODE=true` 时被禁用
+- ⚠️ `require('crypto')` / `require('fs')` 等 — `N8N_RUNNERS_ALLOWED_BUILT_IN_MODULES` 不包含它们时被禁用
 
-**Workarounds**:
-- HTTP with auth → HTTP Request node with credential attached, or sub-workflow pattern
-- Secrets → arrive as data from an upstream HTTP Request / credential-aware node
-- Hashing/crypto → the Crypto node (hash, HMAC, sign, UUID), no allowlist needed
+**解决办法**：
+- 带认证的 HTTP → 挂凭据的 HTTP Request 节点，或子工作流模式
+- 密钥 → 作为数据从上游 HTTP Request / 感知凭据的节点传入
+- 哈希/加密 → Crypto 节点（hash、HMAC、sign、UUID），无需白名单
 
 ---
 
-## Summary
+## 总结
 
-**Most Useful Built-ins**:
-1. **this.helpers.httpRequest()** - API calls inside Code logic; a plain call belongs in the HTTP Request node (the bare `$helpers` global is undefined)
-2. **DateTime** - Professional date/time handling
-3. **$jmespath()** - Complex JSON queries
-4. **Math, JSON, Object, Array** - Standard JavaScript utilities
+**最有用的内置功能**：
+1. **this.helpers.httpRequest()** - 在 Code 逻辑内调用 API；单纯的调用应放进 HTTP Request 节点（裸的 `$helpers` 全局变量未定义）
+2. **DateTime** - 专业的日期/时间处理
+3. **$jmespath()** - 复杂 JSON 查询
+4. **Math、JSON、Object、Array** - 标准 JavaScript 工具
 
-**Common Patterns**:
-- API calls: Use this.helpers.httpRequest() (or, preferably, the HTTP Request node)
-- Date operations: Use DateTime (Luxon)
-- Data filtering: a Filter node before the Code node; inside Code, $jmespath() or .filter()
-- Persistent data: Use $getWorkflowStaticData()
-- Hashing: the Crypto node; `require('crypto')` only if allowlisted
+**常见模式**：
+- API 调用：用 this.helpers.httpRequest()（更推荐 HTTP Request 节点）
+- 日期操作：用 DateTime (Luxon)
+- 数据过滤：Code 节点前放 Filter 节点；Code 内部用 $jmespath() 或 .filter()
+- 持久数据：用 $getWorkflowStaticData()
+- 哈希：用 Crypto 节点；`require('crypto')` 仅在白名单允许时使用
 
-**See Also**:
-- [SKILL.md](SKILL.md) - Overview
-- [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - Real usage examples
-- [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - Error prevention
+**另见**：
+- [SKILL.md](SKILL.md) - 概述
+- [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - 实际用法示例
+- [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - 错误预防

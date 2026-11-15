@@ -1,43 +1,42 @@
-# MonoBehaviour lifecycle & coroutines (Unity 6.3 LTS)
+> **中文汉化版** · 上游：[gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) · 原文件：`skills/unity/unity-csharp-scripting/references/lifecycle-and-coroutines.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Depth for the `unity-csharp-scripting` skill: the full execution order and the coroutine
-patterns that don't fit in the main playbook. Verified against the Unity Manual
-"Event function execution order" page and `ScriptReference/MonoBehaviour`.
+# MonoBehaviour 生命周期与协程（Unity 6.3 LTS）
 
-## Contents
+本文件是 `unity-csharp-scripting` skill 的深度参考：完整的执行顺序，以及放不进主手册的那些协程模式。内容已对照 Unity 手册的"Event function execution order"页面与 `ScriptReference/MonoBehaviour` 核实。
 
-- Execution order
-- Coroutine yield instructions
-- `Awaitable` (async/await) instead of a coroutine
-- Custom yield instruction
-- Gotchas
+## 目录
 
-## Execution order (the parts that matter for gameplay)
+- 执行顺序
+- 协程 yield 指令
+- 用 `Awaitable`（async/await）替代协程
+- 自定义 yield 指令
+- 常见陷阱
 
-Per object, the engine calls these in this order:
+## 执行顺序（对玩法重要的部分）
 
-| Phase | Callback | Runs | Use for |
+对每个对象，引擎按以下顺序调用这些回调：
+
+| 阶段 | 回调 | 运行时机 | 用途 |
 |-------|----------|------|---------|
-| Load | `Awake` | once, when the object loads — even if the script component is disabled, but not while the GameObject is inactive | cache `GetComponent`, set up self |
-| Enable | `OnEnable` | each time the object/script enables | subscribe to events, re-arm coroutines |
-| Init | `Start` | once, before first `Update`, after every `Awake` | wiring that depends on other objects |
-| Physics | `FixedUpdate` | every fixed step (default 0.02s) | rigidbody forces, `MovePosition` |
-| Physics | `OnTriggerXXX` / `OnCollisionXXX` | during the physics step | collision/trigger response |
-| Frame | `Update` | once per rendered frame | input polling, non-physics logic |
-| Frame | `LateUpdate` | once per frame, after all `Update`s | camera follow, IK fix-up |
-| Disable | `OnDisable` | each time the object/script disables | unsubscribe from events |
-| Teardown | `OnDestroy` | once, when destroyed | release native handles, save |
+| 加载 | `Awake` | 一次，对象加载时调用（脚本组件被禁用也会调用，但 GameObject 未激活时不会） | 缓存 `GetComponent` 结果，初始化自身 |
+| 启用 | `OnEnable` | 对象/脚本每次启用时 | 订阅事件，重新启动协程 |
+| 初始化 | `Start` | 一次，在首次 `Update` 之前、所有 `Awake` 之后 | 依赖其他对象的接线 |
+| 物理 | `FixedUpdate` | 每个固定步长（默认 0.02s） | 刚体受力，`MovePosition` |
+| 物理 | `OnTriggerXXX` / `OnCollisionXXX` | 在物理步期间 | 碰撞/触发器响应 |
+| 帧 | `Update` | 每个渲染帧一次 | 输入轮询，非物理逻辑 |
+| 帧 | `LateUpdate` | 每帧一次，在所有 `Update` 之后 | 相机跟随，IK 修正 |
+| 禁用 | `OnDisable` | 对象/脚本每次禁用时 | 取消事件订阅 |
+| 销毁 | `OnDestroy` | 一次，销毁时 | 释放原生句柄，保存数据 |
 
-Key consequences:
+关键影响：
 
-- `FixedUpdate` may run zero, one, or several times per frame depending on frame rate. Never
-  read raw "per frame" input there — read it in `Update`, consume it in `FixedUpdate`.
-- All `Awake` calls finish before any `Start`. Order *among* `Awake`s (and among `Start`s) is
-  undefined unless you set a Script Execution Order in Project Settings.
-- `OnEnable` runs after `Awake` on first enable, then again on every re-enable. Pair every
-  `OnEnable` subscription with an `OnDisable` unsubscription to avoid duplicate handlers.
+- 取决于帧率，`FixedUpdate` 每帧可能运行零次、一次或多次。绝不要在那里读取"每帧"原始输入：在 `Update` 中读取，在 `FixedUpdate` 中使用。
+- 所有 `Awake` 都会在任何 `Start` 之前完成。除非你在 Project Settings 中设置了 Script Execution Order，否则多个 `Awake` 之间（以及多个 `Start` 之间）的先后顺序是不确定的。
+- 首次启用时 `OnEnable` 在 `Awake` 之后运行，之后每次重新启用都会再次运行。`OnEnable` 中的每个订阅都要配上 `OnDisable` 中的取消订阅，避免出现重复的事件处理器。
 
-## Coroutine yield instructions
+## 协程 yield 指令
 
 ```csharp
 yield return null;                          // resume at the start of the next frame
@@ -49,18 +48,17 @@ yield return new WaitWhile(() => isLoading);// resume once the predicate is fals
 yield return StartCoroutine(OtherRoutine());// run a nested coroutine to completion first
 ```
 
-## `Awaitable` (async/await) instead of a coroutine
+## 用 `Awaitable`（async/await）替代协程
 
-Unity 6 ships `UnityEngine.Awaitable`, an allocation-light awaitable for `async` methods.
-The coroutine waits map directly:
+Unity 6 自带 `UnityEngine.Awaitable`，一个面向 `async` 方法的低分配开销 awaitable。协程的等待方式与它一一对应：
 
-| Coroutine | `Awaitable` |
+| 协程 | `Awaitable` |
 |-----------|-------------|
 | `yield return null` | `await Awaitable.NextFrameAsync()` |
 | `yield return new WaitForSeconds(t)` | `await Awaitable.WaitForSecondsAsync(t)` |
 | `yield return new WaitForFixedUpdate()` | `await Awaitable.FixedUpdateAsync()` |
 | `yield return new WaitForEndOfFrame()` | `await Awaitable.EndOfFrameAsync()` |
-| (no equivalent) | `await Awaitable.BackgroundThreadAsync()` / `MainThreadAsync()` |
+| （无对应项） | `await Awaitable.BackgroundThreadAsync()` / `MainThreadAsync()` |
 
 ```csharp
 using System;
@@ -86,22 +84,16 @@ public class Blinker : MonoBehaviour
 }
 ```
 
-Rules that differ from coroutines:
+与协程不同的规则：
 
-- An async method is **not** stopped when its object is disabled or destroyed. Pass
-  `destroyCancellationToken` (read it before the object is destroyed) or check state after
-  each `await`.
-- `Awaitable` instances are pooled: await each one **once**. To await a result twice, store
-  the result, not the `Awaitable`.
-- After `BackgroundThreadAsync`, most Unity APIs are off-limits until you
-  `await Awaitable.MainThreadAsync()`. Background work does not stop when you exit Play mode;
-  use `Application.exitCancellationToken` for that.
-- Prefer `async Awaitable` over `async void` for methods you call yourself, so callers can
-  await them; reserve `async void` for Unity messages such as `Start`.
+- 对象被禁用或销毁时，async 方法**不会**停止。请传入 `destroyCancellationToken`（在对象销毁前读取它），或在每次 `await` 后检查状态。
+- `Awaitable` 实例是池化对象：每个实例只能 await **一次**。要两次等待同一结果，请保存结果本身，而不是保存 `Awaitable`。
+- `BackgroundThreadAsync` 之后，在 `await Awaitable.MainThreadAsync()` 之前，大多数 Unity API 都不可用。退出 Play 模式不会停止后台工作；要停止它，请使用 `Application.exitCancellationToken`。
+- 自己调用的方法优先用 `async Awaitable` 而不是 `async void`，这样调用方才能 await 它们；`async void` 只保留给 `Start` 这类 Unity 消息。
 
-## Custom yield instruction
+## 自定义 yield 指令
 
-When you want a reusable wait condition:
+当你需要一个可复用的等待条件时：
 
 ```csharp
 public class WaitForAnimationEnd : CustomYieldInstruction
@@ -114,9 +106,7 @@ public class WaitForAnimationEnd : CustomYieldInstruction
 }
 ```
 
-## Gotchas
+## 常见陷阱
 
-- Coroutines are killed when the GameObject is **deactivated** (`SetActive(false)`) or the
-  script is destroyed — but *not* when only the script component is disabled while the object
-  stays active. Re-arm in `OnEnable` if needed.
-- Allocating `new WaitForSeconds(x)` every loop iteration creates garbage; cache the instance.
+- GameObject 被**停用**（`SetActive(false)`）或脚本被销毁时，协程会被终止；但如果对象保持激活、仅脚本组件被禁用，协程*不会*终止。需要时在 `OnEnable` 中重新启动。
+- 每次循环迭代都分配 `new WaitForSeconds(x)` 会产生垃圾；请缓存该实例。

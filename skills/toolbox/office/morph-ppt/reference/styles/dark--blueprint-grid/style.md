@@ -1,34 +1,38 @@
-# S15-blueprint-grid — Engineering Blueprint Grid
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--blueprint-grid/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# S15-blueprint-grid：工程蓝图网格
 
-Deep blue background with white grid lines and gold markers creates a precise engineering drafting aesthetic.
+## 风格概览
 
-- **Scene**: Technical planning, engineering blueprints, system architecture
-- **Mood**: Precise, professional, engineering-oriented
-- **Color Tone**: Deep blue + white grid + gold accents
+深蓝背景、白色网格线与金色标记，营造精确的工程制图美感。
 
-## Color Palette
+- **适用场景**：技术规划、工程蓝图、系统架构
+- **氛围**：精确、专业、工程感
+- **色调**：深蓝 + 白色网格 + 金色点缀
 
-| Name         | Hex    | Usage                        |
-| ------------ | ------ | ---------------------------- |
-| Deep Blue    | 1B3A5C | Background                   |
-| Bright Blue  | 4A90D9 | Highlight color, titles      |
-| White        | FFFFFF | Grid lines, body text        |
-| Gold Warning | E8C547 | Warning markers, CTA buttons |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 深蓝 | 1B3A5C | 背景 |
+| 亮蓝 | 4A90D9 | 高亮色、标题 |
+| 白色 | FFFFFF | 网格线、正文文字 |
+| 金色警示 | E8C547 | 警示标记、CTA 按钮 |
 
-- Use rect to draw evenly spaced horizontal/vertical grid lines (opacity 0.25), simulating blueprint graph paper
-- Use ellipse as positioning marker points, suggesting key nodes in a coordinate system
-- All shapes use low transparency overlay to maintain blueprint hierarchy
-- Typography uses monospace or bold sans-serif fonts to reinforce engineering drafting aesthetic
+## 设计技法
 
-## Reference Script
+- 用 rect 绘制等距横/竖网格线（opacity 0.25），模拟蓝图方格纸
+- 用 ellipse 作定位标记点，暗示坐标系中的关键节点
+- 所有形状以低透明度叠加，保持蓝图层级
+- 字体用等宽或加粗无衬线体，强化工程制图美感
 
-Full build script available in `build.sh`.
-**Recommended slides to read for understanding core design techniques**:
+## 参考脚本
 
-- **Slide 1 (hero)** — Grid line drawing method and layout spacing
-- **Slide 3 (pillars)** — Multi-column layout + grid-aligned typesetting technique
-  No need to read all — skim 2-3 representative slides.
+完整构建脚本见 `build.sh`。
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1 (hero)**：网格线的绘制方法与布局间距
+- **Slide 3 (pillars)**：多列版式 + 网格对齐的排版技法
+  无需全部精读，浏览 2-3 张代表性幻灯片即可。

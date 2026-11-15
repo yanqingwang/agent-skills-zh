@@ -7,16 +7,20 @@ display: grotesk-sans Mona Sans
 accent: cool 230
 posture: committed
 keywords: render, 3d, animation, vfx, film, video, frames, pipeline, generative, ai tool, model playground, dark mode, nocturnal, late-night, after-hours, overnight, moody, cinematic, cerebral, calm, technical, midnight
-material: midnight-blue ground to every edge, cool white ink, Mona Sans expanded at 300 over its normal width, square-cut surfaces in lightness steps, photographs as moonlight, one azure signal
+material: 午夜蓝铺满到每条边，冷白墨色，Mona Sans 加宽 300 叠在其正常宽度之上，以明度分级切方的表面，月光质感照片，唯一一抹蔚蓝
 photo: duotone paper ink-2
 pictured: Narrative Workflow, Settled hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/midnight.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Midnight
 
-A cold, calm night instrument whose blue is the ground itself: deep midnight blue to every edge, cool white ink, Mona Sans at an expanded 300 for the heads like titles on a film, the same family at its normal width for reading, surfaces cut square in steps of lighter blue, one azure signal. Photographs arrive as moonlight, shadows in the ground's blue and highlights in the ink. It is not a neon dark mode, not frosted glass, and not a black page with a blue button.
+一件冷而安静的夜间仪器，蓝就是地面本身：深午夜蓝铺满到每条边，冷白墨色，标题用加宽 300 的 Mona Sans，像电影的片名字幕；阅读用同一家族的正常宽度；表面以更浅的蓝色分级、切方；唯一的信号色是蔚蓝。照片如月光降临，阴影落在地面的蓝里，高光落在墨色里。它不是霓虹暗色模式，不是磨砂玻璃，也不是黑底蓝按钮的页面。
 
-## Tokens
+## 令牌
 
 ```css
 :root {
@@ -31,50 +35,50 @@ A cold, calm night instrument whose blue is the ground itself: deep midnight blu
 }
 ```
 
-## Type
+## 字体
 
-- **Display:** Mona Sans 300 at the expanded width on `h1` and `h2`, `--tracking-display`, line-height 1.04, sentence case, roman. The wide light cut is the voice; a long head steps down to `--text-display-s` rather than closing up. Item titles take 500 at the normal width.
-- **Figures that are the point:** the display cut at 300, tabular, from `--text-display` up to twice it, tracking -0.03em, the unit beside it at the normal width 400 in `--color-ink-2`.
-- **Body:** Mona Sans 400 at the normal width, line-height 1.6. One family at two widths: the cold comes from the ground and the ink, never from a second face.
-- **Labels, table heads, meta, status:** 500 a step smaller, sentence case, untracked, `--color-muted`. Tabular figures wherever numbers compare; no mono anywhere.
+- **标题字：**Mona Sans 300 加宽宽度用在 `h1` 与 `h2`，`--tracking-display`，行高 1.04，句首大写，正体。宽而轻的字重就是本主题的声音；长标题降到 `--text-display-s`，而不是收紧排版。条目标题用正常宽度的 500。
+- **作为主角的数字：**展示字重 300，表列数字，从 `--text-display` 起最高到它的两倍，字距 -0.03em，单位在旁边用正常宽度 400 与 `--color-ink-2`。
+- **正文字：**Mona Sans 400，正常宽度，行高 1.6。一个家族、两种宽度：冷感来自地面与墨色，绝不来自第二字体。
+- **标签、表头、元信息、状态：**500，小一档，句首大写，不加字距，`--color-muted`。数字需要对比处一律用表列数字；任何地方不用等宽字体。
 
-## Surfaces
+## 表面
 
-- Depth is a step of lightness from paper to paper-2 to paper-3, cut square at radius 0 like a frame; a lifted surface takes `--shadow-card` in the ground's own dark. No outline around a surface; a 1px `--color-rule` parts rows in a table or a list and nothing else.
-- Bands: `--color-paper-2` or `--color-paper-3`, two a page at most; never an azure field and never a light band.
-- Photographs: low-key light after dark, architecture at night, a lit stairwell, a long corridor; one subject held still, cropped wide or tall. The duotone runs from paper to ink-2, so a daylight picture turns to a pale sheet: pick night. Square frames, a 1px inset outline of ink at 8%, a label-style caption giving the hour or the frame.
-- No texture, no glass, no blur, no bloom.
+- 深度是纸、纸-2、纸-3 之间的明度阶梯，半径 0 切方，像画框；抬升的表面用地面自身深色的 `--shadow-card`。表面不加描边；1px `--color-rule` 只用于分隔表格或列表中的行，其余一概不用。
+- 色带：`--color-paper-2` 或 `--color-paper-3`，一页最多两条；绝不做蔚蓝色块，也绝不用浅色带。
+- 照片：入夜后的低调光，夜里的建筑、亮灯的楼梯间、长长的走廊；单一主体保持静止，横裁或竖裁。双色调从纸色到墨-2，所以日光照片会变成一张泛白的纸：请选夜景。方形画框，1px 内缩描边用 8% 透明度的墨色，图注用标签体给出时刻或帧号。
+- 无纹理、无玻璃、无模糊、无光晕。
 
-## Range
+## 适用手法
 
-- **A figure as the statement:** one real number in the display cut at up to twice `--text-display`, alone on the ground with its unit and one line; the wide light cut makes a price read like a title card.
-- **The product from another angle:** a detail of the interface cropped large on a paper-2 well (a job sheet, a meter, a contact sheet), stepped in lightness, never framed in a drawn window.
-- **Steps or a night log:** an `<ol>` of stages or hours, each head in the expanded cut, figures tabular, the current one in ink and the rest in muted; the meter (a 2px `--color-rule-2` track, an `--color-accent-2` or azure fill) is the only line that moves.
-- **Rows and forms on the ground:** hairline rows with expanded titles on the left and the normal width on the right; a calculator on a paper-2 band whose answer is a display-cut figure.
+- **数字即宣言：**一个真实数字，展示字重，最高到 `--text-display` 的两倍，独自立在地面上，配单位与一行说明；加宽的轻字重让一个价格读起来像片名字幕。
+- **换个角度看产品：**界面局部放大裁切，放在纸-2 井格上（作业单、仪表、联系表），以明度分级，绝不做画出来的窗口框。
+- **步骤或夜班日志：**用 `<ol>` 排阶段或小时，每级标题用加宽字重，数字用表列体，当前项用墨色，其余用 muted；仪表（2px `--color-rule-2` 轨道，`--color-accent-2` 或蔚蓝填充）是唯一会动的线。
+- **地面上的行与表单：**发丝线行，左侧加宽标题，右侧正常宽度；纸-2 色带上的计算器，答案是一个展示字重的数字。
 
-## Controls
+## 控件
 
-- The pair: a solid azure rectangle with `--color-accent-ink` text beside a secondary outlined in `--color-rule-2`, both square, 500. A segmented choice is the same square, filled ink when chosen.
-- Links take an azure underline on hover; inputs sit on the paper with a 1px `--color-muted` edge, square.
-- The azure stays under 5%: the one primary control, a link's hover, one meter value or one figure. Never a field, a gradient or a second light.
+- 成对出现：实心蔚蓝矩形配 `--color-accent-ink` 文字，旁边是 `--color-rule-2` 描边的次级按钮，两者都方正、500 字重。分段选择用同一种方块，选中时填墨色。
+- 链接悬停出现蔚蓝下划线；输入框落在纸面上，1px `--color-muted` 边缘，方正。
+- 蔚蓝不超过 5%：唯一的主控件、链接悬停、一处仪表数值或一处大数字。绝不做色块、渐变或第二种光源。
 
-## Motion
+## 动效
 
-One settle: the hero's text fades from 0.6 to 1 over `--dur-long` on `--ease-out`, once, from a visible default. Hover steps a surface one lightness up. A value changes when its source does; nothing slides, loops or follows the cursor.
+一次落定：首屏文字在 `--dur-long` 配 `--ease-out` 下从 0.6 渐入到 1，只播一次，从可见的默认状态出发。悬停让表面明度升一档。数值随其来源变化而变；任何东西都不滑动、不循环、不跟随光标。
 
-## Voice
+## 语气
 
-Cool and spare, the night shift's register: the hour, the count, the cost. Short declaratives; a number always carries its unit or its time. Never hype.
+冷静、简省，夜班的语域：时刻、计数、成本。短陈述句；数字永远带上单位或时间。绝不夸张。
 
-## Do-nots
+## 禁忌
 
-- Never a warm accent; the light here is cold.
-- Never a heavy display weight or a head at the normal width; the expanded 300 is the face.
-- Never a lamp: no radial glow, no halo, no lit edge on a card.
-- Never a rounded corner or a light section; dark and square end to end.
-- Never a photograph in its own colours beside the duotone, and never a daylight scene.
+- 绝不用暖色强调；这里的光是冷的。
+- 绝不用重的标题字重，也绝不用正常宽度的标题；加宽的 300 就是这张脸。
+- 绝不做灯：无径向光晕、无光圈、卡片上无亮边。
+- 绝不用圆角，也绝不用浅色区块；从头到尾又暗又方。
+- 绝不让原色照片与双色调并存，绝不用日光场景。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@100,400;100,500;125,300&display=swap" rel="stylesheet">

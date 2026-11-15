@@ -1,16 +1,19 @@
-# Custom BTTask in C++ (UE 5.8)
+> **中文汉化版** · 上游：[gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) · 原文件：`skills/unreal/unreal-behavior-trees/references/custom-bttask.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Depth for `unreal-behavior-trees`: writing a custom Behavior Tree task node in C++. Verified
-against the Behavior Trees documentation and the `UBTTaskNode` API. Requires the `AIModule`
-dependency in `*.Build.cs`.
+# 用 C++ 编写自定义 BTTask（UE 5.8）
 
-Contents:
-- Instant task (returns immediately)
-- Latent task (finishes over time, per-AI node memory, `AbortTask`)
-- Reading and writing typed Blackboard values
-- Notes: node names, owner access, key selectors, custom services and decorators
+`unreal-behavior-trees` 的深度参考：用 C++ 编写自定义行为树任务节点。已对照行为树文档与
+`UBTTaskNode` API 验证。需要在 `*.Build.cs` 中添加 `AIModule` 依赖。
 
-## Instant task (returns immediately)
+内容：
+- 即时任务（立即返回）
+- 潜在任务（随时间完成、每个 AI 独立的节点内存、`AbortTask`）
+- 读写带类型的黑板值
+- 注意事项：节点名称、Owner 访问、键选择器、自定义服务与装饰器
+
+## 即时任务（立即返回）
 
 ```cpp
 // BTTask_ClearTarget.h
@@ -56,14 +59,13 @@ EBTNodeResult::Type UBTTask_ClearTarget::ExecuteTask(UBehaviorTreeComponent& Own
 }
 ```
 
-`EBTNodeResult::Type` values: `Succeeded`, `Failed`, `Aborted`, `InProgress`.
+`EBTNodeResult::Type` 的取值：`Succeeded`、`Failed`、`Aborted`、`InProgress`。
 
-## Latent task (finishes over time)
+## 潜在任务（随时间完成）
 
-Return `InProgress`, then call `FinishLatentTask` when the work completes (e.g. a timer, an
-async query, or a delegate callback). Tasks are **not instanced** by default: one node object is
-shared by every AI running the tree, so per-run state (here the timer handle) goes in the
-node's instance memory, never in member variables.
+先返回 `InProgress`，等工作完成（例如定时器、异步查询或委托回调）后再调用 `FinishLatentTask`。
+任务默认**不做实例化**：所有运行该树的 AI 共享同一个节点对象，因此每次运行的状态（这里是定时器
+句柄）必须放进节点的实例内存，绝不能放进成员变量。
 
 ```cpp
 // BTTask_WaitRandom.h
@@ -146,10 +148,10 @@ EBTNodeResult::Type UBTTask_WaitRandom::AbortTask(UBehaviorTreeComponent& OwnerC
 }
 ```
 
-`AbortTask` returns `Aborted` when it can stop immediately; return `InProgress` instead and call
-`FinishLatentAbort(OwnerComp)` later if cancelling is itself asynchronous.
+`AbortTask` 能立即停止时返回 `Aborted`；如果取消本身就是异步操作，则改为返回 `InProgress`，
+稍后再调用 `FinishLatentAbort(OwnerComp)`。
 
-## Reading and writing typed Blackboard values
+## 读写带类型的黑板值
 
 ```cpp
 UBlackboardComponent* BB = OwnerComp.GetBlackboardComponent();
@@ -158,19 +160,17 @@ FVector Loc     = BB->GetValueAsVector(TEXT("LastKnownLocation"));
 BB->SetValueAsBool(TEXT("bIsInvestigating"), true);
 ```
 
-## Notes
+## 注意事项
 
-- Set `NodeName` in the constructor so the node reads clearly in the BT graph.
-- `OwnerComp.GetAIOwner()` gives the `AAIController`; `GetAIOwner()->GetPawn()` the controlled
-  pawn — use these instead of caching world pointers.
-- For nodes that need per-instance memory (counters, handles), override
-  `GetInstanceMemorySize`, construct and destroy the block with `InitializeNodeMemory<T>` /
-  `CleanupNodeMemory<T>`, and read it with `CastInstanceNodeMemory<T>` (as in the latent task
-  above). Member UPROPERTYs on a non-instanced node are shared across all uses; treat them as
-  read-only settings.
-- A bare `FBlackboardKeySelector` offers every key in the editor and only `SelectedKeyName` is
-  usable until resolved. Deriving from `UBTTask_BlackboardBase` gives you a `BlackboardKey`
-  that is resolved in `InitializeFromAsset`; with your own selector, add a type filter in the
-  constructor (e.g. `AddObjectFilter`) and call `ResolveSelectedKey` in `InitializeFromAsset`.
-- A custom **Service** subclasses `UBTService` and overrides `TickNode`; a custom **Decorator**
-  subclasses `UBTDecorator` and overrides `CalculateRawConditionValue`.
+- 在构造函数中设置 `NodeName`，让节点在行为树图表中含义清晰。
+- `OwnerComp.GetAIOwner()` 返回 `AAIController`；`GetAIOwner()->GetPawn()` 返回被控制的 Pawn。
+  请用这两个接口，不要缓存世界指针。
+- 需要每实例内存（计数器、句柄）的节点：重写 `GetInstanceMemorySize`，用 `InitializeNodeMemory<T>` /
+  `CleanupNodeMemory<T>` 构造与销毁内存块，并用 `CastInstanceNodeMemory<T>` 读取（见上面的潜在任务
+  示例）。非实例化节点上的成员 UPROPERTY 被所有使用处共享；请把它们当作只读配置项。
+- 裸用的 `FBlackboardKeySelector` 会在编辑器里提供所有键，且在解析完成前只有 `SelectedKeyName` 可用。
+  继承 `UBTTask_BlackboardBase` 会得到一个在 `InitializeFromAsset` 中解析好的 `BlackboardKey`；若用
+  自定义选择器，请在构造函数里添加类型过滤（例如 `AddObjectFilter`），并在 `InitializeFromAsset` 中
+  调用 `ResolveSelectedKey`。
+- 自定义**服务**继承 `UBTService` 并重写 `TickNode`；自定义**装饰器**继承 `UBTDecorator` 并重写
+  `CalculateRawConditionValue`。

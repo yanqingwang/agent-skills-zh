@@ -1,77 +1,55 @@
-# Agent access policy: robots.txt, Content-Signal, WAF, Web Bot Auth
+> **中文汉化版** · 上游：[AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) · 原文件：`skills/seo-agentic/references/access-policy.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Facts checked 2026-09-23 against vendor documentation unless marked
-secondary. robots.txt is a **preference signal, not access control**: several
-user-triggered agents do not treat it as binding, and TollBit's State of the
-Bots reports (secondary) found a meaningful share of AI fetchers reaching
-disallowed URLs. Protect private paths with authentication.
+# Agent 访问策略：robots.txt、Content-Signal、WAF、Web Bot Auth
 
-## User-agent tokens by purpose
+以下事实核查于 2026-09-23，以厂商文档为准，标注 secondary 的除外。robots.txt 是**偏好信号，不是访问控制**：多个由用户触发的 agent 并不把它当作约束，TollBit 的 State of the Bots 报告（secondary）发现有相当比例的 AI 抓取器访问了 disallow 的 URL。用身份认证保护私有路径。
 
-Check the bot that governs the claim you are making. Crawler roles and the
-citability rules live in `seo-geo`; this table adds what matters for agents.
+## 按用途划分的 User-agent 令牌
 
-| Token | Vendor | Purpose | robots.txt (vendor docs) | Verify by |
+检查与你主张相关的那个 bot。爬虫角色与可引用性规则在 `seo-geo` 中；本表补充对 agent 重要的部分。
+
+| Token | 厂商 | 用途 | robots.txt（厂商文档） | 验证途径 |
 |---|---|---|---|---|
-| GPTBot | OpenAI | model training | honoured | openai.com/gptbot.json |
-| OAI-SearchBot | OpenAI | ChatGPT search index | honoured | openai.com/searchbot.json |
-| ChatGPT-User | OpenAI | user-initiated fetches and actions | "may not apply" | openai.com/chatgpt-user.json; Web Bot Auth |
-| OAI-AdsBot | OpenAI | ad landing-page checks | see vendor docs | openai.com/adsbot.json |
-| ClaudeBot | Anthropic | model training | honoured (incl. Crawl-delay) | claude.com/crawling/bots.json |
-| Claude-SearchBot | Anthropic | Claude search-result citability | honoured | claude.com/crawling/bots.json |
-| Claude-User | Anthropic | user-initiated fetches | honoured | claude.com/crawling/bots.json |
-| PerplexityBot | Perplexity | search index | honoured | perplexity.com/perplexitybot.json |
-| Perplexity-User | Perplexity | user-initiated fetches | generally ignored | perplexity.com/perplexity-user.json |
-| Google-Agent | Google | user-triggered agent fetches | generally ignored | developers.google.com/static/crawling/ipranges/user-triggered-agents.json |
-| Google-Extended | Google | Gemini training/grounding (and Search gen-AI model training) control token, no crawler; never Search inclusion | honoured | n/a |
+| GPTBot | OpenAI | 模型训练 | 遵守 | openai.com/gptbot.json |
+| OAI-SearchBot | OpenAI | ChatGPT 搜索索引 | 遵守 | openai.com/searchbot.json |
+| ChatGPT-User | OpenAI | 用户发起的抓取与操作 | "may not apply" | openai.com/chatgpt-user.json；Web Bot Auth |
+| OAI-AdsBot | OpenAI | 广告落地页检查 | 见厂商文档 | openai.com/adsbot.json |
+| ClaudeBot | Anthropic | 模型训练 | 遵守（含 Crawl-delay） | claude.com/crawling/bots.json |
+| Claude-SearchBot | Anthropic | Claude 搜索结果可引用性 | 遵守 | claude.com/crawling/bots.json |
+| Claude-User | Anthropic | 用户发起的抓取 | 遵守 | claude.com/crawling/bots.json |
+| PerplexityBot | Perplexity | 搜索索引 | 遵守 | perplexity.com/perplexitybot.json |
+| Perplexity-User | Perplexity | 用户发起的抓取 | 通常忽略 | perplexity.com/perplexity-user.json |
+| Google-Agent | Google | 用户触发的 agent 抓取 | 通常忽略 | developers.google.com/static/crawling/ipranges/user-triggered-agents.json |
+| Google-Extended | Google | Gemini 训练/grounding（以及 Search 生成式 AI 模型训练）的控制令牌，不是爬虫；从不影响 Search 收录 | 遵守 | n/a |
 
-Anthropic's help center previously said IP ranges were not published; as of
-2026-08 they are at `claude.com/crawling/bots.json`. Do not IP-block
-Anthropic's crawlers: a blocked crawler cannot read robots.txt at all.
+Anthropic 的帮助中心曾说 IP 段未公开；截至 2026-08，它们已发布在 `claude.com/crawling/bots.json`。不要 IP 封禁 Anthropic 的爬虫：被封禁的爬虫根本读不到 robots.txt。
 
-## RFC 9309 group selection (the most common mistake)
+## RFC 9309 分组选择（最常见的错误）
 
-A crawler obeys **only** the most specific group that names its token. If
-any group names it, the `*` group is ignored entirely for that crawler. So a
-line placed in `User-agent: *` does not reach `GPTBot` when a
-`User-agent: GPTBot` group exists.
+爬虫**只**遵守点名它 token 的最具体分组。只要有任何分组点名了它，`*` 组对它就整体失效。所以放在 `User-agent: *` 里的行，在存在 `User-agent: GPTBot` 组时不会作用到 `GPTBot`。
 
-This matters for `Content-Signal`. Cloudflare's managed robots.txt puts it in
-the `*` group, and no normative text says it escapes group selection. When a
-site has named groups, repeat the line inside each one.
-`agentic_fix.py robots` does exactly that, and never touches Allow/Disallow.
+这对 `Content-Signal` 很关键。Cloudflare 托管的 robots.txt 把它放在 `*` 组里，而没有任何规范性文本说它能绕过分组选择。当站点存在具名分组时，把该行在每个分组里重复一遍。`agentic_fix.py robots` 正是这样做的，且从不改动 Allow/Disallow。
 
-Tokens match case-insensitively and are compared whole (RFC 9309 section
-2.2.1): `GPTBot` does not select a `GPTBot-Image` group. `GPTBot/1.1` or
-`ClaudeBot*` is outside the RFC's token grammar (letters, `_`, `-`). Google
-documents that it ignores the extra text, and `agentic_check.py` does the
-same and lists such lines as `nonstandard_user_agent_lines`. Recommend the
-bare token, because other crawlers may be stricter (read 2026-11-10).
+Token 匹配不区分大小写，且按整词比较（RFC 9309 第 2.2.1 节）：`GPTBot` 不会选中 `GPTBot-Image` 组。`GPTBot/1.1` 或 `ClaudeBot*` 超出了 RFC 的 token 语法（字母、`_`、`-`）。Google 文档说明它会忽略多余文本；`agentic_check.py` 同样如此，并把这类行列为 `nonstandard_user_agent_lines`。推荐裸 token，因为其他爬虫可能更严格（读取于 2026-11-10）。
 
-A 5xx on robots.txt tells compliant crawlers to treat the site as fully
-disallowed. A 4xx means "no restrictions", except 429: RFC 9309 does not
-single it out, but Google treats it as a server error, not as a missing file.
-`agentic_check.py` then reports `robots-reachable` as inconclusive.
+robots.txt 返回 5xx 时，合规爬虫会把站点视为完全禁止访问。4xx 表示"无限制"，但 429 例外：RFC 9309 没有单独点名它，但 Google 把它当服务器错误处理，而不是当作文件缺失。此时 `agentic_check.py` 会把 `robots-reachable` 报告为不确定。
 
 ## Content-Signal
 
-Syntax: `Content-Signal: search=yes, ai-input=yes, ai-train=no`.
+语法：`Content-Signal: search=yes, ai-input=yes, ai-train=no`。
 
-| Key | Meaning |
+| 键 | 含义 |
 |---|---|
-| `search` | Building a search index and showing links/snippets (excludes AI summaries) |
-| `ai-input` | Using content as input to an AI answer (RAG, grounding) |
-| `ai-train` | Training or fine-tuning models |
-| `use` | Experimental Cloudflare field (`immediate`, `reference`, `full`); Cloudflare's managed default includes `use=reference` (docs give no date) |
+| `search` | 建立搜索索引并展示链接/摘要（不含 AI 摘要） |
+| `ai-input` | 把内容用作 AI 回答的输入（RAG、grounding） |
+| `ai-train` | 训练或微调模型 |
+| `use` | 实验性的 Cloudflare 字段（`immediate`、`reference`、`full`）；Cloudflare 托管默认值包含 `use=reference`（文档未给出日期） |
 
-Status: Cloudflare's CC0 Content Signals Policy (launched 2025-09-24). The
-IETF individual draft `draft-romm-aipref-contentsignals` expired 2026-04-04;
-the IETF AIPREF working group vocabulary (`draft-ietf-aipref-vocab`) has not
-reached consensus. We found no Google statement about Content-Signal; Google's
-robots.txt spec lists only the fields it supports, and this is not one. Present
-it as a stated preference with no confirmed effect.
+状态：Cloudflare 的 CC0 Content Signals Policy（2025-09-24 上线）。IETF 个人草案 `draft-romm-aipref-contentsignals` 已于 2026-04-04 过期；IETF AIPREF 工作组的词汇表（`draft-ietf-aipref-vocab`）尚未达成共识。我们没有找到 Google 关于 Content-Signal 的表态；Google 的 robots.txt 规范只列出它支持的字段，这不是其中之一。把它作为"已声明但无确认效果"的偏好来呈现。
 
-## Illustrative robots.txt (welcomes agents and search, not training)
+## 示例 robots.txt（欢迎 agent 和搜索，不允许训练）
 
 ```
 User-agent: *
@@ -96,42 +74,26 @@ Disallow: /
 Sitemap: https://example.com/sitemap.xml
 ```
 
-Blocking a training crawler is a business decision. Never recommend it by
-default, and never present it as affecting Google Search. Google-Agent needs no
-line because it generally ignores robots.txt; put `/checkout/` and
-`/account/` behind authentication.
+封禁训练爬虫是商业决策。绝不要默认推荐它，也绝不要把它说成会影响 Google 搜索。Google-Agent 不需要写行，因为它通常忽略 robots.txt；把 `/checkout/` 和 `/account/` 放到身份认证之后。
 
-## WAF and bot management
+## WAF 与 bot 管理
 
-- Allowlist **verified** bots and signed agents, not user-agent strings.
-  Cloudflare, AWS WAF, Akamai, HUMAN and Vercel verify Web Bot Auth or
-  published IP ranges; Perplexity documents WAF recipes.
-- Keep CAPTCHAs and challenge pages off content and informational pages.
-- A WAF that challenges an unverified request carrying `GPTBot` is behaving
-  correctly. `agentic_check.py --ua-matrix` shows how unverified traffic is
-  treated; confirm real-agent behaviour in WAF logs.
+- 允许**已验证**的 bot 和签名 agent，而不是看 user-agent 字符串。Cloudflare、AWS WAF、Akamai、HUMAN 和 Vercel 都支持验证 Web Bot Auth 或已发布的 IP 段；Perplexity 文档化了 WAF 配方。
+- 不要在内容和信息类页面上放 CAPTCHA 和挑战页。
+- WAF 挑战一个携带 `GPTBot` 但未验证的请求，是在正确行事。`agentic_check.py --ua-matrix` 展示未验证流量如何被对待；再到 WAF 日志里确认真实 agent 的行为。
 
 ## Web Bot Auth
 
-How agents prove identity: HTTP Message Signatures (RFC 9421), Ed25519 keys,
-a key directory at `/.well-known/http-message-signatures-directory`
-(`application/http-message-signatures-directory+json`), and `tag="web-bot-auth"`.
+Agent 如何证明身份：HTTP Message Signatures（RFC 9421）、Ed25519 密钥、位于 `/.well-known/http-message-signatures-directory` 的密钥目录（`application/http-message-signatures-directory+json`），以及 `tag="web-bot-auth"`。
 
-- Current draft: `draft-ietf-webbotauth-httpsig-protocol-00` (2026-09-01),
-  replacing the earlier Meunier individual drafts.
-- `Signature-Agent` is now a **dictionary keyed by signature label**, e.g.
-  `Signature-Agent: sig1="https://signer.example"`. The bare-string form is
-  outdated; some verifiers may still expect it, so test before relying on it.
-- Signers reported: OpenAI (agent and cloud-browser traffic), Google
-  (experimental, `https://agent.bot.goog`), Amazon Bedrock AgentCore, Shopify.
-  Anthropic and Perplexity signing is claimed only by secondary sources.
+- 当前草案：`draft-ietf-webbotauth-httpsig-protocol-00`（2026-09-01），取代此前的 Meunier 个人草案。
+- `Signature-Agent` 现在是**以签名标签为键的 dictionary**，例如 `Signature-Agent: sig1="https://signer.example"`。裸字符串形式已过时，但部分验证方可能仍在期待它，依赖前先测试。
+- 已报告的签名方：OpenAI（agent 与云浏览器流量）、Google（实验性，`https://agent.bot.goog`）、Amazon Bedrock AgentCore、Shopify。Anthropic 与 Perplexity 的签名仅见于 secondary 来源。
 
-Site owners do not publish a key directory unless they operate an agent. They
-verify signatures at the edge.
+站点所有者除非自己运营 agent，否则不发布密钥目录。他们在边缘验证签名。
 
-## Reporting rules
+## 报告规则
 
-- Report training, search and user-fetch access on separate lines.
-- Label Content-Signal and Web Bot Auth as draft or policy, with the check
-  date.
-- Never promise ranking, citation or traffic effects from any robots change.
+- 训练、搜索、用户抓取三类访问分开各占一行报告。
+- Content-Signal 和 Web Bot Auth 标注为草案或政策，并附核查日期。
+- 绝不承诺任何 robots 变更会带来排名、引用或流量效果。

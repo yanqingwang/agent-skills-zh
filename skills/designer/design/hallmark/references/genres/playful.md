@@ -1,24 +1,28 @@
-# Genre: playful
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/genres/playful.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Pages that should feel alive rather than tidy: a prompt that asks for playful, fun, friendly or soft, or one for kids, games or a community. A consumer or family prompt without that ask stays editorial. The deal leans toward this genre's themes, which run from soft and warm to loud and retro.
+# 流派：playful
 
-## Voice
+应该活起来而不是整齐的页面：要求 playful、fun、friendly 或 soft 的提示词，或面向儿童、游戏、社区的提示词。没有这个诉求的消费类或家庭类提示词仍归 editorial。发牌偏向这个流派的主题，其范围从柔软温暖一直到大声复古。
 
-- **Accent:** soft and low-chroma by default; a declared Full-palette or Drenched posture lifts chroma to 0.24 across three or four named roles, each with a job.
-- **Layout:** rounded surfaces (12px cards, 8px inputs, pills, unless the theme sets its radius), soft offset shadows, tinted alternating bands.
-- **Motion:** responsive to the pointer; one small entrance on the page, its one reveal (`craft.md` § 5); a spring only under a declared spring posture, on the primary CTA and one character moment (gate 12's exception).
-- **Copy:** warm, direct, specific; no quirk for its own sake.
+## 语气
 
-## Allowed here
+- **强调色：** 默认柔和低色度；声明了 Full-palette 或 Drenched 姿态时，把色度抬到 0.24，分布在三到四个点名角色上，每个都有职责。
+- **版式：** 圆角表面（12px 卡片、8px 输入框、胶囊，除非主题自己定圆角）、柔和偏移阴影、着色的交替条带。
+- **动效：** 响应指针；页面上一次小入场，它的一次 reveal（`craft.md` § 5）；只有声明了 spring 姿态时才用弹簧，用在主 CTA 和一个性格时刻上（gate 12 的例外）。
+- **文案：** 温暖、直接、具体；不为怪而怪。
 
-Soft drop shadows with an offset; hover lifts on cards; a hard-offset shadow when the theme declares it as material; a single character moment; emoji inside a sentence, never as an ornament or icon.
+## 此处允许
 
-## Refused here
+带偏移的柔和投影；卡片悬停浮起；主题把它声明为材质时的硬偏移阴影；一个性格时刻；句子里用 emoji，绝不当作装饰或图标。
 
-Saturated consumer pinks and violets without a declared posture; Comic-style faces; bounce on anything but the declared moments; glass; gradient text; decorative status dots and sticker-style pills stamped on every element (63, 66).
+## 此处拒绝
 
-## Chrome that fits
+未声明姿态的高饱和消费品粉与紫；漫画风格的脸；声明时刻之外的任何弹跳；玻璃；渐变文字；盖在每个元素上的装饰性状态点与贴纸风胶囊（63、66）。
 
-A heavy slab bar, a dense bar with rounded knobs, a banner, a marquee footer. A masthead or a blurred pill fights the register; a solid pill does not. Affinities, not assignments.
+## 相配的镶边
 
-Stamp: `genre: playful`.
+一条厚重的板块栏、带圆角旋钮的致密栏、横幅、跑马灯页脚。报头或模糊胶囊与语气相抵触；实心胶囊不抵触。是亲和，不是指派。
+
+印记：`genre: playful`。

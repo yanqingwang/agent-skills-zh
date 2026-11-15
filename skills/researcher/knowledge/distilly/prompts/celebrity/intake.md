@@ -1,34 +1,36 @@
-# Celebrity Intake Prompt
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/celebrity/intake.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Goal
+# 名人信息采集提示词
 
-Collect enough information to launch a research-first celebrity distillation workflow,
-while actively helping users who are unsure about who to distill or what they need.
+## 目标
 
----
-
-## Entry Routing
-
-Detect the user's intent and route accordingly:
-
-### Direct Path
-
-User names a specific person (e.g., "distill Paul Graham", "make a Zhang Yiming skill").
-
-→ Go straight to Q1–Q5 below.
-
-### Diagnostic Path
-
-User describes a vague need without naming a person (e.g., "I want someone who's
-good at product thinking", "I need someone who can help me make investment decisions").
-
-→ Run the diagnostic sub-flow before Q1.
+收集足够的信息来启动“研究先行”的名人蒸馏工作流，同时主动帮助那些不确定要蒸馏谁、也不确定自己需要什么的用户。
 
 ---
 
-## Diagnostic Sub-Flow (only when no specific person is named)
+## 入口路由
 
-### Round 1: Identify the dimension
+识别用户意图并据此路由：
+
+### 直接路径
+
+用户点名具体人物（例如“蒸馏 Paul Graham”、“做一个张一鸣 skill”）。
+
+→ 直接进入下方的 Q1 到 Q5。
+
+### 诊断路径
+
+用户描述了模糊需求但没有点名人物（例如“我想要一个擅长产品思考的人”、“我需要有人帮我做投资决策”）。
+
+→ 在 Q1 之前先跑诊断子流程。
+
+---
+
+## 诊断子流程（仅在未点名具体人物时）
+
+### 第 1 轮：确定维度
 
 ```text
 You haven't named a specific person. Let me help you find the right one.
@@ -45,16 +47,16 @@ Examples:
 - Scientific thinking and explanation
 ```
 
-Capture:
-- domain / thinking dimension
-- whether the user prefers a specific era, culture, or language
+记录：
+- 领域 / 思考维度
+- 用户是否偏好特定年代、文化或语言
 
-### Round 2: Narrow and recommend
+### 第 2 轮：收窄并推荐
 
-Based on the user's dimension, recommend 2–3 candidates. Prioritize:
-1. People already distilled as existing Skills in the system
-2. People with abundant public material (books, long interviews, documented decisions)
-3. People whose thinking is distinctive enough to produce a high-quality Skill
+根据用户的维度，推荐 2 至 3 位候选。优先考虑：
+1. 系统里已蒸馏为现有 Skill 的人物
+2. 公开材料充足的人物（书籍、长访谈、有记录的决策）
+3. 思维足够独特、能产出高质量 Skill 的人物
 
 ```text
 Based on what you described, here are some candidates:
@@ -66,11 +68,11 @@ Based on what you described, here are some candidates:
 Who sounds right? Or name someone else.
 ```
 
-Once the user picks, proceed to Q1.
+用户选定后，进入 Q1。
 
 ---
 
-## Opening (Direct Path)
+## 开场（直接路径）
 
 ```text
 I'll help you distill a public figure into a Skill. Answer 5 questions. Every question except Q1 is skippable.
@@ -78,9 +80,9 @@ I'll help you distill a public figure into a Skill. Answer 5 questions. Every qu
 
 ---
 
-## Questions
+## 问题
 
-### Q1: Who is it
+### Q1：是谁
 
 ```text
 Who do you want to distill?
@@ -93,13 +95,13 @@ Examples:
 - Richard Feynman
 ```
 
-Capture:
-- canonical name
-- aliases
-- likely language / region
-- whether this person is well-known (abundant material) or relatively obscure
+记录：
+- 规范姓名
+- 别名
+- 可能的语言 / 地区
+- 此人是知名人物（材料充足）还是相对冷门
 
-### Q2: Why this person
+### Q2：为什么选这个人
 
 ```text
 What do you want from this person's Skill?
@@ -112,12 +114,12 @@ Examples:
 - how they approach risk and uncertainty
 ```
 
-Capture:
-- use case
-- desired lens / focus area
-- output bias: strategy / expression / explanation / judgment / creativity
+记录：
+- 使用场景
+- 期望的视角 / 关注领域
+- 输出偏向：策略 / 表达 / 讲解 / 判断 / 创造
 
-### Q3: Any known materials
+### Q3：有哪些已知材料
 
 ```text
 Do you already have source material? Books, interviews, talks, posts, podcasts, articles, screenshots — anything is fine.
@@ -125,15 +127,15 @@ Do you already have source material? Books, interviews, talks, posts, podcasts, 
 If you have local files (PDF, transcripts, subtitle files, screenshots), mention them now.
 ```
 
-Capture:
-- local materials (files the user can provide directly)
-- URLs of specific known sources
-- known books / talks / interviews by title
-- whether this should run in local-first mode
+记录：
+- 本地材料（用户能直接提供的文件）
+- 具体已知来源的 URL
+- 按标题记录已知的书籍 / 演讲 / 访谈
+- 是否应以本地优先（local-first）模式运行
 
-### Q4: Collection strategy
+### Q4：采集策略
 
-Based on Q3, determine and confirm the collection strategy:
+根据 Q3，确定并确认采集策略：
 
 ```text
 Based on what you've told me, I'll use this collection approach:
@@ -148,12 +150,12 @@ Based on what you've told me, I'll use this collection approach:
 Sound right? (confirm / change)
 ```
 
-The three strategies affect how Phase 1 research allocates effort:
-- **Local-first**: Analyze provided materials first, map which of the 6 dimensions are covered, only search web for gaps
-- **Web + local**: Run full 6-dimension web research, then merge with local materials, use local as ground truth where they overlap
-- **Web-only**: Standard 6-dimension web research pass
+三种策略决定 Phase 1 研究如何分配精力：
+- **本地优先（local-first）**：先分析已有材料，盘点 6 个维度中哪些已覆盖，只对缺口搜索网络
+- **网络 + 本地（web+local）**：先跑完整的 6 维度网络研究，再与本地材料合并，重叠处以本地材料为 ground truth
+- **仅网络（web-only）**：标准的 6 维度网络研究轮
 
-### Q5: Research depth
+### Q5：研究深度
 
 ```text
 Which research profile?
@@ -164,23 +166,23 @@ Which research profile?
 Default: budget-friendly
 ```
 
-Capture:
-- requested research profile
-- whether the user prefers speed or confidence
+记录：
+- 用户选择的研究档位
+- 用户更看重速度还是置信度
 
 ---
 
-## Cold Figure Detection
+## 冷门人物检测
 
-After Q1, estimate whether this person has sufficient public material.
+Q1 之后，估计此人的公开材料是否充足。
 
-Signals of a cold figure:
-- no Wikipedia page or very short one
-- no published books or long-form interviews
-- limited to social media presence only
-- user cannot name specific works or talks
+冷门人物的信号：
+- 没有维基百科条目，或条目极短
+- 没有出版书籍或长篇访谈
+- 只在社交媒体有存在感
+- 用户说不出具体作品或演讲
 
-If cold figure is detected:
+如果判定为冷门人物：
 
 ```text
 ⚠️ Note: {name} appears to have limited public material.
@@ -197,7 +199,7 @@ Continue? (yes / switch to someone else)
 
 ---
 
-## Output Summary
+## 输出摘要
 
 ```text
 Summary:

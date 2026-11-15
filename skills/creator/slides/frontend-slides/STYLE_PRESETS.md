@@ -1,24 +1,28 @@
-# Style Presets Reference
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`plugins/frontend-slides/skills/frontend-slides/STYLE_PRESETS.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Curated visual styles for Frontend Slides. Each preset is inspired by real design references — no generic "AI slop" aesthetics. **Abstract shapes only — no illustrations.**
+# 风格预设参考
 
-**Viewport CSS:** For mandatory base styles, see [viewport-base.css](viewport-base.css). Include in every presentation.
+为 Frontend Slides 精选的视觉风格。每个预设都取材于真实设计参考，摒弃泛泛的"AI 腔"美学。**只用抽象形状，不用插画。**
+
+**Viewport CSS：** 必需的基底样式见 [viewport-base.css](viewport-base.css)。每份演示文稿都要引入。
 
 ---
 
-## Dark Themes
+## 深色主题
 
 ### 1. Bold Signal
 
-**Vibe:** Confident, bold, modern, high-impact
+**Vibe：** 自信、大胆、现代、冲击力强
 
-**Layout:** Colored card on dark gradient. Number top-left, navigation top-right, title bottom-left.
+**Layout：** 深色渐变上的彩色卡片。编号在左上，导航在右上，标题在左下。
 
-**Typography:**
+**Typography：**
 - Display: `Archivo Black` (900)
 - Body: `Space Grotesk` (400/500)
 
-**Colors:**
+**Colors：**
 ```css
 :root {
     --bg-primary: #1a1a1a;
@@ -29,25 +33,25 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 }
 ```
 
-**Signature Elements:**
-- Bold colored card as focal point (orange, coral, or vibrant accent)
-- Large section numbers (01, 02, etc.)
-- Navigation breadcrumbs with active/inactive opacity states
-- Grid-based layout for precise alignment
+**Signature Elements：**
+- 以醒目的彩色卡片作为视觉焦点（橙色、珊瑚色或鲜亮强调色）
+- 大号分节编号（01、02 等）
+- 带激活/未激活透明度状态的导航面包屑
+- 网格布局，对齐精确
 
 ---
 
 ### 2. Electric Studio
 
-**Vibe:** Bold, clean, professional, high contrast
+**Vibe：** 大胆、干净、专业、高对比
 
-**Layout:** Split panel—white top, blue bottom. Brand marks in corners.
+**Layout：** 上下分栏，上白下蓝。品牌标记放在四角。
 
-**Typography:**
+**Typography：**
 - Display: `Manrope` (800)
 - Body: `Manrope` (400/500)
 
-**Colors:**
+**Colors：**
 ```css
 :root {
     --bg-dark: #0a0a0a;
@@ -58,25 +62,25 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 }
 ```
 
-**Signature Elements:**
-- Two-panel vertical split
-- Accent bar on panel edge
-- Quote typography as hero element
-- Minimal, confident spacing
+**Signature Elements：**
+- 上下两栏分割
+- 分栏边缘的强调条
+- 引文排印作为主角元素
+- 克制而自信的留白
 
 ---
 
 ### 3. Creative Voltage
 
-**Vibe:** Bold, creative, energetic, retro-modern
+**Vibe：** 大胆、创意、有活力、复古现代
 
-**Layout:** Split panels—electric blue left, dark right. Script accents.
+**Layout：** 左右分栏，左侧电光蓝，右侧深色。配手写体点缀。
 
-**Typography:**
+**Typography：**
 - Display: `Syne` (700/800)
 - Mono: `Space Mono` (400/700)
 
-**Colors:**
+**Colors：**
 ```css
 :root {
     --bg-primary: #0066ff;
@@ -86,25 +90,25 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 }
 ```
 
-**Signature Elements:**
-- Electric blue + neon yellow contrast
-- Halftone texture patterns
-- Neon badges/callouts
-- Script typography for creative flair
+**Signature Elements：**
+- 电光蓝与霓虹黄的撞色
+- 半调网纹肌理
+- 霓虹徽标与标注
+- 手写体排印增添创意气质
 
 ---
 
 ### 4. Dark Botanical
 
-**Vibe:** Elegant, sophisticated, artistic, premium
+**Vibe：** 优雅、精致、艺术、高级感
 
-**Layout:** Centered content on dark. Abstract soft shapes in corner.
+**Layout：** 深色底上居中排布内容。四角放置抽象柔形。
 
-**Typography:**
-- Display: `Cormorant` (400/600) — elegant serif
+**Typography：**
+- Display: `Cormorant` (400/600) — 优雅衬线
 - Body: `IBM Plex Sans` (300/400)
 
-**Colors:**
+**Colors：**
 ```css
 :root {
     --bg-primary: #0f0f0f;
@@ -116,28 +120,28 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 }
 ```
 
-**Signature Elements:**
-- Abstract soft gradient circles (blurred, overlapping)
-- Warm color accents (pink, gold, terracotta)
-- Thin vertical accent lines
-- Italic signature typography
-- **No illustrations—only abstract CSS shapes**
+**Signature Elements：**
+- 抽象柔和渐变圆（模糊、叠压）
+- 暖色点缀（粉、金、陶土色）
+- 细竖线装饰
+- 斜体签名式排印
+- **不用插画，只用抽象 CSS 形状**
 
 ---
 
-## Light Themes
+## 浅色主题
 
 ### 5. Notebook Tabs
 
-**Vibe:** Editorial, organized, elegant, tactile
+**Vibe：** 编辑感、有条理、优雅、有触感
 
-**Layout:** Cream paper card on dark background. Colorful tabs on right edge.
+**Layout：** 深色背景上的奶油色纸卡。右缘排列彩色标签。
 
-**Typography:**
-- Display: `Bodoni Moda` (400/700) — classic editorial
+**Typography：**
+- Display: `Bodoni Moda` (400/700) — 经典编辑体
 - Body: `DM Sans` (400/500)
 
-**Colors:**
+**Colors：**
 ```css
 :root {
     --bg-outer: #2d2d2d;
@@ -151,25 +155,25 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 }
 ```
 
-**Signature Elements:**
-- Paper container with subtle shadow
-- Colorful section tabs on right edge (vertical text)
-- Binder hole decorations on left
-- Tab text must scale with viewport: `font-size: clamp(0.5rem, 1vh, 0.7rem)`
+**Signature Elements：**
+- 带柔和阴影的纸面容器
+- 右缘彩色分节标签（竖排文字）
+- 左侧活页孔装饰
+- 标签文字须随视口缩放：`font-size: clamp(0.5rem, 1vh, 0.7rem)`
 
 ---
 
 ### 6. Pastel Geometry
 
-**Vibe:** Friendly, organized, modern, approachable
+**Vibe：** 友好、有条理、现代、亲和
 
-**Layout:** White card on pastel background. Vertical pills on right edge.
+**Layout：** 浅彩背景上的白色卡片。右缘竖排胶囊标签。
 
-**Typography:**
+**Typography：**
 - Display: `Plus Jakarta Sans` (700/800)
 - Body: `Plus Jakarta Sans` (400/500)
 
-**Colors:**
+**Colors：**
 ```css
 :root {
     --bg-primary: #c8d9e6;
@@ -182,25 +186,25 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 }
 ```
 
-**Signature Elements:**
-- Rounded card with soft shadow
-- **Vertical pills on right edge** with varying heights (like tabs)
-- Consistent pill width, heights: short → medium → tall → medium → short
-- Download/action icon in corner
+**Signature Elements：**
+- 带柔和阴影的圆角卡片
+- **右缘竖排胶囊标签**，高度错落（类似标签页）
+- 胶囊宽度统一，高度依次为：短 → 中 → 高 → 中 → 短
+- 角落的下载/操作图标
 
 ---
 
 ### 7. Split Pastel
 
-**Vibe:** Playful, modern, friendly, creative
+**Vibe：** 俏皮、现代、友好、有创意
 
-**Layout:** Two-color vertical split (peach left, lavender right).
+**Layout：** 双色竖向分割（左桃色，右薰衣草色）。
 
-**Typography:**
+**Typography：**
 - Display: `Outfit` (700/800)
 - Body: `Outfit` (400/500)
 
-**Colors:**
+**Colors：**
 ```css
 :root {
     --bg-peach: #f5e6dc;
@@ -212,25 +216,25 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 }
 ```
 
-**Signature Elements:**
-- Split background colors
-- Playful badge pills with icons
-- Grid pattern overlay on right panel
-- Rounded CTA buttons
+**Signature Elements：**
+- 分割的双色背景
+- 带图标的俏皮胶囊徽标
+- 右栏叠加网格纹
+- 圆角 CTA 按钮
 
 ---
 
 ### 8. Vintage Editorial
 
-**Vibe:** Witty, confident, editorial, personality-driven
+**Vibe：** 机敏、自信、编辑感、个性鲜明
 
-**Layout:** Centered content on cream. Abstract geometric shapes as accent.
+**Layout：** 奶油色底上居中排布内容。抽象几何形状作点缀。
 
-**Typography:**
-- Display: `Fraunces` (700/900) — distinctive serif
+**Typography：**
+- Display: `Fraunces` (700/900) — 独特衬线
 - Body: `Work Sans` (400/500)
 
-**Colors:**
+**Colors：**
 ```css
 :root {
     --bg-cream: #f5f3ee;
@@ -240,67 +244,67 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 }
 ```
 
-**Signature Elements:**
-- Abstract geometric shapes (circle outline + line + dot)
-- Bold bordered CTA boxes
-- Witty, conversational copy style
-- **No illustrations—only geometric CSS shapes**
+**Signature Elements：**
+- 抽象几何形状（圆形轮廓 + 线 + 点）
+- 粗边框的 CTA 方框
+- 机敏、口语化的文案风格
+- **不用插画，只用几何 CSS 形状**
 
 ---
 
-## Specialty Themes
+## 特色主题
 
 ### 9. Neon Cyber
 
-**Vibe:** Futuristic, techy, confident
+**Vibe：** 未来感、科技感、自信
 
-**Typography:** `Clash Display` + `Satoshi` (Fontshare)
+**Typography：** `Clash Display` + `Satoshi`（Fontshare）
 
-**Colors:** Deep navy (#0a0f1c), cyan accent (#00ffcc), magenta (#ff00aa)
+**Colors：** 深海军蓝（#0a0f1c）、青色强调（#00ffcc）、洋红（#ff00aa）
 
-**Signature:** Particle backgrounds, neon glow, grid patterns
+**Signature：** 粒子背景、霓虹辉光、网格纹
 
 ---
 
 ### 10. Terminal Green
 
-**Vibe:** Developer-focused, hacker aesthetic
+**Vibe：** 面向开发者、黑客美学
 
-**Typography:** `JetBrains Mono` (monospace only)
+**Typography：** `JetBrains Mono`（仅等宽）
 
-**Colors:** GitHub dark (#0d1117), terminal green (#39d353)
+**Colors：** GitHub 深色（#0d1117）、终端绿（#39d353）
 
-**Signature:** Scan lines, blinking cursor, code syntax styling
+**Signature：** 扫描线、闪烁光标、代码语法着色
 
 ---
 
 ### 11. Swiss Modern
 
-**Vibe:** Clean, precise, Bauhaus-inspired
+**Vibe：** 干净、精确、包豪斯风
 
-**Typography:** `Archivo` (800) + `Nunito` (400)
+**Typography：** `Archivo` (800) + `Nunito` (400)
 
-**Colors:** Pure white, pure black, red accent (#ff3300)
+**Colors：** 纯白、纯黑、红色强调（#ff3300）
 
-**Signature:** Visible grid, asymmetric layouts, geometric shapes
+**Signature：** 可见网格、非对称布局、几何形状
 
 ---
 
 ### 12. Paper & Ink
 
-**Vibe:** Editorial, literary, thoughtful
+**Vibe：** 编辑感、文学感、沉静
 
-**Typography:** `Cormorant Garamond` + `Source Serif 4`
+**Typography：** `Cormorant Garamond` + `Source Serif 4`
 
-**Colors:** Warm cream (#faf9f7), charcoal (#1a1a1a), crimson accent (#c41e3a)
+**Colors：** 暖奶油（#faf9f7）、炭黑（#1a1a1a）、绯红强调（#c41e3a）
 
-**Signature:** Drop caps, pull quotes, elegant horizontal rules
+**Signature：** 首字下沉、拉页引文、雅致的分隔横线
 
 ---
 
-## Font Pairing Quick Reference
+## 字体搭配速查
 
-| Preset | Display Font | Body Font | Source |
+| 预设 | 展示字体 | 正文字体 | 来源 |
 |--------|--------------|-----------|--------|
 | Bold Signal | Archivo Black | Space Grotesk | Google |
 | Electric Studio | Manrope | Manrope | Google |
@@ -315,32 +319,32 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 
 ---
 
-## DO NOT USE (Generic AI Patterns)
+## 请勿使用（泛泛的 AI 套路）
 
-**Fonts:** Inter, Roboto, Arial, system fonts as display
+**Fonts：** Inter、Roboto、Arial、系统字体用作展示字体
 
-**Colors:** `#6366f1` (generic indigo), purple gradients on white
+**Colors：** `#6366f1`（泛用靛蓝）、白底紫色渐变
 
-**Layouts:** Everything centered, generic hero sections, identical card grids
+**Layouts：** 全部居中、套路化主视觉、一模一样的卡片网格
 
-**Decorations:** Realistic illustrations, gratuitous glassmorphism, drop shadows without purpose
+**Decorations：** 写实插画、无谓的玻璃拟态、毫无目的的投影
 
 ---
 
-## CSS Gotchas
+## CSS 易错点
 
-### Negating CSS Functions
+### 对 CSS 函数取负
 
-**WRONG — silently ignored by browsers (no console error):**
+**WRONG — 浏览器会静默忽略（不报控制台错误）：**
 ```css
 right: -clamp(28px, 3.5vw, 44px);   /* Browser ignores this */
 margin-left: -min(10vw, 100px);      /* Browser ignores this */
 ```
 
-**CORRECT — wrap in `calc()`:**
+**CORRECT — 用 `calc()` 包裹：**
 ```css
 right: calc(-1 * clamp(28px, 3.5vw, 44px));  /* Works */
 margin-left: calc(-1 * min(10vw, 100px));     /* Works */
 ```
 
-CSS does not allow a leading `-` before function names. The browser silently discards the entire declaration — no error, the element just appears in the wrong position. **Always use `calc(-1 * ...)` to negate CSS function values.**
+CSS 不允许在函数名前直接加前导 `-`。浏览器会静默丢弃整条声明，不报错，元素只是出现在错误的位置。**对 CSS 函数取负一律用 `calc(-1 * ...)`。**

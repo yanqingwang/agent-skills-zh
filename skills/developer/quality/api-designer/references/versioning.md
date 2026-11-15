@@ -1,53 +1,57 @@
-# API Versioning Strategies
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/api-designer/references/versioning.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Why Version APIs?
+# API 版本控制策略
 
-API versioning allows you to evolve your API while maintaining backward compatibility for existing clients. Breaking changes require a new version.
+## 为什么要做 API 版本控制？
 
-### Breaking Changes
+API 版本控制让你在为现有客户端保持向后兼容的同时演进 API。破坏性变更必须引入新版本。
 
-Changes that require a new version:
-- Removing or renaming fields
-- Changing field types (string to integer)
-- Adding required fields to requests
-- Changing response structure
-- Removing endpoints
-- Changing HTTP status codes for same scenario
-- Changing authentication mechanisms
+### 破坏性变更
 
-### Non-Breaking Changes
+需要新版本的变更：
+- 删除或重命名字段
+- 修改字段类型（字符串改为整数）
+- 向请求添加必填字段
+- 修改响应结构
+- 删除端点
+- 同一场景下修改 HTTP 状态码
+- 修改认证机制
 
-Safe changes that don't require a new version:
-- Adding new endpoints
-- Adding optional request fields
-- Adding new fields to responses (clients should ignore unknown fields)
-- Fixing bugs
-- Performance improvements
-- Adding new HTTP methods to existing resources
+### 非破坏性变更
 
-## Versioning Strategies
+不需要新版本的安全变更：
+- 添加新端点
+- 添加可选的请求字段
+- 向响应添加新字段（客户端应忽略未知字段）
+- 修复 bug
+- 性能改进
+- 向现有资源添加新的 HTTP 方法
 
-### 1. URI Versioning
+## 版本控制策略
 
-Most common and visible approach. Version is part of the URL path.
+### 1. URI 版本控制
+
+最常见、最直观的方式。版本号是 URL 路径的一部分。
 
 ```http
 GET /v1/users/123
 GET /v2/users/123
 ```
 
-**Advantages:**
-- Clear and visible in URLs
-- Easy to understand and implement
-- Simple routing and caching
-- Can run multiple versions simultaneously
+**优点：**
+- 清晰，在 URL 中可见
+- 易于理解和实现
+- 路由和缓存简单
+- 可以同时运行多个版本
 
-**Disadvantages:**
-- Violates REST principle (same resource, different URIs)
-- Requires updating client code to change version
-- Can lead to URI proliferation
+**缺点：**
+- 违背 REST 原则（同一资源、不同 URI）
+- 切换版本需要更新客户端代码
+- 可能导致 URI 膨胀
 
-**Implementation:**
+**实现方式：**
 ```
 /v1/users
 /v1/products
@@ -55,11 +59,11 @@ GET /v2/users/123
 /v2/products
 ```
 
-### 2. Header Versioning
+### 2. 请求头版本控制
 
-Version specified in HTTP headers (Accept header or custom header).
+版本号在 HTTP 请求头中指定（Accept 头或自定义头）。
 
-**Accept Header:**
+**Accept 头：**
 ```http
 GET /users/123
 Accept: application/vnd.myapi.v1+json
@@ -68,7 +72,7 @@ GET /users/123
 Accept: application/vnd.myapi.v2+json
 ```
 
-**Custom Header:**
+**自定义请求头：**
 ```http
 GET /users/123
 API-Version: 1
@@ -77,20 +81,20 @@ GET /users/123
 API-Version: 2
 ```
 
-**Advantages:**
-- URIs remain stable
-- More RESTful (same resource, same URI)
-- Separates versioning from resource identification
+**优点：**
+- URI 保持稳定
+- 更符合 REST（同一资源、同一 URI）
+- 把版本控制与资源标识分离
 
-**Disadvantages:**
-- Less visible (harder to debug)
-- More complex routing
-- Difficult to test in browser
-- Cache complexity
+**缺点：**
+- 不可见（更难调试）
+- 路由更复杂
+- 难以在浏览器中测试
+- 缓存复杂
 
-### 3. Query Parameter Versioning
+### 3. 查询参数版本控制
 
-Version specified as query parameter.
+版本号通过查询参数指定。
 
 ```http
 GET /users/123?version=1
@@ -101,19 +105,19 @@ GET /users/123?api-version=1
 GET /users/123?api-version=2
 ```
 
-**Advantages:**
-- Simple to implement
-- Easy to test
-- Visible in URLs
+**优点：**
+- 实现简单
+- 易于测试
+- 在 URL 中可见
 
-**Disadvantages:**
-- Pollutes query string
-- Not semantic (version not a filter)
-- Can interfere with other query params
+**缺点：**
+- 污染查询字符串
+- 不符合语义（版本不是过滤器）
+- 可能与其他查询参数冲突
 
-### 4. Content Negotiation
+### 4. 内容协商
 
-Client specifies desired version through content negotiation.
+客户端通过内容协商指定所需版本。
 
 ```http
 GET /users/123
@@ -123,23 +127,23 @@ GET /users/123
 Accept: application/vnd.myapi+json; version=2
 ```
 
-**Advantages:**
-- Very RESTful
-- Flexible content type negotiation
-- Stable URIs
+**优点：**
+- 非常符合 REST
+- 内容类型协商灵活
+- URI 稳定
 
-**Disadvantages:**
-- Complex implementation
-- Less intuitive for developers
-- Harder to test
+**缺点：**
+- 实现复杂
+- 对开发者不够直观
+- 更难测试
 
-## Recommended Approach
+## 推荐方案
 
-**URI versioning is recommended for most APIs** because:
-- It's the most explicit and discoverable
-- Easy to understand and debug
-- Simple to implement and maintain
-- Clear separation between versions
+**对大多数 API，推荐使用 URI 版本控制**，因为：
+- 最显式、最容易发现
+- 易于理解和调试
+- 实现和维护简单
+- 版本之间界限清晰
 
 ```
 /v1/users
@@ -147,59 +151,59 @@ Accept: application/vnd.myapi+json; version=2
 /v3/users
 ```
 
-## Version Format
+## 版本格式
 
-### Major Versions Only
+### 仅用主版本号
 
-Use simple major versions (v1, v2, v3) for public APIs:
+公共 API 使用简单的主版本号（v1、v2、v3）：
 ```
 /v1/users
 /v2/users
 ```
 
-**Advantages:**
-- Simple and clear
-- Easy to communicate
-- Forces thoughtful breaking changes
+**优点：**
+- 简单清晰
+- 易于传达
+- 迫使团队慎重对待破坏性变更
 
-### Date-Based Versions
+### 基于日期的版本
 
-Some APIs use dates for versions:
+一些 API 用日期做版本号：
 ```
 /2024-01-01/users
 /2024-06-15/users
 ```
 
-**Used by:** Stripe, GitHub API
+**使用者：** Stripe、GitHub API
 
-**Advantages:**
-- Clear when version was released
-- Easy to understand timeline
-- No confusion about major/minor
+**优点：**
+- 清楚版本何时发布
+- 时间线易于理解
+- 不必纠结主/次版本
 
-**Disadvantages:**
-- Less intuitive for clients
-- Harder to understand what changed
+**缺点：**
+- 对客户端不够直观
+- 更难了解具体改了什么
 
-## Version Lifecycle
+## 版本生命周期
 
-### 1. Introduction Phase
+### 1. 引入阶段
 
-New version is released alongside existing version:
+新版本与现有版本并行发布：
 ```
 /v1/users  # Still supported
 /v2/users  # New version available
 ```
 
-Announce new version:
-- Blog post explaining changes
-- Migration guide
-- Breaking changes list
-- Timeline for v1 deprecation
+为新版本发布公告：
+- 说明变更的博客文章
+- 迁移指南
+- 破坏性变更清单
+- v1 弃用时间表
 
-### 2. Deprecation Phase
+### 2. 弃用阶段
 
-Mark old version as deprecated but keep it running:
+把旧版本标记为弃用，但保持运行：
 
 ```http
 GET /v1/users/123
@@ -215,16 +219,16 @@ Link: </v2/users/123>; rel="successor-version"
 }
 ```
 
-**Deprecation Headers:**
-- `Deprecation: true` - Indicates version is deprecated
-- `Sunset: <date>` - When version will be removed (RFC 8594)
-- `Link: <url>; rel="successor-version"` - Points to new version
+**弃用响应头：**
+- `Deprecation: true` - 表示该版本已弃用
+- `Sunset: <date>` - 版本将被移除的时间（RFC 8594）
+- `Link: <url>; rel="successor-version"` - 指向新版本
 
-### 3. Sunset Phase
+### 3. 下线阶段
 
-Old version is shut down on announced date.
+旧版本在公告的日期关闭。
 
-Return 410 Gone for deprecated endpoints:
+对已弃用的端点返回 410 Gone：
 ```http
 GET /v1/users/123
 
@@ -238,27 +242,27 @@ Response: 410 Gone
 }
 ```
 
-## Deprecation Policy
+## 弃用策略
 
-### Recommended Timeline
+### 推荐时间表
 
-1. **Announce deprecation** - At least 6 months before sunset
-2. **Support period** - Run both versions for 6-12 months
-3. **Sunset date** - Clear date communicated in advance
-4. **Grace period** - 30 days of 410 Gone responses before complete shutdown
+1. **宣布弃用** - 至少在下线前 6 个月
+2. **支持期** - 两个版本并行运行 6-12 个月
+3. **下线日期** - 提前明确公布日期
+4. **宽限期** - 完全关闭前 30 天返回 410 Gone
 
-### Communication Channels
+### 沟通渠道
 
-- API response headers
-- Email to registered developers
-- Blog posts and changelog
-- Dashboard notifications
-- Documentation updates
-- Status page announcements
+- API 响应头
+- 发给注册开发者的邮件
+- 博客文章与变更日志
+- 控制台通知
+- 文档更新
+- 状态页公告
 
-## Migration Strategy
+## 迁移策略
 
-### Provide Migration Guide
+### 提供迁移指南
 
 ```markdown
 # Migrating from v1 to v2
@@ -291,16 +295,16 @@ Response: 410 Gone
 - Update client code to use new fields
 ```
 
-### Offer Tools
+### 提供工具
 
-- Migration scripts
-- SDK updates
-- API diff viewer
-- Compatibility layer (temporary)
+- 迁移脚本
+- SDK 更新
+- API diff 查看器
+- 兼容层（临时）
 
-## Version Discovery
+## 版本发现
 
-### Root Endpoint
+### 根端点
 
 ```http
 GET /
@@ -325,7 +329,7 @@ Response:
 }
 ```
 
-### Version Info Endpoint
+### 版本信息端点
 
 ```http
 GET /v2/version
@@ -339,9 +343,9 @@ Response:
 }
 ```
 
-## OpenAPI Versioning
+## OpenAPI 版本控制
 
-### Separate Specs per Version
+### 每个版本一份独立规格
 
 ```
 openapi-v1.yaml
@@ -349,9 +353,9 @@ openapi-v2.yaml
 openapi-v3.yaml
 ```
 
-Each spec is complete and independent.
+每份规格都完整且独立。
 
-### Single Spec with Servers
+### 单一规格加 servers
 
 ```yaml
 openapi: 3.1.0
@@ -365,27 +369,27 @@ servers:
     description: Version 2 (current)
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Version from day one** - Start with /v1, not /api
-2. **Major versions only** - Use v1, v2, v3 (not v1.1, v1.2)
-3. **Long deprecation periods** - Give clients time to migrate (6-12 months)
-4. **Clear communication** - Use headers, docs, emails
-5. **Maintain old versions** - Support at least 2 versions simultaneously
-6. **Document changes** - Provide detailed migration guides
-7. **Use semantic versioning** - For internal/SDK versioning
-8. **Never break without warning** - Always announce breaking changes
-9. **Provide tools** - Migration scripts, updated SDKs
-10. **Monitor usage** - Track which versions are being used
+1. **从第一天起就用版本** - 以 /v1 开头，而不是 /api
+2. **只用主版本号** - 使用 v1、v2、v3（不要 v1.1、v1.2）
+3. **较长的弃用期** - 给客户端留出迁移时间（6-12 个月）
+4. **沟通清晰** - 使用响应头、文档、邮件
+5. **维护旧版本** - 至少同时支持 2 个版本
+6. **记录变更** - 提供详细的迁移指南
+7. **使用语义化版本** - 用于内部/SDK 版本号
+8. **绝不无预警地破坏** - 破坏性变更必须提前公告
+9. **提供工具** - 迁移脚本、更新后的 SDK
+10. **监控用量** - 跟踪各版本的使用情况
 
-## Anti-Patterns
+## 反模式
 
-Avoid these mistakes:
+避免这些错误：
 
-- **Breaking changes without version bump** - Breaks existing clients
-- **Too many versions** - Maintenance nightmare (max 2-3 active versions)
-- **Short deprecation periods** - Frustrates developers
-- **No migration path** - Makes upgrades painful
-- **Surprise sunsets** - Breaks production apps without warning
-- **Inconsistent versioning** - Different strategies for different endpoints
-- **Versioning individual endpoints** - Use consistent version across API
+- **不升版本就引入破坏性变更** - 会破坏现有客户端
+- **版本过多** - 维护负担（最多 2-3 个活跃版本）
+- **弃用期太短** - 让开发者恼火
+- **没有迁移路径** - 升级痛苦
+- **突然下线** - 无预警打挂生产应用
+- **版本策略不一致** - 不同端点采用不同策略
+- **只给单个端点做版本** - 整个 API 用一致的版本

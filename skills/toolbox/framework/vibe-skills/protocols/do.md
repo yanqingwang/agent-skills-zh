@@ -1,30 +1,32 @@
-# vibe-do Protocol
+> **中文汉化版** · 上游：[foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills) · 原文件：`protocols/do.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-> **What this protocol does -- plain language overview**
+# vibe-do 协议
+
+> **本协议的作用（通俗概述）**
 >
-> This is the execution protocol. It governs how VibeSkills writes code, fixes bugs,
-> and runs tests -- specifically during Stage 5 (`plan_execute`) of the runtime.
+> 这是执行协议。它规定 VibeSkills 如何写代码、修 bug、跑测试，具体覆盖运行时的 Stage 5（`plan_execute`）。
 >
-> You do not need to read this to use VibeSkills. It is reference material for advanced
-> users and contributors who want to understand how execution decisions are made.
+> 使用 VibeSkills 不需要读本文件。它供想了解执行决策如何做出的高级用户与贡献者参考。
 >
-> **Key terms used below:**
-> - **M / L / XL grade**: Task complexity level. M = quick task, L = multi-step task, XL = large parallel task.
-> - **Closure-First Contract**: The principle of reaching a working state quickly before expanding scope. Specifically: two probe steps + one verification step early in any task.
-> - **Proxy-goal drift**: When the system optimizes a visible metric instead of the actual goal. Example: making all tests pass by deleting the failing tests, not fixing the code.
-> - **P5 pattern**: "Evidence-Based Communication" -- never say "should work"; always show [Command] -> [Output] -> [Claim].
-> - **V2 pattern**: "Completion Gate" -- identify what to verify, run it, read the output, confirm correctness, then mark complete.
-> - **V7 pattern**: "Learning Capture" -- record what routing decision was made and how effective it was.
+> **下文用到的关键术语：**
+> - **M / L / XL grade（级别）**：任务复杂度等级。M = 快速任务，L = 多步任务，XL = 大型并行任务。
+> - **Closure-First Contract（先闭环契约）**：先快速达到可用状态、再扩大范围的原则。具体为：任何任务的早期做两次探测 + 一次验证。
+> - **Proxy-goal drift（代理目标漂移）**：系统优化可见指标而不是真实目标。例如：删掉失败的测试让全部测试通过，而不是修复代码。
+> - **P5 模式**："基于证据的沟通"。绝不说"应该能行"；始终展示 [命令] -> [输出] -> [声明]。
+> - **V2 模式**："完成门禁"。确定要验证什么，运行它，读输出，确认正确，然后标记完成。
+> - **V7 模式**："学习沉淀"。记录做了什么路由决策、效果如何。
 
 
-Protocol for coding, implementation, debugging, and testing tasks.
+编码、实现、调试与测试任务协议。
 
-## Governed Runtime Position
+## 治理运行时定位
 
-This protocol is the execution surface for runtime stage 5 `plan_execute`.
-It does not replace the governed runtime entry or skip the earlier planning stages defined in `protocols/runtime.md`.
+本协议是运行时第 5 阶段 `plan_execute` 的执行表面。
+它不替代治理运行时入口，也不跳过 `protocols/runtime.md` 定义的更早规划阶段。
 
-The governed runtime path remains:
+治理运行时路径保持不变：
 
 1. `skeleton_check`
 2. `deep_interview`
@@ -33,181 +35,179 @@ The governed runtime path remains:
 5. `plan_execute`
 6. `phase_cleanup`
 
-`do.md` assumes stages 1 through 4 have already produced:
+`do.md` 假定阶段 1 到 4 已经产出：
 
-- a frozen requirement document
-- an execution plan
-- an internal execution grade
-- a confirmed user-facing workflow level for L/XL work
-- approved selected skills when bounded skill help will be used
-- a frozen downstream delivery-acceptance contract
+- 冻结的需求文档
+- 执行计划
+- 内部执行级别
+- L/XL 工作已确认的用户可见工作流级别
+- 将使用有界 skill 帮助时已批准的选定 skill
+- 冻结的下游交付验收契约
 
-The job here is to execute, verify, and hand off cleanly to `phase_cleanup`.
-It must not use execution work to bypass an earlier workflow-level, skill-use,
-requirement, or plan confirmation stop.
+这里的工作是执行、验证，并干净地移交给 `phase_cleanup`。
+不得用执行工作绕过更早的工作流级别、skill 使用、需求或计划确认停止点。
 
-## Runtime Mode Behavior
+## 运行时模式行为
 
 ### `interactive_governed`
 
-- may pause for explicit confirmation when execution scope materially changes
-- should surface requirement or plan drift before continuing
+- 执行范围发生实质变化时，可暂停等待显式确认
+- 继续之前应先暴露需求或计划漂移
 
-## Anti-Drift Execution Guardrails
+## 防漂执行护栏
 
-During execution:
-- do not optimize a visible proxy signal while quietly abandoning the frozen objective,
-- do not absorb validation material, sample text, or current failing examples into product truth without explicit approval,
-- do not relabel a bounded fix as generalized completion unless the proof bundle supports that claim,
-- do preserve valid specialization when the requirement or plan intentionally scoped the work that way.
+执行期间：
+- 不要在悄悄放弃冻结目标的同时优化某个可见代理信号，
+- 未经显式批准，不得把验证材料、示例文本或当前失败样例吸收进产品真相，
+- 除非证据包支持该声明，否则不得把有界修复改标为泛化完成，
+- 需求或计划有意如此限定范围时，要保留有效的专门化。
 
-These are execution guardrails and completion-language rules.
-They are not a standalone blocking layer beyond the approved requirement, plan, and existing hard gates.
+这些是执行护栏与完成措辞规则。
+它们不是在已批准需求、计划与现有硬门禁之外的独立阻塞层。
 
-## Scope
-Activated when the task requires writing or modifying code:
-- Feature implementation
-- Bug fixing and debugging
-- Code refactoring
-- Test writing
+## 适用范围
+任务需要编写或修改代码时激活：
+- 功能实现
+- 修 bug 与调试
+- 代码重构
+- 编写测试
 
-## Closure-First Contract (2 Probes + 1 Verify)
+## 先闭环契约（2 次探测 + 1 次验证）
 
-Primary objective for execution tasks: **avoid dead-air** and reach a **minimal closed loop** quickly.
-This contract applies even if routing/pack selection is imperfect.
+执行任务的首要目标：**避免停摆**（dead-air），尽快达到**最小闭环**。
+即使路由/pack 选择不完美，本契约同样适用。
 
-### Contract
-Within the first 3 actions of an execution task, do:
-1. **Probe #1 (glob, fast):** establish repo shape and likely entry points.
-   - Example: `Get-ChildItem -Force | Select-Object Name`
-2. **Probe #2 (rg, targeted):** search the most relevant keyword(s) from the user prompt.
-   - Example: `rg -n -F -e '<keyword>' .`
-3. **Verify #1 (smallest relevant):** pick 1 verification command that can falsify your change.
-   - Coding: run the narrowest test (`pytest -q`, `npm test`, `pnpm test`, etc.)
-   - Debug: reproduce the bug / run the failing test / run the minimal build step
+### 契约
+执行任务的前 3 个动作内完成：
+1. **Probe #1（glob，快）：**确认仓库形态与可能的入口。
+   - 示例：`Get-ChildItem -Force | Select-Object Name`
+2. **Probe #2（rg，定向）：**搜索用户提示词中最相关的关键词。
+   - 示例：`rg -n -F -e '<keyword>' .`
+3. **Verify #1（最小相关）：**选 1 条能证伪你改动的验证命令。
+   - 编码：跑最窄的测试（`pytest -q`、`npm test`、`pnpm test` 等）
+   - 调试：复现 bug / 跑失败的测试 / 跑最小构建步骤
 
-### Router Hints (When Available)
-If VCO router output includes:
-- `closure_advice`: follow `closure_advice.contract.probes` + `closure_advice.contract.verify` (prefer verbatim).
-- `exploration_advice`: use `exploration_advice.recommended_execution_mode`:
-  - `analysis_first`: allow brief analysis first, but **do not skip probes**.
-  - `direct_execution`: go straight to Probe #1 → Probe #2 → Verify.
+### Router 提示（可用时）
+VCO router 输出包含以下内容时：
+- `closure_advice`：遵循 `closure_advice.contract.probes` + `closure_advice.contract.verify`（尽量逐字采用）。
+- `exploration_advice`：使用 `exploration_advice.recommended_execution_mode`：
+  - `analysis_first`：允许先做简短分析，但**不得跳过探测**。
+  - `direct_execution`：直接进入 Probe #1 → Probe #2 → Verify。
 
-## Tool Orchestration by Grade
+## 按级别编排工具
 
-### M Grade
-1. Pre-implementation: Everything-CC tdd-guide agent
-   - Write tests first (RED)
-   - Implement to pass (GREEN)
-   - Refactor (IMPROVE)
-2. Implementation: Claude Code native tools
-3. Post-implementation: Everything-CC code-reviewer auto-triggers
-4. If security-relevant: Everything-CC security-reviewer
+### M 级
+1. 实现前：Everything-CC tdd-guide agent
+   - 先写测试（RED）
+   - 实现到通过（GREEN）
+   - 重构（IMPROVE）
+2. 实现：Claude Code 原生工具
+3. 实现后：Everything-CC code-reviewer 自动触发
+4. 涉及安全时：Everything-CC security-reviewer
 
-### L Grade
-1. Ensure design exists (from vibe-think protocol)
-2. Execute planned units in native serial order
-   - Sequence-first execution from the frozen plan
-   - No blanket multi-agent fan-out
-3. Optional delegated units must remain bounded and explicitly planned
-   - If subagents are spawned, prompts must end with `$vibe`
-   - Child lane specialist ideas stay advisory in the frozen packet; execute may same-round auto-absorb only under root-governed approval logic
-4. Use runtime-neutral state_store to track progress across tasks
-5. Final review with Superpowers verification-before-completion
+### L 级
+1. 确保设计已存在（来自 vibe-think 协议）
+2. 按原生串行顺序执行计划单元
+   - 按冻结计划顺序优先执行
+   - 不做一刀切的多智能体扇出
+3. 可选的委派单元必须保持有界且经显式计划
+   - 派生子代理时，提示词必须以 `$vibe` 结尾
+   - child lane 的专家意见在冻结包中只是建议；execute 仅在 root-governed 批准逻辑下才可在同一轮自动吸收
+4. 用运行时中立的 state_store 跟踪跨任务进度
+5. 用 Superpowers verification-before-completion 做最终审查
 
-If subagents are spawned under the governed runtime, their prompts must end with `$vibe`.
+在治理运行时下派生子代理时，其提示词必须以 `$vibe` 结尾。
 
-### XL Grade
-Defer to vibe-team protocol (wave-sequential orchestration + step-level bounded parallel units + optional ruflo collaboration).
+### XL 级
+交给 vibe-team 协议（波次顺序编排 + 步骤级有界并行单元 + 可选 ruflo 协作）。
 
-## Debug Mode
+## 调试模式
 
-| Grade | Approach | Tool |
+| 级别 | 方法 | 工具 |
 |-------|----------|------|
-| M | Structured debugging | superpowers:systematic-debugging (4-phase root cause) |
-| L | Parallel investigation | systematic-debugging + dispatching-parallel-agents |
-| Any | Build-specific errors | superpowers:systematic-debugging* |
+| M | 结构化调试 | superpowers:systematic-debugging（4 阶段根因） |
+| L | 并行调查 | systematic-debugging + dispatching-parallel-agents |
+| 任意 | 构建专属错误 | superpowers:systematic-debugging* |
 
-*If an external build-error specialist is unavailable, keep build failures in the local systematic-debugging root-cause flow.
+*外部构建错误专家不可用时，构建失败留在本地 systematic-debugging 根因流程内处理。
 
-## Browser Testing
-When UI testing is needed:
-- Use only host-native tools that are already available and allowed by the
-  current host policy.
-- Do not install or recommend MCP servers as part of Vibe execution.
+## 浏览器测试
+需要 UI 测试时：
+- 只用当前宿主策略已允许且已可用的宿主原生工具。
+- 不要在 Vibe 执行中安装或推荐 MCP 服务器。
 
-## Quality Injection: Core Tier (L/XL Default)
+## 质量注入：核心层（L/XL 默认）
 
-### Always-On Patterns
-- **P5**: Evidence-Based Communication. NEVER say "should work", "probably fine". ALWAYS use [Command] [Output] [Claim] format.
-- **V2**: Completion Gate. IDENTIFY what to verify -> RUN verification -> READ output -> VERIFY correctness -> MARK COMPLETE.
-- **V7**: Learning Capture. Routing decision + injection effectiveness + improvements.
+### 常开模式
+- **P5**：基于证据的沟通。绝不说"应该能行"、"大概没问题"。始终使用 [命令] [输出] [声明] 格式。
+- **V2**：完成门禁。确定要验证什么 -> 运行验证 -> 读输出 -> 确认正确 -> 标记完成。
+- **V7**：学习沉淀。路由决策 + 注入有效性 + 改进。
 
-### Task-Type-Specific Core Patterns
+### 任务类型专属核心模式
 
-| Task Type | Additional Patterns | Reason |
+| 任务类型 | 附加模式 | 原因 |
 |-----------|-------------------|--------|
-| Debug | P1 (Root Cause Discipline) + P4 (Scientific Method) | Prevents blind fix attempts |
-| Coding | V3 (6-Phase Quality Pipeline) | Ensures code quality gates |
-| Research | V1 (Evidence Chain: every claim links to a verifiable source) | Ensures cited sources |
-| Planning | P3 (Structured Analysis: decompose into sub-problems, evaluate each systematically) | Systematic decomposition |
+| 调试 | P1（根因纪律）+ P4（科学方法） | 防止盲目修复 |
+| 编码 | V3（6 阶段质量流水线） | 确保代码质量门 |
+| 研究 | V1（证据链：每个声明都链接到可验证来源） | 确保引用来源 |
+| 计划 | P3（结构化分析：拆分子问题并逐一系统评估） | 系统化分解 |
 
-### V3: 6-Phase Quality Pipeline (Coding Tasks)
+### V3: 6 阶段质量流水线（编码任务）
 Build -> Types -> Lint -> Tests -> Security -> Diff -> [READY / NOT READY]
 
-### P1: Root Cause Discipline (Debug Tasks)
-Iron Law: NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST.
-Complete Phase 1 (root cause investigation) before proposing fixes.
-If 3+ fix attempts fail, STOP and question the architecture.
+### P1: 根因纪律（调试任务）
+铁律：没有根因调查就没有修复。
+提出修复之前先完成 Phase 1（根因调查）。
+修复尝试失败 3 次以上，停下并质疑架构。
 
-### P4: Scientific Method (Debug Tasks)
-Form SINGLE hypothesis. State clearly: I think X because Y.
-Make SMALLEST possible change to test. One variable at a time.
+### P4: 科学方法（调试任务）
+形成单一假设。清楚陈述：我认为 X，因为 Y。
+用最小可能的改动去验证。一次只动一个变量。
 
-### Context Budget Fallback
-- Normal: Full core tier
-- 对话明显变长（多轮工具调用、大量代码输出）: P5 + V2 + V7 only
-- 接近上下文极限（收到 compaction 提示或输出被截断）: Skip injection, note in V7 feedback
+### 上下文预算回退
+- 正常：完整核心层
+- 对话明显变长（多轮工具调用、大量代码输出）：仅用 P5 + V2 + V7
+- 接近上下文极限（收到 compaction 提示或输出被截断）：跳过注入，记入 V7 反馈
 
-### Behavioral Tone (All Grades)
+### 行为基调（所有级别）
 
-- **Conclusion-First Output**: 先交付结论/结果，再以 P5 格式提供证据链。
+- **结论先行输出**：先交付结论/结果，再以 P5 格式提供证据链。
   用户看到的第一行是答案，不是过程。
-- **Exploration Budget**: 面对未知问题，连续探索性工具调用（Glob/Grep/Read/WebSearch）
+- **探索预算**：面对未知问题，连续探索性工具调用（Glob/Grep/Read/WebSearch）
   不超过 8 次。超出后：总结已知信息 → 向用户请求方向指引。
-- **No Self-Commentary**: 不解释困难程度，不自我评价。直接交付工程结果。
+- **不自我解说**：不解释困难程度，不自我评价。直接交付工程结果。
 
-## Quality Gates
-Before marking code task complete:
-1. All tests pass
-2. Code review completed
-3. No security vulnerabilities (for user-facing code)
-4. No console.log left in production code
-5. Delivery-acceptance evidence is sufficient for the claimed completion wording
-6. A handoff bundle exists for runtime stage 6 `phase_cleanup`
+## 质量门
+标记代码任务完成之前：
+1. 全部测试通过
+2. 代码审查已完成
+3. 无安全漏洞（面向用户的代码）
+4. 生产代码中不残留 console.log
+5. 交付验收证据足以支撑所声称的完成措辞
+6. 存在供运行时第 6 阶段 `phase_cleanup` 使用的移交包
 
-## Required Handoff To `phase_cleanup`
+## 必须移交给 `phase_cleanup`
 
-Execution is not complete at the last passing test.
-Before leaving this protocol, write or preserve the evidence needed for cleanup:
+最后一个测试通过不等于执行完成。
+离开本协议之前，写出或保留清理所需的证据：
 
-- verification commands and results
-- changed artifact list
-- temp artifact list
-- node or process cleanup notes when relevant
-- manual spot-check status when the frozen requirement declared them
-- completion-language downgrade notes when delivery truth is not fully passing
-- open risks or deferred follow-ups
+- 验证命令与结果
+- 变更产物清单
+- 临时产物清单
+- 相关时的 node 或进程清理说明
+- 冻结需求声明了人工抽查时的人工抽查状态
+- 交付真相未完全通过时的完成措辞降级说明
+- 未决风险或延期跟进项
 
-`phase_cleanup` is mandatory and owns the final closure receipt.
+`phase_cleanup` 是强制的，并拥有最终收尾回执。
 
-## Conflict Avoidance
-- Do NOT use ruflo agent_spawn for M/L coding tasks
-- Do NOT use SuperClaude sc:implement (use VCO flow)
-- Everything-CC hooks always run -- do not disable
-- For L grade, use Superpowers subagent system, NOT Everything-CC agents.
-- If the preferred orchestration stack is unavailable, do not silently downgrade. Follow `fallback-chains.md` only as an explicit degraded path, emit a standalone hazard alert, and record that the resulting execution is non-authoritative.
-- Do not self-introduce new fallback logic during implementation unless the active requirement document explicitly approves fallback-related changes.
-- Do not convert primary-path failure into fake success by swallowing exceptions, returning template-only success text, or leaving mock / simulation placeholders in production behavior.
-- Prefer explicit failure exposure over convenience recovery: if the real path fails, keep the failure visible in logs, receipts, verification output, or downgraded closure wording.
-- If a requirement explicitly permits fallback or degraded behavior, keep it explicit, document the trigger and non-authoritative status, and make the path easy to disable or remove later.
+## 冲突规避
+- M/L 编码任务不要用 ruflo agent_spawn
+- 不要用 SuperClaude sc:implement（用 VCO 流程）
+- Everything-CC hooks 始终运行，不要禁用
+- L 级用 Superpowers 子代理系统，不要用 Everything-CC agents。
+- 首选编排栈不可用时不要静默降级。只在显式降级路径下遵循 `fallback-chains.md`，发出独立 hazard alert，并记录由此产生的执行为 non-authoritative。
+- 实现期间不要自行引入新的回退逻辑，除非现行需求文档显式批准回退相关变更。
+- 不得通过吞异常、返回模板化成功文本或在生产行为中留下 mock/模拟占位，把主路径失败变成假成功。
+- 宁可显式暴露失败，不做便利性恢复：真实路径失败时，让失败在日志、回执、验证输出或降级收尾措辞中保持可见。
+- 需求显式允许回退或降级行为时，保持其显式，记录触发条件与 non-authoritative 状态，并让该路径日后易于禁用或移除。

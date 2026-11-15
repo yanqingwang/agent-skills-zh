@@ -1,55 +1,59 @@
-# Redesign
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/redesign.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Loaded only when the user names Hallmark with `redesign` or `audit` (`/hallmark redesign <target>`, *redesign the site with Hallmark*). A request that changes an existing design without naming Hallmark (a restyle, new colours or a new theme, a polish, a redesign, a small edit) never loads this file: it is done as asked, in the project's own system. A redesign is a build whose material is the page that exists: SKILL.md still binds, and this file says what the run keeps, what replaces the Step 1 ask and what the sweep adds. The target is the user's own code (a file, a folder, a route on a dev server); a live URL with no source behind it can only be audited, through `--url`.
+# 重设计
 
-## What a redesign keeps
+只在用户点名 Hallmark 并带 `redesign` 或 `audit` 时加载（`/hallmark redesign <target>`，*redesign the site with Hallmark*）。不点名 Hallmark 而要改动既有设计的要求（restyle、换色或换主题、polish、重设计、小修改）绝不加载本文件：按原样照做，用项目自己的系统。重设计是一场以既有页面为材料的建造：SKILL.md 仍然约束全程，本文件说明运行保留什么、用什么替代 Step 1 的提问、清扫步骤额外做什么。目标是用户自己的代码（一个文件、一个文件夹、开发服务器上的一个路由）；没有源码支撑的 live URL 只能通过 `--url` 做审计。
 
-- **The content.** Every fact, claim, name, price, date and quote the page states. Figures, quotes and logos already there are the user's material: carried over as found and listed in the handoff to verify, one a gate doubts (a trend nobody measured, 46a) included. Nothing is added: no action, section, claim or picture the page did not have, beyond what the user hands over and what a gate requires (a pause on a loop, 18; a focus ring). A drawing made from the page's own facts (its channels, its steps, a figure) is composition, and full depth may make one.
-- **The wiring.** Every link, form, field, handler, route, id and test hook; every script, data call and analytics call. Edit markup inside the component that owns it. Never move logic, rename a prop, or drop a `name`, an `id`, a `key`, a `type`, an `href` or a `data-testid` that a script or a test reads. A prop the Floor empties (an emoji passed as an icon) may go with it, named in the handoff. A state the screen has no logic for (a failed load, an undo) is listed for the owner, never built.
-- **The files.** No file deleted, no route removed and no component tree replaced without a file-level plan the user approved, and no test edited to make the redesign pass. Documents in the repo (a README, a prompt, a deck) explain the product; they are not page copy. In a git project, start from a clean tree, `.hallmark/` aside (ask the user to commit or stash; never do it for them), so the redesign is one diff they can read and revert. The stylesheet is the redesign's to edit: the append-only rule guards it from a build, not from its own redesign.
-- **The brand,** when there is one. A brand is chosen: a logo, a colour or a face the project names (a brand file, a logo asset, named tokens, a font file of its own) or the user states. It stays at every depth, its values read from the project's files, never from memory. A framework default or a look the gates name (the purple-to-blue gradient, Inter as the display, a stock swatch) is not a brand: restyle and full replace it, and the Picks block says so in case it was. A locked `design.md` is the system at every depth.
-- **The words,** unless a gate names them. Wording that fails a copy gate (19, 54, 58, 63, 69) is tightened from the facts already on the page, and the handoff lists every changed line, before and after. An eyebrow is never just deleted: where its heading is figurative, the plain label becomes the heading (*Opening hours* over *When to find us* becomes *Opening hours*). Terms, disclaimers and consent text are never reworded. When the user says to keep every word, stamp `copy: verbatim`: 19, 58 and 69 then report as notes.
+## 重设计保留什么
 
-## Depth
+- **内容。**页面陈述的每一个事实、主张、名字、价格、日期与引语。已有的数字、引语与标志是用户的材料：照原样带过来，并在交接单中列出让用户核对，gate 存疑的那份（没人测量过的趋势，46a）也在内。什么都不新增：除了用户交来的与 gate 要求的（循环上的暂停，18；焦点环），不加页面没有的动作、区块、主张或图片。用页面自己的事实画出的图（它的渠道、步骤、某个数字）属于构图，full 深度可以做一张。
+- **接线。**每一个链接、表单、字段、handler、路由、id 与测试钩子；每一个脚本、数据调用与统计调用。在拥有它的组件内部编辑标记。绝不移动逻辑、重命名 prop，或删掉脚本或测试读取的 `name`、`id`、`key`、`type`、`href` 或 `data-testid`。Floor 清空的 prop（当图标传的 emoji）可以随之而去，在交接单中注明。界面没有对应逻辑的状态（加载失败、撤销）列出来交给所有者，绝不擅自实现。
+- **文件。**没有用户批准的文件级计划，就不删文件、不移除路由、不替换组件树；也不为了让重设计通过而改测试。仓库里的文档（README、prompt、演示文稿）是解释产品的，不是页面文案。git 项目里，从干净的树开始（`.hallmark/` 除外；请用户自己 commit 或 stash，绝不代劳），让重设计成为一个用户读得懂、也能回滚的 diff。样式表归重设计编辑：append-only 规则防的是建造，防不了它自己的重设计。
+- **品牌，**如果有。品牌是选出来的：项目点名（品牌文件、标志资源、具名令牌、自己的字体文件）或用户说出的 logo、颜色或字体。它在所有深度都保留，其取值从项目文件读取，绝不凭记忆。框架默认值或 gate 点名的外观（紫到蓝的渐变、Inter 当标题字、现成色卡）不是品牌：restyle 与 full 会整体替换它，Picks 块会写明以防它原本就是。锁定的 `design.md` 是所有深度上的系统。
+- **文字，**除非 gate 点名。未通过文案 gate（19、54、58、63、69）的措辞，用页面上已有的事实收紧，交接单列出每一行改动的前后。eyebrow 绝不只是删掉了事：它的标题是比喻时，平实的标签升为标题（*When to find us* 上方的 *Opening hours* 变成 *Opening hours*）。条款、免责声明与同意文本绝不改写。用户要求一字不动时，盖 `copy: verbatim` 章：19、58 与 69 随后以备注形式报告。
 
-The verb is a **full** redesign: the content and the wiring stay, the system and the composition change. A lighter depth runs only when the same request asks for it in so many words, and the Picks block names the depth:
+## 深度
 
-| Depth | Stays | Changes | Only when the request says |
+这个动词是 **full** 重设计：内容与接线保留，系统与构图改变。更轻的深度只在同一请求原话点名时才运行，Picks 块写明深度：
+
+| 深度 | 保留 | 改动 | 仅当请求原话说出 |
 | --- | --- | --- | --- |
-| **full** | the content and the wiring | the system and the composition: shape, hero, section objects, chrome | nothing else: it is the verb |
-| **restyle** | the layout | the system: colour, type, radius, shadow, motion, the controls | *keep the layout*, *restyle*, *reskin*, *only the colours and type* |
-| **polish** | the system and the layout | only what a gate names: the tells, contrast, states, motion, tokens | *polish*, *keep our look*, *only fix what looks generated* |
+| **full** | 内容与接线 | 系统与构图：形状、首屏、区块对象、界面框架 | 无其他条件：它就是动词本身 |
+| **restyle** | 布局 | 系统：颜色、字体、圆角、阴影、动效、控件 | *keep the layout*、*restyle*、*reskin*、*only the colours and type* |
+| **polish** | 系统与布局 | 只改 gate 点名的：AI 痕迹、对比度、状态、动效、令牌 | *polish*、*keep our look*、*only fix what looks generated* |
 
-The depths do not blend: a polish that finds the concept wrong says so and recommends the full run, it never smuggles one in.
+深度之间不混用：polish 发现概念错了就说出来并建议跑 full，绝不偷偷夹带。
 
-**Full depth on an app screen** recomposes each screen inside the shell it has: what leads, and how the figures, tables and forms are arranged (`flow.md` § App screens). Routes, destinations and each component's logic stay; there is no hero stage and no hero review.
+**应用界面上的 full 深度**在既有的壳内重排每一屏：什么领先呈现，数字、表格与表单如何布局（`flow.md` § App screens）。路由、去向与每个组件的逻辑保留；没有 hero 舞台，也没有 hero 评审。
 
-*From scratch* is a build, not a depth: SKILL.md as written, the old page as its Step 2 inventory, in new files beside the old ones.
+*From scratch* 是一次建造，不是一种深度：按 SKILL.md 原文执行，旧页面作为其 Step 2 盘点，新文件与旧文件并存。
 
-## Before
+## 之前
 
-1. Run the pre-flight (Step 0), then list the pages in the target: route, file, and whether each is a page or an app screen (`flow.md` § App screens). In a framework project start the dev server and record through `--url`; the linter does not render the empty shell `index.html` from disk. An unstamped page has no genre: infer it from the page as Step 1 would from a prompt, and say so.
-2. Record the page as it stands:
+1. 跑 pre-flight（Step 0），然后列出目标中的页面：路由、文件，以及每一项是页面还是应用界面（`flow.md` § App screens）。框架项目里启动开发服务器并通过 `--url` 记录；linter 不渲染磁盘上的空壳 `index.html`。未盖章的页面没有体裁：像 Step 1 从提示词推断那样从页面推断体裁，并说明这一点。
+2. 按现状记录页面：
 
 ```
 node <skill-dir>/scripts/sloplint.mjs <target> --genre <genre> --render --before [--url <route> ...] [--scope app]
 ```
 
-It prints the findings grouped by gate and writes them to `.hallmark/before.txt`, the screenshots to `.hallmark/before/` and the record to `.hallmark/before.json`: every link, form, field, inline handler, test hook, script tag, selector a script queries, heading and figure. Git ignores the folder's screenshots and records.
+它按 gate 分组打印发现，写入 `.hallmark/before.txt`，截图写入 `.hallmark/before/`，记录写入 `.hallmark/before.json`：每个链接、表单、字段、行内 handler、测试钩子、脚本标签、脚本查询的选择器、标题与图。Git 忽略该文件夹的截图与记录。
 
-3. Look at the screenshots before you weigh the findings, so the linter does not write the verdict, then give the read in four lines: what the page is for (the audience, the one action); what works and stays (at least one thing); what reads as generated (the worst tells, by gate); what is broken.
+3. 先看截图再衡量发现，别让 linter 代写结论，然后用四行给出解读：页面是做什么的（受众、那个动作）；什么有效且保留（至少一条）；什么读起来像 AI 生成（最重的痕迹，按 gate）；什么坏了。
 
-**`audit <target>` stops here.** It loads `gates.md` § 1, § 4 and § 5, walks the judged gates from the screenshots, and reports the findings by tier with `file:line`, the read, the lightest depth that settles them and what only a deeper one would. It changes none of the project's files.
+**`audit <target>` 到此为止。**它加载 `gates.md` § 1、§ 4 与 § 5，从截图逐个走受评的 gate，按层级报告发现并附 `file:line`、解读、能解决它们的最轻深度，以及只有更深一层才能解决的。它不改动项目的任何文件。
 
-## The ask
+## 提问
 
-One message replaces the Step 1 ask; skip it when the request already answers it or no one can answer:
+一条消息替代 Step 1 的提问；请求已经回答过、或无人能答时跳过：
 
-> *Before I redesign, three things. 1. **What must stay**: the brand, a section, a page? Say *keep the layout* and I only restyle. 2. **What is wrong with it**, in your words, and the feeling you want instead. 3. **Anything new to show**: screenshots, photos, numbers, a quote. Or say **go ahead** and I will redesign it in full.*
+> *重设计之前，问三件事。1. **什么必须保留**：品牌、某个区块、某个页面？说 *keep the layout*，我就只做 restyle。2. **它有什么问题**，用你的话说，以及你想要什么感觉。3. **有新材料要给我看吗**：截图、照片、数字、一段引语。或者说 **go ahead**，我就直接完整重设计。*
 
-## The plan
+## 计划
 
-The Picks block opens with four rows of its own, and nothing is deleted until the user has seen the Files row:
+Picks 块以自己的四行开场，用户看到 Files 行之前什么都不删：
 
 ```markdown
 - **Redesign** · full · 3 pages (/, /pricing, /docs)
@@ -58,23 +62,23 @@ The Picks block opens with four rows of its own, and nothing is deleted until th
 - **Files** · edit: app/page.tsx, app/pricing/page.tsx, app/globals.css · create: app/tokens.css, app/base.css · delete: none
 ```
 
-Then the build rows the depth reaches: Theme at restyle and full (dealt, `brand` or locked); Shape, Chrome, Hero, Signature and Sections at full only, where Step 2 runs with the page's own content as its inventory. At polish the block stops after Files. The deal's `--prompt` is the read's first line (what the page is for, in plain nouns), never the page's own copy, which is what the redesign is leaving behind.
+然后是深度到达的建造行：restyle 与 full 有 Theme（dealt、`brand` 或 locked）；Shape、Chrome、Hero、Signature 与 Sections 仅 full 有，此时 Step 2 以页面自己的内容为盘点运行。polish 时该块在 Files 之后为止。deal 的 `--prompt` 是解读的第一行（页面是做什么的，用平实的名词），绝不是页面自己的文案，那是重设计要甩掉的东西。
 
-## Build
+## 建造
 
-- **Polish** is `flow.md` § The sweep, on the user's own page: fix in place, single elements and tokens, never restructure, under the check stamp with `built: the project · redesign: polish`. It loads `gates.md` § 1 to § 5 and `patterns.md`, `interaction-and-states.md` when the page has a form, the theme file an old stamp names, and from `craft.md` only the section a finding points at.
-- **Where the layout stays** (polish and restyle), the stamp's `redesign:` field tells sloplint to report the layout gates (6b, 8, 9, 32, 42, 44a, 44c, 58, 77, 79) as notes; at polish the spacing and scale gates (24b, 59, 78) too, so a polish does not re-space a site it was asked to keep. Print them for the user with the depth that would settle them; do not rebuild them. At every depth 58 (the screen budget) is a note too: the words are the owner's, and only a copy gate cuts one. In app scope those gates are skipped, so the handoff's Layout row comes from the read and the review. A theme's own composition rules (its do-nots, the dials that vary between pages) yield to a kept layout: the theme lends its system, and every page takes one dial set.
-- **Restyle and full** start from the scaffold, with the depth in the stamp: `theme.mjs scaffold <slug> --redesign <depth>`, or `scaffold --brand --redesign <depth>` for a kept brand, its tokens filled from the palette and faces the pre-flight found (no `check`: the coordinates are the user's); add `--scope app` for app screens. It writes `tokens.css` and `base.css` beside the project's stylesheet and prints the imports that fit it (`export-formats.md` has the Tailwind and shadcn names). Then the shared components and the chrome, then the pages, the most visited first, each swept before the next.
-- **More than one page** at restyle or full: lock the system once the scaffold has run (`design-md.md`). Every page reads it and the variety rule inverts: pages share theme, type and accent, and differ only in shape. One stylesheet for several pages lists a hero posture per route, `hero: Settled (/), Stage (/contact)`. Past three pages, give each page to its own subagent where the harness has them, with `design.md`, the page's files and this file.
-- **Full depth** runs the hero stage and the hero review; polish and restyle skip both. The old sections still sit below the new hero at that stage: the stage judges the first screen alone, and what it reports below the fold waits for the sweep. Gate 8 judges the composition, not the order of the content: a kept sequence in a new composition is waived on the record.
+- **Polish** 就是 `flow.md` § The sweep，用在用户自己的页面上：就地修复，单个元素与令牌，绝不重构，盖 check 章，`built: the project · redesign: polish`。它加载 `gates.md` § 1 到 § 5 与 `patterns.md`，页面有表单时加载 `interaction-and-states.md`，旧章点名的主题文件，`craft.md` 只加载发现指向的那一节。
+- **布局保留时**（polish 与 restyle），章上的 `redesign:` 字段让 sloplint 把布局 gate（6b、8、9、32、42、44a、44c、58、77、79）按备注报告；polish 时间距与字号阶梯 gate（24b、59、78）也是，这样 polish 不会给一个要求保留的站点重新排间距。把它们连同能解决它们的深度打印给用户；不重建。任何深度下 58（屏幕预算）都是备注：文字是所有者的，只有文案 gate 能删一条。app 范围内这些 gate 被跳过，交接单的 Layout 行来自解读与评审。主题自己的构图规则（它的禁忌、页面间变化的旋钮）让位于保留的布局：主题借出它的系统，每一页取一套旋钮。
+- **Restyle 与 full** 从脚手架开始，深度写进章里：`theme.mjs scaffold <slug> --redesign <depth>`，保留品牌时用 `scaffold --brand --redesign <depth>`，其令牌由 pre-flight 找到的色板与字体填充（不 `check`：坐标是用户的）；应用界面加 `--scope app`。它把 `tokens.css` 与 `base.css` 写在项目样式表旁边，并打印适配它的导入（`export-formats.md` 有 Tailwind 与 shadcn 的名称）。然后是共享组件与界面框架，再是页面，访问最多的先做，每页做完先清扫再进下一页。
+- **restyle 或 full 下超过一页**：脚手架跑完后锁定系统（`design-md.md`）。每页都读它，多样性规则反转：页面共享主题、字体与强调色，只在形状上不同。一份样式表服务多页时按路由列出 hero 姿态，`hero: Settled (/), Stage (/contact)`。超过三页、且 Harness 有子代理时，把每页交给自己的子代理，附 `design.md`、该页的文件与本文件。
+- **Full 深度**跑 hero 舞台与 hero 评审；polish 与 restyle 两者都跳过。该阶段旧区块仍在新 hero 之下：舞台只评第一屏，它报告的折叠线以下内容等清扫处理。Gate 8 评的是构图，不是内容顺序：新构图中的既有顺序在记录上豁免。
 
-## After
+## 之后
 
-1. The sweep, against the record: `sloplint <target> --genre <genre> --render --kept`. Anything the page had and no longer has is a `FAIL kept` (a link, a form, a field, a handler, a test hook, a script, a selector a script still queries) or a `WARN kept` (a heading, a figure, an image, an id). Restore it, or put it on the record in the stamp: `/* Hallmark · dropped /blog, #team · the user is retiring the blog and the team section */`, or for a line a copy gate named, `/* Hallmark · reworded "Built for modern teams" to "Out of your way" · 19 names the opener */`, or `dropped "<the line>" · 69 names it` for a line a gate cuts whole. The run also writes `.hallmark/compare.html`, the before and after screenshots side by side: give the user its path.
-2. The project's own checks, where it has them: the type check, the build, the tests. A redesign that breaks one is not finished.
-3. The finish review also takes the `before` screenshots and answers what the old page did better (`review-finish.md`). A polish hands it only the full pages at 1440, before and after, and takes at most five findings. A finding that is a plain defect (a misalignment, a broken glyph, a label that lies) is fixed at any depth; one that asks for a new composition joins the layout findings; one that asks for content the page never had goes to the owner in the handoff.
-4. The log entry carries `mode: redesign`, `depth` and `scope` (page, site or app), plus the build's fields at full depth.
-5. The handoff, ahead of the material ask; where the layout stayed it adds a Layout row (the findings only a full redesign would settle):
+1. 对照记录清扫：`sloplint <target> --genre <genre> --render --kept`。页面曾有而现在没有的东西，是一条 `FAIL kept`（链接、表单、字段、handler、测试钩子、脚本、脚本仍查询的选择器）或 `WARN kept`（标题、图、图片、id）。恢复它，或在章里记上一笔：`/* Hallmark · dropped /blog, #team · the user is retiring the blog and the team section */`；文案 gate 点名的行用 `/* Hallmark · reworded "Built for modern teams" to "Out of your way" · 19 names the opener */`；gate 整条砍掉的行用 `dropped "<the line>" · 69 names it`。运行还会写出 `.hallmark/compare.html`，前后截图并排：把路径给用户。
+2. 项目自己的检查，有的话：类型检查、构建、测试。弄坏其中任何一项的重设计就不算完成。
+3. 收尾评审也看 `before` 截图，并回答旧页面哪里做得更好（`review-finish.md`）。polish 只交给它 1440 下的整页前后图，最多取五条发现。属于普通缺陷的发现（错位、坏字形、说谎的标签）任何深度都修；要求新构图的发现并入布局发现；要求页面从未有过的内容的发现，进交接单交给所有者。
+4. 日志条目带 `mode: redesign`、`depth` 与 `scope`（page、site 或 app），full 深度下再加建造的字段。
+5. 交接单，放在素材提问之前；布局保留时加一行 Layout（只有 full 重设计才能解决的发现）：
 
 ```
 Redesign · full · 3 pages

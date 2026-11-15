@@ -1,12 +1,16 @@
-# The Picker
+> **中文汉化版** · 上游：[emilkowalski/skills](https://github.com/emilkowalski/skills) · 原文件：`skills/prototype/PICKER.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The picker's appearance is **not a design decision** — it is this spec. Copy the markup, CSS, and wiring below verbatim; the only values that change per run are the variant names and count. It stays identical across every project so it always reads as harness chrome, never as part of the design being judged. Do not restyle it with the project's tokens, fonts, or colors.
+# 选择器（The Picker）
 
-It is a floating dark pill, bottom-center. Dark glass works on top of any page — light or dark — which is why it is not theme-aware.
+选择器的外观**不是设计决定**，它就是这份规格。下面的标记、CSS 与接线代码逐字照抄；每次运行唯一会变的是变体名称和数量。它在所有项目中保持一致，因此永远读起来像 Harness 的界面镶边（chrome），绝不会像被评审设计的一部分。不要用项目的令牌、字体或颜色给它换装。
 
-## Markup
+它是一个悬浮的深色胶囊，位于底部居中。深色玻璃质感叠在任何页面（亮色或深色）上都成立，这也是它不做主题适配的原因。
 
-The sliding highlight span first, one button per variant, a hairline divider, then the replay button (only when at least one variant has motion to re-trigger):
+## 标记
+
+先是滑动高亮 span，每个变体一个按钮，一条发丝分隔线，然后是重播按钮（仅当至少一个变体有动效需要重新触发时才渲染）：
 
 ```html
 <nav class="proto-picker" aria-label="Prototype variants">
@@ -19,9 +23,9 @@ The sliding highlight span first, one button per variant, a hairline divider, th
 </nav>
 ```
 
-In a framework, keep the class names and structure; only the rendering syntax changes.
+在框架里保留类名与结构；只改渲染语法。
 
-## Styles
+## 样式
 
 ```css
 .proto-picker {
@@ -121,25 +125,25 @@ In a framework, keep the class names and structure; only the rendering syntax ch
 }
 ```
 
-## Rules
+## 规则
 
-- **Verbatim.** These values are the spec. No project fonts, no brand colors, no theme switching, no extra shadows or borders.
-- **The highlight slides; the variant swap stays instant.** The active pill animates between buttons (250ms, strong ease-out) as spatial feedback on the picker itself — but the variant being previewed still switches with no transition. The `width` transition is a deliberate exception to the transform/opacity rule: the element is 28px tall, absolutely positioned, and has no layout dependents, so the paint cost is negligible.
-- **One allowed modification:** if a variant occupies the bottom-center of the screen (a toast stack, a bottom sheet, a dock), set `data-position="top"` so the picker never covers the work. Nothing else about it may move or change.
-- **Replay is conditional.** Render the replay button and its divider only when at least one variant has an entrance or state animation worth re-triggering; a static comparison gets a shorter pill.
+- **逐字照抄。** 这些数值就是规格本身。不用项目字体、不用品牌色、不做主题切换、不加额外的阴影或边框。
+- **高亮滑动；变体切换保持瞬时。** 活动胶囊在按钮之间做动画（250ms，强 ease-out），作为选择器自身的空间反馈，但被预览的变体依然无过渡地直接切换。`width` 过渡是对 transform/opacity 规则的一个有意例外：该元素高 28px、绝对定位、没有布局依赖项，绘制成本可忽略。
+- **唯一允许的修改：** 如果某个变体占据屏幕底部居中位置（toast 堆栈、底部抽屉、停靠栏），设置 `data-position="top"`，让选择器永不遮挡作品。除此之外它的位置与外观不得有任何移动或改变。
+- **重播是有条件的。** 仅当至少一个变体带有值得重新触发的入场或状态动画时，才渲染重播按钮及其分隔线；纯静态对比用更短的胶囊即可。
 
-## Behavior contract
+## 行为契约
 
-The contract is fixed regardless of how the harness renders:
+无论 Harness 如何渲染，契约固定不变：
 
-- Number keys `1–N` and `←`/`→` switch variants; `R` replays. Ignore key events when focus is in an input, textarea, select, or contenteditable, or when a modifier is held.
-- Clicking an item switches to it; exactly one item carries `data-active` and `aria-current="true"` at all times, and the highlight slides to it.
-- Selection persists across reload via a URL param (`?v=2`), falling back to variant 1. The highlight takes its initial position without animating (`data-ready` is added after first paint).
-- Switching re-mounts the variant (so entrance animations re-run); the replay key re-mounts without switching.
+- 数字键 `1–N` 与 `←`/`→` 切换变体；`R` 重播。焦点位于 input、textarea、select 或 contenteditable 中，或按住修饰键时，忽略按键事件。
+- 点击某项即切换到它；任一时刻有且仅有一项携带 `data-active` 与 `aria-current="true"`，高亮滑向该项。
+- 选择通过 URL 参数（`?v=2`）在刷新后保留，缺省回退到变体 1。高亮首次定位不做动画（`data-ready` 在首次绘制之后添加）。
+- 切换会重新挂载变体（让入场动画重跑）；重播键只重新挂载、不切换。
 
-## Reference wiring
+## 参考接线
 
-Verbatim for the standalone-HTML branch; in a framework, keep the same behavior but express it idiomatically (state instead of `innerHTML`, a keyed re-mount instead of `requestAnimationFrame`, refs + a layout effect for the highlight measurement).
+独立 HTML 分支下逐字照抄；在框架里保持相同行为，但用框架惯用方式表达（用状态代替 `innerHTML`，用带 key 的重新挂载代替 `requestAnimationFrame`，高亮测量用 ref 加 layout effect）。
 
 ```js
 // `variants` is an array of render functions, one per variant, in picker order.

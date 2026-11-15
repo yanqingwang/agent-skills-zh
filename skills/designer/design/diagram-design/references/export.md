@@ -1,67 +1,72 @@
-# Export to PNG / SVG
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/diagram-design/references/export.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Convert a generated diagram HTML file into a portable `.svg` and/or `.png` next to it. **Manual only — never run unprompted.**
+# 导出为 PNG / SVG
 
-## Trigger
+把生成的图表 HTML 文件转换成与之同目录的可移植 `.svg` 和/或 `.png`。**仅限手动触发：绝不在无人要求时自动运行。**
 
-Load this file when:
+## 触发条件
 
-- The user invokes `/diagram-design:export-diagram <html-file>` (the plugin's slash command — defined in `commands/export-diagram.md` at the repo root).
-- The user asks in natural language to export, save, rasterize, convert, or download a diagram in `.svg` or `.png` form. Typical phrasings:
-  - "export this as PNG"
-  - "save as SVG"
-  - "give me a PNG of that diagram"
-  - "rasterize it"
-  - "convert to png and svg"
+在以下情况加载本文件：
 
-The slash command is a thin wrapper that delegates here — both paths run the same procedure below.
+- 用户调用 `/diagram-design:export-diagram <html-file>`（插件的斜杠命令，定义在仓库根目录的 `commands/export-diagram.md`）。
+- 用户用自然语言要求把图表导出、保存、栅格化、转换或下载为 `.svg` 或 `.png` 形式。常见说法：
+  - "把这个导出为 PNG"
+  - "保存为 SVG"
+  - "给我那张图表的 PNG"
+  - "把它栅格化"
+  - "转换成 png 和 svg"
 
-## Scope
+斜杠命令是一个薄封装，把工作委托到这里：两条路径执行的都是下面同一套流程。
 
-Both formats are **diagram-only** — just the `<svg>` node. Editorial wrappers (header, summary cards, footer in `-full` variants) are intentionally dropped: the export deliverable is the diagram itself, suitable for Figma, slides, social cards, or blog images.
+## 范围
 
-The SVG-only export keeps the source `<title>` and `<desc>` with the diagram. Their per-diagram and per-variant prefixed IDs keep accessible names unique when several figures share a page.
+两种格式都**只含图表**：即 `<svg>` 节点本身。编辑性包装（`-full` 变体中的页眉、摘要卡片、页脚）被有意舍弃：导出交付物就是图表本身，适合放进 Figma、幻灯片、社交卡片或博客配图。
 
-Inlining several exported SVGs in one host document also requires namespaced `<defs>` IDs (markers, patterns, gradients, filters, clip paths, masks, symbols). The export procedure prefixes those IDs with the source file slug and rewrites matching `url(#…)` / `href="#…"` references, so a light figure next to its `-dark` twin does not silently share arrowheads. The accessible-name guarantee alone is not enough.
+仅 SVG 导出会把源 `<title>` 和 `<desc>` 连同图表一起保留。它们按图、按变体加前缀的 ID 保证多张图同页时，可访问名称是唯一的。
 
-If the user explicitly asks for "a screenshot of the whole page including the cards", that's a different request — fall back to a normal full-page screenshot via the user's OS or browser.
+在同一个宿主文档中内联多个导出 SVG，还要求 `<defs>` ID 带命名空间（markers、patterns、gradients、filters、clip paths、masks、symbols）。导出流程会给这些 ID 加上源文件 slug 前缀，并改写匹配的 `url(#…)` / `href="#…"` 引用，这样一张浅色图与它的 `-dark` 孪生图不会悄悄共用箭头。仅有可访问名称的唯一性保证还不够。
 
-## SVG export procedure
+如果用户明确要的是"包含卡片的整页截图"，那是另一个请求：改用用户的操作系统或浏览器做一次普通的整页截图。
 
-**Prefer the packaged helper.** From this skill's directory run:
+## SVG 导出流程
+
+**优先使用打包的辅助脚本。**在本 skill 目录下运行：
 
 ```
 python3 scripts/export_svg.py <html-file> [<out.svg>] [--system-fonts]
 ```
 
-`--system-fonts` skips the Google Fonts `@import` and carried `@font-face` declarations (step 5) so the SVG makes no network request; use it when the skin's font source is `system` (see [style-guide.md § Font source](style-guide.md#font-source)). The diagram CSS still carries over.
+`--system-fonts` 跳过 Google Fonts 的 `@import` 与自带的 `@font-face` 声明（第 5 步），使 SVG 不发起网络请求；当皮肤的字体来源是 `system` 时使用它（见 [style-guide.md § Font source](style-guide.md#font-source)）。图表 CSS 仍然会带上。
 
-Source read and output write failures return exit 2 with an error diagnostic. The viewport must contain four finite SVG numbers with positive width and height; empty or disabled viewports are refused. The class-without-style gate inspects nonempty actual `class` attributes; comments, visible text, empty class values, and `data-class` metadata do not require a stylesheet. Export selects a live SVG and carries live style blocks; HTML comments and script literals do not contribute diagrams or CSS. The selected SVG ends at its own closing tag, so nested icon `<svg>` elements stay inside it. Comments inside the selected SVG remain intact, except that XML forbids `--` inside a comment and a comment ending in `-`: each `--` becomes `- -` and a trailing `-` gets a space. That script is the source of truth for the transform below (CSS carry-forward, defs ID namespacing, rgba normalization, and the class-without-style gate). Reimplement only when the helper is unavailable; keep the behaviour identical.
+源文件读取或输出写入失败会返回退出码 2 并附错误诊断。viewport 必须包含四个有限的 SVG 数字且宽高为正；空 viewport 或被禁用的 viewport 会被拒绝。class-without-style 门检查的是非空的实际 `class` 属性；注释、可见文本、空 class 值和 `data-class` 元数据都不要求存在样式表。导出会选出一个仍然存活的 SVG，并携带仍然存活的 style 块；HTML 注释和脚本字面量不贡献图表或 CSS。选中的 SVG 在它自己的闭合标签处结束，因此嵌套的图标 `<svg>` 元素留在其中。选中 SVG 内部的注释保持原样，但 XML 禁止注释中出现 `--`，也禁止注释以 `-` 结尾：每个 `--` 变成 `- -`，结尾的 `-` 后面补一个空格。这个脚本是下述变换的唯一事实来源（CSS 迁移、defs ID 命名空间化、rgba 归一化，以及 class-without-style 门）。只有当辅助脚本不可用时才重新实现，且行为必须保持一致。
 
-Numeric character references in text and attributes follow HTML decoding, including decimal/hexadecimal forms without a semicolon and the `&#128;` → `€` mapping. Escaped references are decoded once; comments, CDATA and raw style/script bodies are not decoded by this normalization. Characters that XML cannot represent fail export rather than being silently removed.
+文本与属性中的数字字符引用按 HTML 规则解码，包括不带分号的十进制/ hexadecimal 形式，以及 `&#128;` → `€` 的映射。已转义的引用只解码一次；注释、CDATA 和原始 style/script 主体不经此归一化解码。XML 无法表示的字符会导致导出失败，而不是被悄悄删除。
 
-### Manual algorithm (what the helper does)
+### 手工算法（辅助脚本所做的事情）
 
-1. Read the source HTML file.
-2. Extract the **first** top-level `<svg ...>...</svg>` element. Skip HTML comments, `<script>` and `<style>` content, then count `<svg` openings and `</svg>` closings (a self-closing `<svg .../>` does not open one) and stop when the count returns to zero. Read quoted attribute values whole so a `>` or `/>` inside one does not end the tag. A non-greedy regex stops at a nested icon's `</svg>` and truncates the diagram. Most generated diagrams have only one top-level SVG; if there are multiple, the first is the diagram (gallery files are an exception — see *Edge cases*).
-3. Make it standalone:
-   - Ensure the opening tag has `xmlns="http://www.w3.org/2000/svg"`. Add it if missing. The SVG namespace must belong to the root SVG element; a namespace on a descendant does not satisfy it. An explicit incompatible root namespace is refused.
-   - Ensure a `viewBox` is present. The skill's templates always include one; warn the user if absent rather than guessing.
-   - Preserve `role="img"`, `aria-labelledby`, and the first-child `<title>` / `<desc>` exactly as authored.
-   - Rewrite HTML-only attribute syntax as XML: a valueless attribute (`<g data-motion-item>`) becomes `data-motion-item=""`, and an unquoted value gets double quotes. Known named HTML character references in labels and attributes become equivalent XML-safe text (for example, `&nbsp;` becomes a nonbreaking space). HTML's legacy names such as `&copy` and `&nbsp` also decode without the semicolon, except inside an attribute value when the next character is a letter, digit, or `=`, as browsers do. Decode once and escape XML delimiters; already escaped references remain escaped. Comments, CDATA and raw style/script content stay as written; style/script opening-tag attributes follow the same reference conversion as other attributes.
-   - Make comments valid XML. Inside each `<!-- ... -->` outside CDATA, turn every `--` into `- -` and add a space after a body that ends in `-`. Refuse a comment that a browser closes before the next `-->` (`<!-->`, `<!--->`, or one containing `--!>`): the markup after it is live, and rewriting the comment would hide it.
-   - Set `id="<slug>-root"` on the opening `<svg>` tag, where `<slug>` is the source basename without extension (e.g. `example-loop.html` → `example-loop`). This ID scopes carried CSS so several inlined figures do not leak rules into each other. When replacing an existing SVG root ID, retarget whole CSS ID tokens for that root in the carried CSS, including escaped identifier spellings; compound selectors such as `.diagram#original` remain bound to the root without adding another ancestor. Descendant IDs and quoted selector values remain unchanged; an unescaped dot belongs to a class selector, not to the ID token.
-4. **Carry page CSS into the SVG.** Class-styled diagrams (the loop family, process, medallion, data-flow, and others) declare fills and type in the page `<style>` block — `.station`, `.hub`, `.node-name`, and so on. Extracting the bare `<svg>` without those rules yields black boxes. Copy the page's diagram rules into a `<style>` inside `<defs>`, then:
-   - Unwrap CDATA sections in SVG stylesheet text before parsing rules, then strip real CSS comments, so neither XML delimiters nor a comment becomes part of a selector. Preserve comment-looking text inside quoted strings and escapes: `[data-label="net/*retained*/revenue"]` must still match the original attribute value. Keep CDATA content as raw text rather than XML-decoding it; the carried copy is XML-escaped below. The original embedded stylesheet stays in the SVG. CDATA-looking text in an HTML stylesheet remains literal, including inside SVG `foreignObject`, `desc`, or `title` elements. A nested `<svg>` inside HTML switches back to SVG stylesheet handling.
-   - Keep diagram rules inside their original `@media` conditions, including nested conditions; print-only paint must not become screen paint. Keyframe bodies remain intact; ordinary identifier names (also quoted) and matching stylesheet/inline `animation` or `animation-name` bindings are prefixed with the SVG root ID so inlined figures cannot share an animation name. Inline style character references are decoded once before inspecting CSS names and escaped once when written as XML; declaration comments are preserved. A custom property's `{ … }` value is token data and stays literal, including any `animation` text inside it. Duration variables with a literal animation name remain supported. Escaped/complex names, unresolved variable animation names, ambiguous shorthand keyword names, SVG-local animation stylesheets, and nested ordinary-rule animation declarations bound to renamed keyframes are refused explicitly rather than silently retargeted. These unsupported animation cases return exit 2 without writing an SVG. Block at-rules containing ordinary rules, including `@layer` and `@container`, retain their grouping and scoped paint. Unsupported declaration-only blocks are dropped with a warning; stray closing braces between rules are ignored, matching browser CSS recovery.
-   - Re-scope `:root { … }` custom properties onto `#<slug>-root` so the figure keeps its own tokens.
-   - Start selectors that begin at the `<svg>` element at the root instead: `svg .zone` becomes `#<slug>-root .zone` and `svg text` becomes `#<slug>-root text`. The exported root element is the `<svg>` itself, so `#<slug>-root svg .zone` would match nothing.
-   - Split selector lists only at top-level commas. Preserve quoted and escaped attribute values, function arguments, and meaningful whitespace while scoping.
-   - Prefix every other kept selector with `#<slug>-root ` (e.g. `.station` → `#example-loop-root .station`).
-   - **Drop** page chrome: `*`, `html`, `body`, `main`, `h1`/`h2`/`h3`, `p`, `.frame`, `.eyebrow`, `.summary`, `.card(s)`, `.footer`, `.header`, and the bare `svg { min-width: … }` layout rule. Only the bare `svg` selector is layout; `svg .zone` and `svg text` are diagram rules (see above). Those must not follow a fragment.
-   - Carry `color` and `font-family` from the dropped `body` rule onto `#<slug>-root`. SVG content inherits both: `stroke="currentColor"` reads `color`, and text without its own font rule reads `font-family`.
-   - **XML-escape** the carried CSS text (`&` → `&amp;`, `<` → `&lt;`) before inserting it into the SVG. Rule bodies can contain XML-sensitive characters (e.g. `content: "R&D"`); a bare `&` makes the standalone file fail to parse.
-5. Inject Google Fonts `@import` so the SVG renders with correct typography in a browser. **XML-escape the `&` separators as `&amp;`** — a standalone `.svg` is parsed as strict XML, where a bare `&` starts an entity reference and makes the whole file fail to parse. (Don't copy the raw URL from the HTML `<link href>`; that ampersand form is only valid in HTML.) Merge into the same `<defs>` `<style>` as the carried rules (don't add a second `<defs>`). If a new `<defs>` is needed, insert it after the existing leading `<title>` and `<desc>` so the first-child accessible-title contract is preserved:
+1. 读取源 HTML 文件。
+2. 提取**第一个**顶层 `<svg ...>...</svg>` 元素。跳过 HTML 注释、`<script>` 和 `<style>` 内容，然后统计 `<svg` 开标签与 `</svg>` 闭标签的数量（自闭合的 `<svg .../>` 不算开标签），计数归零时停止。把带引号的属性值整体读取，这样值内部的 `>` 或 `/>` 不会终结标签。非贪婪正则会在嵌套图标的 `</svg>` 处停下并截断图表。大多数生成的图表只有一个顶层 SVG；若有多个，第一个就是图表本身（gallery 文件是例外，见*边界情况*）。
+3. 使其独立可用：
+   - 确保开标签带有 `xmlns="http://www.w3.org/2000/svg"`。缺失则补上。SVG 命名空间必须属于根 SVG 元素；后代元素上的命名空间不算数。显式不兼容的根命名空间会被拒绝。
+   - 确保存在 `viewBox`。本 skill 的模板总是包含它；如果缺失，警告用户而不是瞎猜。
+   - 按书写原样保留 `role="img"`、`aria-labelledby`，以及首个子元素 `<title>` / `<desc>`。
+   - 把仅 HTML 支持的属性语法改写为 XML：无值属性（`<g data-motion-item>`）变成 `data-motion-item=""`，未加引号的值加上双引号。标签与属性中已知的命名 HTML 字符引用变成等价的 XML 安全文本（例如 `&nbsp;` 变成不换行空格）。`&copy`、`&nbsp` 这类 HTML 遗留名即使不带分号也会解码，但属性值中下一个字符是字母、数字或 `=` 时除外，与浏览器行为一致。解码一次并转义 XML 分隔符；已转义的引用保持转义。注释、CDATA 和原始 style/script 内容按书写保留；style/script 开标签的属性与其他属性走同样的引用转换。
+   - 让注释成为合法 XML。对 CDATA 之外的每个 `<!-- ... -->`，把每个 `--` 变成 `- -`，正文以 `-` 结尾时补一个空格。拒绝浏览器会在下一个 `-->` 之前提前闭合的注释（`<!-->`、`<!--->`，或包含 `--!>` 的注释）：其后的标记是活内容，改写注释会把它藏起来。
+   - 在开 `<svg>` 标签上设置 `id="<slug>-root"`，其中 `<slug>` 是源文件去掉扩展名的 basename（例如 `example-loop.html` → `example-loop`）。这个 ID 为携带进来的 CSS 划定作用域，多个内联图形不会互相泄漏规则。替换既有 SVG 根 ID 时，把携带 CSS 中指向该根的完整 CSS ID token 一并改指向，包括转义写法的标识符；`.diagram#original` 这类复合选择器仍然绑定到根上，且不会因此多出祖先。后代 ID 和带引号的选择器值保持不变；未转义的点属于类选择器，不属于 ID token。
+4. **把页面 CSS 带进 SVG。**类样式驱动的图表（loop 家族、process、medallion、data-flow 等）在页面 `<style>` 块里声明填充与字体，例如 `.station`、`.hub`、`.node-name` 等。不带这些规则提取裸 `<svg>` 会得到一片黑色方块。把页面的图表规则复制进 `<defs>` 内的一个 `<style>`，然后：
+   - 在解析规则前，先解开 SVG 样式表文本中的 CDATA 段，再剥离真实的 CSS 注释，这样无论是 XML 分隔符还是注释都不会成为选择器的一部分。保留引号字符串和转义中看起来像注释的文本：`[data-label="net/*retained*/revenue"]` 必须仍然匹配原始属性值。CDATA 内容保持原始文本而不做 XML 解码；携带的副本在下面再做 XML 转义。原内嵌样式表留在 SVG 中。HTML 样式表里看起来像 CDATA 的文本保持字面，包括 SVG `foreignObject`、`desc` 或 `title` 元素内部的情形。HTML 中的嵌套 `<svg>` 会切回 SVG 样式表处理。
+   - 图表规则连同其原始 `@media` 条件一起保留，包括嵌套条件；仅打印的绘制不得变成屏幕绘制。Keyframe 主体保持完整；普通标识符名（含带引号的）以及匹配的样式表/内联 `animation` 或 `animation-name` 绑定都加上 SVG 根 ID 前缀，内联图形之间不能共用动画名。内联 style 的字符引用在检查 CSS 名之前解码一次，写成 XML 时再转义一次；声明中的注释保留。自定义属性的 `{ … }` 值属于 token 数据，保持字面，包括其中的任何 `animation` 文本。带字面动画名的时长变量继续支持。转义/复杂名、由未解析变量给出的动画名、有歧义的简写关键字名、SVG 本地的动画样式表，以及绑定到已改名 keyframe 的嵌套普通规则动画声明，都会被明确拒绝而不是悄悄改指向。这些不支持的动画情况返回退出码 2 且不写出 SVG。包含普通规则的块级 at 规则（包括 `@layer` 和 `@container`）保留其分组与作用域绘制。不支持的仅声明块被丢弃并给出警告；规则之间的孤立闭括号被忽略，与浏览器 CSS 的恢复行为一致。
+   - 把 `:root { … }` 自定义属性重新作用域到 `#<slug>-root` 上，让图形保有自己的 token。
+   - 以 `<svg>` 元素开头的选择器改为从根开始：`svg .zone` 变成 `#<slug>-root .zone`，`svg text` 变成 `#<slug>-root text`。导出的根元素就是 `<svg>` 本身，所以 `#<slug>-root svg .zone` 会匹配不到任何东西。
+   - 选择器列表只在顶层逗号处拆分。作用域化时保留带引号和转义的属性值、函数参数以及有意义的空白。
+   - 其余保留的选择器都加上 `#<slug>-root ` 前缀（例如 `.station` → `#example-loop-root .station`）。
+   - **丢弃**页面装饰：`*`、`html`、`body`、`main`、`h1`/`h2`/`h3`、`p`、`.frame`、`.eyebrow`、`.summary`、`.card(s)`、`.footer`、`.header`，以及裸的 `svg { min-width: … }` 布局规则。只有裸 `svg` 选择器属于布局；`svg .zone` 和 `svg text` 是图表规则（见上文）。这些不得跟随片段一起被带走。
+   - 把被丢弃的 `body` 规则中的 `color` 和 `font-family` 迁移到 `#<slug>-root` 上。SVG 内容对两者都有继承：`stroke="currentColor"` 读 `color`，没有自己字体规则的文本读 `font-family`。
+   - **XML 转义**携带的 CSS 文本（`&` → `&amp;`、`<` → `&lt;`）后再插入 SVG。规则体可能包含 XML 敏感字符（例如 `content: "R&D"`）；裸 `&` 会让独立文件解析失败。
+5. 注入 Google Fonts 的 `@import`，让 SVG 在浏览器中以正确排版渲染。**把 `&` 分隔符 XML 转义为 `&amp;`**：独立 `.svg` 按严格 XML 解析，裸 `&` 会开启实体引用并使整个文件解析失败。（不要从 HTML `<link href>` 复制原始 URL；那种 & 形式只在 HTML 中合法。）合并进携带规则的同一个 `<defs>` `<style>`（不要添加第二个 `<defs>`）。如果需要新的 `<defs>`，插在既有的首个 `<title>` 和 `<desc>` 之后，保持首子元素可访问标题的契约：
+
      ```svg
      <defs>
        <style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Noto+Serif:ital@0;1&amp;family=Noto+Sans+KR:wght@400;500;600&amp;family=Noto+Serif+KR:wght@400&amp;family=Noto+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@400&amp;display=swap');
@@ -70,8 +75,10 @@ Numeric character references in text and attributes follow HTML decoding, includ
        <!-- existing markers / patterns stay here -->
      </defs>
      ```
-6. **Namespace `<defs>` IDs.** Prefix every referenceable defs ID — on `marker`, `pattern`, `linearGradient`, `radialGradient`, `filter`, `clipPath`, `mask`, `symbol`, and reusable graphics (`g`, `path`, `rect`, `circle`, `ellipse`, `line`, `polyline`, `polygon`, `text`, `image`, and `use`) — with `<slug>-`, and rewrite matching `url(#…)` and `href="#…"` / `xlink:href="#…"` references. Compare ID and fragment values after XML character-reference decoding, so equivalent named and numeric references stay connected. For recognized local CSS URL forms (literal `url(...)`, case-insensitive) in paint/reference attributes, inline styles, and stylesheets, decode hex escapes before comparing fragment identity, and preserve the original escape spelling when adding the prefix; `url(#\70 aint)` must stay connected to the namespaced `paint` definition. URL-looking metadata and quoted CSS string contents remain literal. Retarget ID selectors in embedded style rules while leaving declaration colors and unrelated IDs unchanged. Preserve URL quotes and match fragment IDs case-sensitively (the CSS `url` keyword remains case-insensitive). Rewrite **longest-id-first** so `arrow-accent` is not clipped by a shorter `arrow` rule. Quoted local URLs (`url("#arrow")`, `url('#arrow')`, including XML-escaped quotes in attributes) follow the same rewrite as unquoted URLs. Unrelated fragment IDs and non-local URLs remain unchanged. Example: `id="arrow"` in `example-loop.html` becomes `id="example-loop-arrow"` with `marker-end="url(#example-loop-arrow)"`.
-7. Normalize colors for strict SVG 1.1 consumers. This design system's tokens are authored as `rgba(...)` (see `style-guide.md`) and render correctly wherever colors are read as CSS — browsers, Figma, Illustrator. PowerPoint's SVG importer does not: it treats `rgba(...)` and `transparent` as unrecognized and paints them **opaque black**, turning a barely-there tint into a solid block that swallows the label inside it. Normalize presentation paint only when its alpha can be preserved: combine a local presentation opacity, but retain RGBA when a CSS or inherited opacity, or a paint override on the element or its children, makes splitting unsafe. An unrelated simple CSS rule does not prevent normalization. Apply this full recipe before writing the file:
+
+6. **给 `<defs>` ID 建立命名空间。**给每个可引用的 defs ID（`marker`、`pattern`、`linearGradient`、`radialGradient`、`filter`、`clipPath`、`mask`、`symbol`，以及可复用图形（`g`、`path`、`rect`、`circle`、`ellipse`、`line`、`polyline`、`polygon`、`text`、`image` 和 `use`））加上 `<slug>-` 前缀，并改写匹配的 `url(#…)` 和 `href="#…"` / `xlink:href="#…"` 引用。比较 ID 与片段值之前先做 XML 字符引用解码，等价的命名与数字引用保持关联。对绘制/引用属性、内联样式和样式表中可识别的本地 CSS URL 形式（字面 `url(...)`，大小写不敏感），比较片段同一性之前先解码 hex 转义，并在添加前缀时保留原转义写法；`url(#\70 aint)` 必须仍与命名空间化后的 `paint` 定义保持关联。URL 形态的元数据和带引号的 CSS 字符串内容保持字面。改指向内嵌样式规则中的 ID 选择器，声明中的颜色与无关 ID 保持不变。保留 URL 引号，并按大小写敏感匹配片段 ID（CSS `url` 关键字仍然大小写不敏感）。按**最长 ID 优先**改写，避免 `arrow-accent` 被较短的 `arrow` 规则截断。带引号的本地 URL（`url("#arrow")`、`url('#arrow')`，包括属性中 XML 转义过的引号）与不带引号的 URL 走同样的改写。无关的片段 ID 和非本地 URL 保持不变。示例：`example-loop.html` 里的 `id="arrow"` 变成 `id="example-loop-arrow"`，并配 `marker-end="url(#example-loop-arrow)"`。
+
+7. 为严格的 SVG 1.1 消费者归一化颜色。本设计系统的 token 以 `rgba(...)` 书写（见 `style-guide.md`），在任何把颜色当 CSS 读取的地方都渲染正确：浏览器、Figma、Illustrator。PowerPoint 的 SVG 导入器不行：它把 `rgba(...)` 和 `transparent` 视为无法识别并涂成**不透明黑色**，把一层若有若无的色调变成吞掉内部标签的实心色块。只在 alpha 能被保留的前提下归一化呈现绘制：可以合并本地的呈现 opacity；当存在 CSS 或继承的 opacity，或元素及其子元素上有绘制覆盖而使拆分不安全时，保留 RGBA。无关的简单 CSS 规则不妨碍归一化。在写出文件前应用下面这套完整配方：
 
    ```python
    import re
@@ -276,103 +283,94 @@ Numeric character references in text and attributes follow HTML decoding, includ
    svg = normalize_rgba_presentation_attrs(svg)
    ```
 
-   Channels and alpha are clamped to the CSS ranges 0–255 and 0–1 so out-of-range rgba values retain their browser paint when converted. The `\s*` around each channel tolerates a spaced `rgba(45, 49, 66, 0.03)` as well as the compact `rgba(45,49,66,0.03)` the templates normally use; `\d*\.?\d+` accepts an alpha value with or without a leading zero (both `0.03` and `.03` appear in shipped tokens). Matching is scoped to the `fill="..."` / `stroke="..."` presentation attribute. Class-styled diagrams may still carry `rgba(...)` inside the embedded `<style>` block via custom properties (e.g. `--accent-tint`); that form is correct in browsers and in Figma/Illustrator, and is out of scope for this presentation-attribute pass. (A brand's onboarded palette in `style-guide.md` could in principle add a third notation such as `hsl()`; none exists in any shipped token today, so this pass doesn't handle it — extend the regex if one is ever introduced.)
-8. **Gate:** if the exported SVG still contains `class=` but no diagram CSS rules, stop and fix the CSS carry step — that fragment will render as black boxes. A fonts-only `<style>` (Google Fonts `@import` with no rules) does **not** satisfy the gate.
-9. Prepend `<?xml version="1.0" encoding="UTF-8"?>\n` so the file is well-formed XML.
-10. Write to `<basename>.svg` next to the source (e.g. `example-architecture.html` → `example-architecture.svg`). Honour an explicit output path if the user provides one.
+通道和 alpha 被钳制在 CSS 范围 0–255 与 0–1 内，转换时越界的 rgba 值仍能保持浏览器的绘制效果。每个通道周围的 `\s*` 同时兼容带空格的 `rgba(45, 49, 66, 0.03)` 和模板常用的紧凑形式 `rgba(45,49,66,0.03)`；`\d*\.?\d+` 接受带或不带前导零的 alpha 值（已发布的 token 里 `0.03` 和 `.03` 都出现过）。匹配范围限定在 `fill="..."` / `stroke="..."` 呈现属性。类样式驱动的图表可能仍在内嵌 `<style>` 块里通过自定义属性（例如 `--accent-tint`）携带 `rgba(...)`；这种形式在浏览器和 Figma/Illustrator 中都正确，不属于本次呈现属性处理的范围。（品牌的调色板收录在 `style-guide.md` 中，原则上可以引入 `hsl()` 之类的第三种记法；目前所有已发布的 token 中都没有，所以本处理不覆盖它：将来真引入了再扩展正则。）
 
-### Caveat to surface to the user
+8. **门检查：**如果导出的 SVG 仍然含有 `class=` 却没有任何图表 CSS 规则，停下并修复 CSS 迁移步骤，否则该片段会渲染成黑色方块。仅含字体的 `<style>`（只有 Google Fonts `@import` 而无规则）**不**满足该门。
+9. 前置 `<?xml version="1.0" encoding="UTF-8"?>\n`，使文件成为良构 XML。
+10. 写到源文件旁边的 `<basename>.svg`（例如 `example-architecture.html` → `example-architecture.svg`）。如果用户提供了明确输出路径，以它为准。
 
-Tools that don't fetch remote fonts at import time (offline Illustrator, some Figma import paths, older SVG viewers) will substitute typography. The SVG renders correctly in any modern browser. For pixel-perfect portability, recommend the PNG export.
+### 需要向用户说明的注意事项
 
-## PNG export procedure
+导入时不抓取远程字体的工具（离线的 Illustrator、部分 Figma 导入路径、较老的 SVG 查看器）会替换字体排版。SVG 在任何现代浏览器中都能正确渲染。要获得像素级的可移植性，推荐改用 PNG 导出。
 
-Render **the original HTML** (not the extracted SVG) and screenshot only the `<svg>` element's bounding box. This keeps font loading reliable (already wired in the source HTML) while satisfying the "diagram only" rule. The PNG always has a **transparent background** (`omit_background=True`) so it can be placed on any slide or doc colour without a white halo. For motion-enabled HTML, append `?motion=static`, await `document.fonts.ready`, and assert the motion root has `data-frame="static"` before capture; never export at an arbitrary wall-clock delay.
+## PNG 导出流程
 
-### Detection
+渲染**原始 HTML**（不是提取出的 SVG），只对 `<svg>` 元素的包围盒截图。这样字体加载保持可靠（源 HTML 里已经接好），同时满足"只要图表"的规则。PNG 始终带**透明背景**（`omit_background=True`），因此可以放在任何幻灯片或文档颜色上而不带白色光晕。对启用了动效的 HTML，追加 `?motion=static`，等待 `document.fonts.ready`，并在截取前断言动效根已处于 `data-frame="static"`；绝不在任意的墙钟延迟处导出。
 
-Before running anything, verify Playwright is installed in the Python interpreter
-you will use for the export. Try:
+### 检测
+
+开始之前，确认你将用于导出的 Python 解释器中安装了 Playwright。试运行：
 
 ```
 python3 -c "import playwright"
 ```
 
-If that fails, try `python -c "import playwright"` (the usual command on
-Windows). Use whichever interpreter passes the import for the rasterization
-command below. If both imports fail, surface this exact instruction to the user
-and stop:
+如果失败，再试 `python -c "import playwright"`（Windows 上的常用命令）。下面的栅格化命令使用通过导入测试的那个解释器。如果两个导入都失败，把下面这段原话转达给用户并停止：
 
-> Playwright is not available. PNG export requires an approved Playwright
-> installation and a compatible browser to be provisioned by the host
-> environment; the skill never installs runtime dependencies automatically.
-> Then ask me to export again.
+> Playwright 不可用。PNG 导出需要宿主环境预先配置经批准的 Playwright 安装以及兼容的浏览器；本 skill 绝不自动安装运行时依赖。
+> 之后请再次让我导出。
 
-Don't auto-install. The user asked for one feature, not a system change.
+不要自动安装。用户要的是一个功能，不是改动系统。
 
-### Rasterize
+### 栅格化
 
-Keep the user's project directory as the working directory so relative input and
-output paths still resolve there. Invoke the packaged renderer by its absolute
-path under the resolved skill directory with the interpreter that passed
-detection: `python3 <skill-dir>/scripts/export_png.py <src.html> <out.png> [scale]`
-or `python <skill-dir>/scripts/export_png.py <src.html> <out.png> [scale]`.
+保持用户的工程目录作为工作目录，使相对输入输出路径仍在那里解析。用通过检测的解释器、按已解析的 skill 目录下的绝对路径调用打包的渲染器：`python3 <skill-dir>/scripts/export_png.py <src.html> <out.png> [scale]` 或 `python <skill-dir>/scripts/export_png.py <src.html> <out.png> [scale]`。
 
-If the `networkidle` wait times out (a stalled font or stylesheet behind a proxy), the helper cancels the outstanding load with `window.stop()` and captures with fallback typography, printing a warning to stderr — pass that warning on to the user. Any other error propagates and fails the export normally. The helper requests the complete static motion frame, waits for font readiness, and rejects a motion root that has not reached `data-frame="static"`; ordinary script-free diagrams need no motion root.
+如果 `networkidle` 等待超时（某个字体或样式表在代理后面卡住），辅助脚本会用 `window.stop()` 取消未完成的加载并以回退字体截取，同时向 stderr 打印警告：请把该警告转达给用户。其他错误照常传播并使导出失败。辅助脚本会请求完整的静态动效帧，等待字体就绪，并在动效根尚未达到 `data-frame="static"` 时拒绝；普通无脚本的图表不需要动效根。
 
-Default `device_scale_factor=2` for crisp output. Accept `1` for compact assets or `3` for print/retina hero use, passed as a third CLI arg. Fractional scales such as `1.25` are also accepted within the documented 1–4 range for exact pixel sizes.
+默认 `device_scale_factor=2`，输出清晰。接受 `1`（紧凑素材）或 `3`（打印/retina 主视觉），作为第三个 CLI 参数传入。也接受 `1.25` 这类小数缩放，在文档记载的 1–4 范围内，用于精确像素尺寸。
 
-The helper's overflow release matters for the wide presets. `min-width` equals the viewBox width (see [`output-spec.md`](output-spec.md)), so a `doc-wide` or `slide-16x9` SVG is 1280px inside a 1200px frame, and its `.diagram-container` scroller clips the last 80px on screen. The screenshot covers the SVG's box but not what an ancestor clipped, so without the release the PNG comes out full size with a blank right edge. This is the screen-side counterpart of the templates' `@media print` rule.
+辅助脚本的溢出释放对宽幅预设很重要。`min-width` 等于 viewBox 宽度（见 [`output-spec.md`](output-spec.md)），所以 `doc-wide` 或 `slide-16x9` 的 SVG 是 1200px 框架里的 1280px，它的 `.diagram-container` 滚动容器在屏幕上裁掉最后 80px。截图只覆盖 SVG 的盒子，不覆盖被祖先裁掉的部分，所以没有这个释放，PNG 会是完整尺寸但右边缘一片空白。这是模板中 `@media print` 规则在屏幕侧的对应物。
 
-### Output naming
+### 输出命名
 
-`example-architecture.html` → `example-architecture.png`, written next to the source. Honour explicit user-provided paths. The rasterizer encodes the absolute source path as a file URI, so literal `#` and `%` characters in filenames remain filename content.
+`example-architecture.html` → `example-architecture.png`，写在源文件旁边。以用户明确提供的路径为准。栅格化器把源文件的绝对路径编码为 file URI，因此文件名中的字面 `#` 和 `%` 字符仍保持为文件名内容。
 
-## Sizing the export
+## 确定导出尺寸
 
-The PNG's pixel dimensions are the SVG's `viewBox` × `device_scale_factor`. The rasterizer establishes the capture viewport from the finite, nonzero viewBox dimensions so page CSS cannot enlarge or shrink the promised output. So the size decision was already made when the diagram was drawn — see [`output-spec.md` §2](output-spec.md) for the presets. Export only picks the multiplier.
+PNG 的像素尺寸是 SVG 的 `viewBox` × `device_scale_factor`。栅格化器用有限的、非零的 viewBox 尺寸来确定截取视口，页面 CSS 无法放大或缩小承诺的输出。所以尺寸决策在画图时就已经做出（预设见 [`output-spec.md` §2](output-spec.md)），导出只选择倍数。
 
-| Destination | Scale | Result from a 1280×720 `viewBox` |
+| 目标用途 | 缩放 | 1280×720 `viewBox` 的结果 |
 |---|---|---|
-| Docs, README, wiki | 2 | 2560×1440 |
-| Slide deck (projected) | 2 | 2560×1440 |
-| Print / PDF handout | 3 | 3840×2160 |
-| Inline thumbnail, email | 1 | 1280×720 |
+| 文档、README、wiki | 2 | 2560×1440 |
+| 幻灯片（投影） | 2 | 2560×1440 |
+| 打印 / PDF 讲义 | 3 | 3840×2160 |
+| 内嵌缩略图、邮件 | 1 | 1280×720 |
 
-### Hitting an exact pixel size
+### 命中精确像素尺寸
 
-When the user needs specific dimensions (an OG card at exactly 1200×630, a slide image at 1920×1080), compute the scale factor instead of guessing — Playwright accepts fractional values:
+当用户需要特定尺寸（恰好 1200×630 的 OG 卡片、1920×1080 的幻灯片图）时，计算缩放系数而不是猜：Playwright 接受小数值：
 
 ```
 scale = target_width / viewBox_width
 ```
 
-A 960-wide `viewBox` at a 1200px target is `scale=1.25`. Two rules:
+960 宽的 `viewBox` 目标 1200px 就是 `scale=1.25`。两条规则：
 
-- **Never scale below 1** to hit a small target — that soft-focuses the type. Redraw at a smaller preset instead.
-- **Never scale past 4** — beyond that you're upscaling a layout that was designed for a smaller canvas; redraw at `slide-16x9` or a print preset.
+- **绝不缩到 1 以下**去凑小目标：那会让字体发虚。改为用更小的预设重画。
+- **绝不缩过 4**：超过之后你是在放大一个为更小画布设计的布局；请改用 `slide-16x9` 或打印预设重画。
 
-If the target aspect ratio doesn't match the `viewBox` aspect ratio, say so and offer to redraw at the matching preset. Padding or cropping a finished diagram to fit a frame is not an export operation — it breaks the 40px safe margin.
+如果目标宽高比与 `viewBox` 的宽高比不一致，说明这一点并提出按匹配的预设重画。把成品图表填充或裁剪去适配某个画框不是导出操作，那会破坏 40px 安全边距。
 
-## Edge cases
+## 边界情况
 
-- **Source is `assets/index.html`** (the gallery, multiple SVGs in one file): refuse the export and ask the user which specific diagram file they meant. Don't guess.
-- **No `<svg>` block found**: the source isn't a diagram file. Tell the user; don't write anything.
-- **Surrounding HTML matters to the user**: they want cards/header in the image. Tell them this skill exports diagrams only, and recommend a browser-based full-page screenshot (or a separate PDF print).
-- **Source is missing fonts at runtime**: Playwright will substitute, the screenshot will look off. Check that the source HTML has the `<link href="...fonts.googleapis.com...">` tag in `<head>`. If absent, the file isn't from a current template — fix the source rather than working around it in export.
+- **源文件是 `assets/index.html`**（gallery，一个文件里有多个 SVG）：拒绝导出，询问用户具体指哪个图表文件。不要猜。
+- **找不到 `<svg>` 块**：源文件不是图表文件。告诉用户；什么都不要写。
+- **周围的 HTML 对用户很重要**：他们想要图里有卡片/页眉。告诉他们本 skill 只导出图表，并推荐基于浏览器的整页截图（或单独的 PDF 打印）。
+- **源文件在运行时缺字体**：Playwright 会替换字体，截图会走样。检查源 HTML 的 `<head>` 里是否有 `<link href="...fonts.googleapis.com...">` 标签。若缺失，说明该文件不是当前模板生成的：修源文件，而不是在导出环节绕过。
 
-## What this command never does
+## 本命令绝不做的事
 
-- Modifies the source HTML.
-- Adds export buttons or `<script>` tags. Static diagrams remain script-free; an already motion-enabled source may retain the scoped controller from [`animation.md`](animation.md), but export never injects another controller.
-- Auto-emits `.svg` or `.png` alongside HTML generation. Manual on every call.
-- Embeds an HTML wrapper (cards, headers) into the SVG via `foreignObject`. Too fragile across renderers.
+- 修改源 HTML。
+- 添加导出按钮或 `<script>` 标签。静态图表保持无脚本；已启用动效的源可以保留 [`animation.md`](animation.md) 中限定作用域的控制器，但导出绝不注入另一个控制器。
+- 在生成 HTML 时自动顺带产出 `.svg` 或 `.png`。每次调用都必须手动触发。
+- 通过 `foreignObject` 把 HTML 包装（卡片、页眉）嵌进 SVG。跨渲染器太脆弱。
 
-The exporter preserves `@font-face` and scopes ordinary rules within block at-rules such as `@supports`, `@media`, `@layer`, and `@container` without flattening their conditions. Groups containing only keyframes or font faces are also retained, including nested groups, so references outside the group keep their definitions. Declaration-only unsupported blocks are dropped with a warning rather than aborting the export. System-font mode continues to omit custom font-face declarations. Semicolons inside parenthesized CSS functions, including unquoted data URLs, remain value text instead of ending a statement.
+导出器保留 `@font-face`，并在 `@supports`、`@media`、`@layer`、`@container` 这类块级 at 规则内部为普通规则保留作用域，不展平其条件。只含 keyframe 或 font face 的分组也会保留，包括嵌套分组，让分组之外的引用保有其定义。仅声明的不支持块被丢弃并给出警告，而不是中止导出。系统字体模式继续省略自定义 font-face 声明。括号包裹的 CSS 函数（包括未加引号的 data URL）内部的分号仍是值文本，不会终结语句。
 
-CSS grouping rules are scanned once and preserved without recursively rescanning nested bodies. Exports deeper than 1,024 nested CSS blocks fail with a clear diagnostic (CLI exit 2) before writing output.
+CSS 分组规则只扫描一次并原样保留，不递归重扫嵌套主体。嵌套超过 1,024 层 CSS 块的导出会在写出前以明确的诊断失败（CLI 退出码 2）。
 
-`@scope` groups containing ordinary paint rules are refused with a clear exit-2 diagnostic before output is written; definition-only scopes retain their keyframes and font faces. `@layer` order statements remain in source order with their layer blocks, including inside grouping rules, so cascade priority is preserved.
-The exporter keeps optional defs in comments namespaced so they can be uncommented later. Only referenceable defs element types have their IDs renamed; live titles and other elements retain their IDs and accessibility references.
+包含普通绘制规则的 `@scope` 组会在写出前以明确的退出码 2 诊断被拒绝；仅定义的 scope 保留其 keyframe 和 font face。`@layer` 顺序语句与其 layer 块一起保持源顺序，包括在分组规则内部，级联优先级因此得以保留。
+导出器把注释里的可选 defs 保持命名空间化，以便日后取消注释启用。只有可引用的 defs 元素类型的 ID 会被改名；活的标题等元素保留其 ID 和无障碍引用。
 
-Animation property names are compared after CSS escape decoding, while their authored spelling is preserved. Page styles and inline attributes keep their binding to namespaced keyframes, including `anim\61 tion` and vendor-prefixed properties. Nested animation declarations and SVG-local animation stylesheets remain unsupported and fail clearly, including escaped property names.
+动画属性名在 CSS 转义解码之后比较，书写原样保留。页面样式和内联属性保持与命名空间化 keyframe 的绑定，包括 `anim\61 tion` 和带厂商前缀的属性。嵌套动画声明和 SVG 本地的动画样式表仍然不支持并会明确失败，包括转义的属性名。

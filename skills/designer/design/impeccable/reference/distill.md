@@ -1,111 +1,115 @@
-Strip a design to its essence. Remove anything that doesn't earn its place: redundant elements, repeated information, decorative noise, cosmetic complexity.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/distill.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+把设计剥到本质。移除一切没挣到自己位置的东西：冗余元素、重复信息、装饰噪音、修饰性复杂度。
 
 
 ---
 
-## Assess Current State
+## 评估现状
 
-Analyze what makes the design feel complex or cluttered:
+分析是什么让设计显得复杂或杂乱：
 
-1. **Identify complexity sources**:
-   - **Too many elements**: Competing buttons, redundant information, visual clutter
-   - **Excessive variation**: Too many colors, fonts, sizes, styles without purpose
-   - **Information overload**: Everything visible at once, no progressive disclosure
-   - **Visual noise**: Unnecessary borders, shadows, backgrounds, decorations
-   - **Confusing hierarchy**: Unclear what matters most
-   - **Feature creep**: Too many options, actions, or paths forward
+1. **找出复杂度来源**：
+   - **元素太多**：互相争抢的按钮、冗余信息、视觉杂乱
+   - **变化过度**：太多颜色、字体、尺寸、风格，却没有目的
+   - **信息过载**：所有东西同时可见，没有渐进披露
+   - **视觉噪音**：不必要的边框、阴影、背景、装饰
+   - **层级混乱**：看不清什么最重要
+   - **功能蔓延**：选项、动作、前进路径太多
 
-2. **Find the essence**:
-   - What's the primary user goal? (There should be ONE)
-   - What's actually necessary vs nice-to-have?
-   - What can be removed, hidden, or combined?
-   - What's the 20% that delivers 80% of value?
+2. **找到本质**：
+   - 用户的首要目标是什么？（应该只有一个）
+   - 什么真正必要，什么只是锦上添花？
+   - 什么可以移除、隐藏或合并？
+   - 交付 80% 价值的那 20% 是什么？
 
-If any of these are unclear from the codebase, do not guess. Ask with the AskUserQuestion tool and wait for the answer before continuing.
+代码库里看不清其中任何一条时，不要猜。用 AskUserQuestion 工具提问，等答案出来再继续。
 
-Simplicity is not about removing features. It's about removing obstacles between users and their goals. Every element should justify its existence.
+简化不是砍功能。是移除用户与目标之间的障碍。每个元素都要为自己存在的理由辩护。
 
-## Plan Simplification
+## 规划简化
 
-Create a ruthless editing strategy:
+制定一条毫不留情的编辑策略：
 
-- **Core purpose**: What's the ONE thing this should accomplish?
-- **Essential elements**: What's truly necessary to achieve that purpose?
-- **Progressive disclosure**: What can be hidden until needed?
-- **Consolidation opportunities**: What can be combined or integrated?
+- **核心目的**：这件事应该完成的那一件事是什么？
+- **必要元素**：达成那个目的真正需要什么？
+- **渐进披露**：什么可以藏到需要时再露？
+- **合并机会**：什么可以合并或整合？
 
-Expect to say no to good ideas to make room for great execution.
+对好点子说不，才能给出色的执行腾地方。
 
-## Simplify the Design
+## 简化设计
 
-Systematically remove complexity across these dimensions:
+沿这些维度系统性移除复杂度：
 
-### Information Architecture
-- **Reduce scope**: Remove secondary actions, redundant information
-- **Progressive disclosure**: Hide complexity behind clear entry points (accordions, modals, step-through flows)
-- **Combine related actions**: Merge similar buttons, consolidate forms, group related content
-- **Clear hierarchy**: ONE primary action, few secondary actions, everything else tertiary or hidden
-- **Remove redundancy**: If it's said elsewhere, don't repeat it here
+### 信息架构
+- **缩小范围**：移除次级动作、冗余信息
+- **渐进披露**：把复杂度藏进清晰的入口（accordion、modal、分步流程）
+- **合并相关动作**：合并相似按钮、归并表单、归组相关内容
+- **清晰层级**：一个主动作，少量次级动作，其余降级或隐藏
+- **移除冗余**：别处说过的，这里不重复
 
-### Visual Simplification
-- **Reduce color palette**: Keep 1-2 decorative or brand colors plus neutrals, not 5-7; keep semantic colors (success, warning, error) and pair each with a non-color cue
-- **Limit typography**: One font family, 3-4 sizes maximum, 2-3 weights
-- **Remove decorations**: Eliminate borders, shadows, backgrounds that don't serve hierarchy or function
-- **Flatten structure**: Reduce nesting, remove unnecessary containers; never nest cards inside cards
-- **Remove unnecessary cards**: Cards aren't needed for basic layout; use spacing and alignment instead
-- **Consistent spacing**: Use one spacing scale, remove arbitrary gaps
+### 视觉简化
+- **收窄色板**：留 1-2 个装饰或品牌色加中性色，不是 5-7 个；保留语义色（success、warning、error）并为每个配一个非颜色线索
+- **限制字排**：一个字体家族，至多 3-4 个字号，2-3 个字重
+- **移除装饰**：清掉不服务层级或功能的边框、阴影、背景
+- **压平结构**：减少嵌套，移除不必要的容器；绝不在卡片里套卡片
+- **移除不必要的卡片**：基础布局不需要卡片；用间距和对齐代替
+- **间距一致**：用一把间距尺，清掉任意间隙
 
-### Layout Simplification
-- **Linear flow**: Replace complex grids with simple vertical flow where possible
-- **Remove sidebars**: Move secondary content inline or hide it
-- **Full-width**: Use available space generously instead of complex multi-column layouts
-- **Consistent alignment**: Pick left or center, stick with it
-- **Generous white space**: Let content breathe, don't pack everything tight
+### 布局简化
+- **线性流**：可能的地方用简单的纵向流替换复杂网格
+- **移除侧栏**：次级内容改为行内或隐藏
+- **全宽利用**：大方使用可用空间，不用复杂多列布局
+- **对齐一致**：选左或居中，贯彻到底
+- **慷慨留白**：让内容呼吸，不要塞满
 
-### Interaction Simplification
-- **Reduce choices**: Fewer buttons, fewer options, clearer path forward (paradox of choice is real)
-- **Smart defaults**: Make common choices automatic, only ask when necessary
-- **Inline actions**: Replace modal flows with inline editing where possible
-- **Remove steps**: Can the flow lose a step?
-- **Clear next action**: ONE obvious next action, not five competing ones
+### 交互简化
+- **减少选择**：更少按钮、更少选项、更清晰的前进路径（选择的悖论是真的）
+- **聪明默认**：常见选择自动做掉，必要时才问
+- **行内动作**：可能的地方用行内编辑替换模态流程
+- **移除步骤**：流程能少一步吗？
+- **清晰的下一步**：一个明显的下一步，不是五个互相争抢的
 
-### Content Simplification
-- **Shorter copy**: Cut filler, not meaning
-- **Active voice**: "Save changes" not "Changes will be saved"
-- **Remove jargon**: Plain language always wins
-- **Scannable structure**: Short paragraphs, bullet points, clear headings
-- **Essential information only**: Remove marketing fluff, hedging
-- **Remove redundant copy**: No headers restating intros, no repeated explanations, say it once
+### 内容简化
+- **更短的文案**：砍填充，不砍含义
+- **主动语态**："保存更改"，不是"更改将会被保存"
+- **去行话**：平实语言永远赢
+- **可扫读结构**：短段落、项目符号、清晰标题
+- **只要必要信息**：移除营销废话和含糊其辞
+- **移除冗余文案**：不用复述引言的标题，不重复解释，说一次就够
 
-### Code Simplification
-- **Remove unused code**: Dead CSS, unused components, orphaned files
-- **Flatten component trees**: Reduce nesting depth
-- **Consolidate styles**: Merge similar styles, use utilities consistently
-- **Reduce variants**: Does that component need 12 variations, or can 3 cover 90% of cases?
+### 代码简化
+- **移除未用代码**：死 CSS、未用组件、孤儿文件
+- **压平组件树**：减少嵌套深度
+- **归并样式**：合并相似样式，一致使用工具类
+- **减少变体**：那个组件真需要 12 个变体，还是 3 个就能盖住 90% 的场景？
 
-**Avoid**:
-- Remove necessary functionality (simplicity ≠ feature-less)
-- Sacrifice accessibility for simplicity (clear labels and ARIA still required)
-- Make things so simple they're unclear (mystery ≠ minimalism)
-- Remove information users need to make decisions
-- Eliminate hierarchy completely (some things should stand out)
-- Oversimplify complex domains (match complexity to actual task complexity)
+**避免**：
+- 移除必要功能（简化不等于没有功能）
+- 为简化牺牲无障碍（清晰的标签和 ARIA 仍然必须）
+- 简化到看不懂（神秘不等于极简）
+- 移除用户做决策所需的信息
+- 完全消灭层级（有些东西就该突出）
+- 过度简化复杂领域（复杂度要匹配真实任务的复杂度）
 
-## Verify Simplification
+## 验证简化
 
-Ensure simplification improves usability:
+确保简化提升了可用性：
 
-- **Faster task completion**: Can users accomplish goals more quickly?
-- **Reduced cognitive load**: Is it easier to understand what to do?
-- **Still complete**: Are all necessary features still accessible?
-- **Clearer hierarchy**: Is it obvious what matters most?
-- **Better performance**: Does simpler design load faster?
+- **更快完成任务**：用户能更快达成目标吗？
+- **认知负担降低**：更容易看懂该做什么吗？
+- **仍然完整**：所有必要功能仍可到达吗？
+- **层级更清晰**：什么最重要一眼可见吗？
+- **性能更好**：更简的设计加载更快吗？
 
-## Document Removed Complexity
+## 记录被移除的复杂度
 
-If you removed features or options:
-- Document why they were removed
-- Consider if they need alternative access points
-- Note any user feedback to monitor
+如果移除了功能或选项：
+- 记录为什么移除
+- 考虑它们是否需要替代入口
+- 记下需要持续观察的用户反馈
 
-When the cuts feel right, hand off to `/impeccable polish` for the final pass. As Antoine de Saint-Exupéry put it: "Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away."
+砍到感觉对了，交给 `/impeccable polish` 做最后一遍。Antoine de Saint-Exupéry 说过："完美不是无可再增，而是无可再减。"

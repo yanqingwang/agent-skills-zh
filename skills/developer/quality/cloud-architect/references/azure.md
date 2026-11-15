@@ -1,271 +1,275 @@
-# Azure Architecture Reference
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/cloud-architect/references/azure.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Comprehensive guide for Azure services, patterns, and Cloud Adoption Framework implementation.
+# Azure 架构参考
 
-## Cloud Adoption Framework
+全面介绍 Azure 服务、架构模式与云采用框架（Cloud Adoption Framework）落地的指南。
 
-### Framework Phases
+## 云采用框架（Cloud Adoption Framework）
 
-1. **Strategy**
-   - Define business justification
-   - Expected business outcomes
-   - Business case development
-   - First project prioritization
+### 框架阶段
 
-2. **Plan**
-   - Digital estate assessment
-   - Initial organization alignment
-   - Skills readiness plan
-   - Cloud adoption plan
+1. **战略（Strategy）**
+   - 明确业务理由
+   - 预期业务成果
+   - 编制业务案例
+   - 首批项目优先级排序
 
-3. **Ready**
-   - Azure landing zone setup
-   - Azure setup guide
-   - Migration readiness
-   - Best practices validation
+2. **计划（Plan）**
+   - 数字资产评估
+   - 初步的组织对齐
+   - 技能准备计划
+   - 云采用计划
 
-4. **Adopt (Migrate + Innovate)**
-   - Migration: Assess, migrate, optimize
-   - Innovate: Build cloud-native solutions
-   - Best practices and patterns
+3. **就绪（Ready）**
+   - Azure 着陆区（Landing Zone）搭建
+   - Azure 设置指南
+   - 迁移就绪评估
+   - 最佳实践校验
 
-5. **Govern**
-   - Methodology for governance
-   - Governance benchmark
-   - Initial governance foundation
-   - Mature governance evolution
+4. **采用（Adopt，迁移 + 创新）**
+   - 迁移：评估、迁移、优化
+   - 创新：构建云原生方案
+   - 最佳实践与模式
 
-6. **Manage**
-   - Business commitments
-   - Operations baseline
-   - Platform and workload specialization
+5. **治理（Govern）**
+   - 治理方法论
+   - 治理基准
+   - 初始治理基础
+   - 成熟治理演进
 
-## Azure Well-Architected Framework
+6. **管理（Manage）**
+   - 业务承诺
+   - 运营基线
+   - 平台与工作负载专业化
 
-### Five Pillars
+## Azure 卓越架构框架（Well-Architected Framework）
 
-1. **Cost Optimization**
+### 五大支柱
+
+1. **成本优化（Cost Optimization）**
    - Azure Cost Management and Billing
-   - Reserved instances and Savings Plans
-   - Azure Hybrid Benefit
-   - Auto-scaling and right-sizing
+   - 预留实例与节省计划
+   - Azure 混合权益（Azure Hybrid Benefit）
+   - 自动扩缩容与规格合理化
 
-2. **Operational Excellence**
-   - Infrastructure as Code (ARM, Bicep, Terraform)
-   - Azure DevOps and GitHub Actions
-   - Azure Monitor and Application Insights
-   - Deployment slots and blue-green deployments
+2. **运营卓越（Operational Excellence）**
+   - 基础设施即代码（ARM、Bicep、Terraform）
+   - Azure DevOps 与 GitHub Actions
+   - Azure Monitor 与 Application Insights
+   - 部署槽与蓝绿部署
 
-3. **Performance Efficiency**
-   - Azure CDN and Front Door
-   - Auto-scaling (VMSS, App Service)
-   - Caching (Redis, CDN)
-   - Performance diagnostics
+3. **性能效率（Performance Efficiency）**
+   - Azure CDN 与 Front Door
+   - 自动扩缩容（VMSS、App Service）
+   - 缓存（Redis、CDN）
+   - 性能诊断
 
-4. **Reliability**
-   - Availability Zones and regions
+4. **可靠性（Reliability）**
+   - 可用性区域（Availability Zones）与区域（Region）
    - Azure Site Recovery
-   - Load Balancer and Traffic Manager
-   - Backup and disaster recovery
+   - Load Balancer 与 Traffic Manager
+   - 备份与灾难恢复
 
-5. **Security**
-   - Azure AD (Entra ID)
-   - Network Security Groups and Firewalls
+5. **安全性（Security）**
+   - Azure AD（Entra ID）
+   - 网络安全组（NSG）与防火墙
    - Azure Key Vault
    - Microsoft Defender for Cloud
 
-## Core Services Architecture
+## 核心服务架构
 
-### Compute
+### 计算
 
-**Virtual Machines**
-- VM sizes: General (D-series), Compute (F-series), Memory (E-series), GPU (N-series)
-- Availability Sets (99.95% SLA)
-- Availability Zones (99.99% SLA)
-- VM Scale Sets for auto-scaling
-- Best practices: Use managed disks, enable accelerated networking, use proximity placement groups
+**虚拟机（Virtual Machines）**
+- VM 规格：通用（D 系列）、计算（F 系列）、内存（E 系列）、GPU（N 系列）
+- 可用性集（99.95% SLA）
+- 可用性区域（99.99% SLA）
+- VM 规模集（VM Scale Sets）支持自动扩缩容
+- 最佳实践：使用托管磁盘、启用加速网络、使用邻近放置组
 
 **App Service**
-- Web Apps, API Apps, Mobile Apps
-- Deployment slots for staging
-- Auto-scaling based on metrics or schedule
-- Supports .NET, Java, Node.js, Python, PHP, Ruby
-- Best practices: Use deployment slots, enable auto-scaling, use App Service Plan efficiently
+- Web 应用、API 应用、移动应用
+- 部署槽（Deployment Slots）用于预发布
+- 按指标或计划自动扩缩容
+- 支持 .NET、Java、Node.js、Python、PHP、Ruby
+- 最佳实践：使用部署槽、启用自动扩缩容、高效使用 App Service 计划
 
 **Azure Functions**
-- Consumption Plan (serverless)
-- Premium Plan (VNet integration, no cold start)
-- Dedicated Plan (App Service Plan)
-- Durable Functions for orchestration
-- Best practices: Keep functions small, use Premium for production, implement retry policies
+- 消耗计划（Consumption Plan，serverless）
+- 高级计划（Premium Plan，VNet 集成、无冷启动）
+- 专用计划（Dedicated Plan，即 App Service 计划）
+- Durable Functions 用于编排
+- 最佳实践：函数保持短小、生产环境用高级计划、实现重试策略
 
-**Azure Kubernetes Service (AKS)**
-- Managed Kubernetes control plane
-- Azure CNI or kubenet networking
-- Azure AD integration
-- Virtual nodes (Azure Container Instances)
-- Best practices: Use system node pools, enable autoscaling, implement network policies
+**Azure Kubernetes Service（AKS）**
+- 托管 Kubernetes 控制平面
+- Azure CNI 或 kubenet 网络
+- Azure AD 集成
+- 虚拟节点（Azure Container Instances）
+- 最佳实践：使用系统节点池、启用自动扩缩、实现网络策略
 
 **Container Instances**
-- Serverless containers
-- Fast startup without infrastructure management
-- Best for batch jobs and burstable workloads
+- Serverless 容器
+- 启动快，无需管理基础设施
+- 最适合批处理任务与突发性负载
 
 **Azure Batch**
-- Large-scale parallel and HPC workloads
-- Auto-scaling compute nodes
-- Task scheduling and dependencies
+- 大规模并行与 HPC 负载
+- 计算节点自动扩缩
+- 任务调度与依赖管理
 
-### Storage
+### 存储
 
-**Blob Storage**
-- Storage tiers: Hot, Cool, Archive
-- Access tiers: Premium, Standard
-- Lifecycle management policies
-- Immutable storage for compliance
-- Best practices: Use lifecycle policies, enable soft delete, implement versioning
+**Blob 存储**
+- 存储层：热（Hot）、冷（Cool）、存档（Archive）
+- 访问层：高级（Premium）、标准（Standard）
+- 生命周期管理策略
+- 面向合规的不可变存储
+- 最佳实践：使用生命周期策略、启用软删除、实现版本控制
 
 **Azure Files**
-- SMB and NFS file shares
-- Integration with Azure File Sync
-- Premium tier for high performance
-- Best practices: Use Premium for databases, implement snapshots
+- SMB 与 NFS 文件共享
+- 与 Azure File Sync 集成
+- 高级层提供高性能
+- 最佳实践：数据库场景用高级层、实现快照
 
-**Disk Storage**
-- Managed Disks: Premium SSD, Standard SSD, Standard HDD, Ultra Disk
-- Disk encryption with Azure Disk Encryption
-- Snapshots and incremental backups
-- Best practices: Use Premium SSD for production, enable encryption
+**磁盘存储**
+- 托管磁盘：高级 SSD、标准 SSD、标准 HDD、Ultra Disk
+- 用 Azure Disk Encryption 做磁盘加密
+- 快照与增量备份
+- 最佳实践：生产环境用高级 SSD、启用加密
 
 **Data Lake Storage Gen2**
-- Hierarchical namespace for big data
-- Built on Blob Storage
-- Integration with Azure Synapse and Databricks
-- Best practices: Enable hierarchical namespace, use lifecycle policies
+- 面向大数据的分层命名空间（hierarchical namespace）
+- 构建在 Blob 存储之上
+- 与 Azure Synapse 和 Databricks 集成
+- 最佳实践：启用分层命名空间、使用生命周期策略
 
 **Azure NetApp Files**
-- Enterprise-grade NFS and SMB shares
-- High performance and low latency
-- Snapshots and data protection
+- 企业级 NFS 与 SMB 共享
+- 高性能、低延迟
+- 快照与数据保护
 
-### Database
+### 数据库
 
 **Azure SQL Database**
-- Serverless and provisioned compute
-- Hyperscale for up to 100TB
-- Elastic pools for multiple databases
-- Auto-tuning and intelligent insights
-- Best practices: Use serverless for dev/test, enable geo-replication
+- Serverless 与预置计算
+- 超大规模（Hyperscale）最高 100TB
+- 弹性池管理多个数据库
+- 自动优化与智能洞察
+- 最佳实践：开发/测试用 Serverless、启用异地复制
 
 **Azure SQL Managed Instance**
-- Near 100% compatibility with SQL Server
-- VNet integration for isolation
-- Native virtual network implementation
-- Best practices: Use for lift-and-shift migrations
+- 与 SQL Server 近 100% 兼容
+- VNet 集成实现隔离
+- 原生虚拟网络实现
+- 最佳实践：用于直接迁移（lift-and-shift）场景
 
 **Cosmos DB**
-- Multi-model NoSQL database
-- Global distribution with multi-master
-- Consistency levels: Strong, Bounded staleness, Session, Consistent prefix, Eventual
-- APIs: SQL, MongoDB, Cassandra, Gremlin, Table
-- Best practices: Choose appropriate consistency, partition key design critical
+- 多模型 NoSQL 数据库
+- 多主节点的全球分布
+- 一致性级别：强（Strong）、有限过期（Bounded staleness）、会话（Session）、一致前缀（Consistent prefix）、最终（Eventual）
+- API：SQL、MongoDB、Cassandra、Gremlin、Table
+- 最佳实践：选择合适的一致性级别，分区键设计至关重要
 
 **Azure Database for PostgreSQL/MySQL/MariaDB**
-- Flexible Server (newer) vs Single Server (legacy)
-- High availability with zone redundancy
-- Read replicas for scaling
-- Best practices: Use Flexible Server, enable HA, implement connection pooling
+- 弹性服务器（Flexible Server，较新）vs 单服务器（Single Server，旧版）
+- 区域冗余实现高可用
+- 只读副本用于横向扩展
+- 最佳实践：使用弹性服务器、启用高可用、实现连接池
 
 **Azure Cache for Redis**
-- In-memory caching
-- Clustering for scalability
-- Geo-replication for disaster recovery
-- Best practices: Use Premium tier for production, enable persistence
+- 内存缓存
+- 集群支持横向扩展
+- 异地复制用于灾难恢复
+- 最佳实践：生产环境用高级层、启用持久化
 
-### Networking
+### 网络
 
-**Virtual Network (VNet)**
-- CIDR planning (avoid overlaps)
-- Subnets with Network Security Groups
-- Service endpoints and Private Link
-- VNet peering for connectivity
-- Best practices: Plan IP address space, use NSGs, implement Private Link
+**虚拟网络（VNet）**
+- CIDR 规划（避免重叠）
+- 子网配合网络安全组（NSG）
+- 服务终结点与 Private Link
+- VNet 对等互连实现连通
+- 最佳实践：规划 IP 地址空间、使用 NSG、实现 Private Link
 
 **Azure Load Balancer**
-- Layer 4 load balancing
-- Standard SKU (zone-redundant, SLA)
-- Health probes and distribution algorithms
-- Best practices: Use Standard SKU, configure health probes
+- 四层负载均衡
+- 标准 SKU（区域冗余、含 SLA）
+- 健康探测与分发算法
+- 最佳实践：使用标准 SKU、配置健康探测
 
 **Application Gateway**
-- Layer 7 load balancing
-- WAF (Web Application Firewall)
-- URL-based routing and SSL termination
-- Best practices: Enable WAF, use autoscaling
+- 七层负载均衡
+- WAF（Web 应用防火墙）
+- 基于 URL 的路由与 SSL 终止
+- 最佳实践：启用 WAF、使用自动扩缩
 
 **Azure Front Door**
-- Global load balancing and CDN
-- WAF at edge
-- Anycast for low latency
-- Best practices: Use for global applications, enable caching
+- 全局负载均衡与 CDN
+- 边缘 WAF
+- Anycast 带来低延迟
+- 最佳实践：全球应用使用、启用缓存
 
-**VPN Gateway and ExpressRoute**
-- Site-to-Site VPN for encrypted connectivity
-- ExpressRoute for private, dedicated connection
-- Virtual WAN for global transit network
-- Best practices: Use ExpressRoute for production, implement redundancy
+**VPN Gateway 与 ExpressRoute**
+- 站点到站点 VPN 提供加密连接
+- ExpressRoute 提供私有专用连接
+- Virtual WAN 构建全球中转网络
+- 最佳实践：生产环境用 ExpressRoute、实现冗余
 
 **Azure Firewall**
-- Managed firewall service
-- Application and network rules
-- Threat intelligence
-- Best practices: Use in hub-spoke topology, enable DNS proxy
+- 托管防火墙服务
+- 应用规则与网络规则
+- 威胁情报
+- 最佳实践：用于中心-分支（hub-spoke）拓扑、启用 DNS 代理
 
 **Azure Private Link**
-- Private connectivity to Azure services
-- No public internet exposure
-- Available for PaaS services
-- Best practices: Use for all PaaS services in production
+- 到 Azure 服务的私有连接
+- 不暴露公网
+- PaaS 服务可用
+- 最佳实践：生产环境的所有 PaaS 服务都使用
 
-### Security and Identity
+### 安全与身份
 
-**Azure Active Directory (Microsoft Entra ID)**
-- Identity and access management
-- Conditional Access policies
-- Multi-factor authentication
-- B2B and B2C scenarios
-- Best practices: Enable MFA, use Conditional Access, implement PIM
+**Azure Active Directory（Microsoft Entra ID）**
+- 身份与访问管理
+- 条件访问（Conditional Access）策略
+- 多因素认证
+- B2B 与 B2C 场景
+- 最佳实践：启用 MFA、使用条件访问、实现 PIM
 
 **Azure Key Vault**
-- Secrets, keys, and certificates management
-- Hardware Security Module (HSM) backed
-- Soft delete and purge protection
-- Best practices: Enable soft delete, use RBAC, implement Private Link
+- 机密、密钥与证书管理
+- 硬件安全模块（HSM）支撑
+- 软删除与清除保护
+- 最佳实践：启用软删除、使用 RBAC、实现 Private Link
 
 **Microsoft Defender for Cloud**
-- Security posture management
-- Threat protection for hybrid workloads
-- Regulatory compliance dashboard
-- Just-in-time VM access
-- Best practices: Enable enhanced security, implement recommendations
+- 安全态势管理
+- 混合负载的威胁防护
+- 合规仪表盘
+- JIT 虚拟机访问
+- 最佳实践：启用增强安全功能、落实安全建议
 
 **Azure Policy**
-- Governance and compliance at scale
-- Built-in and custom policies
-- Deny, audit, append effects
-- Best practices: Assign at management group level, test before enforce
+- 规模化的治理与合规
+- 内置与自定义策略
+- Deny、audit、append 效果
+- 最佳实践：在管理组层级分配、先测试后强制
 
 **Azure Sentinel**
-- Cloud-native SIEM and SOAR
-- AI-powered threat detection
-- Integration with Microsoft 365, third-party tools
-- Best practices: Enable data connectors, create custom analytics rules
+- 云原生 SIEM 与 SOAR
+- AI 驱动的威胁检测
+- 与 Microsoft 365 及第三方工具集成
+- 最佳实践：启用数据连接器、创建自定义分析规则
 
-## Architecture Patterns
+## 架构模式
 
-### High Availability
+### 高可用
 
-**Zone-Redundant Pattern**
+**区域冗余模式**
 ```
 Azure Front Door (global)
     |
@@ -279,7 +283,7 @@ VM Scale Set (across availability zones)
 Azure SQL Database (zone-redundant)
 ```
 
-**Multi-Region Pattern**
+**多区域模式**
 ```
 Azure Traffic Manager (DNS-based routing)
     |
@@ -287,7 +291,7 @@ Azure Traffic Manager (DNS-based routing)
     └── Region 2: App Service + SQL Database (geo-replica)
 ```
 
-### Hub-Spoke Topology
+### 中心-分支（Hub-Spoke）拓扑
 
 ```
 Hub VNet
@@ -300,9 +304,9 @@ Hub VNet
     └── Spoke VNet 3 (DMZ)
 ```
 
-### Serverless Architecture
+### Serverless 架构
 
-**Event-Driven Pattern**
+**事件驱动模式**
 ```
 Event Grid -> Azure Functions -> Cosmos DB
                     |
@@ -310,7 +314,7 @@ Event Grid -> Azure Functions -> Cosmos DB
               Service Bus -> Functions (processing)
 ```
 
-**API-First Pattern**
+**API 优先模式**
 ```
 API Management
     |
@@ -319,9 +323,9 @@ API Management
     └── Function App 3 (data access)
 ```
 
-### Microservices on Azure
+### Azure 上的微服务
 
-**AKS-Based**
+**基于 AKS**
 ```
 Azure Front Door
     |
@@ -336,7 +340,7 @@ AKS (multiple microservices)
     └── Service Bus (async communication)
 ```
 
-**Container Apps Pattern**
+**Container Apps 模式**
 ```
 Azure Container Apps
 ├── Dapr for state management
@@ -344,7 +348,7 @@ Azure Container Apps
 └── Azure Monitor for observability
 ```
 
-### Data Platform
+### 数据平台
 
 ```
 Data Sources
@@ -365,11 +369,11 @@ Azure Synapse Analytics
 Power BI (visualization)
 ```
 
-## Landing Zone Design
+## 着陆区设计
 
-### Enterprise-Scale Landing Zone
+### 企业级着陆区
 
-**Management Group Hierarchy**
+**管理组层级**
 ```
 Tenant Root Group
 ├── Platform
@@ -381,7 +385,7 @@ Tenant Root Group
     └── Online (internet-facing workloads)
 ```
 
-**Network Topology**
+**网络拓扑**
 ```
 Hub VNet (Connectivity subscription)
 ├── Azure Firewall
@@ -395,123 +399,123 @@ Spoke VNets (Workload subscriptions)
 └── Development VNet
 ```
 
-**Governance**
-- Azure Policy for compliance
-- Management groups for hierarchy
-- RBAC assignments at appropriate scope
-- Resource tags for cost allocation
-- Azure Blueprints for repeatable deployments
+**治理**
+- 用 Azure Policy 落实合规
+- 用管理组构建层级
+- 在合适的范围分配 RBAC
+- 用资源标记做成本分摊
+- 用 Azure Blueprints 实现可重复部署
 
-## Migration Strategies
+## 迁移策略
 
 ### Azure Migrate
 
-1. **Assess**
-   - Discovery with Azure Migrate appliance
-   - Dependency analysis
-   - Performance-based sizing
-   - Cost estimation
+1. **评估（Assess）**
+   - 用 Azure Migrate 设备做发现
+   - 依赖关系分析
+   - 基于性能的规格设定
+   - 成本估算
 
-2. **Migrate**
-   - Azure Migrate: Server Migration (agentless)
-   - Database Migration Service
-   - App Service Migration Assistant
-   - Data Box for large data transfers
+2. **迁移（Migrate）**
+   - Azure Migrate: Server Migration（无代理）
+   - 数据库迁移服务（Database Migration Service）
+   - App Service 迁移助手
+   - 大规模数据传输用 Data Box
 
-3. **Optimize**
-   - Right-sizing recommendations
-   - Reserved instances
-   - Azure Hybrid Benefit
+3. **优化（Optimize）**
+   - 规格合理化建议
+   - 预留实例
+   - Azure 混合权益
 
-### Migration Patterns
+### 迁移模式
 
-**Rehost**: Azure Migrate for VMs
-**Replatform**: App Service, Azure SQL Database
-**Refactor**: Container Apps, AKS, Functions
-**Rebuild**: Azure-native services (Cosmos DB, Cognitive Services)
+**重新托管（Rehost）**：虚拟机用 Azure Migrate
+**重新平台化（Replatform）**：App Service、Azure SQL Database
+**重构（Refactor）**：Container Apps、AKS、Functions
+**重建（Rebuild）**：Azure 原生服务（Cosmos DB、Cognitive Services）
 
-## Cost Optimization
+## 成本优化
 
-### Compute Savings
-- Azure Reserved Instances (1-year or 3-year, up to 72% savings)
-- Azure Savings Plans for Compute (up to 65% savings)
-- Spot VMs for fault-tolerant workloads (up to 90% savings)
-- Azure Hybrid Benefit (use existing Windows Server/SQL licenses)
-- Auto-shutdown for dev/test VMs
+### 计算节省
+- Azure 预留实例（1 年或 3 年，最高节省 72%）
+- Azure Savings Plans for Compute（最高节省 65%）
+- Spot VM 用于容错负载（最高节省 90%）
+- Azure 混合权益（复用现有 Windows Server/SQL 许可证）
+- 开发/测试 VM 自动关机
 
-### Storage Savings
-- Blob Storage lifecycle policies (Hot -> Cool -> Archive)
-- Azure Files: Standard tier for general use
-- Managed Disks: Standard SSD instead of Premium if possible
-- Delete unused snapshots and disks
+### 存储节省
+- Blob 存储生命周期策略（热 -> 冷 -> 存档）
+- Azure Files：一般用途用标准层
+- 托管磁盘：可能的话用标准 SSD 替代高级 SSD
+- 删除未使用的快照与磁盘
 
-### Database Savings
-- Serverless tier for Azure SQL Database
-- Reserved capacity for Cosmos DB
-- DTU model vs vCore (choose based on workload)
-- Pause Azure Synapse when not in use
+### 数据库节省
+- Azure SQL Database 用 Serverless 层
+- Cosmos DB 购买预留容量
+- DTU 模型 vs vCore（按负载选择）
+- Azure Synapse 闲置时暂停
 
-### Monitoring
+### 监控
 - Azure Cost Management + Billing
-- Cost alerts and budgets
-- Azure Advisor recommendations
-- Resource tagging for cost allocation
+- 成本警报与预算
+- Azure Advisor 建议
+- 资源标记做成本分摊
 
-## Disaster Recovery
+## 灾难恢复
 
 ### Azure Site Recovery
 
-**VM Replication**
-- Azure to Azure replication
-- On-premises to Azure (VMware, Hyper-V, physical)
-- RPO: 30 seconds to a few minutes
-- Automated failover and failback
+**VM 复制**
+- Azure 到 Azure 复制
+- 本地到 Azure（VMware、Hyper-V、物理机）
+- RPO：30 秒到几分钟
+- 自动故障转移与故障回复
 
-**Recovery Plans**
-- Multi-tier application recovery
-- Customizable scripts and manual actions
-- Integration with Azure Automation
+**恢复计划**
+- 多层应用恢复
+- 可自定义脚本与手动操作
+- 与 Azure Automation 集成
 
-### Backup Strategies
+### 备份策略
 
 **Azure Backup**
-- VM backups (application-consistent)
-- SQL Server and SAP HANA in Azure VMs
-- Azure Files backup
-- Cross-region restore
+- VM 备份（应用一致性）
+- Azure VM 中的 SQL Server 与 SAP HANA
+- Azure Files 备份
+- 跨区域还原
 
-**Database Backup**
-- SQL Database: Automated backups (7-35 days)
-- Cosmos DB: Continuous backup (30 days)
-- Long-term retention policies
+**数据库备份**
+- SQL Database：自动备份（7-35 天）
+- Cosmos DB：连续备份（30 天）
+- 长期保留策略
 
-### High Availability
+### 高可用
 
-**RTO/RPO Targets**
-- Active-Active: Multi-region with Traffic Manager (near-zero)
-- Active-Passive: Geo-replication with failover (minutes)
-- Backup and Restore: Azure Backup (hours)
+**RTO/RPO 目标**
+- 双活（Active-Active）：多区域配合 Traffic Manager（接近零）
+- 主备（Active-Passive）：异地复制加故障转移（分钟级）
+- 备份还原：Azure Backup（小时级）
 
-## Monitoring and Observability
+## 监控与可观测性
 
 ### Azure Monitor
 
-**Components**
-- Metrics: Time-series data (1-minute resolution)
-- Logs: Log Analytics workspace for queries (KQL)
-- Alerts: Metric, log, and activity log alerts
-- Dashboards: Custom visualizations
+**组件**
+- 指标：时间序列数据（1 分钟粒度）
+- 日志：Log Analytics 工作区供查询（KQL）
+- 警报：指标、日志与活动日志警报
+- 仪表盘：自定义可视化
 
 **Application Insights**
-- APM for web applications
-- Distributed tracing
-- Live Metrics Stream
-- Smart detection and anomaly detection
-- Best practices: Instrument all applications, set up availability tests
+- 面向 Web 应用的 APM
+- 分布式追踪
+- 实时指标流（Live Metrics Stream）
+- 智能检测与异常检测
+- 最佳实践：所有应用都接入探针、设置可用性测试
 
 ### Log Analytics
 
-**KQL Queries**
+**KQL 查询**
 ```kusto
 // Performance analysis
 Perf
@@ -525,30 +529,30 @@ requests
 | summarize count() by resultCode, bin(timestamp, 1h)
 ```
 
-**Workbooks**
-- Interactive reports
-- Parameterized queries
-- Combining metrics and logs
+**工作簿（Workbooks）**
+- 交互式报表
+- 参数化查询
+- 指标与日志结合
 
-## Identity and Access
+## 身份与访问
 
-### Azure AD Best Practices
+### Azure AD 最佳实践
 
-- Enable MFA for all users
-- Use Conditional Access policies
-- Implement Privileged Identity Management (PIM)
-- Regular access reviews
-- Break-glass accounts
+- 为所有用户启用 MFA
+- 使用条件访问策略
+- 实现特权标识管理（PIM）
+- 定期访问评审
+- 紧急访问账户（break-glass）
 
-### RBAC Design
+### RBAC 设计
 
-**Built-in Roles**
-- Owner: Full access including RBAC
-- Contributor: Full access except RBAC
-- Reader: Read-only access
-- Custom roles for specific needs
+**内置角色**
+- Owner：完全访问（含 RBAC）
+- Contributor：除 RBAC 外的完全访问
+- Reader：只读访问
+- 针对特定需求自定义角色
 
-**Scope Hierarchy**
+**范围层级**
 ```
 Management Group (highest)
     |
@@ -559,4 +563,4 @@ Resource Group
 Resource (lowest)
 ```
 
-Best practices: Assign at highest appropriate scope, use groups not individual users, apply least privilege
+最佳实践：在合适的最高层级分配、使用组而非单个用户、落实最小权限

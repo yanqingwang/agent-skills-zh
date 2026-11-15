@@ -1,95 +1,99 @@
-# CIP Deliverable Guide
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/design/references/cip-deliverable-guide.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Core Identity
+# CIP 交付物指南
 
-### Primary Logo
-- Vector format (SVG, AI, EPS)
-- Clear space rules defined
-- Scalable from favicon to billboard
+## 核心识别
 
-### Logo Variations
-- Horizontal, vertical, stacked
-- Icon/symbol only
-- Monochrome versions (black, white, reversed)
+### 主标志
+- 矢量格式（SVG、AI、EPS）
+- 已定义净空规则
+- 从网站图标到广告牌均可缩放
 
-## Stationery Set
+### 标志变体
+- 横版、竖版、堆叠
+- 仅图标/符号
+- 单色版本（黑、白、反白）
 
-### Business Card
-- Standard: 3.5x2 inches / 85x55mm
-- Premium paper stock (300-400gsm)
-- Finishes: matte, spot UV, foil, emboss
+## 文具套装
 
-### Letterhead
-- A4 or Letter size
-- Header area for logo/contact
-- Digital and print versions
+### 名片
+- 标准规格：3.5x2 英寸 / 85x55mm
+- 高级纸料（300-400gsm）
+- 表面工艺：哑光、局部 UV、烫金、压纹
 
-### Envelope
-- DL, C4, C5 sizes
-- Logo on flap or front
-- Return address styling
+### 信纸信头
+- A4 或 Letter 尺寸
+- 页眉区域放标志/联系方式
+- 电子版与印刷版
 
-## Office Environment
+### 信封
+- DL、C4、C5 尺寸
+- 标志在封口或正面
+- 回信地址样式
 
-### Reception Signage
-- 3D dimensional letters
-- Backlit LED options
-- Materials: acrylic, metal, wood
+## 办公环境
 
-### Wayfinding System
-- Consistent icon system
-- Clear hierarchy
-- ADA compliance
+### 前台标识
+- 3D 立体字
+- 背光 LED 选项
+- 材质：亚克力、金属、木质
 
-### Wall Graphics
-- Mission/values displays
-- Large-scale murals
-- Window frosting
+### 导视系统
+- 图标体系统一
+- 层级清晰
+- 符合 ADA（美国残障法案）规范
 
-## Apparel
+### 墙面图形
+- 使命/价值观展示
+- 大幅壁画
+- 玻璃磨砂贴膜
 
-### Polo Shirt
-- Embroidery preferred
-- Left chest placement
-- Quality fabric (pique cotton)
+## 服装
 
-### Uniforms
-- Department color coding
-- Name badge integration
-- Safety requirements if applicable
+### Polo 衫
+- 优先刺绣
+- 左胸位置
+- 优质面料（珠地棉）
 
-## Vehicle Branding
+### 工装制服
+- 部门颜色区分
+- 姓名牌集成
+- 如适用，满足安全要求
 
-### Car/Sedan
-- Door panel branding
-- Partial or full wrap
-- Contact information visible
+## 车辆品牌化
 
-### Fleet Vehicles
-- Consistent design across fleet
-- High visibility contact details
-- Professional installation
+### 轿车
+- 车门板品牌化
+- 局部或整车贴膜
+- 联系方式可见
 
-## Digital Assets
+### 车队车辆
+- 全车队设计一致
+- 联系方式高可见度
+- 专业安装
 
-### Social Media
-- Profile pictures (icon version)
-- Cover images (platform-specific)
-- Post templates
+## 数字资产
 
-### Email Signature
-- HTML responsive
-- Max 600px width
-- Essential contact only
+### 社交媒体
+- 头像图（图标版）
+- 封面图（按平台定制）
+- 帖子模板
 
-## Events & Promotional
+### 邮件签名
+- HTML 响应式
+- 最大 600px 宽
+- 只放必要联系方式
 
-### Trade Show Booth
-- Modular design
-- Easy assembly
-- Key messaging visible
+## 活动与宣传
 
-### Promotional Items
-- Quality over quantity
-- Useful items preferred
-- Brand colors prominent
+### 展会展台
+- 模块化设计
+- 易于搭建
+- 关键信息可见
+
+### 宣传品
+- 重质不重量
+- 优先选实用的物品
+- 品牌色醒目

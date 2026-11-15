@@ -1,58 +1,62 @@
-# Neon Productivity — Energetic Dark Theme
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/dark--neon-productivity/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 霓虹效率（活力暗色主题）
 
-Energetic dark theme with multi-color neon accents and organic blob-shaped elements. Designed for productivity-focused content with vibrant color contrasts that maintain visual interest across comprehensive 7-slide structure.
+## 风格概览
 
-- **Scenario**: Productivity talks, tech workshops, motivation/self-improvement, startup pitches
-- **Mood**: Energetic, modern, productivity-focused, vibrant
-- **Tone**: Deep navy with multi-color neon accents
+活力暗色主题，多彩霓虹点缀配有机 blob 形元素。面向效率类内容，鲜活的色彩对比贯穿完整的 7 页结构，保持视觉趣味。
 
-## Color Palette
+- **场景**：效率主题演讲、技术工作坊、励志/自我提升、创业路演
+- **气质**：有活力、现代、效率导向、鲜明
+- **基调**：深藏青，配多彩霓虹点缀
 
-| Name           | Hex     | Usage                               |
+## 配色
+
+| 名称           | Hex     | 用途                                |
 | -------------- | ------- | ----------------------------------- |
-| Background     | #0B0F1A | Deep navy/black canvas              |
-| Primary        | #2BE4A8 | Bright cyan-green for main accents  |
-| Secondary      | #FFB020 | Warm orange for supporting elements |
-| Accent blue    | #5B6CFF | Vivid blue-purple for highlights    |
-| Accent pink    | #FF4D6D | Pink-red for emphasis               |
-| Primary text   | #FFFFFF | White for main text                 |
-| Secondary text | #B0B8C8 | Light blue-gray for secondary text  |
+| 背景           | #0B0F1A | 深藏青/近黑画布                     |
+| 主色           | #2BE4A8 | 主点缀用亮青绿                      |
+| 次色           | #FFB020 | 辅助元素用暖橙                      |
+| 蓝色点缀       | #5B6CFF | 高光用鲜亮蓝紫                      |
+| 粉色点缀       | #FF4D6D | 强调用粉红                          |
+| 主文字         | #FFFFFF | 主文字用白色                        |
+| 次级文字       | #B0B8C8 | 次级文字用浅蓝灰                    |
 
-## Typography
+## 字体排印
 
-| Element    | Font        |
-| ---------- | ----------- |
-| Title (CN) | PingFang SC |
-| Body (CN)  | PingFang SC |
+| 元素        | 字体        |
+| ----------- | ----------- |
+| 标题（中文）| PingFang SC |
+| 正文（中文）| PingFang SC |
 
-## Design Techniques
+## 设计手法
 
-- Blob-shaped scene actors for organic feel
-- Multi-neon color accents (green, orange, blue, pink)
-- Slab and chip decorative elements
-- 7-slide comprehensive structure with timeline
-- Ring and dot small accents
-- Dark background with vibrant neon contrast
+- blob 形场景 actor，营造有机感
+- 多彩霓虹点缀（绿、橙、蓝、粉）
+- 板块与碎片装饰元素
+- 带时间轴的 7 页完整结构
+- 圆环与圆点的小点缀
+- 暗底配鲜亮霓虹的对比
 
-## Page Structure (7 slides)
+## 页面结构（7 页）
 
-| Slide | Type      | Elements | Description                                    |
+| 页码  | 类型      | 元素数量 | 描述                                           |
 | ----- | --------- | -------- | ---------------------------------------------- |
-| 1     | hero      | 41       | Title with neon blobs and decorative elements  |
-| 2     | statement | 41       | Centered statement with morphed scene actors   |
-| 3     | pillars   | 41       | Multi-column layout for key concepts           |
-| 4     | timeline  | 41       | Horizontal process flow with color-coded steps |
-| 5     | evidence  | 41       | Data boxes with neon accents                   |
-| 6     | quote     | 41       | Quotation slide with emphasis                  |
-| 7     | cta       | 41       | Closing slide with call to action              |
+| 1     | hero      | 41       | 标题配霓虹 blob 与装饰元素                     |
+| 2     | statement | 41       | 居中宣言，场景 actor 变形换位                  |
+| 3     | pillars   | 41       | 多栏布局呈现关键概念                           |
+| 4     | timeline  | 41       | 横向流程，步骤按颜色区分                       |
+| 5     | evidence  | 41       | 数据框配霓虹点缀                               |
+| 6     | quote     | 41       | 引言页，带强调                                 |
+| 7     | cta       | 41       | 收尾页，行动号召                               |
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (hero)** — neon blob scene actors establishing energetic organic aesthetic
-- **Slide 4 (timeline)** — horizontal process with color-coded steps demonstrating multi-accent system
+- **Slide 1（hero）**：霓虹 blob 场景 actor，奠定活力的有机美学
+- **Slide 4（timeline）**：颜色分步的横向流程，演示多彩点缀体系

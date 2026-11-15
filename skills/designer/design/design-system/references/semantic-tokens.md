@@ -1,10 +1,14 @@
-# Semantic Tokens
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/design-system/references/semantic-tokens.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Purpose-based aliases referencing primitive tokens.
+# 语义 Token
 
-## Color Semantics
+基于用途的别名，引用 primitive token。
 
-### Background & Foreground
+## 颜色语义
+
+### 背景与前景
 
 ```css
 :root {
@@ -22,7 +26,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-### Primary
+### 主色（Primary）
 
 ```css
 :root {
@@ -33,7 +37,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-### Secondary
+### 次要色（Secondary）
 
 ```css
 :root {
@@ -43,7 +47,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-### Muted
+### 弱化色（Muted）
 
 ```css
 :root {
@@ -52,7 +56,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-### Accent
+### 强调色（Accent）
 
 ```css
 :root {
@@ -61,7 +65,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-### Destructive
+### 危险色（Destructive）
 
 ```css
 :root {
@@ -71,7 +75,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-### Status Colors
+### 状态色
 
 ```css
 :root {
@@ -89,7 +93,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-### Border & Ring
+### 边框与焦点环
 
 ```css
 :root {
@@ -99,7 +103,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-## Spacing Semantics
+## 间距语义
 
 ```css
 :root {
@@ -120,7 +124,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-## Typography Semantics
+## 字体排印语义
 
 ```css
 :root {
@@ -140,7 +144,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-## Interactive States
+## 交互状态
 
 ```css
 :root {
@@ -159,7 +163,7 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-## Dark Mode Overrides
+## 暗色模式覆盖
 
 ```css
 .dark {
@@ -186,9 +190,9 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-## Usage Patterns
+## 用法模式
 
-### Applying Semantic Tokens
+### 应用语义 token
 
 ```css
 /* Good - uses semantic tokens */
@@ -205,9 +209,9 @@ Purpose-based aliases referencing primitive tokens.
 }
 ```
 
-### Theme Switching
+### 主题切换
 
-Semantic tokens enable instant theme switching:
+语义 token 让主题即时切换成为可能：
 
 ```js
 // Toggle dark mode

@@ -1,55 +1,59 @@
-# Cartesian Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/cartesian/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Cartesian 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/cartesian/design.md`
-- Preview card: `bold-template-pack/templates/cartesian/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/cartesian/design.md`
+- 预览卡：`bold-template-pack/templates/cartesian/preview.md`
 
-- Slug: `cartesian`
-- Tagline: Quiet warm-neutral palette with classical Playfair serifs; tasteful and unhurried.
-- Mood: quiet, considered, elegant, warm-minimal
-- Tone: classical, literary, restrained, confident-quiet
-- Formality: high
-- Density: low
-- Scheme: light
-- Best for: Anything that should feel quiet, considered, and grown-up: investment theses, white papers, advisory work, longform research, gallery / cultural decks. Also a strong choice for editorial features, founder reflections, or any deck where restraint is the message — including across tech and finance.
-- Avoid for: Decks that need visual heat, multiple accents, or a sense of urgency — the warm-neutral palette is intentionally low-energy.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`cartesian`
+- Tagline：安静的暖中性配色，古典 Playfair 衬线；有品位、不慌不忙。
+- Mood：quiet、considered、elegant、warm-minimal
+- Tone：classical、literary、restrained、confident-quiet
+- Formality：high
+- Density：low
+- Scheme：light
+- 适合：一切应当安静、深思、成熟的内容：投资论点、白皮书、咨询交付物、长篇研究、画廊/文化演示。对编辑特稿、创始人随笔，或任何以克制为信息的演示而言都是强选择，也包括科技与金融领域。
+- 避免：需要视觉热度、多个点缀色或紧迫感的演示文稿，暖中性配色刻意保持低能量。
 
-A quiet, museum-catalog editorial system built on Playfair Display serif headlines, Inter sans body, and a five-tone warm-stone palette. The aesthetic is "consulting deck meets architectural monograph" — minimal geometric line decorations (thin circles, dashed arcs, vertical and horizontal hairlines) drift behind content, suggesting drafting paper and compass work. Every divider is a single 1px line in a muted taupe; nothing is bold, nothing is loud. The cultural reference is Massimo Vignelli's editorial work, the Cooper Hewitt catalog, and pencil-and-tracing-paper urban planning documents.
+## 视觉速览
 
-Cartesian is a quiet museum-catalog editorial system. Its defining premise is restraint through 1px lines. Every structural element — list separators, agenda rules, timeline connectors, card borders, table dividers — is a single 1px line in a muted taupe {colors.line}. There are no thick borders, no fills, no shadows, no rounded surfaces. Hierarchy is built through type contrast and negative space; depth does not exist in the conventional sense.
+一套安静的博物馆图录编辑系统，建立在 Playfair Display 衬线标题、Inter 无衬线正文和五色调暖石配色之上。美学是"咨询演示遇上建筑专著"：极简几何线装饰（细圆、虚线弧、垂直与水平发丝线）漂浮在内容之后，暗示绘图纸与圆规作业。每条分隔线都是一条灰褐色的 1px 细线；没有任何粗体，没有任何喧闹。文化参照是 Massimo Vignelli 的编辑作品、Cooper Hewitt 图录，以及铅笔加描图纸的城市规划文档。
 
-## Preview Ingredients
+Cartesian 是一套安静的博物馆图录编辑系统。其定义性前提是通过 1px 线条实现克制。每个结构元素，列表分隔、议程横线、时间线连接线、卡片边框、表格分隔线，都是一条灰褐色 {colors.line} 的 1px 细线。没有粗边框，没有填充色，没有阴影，没有圆角表面。层级通过字体对比与负空间构建；传统意义上的深度并不存在。
 
-- Palette: bg-primary #EDE8E0; bg-secondary #E2DBD1; text-primary #1A1A1A; text-secondary #5A5A5A; accent #8A8178; line #B8B0A4
-- Typography: Playfair Display; Inter
-- Signature move: Warm sandstone canvas {colors.bg-primary} with single 1px taupe {colors.line} dividers as the universal structural element.
-- Signature move: Playfair Display serif at weight 400 for every headline/numeral/quote-mark; Inter sans for every body/label/attribution.
-- Signature move: Five-tone monochrome palette: two stones, two grays, one ink. No vivid accent colors anywhere.
-- Signature move: Decorative geometric rings (thin solid + dashed circles, 20–50% opacity) drift behind content as compass-drafted atmosphere.
-- Signature move: Every label, attribution, and micro-text is uppercase Inter with 2–3px letter-spacing.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：bg-primary #EDE8E0; bg-secondary #E2DBD1; text-primary #1A1A1A; text-secondary #5A5A5A; accent #8A8178; line #B8B0A4
+- Typography：Playfair Display; Inter
+- Signature move：暖砂岩画布 {colors.bg-primary}，以单条 1px 灰褐色 {colors.line} 分隔线作为通用结构元素。
+- Signature move：Playfair Display 衬线字重 400 用于每个标题/数字/引号；Inter 无衬线用于每个正文/标签/署名。
+- Signature move：五色单色配色：两种石色、两种灰色、一种墨色。任何地方都没有鲜艳点缀色。
+- Signature move：装饰性几何圆环（细实线 + 虚线圆，20-50% 不透明度）漂浮在内容之后，营造圆规绘制的氛围。
+- Signature move：每个标签、署名与微文字都是大写 Inter，字距 2-3px。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

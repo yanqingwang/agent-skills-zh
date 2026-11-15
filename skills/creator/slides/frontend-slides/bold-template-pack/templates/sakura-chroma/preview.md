@@ -1,55 +1,59 @@
-# Sakura Chroma Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/sakura-chroma/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Sakura Chroma 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/sakura-chroma/design.md`
-- Preview card: `bold-template-pack/templates/sakura-chroma/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/sakura-chroma/design.md`
+- 预览卡：`bold-template-pack/templates/sakura-chroma/preview.md`
 
-- Slug: `sakura-chroma`
-- Tagline: Vintage Japanese cassette-package aesthetic: cream paper, diagonal rainbow ribbons, condensed bold type, JIS-style spec checkboxes.
-- Mood: retro, playful, kawaii-tech, warm, tactile, product-catalogue
-- Tone: playful, confident, warm, tactile, 80s-Japanese-tech
-- Formality: low
-- Density: medium
-- Scheme: light
-- Best for: Anything that should feel like a vintage Japanese cassette package or a TDK / Sony / Sakura Color product catalogue: indie hardware brand decks, music-label release schedules, analog studio retrospectives, zine and magazine pitches, kawaii-tech product launches, creative-studio annual reports. Equally good for any deck wanting bold colour, condensed display type, and a tactile printed-product personality.
-- Avoid for: Decks that need restrained, corporate, or quiet typography — the bold condensed lockups, ribbon stripes, and primary-colour palette are intentionally loud and product-page-y.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`sakura-chroma`
+- Tagline：复古日式卡带包装美学：米白纸张、对角彩虹缎带、压缩加粗字体、JIS 风格规格复选框。
+- Mood：retro、playful、kawaii-tech、warm、tactile、product-catalogue
+- Tone：playful、confident、warm、tactile、80s-Japanese-tech
+- Formality：low
+- Density：medium
+- Scheme：light
+- 适合：一切应当像复古日式卡带包装或 TDK / Sony / Sakura Color 产品目录的内容：独立硬件品牌演示、音乐厂牌发行排期、模拟时代工作室回顾、zine 与杂志提案、kawaii-tech 产品发布、创意工作室年报。同样适合任何想要大胆色彩、压缩展示字体与印刷产品触感个性的演示文稿。
+- 避免：需要克制、企业感或安静排印的演示文稿：加粗压缩字组、缎带条纹与原色配色刻意喧闹、刻意产品页感。
 
-A cassette-package editorial system on warm cream paper with a six-color primary palette and warm-brown ink. Display type runs in Big Shoulders Display (condensed industrial display sans at weight 900); body in Albert Sans; tabular and tag content in JetBrains Mono; occasional Japanese accents in Noto Sans JP. The aesthetic borrows from 1970s consumer cassette packaging, Japanese print catalogues, and lo-fi product zines: petal-cluster blob clusters, diagonal multi-color ribbon bands, 12-point starburst seals, red rectangular stamps, and tracked uppercase micro-labels. The effect is hand-curated industrial editorial — warm but disciplined, playful but tightly typeset, with the cassette as its visual metaphor.
+## 视觉速览
 
-Sakura Chroma is a cassette-package editorial system that treats every slide as a printed product page from a small Japanese audio-products catalogue. The visual metaphor is total: petal-cluster blob marks, diagonal multi-color ribbon bands, 12-point starburst seals, red rectangular stamps, mono-font spec rows, color-coded chips, and equalizer-style bar charts. Everything reads as if pulled from the back-page spread of a 1970s consumer-audio brochure — warm, hand-curated, industrially typeset.
+一套卡带包装编辑系统：暖米白纸张、六色原色配色与暖棕油墨。展示字体用 Big Shoulders Display（字重 900 的压缩工业展示无衬线）；正文用 Albert Sans；表格与标签内容用 JetBrains Mono；零星日文点缀用 Noto Sans JP。美学借鉴 1970 年代消费级卡带包装、日本印刷目录与低保真产品 zine：花瓣簇 blob 团、对角多彩缎带、12 角爆炸印章、红色矩形戳记与带字距的大写微标签。效果是手工策展的工业编辑风：温暖而有纪律，俏皮而排印紧实，卡带就是它的视觉隐喻。
 
-## Preview Ingredients
+Sakura Chroma 是一套卡带包装编辑系统，把每页幻灯片当作一本小型日本音响产品目录里的印刷产品页。视觉隐喻是彻底的：花瓣簇 blob 印记、对角多彩缎带、12 角爆炸印章、红色矩形戳记、等宽字规格行、色码小片与均衡器风格柱状图。一切读起来像从 1970 年代消费级音响手册的封底跨页里撕下来的：温暖、手工策展、工业化排印。
 
-- Palette: paper #F1E6CB; paper-dk #E5D6B0; ink #3A2516; red #E5392A; pink #E54489; orange #F09131; green #3D9F47; blue #3F8BC4
-- Typography: See full design doc after selection.
-- Signature move: Warm cream paper canvas ({colors.paper}) with warm-brown ink ({colors.ink}) as structure and six primary accent colors.
-- Signature move: A 4px-period halftone-dot paper texture ({components.paper-texture}) sits over every slide at 16% opacity. Required.
-- Signature move: Big Shoulders Display weight 900 with negative tracking for every display moment; Albert Sans for body; JetBrains Mono for tabular / data; Noto Sans JP for Japanese accents.
-- Signature move: Petal-cluster blob marks (4–5 overlapping perfect circles) as the signature decorative element.
-- Signature move: Diagonal multi-color ribbon bands (5 stacked colored bars at -22° or +22°) as atmospheric layering.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：paper #F1E6CB; paper-dk #E5D6B0; ink #3A2516; red #E5392A; pink #E54489; orange #F09131; green #3D9F47; blue #3F8BC4
+- Typography：完整设计文档在选定后阅读。
+- Signature move：暖米白纸张画布（{colors.paper}），暖棕油墨（{colors.ink}）作结构，六种原色点缀。
+- Signature move：4px 周期的半调圆点纸张纹理（{components.paper-texture}）以 16% 不透明度盖在每页幻灯片上。必需。
+- Signature move：每个展示时刻用 Big Shoulders Display 字重 900 配负字距；正文用 Albert Sans；表格/数据用 JetBrains Mono；日文点缀用 Noto Sans JP。
+- Signature move：花瓣簇 blob 印记（4–5 个重叠正圆）是招牌装饰元素。
+- Signature move：对角多彩缎带（5 条堆叠彩条，呈 -22° 或 +22°）作为氛围层次。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

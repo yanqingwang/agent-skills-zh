@@ -7,14 +7,18 @@ display: roman-serif Young Serif
 accent: warm 30
 posture: committed
 keywords: grower, mushroom, fungi, farm, food, producer, fermentation, wine, natural wine, wine bar, bottle shop, cellar, preserves, dark, culture, night market, harvest, subscription, small batch
-material: coffee-ground black with a warm grain, parchment ink, Young Serif over Instrument Sans, soft pills and grained wells, photographs lit by lamps and candles, one oyster pink
+material: 带暖色颗粒的咖啡渣黑、羊皮纸色墨色、Instrument Sans 上压 Young Serif、柔和胶囊与带颗粒的 well、灯光与烛光下的照片、一个平菇粉
 photo: warm con=6 exp=-4
 pictured: Photographic, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/spore.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Spore
 
-A cellar at night: coffee-ground black warmed toward brown, a warm grain on its wells, parchment Young Serif over Instrument Sans, soft pills, photographs lit only by lamps and candles, and one oyster-mushroom pink. It feels close and handmade because the warmth sits in the ground, the grain, the figures and one soft colour, never in drawn light. It is not a dark-mode template with a glow, nor a wellness label.
+深夜的酒窖：咖啡渣黑向棕暖去、well 上带暖色颗粒、Instrument Sans 上压羊皮纸色的 Young Serif、柔和胶囊、只被灯光与烛光照亮的照片，以及一个平菇粉。它显得亲近而手工，因为暖意落在底色、颗粒、数字和一种柔和的颜色里，绝不落在画出来的光上。它不是带辉光的深色模式模板，也不是养生标签。
 
 ## Tokens
 
@@ -33,58 +37,58 @@ A cellar at night: coffee-ground black warmed toward brown, a warm grain on its 
 }
 ```
 
-One dial, the colourway, stated in the stamp (`spore: cellar`).
+只有一个旋钮：配色方案（colourway），写进 stamp（`spore: cellar`）。
 
-| Colourway | Ground | Ink | Accent |
+| 配色方案 | 底色 | 墨色 | 强调色 |
 | --- | --- | --- | --- |
-| `cellar` (default) | `oklch(15% 0.012 60)`, grain screened at 15% | parchment `oklch(93% 0.022 85)` | pink `oklch(77% 0.09 30)` |
-| `lab` | cream `oklch(94% 0.02 85)`, grain multiplied at 6% | `oklch(17% 0.015 60)` | pink `oklch(62% 0.13 30)` |
-| `head-torch` | `oklch(12% 0.008 60)`, grain at 15% | `oklch(93% 0.03 85)` | ochre `oklch(74% 0.13 80)` |
+| `cellar`（默认） | `oklch(15% 0.012 60)`，颗粒以 screen 混合、15% | 羊皮纸色 `oklch(93% 0.022 85)` | 粉色 `oklch(77% 0.09 30)` |
+| `lab` | 奶油色 `oklch(94% 0.02 85)`，颗粒以 multiply 混合、6% | `oklch(17% 0.015 60)` | 粉色 `oklch(62% 0.13 30)` |
+| `head-torch` | `oklch(12% 0.008 60)`，颗粒 15% | `oklch(93% 0.03 85)` | 赭色 `oklch(74% 0.13 80)` |
 
-## Type
+## 字体
 
-- **Display:** Young Serif 400, `--tracking-display`, line-height 1.02, sentence case, roman, one colour per head. Its one weight is the voice: hierarchy comes from size, never from bolding.
-- **Figures:** prices, days, hours and counts are Young Serif, lining, and may run past `--text-display` when one number is the section's reason; a price is the one figure that takes pink.
-- **Body:** Instrument Sans 400 and 500, line-height 1.55, in `--color-ink-2`. A second name after a product's (a grape, a vintage, a Latin name) is Instrument Sans italic, the outlier and the only italic.
-- **Labels, captions, table heads:** Instrument Sans 500 a step smaller, sentence case, `--color-muted`.
+- **展示字体：**Young Serif 400、`--tracking-display`、行高 1.02、句首大写、正体，每个标题只用一种颜色。它唯一的字重就是语气：层级靠字号，绝不靠加粗。
+- **数字：**价格、天数、钟点与数量用 Young Serif、等高数字（lining）；当某个数字就是区块存在的理由时，可以超过 `--text-display`；价格是唯一可用粉色的数字。
+- **正文：**Instrument Sans 400 与 500，行高 1.55，用 `--color-ink-2`。产品名之后的第二个名字（葡萄品种、年份、拉丁名）用 Instrument Sans 斜体，是 outlier 字体，也是唯一的斜体。
+- **标签、题注、表头：**Instrument Sans 500 小一档，句首大写，用 `--color-muted`。
 
-## Surfaces
+## 表面
 
-- 1px `--color-rule` between rows; a 1.5px `--color-ink-2` edge on fields. Nothing else has a border.
-- Radii: pills on controls and chips, `--radius-card` on wells and photographs; inputs square.
-- Depth is the ground's three steps: paper, a grained `--color-paper-2` well, a `--color-paper-3` band. A state that is live now (tonight, the chosen row) lifts one step and takes a pink chip. `--shadow-card` only under a well that overlaps a photograph.
-- Photographs: the place after dark, close: racks, a pour, a candlelit counter, a glass; low warm light into shadow, never flash or daylight. `--radius-card` with a 1px ink ring at 8%; type on one sits on its dark side over a paper scrim at 45 to 65%.
-- Grain: the speck grain of `texture.md` § 1, screened at `--grain`, on wells and bands only; never under running text in a column or over a photograph.
+- 行之间 1px `--color-rule`；输入域上 1.5px `--color-ink-2` 边。其他任何东西都不带边框。
+- 圆角：控件与 chip 用胶囊，well 与照片用 `--radius-card`；输入框方形。
+- 纵深就是底色的三档：paper、带颗粒的 `--color-paper-2` well、`--color-paper-3` 色带。当下生效的状态（今晚、选中的行）抬升一档并挂一个粉色 chip。`--shadow-card` 只用在叠压照片的 well 下。
+- 照片：天黑后的场所，凑近：酒架、倾倒的一杯、烛光吧台、一只杯子；低暖光没入阴影，绝不用闪光或日光。`--radius-card`，加 8% 的 1px 墨色圈；照片上的文字放在暗侧，压在 45% 到 65% 的纸张色压暗层上。
+- 颗粒：`texture.md` § 1 的斑点颗粒，以 `--grain` 值做 screen 混合，只用在 well 与色带上；绝不垫在分栏正文之下，也绝不压在照片之上。
 
 ## Range
 
-- **One figure as the section:** a count or a price in Young Serif at two to four times `--text-display` on a grained well, its plain label beneath, beside two or three hairline rows that say what the number means.
-- **The week as a timetable:** Rows of day names in Young Serif at `--text-title`, the hours beside them, closed days dropped to muted, tonight's row lifted to paper-3 with its pink chip; a head block on columns 1 to 4 beside them.
-- **A list or price list:** ruled rows with the name in Young Serif, the second name in italic, the price flush right in pink; set three or five columns deep and it reads as the shelf.
-- **A grained band that holds a form:** paper-3 with the speck grain, the price large in pink beside square fields and the pink pill; or a statement in Young Serif at `--text-display` across ten columns.
+- **一个数字撑起区块：**Young Serif 的数量或价格，两到四倍 `--text-display`，放在带颗粒的 well 上，下方朴素标签，旁边两三行细线行说明这个数字的含义。
+- **一周做成时刻表：**Rows 里星期名用 Young Serif、`--text-title`，钟点在旁，歇业日降为 muted，今晚那一行抬升到 paper-3 并挂粉色 chip；旁边第 1 到 4 栏放一个标题块。
+- **列表或价目表：**划线行，名字用 Young Serif，第二个名字用斜体，价格右齐用粉色；排成三或五栏深，读起来就是酒架。
+- **带颗粒、装着表单的色带：**paper-3 加斑点颗粒，粉色大号价格，旁边方形输入域和粉色胶囊；或一条 Young Serif 宣言、`--text-display` 字号横跨十栏。
 
-## Controls
+## 控件
 
-- The pair: a pink-filled pill with `--color-accent-ink` text, lightening to `--color-accent-2` on hover, beside a pill outlined in 1.5px `--color-ink-2`. Chips are pills; the chosen one fills pink.
-- Links are parchment with an underline that turns pink on hover; inputs are square with the 1.5px edge and the `--color-focus` ring.
+- 按钮对：粉色填充胶囊、`--color-accent-ink` 文字，hover 变亮为 `--color-accent-2`，旁边一枚 1.5px `--color-ink-2` 描边胶囊。Chip 就是胶囊；选中的那枚填粉色。
+- 链接用羊皮纸色、下划线 hover 转粉；输入框方形，带 1.5px 边和 `--color-focus` 焦点圈。
 
-## Motion
+## 动效
 
-State only, in one frame: a chip selects, a row lifts, a pill lightens. Nothing reveals, nothing grows, nothing loops.
+只有状态，一帧完成：chip 选中、某行抬升、胶囊变亮。无显现、无生长、无循环。
 
-## Voice
+## 语气
 
-A maker's log: the name, the day, the hour, the vintage, the price. No wellness, no mystique, no "curated".
+酿造者的日志：名字、日子、钟点、年份、价格。不养生、不神秘、不说"甄选"。
 
-## Do-nots
+## 禁止事项
 
-- Never a second hue; a green for "in stock" makes a garden centre.
-- Never drawn light as the mood (a beam, a pool, a glow behind a head); the light lives in the photographs.
-- Never a neutral or blue-black ground; every dark step tints toward hue 60.
-- Never pink running text or a pink outline; pink is a fill, a price or the focus.
-- Never photograph after photograph; between two pictures a figure, a timetable or a list in Young Serif.
+- 绝不引入第二个色相；"有货"用绿色会让页面变成园艺中心。
+- 绝不把画出来的光当氛围（一束光、一片光斑、标题后的辉光）；光只活在照片里。
+- 绝不用中性或蓝黑底色；每个深色档都偏向色相 60。
+- 正文绝不用粉色，绝不粉色描边；粉色是填充、是价格，或焦点。
+- 绝不让照片一张接一张；两张照片之间放一个数字、一张时刻表或一份 Young Serif 列表。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">

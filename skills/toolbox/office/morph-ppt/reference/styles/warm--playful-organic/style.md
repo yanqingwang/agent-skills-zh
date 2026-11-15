@@ -1,58 +1,62 @@
-# Playful Organic — Warm Colorful Friendly
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/warm--playful-organic/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Playful Organic：温暖多彩友好
 
-Warm and friendly design with organic blob shapes and playful multi-color dot accents. Features comprehensive ghost mechanism and comparison slide type, perfect for storytelling and lifestyle content with inviting atmosphere.
+## 风格概览
 
-- **Scenario**: Lifestyle presentations, pet/animal topics, children's education, creative workshops, storytelling
-- **Mood**: Warm, playful, organic, friendly
-- **Tone**: Warm cream with coral, yellow, and teal accents
+温暖友好的设计，搭配有机 blob 形状与俏皮的多彩圆点点缀。具备完整的幽灵机制与 comparison 幻灯片类型，非常适合故事叙述与生活方式类内容，氛围亲切宜人。
 
-## Color Palette
+- **适用场景**：生活方式演示、宠物/动物主题、儿童教育、创意工作坊、故事叙述
+- **氛围**：温暖、俏皮、有机、友好
+- **色调**：暖奶油底色，配珊瑚色、黄色与青绿色点缀
 
-| Name            | Hex     | Usage                             |
-| --------------- | ------- | --------------------------------- |
-| Background      | #FFF8E7 | Warm cream canvas                 |
-| Primary text    | #3D3B3C | Dark brown for main text          |
-| Accent coral    | #FF8A65 | Coral for warm highlights         |
-| Accent yellow   | #FFD54F | Yellow for playful accents        |
-| Accent teal     | #4DB6AC | Teal for decoration and contrast  |
-| Decoration dark | #3D3B3C | Dark brown for geometric elements |
+## 配色方案
 
-## Typography
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 背景 | #FFF8E7 | 暖奶油色画布 |
+| 主文字 | #3D3B3C | 深棕色，用于主文字 |
+| 珊瑚色强调 | #FF8A65 | 珊瑚色，用于温暖的高亮 |
+| 黄色强调 | #FFD54F | 黄色，用于俏皮的点缀 |
+| 青绿强调 | #4DB6AC | 青绿色，用于装饰与对比 |
+| 深色装饰 | #3D3B3C | 深棕色，用于几何元素 |
 
-| Element    | Font                       |
-| ---------- | -------------------------- |
-| Title (EN) | Montserrat                 |
-| Title (CN) | Source Han Sans (思源黑体) |
-| Body       | Source Han Sans            |
+## 字体排印
 
-## Design Techniques
+| 元素 | 字体 |
+| --- | --- |
+| 标题（英文） | Montserrat |
+| 标题（中文） | Source Han Sans（思源黑体） |
+| 正文 | Source Han Sans |
 
-- Blob-shaped main scene actor
-- Multi-color dot accents (orange, yellow)
-- Teal line decoration
-- Triangle and star geometric accents
-- Comprehensive ghost mechanism (all actors defined on slide 1)
-- Comparison slide type for contrasting content
-- Warm cream canvas with playful organic shapes
+## 设计技法
 
-## Page Structure (6 slides)
+- blob 形主场景 Actor
+- 多彩圆点点缀（橙、黄）
+- 青绿色线条装饰
+- 三角形与星形几何点缀
+- 完整幽灵机制（所有 Actor 都在第 1 页定义）
+- comparison 幻灯片类型，用于对照性内容
+- 暖奶油色画布，配俏皮的有机形状
 
-| Slide | Type       | Elements | Description                                   |
-| ----- | ---------- | -------- | --------------------------------------------- |
-| 1     | hero       | 20+      | Blob + dots + title establishing playful tone |
-| 2     | statement  | 20+      | Centered statement with shifted blobs         |
-| 3     | pillars    | 20+      | Multi-column cards for key concepts           |
-| 4     | evidence   | 20+      | Data display with colorful accents            |
-| 5     | comparison | 20+      | Left-right comparison layout                  |
-| 6     | cta        | 20+      | Closing slide with call to action             |
+## 页面结构（6 页幻灯片）
 
-## Reference Script
+| 幻灯片 | 类型 | 元素数 | 描述 |
+| --- | --- | --- | --- |
+| 1 | hero | 20+ | blob + 圆点 + 标题，奠定俏皮基调 |
+| 2 | statement | 20+ | 居中陈述句，blob 位移配合 |
+| 3 | pillars | 20+ | 多列卡片，呈现关键概念 |
+| 4 | evidence | 20+ | 数据展示，配彩色点缀 |
+| 5 | comparison | 20+ | 左右对比版式 |
+| 6 | cta | 20+ | 行动号召收尾页 |
 
-Complete build script available in `build.sh`.
+## 参考脚本
 
-**Recommended slides to read for understanding core design techniques**:
+完整构建脚本见 `build.sh`。
 
-- **Slide 1 (hero)** — blob scene actor + colorful dots establishing warm organic feel
-- **Slide 5 (comparison)** — left-right contrast layout demonstrating comparison slide type
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1 (hero)**：blob 场景 Actor + 彩色圆点，奠定温暖有机的质感
+- **Slide 5 (comparison)**：左右对比版式，演示 comparison 幻灯片类型

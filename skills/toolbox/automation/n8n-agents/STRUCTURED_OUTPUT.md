@@ -1,14 +1,18 @@
-# Structured output
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-agents/STRUCTURED_OUTPUT.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Non-negotiable: the output parser must **parse AND retry on failure**. Without retry, one malformed model response halts the entire workflow.
+# 结构化输出
 
-The parser is the `@n8n/n8n-nodes-langchain.outputParserStructured` node, wired into the agent (or Basic LLM Chain) via the `ai_outputParser` connection.
+没有商量余地：输出解析器必须**解析并且在失败时重试**。没有重试，一条格式错误的模型响应就能让整个工作流停摆。
+
+解析器是 `@n8n/n8n-nodes-langchain.outputParserStructured` 节点，通过 `ai_outputParser` 连接接入 Agent（或 Basic LLM Chain）。
 
 ---
 
-## The pattern (node objects)
+## 模式（节点对象）
 
-The parser, with `autoFix` and its own fixer model:
+解析器节点，带 `autoFix` 和它自己的修复模型：
 
 ```json
 {
@@ -23,7 +27,7 @@ The parser, with `autoFix` and its own fixer model:
 }
 ```
 
-Wire the parser to the agent, and a **coding-capable fixer model** to the parser:
+解析器接到 Agent，再把**有编码能力的修复模型**接到解析器：
 
 ```json
 "Structured Output Parser": {
@@ -34,21 +38,21 @@ Wire the parser to the agent, and a **coding-capable fixer model** to the parser
 }
 ```
 
-On the agent, set `hasOutputParser: true` so the slot is active.
+在 Agent 上设 `hasOutputParser: true`，让该插槽生效。
 
 ---
 
-## Why a schema, not an example
+## 为什么用 schema 而不是示例
 
-`schemaType: 'manual'` with a real JSON Schema is the default. `jsonSchemaExample` (`schemaType: 'fromJson'`) looks easier, but an example **cannot** express:
+`schemaType: 'manual'` 配一份真实 JSON Schema 是默认做法。`jsonSchemaExample`（`schemaType: 'fromJson'`）看着更简单，但示例**表达不了**：
 
-- **Required vs optional fields** — an example is one snapshot; the parser can't tell which keys are mandatory.
-- **Enums** — `"category": "compliance"` doesn't constrain the model to `compliance | history | risk`; it will invent new categories.
-- **Numeric ranges** — `"score": 3` doesn't say `1-5`; the model returns `7` or `0.85` and passes.
-- **Array constraints** — min/max items, item-type uniformity.
-- **String formats** — email, UUID, ISO date, regex.
+- **必填与可选字段**，示例只是单个快照，解析器判断不了哪些键是必需的。
+- **枚举**，`"category": "compliance"` 约束不了模型只能输出 `compliance | history | risk`，它会发明新类别。
+- **数值范围**，`"score": 3` 说不了 `1-5`；模型返回 `7` 或 `0.85` 也照样通过。
+- **数组约束**，最小/最大条数、条目类型一致性。
+- **字符串格式**，邮箱、UUID、ISO 日期、正则。
 
-A schema gives the model clearer rules and the parser real validation:
+schema 给模型更明确的规则，给解析器真正的校验：
 
 ```json
 {
@@ -74,17 +78,17 @@ A schema gives the model clearer rules and the parser real validation:
 }
 ```
 
-Reach for `fromJson` + `jsonSchemaExample` only for one-off shapes you're certain will never grow constraints. Once a field needs to be optional, enum-ed, or range-bounded, you're rewriting the parser anyway — start with the schema.
+只有在确定永远不会增加约束的一次性场景里才用 `fromJson` + `jsonSchemaExample`。一旦某个字段要变可选、加枚举或限范围，反正都得重写解析器，一开始就用 schema。
 
 ---
 
-## `autoFix: true` and the fixer model
+## `autoFix: true` 与修复模型
 
-The model can produce almost-but-not-quite-valid JSON: trailing comma, missing field, wrong type, or JSON wrapped in a markdown code block. Without `autoFix`, the workflow halts. With it, the parser sends the bad output to a model with a "fix this" prompt, retries, and continues.
+模型可能产出几乎对但不完全合法的 JSON：尾逗号、缺字段、类型错，或 JSON 被包进 markdown 代码块。没有 `autoFix`，工作流停摆。有了它，解析器把坏输出发给一个模型并附上"修一下"的提示词，重试后继续。
 
-The fixer is wired as a **separate** sub-node into the parser's `ai_languageModel` slot. **Use a coding-capable model** (Sonnet-class or better). Reconciling broken JSON against a schema with enums, ranges, and required fields is a structured-output / coding task — a weak or generic model routinely produces another malformed retry, defeating the point and burning tokens.
+修复模型作为**独立的**子节点接进解析器的 `ai_languageModel` 插槽。**用有编码能力的模型**（Sonnet 级或更好）。对照带枚举、范围和必填字段的 schema 修补坏 JSON 是结构化输出/编码任务，弱模型或通用模型经常再产出一次格式错误的输出，白费力气还烧 token。
 
-When you want to customize the retry prompt, set `customizeRetryPrompt: true` and provide `prompt`. The placeholders `{instructions}`, `{completion}`, `{error}` are filled at retry time:
+要自定义重试提示词时，设 `customizeRetryPrompt: true` 并提供 `prompt`。占位符 `{instructions}`、`{completion}`、`{error}` 在重试时填充：
 
 ```
 Instructions:
@@ -105,21 +109,21 @@ This is a structured output parser tool in n8n. Ensure the output format is corr
 DO NOT wrap the output in a markdown code block.
 ```
 
-Generally, leave the retry prompt as default unless you have a specific reason to override it.
+一般保持重试提示词为默认，除非你有明确理由覆盖它。
 
 ---
 
 ## "DO NOT wrap the output in a markdown code block"
 
-This line is **load-bearing**. Models default to wrapping JSON in triple-backtick `json` fences, which breaks the parser. If you see parse failures on output that's clearly valid JSON inside a code block, this instruction is the fix — in both the retry prompt and, if the main model wraps aggressively, the **main** system prompt:
+这一行是**承重的**。模型默认把 JSON 包进三反引号的 `json` 围栏，这会让解析器挂掉。如果你看到明显合法的 JSON 被包在代码块里导致解析失败，修法就是这句指令：重试提示词里要加，主模型若包装成瘾，**主**系统提示词里也要加：
 
-> When responding with structured output, return raw JSON only. DO NOT wrap in markdown code blocks. DO NOT include any prose before or after the JSON.
+> 当以结构化输出响应时，只返回裸 JSON。不要包进 markdown 代码块。JSON 前后不要带任何说明文字。
 
 ---
 
-## System prompt + parser: belt and suspenders
+## 系统提示词 + 解析器：双保险
 
-The parser tells the model the schema; the system prompt should ALSO state the shape:
+解析器告诉模型 schema；系统提示词也应当写明输出形状：
 
 ```
 ## Output Format
@@ -129,35 +133,35 @@ Respond with a JSON object matching this exact shape:
 ONLY output the JSON. No prose, no markdown wrapping.
 ```
 
-It's repetition, but the model takes the system prompt seriously and reinforcement helps. The parser catches what slips through.
+这是重复，但模型对系统提示词很当真，强化有用。漏网的由解析器兜住。
 
 ---
 
-## Common parse failures and fixes
+## 常见解析失败与修法
 
-| Symptom | Likely cause | Fix |
+| 症状 | 可能根因 | 修法 |
 |---|---|---|
-| "Failed to parse output" but the text looks like JSON | Wrapped in a markdown code block | Add "DO NOT wrap in markdown" to retry prompt and system prompt |
-| Empty fields where the schema expects values | Model thinks it can omit unknowns | "Use empty string '' or null for unknown fields, never omit" |
-| Wrong types (number as string) | Schema/example wasn't typed clearly | Use a real number in the schema, not a string |
-| Truncated JSON (unclosed brace) | Hit max tokens mid-response | Increase max tokens, tighten the prompt to produce shorter output |
-| Field names paraphrased ("Score" vs "score") | Schema didn't pin the name | "Field names are exactly as shown" in the system prompt |
-| `autoFix` retries forever | Fixer model too weak for the schema | Swap in a coding-capable (Sonnet-class) fixer; tighten the retry prompt |
+| "Failed to parse output"，但文本看着像 JSON | 被包进 markdown 代码块 | 在重试提示词和系统提示词里加 "DO NOT wrap in markdown" |
+| schema 期望有值的地方是空字段 | 模型以为未知字段可以省略 | 提示词写明："未知字段用空字符串 '' 或 null，绝不省略" |
+| 类型不对（数字成了字符串） | schema/示例没有把类型写清 | 在 schema 里用真数字，不要用字符串 |
+| JSON 被截断（花括号没闭合） | 响应中途达到 max tokens | 调大 max tokens，收紧提示词让输出更短 |
+| 字段名被改写（"Score" vs "score"） | schema 没有钉死字段名 | 在系统提示词里写"字段名与所示完全一致" |
+| `autoFix` 无限重试 | 修复模型对这份 schema 太弱 | 换成有编码能力的（Sonnet 级）修复模型；收紧重试提示词 |
 
 ---
 
-## When NOT to use a parser
+## 什么时候不要用解析器
 
-- **Free-form chat replies to the user** — conversational text doesn't need parsing.
-- **Tool calls only, no final structured output** — if the user-visible output is text, skip it.
-- **Trivial key-value extraction** — a Set node with `JSON.parse($json.output)` covers it.
+- **面向用户的自由聊天回复**，会话文本不需要解析。
+- **只有工具调用、没有最终结构化输出**，用户可见的输出是文本时就跳过。
+- **琐碎的键值提取**，一个 Set 节点加 `JSON.parse($json.output)` 就够。
 
-The parser is for when downstream nodes must consume strict JSON.
+解析器用于下游节点必须消费严格 JSON 的场合。
 
 ---
 
-## Cross-references
+## 交叉引用
 
-- Why and where to use agents at all → parent **SKILL.md**
-- The system-prompt half of structured output → **SYSTEM_PROMPT.md**
-- Block Kit / adaptive cards need the manual schema even more (union types) → **CHAT_AGENT_PATTERNS.md**
+- 为什么用 Agent、在哪用 → 父级 **SKILL.md**
+- 结构化输出的系统提示词那一半 → **SYSTEM_PROMPT.md**
+- Block Kit / adaptive cards 更需要手写 schema（联合类型）→ **CHAT_AGENT_PATTERNS.md**

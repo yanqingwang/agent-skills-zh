@@ -1,6 +1,10 @@
-# ADR Template
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/architecture-designer/references/adr-template.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## ADR Format
+# ADR 模板
+
+## ADR 格式
 
 ```markdown
 # ADR-{number}: {Title}
@@ -36,7 +40,7 @@ What constraints exist? What are we trying to achieve?]
 - [Link to discussion/RFC]
 ```
 
-## Example: Database Selection
+## 示例：数据库选型
 
 ```markdown
 # ADR-001: Use PostgreSQL for primary database
@@ -94,7 +98,7 @@ Use PostgreSQL as the primary database, hosted on AWS RDS.
 - Internal RFC: Database Selection for E-commerce Platform
 ```
 
-## ADR Naming Convention
+## ADR 命名约定
 
 ```
 docs/
@@ -105,12 +109,12 @@ docs/
     └── README.md
 ```
 
-## Quick Reference
+## 快速参考
 
-| Section | Purpose | Key Question |
+| 节 | 用途 | 关键问题 |
 |---------|---------|--------------|
-| Status | Current state | Is this active? |
-| Context | Background | Why are we deciding? |
-| Decision | The choice | What did we choose? |
-| Consequences | Impact | What happens now? |
-| Alternatives | Options | What else was considered? |
+| Status | 当前状态 | 这份 ADR 还生效吗？ |
+| Context | 背景 | 我们为什么要做这个决策？ |
+| Decision | 决策本身 | 我们选了什么？ |
+| Consequences | 影响 | 之后会发生什么？ |
+| Alternatives | 备选方案 | 还考虑过哪些？ |

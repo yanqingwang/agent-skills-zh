@@ -12,11 +12,15 @@ photo: mono con=45
 pictured: Bento Grid, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/pasteup.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Paste-up
 
-A hand-made flyer: kraft board, near-black toner, League Gothic capitals at poster size over a Newsreader galley, white copy paper on real paper shadows, controls on hard ink offsets, one sheet of fluorescent yellow. Photographs come off the copier, black and white, the greys crushed. The paste-up lives in the paper, the tilt and the lift, never in props. It is not a grunge texture pack, a scrapbook of stickers and tape, or a clean modern poster.
+一张手工传单：牛皮纸板、近黑碳粉、海报字号的 League Gothic 大写压在 Newsreader 长条校样上，真实的纸张投影托着白色复印纸，控件压在硬质油墨偏移上，一张荧光黄纸。照片从复印机里出来，黑白，灰阶压死。拼贴感活在纸面、倾角与浮起里，绝不在道具里。它不是一套脏污纹理素材包，不是贴纸与胶带的剪贴簿，也不是干净的现代海报。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -32,51 +36,51 @@ A hand-made flyer: kraft board, near-black toner, League Gothic capitals at post
 }
 ```
 
-The fluorescent is a paper, not an ink: it carries toner type and is never type itself. Three boards, stated in the stamp (`pasteup: kraft`): kraft, the tokens above, fibre at 0.5 multiply; black wall, ground `oklch(21% 0.012 60)`, toner `oklch(94% 0.012 90)`, muted `oklch(70% 0.015 80)`, fibre at 0.35 screen; sugar paper, ground `oklch(84% 0.035 150)`, toner `oklch(22% 0.02 160)`, muted `oklch(42% 0.03 160)`, fibre at 0.4 multiply.
+荧光纸是一种纸，不是一种墨：它承载碳粉文字，自己绝不做文字。三种纸板，写入 stamp（印记）：`pasteup: kraft` 为牛皮纸板，即上面的 Token，纤维晕染 0.5、multiply；黑板墙，底 `oklch(21% 0.012 60)`，碳粉 `oklch(94% 0.012 90)`，淡色 `oklch(70% 0.015 80)`，纤维晕染 0.35、screen；糖纸，底 `oklch(84% 0.035 150)`，碳粉 `oklch(22% 0.02 160)`，淡色 `oklch(42% 0.03 160)`，纤维晕染 0.4、multiply。
 
-## Type
+## 字体（Type）
 
-- **Display:** League Gothic 400, uppercase, `--tracking-display`, never under 28px, so item titles (`h3`) set in Newsreader 500 instead. It is a poster face: a flyer head or a figure takes up to twice `--text-display` at line-height 0.92; a section head takes one step up from `--text-section` at 1.0.
-- **Body:** Newsreader 400 and 500 at 18px, line-height 1.5; italic is emphasis in running text only. On a sheet, text sits on copy white; on the board it takes `--color-ink`, never `--color-muted`, under 18px.
-- **Labels, captions, table heads, meta, controls:** Newsreader 500 a step smaller, sentence case, untracked. No mono.
+- **展示字体：**League Gothic 400，全大写，`--tracking-display`，绝不低于 28px，因此条目标题（`h3`）改用 Newsreader 500。它是海报字体：传单标题或大数字可达两倍 `--text-display`，行高 0.92；章节标题比 `--text-section` 大一档，行高 1.0。
+- **正文：**Newsreader 400 与 500，18px，行高 1.5；斜体只作行文中的强调。纸上文字压在复印纸的白底上；在纸板上用 `--color-ink`，18px 以下绝不用 `--color-muted`。
+- **标签、图注、表头、元信息、控件：**Newsreader 500 小一档，句首大写，不加字距。不用等宽字体。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Paper lifts, not boxes: a well is a sheet of copy paper (`--color-paper-3`) on `--shadow-card`, a raised sheet takes `--shadow-sheet`. Radius 0; hairlines in `--color-rule` part rows on the board, `--color-rule-2` on a sheet.
-- Tilt is the paste: a sheet or a photograph may sit 0.5° to 2° off square, three tilted surfaces a screen at most; inputs, tables and long reading stay square.
-- The fluorescent sheet fills the primary control and one sheet a screen, with toner type on it; never a band, a head or a word on the board.
-- Bands: `--color-paper-2` (a deeper kraft) or the toner with board-coloured type; two a page at most.
-- Photographs: zines, hands, copiers, staplers and fair tables, close and flat-lit, a crowd from behind at most; through the copier (the `photo:` line), hard black and white. Printed multiply on a copy sheet with a 10 to 16px margin and lifted, or straight onto the board so the kraft shows through the whites; never colour, never full-bleed. A caption sits on the sheet's foot.
-- Texture: the fibre wash (`texture.md` § 1, a low-frequency tan tint) on a kraft band at the board's opacity and blend, never on a sheet or under running text.
+- 纸张浮起，不是盒子：凹槽是一张复印纸（`--color-paper-3`）压着 `--shadow-card`，浮起的纸用 `--shadow-sheet`。圆角 0；`--color-rule` 发丝线在纸板上分行，纸上用 `--color-rule-2`。
+- 倾斜就是浆糊：一张纸或一张照片可以偏转 0.5° 到 2°，一块屏幕上倾斜的表面至多三处；输入框、表格与长文阅读保持端正。
+- 荧光纸承载主控件，且一块屏幕至多一张，上面压碳粉文字；绝不做色带、标题，也绝不在纸板上单做一个词。
+- 色带：`--color-paper-2`（更深的牛皮色）或碳粉配纸板色文字；每页至多两条。
+- 照片：zine、手、复印机、订书机与市集摊位，近景、平光，至多一个背影人群；过一遍复印机（`photo:` 一行），硬朗黑白。以 multiply 印在复印纸上，留 10 至 16px 边距并浮起；或直接印上纸板，让牛皮色从白色里透出来；绝不用彩色，绝不通栏。图注压在纸脚上。
+- 纹理：纤维晕染（`texture.md` § 1，低频黄褐色调）以纸板的不透明度与混合模式铺在牛皮色带上，绝不上纸面，也绝不压正文。
 
-## Range
+## 版式（Range）
 
-- **The facts as a wall of flyers:** the prompt's date, count, price and deadline each on its own sheet in League Gothic at poster size, mixed spans and heights, overlapping by a few pixels, two or three tilted, one on the fluorescent; no photograph among them.
-- **A typed sheet:** a timetable, a price list or the where-and-when as a ruled table on one copy sheet at a slight tilt, the left column in League Gothic, the rest in Newsreader.
-- **The toner band:** one line in League Gothic at `--text-display` or larger, board-coloured on toner, across ten columns.
-- **The form as a sheet:** fields on copy paper, square, on a hard offset, beside its head and the deadline set big on the board.
+- **事实排成一墙传单：**提示词的日期、数量、价格与截止日各占一张纸，League Gothic 海报字号，跨度与高度错落，重叠几个像素，两三张带倾角，一张用荧光纸；中间不放照片。
+- **一张排印的纸：**时刻表、价目表或时间地点，作为划线表格放在一张微微倾斜的复印纸上，左列 League Gothic，其余 Newsreader。
+- **碳粉色带：**一行 League Gothic，`--text-display` 或更大，碳粉底上纸板色文字，横跨十列。
+- **表单化作一张纸：**字段在复印纸上，方正，压硬偏移，旁边的纸板上放着大字排印的标题与截止日。
 
-## Controls
+## 控件（Controls）
 
-- The control pair: a fluorescent primary with toner type on a hard `4px 4px 0` ink offset, beside a copy-paper secondary on the same offset, both Newsreader 500 at 15px.
-- Links are toner with a 1px underline, thicker on hover; inputs are copy paper, square, a 1px ink border; the focus ring is toner.
+- 控件对：荧光主按钮压碳粉文字，垫在硬质 `4px 4px 0` 墨色偏移上；旁边是同一偏移上的复印纸次按钮，两者 Newsreader 500、15px。
+- 链接用碳粉加 1px 下划线，悬停加粗；输入框是复印纸，方正，1px 墨色边框；焦点环用碳粉。
 
-## Motion
+## 动效（Motion）
 
-Paper physics only: a button drops 1px into its offset on hover and 4px on press over `--dur-micro`. Nothing floats, nothing reveals.
+只有纸张物理：悬停时按钮向偏移里陷落 1px，按下陷落 4px，时长 `--dur-micro`。无悬浮，无显现。
 
-## Voice
+## 语气（Voice）
 
-Flyer voice: the date, the door, the price, the table number.
+传单语气：日期、开门、价格、桌号。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never paste-up props: no tape, stickers, stamps or scrawled notes.
-- Never a word set apart in a head: no cut-out word, no yellow word, no italic word.
-- Never a soft shadow on a control; controls sit on a hard ink offset.
-- Never a grunge overlay, a torn edge or a photograph in colour.
+- 绝不用拼贴道具：无胶带、贴纸、印章或涂鸦便签。
+- 绝不在标题里单挑一个词：无剪出来的词、无黄色的词、无斜体的词。
+- 绝不给控件加软阴影；控件压在硬质墨色偏移上。
+- 绝不用脏污叠层、撕边或彩色照片。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">

@@ -1,8 +1,12 @@
-# HTML Presentation Template
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`plugins/frontend-slides/skills/frontend-slides/html-template.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Reference architecture for generating slide presentations. Every presentation follows a fixed 16:9 stage model: slides are authored at 1920×1080 and the whole stage scales to fit the browser window.
+# HTML 演示文稿模板
 
-## Base HTML Structure
+生成幻灯片演示文稿的参考架构。每份演示文稿都遵循固定的 16:9 舞台模型：幻灯片按 1920×1080 编写，整个舞台再缩放以适配浏览器窗口。
+
+## 基础 HTML 结构
 
 ```html
 <!DOCTYPE html>
@@ -145,50 +149,50 @@ Reference architecture for generating slide presentations. Every presentation fo
 </html>
 ```
 
-## Required JavaScript Features
+## 必需的 JavaScript 功能
 
-Every presentation must include:
+每份演示文稿必须包含：
 
-1. **SlidePresentation Class** — Main controller with:
-   - Keyboard navigation (arrows, space, page up/down)
-   - Touch/swipe support
-   - Mouse wheel navigation
-   - Optional progress indicator or page count, kept outside the slide stage
+1. **SlidePresentation Class**：主控制器，负责：
+   - 键盘导航（方向键、空格、Page Up/Down）
+   - 触摸/滑动支持
+   - 鼠标滚轮导航
+   - 可选的进度指示或页码，放在幻灯片舞台之外
 
-2. **Stage Scaling** — For fixed 16:9 presentation behavior:
-   - Keep all slides at 1920×1080 inside `.deck-stage`
-   - Scale the whole stage with one transform
-   - Letterbox/pillarbox as needed; never reflow slide content per device
+2. **Stage Scaling**：实现固定的 16:9 演示行为：
+   - 所有幻灯片在 `.deck-stage` 内保持 1920×1080
+   - 用一次 transform 缩放整个舞台
+   - 按需加黑边或左右留黑；绝不按设备重排幻灯片内容
 
-3. **Optional Enhancements** (match to chosen style):
-   - Custom cursor with trail
-   - Particle system background (canvas)
-   - Parallax effects
-   - 3D tilt on hover
-   - Magnetic buttons
-   - Counter animations
+3. **Optional Enhancements**（与所选风格匹配）：
+   - 带拖尾的自定义光标
+   - 粒子系统背景（canvas）
+   - 视差效果
+   - 悬停时的 3D 倾斜
+   - 磁吸按钮
+   - 数字滚动动画
 
-4. **Inline Editing** (included by default after draft generation):
-   - Edit toggle button (hidden by default, revealed via hover hotzone or `E` key)
-   - Auto-save to localStorage
-   - Export/save file functionality
-   - See "Inline Editing Implementation" section below
+4. **Inline Editing**（草稿生成后默认包含）：
+   - 编辑切换按钮（默认隐藏，通过悬停热区或 `E` 键显现）
+   - 自动保存到 localStorage
+   - 导出/保存文件功能
+   - 见下文"Inline Editing Implementation"一节
 
-## Inline Editing Implementation
+## 行内编辑实现
 
-Inline editing is a lightweight post-draft affordance. Do not ask the user whether they want it during the pre-generation Q&A. Include it by default unless the user explicitly asks for a locked/export-only presentation or no editing controls.
+行内编辑是草稿生成后的轻量附加能力。在生成前的问询阶段，不要问用户是否需要。默认包含，除非用户明确要求锁定/仅导出的演示文稿，或不要任何编辑控件。
 
-**Do NOT use CSS `~` sibling selector for hover-based show/hide.** The CSS-only approach (`edit-hotzone:hover ~ .edit-toggle`) fails because `pointer-events: none` on the toggle button breaks the hover chain: user hovers hotzone -> button becomes visible -> mouse moves toward button -> leaves hotzone -> button disappears before click.
+**不要用 CSS `~` 兄弟选择器做基于悬停的显示/隐藏。** 纯 CSS 方案（`edit-hotzone:hover ~ .edit-toggle`）会失败，因为切换按钮上的 `pointer-events: none` 会打断悬停链：用户悬停热区 -> 按钮显现 -> 鼠标移向按钮 -> 离开热区 -> 按钮在点击前消失。
 
-**Required approach: JS-based hover with 400ms delay timeout.**
+**必需方案：基于 JS 的悬停，配 400ms 延迟超时。**
 
-HTML:
+HTML：
 ```html
 <div class="edit-hotzone"></div>
 <button class="edit-toggle" id="editToggle" title="Edit mode (E)">✏️</button>
 ```
 
-CSS (visibility controlled by JS classes only):
+CSS（可见性只由 JS 类控制）：
 ```css
 /* Do NOT use CSS ~ sibling selector for this!
    pointer-events: none breaks the hover chain.
@@ -212,7 +216,7 @@ CSS (visibility controlled by JS classes only):
 }
 ```
 
-JS (three interaction methods):
+JS（三种交互方式）：
 ```javascript
 // 1. Click handler on the toggle button
 document.getElementById('editToggle').addEventListener('click', () => {
@@ -255,13 +259,13 @@ document.addEventListener('keydown', (e) => {
 });
 ```
 
-## Image Pipeline (Skip If No Images)
+## 图片流程（无图片时跳过）
 
-If user chose "No images" in Phase 1, skip this entirely. If images were provided, process them before generating HTML.
+如果用户在 Phase 1 选择了"No images"，整节跳过。若提供了图片，先处理再生成 HTML。
 
-**Dependency:** `pip install Pillow`
+**Dependency：** `pip install Pillow`
 
-### Image Processing
+### 图片处理
 
 ```python
 from PIL import Image, ImageDraw
@@ -285,17 +289,17 @@ def resize_max(input_path, output_path, max_dim=1200):
     img.save(output_path, quality=85)
 ```
 
-| Situation | Operation |
+| 情形 | 操作 |
 |-----------|-----------|
-| Square logo on rounded aesthetic | `crop_circle()` |
-| Image > 1MB | `resize_max(max_dim=1200)` |
-| Wrong aspect ratio | Manual crop with `img.crop()` |
+| 圆润风格上的方形 logo | `crop_circle()` |
+| 图片大于 1MB | `resize_max(max_dim=1200)` |
+| 宽高比不对 | 用 `img.crop()` 手动裁切 |
 
-Save processed images with `_processed` suffix. Never overwrite originals.
+处理后的图片保存时加 `_processed` 后缀。绝不覆盖原图。
 
-### Image Placement
+### 图片放置
 
-**Use direct file paths** (not base64) — presentations are viewed locally:
+**使用直接文件路径**（不用 base64）：演示文稿在本地查看。
 
 ```html
 <img src="assets/logo_round.png" alt="Logo" class="slide-image logo">
@@ -319,31 +323,31 @@ Save processed images with `_processed` suffix. Never overwrite originals.
 }
 ```
 
-**Adapt border/shadow colors to match the chosen style's accent.** Never repeat the same image on multiple slides (except logos on title + closing).
+**调整边框/阴影颜色以贴合所选风格的强调色。** 绝不在多张幻灯片上重复同一张图片（标题页与结束页的 logo 除外）。
 
-**Placement patterns:** Logo centered on title slide. Screenshots in two-column layouts with text. Full-bleed images as slide backgrounds with text overlay (use sparingly).
+**Placement patterns：** 标题页上 logo 居中。截图放在带文字的两栏布局里。全出血图片作幻灯片背景并叠加文字（少用）。
 
 ---
 
-## Code Quality
+## 代码质量
 
-**Comments:** Every section needs clear comments explaining what it does and how to modify it.
+**Comments：** 每一节都要有清晰的注释，说明它做什么、如何修改。
 
-**Accessibility:**
-- Semantic HTML (`<section>`, `<nav>`, `<main>`)
-- Keyboard navigation works fully
-- ARIA labels where needed
-- `prefers-reduced-motion` support (included in viewport-base.css)
+**Accessibility：**
+- 语义化 HTML（`<section>`、`<nav>`、`<main>`）
+- 键盘导航完整可用
+- 需要处加 ARIA 标签
+- 支持 `prefers-reduced-motion`（已包含在 viewport-base.css 中）
 
-## File Structure
+## 文件结构
 
-Single presentations:
+单份演示文稿：
 ```
 presentation.html    # Self-contained, all CSS/JS inline
 assets/              # Images only, if any
 ```
 
-Multiple presentations in one project:
+一个项目里放多份演示文稿：
 ```
 [name].html
 [name]-assets/

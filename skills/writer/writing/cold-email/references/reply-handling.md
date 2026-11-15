@@ -1,65 +1,69 @@
-# Handling Replies
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/reply-handling.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The sequence's job ends when someone replies. What happens in the next hour decides whether that reply becomes a meeting. This reference covers classifying replies, responding to each type, speed, booking, and what an agent can handle on its own.
+# 回复处理
 
-## Classify every reply
+有人回复时，序列的任务就结束了。接下来一小时发生什么，决定这条回复能不能变成会议。本参考文档涵盖回复分类、各类应答、速度、约会议，以及 Agent 能独立处理什么。
 
-| Type | Looks like | Action |
+## 给每条回复分类
+
+| 类型 | 长什么样 | 动作 |
 |------|------------|--------|
-| **Positive** | "Sure, let's talk," "Send times," "Tell me more" | Respond fast, propose times, book (below) |
-| **Information request** | "What does it cost?" "Do you work with X?" | Answer the actual question briefly, then offer a call |
-| **Objection** | "We already use X," "No budget," "Not a priority" | Respond once, using the objection guidance below |
-| **Not now** | "Reach out next quarter," "After our launch" | Thank them, set a reminder for the date they gave, stop the sequence |
-| **Referral** | "Talk to Sam, she owns this" | Thank them; contact Sam citing the referral (with permission to use their name if unclear) |
-| **Wrong person, no referral** | "Not my area" | Ask once who owns it; otherwise stop |
-| **Out of office** | Auto-reply | Pause; resume after their return date. Note any named stand-in |
-| **Unsubscribe or hostile** | "Remove me," "Stop," anger | Suppress on every channel immediately. Apologize briefly if you reply at all. Never argue |
-| **Bounce** | Delivery failure | Remove; check whether the contact moved companies (a possible job-change signal) |
+| **正向** | "好啊，聊聊""发时间过来""多讲讲" | 快速回应、提议时间、约会议（见下文） |
+| **信息询问** | "多少钱？""你们和 X 合作吗？" | 简短回答实际问题，然后提议通话 |
+| **异议** | "我们已经在用 X""没预算""不是优先项" | 只回应一次，用下文的异议处理指引 |
+| **暂不需要** | "下季度再联系""我们上线之后" | 致谢，按对方给的日期设提醒，停止序列 |
+| **转介绍** | "找 Sam 谈，这事她管" | 致谢；引用转介绍联系 Sam（对方姓名的使用不明确时先取得许可） |
+| **找错人且无转介绍** | "不归我管" | 问一次谁负责；否则停止 |
+| **休假自动回复** | 自动回复 | 暂停；到其返回日期后恢复。记下指名的代理人 |
+| **退订或敌意** | "把我删掉""别发了"、怒气 | 立即在全渠道抑制。要回也就简短致歉。绝不争辩 |
+| **退信** | 投递失败 | 移除；核查联系人是否换了公司（可能是跳槽信号） |
 
-Every reply of any type stops all other channels for that person. See [multichannel-cadence.md](multichannel-cadence.md).
+任何类型的回复都会停掉此人在所有其他渠道的触达。见 [multichannel-cadence.md](multichannel-cadence.md)。
 
-## Speed
+## 速度
 
-Answer positive replies within minutes during business hours. The research behind the famous speed-to-lead multipliers is old (2007–2011), but the direction holds. Interest fades fast, and a prospect who replied to you has often replied to others too. Route positive replies to a person instantly (a Slack or phone notification), and keep someone responsible for them every working hour.
+工作时间内的正向回复，几分钟内答复。著名的"响应速度换转化倍数"背后的研究很老（2007–2011），但方向仍然成立。兴趣消退很快，回复了你的潜客往往也回复了别人。正向回复立刻转给真人（Slack 或电话通知），每个工作时段都要有人对其负责。
 
-## Booking
+## 约会议
 
-- **Propose two specific times** in their time zone, and include a booking link as a fallback ("or grab any time here"). Two concrete options get a faster yes than a bare link, which can feel like homework.
-- **Send the calendar invite immediately** once they pick, with a one-line agenda.
-- **Confirm the day before** with something useful: the agenda, a relevant case study, or (for an agency) the teardown you'll discuss. Pre-reads raise show rates.
-- **Reminder an hour before**, by email, or by SMS only if they've agreed to texts.
-- **Reschedule no-shows the same day,** warmly, once. A second no-show goes back to nurture.
+- **在对方时区提议两个具体时间**，并附一个预约链接兜底（"或者在这里挑任何时间"）。两个具体选项比一个光秃秃的链接更容易得到"好"，后者像布置作业。
+- 对方一选定，**立即发日历邀请**，附一行议程。
+- **提前一天确认**，并附上有用的东西：议程、相关案例研究，或（代理机构）将要讨论的拆解。预读材料提升到场率。
+- **提前一小时提醒**，用邮件，或只在对方同意短信时用短信。
+- **爽约当天温柔回约一次。**再爽约就退回培育。
 
-## Objections in reply to cold outreach
+## 对冷外联回复的异议
 
-Early objections are usually reflexes. Answer once, briefly, and make it easy to say no:
+早期异议多半是条件反射。只答一次，简短，并让对方容易说"不"：
 
-| Objection | Response approach |
+| 异议 | 应答思路 |
 |-----------|-------------------|
-| "We already use [competitor]" | Acknowledge it. Name the one situation where teams like theirs still look elsewhere. Ask if it applies |
-| "No budget" | Ask when they plan budgets, or offer something that doesn't need one (an audit, a benchmark) |
-| "Not a priority" | Ask what is a priority this quarter. If it isn't connected, step back and set a reminder |
-| "Send me more info" | Send one specific thing (a one-pager or a two-minute video) and one question that makes a reply easy |
-| "How did you get my email?" | Answer honestly with the actual source, and offer to remove them |
+| "我们已经在用 [competitor]" | 承认它。说出像他们这样的团队仍会另找方案的那一种情形。问是否适用于他们 |
+| "没预算" | 问预算什么时候做，或提供不需要预算的东西（一次审计、一个基准测试） |
+| "不是优先项" | 问本季度什么才是优先。如果不相关，退一步设提醒 |
+| "多给我一些资料" | 发一件具体的东西（一页纸或两分钟视频）加一个容易回复的问题 |
+| "你怎么拿到我邮箱的？" | 如实说出真实来源，并主动提出移除 |
 
-Deal-stage objections (pricing negotiation, security reviews, competitive bake-offs) live in the sales-enablement skill's objection library.
+交易阶段的异议（价格谈判、安全评审、竞标对决）在 sales-enablement skill 的异议库。
 
-## What an agent can handle
+## Agent 能处理什么
 
-| Reply type | Agent alone | Agent drafts, human sends |
+| 回复类型 | Agent 独立处理 | Agent 起草、真人发送 |
 |------------|-------------|---------------------------|
-| Out of office | ✓ Pause and reschedule | |
-| Unsubscribe | ✓ Suppress everywhere | |
-| Bounce | ✓ Remove, flag for job-change check | |
-| Not now | ✓ Set the reminder, stop the sequence | Polite acknowledgment |
-| Positive | | ✓ Until accuracy is proven over 100+ replies |
-| Information request | | ✓ |
-| Objection | | ✓ |
-| Referral | | ✓ |
-| Hostile | ✓ Suppress | Any reply at all |
+| 休假自动回复 | ✓ 暂停并改期 | |
+| 退订 | ✓ 全渠道抑制 | |
+| 退信 | ✓ 移除，标记待跳槽核查 | |
+| 暂不需要 | ✓ 设提醒，停序列 | 礼貌确认 |
+| 正向 | | ✓ 直到在 100+ 条回复上验证准确 |
+| 信息询问 | | ✓ |
+| 异议 | | ✓ |
+| 转介绍 | | ✓ |
+| 敌意 | ✓ 抑制 | 任何回复一律真人发送 |
 
-Before an agent sends anything on its own, check that every claim in the draft matches an approved source, that it contains nothing from your banned-phrase list, and that a daily cap applies. Sample-review a share of autonomous replies every week.
+Agent 独立发送任何内容之前，核查：草稿里每条声明都对应一个已批准的来源、不含禁用短语清单里的任何短语、适用每日上限。每周抽样审阅一部分自主发送的回复。
 
-## Log it
+## 记录
 
-Record on the CRM contact: reply type, date, the sequence and step that produced it, the signal and channel, and the outcome. That's what makes a weekly sequence review possible (the sequence-retro loop in the marketing-loops skill), and it's the outbound stage model in the revops skill.
+在 CRM 联系人上记录：回复类型、日期、产生它的序列与步骤、信号与渠道、结果。有了它，每周序列复盘（marketing-loops skill 的 sequence-retro 环节）才可能，它也是 revops skill 里的外联阶段模型。

@@ -1,10 +1,14 @@
-# Typography Specifications
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/brand/references/typography-specifications.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Guidelines for defining and implementing brand typography.
+# 字体排印规格（Typography Specifications）
 
-## Font Stack Structure
+定义与落地品牌字体排印的指南。
 
-### Primary Fonts
+## 字体栈结构
+
+### 主字体
 ```css
 /* Headings - Display font for impact */
 --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
@@ -16,21 +20,21 @@ Guidelines for defining and implementing brand typography.
 --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 ```
 
-### Font Loading
+### 字体加载
 ```html
 <!-- Google Fonts (recommended) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 ```
 
-## Type Scale
+## 字号阶梯
 
-### Base System
-- Base size: 16px (1rem)
-- Scale ratio: 1.25 (Major Third)
+### 基础体系
+- 基准字号：16px（1rem）
+- 缩放比例：1.25（大三度）
 
-### Scale Definition
-| Element | Size (rem) | Size (px) | Weight | Line Height |
+### 阶梯定义
+| 元素 | 字号 (rem) | 字号 (px) | 字重 | 行高 |
 |---------|------------|-----------|--------|-------------|
 | Display | 3.815rem | 61px | 700 | 1.1 |
 | H1 | 3.052rem | 49px | 700 | 1.2 |
@@ -38,12 +42,12 @@ Guidelines for defining and implementing brand typography.
 | H3 | 1.953rem | 31px | 600 | 1.3 |
 | H4 | 1.563rem | 25px | 600 | 1.35 |
 | H5 | 1.25rem | 20px | 600 | 1.4 |
-| Body Large | 1.125rem | 18px | 400 | 1.6 |
-| Body | 1rem | 16px | 400 | 1.5 |
-| Small | 0.875rem | 14px | 400 | 1.5 |
-| Caption | 0.75rem | 12px | 400 | 1.4 |
+| Body Large（正文大号） | 1.125rem | 18px | 400 | 1.6 |
+| Body（正文） | 1rem | 16px | 400 | 1.5 |
+| Small（小字） | 0.875rem | 14px | 400 | 1.5 |
+| Caption（注释文字） | 0.75rem | 12px | 400 | 1.4 |
 
-### Responsive Adjustments
+### 响应式调整
 ```css
 /* Mobile (< 768px) */
 h1 { font-size: 2rem; }    /* 32px */
@@ -58,46 +62,46 @@ h3 { font-size: 1.75rem; } /* 28px */
 body { font-size: 1rem; }  /* 16px */
 ```
 
-## Font Weights
+## 字重
 
-### Weight Scale
-| Name | Value | Usage |
+### 字重阶梯
+| 名称 | 数值 | 用途 |
 |------|-------|-------|
-| Regular | 400 | Body text, paragraphs |
-| Medium | 500 | Buttons, nav items |
-| Semibold | 600 | Subheadings, emphasis |
-| Bold | 700 | Headings, CTAs |
+| Regular | 400 | 正文、段落 |
+| Medium | 500 | 按钮、导航项 |
+| Semibold | 600 | 小标题、强调 |
+| Bold | 700 | 标题、CTA |
 
-### Weight Pairing
-- Headings: 600-700
-- Body: 400
-- Links: 500
-- Buttons: 600
+### 字重搭配
+- 标题：600-700
+- 正文：400
+- 链接：500
+- 按钮：600
 
-## Line Height Guidelines
+## 行高指南
 
-### Rules
-| Content Type | Line Height | Notes |
+### 规则
+| 内容类型 | 行高 | 说明 |
 |--------------|-------------|-------|
-| Headings | 1.1-1.3 | Tighter for visual impact |
-| Body text | 1.5-1.6 | Optimal readability |
-| Small text | 1.4-1.5 | Slightly tighter |
-| Long-form | 1.6-1.75 | Extra comfortable |
+| 标题 | 1.1-1.3 | 更紧凑，强化视觉冲击 |
+| 正文 | 1.5-1.6 | 最佳可读性 |
+| 小字 | 1.4-1.5 | 略微收紧 |
+| 长文 | 1.6-1.75 | 额外舒适 |
 
-## Letter Spacing
+## 字距（Letter Spacing）
 
-### Guidelines
-| Element | Tracking | Value |
+### 指南
+| 元素 | 字距 | 数值 |
 |---------|----------|-------|
-| Display | Tighter | -0.02em |
-| Headings | Normal | 0 |
-| Body | Normal | 0 |
-| All caps | Wider | 0.05em |
-| Small caps | Wider | 0.1em |
+| Display | 收紧 | -0.02em |
+| 标题 | 正常 | 0 |
+| 正文 | 正常 | 0 |
+| 全大写 | 加宽 | 0.05em |
+| 小型大写字母 | 加宽 | 0.1em |
 
-## Paragraph Spacing
+## 段落间距
 
-### Margins
+### 外边距
 ```css
 /* Heading spacing */
 h1, h2 { margin-top: 2rem; margin-bottom: 1rem; }
@@ -108,10 +112,10 @@ p { margin-bottom: 1rem; }
 p + p { margin-top: 0; }
 ```
 
-### Maximum Line Length
-- Body text: 65-75 characters (optimal)
-- Headings: Can be wider
-- Code blocks: 80-100 characters
+### 最大行宽
+- 正文：65-75 字符（最佳）
+- 标题：可以更宽
+- 代码块：80-100 字符
 
 ```css
 .prose {
@@ -119,9 +123,9 @@ p + p { margin-top: 0; }
 }
 ```
 
-## CSS Implementation
+## CSS 实现
 
-### Full Variables
+### 完整变量
 ```css
 :root {
   /* Font Families */
@@ -156,7 +160,7 @@ p + p { margin-top: 0; }
 }
 ```
 
-### Tailwind Config
+### Tailwind 配置
 ```javascript
 theme: {
   fontFamily: {
@@ -178,37 +182,37 @@ theme: {
 }
 ```
 
-## Common Font Pairings
+## 常见字体搭配
 
-### Clean & Modern
-- Heading: Inter
-- Body: Inter
+### 简洁现代
+- 标题：Inter
+- 正文：Inter
 
-### Professional
-- Heading: Playfair Display
-- Body: Source Sans Pro
+### 专业
+- 标题：Playfair Display
+- 正文：Source Sans Pro
 
-### Startup/Tech
-- Heading: Poppins
-- Body: Open Sans
+### 创业/科技
+- 标题：Poppins
+- 正文：Open Sans
 
-### Editorial
-- Heading: Merriweather
-- Body: Lato
+### 编辑风
+- 标题：Merriweather
+- 正文：Lato
 
-## Accessibility
+## 无障碍
 
-### Minimum Sizes
-- Body text: 16px minimum
-- Small text: 14px minimum, not for long content
-- Caption: 12px minimum, use sparingly
+### 最小字号
+- 正文：最小 16px
+- 小字：最小 14px，不要用于长内容
+- 注释文字：最小 12px，尽量少用
 
-### Contrast Requirements
-- Text on background: 4.5:1 minimum (AA)
-- Large text (18px+): 3:1 minimum
+### 对比度要求
+- 文字与背景：最低 4.5:1（AA 级）
+- 大号文字（18px 以上）：最低 3:1
 
-### Best Practices
-- Don't use all caps for long text
-- Avoid justified text (use left-align)
-- Ensure adequate line spacing
-- Don't use thin weights (<400) at small sizes
+### 最佳实践
+- 不要对长文本使用全大写
+- 避免两端对齐（用左对齐）
+- 确保行间距充足
+- 小字号下不要使用过细字重（<400）

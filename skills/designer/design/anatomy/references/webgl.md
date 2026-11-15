@@ -1,35 +1,39 @@
-# WebGL inside the drawing
+> **中文汉化版** · 上游：[wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) · 原文件：`references/webgl.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-How to put a shader effect (fire, water, light, glow) inside an isometric figure so it reads as part of the same object, seen through the same camera. Two shipped examples do this: `examples/raptor-engine/` (a plume, shock, splash and steam under a rocket engine) and `examples/ripple-tank/` (caustics, shadows and a rippled water surface). Read their `live.js` next to this page.
+# 绘图中的 WebGL（WebGL inside the drawing）
 
-The user loved the first shader figure, but noticed that the colour changed instantly between its phases, as if the effect had been cut. So the bar is: **nothing pops, nothing is cut, and everything sits in the drawing's perspective.** Every rule below came from a bug that broke that bar.
+如何把 shader 效果（火、水、光、辉光）放进等距（isometric）图形内部，让它读起来是同一物体的一部分、透过同一台相机看到。两个已发布的示例做到了这一点：`examples/raptor-engine/`（火箭引擎下方的羽流、激波、水花与蒸汽）和 `examples/ripple-tank/`（焦散、阴影与波纹水面）。阅读本文时对照它们的 `live.js`。
 
-## Contents
-1. When a shader earns its place
-2. The layer stack
-3. The camera contract
-4. Ray-marching in the iso camera
-5. Registering shader content to the SVG
-6. API and a minimal page
-7. Craft rules, each with the bug that taught it
-8. Light theme (8b. Shaders on a turning group)
-9. Verify
-10. Performance
+用户喜欢第一张 shader 图，但注意到各相位之间颜色瞬间切换，仿佛效果被切过。所以标准是：**没有任何东西突跳，没有任何东西被切，一切都处在图形的透视之中。** 下面的每条规则都来自一个打破该标准的 bug。
 
-## 1. When a shader earns its place
+## 目录
+1. 什么时候值得用 shader
+2. 图层堆叠
+3. 相机契约
+4. iso 相机中的光线步进
+5. 把 shader 内容对准 SVG
+6. API 与最小页面
+7. 工艺规则，每条都附上教会它的 bug
+8. 浅色主题（8b. 转动组上的 shader）
+9. 验证
+10. 性能
 
-Use a shader for things lines can't draw: emitted light and glow, fire and exhaust, water surfaces, caustics, soft shadows from a real lamp, smoke and steam. These are continuous fields, and they're the subject or what the subject does.
+## 1. 什么时候值得用 shader
 
-Don't use one for:
-- **Solids.** Parts, edges, ticks and screws stay SVG from the kit. The shader never draws a part that the SVG could draw.
-- **Decoration.** Shimmer, background gradients, bloom on every edge, or noise added to make the figure look "rich". If you could delete the effect and the explanation still holds, delete it.
-- **Something the SVG already shows well.** A glowing LED is a `lit` dot, not a shader.
+线条画不出来的东西才用 shader：发光与辉光、火焰与尾焰、水面、焦散、真实灯具的软阴影、烟与蒸汽。它们是连续场，而且是主体本身或主体做的事。
 
-The SVG must still read on its own. The Raptor without WebGL still shows the engine, with a rim light and a CSS deck glow. The ripple tank draws its crests and nodal lines as SVG lines (`patternOf` in `model.mjs`), clipped to the drawn outline of the tank's shadow on the paper, and hides them with `.rt-stage[data-gl] .rt-fallback { display: none }` once WebGL is running.
+不要用于：
+- **实体件。** 零件、边、刻度与螺丝保留用套件画的 SVG。shader 永不绘制 SVG 能画的零件。
+- **装饰。** 微光、背景渐变、每条边都加 bloom，或为了让图显得"丰富"而加的噪声。如果删掉这个效果解释依然成立，就删掉它。
+- **SVG 已经能表现好的东西。** 发光的 LED 是一个 `lit` 点，不是 shader。
 
-## 2. The layer stack
+SVG 必须仍能独立读。没有 WebGL 时 Raptor 依然显示引擎，带轮廓光与 CSS 台面辉光。涟漪水槽把波峰与波节线画成 SVG 线（`model.mjs` 里的 `patternOf`），裁剪到水槽在纸上的投影轮廓内，并在 WebGL 运行后用 `.rt-stage[data-gl] .rt-fallback { display: none }` 隐藏它们。
 
-A shader can't be depth-tested against SVG, so you order layers instead. The basic stack is three layers in one `position: relative` stage, all with the same viewBox:
+## 2. 图层堆叠
+
+shader 无法与 SVG 做深度测试，所以只能靠排图层。基本堆叠是一个 `position: relative` stage 里的三层，viewBox 全部相同：
 
 ```
 back SVG     what the effect covers        (k.figureSvg: role="img" and the label)
@@ -37,13 +41,13 @@ canvas       the effect                     (position:absolute; inset:0; pointer
 front SVG    what covers the effect        (aria-hidden)
 ```
 
-For every part, ask one question: **is it ever covered by the effect, or does it cover the effect?** Parts that are covered go in the back SVG, and parts that cover go in the front SVG. If a part does both, you have three choices:
+对每个部件问一个问题：**它是否会被效果盖住，或者它是否盖住效果？** 被盖住的部件放后层 SVG，盖住效果的部件放前层 SVG。如果一个部件两者都占，你有三个选择：
 
-- **Split the art.** Cut the part into pieces and send each piece to the layer, and the slot in that layer, where it belongs. The ripple tank's motor cable is three groups of `tubePieces`: the run over the bridge goes in the front SVG before the bar, the run along the near rim goes in the front SVG after the near caps, and the run down the left leg to the control box goes in the middle SVG.
-- **Model it in the shader.** If the part is a simple shape (box, cylinder, torus) and stays in the back SVG, give the shader that shape as an occluder. The Raptor's columns are opaque boxes (`columnNear`), so every air integral starts at `max(tGround, tColumn)`. The deluge ring is a torus inside `groundHit`, so the splash lights its inner side and leaves its outer side dark.
-- **Split the effect.** When the effect passes in front of front-SVG parts, add a second canvas above the front SVG. An analytic proxy of the occluding part decides, for each sample, whether it goes to the back canvas (weight `1 − f`) or the front canvas (weight `f`). Each sample is drawn exactly once, so there is no seam. Make the proxy generous: outside the real silhouette both layers look the same.
+- **拆分画面。** 把该部件切成几段，每段送进它所属的图层和该层中的槽位。涟漪水槽的电机线缆是三组 `tubePieces`：过桥的一段放在前层 SVG 的 bar 之前，沿近侧边缘的一段放在前层 SVG 的近侧端盖之后，沿左腿下行到控制盒的一段放在中层 SVG。
+- **在 shader 里建模。** 如果该部件是简单形状（盒、圆柱、环面）并留在后层 SVG，就把这个形状作为遮挡物交给 shader。Raptor 的立柱是不透明盒（`columnNear`），所以每段空气积分从 `max(tGround, tColumn)` 开始。喷淋环是 `groundHit` 内的一个环面，所以水花照亮它的内侧、外侧保持暗。
+- **拆分效果。** 当效果跑到前层 SVG 部件之前时，在前层 SVG 之上再加一块 canvas。被遮挡部件的解析代理决定每个样本去后层 canvas（权重 `1 − f`）还是前层 canvas（权重 `f`）。每个样本只画一次，所以没有接缝。代理要宽松：在真实轮廓之外，两层看起来一样。
 
-### Worked case: the Raptor
+### 实例：Raptor
 ```
 back SVG    deck, feet, flame cone, deluge ring, columns, ladder, cable tray
 canvas      .rp-plume: plume volume, shock (back half), flash, splash, ground ring, steam behind the engine
@@ -52,9 +56,9 @@ glow SVG    .rp-glow: the two nozzle-lip rims, screen-blended so they can only a
 canvas      .rp-veil: steam and shock samples that lie in front of the engine
 div         .rp-flash: a CSS radial gradient (closest-side) for the ignition flash
 ```
-The engine proxy is `engineR(z)`, a radius function of the bell, chamber and pumps. `inFront(p, V)` says whether sample `p` lies between the engine and the viewer. `side(front, veil)` sends the sample to one canvas or the other.
+引擎代理是 `engineR(z)`，钟形喷管、燃烧室与泵的半径函数。`inFront(p, V)` 判断样本 `p` 是否位于引擎与观察者之间。`side(front, veil)` 把样本送去其中一个 canvas。
 
-### Worked case: the ripple tank
+### 实例：涟漪水槽
 ```
 back SVG    base plate, feet, ruler, label plate, paper sheet with tape, lamp cable over the base edge, SVG fallback pattern
 canvas      .rt-paper-gl: lamp light on the paper and base, caustics, shadows of the legs, post, bridge, motor, control box and foam beach, refraction
@@ -65,101 +69,101 @@ canvas      .rt-water-gl: window reflection and room-light glints, meniscus tilt
 front SVG   far caps, motor cable over the bridge, far pillar and spring, bar, dippers, motor, near spring, near rails,
             glass bottom, water lines, near glass, near caps, motor cable on the rim, near corner post, near pillar, beam
 ```
-Two canvases sit at two depths because there are two effects at two heights: light on the paper (under the legs), and the water surface (inside the tank). The control box stands on the base beside the tank, below the water canvas, so it lives in the middle SVG; the near corner post is painted after the caps it stands on.
+两块 canvas 处于两个深度，因为有两个处于两个高度的效果：纸上的光（腿下）与水面（槽内）。控制盒立在水槽旁的底座上，位于水 canvas 之下，所以它放在中层 SVG；近侧角柱画在它所立的端盖之后。
 
-CSS for the stack (adapted from `ripple.css`):
+堆叠的 CSS（改自 `ripple.css`）：
 ```css
 .fx-stage { position: relative; touch-action: pan-y; }
 .fx-stage > svg, .fx-stage > canvas { display: block; width: 100%; height: auto; }
 .fx-stage > .fx-layer { position: absolute; inset: 0; height: 100% !important; pointer-events: none; }
 .iso:not([data-theme="light"]) .fx-gl { mix-blend-mode: screen; }
 ```
-Screen blending can only brighten. A canvas that must also darken what it covers (the ripple tank's water, which tints the paper seen through it) stays on normal premultiplied blending in dark too: only `.rt-paper-gl` is screen-blended.
-If the front SVG must take hover (the Raptor's parts do), give it `pointer-events: none` and its items `pointer-events: visiblePainted`, so the canvas and empty areas never catch the pointer.
+screen 混合只能提亮。必须同时压暗所盖内容的 canvas（涟漪水槽的水，它会给透过它看到的纸染色）在深色下也保持普通预乘混合：只有 `.rt-paper-gl` 用 screen 混合。
+如果前层 SVG 要接收 hover（Raptor 的部件需要），给它 `pointer-events: none`，给它的元素 `pointer-events: visiblePainted`，这样 canvas 和空白区域永远不会捕获指针。
 
-## 3. The camera contract
+## 3. 相机契约
 
-`kit/gl.mjs` prepends `GLSL_ISO` to your fragment. It declares the uniforms and functions that make the shader see the same camera as `iso()`:
+`kit/gl.mjs` 把 `GLSL_ISO` 前置到你的 fragment。它声明的 uniform 与函数让 shader 看到与 `iso()` 相同的相机：
 
-| Name | What it is |
+| 名称 | 是什么 |
 |---|---|
-| `uCanvas` | Canvas size in device pixels. |
-| `uView` | The viewBox size `[W, H]`. |
-| `uOrigin`, `uK` | The projection origin and the screen units per world unit (`glCamera(P).k`, equal to `scaleOf(P)`). |
-| `uCam` | `(sinA, cosA, sinE, cosE)` of the azimuth and elevation. |
-| `uTime` | The time you pass to `draw`. |
-| `viewOf(gl_FragCoord.xy)` | Device pixel to viewBox point (it flips y). |
-| `project(vec3 p)` | World to viewBox, identical to the kit's `iso()`. |
-| `towardViewer()` | The unit 3D view direction, `(cosA·cosE, sinA·cosE, sinE)`. Every `p + t·towardViewer()` lands on the same pixel. Not the same as the kit's JS `towardViewer(P)`, which returns the 2D floor direction. |
-| `rayOf(vb)` | The world point under `vb` on the vertical plane through the origin that faces the camera, so `rayOf(vb) + t·towardViewer()` is the pixel's ray. |
-| `pixelOf()` | World units per canvas pixel across the screen, `(uView.x / uCanvas.x) / uK`. |
-| `lightDir()` | The kit's light, equal to `lightOf(P)`, so shader shading agrees with the SVG tones. |
-| `onFloor(vb, z)` | The world point on the horizontal plane at height `z` under this pixel. |
-| `onWallX(vb, x)`, `onWallY(vb, y)` | The world point on the vertical plane `x = const` or `y = const` under this pixel. |
-| `hash12`, `hash13`, `noise2`, `noise3`, `fbm2`, `fbm3` | Hashes and value noise, plus 4-octave fbm. |
-| `window(x, a, b, soft)` | 1 inside `[a + soft, b − soft]` and 0 outside `[a − soft, b + soft]`: a smoothstep `2·soft` wide centred on each bound, so it is 0.5 at `a` and `b`. |
-| `tonemap(c, exposure)` | `1 − exp(−c·exposure)`. Use it instead of `clamp`. |
+| `uCanvas` | 画布尺寸，单位为设备像素。 |
+| `uView` | viewBox 尺寸 `[W, H]`。 |
+| `uOrigin`、`uK` | 投影原点，以及每个世界单位对应的屏幕单位数（`glCamera(P).k`，等于 `scaleOf(P)`）。 |
+| `uCam` | 方位角与仰角的 `(sinA, cosA, sinE, cosE)`。 |
+| `uTime` | 你传给 `draw` 的时间。 |
+| `viewOf(gl_FragCoord.xy)` | 设备像素转 viewBox 点（会翻转 y）。 |
+| `project(vec3 p)` | 世界坐标转 viewBox，与套件的 `iso()` 完全一致。 |
+| `towardViewer()` | 单位 3D 视线方向，`(cosA·cosE, sinA·cosE, sinE)`。每个 `p + t·towardViewer()` 都落在同一像素。与套件的 JS 版 `towardViewer(P)` 不同，后者返回 2D 地面方向。 |
+| `rayOf(vb)` | `vb` 下方、过原点且朝向相机的竖直平面上的世界点，因此 `rayOf(vb) + t·towardViewer()` 就是该像素的光线。 |
+| `pixelOf()` | 屏幕上每个 canvas 像素对应的世界单位数，`(uView.x / uCanvas.x) / uK`。 |
+| `lightDir()` | 套件的光照，等于 `lightOf(P)`，因此 shader 的明暗与 SVG 色调一致。 |
+| `onFloor(vb, z)` | 该像素下方、高度 `z` 的水平面上的世界点。 |
+| `onWallX(vb, x)`、`onWallY(vb, y)` | 该像素下方、竖直平面 `x = const` 或 `y = const` 上的世界点。 |
+| `hash12`、`hash13`、`noise2`、`noise3`、`fbm2`、`fbm3` | 哈希与值噪声，外加 4 倍频 fbm。 |
+| `window(x, a, b, soft)` | 在 `[a + soft, b − soft]` 内为 1，在 `[a − soft, b + soft]` 外为 0：以每个边界为中心、宽 `2·soft` 的 smoothstep，所以在 `a` 与 `b` 处为 0.5。 |
+| `tonemap(c, exposure)` | `1 − exp(−c·exposure)`。用它代替 `clamp`。 |
 
-`onFloor` and the wall functions round-trip exactly with `iso()`: `project(onFloor(vb, z)) == vb`. That is what lets shader content register with SVG lines.
+`onFloor` 与墙面函数和 `iso()` 精确往返：`project(onFloor(vb, z)) == vb`。这就是 shader 内容能与 SVG 线对准的原因。
 
-**Why world space.** The figure's perspective is the projection. If you draw an effect in screen space (an ellipse sized by eye, a glow column in pixels), it can't agree with the drawing. It floats above the floor, runs through the deck, or keeps the same shape when the camera changes. Build everything from world points and world sizes. Screen sizes come only from world units times `uK`.
+**为什么用世界空间。** 图形的透视就是投影。如果你在屏幕空间画效果（目测尺寸的椭圆、以像素计的辉光柱），它不可能与图形一致。它会浮在地面之上、穿过台面，或者在相机变化时保持同样形状。一切都从世界点与世界尺寸构建。屏幕尺寸只来自世界单位乘 `uK`。
 
-Antialiasing in world units: `pixelOf()` is world units per device pixel across the screen. On the floor in the depth direction, divide it by `uCam.z` (sinE), and up a wall by `uCam.w` (cosE). Soften registered edges by about `0.7 * px`, so they come out one pixel soft: crisp like the SVG, but not aliased. Where refraction stretches the image, a fixed softness stair-steps; the ripple tank enables `GL_OES_standard_derivatives` and widens its shadow penumbra by `length(fwidth(q.xy)) / length(fwidth(rest))`, the shifted point's footprint over the unshifted one, which is exactly 1 at rest, with an `#ifdef GL_OES_standard_derivatives` fallback.
+以世界单位做抗锯齿：`pixelOf()` 是屏幕上每个设备像素对应的世界单位。在深度方向的地面处，把它除以 `uCam.z`（sinE）；在墙面上则除以 `uCam.w`（cosE）。把对准过的边缘软化约 `0.7 * px`，这样边缘出来正好一个像素的柔度：像 SVG 一样清晰，但不锯齿。折射拉伸图像的地方，固定柔度会阶梯化；涟漪水槽启用 `GL_OES_standard_derivatives`，用 `length(fwidth(q.xy)) / length(fwidth(rest))`（移位点的足迹除以未移位足迹，静止时恰为 1）加宽其阴影半影，并以 `#ifdef GL_OES_standard_derivatives` 作回退。
 
-## 4. Ray-marching in the iso camera
+## 4. iso 相机中的光线步进
 
-The camera is orthographic with uniform scale: both rows of the projection are orthonormal. Three things follow.
+相机是正交投影且比例均匀：投影的两行都是标准正交的。由此得到三件事。
 
-- **Every pixel is a straight ray** `p(t) = p0 + t·V`, where `V = towardViewer()` and `p0` is any world point under the pixel. Take `p0 = onFloor(vb, h)`, or the kit's `rayOf(vb)`, the point on the vertical plane through the origin that faces the camera (the Raptor's ray state starts there: `S.g0 = rayOf(vb)`). Larger `t` is nearer the viewer.
-- **Distances to points are screen distances.** Screen distance divided by `uK` is the exact perpendicular distance from the pixel's ray to a world point. A spherical flash, shock shell or glow ball can be computed from that distance and still be world-correct. The closest-approach parameter is `tc = dot(C − p0, V)`.
-- **Visible fraction behind an occluder.** If the first opaque surface along the ray is at `tLow`, a Gaussian centred at `tc` with width `sigma` is visible by `1/(1 + exp(2.41·(tLow − tc)/sigma))` (the Raptor's `beyond`). That gives a soft cut, but a geometric one.
+- **每个像素都是一条直线** `p(t) = p0 + t·V`，其中 `V = towardViewer()`，`p0` 是该像素下任意世界点。取 `p0 = onFloor(vb, h)`，或套件的 `rayOf(vb)`，即过原点且朝向相机的竖直平面上的点（Raptor 的光线状态从那里开始：`S.g0 = rayOf(vb)`）。`t` 越大越靠近观察者。
+- **到点的距离就是屏幕距离。** 屏幕距离除以 `uK` 就是从像素光线到世界点的精确垂直距离。球状闪光、冲击壳或辉光球可以用该距离计算，且仍然是世界正确的。最近接近参数是 `tc = dot(C − p0, V)`。
+- **遮挡物之后的可见比例。** 若沿光线的第一个不透明表面在 `tLow`，以 `tc` 为中心、宽 `sigma` 的高斯的可见度为 `1/(1 + exp(2.41·(tLow − tc)/sigma))`（Raptor 的 `beyond`）。这给出一个柔和的切分，但仍是几何意义上的。
 
-To march a volume:
-1. **Find the first opaque hit** along the ray: the floor, plus any heightfield the SVG draws. The Raptor steps 28 times from above the flame cone's tip down to the deck and then bisects 7 times on a `ground(r)` heightfield built from the same numbers as the SVG lathe profile. Only the part of the ray in front of the hit (`t > tLow`) is air.
-2. **Bound the march** with a simple shape (the Raptor uses a radius-132 cylinder from the ground hit up to the exit plane). Window every term to exactly zero before that bound, so the bound is only an optimisation.
-3. **Sample with dither.** Use `t = ta + (i + hash12(gl_FragCoord.xy))·dt`, so 28 samples don't band.
-4. **Normalise each term by its chord**, so the centre pixel gets the intended brightness whatever the step count. For a vertical-axis volume `r² = u² + (t·cosE)²`, so a Gaussian of radius `σ` integrates to `σ√π / cosE` along the ray: weight each sample by `dt·cosE/(σ·1.772)`.
-5. **Expect a uniform cylinder to look softer.** Its projected profile is sqrt-shaped, so it loses the defined edge a flat drawing had. In dark, add a limb shell (the Raptor's orange shear layer at `0.9·Re`) to bring the edge back. In light the same shell inks an outline round a hollow flame, so there you weight the body toward the axis instead (section 8.4).
+对一个体积步进：
+1. **找到第一个不透明命中**：沿光线找地面，加上 SVG 画的任何高度场。Raptor 从火焰锥尖上方下行步进 28 次到台面，然后在 `ground(r)` 高度场上二分 7 次，该高度场由与 SVG 车削轮廓相同的数字构成。只有命中之前的光线部分（`t > tLow`）是空气。
+2. **用简单形状限定步进范围**（Raptor 用一个半径 132 的圆柱，从地面命中到出射平面）。在该界之前把每一项窗口化到恰好为零，这样这个界只是一种优化。
+3. **带抖动采样。** 用 `t = ta + (i + hash12(gl_FragCoord.xy))·dt`，28 个采样才不会成带。
+4. **按弦长归一每一项**，这样无论步数多少，中心像素都得到预期亮度。对竖直轴体积，`r² = u² + (t·cosE)²`，半径 `σ` 的高斯沿光线积分为 `σ√π / cosE`：每个样本按 `dt·cosE/(σ·1.772)` 加权。
+5. **预期均匀圆柱看起来更柔。** 其投影轮廓是 sqrt 形，失去了平面图那种明确的边。深色下加一个边缘壳（Raptor 在 `0.9·Re` 处的橙色剪切层）把边找回来。浅色下同样的壳会给空心火焰描轮廓，所以浅色下改为把主体向轴加权（见 8.4 节）。
 
-Some terms don't need marching:
-- A thin horizontal disc seen along the ray is an exact ellipse. The Raptor's Mach disks stay analytic: `u² + ((s0 − sc)/tanE)² < rm²`.
-- A thin spherical shell integrated along a ray is limb-brightened: brightness is proportional to `rs·w / sqrt(rs² − d² + 2·rs·w)`. Square the normalised profile, or the inside reads as a milky bubble.
+有些项不需要步进：
+- 沿光线看去，薄的水平圆盘就是精确的椭圆。Raptor 的马赫盘保持解析式：`u² + ((s0 − sc)/tanE)² < rm²`。
+- 薄球壳沿光线积分会出现边缘增亮：亮度正比于 `rs·w / sqrt(rs² − d² + 2·rs·w)`。把归一化轮廓平方，否则内部读起来像乳白泡泡。
 
-## 5. Registering shader content to the SVG
+## 5. 把 shader 内容对准 SVG
 
-Anything that lies on a plane must line up exactly with that plane's SVG lines.
-- **Same numbers.** Pass the SVG's plans and heights to the shader through `DATA` (the ripple tank passes `inside`, `outside`, `paper`, `base`, `round`, `z` and the plans of everything that casts a shadow), and hand them to `glLayer` once as `fixed` uniforms (its `FIXED`). Test against the same rounded rectangles with a signed-distance `sdRect`, so a lit paper corner ends on the drawn corner radius.
-- **Same plane.** The ripple tank uses `onFloor(vb, uZ.x)` (the paper), `onFloor(vb, uZ.z)` (the water) and `onWallX(vb, uNear.x)` and `onWallY(vb, uNear.y)` (the two near glass walls) for the water band behind the glass. Never use screen offsets.
-- **Seen through an opening, masked twice.** Content behind an opening in a nearer plane (a sight glass, a window, a recess, a gauge face under its bezel) is masked by its own plane (`onWallY(vb, back)`) and by the opening tested in the opening's plane (`onWallY(vb, face)`), the two soft masks multiplied together. Masked only in the back plane, a blind-test sight glass spilled its oil and glass about 0.4 px past the top rim onto the body face, and at the bottom the offset showed a strip of bare body inside the opening. Draw the recess's inner walls in the front SVG, shaded by facing (`craft.md`, section 10), so the offset between the two planes reads as wall, not as bare face.
-- **Only the deviation moves.** If an effect displaces what you see (refraction through ripples), apply only the part that differs from the rest state. The ripple tank computes the sight line bent by the rippled surface and by flat water, and applies only the difference. At rest, the paper under the water lines up with the SVG paper. The shift is also faded to zero wherever the sight line to the paper passes within a few units of a leg (`legClear`), so refracted paper never slides out from behind a leg that the middle SVG draws over it.
-- **Heightfields match the lathe.** The Raptor's `ground(r)` is the deck disc plus the flame-cone profile, with the same radii and heights as the `G.solidOf` profile in `build.mjs`. Flow behind the cone is hidden geometrically, and hard edges appear only where the SVG draws a real silhouette.
+凡位于某个平面上的东西，都必须与该平面的 SVG 线精确对齐。
+- **同样的数字。** 通过 `DATA` 把 SVG 的平面图与高度传给 shader（涟漪水槽传 `inside`、`outside`、`paper`、`base`、`round`、`z` 以及所有投影物的平面图），并在创建时一次性作为 `fixed` uniform 交给 `glLayer`（即其 `FIXED`）。用带符号距离的 `sdRect` 对同样的圆角矩形测试，让被照亮的纸角正好落在画出的圆角半径上。
+- **同一个平面。** 涟漪水槽对玻璃后面的水带使用 `onFloor(vb, uZ.x)`（纸）、`onFloor(vb, uZ.z)`（水），以及 `onWallX(vb, uNear.x)` 与 `onWallY(vb, uNear.y)`（两面近侧玻璃墙）。绝不用屏幕偏移。
+- **透过开口看的内容要做双重遮罩。** 位于更近平面上开口之后的内容（观察窗、窗户、凹槽、表盘面），由其自身平面（`onWallY(vb, back)`）与在开口平面内测试的开口（`onWallY(vb, face)`）双重遮罩，两个软遮罩相乘。只做背面遮罩时，盲测中的观察窗把油和玻璃溢出顶沿约 0.4 px 到机体面上，底部则因偏移露出开口内一条裸露机体。凹槽的内壁画在前层 SVG，按朝向着色（`craft.md` 第 10 节），这样两个平面的偏移读起来是墙，而不是裸面。
+- **只移动偏差。** 如果效果会位移所见内容（透过波纹的折射），只应用与静止状态不同的部分。涟漪水槽分别计算被波面弯折与被平水面弯折的视线，只应用两者之差。静止时，水下的纸与 SVG 的纸对齐。当看向纸的视线经过离腿几单位以内时（`legClear`），位移也淡化为零，这样折射出的纸绝不会从中层 SVG 所画、盖在它上面的腿后面滑出来。
+- **高度场与车削轮廓一致。** Raptor 的 `ground(r)` 是台面圆盘加火焰锥轮廓，半径与高度与 `build.mjs` 里 `G.solidOf` 的轮廓相同。锥后的流动被几何隐藏，硬边只出现在 SVG 画出真实轮廓的地方。
 
-Check registration at 4× (section 9).
+用 4× 检查对准（第 9 节）。
 
-## 6. API and a minimal page
+## 6. API 与最小页面
 
 ```js
 import { GLSL_ISO, glCamera, glLayer, smooth, burst, settle } from "../../kit/gl.mjs";
 import { kitScript, glScript } from "../../scripts/inline-kit.mjs";
 ```
 
-| Function | What it does |
+| 函数 | 作用 |
 |---|---|
-| `glCamera(P)` | `{ origin, k, cam }` for a kit projection. Works in Node and the browser. Put it in your page `DATA`. |
-| `glLayer({ canvas, fragment, view, camera, uniforms = [], fixed = {}, extensions = [], maxRatio = 1.5, onError })` | Compiles `GLSL_ISO + fragment` on `canvas` with a premultiplied-alpha WebGL1 context. `view` is `[W, H]` of the viewBox, `camera` is `glCamera(P)` and `uniforms` lists the uniform names you send per frame. `fixed` is `{ name: value }` for uniforms set once at creation (geometry, theme constants). `extensions` lists GLSL extensions (`["GL_OES_standard_derivatives"]`); each one the context has is enabled and prepended as an `#extension` directive. Returns `{ gl, extensions, set(values), draw(values, time), clear() }`, where `extensions` lists the ones actually enabled, or `null` when WebGL is missing or the shader fails to compile (`onError`, which defaults to `console.error`, gets the log). |
-| `set(values)` | Sets uniforms without drawing. |
-| `draw(values, time)` | Resizes the canvas to its CSS box × `min(maxRatio, devicePixelRatio)`, sets the camera uniforms, sets `uTime = time`, sets each value in `values` and draws one full-screen triangle. |
-| `clear()` | Clears to transparent, only if something was drawn. |
-| `smooth(a, b, x)`, `burst(age, rise, fall)`, `settle(state, target, dt, seconds, calm)` | The JS envelopes every shader uniform should ride on (section 7 and `motion.md`). `settle` returns true while still moving. |
-| `glScript()` | The source of `kit/gl.mjs` with `export` stripped, for inlining into a standalone page after `kitScript()`. Live code on that page uses `glLayer`, `smooth`, `burst` and `settle` directly and must not declare its own. |
+| `glCamera(P)` | 为套件投影给出 `{ origin, k, cam }`。在 Node 和浏览器中都可用。放进页面 `DATA`。 |
+| `glLayer({ canvas, fragment, view, camera, uniforms = [], fixed = {}, extensions = [], maxRatio = 1.5, onError })` | 在 `canvas` 上用预乘 alpha 的 WebGL1 上下文编译 `GLSL_ISO + fragment`。`view` 是 viewBox 的 `[W, H]`，`camera` 是 `glCamera(P)`，`uniforms` 列出每帧发送的 uniform 名。`fixed` 是 `{ name: value }`，为创建时一次性设置的 uniform（几何、主题常量）。`extensions` 列出 GLSL 扩展（`["GL_OES_standard_derivatives"]`）；上下文支持的会被启用并前置为 `#extension` 指令。返回 `{ gl, extensions, set(values), draw(values, time), clear() }`，其中 `extensions` 列出实际启用的扩展；WebGL 缺失或 shader 编译失败时返回 `null`（`onError` 默认为 `console.error`，接收日志）。 |
+| `set(values)` | 只设置 uniform，不绘制。 |
+| `draw(values, time)` | 把 canvas 调整为其 CSS 盒 × `min(maxRatio, devicePixelRatio)`，设置相机 uniform，设置 `uTime = time`，设置 `values` 中每个值，并画一个全屏三角形。 |
+| `clear()` | 清为透明，仅当画过东西时。 |
+| `smooth(a, b, x)`、`burst(age, rise, fall)`、`settle(state, target, dt, seconds, calm)` | 每个 shader uniform 都应骑在上面的 JS 包络（第 7 节与 `motion.md`）。`settle` 在仍在运动时返回 true。 |
+| `glScript()` | `kit/gl.mjs` 的源码，剥掉 `export`，用于在 `kitScript()` 之后内联进独立页面。该页面的 live 代码直接使用 `glLayer`、`smooth`、`burst` 与 `settle`，不得自己声明。 |
 
-A uniform value (in `fixed`, `set` or `draw`) can be a number (float), an array of length 2–4 (`vec2`–`vec4`), or an array or `Float32Array` longer than 4, sent with `uniform1fv` to a `uniform float name[N]`: a 24-sample history is one `uH[24]`. There are no ints, matrices or samplers through these calls. For more data than a uniform array holds, use a texture: a `sampler2D` reads unit 0 by default, so create and update it on `layer.gl`. The ripple tank packs a 32 × 2 history into an RGBA8 texture, 16 bits per value (`PACK`, `put`, `unpack`), one texture per layer because each layer has its own context. Unknown names and uniforms the compiler optimised away are skipped.
+uniform 值（在 `fixed`、`set` 或 `draw` 中）可以是数字（float）、长度 2–4 的数组（`vec2`–`vec4`），或长度超过 4 的数组或 `Float32Array`，用 `uniform1fv` 发给 `uniform float name[N]`：24 个采样的历史就是一个 `uH[24]`。这些调用不支持 int、矩阵或采样器。超过 uniform 数组容量的数据用纹理：`sampler2D` 默认读 0 号单元，所以在 `layer.gl` 上创建并更新它。涟漪水槽把 32 × 2 的历史打包进一张 RGBA8 纹理，每值 16 位（`PACK`、`put`、`unpack`），每层一张纹理，因为每层有自己的上下文。未知名字与被编译器优化掉的 uniform 会被跳过。
 
-Your fragment declares its own extra uniforms and a `main()` that writes **premultiplied** `gl_FragColor`. The canvas must cover exactly the same box as the SVGs, with the same aspect ratio, because `viewOf` assumes one uniform scale.
+你的 fragment 声明自己的额外 uniform，以及一个写入**预乘** `gl_FragColor` 的 `main()`。canvas 必须与各 SVG 覆盖完全相同的盒子、相同的纵横比，因为 `viewOf` 假设比例均匀。
 
-A minimal page: a hot plate glowing on top of a square deck. The plate registers with an SVG ring of radius 40 (`k.ring(0, 0, 40, 0, P, 72)`), and the glow stops at the deck's rounded edge, since there is nothing beyond it to light.
+最小页面：方形台面上方一块发热板发光。板与半径 40 的 SVG 圆环对准（`k.ring(0, 0, 40, 0, P, 72)`），辉光止于台面圆角边缘，因为之外没有东西可照亮。
 
-`build.mjs`:
+`build.mjs`：
 ```js
 const P = k.fitProjection(points, W, H, { pad: 28, azimuth: 40 });
 const DECK = { x: -90, y: -90, w: 180, d: 180, r: 8 };
@@ -170,7 +174,7 @@ const stage = `<div class="fx-stage" tabindex="0">${backSvg}<canvas class="fx-la
 const page = k.pageHtml({ title, theme, body: `<style>${CSS}</style>${k.plateHtml({ ...card, body: stage })}`, script: kitScript() + glScript() + LIVE.replace("__DATA__", JSON.stringify(DATA)) });
 ```
 
-`live.js`:
+`live.js`：
 ```js
 const D = __DATA__;
 const stage = document.querySelector(".fx-stage");
@@ -211,85 +215,85 @@ function tick(now) {
 const run = () => { if (!frame && visible) { last = 0; frame = requestAnimationFrame(tick); } };
 new IntersectionObserver((entries) => { visible = entries[entries.length - 1].isIntersecting; if (visible) run(); }, { rootMargin: "120px 0px" }).observe(stage);
 ```
-Without `uTime` animation this loop stops once the heat has settled. With an animated field (flicker, flow), keep running while the effect is above its activity threshold and visible, and stop otherwise.
+没有 `uTime` 动画时，这个循环在热量稳定后就停止。有动画场（闪烁、流动）时，效果高于其活动阈值且可见就保持运行，否则停止。
 
-## 7. Craft rules, each with the bug that taught it
+## 7. 工艺规则，每条都附上教会它的 bug
 
-### Nothing pops
-Every uniform moves along a smooth envelope in time, with an attack and a decay. Never set a value to 1 in a single frame.
+### 没有任何东西突跳
+每个 uniform 都沿时间上的平滑包络运动，有起振和衰减。绝不在单帧内把值设为 1。
 
-- **One-shot events use `burst`.** The first ignition flash went from 0 to full in one frame and whited out the card. Now every event (flash, shock, ground ring, shutdown pop, card shake) uses the kit's `burst(age, rise, fall)` from `kit/gl.mjs`, a smoothstep attack then an exponential decay:
+- **一次性事件用 `burst`。** 第一版点火闪光在单帧内从 0 冲到满，把卡片闪成全白。现在每个事件（闪光、冲击、地面环、关机噗声、卡片抖动）都用 `kit/gl.mjs` 里套件的 `burst(age, rise, fall)`，smoothstep 起振加指数衰减：
   ```js
   const flash = calm ? 0 : burst(sinceMain, 0.08, 0.13);
   ```
-  with a 50–90 ms attack (zero slope at onset). An alpha function `t·e^(−t)` ties the decay to the rise and stays white too long. Keep whole-card flashes low too: a flash plus a CSS veil at 0.9 opacity whited out the whole card for six frames, so the veil is now `flash × 0.32`.
-- **Phase changes are crossfades driven by the physical quantity.** A separate preburner term that died while the main plume grew read as an instant colour switch. Now colour, brightness, raggedness, tongue length and splash are all functions of chamber pressure, and pressure moves on a spring toward each phase's target.
-- **Colour gets its own slow envelope.** Even when driven by pressure, the orange-to-violet change crossed its smoothstep window in about 0.23 s on a fast spring, and brightness dipped 33% and came back inside the 130 ms flash: a cut hidden by a flash. The fix:
-  - Hue has its own critically damped envelope, the kit's `settle`: `settle(burn.hue, lit && burn.pc > 0.2 ? 1 : 0, dt, lit ? 0.32 : 0.5, calm)`, sent as `uHue`.
-  - Brightness is a separate `uGlow`, computed in JS so it falls monotonically from 1.15 to 1.0 as hue rises.
-  - The pressure spring is critically damped (stiffness 20, drag 2√20), so it doesn't overshoot to 318 bar.
-- **Brightness during a fade-out only falls.** On shutdown the plume flared back up as an orange flame, because `mix(a, b, hue)` with `b < a` rose again as hue decayed. Now the glow level freezes when shutdown starts and is then scaled only by quantities that fall.
-- **Recheck neighbours when you change a spring.** Once the pressure spring was made critically damped, the preburner tongue nearly vanished. That leg needed its own stiffer critical spring (stiffness 64).
-- **One-shot flags belong to the event.** Re-igniting within 2 s of a shutdown lost the next shutdown pop, because the pop's clock was only reset after a quiet period. Now a per-burn `popped` flag decides it. Resetting the clock in `ignite()` would have cut off a pop that was still fading.
-- **Changes travel through the medium.** When the ripple tank's frequency changes, the new wavelength doesn't re-lay the whole field at once. Each frame the page records the source's true phase, ω, k, damping per mm and 1/group speed, keeps 32 samples 50 ms apart, and uploads them as a 32 × 2 texture to both shaders. Each point finds its age `r / groupSpeed` with one fixed-point step on its own history's group speed, and reads k and damping from that age, so the new wavelength spreads outward from the dippers the way it really would.
-- **Keep the phase continuous through a change.** The first version used `θ = k(age)·r − φ(t)`. During a sweep the term `r·dk/dt` made far crests race and alias, and damping the amplitude while the frequency moved (`calm`) blanked the pattern: mean paper brightness dipped 17%. Now `θ = kE·r − uPhase + Ψ(age)`, where `Ψ` is the phase the source gained since that sample beyond what its ω predicts (`lag` in `packHistory`). At a fixed point the crests then move only as fast as ω changes, so no amplitude damping is needed, and a small motion-blur term (`gMove`, how far crests move per frame) softens the caustics during fast changes.
-- **First light fades in, and in light it only brightens.** The ripple lamp fades in over 0.9 s on first view (`smooth(0, 1, (lampClock − 0.15) / 0.9)`). In dark the SVG plain-water fill fades out on the same value through a CSS variable (`--rt-lamp`). In light the first version started from bare paper, so the troughs' ink made the tank go darker as the lamp came on, and the plain-water fill darkened it further. Now the water fill is hidden whenever WebGL runs, and the paper is drawn from the first frame (lamp 0) at its unlit grey (`off`) and mixed toward lit ink by `uLight`, so first light only brightens. For an emitter on paper the same rule reads the other way round: its ink only grows as the light comes in, and the scene never goes pale first or dips dark (section 8.2).
+  起振 50–90 ms（起始斜率为零）。alpha 函数 `t·e^(−t)` 把衰减与起振绑在一起，全白时间太长。整卡闪光也要压低：一次闪光加 0.9 不透明度的 CSS 遮罩曾把整张卡片闪白六帧，所以遮罩现在是 `flash × 0.32`。
+- **相位变化是由物理量驱动的交叉淡化。** 一个随主羽流增长而消失的独立预燃项读起来像瞬间变色。现在颜色、亮度、毛糙度、火舌长度与水花都是燃烧室压强的函数，压强在弹簧上朝每个相位的目标移动。
+- **颜色有自己的慢包络。** 即使由压强驱动，橙变紫在快弹簧上约 0.23 s 就穿过了 smoothstep 窗口，亮度在 130 ms 闪光内跌了 33% 又回来：一个被闪光藏住的切换。修复：
+  - 色相有自己的临界阻尼包络，套件的 `settle`：`settle(burn.hue, lit && burn.pc > 0.2 ? 1 : 0, dt, lit ? 0.32 : 0.5, calm)`，以 `uHue` 发送。
+  - 亮度是单独的 `uGlow`，在 JS 里计算，色相上升时它从 1.15 单调降到 1.0。
+  - 压强弹簧是临界阻尼的（刚度 20，阻尼 2√20），不会过冲到 318 bar。
+- **淡出期间亮度只降不升。** 关机时羽流又窜成橙色火焰，因为 `b < a` 时 `mix(a, b, hue)` 会随 hue 衰减而回升。现在关机一开始辉光级别就冻结，之后只被下降的量缩放。
+- **改弹簧后要复查邻居。** 压强弹簧改成临界阻尼后，预燃火舌几乎消失。那条腿需要自己更硬的临界弹簧（刚度 64）。
+- **一次性标志属于事件本身。** 关机后 2 s 内重新点火会丢失下一次关机噗声，因为噗声的时钟只在安静期后重置。现在由每次燃烧的 `popped` 标志决定。在 `ignite()` 里重置时钟会截断还在淡出的噗声。
+- **变化在介质中传播。** 涟漪水槽的频率改变时，新波长不会一次重铺整个场。页面每帧记录源的真实相位、ω、k、每毫米阻尼与 1/群速度，保留间隔 50 ms 的 32 个采样，并以 32 × 2 纹理上传给两个 shader。每个点用一次定点步进在自己的历史的群速度上求出年龄 `r / groupSpeed`，并从该年龄读 k 与阻尼，这样新波长就像真实情况一样从点水器向外扩散。
+- **变化期间保持相位连续。** 第一版用 `θ = k(age)·r − φ(t)`。扫频时 `r·dk/dt` 项让远处的波峰竞速并混叠，频率移动时阻尼振幅（`calm`）又把图案抹掉：纸张平均亮度跌了 17%。现在用 `θ = kE·r − uPhase + Ψ(age)`，其中 `Ψ` 是该采样自来源起、超出其 ω 预测所积累的相位（`packHistory` 中的 `lag`）。在固定点，波峰只随 ω 的变化速度移动，因此不需要振幅阻尼，再配一个小的运动模糊项（`gMove`，每帧波峰移动多远）在快速变化时柔化焦散。
+- **点亮淡入，且在浅色下只变亮。** 涟漪灯在首次可见时用 0.9 s 淡入（`smooth(0, 1, (lampClock − 0.15) / 0.9)`）。深色下 SVG 素水填充通过 CSS 变量（`--rt-lamp`）随同一值淡出。浅色下第一版从裸纸开始，波谷的墨让水槽随灯亮起反而变暗，素水填充又进一步加深。现在只要 WebGL 运行就隐藏水填充，纸从第一帧（灯为 0）就以未点亮灰（`off`）绘制，再由 `uLight` 向点亮后的墨色混合，所以点亮只会变亮。对纸上的发光体，同一条规则反过来读：光进来时它的墨只增不减，画面绝不先变淡或先变暗（见 8.2 节）。
 
-### No hard spatial cut-offs
-Every term reaches zero before any boundary: an `if`, a bounding shape, a plane, or the canvas edge. Use `if` only as an optimisation where the term is provably about zero.
-- A bead term was cut off sharply at both ends of its range by an `if`. It now fades in and out with smoothstep.
-- The plume had an `if` box, a `s < .01 continue` and a `step(ax, R0)` halo mask. All three showed as seams.
-- A screen-space glow column ran from the nozzle to the bottom of the canvas. The last rows of the canvas still had alpha 11–19/255, so it ended in a straight horizontal line under the deck. It is now a world-space halo bounded by the ground, and the last 10 rows and columns read exactly 0.
-- A wide `exp()` flash and the floor-coordinate steam were still visible at the canvas edges. Both now fall to zero inside the canvas.
-- Cell noise looks only inside its own cell, so a feature whose offset plus radius plus soft tail reaches past the cell's half-width is clipped flat at the cell edge. Keep `offset + wobble + radius + tail` under half a cell, or test the 3 × 3 neighbouring cells. A blind-test bubble field let a centre sit 0.31 of a cell off-centre with a reach of 0.86 against a 0.85 half-cell.
-- Radial noise that used `atan` had a seam along one angle. Use `noise3(vec3(dir, r·k − t))` of the direction vector instead.
-- A CSS `radial-gradient` with percentage stops ended outside its element. Use `circle closest-side` so the gradient ends inside it.
+### 没有硬性的空间截断
+每一项都在任何边界之前归零：`if`、包围形状、平面或画布边缘。`if` 只在该项可证明接近零时作为优化使用。
+- 一项珠状项曾被 `if` 在其区间两端硬切。现在用 smoothstep 淡入淡出。
+- 羽流曾有 `if` 盒、`s < .01 continue` 和 `step(ax, R0)` 辉光遮罩。三者都显示为接缝。
+- 一根屏幕空间辉光柱从喷管延伸到画布底部。画布最后几行仍有 alpha 11–19/255，所以它在台面下方以一条水平直线结束。现在是受地面约束的世界空间辉光，最后 10 行和列精确读 0。
+- 宽的 `exp()` 闪光与以地面坐标写的蒸汽在画布边缘仍可见。现在两者都在画布内降到零。
+- 单元噪声只看自己的单元，所以偏移加半径加柔尾越过单元半宽的特征会在单元边缘被削平。保持 `offset + wobble + radius + tail` 小于半个单元，或测试 3 × 3 邻居单元。盲测中的泡泡场曾让中心偏移 0.31 个单元、触及 0.86 而半宽只有 0.85。
+- 用 `atan` 的径向噪声沿一个角度有接缝。改用方向向量的 `noise3(vec3(dir, r·k − t))`。
+- 带百分比停靠点的 CSS `radial-gradient` 结束在其元素之外。改用 `circle closest-side`，让渐变在元素内结束。
 
-### World space, in the camera
-- The ignition shock was a 2D circle around the projected exit. Its lower arc ran over and under the deck and painted over both columns. It is now a real sphere: each pixel ray hits it at two roots, roots below the ground are hidden softly, each root is limb-weighted, and each one goes to the back or front canvas by the engine proxy.
-- The floor splash was laid flat over the deluge ring, so the tube lost its volume. The ring is now a torus occluder, lit with `max(dot(n, toPlume), 0.)`.
-- Haze behind the near column painted over its front face. Columns are now opaque boxes in the shader.
+### 世界空间，处于相机之中
+- 点火冲击曾是围绕投影出口的 2D 圆。它的下弧跨越台面上下、把两根立柱都盖住。现在是真实球体：每个像素光线在两个根处命中它，地面以下的根被柔和隐藏，每个根按边缘加权，并按引擎代理送入前或后 canvas。
+- 地面水花曾平铺在喷淋环上，管子失去了体积。环现在是环面遮挡物，用 `max(dot(n, toPlume), 0.)` 照亮。
+- 近侧立柱后面的雾曾画在其正面之上。立柱现在是 shader 里的不透明盒。
 
-### Layering and blending
-- In the dark theme, canvases that only emit light use `mix-blend-mode: screen` and write premultiplied colour with alpha = the largest channel. A canvas that also darkens what it covers stays normal-blended: the ripple tank's water tints the paper seen through it, which screen blending would silently drop. In the light theme every canvas is normal-blended, and its ink is solved from the colour the paper should show (section 8), not darkened from the dark-theme colour.
-- A blurred orange rim drawn in normal blend over the white-hot core read as a dim brown collar under the nozzle lip, and drawn slightly off the lip it made a double arc. Glow outlines over a shader now go in their own overlay SVG (`.rp-glow`), screen-blended in dark, at the exact lip. In light nothing can add light, so a rim is part of the ink itself: a saturated band at the body's edge around a pale core (section 8.1).
-- Steam that should pass in front of the bell was always behind it. It is now split across two canvases with the engine proxy (section 2).
+### 图层与混合
+- 深色主题下，只发光的 canvas 用 `mix-blend-mode: screen`，写预乘颜色且 alpha = 最大通道。还要压暗所盖内容的 canvas 保持普通混合：涟漪水槽的水给透过它看到的纸染色，screen 混合会无声丢掉这一点。浅色主题下每个 canvas 都是普通混合，其墨从纸应显示的颜色解出（第 8 节），而不是从深色主题颜色压暗。
+- 以普通混合画在白热核心之上的模糊橙边读起来像喷管唇下的一圈暗棕领，画得稍离唇线又变成双弧。盖在 shader 之上的辉光轮廓现在放进单独的覆盖 SVG（`.rp-glow`），深色下用 screen 混合，位置在唇线正处。浅色下没有东西能加光，所以边缘是墨本身的一部分：围绕淡色核心、在主体边缘的一条饱和带（见 8.1 节）。
+- 本应在钟形喷管之前的蒸汽总在它后面。现在用引擎代理把蒸汽拆到两块 canvas（第 2 节）。
 
-### Tonemap and dither
-- Use `tonemap()`, never `clamp`, so bright cores roll off instead of flattening.
-- Without output dither, the large soft terms became 8-bit staircases (runs of 18–34 px per level), and screen blending made them worse. Dither after tonemap with about ±1 LSB of animated triangular noise, gated so empty pixels stay exactly 0 (the Raptor's `inkOf`):
+### Tonemap 与抖动
+- 用 `tonemap()`，绝不用 `clamp`，让亮核心滚降而不是削平。
+- 没有输出抖动时，大的柔和项变成 8 位阶梯（每级连续 18–34 px），screen 混合让它们更糟。在 tonemap 之后抖动，用约 ±1 LSB 的动态三角噪声，并加门控让空像素保持精确 0（Raptor 的 `inkOf`）：
   ```glsl
   col=tonemap(col,1.15);
   float m=max(col.r,max(col.g,col.b));
   float n=(hash12(gl_FragCoord.xy+fract(uTime*.61)*91.)+hash12(gl_FragCoord.yx*1.37+fract(uTime*.37)*57.)-1.)/255.;
   col=max(col+n*smoothstep(0.,1.5/255.,m),0.);
   ```
-- Band-limit fine detail. The ripple tank fades out each wave whose projected wavelength drops below 2.5–5 device pixels (its `fine` term). Otherwise a 28 Hz pattern turns into moiré.
+- 对精细细节做带限。涟漪水槽把投影波长低于 2.5–5 设备像素的波淡出（其 `fine` 项）。否则 28 Hz 图案会变成摩尔纹。
 
-### Render only while it matters
-- Cap the device ratio at 1.5 (the `maxRatio` default). Draw only while the effect is active: the Raptor clears both canvases and lets the loop stop once every envelope is below 1e-3. Stop offscreen with the same `IntersectionObserver` as the rest of the figure, and redraw on `resize`.
-- An effect that never rests (bubbles in a returning flow, a pilot flame) keeps the shader drawing at idle, but not the rest of the figure: split the loop so the SVG work (depth sort, gauges, readout) runs only while something in it changes, and run the effect alone, at a reduced rate if it is slow. A blind-test bench kept its whole tick at 60 fps forever because one envelope settled at 0.54 instead of 0.
-- Gate costly terms with uniform checks (`if(uSmoke<.0004&&uVent<.0004)return vec3(0.);`). These are the same for the whole draw, so they cost nothing when off.
+### 只在有意义时渲染
+- 设备比上限 1.5（`maxRatio` 默认值）。只在效果活动时绘制：Raptor 清空两块 canvas，所有包络低于 1e-3 后让循环停止。用与图形其他部分相同的 `IntersectionObserver` 在屏幕外停止，并在 `resize` 时重绘。
+- 永不静止的效果（回流中的泡泡、长明小火）让 shader 在空闲时继续绘制，但图形其余部分不必：拆分循环，让 SVG 工作（深度排序、仪表、读数）只在其内容变化时运行，效果单独跑，太慢就降频。盲测中一台台面因一个包络停在 0.54 而不是 0，整个 tick 永远保持 60 fps。
+- 用 uniform 检查门控昂贵项（`if(uSmoke<.0004&&uVent<.0004)return vec3(0.);`）。它们对整次绘制取值相同，关闭时不产生开销。
 
-### Reduced motion
-Jump straight to a representative steady state (the Raptor jumps to main stage, and the ripple tank to its current f and d), freeze `uTime` (the Raptor uses 0.8), zero every event envelope (no flash, shock or shake), and redraw only when the JSON of the uniforms changes. The figure must still respond to input.
+### 减少动态
+直接跳到有代表性的稳态（Raptor 跳到主阶段，涟漪水槽跳到其当前 f 与 d），冻结 `uTime`（Raptor 用 0.8），事件包络全部归零（无闪光、冲击或抖动），只在 uniform 的 JSON 变化时重绘。图形仍须响应输入。
 
-### Fallback
-`glLayer` returns `null`, so guard every call. Mark the stage (`data-gl`) when WebGL runs so CSS can swap between the SVG fallback and the shader. Test by stubbing WebGL (section 9).
+### 回退
+`glLayer` 会返回 `null`，所以每次调用都要判空。WebGL 运行时给 stage 打标（`data-gl`），CSS 才能在 SVG 回退与 shader 之间切换。用 stub 掉 WebGL 来测试（第 9 节）。
 
-## 8. Light theme
+## 8. 浅色主题
 
-Light is the shipping theme. A page that is light gets shaders designed for paper, not dark-plate glows converted at the end. Seven figures on the isometrics site were built on a dark plate and then converted: a pool reactor, a foundry pour, an afterburner, a glory hole, a tokamak, a plasma cutter and a forge. Each conversion took three review rounds, and every rule in this section is one of their findings.
+浅色是发布主题。浅色页面拿到的是为纸面设计的 shader，而不是最后才转换的深色板辉光。isometrics 站点上有七张图先建在深色板上再转换：池式反应堆、铸造浇注、加力燃烧室、烧口（glory hole）、托卡马克、等离子切割器与锻炉。每次转换都经过三轮评审，本节的每条规则都来自其中一条发现。
 
-The Raptor's light plume (`inkOf` in `examples/raptor-engine/live.js`) shows what not to do. It multiplies every hue by a fixed dark red, `vec3(.62,.34,.3)`, and sets alpha to brightness, so the hottest gas comes out darkest and most opaque. Reviewers called it "red ink smoke". Don't copy it. The ripple tank's grey ink (`uPale`) is still a good model for light that isn't a glow: a tone curve `1 − uExpo.x/(1 + (e/uExpo.y)^uExpo.z)` takes the crests to near paper-white and the troughs to the kit's greys, and its water writes only the change from flat water.
+Raptor 的浅色羽流（`examples/raptor-engine/live.js` 里的 `inkOf`）是反面教材。它把每个色相乘一个固定暗红 `vec3(.62,.34,.3)`，alpha 设为亮度，结果最热的气体最暗、最不透明。评审者称它为"红墨烟"。不要照抄。涟漪水槽的灰墨（`uPale`）对非辉光的光仍是好模型：一条色调曲线 `1 − uExpo.x/(1 + (e/uExpo.y)^uExpo.z)` 把波峰带到近纸白、把波谷带到套件的灰色，它的水只写与平水面的差异。
 
-### 8.1 Ink on paper
-Over white, the canvas is normal-blended, premultiplied, and never `screen`, because screen over white is white. No pixel can be brighter than the paper, so light has to read through **saturation and local contrast**:
-- **A glow is a saturated body, a pale near-white core and a coloured rim.** The pale core reads as hot only because the body around it is saturated and the ground around that is darker.
-- **What the light falls on takes a tint** (multiply-like, with capped alpha). It doesn't get brighter.
-- **The volume that holds the light is darker, for a physical reason:** soot, refractory, deep water or shadow (section 8.3). It is never a black box.
+### 8.1 纸上的墨
+在白色之上，canvas 是普通混合、预乘的，绝不用 `screen`，因为 screen 叠在白上还是白。任何像素都不可能比纸更亮，所以光必须靠**饱和度与局部对比**来读：
+- **辉光是饱和的主体、一个近白的淡色核心与一圈彩色边缘。** 淡色核心之所以读作热，只是因为它周围是饱和主体、更外面是更暗的地面。
+- **被光照到的东西获得色调**（类似乘法，alpha 有上限）。它不变亮。
+- **容纳光的体积更暗，且有物理原因：** 烟灰、耐火材料、深水或阴影（见 8.3 节）。它绝不是黑盒子。
 
-**Design the colour the paper should show, then solve for the ink.** Write a ramp from light energy to the colour the reader should see over white. Then invert normal compositing over white, which shows `rgb + (1 − a)`:
+**先设计纸面应显示的颜色，再反解出墨。** 写一条从光能量映射到读者在白上应见颜色的 ramp。然后反解白底上的普通合成，其结果为 `rgb + (1 − a)`：
 ```glsl
 vec4 inkFor(vec3 seen,float cover){
   vec3 absorbed=1.-seen;
@@ -297,177 +301,177 @@ vec4 inkFor(vec3 seen,float cover){
   return vec4(vec3(a)-absorbed,a);
 }
 ```
-Over white this composites to exactly `seen`.
-- **Reactor.** `inkOf` does this with its `paperOf(e)` ramp, where `e = 1 − exp(−2.3·max(lin))`. The ramp runs white → `TINT (.85,.93,1)` → `BODY (.2,.46,.94)` (by e .12–.5) → `RIM (.2,.68,1)` (.4–.65) → `ICE (.9,.98,1)` (.6–.9).
-- **Afterburner.** Its `paperOf` mixes white → body → a pale core, and then inverts the same way.
-- **`cover` is an alpha floor at the hot end:** `WASH·smoothstep(.6,.9,e)` with WASH .52 in the reactor, and `COVER·smoothstep(.45,.92,m)` with COVER .94 in the afterburner. Without it, a near-white core has alpha near 0, so the SVG lines behind it show straight through and it reads as a hole, not as light.
+在白上，这合成结果精确等于 `seen`。
+- **反应堆。** `inkOf` 用它的 `paperOf(e)` ramp 做这件事，其中 `e = 1 − exp(−2.3·max(lin))`。ramp 依次是白 → `TINT (.85,.93,1)` → `BODY (.2,.46,.94)`（e 在 .12–.5 区间）→ `RIM (.2,.68,1)`（.4–.65）→ `ICE (.9,.98,1)`（.6–.9）。
+- **加力燃烧室。** 它的 `paperOf` 把白 → 主体 → 淡色核心混合，然后同样方式反解。
+- **`cover` 是热端的 alpha 下限：** 反应堆用 `WASH·smoothstep(.6,.9,e)`，WASH 为 .52；加力燃烧室用 `COVER·smoothstep(.45,.92,m)`，COVER 为 .94。没有它，近白核心的 alpha 接近 0，它后面的 SVG 线直接透出，读起来像洞，不像光。
 
-The other figures use the form `vec4(colour·a, a)`: `colour` comes from a ramp and `a` from a saturating curve of energy. The tokamak's `glowInk` is an example. Both forms work; `inkFor` also guarantees the colour the reader sees.
+其他图形用 `vec4(colour·a, a)` 形式：`colour` 来自 ramp，`a` 来自能量的饱和曲线。托卡马克的 `glowInk` 就是一例。两种形式都可行；`inkFor` 还保证读者看到的颜色。
 
-**One ink per kind of light, composited in the shader.** Keep separate accumulators, give each its own ink, and stack them back to front with `vec4 over(vec4 top,vec4 under){return top+under*(1.-top.a);}`:
+**每种光一种墨，在 shader 内合成。** 各自保留累加器，每种有自己的墨，从后往前堆叠，用 `vec4 over(vec4 top,vec4 under){return top+under*(1.-top.a);}`：
 
-| Term | Ink | Seen in |
+| 项 | 墨 | 见于 |
 |---|---|---|
-| Emission, the hot thing itself | ramp body plus a pale core, alpha up to .96–.97 | plasma cutter `bodyInk`, forge `barInk`, tokamak `glowInk` |
-| Light falling on a surface | hue pulled warm or cool, alpha capped at .5–.8 | foundry `castInk` and `tintInk`, tokamak `tintInk` (.5), plasma cutter `tintInk` (.75–.8) |
-| Haze: steam, smoke, fume, breakdown gas | grey or lightly tinted, alpha `1 − exp(−density·k)` | plasma cutter `hazeInk`, tokamak `gasInk`, forge steam |
-| Sparks and streaks | on top of everything | foundry and forge `sparks` |
+| 发光，热体本身 | ramp 主体加淡色核心，alpha 到 .96–.97 | 等离子切割器 `bodyInk`、锻炉 `barInk`、托卡马克 `glowInk` |
+| 落在表面上的光 | 色相偏暖或偏冷，alpha 上限 .5–.8 | 铸造 `castInk` 与 `tintInk`、托卡马克 `tintInk`（.5）、等离子切割器 `tintInk`（.75–.8） |
+| 雾：蒸汽、烟、烟气、击穿气体 | 灰或轻微着色，alpha `1 − exp(−density·k)` | 等离子切割器 `hazeInk`、托卡马克 `gasInk`、锻炉蒸汽 |
+| 火花与光痕 | 叠在最上层 | 铸造与锻炉 `sparks` |
 
-The plasma cutter's `lightInkOf` is the clearest example: `over(arcCore, over(bodyInk(body), over(arc, over(fumeInk, over(steamInk, tintInk(tint))))))`. If you sum the energies first and ink the sum, everything gets one hue and the pale core is lost.
+等离子切割器的 `lightInkOf` 是最清晰的例子：`over(arcCore, over(bodyInk(body), over(arc, over(fumeInk, over(steamInk, tintInk(tint))))))`。若先求能量之和再上墨，所有东西都变成一个色相，淡色核心就丢了。
 
-**Finish.**
-- Clamp `rgb ≤ a` after every sum: the afterburner showed a 1-LSB premultiply overflow.
-- Dither the final premultiplied value, rgb and alpha both, gated by `smoothstep(0.,1.5/255.,a)` (the glass furnace's `paperOut`, the foundry's `dithered`).
-- Keep the canvas edges at exactly 0.
-- Tonemap energy before it reaches a ramp (`tonemap`, or `1 − exp(−k·e)`), never `clamp`.
+**收尾。**
+- 每次求和后钳制 `rgb ≤ a`：加力燃烧室出现过 1 LSB 的预乘溢出。
+- 抖动最终预乘值，rgb 与 alpha 都要，门控用 `smoothstep(0.,1.5/255.,a)`（玻璃熔炉的 `paperOut`、铸造的 `dithered`）。
+- 画布边缘保持精确 0。
+- 能量进入 ramp 之前先 tonemap（用 `tonemap`，或 `1 − exp(−k·e)`），绝不用 `clamp`。
 
-### 8.2 Ink grows with light
-In dark, more light only adds. On paper, more light means more ink, and a careless formula can add ink while the light falls or take ink away while it rises. These were the faults reviewers found most often:
-- **Fade the finished ink once.** Scaling a premultiplied ink by `u` is an exact linear crossfade from bare paper to the full picture, monotonic in every pixel: the reactor's `ink*=uFirst`, the glass furnace's `paperOut(overInk(gas, ink)*uLit)`. The glory hole first faded each term before inking it (`*uLit` in `holeOf`, the port bore and the ball). The pale core arrived before its saturated body, then the ground darkened, so first light went pale and then dark. Build every light ink from unfaded tones (its `litOf()` returns 1 in light) and fade only the result.
-- **Fade a glow by energy and alpha together.** If you fade only alpha, a pale core stays pale and the thinning glow turns milky grey: the tokamak's contact band did. If you fade only energy, the glow runs back down its ramp. The tokamak now scales energy down to a floor and alpha the rest of the way: `hot+=glowInk(c*level*(.3+.7*hold))*hold*(1.-hot.a)`. The band stays pink-mauve as it goes.
-- **Take the hue at steady brightness.** As energy falls, the tonemap reddens and darkens the hue, and with alpha near its cap the ink rises: the afterburner's cavity got 55% heavier as the flame went out. The fix:
-  - Divide the burn by the local lit strength before taking the hue (`burn/lit`, `lit = la.x·glowOf(la.y)/LIT_GLOW`).
-  - Blend the hues by each part's share of the energy.
-  - Tie alpha to energy: `cap·(1 − exp(−1.6·e/cap))`.
-  - At low cover, warm the hue toward `EMBER` and scale alpha by `inkOf(hue)/inkOf(ember)`, so the ink stays the same.
-  
-  With that, the window's ink fell monotonically from 1894 to 155 on the cut.
-- **Hand-offs are plain premultiplied mixes.** The afterburner's jet has two copies, dry blue and lit warm, crossfaded with `mix(blue, warm, lift)`. A `max(alpha)` cover there doubled the dry jet's ink. Also gate each copy so it can't pick up the other's terms: the dry shock disc leaked into the warm copy as a cream patch.
-- **Envelopes that multiply can rise during a fade.** If a first-light envelope is still rising while the effect's own edge falls, the fade-out brightens: the tokamak did this when Home was pressed in its first half second. Freeze first-light growth while the effect is falling.
-- **The handover from the SVG fallback is exact,** or the scene dips while the shader comes in (section 8.5).
+### 8.2 墨随光增长
+深色下，光更多只是加量。在纸上，光更多意味着墨更多，粗心的公式会在光下降时加墨，或在光上升时减墨。以下是评审者发现最多的问题：
+- **对完成的墨只淡一次。** 把预乘墨乘以 `u` 是从裸纸到完整画面的精确线性交叉淡化，每个像素都单调：反应堆的 `ink*=uFirst`，玻璃熔炉的 `paperOut(overInk(gas, ink)*uLit)`。烧口曾先淡每一项再上墨（`holeOf`、炉口孔道与球中的 `*uLit`）。淡色核心先到，饱和主体后到，然后地面又变暗，所以点灯先变淡后变暗。每种浅色墨都用未淡化的色调构建（其 `litOf()` 在浅色下返回 1），只淡化最终结果。
+- **按能量与 alpha 一起淡化辉光。** 只淡 alpha，淡色核心保持淡、变细的辉光变成乳灰：托卡马克的接触带就是这样。只淡能量，辉光沿其 ramp 退回。托卡马克现在把能量降到下限、其余路程降 alpha：`hot+=glowInk(c*level*(.3+.7*hold))*hold*(1.-hot.a)`。色带淡出过程保持粉紫。
+- **在稳定亮度下取色相。** 能量下降时 tonemap 会让色相变红变暗，而 alpha 接近上限时墨反而加重：火焰熄灭时加力燃烧室的腔变重了 55%。修复：
+  - 取色相前把燃烧除以局部光强（`burn/lit`，`lit = la.x·glowOf(la.y)/LIT_GLOW`）。
+  - 按各部分能量占比混合色相。
+  - alpha 绑定能量：`cap·(1 − exp(−1.6·e/cap))`。
+  - 低覆盖时把色相向 `EMBER` 加暖，alpha 按 `inkOf(hue)/inkOf(ember)` 缩放，墨量保持不变。
 
-### 8.3 A ground for the light
-A glow on white with nothing around it reads as a stain. Give it the ground it really has:
-- **Cavities in the SVG take a darker token set.** A group class redefines the kit tokens for everything inside it:
-  - the afterburner's `.ab-inside`: paper `#4a453f`, shades `#3c3833` to `#544e47`, lines `#5e5952` to `#9b958b`;
-  - the tokamak's `.tk-cavity`: `#66646e` to `#8b8992`;
-  - the foundry's sooted bore tones (`--fd-bore-*-sooted`, a `color-mix` of `--anatomy-shade-0` with `--fd-soot-ink: #2f2a25`);
-  - the glory hole's `--gf-void` and `--gf-bore`;
-  - the reactor's water-column gradient (`--rx-water-top`, `-mid`, `-deep`, from `#edf2f4` to `#c9d7e0`).
-  
-  In dark the same tokens are set to `inherit`. All four shade tones stay, so the inside still has form and reads as refractory, soot or deep water rather than a hole.
-- **The ground takes the light's tint, live.** The same tokens `color-mix` toward the light's hue by a variable the loop writes: `--ab-flame` at 30% on faces and 55% on lines and back plates, `--tk-cold-mix` for the violet of breakdown. The SVG ground then warms with the flame even without WebGL.
-- **The shader's ground equals the SVG's.** Where the shader paints an opaque cavity (the glory hole's `holeOf = overInk(emberInk(t,1.), vec4(SOOT,1.))`), read the token rather than retyping it. The foundry adds a probe path, sets its fill to each `var(--fd-…)`, reads `getComputedStyle(probe).fill` and passes the result as a `fixed` uniform (`paintOf` in its `mount.ts`).
-- **Light around the source is a tint with a long tail.** The tokamak's vessel read grey at flat-top until a long-range wash (`skin*(.14*exp(-gap/(.22*U))+.17*exp(-gap/(.9*U)))`) tinted its walls magenta. Measured on the column: `#6e6c76` with the plasma off, `#786778` with the wash at .17, which reads as lit. At .1 it still read grey.
-- **No bloom in empty air.** In light, a halo around a stream or sheet hanging in the air is a smudge on the paper (the foundry's stream and notch glows were). Drop halos in air in light. Keep the limb rim inside the body, and the tint on the surfaces the light reaches.
-- **Light only lands where the source can see.** The reactor's surface light leaked onto a shield's cut face and coping until its seal test used the true top of the tank lip (`RIMZ`) rather than the deck. The plasma cutter lit the slat bay under the jet's lower end while the jet was visibly in the next bay; its `bayLight` now lights each bay by its share of the jet column, so the light crossfades from bay to bay as the jet moves.
+  这样，窗口的墨在熄灭切换时从 1894 单调降到 155。
+- **交接就是普通预乘混合。** 加力燃烧室的尾喷有两份拷贝：干燥蓝与点亮暖色，用 `mix(blue, warm, lift)` 交叉淡化。在那里用 `max(alpha)` 覆盖让干燥尾喷的墨翻倍。还要分别门控每份拷贝，避免它捡到另一份的项：干燥冲击盘曾漏进暖色拷贝，成为一块奶油色斑。
+- **相乘的包络会在淡出期间上升。** 若点灯包络还在上升而效果自身的边缘在下降，淡出反而变亮：托卡马克在按下 Home 后的前半秒出现过。效果下降期间冻结点灯包络的增长。
+- **从 SVG 回退的交接必须精确，** 否则 shader 接入时画面会下陷（见 8.5 节）。
 
-### 8.4 Recipes by phenomenon
-Hot bodies run dull red → orange → yellow → near-white, in that order and no other. Keep one stop table in the model, compile it to GLSL and use the same table for the fallback: the foundry's `INK_STOPS` (`inkRampGlsl`, and `glowInk` for the SVG), the forge's `STEEL_INK` (`steelInk`, `steelInkOf`).
-- **Molten metal, forged steel, billets, kerfs.**
-  - Index the table by brightness temperature, so a dim far wall and a bright pour read from the same table. The foundry's `brightOf` inverts Wien from the green channel.
-  - The forge's stops: 560 °C `(.45,.09,.05)`, 680 `(.56,.07,.04)`, 780 `(.78,.10,.03)`, 950 `(.95,.38,.06)`, 1150 `(1,.78,.12)`, 1260 `(1,.93,.78)`.
-  - Alpha opens at visible glow: `steelGlows` over 560–820 °C, or the foundry's `INK_FROM`/`INK_FULL` over 470–590 °C, crossfading from the metal's own ground tone.
-  - The rim is cooler and darker (`steelInk(t − 140)`, the foundry's 150 K limb drop). A cream core appears only in the hottest centre (`steelPale` over 1050–1280 °C, at .8).
-  - A dark skin sits under the glow and grows as the metal cools: the forge's `barInk` runs from oxide `(.28,.29,.32)` to skin `(.24,.22,.23)` with cover up to .86.
-  - Reviewers' words for the foundry stream: "a cream core with an orange skin".
-- **Glass gathers.**
-  - Alpha is a luminance gate: `GLOW_SEEN` .008–.028, about 600–710 °C.
-  - The colour is `pow(hue, mix(1.6,.8,warm))*mix(.62,1.,warm)`, which runs deep cherry → red → orange.
-  - The pale core (`CORE_PALE (1,.88,.62)`) sits where the pixel's own emission is brightest (`cored`, luminance .14–.24), not at a fixed radius.
-  - The cool skin (`SKIN_COOL (.3,.11,.07)`) only recedes.
-  - The first version had a salmon stage. A red mixed toward white is salmon, and no temperature looks like that: go through orange and yellow before anything turns pale.
-- **Sparks.**
-  - A saturated head and a darker, cooler tail. The plasma cutter's `tailCooling` sets the tail at 0.62 of the head's temperature; the forge's tail ink is `(.42,.07,.02)`, alpha .75 capped at .8. Only the youngest third of a spark gets a pale core (`u < .35`).
-  - Keep the streak at least about 1.25 device px wide (`max(.35+.6px, 1.25px)`), or diagonal streaks bead at 10–24×.
-  - On white a spark is ink, so over a hotter emitter it must vanish. The foundry multiplies spark ink by `1 − cover·smoothstep(sparkT−60, sparkT+60, tb)`, against both the metal and the glowing bore.
-  - A spark that passes behind a jet fades by depth: `cover*smoothstep(-.4,.4,tJet-tS)`.
-- **Flame and exhaust.**
-  - A saturated orange-yellow body with translucent edges, weighted toward the axis in light: `mix(1.,1.3-.6*smoothstep(0.,rf,r),uLight)`.
-  - Cut the limb mantle (`mix(.8,.3,uLight)`). The limb shell that gives a dark plume its edge (section 4) draws an outline on paper and leaves the flame hollow.
-  - Keep raggedness to the outer part, widen the hot axis, and put the pale core at the nozzle, fading out over .4–.9 of the length.
-  - Check a cross-section. The afterburner's final flame reads `0 2 13 33 31 49 78 72 78 52 40 32 8` in ink from edge to edge.
-  - The dry jet is a faint blue column. Shock diamonds are pale cream discs (`CREAM (1,.95,.86)`) with a warm rim and a soft edge (about .65 of the disc radius). Pushed stronger, a second diamond read as a knob or a washer, so it stays a faint lens.
-- **Smoke and steam.**
-  - Light grey, never with a dark glow ink laid over it. Edge `(.84,.87,.90)`, crown `(.97,.975,.98)`, and the underside `(.72,.76,.81)` by the cloud's own self-shadow; alpha `1 − exp(−density·k)`.
-  - Near a hot source, warm the cloud toward pale amber (`mix(steelInk(T), CREAM, .5)`). The forge first laid glow ink over the cloud, and reviewers saw a salmon blob.
-  - A quench puff is a `burst` that leaves the tub: it climbs from 4 to about 40 units above the water, slowing as it goes (`PUFF` in the forge's `shader.ts`), clears the rim within about 0.15 s, widens from 7 to 13, thins as it grows, and shares the column's height window, so it never cuts off.
-- **Plasma (tokamak).**
-  - Saturated magenta-violet: `inkBody(chroma)=pow(chroma,vec3(1.8))*vec3(.93,.86,.97)`.
-  - Above m .55 the core goes pale, toward white with 8% of the chroma kept.
-  - Alpha: `.97*smoothstep(.02,.42,m)*(1.-exp(-2.6*(m+2.*m*m)))`.
-  - Breakdown gas is a violet haze, `(.52,.44,1)` to `(.74,.68,1)`, alpha at most .64. Seen through the cutaway, the vessel's interior uses the cavity token set.
-- **Cherenkov (reactor).**
-  - Vivid cyan-blue in a blue-tinted water column: the paper ramp in 8.1, over the SVG water gradient, with the hot end floored by `WASH` so the core covers the fuel lines behind it.
-  - Compress the pulse above critical (`1.+.75*log(level)`), so a 1.5 GW pulse brightens the pool without flooding the card.
-  - The glow on the hall wall uses a separate, weaker ink (`HALL_INK` .35).
-- **Plasma arc (plasma cutter).**
-  - A violet arc `vec3(.6,.34,1.)` with a pale core `vec3(.96,.95,1.)`.
-  - Warm tint ink on the plate and water: `mix(vec3(1.,.5,.08),vec3(1.,.68,.3),…)`, alpha `.75*(1.-exp(-3.2*sqrt(m)))`.
+### 8.3 给光一个底
+白底上的辉光如果周围什么都没有，读起来像一块污渍。给它真实拥有的底：
+- **SVG 里的腔体使用更暗的 token 集。** 一个组 class 为其中所有东西重定义套件 token：
+  - 加力燃烧室的 `.ab-inside`：纸 `#4a453f`，阴影 `#3c3833` 到 `#544e47`，线 `#5e5952` 到 `#9b958b`；
+  - 托卡马克的 `.tk-cavity`：`#66646e` 到 `#8b8992`；
+  - 铸造的积灰孔道色调（`--fd-bore-*-sooted`，`--anatomy-shade-0` 与 `--fd-soot-ink: #2f2a25` 的 `color-mix`）；
+  - 烧口的 `--gf-void` 与 `--gf-bore`；
+  - 反应堆的水柱渐变（`--rx-water-top`、`-mid`、`-deep`，从 `#edf2f4` 到 `#c9d7e0`）。
 
-### 8.5 The SVG and the fallback in light
-- **Read the theme once.** Choose the theme at build time (`pageHtml({ theme })`, or `data-theme` on the React wrapper; on the isometrics site the figure's build returns `theme` and `LivePlate` wraps a dark plate in its own `.iso[data-theme="dark"]`). The live code reads it from the nearest `[data-theme]` (`root.closest("[data-theme]")?.getAttribute("data-theme") !== "dark"`) and passes `uLight` as `fixed`. Gate every light-only change on `uLight` (`mix(dark, light, uLight)`, or a branch on the uniform), so dark output stays as it was. Keep dark working if that is cheap.
-- **No colour literals.** If a figure hard-codes dark colours in its CSS, convert them to tokens with dark overrides: `.x { --x: light }` then `.iso[data-theme="dark"] .x { --x: dark }`. Shader constants that must match a token come from a probe (8.3).
-- **Nested themes.** `.iso:not([data-theme="dark"]) .x` also matches through the light page around a dark plate. That is how the reactor's dark fallback got multiplied into black. Put the dark rule after the light one, at equal specificity, or key on the plate's own theme: the forge uses `.iso-plate[data-plate="light"]`.
-- **How the fallback blends.** Multiply its saturated tints, which darken and leave the lines under them visible. Normal-blend its pale cores, because multiply can't lighten: the reactor's no-WebGL core is a radial gradient from `#fff` at .85 to `#dcefff` at .3, blended normally.
-  - Fallback colours come from the same ramp as the shader: the foundry's `glowLightCss`, and the glass furnace's `gatherInk`, which mirrors the shader's gather ink exactly.
-  - Opacity on a pale token fades to grey, so give the fallback the saturated hue: the tokamak's fallback rings set `--anatomy-lit: #e0409c` and `--anatomy-hi: #f27ec0`.
-- **Fallback shape changes crossfade.** The tokamak's no-WebGL plasma ring is 11 precomputed rings (`LIMITED_RINGS`). Neighbouring rings are crossfaded with linear weights that sum to 1, on the same eased radius the shader draws. With 6 rings a doubled outline showed mid-fade.
-- **Nothing with gaps goes under a translucent ink.** Whatever the SVG draws shows through an ink that isn't fully opaque. The forge's heat band was a set of strokes with paper between them, and it printed grey streaks through the bar's 14% transparency. It is now a face filled with the heat gradient.
-- **The handover from fallback to shader is exact.** At first light the canvas ink rises by `u` while the fallback under it goes. A linear `1 − u` on the fallback makes the middle of the fade paler than either end. For an exact linear crossfade, set the fallback's opacity to `(1 − u)/(1 − u·α)`, where α is the canvas ink's alpha where it matters: the glass furnace's `--gf-gather-fade`, with α the gather's centre stop. Its other fallbacks stay at full strength until the shader is nearly in: `clamp(0, calc(var(--gf-fallback, 1) * 12), 1)`.
-- **Every body the shader draws has a fallback.** The foundry's tap stream had none, so it was missing without WebGL. It is now an SVG outline rebuilt each frame from the same history the shader reads.
+  深色下同样的 token 设为 `inherit`。四个阴影色调全部保留，所以内部仍有形体，读起来是耐火材料、烟灰或深水，而不是一个洞。
+- **底实时接受光的色调。** 同样的 token 由循环写入的变量 `color-mix` 向光的色相偏移：面用 30% 的 `--ab-flame`，线与背板用 55%；击穿紫色用 `--tk-cold-mix`。这样即使没有 WebGL，SVG 底也会随火焰变暖。
+- **shader 的底等于 SVG 的底。** shader 画不透明腔体时（烧口的 `holeOf = overInk(emberInk(t,1.), vec4(SOOT,1.))`），读取 token 而不是重新输入。铸造加一条探针 path，把 fill 设为每个 `var(--fd-…)`，读 `getComputedStyle(probe).fill`，把结果作为 `fixed` uniform 传入（其 `mount.ts` 里的 `paintOf`）。
+- **源周围的光是长尾的色调。** 托卡马克的容器在顶平面时读起来是灰的，直到加了一个长程冲刷（`skin*(.14*exp(-gap/(.22*U))+.17*exp(-gap/(.9*U)))`）把壁染成品红。在柱上实测：等离子关闭时 `#6e6c76`，冲刷 .17 时 `#786778`，读作被照亮。.1 时仍是灰。
+- **空中不放 bloom。** 浅色下，悬空流束或薄板周围的晕就是纸上的一团污迹（铸造的流束与缺口辉光曾是）。浅色下去掉空中晕。边缘光留在体内，色调放在光照到的表面上。
+- **光只落在源能看见的地方。** 反应堆的表面光曾泄漏到屏蔽的切割面与压顶上，直到其密封测试改用水箱唇的真实顶部（`RIMZ`）而不是台面。等离子切割器曾点亮尾焰下端所在格之外的格，而尾焰明显在下一格；现在其 `bayLight` 按各格占尾焰柱的比例照明，尾焰移动时光在格间交叉淡化。
 
-### 8.6 Where the ink meets a line
-The canvas lies over the back SVG's 0.6 px strokes. In light, a misregistered edge shows as a pale gap or a coloured line over the stroke, rather than as a dark seam.
-- **Stop at the stroke's inner edge.** Ramp a face's ink to full under the stroke and end it at the stroke's inner edge, half the line weight in: 0.3 vb for the kit's 0.6 px lines. Measure the computed stroke width; the forge's reviewer guessed 1.1. Examples: the reactor's `cutFade=smoothstep(-SEAM-.5*px,-SEAM+.5*px,gap)` with `SEAM=.3`, and the forge's `strokeMeet`. Pad a tint by the same half stroke (the foundry's `ringLight`), so it never paints over the line and leaves no pale band inside it.
-- **Don't clear the ink where nothing is stroked.** The forge's veil cleared at the crease two faces share, which the SVG doesn't stroke, and white seams showed along the bar. Draw such a crease in the ink instead: ×0.72, at least 0.8 canvas px wide (sharper came out dotted).
-- **Supersample where neighbouring rays disagree.** The reactor traces four sub-pixel rays and takes 16 samples when their hit, depth, kind, normal or cut share differ (`apart`), so cut-face edges don't stair-step. At dpr 1 a canvas pixel is about as wide as the stroke, so one pixel of softness remains.
-- **A body that enters from out of frame** may fade in from the canvas edge in screen space. The foundry's tap stream fades in over 11 vb, starting 10.5 device px below the canvas top, so the edge still reads 0 and the stream reads as coming from above.
+### 8.4 按现象给的配方
+热体按暗红 → 橙 → 黄 → 近白的顺序变化，只有这个顺序。在模型里保留一张停靠点表，编译成 GLSL，回退也用同一张表：铸造的 `INK_STOPS`（`inkRampGlsl`，SVG 侧用 `glowInk`），锻炉的 `STEEL_INK`（`steelInk`、`steelInkOf`）。
+- **熔融金属、锻钢、坯料、切缝。**
+  - 以亮度温度为表编制索引，暗的远墙与亮的浇注读同一张表。铸造的 `brightOf` 从绿通道反解 Wien。
+  - 锻炉的停靠点：560 °C `(.45,.09,.05)`、680 `(.56,.07,.04)`、780 `(.78,.10,.03)`、950 `(.95,.38,.06)`、1150 `(1,.78,.12)`、1260 `(1,.93,.78)`。
+  - alpha 从可见辉光开始：`steelGlows` 在 560–820 °C，或铸造的 `INK_FROM`/`INK_FULL` 在 470–590 °C，从金属自身底色交叉淡化。
+  - 边缘更冷更暗（`steelInk(t − 140)`，铸造的 150 K 边缘下降）。奶油色核心只出现在最热的中心（`steelPale` 在 1050–1280 °C，取 .8）。
+  - 辉光之下有一层暗皮，随金属冷却而增厚：锻炉的 `barInk` 从氧化色 `(.28,.29,.32)` 到皮色 `(.24,.22,.23)`，覆盖最多 .86。
+  - 评审者对铸造流束的描述："奶油核心带橙色皮"。
+- **玻璃聚光。**
+  - alpha 是亮度门：`GLOW_SEEN` .008–.028，约 600–710 °C。
+  - 颜色是 `pow(hue, mix(1.6,.8,warm))*mix(.62,1.,warm)`，依次为深樱桃 → 红 → 橙。
+  - 淡色核心（`CORE_PALE (1,.88,.62)`）放在该像素自身发光最亮处（`cored`，亮度 .14–.24），不在固定半径。
+  - 冷皮（`SKIN_COOL (.3,.11,.07)`）只后退。
+  - 第一版有一个 salmon（橙红偏粉）阶段。红向白混合就成了 salmon 色，没有任何温度是这个颜色：任何东西变淡之前都要经过橙和黄。
+- **火花。**
+  - 饱和的头部，更暗更冷的尾部。等离子切割器的 `tailCooling` 把尾部设在头部温度的 0.62；锻炉尾部墨是 `(.42,.07,.02)`，alpha .75、上限 .8。火花最年轻的三分之一才有淡色核心（`u < .35`）。
+  - 光痕宽度至少约 1.25 设备像素（`max(.35+.6px, 1.25px)`），否则斜向光痕在 10–24× 放大下会串珠。
+  - 在白底上火花就是墨，所以遇到更热的发光体它必须消失。铸造把火花墨乘以 `1 − cover·smoothstep(sparkT−60, sparkT+60, tb)`，对金属与发光孔道都生效。
+  - 穿过尾焰后面的火花按深度淡出：`cover*smoothstep(-.4,.4,tJet-tS)`。
+- **火焰与尾焰。**
+  - 饱和的橙黄主体带半透明边缘，浅色下向轴加权：`mix(1.,1.3-.6*smoothstep(0.,rf,r),uLight)`。
+  - 去掉边缘包层（`mix(.8,.3,uLight)`）。给深色羽流带来边缘的边缘壳（第 4 节）会在纸上画轮廓，让火焰空心。
+  - 毛糙度留给外层，加宽热轴，淡色核心放在喷管处，在长度的 .4–.9 内淡出。
+  - 检查一个横截面。加力燃烧室最终火焰从边到边的墨读数是 `0 2 13 33 31 49 78 72 78 52 40 32 8`。
+  - 干燥尾喷是一道淡蓝柱。马赫盘是淡奶油色圆盘（`CREAM (1,.95,.86)`），带暖色边缘与柔边（约盘半径的 .65）。推强之后，第二个马赫盘读起来像旋钮或垫圈，所以它保持为淡透镜。
+- **烟与蒸汽。**
+  - 浅灰，绝不在其上叠暗的辉光墨。边缘 `(.84,.87,.90)`、顶部 `(.97,.975,.98)`、底面随云自身自阴影取 `(.72,.76,.81)`；alpha 为 `1 − exp(−density·k)`。
+  - 靠近热源时，把云向淡琥珀加暖（`mix(steelInk(T), CREAM, .5)`）。锻炉最初把辉光墨叠在云上，评审者看到一团 salmon 斑块。
+  - 淬火喷团是一个离开水槽的 `burst`：从水面上 4 升到约 40 单位，途中减速（锻炉 `shader.ts` 里的 `PUFF`），约 0.15 s 内越过沿口，宽度从 7 扩到 13，长大时变薄，并与立柱共享高度窗口，因此永不截断。
+- **等离子体（托卡马克）。**
+  - 饱和的品红-紫色：`inkBody(chroma)=pow(chroma,vec3(1.8))*vec3(.93,.86,.97)`。
+  - m 超过 .55 后核心变淡，向白色靠近并保留 8% 色度。
+  - alpha：`.97*smoothstep(.02,.42,m)*(1.-exp(-2.6*(m+2.*m*m)))`。
+  - 击穿气体是紫色雾，`(.52,.44,1)` 到 `(.74,.68,1)`，alpha 最多 .64。透过剖面看，容器内部使用腔体 token 集。
+- **切伦科夫（反应堆）。**
+  - 蓝调水柱中的鲜明青蓝：用 8.1 节的纸 ramp，叠在 SVG 水渐变之上，热端由 `WASH` 给出下限，核心盖住其后的燃料管线。
+  - 超临界时压缩脉冲（`1.+.75*log(level)`），让 1.5 GW 脉冲照亮池水而不淹没卡片。
+  - 大厅墙上的辉光用单独的、更弱的墨（`HALL_INK` .35）。
+- **等离子弧（等离子切割器）。**
+  - 紫色弧 `vec3(.6,.34,1.)`，带淡色核心 `vec3(.96,.95,1.)`。
+  - 板与水上的暖色调墨：`mix(vec3(1.,.5,.08),vec3(1.,.68,.3),…)`，alpha 为 `.75*(1.-exp(-3.2*sqrt(m)))`。
 
-### 8.7 What the reviewers saw, and the fix
+### 8.5 浅色下的 SVG 与回退
+- **只读一次主题。** 在构建时选定主题（`pageHtml({ theme })`，或 React 包装器上的 `data-theme`；isometrics 站点上图形的 build 返回 `theme`，`LivePlate` 把深色板包在自己的 `.iso[data-theme="dark"]` 里）。live 代码从最近的 `[data-theme]` 读取（`root.closest("[data-theme]")?.getAttribute("data-theme") !== "dark"`），并把 `uLight` 作为 `fixed` 传入。每个仅浅色的改动都用 `uLight` 门控（`mix(dark, light, uLight)`，或按 uniform 分支），深色输出保持原样。代价不大时保留深色可用。
+- **不用颜色字面量。** 如果图形在 CSS 里硬编码深色，转成带深色覆盖的 token：`.x { --x: light }`，然后 `.iso[data-theme="dark"] .x { --x: dark }`。必须与 token 匹配的 shader 常量从探针取（8.3 节）。
+- **嵌套主题。** `.iso:not([data-theme="dark"]) .x` 也会透过包裹深色板的浅色页面命中。反应堆的深色回退就是这样被乘成黑色的。把深色规则放在浅色规则之后、同等特异性，或以板自身主题为键：锻炉用 `.iso-plate[data-plate="light"]`。
+- **回退如何混合。** 饱和色调用 multiply，它能压暗且其下的线仍可见。淡色核心用普通混合，因为 multiply 不能提亮：反应堆无 WebGL 的核心是从 .85 的 `#fff` 到 .3 的 `#dcefff` 的径向渐变，普通混合。
+  - 回退颜色与 shader 来自同一条 ramp：铸造的 `glowLightCss`，玻璃熔炉的 `gatherInk` 与 shader 的聚光墨完全一致。
+  - 淡色 token 上加不透明度会淡成灰，所以回退要用饱和色相：托卡马克的回退环设 `--anatomy-lit: #e0409c` 与 `--anatomy-hi: #f27ec0`。
+- **回退形状变化要交叉淡化。** 托卡马克无 WebGL 的等离子环是 11 个预计算环（`LIMITED_RINGS`）。相邻环以和为 1 的线性权重交叉淡化，半径缓动与 shader 相同。用 6 个环时，淡化中途出现过双轮廓。
+- **带空隙的东西不放在半透明墨之下。** SVG 画的任何东西都会透过不完全不透明的墨显出来。锻炉的热带曾是一组笔画、笔画间露纸，透过 14% 透明的条压出灰色条纹。现在是一条用热渐变填充的面。
+- **从回退到 shader 的交接是精确的。** 点灯时 canvas 墨按 `u` 上升，其下的回退随之退场。回退用线性 `1 − u` 会让淡化中段比两端更淡。要精确线性交叉淡化，把回退的不透明度设为 `(1 − u)/(1 − u·α)`，其中 α 是 canvas 墨在关键处的 alpha：玻璃熔炉的 `--gf-gather-fade`，α 取聚光的中心停靠点。其余回退在 shader 接近接入前保持全强度：`clamp(0, calc(var(--gf-fallback, 1) * 12), 1)`。
+- **shader 画的每个物体都要有回退。** 铸造的出铁流原来没有，无 WebGL 时就缺失。现在是用 shader 所读同一份历史逐帧重建的 SVG 轮廓。
 
-| You see in light | Cause | Fix |
+### 8.6 墨与线相交之处
+canvas 叠在后层 SVG 的 0.6 px 描边之上。浅色下，未对准的边缘表现为描边上的淡色缝隙或彩色线，而不是深色接缝。
+- **止于描边的内缘。** 面的墨在描边之下加满，并止于描边内缘，即线宽的一半处：套件 0.6 px 线为 0.3 vb。实测计算出的描边宽度；锻炉的评审者猜的是 1.1。例子：反应堆的 `cutFade=smoothstep(-SEAM-.5*px,-SEAM+.5*px,gap)`，`SEAM=.3`；锻炉的 `strokeMeet`。色调加同样的半个描边内边距（铸造的 `ringLight`），这样它绝不画到线上，也不会在里面留下淡色带。
+- **没有描边的地方不要清墨。** 锻炉的遮罩在两个面共享的折痕处清了墨，而 SVG 不描这条线，条上出现了白色接缝。这种折痕改画在墨里：×0.72，至少 0.8 canvas px 宽（更锐会出成点线）。
+- **相邻光线不一致处做超采样。** 反应堆追踪四条亚像素光线，当命中、深度、种类、法线或切割面不同（`apart`）时取 16 个采样，切割面边缘因此不出阶梯。dpr 1 时一个 canvas 像素约与描边同宽，所以仍留一个像素的柔度。
+- **从画面外进入的物体**可以在屏幕空间从画布边缘淡入。铸造的出铁流在 11 vb 内淡入，起点在画布顶下 10.5 设备像素，边缘仍读 0，流读起来从上方来。
+
+### 8.7 评审者看到的现象与修复
+
+| 浅色下的现象 | 原因 | 修复 |
 |---|---|---|
-| A red-brown "ink smoke" plume | Hue × a dark multiplier, alpha set to brightness | A paper ramp: saturated body, pale core, alpha floor (8.1) |
-| A flame drawn as an outline, hollow inside | The dark limb mantle | Weight the body toward the axis, cut the mantle (8.4) |
-| First light goes pale, then dark | Terms faded one by one before inking | Fade the finished premultiplied ink once (8.2) |
-| A glow fades out through milky grey | Alpha-only fade of a pale ink | Dim energy and alpha together (8.2) |
-| A cavity gets darker as the fire goes out | Tonemap reddens the hue while alpha holds | Hue at steady brightness, alpha from energy, ember match (8.2) |
-| A salmon stage as glass or steel cools | Red mixed toward white | A blackbody-ordered ramp, pale only past yellow, core where emission peaks (8.4) |
-| Sparks look like dirt on the metal | Dark ink over a hotter emitter | Drown sparks over hotter bodies; saturated head, darker tail (8.4) |
-| Spark streaks beaded at zoom | Tails too thin | At least about 1.25 px wide; thin the tail less (8.4) |
-| A spark shows through the jet | No depth test against the jet | Fade it by depth behind the jet (8.4) |
-| A halo stains the paper around a stream | Dark-theme bloom in empty air | No halos in air in light (8.3) |
-| A salmon blob in the steam | Glow ink laid over the cloud | Tint the cloud toward pale amber (8.4) |
-| The vessel reads grey with the plasma on | Tint falls off too fast | A long-range wash term (8.3) |
-| A pale fringe or white seam along an edge | Ink stops short of the stroke, or clears an unstroked crease | End the ink at the stroke's inner edge; draw the crease in ink (8.6) |
-| A cream patch in the jet | One copy picks up another copy's term | Gate each copy (8.2) |
-| The dark plate's fallback is invisible | A `:not([data-theme="dark"])` rule matched through the light page | Order the dark rule last, or key on the plate (8.5) |
-| A grey, washed-out fallback glow | Opacity on a pale token | Saturated tokens; multiply tints, normal pale cores (8.5) |
-| Grey streaks through a hot face | SVG strokes with gaps under a translucent ink | Fill the face (8.5) |
-| Light on a face the source can't see | A surface light without the true occluder | Use the same geometry the SVG draws (8.3) |
+| 红棕色"墨烟"羽流 | 色相 × 暗色乘数，alpha 设为亮度 | 纸 ramp：饱和主体、淡色核心、alpha 下限（8.1） |
+| 火焰画成轮廓、内部空心 | 深色的边缘包层 | 主体向轴加权、去掉包层（8.4） |
+| 点灯先变淡后变暗 | 各项在上墨前逐个淡化 | 完成的预乘墨只淡一次（8.2） |
+| 辉光经乳灰淡出 | 只淡 alpha 的淡色墨 | 能量与 alpha 一起压暗（8.2） |
+| 火熄灭时腔体变暗 | alpha 保持不变时 tonemap 使色相变红 | 稳定亮度下取色相、alpha 由能量决定、向 EMBER 匹配（8.2） |
+| 玻璃或钢冷却时出现 salmon 阶段 | 红向白混合 | 黑体顺序的 ramp、过黄才变淡、核心放在发光峰处（8.4） |
+| 火花像金属上的脏东西 | 更热发光体上的暗墨 | 更热物体上淹没火花；饱和头部、更暗尾部（8.4） |
+| 缩放时火花光痕串珠 | 尾部太细 | 至少约 1.25 px 宽；尾部别削太细（8.4） |
+| 火花透过尾焰显出 | 对尾焰没有深度测试 | 尾焰后面按深度淡出（8.4） |
+| 流束周围纸上有晕渍 | 空中的深色主题 bloom | 浅色下空中不放晕（8.3） |
+| 蒸汽里的 salmon 斑块 | 云上叠了辉光墨 | 云向淡琥珀加色调（8.4） |
+| 等离子开启时容器仍读灰 | 色调衰减太快 | 长程冲刷项（8.3） |
+| 边缘出现淡色镶边或白色接缝 | 墨停在描边之前，或清掉未描边折痕 | 墨止于描边内缘；折痕画进墨里（8.6） |
+| 尾喷中出现奶油色斑 | 一份拷贝捡到另一份的项 | 各拷贝分别门控（8.2） |
+| 深色板的回退不可见 | `:not([data-theme="dark"])` 规则透过浅色页命中 | 深色规则放在最后，或以板为键（8.5） |
+| 回退辉光发灰发淡 | 淡色 token 上加不透明度 | 饱和 token；色调用 multiply、淡核心用普通混合（8.5） |
+| 热面透出灰色条纹 | 半透明墨之下有带空隙的 SVG 描边 | 用面填充（8.5） |
+| 源看不见的面上有光 | 表面光没有用真实遮挡物 | 使用与 SVG 相同的几何（8.3） |
 
-## 8b. Shaders on a turning group
-In a 3D figure (`references/3d.md`) parts move as rigid groups, so a shader has to follow them.
-- **Anchor to a part**: `controller.anchor(group, restPoint, restDir)` gives `{ world, screen, direction }` every frame. Pass them as uniforms. That is how an LED rides a flexing fingertip, a flame stays on a ruptured line's end and a spark source sits on a knuckle.
-- **Anchor to a surface**: prepend `glslPose("Dial")` (or `GLSL_TURN` for one group) and pass `TURN.poseUniforms(controller, "dial", "uDial")`. Then `vec3 q = toDial(onFloor(vb, z))` is the surface point in the group's rest-world coordinates. Oil pooling on a turntable, a texture revealed by light and a scorch mark all turn with it.
-- **World space stays world space.** Smoke, sparks after they leave the source and oil on the bench never touch a group transform. Emit at the anchor's world position, then integrate in world.
-- **Occlusion by live parts.** A front canvas sits over a live layer. Mask its ink with the parts painted after the effect's own part: `TURN.cover(controller, [partName])` → `uCoverEdge`, `uCoverCount`, then `ink *= 1. - coverOf(vb, .7 * px)`. The masks are the exact convex silhouettes pushed out 0.3 vb, so ink stops at the occluder's stroke. Six polygons of ten edges each. Read `MAX_FRAGMENT_UNIFORM_VECTORS` and keep the SVG fallback below 128.
-- **A back canvas between live layers** needs no masks: put the surface that receives light in its own live layer under the parts that cover it (the turning dial's face under the hand).
-- Vector uniform arrays (`uniform vec3 uSpark[24]`) take a `Float32Array` through `draw`.
-- **The SVG fallback on a moving part** is a `T.billboard({ part, at, normal, svg })`. Its markup is in viewBox px centred on the projected point, not in world units, so scale world sizes by `G.scaleOf(P)`: a glow sized for a lens of radius 1.1 is `<circle r="${(1.1 * G.scaleOf(P)).toFixed(2)}"/>`. Written as `r="1.1"`, it draws a pin-dot about a third of the lens's size. Check it with `--no-webgl` and a 4× zoom.
+## 8b. 转动组上的 shader
+3D 图形（`references/3d.md`）中部件作为刚体组移动，shader 必须跟随它们。
+- **锚定到部件**：`controller.anchor(group, restPoint, restDir)` 每帧给出 `{ world, screen, direction }`。作为 uniform 传入。LED 骑在弯曲指尖上、火焰停在破裂线端点、火花源坐在关节上，都靠它。
+- **锚定到表面**：前置 `glslPose("Dial")`（单组用 `GLSL_TURN`）并传 `TURN.poseUniforms(controller, "dial", "uDial")`。此时 `vec3 q = toDial(onFloor(vb, z))` 是组静止世界坐标中的表面点。转台上的油洼、被光照出的纹理与灼痕都随它转动。
+- **世界空间保持世界空间。** 烟、离源后的火花与台面上的油绝不触碰组变换。在锚点的世界位置发射，然后在世界中积分。
+- **活动部件的遮挡。** 前 canvas 位于活动层之上。用画在效果自身部件之后的部件遮罩其墨：`TURN.cover(controller, [partName])` → `uCoverEdge`、`uCoverCount`，然后 `ink *= 1. - coverOf(vb, .7 * px)`。遮罩是被推出 0.3 vb 的精确凸轮廓，墨止于遮挡物的描边。六个多边形、各十条边。读取 `MAX_FRAGMENT_UNIFORM_VECTORS`，SVG 回退保持在 128 以下。
+- **夹在活动层之间的后 canvas** 不需要遮罩：把受光表面放进自己的活动层、排在覆盖它的部件之下（转动的表盘面排在手之下）。
+- 向量 uniform 数组（`uniform vec3 uSpark[24]`）通过 `draw` 接收 `Float32Array`。
+- **活动部件上的 SVG 回退**是 `T.billboard({ part, at, normal, svg })`。其标记以投影点为中心、以 viewBox px 为单位，不是世界单位，所以世界尺寸要乘 `G.scaleOf(P)`：为半径 1.1 的透镜设计的辉光是 `<circle r="${(1.1 * G.scaleOf(P)).toFixed(2)}"/>`。写成 `r="1.1"` 画出的是约为透镜三分之一大的针点。用 `--no-webgl` 与 4× 放大检查。
 
-## 9. Verify
+## 9. 验证
 
-Use `scripts/drive.mjs` for anything that moves; `capture.mjs` also has WebGL now, so it is fine for still shots of a shader page. `references/verify.md` has the usage. On top of the normal checklist:
+会动的东西用 `scripts/drive.mjs`；`capture.mjs` 现在也支持 WebGL，拍摄 shader 页面的静态截图没问题。用法见 `references/verify.md`。在常规清单之上：
 
-- **A contact sheet across every transition:** start, each phase change, steady state and stop. Real-time sheets on a heavy WebGL page are too sparse, because a headless capture takes 60–200 ms and blocks animation frames. Slow the page's clock first with `["slow", 0.05]` (20× slow motion for `requestAnimationFrame` and `performance.now`), take the sheet, then `["slow", 1]`. To catch something that starts on the first frame, such as a first-light fade-in, pass `--preload` a file containing `window.__driveSpeed=0.04` so the page runs slowly from its first frame. Wait for a phase with `["until", "document.querySelector('[data-readout]').textContent.includes('main stage')", 8000]` rather than a guessed `wait`. Hold any idle tour off before each sheet: its resume timer runs on the wall clock, not the slowed one, so it can take the targets back mid-sheet. A key press holds it for a few real seconds; for a long slowed sheet, stub the timer with `--preload` and wait for rest first (`verify.md`, "Slow mode doesn't slow timers").
-- **Numbers, not just pictures.** `canvas.getContext("webgl")` returns the page's own context. In a `requestAnimationFrame` callback, read uniforms with `gl.getUniform(gl.getParameter(gl.CURRENT_PROGRAM), location)` and read the mean canvas RGB with `gl.readPixels`. Readback only works in the same task as the draw, because `preserveDrawingBuffer` is off: all-zero frames from a separate task are a test artefact. Log one row per frame across a whole run. Hue and mean luminance should each move monotonically through a phase change, apart from deliberate bursts.
-- **Edges read 0.** Read back the last 10 rows and columns of the canvas during every phase. Anything above 0 is a cut that will show under screen blending.
-- **In light, log ink, not brightness.** Per frame, log the ink a region lays on white, `1 − lum(rgb + 1 − a)`, with the hook in `verify.md` ("Light-theme shaders"). Do it for each region that matters (a cavity, the core, a fallback-only area) across first light, every phase change and the fade-out. Ink must follow the physical quantity: up as the light comes in, down as it goes, with no hump and no dip. Stated as numbers, the afterburner's cut window fell 1894 → 155, and its light-off rose 154 → 1959 and settled at 1914.
-- **In light, probe colours along the physical ramp.** For something that heats or cools, read the centre and rim pixel at several temperatures. They must run dull red → orange → yellow → near-white, with the rim cooler than the centre and no salmon or grey stage. The glory hole's table runs from 255/179/99 centre and 252/114/25 rim at 930 °C, through 211/63/6 and 165/28/1 at about 620 °C, to clear glass by 465 °C. For a volume, read a cross-section of ink from edge to edge: it should peak on the axis.
-- **In light, check the dark path too.** Every light change sits behind `uLight`, so the dark build's frames should match its baseline. Also render a dark plate inside a light page, with and without WebGL (the nested-theme trap, section 8.5).
-- **2× and 4× crops** of every place the effect meets the SVG: rims, lips, deck edges, wall bands, the paper corners, occluders, and every opening the effect is seen through (does it stop at the rim on all four sides, with the recess wall showing below?). Look for seams, hard edges, banding, a dark collar, a double line or a sudden colour switch. In light, also shoot 8–16× crops wherever ink meets a stroke (cut faces, rims, mouths, creases), and look for a pale gap between ink and line, ink painted over a line, or a stroke the ink cleared. Compare the same crop with the front SVG hidden and with the canvas hidden (set `style.display="none"` with an `eval`).
-- **Fallback.** Run `drive.mjs` with `--no-webgl` (every `getContext("webgl")` returns `null`) and check that `data-gl` is absent and the SVG alone still reads, in both themes. In light, the fallback should show the same inks as the shader and the same dark ground, and every body the shader draws should be there. Film first light on a sheet with `--preload` slowing the page from its first frame: the handover from fallback to shader must not dip (section 8.5).
-- **Reduced motion** (`--reduced`): one still, representative frame.
-- **Console clean.** A shader compile error arrives as `console.error` from `onError`.
+- **覆盖每次过渡的连拍表：** 开始、每次相位变化、稳态与停止。重型 WebGL 页面上的实时连拍太稀疏，因为无头捕获耗时 60–200 ms 并阻塞动画帧。先用 `["slow", 0.05]` 放慢页面时钟（对 `requestAnimationFrame` 与 `performance.now` 慢 20 倍），拍表，然后 `["slow", 1]`。要捕捉第一帧就开始的东西（如点灯淡入），用 `--preload` 传一个包含 `window.__driveSpeed=0.04` 的文件，让页面从第一帧就慢跑。用 `["until", "document.querySelector('[data-readout]').textContent.includes('main stage')", 8000]` 等相位，而不是猜一个 `wait`。每张表之前都要按住空闲巡游：它的恢复定时器走的是墙上时钟而不是放慢的时钟，会在表中途把目标拉回去。一次按键能让它停几真实秒；长的放慢连拍要用 `--preload` stub 定时器并先等静止（`verify.md`，"Slow mode doesn't slow timers"）。
+- **数字，不只是图。** `canvas.getContext("webgl")` 返回页面自己的上下文。在 `requestAnimationFrame` 回调里，用 `gl.getUniform(gl.getParameter(gl.CURRENT_PROGRAM), location)` 读 uniform，用 `gl.readPixels` 读画布平均 RGB。回读只在与绘制相同的任务里有效，因为 `preserveDrawingBuffer` 是关的：来自单独任务的全零帧是测试伪影。整次运行每帧记一行。色相与平均亮度在相位变化中都应单调移动，有意的爆发除外。
+- **边缘读 0。** 每个相位都回读画布最后 10 行与列。任何大于 0 的值都是会在 screen 混合下显形的截断。
+- **浅色下记录墨，而不是亮度。** 每帧记录一个区域铺在白上的墨，`1 − lum(rgb + 1 − a)`，钩子见 `verify.md`（"Light-theme shaders"）。对每个关键区域（腔体、核心、仅回退区域）在点灯、每次相位变化与淡出期间都做。墨必须跟随物理量：光进来时升，光退去时降，没有鼓包也没有凹陷。用数字说：加力燃烧室的熄灭窗口从 1894 降到 155，其灭灯从 154 升到 1959 并稳定在 1914。
+- **浅色下沿物理 ramp 探测颜色。** 对加热或冷却的东西，在若干温度读中心与边缘像素。它们必须按暗红 → 橙 → 黄 → 近白变化，边缘比中心冷，没有 salmon 或灰的阶段。烧口的表从 930 °C 的中心 255/179/99、边缘 252/114/25，经约 620 °C 的 211/63/6 与 165/28/1，到 465 °C 时成为透明玻璃。对体积，从边到边读一行墨的横截面：峰值应在轴上。
+- **浅色下也要查深色路径。** 每个浅色改动都在 `uLight` 之后，所以深色构建的帧应与其基线一致。另外渲染一张浅色页面里的深色板，分别带与不带 WebGL（嵌套主题陷阱，第 8.5 节）。
+- **效果与 SVG 相交处的 2× 与 4× 裁片：** 边缘、唇线、台面边、墙带、纸角、遮挡物，以及效果被透过来看的每个开口（它是否在四侧都止于沿口、其下露出凹槽壁？）。找接缝、硬边、成带、暗领、双线或突然变色。浅色下，凡墨与描边相遇处（切割面、边缘、口部、折痕）也拍 8–16× 裁片，找墨与线之间的淡色缝隙、墨压过线、或被墨清掉的描边。同一裁片分别在前层 SVG 隐藏与 canvas 隐藏下再比一次（用 `eval` 设 `style.display="none"`）。
+- **回退。** 用 `--no-webgl` 跑 `drive.mjs`（每个 `getContext("webgl")` 返回 `null`），检查 `data-gl` 不存在、两种主题下仅靠 SVG 仍可读。浅色下，回退应显示与 shader 相同的墨、相同的暗底，shader 画的每个物体都在。用 `--preload` 让页面从第一帧就放慢，连拍记录点灯：从回退到 shader 的交接不得下陷（第 8.5 节）。
+- **减少动态**（`--reduced`）：一张静止的代表性帧。
+- **控制台干净。** shader 编译错误经 `onError` 以 `console.error` 到达。
 
-## 10. Performance
+## 10. 性能
 
-- Cost is roughly pixels × samples. The Raptor runs 28 volume samples, each with four shock-cell terms, plus a 28-step ground search with 7 bisections, an 8-sample halo, a 10-sample splash curtain and 6 steam samples per canvas, at up to 1.5× device ratio. It runs in SwiftShader, but its frame time hasn't been measured on a real GPU. Measure in a real browser's Performance panel before shipping something heavier, and if it's too slow, cut samples first, then `maxRatio`.
-- The ripple tank's paper shader evaluates the two-source field four times per pixel (once for the refraction shift and three times for the caustic's fixed-point inverse), each source costing six texture reads of its history instead of a 24-step uniform loop. It measured about 1 ms per draw on a laptop GPU; phone cost is unmeasured.
-- Know which GPU you measured. Headless Chrome in `drive.mjs` and `capture.mjs` uses the real GPU when it can and SwiftShader otherwise; log `gl.getParameter(gl.RENDERER)` before trusting a frame time.
-- Spend samples only where they matter. Bound the march (a cylinder or box), start at the ground hit, and gate whole terms on uniforms.
-- Two canvases cost two full-screen passes. Clear the one that has nothing to show (the Raptor's veil is drawn only while steam, vapour or the shock is present).
-- Don't animate `uTime` if nothing in the field needs it. The ripple tank passes `draw(values, 0)` and moves only the wave phase, so a reduced-motion frame is truly still.
-- When idle, stop the loop. A shader page that stays at 60 fps with nothing happening is a bug.
+- 成本约等于像素 × 采样。Raptor 跑 28 个体积采样，每个带四项激波单元项，外加 28 步地面搜索（含 7 次二分）、8 采样辉光、10 采样水花幕与每 canvas 6 个蒸汽采样，设备比最高 1.5×。它在 SwiftShader 下能跑，但真实 GPU 上的帧时间未测过。发布更重的东西之前，先在真实浏览器的 Performance 面板里测量；太慢就先砍采样，再砍 `maxRatio`。
+- 涟漪水槽的纸 shader 每像素求值双源场四次（一次为折射位移，三次为焦散的定点逆运算），每个源花六次纹理读取读其历史，而不是 24 步 uniform 循环。在笔记本 GPU 上测得每次绘制约 1 ms；手机成本未测。
+- 要知道你测的是哪块 GPU。`drive.mjs` 与 `capture.mjs` 的无头 Chrome 能用时用真实 GPU，否则用 SwiftShader；相信帧时间之前先记 `gl.getParameter(gl.RENDERER)`。
+- 采样只花在要紧处。给步进设界（圆柱或盒），从地面命中开始，整项用 uniform 门控。
+- 两块 canvas 就是两次全屏 pass。清空没有东西可显示的那块（Raptor 的 veil 只在蒸汽、水汽或冲击存在时才绘制）。
+- 场里没东西需要就不要动 `uTime`。涟漪水槽传 `draw(values, 0)`，只移动波相位，减少动态的帧因此真正静止。
+- 空闲时停掉循环。一个没有任何动静却保持 60 fps 的 shader 页面是 bug。

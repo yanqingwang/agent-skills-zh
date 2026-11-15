@@ -1,88 +1,92 @@
-# Chromatic Aberration — CRT RGB Split
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/mixed--chromatic-aberration/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 色差故障（CRT RGB 分离）
 
-Dramatic tech-creative design simulating CRT monitor chromatic aberration effect. Uses ultra-dark navy background with cyan and hot pink offset text layers that morph from tight alignment to maximum spread and back. Perfect for tech startups, AI platforms, and creative technology showcases.
+## 风格概览
 
-- **Scenario**: Tech startups, AI platforms, creative technology, developer tools, futuristic product launches
-- **Mood**: Futuristic, glitch aesthetic, high-tech, edgy, cyber
-- **Tone**: Ultra-dark with neon cyan and hot pink accents
+模拟 CRT 显示器色差效果的戏剧化科技创意设计。以超暗藏青为底，青色与亮粉色错位文字层在 morph 中从紧贴对齐张开到最大偏移、再收回。适合科技创业、AI 平台和创意技术展示。
 
-## Color Palette
+- **场景**：科技创业、AI 平台、创意技术、开发者工具、未来感产品发布
+- **气质**：未来感、故障美学、高科技、先锋、赛博
+- **基调**：超暗底色，配霓虹青与亮粉点缀
 
-| Name         | Hex     | Usage                                        |
+## 配色
+
+| 名称         | Hex     | 用途                                       |
 | ------------ | ------- | -------------------------------------------- |
-| Background   | #050814 | Ultra-dark navy (almost black)               |
-| Background 2 | #0A1030 | Slightly lighter navy for variation          |
-| Cyan         | #00F5E4 | Bright cyan for aberration layer and accents |
-| Pink         | #FF0066 | Hot pink for aberration layer and accents    |
-| White        | #FFFFFF | White for main text layer                    |
-| Dim          | #334466 | Dark blue-grey for lines and dividers        |
-| Pale         | #8899CC | Light blue-grey for supporting text          |
+| Background   | #050814 | 超暗藏青（近黑）                             |
+| Background 2 | #0A1030 | 稍亮的藏青，用于变化                         |
+| Cyan         | #00F5E4 | 色差层与点缀的亮青                           |
+| Pink         | #FF0066 | 色差层与点缀的亮粉                           |
+| White        | #FFFFFF | 主文字层的白色                               |
+| Dim          | #334466 | 线条与分隔线的暗蓝灰                         |
+| Pale         | #8899CC | 辅助文字的浅蓝灰                             |
 
-## Typography
+## 字体排印
 
-| Element        | Font           | Size             |
+| 元素           | 字体           | 字号             |
 | -------------- | -------------- | ---------------- |
-| Hero title     | Segoe UI Black | 68pt             |
-| Section labels | Segoe UI       | 10pt (uppercase) |
-| Stats          | Segoe UI Black | 18pt             |
-| Body           | Segoe UI       | 13-14pt          |
+| 主标题         | Segoe UI Black | 68pt             |
+| 区块标签       | Segoe UI       | 10pt（全大写）   |
+| 数据大字       | Segoe UI Black | 18pt             |
+| 正文           | Segoe UI       | 13-14pt          |
 
-## Design Techniques
+## 设计手法
 
-- **Triple-layer text**: Same text rendered 3 times with horizontal offsets (pink left, cyan right, white center)
-- **Animated aberration**: Offset distance morphs across slides (0.3cm → 1.5cm → 4cm → 0cm → vertical shift → converge)
-- **Ghost text as actors**: Cyan and pink layers are actual morph actors (`!!cyan-layer`, `!!pink-layer`) with semi-transparent opacity (0.20-0.45)
-- **Minimal decoration**: Thin horizontal lines (0.10cm height) in cyan/pink
-- **CRT/glitch aesthetic**: Simulates analog RGB color separation
-- **Opacity variation**: Aberration layers fade in/out (0.20-0.45) as they spread/collapse
+- **三层文字**：同一段文字渲染 3 次，水平错位（粉在左、青在右、白居中）
+- **动态色差**：偏移距离跨页 morph（0.3cm → 1.5cm → 4cm → 0cm → 纵向偏移 → 汇聚）
+- **幽灵文字作 actor**：青色与粉色层是真实的 morph actor（`!!cyan-layer`、`!!pink-layer`），半透明（0.20-0.45）
+- **极简装饰**：青/粉细横线（0.10cm 高）
+- **CRT/故障美学**：模拟模拟信号的 RGB 色彩分离
+- **透明度变化**：色差层在张开/收拢时淡入淡出（0.20-0.45）
 
-## Page Structure (6 slides)
+## 页面结构（6 页）
 
-| Slide | Type      | Aberration Pattern | Description                                  |
+| 页码  | 类型      | 色差模式           | 描述                                         |
 | ----- | --------- | ------------------ | -------------------------------------------- |
-| 1     | hero      | Tight (±0.3cm)     | Opening with company name, minimal split     |
-| 2     | statement | Spread (±1.5cm)    | Product intro, aberration widens             |
-| 3     | statement | Maximum (±4cm)     | Technology, ghostly CRT effect at peak split |
-| 4     | evidence  | Collapsed (0cm)    | Metrics, all layers converge (no aberration) |
-| 5     | statement | Vertical shift     | Pricing, aberration shifts to Y-axis         |
-| 6     | cta       | Reconverge (0cm)   | Call to action, perfect alignment returns    |
+| 1     | hero      | 紧贴（±0.3cm）     | 开场：公司名，最小分离                       |
+| 2     | statement | 张开（±1.5cm）     | 产品介绍，色差变宽                           |
+| 3     | statement | 最大（±4cm）       | 技术介绍，分离峰值处的幽灵 CRT 效果          |
+| 4     | evidence  | 收拢（0cm）        | 数据指标，所有层汇聚（无色差）               |
+| 5     | statement | 纵向偏移           | 定价，色差转为 Y 轴方向                      |
+| 6     | cta       | 重新汇聚（0cm）    | 行动号召，完美对齐回归                       |
 
-## Key Morph Patterns
+## 关键 Morph 模式
 
-- **!!pink-layer**: Pink ghost text that moves left as aberration spreads
-  - S1: x=1.7cm (tight left) → S2: x=0.5cm → S3: x=0cm (maximum left) → S4: x=2cm (converged) → S5: y=4cm (vertical shift) → S6: x=2cm (reconverged)
+- **!!pink-layer**：色差张开时向左移动的粉色幽灵文字
+  - S1: x=1.7cm（紧贴偏左）→ S2: x=0.5cm → S3: x=0cm（最左）→ S4: x=2cm（汇聚）→ S5: y=4cm（纵向偏移）→ S6: x=2cm（重新汇聚）
 
-- **!!cyan-layer**: Cyan ghost text that moves right as aberration spreads
-  - S1: x=2.3cm (tight right) → S2: x=3.5cm → S3: x=6cm (maximum right) → S4: x=2cm (converged) → S5: y=2cm (vertical shift) → S6: x=2cm (reconverged)
+- **!!cyan-layer**：色差张开时向右移动的青色幽灵文字
+  - S1: x=2.3cm（紧贴偏右）→ S2: x=3.5cm → S3: x=6cm（最右）→ S4: x=2cm（汇聚）→ S5: y=2cm（纵向偏移）→ S6: x=2cm（重新汇聚）
 
-- **White main text**: Always centered at x=2cm (anchor point)
+- **白色主文字**：始终居中于 x=2cm（锚点）
 
-- **Opacity dynamics**: As aberration spreads, opacity decreases (0.45 → 0.35 → 0.22) for ghostly effect; increases when converged
+- **透明度动态**：色差张开时透明度降低（0.45 → 0.35 → 0.22）制造幽灵感；汇聚时升高
 
-## Aberration Stages
+## 色差阶段
 
-1. **Tight** (S1): ±0.3cm offset, opacity 0.40-0.45 — subtle RGB split
-2. **Spread** (S2): ±1.5cm offset, opacity 0.35 — noticeable separation
-3. **Maximum** (S3): ±4cm offset, opacity 0.20-0.22 — extreme CRT glitch, white text also semi-transparent (0.90)
-4. **Collapsed** (S4): All layers at x=2cm, opacity 0.35 — perfect alignment, effect "resolved"
-5. **Vertical** (S5): Horizontal converged, vertical offset (y diff) — axis shift
-6. **Reconverged** (S6): All layers perfectly aligned — clarity restored
+1. **紧贴**（S1）：偏移 ±0.3cm，透明度 0.40-0.45，轻微 RGB 分离
+2. **张开**（S2）：偏移 ±1.5cm，透明度 0.35，分离明显
+3. **最大**（S3）：偏移 ±4cm，透明度 0.20-0.22，极端 CRT 故障，白字也半透明（0.90）
+4. **收拢**（S4）：所有层回到 x=2cm，透明度 0.35，完美对齐，效果"解除"
+5. **纵向**（S5）：水平已汇聚，改为纵向偏移（y 差），轴向切换
+6. **重新汇聚**（S6）：所有层完美对齐，清晰度恢复
 
-## Technical Notes
+## 技术说明
 
-- **Morph actors are text shapes**: The pink and cyan layers are actual text boxes with `!!` prefix names, not decorative shapes
-- **Stacking order**: Pink (bottom) → Cyan (middle) → White (top) for proper layering
-- **Thin accent lines**: 0.10cm height rects in cyan/pink provide minimal structure
-- **Dark background essential**: Ultra-dark (#050814) makes neon colors pop and aberration effect visible
+- **Morph actor 是文本形状**：粉色和青色层是带 `!!` 前缀名称的真实文本框，不是装饰形状
+- **叠放顺序**：Pink（底）→ Cyan（中）→ White（顶），保证层叠正确
+- **细点缀线**：0.10cm 高的青/粉矩形，提供最低限度的结构感
+- **暗背景必不可少**：超暗底（#050814）让霓虹色更突出，色差效果清晰可见
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.py` (Python with officecli).
+完整构建脚本见 `build.py`（Python + officecli）。
 
-**Recommended slides to read for core techniques**:
+**建议阅读的核心技巧页**：
 
-- **Slide 1 (hero)** — triple-layer text setup with tight aberration (±0.3cm)
-- **Slide 3 (statement)** — maximum aberration spread (±4cm) with opacity fade for ghostly CRT effect
-- **Slide 5 (statement)** — vertical axis shift demonstrating aberration can move in Y dimension
+- **第 1 页（hero）**：紧贴色差（±0.3cm）下的三层文字设置
+- **第 3 页（statement）**：最大色差张开（±4cm）配透明度淡出，营造幽灵 CRT 效果
+- **第 5 页（statement）**：纵向轴切换，演示色差可以在 Y 维度运动

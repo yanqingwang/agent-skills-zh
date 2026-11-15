@@ -1,37 +1,41 @@
-# Swiss System — Pure Black and Red
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/bw--swiss-system/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Swiss System：纯黑与红
 
-Pure white background with ink black and fire red only. Features !!rule actor (full-width rect) that sweeps vertically across slides, creating dramatic transformations.
+## 风格概览
 
-- **Scenario**: Corporate, finance, consulting, high-end professional services
-- **Mood**: Clean, systematic, bold, Swiss design
-- **Tone**: White with black and red accents
+纯白背景，只用墨黑与火红两色。特色是 !!rule Actor（全宽矩形）跨幻灯片纵向扫动，制造戏剧性变换。
 
-## Color Palette
+- **适用场景**：企业、金融、咨询、高端专业服务
+- **氛围**：干净、系统化、大胆、瑞士设计
+- **色调**：白底，黑色与红色点缀
 
-| Name       | Hex     | Usage                    |
-| ---------- | ------- | ------------------------ |
-| Background | #FFFFFF | Pure white               |
-| Ink        | #000000 | Black for text and rules |
-| Fire       | #FF0000 | Red for accents          |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 背景 | #FFFFFF | 纯白 |
+| 墨黑 | #000000 | 黑色，用于文字与线条 |
+| 火红 | #FF0000 | 红色，用于点缀 |
 
-- !!rule (full-width INK rect) sweeps slide vertically:
-  - S1: mid-rule
-  - S2: top thick
-  - S3: bottom thick
-  - S4: thin center
-  - S5: wide top-third band
-  - S6: full INK inversion (CTA - entire slide becomes black)
-- Zero darkness until final CTA slide
-- Swiss design principles: grid, typography, minimal color
+## 设计技法
 
-## Key Morph Pattern
+- !!rule（全宽 INK 色 rect）在幻灯片上纵向扫动：
+  - S1: 中部横线
+  - S2: 顶部粗条
+  - S3: 底部粗条
+  - S4: 中央细线
+  - S5: 上三分之一宽条带
+  - S6: 整页 INK 反色（CTA：整张幻灯片变黑）
+- 直到最后的 CTA 页之前，画面零深色
+- 瑞士设计原则：网格、字体排印、极简用色
 
-The !!rule actor creates a dramatic journey from subtle horizontal line to complete slide inversion, representing transformation from light to dark, question to answer, problem to solution.
+## 关键 Morph 模式
 
-## Reference Script
+!!rule Actor 完成一段戏剧旅程：从一条含蓄的水平线到整页反色，象征从明到暗、从疑问到回答、从问题到解法的转变。
 
-Complete build script available in `build.py`.
+## 参考脚本
+
+完整构建脚本见 `build.py`。

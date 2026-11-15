@@ -1,12 +1,16 @@
-# REST Design Patterns
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/api-designer/references/rest-patterns.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Resource-Oriented Architecture
+# REST 设计模式
 
-REST APIs are built around resources, not actions. Resources are the nouns of your API.
+## 面向资源的架构
 
-### Resource Identification
+REST API 围绕资源构建，而不是围绕动作。资源是你 API 的名词。
 
-**Good Resource URIs:**
+### 资源标识
+
+**好的资源 URI：**
 ```
 GET    /users                  # Collection
 GET    /users/{id}             # Individual resource
@@ -17,37 +21,37 @@ PATCH  /users/{id}             # Update resource
 DELETE /users/{id}             # Delete resource
 ```
 
-**Bad Resource URIs:**
+**差的资源 URI：**
 ```
 POST   /getUser                # Verb in URI
 POST   /createUser             # Verb in URI
 GET    /user?action=delete     # Action as query param
 ```
 
-### Resource Naming Conventions
+### 资源命名规范
 
-- Use plural nouns for collections: `/users`, `/orders`, `/products`
-- Use lowercase and hyphens for readability: `/shipping-addresses`
-- Avoid deep nesting (max 2-3 levels): `/users/{id}/orders/{orderId}`
-- Use query parameters for filtering: `/users?status=active&role=admin`
+- 集合用复数名词：`/users`、`/orders`、`/products`
+- 小写加连字符，提高可读性：`/shipping-addresses`
+- 避免过深嵌套（最多 2-3 层）：`/users/{id}/orders/{orderId}`
+- 用查询参数做过滤：`/users?status=active&role=admin`
 
-## HTTP Method Semantics
+## HTTP 方法语义
 
-### Safe and Idempotent Methods
+### 安全与幂等方法
 
-| Method | Safe | Idempotent | Use Case |
+| 方法 | 安全 | 幂等 | 使用场景 |
 |--------|------|------------|----------|
-| GET | Yes | Yes | Retrieve resource(s) |
-| POST | No | No | Create resource, non-idempotent operations |
-| PUT | No | Yes | Replace entire resource |
-| PATCH | No | No | Partial update |
-| DELETE | No | Yes | Remove resource |
-| HEAD | Yes | Yes | Get metadata only |
-| OPTIONS | Yes | Yes | Get allowed methods |
+| GET | 是 | 是 | 获取资源 |
+| POST | 否 | 否 | 创建资源、非幂等操作 |
+| PUT | 否 | 是 | 替换整个资源 |
+| PATCH | 否 | 否 | 部分更新 |
+| DELETE | 否 | 是 | 删除资源 |
+| HEAD | 是 | 是 | 仅获取元数据 |
+| OPTIONS | 是 | 是 | 获取允许的方法 |
 
-### Method Usage
+### 方法用法
 
-**GET - Retrieve Resources**
+**GET - 获取资源**
 ```http
 GET /users/123
 Accept: application/json
@@ -61,7 +65,7 @@ Response: 200 OK
 }
 ```
 
-**POST - Create Resources**
+**POST - 创建资源**
 ```http
 POST /users
 Content-Type: application/json
@@ -81,7 +85,7 @@ Location: /users/124
 }
 ```
 
-**PUT - Replace Resource**
+**PUT - 替换资源**
 ```http
 PUT /users/123
 Content-Type: application/json
@@ -100,7 +104,7 @@ Response: 200 OK
 }
 ```
 
-**PATCH - Partial Update**
+**PATCH - 部分更新**
 ```http
 PATCH /users/123
 Content-Type: application/json
@@ -118,51 +122,51 @@ Response: 200 OK
 }
 ```
 
-**DELETE - Remove Resource**
+**DELETE - 删除资源**
 ```http
 DELETE /users/123
 
 Response: 204 No Content
 ```
 
-## HTTP Status Codes
+## HTTP 状态码
 
-### Success Codes (2xx)
+### 成功状态码（2xx）
 
-- **200 OK** - Request succeeded (GET, PUT, PATCH)
-- **201 Created** - Resource created (POST), include Location header
-- **202 Accepted** - Request accepted for async processing
-- **204 No Content** - Success with no response body (DELETE)
+- **200 OK** - 请求成功（GET、PUT、PATCH）
+- **201 Created** - 资源已创建（POST），包含 Location 响应头
+- **202 Accepted** - 请求已接受，进入异步处理
+- **204 No Content** - 成功但无响应体（DELETE）
 
-### Redirection (3xx)
+### 重定向（3xx）
 
-- **301 Moved Permanently** - Resource permanently moved
-- **302 Found** - Temporary redirect
-- **304 Not Modified** - Cached version is still valid
+- **301 Moved Permanently** - 资源已永久移动
+- **302 Found** - 临时重定向
+- **304 Not Modified** - 缓存版本仍然有效
 
-### Client Errors (4xx)
+### 客户端错误（4xx）
 
-- **400 Bad Request** - Invalid request syntax or validation error
-- **401 Unauthorized** - Authentication required or failed
-- **403 Forbidden** - Authenticated but not authorized
-- **404 Not Found** - Resource doesn't exist
-- **405 Method Not Allowed** - HTTP method not supported for resource
-- **409 Conflict** - Request conflicts with current state (e.g., duplicate)
-- **422 Unprocessable Entity** - Valid syntax but semantic errors
-- **429 Too Many Requests** - Rate limit exceeded
+- **400 Bad Request** - 请求语法无效或校验失败
+- **401 Unauthorized** - 需要认证或认证失败
+- **403 Forbidden** - 已认证但无权限
+- **404 Not Found** - 资源不存在
+- **405 Method Not Allowed** - 资源不支持该 HTTP 方法
+- **409 Conflict** - 请求与当前状态冲突（如重复创建）
+- **422 Unprocessable Entity** - 语法正确但语义错误
+- **429 Too Many Requests** - 超出速率限制
 
-### Server Errors (5xx)
+### 服务器错误（5xx）
 
-- **500 Internal Server Error** - Unexpected server error
-- **502 Bad Gateway** - Invalid response from upstream server
-- **503 Service Unavailable** - Server temporarily unavailable
-- **504 Gateway Timeout** - Upstream server timeout
+- **500 Internal Server Error** - 服务器意外错误
+- **502 Bad Gateway** - 上游服务器返回无效响应
+- **503 Service Unavailable** - 服务器暂时不可用
+- **504 Gateway Timeout** - 上游服务器超时
 
-## HATEOAS (Hypermedia)
+## HATEOAS（超媒体）
 
-### Hypermedia-Driven APIs
+### 超媒体驱动的 API
 
-Include links to related resources and available actions:
+包含指向相关资源和可用操作的链接：
 
 ```json
 {
@@ -178,7 +182,7 @@ Include links to related resources and available actions:
 }
 ```
 
-### HAL (Hypertext Application Language)
+### HAL（Hypertext Application Language）
 
 ```json
 {
@@ -201,9 +205,9 @@ Include links to related resources and available actions:
 }
 ```
 
-## Content Negotiation
+## 内容协商
 
-### Accept Headers
+### Accept 头
 
 ```http
 GET /users/123
@@ -216,7 +220,7 @@ GET /users/123
 Accept: application/hal+json
 ```
 
-### Response Content-Type
+### 响应 Content-Type
 
 ```http
 Content-Type: application/json; charset=utf-8
@@ -224,18 +228,18 @@ Content-Type: application/problem+json
 Content-Type: application/hal+json
 ```
 
-## Idempotency
+## 幂等性
 
-### Idempotent Operations
+### 幂等操作
 
-**PUT - Always idempotent:**
-Multiple identical PUT requests produce the same result as a single request.
+**PUT - 始终幂等：**
+多个相同的 PUT 请求与单个请求产生相同的结果。
 
-**DELETE - Idempotent:**
-First DELETE returns 204, subsequent DELETEs return 404 (same end state).
+**DELETE - 幂等：**
+第一次 DELETE 返回 204，后续 DELETE 返回 404（最终状态相同）。
 
-**POST - Not idempotent by default:**
-Use `Idempotency-Key` header for idempotent POST:
+**POST - 默认不幂等：**
+幂等的 POST 使用 `Idempotency-Key` 请求头：
 
 ```http
 POST /payments
@@ -248,11 +252,11 @@ Content-Type: application/json
 }
 ```
 
-Server stores idempotency key and returns same response for duplicate requests.
+服务器保存幂等键，对重复请求返回相同响应。
 
-## Cache Control
+## 缓存控制
 
-### Cache Headers
+### 缓存头
 
 ```http
 Cache-Control: public, max-age=3600
@@ -262,7 +266,7 @@ ETag: "33a64df551425fcc55e4d42a148795d9f25f89d4"
 Last-Modified: Wed, 15 Jan 2024 10:30:00 GMT
 ```
 
-### Conditional Requests
+### 条件请求
 
 ```http
 GET /users/123
@@ -283,9 +287,9 @@ Content-Type: application/json
 Response: 412 Precondition Failed (if ETag doesn't match)
 ```
 
-## URI Patterns
+## URI 模式
 
-### Consistent URI Structure
+### 一致的 URI 结构
 
 ```
 /{version}/{resource}
@@ -294,42 +298,42 @@ Response: 412 Precondition Failed (if ETag doesn't match)
 /{version}/{resource}/{id}/{sub-resource}/{sub-id}
 ```
 
-### Query Parameters
+### 查询参数
 
-**Filtering:**
+**过滤：**
 ```
 GET /users?status=active&role=admin
 GET /products?category=electronics&price_min=100&price_max=500
 ```
 
-**Sorting:**
+**排序：**
 ```
 GET /users?sort=created_at
 GET /users?sort=-created_at          # Descending
 GET /users?sort=name,created_at      # Multiple fields
 ```
 
-**Field Selection:**
+**字段选择：**
 ```
 GET /users?fields=id,name,email
 GET /users?exclude=password,social_security_number
 ```
 
-**Search:**
+**搜索：**
 ```
 GET /users?q=john
 GET /products?search=laptop
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Use nouns, not verbs** - Resources are nouns, methods are verbs
-2. **Plural collections** - Use `/users` not `/user`
-3. **Consistent naming** - Choose snake_case or camelCase and stick to it
-4. **Proper status codes** - Use appropriate HTTP status codes
-5. **Include metadata** - Pagination, filtering, sorting info in responses
-6. **Version your API** - Plan for evolution from day one
-7. **Document everything** - OpenAPI specs, examples, error codes
-8. **Security by default** - HTTPS, authentication, rate limiting
-9. **Support filtering** - Enable clients to get exactly what they need
-10. **Implement HATEOAS** - Make APIs self-documenting and discoverable
+1. **用名词，不用动词** - 资源是名词，方法是动词
+2. **集合用复数** - 用 `/users` 而不是 `/user`
+3. **命名一致** - 选定 snake_case 或 camelCase 并坚持使用
+4. **状态码恰当** - 使用合适的 HTTP 状态码
+5. **包含元数据** - 响应中带分页、过滤、排序信息
+6. **为 API 做版本控制** - 从第一天起就规划演进
+7. **文档覆盖一切** - OpenAPI 规格、示例、错误码
+8. **默认安全** - HTTPS、认证、速率限制
+9. **支持过滤** - 让客户端精确获取所需内容
+10. **实现 HATEOAS** - 让 API 自文档化、可发现

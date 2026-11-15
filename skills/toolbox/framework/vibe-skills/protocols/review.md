@@ -1,126 +1,128 @@
-# vibe-review Protocol
+> **中文汉化版** · 上游：[foryourhealth111-pixel/Vibe-Skills](https://github.com/foryourhealth111-pixel/Vibe-Skills) · 原文件：`protocols/review.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-> **What this protocol does -- plain language overview**
+# vibe-review 协议
+
+> **本协议的作用（通俗概述）**
 >
-> This is the quality review protocol. It governs how VibeSkills reviews code,
-> runs security checks, and validates work before marking it complete.
+> 这是质量审查协议。它规定 VibeSkills 如何审查代码、运行安全检查，并在标记完成之前验证工作。
 >
-> You do not need to read this to use VibeSkills. It is reference material for
-> contributors and advanced users who want to understand quality gates.
+> 使用 VibeSkills 不需要读本文件。它供想了解质量门禁的贡献者与高级用户参考。
 >
-> **Key terms used below:**
-> - **M / L / XL grade**: Review depth scales with task complexity. M = quick automated review, L = two-stage thorough review, XL = multi-agent parallel review.
-> - **Anti-proxy-goal-drift lens**: A review checklist ensuring the change actually achieved its stated goal, not just visible metrics (test counts, line counts, etc.).
-> - **report_only_warning**: A finding that must be recorded but does not by itself block a merge.
-> - **specialization_confirmed**: The change is correctly scoped as a specific solution -- it should not be described as a general fix for all similar cases.
-> - **completion_language_corrected**: The code may be fine, but the claim of completion needs to be reduced to match the actual evidence and scope.
+> **下文用到的关键术语：**
+> - **M / L / XL grade（级别）**：审查深度随任务复杂度伸缩。M = 快速自动审查，L = 两阶段彻底审查，XL = 多智能体并行审查。
+> - **Anti-proxy-goal-drift lens（反代理目标漂移视角）**：一份审查清单，确保改动真正达成了既定目标，而不只是可见指标（测试数量、行数等）。
+> - **report_only_warning**：必须记录但本身不阻塞合并的发现。
+> - **specialization_confirmed**：改动被正确限定为特定方案。不应把它描述为对一切类似场景都通用的修复。
+> - **completion_language_corrected**：代码本身可能没问题，但完成声明需要收缩到与实际证据和范围匹配。
 
 
-Protocol for code review, security audit, and quality assurance tasks.
+代码审查、安全审计与质量保证任务协议。
 
-## Scope
-Activated when the task requires evaluating existing code:
-- Code review (style, correctness, maintainability)
-- Security audit (OWASP Top 10, secrets, injection)
-- Quality assurance (test coverage, performance)
-- Pre-merge validation (comprehensive check before merge)
+## 适用范围
+任务需要评估既有代码时激活：
+- 代码审查（风格、正确性、可维护性）
+- 安全审计（OWASP Top 10、密钥、注入）
+- 质量保证（测试覆盖率、性能）
+- 合并前验证（合并前的全面检查）
 
-## Tool Orchestration by Grade
+## 按级别编排工具
 
-### M Grade (Quick Review)
-Tool: Everything-CC code-reviewer agent
-1. Invoke Everything-CC `code-reviewer` directly as a single-agent review tool
-2. Lightweight review: bugs, style, correctness
-3. Auto-triggered after code changes via PostToolUse hooks
+### M 级（快速审查）
+工具：Everything-CC code-reviewer agent
+1. 直接把 Everything-CC `code-reviewer` 当作单智能体审查工具调用
+2. 轻量审查：bug、风格、正确性
+3. 代码变更后经 PostToolUse hooks 自动触发
 
-### L Grade (Thorough Review)
-Tool: Superpowers two-stage review
-1. Stage 1 -- Spec reviewer: Does code match the approved design?
-2. Stage 2 -- Quality reviewer: Is code clean, tested, secure?
-3. Invoke via `superpowers:requesting-code-review`
+### L 级（彻底审查）
+工具：Superpowers 两阶段审查
+1. Stage 1：规格审查者：代码是否符合已批准设计？
+2. Stage 2：质量审查者：代码是否整洁、有测试、安全？
+3. 通过 `superpowers:requesting-code-review` 调用
 
-### XL Grade (Multi-Agent Review)
-Tool: Codex native multi-agent review team
-1. Spawn reviewer agents via `spawn_agent` (role prompt per perspective)
-2. Coordinate review rounds via `send_input`
-3. Parallel perspectives: security, performance, architecture, style
-4. Aggregate findings via `wait` + lead synthesis
-5. Optional: use ruflo `hive-mind_consensus` for formal aggregation
-6. Cleanup: `close_agent` for all spawned reviewers
+### XL 级（多智能体审查）
+工具：Codex 原生多智能体审查团队
+1. 通过 `spawn_agent` 派生审查 Agent（每个视角一份角色提示词）
+2. 通过 `send_input` 协调审查轮次
+3. 并行视角：安全、性能、架构、风格
+4. 通过 `wait` + lead 综合来聚合发现
+5. 可选：用 ruflo `hive-mind_consensus` 做正式聚合
+6. 清理：对所有派生的审查者执行 `close_agent`
 
-## Security Review (Any Grade)
-Always available as an independent check:
-1. Invoke Everything-CC security-reviewer agent
-2. Checks: OWASP Top 10, hardcoded secrets, injection, XSS, CSRF
-3. Can run alongside any grade-specific review without conflict
+## 安全审查（任意级别）
+始终可作为独立检查使用：
+1. 调用 Everything-CC security-reviewer agent
+2. 检查项：OWASP Top 10、硬编码密钥、注入、XSS、CSRF
+3. 可与任何级别专属审查并行运行而不冲突
 
-## Anti-Proxy-Goal-Drift Review Lens
+## 反代理目标漂移审查视角
 
-When the canonical anti-proxy-goal-drift policy is active, every governed review should also answer:
+规范的防代理目标漂移策略激活时，每次治理审查还应回答：
 
-1. What is the primary objective the change claims to serve?
-2. Which proxy signals could be mistaken for true success?
-3. Was validation material kept in a validation role, or did it leak into product logic?
-4. Is the claimed completion state supported by evidence, or is the wording ahead of the proof?
-5. Was the fix applied at the correct abstraction layer, rather than only removing the local symptom?
-6. Is a bounded specialization being described honestly, or is it being relabeled as generalized capability?
+1. 改动声称服务的首要目标是什么？
+2. 哪些代理信号可能被误当成真成功？
+3. 验证材料是否保持在验证角色，还是泄漏进了产品逻辑？
+4. 所声称的完成状态是否有证据支撑，还是措辞跑到了证明前面？
+5. 修复是否做在正确的抽象层，而不只是消除了局部症状？
+6. 有界专门化是被诚实描述，还是被改标成了泛化能力？
 
-Report-only boundary:
-- Anti-drift findings are review evidence and completion-language corrections.
-- They do not by themselves create a new hard gate, new owner, or automatic merge block.
-- If another approved policy or gate is violated, cite that surface explicitly instead of treating anti-drift as hidden enforcement.
+report-only 边界：
+- 防漂发现是审查证据与完成措辞纠正。
+- 它们本身不创建新的硬门禁、新所有者或自动合并阻塞。
+- 违反了另一个已批准策略或门禁时，显式引用那个表面，而不是把防漂当隐藏强制。
 
-## Review Checklist
-Before approving code:
-1. Code is readable and well-named
-2. Functions are small (<50 lines)
-3. Proper error handling at system boundaries
-4. No hardcoded values (use constants or config)
-5. Tests exist and pass (80%+ coverage)
-6. No security vulnerabilities
-7. No console.log / debug statements in production code
-8. Immutable patterns used (no mutation)
-9. No new fallback or degraded-path logic unless the active requirement explicitly approves it
-10. Any fallback path is labeled as a hazard, not presented as equivalent success
-11. No mock-success, template-success, swallowed-error, or simulation-only path is introduced where the real execution path can fail
-12. Any allowed fallback or degraded path is explicit, traceable, documented, and easy to disable
-13. The reviewed change states its primary objective, not only its local success signal
-14. Validation material is not absorbed into product logic or route truth
-15. The claimed completion state matches the evidence bundle and scope
-16. Bounded specialization is either preserved as specialization or explicitly marked as not-yet-generalized
-17. Any anti-drift warning is recorded as report-only review evidence, not hidden hard enforcement
-18. Product acceptance criteria are frozen in the requirement doc rather than improvised at closeout
-19. Manual spot checks are either explicitly not needed or honestly left as pending manual review
-20. Delivery-truth wording does not collapse workflow/process success into downstream project acceptance
+## 审查清单
+批准代码之前：
+1. 代码可读、命名良好
+2. 函数短小（<50 行）
+3. 系统边界有恰当的错误处理
+4. 无硬编码值（用常量或配置）
+5. 测试存在且通过（覆盖率 80% 以上）
+6. 无安全漏洞
+7. 生产代码无 console.log / 调试语句
+8. 使用不可变模式（无可变操作）
+9. 除非现行需求显式批准，不引入新的回退或降级路径逻辑
+10. 任何回退路径都标注为 hazard，不呈现为等价成功
+11. 真实执行路径可能失败的地方，不引入 mock 成功、模板成功、吞错误或仅模拟的路径
+12. 任何被允许的回退或降级路径都是显式、可追溯、有文档且易于禁用的
+13. 被审查的改动声明了其首要目标，而不只是局部成功信号
+14. 验证材料未被吸收进产品逻辑或路由真相
+15. 所声称的完成状态与证据包及范围相符
+16. 有界专门化要么保持专门化身份，要么显式标注为尚未泛化
+17. 任何防漂警告都记录为 report-only 审查证据，而非隐藏硬强制
+18. 产品验收标准冻结在需求文档中，而不是在收尾时即兴编造
+19. 人工抽查要么显式不需要，要么诚实保留为待人工审查
+20. 交付真相措辞不把工作流/过程成功混同于下游项目验收
 
-## Output Format
-Review findings categorized by severity:
-- CRITICAL: Must fix before merge (security vulnerabilities, data loss risks)
-- HIGH: Should fix before merge (bugs, logic errors)
-- MEDIUM: Fix when possible (code smells, minor style issues)
-- LOW: Optional improvement (naming suggestions, minor refactors)
+## 输出格式
+审查发现按严重度分类：
+- CRITICAL：合并前必须修复（安全漏洞、数据丢失风险）
+- HIGH：合并前应当修复（bug、逻辑错误）
+- MEDIUM：尽可能修复（代码坏味道、轻微风格问题）
+- LOW：可选改进（命名建议、小幅重构）
 
-Fallback-specific review rule:
-- Treat silent fallback, silent degradation, or self-introduced fallback logic as HIGH at minimum and CRITICAL when it can hide capability loss from users.
-- Treat swallowed errors, mock-success branches, or template-only pass results as HIGH at minimum and CRITICAL when they can mislead users or reviewers about real execution success.
+回退专属审查规则：
+- 静默回退、静默降级或自行引入的回退逻辑，至少按 HIGH 处理；当它可能向用户隐藏能力损失时按 CRITICAL 处理。
+- 吞掉的错误、mock 成功分支或模板化通过结果，至少按 HIGH 处理；当它们可能就真实执行成功误导用户或审查者时按 CRITICAL 处理。
 
-Objective-protection disposition:
-- `aligned`: objective, scope, and completion wording match the evidence.
-- `report_only_warning`: drift risk exists and must be recorded in review / closure language, but does not by itself block merge.
-- `specialization_confirmed`: the change is valid as a bounded specialization and must not be relabeled as generalized capability.
-- `completion_language_corrected`: code may stand, but the claimed completion wording must be reduced to match proof.
-- `escalate_via_existing_policy`: another already-approved policy or hard gate is independently violated and should be cited directly.
+目标保护处置：
+- `aligned`：目标、范围与完成措辞与证据相符。
+- `report_only_warning`：存在漂移风险，必须记录在审查/收尾措辞中，但本身不阻塞合并。
+- `specialization_confirmed`：改动作为有界专门化有效，不得改标为泛化能力。
+- `completion_language_corrected`：代码可以保留，但所声称的完成措辞必须收缩到与证明匹配。
+- `escalate_via_existing_policy`：另一个已批准策略或硬门禁被独立违反，应直接引用它。
 
-## Conflict Avoidance
-- M review: Everything-CC code-reviewer ONLY
-- L review: Superpowers two-stage review ONLY
-- XL review: Codex native multi-agent team ONLY
-- Security review: Everything-CC security-reviewer at ANY grade (exempt from mutual exclusion)
+## 冲突规避
+- M 审查：只用 Everything-CC code-reviewer
+- L 审查：只用 Superpowers 两阶段审查
+- XL 审查：只用 Codex 原生多智能体团队
+- 安全审查：任意级别都可用 Everything-CC security-reviewer（不受互斥约束）
 
-## Transition After Review
-- CRITICAL/HIGH issues found: Route to vibe-do protocol for fixes
-- `report_only_warning` or `completion_language_corrected`: update requirement / plan / CER / closure wording or route to vibe-do for scope-corrective fixes
-- `specialization_confirmed`: preserve specialization wording and avoid generalized overclaim
-- `escalate_via_existing_policy`: cite the specific approved policy or gate that blocks progress
-- All clean: Proceed to commit/merge
-- Architectural issues found: Route to vibe-think protocol for redesign
+## 审查后的流转
+- 发现 CRITICAL/HIGH 问题：转 vibe-do 协议修复
+- `report_only_warning` 或 `completion_language_corrected`：更新需求/计划/CER/收尾措辞，或转 vibe-do 做范围纠正性修复
+- `specialization_confirmed`：保留专门化措辞，避免泛化过度声明
+- `escalate_via_existing_policy`：引用阻塞进展的具体已批准策略或门禁
+- 全部干净：进入提交/合并
+- 发现架构问题：转 vibe-think 协议重新设计

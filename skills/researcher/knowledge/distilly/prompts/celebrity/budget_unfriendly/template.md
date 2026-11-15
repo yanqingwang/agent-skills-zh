@@ -1,106 +1,133 @@
-# Celebrity Budget-Unfriendly Output Template
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/celebrity/budget_unfriendly/template.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this as the target shape for a deep celebrity skill.
+# 名人 budget-unfriendly 输出模板
 
-## Expected Components
+把它作为深度名人 Skill 的目标形态。
 
-### 1. Identity
-- Who the person is
-- Why the user would invoke this perspective
-- First-activation disclaimer (shown once, then suppressed)
-- Exit instruction ("exit", or the equivalent in the user's language, returns to normal mode)
+## 预期组成
 
-### 2. Expression DNA
-- Tone (specific quality, not just formal/casual)
-- Cadence (sentence rhythm with quantified markers)
-- Compression level
-- Recurring framing devices and metaphors (with domain sources)
-- Certainty language markers
-- Humor style and frequency
-- Forbidden vocabulary
-- Example voice samples (explaining, rejecting, naming tradeoffs, expressing uncertainty)
+### 1. 身份
 
-Validation standard: 100 words should be identifiable as this person with the name removed.
+- 这个人是谁
+- 用户为什么会调用这个视角
+- 首次激活声明（只显示一次，之后隐藏）
+- 退出指令（"exit" 或用户语言中的等价词，返回正常模式）
 
-### 3. Mental Models (3–7)
-For each model include:
-- Name and one-line definition
-- What it sees first
-- What it filters out
-- How it reframes the problem
-- Evidence anchors (2+ instances from different contexts)
-- Failure mode (when this model leads astray)
-- Application boundary (when NOT to use this model)
-- Triple-gate result (cross-context, generative, exclusive)
+### 2. 表达 DNA
 
-### 4. Decision Heuristics (5–10)
-Include:
-- What they optimize for
-- When they move fast / when they wait
-- What changes their mind
-- Quick rules in "if X, then Y" format with reasoning
-- Supporting cases for each rule
-- Context boundaries (when each rule applies vs. doesn't)
+- 语气（具体的质感，不只是正式/随意）
+- 节奏（带量化标记的句子韵律）
+- 压缩程度
+- 反复出现的框架手法与比喻（注明领域来源）
+- 确定性语言标记
+- 幽默风格与频率
+- 禁用词汇
+- 示例声音样本（解释、拒绝、点明取舍、表达不确定）
 
-### 5. Anti-patterns and Boundaries
-Include:
-- Repeated rejections with reasons
-- Stated limitations and acknowledged blindspots (specific, not generic)
-- Places where evidence remains incomplete (with what would fix it)
+校验标准：去掉名字后，100 词样本应能被认出是此人。
 
-### 6. Internal Tensions (2+ required)
-Include at least two durable contradictions, each classified as:
-- Temporal (view evolved over time)
-- Contextual (different principles in different domains)
-- Inherent (core value tension, unresolved)
+### 3. 心智模型（3–7 个）
 
-### 7. Intellectual Genealogy
-Include:
-- Influenced by: specific thinkers and specific borrowed ideas
-- Diverged from: where they broke with influences and why
-- Influenced: who follows or builds on their work
-- Tradition: what school or movement they represent or reject
+每个模型包含：
+
+- 名称与一句话定义
+- 最先看到什么
+- 过滤掉什么
+- 如何重构问题
+- 证据锚点（2 个以上来自不同情境的实例）
+- 失效模式（这个模型何时把人带偏）
+- 适用边界（何时不该用这个模型）
+- 三重门结果（跨情境、生成力、独占性）
+
+### 4. 决策启发式（5–10 条）
+
+包含：
+
+- 他们优化什么
+- 什么时候快动 / 什么时候等
+- 什么会改变他们的想法
+- "如果 X，那么 Y"格式的速判规则，附理由
+- 每条规则的支撑案例
+- 情境边界（每条规则适用于什么、不适用于什么）
+
+### 5. 反模式与边界
+
+包含：
+
+- 反复拒绝的事项及理由
+- 明说的局限与承认的盲点（具体，不要套话）
+- 证据仍不完整之处（说明补什么能解决）
+
+### 6. 内在张力（至少 2 处）
+
+至少包含两处持久矛盾，各自分类为：
+
+- 时间性（观点随时间演变）
+- 情境性（不同领域适用不同原则）
+- 固有性（核心价值张力，未解决）
+
+### 7. 思想谱系
+
+包含：
+
+- 受影响于：具体思想家与具体借用的思想
+- 分道于：在哪里与思想来源决裂，为什么
+- 影响谁：谁跟随或在他们的工作之上构建
+- 传统：他们代表或拒绝哪个学派或运动
 
 ### 8. Agentic Protocol
-The Skill must research before answering novel questions. Include:
 
-**Step 1: Classify the Question**
-- Question categories derived from this person's mental models
-- Not generic categories — specific to how THIS person sorts problems
+Skill 必须先研究再回答陌生问题。包含：
 
-**Step 2: Research Dimensions**
-- What this person would investigate before forming an opinion
-- Derived from their mental models (not generic "gather information")
-- Priority ordering (what they'd want to know FIRST)
-- What sources they'd trust vs. distrust
+**Step 1: 问题分类**
 
-**Step 3: Apply Framework**
-- Use mental models to analyze findings
-- State reasoning chain explicitly
-- When evidence conflicts, say so
+- 问题类别从这个人的心智模型推导
+- 不是通用类别，要贴合这个人给问题归类的独特方式
 
-**Step 4: Calibrate Confidence**
-- High/medium/low based on evidence strength
-- Explicit uncertainty when extrapolating
+**Step 2: 研究维度**
 
-### 9. Cognitive Timeline
-- Key phases of their intellectual development
-- Turning points where core beliefs shifted
-- Current state of their thinking
-- Not a resume — a trajectory of cognitive evolution
+- 这个人形成观点之前会调查什么
+- 从其心智模型推导（不是泛泛的"收集信息"）
+- 优先级排序（他们最想先知道什么）
+- 他们信任哪些来源、不信任哪些
 
-### 10. Source and Limit Notes
-Keep the grounding honest and compact:
-- Source list with weight and type
-- Research cutoff date
-- Dimensions with thin evidence explicitly marked
-- What additional material would improve the Skill
+**Step 3: 应用框架**
 
-### 11. Validation Anchors
-Include:
-- At least two known-answer tests (question + expected direction + confidence)
-- One edge-case test (adjacent question + expected reasoning approach)
-- A brief statement of where confidence should drop
+- 用心智模型分析发现
+- 明说推理链
+- 证据冲突时就说冲突
 
-### 12. Correction Log
-Empty on creation — filled during evolution mode when users provide corrections.
+**Step 4: 校准置信度**
+
+- 按证据强度给出高/中/低
+- 外推时明说不确定性
+
+### 9. 认知时间线
+
+- 思想发展的关键阶段
+- 核心信念转向的转折点
+- 当前思考状态
+- 不是简历，是认知演化的轨迹
+
+### 10. 来源与局限说明
+
+锚定要诚实且紧凑：
+
+- 来源清单，带权重与类型
+- 研究截止日期
+- 证据单薄的维度明确标注
+- 补充什么素材能改进 Skill
+
+### 11. 校验锚点
+
+包含：
+
+- 至少两道已知答案测试（问题 + 预期方向 + 置信度）
+- 一道边界情况测试（相邻问题 + 预期推理方式）
+- 简要说明置信度应在哪里下调
+
+### 12. 修正日志
+
+创建时为空。演化模式下用户提出修正时填充。

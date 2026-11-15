@@ -1,10 +1,14 @@
-# Advanced Hook Use Cases
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/plugin-dev/skills/hook-development/references/advanced.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This reference covers advanced hook patterns and techniques for sophisticated automation workflows.
+# Hook 高级用例
 
-## Multi-Stage Validation
+本参考涵盖高级 Hook 模式与技巧，用于复杂的自动化工作流。
 
-Combine command and prompt hooks for layered validation:
+## 多阶段验证
+
+组合 command 与 prompt 两类 Hook，实现分层验证：
 
 ```json
 {
@@ -28,9 +32,9 @@ Combine command and prompt hooks for layered validation:
 }
 ```
 
-**Use case:** Fast deterministic checks followed by intelligent analysis
+**用例：** 先做快速确定性检查，随后进行智能分析
 
-**Example quick-check.sh:**
+**示例 quick-check.sh：**
 ```bash
 #!/bin/bash
 input=$(cat)
@@ -45,11 +49,11 @@ fi
 exit 0
 ```
 
-The command hook quickly approves obviously safe commands, while the prompt hook analyzes everything else.
+command Hook 快速放行明显安全的命令，其余交由 prompt Hook 分析。
 
-## Conditional Hook Execution
+## 条件化 Hook 执行
 
-Execute hooks based on environment or context:
+根据环境或上下文决定是否执行 Hook：
 
 ```bash
 #!/bin/bash
@@ -64,12 +68,12 @@ input=$(cat)
 # ... validation code ...
 ```
 
-**Use cases:**
-- Different behavior in CI vs local development
-- Project-specific validation
-- User-specific rules
+**用例：**
+- CI 与本地开发环境行为不同
+- 项目专属校验
+- 用户专属规则
 
-**Example: Skip certain checks for trusted users:**
+**示例：对可信用户跳过部分检查：**
 ```bash
 #!/bin/bash
 # Skip detailed checks for admin users
@@ -82,9 +86,9 @@ input=$(cat)
 # ... validation code ...
 ```
 
-## Hook Chaining via State
+## 通过状态串联 Hook
 
-Share state between hooks using temporary files:
+用临时文件在 Hook 之间共享状态：
 
 ```bash
 # Hook 1: Analyze and save state
@@ -110,11 +114,11 @@ if [ "$risk_level" = "high" ]; then
 fi
 ```
 
-**Important:** This only works for sequential hook events (e.g., PreToolUse then PostToolUse), not parallel hooks.
+**重要：** 仅适用于顺序执行的 hook 事件（如先 PreToolUse 后 PostToolUse），不适用于并行 Hook。
 
-## Dynamic Hook Configuration
+## 动态 Hook 配置
 
-Modify hook behavior based on project configuration:
+根据项目配置修改 Hook 行为：
 
 ```bash
 #!/bin/bash
@@ -134,7 +138,7 @@ if [ -f ".claude-hooks-config.json" ]; then
 fi
 ```
 
-**Example .claude-hooks-config.json:**
+**示例 .claude-hooks-config.json：**
 ```json
 {
   "strict_mode": true,
@@ -143,9 +147,9 @@ fi
 }
 ```
 
-## Context-Aware Prompt Hooks
+## 上下文感知的 Prompt Hook
 
-Use transcript and session context for intelligent decisions:
+利用 transcript 与会话上下文做出智能判断：
 
 ```json
 {
@@ -163,11 +167,11 @@ Use transcript and session context for intelligent decisions:
 }
 ```
 
-The LLM can read the transcript file and make context-aware decisions.
+LLM 可以读取 transcript 文件并做出上下文感知的决策。
 
-## Performance Optimization
+## 性能优化
 
-### Caching Validation Results
+### 缓存验证结果
 
 ```bash
 #!/bin/bash
@@ -193,9 +197,9 @@ echo "$result" > "$cache_file"
 echo "$result"
 ```
 
-### Parallel Execution Optimization
+### 并行执行优化
 
-Since hooks run in parallel, design them to be independent:
+Hook 是并行运行的，应把各 Hook 设计成相互独立：
 
 ```json
 {
@@ -224,13 +228,13 @@ Since hooks run in parallel, design them to be independent:
 }
 ```
 
-All three hooks run simultaneously, reducing total latency.
+三个 Hook 同时运行，降低总延迟。
 
-## Cross-Event Workflows
+## 跨事件工作流
 
-Coordinate hooks across different events:
+跨不同事件协调各 Hook：
 
-**SessionStart - Set up tracking:**
+**SessionStart - 建立追踪：**
 ```bash
 #!/bin/bash
 # Initialize session tracking
@@ -238,7 +242,7 @@ echo "0" > /tmp/test-count-$$
 echo "0" > /tmp/build-count-$$
 ```
 
-**PostToolUse - Track events:**
+**PostToolUse - 记录事件：**
 ```bash
 #!/bin/bash
 input=$(cat)
@@ -253,7 +257,7 @@ if [ "$tool_name" = "Bash" ]; then
 fi
 ```
 
-**Stop - Verify based on tracking:**
+**Stop - 基于记录进行验证：**
 ```bash
 #!/bin/bash
 test_count=$(cat /tmp/test-count-$$ 2>/dev/null || echo "0")
@@ -264,9 +268,9 @@ if [ "$test_count" -eq 0 ]; then
 fi
 ```
 
-## Integration with External Systems
+## 与外部系统集成
 
-### Slack Notifications
+### Slack 通知
 
 ```bash
 #!/bin/bash
@@ -284,7 +288,7 @@ echo '{"decision": "deny"}' >&2
 exit 2
 ```
 
-### Database Logging
+### 数据库日志
 
 ```bash
 #!/bin/bash
@@ -297,7 +301,7 @@ psql "$DATABASE_URL" -c "INSERT INTO hook_logs (event, data) VALUES ('PreToolUse
 exit 0
 ```
 
-### Metrics Collection
+### 指标采集
 
 ```bash
 #!/bin/bash
@@ -310,9 +314,9 @@ echo "hook.pretooluse.${tool_name}:1|c" | nc -u -w1 statsd.local 8125
 exit 0
 ```
 
-## Security Patterns
+## 安全模式
 
-### Rate Limiting
+### 速率限制
 
 ```bash
 #!/bin/bash
@@ -346,7 +350,7 @@ echo "$count" >> "$rate_file"
 exit 0
 ```
 
-### Audit Logging
+### 审计日志
 
 ```bash
 #!/bin/bash
@@ -360,7 +364,7 @@ echo "$timestamp | $USER | $tool_name | $input" >> ~/.claude/audit.log
 exit 0
 ```
 
-### Secret Detection
+### 敏感凭据（secrets）检测
 
 ```bash
 #!/bin/bash
@@ -376,9 +380,9 @@ fi
 exit 0
 ```
 
-## Testing Advanced Hooks
+## 测试高级 Hook
 
-### Unit Testing Hook Scripts
+### Hook 脚本单元测试
 
 ```bash
 # test-hook.sh
@@ -401,9 +405,9 @@ else
 fi
 ```
 
-### Integration Testing
+### 集成测试
 
-Create test scenarios that exercise the full hook workflow:
+构造覆盖完整 Hook 工作流的测试场景：
 
 ```bash
 # integration-test.sh
@@ -426,20 +430,20 @@ fi
 rm -rf "$CLAUDE_PROJECT_DIR"
 ```
 
-## Best Practices for Advanced Hooks
+## 高级 Hook 最佳实践
 
-1. **Keep hooks independent**: Don't rely on execution order
-2. **Use timeouts**: Set appropriate limits for each hook type
-3. **Handle errors gracefully**: Provide clear error messages
-4. **Document complexity**: Explain advanced patterns in README
-5. **Test thoroughly**: Cover edge cases and failure modes
-6. **Monitor performance**: Track hook execution time
-7. **Version configuration**: Use version control for hook configs
-8. **Provide escape hatches**: Allow users to bypass hooks when needed
+1. **保持 Hook 独立**：不要依赖执行顺序
+2. **设置超时**：为每类 Hook 设定合适的时限
+3. **优雅处理错误**：给出清晰的错误信息
+4. **文档化复杂度**：在 README 中解释高级模式
+5. **充分测试**：覆盖边界情况与失败模式
+6. **监控性能**：跟踪 Hook 执行耗时
+7. **配置版本化**：用版本控制管理 Hook 配置
+8. **提供逃生通道**：允许用户在需要时绕过 Hook
 
-## Common Pitfalls
+## 常见陷阱
 
-### ❌ Assuming Hook Order
+### ❌ 假设 Hook 执行顺序
 
 ```bash
 # BAD: Assumes hooks run in specific order
@@ -447,7 +451,7 @@ rm -rf "$CLAUDE_PROJECT_DIR"
 # This can fail because hooks run in parallel!
 ```
 
-### ❌ Long-Running Hooks
+### ❌ 长时间运行的 Hook
 
 ```bash
 # BAD: Hook takes 2 minutes to run
@@ -455,7 +459,7 @@ sleep 120
 # This will timeout and block the workflow
 ```
 
-### ❌ Uncaught Exceptions
+### ❌ 未捕获的异常
 
 ```bash
 # BAD: Script crashes on unexpected input
@@ -463,7 +467,7 @@ file_path=$(echo "$input" | jq -r '.tool_input.file_path')
 cat "$file_path"  # Fails if file doesn't exist
 ```
 
-### ✅ Proper Error Handling
+### ✅ 正确的错误处理
 
 ```bash
 # GOOD: Handles errors gracefully
@@ -474,6 +478,6 @@ if [ ! -f "$file_path" ]; then
 fi
 ```
 
-## Conclusion
+## 结语
 
-Advanced hook patterns enable sophisticated automation while maintaining reliability and performance. Use these techniques when basic hooks are insufficient, but always prioritize simplicity and maintainability.
+高级 Hook 模式能在保持可靠性与性能的同时实现复杂自动化。基础 Hook 不够用时再用这些技巧，但始终优先考虑简单性与可维护性。

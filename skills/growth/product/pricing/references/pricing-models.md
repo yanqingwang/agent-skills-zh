@@ -1,66 +1,70 @@
-# Pricing Models
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/pricing/references/pricing-models.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The eight core ways to structure *how* you charge. This is distinct from the value metric (what unit you charge on) and the tier structure (how you package). Most real products **combine** two or more of these.
+# 定价模式
 
-## Contents
-- The 8 Pricing Models
-- Combining Models
-- The Value/Price Ratio
-- The Low-Price Retention Counterpoint
+结构化*怎么收钱*的八种核心方式。它区别于 value metric（按什么单位收费）和套餐结构（怎么打包）。大多数真实产品会**组合**其中两种或更多。
+
+## 目录
+- 八种定价模式
+- 组合模式
+- 价值/价格比
+- 低价伤害留存的反方观点
 
 ---
 
-## The 8 Pricing Models
+## 八种定价模式
 
-| Model | How it works | Best when | Reference |
+| 模式 | 运作方式 | 最适用场景 | 参考 |
 |-------|-------------|-----------|-----------|
-| **Flat-rate** | One price, one product, everyone pays the same | Simple product, one persona, you want zero pricing friction | Basecamp |
-| **Usage-based** | Pay for what you consume (metered) | Value scales directly with volume; consumption is variable and easy to meter | Stripe |
-| **Tier-based** | Good-better-best packages at set prices | Distinct segments with different needs and budgets | Kinsta |
-| **User-based** | Price per seat/user | Value grows as more people in the org use it (collaboration) | Notion |
-| **Feature-based** | Price gated by which capabilities are unlocked | Clear feature tiers map to willingness to pay | Intercom |
-| **Credit-based** | Buy a bucket of credits, spend them on actions | Usage is lumpy or bursty; you want prepaid commitment and simple mental accounting | Audible |
-| **Outcome-based** | Pay per result delivered (resolution, task completed) | You can measure and attribute the outcome, and the outcome is what the buyer actually wants | Intercom Fin, Zapier |
-| **Hybrid** | Deliberate mix (e.g. platform fee + usage, or seats + credits) | A single model under- or over-charges different customers | Drift |
+| **一口价（flat-rate）** | 一个价格、一个产品，人人都一样 | 产品简单、用户画像单一、想要零定价摩擦 | Basecamp |
+| **按用量（usage-based）** | 按消耗付费（计量计费） | 价值随用量直接放大；消耗波动大且易于计量 | Stripe |
+| **分层套餐（tier-based）** | 固定价格的好-更好-最好套餐 | 细分人群的需求与预算差异明显 | Kinsta |
+| **按用户（user-based）** | 按席位/用户收费 | 组织里用的人越多价值越大（协作） | Notion |
+| **按功能（feature-based）** | 按解锁的能力收费 | 功能梯度与付费意愿清晰对应 | Intercom |
+| **积分制（credit-based）** | 买一桶积分，按动作消耗 | 用量成块或突发；想要预付承诺与简单的心理账户 | Audible |
+| **按结果（outcome-based）** | 按交付的结果付费（解决一单、完成一项任务） | 能测量并归因结果，且结果正是买家要的 | Intercom Fin、Zapier |
+| **混合（hybrid）** | 有意的组合（如平台费 + 用量，或席位 + 积分） | 单一模式会对某些客户多收或少收 | Drift |
 
-### When to reach for each
+### 何时用哪一种
 
-- **Flat-rate** — reach for it first if you can. It's the easiest to sell, easiest to understand, easiest to forecast. The tradeoff: you leave money on the table with your biggest customers.
-- **Usage-based** — the fairest model when consumption tracks value, but revenue is less predictable and buyers fear a surprise bill. Pair with spend caps or alerts.
-- **Tier-based** — the default for self-serve SaaS. Lets one page serve SMB through mid-market.
-- **User-based** — only if value genuinely rises with headcount. If it doesn't, seats punish adoption (teams share logins to avoid paying).
-- **Feature-based** — powerful for segmentation, but don't gate the feature that delivers your core value; gate the ones that separate casual from serious users.
-- **Credit-based** — good for AI/actions-based products where each action has a cost. Credits decouple price from a single unit and make prepayment feel natural.
-- **Outcome-based** — the emerging model for AI agents (charge per resolved ticket, per automation run). Highest trust because the buyer only pays when they win — but only viable when the outcome is measurable and clearly attributable to you.
-- **Hybrid** — where most mature products end up. A base platform fee for predictability plus a usage/outcome component for upside.
-
----
-
-## Combining Models
-
-These aren't mutually exclusive. Common combinations:
-
-- **Tiers + per-user** — seats within each package (most B2B SaaS)
-- **Platform fee + usage** — predictable base, variable upside (Twilio-style)
-- **Seats + credits** — pay per person, then top up credits for heavy actions
-- **Feature tiers + outcome** — unlock capabilities by tier, charge per result on top
-
-Pick the primary model from the value metric, then layer a second only if a single model clearly mis-prices a real segment.
+- **一口价**：能先用就用它。最好卖、最好懂、最好预测。代价：从最大的客户身上少收了钱。
+- **按用量**：消耗与价值同步时最公平，但收入更难预测，买家怕收到意外账单。搭配消费上限或提醒。
+- **分层套餐**：自助 SaaS 的默认选择。让一页定价同时服务 SMB 到中型市场。
+- **按用户**：只在价值确实随人数增长时用。否则席位会惩罚采用（团队会共享登录来避付）。
+- **按功能**：做细分很有力，但不要锁住承载核心价值的功能；锁住区分轻度用户与重度用户的功能。
+- **积分制**：适合 AI/动作型产品，每个动作都有成本。积分把价格与单一计量单位解耦，让预付显得自然。
+- **按结果**：AI agent 的新兴模式（按解决的工单收费、按自动化运行收费）。信任度最高，买家只在赢的时候付钱；但只有结果可测量、且能明确归因于你时才可行。
+- **混合**：多数成熟产品的归宿。固定平台费保可预测，再加用量/结果成分捕捉上限。
 
 ---
 
-## The Value/Price Ratio
+## 组合模式
 
-Aim for roughly a **10:1 value-to-price ratio** (Ryan Kulp): the customer should perceive about **10x more value than they pay**. This is the buffer that makes the purchase feel obvious rather than negotiated, and it leaves headroom to raise prices later as you add value.
+这些模式并不互斥。常见组合：
 
-If you can't articulate 10x value, the problem is usually the offer or the positioning, not the price point.
+- **分层 + 按用户**：每个套餐内按席位（多数 B2B SaaS）
+- **平台费 + 用量**：基础可预测，上限浮动（Twilio 式）
+- **席位 + 积分**：按人付费，重度动作用积分补足
+- **功能分层 + 按结果**：按层解锁能力，再按结果收费
+
+先按价值指标定主模式，只有当单一模式明显给某类真实客户错定价时，才叠加第二种。
 
 ---
 
-## The Low-Price Retention Counterpoint
+## 价值/价格比
 
-Charging too little is not the safe choice. **Low prices hurt retention** (Patrick Campbell / ProfitWell data, echoed by operators like Josh Pigford of SpyFu and Tyler Tringas): under-priced customers churn *more*, not less, because a low price signals low value and attracts the least-committed, most price-sensitive buyers.
+目标大约是 **10:1 的价值/价格比**（Ryan Kulp）：客户感知到的价值要约为所付价格的 **10 倍**。这个缓冲让购买显得理所当然，而不是讨价还价；也给你日后随价值增加而涨价留出空间。
 
-Related: the **discount-asker signal** — customers who negotiate for a discount tend to churn at roughly **2x** the rate of full-price customers. Discounting to close a deal often buys a customer who leaves anyway.
+如果你说不出 10 倍价值，问题通常出在 offer 或定位上，而不是价格点。
 
-**Implication:** when in doubt, price higher. It's easier to grandfather a price down than to claw one up, and a higher price selects for better-fit, longer-retained customers.
+---
+
+## 低价伤害留存的反方观点
+
+收太少不是安全的选择。**低价伤害留存**（Patrick Campbell / ProfitWell 数据，SpyFu 的 Josh Pigford、Tyler Tringas 等运营者也持同样看法）：定价过低的客户流失*更多*，不是更少，因为低价传递低价值信号，吸引来的是忠诚度最低、对价格最敏感的买家。
+
+相关现象：**要折扣者信号**。谈折扣的客户流失率约为全价客户的 **2 倍**。靠打折成交，买到的常常是反正会走的客户。
+
+**结论**：拿不准时，定高一点。给老客户降价比涨回去容易得多，而且更高的价格会筛选出更匹配、留存更久的客户。

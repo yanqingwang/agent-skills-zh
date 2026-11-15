@@ -1,37 +1,41 @@
-# Project Audit Mode (project-wide scorecard)
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/check/references/mode-audit.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Loaded from `check` Mode Picker when the request is a project-wide quality scorecard. Distinct from default review (diff-scoped) and triage (issue batching).
+# 项目审计模式（全项目记分卡）
 
-Single-pass project-wide quality assessment.
+当请求是全项目质量记分卡时，从 `check` Mode Picker 加载。区别于默认审查（限 diff）与分诊（issue 批处理）。
 
-**Flow**
+一次跑完的全项目质量评估。
 
-1. Run `python3 <skill-base-dir>/scripts/audit_signals.py --root <project>` from the target repo, with `<skill-base-dir>` replaced by this skill's base directory. The script emits labelled blocks (`=== FILE SIZE HOTSPOTS ===` ... `=== DENYLIST IN BUILD ===`) each ending with `status: PASS|WARN|FAIL|N/A`.
-2. Skim the largest source files surfaced by `FILE SIZE HOTSPOTS` (typically 3-5; stop sooner if the architecture is already clear).
-3. Read `CLAUDE.md` / `AGENTS.md` / `README.md` to learn the project's own stated conventions before judging it against generic ones. The repo's agent guidance itself is part of the audited surface: verify its commands and paths still exist, and report stale, conflicting, or deletable rules as findings.
-4. Apply the four-axis rubric below. Each axis is independently scored 0-10. Overall = arithmetic mean.
-5. Report every finding that moves an axis score, each with file:line citation when possible, severity (CRIT/STRUCT/INCR), and a one-line fix. Zero findings on an axis is a valid result; do not pad to a quota.
-6. Output to **terminal only**. Do not create files in the target repo. If the user follows up with "save it", offer `./docs/<project>-audit.md` then; default is ephemeral.
+**流程**
 
-**Rubric**
+1. 在目标仓库运行 `python3 <skill-base-dir>/scripts/audit_signals.py --root <project>`，其中 `<skill-base-dir>` 替换为本 Skill 的基目录。脚本输出带标签的块（`=== FILE SIZE HOTSPOTS ===` 至 `=== DENYLIST IN BUILD ===`），每块以 `status: PASS|WARN|FAIL|N/A` 结尾。
+2. 粗读 `FILE SIZE HOTSPOTS` 列出的最大源文件（通常 3-5 个；架构已清楚时可提前停止）。
+3. 先读 `CLAUDE.md` / `AGENTS.md` / `README.md`，了解项目自己声明的约定，再用通用标准评判。仓库的 Agent 指引本身也属于被审计表面：核实其中的命令与路径仍然存在，把过时、冲突或可删除的规则作为发现报告。
+4. 应用下面的四轴评分标准。每轴独立打 0-10 分。总分 = 算术平均。
+5. 报告每条会移动轴分的发现，尽量附 file:line 引用、严重级别（CRIT/STRUCT/INCR）和一行修复方案。某轴零发现是合法结果；不要凑数。
+6. 只输出到**终端**。不要在目标仓库创建文件。如果用户随后说"保存一下"，再提供 `./docs/<project>-audit.md`；默认是临时输出。
 
-| Axis | What it covers |
+**评分轴**
+
+| 轴 | 覆盖内容 |
 |---|---|
-| Architecture | Module boundaries, coupling, abstraction layers vs flat duplication, single source of truth |
-| Code Quality | File size discipline, dedup, readability, comments on non-obvious behavior |
-| Engineering | Tests, CI gates, version coordination, install URL pinning, packaging posture |
-| Perf and Risk | Hazards, scope creep, distribution risk, privacy posture, third-party blast radius |
+| 架构 | 模块边界、耦合、抽象层对比平铺重复、单一事实来源 |
+| 代码质量 | 文件大小纪律、去重、可读性、对非显而易见行为的注释 |
+| 工程 | 测试、CI 闸门、版本协调、安装 URL 锁定、打包姿态 |
+| 性能与风险 | 危险点、范围蔓延、分发风险、隐私姿态、第三方影响范围 |
 
-**Scoring anchors**
+**打分锚点**
 
-- 9-10: exceptional discipline, polish-only items
-- 7-8.5: solid with clear targeted improvements
-- 5-7: working but with structural debt
-- below 5: significant rework recommended
+- 9-10：纪律出色，只剩打磨项
+- 7-8.5：扎实，有明确的针对性改进
+- 5-7：能用，但有结构性欠债
+- 5 以下：建议大幅返工
 
-A WARN that the project has explicitly justified (in its own docs or a comment) is not a finding; cite the justification and skip. Do not mechanically convert WARN to CRIT. A block with `status: N/A` means the surface does not exist (e.g. no packaging script); treat as silence, not as a positive signal.
+项目已在其自身文档或注释中明确给出理由的 WARN 不是发现；引用该理由并跳过。不要机械地把 WARN 升级为 CRIT。`status: N/A` 的块表示该表面不存在（例如没有打包脚本）；当作沉默处理，不要当作正面信号。
 
-**Output template (terminal)**
+**输出模板（终端）**
 
 ```
 Project: <name>
@@ -55,4 +59,4 @@ Top 3 highest-leverage moves
 3. ...
 ```
 
-Stop after the report unless the user asks for follow-up implementation. Audit mode does not modify files in the target repo.
+报告之后即停，除非用户要求后续实现。审计模式不修改目标仓库的文件。

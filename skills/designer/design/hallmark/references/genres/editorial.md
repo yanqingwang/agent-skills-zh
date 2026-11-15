@@ -1,24 +1,28 @@
-# Genre: editorial (the default)
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/genres/editorial.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Content-led prompts: portfolios, manifestos, type specimens, agency sites, magazine pieces, podcasts, brand stories, considered consumer marketing. The silent default when no other genre signal fires. The deal leans toward this genre's themes; nothing here lists them.
+# 流派：editorial（默认）
 
-## Voice
+内容主导的提示词：作品集、宣言、字体样本、代理商站点、杂志文章、播客、品牌故事、讲究的消费品营销。没有其他流派信号触发时的静默默认。发牌偏向这个流派的主题；这里不列它们。
 
-- **Accent:** one hue, held to the posture's footprint.
-- **Layout:** asymmetric; hairlines, not card borders; type set large enough to hold its screen.
-- **Motion:** quiet, one orchestrated entrance.
-- **Copy:** specific, hand-set, slightly literary; verbs over adjectives.
+## 语气
 
-## Allowed here
+- **强调色：** 一个色相，守住姿态自己的足迹。
+- **版式：** 不对称；发丝线，不是卡片边框；字号大到撑得住它的屏幕。
+- **动效：** 安静，一次编排好的入场。
+- **文案：** 具体、手工排布、略带书卷气；动词多过形容词。
 
-Hairline rules, fleurons, drop caps, double rules; italic inside running body copy; asymmetric column ratios (2:5, 3:7); photographs in the theme's treatment, captioned with facts; edge-aligned headlines; a single `<mark>` band behind the x-height.
+## 此处允许
 
-## Refused here
+发丝线、花饰、首字下沉、双线；行文正文里用斜体；不对称栏比（2:5、3:7）；按主题处理的照片，配事实性图注；贴边对齐的标题；x-height 背后的一条 `<mark>` 色带。
 
-Gradient-filled pills; a centred-everything hero (the genre is left-biased or asymmetric, unless the theme's material is a centred bill); glass (the medium is paper); pure black or white paper and ink.
+## 此处拒绝
 
-## Chrome that fits
+渐变填充的胶囊；处处居中的 hero（这个流派偏左或不对称，除非主题的材料是一张居中的账单）；玻璃（媒介是纸）；纯黑或纯白的纸与墨。
 
-A masthead, a quiet edge-aligned bar, a colophon, a letter close. A marquee footer or a floating blur pill fights the register. Affinities, not assignments: gate 42 only asks that a default be named in the stamp rather than arrived at by reflex.
+## 相配的镶边
 
-Stamp: `genre: editorial`.
+报头、安静的贴边栏、版权页（colophon）、书信式收尾。跑马灯页脚或悬浮模糊胶囊与语气相抵触。是亲和，不是指派：gate 42 只要求默认值在印记里被点名，而不是靠条件反射得出。
+
+印记：`genre: editorial`。

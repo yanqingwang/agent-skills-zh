@@ -1,14 +1,18 @@
-# Examples
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-agents/EXAMPLES.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Three practical node-object snippets for the shell + core + sub-agent topology. These are **community n8n JSON fragments** to adapt, not full importable exports — credential IDs, workflow IDs, and channel/bot IDs are placeholders. Build with `n8n_update_partial_workflow` (`addNode` + `addConnection` on the `ai_*` outputs), then verify with `n8n_get_workflow` and `validate_workflow`.
+# 示例
 
-For the architecture these fit into, see **CHAT_AGENT_PATTERNS.md**.
+三个实用的节点对象（node-object）片段，对应 shell + 核心 + 子代理 的拓扑。这些是**社区 n8n JSON 片段**，供改造使用，不是可直接导入的完整导出：凭据 ID、工作流 ID、频道/机器人 ID 都是占位符。用 `n8n_update_partial_workflow` 搭建（在 `ai_*` 输出上执行 `addNode` + `addConnection`），再用 `n8n_get_workflow` 和 `validate_workflow` 验证。
+
+这些片段所属的架构见 **CHAT_AGENT_PATTERNS.md**。
 
 ---
 
-## 1. Stateless agent core
+## 1. 无状态 Agent 核心
 
-A reusable agent sub-workflow: `chatInput` + `threadId` in, agent output out. Memory keyed on `threadId`, native tools, a sub-agent tool, and Block Kit structured output with an autoFix fixer model. This is the "brain" called by the shell.
+一个可复用的 Agent 子工作流：输入 `chatInput` + `threadId`，输出 Agent 结果。记忆以 `threadId` 为键，带原生工具、一个子代理工具，以及带 autoFix 修正模型的 Block Kit 结构化输出。这就是被 shell 调用的"大脑"。
 
 ```json
 {
@@ -138,20 +142,20 @@ A reusable agent sub-workflow: `chatInput` + `threadId` in, agent output out. Me
 }
 ```
 
-What to notice:
+要点：
 
-- **Memory keyed on `threadId`**, not on a user/channel ID (those cross conversations). The shell supplies `threadId`.
-- **`maxIterations: 50`** — raised from the low default because this agent chains several tools per turn.
-- **`$now.format('DDDD')`** in the system prompt — no hardcoded date.
-- **Two models**: the main model on the agent, a separate coding-capable fixer wired into the parser. Both connect via `ai_languageModel` but to different nodes.
-- **`hasOutputParser: true`** on the agent activates the `ai_outputParser` slot.
-- The sub-agent tool's description repeats **"This tool is stateless"** — the router can't rely on shared context.
+- **记忆以 `threadId` 为键**，不是用户/频道 ID（那会跨会话串线）。`threadId` 由 shell 提供。
+- **`maxIterations: 50`**：比低默认值调高，因为这个 Agent 每轮要串联多个工具。
+- **系统提示词里的 `$now.format('DDDD')`**：不硬编码日期。
+- **两个模型**：主模型挂在 Agent 上，另一个可写代码的修正模型接到解析器。两者都走 `ai_languageModel`，但接到不同节点。
+- Agent 上的 **`hasOutputParser: true`** 激活 `ai_outputParser` 槽位。
+- 子代理工具的描述里重复强调 **"This tool is stateless"**（此工具无状态）：路由层不能依赖共享上下文。
 
 ---
 
-## 2. Slack router shell
+## 2. Slack 路由 shell
 
-The "shell": trigger, trigger-level anti-loop filter, event-type Switch, loading reaction, the agent-core call with an error branch, and the Block Kit reply envelope. No LLM here.
+"shell"：触发器、触发器级防循环过滤、事件类型 Switch、加载 reaction、带错误分支的 Agent 核心调用，以及 Block Kit 回复信封。这里没有 LLM。
 
 ```json
 {
@@ -302,18 +306,18 @@ The "shell": trigger, trigger-level anti-loop filter, event-type Switch, loading
 }
 ```
 
-What to notice:
+要点：
 
-- **Anti-loop at the trigger**: `options.userIds: ["U00000000BOT"]` is an exclusion list — the bot's own posts never enter the workflow. No separate filter node needed.
-- **`Call Agent core`** has `onError: 'continueErrorOutput'`, so `main[1]` carries the error branch (→ **n8n-error-handling**). The loading reaction is removed on the success path; the error branch surfaces a link instead of hanging forever.
-- **`threadId`** = `thread_ts || ts`, plumbed straight to the core (which keys memory on it).
-- **`blocksUi`** is the `{ "blocks": [...] }` envelope, not the bare array — the bare array fails silently.
+- **触发器级防循环**：`options.userIds: ["U00000000BOT"]` 是排除列表，机器人自己发的消息根本进不了工作流。不需要单独的过滤节点。
+- **`Call Agent core`** 设置了 `onError: 'continueErrorOutput'`，所以 `main[1]` 承载错误分支（→ **n8n-error-handling**）。加载 reaction 在成功路径移除；错误分支给出一个链接，而不是永远挂着。
+- **`threadId`** = `thread_ts || ts`，直接管道传入核心（核心以它作记忆键）。
+- **`blocksUi`** 是 `{ "blocks": [...] }` 信封，不是裸数组：裸数组会静默失败。
 
 ---
 
-## 3. Domain sub-agent (Notion ideas)
+## 3. 领域子代理（Notion ideas）
 
-A specialist sub-agent called via `.toolWorkflow` from the core. It fetches its DB schema fresh on every call and runs on a cheaper model than the router.
+由核心经 `.toolWorkflow` 调用的专职子代理。它每次调用都重新拉取数据库 schema，运行在比路由层更便宜的模型上。
 
 ```json
 {
@@ -414,19 +418,19 @@ A specialist sub-agent called via `.toolWorkflow` from the core. It fetches its 
 }
 ```
 
-What to notice:
+要点：
 
-- **Fresh schema injection**: `Get a database` runs **before** the agent (on `main`), and its `properties` are templated into the system prompt with `.toJsonString()`. The sub-agent never operates on a stale schema, so it can't pick a select option that was renamed last week.
-- **Cheaper model** (`claude-haiku-4.6`) than the router — a focused single-domain agent doesn't need the orchestrator's model.
-- **Stateless contract** restated in the system prompt — matching the tool description on the core side.
-- **`maxIterations: 15`** — fine for a focused sub-agent (vs 50 on the broad router).
-- The `Status|status` / `Type|select` key shape is Notion's `Name|type` convention; match the live schema.
+- **新鲜 schema 注入**：`Get a database` 在 Agent **之前**运行（在 `main` 上），其 `properties` 经 `.toJsonString()` 模板进系统提示词。子代理从不在过期 schema 上工作，因此选不到上周刚改名的 select 选项。
+- **更便宜的模型**（`claude-haiku-4.6`），低于路由层：专注单一领域的子代理用不着编排者的模型。
+- **无状态契约**在系统提示词里重申，与核心侧的工具描述对应。
+- **`maxIterations: 15`**：对专注的子代理够用（对比宽泛路由层的 50）。
+- `Status|status` / `Type|select` 的键形如 Notion 的 `Name|type` 约定；以线上实际 schema 为准。
 
 ---
 
-## Cross-references
+## 交叉引用
 
-- The topology these fit into → **CHAT_AGENT_PATTERNS.md**
-- The `.toolWorkflow` mapping → **SUBWORKFLOW_AS_TOOL.md**
-- Block Kit schema and autoFix → **STRUCTURED_OUTPUT.md**
-- Error branch on the core call → **n8n-error-handling**
+- 这些片段适配的拓扑 → **CHAT_AGENT_PATTERNS.md**
+- `.toolWorkflow` 映射 → **SUBWORKFLOW_AS_TOOL.md**
+- Block Kit schema 与 autoFix → **STRUCTURED_OUTPUT.md**
+- 核心调用上的错误分支 → **n8n-error-handling**

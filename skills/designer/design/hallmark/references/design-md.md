@@ -1,17 +1,21 @@
-# design.md: the locked system
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/design-md.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Loaded when the user asks to lock the current build's system into a portable file, or when a redesign reaches more than one page (`redesign.md`), after the scaffold has run: the file is written from `tokens.css`, never from the theme file. A single build never writes `design.md` on its own; `tokens.css` already makes every build portable, and the Picks block offers the lock in one line.
+# design.md：被锁定的系统
 
-## Triggers
+当用户要求把当前构建的系统锁定为一个可携带文件，或一次重设计跨越多个页面（`redesign.md`）时，在脚手架运行之后加载：该文件从 `tokens.css` 写出，绝不从主题文件写出。单页构建从不自己写 `design.md`；`tokens.css` 已经让每次构建都可携带，而 Picks 块会用一行话提供锁定选项。
 
-*lock the system*, *lock the design system*, *give me a design.md*, *export this as a design.md*, *extract the tokens*, *make this portable*, *I want to use this in another project*. Anything else, including more iteration on the same prompt, skips this file.
+## 触发条件
 
-- **Page builds and redesigns of more than one page.** A single component is too small to be a system.
-- **Never overwrite.** If `design.md` or `DESIGN.md` exists at the root, refresh its `## Exports` and say so in one line: *design.md found; Exports refreshed, system unchanged.*
+*lock the system*, *lock the design system*, *give me a design.md*, *export this as a design.md*, *extract the tokens*, *make this portable*, *I want to use this in another project*。其他任何说法，包括对同一提示词的进一步迭代，都不加载本文件。
 
-## Format
+- **页面构建，以及跨越多页的重设计。** 单个组件太小，成不了系统。
+- **绝不覆写。** 根目录已有 `design.md` 或 `DESIGN.md` 时，刷新其 `## Exports` 并用一行话说明：*design.md found; Exports refreshed, system unchanged.*
 
-At the project root, in the project's case convention, about 45 lines: enough to seed another page, short enough to maintain. State the picks aloud first (*Genre: editorial. Shape: Long Document. Theme: Newsprint. Locking this as the project's system.*), then write:
+## 格式
+
+写在项目根目录，采用项目的大小写惯例，约 45 行：足以给另一个页面当种子，又短到可维护。先用大白话说出选择（*Genre: editorial. Shape: Long Document. Theme: Newsprint. Locking this as the project's system.*），然后写出：
 
 ````markdown
 # Design: <project name>
@@ -48,6 +52,6 @@ The spacing scale, the type scale, the easings and the durations are the scaffol
 `tokens.css` in this project. Tailwind, DTCG or shadcn blocks are added here on request, per `export-formats.md`.
 ````
 
-## After the file exists
+## 文件存在之后
 
-The pre-flight finds it on every later run (SKILL.md Step 0). From then on every pick defers to it, the variety rule inverts (pages share the system rather than differ), and a page that genuinely needs something else amends `design.md` with a `## Variants` section instead of overriding it locally.
+预检（pre-flight）在此后的每次运行中都会找到它（SKILL.md Step 0）。从那时起每个选择都服从它，多样性规则反转（页面共享系统而不是彼此不同），而一个确实需要别的什么东西的页面，会用 `## Variants` 章节修订 `design.md`，而不是在本地覆盖它。

@@ -1,55 +1,59 @@
-# Raw Grid Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/raw-grid/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Raw Grid 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/raw-grid/design.md`
-- Preview card: `bold-template-pack/templates/raw-grid/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/raw-grid/design.md`
+- 预览卡：`bold-template-pack/templates/raw-grid/preview.md`
 
-- Slug: `raw-grid`
-- Tagline: Neo-brutalist deck with thick borders, offset shadows, and a pink/sage/ink palette.
-- Mood: raw, punchy, energetic, confident
-- Tone: direct, modern, no-nonsense, graphic
-- Formality: medium-low
-- Density: high
-- Scheme: light
-- Best for: Anything that should feel direct and graphic-confident: founder pitches, accelerator demos, brand decks, indie launches, creator portfolios. Strong for stat slides, comparison tables, and process flows. Equally good for tech, research, or finance when the speaker wants the deck to feel scrappy-confident rather than buttoned-up.
-- Avoid for: Contexts that need to feel soft, warm, or intentionally quiet — the brutalist borders and offset shadows commit to a graphic voice.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`raw-grid`
+- Tagline：新粗野主义演示：厚边框、偏移阴影与粉/鼠尾草绿/墨色配色。
+- Mood：raw、punchy、energetic、confident
+- Tone：direct、modern、no-nonsense、graphic
+- Formality：medium-low
+- Density：high
+- Scheme：light
+- 适合：一切应当显得直接且图形自信的内容：创始人提案、加速器演示、品牌演示、独立产品发布、创作者作品集。统计幻灯片、对比表格与流程图上表现出色。当演讲者想让演示显得野性自信而非规整拘谨时，用于科技、研究或金融同样出色。
+- 避免：需要显得柔软、温暖或刻意安静的场景：粗野主义边框与偏移阴影押注于图形化语气。
 
-A neobrutalist presentation system where 3px solid black borders ARE the layout. Display type runs in the native system sans-serif stack (Segoe UI / system-ui) at weight 900 in strict uppercase — no web fonts loaded. The palette is white canvas + black structure + two muted pastel accents (blush pink #F2D4CF and sage green #E5EDD6) + a neutral gray. Depth comes from hard offset shadows in solid black at 4px and 6px — never blurred, never colored. The aesthetic borrows from brutalist editorial web design and zine layout: borders meet without gaps, contrast is high but warmed by the pastel accents, and large numerals sit at very low opacity behind content as decorative wallpaper. The effect is sharp, system-native, and unmistakably digital — closer to a Notion-meets-protest-poster than a polished pitch deck.
+## 视觉速览
 
-Raw Grid is a neobrutalist presentation system built on a single structural premise: 3px solid black borders are the layout. There are no margins between regions, no gaps between cells, no rounded corners, no gradients. When two regions meet, a 3px black line separates them — that line is the entire grid system.
+一套新粗野主义演示系统，3px 实线黑边框就是版式本身。展示字体用系统原生无衬线字体栈（Segoe UI / system-ui），字重 900、严格大写：不加载任何 Web 字体。配色是白画布 + 黑结构 + 两种低饱和粉彩点缀色（腮红粉 #F2D4CF 与鼠尾草绿 #E5EDD6）+ 一个中性灰。深度来自 4px 与 6px 的实黑硬偏移阴影：从不模糊，从不变色。美学借鉴粗野主义编辑网页设计与 zine 版式：边框无间隙相接，对比强烈但被粉彩点缀色烘暖，大数字以极低不透明度躺在内容背后充当装饰壁纸。效果锐利、系统原生、数字感十足：更像 Notion 遇上抗议海报，而非打磨过的提案演示。
 
-## Preview Ingredients
+Raw Grid 是一套新粗野主义演示系统，建立在单一的结构前提上：3px 实线黑边框就是版式。区域之间没有外边距，单元格之间没有间隙，没有圆角，没有渐变。两个区域相遇时，一条 3px 黑线隔开它们：这条线就是整个网格系统。
 
-- Palette: black #0A0A0A; white #FFFFFF; pink #F2D4CF; green #E5EDD6; gray #F5F5F5; darkgray #333333
-- Typography: Segoe UI
-- Signature move: White ({colors.white}) canvas with 3px solid black ({colors.black}) borders dividing every region. No gaps between cells — borders meet edge-to-edge.
-- Signature move: System sans-serif at weight 900 uppercase for all display type; weight 500 sentence case for all body type.
-- Signature move: Hard offset shadows at 6px and 4px in solid black, no blur, ever.
-- Signature move: Two muted pastel accent surfaces — blush pink and sage green — used as region fills, never as text colors.
-- Signature move: A signature black-pill label component ({components.label}) — white uppercase text in a small black rectangle — appears as the universal section tag.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：black #0A0A0A; white #FFFFFF; pink #F2D4CF; green #E5EDD6; gray #F5F5F5; darkgray #333333
+- Typography：Segoe UI
+- Signature move：白色（{colors.white}）画布，3px 实线黑（{colors.black}）边框分隔每个区域。单元格之间没有间隙：边框边到边相接。
+- Signature move：系统无衬线字体字重 900 大写用于所有展示文字；字重 500 常规大小写（sentence case）用于所有正文文字。
+- Signature move：硬偏移阴影 6px 与 4px，实黑，永不模糊。
+- Signature move：两种低饱和粉彩点缀表面：腮红粉与鼠尾草绿，只用作区域填充，从不用作文字颜色。
+- Signature move：招牌黑胶囊标签组件（{components.label}）：小黑矩形里的白色大写文字，充当通用分节标签。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

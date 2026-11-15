@@ -1,47 +1,51 @@
-# Specialist Reviewer Activation Catalog
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/check/references/persona-catalog.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The orchestrator reads the full diff and uses judgment (not keyword matching) to decide which specialists to activate. This catalog defines the signals to reason about.
+# 专项审查员激活目录
 
-## Review Coordination
+编排器读取完整 diff 并用判断（不是关键词匹配）决定激活哪些专项审查员。本目录定义需要推理的信号。
 
-Use the activation signals below. When the environment has an agent or sub-agent facility, launch all activated specialists in parallel, each with the full diff and its own persona brief. If no parallel reviewer facility exists, run the specialist passes sequentially in the same session.
+## 审查协调
 
-Merge findings: when two specialists flag the same code location, keep the higher severity and note cross-reviewer agreement. Findings on different code locations are never duplicates even if they share a theme.
+使用下方的激活信号。环境具备 agent 或 sub-agent 设施时，并行启动所有已激活的专项审查员，每个都拿到完整 diff 和自己的人格简报。没有并行审查设施时，在同一会话中顺序执行各专项审查。
 
-Every specialist finding is a claim to verify, not a fact to act on. For HIGH and CRITICAL claims, when the agent facility allows it, spawn one independent skeptic per finding whose only brief is to refute it against the actual code; a finding the skeptic refutes on direct read is dropped or downgraded regardless of which persona raised it. Without the facility, run the skeptic pass yourself: re-read the cited code this turn and confirm the claim is real and live, not already handled elsewhere, not consistent-by-design, not a latent-only risk labeled as a live bug. Parallel reviewers over-report from name-based inference and partial context; drop what dissolves on direct read, and cite the verification path before routing anything to Autofix or sign-off.
+合并发现：两个专项审查员标记同一代码位置时，保留更高的严重级别并注明跨审查员一致。不同代码位置上的发现永远不是重复，即使主题相同。
 
-## Conditional Specialists
+每条专项审查发现都是一个待验证的主张，不是可直接行动的事实。对 HIGH 和 CRITICAL 主张，在 agent 设施允许时，为每条发现生成一个独立怀疑者，其唯一任务就是对照实际代码反驳它；怀疑者直读代码就能反驳的发现，无论出自哪个人格都删除或降级。没有该设施时，自己跑怀疑者回合：本轮重读被引用的代码，确认主张真实且活跃，不是已在别处处理、不是设计如此（consistent-by-design）、不是被标成现行 bug 的纯潜在风险。并行审查员会因基于名字的推断和部分上下文而过度报告；直读即消解的发现要丢弃，路由到 Autofix 或签收之前先引用验证路径。
 
-### Security Reviewer
+## 条件专项审查员
 
-**Agent file:** `agents/reviewer-security.md`
-**Activate at:** Standard or Deep depth
+### 安全审查员
 
-Activate when the diff changes code an attacker could reach or influence: trust-boundary input, auth or crypto, credentials, or query/shell/path construction.
+**Agent 文件：**`agents/reviewer-security.md`
+**激活深度：**Standard 或 Deep
 
-**Do not activate** for: pure UI changes, config file updates, test-only changes, documentation.
+当 diff 改动攻击者可能触达或影响的代码时激活：信任边界输入、认证或加密、凭证、查询/shell/路径构造。
 
-### Architecture Reviewer
+**不激活**的场景：纯 UI 变更、配置文件更新、仅测试变更、文档。
 
-**Agent file:** `agents/reviewer-architecture.md`
-**Activate at:** Standard or Deep depth
+### 架构审查员
 
-Activate when the diff changes how modules relate: boundaries, public APIs or signatures, cross-module dependencies, or a major dependency, rather than logic inside one module.
+**Agent 文件：**`agents/reviewer-architecture.md`
+**激活深度：**Standard 或 Deep
 
-**Do not activate** for: single-file bug fixes, test additions, style changes, documentation updates.
+当 diff 改变模块间关系时激活：边界、公开 API 或签名、跨模块依赖或主要依赖变更，而不是单个模块内部的逻辑。
 
-## Adversarial Pass (Deep only)
+**不激活**的场景：单文件 bug 修复、新增测试、样式变更、文档更新。
 
-No dedicated agent file. When the environment has an agent facility, the orchestrator runs the four angles as parallel agents, each blind to the others' findings; otherwise it runs them as an extra reasoning pass after all findings are collected.
+## 对抗回合（仅 Deep）
 
-**Activate at:** Deep depth only; the Deep criteria live in SKILL.md's Scope table.
+没有专属 agent 文件。环境具备 agent 设施时，编排器把四个角度作为并行 agent 运行，彼此看不到对方的发现；否则在所有发现收集完毕后作为额外的推理回合运行。
 
-Adversarial pass asks: "If I wanted to break this system through this specific diff, what would I do?"
+**激活深度：**仅 Deep；Deep 标准见 SKILL.md 的 Scope 表。
 
-Four attack angles:
-1. **Assumption violation** -- What does this code assume is always true? (format, ordering, range) What happens when it is not?
-2. **Composition failures** -- What breaks when this new code interacts with the existing system under concurrent load or partial failure?
-3. **Cascade construction** -- What sequence of valid operations leads to an invalid state?
-4. **Abuse cases** -- What happens on the 1000th request, during a deployment, with two users editing the same resource simultaneously?
+对抗回合的问题是："如果我想通过这个特定 diff 破坏这个系统，我会怎么做？"
 
-Report adversarial findings with the evidence that supports them; SKILL.md's Finding Quality Gate decides what survives.
+四个攻击角度：
+1. **假设违背**：这段代码假定什么永远为真？（格式、顺序、范围）不为真时会发生什么？
+2. **组合失败**：这段新代码在并发负载或部分失败下与现有系统交互时，什么会坏？
+3. **级联构造**：什么样的合法操作序列会导致非法状态？
+4. **滥用场景**：第 1000 个请求、部署过程中、两个用户同时编辑同一资源时会发生什么？
+
+报告对抗发现时附上支持证据；SKILL.md 的 Finding Quality Gate 决定哪些存活。

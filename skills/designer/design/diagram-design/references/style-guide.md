@@ -1,232 +1,236 @@
-# Style Guide
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/diagram-design/references/style-guide.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**The single source of truth for colors, typography, and tokens.** Every diagram draws from this — not from hex values inlined in other reference files. If you want to change the visual skin of Diagram Design, change this file.
+# 风格指南
 
-Default skin is a cool editorial palette — white-smoke paper, jet-black ink, burnt-tangerine accent, blue-slate muted. It's designed to look good out of the box; swap these values (or run [`onboarding.md`](onboarding.md)) and every new diagram inherits the new skin without touching any type-specific logic.
+**颜色、字体排印与 token 的唯一事实来源。** 每个图表都取材于此，而不是内联在其他参考文件中的 hex 值。想改 Diagram Design 的视觉皮肤，就改这个文件。
 
-To generate your own from a website URL, see [`onboarding.md`](onboarding.md).
+默认皮肤是一套冷调编辑风配色：白烟色（white-smoke）纸面、墨黑（jet-black）墨色、焦橘色（burnt-tangerine）强调色、蓝灰石板色（blue-slate）弱化色。它开箱即好看；换掉这些值（或运行 [`onboarding.md`](onboarding.md)），所有新图表都会继承新皮肤，且不碰任何图型专属逻辑。
+
+想从某个网站 URL 生成自己的皮肤，见 [`onboarding.md`](onboarding.md)。
 
 ---
 
-## Tokens
+## Token
 
-### Semantic roles
+### 语义角色
 
-Every token is referred to by **semantic role**, not by its hex value. Type references (`type-*.md`) and SKILL.md say `accent`, not `#bf4520`.
+所有 token 都按**语义角色**引用，不按 hex 值引用。图型参考（`type-*.md`）和 SKILL.md 写的是 `accent`，不是 `#bf4520`。
 
-| Role | Purpose | Default (light) | Default (dark) |
+| 角色 | 用途 | 默认（浅色） | 默认（深色） |
 |---|---|---|---|
-| `paper` | Page background, default node fill | `#f5f5f5` (white-smoke) | `#2d3142` (jet-black) |
-| `paper-2` | Diagram container bg, secondary fill | `#ececec` | `#393e53` |
-| `ink` | Primary text, primary stroke | `#2d3142` (jet-black) | `#f5f5f5` (white-smoke) |
-| `ink-strong` | High-contrast text on warm accent fills | `#111111` | `#111111` |
-| `muted` | Secondary text, default arrow stroke | `#4f5d75` (blue-slate) | `#bfc0c0` (silver) |
-| `soft` | Sublabels, boundary labels | `#5a6580` | `#949eb2` |
-| `rule` | Hairline borders | `rgba(45,49,66,0.12)` | `rgba(245,245,245,0.12)` |
-| `rule-solid` | Stronger borders, baselines | `#bfc0c0` (silver) | `rgba(191,192,192,0.25)` |
-| `accent` | Focal / 1–2 max per diagram | `#bf4520` (burnt-tangerine) | `#f08a59` |
-| `accent-tint` | Fill for accent-bordered boxes | `rgba(191,69,32,0.08)` | `rgba(240,138,89,0.10)` |
-| `link` | HTTP/API calls, external arrows | `#2e5aa8` | `#739fdf` |
+| `paper` | 页面背景，节点默认填充 | `#f5f5f5`（白烟色） | `#2d3142`（墨黑） |
+| `paper-2` | 图表容器背景，次要填充 | `#ececec` | `#393e53` |
+| `ink` | 主文字，主描边 | `#2d3142`（墨黑） | `#f5f5f5`（白烟色） |
+| `ink-strong` | 暖色强调底上的高对比文字 | `#111111` | `#111111` |
+| `muted` | 次要文字，箭头默认描边 | `#4f5d75`（蓝灰石板） | `#bfc0c0`（银色） |
+| `soft` | 子标签，边界标签 | `#5a6580` | `#949eb2` |
+| `rule` | 发丝线边框 | `rgba(45,49,66,0.12)` | `rgba(245,245,245,0.12)` |
+| `rule-solid` | 更重的边框，基线 | `#bfc0c0`（银色） | `rgba(191,192,192,0.25)` |
+| `accent` | 视觉焦点，每图至多 1–2 处 | `#bf4520`（焦橘色） | `#f08a59` |
+| `accent-tint` | 强调描边盒子的填充 | `rgba(191,69,32,0.08)` | `rgba(240,138,89,0.10)` |
+| `link` | HTTP/API 调用，外部箭头 | `#2e5aa8` | `#739fdf` |
 
-> **Brand palette source:** this skin maps to a five-color brand palette: `jet-black #2d3142`, `silver #bfc0c0`, `white-smoke #f5f5f5`, `atomic-tangerine`, `blue-slate #4f5d75`. The light `accent` is not the raw brand tangerine. Raw atomic-tangerine reads 2.86:1 on `paper`, too faint for an arrow or a label, so the skin uses `#bf4520`, the same hue darkened until it clears 4.5:1 as text. The `soft`, `rule`, and `link` tokens are derived (a darker slate, ink at opacity, and a saturated variant in the blue-slate hue family) to cover roles the brand palette doesn't name directly. Every derived value is held to the contrast contract below.
+> **品牌配色来源：**这套皮肤映射自一个五色品牌配色：`jet-black #2d3142`、`silver #bfc0c0`、`white-smoke #f5f5f5`、`atomic-tangerine`、`blue-slate #4f5d75`。浅色 `accent` 不是原始品牌橘色。原始 atomic-tangerine 在 `paper` 上只有 2.86:1，做箭头或标签太淡，所以皮肤改用 `#bf4520`，同一色相加深到文字对比度过 4.5:1。`soft`、`rule`、`link` 三个 token 是派生值（更深的石板色、带透明度的 ink、蓝灰石板色相族里的一个饱和变体），用来覆盖品牌配色未直接命名的角色。每个派生值都受下文对比度契约约束。
 
-### Contrast contract
+### 对比度契约
 
-Every token must clear the threshold for each role it plays, against the background it actually sits on, in both skins. `scripts/verify-contrast.py` computes the WCAG 2.x ratio for every row above against the `paper` of its skin (`ink-strong` against the 0.85 `accent` fill it labels) and fails CI when one falls short.
+每个 token 在两种皮肤下、按它实际所在的背景，都必须达到其扮演的每个角色的阈值。`scripts/verify-contrast.py` 会为上表每行计算对所在皮肤 `paper` 的 WCAG 2.x 对比度（`ink-strong` 对它所标注的 0.85 `accent` 填充），任一不达标即让 CI 失败。
 
-| Use | Minimum vs. its actual background |
+| 用途 | 对其实际背景的最低要求 |
 |---|---|
-| Regular text, including any `soft`, `link`, or `accent` used as text | 4.5:1 |
-| Large text (24px+, or 18.7px+ at weight 600+) | 3:1 |
-| Essential non-text marks: lines, arrows, borders, focus outlines, data points | 3:1 against the adjacent color |
-| Decorative rules and translucent tints (`rule`, `rule-solid`, `paper-2`, `accent-tint`, fills at opacity) | No minimum, but never the only carrier of meaning |
+| 普通文字，包括用作文字的 `soft`、`link` 或 `accent` | 4.5:1 |
+| 大号文字（24px 以上，或 600 以上字重的 18.7px 以上） | 3:1 |
+| 关键非文字记号：线条、箭头、边框、焦点轮廓、数据点 | 对相邻颜色 3:1 |
+| 装饰性线条与半透明浅色（`rule`、`rule-solid`、`paper-2`、`accent-tint`、带透明度的填充） | 无下限，但绝不能是唯一的含义载体 |
 
-- **A token used in several roles must pass each one.** `accent` is a stroke in one place and a label in another, so it is held to 4.5:1, not the 3:1 its strokes alone would need. Don't assume a token is non-text because it usually is.
-- **Translucent colors are composited first.** An `rgba()` fill or stroke is blended over `paper` before its ratio is measured. A value that clears the bar at full strength can fail at 0.5 opacity.
-- **Surfaces other than `paper` cost contrast.** Inside an `accent-tint` box or on `paper-2` every ratio drops. Measure text placed there against that surface, not against `paper`.
-- **Current defaults:** light `accent` 4.71:1, `soft` 5.34:1, `link` 6.13:1, `muted` 6.11:1 on `#f5f5f5`; dark `accent` 5.21:1, `soft` 4.78:1, `link` 4.76:1 on `#2d3142`.
+- **一个 token 扮演多个角色，就要每个角色都达标。** `accent` 一处做描边、另一处做文字标签，因此按 4.5:1 把关，而不是仅按描边所需的 3:1。不要因为某 token 平时不是文字就默认它不是。
+- **半透明颜色先合成再测。** `rgba()` 填充或描边先与 `paper` 混合，再测对比度。全强度达标的值，0.5 透明度下可能不达标。
+- **`paper` 之外的表面都要吃掉对比度。** `accent-tint` 盒子内或 `paper-2` 上，所有比值都会下降。放在那里的文字要对着该表面测量，而不是对着 `paper`。
+- **当前默认值：**浅色 `accent` 4.71:1、`soft` 5.34:1、`link` 6.13:1、`muted` 6.11:1（在 `#f5f5f5` 上）；深色 `accent` 5.21:1、`soft` 4.78:1、`link` 4.76:1（在 `#2d3142` 上）。
 
-### Inversion rule (light → dark)
+### 反转规则（浅色 → 深色）
 
-Any `rgba(45,49,66, X)` in light becomes `rgba(245,245,245, X)` in dark. Same opacities, RGB flipped. The accent gets a slight hue-shift brighter to read on dark paper.
+浅色下任何 `rgba(45,49,66, X)` 在深色下变成 `rgba(245,245,245, X)`。透明度不变，RGB 对调。accent 稍作色相偏移并提亮，才能在深色纸面上读清。
 
-### Series palette (multi-series chart types only)
+### 系列配色（仅限多系列图表类型）
 
-A small set of desaturated, editorial-tone colors for chart types that genuinely need to distinguish multiple overlapping entities (currently: **radar**). The "1-focal" rule still holds — `accent` is reserved for the focal series; the palette below covers the rest.
+一小组去饱和、编辑风格的配色，供确实需要区分多个重叠实体的图表类型使用（目前：**radar**）。“单焦点”规则依然成立：`accent` 留给焦点系列，下表配色覆盖其余系列。
 
-| Token | Light | Dark | Notes |
+| Token | 浅色 | 深色 | 说明 |
 |---|---|---|---|
-| `series-1` | `#7c8f6f` (sage) | `#9caf8f` | Non-focal series |
-| `series-2` | `#5e7a9b` (dusty-blue) | `#82a0c0` | Non-focal series |
-| `series-3` | `#b8915a` (mustard) | `#d3ad7a` | Non-focal series |
-| `series-4` | `#9c6b50` (rust-brown) | `#b88670` | Non-focal series |
-| `series-5` | `#6e6479` (slate) | `#8d8298` | Non-focal series |
+| `series-1` | `#7c8f6f`（鼠尾草绿） | `#9caf8f` | 非焦点系列 |
+| `series-2` | `#5e7a9b`（灰蓝） | `#82a0c0` | 非焦点系列 |
+| `series-3` | `#b8915a`（芥末黄） | `#d3ad7a` | 非焦点系列 |
+| `series-4` | `#9c6b50`（锈棕） | `#b88670` | 非焦点系列 |
+| `series-5` | `#6e6479`（石板灰） | `#8d8298` | 非焦点系列 |
 
-Fills sit at `0.18` opacity light, `0.22` dark; strokes use the full color. **Don't backfill these tokens to non-chart types** — architecture, swimlane, etc. continue to use muted-ink variants. The series palette is opt-in for diagrams where overlapping shapes demand distinguishable color, not a license to add color elsewhere.
+浅色下填充用 `0.18` 透明度，深色用 `0.22`；描边用全色。**不要把这些 token 回填给非图表类型**：architecture、swimlane 等继续使用 muted-ink 变体。系列配色是可选项，只在重叠形状必须可区分时使用，不是在别处加颜色的通行证。
 
-### Terminal skin (opt-in alternate)
+### 终端皮肤（可选替代方案）
 
-A self-contained palette for the terminal-window primitive (see [primitive-terminal.md](primitive-terminal.md)) — a CLI-chrome register for dev-tool posts and technical social cards. It does not replace the default skin above and isn't affected by onboarding; it's a second, fixed skin you opt into per-diagram.
+为终端窗口 primitive 准备的自包含配色（见 [primitive-terminal.md](primitive-terminal.md)），是给开发者工具类帖文和技术向社交卡片用的 CLI 框面风格。它不替换上面的默认皮肤，也不受 onboarding 影响；它是第二种固定皮肤，按图表逐个选择启用。
 
-| Token | Hex | Purpose |
+| Token | Hex | 用途 |
 |---|---|---|
-| `terminal-page` | `#0a0a0a` | Page background behind the window |
-| `terminal-paper` | `#141414` | Window body, node fill |
-| `terminal-bar` | `#1b1b1b` | Titlebar strip |
-| `terminal-border` | `#2b2b2b` | Window border, hairlines |
-| `terminal-ink` | `#f5f5f5` | Primary text, primary stroke (same white-smoke as default `ink`) |
-| `terminal-muted` | `#9a9a9a` | Secondary text, sublabels, ring stroke |
-| `terminal-soft` | `#5c5c5c` | Tertiary — inactive dots, spokes |
-| `terminal-accent` | `#ff5a36` | The one accent — focal station, prompt sign, active dot |
-| `terminal-accent-tint` | `rgba(255,90,54,0.12)` | Fill for accent-bordered boxes |
+| `terminal-page` | `#0a0a0a` | 窗口背后的页面背景 |
+| `terminal-paper` | `#141414` | 窗口主体，节点填充 |
+| `terminal-bar` | `#1b1b1b` | 标题栏条 |
+| `terminal-border` | `#2b2b2b` | 窗口边框，发丝线 |
+| `terminal-ink` | `#f5f5f5` | 主文字，主描边（与默认 `ink` 同为白烟色） |
+| `terminal-muted` | `#9a9a9a` | 次要文字，子标签，环描边 |
+| `terminal-soft` | `#5c5c5c` | 三级层级：未激活圆点，辐条 |
+| `terminal-accent` | `#ff5a36` | 唯一强调色：焦点站、提示符、激活圆点 |
+| `terminal-accent-tint` | `rgba(255,90,54,0.12)` | 强调描边盒子的填充 |
 
-**1-accent rule still holds.** Everything that isn't `terminal-ink` or `terminal-muted`/`terminal-soft` should be `terminal-accent` — never introduce a second hue.
+**单强调色规则依然成立。** 凡不是 `terminal-ink` 或 `terminal-muted`/`terminal-soft` 的东西都应是 `terminal-accent`，绝不引入第二种色相。
 
 ---
 
-## Typography
+## 字体排印
 
-| Role | Family | Size | Weight | Usage |
+| 角色 | 字体族 | 字号 | 字重 | 用途 |
 |---|---|---|---|---|
-| `title` | Instrument Serif | 1.75rem | 400 | Page H1 |
-| `node-name` | Geist (sans) | 12px | 600 | Human-readable labels |
-| `sublabel` | Geist Mono | 9px | 400 | Port, protocol, URL, field type |
-| `eyebrow` | Geist Mono | 7–8px | 500, tracked 0.18em, uppercase | Type tags, axis labels |
-| `arrow-label` | Geist Mono | 8px | 400, tracked 0.06em | Arrow annotations |
-| `callout` | Instrument Serif *italic* | 14px | 400 | Editorial asides only |
+| `title` | Instrument Serif | 1.75rem | 400 | 页面 H1 |
+| `node-name` | Geist（无衬线） | 12px | 600 | 人读标签 |
+| `sublabel` | Geist Mono | 9px | 400 | 端口、协议、URL、字段类型 |
+| `eyebrow` | Geist Mono | 7–8px | 500，字距 0.18em，全大写 | 类型标签，轴标签 |
+| `arrow-label` | Geist Mono | 8px | 400，字距 0.06em | 箭头注释 |
+| `callout` | Instrument Serif *斜体* | 14px | 400 | 仅限编辑性旁注 |
 
-### Font stack
+### 字体栈
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Serif:ital@0;1&family=Noto+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@400&family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400&display=swap" rel="stylesheet">
 ```
 
-### Font source
+### 字体来源
 
-The font source decides whether a diagram makes any network request. It is a skin setting, so a saved profile carries it too.
+字体来源决定图表是否发起网络请求。它是皮肤设置，保存的 profile 也会携带它。
 
-Font source: `web`
+字体来源：`web`
 
-| Value | What ships | Network |
+| 取值 | 随附内容 | 网络 |
 |---|---|---|
-| `web` (default) | The Google Fonts `<link>` above; text renders in Instrument Serif, Geist, and Geist Mono | One stylesheet request to `fonts.googleapis.com`, plus the font files |
-| `system` | No font `<link>`; every family stack falls through to the platform's own serif, sans, and monospace faces | None |
+| `web`（默认） | 上面的 Google Fonts `<link>`；文字以 Instrument Serif、Geist、Geist Mono 渲染 | 向 `fonts.googleapis.com` 发一个样式表请求，外加字体文件 |
+| `system` | 不放字体 `<link>`；每个字体族栈依次回退到平台自带的衬线、无衬线与等宽字体 | 无 |
 
-Use `system` when the user asks for offline output, system fonts, or no Google Fonts, or when this line says `system`. In `system` mode:
+用户要求离线输出、系统字体或不用 Google Fonts 时，或本行写着 `system` 时，用 `system`。`system` 模式下：
 
-- Omit the font `<link>` (and the export `@import`) entirely. Keep every `font-family` stack as written: each one already ends in a generic family (`serif`, `system-ui, sans-serif`, `ui-monospace, monospace`), so a viewer who has Geist installed still gets it and everyone else gets their system face.
-- Fallback faces have different metrics from Geist, so keep the 8px label padding intact rather than trimming boxes to the Geist measurement.
-- Export with `python3 scripts/export_svg.py <file> --system-fonts`, and verify with `python3 scripts/self_check.py --offline <file>`, which fails if the Google Fonts link is still present.
+- 完全省去字体 `<link>`（以及导出时的 `@import`）。每个 `font-family` 栈照原样保留：每个栈都以通用字体族结尾（`serif`、`system-ui, sans-serif`、`ui-monospace, monospace`），装了 Geist 的查看者仍能看到 Geist，其他人则落到系统字体。
+- 回退字体与 Geist 的度量不同，所以 8px 标签内边距保持原样，不要按 Geist 的量裁盒子。
+- 用 `python3 scripts/export_svg.py <file> --system-fonts` 导出，再用 `python3 scripts/self_check.py --offline <file>` 验证；Google Fonts 链接仍在时它会报失败。
 
-The render linter's default run (`lint-render.py` with network blocked) measures exactly this fallback rendering, so every shipped template and example is already checked in system-font mode.
+渲染 linter 的默认运行（`lint-render.py`，网络被屏蔽）测的正是这种回退渲染，因此所有随附模板与示例都已在系统字体模式下验证过。
 
-To keep the editorial faces with no network at all, install Instrument Serif, Geist, and Geist Mono locally (all three are SIL Open Font License) and use `system`: the stacks resolve to the installed faces first.
+想完全不联网也保留编辑风字体，就本地安装 Instrument Serif、Geist、Geist Mono（三者均为 SIL Open Font License）并使用 `system`：字体栈会优先解析到已安装的字体。
 
-### Korean labels
+### 韩文标签
 
-Geist and Instrument Serif carry no Hangul. A Korean `<text>` element extends its own family — never swap the skin:
+Geist 与 Instrument Serif 都没有谚文（Hangul）。韩文 `<text>` 元素扩展自己的字体族，绝不换皮肤：
 
 ```svg
 <text font-family="'Geist', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">결제 서비스</text>
 ```
 
-Both Noto faces ship in the font link above, so the web font resolves before any locally installed one and the same file renders identically on macOS, Windows, and a reviewer's browser. The local families follow it for offline viewing. Page titles need the serif equivalent — `'Instrument Serif', 'Noto Serif KR', serif` — or a mixed Latin/Korean title resolves Hangul through the platform's generic serif and the two halves disagree. Google's `css2` endpoint slices Korean by unicode-range, so a diagram with a handful of Korean labels downloads only the slices it touches. The four templates carry both faces because a new diagram may contain Hangul; the shipped Latin-only examples keep the shorter link, since a file with no Hangul has nothing to resolve.
+上面字体链接里已带两个 Noto 字体，因此网页字体先于本地安装的字体解析，同一文件在 macOS、Windows 和审阅者的浏览器上渲染一致。离线查看时本地字体族接着兜底。页面标题需要衬线对应项，即 `'Instrument Serif', 'Noto Serif KR', serif`，否则混排拉丁/韩文标题会让谚文落到平台通用衬线上，两半不协调。Google 的 `css2` 端点按 unicode-range 切分韩文，所以只有少量韩文标签的图表只下载用到的切片。四个模板都带这两个字体，因为新图表可能含谚文；随附的纯拉丁示例保留较短的链接，因为不含谚文的文件没有要解析的东西。
 
-**Width budget.** Measure per character, not per script: **every Unicode wide or full-width character costs 1em, every other character costs its face's Latin advance** (0.60em sans, 0.62em mono), and nonspacing/enclosing marks cost nothing. Sum over the string and multiply by the font size for the text width, then add padding and round the box up to the next multiple of 4. `verify-treemap.py` enforces exactly this text width for treemap cell labels. The skill's `scripts/self_check.py` applies the same width, plus any letter-spacing, to text inside a visible box of any type, and fails a label that runs more than 0.3em past the box edge. Padding, rounding, and labels on paper-coloured arrow-label masks are not checked, so those stay yours to hold.
+**宽度预算。** 按字符测量，不按文字体系测量：**每个 Unicode 宽字符或全角字符占 1em，其他字符按其字体的拉丁字幅计**（无衬线 0.60em，等宽 0.62em），非间距/封闭组合字符标记不占宽。对整串求和再乘以字号得出文字宽度，加上内边距，盒子尺寸向上取整到 4 的倍数。`verify-treemap.py` 对 treemap 单元格标签严格按这个文字宽度把关。本 skill 的 `scripts/self_check.py` 对任何类型可见盒子内的文字套用同样宽度（外加上字距），标签超出盒边 0.3em 以上即判失败。内边距、取整以及纸色箭头标签遮罩上的标签不在检查范围内，要靠你自己把住。
 
-Counting by script is the trap. `주문 v2.1` is two full-width syllables and five narrow characters; a formula that tallies Hangul, Latin letters, and spaces silently drops `2`, `.`, and `1` and sizes the box for four of its seven characters. Every rendered character costs something — measure per character, never per script.
+按文字体系计数是个陷阱。`주문 v2.1` 是两个全角音节加五个窄字符；只统计谚文、拉丁字母和空格的公式会悄悄丢掉 `2`、`.` 和 `1`，按七个字符中的四个来定盒子。每个渲染出来的字符都占宽度：按字符测，绝不按文字体系测。
 
-Three rules follow from Hangul metrics:
+从谚文度量可推出三条规则：
 
-- **Sublabels stay Latin.** Ports, protocols, field types, and URLs are Latin anyway — keep `Geist Mono` there and don't translate them. Hangul in a 9px mono sublabel is unreadable and has no mono face to fall back to.
-- **Floor of 12px.** Hangul goes muddy below 12px. If a Korean name doesn't fit at 12px, cut the name — don't shrink the type.
-- **Arrow labels, eyebrows, and legend text switch register.** Those slots are 7–8px Geist Mono, uppercase and tracked, which Hangul has neither a face nor legibility for. A Korean label in one of those slots becomes 12px sans at weight 500 with no tracking and no uppercase transform, and its mask rect grows to match (16px tall, width from the budget above, still rounded to a multiple of 4). Latin labels in the same diagram keep the mono treatment.
+- **子标签保持拉丁文。** 端口、协议、字段类型和 URL 本来就是拉丁文：继续用 `Geist Mono`，不要翻译它们。9px 等宽子标签里的谚文无法阅读，也没有等宽字体可回退。
+- **12px 下限。** 谚文低于 12px 就发糊。韩文名字在 12px 放不下，就删减名字，不要缩小字号。
+- **箭头标签、eyebrow 和图例文字要换语域。** 这些槽位是 7–8px Geist Mono、全大写加字距，谚文既没有对应字体也没有可读性。落在这些槽位里的韩文标签改用 12px 无衬线、字重 500、无字距、不做大写转换，其遮罩矩形随之放大（高 16px，宽度按上文预算，仍取整到 4 的倍数）。同一图表里的拉丁标签维持等宽处理。
 
-**Load-bearing rule:** Mono is for *technical* content (ports, commands, URLs, field types). Names go in Geist sans. Page title is Instrument Serif. Italic Instrument Serif is reserved for annotation callouts (see [primitive-annotation.md](primitive-annotation.md)). **Never JetBrains Mono** as a blanket "dev" font.
+**承重规则：**等宽字体只用于*技术*内容（端口、命令、URL、字段类型）。名字用 Geist 无衬线。页面标题用 Instrument Serif。斜体 Instrument Serif 只留给注释旁注（见 [primitive-annotation.md](primitive-annotation.md)）。**绝不把 JetBrains Mono** 当万能“开发”字体。
 
-### Traditional Chinese labels
+### 繁体中文标签
 
-Geist and Instrument Serif carry no Han. A Traditional Chinese `<text>` element extends its own family — never swap the skin:
+Geist 与 Instrument Serif 都没有汉字。繁体中文 `<text>` 元素扩展自己的字体族，绝不换皮肤：
 
 ```svg
 <text font-family="'Geist', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif">請求項比對</text>
 ```
 
-Both Noto TC faces ship in the font link above, so the web font resolves before any locally installed one and the same file renders identically on macOS, Windows, and a reviewer's browser. The local families follow it for offline viewing. Page titles need the serif equivalent — `'Instrument Serif', 'Noto Serif TC', serif` — or a mixed Latin/Han title resolves Han through the platform's generic serif and the two halves disagree. Google's `css2` endpoint slices Chinese by unicode-range, so a diagram with a handful of Chinese labels downloads only the slices it touches.
+上面字体链接里已带两个 Noto TC 字体，因此网页字体先于本地安装的字体解析，同一文件在 macOS、Windows 和审阅者的浏览器上渲染一致。离线查看时本地字体族接着兜底。页面标题需要衬线对应项，即 `'Instrument Serif', 'Noto Serif TC', serif`，否则混排拉丁/汉字标题会让汉字落到平台通用衬线上，两半不协调。Google 的 `css2` 端点按 unicode-range 切分中文，所以只有少量中文标签的图表只下载用到的切片。
 
-**Width budget.** The per-character contract above is unchanged: every Unicode wide or full-width character costs 1em, every other character costs its face's Latin advance, and nonspacing marks cost nothing. Full-width punctuation — `（）「」，。：` — is wide and costs 1em as well, which is the part most often dropped.
+**宽度预算。** 上文按字符计宽的约定不变：每个 Unicode 宽字符或全角字符占 1em，其他字符按其字体的拉丁字幅计，非间距标记不占宽。全角标点（`（）「」，。：`）也是宽字符、同样占 1em，这恰恰是最常被漏算的部分。
 
-Counting by script is the trap. `請求項 v2.1` is three full-width characters and five narrow ones; a formula that tallies Han and Latin letters silently drops `2`, `.`, and `1` and sizes the box for six of its nine characters.
+按文字体系计数是个陷阱。`請求項 v2.1` 是三个全角字符加五个窄字符；只统计汉字和拉丁字母的公式会悄悄丢掉 `2`、`.` 和 `1`，按九个字符中的六个来定盒子。
 
-Three rules follow from Han metrics, mirroring the Hangul ones:
+从汉字度量可推出三条规则，与谚文那三条对应：
 
-- **Sublabels stay Latin.** Ports, protocols, field types, and URLs are Latin anyway — keep `Geist Mono` there and don't translate them. Han in a 9px mono sublabel is unreadable and has no mono face to fall back to. A sublabel that is prose rather than a value may be Chinese, but it then switches register by the third rule below.
-- **Floor of 12px.** Han packs more strokes than Hangul into the same em box, so the 12px floor binds at least as hard here. If a Chinese name doesn't fit at 12px, cut the name — don't shrink the type.
-- **Arrow labels, eyebrows, and legend text switch register.** Those slots are 7–8px Geist Mono, uppercase and tracked, which Han has neither a face nor legibility for. A Chinese label in one of those slots becomes 12px sans at weight 500 with no tracking and no uppercase transform, and its mask rect grows to match (16px tall, width from the budget above, still rounded to a multiple of 4). Latin labels in the same diagram keep the mono treatment.
+- **子标签保持拉丁文。** 端口、协议、字段类型和 URL 本来就是拉丁文：继续用 `Geist Mono`，不要翻译它们。9px 等宽子标签里的汉字无法阅读，也没有等宽字体可回退。子标签若是叙述性文字而非取值，可以用中文，但随后要按下面第三条规则换语域。
+- **12px 下限。** 汉字在同样的 em 方框里塞进的笔画比谚文更多，所以 12px 下限在这里只紧不松。中文名字在 12px 放不下，就删减名字，不要缩小字号。
+- **箭头标签、eyebrow 和图例文字要换语域。** 这些槽位是 7–8px Geist Mono、全大写加字距，汉字既没有对应字体也没有可读性。落在这些槽位里的中文标签改用 12px 无衬线、字重 500、无字距、不做大写转换，其遮罩矩形随之放大（高 16px，宽度按上文预算，仍取整到 4 的倍数）。同一图表里的拉丁标签维持等宽处理。
 
-Simplified Chinese takes the same three rules with the Simplified stack (`'Noto Sans SC'`, `'PingFang SC'`, `'Microsoft YaHei'`). That face does not ship in the link, so Simplified labels still resolve through whatever the viewer has locally.
+简体中文适用同样三条规则，字体栈换成简体版（`'Noto Sans SC'`、`'PingFang SC'`、`'Microsoft YaHei'`）。该字体不在链接里，所以简体标签仍靠查看者本地有什么字体来解析。
 
-### Cyrillic labels
+### 西里尔文标签
 
-Geist and Geist Mono ship Cyrillic (`cyrillic` and `cyrillic-ext` on Google Fonts), so names, sublabels, arrow labels, eyebrows, and legend text in Bulgarian, Russian, Ukrainian, or Serbian keep the Latin treatment: same faces, sizes, tracking, and uppercase. There is no register switch: Hangul and Han switch register because Geist Mono has no face for them, and Geist Mono does cover Cyrillic.
+Geist 与 Geist Mono 自带西里尔文（Google Fonts 上的 `cyrillic` 与 `cyrillic-ext`），所以保加利亚语、俄语、乌克兰语或塞尔维亚语的名字、子标签、箭头标签、eyebrow 和图例文字沿用拉丁文的处理：同样的字体、字号、字距和大写。这里没有语域切换：谚文和汉字要换语域是因为 Geist Mono 没有它们的字体，而 Geist Mono 覆盖西里尔文。
 
-Instrument Serif carries no Cyrillic. A page title extends its family — `'Instrument Serif', 'Noto Serif', serif` — or a mixed Latin/Cyrillic title resolves Cyrillic through whatever face comes next and the two halves disagree. Noto Serif ships in the font link above, upright and italic, so an italic callout in Cyrillic takes the same stack.
+Instrument Serif 不含西里尔文。页面标题要扩展字体族，写成 `'Instrument Serif', 'Noto Serif', serif`，否则混排拉丁/西里尔标题会让西里尔文落到后面随便哪个字体上，两半不协调。上面字体链接里带了 Noto Serif（正体与斜体都有），所以西里尔文的斜体旁注也用同一个栈。
 
-**Noto Serif goes ahead of the CJK serifs.** When a stack also lists `'Noto Serif KR'` or `'Noto Serif TC'`, put `'Noto Serif'` ahead of them. Google Fonts slices Cyrillic into those faces as well, so a stack that reaches a CJK face first draws its Cyrillic from it. That is why the templates put `'Noto Serif'` between `'Instrument Serif'` and `'Noto Serif KR'`; Noto Serif has no Hangul or Han, so Korean and Chinese titles pass straight through it.
+**Noto Serif 要排在 CJK 衬线之前。** 栈里同时列有 `'Noto Serif KR'` 或 `'Noto Serif TC'` 时，把 `'Noto Serif'` 放在它们前面。Google Fonts 把西里尔文也切分进那些字体，先命中 CJK 字体的栈就会用 CJK 字体来画西里尔文。模板把 `'Noto Serif'` 放在 `'Instrument Serif'` 与 `'Noto Serif KR'` 之间就是这个原因；Noto Serif 没有谚文和汉字，韩文与中文标题会直接穿过它落到后面的字体。
 
-**Width budget.** The per-character contract above is unchanged: every character costs its face's Latin advance (0.60em sans, 0.62em mono). It fits Geist Mono exactly and Geist sans only on average. Geist Mono is monospaced: a Cyrillic glyph advances exactly as far as a Latin one, so sublabels, arrow labels, eyebrows, legend text, and their mask rects are sized as for Latin. Geist sans is not. Its wide Cyrillic letters, capitals and lowercase alike (such as `Ж Ш Щ Ю Ы`, `ж ш щ ы ю`), run well past the 0.60em average: `Шкаф ODF-2` at 12px is budgeted at 72px and draws at about 76. Rounding the box up to a multiple of 4 recovers at most 3px, so it is not the remedy. Leave the overshoot in the box padding and measure a Cyrillic sans name in the browser — `verify-treemap.py` holds the budget, not the drawn width, so it will not catch the overshoot.
+**宽度预算。** 上文按字符计宽的约定不变：每个字符按其字体的拉丁字幅计（无衬线 0.60em，等宽 0.62em）。这在 Geist Mono 上完全准确，在 Geist 无衬线上只是平均数。Geist Mono 是等宽字体：西里尔字形与拉丁字形的步进完全相同，所以子标签、箭头标签、eyebrow、图例文字及其遮罩矩形都按拉丁文尺寸定。Geist 无衬线不是。它的宽西里尔字母（大小写皆然，如 `Ж Ш Щ Ю Ы`、`ж ш щ ы ю`）远超 0.60em 的平均值：`Шкаф ODF-2` 在 12px 下按预算是 72px，实际画出来约 76px。盒子向上取整到 4 的倍数至多找回 3px，救不了场。把超出量留给盒子内边距，并在浏览器里实测西里尔无衬线名字的宽度：`verify-treemap.py` 只对预算把关，不量实际绘制宽度，抓不住这种超出。
 
-Counting by script is still the trap. `Шкаф ODF-2` is four Cyrillic letters, a space, three Latin letters, a hyphen, and a digit; a formula that tallies Cyrillic letters, Latin letters, and spaces silently drops `-` and `2` and sizes the box for eight of its ten characters.
+按文字体系计数依旧是陷阱。`Шкаф ODF-2` 是四个西里尔字母、一个空格、三个拉丁字母、一个连字符加一个数字；只统计西里尔字母、拉丁字母和空格的公式会悄悄丢掉 `-` 和 `2`，按十个字符中的八个来定盒子。
 
-**Preserve printed labels.** A label the reader matches against a physical thing — a cabinet, a splice closure, a port map — carries the exact printed string. Don't transliterate it and don't re-case it; if one has to sit in an uppercase slot such as an eyebrow, drop the transform for that label rather than re-case the printed string. `Шкаф ODF-2` stays `Шкаф ODF-2`, not `Shkaf ODF-2`.
-
----
-
-## Stroke, radius, spacing
-
-| Token | Value | Use |
-|---|---|---|
-| `stroke-thin` | `0.8` | Tag-box outlines, leaf nodes |
-| `stroke-default` | `1` | Most strokes |
-| `stroke-strong` | `1.2` | Emphasis strokes |
-| `radius-sm` | `4` | Small tags |
-| `radius-md` | `6` | Node boxes |
-| `radius-lg` | `8` | Containers, rings |
-| `grid` | `4` | Every coord, size, and gap is divisible by 4 (hard rule) |
+**保住印制标签。** 读者要拿它与实物对号的标签（机柜、接续盒、端口映射图）必须带着与印制完全一致的字符串。不要转写，也不要改大小写；若必须放进 eyebrow 这类大写槽位，宁可对该标签去掉大写转换，也不要改印制字符串的大小写。`Шкаф ODF-2` 就保持 `Шкаф ODF-2`，不要写成 `Shkaf ODF-2`。
 
 ---
 
-## Node type → treatment
+## 描边、圆角、间距
 
-Semantic role combinations — reference these by name in type specs.
-
-| Type | Fill | Stroke |
+| Token | 取值 | 用途 |
 |---|---|---|
-| `focal` (1–2 max) | `accent-tint` | `accent` |
-| `backend` | `#ffffff` (white) | `ink` |
+| `stroke-thin` | `0.8` | 标签盒轮廓，叶节点 |
+| `stroke-default` | `1` | 大多数描边 |
+| `stroke-strong` | `1.2` | 强调描边 |
+| `radius-sm` | `4` | 小标签 |
+| `radius-md` | `6` | 节点盒 |
+| `radius-lg` | `8` | 容器，环 |
+| `grid` | `4` | 所有坐标、尺寸与间距都是 4 的倍数（硬规则） |
+
+---
+
+## 节点类型 → 处理方式
+
+语义角色组合。图型规格里按名称引用它们。
+
+| 类型 | 填充 | 描边 |
+|---|---|---|
+| `focal`（至多 1–2 个） | `accent-tint` | `accent` |
+| `backend` | `#ffffff`（白） | `ink` |
 | `store` | `ink @ 0.05` | `muted` |
 | `external` | `ink @ 0.03` | `ink @ 0.30` |
 | `input` | `muted @ 0.10` | `soft` |
-| `optional` | `ink @ 0.02` | `ink @ 0.20` dashed `4,3` |
-| `security` | `accent @ 0.05` | `accent @ 0.50` dashed `4,4` |
+| `optional` | `ink @ 0.02` | `ink @ 0.20` 虚线 `4,3` |
+| `security` | `accent @ 0.05` | `accent @ 0.50` 虚线 `4,4` |
 
 ---
 
-## Customizing the skin
+## 自定义皮肤
 
-Four options:
+四种方式：
 
-1. **Run onboarding** — see [`onboarding.md`](onboarding.md). Drop a URL; the skill extracts the palette + fonts and rewrites this file.
-2. **Edit by hand** — change the hex values in the tables above. Run the pre-output taste gate afterward to verify the accent still reads as "focal" against the new paper color.
-3. **Brand handoff** — paste your existing design-token JSON into a new section here and map its tokens to the semantic roles above.
-4. **Client profiles** — save and switch named skins, or bind one to a project, using [`profiles.md`](profiles.md).
+1. **运行 onboarding**：见 [`onboarding.md`](onboarding.md)。丢进一个 URL，skill 会提取配色与字体并重写本文件。
+2. **手工编辑**：改上面各表里的 hex 值。改完跑一遍输出前品味闸门，确认新纸面颜色下 accent 仍然读作“焦点”。
+3. **品牌交接**：把你现有的设计 token JSON 粘贴到这里新增一节，并把它的 token 映射到上述语义角色。
+4. **客户 profile**：用 [`profiles.md`](profiles.md) 保存和切换命名皮肤，或把皮肤绑定到某个项目。
 
-### Constraints (don't break these)
+### 约束（不许破坏）
 
-- **Contrast**: every text token (`ink`, `muted`, `soft`, `link`, and `accent`) must clear 4.5:1 on `paper`, in both skins. See the [contrast contract](#contrast-contract); `scripts/verify-contrast.py` checks it.
-- **One accent**: pick one color for `accent`. Two accents erases the focal signal.
-- **No rainbow palette**: if your brand ships 8 colors, pick 3 (paper, ink, accent). The rest become `muted` variants.
-- **Serif + sans + mono**: three families, not more. If brand typography is all sans, keep Instrument Serif for `title` and `callout` anyway — the contrast is load-bearing.
-- **Paper is warm-neutral, not pure white**: pure white turns the design sterile. Pick a cream, bone, or light grey with a hint of warmth.
-- **Dot pattern is optional, not default**: the 22×22 dot pattern is an opt-in "dotted paper" variant (good for long-form editorial hero diagrams). The default background is a clean `paper` fill, no pattern. When the pattern is enabled, it should sit at ~10% opacity of `ink` on `paper` — visible but quiet.
-- **Container is clean by default**: the diagram sits directly on the page paper, no secondary container background or border. A framed variant (`paper-2` bg + `rule` border + 8px radius + padding) is available as an opt-in for card-heavy layouts, but don't reach for it by default — the extra chrome fights the figure.
+- **对比度**：两种皮肤下，每个文字 token（`ink`、`muted`、`soft`、`link`、`accent`）在 `paper` 上都必须过 4.5:1。见[对比度契约](#contrast-contract)；`scripts/verify-contrast.py` 负责检查。
+- **单一强调色**：`accent` 只选一种颜色。两种强调色会抹掉焦点信号。
+- **不做彩虹配色**：品牌有 8 个颜色也只挑 3 个（paper、ink、accent），其余归入 `muted` 变体。
+- **衬线 + 无衬线 + 等宽**：三个字体族，不再多。品牌字体全是无衬线时，`title` 和 `callout` 仍要保留 Instrument Serif，这个对比是承重的。
+- **纸面是暖中性色，不是纯白**：纯白会让设计变冷。选奶油色、米白色或带一点暖意的浅灰。
+- **圆点纹理是可选项，不是默认**：22×22 圆点纹理是可选的“点纹纸”变体（适合长篇编辑风 hero 图表）。默认背景是干净的 `paper` 填充，无纹理。启用纹理时，以 `paper` 上约 10% 透明度的 `ink` 呈现：看得见，但不吵。
+- **容器默认干净**：图表直接放在页面纸面上，不加次要容器背景或边框。带框变体（`paper-2` 背景 + `rule` 边框 + 8px 圆角 + 内边距）作为可选项留给卡片密集的布局，但默认不要伸手去拿：多出来的框面会和图形打架。

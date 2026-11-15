@@ -1,90 +1,94 @@
-Typography carries information, hierarchy, and voice. Improve it inside the established visual world; do not replace the identity unless the user asked to.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/typeset.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+字体排印承载信息、层级与声音。在既定的视觉世界里改进它；除非用户要求，否则不更换识别体系。
 
 ---
 
-## Visitor mode
+## 访客模式
 
-- **Persuade + Experience:** display type may carry the voice. Use decisive contrast and responsive scale when the composition benefits.
-- **Operate + Read:** stability, scanability, and measure come first. A single well-tuned family and fixed role scale are often right.
-- **Native:** follow [ios.md](ios.md) or [android.md](android.md), including platform scaling and accessibility behavior.
+- **说服 + 体验：**展示字体可以承载声音。构图受益时用果断的对比与响应式字号阶梯。
+- **操作 + 阅读：**稳定、可扫读与行长优先。一套调校好的字体家族加上固定的角色阶梯往往就是对的。
+- **原生：**遵循 [ios.md](ios.md) 或 [android.md](android.md)，包括平台缩放与无障碍行为。
 
-If typography replacement would create a new identity, route through [new-work.md](new-work.md) and update DESIGN.md. Otherwise preserve confirmed families and improve their use.
+字体更换会造出新识别体系时，走 [new-work.md](new-work.md) 流程并更新 DESIGN.md。否则保留已确认的家族，改进其用法。
 
-## Two isolated assessments
+## 两个隔离的评估
 
-When a sub-agent tool is available and permitted, run these independently; otherwise run them yourself in this order. Do not let detector findings anchor the design assessment.
+子代理工具可用且被允许时，独立运行这两项；否则自己按此顺序运行。不要让检测器的发现锚定设计评估。
 
-1. **Typographic assessment:** inspect representative pages and styles. Answer every question below with a file, selector, or computed value:
-   - **Authority and fit:** Which faces, weights, and roles are established? Do they fit the product and selected world, or are they unexamined defaults? Is every family necessary?
-   - **Hierarchy:** Can heading, body, label, metadata, and data roles be distinguished at a glance? Are adjacent sizes or weights too close to carry different jobs?
-   - **Scale and consistency:** Is there a deliberate role scale, or a collection of arbitrary values? Do repeated roles stay identical across screens and states?
-   - **Reading:** Does body copy stay within a comfortable 45–75 character measure? Are line height, paragraph rhythm, contrast, and tracking tuned to the actual face, width, language, and surface?
-   - **Stress:** What happens with long headings, localization expansion, zoom, narrow containers, missing weights, and font fallback?
-   - **Delivery:** Are only used assets loaded? Do fallback metrics, loading strategy, and variable-font settings avoid invisible text and disruptive reflow?
-2. **Mechanical scan:** run:
+1. **字体排印评估：**检查代表性页面与样式。以下每个问题都以文件、选择器或计算值作答：
+   - **权威性与契合度：**建立了哪些字体、字重与角色？它们契合产品与所选世界，还是未审视的默认值？每个家族都必要吗？
+   - **层级：**标题、正文、标签、元数据与数据角色能一眼区分吗？相邻的字号或字重是否近到无法承担不同职责？
+   - **阶梯与一致性：**有经过设计的角色阶梯，还是一堆任意值？重复出现的角色在各屏幕与状态下保持一致吗？
+   - **阅读：**正文行长是否在舒适的 45–75 字符之间？行高、段落节奏、对比度与字距是否按实际的字体、宽度、语言与界面调校？
+   - **压力测试：**长标题、本地化膨胀、缩放、窄容器、缺失字重与字体回退时会怎样？
+   - **交付：**只加载用到的资源吗？回退度量、加载策略与可变字体设置能避免隐形文本与破坏性重排吗？
+2. **机械扫描：**运行：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable detect --json --scope type [target files or dirs]
 ```
 
-Also inspect dynamic or arbitrary font values the detector cannot interpret. Synthesize both assessments before editing, noting what each caught alone. A clean scan is a floor, not proof of good typography.
+同时检查检测器无法解读的动态或任意字体值。编辑前综合两份评估，注明各自单独抓到了什么。扫描干净只是底线，不是好排版的证明。
 
-## Set the system
+## 设定系统
 
-Before editing, state:
+编辑前先说明：
 
-- the roles the interface needs;
-- the intended contrast between those roles;
-- the reading measure and density;
-- which existing faces and weights are authoritative;
-- any performance, localization, or accessibility constraints.
+- 界面需要哪些角色；
+- 这些角色之间预期的对比；
+- 阅读行长与密度；
+- 哪些既有字体与字重是权威的；
+- 任何性能、本地化或无障碍约束。
 
-Use the fewest roles and families that make the hierarchy unmistakable. Combine size, weight, space, and tone deliberately instead of asking size alone to do all the work. Role names and tokens should describe purpose rather than values.
+用最少的角色与家族，让层级不容误读。刻意组合字号、字重、空间与色调，而不是让字号独自承担全部工作。角色名与令牌应描述用途，而不是数值。
 
-## Apply
+## 应用
 
-- Keep body copy comfortably readable and zoomable. Use 1rem / 16px as the ordinary web body floor unless a dense role, platform convention, or user setting justifies otherwise.
-- Keep prose in the 45–75ch range. Tune line height inversely with measure: wider lines generally need more leading.
-- Compensate light text on dark surfaces on all three perceptual axes: slightly more line height, a touch more tracking, and one step more weight when the face needs it.
-- Tune line height to the face, width, language, and contrast, not a universal ratio.
-- Keep repeated roles consistent across screens and states.
-- Use numeric, tabular, code, and label features when their content benefits.
-- Load only used font assets and weights. Provide metric-compatible fallbacks and avoid blocking text.
-- Let marketing display type respond to available space when useful; keep dense product and reading surfaces spatially predictable.
-- Preserve browser zoom, user font settings, Dynamic Type, and platform text scaling.
-- Use paragraph spacing or first-line indentation as the primary paragraph rhythm; combining both usually double-marks the boundary.
+- 保持正文舒适可读、可缩放。以 1rem / 16px 作为普通网页正文下限，除非高密度角色、平台惯例或用户设置给出正当理由。
+- 行文保持在 45–75ch 区间。行高与行长反向调校：更宽的行通常需要更多行距。
+- 暗色表面上的浅色文字沿三个感知轴补偿：行高略增、字距微增，字体需要时字重升一档。
+- 行高按字体、宽度、语言与对比度调校，不用万能比值。
+- 重复角色在各屏幕与状态下保持一致。
+- 内容受益时使用数字、表列、代码与标签等字体特性。
+- 只加载用到的字体资源与字重。提供度量兼容的回退字体，避免阻塞文本。
+- 有用时让营销展示字随可用空间伸缩；高密度产品界面与阅读界面保持空间可预期。
+- 保留浏览器缩放、用户字体设置、Dynamic Type 与平台文字缩放。
+- 用段间距或首行缩进作为主要段落节奏；两者并用通常会双重标记边界。
 
-Do not make type decorative at the expense of comprehension, or introduce a second family without a clear role it alone can perform.
+不要让字体为了装饰而牺牲理解，也不要引入第二个家族，除非它有只有自己能承担的明确角色。
 
-## Line breaks
+## 换行
 
-After Matthew Butterick's *Practical Typography*, paraphrased; where his numbers differ from these, these stand.
+改写自 Matthew Butterick 的 *Practical Typography*；他的数值与本文不同时，以本文为准。
 
-- Set `text-wrap: balance` on headings and short centered blocks, and `text-wrap: pretty` on body copy. Both are progressive: a browser that ignores them keeps its default wrap.
-- `pretty` pulls a word down beside a lone last word. It does not fill the last line, and a two-word tail is fine.
-- In a column too narrow for either to help, edit the copy or widen the column.
-- Break a heading by hand only between phrases, and check the break at every width the heading renders at. A hard break that lands mid-line on a phone is worse than the default wrap.
-- An uneven break can carry meaning: a headline that lands on one word for weight, a poster line, a pull quote. Make it deliberate with a hard break or a wrap set on that element, and keep it rare. The detector's `straggler` and `unbalanced-heading` findings are advisory for this reason; say which breaks are intended.
+- 标题与短的居中块设 `text-wrap: balance`，正文设 `text-wrap: pretty`。两者都是渐进增强：忽略它们的浏览器保持默认换行。
+- `pretty` 会把一个词拉下来陪孤零零的末词。它不会填满最后一行，两词的尾部是正常的。
+- 列窄到两者都帮不上时，改文案或加宽列。
+- 手工断行标题只在短语之间，并检查标题出现的每个宽度下的断点。硬换行落在手机上的行中，比默认换行更糟。
+- 不齐的断行可以承载含义：标题落在一个词上以加重、海报行、引语。用硬换行或在该元素上设置换行来表明这是刻意的，并保持稀有。正因如此，检测器的 `straggler` 与 `unbalanced-heading` 发现仅供参考；说明哪些断行是有意的。
 
-## Verify
+## 验证
 
-- Primary, secondary, body, and metadata roles are recognizable without reading the copy.
-- Long text remains comfortable across relevant widths and languages.
-- The typography belongs to the product and its established world.
-- Loading does not create disruptive reflow or invisible text.
-- Zoom, text scaling, focus, contrast, and reduced viewport paths remain usable.
-- The final mechanical scan has no unexplained findings.
+- 主级、次级、正文与元数据角色不读文案也能辨认。
+- 长文本在相关宽度与语言下保持舒适。
+- 字体排印属于产品及其既定世界。
+- 加载不造成破坏性重排或隐形文本。
+- 缩放、文字缩放、焦点、对比度与窄视口路径保持可用。
+- 最终机械扫描没有未解释的发现。
 
-Answer each item with rendered or source evidence, then rerun the scan. Do not substitute a bare “yes” for verification.
+每项以渲染结果或源码证据作答，然后重跑扫描。不要用一个光秃秃的"是"代替验证。
 
-When the hierarchy holds, hand off to `/impeccable polish`.
+层级立住之后，交给 `/impeccable polish`。
 
-## Live-mode signature params
+## Live 模式的签名参数
 
-Every variant declares a coarse `scale` parameter and authors its type ramp against `var(--p-scale, 1)`.
+每个变体声明一个粗粒度的 `scale` 参数，其字阶基于 `var(--p-scale, 1)` 编写。
 
 ```json
 {"id":"scale","kind":"range","min":0.85,"max":1.3,"step":0.05,"default":1,"label":"Scale"}
 ```
 
-Add at most one pairing or weight parameter when it represents a real system choice. Follow [live.md](live.md)'s parameter contract.
+至多再加一个搭配或字重参数，且它必须代表真实的系统选择。遵循 [live.md](live.md) 的参数契约。

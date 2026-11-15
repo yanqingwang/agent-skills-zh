@@ -1,28 +1,29 @@
-# Cloud CLI Remote MCP Server Usage
+> **中文汉化版** · 上游：[google/skills](https://github.com/google/skills) · 原文件：`plugins/cloud/google-cloud-developer/skills/gcloud/references/mcp-usage.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Google Cloud resources can be managed via the Model Context Protocol (MCP),
-allowing AI agents to interact with Google Cloud using structured tool calls
-rather than directly executing local shell commands.
+# Cloud CLI 远程 MCP 服务器使用说明
 
-MCP operations for `gcloud` are executed through the **Cloud CLI remote MCP
-server** (backed by the Cloud CLI Execution API, `cloudcli.googleapis.com`).
+Google Cloud 资源可以通过模型上下文协议（MCP）来管理，让 AI Agent 通过结构化的工具调用
+与 Google Cloud 交互，而不是直接执行本地 shell 命令。
 
-## Server Endpoint & Tool Overview
+`gcloud` 的 MCP 操作通过 **Cloud CLI 远程 MCP 服务器**执行（底层为 Cloud CLI Execution
+API，`cloudcli.googleapis.com`）。
 
--   **Server Endpoint:** `https://cloudcli.googleapis.com/mcp`
--   **Transport:** HTTP (JSON-RPC 2.0)
--   **API Name:** Cloud CLI Execution API (`cloudcli.googleapis.com`)
--   **Available Tool:** `run_gcloud_command`
+## 服务器端点与工具概览
 
-The `run_gcloud_command` tool executes a single `gcloud` command securely in a
-managed remote environment on behalf of the user.
+-   **服务器端点：** `https://cloudcli.googleapis.com/mcp`
+-   **传输方式：** HTTP（JSON-RPC 2.0）
+-   **API 名称：** Cloud CLI Execution API（`cloudcli.googleapis.com`）
+-   **可用工具：** `run_gcloud_command`
 
-## Client Configuration (`mcp_config.json`)
+`run_gcloud_command` 工具在受管的远程环境中，代表用户安全地执行单条 `gcloud` 命令。
 
-To connect an MCP client (such as Antigravity) to the remote Cloud CLI MCP
-server,
-configure the server entry in `mcp_config.json` with `authProviderType` set to
-`"google_credentials"`:
+## 客户端配置（`mcp_config.json`）
+
+要把 MCP 客户端（例如 Antigravity）连接到远程 Cloud CLI MCP 服务器，请在
+`mcp_config.json` 中配置该服务器条目，并把 `authProviderType` 设置为
+`"google_credentials"`：
 
 ```json
 {
@@ -35,82 +36,70 @@ configure the server entry in `mcp_config.json` with `authProviderType` set to
 }
 ```
 
-> [!IMPORTANT] Specifying `"authProviderType": "google_credentials"` is
-> mandatory. It instructs the MCP client to attach Application Default
-> Credentials (ADC) with the `https://www.googleapis.com/auth/cloud-platform`
-> OAuth scope. Omitting this field will cause the client to send unauthenticated
-> requests, resulting in `401 Unauthorized` errors.
+> [!IMPORTANT] 必须指定 `"authProviderType": "google_credentials"`。它指示 MCP 客户端附带
+> 带 `https://www.googleapis.com/auth/cloud-platform` OAuth 作用域的 Application Default
+> Credentials（ADC）。省略该字段会导致客户端发送未认证请求，从而出现 `401 Unauthorized`
+> 错误。
 
-## Prerequisites & IAM Requirements
+## 前提条件与 IAM 要求
 
-Before using the Cloud CLI remote MCP server, the target project and calling
-identity must satisfy two mandatory prerequisites:
+使用 Cloud CLI 远程 MCP 服务器之前，目标项目和调用方身份必须满足两个强制前提条件：
 
-### 1. API Enablement
+### 1. 启用 API
 
-The Cloud CLI Execution API (`cloudcli.googleapis.com`) must be enabled on the
-target project.
+必须在目标项目上启用 Cloud CLI Execution API（`cloudcli.googleapis.com`）。
 
--   **Via Google Cloud Console (No CLI required):**
+-   **通过 Google Cloud 控制台（无需 CLI）：**
 
-    1.  Open the [Google Cloud Console](https://console.cloud.google.com/).
-    2.  Navigate to **APIs & Services** --> **Library**.
-    3.  Search for **Cloud CLI Execution API** (or open the
-        [Cloud CLI Execution API Library Page](https://console.cloud.google.com/apis/library/cloudcli.googleapis.com)).
-    4.  Select the target project from the project dropdown.
-    5.  Click **Enable**.
+    1.  打开 [Google Cloud 控制台](https://console.cloud.google.com/)。
+    2.  依次进入 **APIs & Services** --> **Library**。
+    3.  搜索 **Cloud CLI Execution API**（或打开
+        [Cloud CLI Execution API 库页面](https://console.cloud.google.com/apis/library/cloudcli.googleapis.com)）。
+    4.  在项目下拉框中选择目标项目。
+    5.  点击 **Enable**。
 
--   **Via `gcloud` CLI:**
+-   **通过 `gcloud` CLI：**
 
     ```bash
     gcloud services enable cloudcli.googleapis.com --project={project_id}
     ```
 
-### 2. IAM Roles & Permissions
+### 2. IAM 角色与权限
 
--   **MCP Access Role:** The caller identity must hold the **MCP Tool User**
-    role (`roles/mcp.toolUser`, which grants the `mcp.tools.call` permission) on
-    the target project.
--   **Downstream Resource Roles:** The caller identity must also hold standard
-    IAM permissions on the underlying resources being queried or modified (e.g.,
-    `roles/compute.viewer`, `roles/run.developer`).
+-   **MCP 访问角色：** 调用方身份必须在目标项目上持有 **MCP Tool User** 角色
+    （`roles/mcp.toolUser`，该角色授予 `mcp.tools.call` 权限）。
+-   **下游资源角色：** 调用方身份还必须对被查询或修改的底层资源持有标准 IAM 权限（例如
+    `roles/compute.viewer`、`roles/run.developer`）。
 
-> [!CAUTION] If either the Cloud CLI Execution API is not enabled or the caller
-> lacks the `roles/mcp.toolUser` role, the endpoint returns **`403 Forbidden`**
-> during both tool discovery (`tools/list`) and tool invocation (`tools/call`).
+> [!CAUTION] 如果 Cloud CLI Execution API 未启用，或调用方缺少 `roles/mcp.toolUser` 角色，
+> 端点在工具发现（`tools/list`）和工具调用（`tools/call`）两个阶段都会返回
+> **`403 Forbidden`**。
 
-## Tool Parameters
+## 工具参数
 
-Calls to `run_gcloud_command` accept the following parameters:
+对 `run_gcloud_command` 的调用接受以下参数：
 
--   **`command`** (string, required): The full `gcloud` command line string to
-    execute (e.g., `"gcloud compute instances list --project={resource_project}
-    --format=json"`).
--   **`project`** (string, required): The resource name of the Google Cloud
-    project hosting the Cloud CLI Execution API in the format
-    `"projects/{api_project}"` (e.g., `"projects/my-api-project"`).
--   **`input_files`** (list of objects, optional): Files to provision in the
-    remote execution environment before running the command. Each item contains
-    a relative `path` and string `contents`.
+-   **`command`**（字符串，必填）：要执行的完整 `gcloud` 命令行字符串（例如
+    `"gcloud compute instances list --project={resource_project} --format=json"`）。
+-   **`project`**（字符串，必填）：承载 Cloud CLI Execution API 的 Google Cloud 项目的
+    资源名，格式为 `"projects/{api_project}"`（例如 `"projects/my-api-project"`）。
+-   **`input_files`**（对象列表，可选）：在运行命令前预置到远程执行环境中的文件。每个条目
+    包含相对路径 `path` 和字符串 `contents`。
 
-> [!IMPORTANT] **API Host Project vs. Resource Project Context:**
+> [!IMPORTANT] **API 宿主项目与资源项目上下文的区别：**
 >
-> -   The top-level **`project`** parameter (`"projects/{api_project}"`) is used
->     **strictly for quota, billing, and API enablement** of the
->     `cloudcli.googleapis.com` API itself. It does NOT set the project context
->     for the command being executed.
-> -   For **project-scoped commands**, you MUST explicitly include
->     `--project={resource_project}` within the `command` string. The target
->     `{resource_project}` does NOT have to be the project hosting the Cloud CLI
->     Execution API.
-> -   For **non-project-scoped commands** (such as billing, folder, or
->     organization queries), you MUST include
->     `--billing-project={billing_project}` in the `command` string if the
->     underlying API requires a quota project.
+> -   顶层的 **`project`** 参数（`"projects/{api_project}"`）**严格用于
+>     `cloudcli.googleapis.com` API 本身的配额、计费和 API 启用**。它不会为所执行的命令
+>     设置项目上下文。
+> -   对于**项目级命令**，必须在 `command` 字符串中显式包含
+>     `--project={resource_project}`。目标 `{resource_project}` 不必是承载 Cloud CLI
+>     Execution API 的项目。
+> -   对于**非项目级命令**（例如账单、文件夹或组织查询），如果底层 API 要求配额项目，必须
+>     在 `command` 字符串中包含 `--billing-project={billing_project}`。
 
-### Example Invocations
+### 调用示例
 
-#### 1. Basic Command Execution
+#### 1. 基础命令执行
 
 ```json
 {
@@ -119,7 +108,7 @@ Calls to `run_gcloud_command` accept the following parameters:
 }
 ```
 
-#### 2. Command with Input Files
+#### 2. 带输入文件的命令
 
 ```json
 {
@@ -134,56 +123,45 @@ Calls to `run_gcloud_command` accept the following parameters:
 }
 ```
 
-## Response Structure
+## 响应结构
 
-The tool returns an execution response containing:
+该工具返回一个执行响应，包含：
 
--   `exit_code`: Numeric exit status of the command execution. **This is the
-    primary and authoritative indicator of command success or failure.**
--   `stdout`: Standard output stream from the command.
--   `stderr`: Standard error stream from the command.
--   `output_files`: Any files generated by the command.
+-   `exit_code`：命令执行的数字退出状态。**这是判断命令成功与否的首要且权威的指标。**
+-   `stdout`：命令的标准输出流。
+-   `stderr`：命令的标准错误流。
+-   `output_files`：命令生成的所有文件。
 
-> [!NOTE] - **Exit Code Authority:** A command is successful if and only if
-> `exit_code == 0`. A non-zero `exit_code` indicates failure.
+> [!NOTE] - **退出码权威性：** 当且仅当 `exit_code == 0` 时命令才算成功。`exit_code`
+> 非零表示失败。
 >
-> -   **Informational `stderr` Output:** In `gcloud`, `stderr` frequently
->     contains standard status messages, progress updates, and asynchronous
->     tracking IDs (such as `--async` operation IDs) even when the command
->     executes successfully (`exit_code == 0`). Agents MUST NOT assume a command
->     failed merely because `stderr` is non-empty.
-> -   **Error Diagnosis:** If `exit_code != 0`, diagnostic error messages may
->     appear in either `stderr` or `stdout`. Inspect both streams to understand
->     the failure and formulate a correction.
+> -   **`stderr` 中的提示性输出：** 在 `gcloud` 中，即使命令执行成功（`exit_code == 0`），
+>     `stderr` 也经常包含标准状态消息、进度更新和异步跟踪 ID（例如 `--async` 操作 ID）。
+>     Agent 绝不能仅因 `stderr` 非空就认定命令失败。
+> -   **错误诊断：** 如果 `exit_code != 0`，诊断错误信息可能出现在 `stderr` 或 `stdout`
+>     中。要检查两个流，弄清失败原因并制定修正方案。
 
-## Prohibited & Unsupported Commands
+## 禁用与不支持的命令
 
-The Cloud CLI remote MCP server operates in a sandboxed, non-interactive
-environment. The following list shows a few example `gcloud` commands that
-aren't supported (such as command groups that manage local machine
-configuration, credentials, interactive shells, or metadata). This list is
-non-exhaustive and subject to the addition or removal of commands without
-notice:
+Cloud CLI 远程 MCP 服务器运行在沙箱化、非交互式的环境中。下面列出部分不受支持的
+`gcloud` 命令示例（例如管理本地机器配置、凭证、交互式 shell 或元数据的命令组）。该列表
+并不详尽，命令可能在不另行通知的情况下被增删：
 
--   `gcloud auth` (Local authentication & credential management)
--   `gcloud config` (Local CLI configuration profiles and properties)
--   `gcloud iam service-accounts` (Service account management)
--   `gcloud init` (Interactive setup wizard)
--   `gcloud survey` (User feedback & surveys)
--   `gcloud compute ssh` / `gcloud app instances ssh` (Interactive SSH shells)
+-   `gcloud auth`（本地认证与凭证管理）
+-   `gcloud config`（本地 CLI 配置 profile 与属性）
+-   `gcloud iam service-accounts`（服务账号管理）
+-   `gcloud init`（交互式设置向导）
+-   `gcloud survey`（用户反馈与调查）
+-   `gcloud compute ssh` / `gcloud app instances ssh`（交互式 SSH shell）
 
-## Safety & Execution Guidelines
+## 安全与执行准则
 
--   **Mandatory User Consent for Mutations:** Destructive or state-changing
-    commands (such as `create`, `delete`, `update`, or `patch`) modify or
-    destroy GCP resources. These commands must NOT be invoked autonomously
-    unless the user has explicitly authorized the action.
--   **Asynchronous Operations (`--async`):** For long-running operations (such
-    as creating VM instances, GKE clusters, or database instances), always
-    append the `--async` flag in the `command` string to avoid execution
-    timeouts.
--   **Data Reduction & Formatting:** Use `--format=json`, `--filter`, and
-    `--limit` in the `command` string to constrain output volume and prevent
-    context window bloat.
--   **Non-Interactive Execution (`--quiet`):** Include `--quiet` (or `-q`) on
-    commands that might otherwise prompt for interactive user confirmation.
+-   **变更类操作必须获得用户同意：** 破坏性或改变状态的命令（例如 `create`、`delete`、
+    `update`、`patch`）会修改或销毁 GCP 资源。除非用户已明确授权该操作，否则绝不能自主
+    调用这些命令。
+-   **异步操作（`--async`）：** 对于长时间运行的操作（例如创建 VM 实例、GKE 集群或数据库
+    实例），务必在 `command` 字符串中附加 `--async` 标志，以避免执行超时。
+-   **数据缩减与格式化：** 在 `command` 字符串中使用 `--format=json`、`--filter` 和
+    `--limit` 来约束输出量，防止 context window 膨胀。
+-   **非交互执行（`--quiet`）：** 对于可能触发交互式用户确认的命令，加上 `--quiet`
+    （或 `-q`）。

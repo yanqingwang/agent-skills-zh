@@ -7,14 +7,18 @@ display: grotesk-sans Familjen Grotesk
 accent: cool 256
 posture: restrained
 keywords: api, sdk, cli, dev tool, developer platform, docs, documentation, infrastructure, backend, database, observability, webhooks, events, type-safe, open source, ship, deploy, developer experience, technical
-material: cool near-white paper, blue-grey ink and hairlines, Familjen Grotesk over IBM Plex Sans, a generated ASCII field on an 8 by 16 cell, keycaps and cut-corner panels, JetBrains Mono on graphite, one electric cobalt signal
+material: 冷调近白纸张、蓝灰墨色与细线、IBM Plex Sans 上压 Familjen Grotesk、8×16 单元格上的生成 ASCII 场、键帽与切角面板、石墨底上的 JetBrains Mono、一个电光钴蓝信号
 photo: duotone graphite paper
 pictured: Feature Ledger, Field hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/cobalt.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Cobalt
 
-An exact, technical register: cool near-white paper ruled with hairlines, Familjen Grotesk heads over IBM Plex Sans, and a ground made of characters, a generated ASCII field snapped to an 8 by 16 cell that shows the product's own traffic in cobalt tints. Panels are cut on two opposite corners, buttons are keycaps with a real bottom edge, code runs on graphite. It is precise because every edge is a hairline or a cut and every glyph means something; it is not a dark developer page or a terminal costume.
+精确的技术腔调：冷调近白纸张划满细线、IBM Plex Sans 上压 Familjen Grotesk 标题，底面由字符构成，一片生成 ASCII 场吸附到 8×16 的单元格上，用钴蓝浓淡显示产品自己的流量。面板在两个对角切角，按钮是带真实底边的键帽，代码跑在石墨底上。它精确，因为每条边要么是细线要么是切口，每个字符都有含义；它不是深色开发者页面，也不是终端戏服。
 
 ## Tokens
 
@@ -41,49 +45,49 @@ An exact, technical register: cool near-white paper ruled with hairlines, Familj
 }
 ```
 
-## Type
+## 字体
 
-- **Display:** Familjen Grotesk 600 on heads and figures, 500 on item titles, `--tracking-display`, line-height 1.02, sentence case, tabular figures; a count at 60px and over is the loudest type.
-- **Body:** IBM Plex Sans 400 and 500.
-- **Labels, table heads, status:** Familjen Grotesk 500 a step smaller, `--color-muted`. Never mono.
-- **Code and glyphs:** JetBrains Mono for code, machine values and the field; never a label, head or chip.
+- **展示字体：**标题与数字用 Familjen Grotesk 600，条目标题用 500，`--tracking-display`、行高 1.02、句首大写、tabular 数字；60px 以上的计数是最响的字。
+- **正文：**IBM Plex Sans 400 与 500。
+- **标签、表头、状态：**Familjen Grotesk 500 小一档，用 `--color-muted`。绝不用等宽。
+- **代码与字符：**JetBrains Mono 用于代码、机器值和字符场；绝不做标签、标题或 chip。
 
-## Surfaces
+## 表面
 
-- A 1px `--color-rule` edges every surface and splits every row; neutrals tilt to hue 250 to 260.
-- Panels, chips and fields are cut on two opposite corners: `border-radius: var(--cut-l) 4px` with `corner-shape: bevel round bevel round` inside `@supports`, `--cut` on small parts, plain 8px and 6px radius as the fallback. Depth is `--shadow-card` and a paper step; only keys have an edge.
-- The ground is a generated ASCII field on one canvas, never a picture: noise sampled per 8 by 16 cell into a character ramp, tinted `--color-glyph-1` to `-4` with `--color-accent-deep` for the densest cells, shaped by the product's own flow (raw on one side, resolved on the other). It sits behind the hero; one divider row and one graphite panel (graphite glyph tints) may repeat it, four places at most; a dot grid on the cell stands in without script.
-- Graphite is the dark material: `--color-graphite` under `--color-graphite-ink`, `--color-graphite-2` for a selected line or header strip, `--color-graphite-muted` for comments. Syntax takes `--color-accent-2`, never a rainbow. Two bands a page at most, one graphite.
-- Photographs are rare: one at most, a real system seen from a distance, in the duotone, no type on it.
+- 每个表面 1px `--color-rule` 收边，每行用细线分开；中性色偏向色相 250 到 260。
+- 面板、chip 与输入域在两个对角切角：`@supports` 内用 `border-radius: var(--cut-l) 4px` 加 `corner-shape: bevel round bevel round`，小部件用 `--cut`，回退为普通 8px 与 6px 圆角。纵深靠 `--shadow-card` 和一档纸色；只有键帽有边。
+- 底面是一块画布上的生成 ASCII 场，绝不是图片：按 8×16 单元格采样噪声映射到字符梯度，从 `--color-glyph-1` 到 `-4` 着色，最密的单元格用 `--color-accent-deep`，形状由产品自己的流量决定（一侧是原始请求，另一侧是已解析）。它垫在 hero 之后；一条分隔行与一块石墨面板（石墨字符浓淡）可以复现它，至多四处；无脚本时由单元格上的点阵顶替。
+- 石墨是深色材料：`--color-graphite` 底、`--color-graphite-ink` 文字，选中行或头条用 `--color-graphite-2`，注释用 `--color-graphite-muted`。语法高亮用 `--color-accent-2`，绝不搞彩虹。每页色带至多两条，其中一条石墨。
+- 照片罕用：至多一张，远处看真实系统，双色调，上面不压文字。
 
 ## Range
 
-- **A table that is the API:** ruled full width, machine values in mono, one row on the cobalt wash.
-- **A mapping:** two graphite panes, input and output, matched lines joined by hairline elbows.
-- **A timeline as a ruler:** real seconds on one hairline, attempts as notched ticks with their status in Familjen 600 at display size, waits as dimension lines, failure in the error colour.
-- **A working control on the prompt's numbers:** its result as one large figure over a meter of fifty mono cells.
+- **一张表就是 API：**通栏划线，机器值用等宽字，一行压在钴蓝淡洗色上。
+- **一张映射图：**两块石墨面板，输入与输出，对应的行用细线直角弯相连。
+- **时间线当标尺：**一条细线上标真实秒数，尝试是带缺口的刻度、状态用 Familjen 600 display 字号，等待是尺寸标注线，失败用错误色。
+- **作用于 prompt 数字的可用控件：**结果是一个大数字，压在由五十个等宽单元格组成的量表上。
 
-## Controls
+## 控件
 
-- Keycaps: a key-face button on a 3px bottom edge that lifts 1px on hover and sinks on press; the one primary is a solid cobalt key. Options are keys on a sunken paper-3 tray, the chosen one pressed.
-- A command is a cut chip with a working copy key. Links take a cobalt underline on hover. Inputs are cut, `--color-muted` border, cobalt focus.
-- Status is text with one icon, never a filled chip. Cobalt stays under 5% of a screen outside the field.
+- 键帽：键面按钮带 3px 底边，hover 抬起 1px、按下下沉；唯一的主按钮是一枚实心钴蓝键。选项是沉陷的 paper-3 托盘上的按键，选中的那枚呈按下态。
+- 命令是一枚切角 chip，带一个能用的复制键。链接 hover 时出钴蓝下划线。输入框切角、`--color-muted` 边框、钴蓝焦点。
+- 状态是一行字加一个图标，绝不是填充 chip。场之外，钴蓝保持在一屏 5% 以内。
 
-## Motion
+## 动效
 
-The field runs at 30 fps with a pointer lens, pauses off screen, and is one composed still under reduced motion. Keys travel over `--dur-micro`; connectors draw in once. No bounce, no parallax.
+字符场以 30 fps 运行、带指针透镜，离屏即暂停；reduced motion 下呈现为一帧合成静帧。键帽移动用 `--dur-micro`；连接线画入一次。无回弹、无视差。
 
-## Voice
+## 语气
 
-Declarative and specific, like a good changelog: the event, the endpoint, the status code. No hype adjectives.
+陈述式、具体，像一份好的 changelog：事件、端点、状态码。不用炒作形容词。
 
-## Do-nots
+## 禁止事项
 
-- Never a warm accent, a pill or a gradient button.
-- Never noise for its own sake: the field maps traffic or state the product has, and no type sits on its densest cells.
-- Never fake code: a snippet compiles or returns; with no host in the prompt, call `example.com`.
+- 绝不用暖调强调色、胶囊按钮或渐变按钮。
+- 绝不无病呻吟：字符场映射的是产品真实拥有的流量或状态，最密的单元格上不压任何文字。
+- 绝不造假代码：代码片段要么能编译要么有返回；prompt 里没有宿主时，调用 `example.com`。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">

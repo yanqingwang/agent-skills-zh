@@ -1,107 +1,111 @@
-# Competitive Analysis Frameworks
+> **中文汉化版** · 上游：[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) · 原文件：`product-team/skills/competitive-teardown/references/competitive-analysis-frameworks.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This reference provides practical frameworks for evaluating competitors and positioning decisions.
+# 竞争分析框架
 
-## Porter's Five Forces
+本参考文档提供用于评估竞争对手和定位决策的实用框架。
 
-Assess the competitive intensity of your market:
+## 波特五力
 
-1. Threat of new entrants
-- Barriers to entry (capital, regulation, network effects)
-- Speed of competitor replication
+评估你所在市场的竞争强度：
 
-2. Bargaining power of suppliers
-- Dependency on core infrastructure vendors
-- Concentration of key technical providers
+1. 新进入者的威胁
+- 进入壁垒（资本、监管、网络效应）
+- 竞争对手复制的速度
 
-3. Bargaining power of buyers
-- Customer switching costs
-- Procurement complexity and contract leverage
+2. 供应商的议价能力
+- 对核心基础设施供应商的依赖度
+- 关键技术提供商的集中度
 
-4. Threat of substitutes
-- Adjacent alternatives solving the same job
-- DIY and internal build options
+3. 买方的议价能力
+- 客户的切换成本
+- 采购复杂度与合同筹码
 
-5. Rivalry among existing competitors
-- Number and similarity of competitors
-- Price competition and differentiation pressure
+4. 替代品的威胁
+- 解决同一任务的相邻替代方案
+- DIY 和自建选项
 
-### Five Forces Template
+5. 现有竞争者之间的竞争
+- 竞争者的数量与相似度
+- 价格竞争与差异化压力
 
-| Force | Current Pressure (Low/Med/High) | Evidence | Strategic Response |
+### 五力模板
+
+| 力量 | 当前压力（低/中/高） | 证据 | 战略应对 |
 |---|---|---|---|
-| New Entrants |  |  |  |
-| Supplier Power |  |  |  |
-| Buyer Power |  |  |  |
-| Substitutes |  |  |  |
-| Rivalry |  |  |  |
+| 新进入者 |  |  |  |
+| 供应商能力 |  |  |  |
+| 买方能力 |  |  |  |
+| 替代品 |  |  |  |
+| 竞争烈度 |  |  |  |
 
-## SWOT Analysis
+## SWOT 分析
 
-Use SWOT to map internal and external context quickly.
+用 SWOT 快速映射内外部环境。
 
-### SWOT Template
+### SWOT 模板
 
-| Strengths (Internal) | Weaknesses (Internal) |
+| 优势（内部） | 劣势（内部） |
 |---|---|
-| What we do better than alternatives | Where competitors outperform us |
-| Unique capabilities or assets | Known product or go-to-market gaps |
+| 我们比替代方案做得更好的地方 | 竞争对手胜过我们的地方 |
+| 独特的能力或资产 | 已知的产品或 GTM 缺口 |
 
-| Opportunities (External) | Threats (External) |
+| 机会（外部） | 威胁（外部） |
 |---|---|
-| Market trends we can exploit | Competitor moves or macro risks |
-| Unserved segments and use cases | Regulatory, platform, or pricing pressure |
+| 我们可以借力的市场趋势 | 竞争对手动作或宏观风险 |
+| 未被服务的细分人群和使用场景 | 监管、平台或定价压力 |
 
-### SWOT Quality Checklist
+### SWOT 质量清单
 
-- Base every point on evidence, not assumptions.
-- Separate observations from conclusions.
-- Prioritize top 3 items per quadrant.
+- 每一条都基于证据，不基于假设。
+- 观察与结论分开。
+- 每个象限只排前 3 项。
 
-## Feature Comparison Matrix
+## 功能对比矩阵
 
-Compare products on meaningful buying criteria, not vanity features.
+在买家真正在意的标准上对比，而不是虚荣指标。
 
-### Feature Matrix Template
+### 功能矩阵模板
 
-| Dimension | Weight | Your Product | Competitor A | Competitor B | Notes |
+| 维度 | 权重 | 我方产品 | 竞争对手 A | 竞争对手 B | 备注 |
 |---|---:|---:|---:|---:|---|
-| Core workflow coverage | 25% |  |  |  |  |
-| Ease of implementation | 15% |  |  |  |  |
-| Performance / reliability | 15% |  |  |  |  |
-| Integrations / ecosystem | 15% |  |  |  |  |
-| Security / compliance | 15% |  |  |  |  |
-| Pricing / TCO | 15% |  |  |  |  |
+| 核心工作流覆盖 | 25% |  |  |  |  |
+| 实施难易度 | 15% |  |  |  |  |
+| 性能 / 可靠性 | 15% |  |  |  |  |
+| 集成 / 生态 | 15% |  |  |  |  |
+| 安全 / 合规 | 15% |  |  |  |  |
+| 定价 / TCO | 15% |  |  |  |  |
 
-Scoring scale recommendation: 1-5 (weak to strong).
+评分标度建议：1-5（弱到强）。
 
-## Competitive Positioning Map
+## 竞争定位图
 
-Create a 2-axis map showing market whitespace and crowding.
+画一张双轴图，展示市场空白与拥挤区域。
 
-### Positioning Map Steps
+### 定位图步骤
 
-1. Select two high-signal dimensions customers care about.
-2. Place each competitor based on evidence (pricing pages, reviews, demos).
-3. Mark clusters where products are undifferentiated.
-4. Identify white space where demand exists but options are weak.
+1. 选两个客户在乎的高信号维度。
+2. 基于证据（定价页、评论、演示）放置每个竞争对手。
+3. 标出产品无差异化的聚集区。
+4. 找出有需求但选项疲弱的白地。
 
-Example axes:
-- X-axis: Ease of use
-- Y-axis: Enterprise readiness
+坐标轴示例：
+- X 轴：易用性
+- Y 轴：企业级就绪度
 
-## Blue Ocean Strategy Canvas
+## 蓝海战略画布
 
-Use a strategy canvas to decide where to raise, reduce, eliminate, or create factors.
+用战略画布决定在哪些因素上做"提升、降低、剔除、创造"。
 
-### ERRC Grid (Eliminate-Reduce-Raise-Create)
+### ERRC 网格（剔除-降低-提升-创造）
 
-| Eliminate | Reduce | Raise | Create |
+| 剔除 | 降低 | 提升 | 创造 |
 |---|---|---|---|
-| Commodity table-stakes not valued by target users | Costly features with weak adoption | Differentiators tied to target job-to-be-done | New value dimensions competitors ignore |
+| 目标用户不买单的大宗同质标配 | 成本高但采用弱的功能 | 与目标 job-to-be-done 绑定的差异化项 | 竞争对手忽视的新价值维度 |
 
-### Strategy Canvas Checklist
+### 战略画布清单
 
-- Compare value curves between your product and top competitors.
-- Ensure target segment is explicit.
-- Tie every strategic choice to measurable outcome.
+- 对比我方产品与头部竞争对手的价值曲线。
+- 确保目标细分人群写得明确。
+- 每个战略选择都挂一个可度量的结果。

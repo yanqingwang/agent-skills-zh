@@ -1,39 +1,43 @@
-# BibTeX Formatting Guide
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/citation-management/references/bibtex_formatting.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Comprehensive guide to BibTeX entry types, required fields, formatting conventions, and best practices.
+# BibTeX 格式指南
 
-## Overview
+BibTeX 条目类型、必填字段、格式约定与最佳实践的全面指南。
 
-BibTeX is the standard bibliography format for LaTeX documents. Proper formatting ensures:
-- Correct citation rendering
-- Consistent formatting
-- Compatibility with citation styles
-- No compilation errors
+## 概述
 
-This guide covers all common entry types and formatting rules.
+BibTeX 是 LaTeX 文档的标准参考文献格式。正确的格式能保证：
+- 引文渲染正确
+- 格式一致
+- 与引文样式兼容
+- 不出现编译错误
 
-## Entry Types
+本指南覆盖所有常见条目类型和格式规则。
 
-### @article - Journal Articles
+## 条目类型
 
-**Most common entry type** for peer-reviewed journal articles.
+### @article - 期刊论文
 
-**Required fields**:
-- `author`: Author names
-- `title`: Article title
-- `journal`: Journal name
-- `year`: Publication year
+**最常用的条目类型**，用于同行评审的期刊论文。
 
-**Optional fields**:
-- `volume`: Volume number
-- `number`: Issue number
-- `pages`: Page range
-- `month`: Publication month
-- `doi`: Digital Object Identifier
+**必填字段**：
+- `author`: 作者姓名
+- `title`: 论文标题
+- `journal`: 期刊名称
+- `year`: 出版年份
+
+**可选字段**：
+- `volume`: 卷号
+- `number`: 期号
+- `pages`: 页码范围
+- `month`: 出版月份
+- `doi`: 数字对象标识符（DOI）
 - `url`: URL
-- `note`: Additional notes
+- `note`: 附加说明
 
-**Template**:
+**模板**：
 ```bibtex
 @article{CitationKey2024,
   author  = {Last1, First1 and Last2, First2},
@@ -48,7 +52,7 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Example**:
+**示例**：
 ```bibtex
 @article{Jumper2021,
   author  = {Jumper, John and Evans, Richard and Pritzel, Alexander and others},
@@ -62,25 +66,25 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-### @book - Books
+### @book - 书籍
 
-**For entire books**.
+**用于整本书**。
 
-**Required fields**:
-- `author` OR `editor`: Author(s) or editor(s)
-- `title`: Book title
-- `publisher`: Publisher name
-- `year`: Publication year
+**必填字段**：
+- `author` 或 `editor`: 作者或编者
+- `title`: 书名
+- `publisher`: 出版社名称
+- `year`: 出版年份
 
-**Optional fields**:
-- `volume`: Volume number (if multi-volume)
-- `series`: Series name
-- `address`: Publisher location
-- `edition`: Edition number
+**可选字段**：
+- `volume`: 卷号（多卷本时）
+- `series`: 丛书名称
+- `address`: 出版地
+- `edition`: 版次
 - `isbn`: ISBN
 - `url`: URL
 
-**Template**:
+**模板**：
 ```bibtex
 @book{CitationKey2024,
   author    = {Last, First},
@@ -93,7 +97,7 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Example**:
+**示例**：
 ```bibtex
 @book{Kumar2021,
   author    = {Kumar, Vinay and Abbas, Abul K. and Aster, Jon C.},
@@ -106,28 +110,28 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-### @inproceedings - Conference Papers
+### @inproceedings - 会议论文
 
-**For papers in conference proceedings**.
+**用于会议论文集中的论文**。
 
-**Required fields**:
-- `author`: Author names
-- `title`: Paper title
-- `booktitle`: Conference/proceedings name
-- `year`: Year
+**必填字段**：
+- `author`: 作者姓名
+- `title`: 论文标题
+- `booktitle`: 会议/论文集名称
+- `year`: 年份
 
-**Optional fields**:
-- `editor`: Proceedings editor(s)
-- `volume`: Volume number
-- `series`: Series name
-- `pages`: Page range
-- `address`: Conference location
-- `month`: Conference month
-- `organization`: Organizing body
-- `publisher`: Publisher
+**可选字段**：
+- `editor`: 论文集编者
+- `volume`: 卷号
+- `series`: 丛书名称
+- `pages`: 页码范围
+- `address`: 会议地点
+- `month`: 会议月份
+- `organization`: 主办机构
+- `publisher`: 出版商
 - `doi`: DOI
 
-**Template**:
+**模板**：
 ```bibtex
 @inproceedings{CitationKey2024,
   author    = {Last, First},
@@ -140,7 +144,7 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Example**:
+**示例**：
 ```bibtex
 @inproceedings{Vaswani2017,
   author    = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and others},
@@ -152,31 +156,31 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Note**: `@conference` is an alias for `@inproceedings`.
+**注意**：`@conference` 是 `@inproceedings` 的别名。
 
-### @incollection - Book Chapters
+### @incollection - 书籍章节
 
-**For chapters in edited books**.
+**用于编辑出版的图书中的章节**。
 
-**Required fields**:
-- `author`: Chapter author(s)
-- `title`: Chapter title
-- `booktitle`: Book title
-- `publisher`: Publisher name
-- `year`: Publication year
+**必填字段**：
+- `author`: 章节作者
+- `title`: 章节标题
+- `booktitle`: 书名
+- `publisher`: 出版社名称
+- `year`: 出版年份
 
-**Optional fields**:
-- `editor`: Book editor(s)
-- `volume`: Volume number
-- `series`: Series name
-- `type`: Type of section (e.g., "chapter")
-- `chapter`: Chapter number
-- `pages`: Page range
-- `address`: Publisher location
-- `edition`: Edition
-- `month`: Month
+**可选字段**：
+- `editor`: 书籍编者
+- `volume`: 卷号
+- `series`: 丛书名称
+- `type`: 章节类型（如 "chapter"）
+- `chapter`: 章节编号
+- `pages`: 页码范围
+- `address`: 出版地
+- `edition`: 版次
+- `month`: 月份
 
-**Template**:
+**模板**：
 ```bibtex
 @incollection{CitationKey2024,
   author    = {Last, First},
@@ -190,7 +194,7 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Example**:
+**示例**：
 ```bibtex
 @incollection{Brown2020,
   author    = {Brown, Peter O. and Botstein, David},
@@ -204,24 +208,24 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-### @phdthesis - Doctoral Dissertations
+### @phdthesis - 博士学位论文
 
-**For PhD dissertations and theses**.
+**用于博士学位论文**。
 
-**Required fields**:
-- `author`: Author name
-- `title`: Thesis title
-- `school`: Institution
-- `year`: Year
+**必填字段**：
+- `author`: 作者姓名
+- `title`: 论文标题
+- `school`: 授予机构
+- `year`: 年份
 
-**Optional fields**:
-- `type`: Type (e.g., "PhD dissertation", "PhD thesis")
-- `address`: Institution location
-- `month`: Month
+**可选字段**：
+- `type`: 类型（如 "PhD dissertation"、"PhD thesis"）
+- `address`: 机构所在地
+- `month`: 月份
 - `url`: URL
-- `note`: Additional notes
+- `note`: 附加说明
 
-**Template**:
+**模板**：
 ```bibtex
 @phdthesis{CitationKey2024,
   author = {Last, First},
@@ -233,7 +237,7 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Example**:
+**示例**：
 ```bibtex
 @phdthesis{Johnson2023,
   author  = {Johnson, Mary L.},
@@ -245,19 +249,19 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Note**: `@mastersthesis` is similar but for Master's theses.
+**注意**：`@mastersthesis` 与之类似，用于硕士学位论文。
 
-### @mastersthesis - Master's Theses
+### @mastersthesis - 硕士学位论文
 
-**For Master's theses**.
+**用于硕士学位论文**。
 
-**Required fields**:
-- `author`: Author name
-- `title`: Thesis title
-- `school`: Institution
-- `year`: Year
+**必填字段**：
+- `author`: 作者姓名
+- `title`: 论文标题
+- `school`: 授予机构
+- `year`: 年份
 
-**Template**:
+**模板**：
 ```bibtex
 @mastersthesis{CitationKey2024,
   author = {Last, First},
@@ -267,23 +271,23 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-### @misc - Miscellaneous
+### @misc - 其他类型
 
-**For items that don't fit other categories** (preprints, datasets, software, websites, etc.).
+**用于不适合其他类别的条目**（预印本、数据集、软件、网站等）。
 
-**Required fields**:
-- `author` (if known)
+**必填字段**：
+- `author`（如已知）
 - `title`
 - `year`
 
-**Optional fields**:
-- `howpublished`: Repository, website, format
+**可选字段**：
+- `howpublished`: 仓库、网站、发布形式
 - `url`: URL
 - `doi`: DOI
-- `note`: Additional information
-- `month`: Month
+- `note`: 附加信息
+- `month`: 月份
 
-**Template for preprints**:
+**预印本模板**：
 ```bibtex
 @misc{CitationKey2024,
   author       = {Last, First},
@@ -295,7 +299,7 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Template for datasets**:
+**数据集模板**：
 ```bibtex
 @misc{DatasetName2024,
   author       = {Last, First},
@@ -307,7 +311,7 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-**Template for software**:
+**软件模板**：
 ```bibtex
 @misc{SoftwareName2024,
   author       = {Last, First},
@@ -319,23 +323,23 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-### @techreport - Technical Reports
+### @techreport - 技术报告
 
-**For technical reports**.
+**用于技术报告**。
 
-**Required fields**:
-- `author`: Author name(s)
-- `title`: Report title
-- `institution`: Institution
-- `year`: Year
+**必填字段**：
+- `author`: 作者姓名
+- `title`: 报告标题
+- `institution`: 出报告的机构
+- `year`: 年份
 
-**Optional fields**:
-- `type`: Type of report
-- `number`: Report number
-- `address`: Institution location
-- `month`: Month
+**可选字段**：
+- `type`: 报告类型
+- `number`: 报告编号
+- `address`: 机构所在地
+- `month`: 月份
 
-**Template**:
+**模板**：
 ```bibtex
 @techreport{CitationKey2024,
   author      = {Last, First},
@@ -347,20 +351,20 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-### @unpublished - Unpublished Work
+### @unpublished - 未出版作品
 
-**For unpublished works** (not preprints - use @misc for those).
+**用于未出版作品**（不是预印本；预印本请用 @misc）。
 
-**Required fields**:
-- `author`: Author name(s)
-- `title`: Work title
-- `note`: Description
+**必填字段**：
+- `author`: 作者姓名
+- `title`: 作品标题
+- `note`: 说明
 
-**Optional fields**:
-- `month`: Month
-- `year`: Year
+**可选字段**：
+- `month`: 月份
+- `year`: 年份
 
-**Template**:
+**模板**：
 ```bibtex
 @unpublished{CitationKey2024,
   author = {Last, First},
@@ -370,19 +374,19 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-### @online/@electronic - Online Resources
+### @online/@electronic - 在线资源
 
-**For web pages and online-only content**.
+**用于网页和仅在线发布的内容**。
 
-**Note**: Not standard BibTeX, but supported by many bibliography packages (biblatex).
+**注意**：这不是标准 BibTeX，但许多参考文献宏包（biblatex）支持。
 
-**Required fields**:
-- `author` OR `organization`
+**必填字段**：
+- `author` 或 `organization`
 - `title`
 - `url`
 - `year`
 
-**Template**:
+**模板**：
 ```bibtex
 @online{CitationKey2024,
   author = {{Organization Name}},
@@ -393,13 +397,13 @@ This guide covers all common entry types and formatting rules.
 }
 ```
 
-## Formatting Rules
+## 格式规则
 
-### Citation Keys
+### 引用键（Citation Keys）
 
-**Convention**: `FirstAuthorYEARkeyword`
+**约定**：`FirstAuthorYEARkeyword`
 
-**Examples**:
+**示例**：
 ```bibtex
 Smith2024protein
 Doe2023machine
@@ -408,41 +412,41 @@ NatureEditorial2024        % No author, use publication
 WHO2024guidelines          % Organization author
 ```
 
-**Rules**:
-- Alphanumeric plus: `-`, `_`, `.`, `:`
-- No spaces
-- Case-sensitive
-- Unique within file
-- Descriptive
+**规则**：
+- 字母数字，外加 `-`、`_`、`.`、`:`
+- 不含空格
+- 区分大小写
+- 文件内唯一
+- 有描述性
 
-**Avoid**:
-- Special characters: `@`, `#`, `&`, `%`, `$`
-- Spaces: use CamelCase or underscores
-- Starting with numbers: `2024Smith` (some systems disallow)
+**避免**：
+- 特殊字符：`@`、`#`、`&`、`%`、`$`
+- 空格：改用 CamelCase 或下划线
+- 以数字开头：`2024Smith`（部分系统不允许）
 
-### Author Names
+### 作者姓名
 
-**Recommended format**: `Last, First Middle`
+**推荐格式**：`Last, First Middle`
 
-**Single author**:
+**单个作者**：
 ```bibtex
 author = {Smith, John}
 author = {Smith, John A.}
 author = {Smith, John Andrew}
 ```
 
-**Multiple authors** - separate with `and`:
+**多个作者**：用 `and` 分隔：
 ```bibtex
 author = {Smith, John and Doe, Jane}
 author = {Smith, John A. and Doe, Jane M. and Johnson, Mary L.}
 ```
 
-**Many authors** (10+):
+**作者较多时**（10 人及以上）：
 ```bibtex
 author = {Smith, John and Doe, Jane and Johnson, Mary and others}
 ```
 
-**Special cases**:
+**特殊情形**：
 ```bibtex
 % Suffix (Jr., III, etc.)
 author = {King, Jr., Martin Luther}
@@ -459,7 +463,7 @@ author = {van der Waals, Johannes}
 author = {de Broglie, Louis}
 ```
 
-**Wrong formats** (don't use):
+**错误格式**（不要使用）：
 ```bibtex
 author = {Smith, J.; Doe, J.}  % Semicolons (wrong)
 author = {Smith, J., Doe, J.}  % Commas (wrong)
@@ -467,9 +471,9 @@ author = {Smith, J. & Doe, J.} % Ampersand (wrong)
 author = {Smith J}             % No comma
 ```
 
-### Title Capitalization
+### 标题大小写
 
-**Protect capitalization** with braces:
+**用花括号保护大小写**：
 
 ```bibtex
 % Proper nouns, acronyms, formulas
@@ -479,9 +483,9 @@ title = {The {Ising} Model in Statistical Physics}
 title = {{CRISPR-Cas9} Gene Editing Technology}
 ```
 
-**Reason**: Citation styles may change capitalization. Braces protect.
+**原因**：引文样式可能改变大小写，花括号可以保护。
 
-**Examples**:
+**示例**：
 ```bibtex
 % Good
 title = {Advances in {COVID-19} Treatment}
@@ -493,14 +497,14 @@ title = {Advances in COVID-19 Treatment}  % covid-19
 title = {Using Python for Data Analysis}  % python
 ```
 
-**Whole title protection** (rarely needed):
+**整题保护**（很少需要）：
 ```bibtex
 title = {{This Entire Title Keeps Its Capitalization}}
 ```
 
-### Page Ranges
+### 页码范围
 
-**Use en-dash** (double hyphen `--`):
+**使用连接号 en-dash**（双连字符 `--`）：
 
 ```bibtex
 pages = {123--145}     % Correct
@@ -509,16 +513,16 @@ pages = {e0123456}     % Article ID (PLOS, etc.)
 pages = {123}          % Single page
 ```
 
-**Wrong**:
+**错误**：
 ```bibtex
 pages = {123-145}      % Single hyphen (don't use)
 pages = {pp. 123-145}  % "pp." not needed
 pages = {123–145}      % Unicode en-dash (may cause issues)
 ```
 
-### Month Names
+### 月份名称
 
-**Use three-letter abbreviations** (unquoted):
+**使用三字母缩写**（不加引号）：
 
 ```bibtex
 month = jan
@@ -535,22 +539,22 @@ month = nov
 month = dec
 ```
 
-**Or numeric**:
+**或用数字**：
 ```bibtex
 month = {1}   % January
 month = {12}  % December
 ```
 
-**Or full name in braces**:
+**或用花括号括起的全称**：
 ```bibtex
 month = {January}
 ```
 
-**Standard abbreviations work without quotes** because they're defined in BibTeX.
+**标准缩写不加引号即可使用**，因为它们已在 BibTeX 中定义。
 
-### Journal Names
+### 期刊名称
 
-**Full name** (not abbreviated):
+**使用全称**（不用缩写）：
 
 ```bibtex
 journal = {Nature}
@@ -560,9 +564,9 @@ journal = {Proceedings of the National Academy of Sciences}
 journal = {Journal of the American Chemical Society}
 ```
 
-**Bibliography style** will handle abbreviation if needed.
+**参考文献样式**会在需要时处理缩写。
 
-**Avoid manual abbreviation**:
+**避免手动缩写**：
 ```bibtex
 % Don't do this in BibTeX file
 journal = {Proc. Natl. Acad. Sci. U.S.A.}
@@ -571,50 +575,50 @@ journal = {Proc. Natl. Acad. Sci. U.S.A.}
 journal = {Proceedings of the National Academy of Sciences}
 ```
 
-**Exception**: If style requires abbreviations, use full abbreviated form:
+**例外**：如果样式要求缩写，则使用完整缩写形式：
 ```bibtex
 journal = {Proc. Natl. Acad. Sci. U.S.A.}  % If required by style
 ```
 
-### DOI Formatting
+### DOI 格式
 
-**Bare identifier** in the `doi` field:
+`doi` 字段中**只放裸标识符**：
 
 ```bibtex
 doi = {10.1038/s41586-021-03819-2}
 ```
 
-**Not**:
+**不要这样**：
 ```bibtex
 doi = {https://doi.org/10.1038/s41586-021-03819-2}  % Don't include URL
 doi = {doi:10.1038/s41586-021-03819-2}              % Don't include prefix
 ```
 
-**LaTeX** will format as URL automatically.
+**LaTeX** 会自动把它格式化为 URL。
 
-**Note**: No period after DOI field!
+**注意**：DOI 字段值后面不要加句号！
 
-### URL Formatting
+### URL 格式
 
 ```bibtex
 url = {https://www.example.com/article}
 ```
 
-**Use**:
-- When DOI not available
-- For web pages
-- For supplementary materials
+**适用场景**：
+- 没有 DOI 时
+- 用于网页
+- 用于补充材料
 
-**Don't duplicate**:
+**不要重复**：
 ```bibtex
 % Don't include both if DOI URL is same as url
 doi = {10.1038/nature12345}
 url = {https://doi.org/10.1038/nature12345}  % Redundant!
 ```
 
-### Special Characters
+### 特殊字符
 
-**Accents and diacritics**:
+**重音与变音符**：
 ```bibtex
 author = {M{\"u}ller, Hans}        % ü
 author = {Garc{\'i}a, Jos{\'e}}    % í, é
@@ -622,28 +626,28 @@ author = {Erd{\H{o}}s, Paul}       % ő
 author = {Schr{\"o}dinger, Erwin}  % ö
 ```
 
-**Or use UTF-8** (with proper LaTeX setup):
+**或直接使用 UTF-8**（需正确配置 LaTeX）：
 ```bibtex
 author = {Müller, Hans}
 author = {García, José}
 ```
 
-**Mathematical symbols**:
+**数学符号**：
 ```bibtex
 title = {The $\alpha$-helix Structure}
 title = {$\beta$-sheet Prediction}
 ```
 
-**Chemical formulas**:
+**化学式**：
 ```bibtex
 title = {H$_2$O Molecular Dynamics}
 % Or with chemformula package:
 title = {\ce{H2O} Molecular Dynamics}
 ```
 
-### Field Order
+### 字段顺序
 
-**Recommended order** (for readability):
+**推荐顺序**（便于阅读）：
 
 ```bibtex
 @article{Key,
@@ -660,92 +664,92 @@ title = {\ce{H2O} Molecular Dynamics}
 }
 ```
 
-**Rules**:
-- Most important fields first
-- Consistent across entries
-- Use formatter to standardize
+**规则**：
+- 重要字段在前
+- 各条目保持一致
+- 用格式化工具统一
 
-## Best Practices
+## 最佳实践
 
-### 1. Consistent Formatting
+### 1. 格式一致
 
-Use same format throughout:
-- Author name format
-- Title capitalization
-- Journal names
-- Citation key style
+全文使用同一格式：
+- 作者姓名格式
+- 标题大小写
+- 期刊名称
+- 引用键风格
 
-### 2. Required Fields
+### 2. 必填字段
 
-Always include:
-- All required fields for entry type
-- DOI when assigned, regardless of publication year
-- Volume and pages or article number when assigned
-- Publisher for books
+始终包含：
+- 条目类型的全部必填字段
+- 已分配的 DOI，无论出版年份
+- 已分配的卷、页码或文章编号
+- 书籍的出版商
 
-### 3. Protect Capitalization
+### 3. 保护大小写
 
-Use braces for:
-- Proper nouns: `{AlphaFold}`
-- Acronyms: `{DNA}`, `{CRISPR}`
-- Formulas: `{H2O}`
-- Names: `{Python}`, `{R}`
+对以下内容用花括号：
+- 专有名词：`{AlphaFold}`
+- 缩写词：`{DNA}`、`{CRISPR}`
+- 公式：`{H2O}`
+- 名称：`{Python}`、`{R}`
 
-### 4. Complete Author Lists
+### 4. 完整作者列表
 
-Include all authors when possible:
-- Preserve the full verified author list
-- Let the bibliography style truncate the display when required
-- Don't abbreviate to "et al." manually
+尽量收录全部作者：
+- 保留核实过的完整作者列表
+- 需要截断显示时交给参考文献样式处理
+- 不要手动缩写成 "et al."
 
-### 5. Use Standard Entry Types
+### 5. 使用标准条目类型
 
-Choose correct entry type:
-- Journal article → `@article`
-- Book → `@book`
-- Conference paper → `@inproceedings`
-- Preprint → `@misc`
+选择正确的条目类型：
+- 期刊论文 → `@article`
+- 书籍 → `@book`
+- 会议论文 → `@inproceedings`
+- 预印本 → `@misc`
 
-### 6. Validate Syntax
+### 6. 校验语法
 
-Check for:
-- Balanced braces
-- Commas after fields
-- Unique citation keys
-- Valid entry types
+检查：
+- 花括号配对
+- 字段后有逗号
+- 引用键唯一
+- 条目类型有效
 
-### 7. Use Formatters
+### 7. 使用格式化工具
 
-Use automated tools:
+使用自动化工具：
 ```bash
 python scripts/format_bibtex.py references.bib
 ```
 
-Benefits:
-- Consistent formatting
-- Catch syntax errors
-- Standardize field order
-- Fix common issues
+好处：
+- 格式一致
+- 捕获语法错误
+- 统一字段顺序
+- 修复常见问题
 
-## Common Mistakes
+## 常见错误
 
-### 1. Wrong Author Separator
+### 1. 作者分隔符错误
 
-**Wrong**:
+**错误**：
 ```bibtex
 author = {Smith, J.; Doe, J.}    % Semicolon
 author = {Smith, J., Doe, J.}    % Comma
 author = {Smith, J. & Doe, J.}   % Ampersand
 ```
 
-**Correct**:
+**正确**：
 ```bibtex
 author = {Smith, John and Doe, Jane}
 ```
 
-### 2. Missing Commas
+### 2. 缺少逗号
 
-**Wrong**:
+**错误**：
 ```bibtex
 @article{Smith2024,
   author = {Smith, John}    % Missing comma!
@@ -753,7 +757,7 @@ author = {Smith, John and Doe, Jane}
 }
 ```
 
-**Correct**:
+**正确**：
 ```bibtex
 @article{Smith2024,
   author = {Smith, John},   % Comma after each field
@@ -761,57 +765,57 @@ author = {Smith, John and Doe, Jane}
 }
 ```
 
-### 3. Unprotected Capitalization
+### 3. 大小写未保护
 
-**Wrong**:
+**错误**：
 ```bibtex
 title = {Machine Learning with Python}
 % "Python" will become "python" in title case
 ```
 
-**Correct**:
+**正确**：
 ```bibtex
 title = {Machine Learning with {Python}}
 ```
 
-### 4. Single Hyphen in Pages
+### 4. 页码用单连字符
 
-**Wrong**:
+**错误**：
 ```bibtex
 pages = {123-145}   % Single hyphen
 ```
 
-**Correct**:
+**正确**：
 ```bibtex
 pages = {123--145}  % Double hyphen (en-dash)
 ```
 
-### 5. Redundant "pp." in Pages
+### 5. 页码中多余的 "pp."
 
-**Wrong**:
+**错误**：
 ```bibtex
 pages = {pp. 123--145}
 ```
 
-**Correct**:
+**正确**：
 ```bibtex
 pages = {123--145}
 ```
 
-### 6. DOI with URL Prefix
+### 6. DOI 带 URL 前缀
 
-**Wrong**:
+**错误**：
 ```bibtex
 doi = {https://doi.org/10.1038/nature12345}
 doi = {doi:10.1038/nature12345}
 ```
 
-**Correct**:
+**正确**：
 ```bibtex
 doi = {10.1038/nature12345}
 ```
 
-## Example Complete Bibliography
+## 完整参考文献示例
 
 ```bibtex
 % Journal article
@@ -887,22 +891,21 @@ doi = {10.1038/nature12345}
 }
 ```
 
-## Summary
+## 总结
 
-BibTeX formatting essentials:
+BibTeX 格式要点：
 
-✓ **Choose correct entry type** (@article, @book, etc.)  
-✓ **Include all required fields**  
-✓ **Use `and` for multiple authors**  
-✓ **Protect capitalization** with braces  
-✓ **Use `--` for page ranges**  
-✓ **Include DOI** for modern papers  
-✓ **Validate syntax** before compilation  
+✓ **选择正确的条目类型**（@article、@book 等）  
+✓ **包含全部必填字段**  
+✓ **多作者用 `and` 分隔**  
+✓ **用花括号保护大小写**  
+✓ **页码范围用 `--`**  
+✓ **现代论文包含 DOI**  
+✓ **编译前校验语法**  
 
-Use formatting tools to ensure consistency:
+用格式化工具保证一致性：
 ```bash
 python scripts/format_bibtex.py references.bib
 ```
 
-Properly formatted BibTeX ensures correct, consistent citations across all bibliography styles!
-
+格式规范的 BibTeX 能保证所有参考文献样式下引文正确且一致！

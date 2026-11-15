@@ -7,14 +7,18 @@ display: pixel Silkscreen and Bungee
 accent: chromatic-ember 40
 posture: full-palette
 keywords: game, indie, game studio, launch party, demo night, hackathon, festival, meetup, retro, pixel, arcade, nostalgia, synth, lo-fi, toy, zine, club night, loud
-material: aubergine CRT ground, lilac-white ink, Bungee capitals split in RGB over Chivo, Silkscreen figures, hard offset shadows, ember and acid signals
+material: 茄子色 CRT 底色、丁香白墨色、Chivo 上压 RGB 分离的 Bungee 大写、Silkscreen 数字、硬偏移阴影、ember 与 acid 信号色
 photo: tint accent
 pictured: Marquee Hero, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/arcade.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Arcade
 
-A late-night cabinet: an aubergine ground under a CRT screen, Bungee capitals split in RGB over Chivo, Silkscreen figures, hard offset shadows, two loud inks that take turns like two players. Photographs come through the screen, tinted in the lead. It is loud through colour, lettering, light and press physics, never drawn props; not a neon synthwave poster, not a pixel-art game page.
+深夜的街机柜：CRT 屏幕下的茄子色底、Chivo 上压 RGB 分离的 Bungee 大写、Silkscreen 数字、硬偏移阴影，还有两种喧闹的墨色像两个玩家轮流出招。照片像透过屏幕看进来，按主色着色。它靠颜色、字形、光与按压物理制造喧闹，绝不画道具；不是霓虹合成波海报，也不是像素游戏页。
 
 ## Tokens
 
@@ -33,52 +37,52 @@ A late-night cabinet: an aubergine ground under a CRT screen, Bungee capitals sp
 }
 ```
 
-Two dials, each stated in the stamp (`arcade: ember/grille`). Colourway, lead over answer on ground: `ember` (the block above), `sodium` (80% 0.165 72 over 60% 0.145 242 on 14% 0.030 300) or `oxblood` (83% 0.150 90 over 58% 0.200 25 on 16% 0.028 330). Screen: `grille` (1px vertical RGB stripes at low alpha) or `mask` (a triad dot lattice on a 3px pitch). Never mix two on a page.
+两个旋钮，各自写进 stamp（`arcade: ember/grille`）。配色方案（主色压答色、置于底色之上）：`ember`（上面的块）、`sodium`（80% 0.165 72 压 60% 0.145 242，底 14% 0.030 300）或 `oxblood`（83% 0.150 90 压 58% 0.200 25，底 16% 0.028 330）。屏幕：`grille`（低透明度 1px 竖向 RGB 条纹）或 `mask`（3px 间距的三色点阵）。一页绝不混用两个。
 
-## Type
+## 字体
 
-- **Display:** Bungee 400, uppercase, untracked, line-height 1.02, for the h1, one statement line and the wordmark, each under 28 characters. It carries the RGB split: 1 to 2px of `--color-crt-r` one way and `--color-crt-c` the other, zero blur, one split line per screen.
-- **Heads and body:** Chivo; section heads 900 at -0.02em and line-height 1, sentence case; prose 400 at 1.6.
-- **Figures:** Silkscreen 700, untracked, tabular, at 40px and up only (it smears smaller), in the two inks, with the unit beside it in Chivo 700. Never a word in Silkscreen but a unit like PM.
-- **Labels:** Chivo 700 a step smaller, sentence case.
+- **展示字体：**Bungee 400、大写、不加字距、行高 1.02，用于 h1、一句宣言和字标，每个不超过 28 个字符。它带 RGB 分离：`--color-crt-r` 向一侧偏 1 到 2px、`--color-crt-c` 向另一侧，零模糊，每屏一条分离线。
+- **标题与正文：**Chivo；区块标题 900、-0.02em、行高 1，句首大写；散文 400、行高 1.6。
+- **数字：**Silkscreen 700、不加字距、tabular，只在 40px 及以上使用（更小会糊），用两种墨色，单位在旁用 Chivo 700。Silkscreen 里绝不排单词，PM 这类单位除外。
+- **标签：**Chivo 700 小一档，句首大写。
 
-## Surfaces
+## 表面
 
-- `--rule-bar` on wells and anything pressable, `--rule-hair` in `--color-rule` between rows; 4px radius, square tags and inputs.
-- Depth: the zero-blur acid offset on anything pressable, a ground step on a well, the cursor row (a row filled ember with `--color-accent-ink` type, like a selected menu line) for the one thing a list wants chosen. Never blur.
-- Bands: `--color-paper-2` under the screen, or one ember field with `--color-accent-ink` type and no RGB split. Two a page at most.
-- Photographs: the night from inside the room: hands on a stick, keys lit from below, players from behind, nobody facing the lens. Tinted, a `--rule-bar` border, under the screen; big and few.
-- The screen (`texture.md` § 4): the dial's layer and a `--color-shade` scanline, static, on bands, wells and photographs; never under running text, never a bezel.
+- well 与一切可按压物用 `--rule-bar`，行之间用 `--color-rule` 的 `--rule-hair`；圆角 4px，标签与输入框方形。
+- 纵深：可按压物上的零模糊 acid 偏移、well 的底色一档、光标行（一行填 ember、配 `--color-accent-ink` 文字，像选中的菜单行）用于列表里唯一要选中的那项。绝不模糊。
+- 色带：屏幕层之下的 `--color-paper-2`，或一片 ember 场域配 `--color-accent-ink` 文字、无 RGB 分离。每页至多两条。
+- 照片：从房间里看夜晚：握着摇杆的手、被下方光照亮的按键、玩家的背影，没有人面对镜头。着色、`--rule-bar` 边框、压屏幕层；大而少。
+- 屏幕（`texture.md` § 4）：旋钮那一层加 `--color-shade` 扫描线，静态，用在色带、well 与照片上；绝不垫在正文下，绝不做外框。
 
 ## Range
 
-- **Figures as a score line:** the prompt's real numbers in Silkscreen at `--text-display-s` and up, ember and acid alternating, parted by `--rule-bar` verticals across the twelve columns.
-- **Two-player comparison:** two wells side by side, one keyed ember and one acid (a top bar and the figure ink), rows matched across them for two audiences or two choices; the inks are the players, nothing is drawn.
-- **A timetable or price list as a menu:** Rows of Silkscreen times or prices against Chivo 900 titles on hairlines, one cursor row lit ember.
-- **Statement and working control:** one Bungee line at display size on the ember field; or the press surface as a stepper with a running total in Silkscreen at display size.
+- **数字当比分行：**prompt 的真实数字用 Silkscreen、`--text-display-s` 起步，ember 与 acid 交替，`--rule-bar` 竖线分隔，横跨十二栏。
+- **双人对局对比：**两个 well 并排，一个以 ember 为基调、一个以 acid（顶栏与数字墨色），行在两者之间对应，服务两类受众或两个选项；墨色就是玩家，什么都不画。
+- **时刻表或价目表当菜单：**Rows 里 Silkscreen 的时刻或价格对着 Chivo 900 标题，铺在细线上，一行光标行点亮 ember。
+- **宣言与可用控件：**ember 场域上一行 display 字号的 Bungee；或按压面做成步进器，累计总数用 Silkscreen、display 字号。
 
-## Controls
+## 控件
 
-- The press surface: an ember fill, Chivo 700, a `--rule-bar` ink border and the acid offset, beside the same surface unfilled. Hover moves away from the shadow, active slams toward it; a stepper button is the same surface square.
-- Links in ink with a 2px acid underline; inputs 52px, square, a `--rule-bar` border in `--color-muted`.
-- Ember leads and acid answers across controls and figures; never a third ink.
+- 按压面：ember 填充、Chivo 700、`--rule-bar` 墨色边框加 acid 偏移，旁边一枚未填充的同款面。Hover 时远离阴影，active 时砸向阴影；步进器按钮就是同一按压面的方形版。
+- 链接墨色、2px acid 下划线；输入框 52px、方形，`--color-muted` 的 `--rule-bar` 边框。
+- 控件与数字里 ember 主导、acid 应答；绝不引入第三种墨色。
 
-## Motion
+## 动效
 
-Press physics on `--dur-micro` and `--ease-out`. A cursor row lights on `steps(1)`, no fade; the RGB split may widen 1px on a display line that links.
+按压物理用 `--dur-micro` 与 `--ease-out`。光标行以 `steps(1)` 点亮，无淡入；可点击的 display 行 RGB 分离可加宽 1px。
 
-## Voice
+## 语气
 
-Coin-op plain, said over the noise: the night, the hour, the door price, the machines. Short lines, verbs first, no nostalgia.
+投币机的平实，压过喧闹说出来：夜晚、钟点、门票价、机器。短句、动词开头，不怀旧。
 
-## Do-nots
+## 禁止事项
 
-- Never magenta and cyan as the pair, never a starfield; the screen is the texture.
-- Never a soft shadow, a phosphor glow or a gradient on a button.
-- Never a drawn sprite, joystick, controller or pixel character; the night is photographed.
-- Never a page of tinted photographs back to back: an ember picture beside an ember picture is one orange wall.
+- 绝不用品红配青做一对，绝不做星空；屏幕就是纹理。
+- 绝不用软阴影、荧光辉光或按钮渐变。
+- 绝不画精灵、摇杆、手柄或像素角色；夜晚是拍出来的。
+- 绝不让着色照片一张挨一张：ember 图挨着 ember 图，就是一整面橙墙。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Chivo:wght@400;700;900&family=Silkscreen:wght@700&display=swap" rel="stylesheet">

@@ -1,58 +1,62 @@
-# Agent tools
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-agents/TOOLS.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The agent picks tools by reading their **name** and **description** — nothing else. Both are part of the prompt. Treat tool design like API design: what it does, when to use it, what each parameter means, and how it fails.
+# Agent 工具
 
----
-
-## The four tool types
-
-### 1. Native tool node
-
-Pre-built tool versions of regular nodes: `slackTool`, `gmailTool`, `googleSheetsTool`, `toolCalculator`, `notionTool`, `httpRequestTool`, and so on. Identical to their non-tool counterparts except parameters can be agent-filled via `$fromAI()`.
-
-- **Pros**: minimal config, well-tested, native feel.
-- **Cons**: one node = one operation. Multi-step logic doesn't fit.
-- **Use when**: the capability maps cleanly to one node and one operation.
-
-When a native node is missing an operation or needs a non-standard param shape, point an **HTTP Request Tool** at the service's API with the service's *predefined credential type* — you reuse the existing OAuth/API-key credential and get the full API.
-
-### 2. Sub-workflow as tool (`@n8n/n8n-nodes-langchain.toolWorkflow`)
-
-The default for anything beyond one node. Any workflow becomes a tool with typed `$fromAI()` inputs.
-
-- **Pros**: full power of n8n inside the tool — branching, error handling, sub-sub-workflows, native nodes, custom logic. Reusable across agents. Independently testable.
-- **Cons**: one extra workflow boundary, slight latency.
-- **Use when**: more than one node, logic that might be reused, or you want testability.
-
-The canonical n8n way to build agent capabilities. → **SUBWORKFLOW_AS_TOOL.md**
-
-### 3. HTTP Request Tool (`@n8n/n8n-nodes-langchain.toolHttpRequest`)
-
-A wrapper around the HTTP Request node exposing its parameters to the agent.
-
-- **Pros**: any HTTP API becomes a tool with one node.
-- **Cons**: HTTP only. Auth/retry/error handling are yours to wire.
-- **Use when**: calling a single external API the agent should orchestrate directly.
-
-One thing to know: HTTP Request has its own HTTP-level timeout (default 5 minutes) — bump `options.timeout` for slow endpoints. The agent tool itself has no timeout; the agent waits as long as the tool takes. Pointing it at, say, the Notion API (with the Notion predefined credential) lets the agent compose path, method, and body itself — covering operations the native node doesn't expose. Trade-off: the agent is now writing API requests, which is more error-prone and needs a capable model plus clear endpoint guidance in the description. That widens the blast radius — make sure the user understands.
-
-### 4. MCP Client Tool (`@n8n/n8n-nodes-langchain.mcpClientTool`)
-
-Connects the agent to any MCP server. Two flavors:
-
-- **External MCP servers** — any third-party or self-hosted MCP (GitHub, Linear, Notion, custom internal). One node exposes every tool that server offers.
-- **n8n-hosted MCP** — a workflow on the same instance published with MCP access enabled. Same client node, pointed at an n8n MCP trigger URL. Lets one workflow serve many agents.
-
-- **Cons**: tool descriptions and shapes come from the server, so quality varies and you can't easily tune them. Auth and reachability are yours.
-- **Use when**: a maintained MCP server already covers the capability, or you want one published workflow to serve many agents.
-
-### Plus: Custom Code Tool (`@n8n/n8n-nodes-langchain.toolCode`)
-
-Pure inline computation (math, parsing, formatting). Its runtime contract is **string in / string out, no `$fromAI`, no `$helpers`** and is owned by the **n8n-code-tool** skill — read it before writing one. Rule of thumb: if you want `$fromAI()` in the code, you want `.toolWorkflow` instead.
+Agent 选择工具只靠读**名称**和**描述**，没有别的。两者都是提示词的一部分。把工具设计当 API 设计来做：它做什么、何时用、每个参数什么含义、失败时什么样。
 
 ---
 
-## Decision: which tool type?
+## 四种工具类型
+
+### 1. 原生工具节点
+
+常规节点的预制工具版：`slackTool`、`gmailTool`、`googleSheetsTool`、`toolCalculator`、`notionTool`、`httpRequestTool` 等。与非工具版完全一样，区别只是参数可以经 `$fromAI()` 由 Agent 填。
+
+- **优点**：配置最少、经过充分测试、体验原生。
+- **缺点**：一个节点 = 一个操作。多步逻辑放不下。
+- **适用**：能力能干净地对应到一个节点、一个操作。
+
+原生节点缺某个操作、或需要非标准参数形状时，把 **HTTP Request Tool** 指向该服务的 API，并用该服务的*预定义凭据类型*：复用已有的 OAuth/API-key 凭据，拿到完整 API。
+
+### 2. 子工作流作工具（`@n8n/n8n-nodes-langchain.toolWorkflow`）
+
+超过一个节点时的默认选择。任何工作流都变成带类型 `$fromAI()` 输入的工具。
+
+- **优点**：工具里可用 n8n 的全部能力：分支、错误处理、子子工作流、原生节点、自定义逻辑。跨 Agent 复用。可独立测试。
+- **缺点**：多一层工作流边界，略增延迟。
+- **适用**：超过一个节点、逻辑可能被复用，或需要可测试性。
+
+构建 Agent 能力的 n8n 正统做法。→ **SUBWORKFLOW_AS_TOOL.md**
+
+### 3. HTTP Request Tool（`@n8n/n8n-nodes-langchain.toolHttpRequest`）
+
+HTTP Request 节点的包装，把它的参数暴露给 Agent。
+
+- **优点**：一个节点让任何 HTTP API 变成工具。
+- **缺点**：仅限 HTTP。鉴权/重试/错误处理要自己接线。
+- **适用**：调用一个需要 Agent 直接编排的单一外部 API。
+
+一点须知：HTTP Request 有自己的 HTTP 层超时（默认 5 分钟），慢端点要调高 `options.timeout`。Agent 工具本身没有超时，工具跑多久 Agent 就等多久。把它指向比如 Notion API（用 Notion 预定义凭据），Agent 就能自己拼路径、方法和请求体，覆盖原生节点没暴露的操作。代价是 Agent 开始亲自写 API 请求，更容易出错，需要足够强的模型，以及描述里清晰的端点指导。影响面随之扩大：确保用户理解这一点。
+
+### 4. MCP Client Tool（`@n8n/n8n-nodes-langchain.mcpClientTool`）
+
+把 Agent 接到任何 MCP 服务器。两种形态：
+
+- **外部 MCP 服务器**：任何第三方或自托管 MCP（GitHub、Linear、Notion、内部自建）。一个节点暴露该服务器提供的全部工具。
+- **n8n 托管 MCP**：同一实例上开启 MCP 访问并发布的工作流。同一个客户端节点，指向 n8n MCP 触发器 URL。让一个工作流服务多个 Agent。
+
+- **缺点**：工具描述与形状来自服务器，质量参差，也不好调。鉴权与可达性自己负责。
+- **适用**：已有维护良好的 MCP 服务器覆盖该能力，或想让一个发布的工作流服务多个 Agent。
+
+### 另外：Custom Code Tool（`@n8n/n8n-nodes-langchain.toolCode`）
+
+纯内联计算（数学、解析、格式化）。它的运行时契约是**字符串进 / 字符串出，不能用 `$fromAI`，不能用 `$helpers`**，归 **n8n-code-tool** 这个 Skill 管：写之前先读它。经验法则：想在代码里用 `$fromAI()`，说明你想要的其实是 `.toolWorkflow`。
+
+---
+
+## 决策：用哪种工具类型？
 
 ```
 Capability the agent needs?
@@ -70,9 +74,9 @@ Capability the agent needs?
 
 ---
 
-## `$fromAI()`: how the agent fills tool parameters
+## `$fromAI()`：Agent 如何填工具参数
 
-`$fromAI()` is a **real n8n expression helper**, written inside a tool node's parameter expressions. Parameters the agent should decide get wrapped in it:
+`$fromAI()` 是**真实的 n8n 表达式助手**，写在工具节点的参数表达式里。该由 Agent 决定的参数就用它包起来：
 
 ```
 sendTo:  ={{ $fromAI('recipient', 'Email address of the recipient', 'string') }}
@@ -80,16 +84,16 @@ subject: ={{ $fromAI('subject', 'Email subject line, concise and informative', '
 body:    ={{ $fromAI('body', 'Email body in plain text, professional tone', 'string') }}
 ```
 
-Shape: `$fromAI(paramName, description, type?, defaultValue?)`
+形态：`$fromAI(paramName, description, type?, defaultValue?)`
 
-- **paramName** — the name the model uses internally. snake_case or camelCase, be consistent.
-- **description** — what value to produce. **Part of the prompt.** Be specific: format, range, example.
-- **type** — `'string'` (default), `'number'`, `'boolean'`, `'json'`. Enforced — a wrong-typed value fails the call.
-- **defaultValue** — used when the model omits the parameter.
+- **paramName**：模型内部使用的名称。snake_case 或 camelCase，保持一致。
+- **description**：要产生什么值。**提示词的一部分。**写具体：格式、范围、示例。
+- **type**：`'string'`（默认）、`'number'`、`'boolean'`、`'json'`。有强制校验：类型不对的值会让调用失败。
+- **defaultValue**：模型省略该参数时使用。
 
-It carries **JSON only** — it cannot carry binary (no base64, no file bytes), even through a non-AI binding. For binary, pass a storage key as a string and have the tool re-fetch (→ **n8n-binary-and-data**).
+它只能携带 **JSON**：不能携带二进制（没有 base64、没有文件字节），即使经非 AI 绑定也不行。二进制请传存储键字符串，让工具自己去取（→ **n8n-binary-and-data**）。
 
-A good description vs a useless one:
+好描述与无用描述对比：
 
 ```
 ✅ ={{ $fromAI('imageName', 'Storage key for an existing image to edit, or empty for a new generation. Use the exact key shown in the system prompt; do not reconstruct or guess.', 'string') }}
@@ -97,13 +101,13 @@ A good description vs a useless one:
 ❌ ={{ $fromAI('imageName', 'image name', 'string') }}   // useless to the model
 ```
 
-Treat `$fromAI` descriptions like JSDoc — the model reads them to figure out what to pass.
+把 `$fromAI` 描述当 JSDoc 对待：模型靠它们弄清该传什么。
 
 ---
 
-## Plumbed params: hide what the agent shouldn't decide
+## 管道参数：Agent 不该决定的东西藏起来
 
-Not every parameter has to be `$fromAI`. Any parameter can be filled deterministically from workflow context, and **plumbed values are invisible to the agent** — not in the tool schema, not influenceable by anything the model produces:
+不是每个参数都得用 `$fromAI`。任何参数都可以从工作流上下文确定性填充，而且**管道传入的值对 Agent 不可见**：不在工具 schema 里，也不受模型产出的任何内容影响：
 
 ```
 reason:        ={{ $fromAI('reason', 'Why the user is requesting a refund', 'string') }}   // agent-filled
@@ -112,41 +116,41 @@ maxRefund:     ={{ $('Get user tier').first().json.refundLimit }}               
 idempotencyKey:={{ $('Chat Trigger').first().json.sessionId }}                               // hidden
 ```
 
-Plumb anything the agent shouldn't get wrong or see:
+凡是 Agent 不能搞错、也不该看到的，都用管道传入：
 
-- **Identity** — `userId`, `customerId`, authenticated actor, tenant scope.
-- **Authority limits** — refund caps, tier flags, allowed regions.
-- **Correlation IDs** — `sessionId`, idempotency keys, trace IDs.
+- **身份**：`userId`、`customerId`、已鉴权操作者、租户范围。
+- **权限上限**：退款上限、等级标志、允许的地区。
+- **关联 ID**：`sessionId`、幂等键、trace ID。
 
-**Give the agent a button to push, not a steering wheel.** The strongest version is a sensitive tool with **zero `$fromAI` parameters**: a "Refund order" tool takes `orderId` from the trigger, `amount` from the fetched order record, `actor` from the session — all plumbed. The agent literally cannot refund the wrong order; it only chooses whether to fire. Pair with **HUMAN_REVIEW.md** for actions needing both deterministic params and sign-off.
+**给 Agent 一个按钮，而不是方向盘。**最强形态是一个**零 `$fromAI` 参数**的敏感工具："Refund order" 工具的 `orderId` 来自触发器，`amount` 来自取回的订单记录，`actor` 来自会话，全部管道传入。Agent 在物理上不可能退错订单，它只决定是否按下。需要确定性参数加人工签核的操作，配合 **HUMAN_REVIEW.md** 使用。
 
 ---
 
-## Tool name and description as prompt
+## 工具名与描述即提示词
 
-Selection process the model runs every turn:
+模型每一轮都在跑的选择流程：
 
-1. It gets the system prompt, conversation, and the list of tools.
-2. For each tool it reads name + description + parameter schema (with `$fromAI` descriptions).
-3. It picks the tool whose description best matches what it needs to do.
+1. 拿到系统提示词、对话和工具列表。
+2. 对每个工具读名称 + 描述 + 参数 schema（含 `$fromAI` 描述）。
+3. 挑出描述与它要做的事最匹配的工具。
 
-**Bad names and descriptions cause bad selection — usually silently.** The model just doesn't call your tool, or calls a different one with garbage parameters. No error.
+**差的名字和描述导致差的选择，而且通常无声。**模型就是不调你的工具，或者调了别的工具、参数一塌糊涂。没有报错。
 
-### Names: verb-first and specific
+### 命名：动词开头，足够具体
 
-| Good | Bad | Why |
+| 好 | 差 | 原因 |
 |---|---|---|
-| `Search customer database` | `query` / `tool1` | Generic names say nothing |
-| `Generate image with Veo` | `imageGen` | Which generator? |
-| `Edit existing image` | `edit` | Edit what? |
-| `Send Slack message to channel` | `slack` | Name the action, not just the surface |
-| `Lookup user by email` | `getUser` | Lookup how? |
+| `Search customer database` | `query` / `tool1` | 泛化名字什么都没说 |
+| `Generate image with Veo` | `imageGen` | 哪个生成器？ |
+| `Edit existing image` | `edit` | 编辑什么？ |
+| `Send Slack message to channel` | `slack` | 说出动作，不只说渠道 |
+| `Lookup user by email` | `getUser` | 怎么查？ |
 
-### Descriptions: three parts
+### 描述：三个部分
 
-1. **What it does** (one sentence).
-2. **When to use it** (one or two sentences, with boundaries / examples).
-3. **Parameter notes** (only if not already covered in `$fromAI` descriptions).
+1. **它做什么**（一句话）。
+2. **何时用它**（一两句，带边界 / 示例）。
+3. **参数说明**（只在 `$fromAI` 描述没覆盖时写）。
 
 ```
 Edit existing image: Modifies an image the user already uploaded, based on a prompt.
@@ -156,44 +160,44 @@ The imageName parameter must be the storage key of the existing image as listed 
 available files; do not pass the original filename or a URL.
 ```
 
-That description does work that would otherwise bloat the system prompt — which is exactly the point.
+这段描述承担了本会撑大系统提示词的工作：这正是它的意义。
 
 ---
 
-## Tool descriptions as modular prompts
+## 工具描述即模块化提示词
 
-Anything specific to *how to call this tool* belongs in the tool's description, not the system prompt:
+凡是关于*如何调用这个工具*的具体内容，都放进工具描述，不放进系统提示词：
 
-| In the system prompt (move out) | Better in the tool description |
+| 在系统提示词里（移出去） | 更该放在工具描述里 |
 |---|---|
 | "When generating images, prefer realistic photography over `8k cinematic`" | `Generate Image`: "Default to realistic photography aesthetics…" |
 | "If the search tool returns nothing, summarize politely" | `Search`: "Returns up to 10 results; if empty, report 'no matches' rather than retrying broader" |
 | "Use 9:16 for video tools" | `Generate Video`: "Defaults to 9:16; pass `aspectRatio: '16:9'` for landscape" |
 
-Three reasons: **reusability** (the tool teaches each new agent how to use it), **token efficiency** (per-tool guidance only loads when the model considers that tool, not every turn), **maintainability** (one description, not a buried paragraph).
+三个理由：**可复用**（工具自己教会每个新 Agent 怎么用它）、**token 效率**（每工具的指导只在模型考虑该工具时加载，不是每轮都加载）、**可维护**（一份描述，而不是一段埋没的段落）。
 
 ---
 
-## Granularity: one tool with branching, not two near-identical tools
+## 粒度：一个带分支的工具，而不是两个几乎相同的工具
 
-The model gets confused choosing between near-identical tools. If two are ~80% the same internally:
+在几乎相同的工具之间做选择，模型会犯迷糊。如果两个工具内部约 80% 相同：
 
-- **One tool with a branching parameter.** `Generate Image` vs `Edit Image` share most logic → collapse to one with an `imageName` parameter (empty = generate, populated = edit).
-- **Two tools only when genuinely distinct AND the descriptions clearly differentiate.** `Send DM` vs `Send Channel Message` are distinct.
-
----
-
-## Operational notes
-
-- **maxIterations.** Agents have a configurable tool-call cap (`options.maxIterations`), and the default is **low**. A multi-tool agent that chains calls hits it and surfaces "max iterations reached" or empty output. Raise it. Build a fallback — don't trust graceful recovery.
-- **Tool-call cost.** Each call is at minimum one extra model round-trip. Frequently-called tools should return **concise** results — bloated returns burn input tokens fast.
-- **Tool failure handling.** Set `onError: 'continueErrorOutput'` on tool sub-workflows where you want the agent to receive an error string instead of halting; the agent can retry, switch tools, or report. → **n8n-error-handling**.
+- **一个工具加一个分支参数。**`Generate Image` 与 `Edit Image` 共享大部分逻辑 → 合并成一个，用 `imageName` 参数区分（空 = 生成，有值 = 编辑）。
+- **只有真正不同且描述能明确区分时才用两个工具。**`Send DM` 与 `Send Channel Message` 是不同的。
 
 ---
 
-## Cross-references
+## 运维注意事项
 
-- The sub-workflow tool pattern in detail → **SUBWORKFLOW_AS_TOOL.md**
-- System-prompt-vs-tool-description split → **SYSTEM_PROMPT.md**
-- Passing binary into tools → **n8n-binary-and-data**
-- The Custom Code Tool contract → **n8n-code-tool**
+- **maxIterations。**Agent 有可配置的工具调用上限（`options.maxIterations`），默认值**很低**。串联调用的多工具 Agent 会撞上限，表现为 "max iterations reached" 或空输出。调高它，并准备兜底：不要指望优雅恢复。
+- **工具调用成本。**每次调用至少多一次模型往返。高频工具应返回**精简**结果：臃肿的返回烧 token 很快。
+- **工具失败处理。**希望 Agent 收到错误字符串而不是中断的，在工具子工作流上设置 `onError: 'continueErrorOutput'`；Agent 可以重试、换工具或上报。→ **n8n-error-handling**。
+
+---
+
+## 交叉引用
+
+- 子工作流工具模式详解 → **SUBWORKFLOW_AS_TOOL.md**
+- 系统提示词与工具描述的分工 → **SYSTEM_PROMPT.md**
+- 给工具传二进制 → **n8n-binary-and-data**
+- Custom Code Tool 的契约 → **n8n-code-tool**

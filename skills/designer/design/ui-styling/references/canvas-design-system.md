@@ -1,158 +1,162 @@
-# Canvas Design System
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/ui-styling/references/canvas-design-system.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Visual design philosophy, systematic composition, and sophisticated visual communication.
+# Canvas 设计系统
 
-## Design Philosophy Approach
+视觉设计哲学、系统化构图与精致的视觉传达。
 
-Canvas design operates through two-phase process:
+## 设计哲学方法论
 
-### Phase 1: Design Philosophy Creation
+Canvas 设计通过两阶段流程运作：
 
-Create visual philosophy - aesthetic movement expressed through form, space, color, composition. Not layouts or templates, but pure visual philosophy.
+### Phase 1: 创建设计哲学
 
-**What is created:** Design manifesto emphasizing:
-- Visual expression over text
-- Spatial communication
-- Artistic interpretation
-- Minimal words as visual accent
+创造视觉哲学：通过形式、空间、色彩与构图表达的美学流派。不是版式或模板，而是纯粹的视觉哲学。
 
-**Philosophy structure (4-6 paragraphs):**
-- Space and form principles
-- Color and material approach
-- Scale and rhythm guidance
-- Composition and balance rules
-- Visual hierarchy system
+**产出物：**一份设计宣言，强调：
+- 视觉表达优先于文字
+- 空间传达
+- 艺术诠释
+- 极少的文字作为视觉点缀
 
-### Phase 2: Visual Expression
+**哲学结构（4-6 段）：**
+- 空间与形式原则
+- 色彩与材质取向
+- 尺度与节奏指引
+- 构图与平衡规则
+- 视觉层级系统
 
-Express philosophy through canvas artifacts:
-- 90% visual design
-- 10% essential text
-- Museum-quality execution
-- Systematic patterns
-- Sophisticated composition
+### Phase 2: 视觉表达
 
-## Core Principles
+通过 canvas 作品表达哲学：
+- 90% 视觉设计
+- 10% 必要文字
+- 博物馆级完成度
+- 系统化图案
+- 精致构图
 
-### 1. Visual Communication First
+## 核心原则
 
-Information lives in design, not paragraphs. Express ideas through:
-- Color zones and fields
-- Geometric precision
-- Spatial relationships
-- Visual weight and tension
-- Form and structure
+### 1. 视觉传达优先
 
-### 2. Minimal Text Integration
+信息存在于设计里，不在段落里。通过以下方式表达想法：
+- 色彩区域与色块
+- 几何精度
+- 空间关系
+- 视觉重量与张力
+- 形式与结构
 
-Text as rare, powerful gesture:
-- Never paragraphs
-- Only essential words
-- Integrated into visual architecture
-- Small labels, huge impact
-- Typography as visual element
+### 2. 极简文字融入
 
-### 3. Expert Craftsmanship
+文字是稀有而有力的手势：
+- 绝不用段落
+- 只用必要的词
+- 融入视觉架构
+- 小标签，大冲击
+- 字体排印本身就是视觉元素
 
-Work must appear:
-- Meticulously crafted
-- Labored over with care
-- Product of countless hours
-- From absolute top of field
-- Master-level execution
+### 3. 专家级工艺
 
-### 4. Systematic Patterns
+作品必须显得：
+- 经过精心打磨
+- 被用心雕琢过
+- 是无数小时的产物
+- 出自行业绝对顶尖之手
+- 大师级完成度
 
-Use scientific visual language:
-- Repeating patterns
-- Perfect shapes
-- Dense accumulation of marks
-- Layered elements
-- Patient repetition rewards sustained viewing
+### 4. 系统化图案
 
-## Design Movement Examples
+使用科学式的视觉语言：
+- 重复图案
+- 完美形状
+- 高密度的标记累积
+- 分层元素
+- 耐心的重复会回报持续的注视
 
-### Concrete Poetry
-**Philosophy:** Communication through monumental form and bold geometry.
+## 设计流派示例
 
-**Expression:**
-- Massive color blocks
-- Sculptural typography (huge words, tiny labels)
-- Brutalist spatial divisions
-- Polish poster energy meets Le Corbusier
-- Ideas through visual weight and spatial tension
-- Text as rare, powerful gesture
+### 具象诗
+**哲学：**通过纪念碑式的形式与大胆的几何来传达。
 
-### Chromatic Language
-**Philosophy:** Color as primary information system.
+**表达：**
+- 巨大的色块
+- 雕塑感的字体排印（巨大的词、极小的标签）
+- 粗野主义的空间切分
+- 波兰海报的劲道遇上勒·柯布西耶
+- 用视觉重量与空间张力承载想法
+- 文字是稀有而有力的手势
 
-**Expression:**
-- Geometric precision
-- Color zones create meaning
-- Typography minimal - small sans-serif labels
-- Josef Albers' interaction meets data visualization
-- Information encoded spatially and chromatically
-- Words only anchor what color shows
+### 色彩语言
+**哲学：**色彩作为首要的信息系统。
 
-### Analog Meditation
-**Philosophy:** Quiet visual contemplation through texture and breathing room.
+**表达：**
+- 几何精度
+- 色彩区域创造含义
+- 字体极简：小型无衬线标签
+- 约瑟夫·阿尔伯斯的色彩交互遇上数据可视化
+- 信息以空间和色彩方式编码
+- 文字只为色彩呈现的内容做锚点
 
-**Expression:**
-- Paper grain, ink bleeds
-- Vast negative space
-- Photography and illustration dominate
-- Typography whispered (small, restrained)
-- Japanese photobook aesthetic
-- Images breathe across pages
-- Text appears sparingly - short phrases only
+### 模拟冥想
+**哲学：**借助质感与留白做安静的视觉沉思。
 
-### Organic Systems
-**Philosophy:** Natural clustering and modular growth patterns.
+**表达：**
+- 纸张纹理、墨水晕染
+- 大面积负空间
+- 摄影与插画占主导
+- 字体排印低声细语（小、克制）
+- 日本摄影集美学
+- 图像在页面之间呼吸
+- 文字出现得很少：只用短句
 
-**Expression:**
-- Rounded forms
-- Organic arrangements
-- Color from nature through architecture
-- Information through visual diagrams
-- Spatial relationships and iconography
-- Text only for key labels floating in space
-- Composition tells story through spatial orchestration
+### 有机系统
+**哲学：**自然的聚簇与模块化生长模式。
 
-### Geometric Silence
-**Philosophy:** Pure order and restraint.
+**表达：**
+- 圆润的形式
+- 有机的排布
+- 色彩取自自然、再经建筑转化
+- 信息通过视觉图示承载
+- 空间关系与图像符号
+- 文字只用于悬浮在空间中的关键标签
+- 构图通过空间编排讲故事
 
-**Expression:**
-- Grid-based precision
-- Bold photography or stark graphics
-- Dramatic negative space
-- Typography precise but minimal
-- Small essential text, large quiet zones
-- Swiss formalism meets Brutalist material honesty
-- Structure communicates, not words
-- Every alignment from countless refinements
+### 几何静默
+**哲学：**纯粹的秩序与克制。
 
-## Implementation Guidelines
+**表达：**
+- 基于网格的精度
+- 大胆的摄影或冷峻的图形
+- 戏剧化的负空间
+- 字体排印精确而极简
+- 小而必要的文字，大而安静的区域
+- 瑞士形式主义遇上粗野主义的材料诚实
+- 传达信息的是结构，不是文字
+- 每一处对齐都来自无数次的打磨
 
-### Subtle Reference Integration
+## 实施指南
 
-Embed conceptual DNA without announcing:
-- Niche reference woven invisibly
-- Those who know feel it intuitively
-- Others experience masterful abstract composition
-- Like jazz musician quoting another song
-- Sophisticated, never literal
-- Reference enhances depth quietly
+### 低调的引用融入
 
-### Color Approach
+嵌入概念 DNA，但不声张：
+- 小众引用被无形地织入
+- 懂的人会直觉地感受到
+- 其他人看到的是高超的抽象构图
+- 就像爵士乐手引用另一首歌
+- 成熟老练，绝不直白
+- 引用安静地增加深度
 
-**Intentional palette:**
-- Limited colors (2-5)
-- Cohesive system
-- Purposeful relationships
-- oklch color space for precision
-- Each shade carries meaning
+### 色彩取向
 
-**Example palette:**
+**有意为之的配色：**
+- 有限的颜色（2-5 种）
+- 内聚的系统
+- 有目的的关系
+- 用 oklch 色彩空间保证精度
+- 每个色阶都承载含义
+
+**配色示例：**
 ```
 --color-primary: oklch(0.55 0.22 264)
 --color-accent: oklch(0.75 0.18 45)
@@ -160,161 +164,161 @@ Embed conceptual DNA without announcing:
 --color-dark: oklch(0.25 0.15 264)
 ```
 
-### Typography System
+### 字体排印系统
 
-**Thin fonts preferred:**
-- Light weights (200-300)
-- Clean sans-serifs
-- Geometric precision
-- Small sizes for labels
-- Large sizes for impact moments
+**偏好细体：**
+- 细字重（200-300）
+- 干净的无衬线体
+- 几何精度
+- 标签用小字号
+- 冲击时刻用大字号
 
-**Font integration:**
-- Search `./canvas-fonts` directory
-- Download needed fonts
-- Bring typography onto canvas
-- Part of art, not typeset digitally
+**字体引入：**
+- 在 `./canvas-fonts` 目录中搜索
+- 下载所需字体
+- 把字体排印带上画布
+- 成为艺术的一部分，而不是数字排版产物
 
-### Composition Rules
+### 构图规则
 
-**Systematic approach:**
-- Repeating patterns establish rhythm
-- Perfect geometric shapes
-- Clinical typography
-- Reference markers suggest imaginary discipline
-- Dense accumulation builds meaning
-- Layered patterns reward attention
+**系统化方法：**
+- 重复图案建立节奏
+- 完美的几何形状
+- 冷静精确的字体排印
+- 引用标记暗示出想象中的学科纪律
+- 高密度累积构建含义
+- 分层图案回报专注
 
-**Spacing discipline:**
-- Nothing falls off page
-- Nothing overlaps
-- Every element within canvas boundaries
-- Proper margins non-negotiable
-- Breathing room and clear separation
-- Professional execution mandatory
+**间距纪律：**
+- 没有任何元素掉出页面
+- 没有任何元素重叠
+- 每个元素都在画布边界之内
+- 合理边距不可妥协
+- 留出呼吸空间与清晰分隔
+- 专业完成度是硬性要求
 
-### Canvas Boundaries
+### Canvas 边界
 
-**Technical specs:**
-- Single page default (multi-page when requested)
-- PDF or PNG output
-- High resolution
-- Clean margins
-- Contained composition
-- Flawless formatting
+**技术规格：**
+- 默认单页（按需求可多页）
+- PDF 或 PNG 输出
+- 高分辨率
+- 干净的边距
+- 收在边界内的构图
+- 无瑕疵的版面
 
-## Multi-Page Design Systems
+## 多页设计系统
 
-When creating multiple pages:
+创建多页时：
 
-### Approach
-- Treat first page as single page in coffee table book
-- Create more pages along same philosophy
-- Distinctly different but cohesive
-- Pages tell story tastefully
-- Full creative freedom
+### 方法
+- 把第一页当作咖啡桌书里的单页来对待
+- 沿同一哲学创建后续页面
+- 明显不同却彼此内聚
+- 页面有品位地讲故事
+- 完全的创作自由
 
-### Consistency Elements
-- Shared color palette
-- Consistent typography system
-- Related compositional approach
-- Visual language continuity
-- Philosophical thread throughout
+### 一致性要素
+- 共享的配色
+- 一致的字体排印系统
+- 相关联的构图手法
+- 视觉语言的连续性
+- 贯穿始终的哲学线索
 
-### Variation Strategy
-- Unique twist per page
-- Different focal points
-- Varied spatial arrangements
-- Complementary patterns
-- Progressive visual narrative
+### 变化策略
+- 每页有独特的转折
+- 不同的焦点
+- 多样的空间排布
+- 互补的图案
+- 渐进推进的视觉叙事
 
-## Execution Checklist
+## 执行清单
 
-Before finalizing:
+定稿之前：
 
-- [ ] Philosophy guides every decision
-- [ ] 90% visual, 10% text maximum
-- [ ] Text minimal and integrated
-- [ ] Nothing overlaps or falls off page
-- [ ] Margins and spacing pristine
-- [ ] Composition cohesive with art
-- [ ] Appears meticulously crafted
-- [ ] Master-level execution evident
-- [ ] Sophisticated, never amateur
-- [ ] Could be displayed in museum
-- [ ] Proves undeniable expertise
-- [ ] Formatting flawless
-- [ ] Every detail perfect
+- [ ] 哲学指导每一个决策
+- [ ] 90% 视觉，文字至多 10%
+- [ ] 文字极简且已融入
+- [ ] 没有重叠，没有元素掉出页面
+- [ ] 边距与间距完美无瑕
+- [ ] 构图与艺术内聚统一
+- [ ] 看起来经过精心打磨
+- [ ] 大师级完成度清晰可见
+- [ ] 成熟老练，绝无业余感
+- [ ] 可以陈列在博物馆里
+- [ ] 证明无可争议的专业能力
+- [ ] 版面无瑕疵
+- [ ] 每个细节都完美
 
-## Quality Standards
+## 质量标准
 
-### What to Avoid
-- Cartoony aesthetics
-- Amateur execution
-- Text-heavy composition
-- Random placement
-- Overlapping elements
-- Inconsistent spacing
-- Obvious AI generation
-- Lack of refinement
+### 要避免
+- 卡通化审美
+- 业余完成度
+- 文字过重的构图
+- 随意摆放
+- 元素重叠
+- 间距不一致
+- 一眼可见的 AI 生成感
+- 缺乏打磨
 
-### What to Achieve
-- Museum quality
-- Magazine worthy
-- Art object status
-- Countless hours appearance
-- Top-of-field craftsmanship
-- Philosophical coherence
-- Visual sophistication
-- Systematic precision
+### 要达到
+- 博物馆级质量
+- 杂志级水准
+- 艺术品级别的地位
+- 无数小时打磨出来的外观
+- 行业顶尖的工艺
+- 哲学上的连贯
+- 视觉上的成熟
+- 系统化的精确
 
-## Refinement Process
+## 打磨流程
 
-### Initial Pass
-Create based on philosophy and principles.
+### 第一遍
+依据哲学与原则进行创作。
 
-### Second Pass (Critical)
-- Don't add more graphics
-- Refine what exists
-- Make extremely crisp
-- Respect minimalism philosophy
-- Increase cohesion with art
-- Make existing elements more artistic
-- Polish rather than expand
+### 第二遍（关键）
+- 不要再加图形
+- 打磨已有的东西
+- 做到极度清晰锐利
+- 尊重极简主义哲学
+- 增强与艺术的内聚
+- 让已有元素更有艺术感
+- 打磨，而不是扩张
 
-### Final Verification
-User already said: "It isn't perfect enough. Must be pristine, masterpiece of craftsmanship, as if about to be displayed in museum."
+### 最终校验
+用户已经说过："还不够完美。必须完美无瑕，是工艺上的杰作，就像马上要陈列进博物馆一样。"
 
-Apply this standard before delivery.
+交付之前，按这个标准执行。
 
-## Output Format
+## 输出格式
 
-**Required files:**
-1. Design philosophy (.md file)
-2. Visual expression (.pdf or .png)
+**必需文件：**
+1. 设计哲学（.md 文件）
+2. 视觉表达（.pdf 或 .png）
 
-**Philosophy file contains:**
-- Movement name
-- 4-6 paragraph philosophy
-- Visual principles
-- Execution guidance
+**哲学文件包含：**
+- 流派名称
+- 4-6 段的哲学阐述
+- 视觉原则
+- 执行指引
 
-**Canvas file contains:**
-- Visual interpretation
-- Minimal text
-- Systematic composition
-- Expert-level execution
+**Canvas 文件包含：**
+- 视觉诠释
+- 极少文字
+- 系统化构图
+- 专家级完成度
 
-## Use Cases
+## 适用场景
 
-Apply canvas design for:
-- Brand identity systems
-- Poster designs
-- Visual manifestos
-- Design system documentation
-- Art pieces and compositions
-- Conceptual visual frameworks
-- Editorial design
-- Exhibition materials
-- Coffee table books
-- Design philosophy demonstrations
+Canvas 设计适用于：
+- 品牌识别系统
+- 海报设计
+- 视觉宣言
+- 设计系统文档
+- 艺术作品与构图
+- 概念性视觉框架
+- 编辑设计
+- 展览物料
+- 咖啡桌书
+- 设计哲学演示

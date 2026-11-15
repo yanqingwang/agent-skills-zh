@@ -1,53 +1,57 @@
-# Brand Refresh — Brand Refresh
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/warm--brand-refresh/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Brand Refresh：品牌焕新
 
-Colorful block collage on warm cream background, creating lively and fashionable brand visuals.
+## 风格概览
 
-- **Scene**: Brand launches, corporate image updates, creative proposals
-- **Mood**: Warm, fashionable, colorful, modern
-- **Tone**: Warm base, colorful blocks
+暖奶油色背景上的多彩色块拼贴，营造活泼时尚的品牌视觉。
 
-## Color Palette
+- **适用场景**：品牌发布、企业形象焕新、创意提案
+- **氛围**：温暖、时尚、多彩、现代
+- **色调**：暖色基底，多彩色块
 
-| Name       | Hex    | Usage                          |
-| ---------- | ------ | ------------------------------ |
-| Warm Cream | F5F0E8 | Background (parchment texture) |
-| Deep Navy  | 162040 | Title text                     |
-| Blue       | 1A6BFF | Primary block color            |
-| Orange     | F4713A | Block accent                   |
-| Cyan       | 00C9D4 | Block secondary color          |
-| Mint Green | 7EC8A0 | Block secondary color          |
-| Pink       | E8749A | Block highlight                |
-| Muted Text | 9A9080 | Muted text                     |
-| Body Text  | 6B6355 | Body text                      |
+## 配色方案
 
-## Typography
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 暖奶油色 | F5F0E8 | 背景（羊皮纸纹理） |
+| 深海军蓝 | 162040 | 标题文字 |
+| 蓝色 | 1A6BFF | 主色块色 |
+| 橙色 | F4713A | 色块强调 |
+| 青色 | 00C9D4 | 色块次色 |
+| 薄荷绿 | 7EC8A0 | 色块次色 |
+| 粉色 | E8749A | 色块高亮 |
+| 弱化文字 | 9A9080 | 弱化的文字 |
+| 正文字色 | 6B6355 | 正文文字 |
 
-- Titles: Arial 52pt Bold
-- Body: Arial 15pt
-- Labels: Arial 11pt
+## 字体排印
 
-## Scene Elements
+- 标题：Arial 52pt Bold
+- 正文：Arial 15pt
+- 标签：Arial 11pt
 
-- 6 rectangular color blocks (blk-a to blk-f), forming mosaic grid on right side
-- Blocks rearrange, scale, and shift between each page
-- Uses image assets (portrait1.jpg, portrait2.jpg, abstract1.jpg, team1.jpg) — can be ignored when using as style reference
+## 场景元素
 
-## Design Techniques
+- 6 个矩形色块（blk-a 至 blk-f），在右侧组成马赛克网格
+- 色块在每页之间重排、缩放与位移
+- 使用图片素材（portrait1.jpg、portrait2.jpg、abstract1.jpg、team1.jpg）；仅作风格参考时可忽略图片部分
 
-- Block mosaic layout — blocks form different grid patterns on each page
-- Photos embedded within block grid
-- Classic split layout: text on left + colorful blocks on right
-- Morph transitions smoothly slide and scale blocks
-- 6 slides
+## 设计技法
 
-## Reference Script
+- 色块马赛克版式：色块在每页构成不同的网格图案
+- 照片嵌入色块网格之中
+- 经典分栏版式：左侧文字 + 右侧多彩色块
+- Morph 转场让色块平滑滑动与缩放
+- 6 页幻灯片
 
-Complete build script available in `build.sh`.
-Note: Script uses image resources from assets/ directory, image parts can be ignored when using as style reference.
-**Recommended slides to read for understanding core design techniques**:
+## 参考脚本
 
-- **Slide 1** — Title page, initial layout of block grid
-- **Slide 4** — Major block reorganization, demonstrating mosaic transformation effect
-  No need to read all — skim 2-3 representative slides.
+完整构建脚本见 `build.sh`。
+说明：脚本使用 assets/ 目录下的图片资源，仅作风格参考时可忽略图片部分。
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1**：标题页，色块网格的初始布局
+- **Slide 4**：色块大重组，演示马赛克变换效果
+  无需全部精读，浏览 2-3 张代表性幻灯片即可。

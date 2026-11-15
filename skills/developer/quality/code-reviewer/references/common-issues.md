@@ -1,6 +1,10 @@
-# Common Issues
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/code-reviewer/references/common-issues.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## N+1 Query Problem
+# 常见问题
+
+## N+1 查询问题
 
 ```typescript
 // N+1 queries - BAD
@@ -18,7 +22,7 @@ const authorIds = posts.map(p => p.authorId);
 const authors = await User.findByIds(authorIds);
 ```
 
-## Missing Error Handling
+## 缺失错误处理
 
 ```typescript
 // Unhandled rejection - BAD
@@ -37,7 +41,7 @@ try {
 }
 ```
 
-## Magic Numbers/Strings
+## 魔法数字/字符串
 
 ```typescript
 // Magic number - BAD
@@ -52,7 +56,7 @@ if (user.age >= MINIMUM_AGE) { ... }
 setTimeout(fn, ONE_DAY_MS);
 ```
 
-## Deep Nesting
+## 深层嵌套
 
 ```typescript
 // Deep nesting - BAD
@@ -71,7 +75,7 @@ if (!user || !user.isActive || !user.hasPermission) {
 doSomething();
 ```
 
-## God Functions
+## 上帝函数
 
 ```typescript
 // Does too much - BAD
@@ -93,7 +97,7 @@ async function processOrder(order) {
 }
 ```
 
-## Mutable Shared State
+## 可变共享状态
 
 ```typescript
 // Shared mutable - BAD
@@ -108,7 +112,7 @@ function createConfig(overrides = {}) {
 }
 ```
 
-## Missing Null Checks
+## 缺失空值检查
 
 ```typescript
 // Unsafe access - BAD
@@ -118,7 +122,7 @@ const name = user.profile.name;
 const name = user?.profile?.name ?? 'Unknown';
 ```
 
-## Synchronous File Operations
+## 同步文件操作
 
 ```typescript
 // Blocks event loop - BAD
@@ -128,15 +132,15 @@ const data = fs.readFileSync('file.txt');
 const data = await fs.promises.readFile('file.txt');
 ```
 
-## Quick Reference
+## 速查表
 
-| Issue | Impact | Fix |
+| 问题 | 影响 | 修复 |
 |-------|--------|-----|
-| N+1 queries | Performance | Eager load or batch |
-| Missing error handling | Reliability | Try/catch + logging |
-| Magic numbers | Maintainability | Named constants |
-| Deep nesting | Readability | Early returns |
-| God functions | Testability | Single responsibility |
-| Mutable shared state | Bugs | Immutable patterns |
-| Missing null checks | Crashes | Optional chaining |
-| Sync file operations | Performance | Async operations |
+| N+1 查询 | 性能 | 预加载或批量 |
+| 缺失错误处理 | 可靠性 | try/catch 加日志 |
+| 魔法数字 | 可维护性 | 命名常量 |
+| 深层嵌套 | 可读性 | 提前返回 |
+| 上帝函数 | 可测试性 | 单一职责 |
+| 可变共享状态 | bug | 不可变模式 |
+| 缺失空值检查 | 崩溃 | 可选链 |
+| 同步文件操作 | 性能 | 异步操作 |

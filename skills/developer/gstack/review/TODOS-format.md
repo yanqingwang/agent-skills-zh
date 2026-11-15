@@ -1,10 +1,14 @@
-# TODOS.md Format Reference
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`skills/developer/gstack/review/TODOS-format.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Shared reference for the canonical TODOS.md format. Referenced by `/ship` (Step 14) and `/plan-ceo-review` (TODOS.md updates section) to ensure consistent TODO item structure.
+# TODOS.md 格式参考
+
+TODOS.md 规范格式的共享参考。由 `/ship`（Step 14）与 `/plan-ceo-review`（TODOS.md updates 小节）引用，以保证 TODO 条目结构一致。
 
 ---
 
-## File Structure
+## 文件结构
 
 ```markdown
 # TODOS
@@ -16,13 +20,13 @@ Shared reference for the canonical TODOS.md format. Referenced by `/ship` (Step 
 <finished items with completion annotation>
 ```
 
-**Sections:** Organize by skill or component (`## Browse`, `## Ship`, `## Review`, `## QA`, `## Retro`, `## Infrastructure`). Within each section, sort items by priority (P0 at top).
+**小节：** 按 skill 或 component 组织（`## Browse`、`## Ship`、`## Review`、`## QA`、`## Retro`、`## Infrastructure`）。每个小节内按优先级排序（P0 在最上）。
 
 ---
 
-## TODO Item Format
+## TODO 条目格式
 
-Each item is an H3 under its section:
+每个条目是其所属小节下的一个 H3：
 
 ```markdown
 ### <Title>
@@ -38,24 +42,24 @@ Each item is an H3 under its section:
 **Depends on:** <prerequisites, or "None">
 ```
 
-**Required fields:** What, Why, Context, Effort, Priority
-**Optional fields:** Depends on, Blocked by
+**必填字段：** What、Why、Context、Effort、Priority
+**可选字段：** Depends on、Blocked by
 
 ---
 
-## Priority Definitions
+## 优先级定义
 
-- **P0** — Blocking: must be done before next release
-- **P1** — Critical: should be done this cycle
-- **P2** — Important: do when P0/P1 are clear
-- **P3** — Nice-to-have: revisit after adoption/usage data
-- **P4** — Someday: good idea, no urgency
+- **P0**（Blocking）：必须在下一个 release 之前完成
+- **P1**（Critical）：应在本周期内完成
+- **P2**（Important）：P0/P1 清空后处理
+- **P3**（Nice-to-have）：拿到采用/使用数据后再评估
+- **P4**（Someday）：好想法，无紧迫性
 
 ---
 
-## Completed Item Format
+## Completed 条目格式
 
-When an item is completed, move it to the `## Completed` section preserving its original content and appending:
+条目完成后，把它移入 `## Completed` 小节，保留原内容并追加：
 
 ```markdown
 **Completed:** vX.Y.Z (YYYY-MM-DD)

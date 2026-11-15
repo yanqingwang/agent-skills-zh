@@ -1,88 +1,92 @@
-# Outbound Plays
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/outbound-plays.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-A play is a repeatable outbound motion: a trigger, an offer, a sequence, and a definition of success. Plays keep outbound from becoming a pile of one-off emails. This reference covers four that work in 2026, with the conditions each needs.
+# 外联打法
 
-## 1. Value-first teardown (services and agencies)
+一个"打法"是一套可重复的外联动作：触发器、报价、序列和成功定义。打法让外联不至于沦为一大堆一次性邮件。本参考文档覆盖 2026 年仍然有效的四种打法，以及各自需要的条件。
 
-Give a specific piece of the work before asking for anything. It works best when what you sell is expertise someone can see: conversion optimization, design, SEO, ads, copy, analytics.
+## 1. 价值优先拆解（服务与代理机构）
 
-**Trigger:** something visible changed or matters right now: a new pricing or landing page, a redesign, launched ad campaigns, a new head of growth, fresh funding with growth targets.
+先交付工作成果的一个具体片段，再谈任何请求。当你卖的是肉眼可见的专业能力时最有效：转化优化、设计、SEO、广告、文案、分析。
 
-**The sequence**
-1. **Email 1 asks permission, with no link.** Name one specific thing you noticed on their page, and offer the rest.
-   > Looked at your new pricing page. The annual toggle defaults to monthly, which usually costs a few points of annual uptake. I noted two other things I'd test there. Want me to send them over?
-2. **When they say yes,** send a 2–4 minute video (or a one-page annotated screenshot) covering 3 specific, testable ideas on *their* page. Show their page on screen in the first seconds.
-3. **Follow-up** asks a small question about the ideas, not for a meeting: "Was the second one already on your list?"
-4. **Then offer the call:** "Happy to walk through how we'd prioritize the rest."
+**触发器：**眼下看得见的变化或要紧事：新的定价页或落地页、改版、刚上线的广告投放、新任增长负责人、附带增长目标的新融资。
 
-**Why the permission step:** no link or attachment in the first email protects deliverability, a "yes" filters for real interest, and the teardown goes only to people who asked for it. That keeps a time-intensive asset efficient.
+**序列**
+1. **第一封邮件请求许可，不放链接。**点出你在他们页面上注意到的一个具体问题，其余的作为提议。
+   > 看了你们的新定价页。年付开关默认选中月付，这通常会损失几个点的年付转化。我在那里还记了两处我会测试的点。要我发给你吗？
+2. **对方答应后，**发一段 2–4 分钟的视频（或一页带标注的截图），讲 *他们* 页面上 3 个具体可测的想法。开头几秒就把他们的页面放进画面。
+3. **跟进**只问关于这些想法的一个小问题，不是约会议："第二条是不是已经在你清单上了？"
+4. **然后再约通话：**"乐意过一遍我们怎么给剩下的排优先级。"
 
-**Rules**
-- The ideas must be real and specific to their page. A generic checklist dressed as a teardown burns trust and the brand.
-- Give enough to be useful, and leave the "how we'd do all of it" for the call.
-- Volume is low by design: around 50 well-chosen accounts a week, mostly Tier 1 and 2.
-- An agent can draft the teardown (screenshot, analysis against your CRO or design framework), but a human expert reviews every one before it goes out. It represents your expertise.
+**为什么要许可这一步：**第一封邮件不放链接或附件，保护送达能力；一句"好"筛出真兴趣；拆解只发给开口要过的人。这让一件耗时资产保持高效。
 
-**Measure:** permission rate (yes to email 1), teardown-to-call rate, call-to-proposal rate.
+**规则**
+- 想法必须真实且针对他们的页面。把通用清单包装成拆解，烧掉的是信任和品牌。
+- 给到有用的程度就停，"我们怎么全都做"留给通话。
+- 量级本来就低：每周约 50 个精挑账户，主要是 Tier 1 和 2。
+- Agent 可以起草拆解（截图、按你的 CRO 或设计框架做分析），但发出前每份都要有人类专家审。它代表你的专业能力。
 
-## 2. Product-led outbound (self-serve and freemium SaaS)
+**衡量：**许可率（第一封邮件得到"好"）、拆解转通话率、通话转提案率。
 
-Reach out to people already using the product, when their usage shows they're ready for more.
+## 2. 产品驱动外联（自助与免费增值 SaaS）
 
-**Triggers**, in rough order of strength:
-- Hitting a plan, credit, or usage limit
-- A large job or upload (a much bigger list, project, or import than usual)
-- Inviting teammates
-- Signing up from a company domain that matches the ICP
-- Returning repeatedly to pricing or upgrade pages
+触达已经在用产品的人，时机是他们用量显示准备好更进一步的时候。
 
-**The sequence**
-1. **Within minutes of the trigger,** a short plain-text email from a founder or named account owner, sent from their own address. Reference what they're doing:
-   > Saw you're verifying larger lists this week. If you're running these before outbound campaigns, a couple of settings help with catch-all domains. Happy to share them, or set you up with a volume plan if you're doing this regularly.
-2. **LinkedIn connect** the same or next day, for company-domain users.
-3. **One follow-up** with a specific resource for their use case.
-4. **Stop** if they upgrade, go quiet for two weeks, or say no.
+**触发器**，按强度大致排序：
+- 撞上套餐、额度或用量上限
+- 一次大任务或大上传（比平常大得多的名单、项目或导入）
+- 邀请队友
+- 用符合 ICP 的公司域名注册
+- 反复回到定价页或升级页
 
-**Rules**
-- Speed matters more here than anywhere: the trigger loses most of its value within a day.
-- Never make the tracking feel like surveillance. Talk about the job they're doing and leave the logged events out of it.
-- Offer help first and an upgrade second. Product-qualified users convert far better than cold contacts (vendors report many times higher), so you don't need a hard sell.
-- Route accounts that exceed self-serve limits to a person. See the revops skill's routing rules.
+**序列**
+1. **触发后几分钟内，**由创始人或具名客户负责人从自己的地址发出一封简短的纯文本邮件。点出对方正在做的事：
+   > 看到你这周在验证更大的名单。如果是在外联活动之前做这些，有几个设置对 catch-all 域名有帮助。乐意分享，或者你经常这么做的话，帮你配一个按量套餐。
+2. 同一天或次日发起 **LinkedIn 加好友**，针对公司域名的用户。
+3. **一次跟进**，附一个针对其用例的具体资源。
+4. 如果他们升级、沉默两周或说不要，就**停**。
 
-**Measure:** trigger-to-reply rate, trigger-to-upgrade rate within 14 days, expansion revenue per triggered account.
+**规则**
+- 速度在这里比任何地方都重要：触发器的价值一天内就掉大半。
+- 绝不让追踪显得像监控。谈他们在做的活儿，别提后台记录的事件。
+- 先帮后推升级。产品合格用户的转化远好于冷联系人（厂商报告高出数倍），所以不需要硬推销。
+- 超过自助限额的账户转给真人。见 revops skill 的路由规则。
 
-## 3. Problem-led cold outbound (any product)
+**衡量：**触发转回复率、14 天内触发转升级率、每个触发账户的增购收入。
 
-The default play for accounts with no product usage: lead with a problem the segment is known to have, prove you understand it, and offer something small.
+## 3. 问题驱动冷外联（任何产品）
 
-**Trigger:** a signal from the prospecting skill's signal plays reference, or a tightly defined segment.
+对没有产品使用记录的账户，这是默认打法：以该人群公认存在的问题开场，证明你理解它，然后给个小东西。
 
-**Offer something smaller than a meeting:** a sample of the work (verify a sample of their list, audit one page, benchmark one metric), a relevant resource, or a quick answer to a question they're probably asking.
+**触发器：**来自 prospecting skill 信号打法参考的信号，或一个定义收紧的细分人群。
 
-**Example for a technical product** (an email verification tool selling to agencies that send cold email for clients):
-> Agencies running outbound for several clients usually find out about a bad list when the domain is already hurting. Want me to run a sample of one client's list through and send back what would have bounced?
+**给出的东西要比会议还小：**一件工作样品（验证他们名单的一个样本、审计一个页面、基准测试一个指标）、一个相关资源，或对他们大概正在问的问题给个快答。
 
-**Rules**
-- The problem must be specific to the segment, with proof from a similar customer.
-- The free sample has to be genuinely small to deliver, or the play won't scale.
-- If you sell deliverability, compliance, or quality, your own outbound has to be flawless. A bounce, a typo, or a missing opt-out from a company selling those things undercuts the pitch.
+**技术产品示例**（一款卖给替客户发冷邮件的代理机构的邮箱验证工具）：
+> 给多个客户跑外联的代理机构，通常是在域名已经受伤时才知道名单有问题。要不要我拿某个客户的名单跑个样本，把会退信的部分发回给你？
 
-## 4. Founder-led outbound
+**规则**
+- 问题必须特定于该人群，并有同类客户的证据。
+- 免费样品必须真的小到容易交付，否则打法无法规模化。
+- 如果你卖的是送达能力、合规或质量，你自己的外联必须无懈可击。一家卖这些东西的公司自己出现退信、错别字或漏了退订声明，等于拆自己的台。
 
-Early-stage, or for a small set of strategic accounts: the founder writes personally, from their own account, about why they built the thing.
+## 4. 创始人驱动外联
 
-- Short, personal, specific to the recipient. No templates.
-- Ask for advice or feedback as often as for a meeting. People answer founders.
-- 10–20 a week, done consistently, beats occasional bursts.
-- Pairs naturally with the founder posting on LinkedIn, so the name is familiar when the email lands.
+早期阶段，或针对一小撮战略账户：创始人亲自写，用自己的账号，写自己为什么做这个东西。
 
-## Choosing plays
+- 短、个人化、针对收件人。不用模板。
+- 要建议或反馈的频率不低于约会议。人们愿意回复创始人。
+- 每周 10–20 封、持续地做，胜过偶尔爆发。
+- 与创始人在 LinkedIn 上发帖天然搭配，邮件到达时名字已经眼熟。
 
-| If you... | Start with |
+## 打法选择
+
+| 如果你…… | 从这里开始 |
 |-----------|-----------|
-| Sell services where expertise is visible | Value-first teardown |
-| Have self-serve users | Product-led outbound for usage triggers, plus problem-led for everyone else |
-| Sell a technical product to a defined segment | Problem-led with a free sample |
-| Are pre-product-market fit or chasing a few big logos | Founder-led |
+| 卖的是肉眼可见专业能力的服务 | 价值优先拆解 |
+| 有自助用户 | 用量触发走产品驱动外联，其余人走问题驱动 |
+| 向定义明确的细分人群卖技术产品 | 问题驱动 + 免费样品 |
+| 还没过产品市场契合，或在攻坚少数大 Logo | 创始人驱动 |
 
-Run one play at a time until it works. Each needs its own copy, its own success metric, and a few hundred touches before you can judge it.
+一次只跑一种打法，跑通为止。每种打法需要自己的文案、自己的成功指标，以及几百次触达之后才有资格下判断。

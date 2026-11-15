@@ -1,71 +1,75 @@
-# Content Refresh Editing
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/copy-editing/references/content-refresh.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Copy editing isn't just for new content. Existing pages and posts decay over time — outdated stats, stale examples, drifted brand voice, and missed SEO opportunities. A content refresh applies the same editing rigor to content that's already published.
+# 内容翻新编辑
 
-## When to Refresh
+文案编辑不只适用于新内容。既有页面和文章会随时间衰减：数据过时、案例陈旧、品牌声音漂移、SEO 机会错失。内容翻新就是把同等的编辑严谨性应用到已发布的内容上。
 
-- **Traffic declining** on a page that used to perform well
-- **Stats or data** are more than 12 months old
-- **Product has changed** — features, pricing, or positioning no longer match
-- **Competitors updated** their version of the same content
-- **AI search visibility** matters — outdated content gets cited less (see ai-seo skill)
+## 何时翻新
 
-## Content Refresh Checklist
+- **流量下滑**：曾经表现很好的页面掉了
+- **统计或数据**超过 12 个月
+- **产品变了**：功能、定价或定位对不上了
+- **竞品更新**了同类内容
+- **AI 搜索可见性**很重要：过时内容被引用得更少（见 ai-seo skill）
 
-1. **Freshness pass** — Update all dates, stats, and examples. Replace "in 2024" with current data. Remove references to deprecated features or tools.
-2. **Accuracy pass** — Verify all claims are still true. Check that linked resources still exist. Confirm pricing and feature descriptions match current state.
-3. **Voice pass** — Does the tone match your current brand voice? Older content often reflects an earlier stage of the company.
-4. **SEO pass** — Has search intent shifted for this topic? Are there new keywords or questions to address? Add "Last updated: [date]" prominently.
-5. **Proof pass** — Can you add newer testimonials, case studies, or data points that didn't exist when this was first published?
-6. **Structure pass** — Add comparison tables, FAQ sections, or other scannable formats that make the content easier to consume.
+## 内容翻新清单
 
-## Before You Edit: Find the Gap
+1. **新鲜度过一遍**：更新所有日期、统计和示例。把"in 2024"换成当前数据。删掉对已弃用功能或工具的引用。
+2. **准确性过一遍**：核实所有声明仍然为真。检查链接的资源仍然存在。确认定价和功能描述与现状一致。
+3. **声音过一遍**：语调还符合你当前的品牌声音吗？旧内容往往停留在公司更早的阶段。
+4. **SEO 过一遍**：这个主题的搜索意图变了吗？有需要覆盖的新关键词或新问题吗？醒目地加上"Last updated: [date]"。
+5. **证明过一遍**：能否补充首发时还不存在的新评价、案例研究或数据点？
+6. **结构过一遍**：加对比表、FAQ 区块或其他易扫读的格式，让内容更容易消化。
 
-A refresh aimed at a ranking page should start from the results page. The first question to answer is why the pages above yours are winning.
+## 动笔之前：先找差距
 
-1. **Read the results page for the post's main query.** Note the dominant format (list, guide, tool, comparison), the featured snippet and how it's formatted, People Also Ask questions, and related searches.
-2. **Pick five competitors**: the top three results, plus any direct competitor or recently updated page ranking near you.
-3. **Map coverage.** List the subtopics each page covers in a simple grid, with your post as the first column:
+针对已有排名页面的翻新，应当从搜索结果页开始。第一个要回答的问题是：排在你前面的页面为什么赢。
 
-| Subtopic / element | Your post | Comp 1 | Comp 2 | Comp 3 | Comp 4 | Comp 5 |
+1. **读文章主查询的搜索结果页。**记下主流格式（列表、指南、工具、对比）、精选摘要及其呈现方式、People Also Ask 问题，以及相关搜索。
+2. **选五个竞品**：前三名结果，加上排在你附近的直接竞品或近期更新过的页面。
+3. **映射覆盖面。**用一张简单网格列出每个页面覆盖的子主题，你的文章作为第一列：
+
+| 子主题 / 要素 | 你的文章 | 竞品 1 | 竞品 2 | 竞品 3 | 竞品 4 | 竞品 5 |
 |--------------------|:---------:|:------:|:------:|:------:|:------:|:------:|
 | [Subtopic A] | ✗ | ✓ | ✓ | ✓ | ✓ | — |
-| Comparison table | ✗ | ✓ | — | ✓ | — | — |
-| Current-year data | ✗ | ✓ | ✓ | — | ✓ | ✓ |
+| 对比表 | ✗ | ✓ | — | ✓ | — | — |
+| 当年数据 | ✗ | ✓ | ✓ | — | ✓ | ✓ |
 
-4. **Rank what's missing** by how many competitors cover it:
-   - **Expected** (4–5 of 5): searchers assume it's there. Add it.
-   - **Common** (2–3): add it if it serves your reader.
-   - **Distinctive** (1): add it only if it's genuinely useful, not to copy one page.
-   - **Uncovered** (0): the angle nobody has. Your best chance to be the result worth citing.
-5. **Match coverage.** Ignore competitors' word counts. Close the gaps that matter, and stop when the reader's question is answered.
+4. **给缺口排序**，按覆盖它的竞品数量：
+   - **必备**（5 家中 4–5 家）：搜索者默认它该在。补上。
+   - **常见**（2–3 家）：对你的读者有用就加。
+   - **独特**（1 家）：只在真正有用时加，不是照抄某一家。
+   - **无人覆盖**（0 家）：谁都没有的角度。这是你成为值得被引用结果的最佳机会。
+5. **匹配覆盖面。**忽略竞品的字数。补上重要的缺口，读者的问题得到解答就停。
 
-Present the gap grid and a proposed outline before rewriting. Mark each section **Keep**, **Revise**, or **New**, propose 2–3 title options (see the `seo-audit` skill's title-tags reference), and wait for approval. Don't promise a ranking or traffic outcome.
+重写之前，先呈现差距网格和拟议大纲。每个部分标注**保留（Keep）**、**修订（Revise）**或**新增（New）**，提出 2–3 个标题备选（见 `seo-audit` skill 的 title-tags 参考），然后等批准。不要承诺排名或流量结果。
 
-## Keep What Already Works
+## 保住已起作用的东西
 
-A page that ranks has signals worth protecting:
-- **Keep the URL.** If it must change, 301 the old one.
-- **Keep heading anchors** other pages link to, and the sections that rank for their own queries (check Search Console's query list for the page).
-- **Keep the voice.** A refresh shouldn't read like a different author wrote it.
-- **Show the update**: a visible "Last updated" date, with the year next to every statistic.
+有排名的页面带着值得保护的信号：
+- **保留 URL。**必须改时，旧地址做 301。
+- **保留**其他页面链接指向的**标题锚点**，以及靠自身查询获得排名的区块（在 Search Console 里查该页的查询清单）。
+- **保留声音。**翻新后不该读起来像换了个人写的。
+- **展示更新**：显眼的"Last updated"日期，每条统计数据旁标注年份。
 
-When handing the refresh to whoever publishes it, include the new meta description, schema types to add, internal links to add to and from the post, images or screenshots needed, and the URL plan.
+把翻新稿交给发布者时，附上新的 meta description、要添加的 schema 类型、文章要新增的站内链入和链出链接、需要的图片或截图，以及 URL 方案。
 
-## Refresh vs. Rewrite
+## 翻新还是重写
 
-| Signal | Action |
+| 信号 | 动作 |
 |--------|--------|
-| Core message still valid, details outdated | Refresh (update facts, stats, examples) |
-| Brand voice has evolved significantly | Refresh + voice rewrite |
-| Topic angle or audience has shifted | Full rewrite |
-| Page structure doesn't match current search intent | Full rewrite |
-| Just needs updated stats and links | Light refresh |
+| 核心信息仍有效，细节过时 | 翻新（更新事实、统计、示例） |
+| 品牌声音明显演进 | 翻新 + 声音重写 |
+| 主题角度或受众变了 | 全文重写 |
+| 页面结构与当前搜索意图不符 | 全文重写 |
+| 只需更新数据和链接 | 轻度翻新 |
 
-## Refresh Cadence
+## 翻新频率
 
-- **Pricing and product pages**: Every quarter, or when pricing/features change
-- **High-traffic blog posts**: Every 6 months
-- **Comparison and alternatives pages**: Every 3-6 months (competitors change fast)
-- **Evergreen guides**: Annually, unless traffic drops sooner
-- **Low-traffic pages**: Only when traffic data suggests an opportunity
+- **定价与产品页**：每季度一次，或定价/功能变化时
+- **高流量博文**：每 6 个月
+- **对比与替代品页**：每 3–6 个月（竞品变化快）
+- **长青指南**：每年一次，除非流量提前下滑
+- **低流量页面**：只在流量数据显示有机会时

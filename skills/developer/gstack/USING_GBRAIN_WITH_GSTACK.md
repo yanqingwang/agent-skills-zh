@@ -1,110 +1,114 @@
-# Using GBrain with GStack
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`skills/developer/gstack/USING_GBRAIN_WITH_GSTACK.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Your coding agent, with a memory it actually keeps.
+# 在 GStack 中使用 GBrain
 
-[GBrain](https://github.com/garrytan/gbrain) is a persistent knowledge base designed for AI agents. It stores what your agent learns, what you've decided, what worked and what didn't, and lets the agent search all of it on demand. GStack gives you a one-command path from zero to "gbrain is running, and my agent can call it" — with paths for try-it-local, share-with-your-team, and everything between.
+你的编码 agent，配上它真正记得住的记忆。
 
-This is the full monty: every scenario, every flag, every helper bin, every troubleshooting step. For the quick pitch, see the [README's GBrain section](README.md#gbrain--persistent-knowledge-for-your-coding-agent). For error codes and sync-specific issues, see [docs/gbrain-sync.md](docs/gbrain-sync.md).
+[GBrain](https://github.com/garrytan/gbrain) 是一个为 AI agent 设计的持久知识库。它存下你的 agent 学到的东西、你做过的决定、哪些有效哪些无效，并让 agent 按需检索这一切。GStack 给你一条从零到"gbrain 已运行、我的 agent 能调用它"的单命令路径，覆盖本地试用、与团队共享以及两者之间的各种形态。
+
+这是完整版：每个场景、每个标志、每个 helper bin、每个排障步骤。快速介绍见 [README 的 GBrain 一节](README.md#gbrain--persistent-knowledge-for-your-coding-agent)。错误码与同步专属问题见 [docs/gbrain-sync.md](docs/gbrain-sync.md)。
 
 ---
 
-## The one-command install
+## 一条命令安装
 
 ```bash
 /setup-gbrain
 ```
 
-That's it. The skill detects your current state, asks three questions at most, and walks you through install, init, MCP registration for Claude Code, and per-repo trust policy. On a clean Mac with nothing installed it finishes in under five minutes. On a Mac where something's already set up it takes seconds (it detects the existing state and skips done work).
+就这样。skill 检测你的当前状态，最多问三个问题，带你走完安装、init、Claude Code 的 MCP 注册和 per-repo 信任策略。在什么都没装的干净 Mac 上五分钟内完成。在已有部分设置的 Mac 上只要几秒（它检测既有状态并跳过已完成的工作）。
 
-## What you get after setup
+## 设置完成后你得到什么
 
-Once `/setup-gbrain` finishes, your coding agent has two retrieval surfaces it didn't have before:
+`/setup-gbrain` 完成后，你的编码 agent 多了两个以前没有的检索面：
 
-- **Semantic code search across this repo.** `gbrain search "browser security canary"` returns ranked file regions, not exact-match grep hits. `gbrain code-def`, `code-refs`, `code-callers`, `code-callees` walk the call graph by symbol — useful when you don't know which file holds the implementation but you know what it does. The agent prefers these over Grep when the question is semantic; CLAUDE.md gets a `## GBrain Search Guidance` block that teaches it the routing rules.
-- **Cross-session memory.** Plans, retros, decisions, and learnings from past sessions live in `~/.gstack/` and (if you opted in to artifacts sync) get pushed to a private git repo that gbrain indexes. `gbrain search "what did we decide about auth?"` actually finds the prior CEO plan instead of you re-describing context every session.
+- **跨本仓库的语义代码搜索。** `gbrain search "browser security canary"` 返回按相关性排序的文件区域，不是精确匹配的 grep 命中。`gbrain code-def`、`code-refs`、`code-callers`、`code-callees` 按符号遍历调用图：不知道实现在哪个文件、但知道它做什么时很好用。问题偏语义时，agent 优先用它们而非 Grep；CLAUDE.md 会得到一个 `## GBrain Search Guidance` 块，教它路由规则。
+- **跨会话记忆。** 过去会话的 plans、retros、决策与 learnings 存放在 `~/.gstack/`，并且（若你选择加入 artifacts sync）推送到一个 gbrain 会索引的私有 git 仓库。`gbrain search "what did we decide about auth?"` 真能找到当初的 CEO 计划，而不是你每个会话重新描述一遍上下文。
 
-If you also enabled remote MCP (Path 4 below), brain queries route to a shared brain server that other machines can write to — your laptop, your desktop, and a teammate's machine all see the same memory.
+如果你还启用了远程 MCP（下文 Path 4），脑查询会路由到一台其他机器也能写入的共享脑服务器：你的笔记本、台式机和队友的机器看到同一份记忆。
 
-## The four paths
+## 四条路径
 
-You pick one when the skill asks "Where should your brain live?"
+skill 问"你的脑应该住在哪？"时，你从中选一个。
 
-### Path 1: Supabase, you already have a connection string
+### Path 1：Supabase，你已有连接串
 
-Best for: you (or a teammate's cloud agent) already provisioned a Supabase brain and you want this local machine to use the same data.
+适合：你（或队友的云 agent）已经开通了 Supabase 脑，想让这台本地机器使用同一份数据。
 
-**What happens:** Paste the Session Pooler URL (Settings → Database → Connection Pooler → Session → copy URI, port 6543). The skill reads it with echo off, shows you a redacted preview (`aws-0-us-east-1.pooler.supabase.com:6543/postgres` — host visible, password masked), hands it to `gbrain init` via the `GBRAIN_DATABASE_URL` environment variable, and the URL is never written to argv or your shell history.
+**会发生什么：** 粘贴 Session Pooler URL（Settings → Database → Connection Pooler → Session → copy URI，端口 6543）。skill 关闭回显读取它，给你看脱敏预览（`aws-0-us-east-1.pooler.supabase.com:6543/postgres`，主机可见，密码打码），经 `GBRAIN_DATABASE_URL` 环境变量交给 `gbrain init`，URL 绝不写入 argv 或你的 shell 历史。
 
-**Trust warning:** Pasting this URL gives your local Claude Code full read/write access to every page in the shared brain. If that's not the trust level you want, pick PGLite local (Path 3) instead and accept the brains are disjoint.
+**信任警告：** 粘贴这个 URL 等于给你的本地 Claude Code 对共享脑里每个页面的完整读写权限。这不是你想要的信任级别的话，改选 PGLite 本地（Path 3），并接受两边脑互不相通。
 
-### Path 2a: Supabase, auto-provision a new project
+### Path 2a：Supabase，自动开通新项目
 
-Best for: fresh Supabase account, you want a clean new project with zero clicking.
+适合：全新的 Supabase 账号，想要零点击得到一个干净的新项目。
 
-**What happens:** You paste a Supabase Personal Access Token (PAT). The skill shows you the scope disclosure first — *the token grants full access to every project in your Supabase account, not just the one we're about to create*. It lists your organizations, asks which one and which region (default `us-east-1`), generates a database password, calls `POST /v1/projects`, polls `GET /v1/projects/{ref}` every 5 seconds until the project is `ACTIVE_HEALTHY` (180s timeout), fetches the pooler URL, hands it to `gbrain init`. End-to-end: ~90 seconds.
+**会发生什么：** 你粘贴一个 Supabase Personal Access Token（PAT）。skill 先展示范围披露：*该 token 对你 Supabase 账号里每个项目都有完整访问权限，不只是我们将创建的那个*。它列出你的组织，询问选哪个组织和哪个区域（默认 `us-east-1`），生成数据库密码，调用 `POST /v1/projects`，每 5 秒轮询 `GET /v1/projects/{ref}` 直到项目 `ACTIVE_HEALTHY`（180 秒超时），取回 pooler URL，交给 `gbrain init`。端到端约 90 秒。
 
-At the end: explicit reminder to revoke the PAT at https://supabase.com/dashboard/account/tokens. The skill already discarded it from memory.
+最后：明确提醒到 https://supabase.com/dashboard/account/tokens 吊销该 PAT。skill 已把它从内存丢弃。
 
-**If you Ctrl-C mid-provision:** The SIGINT trap prints your in-flight project ref + a resume command. You can delete the orphan at the Supabase dashboard, or run `/setup-gbrain --resume-provision <ref>` to pick up where you left off.
+**开通途中 Ctrl-C：** SIGINT 陷阱会打印你进行中的项目 ref 和一条续办命令。你可以在 Supabase 仪表盘删掉这个孤儿项目，或运行 `/setup-gbrain --resume-provision <ref>` 从中断处继续。
 
-### Path 2b: Supabase, create manually
+### Path 2b：Supabase，手动创建
 
-Best for: you'd rather click through supabase.com yourself than paste a PAT.
+适合：你宁愿自己在 supabase.com 上点，也不愿粘贴 PAT。
 
-**What happens:** The skill walks you through the four manual steps (signup → new project → wait ~2 min → copy Session Pooler URL), then takes over from Path 1's paste step. Same security treatment as Path 1.
+**会发生什么：** skill 带你走完四个手动步骤（注册 → 新项目 → 等约 2 分钟 → 复制 Session Pooler URL），然后从 Path 1 的粘贴步骤接管。安全处理与 Path 1 相同。
 
-### Path 3: PGLite local
+### Path 3：PGLite 本地
 
-Best for: try-it-first, no account, no cloud, no sharing. Or a dedicated "this Mac's brain" that stays isolated from any cloud agent.
+适合：先试试看，无账号、无云、不共享。或一个与任何云 agent 隔离的专用"这台 Mac 的脑"。
 
-**What happens:** `gbrain init --pglite`. Brain lives at `~/.gbrain/brain.pglite`. No network calls for the init itself. Done in 30 seconds.
+**会发生什么：** `gbrain init --pglite`。脑位于 `~/.gbrain/brain.pglite`。init 本身不发起网络调用。30 秒完成。
 
-**Embedding model.** When `VOYAGE_API_KEY` is set, gstack inits PGLite with `voyage-code-3` (1024-dim) — Voyage's code-specialized embedding model, which beats their general-purpose `voyage-4-large` and OpenAI `text-embedding-3-large` head-to-head on this codebase's symbol queries. Without `VOYAGE_API_KEY`, gbrain auto-selects (OpenAI 1536-dim when `OPENAI_API_KEY` is present, else falls down its provider chain). Either way, the embeddings call out to the chosen provider's API during sync — set the key for the provider you want before running `/sync-gbrain`.
+**嵌入模型。** 设置了 `VOYAGE_API_KEY` 时，gstack 以 `voyage-code-3`（1024 维）初始化 PGLite，这是 Voyage 的代码专用嵌入模型，在本代码库的符号查询上正面对比优于其通用型 `voyage-4-large` 和 OpenAI 的 `text-embedding-3-large`。没有 `VOYAGE_API_KEY` 时，gbrain 自动选择（有 `OPENAI_API_KEY` 就用 OpenAI 1536 维，否则沿其 provider 链下探）。无论哪种，嵌入都在同步期间调用所选 provider 的 API：运行 `/sync-gbrain` 前先设好你想要 provider 的密钥。
 
-This is the best first choice if you just want to see what gbrain feels like before committing to cloud. You can always migrate later with `/setup-gbrain --switch`.
+如果你只想在上云前感受一下 gbrain，这是最好的首选。以后随时可用 `/setup-gbrain --switch` 迁移。
 
-### Path 4: Remote gbrain MCP (split-engine)
+### Path 4：远程 gbrain MCP（双引擎分离）
 
-Best for: your brain runs on another machine you control (Tailscale, ngrok, internal LAN) or a teammate's server. You want the cross-machine memory benefit without standing up a local database, and you still want symbol-aware code search on this Mac.
+适合：你的脑运行在你控制的另一台机器上（Tailscale、ngrok、内网）或队友的服务器。你想要跨机器记忆的好处、又不想架设本地数据库，同时仍想在这台 Mac 上有符号感知的代码搜索。
 
-**What happens:** You paste an MCP URL (e.g. `https://wintermute.tail554574.ts.net:3131/mcp`) and a bearer token. The skill verifies the URL over the wire, registers gbrain as an HTTP MCP in `~/.claude.json` at user scope, and offers to also stand up a tiny local PGLite for code search (~30 seconds, ~120 MB disk).
+**会发生什么：** 你粘贴一个 MCP URL（如 `https://wintermute.tail554574.ts.net:3131/mcp`）和一个 bearer token。skill 经网络验证 URL，把 gbrain 注册为 `~/.claude.json` 里 user scope 的 HTTP MCP，并提议再架一个小型本地 PGLite 用于代码搜索（约 30 秒，约 120 MB 磁盘）。
 
-If you accept the local PGLite, you end up in **split-engine mode**:
+如果你接受本地 PGLite，就进入**双引擎分离模式（split-engine）**：
 
-- **Brain/context queries** (`mcp__gbrain__search`, `mcp__gbrain__query`, `mcp__gbrain__get_page`) route to the remote MCP. Plans, retros, learnings, cross-machine memory — all on the shared server.
-- **Code queries** (`gbrain code-def`, `code-refs`, `code-callers`, `code-callees`, `gbrain search` for code) route to the local PGLite via the `.gbrain-source` pin in each worktree. Indexed locally, fast, never leaves the machine.
+- **脑/上下文查询**（`mcp__gbrain__search`、`mcp__gbrain__query`、`mcp__gbrain__get_page`）路由到远程 MCP。Plans、retros、learnings、跨机器记忆：全在共享服务器上。
+- **代码查询**（`gbrain code-def`、`code-refs`、`code-callers`、`code-callees`，以及面向代码的 `gbrain search`）经每个 worktree 的 `.gbrain-source` pin 路由到本地 PGLite。本地索引，快，绝不出机。
 
-A `gbrain serve --http` on this machine's loopback address (`localhost`, `127.0.0.1`, `::1`) over this machine's own Postgres brain is not Path 4. That is gbrain's recommended setup for local agents on a Postgres brain (`gbrain bootstrap harness`), and gstack treats it as a local brain: transcripts go through `gbrain import` here. gstack decides this from the URL and the local gbrain config alone, and only a config with a Postgres `database_url` counts. A loopback URL next to a local PGLite stays Path 4, so the split-engine setup above keeps working when you reach the remote brain through an SSH tunnel or port forward on a loopback port.
+在这台机器的回环地址（`localhost`、`127.0.0.1`、`::1`）上运行 `gbrain serve --http`、且后端是这台机器自己的 Postgres 脑，不算 Path 4。那是 gbrain 为 Postgres 脑上的本地 agent 推荐的设置（`gbrain bootstrap harness`），gstack 把它当作本地脑：转录在这里经 `gbrain import` 摄入。gstack 只凭 URL 与本地 gbrain 配置判断，且只有带 Postgres `database_url` 的配置才算数。回环 URL 搭配本地 PGLite 仍是 Path 4，所以上面那套双引擎分离设置在你经 SSH 隧道或回环端口转发访问远程脑时照常工作。
 
-The two engines are independent. Wiping the local PGLite doesn't touch the remote brain; rotating the remote MCP bearer doesn't affect local code search. This is also the right configuration if your remote brain admin can't (or shouldn't) index every developer's checkout — local code stays local.
+两个引擎相互独立。清空本地 PGLite 不影响远程脑；轮换远程 MCP bearer 不影响本地代码搜索。如果远程脑管理员不能（或不该）索引每个开发者的 checkout，这也是正确配置：本地代码留在本地。
 
-## MCP registration for Claude Code
+## 为 Claude Code 注册 MCP
 
-By default the skill asks "Give Claude Code a typed tool surface for gbrain?" If you say yes, it runs:
+默认情况下 skill 会问"要为 gbrain 给 Claude Code 一个带类型的工具面吗？"你答是，它就运行：
 
 ```bash
 claude mcp add gbrain -- gbrain serve
 ```
 
-That registers gbrain's stdio MCP server with Claude Code. Now `gbrain search`, `gbrain put`, `gbrain get`, etc. show up as first-class tools in every session, not bash shell-outs.
+这会把 gbrain 的 stdio MCP 服务器注册给 Claude Code。此后 `gbrain search`、`gbrain put`、`gbrain get` 等在每个会话里都是一等工具，不是 bash 外调。
 
-**If `claude` is not on PATH**, the skill skips MCP registration gracefully with a manual-register hint. The CLI resolver still works from any skill that shells out to `gbrain` — MCP is an upgrade, not a prerequisite.
+**若 `claude` 不在 PATH**，skill 优雅跳过 MCP 注册并给出手动注册提示。CLI 解析器仍对任何会外调 `gbrain` 的 skill 有效：MCP 是升级项，不是前置条件。
 
-**Other local agents** (Cursor, Codex CLI, etc.) need their own MCP registration. The skill is Claude-Code-targeted for v1; other hosts can register `gbrain serve` manually in their own MCP config.
+**其他本地 agent**（Cursor、Codex CLI 等）需要各自的 MCP 注册。v1 的 skill 以 Claude Code 为目标；其他宿主可在自己的 MCP 配置里手动注册 `gbrain serve`。
 
-## Per-remote trust policy (the triad)
+## per-remote 信任策略（三元组）
 
-Every repo on your machine gets a policy decision: **read-write**, **read-only**, or **deny**.
+你机器上每个仓库都有一个策略决定：**read-write**、**read-only** 或 **deny**。
 
-- **read-write** — your agent can `gbrain search` from this repo's context AND write new pages back to the brain. Default for your own projects.
-- **read-only** — your agent can search the brain but never writes new pages from this repo's sessions. Ideal for multi-client consultants: search the shared brain, don't contaminate it with Client A's code while you're in Client B's repo.
-- **deny** — no gbrain interaction at all. The repo is invisible to gbrain tooling.
+- **read-write**：你的 agent 能在本仓库上下文中 `gbrain search`，还能把新页面写回脑。自己的项目默认用它。
+- **read-only**：你的 agent 能搜索脑，但绝不从本仓库的会话写入新页面。多客户顾问的理想选择：搜索共享脑，在客户 B 的仓库里时不让客户 A 的代码污染它。
+- **deny**：完全不与 gbrain 交互。该仓库对 gbrain 工具不可见。
 
-The skill asks once per repo the first time you run a gstack skill there. After that the decision is sticky — every worktree + branch of the same git remote shares the same policy, so you set it once and it follows you.
+第一次在该仓库运行 gstack skill 时，skill 逐仓库问一次。之后决定即固定：同一 git remote 的每个 worktree 和分支共享同一策略，设一次就跟着你走。
 
-SSH and HTTPS remote variants collapse to the same key: `https://github.com/foo/bar.git` and `git@github.com:foo/bar.git` are the same repo.
+SSH 与 HTTPS 两种 remote 写法折叠为同一个键：`https://github.com/foo/bar.git` 与 `git@github.com:foo/bar.git` 是同一个仓库。
 
-**To change a policy:**
+**修改策略：**
 
 ```bash
 /setup-gbrain --repo      # re-prompt for this repo only
@@ -113,17 +117,17 @@ SSH and HTTPS remote variants collapse to the same key: `https://github.com/foo/
 ~/.claude/skills/gstack/bin/gstack-gbrain-repo-policy set "github.com/foo/bar" read-only
 ```
 
-**To see every policy:**
+**查看所有策略：**
 
 ```bash
 ~/.claude/skills/gstack/bin/gstack-gbrain-repo-policy list
 ```
 
-Storage: `~/.gstack/gbrain-repo-policy.json`, mode 0600, schema-versioned so future migrations stay deterministic.
+存储：`~/.gstack/gbrain-repo-policy.json`，权限 0600，带 schema 版本，未来迁移保持确定性。
 
-## Keeping the brain current with `/sync-gbrain`
+## 用 `/sync-gbrain` 让脑保持最新
 
-`/setup-gbrain` is one-time onboarding. `/sync-gbrain` is the verb you run every time you want gbrain to see fresh changes in this repo's code.
+`/setup-gbrain` 是一次性引导。`/sync-gbrain` 是你每次想让 gbrain 看到本仓库代码新变化时运行的动词。
 
 ```bash
 /sync-gbrain                # incremental: mtime fast-path, ~seconds on a clean tree
@@ -132,264 +136,264 @@ Storage: `~/.gstack/gbrain-repo-policy.json`, mode 0600, schema-versioned so fut
 /sync-gbrain --dry-run      # preview what would sync; no writes
 ```
 
-The skill runs three stages — code, memory, brain-sync — independently. A failure in one doesn't block the others. State persists to `~/.gstack/.gbrain-sync-state.json` so re-running picks up cleanly.
+skill 独立运行三个阶段：code、memory、brain-sync。一个失败不阻塞其他。状态持久化到 `~/.gstack/.gbrain-sync-state.json`，重跑能干净接续。
 
-Stages that can send data off-machine (code sync into a possibly-remote gbrain DB, memory ingest, the brain-sync push) each write a tamper-evident receipt to the egress ledger (`~/.gstack/security/egress.jsonl`) before sending, fail-closed: if the receipt can't be written, the stage refuses with `EGRESS_RECEIPT_FAILED` instead of syncing unrecorded. Fix is usually `mkdir -p ~/.gstack/security && chmod -R u+w ~/.gstack/security`, then re-run. Inspect receipts with `gstack-egress list`.
+可能把数据送出机器的阶段（同步代码进可能远程的 gbrain 数据库、记忆摄入、brain-sync 推送）都会在发送前向出口账本（`~/.gstack/security/egress.jsonl`）写一条防篡改回执，fail-closed：回执写不出来时，该阶段以 `EGRESS_RECEIPT_FAILED` 拒绝，而不是无记录地同步。修复通常是 `mkdir -p ~/.gstack/security && chmod -R u+w ~/.gstack/security`，然后重跑。用 `gstack-egress list` 检查回执。
 
-**What it does on a fresh worktree:**
+**在全新 worktree 上它做什么：**
 
-1. **Pre-flight.** Checks `gbrain_local_status` (the local engine's health). If the engine is `broken-db` or `broken-config`, the skill STOPs with a remediation menu — it refuses to silently degrade. If the local engine is missing and you're in remote-MCP mode (Path 4), the code stage SKIPs cleanly and only brain-sync runs.
-2. **Code stage.** Registers the cwd as a federated source via `gbrain sources add`, writes a `.gbrain-source` pin file in the repo root (kubectl-style context — every worktree gets its own pin, so Conductor sibling worktrees don't collide), runs `gbrain sync --strategy code`.
-3. **Memory stage.** Stages your `~/.gstack/` transcripts + curated memory. In local-stdio MCP mode, ingests into the local engine. In remote-http MCP mode, persists staged markdown to `~/.gstack/transcripts/run-<pid>-<ts>/` for the remote brain admin's pull pipeline. The ingest timeout is 30 minutes by default; raise it for a big brain with `GSTACK_INGEST_TIMEOUT_MS` (accepts 1 min–24h). On timeout the gbrain import checkpoint is preserved, so the next `/sync-gbrain` resumes instead of starting over.
-4. **Brain-sync stage.** Pushes curated artifacts (plans, designs, retros) to your private artifacts repo if you have one configured.
-5. **CLAUDE.md guidance.** Capability-checks the round-trip (write a page → search → find it). If green, writes the `## GBrain Search Guidance` block to your project's CLAUDE.md. If red, REMOVES the block — the agent should never be told to use a tool that isn't installed.
+1. **预检。** 检查 `gbrain_local_status`（本地引擎健康度）。引擎是 `broken-db` 或 `broken-config` 时，skill 停止（STOP）并给出修复菜单：它拒绝静默降级。本地引擎缺失且你处于远程 MCP 模式（Path 4）时，code 阶段干净地跳过（SKIP），只跑 brain-sync。
+2. **code 阶段。** 经 `gbrain sources add` 把 cwd 注册为联邦源，在仓库根写一个 `.gbrain-source` pin 文件（kubectl 风格的 context：每个 worktree 有自己的 pin，Conductor 兄弟 worktree 互不冲突），运行 `gbrain sync --strategy code`。
+3. **memory 阶段。** 暂存你的 `~/.gstack/` 转录 + 精选记忆。local-stdio MCP 模式下摄入本地引擎。remote-http MCP 模式下把暂存的 markdown 持久化到 `~/.gstack/transcripts/run-<pid>-<ts>/`，供远程脑管理员的拉取管线使用。摄入超时默认 30 分钟；脑很大时用 `GSTACK_INGEST_TIMEOUT_MS` 调高（接受 1 分钟至 24 小时）。超时时 gbrain import 检查点被保留，下一次 `/sync-gbrain` 从断点续传而不是从头再来。
+4. **brain-sync 阶段。** 若配置了私有 artifacts 仓库，把精选产物（plans、designs、retros）推送上去。
+5. **CLAUDE.md 指引。** 对往返做能力检查（写一个页面 → 搜索 → 找到它）。绿色则把 `## GBrain Search Guidance` 块写进你项目的 CLAUDE.md。红色则移除该块：绝不该告诉 agent 去用一个没安装的工具。
 
-**The watermark.** Sync state advances by commit hash. If gbrain hits a file it can't index (5 MB hard limit per file, or a file vanished mid-sync), the watermark stays put and subsequent syncs retry. To acknowledge an unfixable failure and move past it:
+**水位线。** 同步状态按提交哈希推进。gbrain 碰到无法索引的文件（每文件 5 MB 硬上限，或文件在同步中途消失）时，水位线原地不动，后续同步重试。要承认一个无法修复的失败并越过它：
 
 ```bash
 gbrain sync --source <source-id> --skip-failed
 ```
 
-Re-runnable, idempotent, safe to run from multiple terminals on the same machine (locked at `~/.gstack/.sync-gbrain.lock`).
+可重复运行、幂等，同一机器多终端并发运行安全（锁在 `~/.gstack/.sync-gbrain.lock`）。
 
-## Switching engines later
+## 以后切换引擎
 
-Picked PGLite and now want to join a team brain? One command:
+选了 PGLite，现在想加入团队脑？一条命令：
 
 ```bash
 /setup-gbrain --switch
 ```
 
-The skill runs `gbrain migrate --to supabase --url "$URL"` wrapped in `timeout 180s`. Migration is bidirectional (Supabase → PGLite also works) and lossless — pages, chunks, embeddings, links, tags, and timeline all copy. Your original brain is preserved as a backup.
+skill 在 `timeout 180s` 包裹下运行 `gbrain migrate --to supabase --url "$URL"`。迁移是双向的（Supabase → PGLite 也行）且无损：pages、chunks、embeddings、links、tags、timeline 全部复制。原脑保留为备份。
 
-**If migration hangs:** another gstack session may be holding a lock on the source brain. The timeout fires at 3 minutes with an actionable message. Close other workspaces and re-run.
+**迁移卡住：** 可能是另一个 gstack 会话锁住了源脑。3 分钟触发超时，消息可直接行动。关掉其他工作区再重跑。
 
-## GStack memory sync (a separate concern)
+## GStack 记忆同步（另一件事）
 
-This is different from gbrain itself. Your gstack state (`~/.gstack/` — learnings, plans, retros, timeline, developer profile) is machine-local by default. "GStack memory sync" optionally pushes a curated, secret-scanned subset to a private git repo so your memory follows you across machines — and, if you're running gbrain, that git repo becomes indexable there too.
+这与 gbrain 本身是两回事。你的 gstack 状态（`~/.gstack/`：learnings、plans、retros、timeline、developer profile）默认只在单机。"GStack 记忆同步"可选地把一个精选、扫过机密的子集推到私有 git 仓库，让记忆跨机器跟着你，而且如果你在跑 gbrain，那个 git 仓库也能被索引。
 
-Turn it on with:
+这样开启：
 
 ```bash
 gstack-artifacts-init
 ```
 
-You'll get a one-time privacy prompt: **everything allowlisted** / **artifacts only** (plans, designs, retros, learnings — skip behavioral data like timelines) / **off**. Every skill run syncs the queue at start and end — no daemon, no background process.
+你会看到一次性的隐私提示：**everything allowlisted** / **artifacts only**（plans、designs、retros、learnings，跳过 timeline 这类行为数据）/ **off**。每次 skill 运行在开始和结束时同步队列：没有守护进程，没有后台进程。
 
-Secret-shaped content (AWS keys, GitHub tokens, PEM blocks, JWTs, bearer tokens) is blocked from sync before it leaves your machine.
+形似机密的内容（AWS 密钥、GitHub token、PEM 块、JWT、bearer token）在离开你的机器之前就被挡在同步之外。
 
-**On a new machine:** Copy `~/.gstack-artifacts-remote.txt` over (the legacy
-`~/.gstack-brain-remote.txt` name still works), run `gstack-brain-restore`, and
-yesterday's learnings surface on today's laptop.
+**在新机器上：** 把 `~/.gstack-artifacts-remote.txt` 拷过来（旧名
+`~/.gstack-brain-remote.txt` 仍有效），运行 `gstack-brain-restore`，
+昨天的 learnings 就出现在今天的笔记本上。
 
-Full guide: [docs/gbrain-sync.md](docs/gbrain-sync.md). Error index: [docs/gbrain-sync-errors.md](docs/gbrain-sync-errors.md).
+完整指南：[docs/gbrain-sync.md](docs/gbrain-sync.md)。错误索引：[docs/gbrain-sync-errors.md](docs/gbrain-sync-errors.md)。
 
-`/setup-gbrain` offers to wire this up for you at the end of initial setup — it's one more AskUserQuestion, and it integrates with the same private-repo infrastructure.
+`/setup-gbrain` 会在初始设置结束时提议帮你接好：多一次 AskUserQuestion，并接入同一套私有仓库基础设施。
 
-## Cleanup orphan projects
+## 清理孤儿项目
 
-If you Ctrl-C'd mid-provision, tried three different names before settling on one, or otherwise accumulated gbrain-shaped Supabase projects you don't use, there's a subcommand for that:
+如果你在开通途中 Ctrl-C 过、换过三个名字才定下来，或以其他方式攒了一堆没在用的 gbrain 形态 Supabase 项目，有个子命令处理这个：
 
 ```bash
 /setup-gbrain --cleanup-orphans
 ```
 
-The skill re-collects a PAT (one-time, discarded after), lists every project in your Supabase account whose name starts with `gbrain` and whose ref doesn't match your active `~/.gbrain/config.json` pooler URL. For each orphan it asks per-project: *"Delete orphan project `<ref>` (`<name>`, created `<date>`)?"* — no batching, no "delete all" shortcut. The active brain is never offered for deletion.
+skill 重新收集一个 PAT（一次性，用后丢弃），列出你 Supabase 账号里每个名字以 `gbrain` 开头、且 ref 与你当前 `~/.gbrain/config.json` pooler URL 不匹配的项目。对每个孤儿逐项目询问：*"Delete orphan project `<ref>` (`<name>`, created `<date>`)?*"，不批量、没有"全部删除"捷径。当前脑永远不会被提供删除。
 
-## Command + flag reference
+## 命令与标志参考
 
-### `/setup-gbrain` entry modes
+### `/setup-gbrain` 入口模式
 
-| Invocation | What it does |
+| 调用方式 | 作用 |
 |---|---|
-| `/setup-gbrain` | Full flow: detect state, pick path, install, init, MCP, policy, optional memory-sync |
-| `/setup-gbrain --repo` | Flip the per-remote trust policy for the current repo only |
-| `/setup-gbrain --switch` | Migrate engine (PGLite ↔ Supabase) without re-running the other steps |
-| `/setup-gbrain --resume-provision <ref>` | Resume a path-2a auto-provision that was interrupted during polling |
-| `/setup-gbrain --cleanup-orphans` | List + per-project delete of orphan Supabase projects |
+| `/setup-gbrain` | 完整流程：检测状态、选路径、安装、init、MCP、策略、可选的 memory-sync |
+| `/setup-gbrain --repo` | 只为当前仓库翻转 per-remote 信任策略 |
+| `/setup-gbrain --switch` | 迁移引擎（PGLite ↔ Supabase），不重跑其他步骤 |
+| `/setup-gbrain --resume-provision <ref>` | 续办在轮询期间被打断的 Path 2a 自动开通 |
+| `/setup-gbrain --cleanup-orphans` | 列出并逐项目删除孤儿 Supabase 项目 |
 
-### Bin helpers (for scripting)
+### Bin helper（供脚本使用）
 
-| Bin | Purpose |
+| Bin | 用途 |
 |---|---|
-| `gstack-gbrain-detect` | Emit current state as JSON: gbrain on PATH, version, config engine, doctor status, sync mode. `--doctor` runs the full brain-health gate that `/setup-gbrain` Step 5 uses (`gbrain doctor --json --scope=brain`); it prints `brain_ok`, `brain_failures` and `skill_failures`, and exits 0 only when `brain_ok` is true. Failed skill checks (gbrain grading another agent's skills folder) never decide `brain_ok`. |
-| `gstack-gbrain-install` | Detect-first installer (probes `~/git/gbrain`, `~/gbrain`, then fresh clone). Has `--dry-run` and `--validate-only` flags. PATH-shadow check exits 3 with remediation menu. |
-| `gstack-gbrain-lib.sh` | Sourced, not executed. Provides `read_secret_to_env VARNAME "prompt" [--echo-redacted "<sed-expr>"]` |
-| `gstack-gbrain-supabase-verify` | Structural URL check. Rejects direct-connection URLs (`db.*.supabase.co:5432`) with exit 3 |
-| `gstack-gbrain-supabase-provision` | Management API wrapper. Subcommands: `list-orgs`, `create`, `wait`, `pooler-url`, `list-orphans`, `delete-project`. All require `SUPABASE_ACCESS_TOKEN` in env. `create` and `pooler-url` also require `DB_PASS`. `--json` mode available on every subcommand. |
-| `gstack-gbrain-repo-policy` | Per-remote trust triad. Subcommands: `get`, `set`, `list`, `normalize` |
-| `gstack-gbrain-source-wireup` | Registers your `~/.gstack/` brain repo with gbrain as a federated source via `gbrain sources add` + `git worktree`, then runs an initial `gbrain sync`. Idempotent. Replaces the dead `consumers.json + /ingest-repo` HTTP wireup from v1.12.x. Flags: `--strict`, `--source-id <id>`, `--no-pull`, `--uninstall`, `--probe`. |
+| `gstack-gbrain-detect` | 把当前状态输出为 JSON：gbrain 在不在 PATH、版本、配置引擎、doctor 状态、同步模式。`--doctor` 运行 `/setup-gbrain` 第 5 步用的完整脑健康门禁（`gbrain doctor --json --scope=brain`）；打印 `brain_ok`、`brain_failures` 与 `skill_failures`，仅当 `brain_ok` 为真才退出 0。失败的 skill 检查（gbrain 给另一个 agent 的 skills 目录打分）绝不影响 `brain_ok`。 |
+| `gstack-gbrain-install` | 先检测再安装（依次探测 `~/git/gbrain`、`~/gbrain`，然后全新克隆）。有 `--dry-run` 与 `--validate-only` 标志。PATH 遮蔽检查以退出码 3 失败并给出修复菜单。 |
+| `gstack-gbrain-lib.sh` | 供 source，不可执行。提供 `read_secret_to_env VARNAME "prompt" [--echo-redacted "<sed-expr>"]` |
+| `gstack-gbrain-supabase-verify` | 结构性 URL 检查。拒绝直连 URL（`db.*.supabase.co:5432`），退出码 3 |
+| `gstack-gbrain-supabase-provision` | Management API 包装器。子命令：`list-orgs`、`create`、`wait`、`pooler-url`、`list-orphans`、`delete-project`。全部要求环境变量 `SUPABASE_ACCESS_TOKEN`。`create` 与 `pooler-url` 还要求 `DB_PASS`。每个子命令都有 `--json` 模式。 |
+| `gstack-gbrain-repo-policy` | per-remote 信任三元组。子命令：`get`、`set`、`list`、`normalize` |
+| `gstack-gbrain-source-wireup` | 经 `gbrain sources add` + `git worktree` 把你的 `~/.gstack/` 脑仓库注册为 gbrain 联邦源，然后跑一次初始 `gbrain sync`。幂等。取代 v1.12.x 已死的 `consumers.json + /ingest-repo` HTTP wireup。标志：`--strict`、`--source-id <id>`、`--no-pull`、`--uninstall`、`--probe`。 |
 
-### gbrain CLI (upstream tool)
+### gbrain CLI（上游工具）
 
-Gbrain itself ships with these that gstack wraps:
+gbrain 自带这些命令，gstack 对其包装：
 
-| Command | Purpose |
+| 命令 | 用途 |
 |---|---|
-| `gbrain init --pglite` | Initialize a local PGLite brain |
-| `gbrain init --non-interactive` | Initialize via env (`GBRAIN_DATABASE_URL` or `DATABASE_URL`). Never pass a URL as argv — it'll leak to shell history. |
-| `gbrain doctor --json` | Health check. Returns `{status: "healthy"|"warnings"|"unhealthy" (older gbrain: "ok"), health_score: 0-100, checks: [...]}`. `--scope=brain` (gbrain v0.41.20+) skips the skill checks. |
-| `gbrain migrate --to supabase --url ...` | Move a PGLite brain to Supabase (lossless, preserves source as backup) |
-| `gbrain migrate --to pglite` | Reverse migration |
-| `gbrain search "query"` | Search the brain |
-| `gbrain put "<slug>" --content "<markdown-with-frontmatter>"` | Write a page (title/tags go in YAML frontmatter inside `--content`) |
-| `gbrain get "<slug>"` | Fetch a page |
-| `gbrain serve` | Start the MCP stdio server (used by `claude mcp add`) |
+| `gbrain init --pglite` | 初始化本地 PGLite 脑 |
+| `gbrain init --non-interactive` | 经环境变量初始化（`GBRAIN_DATABASE_URL` 或 `DATABASE_URL`）。绝不要把 URL 放进 argv：它会泄漏到 shell 历史。 |
+| `gbrain doctor --json` | 健康检查。返回 `{status: "healthy"|"warnings"|"unhealthy" (older gbrain: "ok"), health_score: 0-100, checks: [...]}`。`--scope=brain`（gbrain v0.41.20+）跳过 skill 检查。 |
+| `gbrain migrate --to supabase --url ...` | 把 PGLite 脑迁到 Supabase（无损，源保留为备份） |
+| `gbrain migrate --to pglite` | 反向迁移 |
+| `gbrain search "query"` | 搜索脑 |
+| `gbrain put "<slug>" --content "<markdown-with-frontmatter>"` | 写一个页面（title/tags 放在 `--content` 内的 YAML frontmatter 里） |
+| `gbrain get "<slug>"` | 取一个页面 |
+| `gbrain serve` | 启动 MCP stdio 服务器（`claude mcp add` 使用） |
 
-### Config files + state
+### 配置文件与状态
 
-| Path | What lives there |
+| 路径 | 存放什么 |
 |---|---|
-| `~/.gbrain/config.json` | Engine (pglite/postgres), database URL or path, API keys. Mode 0600. Written by `gbrain init`. |
-| `~/.gstack/gbrain-repo-policy.json` | Per-remote trust triad. Schema v2. Mode 0600. |
-| `~/.gstack/.setup-gbrain.lock.d` | Concurrent-run lock (atomic mkdir). Released on normal exit + SIGINT. |
-| `~/.gstack/.brain-queue.d/` | Pending sync records for gstack memory sync — maildir-style spool, one file per record. A legacy `.brain-queue.jsonl` from older releases migrates automatically on the next drain. |
-| `~/.gstack/.brain-last-push` | Timestamp of last sync push (for `/health` scoring) |
-| `~/.gstack-artifacts-remote.txt` | URL of your gstack memory sync remote (safe to copy between machines; legacy name `~/.gstack-brain-remote.txt` still read) |
-| `~/.gstack/.setup-gbrain-inflight.json` | Reserved for future `--resume-provision` persisted state |
+| `~/.gbrain/config.json` | 引擎（pglite/postgres）、数据库 URL 或路径、API 密钥。权限 0600。由 `gbrain init` 写入。 |
+| `~/.gstack/gbrain-repo-policy.json` | per-remote 信任三元组。schema v2。权限 0600。 |
+| `~/.gstack/.setup-gbrain.lock.d` | 并发运行锁（原子 mkdir）。正常退出与 SIGINT 时释放。 |
+| `~/.gstack/.brain-queue.d/` | gstack 记忆同步的待同步记录，maildir 风格 spool，一条记录一个文件。旧版的 `.brain-queue.jsonl` 会在下次 drain 时自动迁移。 |
+| `~/.gstack/.brain-last-push` | 上次同步推送的时间戳（供 `/health` 打分） |
+| `~/.gstack-artifacts-remote.txt` | 你的 gstack 记忆同步远端的 URL（可跨机器复制；旧名 `~/.gstack-brain-remote.txt` 仍可读） |
+| `~/.gstack/.setup-gbrain-inflight.json` | 保留给未来 `--resume-provision` 的持久化状态 |
 
-### Environment variables
+### 环境变量
 
-| Var | Where it's read | What it does |
+| 变量 | 在哪读取 | 作用 |
 |---|---|---|
-| `SUPABASE_ACCESS_TOKEN` | `gstack-gbrain-supabase-provision` | PAT for Management API calls. Discarded after each setup run. |
-| `DB_PASS` | `gstack-gbrain-supabase-provision` (create, pooler-url) | Generated DB password. Never in argv. |
-| `GBRAIN_DATABASE_URL` | `gbrain init`, `gbrain doctor`, etc. | Postgres connection string (Supabase pooler URL for us). Env takes precedence over `~/.gbrain/config.json`. |
-| `DATABASE_URL` | `gbrain init` (fallback) | Same semantics as `GBRAIN_DATABASE_URL`; checked second. |
-| `SUPABASE_API_BASE` | `gstack-gbrain-supabase-provision` | Override the Management API host. Used by tests to point at a mock server. |
-| `GBRAIN_INSTALL_DIR` | `gstack-gbrain-install` | Override default install path (`~/gbrain`) |
-| `GSTACK_HOME` | every bin helper | Override `~/.gstack` state dir. Heavy test use. |
-| `VOYAGE_API_KEY` | `gbrain embed` subprocess; gstack PGLite init | When set, gstack inits PGLite with `voyage-code-3` (1024-dim), Voyage's code-specialized embedding model. Beats `voyage-4-large` and OpenAI `text-embedding-3-large` head-to-head on this codebase's symbol queries. See CHANGELOG v1.43.1.0 for the A/B numbers. |
-| `OPENAI_API_KEY` | `gbrain embed` subprocess | Used for embeddings during `gbrain sync` / `/sync-gbrain` when `VOYAGE_API_KEY` is not set (gbrain's auto-selected fallback, `text-embedding-3-large` 1536-dim). Without either key, pages are imported structurally (symbol tables, chunks) but semantic search degrades — you'll see `[gbrain] embedding failed for code file ...` in the sync log. |
-| `ANTHROPIC_API_KEY` | `claude-agent-sdk`, paid evals | Required for paid evals (`bun run eval:bg:pr`) and any direct `query()` call against Claude. |
-| `GSTACK_OPENAI_API_KEY` | `lib/conductor-env-shim.ts` | Conductor-injected fallback. Promoted to `OPENAI_API_KEY` when the canonical name is empty. |
-| `GSTACK_ANTHROPIC_API_KEY` | `lib/conductor-env-shim.ts` | Same pattern as above for Anthropic. |
+| `SUPABASE_ACCESS_TOKEN` | `gstack-gbrain-supabase-provision` | 调 Management API 用的 PAT。每次设置运行后丢弃。 |
+| `DB_PASS` | `gstack-gbrain-supabase-provision`（create、pooler-url） | 生成的数据库密码。绝不进 argv。 |
+| `GBRAIN_DATABASE_URL` | `gbrain init`、`gbrain doctor` 等 | Postgres 连接串（对我们来说是 Supabase pooler URL）。环境变量优先于 `~/.gbrain/config.json`。 |
+| `DATABASE_URL` | `gbrain init`（回退） | 与 `GBRAIN_DATABASE_URL` 语义相同；第二个检查。 |
+| `SUPABASE_API_BASE` | `gstack-gbrain-supabase-provision` | 覆盖 Management API 主机。测试用它指向 mock 服务器。 |
+| `GBRAIN_INSTALL_DIR` | `gstack-gbrain-install` | 覆盖默认安装路径（`~/gbrain`） |
+| `GSTACK_HOME` | 每个 bin helper | 覆盖 `~/.gstack` 状态目录。测试重度使用。 |
+| `VOYAGE_API_KEY` | `gbrain embed` 子进程；gstack PGLite init | 设置时，gstack 以 `voyage-code-3`（1024 维）初始化 PGLite，Voyage 的代码专用嵌入模型。在本代码库的符号查询上正面对比优于 `voyage-4-large` 与 OpenAI `text-embedding-3-large`。A/B 数据见 CHANGELOG v1.43.1.0。 |
+| `OPENAI_API_KEY` | `gbrain embed` 子进程 | 未设 `VOYAGE_API_KEY` 时，用于 `gbrain sync` / `/sync-gbrain` 期间的嵌入（gbrain 自动选择的回退，`text-embedding-3-large` 1536 维）。两个密钥都没有时，页面按结构导入（符号表、chunks），但语义搜索降级：同步日志里会看到 `[gbrain] embedding failed for code file ...`。 |
+| `ANTHROPIC_API_KEY` | `claude-agent-sdk`、付费评估 | 付费评估（`bun run eval:bg:pr`）及任何对 Claude 的直接 `query()` 调用所需。 |
+| `GSTACK_OPENAI_API_KEY` | `lib/conductor-env-shim.ts` | Conductor 注入的回退。规范名为空时提升为 `OPENAI_API_KEY`。 |
+| `GSTACK_ANTHROPIC_API_KEY` | `lib/conductor-env-shim.ts` | 与上相同的 Anthropic 模式。 |
 
-## Conductor + GSTACK_* env vars
+## Conductor 与 GSTACK_* 环境变量
 
-If you run gstack inside a [Conductor](https://conductor.build) workspace, **Conductor explicitly strips `ANTHROPIC_API_KEY` and `OPENAI_API_KEY` from the workspace env.** Setting them in `~/.zshrc` or `.env` won't help — the strip happens after env inheritance. To get a usable API key into a workspace, set `GSTACK_ANTHROPIC_API_KEY` and `GSTACK_OPENAI_API_KEY` in Conductor's workspace env config instead. Conductor passes those through untouched.
+如果你在 [Conductor](https://conductor.build) 工作区里运行 gstack，**Conductor 会明确从工作区环境里剥掉 `ANTHROPIC_API_KEY` 和 `OPENAI_API_KEY`。** 在 `~/.zshrc` 或 `.env` 里设置没有用：剥离发生在环境继承之后。要把可用的 API 密钥送进工作区，改为在 Conductor 的工作区 env 配置里设置 `GSTACK_ANTHROPIC_API_KEY` 与 `GSTACK_OPENAI_API_KEY`。Conductor 原样放行这两个。
 
-`lib/conductor-env-shim.ts` bridges the gap on the gstack side: when imported as a side effect (`import "../lib/conductor-env-shim";`), it promotes `GSTACK_FOO_API_KEY` to `FOO_API_KEY` for any subprocess that doesn't see the canonical name. The shim is already wired into:
+`lib/conductor-env-shim.ts` 在 gstack 侧补上这个缺口：作为副作用导入（`import "../lib/conductor-env-shim";`）时，它为任何看不到规范名的子进程把 `GSTACK_FOO_API_KEY` 提升为 `FOO_API_KEY`。该 shim 已接入：
 
-- `bin/gstack-gbrain-sync.ts` — so `/sync-gbrain` picks up OpenAI for embeddings
-- `bin/gstack-model-benchmark` — so `--judge` runs work without manual env mapping
-- `scripts/preflight-agent-sdk.ts` — so paid-eval auth probes work
-- `test/helpers/e2e-helpers.ts` — so paid evals find Anthropic
+- `bin/gstack-gbrain-sync.ts`：让 `/sync-gbrain` 取到 OpenAI 做嵌入
+- `bin/gstack-model-benchmark`：让 `--judge` 运行无需手工环境映射
+- `scripts/preflight-agent-sdk.ts`：让付费评估的认证探测可用
+- `test/helpers/e2e-helpers.ts`：让付费评估找得到 Anthropic
 
-If you add a new TS entry point that hits a paid API or needs gbrain embeddings, add the same one-line import at the top. See [CONTRIBUTING.md "Conductor workspaces"](CONTRIBUTING.md#conductor-workspaces) for the contributor checklist.
+新增会打付费 API 或需要 gbrain 嵌入的 TS 入口时，在顶部加上同样的一行导入。贡献者清单见 [CONTRIBUTING.md 的 "Conductor workspaces"](CONTRIBUTING.md#conductor-workspaces)。
 
-`bin/gstack-codex-probe` is bash and doesn't read these directly — it relies on `~/.codex/` auth managed by the Codex CLI.
+`bin/gstack-codex-probe` 是 bash，不直接读这些：它依赖 Codex CLI 管理的 `~/.codex/` 认证。
 
-## Security model
+## 安全模型
 
-One rule for every secret this skill touches: **env var only, never argv, never logged, never written to disk by us.** The only persistent storage is gbrain's own `~/.gbrain/config.json` at mode 0600, which is gbrain's discipline, not ours.
+本 skill 接触的每个机密都守一条规则：**只走环境变量，绝不进 argv，绝不进日志，也绝不由我们写盘。** 唯一的持久存储是 gbrain 自己的 `~/.gbrain/config.json`（0600 权限），那是 gbrain 的纪律，不是我们的。
 
-**Enforced in code:**
+**代码内强制：**
 
-- CI grep test in `test/skill-validation.test.ts` fails the build if `$SUPABASE_ACCESS_TOKEN` or `$GBRAIN_DATABASE_URL` appears in an argv position
-- CI grep test fails if `--insecure`, `-k`, or `NODE_TLS_REJECT_UNAUTHORIZED=0` appear in `bin/gstack-gbrain-supabase-provision`
-- `set +x` at the top of the provision helper prevents debug tracing from leaking PAT
-- Telemetry payload contains only enumerated categorical values (scenario, install result, MCP opt-in, trust tier) — never free-form strings that could contain secrets
+- `test/skill-validation.test.ts` 里的 CI grep 测试在 `$SUPABASE_ACCESS_TOKEN` 或 `$GBRAIN_DATABASE_URL` 出现在 argv 位置时让构建失败
+- `--insecure`、`-k` 或 `NODE_TLS_REJECT_UNAUTHORIZED=0` 出现在 `bin/gstack-gbrain-supabase-provision` 中时 CI grep 测试失败
+- provision helper 顶部的 `set +x` 防止调试追踪泄漏 PAT
+- 遥测载荷只含枚举的类别值（scenario、install result、MCP opt-in、trust tier）：绝不含可能带机密的自由字符串
 
-**Enforced via tests:**
+**经测试强制：**
 
-- `test/secret-sink-harness.test.ts` runs every secret-handling bin with a seeded secret and asserts the seed never appears in any captured channel (stdout, stderr, files under `$HOME`, telemetry JSONL). Four match rules per seed: exact, URL-decoded, first-12-char prefix, base64.
-- Positive controls in the same test file deliberately leak seeds in every covered channel and assert the harness catches each one. Without the positive controls, a harness that silently under-reports would look identical to a working harness.
+- `test/secret-sink-harness.test.ts` 用播种的机密运行每个处理机密的 bin，断言种子绝不出现在任何被捕获的通道（stdout、stderr、`$HOME` 下的文件、遥测 JSONL）。每个种子四种匹配规则：精确、URL 解码、前 12 字符前缀、base64。
+- 同一测试文件里的阳性对照在每个被覆盖通道故意泄漏种子，并断言 harness 抓到每一个。没有阳性对照，静默漏报的 harness 看起来就和正常工作的一样。
 
-**What you can still leak** (the honest limits of v1):
+**你仍然可能泄漏的**（v1 的诚实边界）：
 
-- If you paste a secret into a normal chat message outside `read -s`, it's in the conversation transcript and any host-side logging
-- The leak harness doesn't dump subprocess environment — a bin that `env >> ~/.log` would evade detection (no bin in v1 does this; grep tests prevent it)
-- Your shell's own `HISTFILE` behavior is your shell's, not ours — we never pass secrets to argv so they don't land there via our code, but nothing stops you from pasting one into a raw `curl` command yourself
+- 你把机密粘进 `read -s` 之外的普通聊天消息，它就进了会话转录和任何宿主侧日志
+- 泄漏 harness 不转储子进程环境：一个执行 `env >> ~/.log` 的 bin 能躲过检测（v1 没有这样的 bin；grep 测试防着它）
+- 你 shell 自己的 `HISTFILE` 行为归你的 shell 管，不归我们：我们从不把机密传进 argv，所以它们不会经我们的代码落进去，但没人拦得住你亲手把机密粘进一条裸 `curl` 命令
 
-## Troubleshooting
+## 排障
 
-### "PATH SHADOWING DETECTED" during install
+### 安装期间 "PATH SHADOWING DETECTED"
 
-Another `gbrain` binary is earlier in PATH than the one the installer just linked. The installer's version check caught it. Fix one of:
+PATH 里另一个 `gbrain` 二进制排在安装器刚链接的那个前面。安装器的版本检查抓到了它。修复任选其一：
 
-- `rm $(which gbrain)` if you don't need the other one
-- Prepend `~/.bun/bin` to PATH in your shell rc so the linked binary wins
-- Set `GBRAIN_INSTALL_DIR` to the shadowing binary's install directory and re-run
+- 不需要另一个就 `rm $(which gbrain)`
+- 在 shell rc 里把 `~/.bun/bin` 前置到 PATH，让刚链接的二进制胜出
+- 把 `GBRAIN_INSTALL_DIR` 设为遮蔽二进制的安装目录并重跑
 
-Then re-run `/setup-gbrain`.
+然后重跑 `/setup-gbrain`。
 
 ### "rejected direct-connection URL"
 
-You pasted a `db.<ref>.supabase.co:5432` URL. Those are IPv6-only and fail in most environments. Use the Session Pooler URL instead: Supabase dashboard → Settings → Database → Connection Pooler → **Session** → copy URI (port 6543).
+你粘贴了 `db.<ref>.supabase.co:5432` URL。它们只有 IPv6，在多数环境会失败。改用 Session Pooler URL：Supabase 仪表盘 → Settings → Database → Connection Pooler → **Session** → copy URI（端口 6543）。
 
-### Auto-provision times out at 180s
+### 自动开通在 180 秒超时
 
-The Supabase project is still initializing. Your ref was printed in the exit message. Wait a minute, then:
+Supabase 项目还在初始化。你的 ref 已打印在退出消息里。等一分钟，然后：
 
 ```bash
 /setup-gbrain --resume-provision <ref>
 ```
 
-The skill re-collects a PAT, skips project creation, resumes polling.
+skill 重新收集 PAT，跳过项目创建，继续轮询。
 
 ### "Another `/setup-gbrain` instance is running"
 
-You have a stale lock directory. If you're sure no other instance is actually running:
+你有一个过期的锁目录。确认确实没有其他实例在运行的话：
 
 ```bash
 rm -rf ~/.gstack/.setup-gbrain.lock.d
 ```
 
-Then re-run.
+然后重跑。
 
-### "No cross-model tension" on policy file
+### 策略文件报 "No cross-model tension"
 
-You edited `~/.gstack/gbrain-repo-policy.json` by hand with legacy `allow` values? No problem. On the next read, gstack auto-migrates `allow` → `read-write` and adds `_schema_version: 2`. One log line on stderr, idempotent, deterministic.
+你手工编辑 `~/.gstack/gbrain-repo-policy.json` 用了旧版 `allow` 取值？没问题。下次读取时，gstack 自动把 `allow` 迁移为 `read-write` 并加 `_schema_version: 2`。stderr 一行日志，幂等，确定。
 
-### `gbrain doctor` says "warnings"
+### `gbrain doctor` 报 "warnings"
 
-`/health` treats that as yellow, not red. Check `gbrain doctor --json | jq .checks` to see which sub-checks are warning. Typical causes: resolver MECE overlap (skill names clashing) or DB connection not yet configured.
+`/health` 把它当黄色，不当红色。用 `gbrain doctor --json | jq .checks` 看哪些子检查在告警。典型原因：resolver MECE 重叠（skill 名冲突）或数据库连接尚未配置。
 
-### `/sync-gbrain` reports `OK` but `gbrain search` returns nothing semantic
+### `/sync-gbrain` 报 `OK` 但 `gbrain search` 搜不出语义结果
 
-Embeddings probably failed during import. Symbol queries (`code-def`, `code-refs`) still work because they don't need embeddings, but `gbrain search "<terms>"` falls back to a degraded BM25 path. Look in the sync output for lines like:
+嵌入很可能在导入时失败了。符号查询（`code-def`、`code-refs`）仍然可用，因为它们不需要嵌入，但 `gbrain search "<terms>"` 会退到降级的 BM25 路径。在同步输出里找这样的行：
 
 ```
 [gbrain] embedding failed for code file <name>: OpenAI embedding requires OPENAI_API_KEY
 ```
 
-The fix is to put a provider API key in the process env before re-running. `VOYAGE_API_KEY` is preferred for code (gstack defaults PGLite to `voyage-code-3` when set); otherwise `OPENAI_API_KEY` falls back to `text-embedding-3-large`. On a bare Mac shell, source the key from `~/.zshrc` before calling. In Conductor, the `lib/conductor-env-shim.ts` shim promotes `GSTACK_ANTHROPIC_API_KEY` / `GSTACK_OPENAI_API_KEY` to their canonical names automatically; for `VOYAGE_API_KEY`, set it directly in your Conductor workspace env. Re-run `/sync-gbrain --code-only` to backfill embeddings on already-imported pages.
+修复方法：重跑前把 provider API 密钥放进进程环境。代码场景首选 `VOYAGE_API_KEY`（设置时 gstack 默认 PGLite 用 `voyage-code-3`）；否则 `OPENAI_API_KEY` 回退到 `text-embedding-3-large`。在裸 Mac shell 上，调用前从 `~/.zshrc` source 密钥。Conductor 里，`lib/conductor-env-shim.ts` shim 自动把 `GSTACK_ANTHROPIC_API_KEY` / `GSTACK_OPENAI_API_KEY` 提升为规范名；`VOYAGE_API_KEY` 则直接设在 Conductor 工作区 env 里。重跑 `/sync-gbrain --code-only` 可为已导入页面回填嵌入。
 
-### `gbrain sync` blocked at a commit hash — `FILE_TOO_LARGE`
+### `gbrain sync` 卡在某个提交哈希：`FILE_TOO_LARGE`
 
-A file in your tree exceeds gbrain's 5 MB hard limit (`MAX_FILE_SIZE` in `gbrain/src/core/import-file.ts`). Common culprits: response replay caches, captured screenshots, large JSON fixtures. Gbrain doesn't honor `.gitignore`-style exclude lists for code sync; the only knob is acknowledging the failure:
+你树里的某个文件超过 gbrain 的 5 MB 硬上限（`gbrain/src/core/import-file.ts` 的 `MAX_FILE_SIZE`）。常见元凶：响应回放缓存、截图、大型 JSON fixture。gbrain 的代码同步不认 `.gitignore` 风格的排除清单；唯一的旋钮是确认该失败：
 
 ```bash
 gbrain sync --source <source-id> --skip-failed
 ```
 
-Watermark advances past the offending commit. The same file fails again if it changes; re-skip when that happens.
+水位线越过问题提交。同一文件再变更会再失败；届时再次跳过。
 
-### ZeroEntropy embeddings stop working after September 4, 2026
+### ZeroEntropy 嵌入在 2026 年 9 月 4 日后失效
 
-ZeroEntropy was acquired by Notion and sunsets its hosted API on **September 4, 2026** (new signups already disabled). A gbrain configured with the `zeroentropyai` embedding recipe keeps importing pages after that date, but embedding silently fails — pages land structurally with no semantic search. The wireup helper warns when your `~/.gbrain/config.json` names the recipe; migrate to another provider (Voyage via `VOYAGE_API_KEY`, or OpenAI via `OPENAI_API_KEY`) before the deadline. Details, self-hosting caveats, and migration discussion: [garrytan/gstack#2365](https://github.com/garrytan/gstack/issues/2365).
+ZeroEntropy 被 Notion 收购，其托管 API 于 **2026 年 9 月 4 日**停服（新注册已停）。配置了 `zeroentropyai` 嵌入配方的 gbrain 在那之后仍继续导入页面，但嵌入静默失败：页面按结构落地，没有语义搜索。你的 `~/.gbrain/config.json` 指名该配方时，wireup helper 会警告；请在截止日前迁移到其他 provider（经 `VOYAGE_API_KEY` 用 Voyage，或经 `OPENAI_API_KEY` 用 OpenAI）。细节、自托管注意事项与迁移讨论：[garrytan/gstack#2365](https://github.com/garrytan/gstack/issues/2365)。
 
-### Switching PGLite → Supabase hangs
+### PGLite → Supabase 切换卡住
 
-Another gstack session in a sibling Conductor workspace may be holding a lock on your local PGLite file via its preamble's `gstack-brain-sync` call. Close other workspaces, re-run `/setup-gbrain --switch`. The timeout is bounded at 180s so you'll never actually wait forever.
+兄弟 Conductor 工作区里的另一个 gstack 会话可能经其前导块的 `gstack-brain-sync` 调用锁住了你的本地 PGLite 文件。关掉其他工作区，重跑 `/setup-gbrain --switch`。超时上限 180 秒，不会真的永远等下去。
 
-## Why this design
+## 为什么这样设计
 
-**Why per-remote trust triad and not binary allow/deny?** Multi-client consultants need search without write-back. A freelance dev working on Client A in the morning and Client B in the afternoon can't let A's code insights leak into a brain Client B can search. Read-only solves that cleanly.
+**为什么是 per-remote 信任三元组，而不是二元 allow/deny？** 多客户顾问需要只搜不写回。上午服务客户 A、下午服务客户 B 的自由开发者，不能让 A 的代码洞见泄漏进 B 可搜索的脑。read-only 干净地解决了这个问题。
 
-**Why not bundle gbrain into gstack?** Gbrain is a separate, actively-developed project with its own release cadence, schema migrations, and MCP surface. Bundling would mean gstack has to gate gbrain updates, which slows gbrain improvements from reaching users. Separate-but-integrated lets each ship on its own cadence.
+**为什么不把 gbrain 捆进 gstack？** Gbrain 是独立、活跃开发的项目，有自己的发布节奏、schema 迁移和 MCP 面。捆绑意味着 gstack 必须给 gbrain 更新设闸，这会拖慢 gbrain 改进到达用户的速度。分离但集成，让各自按自己的节奏发布。
 
-**Why `gbrain init --non-interactive` via env var and not a flag?** Connection strings contain database passwords. Passing them as argv lands the password in `ps`, shell history, and process listings. Env-var handoff keeps the secret in process memory only. Gbrain supports both `GBRAIN_DATABASE_URL` and `DATABASE_URL`; we use the former to avoid collisions with non-gbrain tooling.
+**为什么 `gbrain init --non-interactive` 走环境变量而不是标志？** 连接串含数据库密码。放 argv 会让密码落进 `ps`、shell 历史和进程列表。环境变量交接让机密只留在进程内存。Gbrain 同时支持 `GBRAIN_DATABASE_URL` 和 `DATABASE_URL`；我们用前者，避免与非 gbrain 工具撞名。
 
-**Why fail-hard on PATH shadowing instead of warn-and-continue?** A shadowed `gbrain` means every subsequent command calls a different binary than the one we just installed. That's a silent version-drift bug that surfaces as mysterious feature gaps weeks later. Setup skills have one job — set up a working environment. Refusing to install into a broken one is the setup-skill-correct behavior.
+**为什么 PATH 遮蔽要硬失败，而不是警告后继续？** 被遮蔽的 `gbrain` 意味着后续每条命令调用的都是另一个二进制，不是我们刚装的那个。这是静默的版本漂移 bug，几周后以神秘的功能缺失浮现。安装类 skill 只有一件事：装出一个能用的环境。拒绝装进一个坏环境才是 setup skill 的正确行为。
 
-**Why not auto-import every repo?** Privacy + noise. An auto-import preamble hook that ingests every repo you touch would: (a) leak work code into a shared brain without consent, and (b) clog search with throwaway repos. The per-remote policy makes ingestion an explicit, per-repo decision. `/setup-gbrain` doesn't install any auto-import hook today — but the policy store is forward-compatible for one later.
+**为什么不自动导入每个仓库？** 隐私 + 噪音。一个摄入你碰过的每个仓库的自动导入前导块 Hook 会：(a) 未经同意把工作代码泄漏进共享脑，(b) 用一次性仓库堵死搜索。per-remote 策略让摄入成为显式的逐仓库决定。`/setup-gbrain` 今天不装任何自动导入 Hook，但策略存储为将来接入留了前向兼容。
 
-## Related skills + next steps
+## 相关 skill 与下一步
 
-- `/health` — includes a GBrain dimension (doctor status, sync queue depth, last-push age) in its 0-10 composite score. The dimension is omitted when gbrain isn't installed; running `/health` on a non-gbrain machine doesn't penalize that choice.
-- `/gstack-upgrade` — keeps gstack itself up to date. Does NOT upgrade gbrain independently. gbrain installs at the latest HEAD by default; to refresh it, `git pull` in your gbrain clone (default `~/gbrain`) and re-run `/setup-gbrain`. Pin a specific commit with `gstack-gbrain-install --pinned-commit <sha>` if you need reproducibility. Installs below the minimum tested version are refused.
-- `/retro` — weekly retrospective pulls learnings and plans from your gbrain when memory sync is on, letting the retro reference cross-machine history.
+- `/health`：其 0-10 综合分含 GBrain 维度（doctor 状态、同步队列深度、上次推送距今时间）。gbrain 未安装时该维度省略；在非 gbrain 机器上运行 `/health` 不会因此扣分。
+- `/gstack-upgrade`：保持 gstack 自身最新。不会独立升级 gbrain。gbrain 默认装最新 HEAD；要刷新，在你的 gbrain 克隆（默认 `~/gbrain`）里 `git pull` 后重跑 `/setup-gbrain`。需要可复现性就用 `gstack-gbrain-install --pinned-commit <sha>` 固定到特定提交。低于最低已测版本的安装会被拒绝。
+- `/retro`：memory sync 开启时，每周复盘从你的 gbrain 拉取 learnings 与 plans，让复盘能引用跨机器历史。
 
-Run `/setup-gbrain` and see what sticks.
+跑一次 `/setup-gbrain`，看看哪些留得下来。

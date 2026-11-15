@@ -1,27 +1,31 @@
-# Pagination Patterns
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/api-designer/references/pagination.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Why Paginate?
+# 分页模式
 
-Large collections can't be returned all at once due to:
-- Performance (slow queries, large payloads)
-- Memory constraints (server and client)
-- Network timeouts
-- Poor user experience
+## 为什么要分页？
 
-Always paginate collection endpoints.
+大型集合无法一次性全部返回，原因如下：
+- 性能（查询慢、载荷大）
+- 内存限制（服务器端和客户端）
+- 网络超时
+- 用户体验差
 
-## Pagination Strategies
+集合端点一律分页。
 
-### 1. Offset-Based Pagination
+## 分页策略
 
-Most common and intuitive. Uses `offset` (skip) and `limit` (page size).
+### 1. 基于偏移量的分页
 
-**Request:**
+最常见、最直观。使用 `offset`（跳过多少条）和 `limit`（每页条数）。
+
+**请求：**
 ```http
 GET /users?offset=20&limit=10
 ```
 
-**Response:**
+**响应：**
 ```json
 {
   "data": [
@@ -43,34 +47,34 @@ GET /users?offset=20&limit=10
 }
 ```
 
-**Advantages:**
-- Simple to implement
-- Easy to understand
-- Random access (jump to any page)
-- Shows total count
+**优点：**
+- 实现简单
+- 容易理解
+- 支持随机访问（跳到任意一页）
+- 显示总数
 
-**Disadvantages:**
-- Performance degrades with large offsets (database scans many rows)
-- Inconsistent results if data changes during pagination
-- Inefficient for real-time data
-- Database must count total rows (expensive)
+**缺点：**
+- 大偏移量下性能下降（数据库要扫描大量行）
+- 翻页期间数据发生变化会导致结果不一致
+- 对实时数据效率低
+- 数据库必须统计总行数（开销大）
 
-**Use when:**
-- Small to medium datasets
-- Data doesn't change frequently
-- Need random page access
-- Need total count
+**适用场景：**
+- 中小规模数据集
+- 数据变化不频繁
+- 需要随机跳页
+- 需要总数
 
-### 2. Page-Based Pagination
+### 2. 基于页码的分页
 
-Simplified offset pagination using page numbers.
+用页码简化偏移量分页。
 
-**Request:**
+**请求：**
 ```http
 GET /users?page=3&per_page=10
 ```
 
-**Response:**
+**响应：**
 ```json
 {
   "data": [...],
@@ -89,25 +93,25 @@ GET /users?page=3&per_page=10
 }
 ```
 
-**Calculation:**
+**计算：**
 - `offset = (page - 1) * per_page`
 - `total_pages = ceil(total_count / per_page)`
 
-**Same pros/cons as offset-based, but:**
-- More intuitive for users (page 1, page 2)
-- Common in web applications
+**优缺点与偏移量分页相同，但：**
+- 对用户更直观（第 1 页、第 2 页）
+- 在 Web 应用中常见
 
-### 3. Cursor-Based Pagination
+### 3. 基于游标的分页
 
-Uses an opaque cursor (pointer) to the next set of results.
+使用不透明游标（指针）指向下一批结果。
 
-**Request:**
+**请求：**
 ```http
 GET /users?limit=10
 GET /users?cursor=<cursor>&limit=10
 ```
 
-**Response:**
+**响应：**
 ```json
 {
   "data": [
@@ -126,12 +130,12 @@ GET /users?cursor=<cursor>&limit=10
 }
 ```
 
-**Cursor structure (base64 encoded):**
+**游标结构（base64 编码）：**
 ```json
 {"id": 30, "sort": "created_at"}
 ```
 
-**Implementation:**
+**实现：**
 ```sql
 -- First page
 SELECT * FROM users ORDER BY created_at DESC LIMIT 10;
@@ -143,37 +147,37 @@ ORDER BY created_at DESC
 LIMIT 10;
 ```
 
-**Advantages:**
-- Consistent results (no skipped/duplicate items)
-- Efficient for large datasets
-- Works well with real-time data
-- No expensive COUNT query
-- Better database performance
+**优点：**
+- 结果一致（不漏项、不重复）
+- 大数据集下高效
+- 与实时数据配合良好
+- 无需昂贵的 COUNT 查询
+- 数据库性能更好
 
-**Disadvantages:**
-- No random access (can't jump to page 10)
-- No total count
-- More complex to implement
-- Cursor is opaque (users can't modify it)
+**缺点：**
+- 无法随机访问（不能跳到第 10 页）
+- 没有总数
+- 实现更复杂
+- 游标不透明（用户无法修改）
 
-**Use when:**
-- Large datasets
-- Data changes frequently
-- Infinite scroll UI
-- Real-time feeds
-- Performance is critical
+**适用场景：**
+- 大型数据集
+- 数据变化频繁
+- 无限滚动 UI
+- 实时信息流
+- 性能要求高
 
-### 4. Keyset Pagination
+### 4. 键集分页
 
-Similar to cursor but uses actual field values instead of opaque cursor.
+与游标分页类似，但使用实际字段值而非不透明游标。
 
-**Request:**
+**请求：**
 ```http
 GET /users?after_id=20&limit=10
 GET /users?after_created_at=2024-01-15T10:30:00Z&limit=10
 ```
 
-**Response:**
+**响应：**
 ```json
 {
   "data": [
@@ -191,7 +195,7 @@ GET /users?after_created_at=2024-01-15T10:30:00Z&limit=10
 }
 ```
 
-**Implementation:**
+**实现：**
 ```sql
 SELECT * FROM users
 WHERE id > 20
@@ -199,34 +203,34 @@ ORDER BY id ASC
 LIMIT 10;
 ```
 
-**Advantages:**
-- Very efficient (uses index)
-- Transparent cursor (human readable)
-- Consistent results
-- Simple implementation
+**优点：**
+- 非常高效（走索引）
+- 游标透明（人类可读）
+- 结果一致
+- 实现简单
 
-**Disadvantages:**
-- Requires indexed column
-- No random access
-- Sorting limited to cursor field
-- Complex for multi-field sorting
+**缺点：**
+- 需要有索引的列
+- 无法随机访问
+- 排序仅限游标字段
+- 多字段排序时复杂
 
-**Use when:**
-- Simple ordering (by ID, timestamp)
-- Need efficient pagination
-- Want transparent cursor
-- Have proper indexes
+**适用场景：**
+- 简单排序（按 ID、时间戳）
+- 需要高效分页
+- 希望游标透明
+- 已有合适的索引
 
-### 5. Seek Pagination (Time-Based)
+### 5. Seek 分页（基于时间）
 
-Specialized keyset pagination for time-series data.
+面向时间序列数据的特化键集分页。
 
-**Request:**
+**请求：**
 ```http
 GET /events?since=2024-01-15T10:00:00Z&until=2024-01-15T11:00:00Z&limit=100
 ```
 
-**Response:**
+**响应：**
 ```json
 {
   "data": [...],
@@ -242,15 +246,15 @@ GET /events?since=2024-01-15T10:00:00Z&until=2024-01-15T11:00:00Z&limit=100
 }
 ```
 
-**Use for:**
-- Time-series data
-- Logs and events
-- Activity streams
-- Analytics data
+**用于：**
+- 时间序列数据
+- 日志与事件
+- 活动流
+- 分析数据
 
-## Default Limits
+## 默认限制
 
-Always set reasonable defaults and maximum limits:
+始终设置合理的默认值和上限：
 
 ```json
 {
@@ -260,7 +264,7 @@ Always set reasonable defaults and maximum limits:
 }
 ```
 
-**Validation:**
+**校验：**
 ```http
 GET /users?limit=1000
 
@@ -273,9 +277,9 @@ Response: 400 Bad Request
 }
 ```
 
-## Response Format
+## 响应格式
 
-### Standard Pagination Object
+### 标准分页对象
 
 ```json
 {
@@ -290,7 +294,7 @@ Response: 400 Bad Request
 }
 ```
 
-### Link Header (RFC 5988)
+### Link 头（RFC 5988）
 
 ```http
 Link: </users?offset=0&limit=10>; rel="first",
@@ -299,9 +303,9 @@ Link: </users?offset=0&limit=10>; rel="first",
       </users?offset=140&limit=10>; rel="last"
 ```
 
-**Used by:** GitHub API
+**使用者：** GitHub API
 
-### Embedded Links
+### 内嵌链接
 
 ```json
 {
@@ -316,9 +320,9 @@ Link: </users?offset=0&limit=10>; rel="first",
 }
 ```
 
-## Sorting with Pagination
+## 分页与排序
 
-Always support sorting when paginating:
+分页时始终支持排序：
 
 ```http
 GET /users?sort=created_at&order=desc&limit=10
@@ -326,7 +330,7 @@ GET /users?sort=-created_at&limit=10                    # Descending
 GET /users?sort=last_name,first_name&limit=10           # Multi-field
 ```
 
-**For cursor pagination, cursor must include sort fields:**
+**游标分页时，游标必须包含排序字段：**
 ```json
 {
   "cursor": {
@@ -337,23 +341,23 @@ GET /users?sort=last_name,first_name&limit=10           # Multi-field
 }
 ```
 
-## Filtering with Pagination
+## 分页与过滤
 
-Combine filtering with pagination:
+把过滤与分页结合使用：
 
 ```http
 GET /users?status=active&role=admin&offset=0&limit=10
 ```
 
-**Important:** Apply filters before pagination:
-1. Filter records
-2. Count filtered results
-3. Apply pagination
-4. Return paginated subset
+**重要：** 先过滤，后分页：
+1. 过滤记录
+2. 统计过滤后的结果
+3. 应用分页
+4. 返回分页后的子集
 
-## Total Count
+## 总数
 
-### Include Total Count
+### 返回总数
 
 ```json
 {
@@ -366,17 +370,17 @@ GET /users?status=active&role=admin&offset=0&limit=10
 }
 ```
 
-**Pros:**
-- Clients know total results
-- Can calculate total pages
-- Better UX (show "Page 3 of 153")
+**优点：**
+- 客户端知道结果总量
+- 可计算总页数
+- 体验更好（显示"第 3 页，共 153 页"）
 
-**Cons:**
-- COUNT query is expensive
-- Slows down response
-- Inaccurate for large/changing datasets
+**缺点：**
+- COUNT 查询开销大
+- 拖慢响应
+- 大型或频繁变化的数据集下不准确
 
-### Omit Total Count
+### 省略总数
 
 ```json
 {
@@ -388,23 +392,23 @@ GET /users?status=active&role=admin&offset=0&limit=10
 }
 ```
 
-**Use when:**
-- Large datasets (COUNT is too slow)
-- Real-time data (count changes constantly)
-- Cursor pagination
-- Infinite scroll UI
+**适用场景：**
+- 大型数据集（COUNT 太慢）
+- 实时数据（总数不断变化）
+- 游标分页
+- 无限滚动 UI
 
-### Optional Total Count
+### 可选总数
 
-Let client request total count:
+让客户端按需请求总数：
 
 ```http
 GET /users?limit=10&include_total=true
 ```
 
-## Edge Cases
+## 边界情况
 
-### Empty Results
+### 空结果
 
 ```json
 {
@@ -418,7 +422,7 @@ GET /users?limit=10&include_total=true
 }
 ```
 
-### Last Page
+### 最后一页
 
 ```json
 {
@@ -437,7 +441,7 @@ GET /users?limit=10&include_total=true
 }
 ```
 
-### Out of Range
+### 超出范围
 
 ```http
 GET /users?offset=10000&limit=10
@@ -454,7 +458,7 @@ Response: 200 OK (empty results)
 }
 ```
 
-Or return 404 for pages that don't exist:
+或者对不存在的页返回 404：
 ```http
 GET /users?page=1000&per_page=10
 
@@ -467,28 +471,28 @@ Response: 404 Not Found
 }
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Always paginate collections** - Never return unbounded lists
-2. **Set reasonable defaults** - Default limit of 20-50 items
-3. **Enforce maximum limits** - Prevent excessive loads (max 100-1000)
-4. **Include has_more flag** - Tell clients if more results exist
-5. **Provide navigation links** - Make it easy to get next/prev pages
-6. **Document pagination** - Explain cursor format, limits, defaults
-7. **Be consistent** - Use same pagination pattern across all endpoints
-8. **Consider performance** - Choose strategy based on data size/type
-9. **Support sorting** - Let clients control result order
-10. **Handle edge cases** - Empty results, last page, invalid cursors
+1. **集合一律分页** - 绝不返回无上限的列表
+2. **设置合理默认值** - 默认 limit 取 20-50 条
+3. **强制最大上限** - 防止过载（最大 100-1000）
+4. **包含 has_more 标志** - 告知客户端是否还有更多结果
+5. **提供导航链接** - 让获取上一页/下一页更容易
+6. **把分页写进文档** - 说明游标格式、限制、默认值
+7. **保持一致** - 所有端点使用同一分页模式
+8. **考虑性能** - 按数据规模/类型选择策略
+9. **支持排序** - 让客户端控制结果顺序
+10. **处理边界情况** - 空结果、最后一页、无效游标
 
-## Comparison Matrix
+## 对比矩阵
 
-| Feature | Offset | Page | Cursor | Keyset |
+| 特性 | 偏移量 | 页码 | 游标 | 键集 |
 |---------|--------|------|--------|--------|
-| Performance | Poor for large offsets | Poor | Excellent | Excellent |
-| Random access | Yes | Yes | No | No |
-| Total count | Yes | Yes | No | Optional |
-| Consistency | Poor | Poor | Excellent | Excellent |
-| Complexity | Simple | Simple | Medium | Medium |
-| Real-time data | Poor | Poor | Excellent | Excellent |
-| Database load | High | High | Low | Low |
-| Use case | Small datasets | Web UIs | Feeds/streams | Large datasets |
+| 性能 | 大偏移量下差 | 差 | 优 | 优 |
+| 随机访问 | 是 | 是 | 否 | 否 |
+| 总数 | 是 | 是 | 否 | 可选 |
+| 一致性 | 差 | 差 | 优 | 优 |
+| 复杂度 | 简单 | 简单 | 中等 | 中等 |
+| 实时数据 | 差 | 差 | 优 | 优 |
+| 数据库负载 | 高 | 高 | 低 | 低 |
+| 使用场景 | 小数据集 | Web UI | 信息流/流 | 大数据集 |

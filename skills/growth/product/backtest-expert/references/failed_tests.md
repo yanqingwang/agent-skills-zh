@@ -1,236 +1,240 @@
-# Learning from Failed Backtests
+> **中文汉化版** · 上游：[tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) · 原文件：`skills/backtest-expert/references/failed_tests.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Table of Contents
+# 从失败的回测中学习
 
-1. Why Failed Ideas Are Valuable
-2. Common Failure Patterns
-3. Case Study Framework
-4. Red Flags Checklist
+## 目录
 
-## 1. Why Failed Ideas Are Valuable
+1. 失败的想法为什么有价值
+2. 常见失败模式
+3. 案例复盘框架
+4. 危险信号清单
 
-### The Value of Failures
+## 1. 失败的想法为什么有价值
 
-**Key insights**:
-- Failed tests save capital by preventing live implementation
-- Failure patterns reveal which assumptions don't hold
-- Understanding what doesn't work narrows the search space
-- Failed tests build experience in recognizing fragile strategies
+### 失败的价值
 
-### Documentation Discipline
+**关键认识**：
+- 失败的测试拦住了实盘落地，等于省下了资金
+- 失败模式揭示了哪些假设站不住脚
+- 搞清什么没用，能缩小搜索空间
+- 失败的测试积累识别脆弱策略的经验
 
-**Record for each failed idea**:
-- The hypothesis being tested
-- Why you thought it would work
-- What the data showed
-- Specific breaking points
-- Lessons learned
+### 记录纪律
 
-**Purpose**: Build a library of "anti-patterns" to avoid repeating mistakes.
+**每个失败的想法都记下**：
+- 被检验的假设
+- 你当初为什么觉得它可行
+- 数据显示了什么
+- 具体的崩坏点
+- 学到的教训
 
-## 2. Common Failure Patterns
+**目的**：建一个"反模式"库，避免重蹈覆辙。
 
-### Pattern 1: Parameter Sensitivity
+## 2. 常见失败模式
 
-**Symptom**: Strategy only works with very specific parameter values.
+### 模式 1：参数敏感性
 
-**Example scenario**:
-- Strategy profitable with stop loss at exactly 2.5%
-- Increasing to 3% or decreasing to 2% causes significant performance drop
-- No "plateau" of stable performance
+**症状**：策略只在非常特定的参数值下有效。
 
-**Why it fails**: Real markets have noise; if small changes break the strategy, it likely captured noise, not signal.
+**示例场景**：
+- 止损恰好设在 2.5% 时策略盈利
+- 调到 3% 或降到 2%，表现大幅下滑
+- 没有稳定表现的"高原"
 
-**Lesson**: Seek strategies with stable performance across parameter ranges.
+**为什么失败**：真实市场有噪音；小幅改动就击垮策略，说明它捕捉的可能是噪音而非信号。
 
-### Pattern 2: Regime-Specific Performance
+**教训**：寻找在参数区间内表现稳定的策略。
 
-**Symptom**: Strategy works brilliantly in some years, terribly in others.
+### 模式 2：状态依赖表现
 
-**Example scenario**:
-- Great performance in 2017-2019 (low volatility bull market)
-- Catastrophic losses in 2020 (high volatility)
-- Poor performance in 2022 (downtrend)
+**症状**：策略某些年份表现惊艳，另一些年份惨不忍睹。
 
-**Why it fails**: Strategy dependent on specific market conditions, not robust enough for diverse environments.
+**示例场景**：
+- 2017-2019 表现优异（低波动牛市）
+- 2020 灾难性亏损（高波动）
+- 2022 表现糟糕（下行趋势）
 
-**Lesson**: Require acceptable (not necessarily best) performance across all regimes.
+**为什么失败**：策略依赖特定市场环境，不足以应对多样的环境。
 
-### Pattern 3: Slippage Sensitivity
+**教训**：要求在所有状态下表现可接受（不必最优）。
 
-**Symptom**: Strategy becomes unprofitable when realistic trading costs added.
+### 模式 3：滑点敏感性
 
-**Example scenario**:
-- Backtest shows 0.5% average gain per trade
-- Adding 0.1% slippage per side (0.2% round-trip) eliminates profits
-- Strategy requires unrealistic fills to be profitable
+**症状**：加入现实的交易成本后策略变得不赚钱。
 
-**Why it fails**: Edge too small to survive real-world friction.
+**示例场景**：
+- 回测显示每笔交易平均赚 0.5%
+- 每边加 0.1% 滑点（往返 0.2%）就抹掉利润
+- 策略需要不现实的成交假设才能盈利
 
-**Lesson**: Edge must be large enough to survive pessimistic assumptions about costs.
+**为什么失败**：优势太小，扛不住现实世界的摩擦。
 
-### Pattern 4: Sample Size Issues
+**教训**：优势必须大到足以在悲观的成本假设下存活。
 
-**Symptom**: Strong results based on small number of trades.
+### 模式 4：样本量问题
 
-**Example scenario**:
-- Backtest shows 80% win rate
-- Only 15 total trades in 5 years
-- A few different outcomes would dramatically change results
+**症状**：亮眼结果建立在很少的交易笔数上。
 
-**Why it fails**: Insufficient data to distinguish edge from luck.
+**示例场景**：
+- 回测显示 80% 胜率
+- 5 年总共只有 15 笔交易
+- 少数几笔结果不同，结果就会大变样
 
-**Lesson**: Require minimum 100 trades for meaningful conclusions, preferably 200+.
+**为什么失败**：数据不足以区分优势与运气。
 
-### Pattern 5: Look-Ahead Bias
+**教训**：要有意义的结论至少需要 100 笔，最好 200 笔以上。
 
-**Symptom**: Perfect or near-perfect backtest results.
+### 模式 5：前视偏差
 
-**Example scenario**:
-- Strategy shows 95%+ win rate
-- Unrealistically good entry/exit timing
-- Performance too good to be realistic
+**症状**：回测结果完美或接近完美。
 
-**Why it fails**: Likely using information not available at time of trade.
+**示例场景**：
+- 策略显示 95% 以上胜率
+- 入场/出场时点好得不现实
+- 表现好到不真实
 
-**Lesson**: Be suspicious of "too good to be true" results; audit data alignment carefully.
+**为什么失败**：很可能用了交易时点不可得的信息。
 
-### Pattern 6: Over-Optimization (Curve Fitting)
+**教训**：对"好到不真实"的结果保持怀疑；仔细审计数据对齐。
 
-**Symptom**: Complex strategy with many parameters shows excellent in-sample results but poor out-of-sample.
-
-**Example scenario**:
-- Strategy uses 8-10 different indicators with specific thresholds
-- In-sample performance: 40% annual return
-- Out-of-sample performance: -5% annual return
-- Parameters needed constant re-optimization
-
-**Why it fails**: Fitted to historical noise rather than genuine market structure.
-
-**Lesson**: Prefer simple strategies with fewer parameters; demand strong out-of-sample results.
-
-## 3. Case Study Framework
-
-### Template for Documenting Failed Ideas
-
-Use this framework when a backtest fails:
-
-#### 1. Initial Hypothesis
-- **What edge were you trying to capture?**
-- **Why did you think this would work?**
-- **What was the logical basis?**
-
-#### 2. Implementation Details
-- **Entry rules** (specific and complete)
-- **Exit rules** (stop loss, profit target, time-based)
-- **Position sizing**
-- **Filters or conditions**
-
-#### 3. Test Results
-- **Basic metrics**:
-  - Total trades
-  - Win rate
-  - Average win/loss
-  - Max drawdown
-  - Annual returns by year
-
-- **Parameter sensitivity**:
-  - How results changed with parameter variations
-  - Whether "plateau" of stable performance existed
-
-- **Regime analysis**:
-  - Performance in different market conditions
-  - Which regimes caused problems
-
-#### 4. Breaking Points
-- **What specifically caused the strategy to fail?**
-  - Slippage too high?
-  - Parameter sensitivity?
-  - Regime-specific?
-  - Insufficient sample size?
-
-#### 5. Lessons Learned
-- **What assumptions were wrong?**
-- **What would you test differently next time?**
-- **Are there salvageable elements?**
-
-### Example: Failed Momentum Reversal Strategy
-
-#### 1. Initial Hypothesis
-Tried to capture mean reversion after strong momentum moves. Hypothesis: Stocks that gap up 5%+ on earnings often pull back 2-3% before continuing, providing short-term reversal opportunity.
-
-#### 2. Implementation
-- Entry: Short when stock gaps up 5%+ on earnings at market open
-- Exit: Cover at 2% profit or 3% stop loss
-- Holding period: Maximum 3 days
-- Filters: Market cap >$2B, average volume >500K shares
-
-#### 3. Test Results
-- 67 trades over 5 years
-- Win rate: 58%
-- Avg win: 2.1%, Avg loss: 3.2%
-- Max drawdown: 18%
-- 2019-2021: Profitable
-- 2022-2023: Significant losses
-
-#### 4. Breaking Points
-- Strategy failed during strong momentum environments (2021 meme stocks)
-- Stop losses hit frequently during continued upward momentum
-- Gap-ups that continued higher immediately caused outsized losses
-- Small sample size (67 trades) provided low statistical confidence
-- Slippage on short entries during high volatility eliminated thin edge
-
-#### 5. Lessons Learned
-- Mean reversion strategies vulnerable during momentum regimes
-- Need regime filter (e.g., only trade during high VIX or weak market)
-- 5-year test insufficient for momentum strategies; need 10+ years
-- Edge too small (2% target vs 3% stop) to survive slippage
-- Better approach: Wait for actual pullback, then enter, rather than fade immediately
-
-## 4. Red Flags Checklist
-
-Use this checklist when evaluating any backtest:
-
-### Data Quality Issues
-- [ ] Has survivorship bias been addressed?
-- [ ] Are delisted stocks included in test?
-- [ ] Is data alignment correct (no look-ahead bias)?
-- [ ] Are corporate actions (splits, dividends) handled correctly?
-
-### Sample Size Concerns
-- [ ] At least 100 trades? (Preferably 200+)
-- [ ] At least 5 years of data? (Preferably 10+)
-- [ ] Includes full market cycle?
-- [ ] Tested across multiple market regimes?
-
-### Parameter Robustness
-- [ ] Does strategy work with nearby parameter values?
-- [ ] Are there "plateaus" of stable performance?
-- [ ] Minimal parameters (ideally <5)?
-- [ ] Parameters based on logical reasoning, not pure optimization?
-
-### Execution Realism
-- [ ] Realistic commissions included?
-- [ ] Slippage modeled conservatively (1.5-2x typical)?
-- [ ] Worst-case fills considered?
-- [ ] Order rejection/partial fills addressed?
-
-### Performance Characteristics
-- [ ] Positive expectancy in majority of years?
-- [ ] Acceptable performance in all major regimes?
-- [ ] No catastrophic drawdowns (>50%)?
-- [ ] Edge large enough to survive friction?
-
-### Bias Prevention
-- [ ] Strategy defined before testing?
-- [ ] Hypothesis has economic logic?
-- [ ] Results aren't "too good to be true"?
-- [ ] Out-of-sample testing performed?
-- [ ] No cherry-picking of examples?
-
-### Tool Limitations
-- [ ] Aware of testing platform's interpolation methods?
-- [ ] Understand how platform handles low-liquidity situations?
-- [ ] Know quirks specific to data provider?
-
-**If more than 2-3 items aren't checked, the backtest requires additional work before considering live implementation.**
+### 模式 6：过度优化（曲线拟合）
+
+**症状**：多参数的复杂策略样本内结果优秀，样本外却很差。
+
+**示例场景**：
+- 策略用了 8-10 个带特定阈值的指标
+- 样本内表现：年化 40%
+- 样本外表现：年化 -5%
+- 参数需要不断重新优化
+
+**为什么失败**：拟合的是历史噪音，不是真实的市场结构。
+
+**教训**：优先选参数更少的简单策略；要求过硬的样本外结果。
+
+## 3. 案例复盘框架
+
+### 失败想法记录模板
+
+回测失败时用这个框架复盘：
+
+#### 1. 初始假设
+- **你想捕捉的优势是什么？**
+- **你为什么觉得它会有效？**
+- **逻辑依据是什么？**
+
+#### 2. 实现细节
+- **入场规则**（具体且完整）
+- **出场规则**（止损、止盈、按时间）
+- **仓位大小**
+- **过滤器或条件**
+
+#### 3. 测试结果
+- **基础指标**：
+  - 总交易笔数
+  - 胜率
+  - 平均盈利/亏损
+  - 最大回撤
+  - 逐年收益
+
+- **参数敏感性**：
+  - 参数变动时结果如何变化
+  - 是否存在稳定表现的"高原"
+
+- **状态分析**：
+  - 不同市场环境下的表现
+  - 哪些状态出了问题
+
+#### 4. 崩坏点
+- **具体是什么让策略失败的？**
+  - 滑点太高？
+  - 参数敏感性？
+  - 状态依赖？
+  - 样本量不足？
+
+#### 5. 学到的教训
+- **哪些假设错了？**
+- **下次测试会换什么做法？**
+- **有没有可以抢救的部分？**
+
+### 示例：失败的动量反转策略
+
+#### 1. 初始假设
+尝试捕捉强动量行情之后的均值回归。假设：财报后跳空高开 5% 以上的股票往往先回撤 2-3% 再继续走，提供短期反转机会。
+
+#### 2. 实现
+- 入场：财报日开盘跳空高开 5% 以上时做空
+- 出场：获利 2% 平仓，或止损 3%
+- 持仓时间：最多 3 天
+- 过滤条件：市值 >$2B，平均成交量 >50 万股
+
+#### 3. 测试结果
+- 5 年 67 笔交易
+- 胜率：58%
+- 平均盈利 2.1%，平均亏损 3.2%
+- 最大回撤：18%
+- 2019-2021：盈利
+- 2022-2023：显著亏损
+
+#### 4. 崩坏点
+- 策略在强动量环境中失败（2021 年 meme 股）
+- 上行动能持续时止损频繁被打
+- 跳空后立刻继续冲高的个股造成超额亏损
+- 样本量小（67 笔），统计置信度低
+- 高波动时做空入场的滑点吃掉了微薄优势
+
+#### 5. 学到的教训
+- 均值回归策略在动量状态下很脆弱
+- 需要状态过滤（如只在 VIX 高企或市场疲弱时交易）
+- 5 年测试对动量策略不够，需要 10 年以上
+- 优势太小（2% 止盈对 3% 止损），扛不住滑点
+- 更好的做法：等真正的回撤出现再进场，而不是立刻反着做
+
+## 4. 危险信号清单
+
+评估任何回测时用这份清单：
+
+### 数据质量问题
+- [ ] 幸存者偏差处理了吗？
+- [ ] 退市股票包含在测试里吗？
+- [ ] 数据对齐正确吗（无前视偏差）？
+- [ ] 公司行动（拆股、分红）处理正确吗？
+
+### 样本量问题
+- [ ] 至少 100 笔交易？（最好 200 笔以上）
+- [ ] 至少 5 年数据？（最好 10 年以上）
+- [ ] 覆盖完整市场周期了吗？
+- [ ] 在多种市场状态下测过吗？
+
+### 参数稳健性
+- [ ] 邻近参数值下策略仍有效吗？
+- [ ] 有稳定表现的"高原"吗？
+- [ ] 参数够少吗（理想 <5 个）？
+- [ ] 参数有逻辑依据，而不是纯优化凑出来的？
+
+### 执行现实性
+- [ ] 手续费按现实水平计入了吗？
+- [ ] 滑点按保守值建模了吗（通常值的 1.5-2 倍）？
+- [ ] 考虑最坏情形成交了吗？
+- [ ] 订单被拒/部分成交考虑了吗？
+
+### 表现特征
+- [ ] 多数年份有正期望吗？
+- [ ] 在所有主要状态下表现可接受吗？
+- [ ] 没有灾难性回撤（>50%）？
+- [ ] 优势大到足以扛住摩擦吗？
+
+### 偏差预防
+- [ ] 策略在测试前就定义好了吗？
+- [ ] 假设有经济逻辑吗？
+- [ ] 结果没有"好到不真实"？
+- [ ] 做了样本外测试吗？
+- [ ] 没有挑拣案例？
+
+### 工具局限
+- [ ] 了解测试平台的插值方法吗？
+- [ ] 了解平台如何处理低流动性情形吗？
+- [ ] 知道数据源特有的坑吗？
+
+**如果超过 2-3 项没勾上，这个回测还需要补工作，才谈得上考虑实盘。**

@@ -1,79 +1,83 @@
-# Multichannel Cadence
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/multichannel-cadence.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Most buyers need to see a name a few times, in more than one place, before they respond. A cadence coordinates email, LinkedIn, phone, and the occasional video or package so each touch builds on the last and nobody gets hit on four channels in one afternoon.
+# 多渠道节奏
 
-## Which channels for which tier
+多数买家要在不止一个地方见过一个名字几次，才会回应。一套节奏（cadence）把邮件、LinkedIn、电话，以及偶尔的视频或包裹协调起来，让每次触达建立在上一次之上，也没人会在一个下午被四个渠道轮番轰炸。
 
-| Tier | Channels |
+## 哪个层级用哪些渠道
+
+| 层级 | 渠道 |
 |------|----------|
-| Tier 1 (1:1) | Email, LinkedIn, phone, personalized video; direct mail after engagement |
-| Tier 2 (1:few) | Email and LinkedIn; phone for the best-fit accounts |
-| Tier 3 (1:many) | Email; LinkedIn only if it can be done without automation risk |
+| Tier 1（1:1） | 邮件、LinkedIn、电话、个性化视频；互动之后可加直邮 |
+| Tier 2（1:少） | 邮件和 LinkedIn；契合度最高的账户加电话 |
+| Tier 3（1:多） | 邮件；LinkedIn 仅在无自动化风险时使用 |
 
-Tiers are defined in the prospecting skill's signal plays reference.
+层级定义见 prospecting skill 的信号打法参考。
 
-## A 21-day Tier 1 cadence
+## 21 天 Tier 1 节奏
 
-| Day | Touch |
+| 天 | 触达 |
 |-----|-------|
-| 1 | View their LinkedIn profile and engage with a recent post. Send email 1 (short, no link) |
-| 3 | LinkedIn connection request |
-| 4 | Email 2, as a reply in the same thread |
-| 6 | Call 1. If no answer, leave a short voicemail and send an email recapping it |
-| 8 | LinkedIn message if connected; otherwise a short personalized video by email |
-| 11 | Email 3: new angle or a case study |
-| 13 | Call 2 |
-| 15 | LinkedIn voice note or a comment on a new post |
-| 18 | Email 4: breakup or referral ask |
-| 21 | Call 3. Then move the contact to nurture and ad retargeting |
+| 1 | 浏览其 LinkedIn 主页并与近期帖子互动。发邮件 1（短，无链接） |
+| 3 | LinkedIn 加好友请求 |
+| 4 | 邮件 2，在同一会话里以回复形式发出 |
+| 6 | 电话 1。无人接听则留一段简短语音留言，并补一封概括留言内容的邮件 |
+| 8 | 已加好友则发 LinkedIn 消息；否则邮件附一条简短个性化视频 |
+| 11 | 邮件 3：新角度或案例研究 |
+| 13 | 电话 2 |
+| 15 | LinkedIn 语音，或对其新帖评论 |
+| 18 | 邮件 4：分手信或请求转介绍 |
+| 21 | 电话 3。然后把联系人转入培育和广告再营销 |
 
-Shorten it for Tier 2 (email and LinkedIn over about 14 days). Tier 3 is the email sequence alone; see [follow-up-sequences.md](follow-up-sequences.md).
+Tier 2 压缩节奏（邮件和 LinkedIn，约 14 天）。Tier 3 只跑邮件序列；见 [follow-up-sequences.md](follow-up-sequences.md)。
 
-## Rules that hold any cadence together
+## 支撑任何节奏的规则
 
-1. **A reply on any channel stops every channel.** Someone who answered on LinkedIn mustn't get email 3 the next morning. This needs one shared record of who has replied, checked before each touch.
-2. **An opt-out on one channel is an opt-out on all of them.** Key the suppression list on email, LinkedIn URL, and phone together. See the prospecting skill's sourcing and enrichment reference.
-3. **One sender per account at a time.** Two reps, or a rep and an agent, sequencing the same company looks disorganized and doubles the annoyance.
-4. **Each touch references the last** when it helps ("Following up on the voicemail I left Tuesday"), but must also make sense on its own.
-5. **Keep it to 4–7 emails and at most 3 LinkedIn messages.** More touches don't rescue the wrong offer.
-6. **Space touches across days.** Never two channels on the same day except a voicemail and its recap email.
+1. **任何渠道的回复都停掉所有渠道。**在 LinkedIn 上回了话的人，第二天早上不该再收到邮件 3。这需要一份共享的回复记录，每次触达前核对。
+2. **一个渠道退订等于所有渠道退订。**抑制名单同时以邮件、LinkedIn URL 和电话为主键。见 prospecting skill 的名单来源与增强参考。
+3. **同一时间一个账户只有一个发送者。**两个销售，或一个销售加一个 Agent，同时序列化同一家公司，显得混乱，骚扰也翻倍。
+4. **每次触达呼应上一次**（有帮助时，"接着我周二留的语音留言说"），但单独看也要成立。
+5. **控制在 4–7 封邮件、至多 3 条 LinkedIn 消息。**再多触达也救不了错的报价。
+6. **触达按天错开。**绝不在同一天用两个渠道，除非是语音留言配上它的概括邮件。
 
-Most sequencing tools only coordinate their own channels. When email, LinkedIn, and calls run in different tools, connect them with a shared state (the CRM or a simple table keyed on the contact) and webhooks that pause every sequence when any reply arrives.
+多数序列化工具只协调自己的渠道。当邮件、LinkedIn 和电话分散在不同工具里时，用共享状态（CRM 或以联系人为主键的简单表格）和 webhook 把它们连起来，任何回复一到就暂停所有序列。
 
-## Calls
+## 电话
 
-Calls are the slowest channel and the fastest to a conversation. Vendor and agency datasets from 2025 put the dial-to-conversation rate around 10% and roughly one meeting per several hundred dials. Mobile numbers connect far better than office lines.
+电话是最慢的渠道，也是最快进入对话的渠道。2025 年的厂商与代理机构数据集显示，拨号到对话的转化率约 10%，大约几百次拨号换一个会议。手机号接通率远高于座机。
 
-- **Best times:** mid-week, mid-to-late afternoon in the prospect's time zone. Test your own.
-- **Attempts:** 3 calls per contact across the cadence, on different days and times.
-- **Openers:** say who you are and why you're calling, then ask permission to continue. Avoid "Did I catch you at a bad time?", which call-analysis data ranks among the worst openers.
-- **Voicemail:** 20–30 seconds, your name, one specific reason, and "I'll send you a note too." Then send it.
-- **Rules:** scrub against Do Not Call lists, and never use AI voice on US mobile numbers without consent. See the prospecting skill's compliance reference.
+- **最佳时段：**周中，潜客时区的下午中后段。以自己的数据为准。
+- **尝试次数：**整个节奏内每个联系人 3 次电话，安排在不同日期和时段。
+- **开场白：**报上身份和来电原因，再请求继续。避免"Did I catch you at a bad time?"，通话分析数据把它列为最差开场白之一。
+- **语音留言：**20–30 秒，报姓名，一个具体理由，再加一句"我也会给你发封邮件"。然后真的发。
+- **规则：**对照禁呼名单（Do Not Call）清洗，未经同意绝不对美国手机号使用 AI 语音。见 prospecting skill 的合规参考。
 
-Scripts for openers, voicemails, and common pushback are in the sales-enablement skill's cold call scripts reference.
+开场白、语音留言和常见推挡的话术，见 sales-enablement skill 的冷呼叫脚本参考。
 
-## Video
+## 视频
 
-A short video recorded for one person stands out in a text inbox, and it's the natural format for value-first plays (see [outbound-plays.md](outbound-plays.md)).
-- **60–120 seconds** for a pure outreach video; **2–4 minutes** for a teardown or audit.
-- Show their thing (their site, their product, their dashboard) on screen in the first few seconds.
-- Send a thumbnail or GIF that shows their page, linked to the video. Don't attach the file.
-- For Tier 1 only, or after a reply. Video doesn't scale like text, and that's the point.
+为一个人专门录的短视频在文字收件箱里很显眼，也是价值优先打法的天然格式（见 [outbound-plays.md](outbound-plays.md)）。
+- 纯外联视频 **60–120 秒**；拆解或审计 **2–4 分钟**。
+- 开头几秒就把对方的东西（他们的网站、产品、后台）放进画面。
+- 发一张显示对方页面的缩略图或 GIF，链接到视频。不要发附件文件。
+- 仅限 Tier 1，或收到回复之后。视频不像文字那样可规模化，而这正是它的价值。
 
-Tools: Loom, Tella, Sendspark, Vidyard.
+工具：Loom、Tella、Sendspark、Vidyard。
 
-## Direct mail and gifts
+## 直邮与礼品
 
-Useful for Tier 1 accounts that have engaged but stalled. Something relevant to the conversation (a book you referenced, a printed teardown) beats a generic gift. Sendoso and Reachdesk handle sending and address confirmation. Check company gift policies, which often cap or ban gifts in regulated industries and government.
+对已互动但停滞的 Tier 1 账户有用。与对话相关的东西（你引用过的一本书、一份打印出来的拆解）胜过通用礼品。Sendoso 和 Reachdesk 负责寄送和地址确认。查公司的礼品政策，受监管行业和政府部门往往限制或禁止礼品。
 
-## Ads to target accounts
+## 面向目标账户的广告
 
-Upload your target account and contact lists to LinkedIn Matched Audiences (or other ad platforms) and run light awareness ads during the cadence. When the email arrives, the name is already familiar. See the ads skill's ABM playbook.
+把目标账户和联系人名单上传到 LinkedIn Matched Audiences（或其他广告平台），在节奏期间投放轻量认知广告。邮件到达时，名字已经眼熟。见 ads skill 的 ABM 攻略。
 
-## SMS and WhatsApp
+## 短信与 WhatsApp
 
-Not for cold outreach. US SMS to mobile numbers needs consent and 10DLC registration; WhatsApp business messaging needs an opt-in. Use them only after a prospect has engaged and agreed, for scheduling and reminders.
+不用于冷外联。美国发往手机号的短信需要同意和 10DLC 注册；WhatsApp 商业消息需要用户选择加入。只在潜客互动并同意之后使用，用来约时间和发提醒。
 
-## Measure by channel
+## 按渠道衡量
 
-Track, per channel and per step: touches sent, replies, positive replies, meetings. Attribute the meeting to the touch that produced the reply, and keep the full sequence on the record so you can see which combinations work. A channel that never produces a positive reply after a few hundred touches is costing more than it returns.
+按渠道、按步骤追踪：已发送触达、回复、正向回复、会议。把会议归因到产生回复的那次触达，并把完整序列留在记录里，这样才能看清哪些组合有效。一个渠道几百次触达后仍没有一个正向回复，它的成本已经超过回报。

@@ -1,237 +1,241 @@
-# Backtesting Methodology Reference
+> **中文汉化版** · 上游：[tradermonty/claude-trading-skills](https://github.com/tradermonty/claude-trading-skills) · 原文件：`skills/backtest-expert/references/methodology.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Table of Contents
+# 回测方法论参考
 
-1. Core Testing Techniques
-2. Stress Testing Methods
-3. Parameter Sensitivity Analysis
-4. Slippage and Friction Modeling
-5. Sample Size Guidelines
-6. Market Regime Analysis
-7. Common Pitfalls and Biases
+## 目录
 
-## 1. Core Testing Techniques
+1. 核心测试技术
+2. 压力测试方法
+3. 参数敏感性分析
+4. 滑点与摩擦建模
+5. 样本量指南
+6. 市场状态分析
+7. 常见陷阱与偏差
 
-### "Beat Ideas to Death" Approach
+## 1. 核心测试技术
 
-**Core principle**: Add friction and punishment to find strategies that break the least, not those that profit the most on paper.
+### "把想法往死里打"（Beat Ideas to Death）的方法
 
-**Key techniques**:
-- Multiple stop loss variations
-- Different profit targets
-- Realistic + exaggerated commissions
-- Worst-case fills
-- Extended time periods
-- Multiple market regimes
+**核心原则**：加入摩擦与惩罚，找出最不容易被打垮的策略，而不是纸面上赚最多的策略。
 
-### The 80/20 Rule for R&D Time
+**关键技术**：
+- 多种止损变体
+- 不同的止盈目标
+- 现实 + 夸大的手续费
+- 最坏情形成交
+- 拉长的时间区间
+- 多种市场状态
 
-- 20% generating and codifying ideas
-- 80% stress testing and trying to break them
+### 研发时间的 80/20 法则
 
-## 2. Stress Testing Methods
+- 20% 用于产生并编码实现想法
+- 80% 用于压力测试、想法子把它们打垮
 
-### Execution Friction Tests
+## 2. 压力测试方法
 
-**Required friction additions**:
-- Realistic commissions (actual broker rates)
-- Pessimistic slippage (1.5-2x typical)
-- Worst-case entry fills (ask + 1-2 ticks)
-- Worst-case exit fills (bid - 1-2 ticks)
-- Order rejection scenarios
-- Partial fills
+### 执行摩擦测试
 
-### Parameter Robustness Tests
+**必须加入的摩擦**：
+- 现实的手续费（按券商实际费率）
+- 悲观滑点（通常值的 1.5-2 倍）
+- 最坏情形的开仓成交（卖一价 + 1-2 个 tick）
+- 最坏情形的平仓成交（买一价 - 1-2 个 tick）
+- 订单被拒场景
+- 部分成交
 
-Test across multiple configurations:
-- Entry timing variations (±15-30 minutes)
-- Stop loss distances (50%, 75%, 100%, 125%, 150% of baseline)
-- Profit targets (80%, 90%, 100%, 110%, 120% of baseline)
-- Position sizing rules
-- Filter thresholds
+### 参数稳健性测试
 
-**Goal**: Find "plateau" performance where small parameter changes don't drastically alter results.
+在多组配置下测试：
+- 入场时点变化（±15-30 分钟）
+- 止损距离（基线的 50%、75%、100%、125%、150%）
+- 止盈目标（基线的 80%、90%、100%、110%、120%）
+- 仓位管理规则
+- 过滤器阈值
 
-### Time-Based Robustness
+**目标**：找到"高原"式表现，即参数小幅变动不会剧烈改变结果。
 
-**Minimum requirements**:
-- Test across at least 5-10 years
-- Include multiple market regimes:
-  - Bull markets
-  - Bear markets
-  - High volatility periods
-  - Low volatility periods
-  - Trending markets
-  - Range-bound markets
+### 时间维度稳健性
 
-**Year-by-year analysis**: Strategy should show positive expectancy in majority of years, not rely on 1-2 exceptional years.
+**最低要求**：
+- 至少覆盖 5-10 年
+- 覆盖多种市场状态：
+  - 牛市
+  - 熊市
+  - 高波动期
+  - 低波动期
+  - 趋势市
+  - 震荡市
 
-## 3. Parameter Sensitivity Analysis
+**逐年分析**：策略应在多数年份有正期望，而不是靠 1-2 个特殊年份撑起来。
 
-### Heat Map Analysis
+## 3. 参数敏感性分析
 
-Create 2D heat maps varying two parameters simultaneously:
-- Profit target (rows) × Stop loss (columns)
-- Entry time (rows) × Exit time (columns)
-- Volatility filter (rows) × Volume filter (columns)
+### 热力图分析
 
-**Interpretation**:
-- Robust strategies show "plateaus" of consistent performance
-- Fragile strategies show "spikes" or narrow optimal ranges
-- Avoid strategies with performance cliffs at parameter boundaries
+同时变动两个参数，生成二维热力图：
+- 止盈目标（行）× 止损（列）
+- 入场时间（行）× 出场时间（列）
+- 波动率过滤（行）× 成交量过滤（列）
 
-### Walk-Forward Analysis
+**解读**：
+- 稳健策略表现出持续一致表现的"高原"
+- 脆弱策略表现为"尖峰"或极窄的最优区间
+- 避开在参数边界出现表现断崖的策略
 
-1. Optimize parameters on training period (e.g., Year 1-2)
-2. Test with those parameters on validation period (Year 3)
-3. Roll forward and repeat
-4. Compare in-sample vs out-of-sample performance
+### 滚动前推分析（Walk-Forward）
 
-**Warning signs**:
-- Out-of-sample performance <50% of in-sample
-- Frequent need to re-optimize parameters
-- Parameters that change dramatically between periods
+1. 在训练期（如第 1-2 年）优化参数
+2. 用这组参数在验证期（第 3 年）测试
+3. 向前滚动，重复上述过程
+4. 对比样本内与样本外表现
 
-### Profit Factor Scoring in Evaluation Script
+**危险信号**：
+- 样本外表现不到样本内的 50%
+- 需要频繁重新优化参数
+- 参数在不同时期之间大幅变动
 
-The evaluation script scores profit factor (PF) as one component of the Risk Management dimension (0-8 points out of 20). The mapping uses continuous linear interpolation with integer truncation:
+### 评估脚本中的盈利因子（Profit Factor）打分
 
-- PF < 1.0 → 0 points (unprofitable)
-- PF 1.0 to 3.0 → linear 0 to 8 points: `int((PF - 1.0) / 2.0 * 8)`
-- PF >= 3.0 → 8 points (capped)
+评估脚本把盈利因子（PF）作为风险管理维度的一个组成部分（满分 20 分中占 0-8 分）。映射采用连续线性插值再取整：
 
-The `int()` truncation creates discrete 1-point steps (e.g., PF 1.25→1 pt, PF 1.50→2 pt). This is intentional — integer scoring avoids false precision from fractional differences in profit factor.
+- PF < 1.0 → 0 分（不盈利）
+- PF 1.0 到 3.0 → 线性映射 0 到 8 分：`int((PF - 1.0) / 2.0 * 8)`
+- PF >= 3.0 → 8 分（封顶）
 
-## 4. Slippage and Friction Modeling
+`int()` 截断会产生 1 分一档的离散阶梯（如 PF 1.25→1 分，PF 1.50→2 分）。这是有意为之：整数打分避免了盈利因子细微差异带来的虚假精确。
 
-### Realistic Slippage Assumptions
+## 4. 滑点与摩擦建模
 
-**By market capitalization**:
-- Mega cap (>$200B): 0.01-0.02%
-- Large cap ($10B-$200B): 0.02-0.05%
-- Mid cap ($2B-$10B): 0.05-0.10%
-- Small cap ($300M-$2B): 0.10-0.20%
-- Micro cap (<$300M): 0.20-0.50%+
+### 现实的滑点假设
 
-**By order type**:
-- Market orders: Higher slippage
-- Limit orders: Lower slippage but potential non-fills
-- Stop orders: Significant slippage in volatile conditions
+**按市值**：
+- 超大盘（>$200B）：0.01-0.02%
+- 大盘（$10B-$200B）：0.02-0.05%
+- 中盘（$2B-$10B）：0.05-0.10%
+- 小盘（$300M-$2B）：0.10-0.20%
+- 微盘（<$300M）：0.20-0.50%+
 
-### Conservative Testing Approach
+**按订单类型**：
+- 市价单：滑点更高
+- 限价单：滑点更低，但可能不成交
+- 止损单：波动剧烈时滑点显著
 
-Use 1.5-2x typical slippage estimates for stress testing:
-- If typical slippage is 0.05%, test with 0.075-0.10%
-- If typical is 0.10%, test with 0.15-0.20%
+### 保守测试方法
 
-**Rationale**: Strategies that survive pessimistic assumptions often perform better in practice than in backtests.
+压力测试时用通常滑点估计值的 1.5-2 倍：
+- 若通常滑点为 0.05%，则用 0.075-0.10% 测试
+- 若通常为 0.10%，则用 0.15-0.20% 测试
 
-## 5. Sample Size Guidelines
+**理由**：能在悲观假设下存活的策略，实盘往往比回测表现更好。
 
-### Minimum Trade Requirements
+## 5. 样本量指南
 
-**Statistical significance thresholds**:
-- Absolute minimum: 30 trades
-- Preferred minimum: 100 trades
-- High confidence: 200+ trades
+### 最低交易笔数要求
 
-**Why large samples matter**:
-- Reduces impact of outliers
-- Provides statistical confidence
-- Reveals true edge vs luck
+**统计显著性门槛**：
+- 绝对下限：30 笔
+- 建议下限：100 笔
+- 高置信度：200 笔以上
 
-### Time Period Considerations
+**大样本为什么重要**：
+- 降低异常值影响
+- 提供统计置信度
+- 区分真实优势与运气
 
-**Minimum testing period**: 5 years
-**Preferred testing period**: 10+ years
+### 时间区间考量
 
-**Must include**:
-- At least one full market cycle
-- Multiple volatility regimes
-- Different Federal Reserve policy environments
+**最低测试区间**：5 年
+**建议测试区间**：10 年以上
 
-## 6. Market Regime Analysis
+**必须包含**：
+- 至少一个完整市场周期
+- 多种波动率状态
+- 不同的美联储政策环境
 
-### Regime Classification
+## 6. 市场状态分析
 
-**Volatility-based regimes**:
-- Low volatility: VIX <15
-- Normal volatility: VIX 15-25
-- High volatility: VIX 25-35
-- Extreme volatility: VIX >35
+### 状态划分
 
-**Trend-based regimes**:
-- Strong uptrend: Market +10%+ over 6 months
-- Moderate uptrend: Market +5% to +10% over 6 months
-- Sideways: Market -5% to +5% over 6 months
-- Downtrend: Market <-5% over 6 months
+**按波动率划分**：
+- 低波动：VIX <15
+- 正常波动：VIX 15-25
+- 高波动：VIX 25-35
+- 极端波动：VIX >35
 
-### Performance Requirements by Regime
+**按趋势划分**：
+- 强上行：市场 6 个月 +10% 以上
+- 温和上行：市场 6 个月 +5% 到 +10%
+- 横盘：市场 6 个月 -5% 到 +5%
+- 下行：市场 6 个月 -5% 以下
 
-**Robust strategy characteristics**:
-- Positive expectancy in majority of regimes
-- Acceptable (not necessarily best) in all regimes
-- No catastrophic failures in any single regime
-- Understanding of which regime causes weakness
+### 分状态的表现要求
 
-## 7. Common Pitfalls and Biases
+**稳健策略的特征**：
+- 在多数状态下有正期望
+- 在所有状态下都可接受（不必最优）
+- 不在任何一个状态里出现灾难性失败
+- 清楚哪个状态会导致弱点暴露
 
-### Survivorship Bias
+## 7. 常见陷阱与偏差
 
-**Issue**: Testing only on currently-trading stocks ignores delisted/bankrupt companies.
+### 幸存者偏差
 
-**Solution**: Use survivorship-bias-free datasets that include historical delistings.
+**问题**：只用当前还在交易的股票测试，忽略了已退市/破产的公司。
 
-### Look-Ahead Bias
+**解法**：使用不含幸存者偏差、包含历史退市记录的数据集。
 
-**Issue**: Using information not available at the time of trade.
+### 前视偏差（Look-Ahead Bias）
 
-**Examples**:
-- Using EOD data for intraday decisions
-- Using next-day's open for today's close decisions
-- Calculating indicators with future data points
+**问题**：使用了交易时点尚不可得的信息。
 
-**Prevention**: Strict timestamp control and data alignment checks.
+**示例**：
+- 用日终（EOD）数据做日内决策
+- 用次日开盘价做当日收盘决策
+- 用未来数据点计算指标
 
-### Curve-Fitting (Over-Optimization)
+**预防**：严格管控时间戳，做数据对齐检查。
 
-**Warning signs**:
-- Too many parameters (>=7 triggers over-optimization flag; <=4 is ideal, 5-6 acceptable)
-- Highly specific parameter values (e.g., RSI = 37.3)
-- Perfect backtest results
-- Large performance drop in validation period
+### 曲线拟合（过度优化）
 
-**Prevention techniques**:
-- Limit parameters to essential ones only
-- Use round numbers when possible
-- Require out-of-sample testing
-- Analyze parameter sensitivity
+**危险信号**：
+- 参数过多（>=7 个触发过度优化标记；<=4 个理想，5-6 个可接受）
+- 参数值过于精确（如 RSI = 37.3）
+- 回测结果完美无瑕
+- 验证期表现大幅下滑
 
-### Sample Selection Bias
+**预防手段**：
+- 参数只保留必要的
+- 尽量用整数
+- 必须做样本外测试
+- 做参数敏感性分析
 
-**Issue**: Testing only on hand-picked examples (e.g., known market leaders).
+### 样本选择偏差
 
-**Problem**: Ignoring all stocks that met criteria but failed creates false impression of strategy quality.
+**问题**：只挑手工选出的例子测试（如已知的市场龙头）。
 
-**Solution**: Test on ALL historical examples meeting the criteria, not just successful outcomes.
+**后果**：忽略所有符合条件却失败了的股票，会给人对策略质量的错误印象。
 
-### Hindsight Bias
+**解法**：对所有符合条件的历史例子做测试，而不只测成功案例。
 
-**Issue**: Using outcome knowledge to influence decisions.
+### 后见之明偏差
 
-**Prevention for systematic trading**:
-- Define all rules in advance
-- No manual intervention based on hindsight
-- Test rules across all cases, not cherry-picked examples
+**问题**：用已知结果来影响决策。
 
-### Data Mining Bias
+**系统化交易的预防措施**：
+- 提前定义全部规则
+- 不做基于后见之明的人工干预
+- 在全部案例上测规则，不挑着测
 
-**Issue**: Testing hundreds of strategies until finding one that "works" by random chance.
+### 数据挖掘偏差
 
-**Risk**: With enough attempts, random data will produce seemingly profitable patterns.
+**问题**：测几百个策略，直到碰巧有一个"有效"。
 
-**Mitigation**:
-- Have hypothesis before testing
-- Require economic logic for the edge
-- Use Bonferroni correction for multiple comparisons
-- Demand higher significance thresholds (p < 0.01 instead of p < 0.05)
+**风险**：尝试次数够多，随机数据也会"长"出看似能赚钱的模式。
+
+**缓解手段**：
+- 测试前先有假设
+- 优势必须有经济逻辑支撑
+- 多重比较用 Bonferroni 校正
+- 要求更高的显著性门槛（p < 0.01，而非 p < 0.05）

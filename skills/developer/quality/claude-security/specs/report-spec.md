@@ -1,12 +1,16 @@
-<!-- Audience: the Security Lead assembling a report from workflow findings, which writes CLAUDE-SECURITY-RESULTS.md as the delivery step of the scan job. Load this file only when a scan reaches delivery. -->
+> **中文汉化版** · 上游：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) · 原文件：`plugins/claude-security/skills/claude-security/specs/report-spec.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-# CLAUDE-SECURITY-RESULTS.md — report spec
+<!-- 读者：安全负责人（Security Lead），负责从工作流的发现汇总报告；扫描作业的交付步骤会写出 CLAUDE-SECURITY-RESULTS.md。仅当扫描到达交付阶段时才加载本文件。 -->
 
-The markdown report is the one artifact written as prose rather than generated. It is what a human actually reads, so it is written for a specific reader: an engineer who owns this code, is busy, and will decide in about ninety seconds whether to act on each finding.
+# CLAUDE-SECURITY-RESULTS.md——报告规格
 
-`render_report.py` generates the machine-readable companions from `findings.json` and `votes.json`. Do not hand-write the JSONL, the SARIF, or the stamp, and do not restate the JSONL here — this file is the part a person reads.
+Markdown 报告是唯一以散文形式撰写而非生成的产物。它是人类真正阅读的部分，因此要为一位特定的读者而写：一位拥有这份代码、很忙的工程师，他会用大约九十秒决定是否处理每条发现。
 
-## Shape
+`render_report.py` 从 `findings.json` 和 `votes.json` 生成机器可读的配套产物。不要手写 JSONL、SARIF 或印章，也不要在这里复述 JSONL 的内容，这个文件是人类阅读的那一部分。
+
+## 形态
 
 ```markdown
 # Claude Security results
@@ -176,44 +180,38 @@ it -- do not bury it. If the status is "verified" and a researcher did not
 return, say that "verified" does not cover the missing readings.>
 ```
 
-## Rules
+## 规则
 
-**Severity is exploitability and impact, not confidence.** CRITICAL means severe impact with nothing in the attacker's way. HIGH means severe impact behind one real hurdle. MEDIUM means bounded impact, or serious impact behind several conditions. LOW means limited impact and demanding exploitation. The severity in `findings.json` is final: where the panel's confirming voters rated a finding lower than its researchers did, the workflow already lowered it, and coverage.severityLowered names each such finding with both ratings — say so in its **Verification.** line and do not restore the reported one. Uncertainty belongs in `confidence` — a word, `low`, `medium`, or `high` — which the panel's vote clamps: only a unanimous panel earns `high`, and the workflow has already lowered any other `high`; `render_report.py` lowers it if you raise it.
+**严重程度衡量的是可利用性与影响，不是置信度。** CRITICAL 表示影响严重且攻击者毫无阻碍。HIGH 表示影响严重，但存在一个真实障碍。MEDIUM 表示影响有边界，或严重影响需要满足多个条件。LOW 表示影响有限且利用门槛高。`findings.json` 中的严重程度是最终结果：当评审小组的确认投票者给某条发现的评级低于其研究员时，工作流已经把它调低了，coverage.severityLowered 会列出每条这样的发现及两个评级；在它的 **Verification.** 行如实说明，不要恢复原来的评级。不确定性属于 `confidence`，取值是一个词：`low`、`medium` 或 `high`，由评审小组投票约束：只有全票通过的评审小组才配得上 `high`，而工作流已经调低了其他任何 `high`；如果你把它改高，`render_report.py` 会再次调低。
 
-**Order by severity, then by confidence.** The reader stops partway down; put what matters at the top.
+**按严重程度排序，再按置信度排序。** 读者会中途停下，把要紧的放在顶部。
 
-**More than twenty findings are written in batches.** One call holding every finding can exceed the model's output limit, and a Write cut off there is refused whole. So the first Write holds the opening paragraph, Coverage, the first twenty findings and What was verified, and each further twenty go in with Edit, inserted above the `## What was verified` heading.
+**发现超过二十条时分批写入。** 一次调用装下所有发现可能超出模型的输出上限，在那里被截断的 Write 会被整体拒绝。所以第一次 Write 包含开头段落、Coverage、前二十条发现和 What was verified，之后每二十条用 Edit 写入，插在 `## What was verified` 标题之上。
 
-**Every finding cites a real `file:line`.** A finding pointing at the wrong line costs the reader more than a missed finding, because they lose trust in the rest of the report while chasing it.
+**每条发现都引用真实的 `file:line`。** 一条指向错误行号的发现，代价超过一条漏报：追查它的过程中，读者会失去对报告其余部分的信任。
 
-**A hard-coded credential finding gets no "Link to the change" line.** That is any finding carrying CWE-798, CWE-259, CWE-321 or CWE-671, in `cwe_id` or in `other_cwe_ids`: the changed line it would name is the credential, and the JSONL and SARIF already withhold that link.
+**硬编码凭证类发现不写"Link to the change"行。** 凡在 `cwe_id` 或 `other_cwe_ids` 中带有 CWE-798、CWE-259、CWE-321 或 CWE-671 的发现都是如此：它本要点名的那行改动就是凭证本身，JSONL 和 SARIF 已经隐去了这一链接。
 
-**No control characters.** Only `\n` and `\t`. The report is read in a terminal, where an escape sequence can rewrite what a human sees. If a byte like that genuinely appears in the scanned source, describe it rather than reproducing it.
+**不允许控制字符。** 只允许 `\n` 和 `\t`。报告在终端里阅读，转义序列可能改写人类看到的内容。如果被扫描的源码里确实出现了这样的字节，描述它，而不是复现它。
 
-**No hedging, no padding.** Do not soften a real finding to be polite about the code, and do not inflate a nit to look thorough. "No findings" is a complete report, and writing it well — what you covered, what you did not — is more valuable than a page of maybes.
+**不含糊其辞，不注水凑数。** 不要为了对代码客气而软化真实发现，也不要为了显得全面而夸大小问题。"无发现"是一份完整的报告，把它写好（覆盖了什么、没覆盖什么）比一页"可能有问题"更有价值。
 
-**The researchers' lenses are not the panel's.** A researcher's lens is a vulnerability category, one of them or every category its group kept; a panel voter's is reachability, impact or defenses. Never give the panel's three as the researchers'.
+**研究员的视角不是评审小组的视角。** 研究员的视角是漏洞类别：一个类别，或其所在组保留的全部类别。评审小组投票者的视角是可达性、影响或防御。绝不要把评审小组的这三者说成研究员的。
 
-**Never claim something ran that did not.** Nothing in a scan executes the repository's code: no tests were run, no exploit was fired, no proof-of-concept was validated. Every finding is derived from reading. Say so rather than implying a demonstration.
+**绝不声称运行过没有运行的东西。** 扫描中没有任何环节会执行仓库的代码：没有运行过测试，没有发射过利用，没有验证过任何概念验证。每条发现都来自阅读。如实说明，不要暗示做过演示。
 
-## Example of the bar
+## 达标示例
 
-Not this:
+不要这样写：
 
-> The code may be vulnerable to SQL injection. Consider using parameterized
-> queries as a best practice.
+> 代码可能存在 SQL 注入漏洞。建议按最佳实践使用参数化查询。
 
-This:
+要这样写：
 
-> **Impact.** Any unauthenticated caller of `GET /users?name=` can read every
-> row of the `users` table, including password hashes and email addresses.
+> **Impact.** `GET /users?name=` 的任何未认证调用方都能读取 `users` 表的每一行，包括密码哈希和邮箱地址。
 >
-> **Where.** `api/app.py:3` in `get_user` — CWE-89
+> **Where.** `api/app.py:3` 的 `get_user`——CWE-89
 >
-> **What.** `name` arrives from the query string in `handlers.py:41` and is
-> interpolated into the SQL string with `%`. No escaping or validation runs on
-> the path between them; the `validate_name` call in `handlers.py:38` checks
-> length only.
+> **What.** `name` 在 `handlers.py:41` 从查询字符串进入，然后用 `%` 插值进 SQL 字符串。两者之间的路径上没有任何转义或校验；`handlers.py:38` 的 `validate_name` 只检查长度。
 >
-> **Exploit scenario.** `GET /users?name=' OR '1'='1` makes the WHERE clause
-> tautological and returns the full table in the JSON response.
+> **Exploit scenario.** `GET /users?name=' OR '1'='1` 让 WHERE 子句成为恒真式，JSON 响应返回整张表。

@@ -1,14 +1,18 @@
-# Animation Recipes
+> **中文汉化版** · 上游：[emilkowalski/skills](https://github.com/emilkowalski/skills) · 原文件：`skills/animate/RECIPES.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Ready-to-build implementations for the cases that come up most. Start from the recipe, then adapt — don't rebuild from scratch.
+# 动画配方
 
-Curves are the `--ease-out`, `--ease-in-out`, and `--ease-drawer` tokens defined in SKILL.md.
+最常见的场景，拿来即用的实现。从配方起步再做适配，不要从零重建。
+
+曲线指 SKILL.md 里定义的 `--ease-out`、`--ease-in-out`、`--ease-drawer` token。
 
 ---
 
-## Button press
+## 按钮按压
 
-Any pressable element. Instant feedback that the interface heard the user.
+任何可按压的元素。即时反馈，让界面"听到"用户的操作。
 
 ```css
 .button {
@@ -20,15 +24,15 @@ Any pressable element. Instant feedback that the interface heard the user.
 }
 ```
 
-`scale()` scales children too — the label and icons come along, which is what makes it read as a physical press.
+`scale()` 会连同子元素一起缩放：标签和图标跟着变小，这正是它读起来像物理按压的原因。
 
-No hover gating needed here: `:active` is a real press on touch. Gate any `:hover` styling separately.
+这里不需要 hover 门控：`:active` 在触屏上就是真实的按压。任何 `:hover` 样式要单独做门控。
 
 ---
 
-## Dropdown, popover, menu, select
+## 下拉菜单、popover、菜单、select
 
-Scales out of its trigger, not out of thin air.
+从触发元素里长出来，而不是凭空出现。
 
 ```css
 .popover {
@@ -45,13 +49,13 @@ Scales out of its trigger, not out of thin air.
 }
 ```
 
-The `transform-origin` is the whole point — the panel should look like it came out of the thing you clicked.
+`transform-origin` 是全部重点：面板必须看起来像是从你点击的那个东西里出来的。
 
 ---
 
-## Tooltip
+## tooltip
 
-Same shape as a popover, faster, plus the detail most implementations miss.
+形态与 popover 相同，更快，外加一个大多数实现都会漏掉的细节。
 
 ```css
 .tooltip {
@@ -73,13 +77,13 @@ Same shape as a popover, faster, plus the detail most implementations miss.
 }
 ```
 
-The initial delay prevents accidental activation. After that, skipping both the delay and the animation makes the whole toolbar feel faster.
+初始延迟防止误触发。在此之后，同时跳过延迟和动画，会让整条工具栏感觉更快。
 
 ---
 
-## Modal
+## modal
 
-The one popover that stays centered.
+唯一保持居中的 popover。
 
 ```css
 .modal {
@@ -100,11 +104,11 @@ The one popover that stays centered.
 }
 ```
 
-Animate the backdrop's opacity alongside it so they read as one surface.
+让遮罩层的透明度与它同步动画，两者才读作一个整体表面。
 
 ---
 
-## Drawer / sheet
+## drawer / sheet
 
 ```css
 .drawer {
@@ -117,13 +121,13 @@ Animate the backdrop's opacity alongside it so they read as one surface.
 }
 ```
 
-This is how Vaul hides a drawer before animating it in.
+Vaul 就是先用这个把 drawer 藏起来，再播放入场动画。
 
-Add drag and it becomes a gesture problem — see **Drag to dismiss** below.
+再加上拖拽，它就变成手势问题，见下文**拖拽关闭（drag-to-dismiss）**。
 
 ---
 
-## Toast
+## toast
 
 ```css
 .toast {
@@ -140,19 +144,19 @@ Add drag and it becomes a gesture problem — see **Drag to dismiss** below.
 }
 ```
 
-- `ease` rather than `ease-out`, slightly slower than typical UI: Sonner reads as elegant partly because its motion is tuned to the component's personality rather than to the generic UI budget.
-- If `@starting-style` isn't available, fall back to the mount flag:
+- 用 `ease` 而不是 `ease-out`，比典型 UI 稍慢：Sonner 读起来优雅，部分原因就是它的动效按组件自身的性格来调，而不是套用通用 UI 的时间预算。
+- 如果 `@starting-style` 不可用，退回到挂载标记：
 
 ```jsx
 useEffect(() => { setMounted(true); }, []);
 // <div data-mounted={mounted}>
 ```
 
-When toasts stack and the list reflows, the opacity change has to work against the height change. There's no formula for that pair — adjust until it feels right, then check it again the next day.
+多条 toast 堆叠、列表回流时，透明度变化要和高度变化相互配合。这一对没有公式可套：调到感觉对了为止，第二天再复查一遍。
 
 ---
 
-## Accordion / collapse
+## accordion / collapse
 
 ```css
 .content {
@@ -163,13 +167,13 @@ When toasts stack and the list reflows, the opacity change has to work against t
 }
 ```
 
-Keep it short — this is one of the few animations that costs layout on every frame, so a long duration is expensive as well as sluggish. Measure the content height in JS (or use a headless primitive that supplies it) rather than animating to `auto`.
+保持简短：这是少数每一帧都要付出 layout 代价的动画之一，时长一长，又贵又拖沓。在 JS 里测量内容高度（或使用能提供高度的无头组件），不要把动画目标写成 `auto`。
 
 ---
 
-## Stagger a group entrance
+## 给一组元素做 stagger（错峰）
 
-For a list or grid the user sees occasionally — not for a list they scroll past all day.
+适合用户偶尔看到的列表或网格，不适合用户整天滚动划过的列表。
 
 ```css
 .item {
@@ -190,13 +194,13 @@ For a list or grid the user sees occasionally — not for a list they scroll pas
 }
 ```
 
-Stagger is decorative — it must never block interaction while it plays.
+stagger 是装饰：播放期间绝不能阻塞交互。
 
 ---
 
-## Hold to confirm
+## 按住确认（hold-to-confirm）
 
-For destructive actions where a plain click is too easy to fire by accident.
+用于破坏性操作：普通点击太容易误触。
 
 ```css
 .overlay {
@@ -214,15 +218,15 @@ For destructive actions where a plain click is too easy to fire by accident.
 }
 ```
 
-`linear` is correct here — the fill is a progress indicator, and progress shouldn't ease.
+这里用 `linear` 是对的：填充是进度指示器，而进度不该有缓动。
 
 ---
 
-## Tab indicator with a color transition
+## 带颜色过渡的 tab 指示器
 
-Timing individual color transitions across a tab list never quite lands. Clip instead.
+在整条 tab 列表上给每个颜色分别做过渡计时，效果总是不到位。改用裁切。
 
-Duplicate the tab list. Style the copy as the active state — different background, different text color. Clip the copy so only the active tab shows, and animate the clip on change:
+复制一份 tab 列表。把副本样式化成激活态：不同的背景、不同的文字颜色。对副本做裁切，只露出激活的那个 tab，切换时对裁切区域做动画：
 
 ```css
 .tabs-active-copy {
@@ -231,13 +235,13 @@ Duplicate the tab list. Style the copy as the active state — different backgro
 }
 ```
 
-The text and background change together, in perfect sync, because they're one element being revealed rather than two colors being interpolated.
+文字和背景一起变化，完美同步，因为这是同一个元素在被揭示，而不是两种颜色在插值。
 
 ---
 
-## Scroll reveal
+## 滚动显现（scroll reveal）
 
-Marketing surfaces only. Don't do this to functional UI a user visits daily.
+只用于营销页面。不要对用户每天使用的功能性 UI 这么做。
 
 ```css
 .reveal {
@@ -250,13 +254,13 @@ Marketing surfaces only. Don't do this to functional UI a user visits daily.
 }
 ```
 
-Trigger with `IntersectionObserver`, or Motion's `useInView` with `{ once: true, margin: "-100px" }`. Fire it once — re-animating on every scroll-by is an interface fighting its reader.
+用 `IntersectionObserver` 触发，或用 Motion 的 `useInView` 加 `{ once: true, margin: "-100px" }`。只触发一次：每次滚动经过都重新播放动画，等于界面在和读者作对。
 
 ---
 
-## Drag to dismiss
+## 拖拽关闭（drag-to-dismiss）
 
-The gesture recipe. Springs, not durations, because the user can reverse mid-motion.
+手势配方。用 spring，不用固定时长，因为用户可以在动作中途反向操作。
 
 ```js
 // Dismiss on a flick, not just on distance
@@ -274,14 +278,14 @@ if (Math.abs(swipeAmount) >= SWIPE_THRESHOLD || velocity > 0.11) {
 element.style.transform = `translateY(${distance}px)`;
 ```
 
-Four details that separate a good drag from a bad one:
+四个细节决定拖拽手感的好坏：
 
-- **Pointer capture** once the drag starts, so it continues when the pointer leaves the element's bounds.
-- **Multi-touch protection** — `if (isDragging) return` on new touch points, or switching fingers mid-drag makes the element jump.
-- **Damping past boundaries** — dragging beyond a natural edge moves the element less the further it goes. Real things slow before they stop.
-- **Friction, not a wall** — allow the over-drag with rising resistance rather than refusing it.
+- **指针捕获**：拖拽一开始就捕获指针，这样指针离开元素边界后拖拽仍会继续。
+- **多点触控防护**：新触点进来时执行 `if (isDragging) return`，否则拖拽中途换手指会让元素跳变。
+- **越界阻尼**：拖过自然边界后，拖得越远位移越小。真实物体停下来之前会先减速。
+- **是摩擦力，不是一堵墙**：允许越界拖拽，用递增的阻力应对，而不是直接拒绝。
 
-Settle with a spring so an interrupted drag keeps its velocity:
+用 spring 收尾，被中断的拖拽能保留速度：
 
 ```js
 { type: "spring", duration: 0.5, bounce: 0.2 }
@@ -289,9 +293,9 @@ Settle with a spring so an interrupted drag keeps its velocity:
 
 ---
 
-## Masking a crossfade that won't settle
+## 用遮罩补救收不住的 crossfade
 
-When two states overlap visibly during a transition and no amount of easing or duration tuning fixes it, blur the seam:
+两个状态在过渡期间明显重叠、怎么调 easing 和时长都修不好时，把接缝模糊掉：
 
 ```css
 .content {
@@ -306,13 +310,13 @@ When two states overlap visibly during a transition and no amount of easing or d
 }
 ```
 
-Without blur the eye reads two distinct objects swapping. Blur blends them into one perceived transformation. Keep it under 20px — heavy blur is expensive, especially in Safari.
+不加模糊，眼睛看到的是两个不同的物体在互换。模糊把它们融成一次感知上的变换。模糊值控制在 20px 以内：重度模糊开销很大，Safari 尤其明显。
 
 ---
 
-## Programmatic, without a library
+## 不用库的程序化方案
 
-When the motion needs JS control but not a dependency, WAAPI gives you CSS-grade performance:
+动效需要 JS 控制但不需要引入依赖时，WAAPI 能给你 CSS 级别的性能：
 
 ```js
 element.animate(
@@ -321,4 +325,4 @@ element.animate(
 );
 ```
 
-Hardware-accelerated, interruptible, no bundle cost.
+硬件加速、可中断、零打包体积成本。

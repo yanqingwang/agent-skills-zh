@@ -1,12 +1,16 @@
-# Reconnaissance
+> **中文汉化版** · 上游：[cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) · 原文件：`skills/security-audit/RECONNAISSANCE.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-### Phase 1: Map the source and plan coverage
+# 侦察
 
-The parent initializes `run-metadata.json`, applies the strict pre-reconnaissance budget gate in `SKILL.md`, then creates agent scratch roots and the shared ledger before hunting. If the gate fails, record the incomplete status in metadata and launch no reconnaissance agent. Reconnaissance reads the target and locally available build/configuration state only. It does not contact deployed endpoints, external identity providers, registries, brokers, cloud APIs, or other shared services.
+### Phase 1: 梳理源码并规划覆盖
 
-Launch several `research` agents in parallel. They return structured facts to the parent and do not write files.
+Parent 初始化 `run-metadata.json`，执行 `SKILL.md` 中严格的侦察前预算关卡，然后在猎取之前创建 Agent 的 scratch 根目录和共享台账。关卡未通过时，把不完整状态记入元数据，不启动任何侦察 Agent。侦察只读取目标和本地可得的构建/配置状态。它不接触已部署端点、外部身份提供方、注册表、消息中间件、云 API 或其他共享服务。
 
-**Agent 1a: Product, stack, and local operation**
+并行启动若干 `research` Agent。它们向 Parent 返回结构化事实，不写文件。
+
+**Agent 1a：产品、技术栈与本地运行**
 
 ```text
 Read the target at <target>. Do not use network access. Return:
@@ -19,7 +23,7 @@ Read the target at <target>. Do not use network access. Return:
 Return only source facts with repository-relative file:line references.
 ```
 
-**Agent 1b: Principals, authority, and controls**
+**Agent 1b：主体、权限与控制**
 
 ```text
 Read all source that establishes identity, authorization, isolation, and privilege. Map:
@@ -32,7 +36,7 @@ Read all source that establishes identity, authorization, isolation, and privile
 Return trust boundaries and control locations with repository-relative file:line references. Do not infer live reachability.
 ```
 
-**Agent 1c: Entry surfaces, copies, and sinks**
+**Agent 1c：入口面、副本与 sink**
 
 ```text
 Inventory every source-visible place external or lower-trust input enters:
@@ -41,7 +45,7 @@ For each surface, follow major transformations, stored or derived copies, and se
 Return repository-relative paths and line numbers. Be complete, but do not execute or send inputs.
 ```
 
-**Agent 1d: Local execution and deployment visibility**
+**Agent 1d：本地执行与部署可见性**
 
 ```text
 Read tests, build definitions, manifests, packaging, and maintained environment overlays. Return:
@@ -54,54 +58,54 @@ Read tests, build definitions, manifests, packaging, and maintained environment 
 7. Whether trusted parent-side code can promote predeclared scratch files with path-confined no-follow descriptor traversal, nonblocking regular-file checks, no-follow traversal of every destination parent, exclusive regular-file destination creation, and explicit per-file and cumulative size bounds. Missing promotion controls block use of scratch files as evidence.
 ```
 
-Add focused reconnaissance agents for materially distinct deployment modes or subsystems that these four do not map. Do not silently omit them: if the budget gate in `SKILL.md` blocks a focused agent, launch nothing for it, seed the unmapped area as a `deferred` ledger unit with reason `budget_cannot_reserve_critics_and_validation`, and disclose the gap in the report.
+对这四个 Agent 没有覆盖到的重要差异部署模式或子系统，追加针对性侦察 Agent。不要静默省略：如果 `SKILL.md` 的预算关卡挡住了某个针对性 Agent，就不要为它启动任何东西，把未覆盖区域播种为一个 `deferred` 台账单元，原因为 `budget_cannot_reserve_critics_and_validation`，并在报告中披露这一缺口。
 
-## Prior-run input
+## 先前运行输入
 
-Before selecting work, the parent reads every available prior `coverage-ledger.json` and `findings.json` for the same repo:
+在选择工作之前，Parent 读取同一仓库所有可用的先前 `coverage-ledger.json` 和 `findings.json`：
 
-- Compare the source locations, controls, conditions, and source-derived identity for every prior record and unit against the current source.
-- Carry an unchanged prior `confirmed` record into the current candidate set, with the same fingerprint, only when its relevant source, conditions, and qualifying evidence still apply. Link it to a current `planned` unit with `prior_status: "prior_confirmed_same_source"` and put only that root cause on the hunter exclusion list. The Phase 3 verifier that re-verifies the carried record becomes that unit's assignment owner; its source re-check is the unit's first check and moves the unit to `candidate` with the carried fingerprint.
-- Build a current planned `prior_confirmed_changed_source` revalidation unit when any relevant source or condition changed. Do not exclude that root cause from hunting or assume the prior verdict still applies.
-- Build current work units for every prior `needs_validation`, `deferred`, `blocked`, `out_of_scope`, and changed-source unit. These states are priority input, never deduplication or suppression keys.
-- Carry a still-blocked prior `needs_validation` record with the same fingerprint only after current source supports its trace. Link it to a current `planned` unit with `prior_status: "prior_needs_validation"`; the record keeps the unresolved blocker. The Phase 3 verifier that re-checks the carried record becomes that unit's assignment owner; its re-check is the unit's first check and moves the unit to `candidate` with the carried fingerprint. Include the record in final verification.
-- Treat prior rejected records as stale claims unless current evidence changes the failed trace or missing condition. An unchanged rejection suppresses only that exact claim, not review of the coverage unit.
-- Record missing or incompatible ledgers instead of treating them as empty coverage.
+- 把每条先前记录和单元的源码位置、控制、条件以及源码派生的身份，与当前源码比对。
+- 仅当先前 `confirmed` 记录的相关源码、条件和合格证据仍然成立时，才把它以相同指纹携带进当前候选集。把它链接到一个当前 `planned` 单元，`prior_status` 为 `"prior_confirmed_same_source"`，且只把该根因放进猎手排除清单。重新验证该携带记录的 Phase 3 验证者成为该单元的分配所有者；其源码复查是该单元的第一次检查，并把单元带着携带的指纹移入 `candidate`。
+- 当任何相关源码或条件变化时，构建一个当前计划中的 `prior_confirmed_changed_source` 重验单元。不要把该根因排除出猎取范围，也不要假设先前判定仍然成立。
+- 为每个先前 `needs_validation`、`deferred`、`blocked`、`out_of_scope` 和变源单元构建当前工作单元。这些状态是优先级输入，绝不用作去重或抑制键。
+- 仅当当前源码支持其 trace 时，才以相同指纹携带仍然被阻塞的先前 `needs_validation` 记录。把它链接到一个当前 `planned` 单元，`prior_status` 为 `"prior_needs_validation"`；该记录保留未解决阻塞项。复查该携带记录的 Phase 3 验证者成为该单元的分配所有者；其复查是该单元的第一次检查，并把单元带着携带的指纹移入 `candidate`。把该记录纳入最终验证。
+- 先前 rejected 记录视为过期断言，除非当前证据改变了失败的 trace 或缺失的条件。未变化的拒绝只抑制那一条断言，不抑制对该覆盖单元的审查。
+- 记录缺失或不兼容的台账，而不是把它们当作空覆盖。
 
-State paths and source refs used in `run-metadata.json`. Summarize only the coverage consequences in `architecture.md`.
+把用到的路径和源码 ref 写入 `run-metadata.json`。`architecture.md` 里只总结覆盖影响。
 
-## Architecture summary and companion selection
+## 架构摘要与配套文件选择
 
-The parent synthesizes `<output-dir>/architecture.md`, with a hard cap of about 1,000 words. Include:
+Parent 撰写 `<output-dir>/architecture.md`，硬上限约 1,000 词。包括：
 
-1. Product, principals, normal authority, and protected resources.
-2. The comparable-software baseline from Agent 1a, when one is source-grounded: what security trade-offs the comparable accepts. Use it to calibrate effort and severity, never to dismiss a demonstrated finding; if the comparable shares a defect pattern that has mattered in practice, that strengthens the finding. Omit this line when no meaningful comparable exists.
-3. Tech stack, source-visible deployment paths, and offline build/test limits.
-4. Entry surfaces and the important source-to-sink or lifecycle paths.
-5. Trust boundaries and the strongest source-visible control on each.
-6. Repository-relative starting paths.
-7. Prior coverage gaps, changed-source and blocked revalidation targets, and same-source confirmed exclusions.
-8. A short companion-selection summary derived from [ATTACK-CLASSES.md](ATTACK-CLASSES.md): selected files and the source-visible boundaries that require them.
+1. 产品、主体、常规权限与受保护资源。
+2. Agent 1a 给出的同类软件基线（当它有源码依据时）：该同类软件接受了哪些安全权衡。用它校准投入与严重程度，绝不用它否定一条已论证的发现；如果同类软件在实践中也踩过同一个缺陷模式，这反而加强该发现。没有有意义的同类软件时省略此条。
+3. 技术栈、源码可见的部署路径和离线构建/测试限制。
+4. 入口面和重要的源码到 sink 或生命周期路径。
+5. 信任边界及每条边界上最强的源码可见控制。
+6. 仓库相对的起始路径。
+7. 先前覆盖缺口、变源与被阻塞的重验目标，以及同源已确认的排除项。
+8. 依据 [ATTACK-CLASSES.md](ATTACK-CLASSES.md) 得出的简短配套文件选择摘要：选中的文件，以及需要它们的源码可见边界。
 
-Keep the assignment-level ordinary block, selected companion blocks, and excluded blocks with reasons in each ledger unit, not in `architecture.md`. This keeps the architecture cap valid for large runs and makes the exact hunter prompt map machine-checkable.
+分配级的普通攻击类别块、选中的配套块和带原因的排除块保存在每个台账单元里，不放进 `architecture.md`。这样架构摘要的上限对大规模运行依然成立，精确的猎手提示词映射也可被机器校验。
 
-Do not select a companion file merely because the language or dependency name appears. Select it because reconnaissance found the trust-sensitive boundary described by its `When to use this file` section. Do not exclude a visible boundary just because another agent will review a related class.
+不要仅因为出现某个语言或依赖名就选择配套文件。选择它的理由是侦察发现了其 `When to use this file` 小节描述的信任敏感边界。不要只因为另一个 Agent 会审查相关类别，就排除一个可见边界。
 
-## Deterministic coverage ledger
+## 确定性覆盖台账
 
-The parent writes `<output-dir>/coverage-ledger.json` as a top-level JSON array. Derive one unit for every material combination of entry surface, trust boundary, subsystem, and applicable ordinary or companion attack class at the granularity the run profile sets (`quick` uses one all-in-scope subsystem identity; `deep` adds lifecycle modes). For a scoped run, seed in-scope surfaces for assignment and retain discovered excluded surfaces as `out_of_scope` units so later full runs can turn them into current work.
+Parent 把 `<output-dir>/coverage-ledger.json` 写成顶层 JSON 数组。按运行档位设定的粒度，为暴露面、信任边界、子系统和适用普通/配套攻击类别的每个重要组合派生一个单元（`quick` 用一个全范围内子系统标识；`deep` 额外加入生命周期模式）。限定范围的运行要为分配播种范围内的面，并把发现的被排除面保留为 `out_of_scope` 单元，让以后的完整运行能把它们变成当前工作。
 
-Each dimension has a human label and a stable source-derived value in `canonical_refs`. Use the same canonical reference for the same source object across runs even if its display label changes. Suitable references include a repository-relative entry path plus exported scope, a route or message identity defined in source, the source control that defines a boundary, a repository package path, and the exact attack-class block reference. A block reference is `FILE.md#` plus the exact class name as written in bold or as a heading in that file — a stable identifier matched against the file text, not a rendered HTML anchor. For companion section blocks, use the heading text before any parenthetical qualifier (for example `Core discipline`). Do not derive references by lowercasing or slugging display labels.
+每个维度都有一个人类可读标签，以及 `canonical_refs` 里一个稳定的源码派生值。同一源码对象跨运行使用同一个规范引用，即使其展示标签变化。合适的引用包括：仓库相对入口路径加导出范围、源码中定义的路由或消息标识、定义边界的源码控制、仓库包路径，以及精确的攻击类别块引用。块引用是 `FILE.md#` 加该文件中以粗体或标题形式书写的精确类名，它是用来与文件文本匹配的稳定标识符，不是渲染后的 HTML 锚点。配套小节块用括号限定语之前的标题文本（例如 `Core discipline`）。不要通过小写化或 slug 化展示标签来派生引用。
 
-Derive `coverage_id` without lossy slugs:
+派生 `coverage_id` 时不做有损 slug：
 
-1. Require every reference to be Unicode NFC with valid scalar values, visible content, no control, format, line/paragraph separator, or default-ignorable code point, and no surrounding whitespace.
-2. Encode its UTF-8 bytes with RFC 3986 percent encoding: leave only `A-Z a-z 0-9 - . _ ~` unescaped and use uppercase `%HH` for every other byte.
-3. Join encoded `surface`, `boundary`, `subsystem`, and `attack_class` references with `::`; append encoded `lifecycle` when present.
+1. 要求每个引用为 Unicode NFC，含有效标量值、有可见内容，不含控制、格式、行/段分隔符或默认可忽略码点，且首尾无空白。
+2. 用 RFC 3986 百分号编码其 UTF-8 字节：只有 `A-Z a-z 0-9 - . _ ~` 保持不转义，其余每个字节用大写 `%HH`。
+3. 用 `::` 连接编码后的 `surface`、`boundary`、`subsystem` 和 `attack_class` 引用；存在 `lifecycle` 时追加其编码值。
 
-Use the fixed canonical value `profile/quick/all-in-scope-subsystems` for the quick profile's coarsened subsystem dimension. Do not include wave number, agent, verdict, severity, or line number in a reference or ID. Sort units lexicographically by `coverage_id` before each assignment. Fail on every duplicate ID. If duplicate IDs have different semantic fields, treat that as a canonical identity collision; never merge or silently overwrite them. The validator also rejects one semantic tuple represented by different canonical references.
+quick 档位粗化后的子系统维度使用固定规范值 `profile/quick/all-in-scope-subsystems`。引用或 ID 中不要包含波次号、Agent、判定、严重程度或行号。每次分配之前按 `coverage_id` 字典序排序单元。遇到重复 ID 即失败。如果重复 ID 的语义字段不同，视为规范标识冲突；绝不合并或静默覆盖。校验器同样拒绝用不同规范引用表示同一个语义元组。
 
-Each unit records:
+每个单元记录：
 
 ```json
 {
@@ -132,25 +136,25 @@ Each unit records:
 }
 ```
 
-When `lifecycle` is material, add both `canonical_refs.lifecycle` and a human `lifecycle` field. `ordinary_attack_class_block` is null only when no ordinary block applies. The selected companion list includes each applicable class plus its companion `Core discipline`, `Universal moves`, and `Validation rules`; `excluded_blocks` records every considered but unselected block and the source fact that excludes it.
+`lifecycle` 为重要维度时，同时添加 `canonical_refs.lifecycle` 和人类可读的 `lifecycle` 字段。`ordinary_attack_class_block` 只在没有适用普通块时为 null。选中的配套列表包括每个适用类别及其配套的 `Core discipline`、`Universal moves` 和 `Validation rules`；`excluded_blocks` 记录每个考虑过但未选中的块，以及排除它的源码事实。
 
-The parent may add bookkeeping fields but keeps the semantic fields above stable. In `prior_status`, `new` marks a surface first seen in this run when compatible prior ledgers exist; `none` marks a unit seeded when no compatible prior ledger is available. Prior `deferred`, `blocked`, `out_of_scope`, and changed-source units initialize as current `planned` work when now in scope. A prior same-source covered unit remains visible in the current ledger; assign changed source, important lifecycle paths, and exact conflicts first, then use the coverage critic to decide whether it needs another pass.
+Parent 可以添加簿记字段，但保持上述语义字段稳定。在 `prior_status` 中，`new` 表示存在兼容先前台账时本运行首次见到的面；`none` 表示没有可用兼容先前台账时播种的单元。先前 `deferred`、`blocked`、`out_of_scope` 和变源单元，在现已进入范围时初始化为当前 `planned` 工作。先前同源已覆盖单元在当前台账中保持可见；先分配变源、重要生命周期路径和精确冲突，再用覆盖评审者决定它是否需要再过一遍。
 
-`attempts` is an append-only archive for evidence-bearing assignments that a coverage critic reopens. Before reassignment, append the prior unit's exact `wave`, `status`, `agent_id`, `reviewed_paths`, `local_checks`, `result_fingerprints`, and `unresolved`, plus the critic's source-backed `reassignment_reason`. Only `blocked`, `covered`, and `candidate` states can be archived. Archived attempts retain the same state and evidence invariants as live units, use strictly increasing waves below the current wave, and retain their producing owners and artifacts. The next assignment increments `wave`, uses a fresh owner, and starts with empty live evidence. If the profile or budget prevents another assignment, increment `wave` and use live `deferred` state with null owner, empty evidence, and the stop reason. Never copy an archived owner's checks or artifacts into the live state. A later live terminal state contains only the new attempt's evidence; the archive remains unchanged.
+`attempts` 是只追加的存档，保存被覆盖评审者重新打开的带证据分配。重新分配之前，追加先前单元的准确 `wave`、`status`、`agent_id`、`reviewed_paths`、`local_checks`、`result_fingerprints` 和 `unresolved`，外加评审者有源码依据的 `reassignment_reason`。只有 `blocked`、`covered` 和 `candidate` 状态可以归档。归档的尝试保持与活动单元相同的状态和证据不变量，使用严格递增且低于当前波次的编号，并保留其产出所有者与产物。下一次分配递增 `wave`，使用新所有者，从空的活动证据开始。如果档位或预算不允许再次分配，递增 `wave` 并使用 `deferred` 活动状态，所有者为 null、证据为空，附停止原因。绝不把归档所有者的检查或产物复制进活动状态。后续的活动终态只包含新尝试的证据；存档保持不变。
 
-Enforce this state table exactly:
+严格执行这张状态表：
 
-| Status | Unit `agent_id` | `reviewed_paths` / `local_checks` | `result_fingerprints` | `unresolved` |
+| Status | 单元 `agent_id` | `reviewed_paths` / `local_checks` | `result_fingerprints` | `unresolved` |
 |---|---|---|---|---|
-| `planned` | null | empty | empty | empty |
-| `not_applicable`, `out_of_scope`, `deferred` | null | empty | empty | nonempty reason |
-| `in_progress` | canonical owner | empty | empty | empty |
-| `blocked` | canonical owner | both nonempty owned partial evidence | empty | nonempty blocker |
-| `covered` | canonical owner | both nonempty | empty | empty |
-| `candidate` | canonical owner | both nonempty | nonempty | optional |
+| `planned` | null | 空 | 空 | 空 |
+| `not_applicable`, `out_of_scope`, `deferred` | null | 空 | 空 | 非空原因 |
+| `in_progress` | 规范所有者 | 空 | 空 | 空 |
+| `blocked` | 规范所有者 | 两者均为非空的所属部分证据 | 空 | 非空阻塞项 |
+| `covered` | 规范所有者 | 两者均非空 | 空 | 空 |
+| `candidate` | 规范所有者 | 两者均非空 | 非空 | 可选 |
 
-Canonical agent IDs match `^[a-z0-9][a-z0-9_-]{0,63}$` and are not Windows device names. Lowercase is mandatory, so one ledger cannot contain case-fold aliases. The unit `agent_id` records the assignment owner. Every check records its own `agent_id` and nonempty `reviewed_paths`; the unit-level `reviewed_paths` is exactly their union. A source-only check uses `artifact: null`. A local check requires a regular file promoted only by trusted parent-side code under exactly `agents/<check.agent_id>/artifacts/`. This lets hunter and verifier checks coexist in one unit. Scratch paths, output-root files, symlinks, special files, and another check owner's artifacts are not evidence.
+规范 Agent ID 匹配 `^[a-z0-9][a-z0-9_-]{0,63}$`，且不是 Windows 设备名。必须小写，因此一个台账不能包含大小写折叠的别名。单元的 `agent_id` 记录分配所有者。每个检查记录自己的 `agent_id` 和非空 `reviewed_paths`；单元级 `reviewed_paths` 恰为它们的并集。纯源码检查用 `artifact: null`。本地检查要求一个仅由可信父端代码提升到 `agents/<check.agent_id>/artifacts/` 之下的常规文件。这让猎手检查与验证者检查得以共存于一个单元。scratch 路径、输出根文件、符号链接、特殊文件以及另一个检查所有者的产物都不是证据。
 
-The ledger is the coverage claim. An architecture summary, agent count, or generic "auth reviewed" sentence is not coverage evidence. Phase 2 closes units only from the paths and checks in a hunter's structured result.
+台账就是覆盖声明。架构摘要、Agent 数量或泛泛的一句"审查过认证"都不是覆盖证据。Phase 2 只根据猎手结构化结果中的路径和检查关闭单元。
 
-Run `node <skill-dir>/validate-coverage-ledger.cjs <output-dir>/coverage-ledger.json` after seeding, after every parent update, and before Phase 6. The validator rejects input beyond 5 MiB, 64 nesting levels, 10,000 units, 1,000 entries in a nested collection, or 500,000 traversed values, and caps reported validation errors at 100. In practice the 5 MiB byte limit holds roughly 2,000-5,000 realistic units, so it binds before the 10,000-unit cap. Fix every error before assigning work or making a coverage claim.
+在播种之后、每次 Parent 更新之后以及 Phase 6 之前，运行 `node <skill-dir>/validate-coverage-ledger.cjs <output-dir>/coverage-ledger.json`。校验器拒绝超过 5 MiB、64 层嵌套、10,000 个单元、嵌套集合 1,000 个条目或 500,000 个遍历值的输入，并把报告的校验错误截在 100 条。实践中 5 MiB 字节上限大约容纳 2,000-5,000 个真实单元，所以它会先于 10,000 单元上限生效。分配工作或声称覆盖之前，修掉所有错误。

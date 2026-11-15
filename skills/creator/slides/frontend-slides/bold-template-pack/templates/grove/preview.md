@@ -1,55 +1,59 @@
-# Grove Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/grove/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Grove 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/grove/design.md`
-- Preview card: `bold-template-pack/templates/grove/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/grove/design.md`
+- 预览卡：`bold-template-pack/templates/grove/preview.md`
 
-- Slug: `grove`
-- Tagline: Forest-green canvas with cream type, classical Playfair serifs, and a single rust accent.
-- Mood: organic, considered, warm, literary, natural
-- Tone: classical, warm, considered, patient
-- Formality: medium-high
-- Density: medium
-- Scheme: mixed
-- Best for: Anything that should feel organic, considered, and grown-up: sustainability and wellness brands, outdoor / nature products, wineries and restaurants, literary or arts decks, advisory deliverables, bilingual EN/CN reports. Also a calm, distinctive choice for tech, research, or business decks that want patience over urgency.
-- Avoid for: Decks that need neon energy or rapid-fire pop — the forest-green canvas and Playfair serif commit to a slow, classical voice.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`grove`
+- Tagline：森林绿画布配米白文字、古典 Playfair 衬线与单一铁锈色点缀。
+- Mood：organic、considered、warm、literary、natural
+- Tone：classical、warm、considered、patient
+- Formality：medium-high
+- Density：medium
+- Scheme：mixed
+- 适合：一切应当显得自然、用心而成熟的内容：可持续与健康品牌、户外/自然产品、酒庄与餐厅、文学或艺术演示、咨询交付物、EN/CN 双语报告。对想要从容多于紧迫的科技、研究或商业演示而言，也是一个安静而独特的选择。
+- 避免：需要霓虹能量或密集快节奏的演示文稿：森林绿画布与 Playfair 衬线押注于缓慢的古典语气。
 
-A quiet, editorial-serif presentation system in the register of a well-bound monograph or boutique brand book. Playfair Display at weight 400 (never bold) carries every headline, italicized in terracotta coral for accent emphasis as the signature move. Jost weight 300 carries every paragraph as the "good paper" body face. JetBrains Mono at weight 300 holds labels, kickers, and the thin chrome bars. The palette pairs a deep forest green canvas (#192b1b) with warm cream text (#d4cfbf) and a single terracotta coral accent (#c8524a). Generous negative space, hairline 1px borders, and a near-invisible serif watermark numeral give it the calm authority of a literary journal.
+## 视觉速览
 
-Grove is a quiet, editorial-serif presentation system in the register of a literary monograph or boutique brand book. The foundational premise is restraint: every slide carries one focused content moment surrounded by deep negative space, anchored by thin 1px chrome bars at top and bottom and supported by a small library of compositional beats (coral kicker, 36px coral rule, italic-coral accent, em-dash bullet, near-invisible watermark numeral).
+一套安静的衬线编辑演示系统，语域接近装帧精良的专著或精品品牌手册。Playfair Display 字重 400（从不加粗）承担每个标题，以陶土珊瑚红斜体做强调是招牌动作。Jost 字重 300 以"好纸张"正文字体的身份承担每个段落。JetBrains Mono 字重 300 承担标签、眉题与纤细的界面装饰条。配色把深森林绿画布（#192b1b）与暖米白文字（#d4cfbf）配对，外加单一陶土珊瑚红点缀色（#c8524a）。慷慨的负空间、发丝级 1px 边框与近乎隐形的衬线水印数字，赋予它文学期刊式的沉静权威。
 
-## Preview Ingredients
+Grove 是一套安静的衬线编辑演示系统，语域接近文学专著或精品品牌手册。奠基性前提是克制：每页幻灯片承载一个聚焦的内容时刻，四周环绕深深的负空间，上下由纤细的 1px 界面装饰条锚定，并由一小组构图节拍支撑（珊瑚红眉题、36px 珊瑚红横线、斜体珊瑚红强调、破折号列表符、近乎隐形的水印数字）。
 
-- Palette: bg #192B1B; bg-alt #1E3221; bg-light #E8E4D6; bg-light-alt #DEDAD0; fg #D4CFBF; fg-light #192B1B; accent #C8524A
-- Typography: See full design doc after selection.
-- Signature move: Playfair Display at weight 400 carries every headline, every quote, every stat figure, and every watermark numeral. Bold serif is not permitted — the no-bold rule is the system's most important typographic commitment. Italicized Playfair in {colors.accent} co...
-- Signature move: Jost at weight 300 carries every paragraph and bullet body. The light weight is the "good paper" feel — it sits back and lets the serif lead.
-- Signature move: JetBrains Mono at weight 300 carries every label, kicker, footline, slide counter, and stat caption. Always uppercase, always with at least 0.12em letter-spacing.
-- Signature move: Noto Serif SC / Noto Sans SC at weight 300–500 are loaded as Chinese fallbacks for every role. The deck is built bilingually-aware — Chinese characters render through the Noto cuts when present in the content.
-- Signature move: Playfair Display at weight 400 — never bold — for every serif moment. Italic in {colors.accent} is the headline accent.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：bg #192B1B; bg-alt #1E3221; bg-light #E8E4D6; bg-light-alt #DEDAD0; fg #D4CFBF; fg-light #192B1B; accent #C8524A
+- Typography：完整设计文档在选定后阅读。
+- Signature move：Playfair Display 字重 400 承担每个标题、每句引语、每个统计数字与每个水印数字。不允许粗体衬线：禁用粗体规则是本系统最重要的排印承诺。斜体 Playfair 以 {colors.accent} co...
+- Signature move：Jost 字重 300 承担每段正文与列表。轻字重营造"好纸张"手感：它退居幕后，让衬线主导。
+- Signature move：JetBrains Mono 字重 300 承担每个标签、眉题、页脚线、页码计数与统计图注。始终大写，字距至少 0.12em。
+- Signature move：Noto Serif SC / Noto Sans SC 字重 300–500 作为所有角色的中文回退加载。整套演示文稿是双语感知的：内容中出现中文时，中文字符通过 Noto 字体渲染。
+- Signature move：Playfair Display 字重 400（从不加粗）用于每个衬线时刻。{colors.accent} 中的斜体是标题强调色。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

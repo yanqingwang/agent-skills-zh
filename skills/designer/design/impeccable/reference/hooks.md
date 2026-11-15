@@ -1,120 +1,123 @@
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/hooks.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # /impeccable hooks
 
-Manage the **design detector hook** for the current project.
+管理当前项目的**设计检测 hook**。
 
-The hook runs the impeccable design detector on direct file edits to design-relevant files (`.tsx`, `.jsx`, `.html`, `.vue`, `.svelte`, `.astro`, `.css`, `.scss`, `.sass`, `.less`, `.ts`, `.js`). Claude Code, Codex, Cursor, and GitHub Copilot use a post-tool-use hook and push a short system reminder into the agent's context after the edit; findings get a correction prompt, pending issues get a re-nudge, and clean UI-ish files get a short ack unless quiet mode is on (`hook.quiet` in config). Plain `.ts` and `.js` files are still scanned, but stay quiet unless the detector finds something. Grok Build fires the same PostToolUse scan to mark touched files, then surfaces findings on Stop `additionalContext`. Do not expect a Grok per-edit reminder: Grok discards that stdout. On Hermes Agent the per-edit findings arrive inside the `write_file` or `patch` tool result itself, as its `impeccable` field.
+hook 在直接编辑设计相关文件（`.tsx`、`.jsx`、`.html`、`.vue`、`.svelte`、`.astro`、`.css`、`.scss`、`.sass`、`.less`、`.ts`、`.js`）时运行 impeccable 设计检测器。Claude Code、Codex、Cursor 和 GitHub Copilot 用 post-tool-use hook，在编辑之后把一条简短的系统提醒推入 agent 上下文：有发现就给纠正提示，有待处理问题就再催一次，干净的 UI 类文件给一条简短确认，除非 quiet 模式开着（config 里的 `hook.quiet`）。纯 `.ts` 和 `.js` 文件照样扫描，但检测器没发现就保持安静。Grok Build 触发同样的 PostToolUse 扫描来标记被改过的文件，然后在 Stop 的 `additionalContext` 里浮出发现。不要期待 Grok 的每次编辑提醒：Grok 丢弃那段 stdout。在 Hermes Agent 上，每次编辑的发现直接出现在 `write_file` 或 `patch` 工具结果里，就是它的 `impeccable` 字段。
 
-The detector rules run in two tiers. The per-edit hook surfaces only the immediate tier: mechanical, unambiguous problems worth interrupting an edit for, such as broken images, overflowing content, contrast and legibility failures, gradient text, glow shadows, and design-system drift. Everything else (copy cadence, palette and typography taste, layout rhythm) is deferred to a deep pass on the `Stop` hook event, which runs the full rule set over every UI file touched in the session and surfaces the remaining findings once, deduplicated against what the per-edit pass already reported. A session with nothing left to report stops silently. Set `hook.perEditRules` to `"all"` in `.impeccable/config.json` to restore the full rule set on every edit. The Stop deep pass is wired for Claude Code, Codex, and Grok Build, which dispatch a native `Stop` hook event, and for Hermes Agent, whose plugin sends it from `pre_verify`. Cursor does not get one (its `stop` hook can only answer with a follow-up user message), and GitHub Copilot's stop-style events do not feed context back to the model, so they keep the full detector per edit. Grok also fires an observe-only Stop with `reason: "shutdown"` after `end_turn`; skip that one, scan only `end_turn`.
+检测器规则分两档。每次编辑的 hook 只浮出即时档：机械、无歧义、值得打断一次编辑的问题，例如坏图、内容溢出、对比度与可读性失败、渐变文字、发光阴影、设计系统漂移。其余一切（文案节奏、色板与字体品味、布局节奏）推迟到 `Stop` hook 事件上的深度一轮：它对会话中触碰过的每个 UI 文件跑完整规则集，把剩下的发现一次性浮出，并与每次编辑那轮已报告过的去重。再没东西可报的会话安静收尾。在 `.impeccable/config.json` 里设 `hook.perEditRules` 为 `"all"` 可恢复每次编辑跑完整规则集。Stop 深度一轮为 Claude Code、Codex 和 Grok Build（它们派发原生 `Stop` hook 事件）以及 Hermes Agent（其插件从 `pre_verify` 发出）接线。Cursor 没有（它的 `stop` hook 只能用一条后续用户消息作答），GitHub Copilot 的 stop 类事件不把上下文回传给模型，所以它们保持每次编辑跑完整检测器。Grok 在 `end_turn` 之后还会触发一次只观察的 Stop，`reason: "shutdown"`：跳过那一次，只扫 `end_turn`。
 
-Every hook is a mechanical pass. The reflexes no scanner catches live in [craft-floor.md](craft-floor.md), which the skill loads before it edits UI, so they apply whether or not a hook is wired. A session with no automatic hook gets one `MANUAL_DETECTOR_REQUIRED` directive from `impeccable context` asking for a single detector run at the end.
+每个 hook 都是一次机械扫描。扫描器抓不到的直觉反应住在 [craft-floor.md](craft-floor.md) 里，skill 在编辑 UI 之前加载它，所以无论有没有接 hook，它们都生效。没有自动 hook 的会话会从 `impeccable context` 收到一条 `MANUAL_DETECTOR_REQUIRED` 指令，要求最后跑一次检测器。
 
-This command toggles the hook **per project** by editing `.impeccable/config.json` (the unified Impeccable config; hook runtime settings live under its `hook` key, and shared detector ignores live under `detector`). Per-developer overrides, including the install consent decision (`hook.consent`) the CLI records, live in the gitignored `.impeccable/config.local.json`. Set `hook.enabled: false` to turn the hook off, `hook.quiet: true` to silence the clean/pending acks, or `hook.auditLog` to a file path for an NDJSON log. The legacy `IMPECCABLE_HOOK_DISABLED`, `IMPECCABLE_HOOK_QUIET`, and `IMPECCABLE_HOOK_LOG` env vars are still honored and override these config values when set.
+本命令通过编辑 `.impeccable/config.json`（统一的 Impeccable 配置；hook 运行时设置在其 `hook` 键下，共享的检测器忽略项在 `detector` 键下）**按项目**开关 hook。开发者个人层面的覆写，包括 CLI 记录的安装同意决定（`hook.consent`），住在 gitignore 掉的 `.impeccable/config.local.json` 里。设 `hook.enabled: false` 关掉 hook，设 `hook.quiet: true` 静音干净/待办的确认回执，把 `hook.auditLog` 设为文件路径可获得 NDJSON 日志。旧环境变量 `IMPECCABLE_HOOK_DISABLED`、`IMPECCABLE_HOOK_QUIET`、`IMPECCABLE_HOOK_LOG` 仍然生效，且在设置时覆盖这些 config 值。
 
-Declare server-side template extensions under **`detector.extensions`** when the project uses Blade, Twig, ERB, or Handlebars files; the hook skips them otherwise because they sit outside the built-in extension list. One entry per extension, `{ "ext": ".blade.php", "engine": "html" }`. `engine` picks the analyzer (`html` for markup templates, `text` for JS/TS/CSS-like files) and defaults to `html`. Match against the end of the filename, so double extensions like `.blade.php` and `.html.erb` work. Config only adds extensions; the built-in list always applies.
+项目使用 Blade、Twig、ERB 或 Handlebars 文件时，在 **`detector.extensions`** 下声明服务端模板扩展；否则 hook 会跳过它们，因为它们不在内建扩展列表里。一个扩展一条目，`{ "ext": ".blade.php", "engine": "html" }`。`engine` 选择分析器（标记模板用 `html`，类 JS/TS/CSS 文件用 `text`），默认 `html`。匹配按文件名结尾，所以 `.blade.php`、`.html.erb` 这样的双扩展名可用。config 只做增量；内建列表始终生效。
 
-Manual `.claude/skills/impeccable/scripts/impeccable detect` scans use the same project filter config by default: `detector.ignoreRules`, `detector.ignoreFiles`, `detector.ignoreValues`, and `detector.designSystem.enabled`. `hook.enabled` only controls automatic hook execution, not manual CLI scans. Use `.claude/skills/impeccable/scripts/impeccable detect --no-config ...` for a raw detector run that ignores project config/context. Use `.claude/skills/impeccable/scripts/impeccable ignores ...` for direct CLI CRUD on the same detector ignores.
+手动的 `.claude/skills/impeccable/scripts/impeccable detect` 扫描默认使用同一份项目过滤配置：`detector.ignoreRules`、`detector.ignoreFiles`、`detector.ignoreValues` 和 `detector.designSystem.enabled`。`hook.enabled` 只控制 hook 的自动执行，不管手动 CLI 扫描。要一次无视项目 config/上下文的裸检测器运行，用 `.claude/skills/impeccable/scripts/impeccable detect --no-config ...`。要直接对这些检测器忽略项做 CLI CRUD，用 `.claude/skills/impeccable/scripts/impeccable ignores ...`。
 
-Supported harnesses: Claude Code (`.claude/settings.local.json` for a project-scope install; `$CLAUDE_CONFIG_DIR/settings.json` for a user-scope install, defaulting to `~/.claude/settings.json`; a project hook moved into shared `.claude/settings.json` is honored in place too), Codex (`.codex/hooks.json` in the project), Cursor (`.cursor/hooks.json` in the project), Grok Build (`.grok/hooks/impeccable.json` in the project; requires `/hooks-trust` or `--trust`), GitHub Copilot (`.github/hooks/impeccable.json` in the project, a team-shared committed file that both the Copilot CLI and the cloud agent read), and Hermes Agent (the `impeccable-design-hook` plugin in `~/.hermes/plugins/`; the user enables it once with `hermes plugins enable impeccable-design-hook`; a project install's launcher runs only in a project Hermes trusts, via `hermes skills trust`). For the Copilot CLI, repo-level hooks fire once `.github/hooks/impeccable.json` is committed to the repository's default branch.
+支持的 Harness：Claude Code（项目级安装用 `.claude/settings.local.json`；用户级安装用 `$CLAUDE_CONFIG_DIR/settings.json`，默认 `~/.claude/settings.json`；被挪进共享 `.claude/settings.json` 的项目 hook 也原地生效），Codex（项目里的 `.codex/hooks.json`），Cursor（项目里的 `.cursor/hooks.json`），Grok Build（项目里的 `.grok/hooks/impeccable.json`；要求 `/hooks-trust` 或 `--trust`），GitHub Copilot（项目里的 `.github/hooks/impeccable.json`，一份团队共享、入库提交的文件，Copilot CLI 和云端 agent 都读它），以及 Hermes Agent（`~/.hermes/plugins/` 里的 `impeccable-design-hook` 插件；用户用 `hermes plugins enable impeccable-design-hook` 启用一次；项目级安装的启动器只在 Hermes 信任的项目里运行，经 `hermes skills trust`）。对 Copilot CLI，`.github/hooks/impeccable.json` 提交进仓库默认分支后，仓库级 hook 即触发。
 
-On **Cursor**, the hook runs on `postToolUse` for the `Write` tool (every agent file edit) and returns its reminder as `additional_context`, which Cursor adds after the tool result. Projects set up before this ran a `preToolUse` gate (`hook-before-edit`) that blocked bad writes before they landed; that gate still works until `hooks on`, `impeccable update`, or `impeccable doctor --fix` moves the entry to `postToolUse`.
+在 **Cursor** 上，hook 挂在 `Write` 工具（每次 agent 文件编辑）的 `postToolUse` 上，以 `additional_context` 返回提醒，Cursor 把它加在工具结果之后。更早建的项目跑的是一个 `preToolUse` 门（`hook-before-edit`），在坏写入落地前拦住；那条门仍然有效，直到 `hooks on`、`impeccable update` 或 `impeccable doctor --fix` 把条目挪到 `postToolUse`。
 
-Gemini installs session and completion hooks in `.gemini/settings.json`, merged into the settings already there (comments are tolerated; a commented file is backed up to `settings.json.bak` before the rewrite, and a file that is not valid JSON is left alone). It does not install a per-edit detector hook. The `BeforeTool` hook only rewrites shell commands that run `build-phase`, and only on macOS and Linux; on Windows (where Gemini runs hooks through PowerShell) no session id reaches the shell, so a comp build is not tied to the session and the completion reminder stays silent.
+Gemini 在 `.gemini/settings.json` 里装 session 和 completion hook，合并进已有的设置（容忍注释；带注释的文件在重写前备份为 `settings.json.bak`，不是合法 JSON 的文件不动）。它不装每次编辑的检测器 hook。`BeforeTool` hook 只重写运行 `build-phase` 的 shell 命令，且只在 macOS 和 Linux 上；Windows 上（Gemini 经 PowerShell 跑 hook）没有 session id 到达 shell，comp 构建无法绑定会话，完成提醒保持沉默。
 
-When there is no project Claude skill, `hooks on` looks for `skills/impeccable/scripts/impeccable` inside `CLAUDE_CONFIG_DIR` (default `~/.claude`) and writes the hook into that account's `settings.json`, using the installed launcher's absolute path. Relative account directories resolve against the caller's working directory. An explicit account directory is exclusive: another account's default skill and settings are never substituted. Status and context read the same account settings. If no design harness can be wired, `hooks on` says so, reports skipped invalid settings or the missing skill lookup paths, and gives the next step.
+没有项目级 Claude skill 时，`hooks on` 会在 `CLAUDE_CONFIG_DIR`（默认 `~/.claude`）里找 `skills/impeccable/scripts/impeccable`，用已安装启动器的绝对路径把 hook 写进那个账号的 `settings.json`。相对账号目录按调用者的工作目录解析。显式账号目录是排他的：绝不用另一个账号的默认 skill 和设置顶替。status 和 context 读同一份账号设置。没有任何设计 Harness 可接线时，`hooks on` 直说，报告被跳过的无效设置或缺失的 skill 查找路径，并给出下一步。
 
-Status checks the current event entries and matchers in each manifest, including the Stop pass where supported. Claude Code counts as wired when either project settings file (or its user settings file) contains the current entries. A legacy command, partial manifest, or missing file is reported as not wired. If enabled in config but no design harness is wired, status says so and gives `impeccable hooks on` as the repair command. An installed and enabled Hermes design-hook plugin also counts as wired; `on` acknowledges it without changing the plugin configuration. Wiring confirms the manifest entries; harness trust requirements and session reloads still apply.
+status 检查每个 manifest 里当前的事件条目和匹配器，支持的地方包括 Stop 那一轮。项目设置文件（或其用户设置文件）之一含有当前条目，Claude Code 即算接线。旧命令、残缺 manifest 或文件缺失都报告为未接线。config 里启用但没有任何设计 Harness 接线时，status 直说，并给出修复命令 `impeccable hooks on`。已安装且已启用的 Hermes 设计 hook 插件也算接线；`on` 会承认它而不改插件配置。接线确认 manifest 条目；Harness 的信任要求和会话重载仍然适用。
 
-When `hook.consent` is `"accepted"` in the project's `config.local.json` and the hook is enabled, `impeccable context` restores missing or stale entries for installed harness skills and reports repairs in one line. Shared config consent does not authorize this write. Automatic repair preserves unrelated settings and hooks and leaves malformed manifests alone. Without local consent, context writes no manifests and keeps `MANUAL_DETECTOR_REQUIRED`, naming the missing or stale harness wiring. Explicitly disabled hooks stay disabled.
+项目的 `config.local.json` 里 `hook.consent` 为 `"accepted"` 且 hook 已启用时，`impeccable context` 会为已安装的 Harness skill 恢复缺失或过期的条目，并用一行报告修复。共享 config 里的同意不授权这次写入。自动修复保留无关的设置和 hook，不碰畸形 manifest。没有本地同意时，context 不写任何 manifest，保留 `MANUAL_DETECTOR_REQUIRED`，点名缺失或过期的 Harness 接线。被显式禁用的 hook 保持禁用。
 
-## Routing
+## 路由
 
-The first argument is the action. Defaults to `status`.
+第一个参数是动作。默认 `status`。
 
-| Action | What it does |
+| 动作 | 它做什么 |
 |---|---|
-| `status` | Print current state, shared/local config paths, ignored rules / files / values, env override, and actual manifest wiring for each harness. |
-| `on` | Set `enabled: true` in `.impeccable/config.json`, record local hook consent as accepted, and install/repair provider hook manifests when the skill is installed. |
-| `off` | Set `enabled: false` in `.impeccable/config.json`. |
-| `ignore-rule <id>` | Append `<id>` to `detector.ignoreRules`; for `overused-font`, requires `--all-values`. Suppresses the rule across the whole project. |
-| `ignore-file <glob>` | Append `<glob>` to `detector.ignoreFiles`. Suppresses **every** rule for matching files. |
-| `ignore-value <id> <value> [--shared] [--reason "..."]` | Append a rule/value suppression to shared `.impeccable/config.json`. |
-| `ignore-value <id> <value> --local [--reason "..."]` | Append a private rule/value suppression to `.impeccable/config.local.json`. |
-| `ignore-value <id> "*" --file <glob> [--file <glob>...]` | Turn one rule off in matching files only, leaving it active everywhere else. Repeat `--file`, or use `--file=<glob>` / `--files=<glob>`. A bare `"*"` with no `--file` is refused: use `ignore-rule <id>` if you really mean project-wide. |
-| `reset` | Delete the project config, dedup cache, and Cursor pending queue, and remove the hook's entries from every provider manifest `on` installs, the committed Copilot file included (a team-shared `settings.json` that `on` never writes is never touched). |
+| `status` | 打印当前状态、共享/本地 config 路径、被忽略的规则 / 文件 / 值、env 覆盖，以及每个 Harness 实际的 manifest 接线。 |
+| `on` | 在 `.impeccable/config.json` 里设 `enabled: true`，把本地 hook 同意记录为 accepted，并在 skill 已安装时安装/修复各 provider 的 hook manifest。 |
+| `off` | 在 `.impeccable/config.json` 里设 `enabled: false`。 |
+| `ignore-rule <id>` | 把 `<id>` 追加进 `detector.ignoreRules`；`overused-font` 要求 `--all-values`。在整个项目压制该规则。 |
+| `ignore-file <glob>` | 把 `<glob>` 追加进 `detector.ignoreFiles`。对匹配文件压制**全部**规则。 |
+| `ignore-value <id> <value> [--shared] [--reason "..."]` | 把一条规则/值压制追加进共享的 `.impeccable/config.json`。 |
+| `ignore-value <id> <value> --local [--reason "..."]` | 把一条私有的规则/值压制追加进 `.impeccable/config.local.json`。 |
+| `ignore-value <id> "*" --file <glob> [--file <glob>...]` | 只在匹配文件里关掉一条规则，其余地方保持生效。重复 `--file`，或用 `--file=<glob>` / `--files=<glob>`。不带 `--file` 的裸 `"*"` 会被拒绝：真想全项目生效就用 `ignore-rule <id>`。 |
+| `reset` | 删除项目 config、去重缓存和 Cursor 待处理队列，并从 `on` 安装过的每个 provider manifest 里移除 hook 条目，入库提交的 Copilot 文件也在内（`on` 从不写的团队共享 `settings.json` 绝不触碰）。 |
 
-## Flow
+## 流程
 
-1. Resolve the action from the user's argument. If no action was given, default to `status`.
-2. Invoke the admin script and pass the user's output through verbatim:
+1. 从用户参数解析动作。没给动作时默认 `status`。
+2. 调用管理脚本，把用户的输出原样转达：
 
    ```bash
    .claude/skills/impeccable/scripts/impeccable hooks <action> [args...]
    ```
 
-3. If `<action>` is `off`, follow up with a one-line note: "Done. New edits will not trigger the design hook in this project until you run `/impeccable hooks on`."
-4. If `<action>` is `on`, report what the command installed or repaired. If no installed skill folders were found or settings were skipped, surface that result and do not claim the hook will run. Otherwise note that the harness must load the updated settings (and satisfy any trust requirements) before it runs. On Hermes Agent, `on` cannot install or enable the plugin: if `impeccable context` reported `MANUAL_DETECTOR_REQUIRED`, tell the user to run `npx impeccable install` and then `hermes plugins enable impeccable-design-hook` instead.
-5. If `<action>` is `ignore-value`, `ignore-file`, or `ignore-rule`, just print the script output. The default scope is shared `.impeccable/config.json`; add `--local` only when the user explicitly asks for a private exception.
-6. If `<action>` is `status`, just print the script output. Do not add commentary unless the user asked a follow-up question.
+3. 动作为 `off` 时，补一句一行说明："完成。在你运行 `/impeccable hooks on` 之前，本项目的新编辑不会再触发设计 hook。"
+4. 动作为 `on` 时，报告命令安装或修复了什么。没找到任何已安装的 skill 目录、或设置被跳过时，如实转达该结果，不要声称 hook 会运行。否则提示：Harness 必须先加载更新后的设置（并满足任何信任要求）才会运行。在 Hermes Agent 上，`on` 无法安装或启用插件：如果 `impeccable context` 报过 `MANUAL_DETECTOR_REQUIRED`，改让用户运行 `npx impeccable install`，然后 `hermes plugins enable impeccable-design-hook`。
+5. 动作为 `ignore-value`、`ignore-file` 或 `ignore-rule` 时，只打印脚本输出。默认作用域是共享的 `.impeccable/config.json`；只在用户明确要求私有例外时加 `--local`。
+6. 动作为 `status` 时，只打印脚本输出。除非用户追问，不加评论。
 
-## Triage findings
+## 分诊发现
 
-The hook itself never writes ignore config; every exception goes through `impeccable hooks`. Triage each finding into one of three outcomes:
+hook 自己绝不写忽略配置；每个例外都经 `impeccable hooks` 走。把每条发现分诊为三种结局之一：
 
-- **Real design problem**: fix it. Never add an ignore to skip a fix or to push a blocked write through.
-- **Confident false positive or sanctioned exception**: persist the narrowest ignore yourself and disclose it in your reply. The bar is evidence you can name: an intentional demo or fixture, documentation of bad design, literal or domain-appropriate motion (a ball that bounces), or a choice the user already confirmed. Put that evidence in `--reason` as `"<who decided: evidence>"`; write "user confirmed" only when the user actually did.
-- **Unsure**: leave the finding standing and give the reason in one line. Ask the user only when you genuinely cannot decide.
+- **真实设计问题**：修它。绝不为了跳过修复或把被拦的写入硬推过去而加忽略。
+- **有把握的误报或获准的例外**：自己持久化最窄的忽略，并在回复里披露。门槛是你能点名的证据：有意的 demo 或 fixture、记录坏设计的文档、字面或符合领域语义的运动（一颗弹跳的球）、或用户已确认过的选择。把证据写进 `--reason`，格式 `"<谁决定的：证据>"`；只有用户真的确认过才写"用户确认"。
+- **拿不准**：让发现留着，用一行说明原因。只有真的无法决定时才问用户。
 
-Self-serve stops at `ignore-value`. `ignore-file` and `ignore-rule` silence too much to add on your own judgment; ask the user first.
+自助只到 `ignore-value` 为止。`ignore-file` 和 `ignore-rule` 压制面太大，不能凭你自己的判断加；先问用户。
 
-Prefer the narrowest exception:
+优先最窄的例外：
 
-- If the finding line shows an `ignore-value <rule> <value>` pair, pass it to `impeccable hooks ignore-value` with your `--reason`. This writes shared `.impeccable/config.json` by default.
-- For value-specific findings such as `overused-font` and `bounce-easing`, use `ignore-value` for the specific value. Do not use `ignore-rule overused-font` for a specific font.
-- If the finding has no value-specific command, such as `side-tab`, scope that one rule to the file: `ignore-value <id> "*" --file <path>`. Run `.claude/skills/impeccable/scripts/impeccable detect <path>` first to see what actually fires there.
-- Reach for `ignore-file <path>` only when the whole file is out of scope for design review: a fixture, a generated artifact, a deliberate slop demo. It silences every rule for that file permanently, including rules that have not been written yet. A real UI surface with one noisy rule wants the file-scoped value ignore above.
-- Use `ignore-rule <id>` only when the user asks to suppress that whole rule across the project. For broad overused-font suppression, use `ignore-rule overused-font --all-values` only when the user asks to ignore overused fonts generally.
-- Prefer config ignores (the commands above) by default; they keep suppressions in one reviewable place. Reach for an inline comment only when the waiver must travel with a single file that leaves the repo (a generated/exported standalone document, an emailed HTML file). The supported marker is `impeccable-disable <rule>` (whole file) or `impeccable-disable-line` / `impeccable-disable-next-line` (one line), in any comment syntax, with an optional reason after `:` or `--`. The detector honors it by default; `--no-inline-ignores` or `--no-config` bypasses it.
+- 发现行给出 `ignore-value <rule> <value>` 对时，带上你的 `--reason` 传给 `impeccable hooks ignore-value`。这默认写进共享的 `.impeccable/config.json`。
+- 对值级发现如 `overused-font` 和 `bounce-easing`，用 `ignore-value` 压那个具体值。不要对一款具体字体用 `ignore-rule overused-font`。
+- 发现没有值级命令时，如 `side-tab`，把那一条规则按文件限定：`ignore-value <id> "*" --file <path>`。先跑 `.claude/skills/impeccable/scripts/impeccable detect <path>` 看那里实际触发什么。
+- 只有当整个文件都不在设计评审范围之内时才动 `ignore-file <path>`：一个 fixture、一份生成产物、一个故意的 slop demo。它会永久压制该文件的全部规则，包括还没写出来的规则。一个只有一个吵闹规则的真实 UI 表面，想要的是上面的文件级值忽略。
+- 只在用户要求把整条规则全项目压制时才用 `ignore-rule <id>`。要广泛压制 overused-font，只在用户要求一般性忽略滥用字体时才用 `ignore-rule overused-font --all-values`。
+- 默认优先 config 忽略（上面的命令）；它们把压制放在一个可评审的地方。只有当豁免必须随一个离开仓库的单文件走（生成/导出的独立文档、邮件里的 HTML 文件）时才用行内注释。受支持的标记是 `impeccable-disable <rule>`（整个文件）或 `impeccable-disable-line` / `impeccable-disable-next-line`（单行），任意注释语法均可，`:` 或 `--` 之后可带原因。检测器默认认可它；`--no-inline-ignores` 或 `--no-config` 绕过它。
 
-Example value-specific exception:
+值级例外示例：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable hooks ignore-value overused-font Inter --shared --reason "User confirmed Inter is intentional"
 ```
 
-Example self-served exception, with the evidence named:
+自助例外示例，证据点名：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable hooks ignore-value bounce-easing bounce-ball --shared --reason "Agent: literal ball-bounce animation, bounce easing is the subject"
 ```
 
-Example whole-rule font exception:
+整规则字体例外示例：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable hooks ignore-rule overused-font --all-values --reason "User asked to ignore overused fonts generally"
 ```
 
-Example one-rule-in-one-file exception, for a file that is still worth reviewing
-for everything else:
+单文件单规则例外示例，该文件其余部分仍值得评审：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable hooks ignore-value design-system-font-size "*" --file "src/overlay/widget.js" --reason "Injected widget builds its own type scale; DESIGN.md's ramp describes the site"
 ```
 
-Example whole-file exception, for a file that is out of scope entirely:
+整文件例外示例，该文件完全在范围之外：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable hooks ignore-file "src/legacy/Card.tsx"
 ```
 
-## Constraints
+## 约束
 
-- Never modify `.impeccable/config.json` or `.impeccable/config.local.json` by hand from this command. Always go through `impeccable hooks` so writes stay validated and the file shape stays consistent. One exception: `detector.extensions` has no admin action, so when the user asks to cover a template stack, edit that one field in `.impeccable/config.json` directly and leave the rest of the file untouched.
-- Do not edit the launcher or the binary behind `impeccable hook` and `impeccable hook-before-edit` from this flow. Those are skill plumbing.
-- When a user asks how far to trust the hook, say it runs the engine unsandboxed with the agent's environment and network access (in the Copilot cloud agent too, once `.github/hooks/impeccable.json` is committed), and that the launcher checks a downloaded engine against `.claude/skills/impeccable/scripts/engine-checksums.txt` before its first run; **never** call it sandboxed.
-- The hook never blocks an edit; it emits a post-edit reminder. (A Cursor project still on the old `preToolUse` gate can block a write until its manifest is migrated.) Disabling stops the reminders.
-- The hook is bundled with the Impeccable skill. Project installs use `.claude/settings.local.json`, `.codex/hooks.json`, `.cursor/hooks.json`, `.github/hooks/impeccable.json`, and `.gemini/settings.json`; a user-scope Claude install uses the active account's `$CLAUDE_CONFIG_DIR/settings.json` (default `~/.claude/settings.json`). On Codex, the user must approve the hook via `/hooks` the first time. On Cursor, confirm hooks are enabled under Settings -> Hooks. On GitHub Copilot, the CLI loads `.github/hooks/impeccable.json` once it is committed to the repository's default branch, and the cloud agent reads it from the repo directly.
+- 绝不从本命令手改 `.impeccable/config.json` 或 `.impeccable/config.local.json`。始终经 `impeccable hooks` 走，写入才有校验、文件形状才一致。唯一例外：`detector.extensions` 没有管理动作，用户要求覆盖一套模板栈时，直接编辑 `.impeccable/config.json` 里这一个字段，文件其余部分不动。
+- 不要在这条流程里编辑 `impeccable hook` 和 `impeccable hook-before-edit` 背后的启动器或二进制。那是 skill 的管线。
+- 用户问 hook 该信到什么程度时，如实说：它带着 agent 的环境和网络访问不加沙箱地运行引擎（`.github/hooks/impeccable.json` 提交后，Copilot 云端 agent 里也一样），且启动器在首次运行前对照 `.claude/skills/impeccable/scripts/engine-checksums.txt` 校验下载的引擎；**绝不**说它是沙箱化的。
+- hook 绝不阻塞编辑；它发出编辑后的提醒。（还在旧 `preToolUse` 门上的 Cursor 项目可以拦写入，直到 manifest 迁移。）禁用即停止提醒。
+- hook 随 Impeccable skill 打包。项目级安装用 `.claude/settings.local.json`、`.codex/hooks.json`、`.cursor/hooks.json`、`.github/hooks/impeccable.json` 和 `.gemini/settings.json`；用户级 Claude 安装用当前账号的 `$CLAUDE_CONFIG_DIR/settings.json`（默认 `~/.claude/settings.json`）。Codex 上，用户首次须经 `/hooks` 批准 hook。Cursor 上，确认 Settings -> Hooks 下 hook 已启用。GitHub Copilot 上，`.github/hooks/impeccable.json` 提交进仓库默认分支后 CLI 才加载它，云端 agent 直接从仓库读。
 
-## Failure modes
+## 失败模式
 
-- If `.impeccable/config.json` or `.impeccable/config.local.json` is unreadable or malformed, the hook ignores that file and uses the remaining valid config/defaults. `impeccable hooks status` will show malformed files as ignored.
-- If the user asks to "disable the hook" globally, lead with `/impeccable hooks off` (persistent for this project; writes `hook.enabled: false` to config). The legacy `IMPECCABLE_HOOK_DISABLED=1` env var also works as a one-shot override that follows the shell.
+- `.impeccable/config.json` 或 `.impeccable/config.local.json` 不可读或畸形时，hook 忽略该文件，用剩余的有效 config/默认值。`impeccable hooks status` 会把畸形文件显示为已忽略。
+- 用户要求全局"禁用 hook"时，先给 `/impeccable hooks off`（对本项目持久；向 config 写入 `hook.enabled: false`）。旧环境变量 `IMPECCABLE_HOOK_DISABLED=1` 也可作为跟随 shell 的一次性覆写。

@@ -1,44 +1,48 @@
-# Craft floor
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/craft-floor.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Load this after the direction is settled, and build without announcing the checklist. A pinned brief or the committed visual world overrides anything here except a line marked as a ban; your own habit does not. When the design hook is active it already enforces the mechanical checks below as you edit: act on its findings instead of re-auditing each rule.
+# 工艺底线（Craft floor）
 
-## Verify
+方向定下来之后加载本文件，构建时不要宣告这份清单。被钉住的 brief 或已敲定的视觉世界压过此处一切，只有标为禁令的条目除外；你自己的习惯压不过。design Hook 激活时，它已经在编辑过程中强制执行下方的机械检查：对它的发现采取行动，而不是逐条重审规则。
 
-Each of these is a check on the built result, not an intention. Run them together in each batched look at the render, not as separate screenshot trips; the checks share one render.
+## Verify（验证）
 
-- **Contrast:** body and placeholder text ≥4.5:1, large text ≥3:1. On colored surfaces tint secondary text from that hue or the foreground; never gray.
-- **Depth:** shadows carry an offset and a soft blur. A zero-offset colored halo is decoration.
-- **Spacing:** tight groups, generous separation, more space above a heading than below it. Read the computed values.
-- **Type:** body measure 65–75ch, display max 6rem, tracking floor -0.04em, balanced headings, obvious scale and weight steps. Run the real copy at every breakpoint and fix what overflows.
-- **Motion:** one authored moment, not scattered effects and not one identical entrance on every section. Exponential ease-out from an already-visible default. Reach past transform and opacity: blur, backdrop-filter, clip-path, mask, and shadow belong to the palette when they stay smooth.
-- **States:** hover, disabled, loading, error, empty. Plus real content, working controls, responsive composition, keyboard focus.
-- **Browser surfaces:** the parts you did not draw still carry the design. Text selection, the caret, custom scrollbars, focus rings, underline offset, and the numerals in tabular data all ship with browser defaults that belong to no design system. Theme them from the palette. This is the cheapest signal that a page was built rather than assembled, and the one models skip most reliably.
-- **Copy:** the product's own language. Controls name their action; errors name the problem and the recovery.
-- **Coverage:** every brief requirement present and findable within seconds.
+每一条都是对构建结果的检查，不是对意图的检查。每次批量查看渲染时把它们一起跑完，不要拆成多次截图往返；这些检查共享同一次渲染。
 
-## Refuse
+- **对比度：** 正文与占位文本 ≥4.5:1，大字号文本 ≥3:1。在彩色表面上，次级文本从该色相或前景色取色调；绝不取灰色。
+- **深度：** 阴影要有偏移和柔和的模糊。零偏移的彩色光晕只是装饰。
+- **间距：** 组内紧凑，组间慷慨，标题上方的留白多于下方。读取计算值。
+- **字体：** 正文行长 65–75ch，展示字最大 6rem，字距下限 -0.04em，标题均衡，字号与字重阶梯明显。在每个断点跑真实文案，修掉溢出。
+- **动效：** 一个被真正创作的时刻，不是散落各处的效果，也不是每个区块都来一遍相同的入场。从本来就可见的默认态出发做指数缓出。敢用 transform 和 opacity 之外的手段：blur、backdrop-filter、clip-path、mask 和阴影，只要保持流畅，都属于调色板。
+- **状态：** hover、disabled、loading、error、empty。再加上真实内容、可用的控件、响应式构图、键盘焦点。
+- **浏览器表面：** 你没有画的部分同样承载设计。文本选区、光标、自定义滚动条、焦点环、下划线偏移、表格数据里的数字，全部随浏览器默认样式出厂，不属于任何设计体系。用调色板给它们定主题。这是"页面被建出来而不是拼出来"最便宜的信号，也是模型最稳定漏掉的一个。
+- **文案：** 产品自己的语言。控件说出自己的动作；错误信息说出问题所在和恢复办法。
+- **覆盖：** brief 的每条要求都在，且几秒内找得到。
 
-These are the category's defaults, not bans: the brief's own words can earn any of them. Reaching for one when the axis is free means you were not deciding; recognizing that means rewriting the element, not softening it.
+## Refuse（拒绝）
 
-Page scaffolds:
+这些是品类默认样式，不是禁令：brief 自己的原话可以赎回其中任何一条。在自由轴上顺手抓取其中一条，说明你没有在做决定；认识到这一点，意味着重写该元素，而不是把它软化。
 
-- Same-size cards of icon plus heading plus text as the page structure. Cards are the lazy container; nested cards are always wrong.
-- The hero-metric template: big number, small label, supporting stats, accent.
-- A kicker or eyebrow above a heading. This one is a ban, not a default: no brief earns it back. The heading carries its own weight; delete the label and let the heading speak.
-- Section numbers (01 / 02 / 03) unless the sequence itself carries information the reader needs.
-- A modal for a task that needs neither interruption nor protected focus.
+页面骨架：
 
-Surface habits:
+- 等尺寸的"图标 + 标题 + 文本"卡片充当页面结构。卡片是偷懒的容器；嵌套卡片永远是错的。
+- hero 指标模板：大数字、小标签、若干辅助数字、一个强调色。
+- 标题上方的 kicker 或 eyebrow。这一条是禁令，不是默认：任何 brief 都赎不回它。标题自己扛得住分量；删掉标签，让标题开口。
+- 小节编号（01 / 02 / 03），除非序列本身携带着读者需要的信息。
+- 为既不需要打断也不需要受保护专注的任务上模态框。
 
-- Gradient text. Emphasis comes from weight or size.
-- Glass and blur as decoration rather than as a specific effect.
-- A colored `border-left` or `border-right` above 1px on cards, list items, callouts, or alerts.
-- Hard offset shadows (`box-shadow: 4px 4px 0`) outside a world that is actually neobrutalist. The zero-blur block shadow is a costume, not a depth system; a world that did not choose it never earns it as a default.
-- Sparklines, progress rings, and soft-shadowed rounded rectangles standing in for content.
-- Monospace as a costume for "technical" rather than for code, data, or measurement.
-- A system display face (Impact, Arial Black, the platform sans) as the display voice of an own-world page. Source and self-host a face whose character matches the approved lettering; the closest installed font is a failure, not a fallback.
-- Unicode glyphs or emoji standing in for an icon system. Icons are drawn, from a real library or authored SVG, in one consistent stroke and weight.
-- Geometric masks standing in for organic contours. A circle, polygon, or radial-gradient cutout approximating a photographic subject's edge is the cheap version of the effect and reads worse than omitting it. Derive an alpha matte from the actual image, or produce a cut-out asset.
-- Light or dark picked by category. Pick it from the use scene: who, where, under what ambient light.
+表面习惯：
 
-The floor holds the mechanics; it never picks the direction. With every check green, spend the page on the committed world, and when torn between refined and committed, commit.
+- 渐变文字。强调来自字重或字号。
+- 把玻璃与模糊当装饰，而不是当具体效果。
+- 卡片、列表项、callout 或警示条上超过 1px 的彩色 `border-left` 或 `border-right`。
+- 在并非真新粗野主义的世界上使用硬偏移阴影（`box-shadow: 4px 4px 0`）。零模糊的块状阴影是一套戏服，不是深度体系；没有选择它的世界，永远不能把它当默认。
+- 用迷你折线图、进度环和软阴影圆角矩形顶替内容。
+- 把等宽字体当"技术感"的戏服，而不是用于代码、数据或度量。
+- 用系统展示字体（Impact、Arial Black、平台 sans）充当自有世界页面的展示声音。去找并自托管一款气质与已批准字面相符的字体；最接近的已安装字体是失败，不是回退。
+- 用 Unicode 字形或 emoji 顶替图标体系。图标要画出来，来自真实图标库或手写 SVG，笔触与字重全程一致。
+- 用几何遮罩顶替有机轮廓。用圆形、多边形或径向渐变切口去近似摄影主体的边缘，是这个效果的廉价版，读起来比干脆省掉还差。从真实图像推导 alpha 遮罩，或产出一张抠好的素材。
+- 按品类挑浅色或深色。要从使用场景挑：谁、在哪里、什么环境光。
+
+底线守住机制；它从不挑选方向。所有检查全绿后，把页面花在已敲定的世界上；在精致与贯彻之间摇摆时，选贯彻。

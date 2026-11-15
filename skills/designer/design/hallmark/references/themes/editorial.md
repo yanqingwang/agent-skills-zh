@@ -12,11 +12,15 @@ photo: natural sat=-10 con=4
 pictured: Marquee Hero, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/editorial.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Editorial
 
-A contemporary magazine voice: warm white uncoated stock, a printed black with a faint cool tilt that runs through the reading text too, Bricolage Grotesque at 800 squeezed to width 75 for every head, Source Serif 4 for reading and the standfirst, square corners, a heavy ink rule over 1px hairlines, one printer's green. The condensed head, the serif standfirst and the rule carry it, not ornament. It is not a serif literary journal, not cream with terracotta, and not a gallery of captioned photographs.
+一本当代杂志的声音：暖白非涂布纸、微微偏冷的印刷黑（行文同样用它）、Bricolage Grotesque 挤到宽度 75 的 800 作每个标题、Source Serif 4 做阅读与导语、方正的角、1px 发丝线上的重磅墨线、一种印刷绿。窄体标题、衬线导语与那条线承担一切，不靠装饰。它不是衬线文学期刊，不是奶油底陶土色，也不是带图注照片的画廊。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -30,51 +34,51 @@ A contemporary magazine voice: warm white uncoated stock, a printed black with a
 }
 ```
 
-## Type
+## 字体（Type）
 
-- **Display:** Bricolage Grotesque 800 with `"wdth" 75, "opsz" 96`, `--tracking-display`, sentence case, roman. Line-height 0.92 at hero size, 1.0 for heads. Condensed, it takes one step up: a section head may run at `--text-display-s`, a lone hero word at twice `--text-display`. One weight and one colour per head.
-- **Body:** Source Serif 4 400 and its italic at 18px, optical size automatic, line-height 1.55, oldstyle figures in running text, in `--color-ink-2`. The standfirst (the line under a head, or a statement) is the same face at `--text-lead` up to `--text-display-s`, ink, line-height 1.2 at the large end. A quotation takes the italic; italic never enters a head.
-- **Labels, captions, nav links, controls, table heads, bylines:** Bricolage Grotesque 500 at `"opsz" 12`, full width, a step smaller, sentence case, untracked; captions in `--color-muted`. Figures set in the display face take lining tabular numerals. No mono on the page.
+- **展示字体：**Bricolage Grotesque 800 加 `"wdth" 75, "opsz" 96`，`--tracking-display`，句首大写，正体。Hero 字号行高 0.92，标题 1.0。窄体，所以升一档：章节标题可以排到 `--text-display-s`，独词 Hero 可以到两倍 `--text-display`。一个标题一个字重、一种颜色。
+- **正文：**Source Serif 4 400 及其斜体，18px，光学字号自动，行高 1.55，行文用旧式数字，用 `--color-ink-2`。导语（标题下那行，或一句陈述）用同一字面，`--text-lead` 到 `--text-display-s`，墨色，大字号端行高 1.2。引语用斜体；斜体绝不进标题。
+- **标签、图注、导航链接、控件、表头、署名：**Bricolage Grotesque 500，`"opsz" 12`，全宽，小一档，句首大写，不加字距；图注用 `--color-muted`。用展示字面排的数字用等高表格数字。页面上没有等宽。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Two rule weights: a `--rule-heavy` ink rule opens a section or a table, the head flush under it; 1px `--color-rule` hairlines part rows, columns and figures, `--color-rule-2` under a table head. Nothing is boxed, nothing casts a shadow.
-- Radius 0 on everything: controls, tags, inputs, wells and photographs are sharp rectangles.
-- Depth is a paper step: a well is `--color-paper-2` under a `--color-rule-2` hairline, never a raised card.
-- Bands: a `--color-paper-2` well and one `--color-ink` band with `--color-paper` type, two a page at most; never a green band.
-- Photographs: seen close: hands at work, an object on a bench, a room in daylight, printed pages. Soft window light, people from behind, never a face to the lens; a little quieter than life, square, an inset ink outline at 8%, full-bleed or cut to a column edge. A head crosses a photograph only as a cover line, once a page, over an ink scrim. Two or three big pictures below the first screen; the material carries the rest.
-- No texture, no grain, no mesh.
+- 两种线宽：`--rule-heavy` 墨线为一节或一张表起头，表头紧贴其下；1px `--color-rule` 发丝线分隔行、列与数字，表头之下用 `--color-rule-2`。什么都不装框，什么都不投影。
+- 一切圆角 0：控件、标签、输入框、凹槽与照片都是锋利的矩形。
+- 深度是一档纸面：凹槽是 `--color-rule-2` 发丝线之下的 `--color-paper-2`，绝不是抬起的卡片。
+- 色带：一个 `--color-paper-2` 凹槽与一条 `--color-ink` 色带配 `--color-paper` 文字，每页至多两条；绝不用绿色色带。
+- 照片：近看：工作的手、案上的物件、日光下的房间、印出来的页面。柔和窗光，人物从背后，绝不正对镜头的脸；比生活安静一点，方正，8% 内嵌墨色描边，通栏或齐列边裁切。标题只在作为封面语时横过照片，每页一次，压一层墨色暗化。首屏之下两三张大图；其余交给材料。
+- 无纹理、无颗粒、无网格。
 
-## Range
+## 版式（Range）
 
-- **Contents as rows:** under the heavy rule, three to six hairline rows, a title in the condensed head at about 40px on the left, its standfirst in the serif on the right, a page or date in the display face at the far edge.
-- **The standfirst as a statement:** one or two sentences in Source Serif at `--text-display-s`, ink across ten columns under the heavy rule; the serif at size is as much this theme as the head.
-- **Figures reversed out:** on the ink band, three or four of the prompt's numbers in the condensed head at `--text-display`, parted by hairlines, labels beneath.
-- **The order as a spec sheet:** a form on the paper-2 well, its facts in a ruled table beside the fields, the total in the display face, updated as the quantity changes.
+- **目录化作行：**重磅墨线之下三到六行发丝线行，左侧窄体标题约 40px，右侧衬线导语，最边上展示字面的页码或日期。
+- **导语化作陈述：**一或两句 Source Serif，`--text-display-s` 字号，墨色横跨十列压在重磅墨线之下；衬线在那个字号上与标题同为这个主题的骨血。
+- **数字反白：**墨色色带上，提示词的三四个数字用窄体标题排 `--text-display`，发丝线分隔，下方配标签。
+- **订单化作规格单：**表单压在 paper-2 凹槽上，事实排成字段旁的划线表格，合计用展示字面，随数量变化原位更新。
 
-## Controls
+## 控件（Controls）
 
-- An ink-filled square block (`--color-paper` on `--color-ink`) beside a 1px ink-outlined block, both in the label face, 48px tall; a tag may be the one filled green rectangle.
-- Links carry a hairline underline that turns green on hover; inputs and selects are square, 52px tall, with a 1px `--color-rule-2` border that turns ink on focus.
-- Green stays under 5% of a screen: a hover, one tag, the focus ring.
+- 墨色填充的方块（`--color-paper` 压 `--color-ink`）旁边是 1px 墨色描边的方块，两者都用标签字体，48px 高；标签可以是唯一的绿色填充矩形。
+- 链接带发丝线下划线，悬停转绿；输入框与下拉方正，52px 高，1px `--color-rule-2` 边框，聚焦转墨色。
+- 绿不超过一块屏幕的 5%：一次悬停、一个标签、焦点环。
 
-## Motion
+## 动效（Motion）
 
-State only: a green underline grows under a link over `--dur-short` on `--ease-out`, a block darkens one step, a total changes in place. No reveal, nothing on scroll.
+只动状态：链接之下一条绿色下划线以 `--dur-short`、`--ease-out` 长出，一个方块深一档，合计原位变化。无显现，滚动时无动作。
 
-## Voice
+## 语气（Voice）
 
-Contemporary, lightly literary, exact. Name the issue, the page count, the date; a head reads like a cover line, a standfirst says the argument in one breath.
+当代、略带文学气、精确。说出期号、页数、日期；标题读起来像封面语，导语一口气说完论点。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a serif head; Source Serif 4 sets reading text, standfirsts and quotations, never an `h1` to `h3`.
-- Never Bricolage at its default width; without `"wdth" 75` the head loses the magazine proportion.
-- Never a rounded corner, a pill, a shadow, or a rule in green.
-- Never two picture sections in a row; follow each with rows, a standfirst or the figures.
-- Never an all-caps shout; sentence case, tight, magazine-modern.
+- 绝不用衬线标题；Source Serif 4 只排阅读文字、导语与引语，绝不排 `h1` 到 `h3`。
+- 绝不让 Bricolage 用默认宽度；没有 `"wdth" 75`，标题就丢了杂志的比例。
+- 绝不用圆角、胶囊、阴影或绿色横线。
+- 绝不让两个图片区块相邻；每个之后接行、导语或数字。
+- 绝不全大写喊叫；句首大写、紧凑、杂志式的当代。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">

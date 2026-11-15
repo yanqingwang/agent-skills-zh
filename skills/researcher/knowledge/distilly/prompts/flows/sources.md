@@ -1,31 +1,35 @@
-# Source Material Import
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/flows/sources.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Used by Step 2 of `prompts/flows/create.md` and by the append flow in `prompts/flows/evolve.md`. Resolve every `prompts/...` and `tools/...` path against `{distilly_skill_root}` (see `SKILL.md`).
+# 素材导入
 
-| Task | Tool |
+由 `prompts/flows/create.md` 的 Step 2 与 `prompts/flows/evolve.md` 的追加流程使用。所有 `prompts/...` 与 `tools/...` 路径都相对 `{distilly_skill_root}` 解析（见 `SKILL.md`）。
+
+| 任务 | 工具 |
 |------|------|
-| Read PDF documents | `Read` tool (native PDF support) |
-| Read image screenshots | `Read` tool (native image support) |
-| Read MD/TXT files | `Read` tool |
-| Parse Lark message JSON export | `Bash` → `python3 "{distilly_skill_root}/tools/feishu_parser.py"` |
-| Lark auto-collect (recommended) | `Bash` → `python3 "{distilly_skill_root}/tools/feishu_auto_collector.py"` |
-| Lark docs (browser session) | `Bash` → `python3 "{distilly_skill_root}/tools/feishu_browser.py"` |
-| Lark docs (MCP App Token) | `Bash` → `python3 "{distilly_skill_root}/tools/feishu_mcp_client.py"` |
-| DingTalk auto-collect | `Bash` → `python3 "{distilly_skill_root}/tools/dingtalk_auto_collector.py"` |
-| Parse email .eml/.mbox | `Bash` → `python3 "{distilly_skill_root}/tools/email_parser.py"` |
+| 读取 PDF 文档 | `Read` 工具（原生 PDF 支持） |
+| 读取图片截图 | `Read` 工具（原生图片支持） |
+| 读取 MD/TXT 文件 | `Read` 工具 |
+| 解析飞书消息 JSON 导出 | `Bash` → `python3 "{distilly_skill_root}/tools/feishu_parser.py"` |
+| 飞书自动采集（推荐） | `Bash` → `python3 "{distilly_skill_root}/tools/feishu_auto_collector.py"` |
+| 飞书文档（浏览器会话） | `Bash` → `python3 "{distilly_skill_root}/tools/feishu_browser.py"` |
+| 飞书文档（MCP App Token） | `Bash` → `python3 "{distilly_skill_root}/tools/feishu_mcp_client.py"` |
+| 钉钉自动采集 | `Bash` → `python3 "{distilly_skill_root}/tools/dingtalk_auto_collector.py"` |
+| 解析邮件 .eml/.mbox | `Bash` → `python3 "{distilly_skill_root}/tools/email_parser.py"` |
 
-**Credential rules (Lark / DingTalk / Slack)**: App Secrets, user_access_token, refresh_token, Bot Tokens and OAuth codes must never enter the conversation context.
-- **Never** ask the user to send you these values, and never put them in command arguments, script source, output files or replies.
-- For setup, ask the user to run the script's `--setup` **in their own terminal** (plus `--login` for Lark private chats). Secrets are typed with hidden input and stored in the OS keychain (when `keyring` is installed) or in `~/.distilly/*_config.json` (mode 0600). The user may instead export environment variables (`FEISHU_APP_ID` / `FEISHU_APP_SECRET` / `FEISHU_USER_ACCESS_TOKEN` / `DINGTALK_APP_KEY` / `DINGTALK_APP_SECRET` / `SLACK_BOT_TOKEN`). `--setup` / `--login` refuse to run without an interactive terminal, so you cannot run them on the user's behalf.
-- Use `--check` to see whether credentials are ready; it shows only the source (env / keychain / config file), never the values.
-- If you write your own script against the APIs, load credentials from environment variables or `credentials.resolve(...)` in `tools/credentials.py`, and never print them.
-- If the user pastes a secret into the chat anyway: do not repeat or use it, tell them to rotate it on the open platform, then reconfigure as above.
+**凭证规则（飞书 / 钉钉 / Slack）**：App Secrets、user_access_token、refresh_token、Bot Tokens 和 OAuth codes 绝不能进入对话上下文。
+- **绝不**让用户把这些值发给你，也不要把它们放进命令参数、脚本源码、输出文件或回复里。
+- 配置时，请让用户**在自己的终端里**运行脚本的 `--setup`（飞书私聊还要 `--login`）。Secret 以隐藏输入方式键入，存入系统钥匙串（装了 `keyring` 时）或 `~/.distilly/*_config.json`（权限 0600）。用户也可以改为导出环境变量（`FEISHU_APP_ID` / `FEISHU_APP_SECRET` / `FEISHU_USER_ACCESS_TOKEN` / `DINGTALK_APP_KEY` / `DINGTALK_APP_SECRET` / `SLACK_BOT_TOKEN`）。`--setup` / `--login` 在没有交互终端时会拒绝运行，所以你无法代替用户执行。
+- 用 `--check` 查看凭证是否就绪；它只显示来源（env / 钥匙串 / 配置文件），从不显示值。
+- 如果你自己写脚本调用这些 API，请从环境变量或 `tools/credentials.py` 里的 `credentials.resolve(...)` 加载凭证，并且绝不打印。
+- 如果用户还是把 secret 粘贴进了聊天：不要复述或使用它，让用户去开放平台轮换该密钥，然后按上文重新配置。
 
-The Lark-labelled compatibility collectors currently connect to the China-region `open.feishu.cn` / `feishu.cn` endpoints. International `larksuite.com` tenant routing is not implemented yet.
+标注 Lark 的兼容采集器目前连接的是中国区 `open.feishu.cn` / `feishu.cn` 端点。国际版 `larksuite.com` 的租户路由尚未实现。
 
-## Choose a source
+## 选择来源
 
-Ask the user how they'd like to provide materials:
+询问用户想如何提供素材：
 
 ```
 How would you like to provide source materials?
@@ -51,18 +55,18 @@ Can mix and match, or skip entirely (generate from manual info only).
 
 ---
 
-### Option A: Lark Auto-Collect (Recommended)
+### 选项 A：飞书自动采集（推荐）
 
-First-time setup. Check whether credentials are ready:
+首次使用先配置。检查凭证是否就绪：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_auto_collector.py" --check
 ```
-If not, ask the user to run this **in their own terminal** (do not run it yourself, and do not ask for the App Secret in chat):
+如果没有就绪，让用户**在自己的终端里**运行（不要自己运行，也不要在聊天里索要 App Secret）：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_auto_collector.py" --setup
 ```
 
-**Group chat collection** (uses tenant_access_token, bot must be in the group):
+**群聊采集**（使用 tenant_access_token，机器人必须在群里）：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_auto_collector.py" \
   --name "{name}" \
@@ -71,51 +75,51 @@ python3 "{distilly_skill_root}/tools/feishu_auto_collector.py" \
   --doc-limit 20
 ```
 
-**Private chat (P2P) collection** (requires user_access_token + p2p chat_id):
+**私聊（P2P）采集**（需要 user_access_token + p2p chat_id）：
 
-Private messages can only be accessed via user identity (user_access_token). App identity cannot access private chats.
+私聊消息只能通过用户身份（user_access_token）访问。应用身份无法访问私聊。
 
-**Prerequisites** (the user completes these on the Open Platform and in their own terminal; you only guide):
-1. **Lark app credentials**: `app_id` / `app_secret` configured via `--setup` or environment variables (confirm with `--check`)
-2. **User scopes**: The app must have these user scopes enabled:
-   - `im:message` — read/send messages as user
-   - `im:chat` — read chat list as user
-3. **Redirect URL**: add `http://www.example.com` under the app's "Security Settings → Redirect URLs"
+**前置条件**（以下由用户在开放平台和自己的终端里完成，你只做引导）：
+1. **飞书应用凭证**：通过 `--setup` 或环境变量配置好 `app_id` / `app_secret`（用 `--check` 确认）
+2. **用户权限（user scopes）**：应用必须开启这些用户权限：
+   - `im:message`：以用户身份收发消息
+   - `im:chat`：以用户身份读取会话列表
+3. **重定向 URL**：在应用的“安全设置 → 重定向 URL”下添加 `http://www.example.com`
 
-If the user is missing any of these, guide them through setup. Don't assume anything is pre-configured.
+如果用户缺少其中任何一项，引导其完成配置。不要假设任何东西已预先配置好。
 
-**Getting user_access_token**: ask the user to run this **in their own terminal**:
+**获取 user_access_token**：让用户**在自己的终端里**运行：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_auto_collector.py" --login
 ```
-The script prints the authorization URL; after authorizing in the browser, the user pastes the callback URL into the terminal (hidden input) and the token goes straight into the keychain or config file. Never ask the user to send the code or token in chat.
+脚本会打印授权 URL；用户在浏览器里完成授权后，把回调 URL 粘贴回终端（隐藏输入），token 会直接进入钥匙串或配置文件。绝不要让用户在聊天里发送 code 或 token。
 
-When the token expires (about 2 hours), you can refresh it yourself with no secret input:
+token 过期后（约 2 小时），你可以自行刷新，无需输入任何 secret：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_auto_collector.py" --refresh
 ```
 
-**Getting the p2p chat_id**:
+**获取 p2p chat_id**：
 
-Users typically don't know their chat_id. The user can open the private chat in Lark and find the `oc_` chat_id in the chat link or developer tools. If you write a script to obtain it, the script must read the token from `credentials.resolve("feishu", ...)` or environment variables and must not print it:
+用户通常不知道自己的 chat_id。用户可以在飞书里打开该私聊，从会话链接或开发者工具里找到 `oc_` 开头的 chat_id。如果你写脚本来获取它，脚本必须从 `credentials.resolve("feishu", ...)` 或环境变量读取 token，且不得打印：
 
-- **Method**: Send a message to the other user's open_id — the response includes the chat_id (this really sends a message, so ask the user first)
+- **方法**：向对方 open_id 发一条消息，响应里会带 chat_id（这会真的发出一条消息，所以先征得用户同意）
   ```python
   POST https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id
   Header: Authorization: Bearer <read via credentials.resolve, never hard-coded>
   Body: {"receive_id": "{target_open_id}", "msg_type": "text", "content": "{\"text\":\"hello\"}"}
   # The chat_id in the response is the p2p chat ID
   ```
-- **Important**: `GET /im/v1/chats` does NOT return p2p chats — this is an API limitation, not a permission issue. Do not try to use it for finding private chats.
-- If the user doesn't know the target's open_id, use tenant_access_token to search contacts:
+- **重要**：`GET /im/v1/chats` 不返回 p2p 会话：这是 API 限制，不是权限问题。不要试图用它来找私聊。
+- 如果用户不知道对方的 open_id，用 tenant_access_token 搜索联系人：
   ```python
   GET https://open.feishu.cn/open-apis/contact/v3/scopes
   # Returns open_ids of all users visible to the app
   ```
 
-**Running collection**:
+**执行采集**：
 
-Once credentials are ready and you have the chat_id (the script loads the token itself; it never appears on the command line):
+凭证就绪、拿到 chat_id 之后（脚本自己加载 token，命令行上不会出现）：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_auto_collector.py" \
   --open-id {target_open_id} \
@@ -125,40 +129,40 @@ python3 "{distilly_skill_root}/tools/feishu_auto_collector.py" \
   --msg-limit 1000
 ```
 
-**Flexibility principle**: The above API calls don't have to go through the collector script. If the script doesn't work or doesn't fit the scenario, write Python scripts directly against the same endpoints, but load credentials through `credentials.resolve("feishu", feishu_auto_collector.load_config())` or environment variables; they must never appear in script source, command arguments or output. Key API reference:
-- Get token: `POST /auth/v3/tenant_access_token/internal` (wrapped by `get_tenant_token` in the collector)
-- Send message (get chat_id): `POST /im/v1/messages?receive_id_type=open_id`
-- Fetch messages: `GET /im/v1/messages?container_id_type=chat&container_id={chat_id}`
-- Search contacts: `GET /contact/v3/scopes`, `GET /contact/v3/users/{user_id}`
+**灵活性原则**：上述 API 调用不必经过采集器脚本。如果脚本跑不通或不匹配场景，直接对同样的端点写 Python 脚本，但凭证必须通过 `credentials.resolve("feishu", feishu_auto_collector.load_config())` 或环境变量加载，绝不能出现在脚本源码、命令参数或输出里。关键 API 参考：
+- 获取 token：`POST /auth/v3/tenant_access_token/internal`（采集器里的 `get_tenant_token` 封装了它）
+- 发消息（拿 chat_id）：`POST /im/v1/messages?receive_id_type=open_id`
+- 拉取消息：`GET /im/v1/messages?container_id_type=chat&container_id={chat_id}`
+- 搜索联系人：`GET /contact/v3/scopes`、`GET /contact/v3/users/{user_id}`
 
-Auto-collected content:
-- Group chats: messages sent by them (system messages and stickers filtered)
-- Private chats: full conversation with both parties (for context understanding)
-- Lark docs and Wikis they created/edited
-- Related spreadsheets (if accessible)
+自动采集到的内容：
+- 群聊：他们发出的消息（过滤系统消息和表情包）
+- 私聊：双方的完整对话（用于理解上下文）
+- 他们创建/编辑过的飞书文档和 Wiki
+- 相关电子表格（如果有权限访问）
 
-After collection, `Read` the output files:
-- `knowledge/{slug}/messages.txt` → messages (group + private)
-- `knowledge/{slug}/docs.txt` → document content
-- `knowledge/{slug}/collection_summary.json` → collection summary
+采集完成后，用 `Read` 读取输出文件：
+- `knowledge/{slug}/messages.txt`：消息（群聊 + 私聊）
+- `knowledge/{slug}/docs.txt`：文档内容
+- `knowledge/{slug}/collection_summary.json`：采集摘要
 
-If collection fails, diagnose the error and attempt to fix it. Common issues:
-- Group chat: bot not added to the group
-- Private chat: user_access_token expired (2-hour TTL; run `--refresh`, or ask the user to re-run `--login` in their own terminal if there is no refresh_token)
-- Insufficient permissions: guide user to enable scopes and re-authorize
-- Or switch to Option B/C
+如果采集失败，先诊断错误再尝试修复。常见问题：
+- 群聊：机器人没被拉进群
+- 私聊：user_access_token 过期（2 小时有效期；运行 `--refresh`，若无 refresh_token 则让用户在自己的终端里重跑 `--login`）
+- 权限不足：引导用户开启权限并重新授权
+- 或改用选项 B/C
 
 ---
 
-### Option B: DingTalk Auto-Collect
+### 选项 B：钉钉自动采集
 
-First-time setup. Run `--check` first; if not configured, ask the user to run `--setup` **in their own terminal** (hidden AppSecret input), or to export `DINGTALK_APP_KEY` / `DINGTALK_APP_SECRET`. Never ask for the AppSecret in chat:
+首次使用先配置。先运行 `--check`；如果未配置，让用户**在自己的终端里**运行 `--setup`（AppSecret 隐藏输入），或者导出 `DINGTALK_APP_KEY` / `DINGTALK_APP_SECRET`。绝不要在聊天里索要 AppSecret：
 ```bash
 python3 "{distilly_skill_root}/tools/dingtalk_auto_collector.py" --check
 python3 "{distilly_skill_root}/tools/dingtalk_auto_collector.py" --setup   # run by the user
 ```
 
-Then enter the name:
+然后输入姓名：
 ```bash
 python3 "{distilly_skill_root}/tools/dingtalk_auto_collector.py" \
   --name "{name}" \
@@ -168,23 +172,23 @@ python3 "{distilly_skill_root}/tools/dingtalk_auto_collector.py" \
   --show-browser   # add this flag on first use to complete DingTalk login
 ```
 
-Collected content:
-- DingTalk docs and knowledge bases they created/edited
-- Spreadsheets
-- Messages (⚠️ DingTalk API doesn't support message history — auto-switches to browser scraping)
+采集到的内容：
+- 他们创建/编辑过的钉钉文档和知识库
+- 电子表格
+- 消息（⚠️ 钉钉 API 不支持拉取历史消息：自动切换为浏览器抓取）
 
-After collection, `Read`:
+采集完成后，用 `Read` 读取：
 - `knowledge/{slug}/docs.txt`
 - `knowledge/{slug}/bitables.txt`
 - `knowledge/{slug}/messages.txt`
 
-If message collection fails, prompt user to upload chat screenshots.
+如果消息采集失败，提示用户上传聊天截图。
 
 ---
 
-### Option C: Lark Link
+### 选项 C：飞书链接
 
-When the user provides a Lark doc/Wiki link, ask which method to use:
+用户提供飞书文档/Wiki 链接时，询问用哪种方式：
 
 ```
 Lark link detected. Choose read method:
@@ -205,31 +209,31 @@ Lark link detected. Choose read method:
 Choose [1/2]:
 ```
 
-**Option 1 (Browser)**:
+**方式 1（浏览器）**：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_browser.py" \
   --url "{feishu_url}" \
   --target "{name}" \
   --output /tmp/feishu_doc_out.txt
 ```
-First use will open a browser window for login (one-time).
+首次使用会打开浏览器窗口登录（一次性）。
 
-**Option 2 (MCP)**:
+**方式 2（MCP）**：
 
-First-time setup (shares Lark credentials with Option A). Run `--check` first; if not configured, ask the user to run `--setup` **in their own terminal**:
+首次使用先配置（与选项 A 共用飞书凭证）。先运行 `--check`；如果未配置，让用户**在自己的终端里**运行 `--setup`：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_mcp_client.py" --check
 python3 "{distilly_skill_root}/tools/feishu_mcp_client.py" --setup   # run by the user
 ```
 
-Then read directly:
+然后直接读取：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_mcp_client.py" \
   --url "{feishu_url}" \
   --output /tmp/feishu_doc_out.txt
 ```
 
-Read messages (needs chat ID, format `oc_xxx`):
+读取消息（需要 chat ID，格式 `oc_xxx`）：
 ```bash
 python3 "{distilly_skill_root}/tools/feishu_mcp_client.py" \
   --chat-id "oc_xxx" \
@@ -238,27 +242,27 @@ python3 "{distilly_skill_root}/tools/feishu_mcp_client.py" \
   --output /tmp/feishu_msg_out.txt
 ```
 
-Both methods output to files, then use `Read` to load results into analysis.
+两种方式都输出到文件，然后用 `Read` 把结果载入分析。
 
 ---
 
-### Option D: Upload Files
+### 选项 D：上传文件
 
-- **PDF / Images**: `Read` tool directly
-- **Lark message JSON export**:
+- **PDF / 图片**：直接用 `Read` 工具
+- **飞书消息 JSON 导出**：
   ```bash
   python3 "{distilly_skill_root}/tools/feishu_parser.py" --file {path} --target "{name}" --output /tmp/feishu_out.txt
   ```
-  Then `Read /tmp/feishu_out.txt`
-- **Email files .eml / .mbox**:
+  然后 `Read /tmp/feishu_out.txt`
+- **邮件文件 .eml / .mbox**：
   ```bash
   python3 "{distilly_skill_root}/tools/email_parser.py" --file {path} --target "{name}" --output /tmp/email_out.txt
   ```
-  Then `Read /tmp/email_out.txt`
-- **Markdown / TXT**: `Read` tool directly
+  然后 `Read /tmp/email_out.txt`
+- **Markdown / TXT**：直接用 `Read` 工具
 
 ---
 
-### Option E: Paste Text
+### 选项 E：粘贴文本
 
-User-pasted content is used directly as text material. No tools needed.
+用户粘贴的内容直接作为文字素材使用，不需要任何工具。

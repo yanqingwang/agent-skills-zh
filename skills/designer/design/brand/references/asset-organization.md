@@ -1,8 +1,12 @@
-# Asset Organization Guide
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/brand/references/asset-organization.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Guidelines for organizing marketing assets in a structured, searchable system.
+# 素材整理指南
 
-## Directory Structure
+以结构化、可检索的方式组织营销素材的准则。
+
+## 目录结构
 
 ```
 project-root/
@@ -40,25 +44,25 @@ project-root/
 │       └── {YYYYMMDD}/               # Date-organized
 ```
 
-## Naming Convention
+## 命名规范
 
-### Format
+### 格式
 ```
 {type}_{campaign}_{description}_{timestamp}_{variant}.{ext}
 ```
 
-### Components
-| Component | Format | Required | Examples |
+### 组成部分
+| 组件 | 格式 | 必填 | 示例 |
 |-----------|--------|----------|----------|
-| type | lowercase | Yes | banner, logo, design, video |
-| campaign | kebab-case | Yes* | claude-launch, q1-promo, evergreen |
-| description | kebab-case | Yes | hero-image, email-header |
-| timestamp | YYYYMMDD | Yes | 20251209 |
-| variant | kebab-case | No | dark-mode, 1x1, mobile |
+| type | lowercase | 是 | banner, logo, design, video |
+| campaign | kebab-case | 是* | claude-launch, q1-promo, evergreen |
+| description | kebab-case | 是 | hero-image, email-header |
+| timestamp | YYYYMMDD | 是 | 20251209 |
+| variant | kebab-case | 否 | dark-mode, 1x1, mobile |
 
-*Use "evergreen" for non-campaign assets
+*非活动素材使用"evergreen"
 
-### Examples
+### 示例
 ```
 banner_claude-launch_hero-image_20251209_16-9.png
 logo_brand-refresh_horizontal-full-color_20251209.svg
@@ -67,9 +71,9 @@ video_product-demo_feature-walkthrough_20251209.mp4
 infographic_evergreen_pricing-comparison_20251209.png
 ```
 
-## Metadata Schema
+## 元数据 Schema
 
-### Asset Entry (manifest.json)
+### 素材条目（manifest.json）
 ```json
 {
   "id": "uuid-v4",
@@ -93,7 +97,7 @@ infographic_evergreen_pricing-comparison_20251209.png
 }
 ```
 
-### Version Entry (versions/{id}/v{n}.json)
+### 版本条目（versions/{id}/v{n}.json）
 ```json
 {
   "version": 2,
@@ -105,10 +109,10 @@ infographic_evergreen_pricing-comparison_20251209.png
 }
 ```
 
-## Tagging System
+## 打标系统
 
-### Standard Tags
-| Category | Values |
+### 标准标签
+| 类别 | 取值 |
 |----------|--------|
 | status | draft, review, approved, archived |
 | platform | instagram, twitter, linkedin, facebook, youtube, email, web |
@@ -116,42 +120,42 @@ infographic_evergreen_pricing-comparison_20251209.png
 | format | 1x1, 4x5, 9x16, 16x9, story, reel, banner |
 | source | imagen-4, veo-3, user-upload, canva, figma |
 
-### Tag Usage
-- Each asset should have: status + platform + content-type
-- Optional: format, source, campaign
+### 标签使用
+- 每个素材应包含：status + platform + content-type
+- 可选：format、source、campaign
 
-## File Organization Best Practices
+## 文件组织最佳实践
 
-1. **One file per variant** - Don't combine dark/light in one file
-2. **Source files separate** - Keep .psd/.fig in same structure
-3. **AI assets timestamped** - Auto-organize by generation date
-4. **Archive don't delete** - Move to `archived/` with date prefix
-5. **Large files external** - Videos > 100MB use cloud storage links
+1. **一个变体一个文件**：不要把深色/浅色合在一个文件里
+2. **源文件单独放**：`.psd`/`.fig` 保留在同一结构中
+3. **AI 素材加时间戳**：按生成日期自动归档
+4. **归档而非删除**：移入 `archived/` 并加日期前缀
+5. **大文件外置**：超过 100MB 的视频用云存储链接
 
-## Search Patterns
+## 检索模式
 
-### By Type
+### 按类型
 ```bash
 # Find all banners
 ls assets/banners/**/*
 ```
 
-### By Campaign
+### 按活动
 ```bash
 # Find all assets for specific campaign
 grep -l "claude-launch" .assets/manifest.json
 ```
 
-### By Status
+### 按状态
 ```bash
 # Find approved assets only
 jq '.assets[] | select(.status == "approved")' .assets/manifest.json
 ```
 
-## Cleanup Workflow
+## 清理工作流
 
-1. Run `extract-colors.cjs` on new assets
-2. Validate against brand guidelines
-3. Update manifest.json with new entries
-4. Tag appropriately
-5. Remove duplicates/outdated versions
+1. 对新素材运行 `extract-colors.cjs`
+2. 对照品牌指南校验
+3. 把新条目写入 manifest.json
+4. 打上合适的标签
+5. 移除重复/过期版本

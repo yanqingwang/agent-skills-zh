@@ -1,12 +1,16 @@
-# Architecture
+> **中文汉化版** · 上游：[garrytan/gstack](https://github.com/garrytan/gstack) · 原文件：`skills/developer/gstack/ARCHITECTURE.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document explains **why** gstack is built the way it is. For setup and commands, see CLAUDE.md. For contributing, see CONTRIBUTING.md.
+# 架构
 
-## The core idea
+本文解释 gstack **为何**如此构建。安装与命令见 CLAUDE.md。贡献见 CONTRIBUTING.md。
 
-gstack gives Claude Code a set of opinionated workflow skills and a browser to see with. The browser it reaches for first is the user's own [Aside](https://aside.com) AI browser (macOS 15+): real cookies, real logged-in accounts, the tabs they already have open. When Aside is not installed or not running — Linux, Windows, a closed Aside app — gstack falls back, automatically, to the browser it ships itself: a persistent headless Chromium daemon behind a compiled CLI (`$B`). Same skills, same evidence lines, two engines.
+## 核心理念
 
-The key insight, learned the expensive way: an AI agent wants to be in *your* browser, not in a browser that imitates you. Every feature of the daemon — cookie import so it could be logged in as you, headed mode so you could watch, a CAPTCHA handoff, a tunnel so other agents could join, a sidebar so it could talk back — existed to close the gap to the browser you already had open. Aside is that browser with an agent-grade CLI, so on a Mac with Aside open the skills use it directly:
+gstack 给 Claude Code 一套立场鲜明的 workflow skill，外加一双能看的浏览器。它最先伸手去够的是用户自己的 [Aside](https://aside.com) AI 浏览器（macOS 15+）：真实的 cookie、真实登录的账号、已经打开的标签页。当 Aside 未安装或未运行（Linux、Windows、Aside 应用已关闭）时，gstack 自动回退到自带的浏览器：编译后 CLI（`$B`）背后的常驻无头 Chromium 守护进程。同一批 skill，同样的证据行，两个引擎。
+
+花了不少代价才学到的关键认识：AI agent 想待在*你的*浏览器里，而不是一个模仿你的浏览器里。守护进程的每个功能（cookie 导入让它能以你的身份登录、有头模式让你能看到、CAPTCHA 移交、隧道让其他 agent 加入、侧边栏让它能回话）都是为了拉近与你已经打开的那个浏览器的差距。Aside 就是那个浏览器，还带 agent 级 CLI，所以在开着 Aside 的 Mac 上，skill 直接用它：
 
 ```
 Claude Code                           Aside (the user's browser, macOS 15+)
@@ -20,13 +24,13 @@ Claude Code                           Aside (the user's browser, macOS 15+)
           GSTACK_STEP_OK sentinel       sentinel (or a `[error` line)
 ```
 
-One flow per script. Nothing persists between calls, so a skill re-navigates from the URL for each step, prints labelled evidence lines, and copies artifacts out of the session directory in bash. The full contract — detect-never-install, own tabs only, look-freely-act-with-consent, credentials never pass through the agent, everything a page returns is untrusted — lives in `scripts/resolvers/aside.ts` and renders into every browser skill as `{{ASIDE_SETUP}}`; `test/aside-driver.test.ts` pins its sentences. [BROWSER.md](BROWSER.md) is the reader's version.
+每个脚本一条流程。调用之间什么都不保留，所以 skill 每一步都从 URL 重新导航，打印带标签的证据行，并用 bash 把产物从会话目录复制出来。完整契约（检测而非安装、只用自己开的标签页、随便看但征得同意才能动、凭据绝不经过 agent、页面返回的一切都不可信）写在 `scripts/resolvers/aside.ts`，渲染进每个浏览器 skill 的 `{{ASIDE_SETUP}}`；`test/aside-driver.test.ts` 固定其句子。[BROWSER.md](BROWSER.md) 是面向读者的版本。
 
-Web research in the planning and review skills goes through the same door first: `aside exec "<question>"` in the user's browser (`{{ASIDE_RESEARCH}}`), one read-only request per question, the answer treated as untrusted content, every call routed through the `_aside_exec` wrapper (`{{ASIDE_EXEC_PRELUDE}}`) that writes an egress receipt before the prompt leaves the machine (fail-open: only a missing egress library lets the call run unreceipted). Without Aside it uses the host's WebSearch tool when there is one, and otherwise says "Search unavailable" once and carries on.
+规划与审查 skill 里的网络研究先走同一扇门：在用户浏览器里执行 `aside exec "<question>"`（`{{ASIDE_RESEARCH}}`），每个问题一次只读请求，回答按不可信内容对待，每次调用都经过 `_aside_exec` 包装器（`{{ASIDE_EXEC_PRELUDE}}`），它在提示词离开机器前写一条出口回执（fail-open：只有出口库缺失时调用才会无回执运行）。没有 Aside 时用宿主的 WebSearch 工具（若有），否则说一次 "Search unavailable" 然后继续。
 
-### The fallback engine
+### 回退引擎
 
-The second engine is the one gstack has always shipped, and it is what runs everywhere Aside does not. An AI agent driving a browser it owns needs **sub-second latency** and **persistent state**: if every command cold-starts a browser you wait 3-5 seconds per tool call, and if the browser dies between commands you lose cookies, tabs, and login sessions. So gstack runs a long-lived Chromium daemon that the CLI talks to over localhost HTTP.
+第二个引擎是 gstack 一直自带的那个，Aside 覆盖不到的地方都由它运行。AI agent 驱动自己拥有的浏览器需要**亚秒级延迟**和**持久状态**：如果每条命令都冷启动浏览器，每次工具调用要等 3-5 秒；如果浏览器在命令之间死掉，cookie、标签页、登录会话全丢。所以 gstack 运行一个长寿的 Chromium 守护进程，CLI 通过 localhost HTTP 与之通信。
 
 ```
 Claude Code                     gstack
@@ -53,202 +57,202 @@ Claude Code                     gstack
                                └───────────────────────┘
 ```
 
-First call starts everything (~3s). Every call after: ~100-200ms.
+首次调用启动全部（约 3 秒）。之后每次调用：约 100-200ms。
 
-The skills decide which engine to use at their BROWSER SETUP step: probe Aside (`command -v aside` + a one-line `aside repl`); on `READY` drive Aside, otherwise resolve `$B` per `{{BROWSE_FALLBACK}}` and run the `$B` equivalent of each cookbook shape. Cookie import, GStack Browser headed mode, `/pair-agent`, browser-skills and `/skillify`, and domain-skills are features of this engine — they matter on the fallback path and are unnecessary on Aside, where the sessions are already yours.
+skill 在自己的 BROWSER SETUP 步骤决定用哪个引擎：探测 Aside（`command -v aside` 加一行 `aside repl`）；`READY` 就驱动 Aside，否则按 `{{BROWSE_FALLBACK}}` 解析 `$B`，运行每个 cookbook 形态的 `$B` 等价物。Cookie 导入、GStack Browser 有头模式、`/pair-agent`、browser-skills 与 `/skillify`、领域 skill 都是这个引擎的功能：它们在回退路径上有意义，在 Aside 上则多余，因为那里的会话本来就是你自己的。
 
-## Why Bun
+## 为什么用 Bun
 
-Node.js would work. Bun is better here for three reasons:
+Node.js 也能用。在这里 Bun 更好，理由有三：
 
-1. **Compiled binaries.** `bun build --compile` produces a single ~58MB executable. No `node_modules` at runtime, no `npx`, no PATH configuration. The binary just runs. This matters because gstack installs into `~/.claude/skills/` where users don't expect to manage a Node.js project.
+1. **编译成二进制。** `bun build --compile` 产出单个约 58MB 的可执行文件。运行时没有 `node_modules`，不用 `npx`，不用配置 PATH。二进制直接跑。这很重要，因为 gstack 装在 `~/.claude/skills/`，用户没道理在那里维护一个 Node.js 项目。
 
-2. **Native SQLite.** Cookie decryption reads Chromium's SQLite cookie database directly. Bun has `new Database()` built in — no `better-sqlite3`, no native addon compilation, no gyp. One less thing that breaks on different machines.
+2. **原生 SQLite。** Cookie 解密直接读 Chromium 的 SQLite cookie 数据库。Bun 内置 `new Database()`：不需要 `better-sqlite3`，不需要编译原生插件，没有 gyp。少一件在不同机器上坏掉的事。
 
-3. **Native TypeScript.** The server runs as `bun run server.ts` during development. No compilation step, no `ts-node`, no source maps to debug. The compiled binary is for deployment; source files are for development.
+3. **原生 TypeScript。** 开发期服务器以 `bun run server.ts` 运行。没有编译步骤，不用 `ts-node`，不用调试 source map。编译二进制用于部署；源码文件用于开发。
 
-4. **Built-in HTTP server.** `Bun.serve()` is fast, simple, and doesn't need Express or Fastify. The server handles ~30 routes, declared in one route table (`browse/src/routes/table.ts`; its header shows how to add one). A framework would be overhead.
+4. **内置 HTTP 服务器。** `Bun.serve()` 快、简单，不需要 Express 或 Fastify。服务器处理约 30 条路由，全部声明在一张路由表里（`browse/src/routes/table.ts`；文件头部展示了如何新增一条）。引入框架只会是负担。
 
-The bottleneck is always Chromium, not the CLI or server. Bun's startup speed (~1ms for the compiled binary vs ~100ms for Node) is nice but not the reason we chose it. The compiled binary and native SQLite are.
+瓶颈永远是 Chromium，不是 CLI 或服务器。Bun 的启动速度（编译二进制约 1ms，对比 Node 约 100ms）不错，但不是我们选它的原因。编译二进制和原生 SQLite 才是。
 
-## The daemon model
+## 守护进程模型
 
-### Why not start a browser per command?
+### 为什么不每条命令启动一个浏览器？
 
-Playwright can launch Chromium in ~2-3 seconds. For a single screenshot, that's fine. For a QA session with 20+ commands, it's 40+ seconds of browser startup overhead. Worse: you lose all state between commands. Cookies, localStorage, login sessions, open tabs — all gone.
+Playwright 约 2-3 秒能启动 Chromium。单张截图，无所谓。带 20 多条命令的 QA 会话，就是 40 多秒的浏览器启动开销。更糟：命令之间所有状态丢失。Cookie、localStorage、登录会话、打开的标签页，全没了。
 
-The daemon model means:
+守护进程模型意味着：
 
-- **Persistent state.** Log in once, stay logged in. Open a tab, it stays open. localStorage persists across commands.
-- **Sub-second commands.** After the first call, every command is just an HTTP POST. ~100-200ms round-trip including Chromium's work.
-- **Automatic lifecycle.** The server auto-starts on first use, auto-shuts down after 30 minutes idle. No process management needed.
+- **持久状态。** 登录一次，一直在线。打开一个标签页，它一直开着。localStorage 跨命令保留。
+- **亚秒级命令。** 首次调用后，每条命令就是一次 HTTP POST。含 Chromium 的工作在内，往返约 100-200ms。
+- **自动生命周期。** 服务器首次使用时自动启动，闲置 30 分钟后自动关闭。不需要进程管理。
 
-### State file
+### 状态文件
 
-The server writes `.gstack/browse.json` (atomic write via tmp + rename, mode 0o600):
+服务器写 `.gstack/browse.json`（经 tmp + rename 的原子写，权限 0o600）：
 
 ```json
 { "pid": 12345, "port": 34567, "token": "uuid-v4", "startedAt": "...", "binaryVersion": "abc123" }
 ```
 
-The CLI reads this file to find the server. If the file is missing or the daemon process is dead, the CLI spawns a new server. A process that is alive but not answering `/health` is busy, not dead: the CLI probes for a bounded ~8s, then reports busy with a nonzero exit — only an explicit `--force-restart` kills a live daemon. Process liveness uses signal-0 (`isProcessAlive`, EPERM counts as alive) on every platform, with the health check (GET /health) as the responsiveness signal. Its `status` covers the daemon and its Chromium connection only; the active tab's main thread is reported separately (`activeTab.responsive`, a probe bounded to 1s), so one page stuck in a long script never makes the CLI refuse commands. Daemon stdout/stderr persists to `<project>/.gstack/browse-daemon.log`.
+CLI 读这个文件找到服务器。文件缺失或守护进程已死时，CLI 拉起新服务器。进程活着但不回答 `/health` 是忙，不是死：CLI 探测有上限的约 8 秒，然后以非零退出码报告忙。只有显式 `--force-restart` 才会杀掉活着的守护进程。进程存活性在所有平台用 signal-0 判断（`isProcessAlive`，EPERM 算活着），健康检查（GET /health）作为响应性信号。它的 `status` 只覆盖守护进程及其 Chromium 连接；活动标签页的主线程单独报告（`activeTab.responsive`，探测限时 1 秒），所以一个卡在长脚本里的页面绝不会让 CLI 拒绝命令。守护进程的 stdout/stderr 持久化到 `<project>/.gstack/browse-daemon.log`。
 
-### Port selection
+### 端口选择
 
-Random port between 10000-49151 (retry up to 5 on collision), allocated through the shared `browse/src/port-allocator.ts` so every long-lived gstack listener draws from the same range. The range ends at 49151 on purpose: 49152-65535 is the macOS ephemeral pool, and allocating inside it meant the OS could hand the same port to another process moments later. This means 10 Conductor workspaces can each run their own browse daemon with zero configuration and zero port conflicts. The old approach (scanning 9400-9409) broke constantly in multi-workspace setups.
+在 10000-49151 之间随机取端口（冲突最多重试 5 次），经共享的 `browse/src/port-allocator.ts` 分配，让每个长寿的 gstack 监听器都从同一区间取值。区间止于 49151 是有意的：49152-65535 是 macOS 的临时端口池，在里面分配意味着操作系统可能片刻之后把同一个端口发给另一个进程。这意味着 10 个 Conductor 工作区可以各自运行自己的 browse 守护进程，零配置、零端口冲突。旧方案（扫描 9400-9409）在多工作区环境里频繁出问题。
 
-### Version auto-restart
+### 版本自动重启
 
-The build writes `git rev-parse HEAD` to `browse/dist/.version`. On each CLI invocation, if the binary's version doesn't match the running server's `binaryVersion`, the CLI kills the old server and starts a new one. This prevents the "stale binary" class of bugs entirely — rebuild the binary, next command picks it up automatically.
+构建把 `git rev-parse HEAD` 写进 `browse/dist/.version`。每次 CLI 调用时，若二进制版本与运行中服务器的 `binaryVersion` 不匹配，CLI 杀掉旧服务器再启动新的。这彻底消灭了"陈旧二进制"这一类 bug：重编一次，下一条命令自动用上。
 
-## Rendering local HTML
+## 渲染本地 HTML
 
-`/make-pdf`, `/diagram`, `/design-html` previews, and `/office-hours` sketches generate HTML and need a browser to print or rasterize it. That browser is Aside first, through `lib/aside-render.ts` (the TypeScript API, embedded in make-pdf) and `bin/gstack-render.ts` (the CLI skill templates call). Every fact below was verified against Aside CLI 1.26:
+`/make-pdf`、`/diagram`、`/design-html` 预览和 `/office-hours` 草图会生成 HTML，需要浏览器来打印或栅格化。这个浏览器优先用 Aside，经由 `lib/aside-render.ts`（TypeScript API，内嵌于 make-pdf）和 `bin/gstack-render.ts`（skill 模板调用的 CLI）。以下每条事实都对照 Aside CLI 1.26 验证过：
 
-1. **Aside refuses `file://` URLs**, so the HTML's directory is served with `Bun.serve()` on `127.0.0.1` at an ephemeral port for the duration of one render and opened with `goto(url, { waitUntil: "load" })` — the default "interactive" readiness never fires for the 9MB diagram bundle. The URL carries a per-render secret as its first path segment (another local process gets 404 for everything), containment is checked on the real path of every request (a symlink escaping the directory is 403, malformed encoding is 400), and directories are never listed.
-2. **One `aside repl` process runs one generated script**: open, wait (`--wait-selector` / `--wait-expr`), run the steps in order (`--pdf`, `--screenshot`, `--eval … --out`), close the tab. Nothing persists between CLI calls, so a render is always a single script.
-3. **Artifacts are written inside Aside's sandbox** (the per-run session directory is the only writable place), the script prints `ASIDE_DIR=<pwd>`, and the wrapper copies them out.
-4. **PDFs go through raw CDP `Page.printToPDF`** via `page._sendToTarget`, so header/footer templates, tagged PDF, and the document outline keep working — `page.pdf()` exposes only the Playwright subset.
-5. **Sized screenshots use CDP `Emulation.setDeviceMetricsOverride`.** There is no `setViewportSize`.
-6. **The CLI exit code is 0 even when the script throws.** Truth is the `GSTACK_RENDER_OK` sentinel on stdout; a `[error` line is failure.
+1. **Aside 拒绝 `file://` URL**，所以渲染期间用 `Bun.serve()` 把 HTML 所在目录服务在 `127.0.0.1` 的临时端口上，并用 `goto(url, { waitUntil: "load" })` 打开：默认的 "interactive" 就绪判定对 9MB 的 diagram bundle 永远不会触发。URL 以每次渲染的密钥作为首段路径（其他本地进程请求一律 404），每个请求都在真实路径上做围栏检查（符号链接逃出目录是 403，畸形编码是 400），目录永不列举。
+2. **一个 `aside repl` 进程跑一个生成脚本**：打开、等待（`--wait-selector` / `--wait-expr`）、按顺序执行步骤（`--pdf`、`--screenshot`、`--eval … --out`）、关闭标签页。CLI 调用之间什么都不保留，所以一次渲染永远是单个脚本。
+3. **产物写在 Aside 沙箱里**（每次运行的会话目录是唯一可写位置），脚本打印 `ASIDE_DIR=<pwd>`，包装器把它们复制出来。
+4. **PDF 走裸 CDP `Page.printToPDF`**，经 `page._sendToTarget`，所以页眉/页脚模板、tagged PDF 和文档大纲都继续可用：`page.pdf()` 只暴露 Playwright 子集。
+5. **指定尺寸的截图用 CDP `Emulation.setDeviceMetricsOverride`。** 没有 `setViewportSize` 这回事。
+6. **即使脚本抛错，CLI 退出码也是 0。** 真相是 stdout 上的 `GSTACK_RENDER_OK` 哨兵；出现 `[error` 行即失败。
 
-When `probeAside()` reports `NEEDS_ASIDE` or `ASIDE_NOT_RUNNING`, the same wrappers render through the fallback engine instead — the one shared Chromium per box, no second download: the same loopback server, then one daemon call per action — `newtab --json`, `goto <loopback URL>`, `js` polling for readiness, `pdf --from-file`, `viewport` + `screenshot [--selector]`, `js --out`, and `closetab` in a finally. Same CLI flags, same `OK <path>` lines; `ENGINE=aside|browse` names the engine that actually rendered: when Aside was chosen but its CLI could not start, or its private CDP bridge (`_sendToTarget`) is gone mid-run, `render()` retries the same spec once on this path (a page failure, or a timeout of a script that was already running, is never retried). The CLI fences its `EVAL` / `PAGE_ERRORS` lines as untrusted web content because they are page-controlled text. Not mirrored on the fallback: sized screenshots come out at 1x (Aside defaults to 2x), JPEG `--quality` and `pageRanges`/`scale` are Aside-only, `--landscape` is emulated by swapping the paper dimensions, and `--wait-pagedjs` maps to the daemon's `toc` wait. The renderer serves a local directory and nothing else on either path; pointing it at a website is site work and belongs to the driver contract.
+当 `probeAside()` 报告 `NEEDS_ASIDE` 或 `ASIDE_NOT_RUNNING` 时，同样的包装器改经回退引擎渲染（每台机器一个共享 Chromium，不做第二次下载）：同一个回环服务器，然后每个动作一次守护进程调用：`newtab --json`、`goto <loopback URL>`、用 `js` 轮询就绪、`pdf --from-file`、`viewport` + `screenshot [--selector]`、`js --out`，最后在 finally 里 `closetab`。CLI 标志相同，`OK <path>` 行相同；`ENGINE=aside|browse` 标明实际渲染的引擎：当选了 Aside 但其 CLI 无法启动，或其私有 CDP 桥（`_sendToTarget`）在运行中消失时，`render()` 会在该路径上把同一 spec 重试一次（页面级失败，或已在运行脚本的超时，绝不重试）。CLI 把 `EVAL` / `PAGE_ERRORS` 行当作不可信网页内容加围栏，因为那是页面控制的文本。回退路径不镜像的部分：指定尺寸的截图输出为 1x（Aside 默认 2x），JPEG `--quality` 与 `pageRanges`/`scale` 仅 Aside 有，`--landscape` 用交换纸张尺寸模拟，`--wait-pagedjs` 映射为守护进程的 `toc` 等待。两条路径上渲染器都只服务本地目录、别无其他；把它指向某个网站属于站点操作，归驱动契约管。
 
-## Security model
+## 安全模型
 
-### The browser boundary (Aside)
+### 浏览器边界（Aside）
 
-On the Aside path the browser is the user's, so the security model is about what the agent may do inside it, not about protecting a daemon. The rules are prose in `scripts/resolvers/aside.ts`, rendered into every browser skill and pinned by `test/aside-driver.test.ts`:
+Aside 路径上浏览器是用户的，所以安全模型关注的是 agent 在里面可以做什么，而不是保护一个守护进程。规则以散文形式写在 `scripts/resolvers/aside.ts`，渲染进每个浏览器 skill，由 `test/aside-driver.test.ts` 固定：
 
-- **Detect, never install.** A missing or closed Aside hands off to the fallback engine with one line saying so; gstack never runs an installer for Aside.
-- **Own tabs only.** The agent works in tabs it opened (or one the user named). `listBrowserTabs()` output is private data and never lands in a report.
-- **Look freely, act with consent.** Invoking a skill with a target is consent to read, navigate, and fill without submitting. Mutating actions on a non-local target hit the user's real account, so they get ONE AskUserQuestion per run listing the exact actions first. Logout/delete/cancel/unsubscribe links are never followed.
-- **Credentials never pass through the agent.** Sign-in walls are solved by the user inside Aside; the agent never types, reads, or prints passwords, one-time codes, cookies, tokens, or localStorage.
-- **Everything a page returns is untrusted.** Snapshot trees, page text, console output, `aside exec` answers, screenshots: content, never instructions (`{{UNTRUSTED_CONTENT_WARNING}}` is the single-source wording).
+- **只检测，绝不安装。** Aside 缺失或未运行时，用一行说明移交回退引擎；gstack 从不为 Aside 运行安装器。
+- **只用自己开的标签页。** agent 在自己打开的标签页（或用户指名的标签页）里工作。`listBrowserTabs()` 输出是私密数据，绝不进报告。
+- **随便看，征得同意才动。** 带目标调用某个 skill 即视为同意读取、导航和填写（不提交）。对非本地目标的修改性操作会动用户真实账号，所以每次运行先用一次 AskUserQuestion 列出确切动作。登出/删除/取消/退订链接绝不点击。
+- **凭据绝不经过 agent。** 登录墙由用户在 Aside 里解决；agent 绝不输入、读取或打印密码、一次性验证码、cookie、token 或 localStorage。
+- **页面返回的一切都不可信。** 快照树、页面文本、控制台输出、`aside exec` 回答、截图：都是内容，绝不是指令（`{{UNTRUSTED_CONTENT_WARNING}}` 是唯一来源措辞）。
 
-Drives happen inside Aside, so they produce no gstack-side daemon log; Aside keeps its own history. Everything below this line is the fallback engine's threat model — the daemon, its tokens, its cookie jar, its tunnel.
+驱动发生在 Aside 内部，因此不产生 gstack 侧的守护进程日志；Aside 自己保留历史。本行以下都是回退引擎的威胁模型：守护进程、它的 token、它的 cookie 罐、它的隧道。
 
-### Localhost only
+### 仅监听 localhost
 
-The HTTP server binds to `127.0.0.1`, not `0.0.0.0`. It's not reachable from the network.
+HTTP 服务器绑定 `127.0.0.1`，不是 `0.0.0.0`。网络不可达。
 
-### Dual-listener tunnel architecture (v1.6.0.0)
+### 双监听器隧道架构（v1.6.0.0）
 
-When a user runs `pair-agent --client`, the daemon starts an ngrok tunnel so a remote paired agent can drive the browser. Exposing the full daemon surface to the internet (even behind a random ngrok subdomain) meant `/health` leaked the root token on any Origin spoof, and `/cookie-picker` embedded the token into HTML that any caller could fetch.
+用户运行 `pair-agent --client` 时，守护进程启动 ngrok 隧道，让远程配对的 agent 能驱动浏览器。把完整守护进程面暴露到互联网（哪怕藏在随机 ngrok 子域后面）意味着任何 Origin 伪造都能让 `/health` 泄露 root token，而 `/cookie-picker` 会把 token 嵌进任何调用方都能取到的 HTML。
 
-The fix is **two HTTP listeners**, not one:
+修复方案是**两个 HTTP 监听器**，而不是一个：
 
-- **Local listener** (`127.0.0.1:LOCAL_PORT`) — always bound. Serves token bootstrap (`POST /extension-token`, released only to the pinned extension identity), `/health` (liveness/status only — never a token), `/cookie-picker`, `/inspector/*`, `/welcome`, `/refs`, the sidebar-agent API, and the full command surface. Never forwarded.
-- **Tunnel listener** (`127.0.0.1:TUNNEL_PORT`) — bound lazily on `/tunnel/start`, torn down on `/tunnel/stop`. Serves a locked allowlist: `/connect` (pairing ceremony, unauth + rate-limited) and `/command` (scoped tokens only, further restricted to a browser-driving command allowlist). Everything else 404s.
+- **本地监听器**（`127.0.0.1:LOCAL_PORT`）：始终绑定。服务 token 引导（`POST /extension-token`，只发给固定的扩展身份）、`/health`（仅存活/状态，绝不含 token）、`/cookie-picker`、`/inspector/*`、`/welcome`、`/refs`、侧边栏 agent API，以及完整命令面。永不转发。
+- **隧道监听器**（`127.0.0.1:TUNNEL_PORT`）：在 `/tunnel/start` 时惰性绑定，`/tunnel/stop` 时拆除。只服务一个锁定的白名单：`/connect`（配对流程，无认证 + 限速）和 `/command`（仅限 scoped token，且进一步限定为浏览器驱动命令白名单）。其余一律 404。
 
-ngrok forwards only the tunnel port. The security property comes from **physical port separation**: a tunnel caller cannot reach `/health` or `/cookie-picker` because those paths don't exist on that TCP socket. Header inference (check `x-forwarded-for`, check origin) is unreliable (ngrok header behavior changes; local proxies can add these headers); socket separation isn't.
+ngrok 只转发隧道端口。安全性质来自**物理端口隔离**：隧道调用方到不了 `/health` 或 `/cookie-picker`，因为这些路径在那个 TCP 套接字上根本不存在。基于头部推断（检查 `x-forwarded-for`、检查 origin）不可靠（ngrok 的头部行为会变；本地代理也可能加这些头部）；套接字隔离不会。
 
-| Endpoint | Local listener | Tunnel listener | Notes |
+| 端点 | 本地监听器 | 隧道监听器 | 说明 |
 |---|---|---|---|
-| `GET /health` | public (liveness/status only — never a token) | 404 | Token bootstrap moved to `POST /extension-token` (v1.63) |
-| `POST /extension-token` | pinned Origin (`chrome-extension://<GSTACK_EXTENSION_ID>`) + loopback Host | 404 | The only endpoint that hands out the root token |
-| `GET /connect` | public (`{alive:true}`) | public (`{alive:true}`) | Probe path for tunnel liveness |
-| `POST /connect` | public (rate-limited 300/min) | public (rate-limited) | Setup-key exchange for pair-agent |
-| `POST /command` | auth (Bearer root OR scoped) | auth (scoped only, allowlisted commands) | Root token on tunnel = 403 |
-| `POST /pair` | root-only | 404 | Pairing mint — local operator action |
-| `POST /tunnel/{start,stop}` | root-only | 404 | Daemon configuration |
-| `POST /token`, `DELETE /token/:id` | root-only | 404 | Scoped token mint/revoke |
-| `GET /cookie-picker`, `/cookie-picker/*` | one-use code/session for UI; Bearer or picker session for API | 404 | Local-only — reads local browser DBs |
-| `GET /inspector`, `/inspector/events`, etc. | auth | 404 | Extension callback, local-only |
-| `GET /welcome` | public | 404 | GStack Browser landing page, local-only |
-| `GET /refs` | auth | 404 | Ref map — internal state |
-| `GET /activity/stream` | Bearer OR HttpOnly `gstack_sse` cookie | 404 | SSE. ?token= query param no longer accepted |
-| `GET /inspector/events` | Bearer OR HttpOnly `gstack_sse` cookie | 404 | SSE. Same cookie as /activity/stream |
-| `POST /sse-session` | auth (Bearer) | 404 | Mints the view-only 30-min SSE session cookie |
+| `GET /health` | 公开（仅存活/状态，绝不含 token） | 404 | Token 引导移至 `POST /extension-token`（v1.63） |
+| `POST /extension-token` | 固定 Origin（`chrome-extension://<GSTACK_EXTENSION_ID>`）+ 回环 Host | 404 | 唯一发放 root token 的端点 |
+| `GET /connect` | 公开（`{alive:true}`） | 公开（`{alive:true}`） | 隧道存活探测路径 |
+| `POST /connect` | 公开（限速 300/分） | 公开（限速） | pair-agent 的 setup-key 交换 |
+| `POST /command` | 认证（Bearer root 或 scoped） | 认证（仅 scoped，命令白名单） | 隧道上 root token = 403 |
+| `POST /pair` | 仅 root | 404 | 配对铸造，本地操作者动作 |
+| `POST /tunnel/{start,stop}` | 仅 root | 404 | 守护进程配置 |
+| `POST /token`、`DELETE /token/:id` | 仅 root | 404 | Scoped token 铸造/吊销 |
+| `GET /cookie-picker`、`/cookie-picker/*` | UI 用一次性 code/会话；API 用 Bearer 或 picker 会话 | 404 | 仅本地，读取本地浏览器数据库 |
+| `GET /inspector`、`/inspector/events` 等 | 认证 | 404 | 扩展回调，仅本地 |
+| `GET /welcome` | 公开 | 404 | GStack Browser 落地页，仅本地 |
+| `GET /refs` | 认证 | 404 | Ref 映射，内部状态 |
+| `GET /activity/stream` | Bearer 或 HttpOnly `gstack_sse` cookie | 404 | SSE。`?token=` 查询参数不再接受 |
+| `GET /inspector/events` | Bearer 或 HttpOnly `gstack_sse` cookie | 404 | SSE。与 /activity/stream 同一 cookie |
+| `POST /sse-session` | 认证（Bearer） | 404 | 铸造 30 分钟只读 SSE 会话 cookie |
 
-**Extension token bootstrap (v1.63.0.0).** `GET /health` never carries a token in any mode — it is liveness/status only. The sidebar extension obtains the root token via `POST /extension-token`, which releases it only when the caller's Origin is exactly `chrome-extension://<GSTACK_EXTENSION_ID>` (pinned by the `key` field in `extension/manifest.json`; reproduce the derivation with `bun browse/scripts/extension-id.ts`) and the Host header parses to a loopback hostname — parsed with `new URL()`, never compared raw, because Host carries the port. Web pages cannot forge a `chrome-extension://` Origin, and the endpoint is never added to the tunnel allowlist, so the tunnel surface 404s it by default-deny.
+**扩展 token 引导（v1.63.0.0）。** `GET /health` 在任何模式下都不携带 token：仅存活/状态。侧边栏扩展经 `POST /extension-token` 获取 root token，该端点只在调用方 Origin 恰为 `chrome-extension://<GSTACK_EXTENSION_ID>`（由 `extension/manifest.json` 的 `key` 字段固定；用 `bun browse/scripts/extension-id.ts` 复现推导）且 Host 头解析为回环主机名时才发放。Host 用 `new URL()` 解析，绝不裸比较，因为 Host 带端口。网页无法伪造 `chrome-extension://` Origin，且该端点永不加入隧道白名单，隧道面按默认拒绝对其返回 404。
 
-**Tunnel surface denial logs.** Every rejection on the tunnel listener (`path_not_on_tunnel`, `root_token_on_tunnel`, `missing_scoped_token`, `disallowed_command:*`) is recorded asynchronously to `~/.gstack/security/attempts.jsonl` with timestamp, source IP (from `x-forwarded-for`), path, and method. Rate-capped at 60 writes/min globally to prevent log-flood DoS. Shares the attempt log with the prompt-injection scanner.
+**隧道面拒绝日志。** 隧道监听器上的每次拒绝（`path_not_on_tunnel`、`root_token_on_tunnel`、`missing_scoped_token`、`disallowed_command:*`）都异步记录到 `~/.gstack/security/attempts.jsonl`，含时间戳、来源 IP（取自 `x-forwarded-for`）、路径与方法。全局限速每分钟 60 次写入，防日志洪泛 DoS。与提示词注入扫描器共用同一份尝试日志。
 
-**SSE session cookies.** EventSource can't send Authorization headers, so the extension POSTs `/sse-session` once at bootstrap with the root Bearer and receives a 30-minute view-only cookie (`gstack_sse`, HttpOnly, SameSite=Strict). The cookie is valid ONLY for `/activity/stream` and `/inspector/events` — it is NOT a scoped token and cannot be used on `/command`. Scope isolation is enforced by the module boundary: `sse-session-cookie.ts` has no imports from `token-registry.ts`.
+**SSE 会话 cookie。** EventSource 发不了 Authorization 头，所以扩展在引导时用 root Bearer POST 一次 `/sse-session`，拿到 30 分钟只读 cookie（`gstack_sse`，HttpOnly，SameSite=Strict）。该 cookie 只对 `/activity/stream` 和 `/inspector/events` 有效：它不是 scoped token，不能用于 `/command`。范围隔离由模块边界保证：`sse-session-cookie.ts` 不导入 `token-registry.ts`。
 
-**Windows native-cookie boundary** (#1136): the exposed debugging TCP fallback has been removed. The native adapter uses Playwright's pipe transport and requires browser/runtime process-ownership and cleanup qualification before enablement; its qualification list is currently empty. DPAPI-compatible database imports remain available, but this does not promise recovery of every App-Bound Encryption cookie. Chrome 136+ protects its default user-data directory, including numbered profiles, against both pipe and TCP debugging. Closing Chrome does not bypass that policy. No TCP downgrade, substitute browser, or real-profile copy is allowed; unsupported cases direct the user to manual sign-in in gstack's browser.
+**Windows 原生 cookie 边界**（#1136）：暴露的调试 TCP 回退已移除。原生适配器使用 Playwright 的 pipe transport，启用前需要浏览器/运行时进程所有权与清理方面的资格认定；其认定清单目前为空。DPAPI 兼容的数据库导入仍然可用，但不承诺恢复每一个 App-Bound Encryption cookie。Chrome 136+ 对其默认用户数据目录（含编号 profile）同时防范 pipe 与 TCP 调试。关闭 Chrome 不能绕过该策略。不允许 TCP 降级、换用替代浏览器或复制真实 profile；不支持的场景引导用户在 gstack 自己的浏览器里手动登录。
 
-### Bearer token auth
+### Bearer token 认证
 
-Every server session generates a random UUID token, written to the state file with mode 0o600 (owner-only read). Requests to `/command` must include `Authorization: Bearer <token>` using an authorized root or scoped token. Invalid authentication is rejected.
+每个服务器会话生成随机 UUID token，以 0o600 权限（仅属主可读）写入状态文件。对 `/command` 的请求必须带 `Authorization: Bearer <token>`，使用经授权的 root 或 scoped token。无效认证一律拒绝。
 
-Command authorization requires the token. The local cookie picker instead exchanges a five-minute one-use code for a scoped HttpOnly session cookie; that cookie authorizes only picker routes, never `/command`. Its API also accepts Bearer authorization. The local health check (`/health`) is public and does not execute commands. On the tunnel listener nothing is exempt except `/connect`.
+命令授权需要 token。本地 cookie picker 改为用五分钟有效的一次性 code 换一个 scoped HttpOnly 会话 cookie；该 cookie 只授权 picker 路由，绝不通向 `/command`。其 API 也接受 Bearer 授权。本地健康检查（`/health`）公开且不执行命令。隧道监听器上除 `/connect` 外无一豁免。
 
-### Cookie security
+### Cookie 安全
 
-Cookies are the most sensitive data gstack handles. The design:
+Cookie 是 gstack 处理的最敏感数据。设计如下：
 
-Cookie databases use a read-only runtime adapter: Bun SQLite in Bun, or built-in SQLite in Node.js 22.13+. Large Chromium timestamps remain exact integers; ordinary domain counts remain JSON numbers. Temporary database snapshots are private and removed on close or failure.
+Cookie 数据库使用只读运行时适配器：Bun 里用 Bun SQLite，Node.js 22.13+ 里用内置 SQLite。大的 Chromium 时间戳保持精确整数；普通域名计数保持 JSON 数字。临时数据库快照为私有，关闭或失败时移除。
 
-1. **OS key access follows platform permissions.** macOS may prompt for Keychain approval on the first import per browser. Linux supports libsecret-backed `v11` and the Chromium fallback key for `v10`; Windows supports DPAPI-compatible cookies. Permission denial stops the operation rather than automatically repeating prompts.
+1. **OS 密钥访问遵循平台权限。** macOS 在每个浏览器首次导入时可能弹 Keychain 批准。Linux 支持基于 libsecret 的 `v11` 和 `v10` 的 Chromium 回退密钥；Windows 支持 DPAPI 兼容的 cookie。权限被拒即停止操作，而不是自动反复弹窗。
 
-2. **Import receipts do not contain cookie values.** Database decryption happens in memory using the platform's supported format; decrypted cookies are applied to the captured Playwright context. The picker shows browser/profile labels, domains, counts, and separate import/reset/authentication statuses, never cookie values. Labels can still identify an account and must not be copied to public logs. Optional session persistence is a separate opt-in disk-storage feature.
+2. **导入回执不含 cookie 值。** 数据库解密在内存中进行，用平台支持的格式；解密后的 cookie 应用到捕获的 Playwright context。picker 显示浏览器/profile 标签、域名、计数，以及各自独立的导入/重置/认证状态，绝不显示 cookie 值。标签仍可能识别到账号，不得复制到公开日志。可选的会话持久化是另一项选择加入的磁盘存储功能。
 
-3. **Database reads do not modify the source.** gstack copies the Chromium cookie DB to a temp file to avoid SQLite lock conflicts and opens it read-only. Only classified transient reads retry, at most three attempts with 150ms and 500ms delays. Native browser extraction has a separate lifecycle boundary and remains disabled pending qualification.
+3. **数据库读取不改源库。** gstack 把 Chromium cookie 数据库复制到临时文件以避免 SQLite 锁冲突，并以只读方式打开。只有归为瞬态的读取会重试，最多三次，间隔 150ms 和 500ms。原生浏览器提取有独立的生命周期边界，资格认定完成前保持禁用。
 
-4. **Key caching is per-session.** Derived keys are cached in memory for the server's lifetime. When the server shuts down (idle timeout or explicit stop), the cache is gone.
+4. **密钥缓存按会话。** 派生密钥只在服务器生存期内缓存于内存。服务器关闭（闲置超时或显式停止）时缓存即消失。
 
-5. **Diagnostics use safe categories.** Cookie-import failures expose classified reasons and counts, not raw OS errors or decrypted values. The separate `cookies` inspection command redacts values that match its sensitive-name/value rules; it is not a metadata-only receipt and should not be used for public import summaries.
+5. **诊断用安全类别。** Cookie 导入失败只暴露归类的原因与计数，不暴露原始 OS 错误或解密值。独立的 `cookies` 检查命令按其敏感名/值规则脱敏；它不是纯元数据回执，不该用于公开的导入汇总。
 
-`cookie-import-operation.ts` owns profile selection, decryption, application, and receipts for the direct CLI, `--all`, and authenticated picker. Explicit profile selection wins; otherwise only a sole relevant profile is chosen, with unreadable profiles treated as unknown. Current `Local State` labels precede Preferences and directory fallbacks. Browser/context/page ownership is captured before asynchronous work, imports serialize per destination context, and applied domains feed the existing JavaScript-origin guard. Cookies are context-wide, not tab-isolated.
+`cookie-import-operation.ts` 负责直接 CLI、`--all` 和经认证 picker 的 profile 选择、解密、应用与回执。显式选择的 profile 优先；否则只有唯一相关 profile 时才选它，不可读的 profile 视为未知。当前 `Local State` 标签优先于 Preferences 与目录回退。浏览器/context/page 归属在异步工作前捕获，导入按目标 context 串行，已应用的域名进入既有的 JavaScript-origin 防护。Cookie 是 context 级的，不是标签页隔离的。
 
-Storage reset and authentication verification are independent opt-ins. `--clear-storage` clears only the captured origin's localStorage (shared by same-origin tabs in that context) and target-tab sessionStorage, never IndexedDB, service workers, sibling origins, or other tabs' sessionStorage; `--all` plus reset is rejected. Reset is Chromium-only: an isolated world binds native-clock sampling and the destructive operation to one system-unique context, while navigation and the host deadline cancel pending work. Other engines retain import/auth checks but reject reset. A failed reset or later application failure does not imply rollback.
+存储重置与认证验证是相互独立的选择加入项。`--clear-storage` 只清除所捕获 origin 的 localStorage（同 context 内同源标签页共享）和目标标签页的 sessionStorage，绝不动 IndexedDB、service worker、同级 origin 或其他标签页的 sessionStorage；`--all` 加重置会被拒绝。重置仅限 Chromium：隔离 world 把原生时钟采样与破坏性操作绑定到一个系统唯一 context，导航与宿主截止时间会取消未完成的工作。其他引擎保留导入/认证检查但拒绝重置。重置失败或后续应用失败不意味着回滚。
 
-`cookie-auth-verification.ts` validates daemon-side `GSTACK_COOKIE_AUTH_SELECTOR` and `GSTACK_COOKIE_AUTH_EXPECTED_IDENTITY` before a requested verification can mutate cookies or storage. Set them privately before daemon startup. After importing cookies, `--verify-auth` reloads the captured target and requires a successful same-origin response and exactly one visible identity whose normalized text matches exactly. Cookie count, HTTP 200, and substring matches cannot establish authentication. An import without this check is **not checked**, not verified; zero imports cannot verify sign-in. Results do not echo expected identity text.
+`cookie-auth-verification.ts` 在请求的验证可以改动 cookie 或存储之前，先校验守护进程侧的 `GSTACK_COOKIE_AUTH_SELECTOR` 与 `GSTACK_COOKIE_AUTH_EXPECTED_IDENTITY`。要在守护进程启动前私下设置它们。导入 cookie 后，`--verify-auth` 重新加载捕获的目标，要求同源响应成功，且恰好有一个可见身份其规范化文本精确匹配。Cookie 数量、HTTP 200、子串匹配都不能确立登录。没有这项检查的导入是**未检查**，不是已验证；零导入无法验证登录。结果不回显期望的身份文本。
 
-### Shell injection prevention
+### Shell 注入防护
 
-The browser registry (Chrome, Chromium, Brave, Edge, Windows-only Opera and Opera GX, and macOS-only Comet and Arc) is hardcoded. Database roots come from known platform locations; profile directory input is validated. Keychain access uses `Bun.spawn()` with explicit argument arrays, not shell string interpolation.
+浏览器注册表（Chrome、Chromium、Brave、Edge、仅 Windows 的 Opera 与 Opera GX，以及仅 macOS 的 Comet 与 Arc）是硬编码的。数据库根目录来自已知平台位置；profile 目录输入经过校验。Keychain 访问用 `Bun.spawn()` 加显式参数数组，不做 shell 字符串插值。
 
-### Egress receipt ledger (v1.63.0.0)
+### 出口回执账本（v1.63.0.0）
 
-Every enumerated gstack-initiated off-machine sink writes a hash-chained, tamper-evident receipt to `~/.gstack/security/egress.jsonl` BEFORE the send — `writeReceipt` in `lib/egress-receipt.ts` for TypeScript callers, `_receipted_curl` / `_receipted_git` from `bin/gstack-egress-lib.sh` for shell scripts. Receipts record a sha256 of the exact bytes sent when the caller owns them (subprocess-owned sends like git pushes record `sha256: null`); they never store the body.
+每一个被枚举的、由 gstack 发起的出机器发送点，都在发送前把一条哈希链、防篡改的回执写入 `~/.gstack/security/egress.jsonl`：TypeScript 调用方用 `lib/egress-receipt.ts` 的 `writeReceipt`，shell 脚本用 `bin/gstack-egress-lib.sh` 的 `_receipted_curl` / `_receipted_git`。调用方拥有字节时，回执记录所发确切字节的 sha256（git push 这类由子进程拥有的发送记录 `sha256: null`）；回执从不存储正文。
 
-Failure polarity is per-class and pinned by tests. Sensitive sinks are fail-closed: brain-sync pushes, memory-ingest, gbrain-sync, telemetry, ngrok tunnel starts, mcp-verify, supabase-provision, and the Memorable bridge's per-prompt `memorable-recall` hand-off (a prompt handed to a local vendor binary; see [docs/memorable-workflow-memory.md](docs/memorable-workflow-memory.md)) refuse to send if the receipt can't be written (each refusal prints problem + cause + fix). User-facing sinks fail open with a stderr warning — the design binary's OpenAI calls, update-check, the read-only dashboards, and git-class receipts proceed even when the receipt write failed, so a fail-open send can go unrecorded (warned, by design). The new-sink scanner in `test/egress-receipt-wiring.test.ts` fails CI when an off-machine sink ships unwired; its only exemptions are enumerated with reasons (user-directed page fetches, reachability probes, install-doc strings, skill prose).
+失败极性按类别划分并由测试固定。敏感发送点 fail-closed：brain-sync 推送、memory-ingest、gbrain-sync、telemetry、ngrok 隧道启动、mcp-verify、supabase-provision，以及 Memorable 桥的每条提示词 `memorable-recall` 交接（把提示词交给本地厂商二进制；见 [docs/memorable-workflow-memory.md](docs/memorable-workflow-memory.md)）在回执写不出来时拒绝发送（每次拒绝都打印问题 + 原因 + 修复）。面向用户的发送点 fail-open 并给 stderr 警告：design 二进制的 OpenAI 调用、更新检查、只读仪表盘和 git 类回执在回执写入失败时照样进行，所以 fail-open 的发送可能没有记录（有意设计，带警告）。`test/egress-receipt-wiring.test.ts` 里的新发送点扫描器会在出机器发送点未接线时让 CI 失败；其豁免逐项列出并有理由（用户指示的页面抓取、可达性探测、安装文档字符串、skill 散文）。
 
-Inspect the ledger with `bin/gstack-egress`: `list` (what gstack attempted to send), `verify` (recompute the chain, exit 3 on tamper), `grants` (the standing consent settings and how to revoke each). `verify` detects in-place edits, reordering, and mid-chain deletion; it does NOT detect tail-truncation, whole-file re-fabrication, or deletion of the ledger itself — guarding against the same-machine, same-user actor who owns the file is out of scope for a forensic log. Threat model: the ledger is forensic observability of ATTEMPTED egress — it records what gstack tried to send so accidents are auditable; it is not an exfiltration control.
+用 `bin/gstack-egress` 检查账本：`list`（gstack 尝试发送过什么）、`verify`（重算链，被篡改时退出码 3）、`grants`（常设同意设置及各自的撤销方式）。`verify` 能发现原地篡改、重排序和链中删除；它发现不了尾部截断、整文件重造或账本本体被删：对拥有该文件的同机同用户行为者设防，超出一份取证日志的范围。威胁模型：账本是对"尝试过的出口"的取证可观测性，记录 gstack 试图发送了什么，让事故可审计；它不是防外泄控制。
 
-### Unicode sanitization at server egress (v1.38.0.0)
+### 服务器出口的 Unicode 消毒（v1.38.0.0）
 
-Page content harvested by CDP can contain lone UTF-16 surrogate halves (orphaned high or low surrogates from broken JavaScript string handling on the page). When those reach `JSON.stringify`, Bun emits them as `\uD800`-style escape sequences that the downstream consumer's `JSON.parse` accepts, but the Anthropic API rejects with a 400 — turning a single weird page into a session-killing error. Defense is single-point, applied at every server egress that ships page-derived strings.
+CDP 采集的页面内容可能含孤立的 UTF-16 代理半（页面 JavaScript 字符串处理出错留下的孤儿高位或低位代理）。它们到达 `JSON.stringify` 时，Bun 会输出 `\uD800` 形式的转义序列，下游消费者的 `JSON.parse` 能接受，但 Anthropic API 会以 400 拒绝：一个古怪页面就这样变成杀死会话的错误。防御是单点的，应用于每个送出页面派生字符串的服务器出口。
 
-| Egress path | Module | Sanitization point |
+| 出口路径 | 模块 | 消毒点 |
 |---|---|---|
-| `POST /command` (HTTP) | `browse/src/routes/commands.ts` (wrapper in `browse/src/server.ts`) | `handleCommandInternal` wrapper (sanitizes the result of `handleCommandInternalImpl`) |
-| `POST /batch` | `browse/src/routes/commands.ts` | Same wrapper — batch consumers inherit it |
-| `GET /activity/stream` (SSE) | `browse/src/routes/activity.ts` | `sanitizeReplacer` applied inside `createSseEndpoint` |
-| `GET /inspector/events` (SSE) | `browse/src/routes/inspector.ts` | `sanitizeReplacer` applied inside `createSseEndpoint` |
+| `POST /command`（HTTP） | `browse/src/routes/commands.ts`（包装在 `browse/src/server.ts`） | `handleCommandInternal` 包装器（对 `handleCommandInternalImpl` 的结果消毒） |
+| `POST /batch` | `browse/src/routes/commands.ts` | 同一包装器，批处理消费者随之继承 |
+| `GET /activity/stream`（SSE） | `browse/src/routes/activity.ts` | `sanitizeReplacer` 应用于 `createSseEndpoint` 内部 |
+| `GET /inspector/events`（SSE） | `browse/src/routes/inspector.ts` | `sanitizeReplacer` 应用于 `createSseEndpoint` 内部 |
 
-`sanitizeReplacer` is a `JSON.stringify` replacer function that cleans every string value during encoding. Post-stringify regex doesn't work here — `JSON.stringify` has already converted `\uD800` into the literal escape sequence `"\\ud800"` before the regex could match, so the replacer must run inside the encoding pipeline. The pure-string helper `sanitizeLoneSurrogates` is used directly for `text/plain` responses.
+`sanitizeReplacer` 是一个 `JSON.stringify` 的 replacer 函数，在编码过程中清洗每个字符串值。stringify 之后的正则在这里不管用：`JSON.stringify` 在正则匹配之前就已把 `\uD800` 转成字面转义序列 `"\\ud800"`，所以 replacer 必须在编码管线内运行。纯字符串辅助函数 `sanitizeLoneSurrogates` 直接用于 `text/plain` 响应。
 
-**Architectural invariant.** Every new SSE/WebSocket writer or HTTP response that ships page-content-derived strings MUST go through one of two paths: `JSON.stringify(payload, sanitizeReplacer)` for object payloads, or `sanitizeLoneSurrogates(body)` for text bodies. New surfaces that bypass both will desync the system. Inline comments at both SSE producers (`routes/activity.ts`, `routes/inspector.ts`) say so; `browse/test/server-sanitize-surrogates.test.ts` pins wiring with bug-repro + invariant tests (`handleCommandInternalImpl` rename, central sanitization line, replacer existence, SSE producers stringify with replacer).
+**架构不变量。** 每个送出页面内容派生字符串的新 SSE/WebSocket 写入器或 HTTP 响应，必须走两条路径之一：对象载荷用 `JSON.stringify(payload, sanitizeReplacer)`，文本正文用 `sanitizeLoneSurrogates(body)`。绕开两者的新表面会让系统失步。两个 SSE 生产者（`routes/activity.ts`、`routes/inspector.ts`）的内联注释都写明这一点；`browse/test/server-sanitize-surrogates.test.ts` 用 bug 复现 + 不变量测试固定接线（`handleCommandInternalImpl` 改名、中央消毒行、replacer 存在性、SSE 生产者用 replacer 做 stringify）。
 
-### Prompt injection defense (sidebar agent)
+### 提示词注入防御（侧边栏 agent）
 
-The Chrome sidebar agent has tools (Bash, Read, Glob, Grep, WebFetch) and reads hostile web pages, so it's the part of gstack most exposed to prompt injection. Defense is layered, not single-point.
+Chrome 侧边栏 agent 拥有工具（Bash、Read、Glob、Grep、WebFetch）并阅读敌意网页，是 gstack 中最暴露于提示词注入的部分。防御是分层的，不是单点。
 
-1. **L1-L3 content security (`browse/src/content-security.ts`).** Runs on every page-content command and every tool output: datamarking, hidden-element strip, ARIA regex, URL blocklist, and a trust-boundary envelope wrapper. Applied at both the server and the agent.
+1. **L1-L3 内容安全（`browse/src/content-security.ts`）。** 应用于每个页面内容命令和每个工具输出：数据标记、隐藏元素剥离、ARIA 正则、URL 黑名单和信任边界信封包装。服务器与 agent 两侧都应用。
 
-2. **L4 ML classifier — TestSavantAI (`browse/src/security-classifier.ts`).** A 22MB BERT-small ONNX model (int8 quantized) running in the security sidecar subprocess. Runs locally, no network. Scans page-derived content on the inject-scan path before the agent sees it.
+2. **L4 ML 分类器：TestSavantAI（`browse/src/security-classifier.ts`）。** 22MB 的 BERT-small ONNX 模型（int8 量化），运行在安全 sidecar 子进程里。本地运行，不联网。在 agent 看到之前，于注入扫描路径上扫描页面派生内容。
 
-3. **L4b transcript classifier (removed).** A Claude Haiku conversation-shape pass existed until the chat-path agent that invoked it was ripped; it was deleted as dead code (zero production callers), along with the opt-in DeBERTa ensemble. Do not re-document either as live.
+3. **L4b 转录分类器（已移除）。** 一个 Claude Haiku 会话形态检查曾经存在，直到调用它的 chat 路径 agent 被拆掉；它作为死代码（零生产调用方）被删除，选择加入的 DeBERTa 集成随之删除。不要再把任何一项记为在用。
 
-4. **L5 canary token (`browse/src/security.ts`).** Generate/inject/detect utilities for a random system-prompt token whose leak means the attacker convinced the model to reveal the system prompt. Canary leak BLOCKs deterministically. The utilities are pure and tested; the chat prompt-builder that injected the canary was ripped, so no production path injects it today.
+4. **L5 canary token（`browse/src/security.ts`）。** 针对随机系统提示词 token 的生成/注入/检测工具，该 token 泄露即意味着攻击者诱使模型泄露了系统提示词。Canary 泄露确定性地 BLOCK。这些工具是纯函数且有测试；注入 canary 的聊天提示词构建器已被拆掉，所以今天没有生产路径注入它。
 
-5. **L6 ensemble combiner (`combineVerdict`).** BLOCK requires agreement from two ML classifiers at >= `WARN` (0.75), not a single confident hit. This is the Stack Overflow instruction-writing false-positive mitigation. On tool-output scans, single-layer high confidence BLOCKs directly — the content wasn't user-authored, so the FP concern doesn't apply.
+5. **L6 集成合并器（`combineVerdict`）。** BLOCK 需要两个 ML 分类器都达到 >= `WARN`（0.75）的判定，单个自信命中不算。这是针对 Stack Overflow 指令写作误报的缓解。对工具输出扫描，单层高置信度直接 BLOCK：内容不是用户写的，误报顾虑不适用。
 
-**Critical constraint:** `security-classifier.ts` runs only in the security sidecar subprocess (`security-sidecar-entry.ts`), never in the compiled browse binary. `@huggingface/transformers` v4 requires `onnxruntime-node`, which fails `dlopen` from Bun compile's temp extract directory. Only the pure-string pieces (canary inject/check, verdict combiner) are in `security.ts`, which is safe to import from `server.ts`. (The attack log lives in `tunnel-denial-log.ts`; the session-state/status surface was removed in #2557.)
+**关键约束：** `security-classifier.ts` 只在安全 sidecar 子进程（`security-sidecar-entry.ts`）里运行，绝不在编译后的 browse 二进制里。`@huggingface/transformers` v4 依赖 `onnxruntime-node`，而后者从 Bun compile 的临时解压目录 `dlopen` 会失败。只有纯字符串部件（canary 注入/检查、判定合并器）在 `security.ts`，从 `server.ts` 导入它是安全的。（攻击日志在 `tunnel-denial-log.ts`；会话状态/状态面已在 #2557 移除。）
 
-**Env knobs:** `GSTACK_SECURITY_OFF=1` is a real kill switch (classifier stays off even if warmed; the L1-L3 filters keep running). Model cache at `~/.gstack/models/testsavant-small/` (112MB, first run). Attack log at `~/.gstack/security/attempts.jsonl` (salted sha256 + domain, rotates at 10MB, 5 generations). Per-device salt at `~/.gstack/security/device-salt` (0600), cached in-process to survive FS-unwritable environments.
+**环境旋钮：** `GSTACK_SECURITY_OFF=1` 是真正的总开关（即使已预热，分类器也保持关闭；L1-L3 过滤器继续运行）。模型缓存在 `~/.gstack/models/testsavant-small/`（首次运行 112MB）。攻击日志在 `~/.gstack/security/attempts.jsonl`（加盐 sha256 + 域名，10MB 轮转，保留 5 代）。每设备盐在 `~/.gstack/security/device-salt`（0600），进程内缓存以便在文件系统不可写的环境中存活。
 
-**Visibility.** A centered banner appears on canary leak or BLOCK verdict with the exact layer scores. `bin/gstack-security-dashboard` aggregates local attempts; `supabase/functions/community-pulse` aggregates opt-in community telemetry across users. (The sidebar header's SEC shield icon and the `/health` `security` field were removed in #2557: their only data source — `~/.gstack/security/session-state.json` — lost its only writer when the chat-path agent was ripped, so the shield reported stale or empty state. The live defenses report through their own call sites.)
+**可见性。** canary 泄露或 BLOCK 判定时出现居中横幅，附各层确切分数。`bin/gstack-security-dashboard` 汇总本地尝试；`supabase/functions/community-pulse` 汇总跨用户的选择加入社区遥测。（侧边栏头部的 SEC 盾牌图标与 `/health` 的 `security` 字段已在 #2557 移除：它们唯一的数据源 `~/.gstack/security/session-state.json` 在 chat 路径 agent 被拆掉后失去了唯一写入者，盾牌报的是过期或空状态。在用的防御通过各自的调用点上报。）
 
-## The ref system
+## Ref 系统
 
-Refs (`@e1`, `@e2`, `@c1`) are how the agent addresses page elements without writing CSS selectors or XPath.
+Ref（`@e1`、`@e2`、`@c1`）是 agent 定位页面元素而无需写 CSS 选择器或 XPath 的方式。
 
-### How it works
+### 工作原理
 
 ```
 1. Agent runs: $B snapshot -i
@@ -263,23 +267,23 @@ Later:
 8. Server resolves @e3 → Locator → locator.click()
 ```
 
-### Why Locators, not DOM mutation
+### 为什么用 Locator，而不是改 DOM
 
-The obvious approach is to inject `data-ref="@e1"` attributes into the DOM. This breaks on:
+显而易见的做法是往 DOM 注入 `data-ref="@e1"` 属性。它在以下情况失效：
 
-- **CSP (Content Security Policy).** Many production sites block DOM modification from scripts.
-- **React/Vue/Svelte hydration.** Framework reconciliation can strip injected attributes.
-- **Shadow DOM.** Can't reach inside shadow roots from the outside.
+- **CSP（内容安全策略）。** 许多生产站点禁止脚本修改 DOM。
+- **React/Vue/Svelte hydration。** 框架调和可能剥掉注入的属性。
+- **Shadow DOM。** 从外面够不到 shadow root 内部。
 
-Playwright Locators are external to the DOM. They use the accessibility tree (which Chromium maintains internally) and `getByRole()` queries. No DOM mutation, no CSP issues, no framework conflicts.
+Playwright Locator 位于 DOM 之外。它们用无障碍树（Chromium 内部维护）和 `getByRole()` 查询。不改 DOM，没有 CSP 问题，没有框架冲突。
 
-### Ref lifecycle
+### Ref 生命周期
 
-Refs are cleared on navigation (the `framenavigated` event on the main frame). This is correct — after navigation, all locators are stale. The agent must run `snapshot` again to get fresh refs. This is by design: stale refs should fail loudly, not click the wrong element.
+导航时清空 Ref（主 frame 的 `framenavigated` 事件）。这是对的：导航之后所有 locator 都过期了。agent 必须重新运行 `snapshot` 获取新 ref。这是有意设计：过期 ref 应当大声失败，而不是点错元素。
 
-### Ref staleness detection
+### Ref 过期检测
 
-SPAs can mutate the DOM without triggering `framenavigated` (e.g. React router transitions, tab switches, modal opens). This makes refs stale even though the page URL didn't change. To catch this, `resolveRef()` performs an async `count()` check before using any ref:
+SPA 可以在不触发 `framenavigated` 的情况下改动 DOM（如 React 路由切换、标签页切换、弹窗打开）。这让 ref 过期而页面 URL 未变。为捕获这种情况，`resolveRef()` 在使用任何 ref 前先做一次异步 `count()` 检查：
 
 ```
 resolveRef(@e3) → entry = refMap.get("e3")
@@ -288,36 +292,36 @@ resolveRef(@e3) → entry = refMap.get("e3")
                 → if count > 0: return { locator }
 ```
 
-This fails fast (~5ms overhead) instead of letting Playwright's 30-second action timeout expire on a missing element. The `RefEntry` stores `role` and `name` metadata alongside the Locator so the error message can tell the agent what the element was.
+这样做快速失败（约 5ms 开销），而不是让 Playwright 的 30 秒操作超时耗在一个不存在的元素上。`RefEntry` 在 Locator 之外还存了 `role` 与 `name` 元数据，错误消息能告诉 agent 那是什么元素。
 
-### Cursor-interactive refs (@c)
+### 光标可交互 ref（@c）
 
-The `-C` flag finds elements that are clickable but not in the ARIA tree — things styled with `cursor: pointer`, elements with `onclick` attributes, or custom `tabindex`. These get `@c1`, `@c2` refs in a separate namespace. This catches custom components that frameworks render as `<div>` but are actually buttons.
+`-C` 标志找出可点击但不在 ARIA 树里的元素：带 `cursor: pointer` 样式的、有 `onclick` 属性的、或自定义 `tabindex` 的。它们获得独立命名空间的 `@c1`、`@c2` ref。这能捕获框架渲染成 `<div>` 但其实是按钮的自定义组件。
 
-## Logging architecture
+## 日志架构
 
-Three ring buffers (50,000 entries each, O(1) push):
+三个环形缓冲区（各 50,000 条，O(1) 推入）：
 
 ```
 Browser events → CircularBuffer (in-memory) → Async flush to .gstack/*.log
 ```
 
-Console messages, network requests, and dialog events each have their own buffer. Flushing happens every 1 second — the server appends only new entries since the last flush. This means:
+控制台消息、网络请求和对话框事件各有自己的缓冲区。每 1 秒刷盘一次：服务器只追加自上次刷新以来的新条目。这意味着：
 
-- HTTP request handling is never blocked by disk I/O
-- Logs survive server crashes (up to 1 second of data loss)
-- Memory is bounded (50K entries × 3 buffers)
-- Disk files are append-only, readable by external tools
+- HTTP 请求处理绝不会被磁盘 I/O 阻塞
+- 日志能在服务器崩溃后幸存（最多丢 1 秒数据）
+- 内存有界（50K 条 × 3 个缓冲区）
+- 磁盘文件只追加，外部工具可读
 
-The `console`, `network`, and `dialog` commands read from the in-memory buffers, not disk. Disk files are for post-mortem debugging.
+`console`、`network`、`dialog` 命令从内存缓冲区读取，不读磁盘。磁盘文件用于事后调试。
 
-## SKILL.md template system
+## SKILL.md 模板系统
 
-### The problem
+### 问题
 
-SKILL.md files tell Claude how to use the browse commands. If the docs list a flag that doesn't exist, or miss a command that was added, the agent hits errors. Hand-maintained docs always drift from code.
+SKILL.md 文件告诉 Claude 怎么用 browse 命令。文档列了不存在的标志，或漏了新加的命令，agent 就会撞错。手工维护的文档总会偏离代码。
 
-### The solution
+### 解决方案
 
 ```
 SKILL.md.tmpl          (human-written prose + placeholders)
@@ -327,110 +331,108 @@ gen-skill-docs.ts      (reads source code metadata)
 SKILL.md               (committed, auto-generated sections)
 ```
 
-Templates contain the workflows, tips, and examples that require human judgment. Placeholders are filled from source code at build time:
+模板承载需要人类判断的工作流、提示与示例。占位符在构建时由源码填充：
 
-| Placeholder | Source | What it generates |
+| 占位符 | 来源 | 生成什么 |
 |-------------|--------|-------------------|
-| `{{COMMAND_REFERENCE}}` | `commands.ts` | Categorized command table |
-| `{{SNAPSHOT_FLAGS}}` | `snapshot.ts` | Flag reference with examples |
-| `{{ASIDE_SETUP}}` | `resolvers/aside.ts` | Aside browser-driver contract: readiness probe, the rules for driving a real browser, and the hand-off to the `$B` fallback |
-| `{{ASIDE_COOKBOOK}}` | `resolvers/aside.ts` | The verified `aside repl` script shapes (carried by /browse and /devex-review; other skills inline their own) |
-| `{{ASIDE_RESEARCH}}` | `resolvers/aside.ts` | Web research through `aside exec` in the user's browser, WebSearch as the fallback, then the no-search degrade |
-| `{{ASIDE_EXEC_PRELUDE}}` | `resolvers/aside.ts` | One-line `_aside_exec` definition: an `aside exec` call writes an egress receipt before the prompt leaves the machine (fail-open, user-facing sink: it runs unreceipted only when the egress library is missing); skills never call `aside exec` bare |
-| `{{UNTRUSTED_CONTENT_WARNING}}` | `resolvers/aside.ts` | The one untrusted-content rule for everything either browser hands back |
-| `{{PREAMBLE}}` | `resolvers/preamble.ts`, `resolvers/preamble-hoist.ts` | Startup block: update check, session tracking, contributor mode, AskUserQuestion format; tier 2+ skills get a pointer to their shared `sections/preamble.md` plus the sections that are their own |
-| `{{BROWSE_SETUP}}` | `gen-skill-docs.ts` | Binary discovery + setup instructions |
-| `{{BROWSE_FALLBACK}}` | `resolvers/browse.ts` | Aside→`$B` hand-off: binary discovery + the step-by-step equivalence table, rendered right after `{{ASIDE_SETUP}}` in every browsing skill |
-| `{{BASE_BRANCH_DETECT}}` | `gen-skill-docs.ts` | Dynamic base branch detection for PR-targeting skills (ship, review, qa, plan-ceo-review) |
-| `{{QA_METHODOLOGY}}` | `resolvers/utility.ts` | Browser-only QA methodology, conditionally loaded by /qa and /qa-only |
-| `{{QA_SCOPE}}, {{QA_EXPLORATORY}}, {{QA_FUNCTIONAL}}, {{QA_RESOURCE}}, {{QA_METHOD_READS}}, {{QA_REVIEW}}` | `resolvers/qa.ts` | Surface selection, checkpointed native/exploratory QA, direct conditional method reads, installed-asset references and bounded review/ship callers |
-| `{{DESIGN_METHODOLOGY}}` | `gen-skill-docs.ts` | Shared design audit methodology for /plan-design-review and /design-review |
-| `{{SHARED_LIBS_RUBRIC}}` | `resolvers/shared-libs.ts` | Shared-code criteria for /deslop-shared-libs, /autoplan's eng phase, and /review: verified callers, existing helpers, compatibility, tests, and total savings |
-| `{{REVIEW_DASHBOARD}}` | `gen-skill-docs.ts` | Review Readiness Dashboard for /ship pre-flight |
-| `{{TEST_VALUE_BAR:<mode>}}` | `resolvers/test-value.ts` | Shared test value bar (authoring gate, value card, X/Y coverage, red-first proof, low-value catalog) for /qa and /qa-only (`qa`) and /test-audit (`audit`); /autoplan's eng phase and /ship embed it through the coverage audit |
-| `{{TEST_VALUE_MESSAGE:<key>}}` | `resolvers/test-value.ts` | One degraded-mode message (problem, consequence, fix, docs anchor) from the shared constants |
-| `{{TEST_BOOTSTRAP}}` | `resolvers/testing.ts` | Test framework detection, bootstrap, CI/CD setup for /ship and /design-review |
-| `{{CODEX_PLAN_REVIEW}}` | `resolvers/outside-voice-steps.ts` | Optional outside plan review for /plan-ceo-review and /autoplan's eng phase: Claude Code on Codex, Codex on other supported harnesses, with the caller's native subagent fallback |
-| `{{DESIGN_SETUP}}` | `resolvers/design.ts` | Discovery pattern for `$D` design binary, mirrors `{{BROWSE_SETUP}}` |
-| `{{DESIGN_DETECTOR}}` | `resolvers/design.ts` | Probe block + sentinel reading for the user-installed impeccable engine (`bin/gstack-design-detect.ts`); `:phase0` renders design-review's mechanical scan, `:gate` design-html's bounded slop gate |
-| `{{DESIGN_MD_CHECK}}` | `resolvers/design.ts` | Open DESIGN.md format check through `bin/gstack-design-md.ts`, with the one-time conversion offer persisted in the file; `:calibrate` renders the tokens-as-calibration form for /design-review |
-| `{{OVERUSED_FONTS}}` | `resolvers/design.ts` | Role-scoped font lists from `lib/design-catalog.ts` (overused as display, fine as body/UI, mono, banned, verified-free) for /design-consultation |
-| `{{DESIGN_SLOP_BULLETS}}` | `resolvers/design.ts` | Prose-only slop bullets from `lib/design-catalog.ts` (no rule ids) for the proposal skills |
-| `{{DESIGN_CRAFT_RULE:<lead>}}` | `resolvers/design-craft.ts` | One paragraph of `design-html/sections/craft.md.tmpl`, found by its bold lead, with its bullets, for /design-review's craft audit; a missing or ambiguous lead fails generation |
-| `{{DESIGN_PERSUADE_CHECKS}}` | `resolvers/design-craft.ts` | The five Persuade conversion checks (one primary action, named objections, proof beside each claim, a real risk reversal, an index/noindex decision) for /design-review's craft audit and /plan-design-review Pass 1 |
-| `{{DESIGN_SHOTGUN_LOOP}}` | `resolvers/design.ts` | Shared comparison board feedback loop for /design-shotgun, /plan-design-review, /design-consultation |
-| `{{UX_PRINCIPLES}}` | `resolvers/design.ts` | User behavioral foundations (scanning, satisficing, goodwill reservoir, trunk test) for /design-html and /design-shotgun |
-| `{{GBRAIN_CONTEXT_LOAD}}` | `resolvers/gbrain.ts` | Brain-first context search with keyword extraction, health awareness, and data-research routing. Injected into 10 brain-aware skills. Suppressed on non-brain hosts. |
-| `{{GBRAIN_SAVE_RESULTS}}` | `resolvers/gbrain.ts` | Post-skill brain persistence with entity enrichment, throttle handling, and per-skill save instructions. 8 skill-specific save formats. |
-| `{{FOREGROUND_DISPATCH_NOTE}}` | `resolvers/constants.ts` | Canonical `run_in_background: false` guidance for every synchronous Agent-tool subagent dispatch (subagents run in the background by default since Claude Code v2.1.198). Single source of truth; carriers are pinned per file by `test/run-in-background-guidance.test.ts`. |
+| `{{COMMAND_REFERENCE}}` | `commands.ts` | 分类命令表 |
+| `{{SNAPSHOT_FLAGS}}` | `snapshot.ts` | 带示例的标志参考 |
+| `{{ASIDE_SETUP}}` | `resolvers/aside.ts` | Aside 浏览器驱动契约：就绪探测、驱动真实浏览器的规则，以及向 `$B` 回退的移交 |
+| `{{ASIDE_COOKBOOK}}` | `resolvers/aside.ts` | 经验证的 `aside repl` 脚本形态（由 /browse 和 /devex-review 携带；其他 skill 内联自己的版本） |
+| `{{ASIDE_RESEARCH}}` | `resolvers/aside.ts` | 经由用户浏览器中 `aside exec` 的网络研究，WebSearch 作回退，再是无搜索降级 |
+| `{{ASIDE_EXEC_PRELUDE}}` | `resolvers/aside.ts` | 一行 `_aside_exec` 定义：`aside exec` 调用在提示词离开机器前写一条出口回执（fail-open，面向用户的发送点：仅在出口库缺失时才无回执运行）；skill 绝不裸调 `aside exec` |
+| `{{UNTRUSTED_CONTENT_WARNING}}` | `resolvers/aside.ts` | 适用于任一浏览器返回内容的那条不可信内容规则 |
+| `{{PREAMBLE}}` | `resolvers/preamble.ts`、`resolvers/preamble-hoist.ts` | 启动块：更新检查、会话跟踪、贡献者模式、AskUserQuestion 格式；tier 2+ skill 得到指向其共享 `sections/preamble.md` 的指针，外加属于它们自己的小节 |
+| `{{BROWSE_SETUP}}` | `gen-skill-docs.ts` | 二进制发现与安装说明 |
+| `{{BROWSE_FALLBACK}}` | `resolvers/browse.ts` | Aside→`$B` 移交：二进制发现 + 逐步等价表，渲染在每个浏览类 skill 的 `{{ASIDE_SETUP}}` 之后 |
+| `{{BASE_BRANCH_DETECT}}` | `gen-skill-docs.ts` | 面向 PR 的 skill（ship、review、qa、plan-ceo-review）的动态基础分支检测 |
+| `{{QA_METHODOLOGY}}` | `resolvers/utility.ts` | 仅浏览器 QA 方法论，由 /qa 和 /qa-only 条件加载 |
+| `{{QA_SCOPE}}, {{QA_EXPLORATORY}}, {{QA_FUNCTIONAL}}, {{QA_RESOURCE}}, {{QA_METHOD_READS}}, {{QA_REVIEW}}` | `resolvers/qa.ts` | 表面选择、带检查点的原生/探索式 QA、直接条件方法读取、已装资产引用，以及有界的 review/ship 调用方 |
+| `{{DESIGN_METHODOLOGY}}` | `gen-skill-docs.ts` | /plan-design-review 与 /design-review 共享的设计审查方法论 |
+| `{{SHARED_LIBS_RUBRIC}}` | `resolvers/shared-libs.ts` | /deslop-shared-libs、/autoplan 工程阶段与 /review 的共享代码标准：经验证的调用方、既有 helper、兼容性、测试与总节省 |
+| `{{REVIEW_DASHBOARD}}` | `gen-skill-docs.ts` | /ship 预检的 Review Readiness Dashboard |
+| `{{TEST_VALUE_BAR:<mode>}}` | `resolvers/test-value.ts` | 共享测试价值标准（创作门禁、价值卡、X/Y 覆盖、红先行证明、低价值目录），/qa 与 /qa-only 用（`qa`），/test-audit 用（`audit`）；/autoplan 工程阶段与 /ship 经覆盖审计嵌入 |
+| `{{TEST_VALUE_MESSAGE:<key>}}` | `resolvers/test-value.ts` | 来自共享常量的一条降级模式消息（问题、后果、修复、文档锚点） |
+| `{{TEST_BOOTSTRAP}}` | `resolvers/testing.ts` | 测试框架检测、引导与 CI/CD 配置，供 /ship 与 /design-review |
+| `{{CODEX_PLAN_REVIEW}}` | `resolvers/outside-voice-steps.ts` | /plan-ceo-review 与 /autoplan 工程阶段的可选外部计划评审：Claude Code 上的 Codex、其他受支持 harness 上的 Codex，带调用方原生 subagent 回退 |
+| `{{DESIGN_SETUP}}` | `resolvers/design.ts` | `$D` design 二进制的发现模式，镜像 `{{BROWSE_SETUP}}` |
+| `{{DESIGN_DETECTOR}}` | `resolvers/design.ts` | 用户安装的 impeccable 引擎的探测块 + 哨兵读取（`bin/gstack-design-detect.ts`）；`:phase0` 渲染 design-review 的机械扫描，`:gate` 渲染 design-html 的有界 slop 门禁 |
+| `{{DESIGN_MD_CHECK}}` | `resolvers/design.ts` | 经 `bin/gstack-design-md.ts` 的 open DESIGN.md 格式检查，一次性转换建议持久化在文件里；`:calibrate` 为 /design-review 渲染 tokens-as-calibration 表单 |
+| `{{OVERUSED_FONTS}}` | `resolvers/design.ts` | 来自 `lib/design-catalog.ts` 的按角色划分字体清单（作展示字体属滥用、作正文/UI 尚可、等宽、禁用、经验证免费），供 /design-consultation |
+| `{{DESIGN_SLOP_BULLETS}}` | `resolvers/design.ts` | 来自 `lib/design-catalog.ts` 的纯散文 slop 要点（无规则 id），供提案类 skill |
+| `{{DESIGN_CRAFT_RULE:<lead>}}` | `resolvers/design-craft.ts` | `design-html/sections/craft.md.tmpl` 中按加粗导语找到的一段及其要点，供 /design-review 的 craft 审查；导语缺失或含糊会使生成失败 |
+| `{{DESIGN_PERSUADE_CHECKS}}` | `resolvers/design-craft.ts` | 五项 Persuade 转化检查（一个主行动、点名的异议、每条主张旁的证据、真实的风险逆转、index/noindex 决策），供 /design-review 的 craft 审查与 /plan-design-review 的 Pass 1 |
+| `{{DESIGN_SHOTGUN_LOOP}}` | `resolvers/design.ts` | /design-shotgun、/plan-design-review、/design-consultation 共享的对比板反馈循环 |
+| `{{UX_PRINCIPLES}}` | `resolvers/design.ts` | 用户行为基础（扫读、满意即止、善意储备、后备箱测试），供 /design-html 与 /design-shotgun |
+| `{{GBRAIN_CONTEXT_LOAD}}` | `resolvers/gbrain.ts` | 脑优先上下文搜索，带关键词提取、健康感知与数据研究路由。注入 10 个脑感知 skill。非脑主机上被抑制。 |
+| `{{GBRAIN_SAVE_RESULTS}}` | `resolvers/gbrain.ts` | skill 后置的脑持久化，带实体富化、节流处理与每 skill 保存说明。8 种 skill 专属保存格式。 |
+| `{{FOREGROUND_DISPATCH_NOTE}}` | `resolvers/constants.ts` | 面向每个同步 Agent 工具子代理分发的权威 `run_in_background: false` 指引（自 Claude Code v2.1.198 起 subagent 默认后台运行）。单一事实来源；每文件的承载者由 `test/run-in-background-guidance.test.ts` 固定。 |
 
-`/qa` uses its browser-only `qa/sections/test-bootstrap.md.tmpl`; functional QA never bootstraps.
+`/qa` 使用其仅浏览器版的 `qa/sections/test-bootstrap.md.tmpl`；功能 QA 从不引导。
 
-This is structurally sound — if a command exists in code, it appears in docs. If it doesn't exist, it can't appear.
+这在结构上是可靠的：命令在代码里存在，就会出现在文档里；不存在，就不可能出现。
 
-The generator also owns two files that are not skill docs: `review/design-checklist.md` is rendered from `lib/design-catalog.ts` (through `scripts/resolvers/design-checklist.ts`), and `lib/dom-dump.js` is written from `lib/dom-dump-script.ts`. The checklist `/review` and `/ship` read and the DOM dump `/design-review` runs therefore cannot drift from the catalog and the script the templates describe; `test/design-checklist-sync.test.ts` pins both.
+生成器还拥有两个非 skill 文档的文件：`review/design-checklist.md` 从 `lib/design-catalog.ts` 渲染（经 `scripts/resolvers/design-checklist.ts`），`lib/dom-dump.js` 从 `lib/dom-dump-script.ts` 写出。`/review` 与 `/ship` 读的清单，以及 `/design-review` 运行的 DOM dump，因此不会偏离模板所描述的目录与脚本；`test/design-checklist-sync.test.ts` 固定两者。
 
-The internal async `runGeneration()` driver inventories skills, Claude sections
-and, on every supported host, the sections of the skills carved on every host
-(`CARVED_ON_EVERY_HOST` in `scripts/resolvers/sections.ts`: qa, qa-only, ship,
-plan-ceo-review, office-hours and design-review), each tier 2+ skill's shared
-`sections/preamble.md` on every host, host metadata, OpenClaw snippets,
-the index, the agent digest, and auxiliary assets. Other skills remain inline on
-non-Claude hosts; QA assets resolve relative to the installed host skill.
-Every artifact goes through one compare-or-write function. Dry runs
-report missing or different artifacts as `STALE` without changing files or
-directories; rendering and filesystem failures report `ERROR` with their cause.
-Either fails the command, including a single-host invocation. Module imports
-remain synchronous and do not start generation.
+内部异步驱动 `runGeneration()` 清点 skills、Claude 小节、以及在每个受支持主机上被刻入每个主机的那些 skill 的小节
+（`scripts/resolvers/sections.ts` 的 `CARVED_ON_EVERY_HOST`：qa、qa-only、ship、
+plan-ceo-review、office-hours 与 design-review）、每个 tier 2+ skill 在每个主机上的共享
+`sections/preamble.md`、主机元数据、OpenClaw 片段、
+索引、agent 摘要和辅助资产。其他 skill 在
+非 Claude 主机上保持内联；QA 资产相对已安装的主机 skill 解析。
+每个产物都经过同一个比较或写入函数。Dry run
+把缺失或不一致的产物报为 `STALE`，不改任何文件或目录；渲染与文件系统失败报 `ERROR` 并带原因。
+任一情况都使命令失败，包括单主机调用。模块导入
+保持同步，不会启动生成。
 
-Physical output paths are separate from paths embedded in content. `skill:check`
-uses that separation to generate every host once in temporary storage, validate
-the complete render, and compare canonical tracked output. Nonignored generated
-output must be tracked. Optional ignored host caches are untouched, and temporary
-storage is cleaned in `finally`, including after failed generation.
+物理输出路径与嵌在内容里的路径彼此独立。`skill:check`
+利用这种分离：在临时存储里把每个主机生成一次，校验
+完整渲染，再与规范的已跟踪输出比较。非忽略的生成
+输出必须被跟踪。可选的、被忽略的主机缓存不受影响，临时
+存储在 `finally` 里清理，生成失败后也不例外。
 
-### The preamble
+### 前导块（preamble）
 
-Most workflow skills start with a `{{PREAMBLE}}` block that runs before the skill's own logic. The read-only `/deslop-shared-libs` audit omits this block and does not run startup, telemetry, memory, or stateful review helpers. Since v1.71.0.0 the rendered block is a thin fence that invokes `bin/gstack-skill-start` (the consolidated preamble runtime — it replaced ~18KB of inline bash per tier-2+ skill) and reads back `KEY: value` STATUS lines that the skill prose branches on; `bin/gstack-skill-end` logs telemetry at skill end. One-time onboarding and consent text is emitted as session-bound `GSTACK_INSTRUCTION` blocks only when a runtime gate actually fires, instead of rendering in every skill. The startup still handles five things:
+多数 workflow skill 以 `{{PREAMBLE}}` 块开头，先于 skill 自身逻辑运行。只读的 `/deslop-shared-libs` 审计省略此块，不运行启动、遥测、记忆或有状态审查 helper。自 v1.71.0.0 起，渲染出的块是一层薄围栏，调用 `bin/gstack-skill-start`（合并后的前导块运行时，它替代了每个 tier-2+ skill 约 18KB 的内联 bash），并读回 `KEY: value` 状态行供 skill 正文分支；`bin/gstack-skill-end` 在 skill 结束时记录遥测。一次性引导与同意文本只在运行时门槛真正触发时，才以会话绑定的 `GSTACK_INSTRUCTION` 块发出，而不是渲染进每个 skill。启动仍然处理五件事：
 
-1. **Update check** — calls `gstack-update-check`, reports if an upgrade is available.
-2. **Session tracking** — touches `~/.gstack/sessions/<parent-pid>` and prunes entries older than 2 hours, so concurrent-session state is observable on disk.
-3. **Operational self-improvement** — at the end of every skill session, the agent reflects on failures (CLI errors, wrong approaches, project quirks) and logs operational learnings to the project's JSONL file for future sessions.
-4. **AskUserQuestion format** — universal format: context, question, `RECOMMENDATION: Choose X because ___`, lettered options. Consistent across all skills.
-5. **Search Before Building** — before building infrastructure or unfamiliar patterns, search first. Three layers of knowledge: tried-and-true (Layer 1), new-and-popular (Layer 2), first-principles (Layer 3). When first-principles reasoning reveals conventional wisdom is wrong, the agent names the "eureka moment" and logs it. See `ETHOS.md` for the full builder philosophy.
+1. **更新检查**：调用 `gstack-update-check`，有升级可用时报告。
+2. **会话跟踪**：touch `~/.gstack/sessions/<parent-pid>` 并清理 2 小时以上的旧条目，让并发会话状态在磁盘上可观察。
+3. **运营式自我改进**：每个 skill 会话结束时，agent 反思失败（CLI 报错、走错的路、项目怪癖），把运营经验记入项目的 JSONL 文件供未来会话使用。
+4. **AskUserQuestion 格式**：统一格式：背景、问题、`RECOMMENDATION: Choose X because ___`、带字母的选项。所有 skill 一致。
+5. **Search Before Building（先搜索再构建）**：构建基础设施或陌生模式之前先搜索。知识分三层：久经考验（第 1 层）、新而流行（第 2 层）、第一性原理（第 3 层）。第一性原理推理揭示惯例有误时，agent 点名那个"eureka 时刻"并记录。完整构建者哲学见 `ETHOS.md`。
 
-Tier 2+ skills share most of this text, so it is not repeated in each SKILL.md. `scripts/resolvers/preamble-hoist.ts` renders the skill-independent preamble sections once per host into `sections/preamble.md` beside the SKILL.md, and the SKILL.md opens with a short "Shared preamble (load first)" pointer that names the file's id (a hash of the install root and the shared text before host rewrites, so it changes when that text changes but can repeat across hosts); the agent reads the file unless its own earlier Read of that file, headed by that id, is still in context, so a session loads it once and text that merely carries the id never stands in for it. A section moves only when the skill's render of it is byte-identical to the shared render. The start command, sections that name the skill (Question Tuning, Repo Ownership, Search Before Building, Telemetry) and skill-specific variants stay inline. Tier 1 skills keep their short preamble inline.
+Tier 2+ skill 共享其中大部分文本，所以不在每个 SKILL.md 里重复。`scripts/resolvers/preamble-hoist.ts` 把与 skill 无关的前导块小节在每个主机渲染一次到 SKILL.md 旁的 `sections/preamble.md`，SKILL.md 开头是一段简短的 "Shared preamble (load first)" 指针，标出该文件的 id（安装根与主机改写前共享文本的哈希，文本变了 id 就变，但不同主机间可以重复）；agent 会读取该文件，除非它自己更早、以该 id 开头的 Read 结果仍在上下文里，这样一次会话只加载一次，而仅携带 id 的文字永远不能顶替文件本身。一个小节只有在 skill 的渲染与共享渲染逐字节一致时才外移。启动命令、点名 skill 的小节（Question Tuning、Repo Ownership、Search Before Building、Telemetry）以及 skill 专属变体保持内联。Tier 1 skill 的短前导块保持内联。
 
-### Why committed, not generated at runtime?
+### 为什么提交入库，而不是运行时生成？
 
-Three reasons:
+三个理由：
 
-1. **Claude reads SKILL.md at skill load time.** There's no build step when a user invokes `/browse`. The file must already exist and be correct.
-2. **CI can validate freshness.** All-host generation followed by tracked-diff and untracked-output checks catches stale docs before merge; `skill:check` also validates every host's content from a clean checkout.
-3. **Git blame works.** You can see when a command was added and in which commit.
+1. **Claude 在加载 skill 时读 SKILL.md。** 用户调用 `/browse` 时没有构建步骤。文件必须已经存在且正确。
+2. **CI 能校验新鲜度。** 全主机生成加跟踪差异与未跟踪输出检查，能在合并前抓住过期文档；`skill:check` 还会从干净 checkout 校验每个主机的内容。
+3. **git blame 有效。** 你能看到一条命令何时加入、在哪个提交。
 
-### Template test tiers
+### 模板测试分层
 
-Paid-tier cost and speed estimates below predate the current model defaults.
-See [eval defaults and overrides](CONTRIBUTING.md#testing--evals).
+下方的付费层成本与速度估算早于当前模型默认值。
+见[评估默认值与覆盖](CONTRIBUTING.md#testing--evals)。
 
-| Tier | What | Cost | Speed |
-|------|------|------|-------|
-| 1 — Static validation | Parse every `$B` command in SKILL.md and validate it against the registry; pin the Aside contract sentences and the render wrapper's option mapping | Free | <2s |
-| 2 — E2E via `claude -p` | Spawn real Claude session, run each skill, check for errors | ~$3.85 | ~20min |
-| 3 — LLM-as-judge | `claude-fable-5-1` by default scores docs on clarity/completeness/actionability | ~$0.15 | ~30s |
+| Tier | 内容 | 成本 | 速度 |
+|------|------|-------|-------|
+| 1 — 静态验证 | 解析 SKILL.md 中每条 `$B` 命令并对注册表校验；固定 Aside 契约句子与渲染包装器的选项映射 | 免费 | <2s |
+| 2 — 经 `claude -p` 的 E2E | 拉起真实 Claude 会话，运行每个 skill，检查报错 | ~$3.85 | ~20min |
+| 3 — LLM 当评判 | 默认 `claude-fable-5-1` 按清晰度/完整性/可操作性给文档打分 | ~$0.15 | ~30s |
 
-Tier 1 runs on every `bun run test`. Tiers 2+3 are gated behind `EVALS=1`. The idea is: catch 95% of issues for free, use LLMs only for judgment calls.
+Tier 1 随每次 `bun run test` 运行。Tier 2+3 由 `EVALS=1` 把门。思路是：免费抓住 95% 的问题，LLM 只用于需要判断力的场合。
 
-## Command dispatch
+## 命令分发
 
-Commands are categorized by side effects:
+命令按副作用分类：
 
-- **READ** (text, html, links, console, cookies, ...): No mutations. Safe to retry. Returns page state.
-- **WRITE** (goto, click, fill, press, ...): Mutates page state. Not idempotent.
-- **META** (snapshot, screenshot, tabs, chain, ...): Server-level operations that don't fit neatly into read/write.
+- **READ**（text、html、links、console、cookies 等）：无修改。可安全重试。返回页面状态。
+- **WRITE**（goto、click、fill、press 等）：修改页面状态。不幂等。
+- **META**（snapshot、screenshot、tabs、chain 等）：不易归入读/写的服务器级操作。
 
-This isn't just organizational. The server uses it for dispatch:
+这不只是分类学。服务器用它做分发：
 
 ```typescript
 if (READ_COMMANDS.has(cmd))  → handleReadCommand(cmd, args, bm)
@@ -438,37 +440,37 @@ if (WRITE_COMMANDS.has(cmd)) → handleWriteCommand(cmd, args, bm)
 if (META_COMMANDS.has(cmd))  → handleMetaCommand(cmd, args, bm, shutdown)
 ```
 
-The `help` command returns all three sets so agents can self-discover available commands.
+`help` 命令返回全部三个集合，agent 由此自助发现可用命令。
 
-## Error philosophy
+## 错误哲学
 
-Errors are for AI agents, not humans. Every error message must be actionable:
+错误消息是写给 AI agent 的，不是给人的。每条错误消息都必须可行动：
 
 - "Element not found" → "Element not found or not interactable. Run `snapshot -i` to see available elements."
 - "Selector matched multiple elements" → "Selector matched multiple elements. Use @refs from `snapshot` instead."
 - Timeout → "Navigation timed out after 30s. The page may be slow or the URL may be wrong."
 
-Playwright's native errors are rewritten through `wrapError()` to strip internal stack traces and add guidance. The agent should be able to read the error and know what to do next without human intervention.
+Playwright 的原生错误经 `wrapError()` 重写，剥掉内部堆栈、加上指引。agent 应能读懂错误并知道下一步做什么，无需人工介入。
 
-### Crash recovery
+### 崩溃恢复
 
-The server doesn't try to self-heal. If Chromium crashes (`browser.on('disconnected')`), the server exits immediately. The CLI detects the dead server on the next command and auto-restarts. This is simpler and more reliable than trying to reconnect to a half-dead browser process.
+服务器不自愈。Chromium 崩溃时（`browser.on('disconnected')`），服务器立即退出。CLI 在下一条命令时发现服务器已死并自动重启。这比试图重连一个半死的浏览器进程更简单也更可靠。
 
-## E2E test infrastructure
+## E2E 测试基础设施
 
-### Session runner (`test/helpers/session-runner.ts`)
+### 会话运行器（`test/helpers/session-runner.ts`）
 
-E2E tests spawn `claude -p` as a completely independent subprocess — not via the Agent SDK, which can't nest inside Claude Code sessions. The runner:
+E2E 测试以完全独立子进程的方式拉起 `claude -p`：不经 Agent SDK，后者无法嵌套在 Claude Code 会话内。运行器：
 
-1. Writes the prompt to a temp file (avoids shell escaping issues)
-2. Spawns `sh -c 'cat prompt | claude -p --output-format stream-json --verbose'`
-3. Streams NDJSON from stdout for real-time progress
-4. Races against a configurable timeout
-5. Parses the full NDJSON transcript into structured results
+1. 把提示词写进临时文件（避免 shell 转义问题）
+2. 启动 `sh -c 'cat prompt | claude -p --output-format stream-json --verbose'`
+3. 从 stdout 流式读取 NDJSON 获得实时进度
+4. 与可配置的超时赛跑
+5. 把完整 NDJSON 转录解析成结构化结果
 
-The `parseNDJSON()` function is pure — no I/O, no side effects — making it independently testable.
+`parseNDJSON()` 是纯函数：无 I/O，无副作用，因此可独立测试。
 
-### Observability data flow
+### 可观测性数据流
 
 ```
   skill-e2e-*.test.ts
@@ -499,45 +501,45 @@ The `parseNDJSON()` function is pure — no I/O, no side effects — making it i
   │  Run dir: e2e-runs/{runId}/
 ```
 
-**Split ownership:** session-runner owns the heartbeat (current test state), eval-store owns partial results (completed test state). Neither component knows about the other — they share data only through the filesystem. Sharded runs report live progress through the detach log (`~/.gstack-dev/eval-runs/`) and each shard's own eval directory.
+**所有权分离：** session-runner 拥有心跳（当前测试状态），eval-store 拥有部分结果（已完成测试状态）。两个组件互不知晓：只通过文件系统共享数据。分片运行经 detach 日志（`~/.gstack-dev/eval-runs/`）和每个分片自己的 eval 目录报告实时进度。
 
-**Non-fatal everything:** All observability I/O is wrapped in try/catch. A write failure never causes a test to fail. The tests themselves are the source of truth; observability is best-effort.
+**一切皆非致命：** 所有可观测性 I/O 都包在 try/catch 里。写失败绝不会导致测试失败。测试本身才是事实来源；可观测性尽力而为。
 
-**Machine-readable diagnostics:** Each test result includes `exit_reason` (success, timeout, error_max_turns, error_api, exit_code_N), `timeout_at_turn`, and `last_tool_call`. This enables `jq` queries like:
+**机器可读诊断：** 每条测试结果包含 `exit_reason`（success、timeout、error_max_turns、error_api、exit_code_N）、`timeout_at_turn` 与 `last_tool_call`。由此可以写这样的 `jq` 查询：
 ```bash
 jq '.tests[] | select(.exit_reason == "timeout") | .last_tool_call' ~/.gstack/projects/<slug>/evals/_partial-e2e.json
 ```
 
-### Eval persistence (`test/helpers/eval-store.ts`)
+### 评估持久化（`test/helpers/eval-store.ts`）
 
-The `EvalCollector` accumulates test results and writes them in two ways:
+`EvalCollector` 累积测试结果，并以两种方式写出：
 
-1. **Incremental:** `savePartial()` writes `_partial-e2e.json` after each test (atomic: write `.tmp`, `fs.renameSync`). Survives kills.
-2. **Final:** `finalize()` writes a timestamped eval file (e.g. `e2e-20260314-143022.json`). The partial file is never cleaned up — it persists alongside the final file for observability.
+1. **增量：** `savePartial()` 在每个测试后写 `_partial-e2e.json`（原子：先写 `.tmp`，再 `fs.renameSync`）。被杀也能幸存。
+2. **终局：** `finalize()` 写带时间戳的评估文件（如 `e2e-20260314-143022.json`）。partial 文件从不清理：它与终局文件并存以供观测。
 
-`eval:compare` diffs two eval runs. `eval:summary` aggregates stats across all runs in `~/.gstack/projects/<slug>/evals/` (legacy fallback `~/.gstack-dev/evals/`). Both are shard-aware (v1.63.0.0): the sharded paid runner (`scripts/test-paid-shards.ts`, run via `test:gate:sharded` / `test:periodic:sharded` — the `eval:bg:gate` / `eval:bg:periodic` scripts now point at these) gives each shard's collector its own directory at `<evalDir>/shards/<slug>/` through the `GSTACK_EVAL_DIR` env var (honored by the `EvalCollector` constructor), and `eval:list` / `eval:compare` / `eval:summary` scan one level of `shards/<slug>/` subdirectories (`eval:flake-rank` reads the same tree recursively, plus the free-suite flake ledger). Baseline lookups exclude `_partial` accumulators (`isPartialEval` / `findLatestFinalizedRun` in `eval-store.ts`), so auto-comparison never uses the current run's own partial file as its baseline.
+`eval:compare` 对比两次评估运行。`eval:summary` 汇总 `~/.gstack/projects/<slug>/evals/`（旧回退 `~/.gstack-dev/evals/`）下所有运行的统计。两者都感知分片（v1.63.0.0）：分片付费运行器（`scripts/test-paid-shards.ts`，经 `test:gate:sharded` / `test:periodic:sharded` 运行，`eval:bg:gate` / `eval:bg:periodic` 脚本现在指向它们）通过 `GSTACK_EVAL_DIR` 环境变量（`EvalCollector` 构造函数支持）给每个分片的收集器自己的目录 `<evalDir>/shards/<slug>/`，`eval:list` / `eval:compare` / `eval:summary` 扫描一层 `shards/<slug>/` 子目录（`eval:flake-rank` 递归读取同一棵树，外加免费套件的 flake 账本）。基线查找排除 `_partial` 累积文件（`eval-store.ts` 的 `isPartialEval` / `findLatestFinalizedRun`），自动对比绝不会拿当前运行自己的 partial 文件当基线。
 
-### Test tiers
+### 测试分层
 
-Paid-tier cost and speed estimates below predate the current model defaults.
-See [eval defaults and overrides](CONTRIBUTING.md#testing--evals).
+下方的付费层成本与速度估算早于当前模型默认值。
+见[评估默认值与覆盖](CONTRIBUTING.md#testing--evals)。
 
-| Tier | What | Cost | Speed |
-|------|------|------|-------|
-| 1 — Static validation | Parse `$B` commands against the registry, Aside contract pins, render-wrapper pins, observability unit tests | Free | <5s |
-| 2 — E2E via `claude -p` | Spawn real Claude session, run each skill, scan for errors | ~$3.85 | ~20min |
-| 3 — LLM-as-judge | `claude-fable-5-1` by default scores docs on clarity/completeness/actionability | ~$0.15 | ~30s |
+| Tier | 内容 | 成本 | 速度 |
+|------|------|-------|-------|
+| 1 — 静态验证 | 对注册表解析 `$B` 命令、Aside 契约固定、渲染包装器固定、可观测性单元测试 | 免费 | <5s |
+| 2 — 经 `claude -p` 的 E2E | 拉起真实 Claude 会话，运行每个 skill，扫描报错 | ~$3.85 | ~20min |
+| 3 — LLM 当评判 | 默认 `claude-fable-5-1` 按清晰度/完整性/可操作性给文档打分 | ~$0.15 | ~30s |
 
-Tier 1 runs on every `bun run test`. Tiers 2+3 are gated behind `EVALS=1`. The idea: catch 95% of issues for free, use LLMs only for judgment calls and integration testing.
+Tier 1 随每次 `bun run test` 运行。Tier 2+3 由 `EVALS=1` 把门。思路：免费抓住 95% 的问题，LLM 只用于需要判断力的场合与集成测试。
 
-Anything that needs Aside itself — `test/skill-e2e-aside.test.ts`, the Aside cases in the qa and design-review E2E files, the live round-trip in `test/aside-render.test.ts` — runs only on a Mac with the Aside app open and self-skips elsewhere (`asideAvailable()` in `test/helpers/aside-available.ts`; `GSTACK_SKIP_ASIDE=1` forces the skip). The render gates are engine-agnostic: make-pdf's `*-gate.test.ts` and `test/skill-e2e-diagram.test.ts` run through whichever engine resolves (`browserAvailable()` in `test/helpers/browser-available.ts` = `asideAvailable() || resolveBrowseBin() !== null`) and skip only when neither exists, so Linux CI builds the browse binary with `bun run build:gates` and runs them live. The fallback engine's own tests (`browse/test/`, the `$B`-driven E2E cases) run on every platform as before: Linux CI proves the fallback path live and the Aside contract statically.
+需要 Aside 本体的测试：`test/skill-e2e-aside.test.ts`、qa 与 design-review E2E 文件里的 Aside 用例、`test/aside-render.test.ts` 的真实往返，只在开着 Aside 应用的 Mac 上运行，在其他地方自跳过（`test/helpers/aside-available.ts` 的 `asideAvailable()`；`GSTACK_SKIP_ASIDE=1` 强制跳过）。渲染门禁与引擎无关：make-pdf 的 `*-gate.test.ts` 和 `test/skill-e2e-diagram.test.ts` 经由解析出的引擎运行（`test/helpers/browser-available.ts` 的 `browserAvailable()` = `asideAvailable() || resolveBrowseBin() !== null`），两者都不存在才跳过，所以 Linux CI 用 `bun run build:gates` 构建 browse 二进制并真实运行它们。回退引擎自己的测试（`browse/test/`、由 `$B` 驱动的 E2E 用例）照旧在所有平台运行：Linux CI 真实证明回退路径，静态证明 Aside 契约。
 
-## What's intentionally not here
+## 这里有意不做的
 
-- **No persistent page across `aside repl` calls.** Every Aside script is a fresh session and its tabs die with it. Re-navigating per script is the honest tax of that model; `aside mcp` may lift it later (TODOS.md).
-- **No search tool of our own.** Research goes Aside first, the host's WebSearch tool second, in-distribution knowledge third — out loud each time it steps down.
-- **No WebSocket streaming.** HTTP request/response is simpler, debuggable with curl, and fast enough. Streaming would add complexity for marginal benefit.
-- **No MCP protocol.** MCP adds JSON schema overhead per request and requires a persistent connection. Plain HTTP + plain text output is lighter on tokens and easier to debug.
-- **No multi-user support.** One server per workspace, one user. The token auth is defense-in-depth, not multi-tenancy.
-- **No universal session recovery.** OS-backed cookie import supports macOS, Linux, and DPAPI-compatible Windows formats, not every encryption scheme or site's authentication state. Windows native extraction stays disabled pending qualification, and Chrome's protected default directory is not bypassed.
-- **No iframe auto-discovery.** `$B frame` supports cross-frame interaction (CSS selector, @ref, `--name`, `--url` matching), but the ref system does not auto-crawl iframes during `snapshot`. You must explicitly enter a frame context first.
+- **`aside repl` 调用之间不保留页面。** 每个 Aside 脚本都是全新会话，标签页随它消亡。每个脚本重新导航是这个模型的诚实代价；`aside mcp` 或许日后能解除（TODOS.md）。
+- **没有自己的搜索工具。** 研究先走 Aside，其次宿主的 WebSearch 工具，再次分布内知识：每降一级都明说。
+- **不做 WebSocket 流。** HTTP 请求/响应更简单、能用 curl 调试、也够快。流式只带来复杂度，收益边际。
+- **不用 MCP 协议。** MCP 每个请求都要付 JSON schema 开销，还需要持久连接。纯 HTTP + 纯文本输出更省 token，也更好调试。
+- **不做多用户。** 每个工作区一个服务器、一个用户。token 认证是纵深防御，不是多租户。
+- **没有万能会话恢复。** 基于 OS 的 cookie 导入支持 macOS、Linux 和 DPAPI 兼容的 Windows 格式，不支持所有加密方案或所有站点的登录状态。Windows 原生提取在资格认定前保持禁用，Chrome 受保护的默认目录不被绕过。
+- **不做 iframe 自动发现。** `$B frame` 支持跨 frame 交互（CSS 选择器、@ref、`--name`、`--url` 匹配），但 ref 系统不在 `snapshot` 时自动爬 iframe。必须先显式进入 frame 上下文。

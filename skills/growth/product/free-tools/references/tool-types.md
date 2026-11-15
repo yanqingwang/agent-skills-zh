@@ -1,217 +1,221 @@
-# Free Tool Types Reference
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/free-tools/references/tool-types.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Detailed guide to each type of marketing tool you can build.
+# 免费工具类型参考
 
-## Contents
-- Calculators
-- Generators
-- Analyzers/Auditors
-- Testers/Validators
-- Libraries/Resources
-- Interactive Educational
-- Tool Concept Examples by Industry (SaaS product, agency/services, e-commerce, developer tools, finance)
+逐类详解你可以搭建的营销工具。
 
-## Calculators
+## 目录
+- 计算器
+- 生成器
+- 分析器/审计器
+- 测试器/校验器
+- 素材库/资源
+- 互动教育类
+- 分行业的工具创意示例（SaaS 产品、代理/服务商、电商、开发者工具、金融）
 
-**Best for**: Decisions involving numbers, comparisons, estimates
+## 计算器
 
-**Examples**:
-- ROI calculator
-- Savings calculator
-- Cost comparison tool
-- Salary calculator
-- Tax estimator
-- Pricing estimator
-- Compound interest calculator
-- Break-even calculator
+**最适合**：涉及数字、比较、估算的决策
 
-**Why they work**:
-- Personalized output
-- High perceived value
-- Share-worthy results
-- Clear problem → solution
+**示例**：
+- ROI 计算器
+- 省钱计算器
+- 成本对比工具
+- 薪资计算器
+- 税额估算器
+- 定价估算器
+- 复利计算器
+- 盈亏平衡计算器
 
-**Implementation tips**:
-- Keep inputs simple
-- Show calculations transparently
-- Make results shareable
-- Add "powered by" branding
+**为什么有效**：
+- 输出个性化
+- 感知价值高
+- 结果值得分享
+- 问题 → 方案路径清晰
 
----
-
-## Generators
-
-**Best for**: Creating something useful quickly
-
-**Examples**:
-- Policy generator (privacy, terms)
-- Template generator
-- Name/tagline generator
-- Email subject line generator
-- Resume builder
-- Color palette generator
-- Logo maker
-- Contract generator
-
-**Why they work**:
-- Tangible output
-- Saves time
-- Easily shared
-- Repeat usage
-
-**Implementation tips**:
-- Output should be immediately usable
-- Allow customization
-- Offer download/export options
-- Include email gating for premium outputs
+**实现建议**：
+- 输入保持简单
+- 计算过程透明可见
+- 结果可分享
+- 加"powered by"品牌标识
 
 ---
 
-## Analyzers/Auditors
+## 生成器
 
-**Best for**: Evaluating existing work or assets
+**最适合**：快速造出有用的东西
 
-**Examples**:
-- Website grader
-- SEO analyzer
-- Email subject tester
-- Headline analyzer
-- Security checker
-- Performance auditor
-- Accessibility checker
-- Code quality analyzer
+**示例**：
+- 政策生成器（隐私政策、服务条款）
+- 模板生成器
+- 起名/标语生成器
+- 邮件主题行生成器
+- 简历生成器
+- 配色方案生成器
+- Logo 制作器
+- 合同生成器
 
-**Why they work**:
-- Curiosity-driven
-- Personalized insights
-- Creates awareness of problems
-- Natural lead to solution
+**为什么有效**：
+- 产出看得见摸得着
+- 省时间
+- 易分享
+- 重复使用
 
-**Implementation tips**:
-- Score or grade for gamification
-- Benchmark against averages
-- Provide actionable recommendations
-- Follow up with improvement offers
-
----
-
-## Testers/Validators
-
-**Best for**: Checking if something works
-
-**Examples**:
-- Meta tag preview
-- Email rendering test
-- Mobile-friendly test
-- Speed test
-- DNS checker
-- SSL certificate checker
-- Redirect checker
-- Broken link finder
-
-**Why they work**:
-- Immediate utility
-- Bookmark-worthy
-- Repeat usage
-- Professional necessity
-
-**Implementation tips**:
-- Fast results are essential
-- Show pass/fail clearly
-- Provide fix instructions
-- Integrate with your product where relevant
+**实现建议**：
+- 产出要能立刻用
+- 支持自定义
+- 提供下载/导出选项
+- 对高级产出设置邮箱门槛
 
 ---
 
-## Libraries/Resources
+## 分析器/审计器
 
-**Best for**: Reference material
+**最适合**：评估已有作品或资产
 
-**Examples**:
-- Icon library
-- Template library
-- Code snippet library
-- Example gallery
-- Industry directory
-- Resource list
-- Swipe file collection
-- Font pairing tool
+**示例**：
+- 网站评分器
+- SEO 分析器
+- 邮件主题测试器
+- 标题分析器
+- 安全检查器
+- 性能审计器
+- 无障碍检查器
+- 代码质量分析器
 
-**Why they work**:
-- High SEO value
-- Ongoing traffic
-- Establishes authority
-- Linkable asset
+**为什么有效**：
+- 好奇心驱动
+- 洞察个性化
+- 让人意识到问题存在
+- 自然引向解决方案
 
-**Implementation tips**:
-- Make searchable/filterable
-- Allow easy copying/downloading
-- Update regularly
-- Accept community submissions
-
----
-
-## Interactive Educational
-
-**Best for**: Learning/understanding
-
-**Examples**:
-- Interactive tutorials
-- Code playgrounds
-- Visual explainers
-- Quizzes/assessments
-- Simulators
-- Comparison tools
-- Decision trees
-- Configurators
-
-**Why they work**:
-- Engages deeply
-- Demonstrates expertise
-- Shareable
-- Memory-creating
-
-**Implementation tips**:
-- Make it hands-on
-- Show immediate feedback
-- Lead to deeper resources
-- Capture engaged users
+**实现建议**：
+- 打分或评级，制造游戏感
+- 与平均水平对标
+- 给出可执行的建议
+- 后续跟进改进服务
 
 ---
 
-## Tool Concept Examples by Industry
+## 测试器/校验器
 
-### SaaS Product
-- Product ROI calculator
-- Competitor comparison tool
-- Readiness assessment quiz
-- Template library for use case
-- Feature configurator
+**最适合**：检查某个东西是否正常工作
 
-### Agency/Services
-- Industry benchmark tool
-- Project scoping calculator
-- Portfolio review tool
-- Cost estimator
-- Proposal generator
+**示例**：
+- Meta 标签预览
+- 邮件渲染测试
+- 移动端适配测试
+- 速度测试
+- DNS 检查器
+- SSL 证书检查器
+- 重定向检查器
+- 失效链接查找器
 
-### E-commerce
-- Product finder quiz
-- Comparison tool
-- Size/fit calculator
-- Savings calculator
-- Gift finder
+**为什么有效**：
+- 即刻可用
+- 值得收藏
+- 反复使用
+- 职业刚需
 
-### Developer Tools
-- Code snippet library
-- Testing/preview tool
-- Documentation generator
-- Interactive tutorials
-- API playground
+**实现建议**：
+- 出结果必须快
+- 通过/不通过一目了然
+- 给出修复指引
+- 在合适处与自家产品打通
 
-### Finance
-- Financial calculators
-- Investment comparison
-- Budget planner
-- Tax estimator
-- Loan calculator
+---
+
+## 素材库/资源
+
+**最适合**：参考资料
+
+**示例**：
+- 图标库
+- 模板库
+- 代码片段库
+- 示例画廊
+- 行业名录
+- 资源清单
+- 文案范例合集（swipe file）
+- 字体搭配工具
+
+**为什么有效**：
+- SEO 价值高
+- 持续带来流量
+- 建立权威
+- 可被外链引用的资产
+
+**实现建议**：
+- 支持搜索/筛选
+- 方便复制/下载
+- 定期更新
+- 接受社区投稿
+
+---
+
+## 互动教育类
+
+**最适合**：学习/理解
+
+**示例**：
+- 互动教程
+- 代码游乐场
+- 可视化讲解
+- 测验/测评
+- 模拟器
+- 对比工具
+- 决策树
+- 配置器
+
+**为什么有效**：
+- 深度投入
+- 展示专业实力
+- 可分享
+- 制造记忆点
+
+**实现建议**：
+- 做成动手操作
+- 即时反馈
+- 引向更深入的资源
+- 留住互动过的用户
+
+---
+
+## 分行业的工具创意示例
+
+### SaaS 产品
+- 产品 ROI 计算器
+- 竞品对比工具
+- 就绪度测评问答
+- 按用例整理的模板库
+- 功能配置器
+
+### 代理/服务商
+- 行业基准工具
+- 项目范围估算器
+- 作品集评估工具
+- 成本估算器
+- 提案生成器
+
+### 电商
+- 选品问答
+- 对比工具
+- 尺码/合身计算器
+- 省钱计算器
+- 礼物挑选器
+
+### 开发者工具
+- 代码片段库
+- 测试/预览工具
+- 文档生成器
+- 互动教程
+- API 游乐场
+
+### 金融
+- 财务计算器
+- 投资对比
+- 预算规划器
+- 税额估算器
+- 贷款计算器

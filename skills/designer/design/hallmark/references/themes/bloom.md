@@ -7,14 +7,18 @@ display: grotesk-sans Ranade
 accent: warm 36
 posture: committed
 keywords: generative, ai creative, music, song, video, image, voice, art, make, create, compose, render, imagine, prompt, creative studio, playground, expressive, warm, daylight, consumer creative, portrait, headshot, selfie, retouch
-material: warm off-white paper with grain and a generated working grid, two quiet terracotta blooms, warm umber ink, Ranade with one roman Gambarino figure, rubber and cased parts lit from above, part tones on rounded clips
+material: 带颗粒与生成工作网格的暖调米白纸张、两处安静的陶土色光晕、暖赭墨色、Ranade 配一处正体 Gambarino 数字、俯光照明的橡胶与盒装部件、圆角 clip 上的声部色调
 photo: warm exp=4
 pictured: Workbench, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/bloom.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Bloom
 
-Daylight on a working sheet: warm off-white paper with a faint grain, the medium's own grid (a piano roll, a timeline, a ruler) printed into the ground and fading out from the stage, umber ink, Ranade with one roman Gambarino moment. The making happens on the grid in rounded clips; the parts you touch are physical: a rubber cap in a bezel, cases slid from a stack. It is not a dark generative canvas with neon glows, not a cream editorial page, not a terracotta poster.
+日光落在工作纸上：带微弱颗粒的暖调米白纸张、媒介自己的网格（钢琴卷帘、时间线、标尺）印进底色并从主舞台向外淡出、赭色墨水、Ranade 配一处正体 Gambarino 时刻。创作发生在网格上的圆角 clip 里；你摸到的部件是实体的：嵌在金属圈里的橡胶帽、从一摞盒子里滑出的那一盒。它不是带霓虹辉光的深色生成画布，不是奶油色编辑部页面，也不是陶土色海报。
 
 ## Tokens
 
@@ -39,51 +43,51 @@ Daylight on a working sheet: warm off-white paper with a faint grain, the medium
 }
 ```
 
-## Type
+## 字体
 
-- **Display:** Ranade 600 for every head, `--tracking-display`, line-height 1.04 to 1.08, sentence case, one colour: the ink.
-- **Body:** Ranade 400 at 17 to 18px, line-height 1.55; 500 for labels and controls. Three weights in all.
-- **The serif moment:** Gambarino 400, roman, once a page: one figure at 160px or more, or one lede. Never a head, never italic.
-- **Labels:** Ranade 500 a step smaller, sentence case, `--color-muted`. Geist Mono only for a ruler's fine numerals and timecodes inside the built product.
+- **展示字体：**所有标题用 Ranade 600、`--tracking-display`、行高 1.04 到 1.08、句首大写、只用一种颜色：墨色。
+- **正文：**Ranade 400、17 到 18px、行高 1.55；标签与控件用 500。总共三个字重。
+- **衬线时刻：**Gambarino 400、正体、每页一次：一个 160px 以上的数字，或一段导语。绝不当标题，绝不用斜体。
+- **标签：**Ranade 500 小一档，句首大写，用 `--color-muted`。Geist Mono 只用于标尺的细小数字和成品内部的时间码。
 
-## Surfaces
+## 表面
 
-- The ground is the medium's grid in CSS: stacked linear gradients for bars, beats, sixteenths and rows (black-key rows tinted every octave for a piano roll), on `--color-sheet` behind the stage, then continued faintly past it and masked to fade out radially. The grid returns in small crops beside steps and at the close.
-- On the grid, the work: four part lanes in `--lane-*` tones as rounded clips (`--radius-clip`, a tinted gradient, an inset hairline in the lane tone, a lit top edge) carrying bar waveforms or notes; a hairline playhead; a key strip and a fine-numeral ruler.
-- Texture is generated: a 180px feTurbulence grain at 5% over the paper, and at 30% soft-light on rubber.
-- Light from above on every part. Two warm blooms stay, quieter: `--color-accent` near 8% top right, `--color-accent-2` near 5% bottom left, fixed.
-- Raised warm surfaces, never hairline boxes: `--shadow-card`, `--shadow-lift` for the one that matters. Two bands at most, never terracotta.
-- Photographs: daylight at home, hands, an instrument by a window; never a studio at night.
+- 底色就是用 CSS 画的媒介网格：叠加的 linear-gradient 画出小节、拍、十六分与行（钢琴卷帘每隔一个八度给黑键行着色），铺在主舞台之后的 `--color-sheet` 上，再淡淡延伸过它，并用遮罩径向淡出。网格会在步骤旁和收尾处小幅回访。
+- 网格上是作品：四个声部轨用 `--lane-*` 色调做成圆角 clip（`--radius-clip`、一层着色渐变、声部色调的内嵌细线、一条受光的顶边），承载小节波形或音符；一条细线播放头；一条琴键条和一条细数字标尺。
+- 纹理是生成的：纸张上盖 180px feTurbulence 颗粒、强度 5%；橡胶上 30%、soft-light。
+- 每个部件都有来自上方的光。两处暖色光晕保留、更安静：`--color-accent` 约 8%、右上，`--color-accent-2` 约 5%、左下，固定不动。
+- 浮起的暖表面，绝不做细线盒子：用 `--shadow-card`，最重要的那块用 `--shadow-lift`。色带至多两条，绝不用陶土色。
+- 照片：家里的日光、手、窗边的乐器；绝不用深夜的摄影棚。
 
 ## Range
 
-- **The input becoming the output on one grid:** what the user gives (a hum, a sketch, a line) drawn as a trace that settles onto the grid, the result growing in lanes beneath, and Play really plays it.
-- **Choices as cased spines:** options as a stack of cases (a colour band striped with light, a card label, pips for its parts); the chosen one slides out and the grid re-arranges.
-- **One figure in the serif** beside three steps, each with a small crop of the grid.
-- **The result as one clip** on the grid at the close, downloadable.
+- **输入在同一张网格上变成输出：**用户给的东西（一段哼唱、一张草图、一行字）画成一道轨迹落定到网格上，结果在下方的声部轨里长出来，按下 Play 就真的会播放。
+- **选项做成盒脊：**选项是一摞盒子（带光条纹的色带、卡片标签、部件的小圆点）；选中的那盒滑出，网格重新排列。
+- **一个衬线数字**旁边三步，每步配一小块网格特写。
+- **结果作为一个 clip** 收尾时放在网格上，可下载。
 
-## Controls
+## 控件
 
-- The primary is a rubber cap in a recessed bezel: a domed `--rubber` radial gradient lit from the top, grain, set in a `--bezel` well with an inset shade; it sits at the left of a `--color-sheet` pill with its label, and its ring breathes while the product listens. Press sinks it 1px.
-- Secondary: a sheet pill with a shade ring and a lit top edge, or an `--umber` pill.
-- Links in terracotta, underlined on hover; inputs 52px pills with a 1px `--color-muted` edge.
+- 主按钮是嵌在凹陷金属圈里的橡胶帽：拱顶的 `--rubber` 径向渐变、从顶部受光、带颗粒，装在 `--bezel` 的 well 里带内阴影；它坐在一枚 `--color-sheet` 胶囊的左侧、旁边是它的标签，产品聆听时它的光圈呼吸。按下时下沉 1px。
+- 次级：带阴影圈与受光顶边的纸面胶囊，或一枚 `--umber` 胶囊。
+- 链接陶土色，hover 加下划线；输入框 52px 胶囊，1px `--color-muted` 边。
 
-## Motion
+## 动效
 
-Once, in view: the input draws in (about 3 s), notes settle, the playhead glides home, lanes grow. Transforms and opacity, paused off screen. Reduced motion or no script: the finished arrangement, playhead at the start. The blooms never move.
+一次，进入视口时：输入画入（约 3 秒）、音符落定、播放头滑回起点、声部轨长出来。只用 transform 与 opacity，离屏即暂停。Reduced motion 或无脚本时：直接呈现完成后的排布，播放头在起点。光晕绝不动。
 
-## Voice
+## 语气
 
-Warm, daylight, specific: the verb (hum, make, listen), the output (song, part, scene), and where.
+温暖、日光感、具体：动词（哼唱、制作、聆听）、产出（歌曲、声部、场景），以及在哪里。
 
-## Do-nots
+## 禁止事项
 
-- Never a dark canvas, a neon glow or a third bloom.
-- Never a terracotta field or card; terracotta is rubber, a link, a lane.
-- Never a grid at full strength across a whole section; it fades from the stage.
-- Never an italic serif, and never the serif in a head or in two places.
+- 绝不用深色画布、霓虹辉光或第三处光晕。
+- 绝不用陶土色场域或卡片；陶土色是橡胶、是链接、是声部轨。
+- 绝不让网格以全强度铺满整个区块；它从主舞台向外淡出。
+- 绝不用斜体衬线，衬线绝不进标题、也绝不出现在两处。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://api.fontshare.com/v2/css?f[]=ranade@400,500,600&display=swap" rel="stylesheet">

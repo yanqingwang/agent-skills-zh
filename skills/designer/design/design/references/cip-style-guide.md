@@ -1,68 +1,72 @@
-# CIP Design Style Guide
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/design/references/cip-style-guide.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Corporate Minimal
-**Industries:** Finance, Legal, Consulting, Tech
-**Colors:** Navy (#0F172A), White (#FFFFFF), Blue accents
-**Typography:** Clean sans-serif (Inter, Helvetica)
-**Materials:** Premium matte paper, subtle textures
-**Finishes:** Matte, spot UV on logo
+# CIP 设计风格指南
 
-## Modern Tech
-**Industries:** Tech, SaaS, Startups, AI
-**Colors:** Purple (#6366F1), Cyan (#0EA5E9), Green (#10B981)
-**Typography:** Geometric sans (Outfit, Poppins)
-**Materials:** Smooth surfaces, gradient prints
-**Finishes:** Gloss, metallic accents
+## 企业极简（Corporate Minimal）
+**行业：** 金融、法律、咨询、科技
+**颜色：** 藏青（#0F172A）、白色（#FFFFFF）、蓝色点缀
+**字体：** 简洁无衬线体（Inter、Helvetica）
+**材质：** 高级哑光纸、细腻纹理
+**表面工艺：** 哑光、Logo 局部 UV
 
-## Luxury Premium
-**Industries:** Fashion, Jewelry, Hotels, Fine Dining
-**Colors:** Black (#1C1917), Gold (#D4AF37), White
-**Typography:** Elegant serif (Playfair), thin sans
-**Materials:** Heavy cotton paper, leather, metal
-**Finishes:** Gold foil, emboss, deboss, soft-touch
+## 现代科技（Modern Tech）
+**行业：** 科技、SaaS、初创公司、AI
+**颜色：** 紫色（#6366F1）、青色（#0EA5E9）、绿色（#10B981）
+**字体：** 几何无衬线体（Outfit、Poppins）
+**材质：** 光滑表面、渐变印刷
+**表面工艺：** 亮光、金属点缀
 
-## Classic Traditional
-**Industries:** Law Firms, Heritage Brands, Finance
-**Colors:** Navy, Burgundy, Gold
-**Typography:** Traditional serif (Times, Garamond)
-**Materials:** Quality laid paper, wood
-**Finishes:** Letterpress, gold emboss
+## 奢华高端（Luxury Premium）
+**行业：** 时尚、珠宝、酒店、精致餐饮
+**颜色：** 黑色（#1C1917）、金色（#D4AF37）、白色
+**字体：** 优雅衬线体（Playfair）、细无衬线体
+**材质：** 厚实棉质纸、皮革、金属
+**表面工艺：** 烫金、压凸、压凹、软触感
 
-## Warm Organic
-**Industries:** Food, Organic, Wellness, Craft
-**Colors:** Brown (#8B4513), Green (#228B22), Cream
-**Typography:** Friendly serif, organic script
-**Materials:** Kraft paper, recycled materials
-**Finishes:** Uncoated, natural textures
+## 经典传统（Classic Traditional）
+**行业：** 律所、传承型品牌、金融
+**颜色：** 藏青、酒红、金色
+**字体：** 传统衬线体（Times、Garamond）
+**材质：** 优质纹理纸、木材
+**表面工艺：** 凸版印刷、金色压凸
 
-## Bold Dynamic
-**Industries:** Sports, Entertainment, Gaming
-**Colors:** Red (#DC2626), Orange (#F97316), Black
-**Typography:** Bold condensed sans
-**Materials:** High-contrast, metallic
-**Finishes:** Gloss, vibrant colors
+## 温暖自然（Warm Organic）
+**行业：** 食品、有机产品、健康养生、手工艺
+**颜色：** 棕色（#8B4513）、绿色（#228B22）、奶油色
+**字体：** 亲和衬线体、自然手写体
+**材质：** 牛皮纸、再生材料
+**表面工艺：** 未涂布、天然纹理
 
-## Fresh Modern
-**Industries:** Healthcare, Wellness, Fintech
-**Colors:** Mint (#10B981), Sky (#0EA5E9), White
-**Typography:** Modern rounded sans
-**Materials:** Light, clean surfaces
-**Finishes:** Matte, clean minimal
+## 大胆动感（Bold Dynamic）
+**行业：** 体育、娱乐、游戏
+**颜色：** 红色（#DC2626）、橙色（#F97316）、黑色
+**字体：** 粗壮窄体无衬线
+**材质：** 高对比、金属质感
+**表面工艺：** 亮光、鲜艳色彩
 
-## Soft Elegant
-**Industries:** Beauty, Wedding, Spa, Fashion
-**Colors:** Pink (#F472B6), Gold, White
-**Typography:** Elegant script, thin sans
-**Materials:** Soft-touch, quality paper
-**Finishes:** Rose gold foil, emboss
+## 清新现代（Fresh Modern）
+**行业：** 医疗健康、养生、金融科技
+**颜色：** 薄荷绿（#10B981）、天蓝（#0EA5E9）、白色
+**字体：** 现代圆角无衬线
+**材质：** 轻盈、干净的表面
+**表面工艺：** 哑光、干净极简
 
-## Color Psychology
+## 柔美优雅（Soft Elegant）
+**行业：** 美妆、婚礼、SPA、时尚
+**颜色：** 粉色（#F472B6）、金色、白色
+**字体：** 优雅手写体、细无衬线体
+**材质：** 软触感、优质纸张
+**表面工艺：** 玫瑰金烫金、压凸
 
-| Color | Meaning | Best Use |
+## 色彩心理学
+
+| 颜色 | 含义 | 最佳用途 |
 |-------|---------|----------|
-| Blue | Trust, stability | Finance, Tech, Healthcare |
-| Green | Growth, nature | Eco, Wellness, Organic |
-| Gold | Luxury, prestige | Premium, Jewelry |
-| Red | Energy, passion | Food, Sports |
-| Black | Sophistication | Luxury, Fashion |
-| White | Clean, minimal | Tech, Healthcare |
+| 蓝色 | 信任、稳定 | 金融、科技、医疗健康 |
+| 绿色 | 成长、自然 | 环保、养生、有机 |
+| 金色 | 奢华、尊贵 | 高端、珠宝 |
+| 红色 | 活力、激情 | 食品、体育 |
+| 黑色 | 品质感 | 奢侈品、时尚 |
+| 白色 | 干净、极简 | 科技、医疗健康 |

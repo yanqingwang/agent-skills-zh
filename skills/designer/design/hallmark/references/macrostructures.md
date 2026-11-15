@@ -1,119 +1,123 @@
-# Macrostructures
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/macrostructures.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Twenty-one named landing-page shapes. Each is a complete fingerprint (heading placement, body composition, divider language, button voice, image treatment, reveal pattern) bundled under one name. **This is a vocabulary, not a menu.** Design the page the prompt asks for, then name the shape you designed so Rotation and gate 32 have something to read; reaching in here first and building whatever comes back is how twenty-one shapes collapse into the same three. When nothing here fits what you designed, say so, describe the shape as a fingerprint (§ The fingerprint, below), and give it a short name for the stamp and the log (*a season page*).
+# 宏观结构
 
-## The 21 macrostructures, index
+二十一个有名字的落地页形态。每个都是一份完整指纹（标题位置、正文构图、分隔语言、按钮语气、图像处理、reveal 模式），打包在一个名字之下。**这是一套词汇表，不是菜单。** 先设计提示词要的页面，再给你设计的那个形态起名，让 Rotation 和关卡 32 有东西可读；先翻这里、照搬翻到的东西，正是二十一个形态塌缩成同样三个的原因。这里没有适合你所设计形态的条目时，直说，把形态按指纹描述（§ 指纹，见下），并给它起个短名字供印记和日志使用（*一个季节页*）。
 
-**Read only the one file** for the shape you landed on, from `references/macrostructures/`. Do not load the whole catalogue. Slugs are stable; Rotation reads the shape from the stamp and the log. Nav and footer are part of the shape, settled with the hero. Each shape file names the `layout.md` compositions it is built from; the code is yours.
+## 21 个宏观结构，索引
 
-- **01 · Bento Grid.** Modular blocks of varying sizes laid out as an irregular grid. Each block is a feature, a figure, an image or a quote the user supplied. Rhythm comes from size variation, not card uniformity. [`macrostructures/01-bento-grid.md`](macrostructures/01-bento-grid.md)
-- **02 · Long Document.** Reads like a memo, a letter or a journal entry. No marketing structure. Continuous prose with inline section heads. The page is literature about the product. [`macrostructures/02-long-document.md`](macrostructures/02-long-document.md)
-- **03 · Marquee Hero.** The hero is the page above the fold. A single statement or visual fills the viewport. Below the fold the page becomes something else (a list, a grid, prose). [`macrostructures/03-marquee-hero.md`](macrostructures/03-marquee-hero.md)
-- **04 · Stat-Led.** The hero is a figure the user gave, with the line that says what it means. Everything that follows supports or qualifies it. [`macrostructures/04-stat-led.md`](macrostructures/04-stat-led.md)
-- **05 · Workbench.** Real product captures are the primary content. The page is a guided tour of the app in use, with short captions in place of marketing copy. [`macrostructures/05-workbench.md`](macrostructures/05-workbench.md)
-- **06 · Conversational FAQ.** Bold questions, prompt answers. The page reads like an honest interview with the product. Each pair may be a disclosure. [`macrostructures/06-conversational-faq.md`](macrostructures/06-conversational-faq.md)
-- **07 · Manifesto.** Polemical large type. The page tells the reader what to believe before it tells them what to buy. [`macrostructures/07-manifesto.md`](macrostructures/07-manifesto.md)
-- **08 · Photographic.** A single huge image dominates each fold. Text is small annotation, not headline. The design says look before it says read. [`macrostructures/08-photographic.md`](macrostructures/08-photographic.md)
-- **09 · Quote-Led.** The hero is a quote the user supplied, with its attribution. The headline is someone else's voice. [`macrostructures/09-quote-led.md`](macrostructures/09-quote-led.md)
-- **10 · Specimen.** Large serif display, asymmetric spans, hairline rules, a typographic CTA, generous whitespace. Only for prompts about type, publishing or writing (a foundry, a journal, a press); the editorial genre alone does not qualify. [`macrostructures/10-specimen.md`](macrostructures/10-specimen.md)
-- **11 · Catalogue.** Uniform grid of variations of the same thing: typefaces, palettes, SKUs. The page is a visual index of inventory. [`macrostructures/11-catalogue.md`](macrostructures/11-catalogue.md)
-- **12 · Letter.** First-person, written, intimate. Opens with a greeting. Reads as a personal note from the founder. [`macrostructures/12-letter.md`](macrostructures/12-letter.md)
-- **13 · Index-First.** The page is a list of links. No hero image, no narrative flow. Navigation as design. [`macrostructures/13-index-first.md`](macrostructures/13-index-first.md)
-- **14 · Narrative Workflow.** Numbered stages tell the story of how the user uses the product over time. Each section is a phase; the page is a process timeline. [`macrostructures/14-narrative-workflow.md`](macrostructures/14-narrative-workflow.md)
-- **15 · Split Studio.** Diptych. Every major block divides the screen, text on one side, proof on the other; the proof keeps its side and the rows vary by weight. [`macrostructures/15-split-studio.md`](macrostructures/15-split-studio.md)
-- **16 · Feature Stack.** Sticky left pane holding the heading, scroll-synced right pane cycling through related captures. Paced like film. [`macrostructures/16-feature-stack.md`](macrostructures/16-feature-stack.md)
-- **17 · Type Specimen.** The typeface is the design. Foundry pages and design systems where a custom face is the proof. [`macrostructures/17-type-specimen.md`](macrostructures/17-type-specimen.md)
-- **18 · Portfolio Grid.** Filterable cards of projects. Studio and designer homepages where the work is the product. [`macrostructures/18-portfolio-grid.md`](macrostructures/18-portfolio-grid.md)
-- **19 · Map / Diagram.** A single large spatial diagram organises the page: flowchart, floor plan, network graph, system map. [`macrostructures/19-map-diagram.md`](macrostructures/19-map-diagram.md)
-- **20 · Ecosystem Index.** Multiple discovery surfaces: featured, latest, by category, by people. The platform's value is browsing, not declaration. [`macrostructures/20-ecosystem-index.md`](macrostructures/20-ecosystem-index.md)
-- **21 · Component Playground.** Interactive code-and-preview blocks are the page's primary content. Each block previews a thing and shows how to copy it. [`macrostructures/21-component-playground.md`](macrostructures/21-component-playground.md)
+**只读你落在的那个形态的文件**，从 `references/macrostructures/` 里读。不要加载整个目录。slug 稳定；Rotation 从印记和日志里读形态。Nav 和 footer 是形态的一部分，与 hero 一起定案。每个形态文件都点名它由哪些 `layout.md` 构图组成；代码是你的。
 
----
-
-## SaaS section deck: deal it, do not sequence it
-
-When the shape is **Bento Grid, Stat-Led, Workbench or Marquee Hero** and the prompt is a B2B SaaS page, build from this deck. Cards have roles, not positions. The base of the deck is made of things the page can show honestly without inventing anything; the top of the deck exists only when the user handed over the material.
-
-**Base cards** (always available):
-
-| Card | Role | Composition |
-| --- | --- | --- |
-| Spec sheet | what it is, in figures the product ships with: limits, formats, versions, regions | Table or Rows (`layout.md` § 5) |
-| Worked example | the product doing one real job on the user's material: a command and its output, a capture and its caption | Showcase or Split |
-| Changelog | the last three or four entries with their real dates; the page proves it is alive | Rows |
-| Comparison anatomy | the product beside the way it is done today, row by row, no scores | Table |
-| Pricing table | the actual price, two or three tiers; "Contact sales" on every tier says the brand does not trust the buyer | `craft.md` § 9 Pricing |
-| FAQ | real objections answered like a person; "Yes, both providers work out of the box" beats "integrates with leading providers" | [`macrostructures/06-conversational-faq.md`](macrostructures/06-conversational-faq.md) |
-| CTA strip | the ask, once, one button | Band |
-| Footer | the close, in the theme's voice | `layout.md` § 7 |
-
-**Material cards** (exist only when the user supplied the material, and the Picks block names what was supplied):
-
-| Card | Needs | Without it |
-| --- | --- | --- |
-| Hero visual | a real capture | the product built in a `data-slot` (`imagery.md` § 4), or a typographic hero; never a styled-div UI outside a slot (47c) |
-| Logo row | the user's own customer marks, with permission to show them | the card does not exist; no invented marks, no "Trusted by" line (46a, 54) |
-| Three features | three named capabilities, each with a capture or figure to show | fold them into the worked example or the spec sheet |
-| Testimonials | quotes the user supplied verbatim, with the person's name, role and company as given | the card does not exist; no plausible names, no paraphrase (46a, 19) |
-
-**Every deal deviates twice.** (a) Drop at least one base card and name it (the CTA strip is the usual cut; footer never drops). (b) Either promote a second base card into the hero's place (a spec sheet as the hero object says "the numbers are the pitch"; a worked example as the hero says "watch it work") or reorder one adjacent pair meaningfully (pricing before the example says "the price is the pitch"). State both moves in the Picks block: `deck: -cta +changelog` or `deck: -faq · pricing<example`. A deal that keeps at least five cards still reads complete; below five it is a landing strip, not a landing page: re-add cards or switch shape.
-
-Cards part by the three `--section-gap` steps, mixed (59), and each fills its section (`layout.md` § 4).
-
-The deck is not a template you stamp out: the shape determines how each card looks. A Bento Grid page interleaves the spec sheet and the example inside the grid; a Stat-Led page sequences them top to bottom under the figure; a Marquee Hero page lets the marquee carry the claim and the example carry the proof.
-
-For non-SaaS work (Editorial, Manifesto, Letter, Long Document, Quote-Led) this deck does not apply. A bakery does not need a pricing tier comparison.
+- **01 · Bento Grid.** 大小不一的模块块铺成不规则网格。每块是一个功能、一个数字、一张图或一条用户给的引言。节奏来自尺寸变化，不是卡片均质。[`macrostructures/01-bento-grid.md`](macrostructures/01-bento-grid.md)
+- **02 · Long Document.** 读起来像一份备忘录、一封信或一篇日志。没有营销结构。连续散文加行内小节标题。页面是关于产品的文学。[`macrostructures/02-long-document.md`](macrostructures/02-long-document.md)
+- **03 · Marquee Hero.** hero 就是首屏之上的整页。一句陈述或一个视觉填满视口。首屏之下页面变成别的东西（一份列表、一个网格、散文）。[`macrostructures/03-marquee-hero.md`](macrostructures/03-marquee-hero.md)
+- **04 · Stat-Led.** hero 是用户给的一个数字，配上说明它意义的那句话。之后的一切都在支撑或限定它。[`macrostructures/04-stat-led.md`](macrostructures/04-stat-led.md)
+- **05 · Workbench.** 真实产品截图是主要内容。页面是对使用中应用的一次导览，短说明字幕代替营销文案。[`macrostructures/05-workbench.md`](macrostructures/05-workbench.md)
+- **06 · Conversational FAQ.** 加粗的问题，利落的回答。页面读起来像对产品的一次诚实访谈。每一对问答都可以是一个折叠。[`macrostructures/06-conversational-faq.md`](macrostructures/06-conversational-faq.md)
+- **07 · Manifesto.** 论战式大字。页面先告诉读者该相信什么，再告诉他们买什么。[`macrostructures/07-manifesto.md`](macrostructures/07-manifesto.md)
+- **08 · Photographic.** 每一屏由一张巨图主导。文字是小注解，不是标题。设计先说"看"，再说"读"。[`macrostructures/08-photographic.md`](macrostructures/08-photographic.md)
+- **09 · Quote-Led.** hero 是用户给的一条引文，带署名。标题是别人的声音。[`macrostructures/09-quote-led.md`](macrostructures/09-quote-led.md)
+- **10 · Specimen.** 大号衬线展示字、不对称跨栏、发丝线、字排式 CTA、大量留白。只给关于字体、出版或写作的提示词（一家字厂、一本期刊、一家出版社）；光"编辑风"体裁不够格。[`macrostructures/10-specimen.md`](macrostructures/10-specimen.md)
+- **11 · Catalogue.** 同一事物各种变体的均匀网格：字体、色板、SKU。页面是库存的视觉索引。[`macrostructures/11-catalogue.md`](macrostructures/11-catalogue.md)
+- **12 · Letter.** 第一人称、书面、亲密。以问候开场。读起来像创始人的一张私人便条。[`macrostructures/12-letter.md`](macrostructures/12-letter.md)
+- **13 · Index-First.** 页面就是一份链接列表。没有 hero 图，没有叙事流。导航即设计。[`macrostructures/13-index-first.md`](macrostructures/13-index-first.md)
+- **14 · Narrative Workflow.** 编号的阶段讲出用户随时间使用产品的故事。每一节是一个阶段；页面是一条流程时间线。[`macrostructures/14-narrative-workflow.md`](macrostructures/14-narrative-workflow.md)
+- **15 · Split Studio.** 双联画。每个主要块都把屏幕一分为二，文字一侧，证据另一侧；证据守住自己的那半，各行靠字重变化。[`macrostructures/15-split-studio.md`](macrostructures/15-split-studio.md)
+- **16 · Feature Stack.** 左侧吸顶面板放标题，右侧滚动同步切换相关截图。节奏像电影。[`macrostructures/16-feature-stack.md`](macrostructures/16-feature-stack.md)
+- **17 · Type Specimen.** 字体就是设计。字厂页面和以定制字体为证据的设计系统。[`macrostructures/17-type-specimen.md`](macrostructures/17-type-specimen.md)
+- **18 · Portfolio Grid.** 可筛选的项目卡片。作品即产品的 studio 和设计师主页。[`macrostructures/18-portfolio-grid.md`](macrostructures/18-portfolio-grid.md)
+- **19 · Map / Diagram.** 一张大空间图组织整个页面：流程图、平面图、网络图、系统图。[`macrostructures/19-map-diagram.md`](macrostructures/19-map-diagram.md)
+- **20 · Ecosystem Index.** 多个发现入口：精选、最新、按分类、按人。平台的价值在浏览，不在宣告。[`macrostructures/20-ecosystem-index.md`](macrostructures/20-ecosystem-index.md)
+- **21 · Component Playground.** 可交互的代码加预览块是页面的主要内容。每块预览一个东西并展示怎么复制它。[`macrostructures/21-component-playground.md`](macrostructures/21-component-playground.md)
 
 ---
 
-## How to pick
+## SaaS 区块牌组：发牌，不要排序
 
-On a theme build the draw deals the shape (SKILL.md Step 2); these steps are for a swap the material forces, or a run without Node.
+形态是 **Bento Grid、Stat-Led、Workbench 或 Marquee Hero** 且提示词是 B2B SaaS 页面时，从这套牌组构建。卡片有角色，没有位置。牌组的底座由页面能诚实展示、无须编造的东西组成；牌组的顶层只在用户交来材料时才存在。
 
-0. **Read the material inventory** (SKILL.md Step 2). A shape built on screenshots or figures needs them, real or as slots the user asked for; with neither, pick a shape that carries type and facts.
-1. **Read the prompt.** Note any words that strongly signal one shape ("data heavy", "tell a story", "a list of links", "many small features", "personal note").
-2. **Read `.hallmark/log.json`** (newest first) and the `shape:` field of any Hallmark stamp in the project; the last three shapes are excluded.
-3. **Match the prompt to a shape** using the index lines above and § Domain to trio below, then open only the file you land on. Most prompts match two to four; pick the one most distant from the logged shapes, and check the mirror test in SKILL.md Step 2.
-4. **State the pick once**, in the Picks block's Shape row and the stamp's `shape:` field.
-5. If torn, take the domain's trio (§ Domain to trio) and pick the one most distant from the log.
+**基础牌**（始终可用）：
 
-Two pages Hallmark builds for two different prompts must look like different sites, not colour swaps of one template.
+| 牌 | 作用 | 构图 |
+| --- | --- | --- |
+| Spec sheet | 用产品自带的数字说清它是什么：限额、格式、版本、地区 | Table 或 Rows（`layout.md` § 5） |
+| Worked example | 产品在用户的材料上干一件真活：一条命令和它的输出，一张截图和它的说明 | Showcase 或 Split |
+| Changelog | 最近三四条条目配真实日期；页面由此证明自己活着 | Rows |
+| Comparison anatomy | 产品与今天的做法逐行并排，不打分 | Table |
+| Pricing table | 真实价格，两三档；每一档都写"联系销售"，说明品牌不信任买家 | `craft.md` § 9 Pricing |
+| FAQ | 像人一样回答真实疑虑；"是的，两家服务商都开箱即用"胜过"集成主流服务商" | [`macrostructures/06-conversational-faq.md`](macrostructures/06-conversational-faq.md) |
+| CTA strip | 那个请求，一次，一个按钮 | Band |
+| Footer | 收尾，用主题的语气 | `layout.md` § 7 |
 
-## The fingerprint: six axes
+**素材牌**（只在用户交来材料时存在，Picks 块点名交来的是什么）：
 
-**1. Heading placement.** Left-margin (marginalia beside the body; a label beside a heading is an eyebrow, gate 54) · Hanging (the heading floats above in air) · Centred display · Bottom-aligned (the heading anchors the base, content above) · Overlapping (over a photo or colour block) · Sticky or pinned · Numbered by structure (a real `<ol>` with `counter()`, or one numeral at graphic scale) · Inline with the body (no break, the heading emerges from the prose). Any placement is fair; what reads as a mistake is a narrow auto-centred head over full-width left-flush content.
+| 牌 | 需要什么 | 没有它 |
+| --- | --- | --- |
+| Hero visual | 一张真实截图 | 产品在 `data-slot` 里建（`imagery.md` § 4），或一个字排 hero；slot 之外绝不用样式化 div 冒充 UI（47c） |
+| Logo row | 用户自己的客户标志，且有展示许可 | 这张牌不存在；不发明标志，不写"Trusted by"行（46a、54） |
+| Three features | 三个具名能力，各配一张截图或数字 | 并进 worked example 或 spec sheet |
+| Testimonials | 用户逐字提供的引言，姓名、头衔、公司按原样 | 这张牌不存在；不编像样的名字，不改写（46a、19） |
 
-**2. Body composition.** Single column · Two-column asymmetric (wide body, narrow margin for captions) · Multi-column justified with hyphenation · Marginalia (sidenotes in the outer margin) · Three equal columns (reference density) · Full-bleed with margin reset (65ch body, pull quotes and images bleed) · Asymmetric spans (2-1-3 ratios on a grid).
+**每次发牌偏离两次。** (a) 至少弃掉一张基础牌并点名（常被弃的是 CTA strip；footer 绝不弃）。(b) 要么把第二张基础牌提进 hero 的位置（spec sheet 当 hero 说"数字就是卖点"；worked example 当 hero 说"看它干活"），要么把一对相邻的牌有意义地重排（pricing 排在例子之前说"价格就是卖点"）。两步都写进 Picks 块：`deck: -cta +changelog` 或 `deck: -faq · pricing<example`。保住至少五张牌的发牌仍读作完整；低于五张就是一条着陆跑道，不是落地页：补牌或换形态。
 
-**3. Divider language.** Hairline rule (0.5 to 1px, inset or full-bleed) · Ornament (a fleuron, a dot, a mark) · Negative space (the gap is the divider) · Bleed-colour block (a paper change is the edge) · Double rule. Pick one language for the page and vary its weight and placement by seam (9): the same rule at the same gap at every seam is the template.
+牌与牌之间按 `--section-gap` 的三档分隔，可混用（59），每张填满自己的区块（`layout.md` § 4）。
 
-**4. Button voice.** Solid (one filled primary) · Outlined · Unstyled link (an underlined word) · Oversized solid · Typographic only (a word in a weight, no box) · Form as CTA (the action is fill-this-field).
+牌组不是盖了章就出的模板：形态决定每张牌长什么样。Bento Grid 页把 spec sheet 和 example 交错织进网格；Stat-Led 页让它们在数字之下自上而下排开；Marquee Hero 页让 marquee 扛主张、example 扛证据。
 
-**5. Image treatment.** Full-bleed · Tightly cropped to the grid · Inline with the text · Margin-aligned · None.
+非 SaaS 的活（Editorial、Manifesto、Letter、Long Document、Quote-Led）不适用这套牌组。一家面包店不需要定价档位对比。
 
-**6. Reveal pattern.** Fade-up stagger (once, orchestrated) · Horizontal sweep · Type-unmask (a clip-path opening over text) · Number-tick (counters, only on real figures) · Typewriter (a terminal only, the caret inside a typed command) · None.
+---
 
-Fingerprint: one choice per axis, written `Hanging|Asymmetric spans|Hairline|Outlined|Margin-aligned|None`. Two rules: coherence (choices from the same world; a justified newspaper body wants a typographic CTA, not an oversized solid) and anti-repetition (no more than three of six axes shared with any of the last three logged entries; a None on Image or Reveal that the theme or the material forces is not a shared choice).
+## 怎么挑
 
-## Domain to trio, when the prompt names no shape
+主题构建时，抽签发形态（SKILL.md 第 2 步）；这些步骤用于材料逼出来的换牌，或没有 Node 的运行。
 
-Three shapes from different families (grid-led, document-led, poster-led, product-led) that fit the domain, never three near-twins; the one most distant from the last logged shape is the pick:
+0. **读材料清单**（SKILL.md 第 2 步）。建立在截图或数字上的形态需要它们，真实或有用户要的 slot；两者都没有，就挑一个靠字排和事实扛住的形态。
+1. **读提示词。** 记下强烈指向某个形态的词（"data heavy"、"tell a story"、"a list of links"、"many small features"、"personal note"）。
+2. **读 `.hallmark/log.json`**（最新在前）和项目里任何 Hallmark 印记的 `shape:` 字段；最近三个形态被排除。
+3. **把提示词对到形态上**，用上面的索引行和 § 领域到三选，然后只打开你落在的那个文件。多数提示词命中两到四个；挑离日志形态最远的那个，并核对 SKILL.md 第 2 步的镜像测试。
+4. **只声明一次选择**，写在 Picks 块的 Shape 行和印记的 `shape:` 字段。
+5. 拿不准时，取该领域的三选（§ 领域到三选），挑离日志最远的那个。
 
-| Domain words | Trio |
+Hallmark 为两个不同提示词建的两张页面，必须看起来像两个网站，而不是同一个模板的换色。
+
+## 指纹：六根轴
+
+**1. 标题位置。** 左边距（旁注贴着正文；标题旁的标签是眉题，关卡 54）· 悬空（标题浮在空白里）· 居中大字 · 底部对齐（标题锚住底部，内容在上）· 叠压（压在照片或色块上）· 吸顶或钉住 · 按结构编号（真 `<ol>` 配 `counter()`，或一个图形尺度的数字）· 与正文同行（不分段，标题从散文里长出来）。任何位置都行；读起来像错误的，是通栏左对齐内容上头一个窄的自动居中标题。
+
+**2. 正文构图。** 单栏 · 双栏不对称（宽正文，窄边距放说明字幕）· 多栏两端对齐带断词 · 旁注（脚注放外侧边距）· 等宽三栏（参考密度）· 出血加边距重置（正文 65ch，引文提行和图片出血）· 不对称跨栏（网格上 2-1-3 比例）。
+
+**3. 分隔语言。** 发丝线（0.5 到 1px，内缩或出血）· 花饰（一个 fleuron、一个点、一个记号）· 负空间（间隙就是分隔）· 出血色块（换纸就是边缘）· 双线。整页选一种语言，按接缝变化它的重量和位置（9）：每个接缝同样的线同样的间隙，就是模板。
+
+**4. 按钮语气。** 实心（一个实心主按钮）· 描边 · 无样式链接（一个带下划线的词）· 超大实心 · 纯字排（一个有字重的词，不带盒子）· 表单即 CTA（动作就是"填这个字段"）。
+
+**5. 图像处理。** 出血 · 紧贴网格裁切 · 与文字同行 · 边距对齐 · 无。
+
+**6. reveal 模式。** 淡入上浮错开（一次，有编排）· 横向扫过 · 文字揭幕（clip-path 在文字上张开）· 数字跳动（counter，只用于真实数字）· 打字机（只给终端，光标在被敲的命令里）· 无。
+
+指纹：每轴一个选择，写作 `Hanging|Asymmetric spans|Hairline|Outlined|Margin-aligned|None`。两条规则：连贯（选择来自同一个世界；两端对齐的报纸正文配的是字排式 CTA，不是超大实心按钮）和反重复（与最近三条日志条目共享的轴不超过六分之三；主题或材料逼出来的 Image 或 Reveal 上的 None 不算共享选择）。
+
+## 领域到三选，提示词没有点名形态时
+
+来自不同家族（网格主导、文档主导、海报主导、产品主导）的三个形态，都贴合该领域，绝不是三个近亲；离最近一条日志形态最远的那个就是选择：
+
+| 领域词 | 三选 |
 | --- | --- |
-| podcast, audio, music, listening | Photographic · Quote-Led · Letter |
-| shop, store, product, merch, commerce | Catalogue · Photographic · Bento Grid |
-| docs, CLI, SDK, API, library, open source | Workbench · Long Document · Component Playground |
-| platform, infra, observability, B2B tool | Bento Grid · Workbench · Stat-Led |
-| agency, studio, case studies, portfolio | Portfolio Grid · Split Studio · Index-First |
-| personal one-pager, about-me, resume | Long Document · Letter · Index-First |
-| restaurant, café, bar, food, menu | Photographic · Long Document · Catalogue |
-| fashion, apparel, beauty, lookbook | Photographic (with real photographs) · Catalogue · Marquee Hero |
-| fintech, banking, payments, trading | Stat-Led · Workbench · Long Document |
-| manifesto, campaign, cause, advocacy | Manifesto · Quote-Led · Stat-Led |
-| editorial, foundry, magazine, type | Specimen · Long Document · Type Specimen |
-| product launch, SaaS marketing | Bento Grid · Workbench · Stat-Led |
-| conference, event, speaker | Marquee Hero · Manifesto · Photographic |
-| no signal at all | Bento Grid · Long Document · Manifesto |
+| 播客、音频、音乐、收听 | Photographic · Quote-Led · Letter |
+| 商店、店铺、产品、周边、电商 | Catalogue · Photographic · Bento Grid |
+| docs、CLI、SDK、API、库、开源 | Workbench · Long Document · Component Playground |
+| 平台、基础设施、可观测性、B2B 工具 | Bento Grid · Workbench · Stat-Led |
+| 代理公司、studio、案例、作品集 | Portfolio Grid · Split Studio · Index-First |
+| 个人一页站、关于我、简历 | Long Document · Letter · Index-First |
+| 餐厅、咖啡馆、酒吧、食物、菜单 | Photographic · Long Document · Catalogue |
+| 时尚、服装、美妆、lookbook | Photographic（配真实照片）· Catalogue · Marquee Hero |
+| 金融科技、银行、支付、交易 | Stat-Led · Workbench · Long Document |
+| 宣言、campaign、公益、倡导 | Manifesto · Quote-Led · Stat-Led |
+| 编辑、字厂、杂志、字体 | Specimen · Long Document · Type Specimen |
+| 产品发布、SaaS 营销 | Bento Grid · Workbench · Stat-Led |
+| 会议、活动、演讲者 | Marquee Hero · Manifesto · Photographic |
+| 完全没有信号 | Bento Grid · Long Document · Manifesto |
 
-Developer docs and developer marketing are different prompts (a walkthrough wants Workbench; the landing wants Bento plus Stat-Led), as are a one-pager and a case-study portfolio; the Step 1 use decides. A vague tone word ("modern", "clean") is read through the genre and stated as an inference, never a second question.
+开发者文档和开发者营销是不同的提示词（一份 walkthrough 要 Workbench；落地页要 Bento 加 Stat-Led），一页站和案例作品集也一样；第 1 步的用途说了算。含糊的语气词（"modern"、"clean"）经体裁解读，并作为推断陈述出来，绝不作为第二个问题。

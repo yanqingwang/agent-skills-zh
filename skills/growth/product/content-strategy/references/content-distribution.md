@@ -1,83 +1,87 @@
-# Content Distribution Spine
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/content-strategy/references/content-distribution.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The "distribute" half of content strategy. Creating a great piece is table stakes; the leverage is in getting it seen. This reference expands the **Create Once, Distribute Twice** section of the skill.
+# 内容分发主干
 
-Cross-links: ORB channel-type playbook lives in **launch**; atomization/repurposing workflows (podcast → clips, blog → thread) live in **social**. This file consolidates the strategy that ties them together—don't re-derive ORB from scratch here.
+内容策略中“分发”的那一半。创作出好内容只是入场券；杠杆在于让人看到。本参考展开 skill 的**一次创作，两次分发**一节。
 
-## Create Once, Distribute Twice
+交叉引用：ORB 渠道类型打法在 **launch**；拆解/复用工作流（播客 → 切片、博客 → 推文串）在 **social**。本文件汇总把两者串起来的策略，不要在这里从零重推 ORB。
 
-One exceptional piece, reformatted across channels—not a fresh piece per platform. The math is simple: a flagship piece plus ten repurposed cuts reaches far more people than eleven mediocre native posts, at a fraction of the effort.
+## 一次创作，两次分发
 
-The discipline is **designing the piece to be distributed**:
-- Write subheads that read as standalone social posts.
-- Structure sections modularly so they can be lifted out and stand alone.
-- Pre-identify the pull quotes, stats, and frames you'll turn into graphics or short clips.
-- Know the atomized outputs before you write, so the source piece contains them.
+一篇出色的内容，跨渠道改格式复用，而不是每个平台都从零写一篇。账很简单：一篇旗舰内容加十条复用切片，触达的人远多于十一条平庸的原生帖子，投入却只是一小部分。
 
-Treat the flagship as the master; every channel gets a cut derived from it.
+纪律在于**创作时就为分发做设计**：
+- 小标题写成能独立当社交帖子的样子。
+- 分节做成模块化，抽出来也能独立成立。
+- 提前锁定要做成图片或短片的金句、数据和叙事框架。
+- 动笔前就想好拆解产物，让源内容天然包含它们。
 
-## The ORB Framework as a Funnel
+把旗舰当作母本；每个渠道拿到的都是从它派生的切片。
 
-Own, Rent, Borrow—read as a discovery → engagement → conversion funnel:
+## 作为漏斗的 ORB
 
-| Layer | Channels | Funnel role | You control |
+自有（Own）、租用（Rent）、借用（Borrow），读作发现 → 参与 → 转化的漏斗：
+
+| 层 | 渠道 | 漏斗角色 | 你能控制的 |
 |---|---|---|---|
-| **Borrowed** | Podcasts, guest posts, partnerships, PR, other people's audiences | Discovery / breakthrough | Nothing—it's a loan |
-| **Rented** | Social platforms, ad networks, marketplaces | Engagement / reach | The content, not the audience or algorithm |
-| **Owned** | Email list, blog, community, app | Conversion / retention | Everything—the durable asset |
+| **借用（Borrowed）** | 播客、客座文章、合作、PR、别人的受众 | 发现 / 破圈 | 什么都没有，那是借来的 |
+| **租用（Rented）** | 社交平台、广告网络、各类市场（marketplaces） | 参与 / 触达 | 内容，而非受众或算法 |
+| **自有（Owned）** | 邮件列表、博客、社区、App | 转化 / 留存 | 全部，可持续的资产 |
 
-The strategic move: use borrowed and rented reach to funnel strangers into owned channels where you can convert and retain them. Borrowed and rented are rented land; owned is the only asset you keep.
+战略动作：用借用与租用的触达，把陌生人导入自有渠道，在那里转化并留住他们。借用和租用都是租来的地；自有才是唯一留得住的资产。
 
-## The Ownership Paradox
+## 所有权悖论
 
-Most teams invert the priority: they spend ~90% of effort on borrowed and rented channels they don't control, and neglect the owned assets that actually convert. The paradox is that the channels getting the least attention (email, blog, community) are the ones that compound and can't be revoked. Rebalance toward owned as the destination for all upstream effort.
+大多数团队把优先级弄反了：约 90% 的力气花在自己控制不了的借用和租用渠道上，却忽视真正带来转化的自有资产。悖论在于，最受冷落的渠道（邮件、博客、社区）恰恰是会复利增长、且无法被收回的。重新平衡：把自有渠道作为所有上游投入的归宿。
 
-## Failure Modes
+## 失败模式
 
-- **Spray-and-pray** — publishing across every platform with no flagship and no repurposing system. Effort scatters; nothing compounds; each post starts from zero.
-- **Platform dependency** — building your audience on rented land. Facebook organic reach collapsed from ~20% to under 2% as the platform monetized. Any rented channel can throttle, deprioritize, or de-platform you with no recourse. The lesson isn't "avoid rented"—it's "never let rented be the endpoint."
+- **广撒网碰运气**：在每个平台都发，没有旗舰，也没有复用体系。精力散掉，什么都无法复利，每条帖子都从零开始。
+- **平台依赖**：把受众建在租来的土地上。随着平台商业化，Facebook 自然触达从约 20% 跌到 2% 以下。任何租来的渠道都可以限流、降权或直接封掉你，且无处申诉。教训不是“避开租来的”，而是“绝不让租来的成为终点”。
 
-## Platform Half-Lives
+## 平台半衰期
 
-Content decays at wildly different rates by channel. Match the piece to the channel's shelf life:
+内容在不同渠道的衰减速度天差地别。让内容匹配渠道的保质期：
 
-| Channel | Rough half-life | Implication |
+| 渠道 | 大致半衰期 | 含义 |
 |---|---|---|
-| Twitter/X post | Minutes–hours | Post often; repost; thread for reach |
-| Instagram / Facebook | ~a day | Frequent cadence; stories are ephemeral by design |
-| LinkedIn post | ~a day, longer for strong performers | Fewer, higher-effort posts |
-| TikTok / Reels / Shorts | Days–weeks (algorithmic resurfacing) | Evergreen hooks can re-surface long after posting |
-| YouTube video | Months–years | Search-driven; compounds like a blog post |
-| Blog post / SEO | Years | The long tail; the compounding asset |
-| Email | Sent once, but archived / repurposable | One-shot attention; harvest into other formats |
+| Twitter/X 帖子 | 几分钟到几小时 | 高频发；转发；用推文串扩触达 |
+| Instagram / Facebook | 约 1 天 | 高频节奏；快拍（stories）按设计就是短命的 |
+| LinkedIn 帖子 | 约 1 天，强内容更久 | 更少、单条投入更高 |
+| TikTok / Reels / Shorts | 数天到数周（算法会重新推荐） | 常青钩子可能在发布很久后再次被推起来 |
+| YouTube 视频 | 数月到数年 | 搜索驱动；像博客文章一样产生复利 |
+| 博客文章 / SEO | 数年 | 长尾；复利资产 |
+| 邮件 | 只发一次，但可归档 / 可复用 | 一次性注意力；收割成其他格式 |
 
-Short half-life channels reward frequency and repetition; long half-life channels reward depth and evergreen framing. Owned, long-half-life formats (blog, YouTube, email archive) are where distribution effort compounds.
+半衰期短的渠道奖励频率和重复；半衰期长的渠道奖励深度和常青框架。自有、长半衰期的形式（博客、YouTube、邮件存档）才是分发投入产生复利的地方。
 
-## The Content Distribution Flywheel
+## 内容分发飞轮
 
-Distribution isn't a linear checklist—it's a loop that feeds itself:
+分发不是线性清单，而是一个自我供能的循环：
 
-1. **Create** one exceptional flagship piece (guide, video, podcast, original research), with distribution hooks built in.
-2. **Atomize** it into channel-native cuts—clips, threads, carousels, quote graphics, email, subhead-posts.
-3. **Distribute** across owned → rented → borrowed, routing everything back to owned.
-4. **Engage** with the responses; capture the questions, objections, and reactions.
-5. **Feed back** — the engagement surfaces the next flagship topic (what resonated, what got asked), and top-performing atoms signal what to make more of.
+1. **创作（Create）**一篇出色的旗舰内容（指南、视频、播客、原创研究），内置分发钩子。
+2. **拆解（Atomize）**成渠道原生切片：短片、推文串、轮播图、金句图、邮件、小标题帖。
+3. **分发（Distribute）**：按自有 → 租用 → 借用的顺序铺开，所有流量都导回自有渠道。
+4. **互动（Engage）**：回应反馈；记录问题、异议和反应。
+5. **反哺（Feed back）**：互动暴露下一个旗舰选题（什么引起共鸣、大家在问什么），表现最好的切片指示该多做什么。
 
-Each turn of the loop lowers the cost of the next piece (you learn what lands) and grows the owned audience that amplifies it. The flywheel is why consistent distributors pull away from one-off publishers over time.
+循环每转一圈，下一篇的成本就降低一点（你知道什么有效），能放大它的自有受众也在变大。飞轮正是持续分发的人随时间甩开一次性发布者的原因。
 
-## Atomization Checklist (per flagship)
+## 拆解清单（每篇旗舰）
 
-For each major piece, produce (see **social** for the platform-native execution):
-- [ ] 3–5 standalone social posts from the subheads/key points
-- [ ] 1 thread (Twitter/X) or carousel (LinkedIn/Instagram) of the core argument
-- [ ] 2–4 short-form video clips (if source is video/podcast)
-- [ ] 1–2 quote or stat graphics
-- [ ] 1 email to the owned list linking the flagship
-- [ ] Repost/reshare schedule across the piece's half-life (don't post once and move on)
+每篇重要内容都产出以下物件（平台原生执行见 **social**）：
+- [ ] 从小标题/要点做出 3–5 条独立社交帖子
+- [ ] 1 条推文串（Twitter/X）或轮播（LinkedIn/Instagram）承载核心论证
+- [ ] 2–4 条短视频切片（若源是视频/播客）
+- [ ] 1–2 张金句图或数据图
+- [ ] 1 封发给自有邮件列表、链接旗舰内容的邮件
+- [ ] 覆盖内容半衰期的转发/分享排期（不要发一次就完）
 
-## Related
+## 相关
 
-- **launch** — ORB channel-type playbook and launch-day distribution
-- **social** — atomization/repurposing workflows and platform-native execution
-- **emails** — the owned channel that converts distributed attention
-- **ai-seo** — making owned content citable by LLMs (another distribution surface)
+- **launch**：ORB 渠道类型打法与发布日分发
+- **social**：拆解/复用工作流与平台原生执行
+- **emails**：把分发来的注意力转化为转化的自有渠道
+- **ai-seo**：让自有内容可被 LLM 引用（另一个分发面）

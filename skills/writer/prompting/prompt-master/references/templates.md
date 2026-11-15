@@ -1,31 +1,35 @@
-# Prompt Templates Reference
+> **中文汉化版** · 上游：[nidhinjs/prompt-master](https://github.com/nidhinjs/prompt-master) · 原文件：`references/templates.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Full template library for Prompt Master. Read the relevant template when the user's task type matches. Do not load all templates at once — only the one you need.
+# 提示词模板参考
 
-## Table of Contents
+Prompt Master 的完整模板库。用户任务类型匹配时，读取对应模板。不要一次性加载全部模板，只读需要的那一个。
 
-| Template | Best For |
+## 目录
+
+| 模板 | 适用场景 |
 |----------|----------|
-| [A — RTF](#template-a--rtf) | Simple one-shot tasks |
-| [B — CO-STAR](#template-b--co-star) | Professional documents, business writing |
-| [C — RISEN](#template-c--risen) | Complex multi-step projects |
-| [D — CRISPE](#template-d--crispe) | Creative work, brand voice |
-| [E — Auditable Reasoning](#template-e--auditable-reasoning) | Logic, math, analysis, debugging |
-| [F — Few-Shot](#template-f--few-shot) | Consistent structured output, pattern replication |
-| [G — File-Scope](#template-g--file-scope) | Cursor, Windsurf, Copilot — code editing AI |
-| [H — ReAct + Stop Conditions](#template-h--react--stop-conditions) | Claude Code, Devin — autonomous agents |
-| [I — Visual Descriptor](#template-i--visual-descriptor) | Midjourney, DALL-E, Stable Diffusion, Sora |
-| [J — Reference Image Editing](#template-j--reference-image-editing) | Editing an existing image with a reference |
-| [K — ComfyUI](#template-k--comfyui) | ComfyUI node-based image workflows |
-| [L — Prompt Decompiler](#template-l--prompt-decompiler) | Breaking down, adapting, or splitting existing prompts |
-| [M — Current Claude Task Brief](#template-m--current-claude-task-brief) | Complex, multi-step, or agentic task on current Claude models |
-| [N — OpenAI Task Brief](#template-n--openai-task-brief) | Complex tasks on GPT-6, GPT-6.1 Sol, or explicitly selected GPT-5.6 models |
+| [模板 A — RTF](#template-a--rtf) | 简单的一次性任务 |
+| [模板 B — CO-STAR](#template-b--co-star) | 专业文档、商务写作 |
+| [模板 C — RISEN](#template-c--risen) | 复杂的多步骤项目 |
+| [模板 D — CRISPE](#template-d--crispe) | 创意工作、品牌语气 |
+| [模板 E — 可审计推理](#template-e--auditable-reasoning) | 逻辑、数学、分析、调试 |
+| [模板 F — Few-Shot](#template-f--few-shot) | 一致的结构化输出、模式复刻 |
+| [模板 G — 文件范围](#template-g--file-scope) | Cursor、Windsurf、Copilot 等代码编辑 AI |
+| [模板 H — ReAct + 停止条件](#template-h--react--stop-conditions) | Claude Code、Devin 等自主 Agent |
+| [模板 I — 视觉描述](#template-i--visual-descriptor) | Midjourney、DALL-E、Stable Diffusion、Sora |
+| [模板 J — 参考图编辑](#template-j--reference-image-editing) | 用参考图编辑已有图像 |
+| [模板 K — ComfyUI](#template-k--comfyui) | ComfyUI 节点式图像工作流 |
+| [模板 L — 提示词反编译](#template-l--prompt-decompiler) | 拆解、适配或拆分已有提示词 |
+| [模板 M — 当前 Claude 任务简报](#template-m--current-claude-task-brief) | 当前 Claude 模型上的复杂、多步骤或 agentic 任务 |
+| [模板 N — OpenAI 任务简报](#template-n--openai-task-brief) | GPT-6、GPT-6.1 Sol 或显式选择的 GPT-5.6 模型上的复杂任务 |
 
 ---
 
-## Template A — RTF
+## 模板 A — RTF
 
-*Role, Task, Format. Use for fast one-shot tasks where the request is clear and simple.*
+*Role、Task、Format。适用于请求清晰简单、需要快速完成的一次性任务。*
 
 ```
 Role: [One sentence defining who the AI is]
@@ -33,7 +37,7 @@ Task: [Precise verb + what to produce]
 Format: [Exact output format and length]
 ```
 
-**Example:**
+**示例：**
 ```
 Role: You are a senior technical writer.
 Task: Write a one-paragraph description of what a REST API is.
@@ -42,9 +46,9 @@ Format: Plain prose, 3 sentences maximum, no jargon, suitable for a non-technica
 
 ---
 
-## Template B — CO-STAR
+## 模板 B — CO-STAR
 
-*Context, Objective, Style, Tone, Audience, Response. Use for professional documents, business writing, reports, and marketing content where full context control matters.*
+*Context、Objective、Style、Tone、Audience、Response。适用于专业文档、商务写作、报告，以及需要完整掌控上下文的营销内容。*
 
 ```
 Context: [Background the AI needs to understand the situation]
@@ -55,7 +59,7 @@ Audience: [Who reads this — their knowledge level and expectations]
 Response: [Format, length, and structure of the output]
 ```
 
-**Example:**
+**示例：**
 ```
 Context: I am a founder pitching a B2B SaaS tool that automates expense reporting for mid-size companies.
 Objective: Write a cold email that gets a reply from a CFO.
@@ -67,9 +71,9 @@ Response: 5 sentences max. Subject line included. No bullet points.
 
 ---
 
-## Template C — RISEN
+## 模板 C — RISEN
 
-*Role, Instructions, Steps, End Goal, Narrowing. Use for complex projects, multi-step tasks, and any output that requires a clear sequence of actions.*
+*Role、Instructions、Steps、End Goal、Narrowing。适用于复杂项目、多步骤任务，以及任何需要明确行动顺序的输出。*
 
 ```
 Role: [Expert identity the AI should adopt]
@@ -82,7 +86,7 @@ End Goal: [What the final output must achieve]
 Narrowing: [Constraints, scope limits, what to exclude]
 ```
 
-**Example:**
+**示例：**
 ```
 Role: You are a product manager with 10 years of experience in mobile apps.
 Instructions: Write a product requirements document for a habit tracking feature.
@@ -97,9 +101,9 @@ Narrowing: No technical implementation details. No wireframes. Under 600 words t
 
 ---
 
-## Template D — CRISPE
+## 模板 D — CRISPE
 
-*Capacity, Role, Insight, Statement, Personality, Experiment. Use for creative work, brand voice writing, and any task where personality, tone, and iteration matter.*
+*Capacity、Role、Insight、Statement、Personality、Experiment。适用于创意工作、品牌语气写作，以及任何人格、语调和迭代都很重要的任务。*
 
 ```
 Capacity: [What capability or expertise the AI should have]
@@ -110,7 +114,7 @@ Personality: [Tone and style — witty / authoritative / casual / sharp]
 Experiment: [Request variants or alternatives to explore]
 ```
 
-**Example:**
+**示例：**
 ```
 Capacity: Expert copywriter specializing in SaaS product launches.
 Role: Brand voice for a productivity tool aimed at developers.
@@ -122,9 +126,9 @@ Experiment: Give 3 variants ranging from minimal to bold.
 
 ---
 
-## Template E — Auditable Reasoning
+## 模板 E — 可审计推理
 
-*Use for logic-heavy tasks, math, debugging, and multi-factor analysis where the result must be checkable without requesting private reasoning.*
+*适用于逻辑密集型任务、数学、调试，以及不索取私有推理过程也能核查结果的多因素分析。*
 
 ```
 [Task statement]
@@ -139,21 +143,21 @@ Return:
 Do not reveal hidden chain-of-thought or private reasoning. Keep the rationale concise and decision-relevant.
 ```
 
-**When to use:**
-- Debugging where the cause is not obvious
-- Comparing technical approaches
-- Math or calculation requiring verification
-- Analysis where evidence and assumptions must be inspectable
+**适用场景：**
+- 原因不明显的调试
+- 对比不同技术方案
+- 需要验证的数学或计算
+- 证据与假设必须可查验的分析
 
-**When NOT to use:**
-- Simple tasks where the answer is clear
-- Creative tasks where an audit trail adds noise
+**不适用场景：**
+- 答案一目了然的简单任务
+- 审计记录只会添乱的创意任务
 
 ---
 
-## Template F — Few-Shot
+## 模板 F — Few-Shot
 
-*Use when the output format is easier to show than describe. Examples outperform written instructions for format-sensitive tasks every time.*
+*适用于输出格式用示例展示比用文字描述更有效的情形。对格式敏感的任务，示例永远胜过书面指令。*
 
 ```
 [Task instruction]
@@ -174,17 +178,17 @@ Here are examples of the exact format needed:
 Now apply this exact pattern to: [actual input]
 ```
 
-**Rules:**
-- 2 to 5 examples is the sweet spot. More rarely helps and wastes tokens.
-- Examples must include edge cases, not just easy cases.
-- Use XML tags to wrap examples — Claude parses XML reliably.
-- If you have been re-prompting for the same formatting correction twice, switch to few-shot instead of rewriting instructions.
+**规则：**
+- 2 到 5 个示例是最佳区间。更多示例很少有帮助，只会浪费 token。
+- 示例必须包含边界情况，不能只有简单情形。
+- 用 XML 标签包裹示例，Claude 解析 XML 相当可靠。
+- 如果同一个格式问题已经反复提示修正两次，改用 few-shot，而不是重写指令。
 
 ---
 
-## Template G — File-Scope
+## 模板 G — 文件范围
 
-*Use for Cursor, Windsurf, GitHub Copilot, and any AI that edits code inside a codebase. The most common failure mode here is editing the wrong file or breaking existing logic — this template prevents both.*
+*适用于 Cursor、Windsurf、GitHub Copilot，以及任何在代码库内编辑代码的 AI。这里最常见的失败模式是改错文件或破坏现有逻辑，本模板两者都能防住。*
 
 ```
 File: [exact/path/to/file.ext]
@@ -211,9 +215,9 @@ Done When:
 
 ---
 
-## Template H — ReAct + Stop Conditions
+## 模板 H — ReAct + 停止条件
 
-*Use for Claude Code, Devin, AutoGPT, and any AI that takes autonomous actions. Runaway loops and scope explosion are the biggest credit killers in agentic workflows — stop conditions are not optional.*
+*适用于 Claude Code、Devin、AutoGPT，以及任何会自主执行动作的 AI。失控循环与范围膨胀是 agentic 工作流中最烧额度的两个杀手，停止条件不是可选项。*
 
 ```
 Objective:
@@ -251,9 +255,9 @@ At the end, output a full summary of every file changed.
 
 ---
 
-## Template I — Visual Descriptor
+## 模板 I — 视觉描述
 
-*Use for Midjourney, DALL-E 3, Stable Diffusion, Sora, Runway, and any image or video generation tool.*
+*适用于 Midjourney、DALL-E 3、Stable Diffusion、Sora、Runway，以及任何图像或视频生成工具。*
 
 ```
 Subject: [Main subject — specific, not vague]
@@ -269,25 +273,25 @@ Negative Prompts: [blurry, watermark, extra fingers, distortion, low quality]
 Style Reference: [artist / film / aesthetic reference if applicable]
 ```
 
-**Tool-specific syntax:**
-- **Midjourney**: Comma-separated descriptors, not prose. Add `--ar`, `--style`, `--v 6` at the end.
-- **Stable Diffusion**: Use `(word:1.3)` weight syntax. CFG scale 7 to 12. Negative prompt is mandatory.
-- **DALL-E 3**: Prose works well. Add "do not include any text in the image" unless text is needed.
-- **Sora / video**: Add camera movement (slow dolly, static shot, crane up), duration in seconds, and cut style.
+**各工具专用语法：**
+- **Midjourney**: 用逗号分隔的描述词，不要写成散文。结尾追加 `--ar`、`--style`、`--v 6`。
+- **Stable Diffusion**: 使用 `(word:1.3)` 权重语法。CFG 值取 7 到 12。负面提示词必须提供。
+- **DALL-E 3**: 散文式描述效果很好。除非需要文字，否则加上 "do not include any text in the image"。
+- **Sora / 视频**: 写明运镜方式（慢速推轨、固定机位、升降摇臂）、以秒计的时长和剪辑风格。
 
 ---
 
-## Template J — Reference Image Editing
+## 模板 J — 参考图编辑
 
-*Use when the user has an existing image they want to modify. Completely different from generation — never describe the whole scene from scratch, only describe the change.*
+*适用于用户想修改一张已有图像的情形。与生成完全不同：永远不要从零描述整个场景，只描述要改的部分。*
 
-**Before writing the prompt, always tell the user:**
-"Attach your reference image to [tool name] before sending this prompt."
+**写提示词之前，务必先告诉用户：**
+"发送此提示词前，请先把你的参考图附到 [tool name] 上。"
 
-**Detect the tool's editing capability:**
-- Midjourney: use `--cref [image URL]` for character reference or `--sref` for style reference
-- DALL-E 3: use the Edit endpoint, not the Generate endpoint. User must be in ChatGPT with image editing enabled
-- Stable Diffusion: use img2img mode, not txt2img. Set denoising strength 0.3-0.6 to preserve the original
+**先探测该工具的编辑能力：**
+- Midjourney: 用 `--cref [image URL]` 做角色参考，或用 `--sref` 做风格参考
+- DALL-E 3: 用 Edit 端点，不要用 Generate 端点。用户必须在 ChatGPT 中并启用图像编辑
+- Stable Diffusion: 用 img2img 模式，不要用 txt2img。把去噪强度设为 0.3-0.6 以保留原图
 
 ```
 Reference image: [attached / URL]
@@ -298,7 +302,7 @@ Style consistency: maintain the exact style, lighting, and mood of the reference
 Negative prompt: [what to avoid introducing]
 ```
 
-**Example:**
+**示例：**
 ```
 Reference image: [attached portrait photo]
 What to keep exactly the same: face, hair, clothing, background, lighting
@@ -310,17 +314,17 @@ Negative prompt: no new elements, no style changes, no background changes
 
 ---
 
-## Template K — ComfyUI
+## 模板 K — ComfyUI
 
-*Use for ComfyUI node-based workflows. Always output Positive and Negative prompts as separate blocks. Ask for the checkpoint model before writing — syntax and token limits differ per model.*
+*适用于 ComfyUI 节点式工作流。务必把正向提示词与负面提示词分成两个独立区块输出。动笔前先问清 checkpoint 模型，各模型的语法与 token 上限不同。*
 
-**Ask first if not stated:**
-"Which checkpoint model are you using? (SD 1.5, SDXL, Flux, or other)"
+**未说明时先问：**
+"你用的是哪个 checkpoint 模型？（SD 1.5、SDXL、Flux 还是其他）"
 
-**Model-specific notes:**
-- SD 1.5: shorter prompts work better, under 75 tokens per block, use (word:weight) syntax
-- SDXL: handles longer prompts, supports more natural language alongside weighted syntax
-- Flux: natural language works well, less reliance on weighted syntax, very responsive to style descriptions
+**各模型注意事项：**
+- SD 1.5: 提示词更短效果更好，每块不超过 75 个 token，使用 (word:weight) 语法
+- SDXL: 能容纳更长的提示词，加权语法之外还支持更多自然语言
+- Flux: 自然语言效果好，对加权语法依赖更少，对风格描述的响应非常灵敏
 
 ```
 POSITIVE PROMPT:
@@ -338,20 +342,20 @@ RESOLUTION: [width x height — must be divisible by 64]
 
 ---
 
-## Template L — Prompt Decompiler
+## 模板 L — 提示词反编译
 
-*Use when the user pastes an existing prompt and wants to break it down, adapt it for a different tool, simplify it, or understand its structure. This is analysis and adaptation, not building from scratch.*
+*适用于用户粘贴一段已有提示词，想拆解它、为其他工具适配它、简化它，或理解其结构的情形。这是分析与适配，不是从零构建。*
 
-**Detect which Decompiler task is needed:**
-- **Break down** — explain what each part of the prompt does
-- **Adapt** — rewrite for a different tool while preserving intent
-- **Simplify** — remove redundancy and tighten without losing meaning
-- **Split** — divide a complex one-shot prompt into a cleaner sequence
+**先判断需要哪种反编译任务：**
+- **Break down**：解释提示词各部分的作用
+- **Adapt**：为其他工具重写，同时保留原意
+- **Simplify**：去除冗余、收紧表达，不损失含义
+- **Split**：把复杂的一次性提示词拆分成更清晰的顺序提示词
 
-**For Adapt tasks, always ask:**
-"What tool is the original prompt from, and what tool are you adapting it for?"
+**Adapt 任务务必先问：**
+"原始提示词来自哪个工具？你要适配到哪个工具？"
 
-**Break down output format:**
+**Break down 输出格式：**
 ```
 Original prompt: [paste]
 
@@ -365,7 +369,7 @@ Structure analysis:
 Recommended fix: [rewritten version with gaps filled]
 ```
 
-**Adapt output format:**
+**Adapt 输出格式：**
 ```
 Original ([source tool]): [original prompt]
 
@@ -377,7 +381,7 @@ Key changes made:
 - [change 2 and why]
 ```
 
-**Split output format:**
+**Split 输出格式：**
 ```
 Original prompt: [paste]
 
@@ -393,9 +397,9 @@ Run these in order. Each output feeds the next.
 ```
 ---
 
-## Template M — Current Claude Task Brief
+## 模板 M — 当前 Claude 任务简报
 
-*Use for complex, multi-step, or agentic tasks on current Claude models—Claude.ai, API, or Claude Code. It front-loads the outcome, context, scope, and action boundaries while avoiding obsolete manual-thinking scaffolding.*
+*适用于当前 Claude 模型（Claude.ai、API 或 Claude Code）上的复杂、多步骤或 agentic 任务。它把结果、上下文、范围和行动边界前置，同时避开已过时的手动思考脚手架。*
 
 ```
 ## Objective
@@ -428,9 +432,9 @@ Run these in order. Each output feeds the next.
 For long-running work, report progress only when it changes or when a checkpoint is reached. Ground every completion claim in a tool result, changed artifact, or verification output.
 ```
 
-**Effort** — configure in the API or harness rather than requesting private reasoning in the prompt. Start with the model default, lower it for routine scoped work, and raise it only when task difficulty warrants the cost.
+**Effort**：在 API 或 Harness 中配置，而不是在提示词里索取私有推理过程。从模型默认值起步，常规的范围明确工作调低，仅当任务难度配得上这笔成本时才调高。
 
-**Claude Code only — add Session Strategy block when relevant:**
+**仅限 Claude Code**，相关时附加 Session Strategy 区块：
 ```
 ## Session Strategy
 [Pick one:]
@@ -440,13 +444,13 @@ For long-running work, report progress only when it changes or when a checkpoint
 - Compact first — compact around [decisions, constraints, and current state], then begin
 ```
 
-**When to use:** Current Claude models on any surface when the task is complex, multi-file, ambiguous, or agentic. Not needed for simple one-shot tasks.
+**适用场景：** 任意界面上的当前 Claude 模型，任务复杂、多文件、有歧义或 agentic 时使用。简单的一次性任务不需要。
 
 ---
 
-## Template N — OpenAI Task Brief
+## 模板 N — OpenAI 任务简报
 
-*Use for complex tasks targeting OpenAI models in ChatGPT, Codex, or the API. Keep simple requests short; omit sections that do not affect the result.*
+*适用于在 ChatGPT、Codex 或 API 中面向 OpenAI 模型的复杂任务。简单请求保持简短，省略不影响结果的区块。*
 
 ```text
 Goal:
@@ -469,15 +473,15 @@ Output:
 [Deliverable, format, level of detail, and required evidence.]
 ```
 
-**Adaptation heuristics — evaluate on representative tasks:**
-- Luna: narrow the task and make the output contract explicit.
-- Sol: emphasize implementation context and acceptance criteria.
-- Astra: include decision criteria and evidence requirements for difficult work.
-- Preserve an explicitly selected GPT-5.6 model and apply its compatibility guidance in SKILL.md.
-- Combine related tasks when they share one outcome; split when dependencies, review checkpoints, or context limits justify separate runs.
-- Ask for conclusions, assumptions, concise rationale, evidence, and checks rather than hidden chain-of-thought.
-- For current facts, request retrieval and citations when the environment provides those capabilities; disclose missing access rather than invent sources.
-- Define tool access and authorization only for agentic tasks. For long work, request milestones and blockers instead of a message after every action.
-- Keep API and harness settings in setup notes outside the prompt. Verify supported controls for the exact model, endpoint, and surface.
+**适配启发式（在代表性任务上评估）：**
+- Luna: 收窄任务，并让输出契约明确。
+- Sol: 强调实现上下文与验收标准。
+- Astra: 为困难工作加入决策标准与证据要求。
+- 保留显式选择的 GPT-5.6 模型，并在 SKILL.md 中应用其兼容性指引。
+- 相关任务共享同一结果时合并；当依赖关系、审查检查点或上下文限制足以支持分开运行时拆分。
+- 索取结论、假设、简要依据、证据与核查项，而不是隐藏的思维链。
+- 涉及最新事实时，若环境提供检索与引用能力就加以使用；缺少访问权限要如实披露，而不是编造来源。
+- 只为 agentic 任务定义工具访问与授权。长任务索要里程碑与阻塞点，而不是每个动作之后都发一条消息。
+- 把 API 与 Harness 设置写进提示词之外的配置说明。针对确切的模型、端点与界面验证受支持的控制项。
 
-The task brief and adaptation heuristics are Prompt Master recommendations, not an official OpenAI template or benchmark result.
+任务简报与适配启发式是 Prompt Master 的建议，不是 OpenAI 官方模板或基准测试结果。

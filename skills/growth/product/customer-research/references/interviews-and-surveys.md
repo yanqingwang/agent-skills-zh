@@ -1,66 +1,70 @@
-# Customer Research — Interviews & Surveys (Primary Research)
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/customer-research/references/interviews-and-surveys.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Going to the source. Mode 2 mines what customers already said in public; this is Mode 3 — you *ask*. Customer research is your marketing cheat code, and the highest-signal version is talking to customers directly.
+# 客户研究：访谈与问卷（一手研究）
 
-Three primary-research pillars, best used together:
-1. **Video calls** — deep, unstructured, follow-the-thread (this file)
-2. **Surveys** — broad, quantified, benchmarkable (this file)
-3. **Online sleuthing** — Sales Safari and watering-hole mining (see `references/source-guides.md`)
+回到源头。Mode 2 挖掘客户在公开场合已经说过的话；这一篇是 Mode 3：你*去问*。客户研究是你的营销作弊码，而信号最强的版本就是直接和客户对话。
 
----
-
-## The First Rule of Customer Research
-
-> The first rule of customer research: you do not talk about customer research.
-
-Keep it casual. The moment a customer thinks they're in "a research study" they perform — they give you the polished, socially-acceptable answer instead of the real one. Frame calls as a chat, not an interview. Don't lead. Don't pitch. Don't defend the product. You're there to listen and learn how they actually think, talk, and decide.
-
-**Prove yourself wrong, not right.** The point of research is not validation — it's disconfirmation. Go in trying to *break* your assumptions, not confirm them. If you only look for evidence you're right, you'll find it, and it'll be worthless.
-
-- **Dropbox example**: the team assumed users would care most about sync *speed*. Research aimed at disproving the assumption revealed users cared more that files were *reliably there and safe* than about raw speed. Chasing the confirmation would have optimized the wrong thing.
-- Ask questions that could return an answer you don't want to hear. If none of your questions can prove you wrong, rewrite them.
+三种一手研究支柱，最好组合使用：
+1. **视频通话**：深入、非结构化、顺着线索追（本文件）
+2. **问卷**：覆盖面广、可量化、可对标（本文件）
+3. **线上侦查**：Sales Safari 和聚集地挖掘（见 `references/source-guides.md`）
 
 ---
 
-## Sales Safari (Amy Hoy)
+## 客户研究的第一条规则
 
-Amy Hoy's **Sales Safari**: go where your audience already congregates and observe them in the wild, without interrupting. It's structured online sleuthing — read threads, reviews, comments, and forum posts to mine four things:
+> 客户研究的第一条规则：不要谈"客户研究"。
 
-| Mine for | What you're capturing |
+保持随意。一旦客户意识到自己在参加"一项研究"，他们就会开始表演：给你一个得体的、社交上正确的答案，而不是真实答案。把通话包装成聊天，不是访谈。不要引导。不要推销。不要为产品辩护。你在那里是为了倾听，了解他们实际上怎么想、怎么说、怎么决策。
+
+**努力证明自己是错的，而不是对的。** 研究的目的不是验证，是证伪。带着*打破*自己假设的意图进入研究，而不是去确认它们。如果你只找证明自己对的表现，你一定能找到，而它毫无价值。
+
+- **Dropbox 的例子**：团队假设用户最在乎同步*速度*。以推翻该假设为目标的研究发现，用户更在乎文件*可靠地在那里、安全地在那里*，而不是原始速度。如果只追着验证信息走，就会优化错的东西。
+- 问那些可能得到你不想要的答案的问题。如果你的问题没有一个能证明你错了，就重写它们。
+
+---
+
+## Sales Safari（Amy Hoy）
+
+Amy Hoy 的 **Sales Safari**：去你的受众已经聚集的地方，在自然状态下观察他们，不打扰。这是一种结构化的线上侦查：读帖子、评论、留言和论坛发言，挖掘四样东西：
+
+| 挖掘对象 | 你在捕捉什么 |
 |----------|-----------------------|
-| **Pains** | The problems, frustrations, and workarounds they describe unprompted |
-| **Jargon** | The exact words, phrases, and shorthand they use — copy gold |
-| **Recommendations** | What they tell each other to buy, try, or avoid |
-| **Worldview** | Their beliefs, biases, and how they see themselves and the problem |
+| **痛点（Pains）** | 他们主动描述的问题、挫败感和变通办法 |
+| **行话（Jargon）** | 他们使用的原话、短语和缩写——文案的金矿 |
+| **推荐（Recommendations）** | 他们互相建议买什么、试什么、避开什么 |
+| **世界观（Worldview）** | 他们的信念、偏见，以及如何看待自己和这个问题 |
 
-Safari is passive (you observe) where interviews are active (you ask). Run it first: it tells you what to ask about, and in whose words. For per-platform search operators and extraction tips, see `references/source-guides.md`.
+Safari 是被动的（你观察），访谈是主动的（你提问）。先跑 Safari：它告诉你该问什么、该用谁的语言问。各平台的搜索运算符和提取技巧见 `references/source-guides.md`。
 
 ---
 
-## Customer Interviews (Video Calls)
+## 客户访谈（视频通话）
 
-### Recruit your best customers
+### 招募你最好的客户
 
-Don't interview whoever answers first. Interview the customers you want *more of*. Segment your CRM and prioritize by:
+不要访谈最先回复的人。访谈你想要*更多*的那种客户。对 CRM 做分层，按以下标准排优先级：
 
-- **High deal size** — the accounts worth the most
-- **Short sales cycle** — they "got it" fast; their language converts fast
-- **Low churn / high retention** — they got real, lasting value
+- **客单价高**：价值最高的账户
+- **销售周期短**：他们很快"get 到了"；他们的语言转化快
+- **低流失 / 高留存**：他们获得了真实、持久的价值
 
-Recruitment methods, in order of leverage:
-1. **Segment the CRM** by the three signals above and pull a shortlist
-2. **Ask sales and CS for referrals** — they know who loves the product and who articulates why
-3. **Always close every call with**: *"Who else should we talk to?"* — the single most reliable way to compound your interview pipeline
+招募方法，按杠杆大小排序：
+1. **按上述三个信号对 CRM 分层**，拉出候选名单
+2. **向销售和客服要推荐**：他们知道谁爱这个产品、谁能把理由讲清楚
+3. **每次通话结尾必问**：*"我们还应该和谁聊聊？"*：这是让访谈管线滚雪球的最可靠的一招
 
-### Incentives
+### 激励
 
-- **$50 per call** (~30 min); **$5 per survey response**
-- Aim for **10 calls, be happy with 5.** Signal saturates fast — by call 5-6 you'll hear the same themes repeat. Don't stall the project waiting for a perfect sample.
-- Offer the incentive up front; it dramatically lifts response rate and shows you value their time. Gift cards work fine.
+- **每次通话 $50**（约 30 分钟）；**每份问卷回复 $5**
+- 目标是 **10 次通话，做到 5 次就该高兴**。信号饱和得很快，到第 5-6 次通话时你会听到同样的主题反复出现。不要为了等一个完美样本把项目拖住。
+- 提前说明激励；这会显著提升回复率，也表明你尊重对方的时间。礼品卡就很好用。
 
-### Outreach email template
+### 邀约邮件模板
 
-Keep it short, casual, specific, and low-commitment. Not a "research study."
+简短、随意、具体、低承诺。不要写成"研究项目"。
 
 ```
 Subject: Quick favor — 30 min, on us
@@ -80,76 +84,76 @@ Thanks either way,
 [Name]
 ```
 
-Notes:
-- "No pitch, no agenda" and "what's annoying" signal you actually want the truth.
-- One clear ask, two concrete time options, a booking link. Remove friction.
-- Never say "customer research study."
+要点：
+- "No pitch, no agenda" 和 "what's annoying" 表明你真的想听真话。
+- 一个明确的请求、两个具体时间选项、一个预约链接。把摩擦降到最低。
+- 永远不要说"客户研究项目"。
 
 ---
 
-## Keep Asking Why (5-Why Laddering)
+## 不断追问为什么（5-Why 阶梯法）
 
-The first answer is never the real answer. **Keep Asking Why** — ladder each response down 3-5 levels until you hit the root motivation, the business outcome, or the emotional driver. Surface answers are features; the bottom of the ladder is why they pay and why they stay.
+第一个答案从来不是真正的答案。**不断追问为什么**：把每个回答往下追 3-5 层，直到触及根本动机、业务结果或情绪驱动。表层答案是功能；阶梯底部才是他们为什么付费、为什么留下。
 
-**Worked example** — laddering a churn signal to NRR:
+**完整示例**：把一个流失信号一路追到 NRR：
 
-- **Q: Why did you downgrade your plan last quarter?**
-  - "We weren't using the advanced reports."
-- **Why weren't you using them?**
-  - "Nobody on the team knew how to build one."
-- **Why didn't anyone learn?**
-  - "The person who set us up left, and onboarding never got re-run for the new hires."
-- **Why did that matter enough to downgrade?**
-  - "Without the reports, my boss couldn't see the ROI, so at renewal it looked like an easy cost to cut."
-- **Why is that the real risk?**
-  - "If leadership can't see value, we churn — and if we *had* seen it, we'd probably have added seats, not cut them."
+- **问：你上季度为什么降级了套餐？**
+  - "我们没在用高级报表。"
+- **为什么没用？**
+  - "团队里没人会做。"
+- **为什么没人学？**
+  - "当初帮我们配置的人离职了，新员工入职时也没人重新做过 onboarding。"
+- **为什么这件事严重到要降级？**
+  - "没有报表，我老板看不到 ROI，续费时它就成了一个很容易砍掉的成本。"
+- **为什么这才是真正的风险？**
+  - "如果领导层看不到价值，我们就会流失。而且如果我们本来*能看到*，我们多半会加席位，而不是砍。"
 
-The surface answer was "we don't use reports." The root is an **onboarding gap that quietly converts an expansion (NRR up) into a contraction or churn (NRR down)**. You can't fix "they don't use reports." You can fix re-onboarding new hires and surfacing ROI to the buyer — which is the difference between contraction and net revenue retention.
+表层答案是"我们不用报表"。根因是一个 **onboarding 缺口，它悄悄把一次扩张（NRR 上升）变成了收缩或流失（NRR 下降）**。"他们不用报表"这个问题本身没法修。你能修的是给新员工重新做 onboarding、把 ROI 呈现给买单的人：这正是收缩与净收入留存之间的分界线。
 
-**Pain points vs. passion points.** Ladder for both. Pain points are what's broken and what they'll pay to escape. Passion points are what they love, brag about, and would be "very disappointed" to lose. Passion points drive retention and referrals; pains drive acquisition. Capture both in their words.
-
----
-
-## Surveys
-
-### The PMF Survey (Sean Ellis / Superhuman)
-
-The single most useful survey question, from Sean Ellis and popularized by Superhuman's Rahul Vohra:
-
-> **"How would you feel if you could no longer use [product]?"**
-> - Very disappointed
-> - Somewhat disappointed
-> - Not disappointed
-> - N/A — I no longer use it
-
-**The 40% benchmark**: if **40% or more** of users answer **"very disappointed,"** you likely have product/market fit. Below 40%, keep iterating. **Superhuman reached 58%** by engineering their roadmap around this metric — segmenting on the "very disappointed" cohort, doubling down on what that cohort loved, and converting the "somewhat disappointed" fence-sitters.
-
-Run it as a recurring pulse, not once. Follow the core question with:
-- *"What type of person do you think would most benefit from [product]?"* (sharpens ICP)
-- *"What is the main benefit you receive from [product]?"* (your positioning, in their words)
-- *"How can we improve [product] for you?"* (roadmap fuel from fence-sitters)
-
-Segment every answer by the "very disappointed" cohort vs. the rest — that cohort is your true market.
-
-### Survey design guardrails
-
-- Keep it short — every extra question drops completion.
-- Prefer open-ended for language mining; multiple-choice answers are artifacts of the options you gave.
-- Don't lead. A question that telegraphs the answer you want returns the answer you want, not the truth.
-- $5/response incentive lifts completion; deliver it on submit.
+**痛点 vs. 热情点。** 两条都要追。痛点是哪里坏了、他们愿意付钱逃离什么。热情点是他们热爱什么、会炫耀什么、失去时会觉得"非常失望"的东西。热情点驱动留存和推荐；痛点驱动获客。两者都用他们的原话记录下来。
 
 ---
 
-## Case Anchors
+## 问卷
 
-- **Airbnb (host photography)**: research revealed listings failed because the *photos* were bad, not the pricing or copy. Airbnb sent photographers to shoot host homes — a fix nobody would have guessed without talking to the market. Research points at problems you can't see from inside.
-- **Dropbox (confirmation bias)**: assumed sync speed mattered most; disconfirming research showed reliability/safety of files mattered more. Prove yourself wrong.
-- **Superhuman (PMF survey)**: engineered the roadmap around the "very disappointed" metric, 40% → 58%.
+### PMF 问卷（Sean Ellis / Superhuman）
+
+单个最有用的问卷问题，来自 Sean Ellis，经 Superhuman 的 Rahul Vohra 推广：
+
+> **"如果你再也无法使用 [产品]，你会作何感受？"**
+> - 非常失望
+> - 有点失望
+> - 不失望
+> - 不适用：我已经不再使用它
+
+**40% 基准**：如果 **40% 或更多**的用户回答**"非常失望"**，你很可能已经达成产品/市场匹配（PMF）。低于 40%，继续迭代。**Superhuman 做到了 58%**：他们把路线图围绕这个指标来设计：按"非常失望"人群分层，加倍投入这群人喜欢的东西，并转化"有点失望"的摇摆者。
+
+把它当作周期性脉搏来跑，不要只跑一次。核心问题之后接着问：
+- *"你觉得什么类型的人最能从 [产品] 中受益？"*（让 ICP 更锐利）
+- *"你从 [产品] 中获得的主要收益是什么？"*（用他们的语言说出的你的定位）
+- *"我们可以怎样为 [产品] 做得更好？"*（从摇摆者那里拿到路线图素材）
+
+每个答案都按"非常失望"人群 vs. 其他人分层：那群人就是你的真实市场。
+
+### 问卷设计的护栏
+
+- 保持简短：每多一个问题，完成率就掉一点。
+- 语言挖掘优先用开放式问题；选择题的答案是选项本身的产物。
+- 不要引导。一个问题如果把想要的答案写在脸上，回来的就是你想听的，不是真相。
+- 每份回复 $5 的激励能提升完成率；提交即发放。
 
 ---
 
-## Where This Fits
+## 案例锚点
 
-- **Analyze what you gather** with the Mode 1 extraction framework in `SKILL.md` (jobs to be done, pains, triggers, outcomes, language, alternatives) and the confidence guardrails.
-- **Mine public sources** (the passive Safari half) via `references/source-guides.md`.
-- Interview + survey signal is **first-party and high-confidence** — weight it above scraped online sources when they conflict.
+- **Airbnb（房东照片）**：研究发现房源失败的原因是*照片*太差，不是定价也不是文案。Airbnb 派摄影师去给房东的家拍照。不去和市场对话，没人能猜到这个修法。研究指向你从内部看不到的问题。
+- **Dropbox（确认偏误）**：假设同步速度最重要；证伪式的研究表明文件的可靠性/安全性更重要。努力证明自己是错的。
+- **Superhuman（PMF 问卷）**：把路线图围绕"非常失望"指标来设计，40% → 58%。
+
+---
+
+## 它在整体中的位置
+
+- **分析你收集到的东西**：用 `SKILL.md` 中的 Mode 1 提取框架（待完成的任务、痛点、触发点、结果、语言、替代品）和置信度护栏。
+- **挖掘公开来源**（被动的那一半 Safari）：通过 `references/source-guides.md`。
+- 访谈 + 问卷信号是**第一方、高置信度**的：当它们与抓取的线上来源冲突时，权重放在访谈和问卷之上。

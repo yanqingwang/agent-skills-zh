@@ -1,55 +1,59 @@
-# Stencil & Tablet Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/stencil-tablet/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Stencil & Tablet 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/stencil-tablet/design.md`
-- Preview card: `bold-template-pack/templates/stencil-tablet/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/stencil-tablet/design.md`
+- 预览卡：`bold-template-pack/templates/stencil-tablet/preview.md`
 
-- Slug: `stencil-tablet`
-- Tagline: Bone paper with stencil-cut headlines and a six-color earth palette: archaeology meets brand.
-- Mood: archival, earthy, tactile, considered, graphic
-- Tone: weighty, considered, tactile, literary
-- Formality: medium-high
-- Density: medium
-- Scheme: light
-- Best for: Anything that should feel archival, tactile, and weighty-graphic: museum and cultural-institution decks, art / architecture brands, longform research, heritage and craft brands, manifestos. A great choice anytime — including across tech and business — when you want the deck to feel like a field manual rather than a slide deck.
-- Avoid for: Contexts that demand digital-native polish or playful pop — the stencil-cut display and earth-tone palette commit to a deliberate analog feel.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`stencil-tablet`
+- Tagline：骨白纸张配镂空刻板标题与六色大地色配色：考古遇上品牌。
+- Mood：archival、earthy、tactile、considered、graphic
+- Tone：weighty、considered、tactile、literary
+- Formality：medium-high
+- Density：medium
+- Scheme：light
+- 适合：一切应当显得档案感、有触感且厚重图形化的内容：博物馆与文化机构演示、艺术/建筑品牌、长篇研究、遗产与手作品牌、宣言。任何时候都是佳选（科技与商业领域亦然）：只要你想让演示读起来像一本野外手册，而不是幻灯片。
+- 避免：要求数字原生光鲜或俏皮波普的场景：镂空刻板展示字体与大地色配色押注于刻意的模拟质感。
 
-A West Coast skate-poster meets municipal stencil signage system. Stardos Stencil carries every headline, numeral, and chunky display moment with its characteristic ink-break gaps; Barlow Condensed runs all metadata and uppercase chrome at extra-heavy weights; Inter handles body. The palette is bone (#E2DCC9) and black, energized by a saturated retro-print accent set — sienna, magenta, orange, teal, blue, mustard, olive. Soft rounded "tablet" cards (22–26px radius) tile across slides in colored blocks. Type runs huge and uppercase, numerals dominate at 160–540px, and color blocks act as the layout. The mood is industrial poster, vintage workshop sign, and music festival lineup all at once.
+## 视觉速览
 
-Stencil & Tablet is a poster-loud, type-led presentation system. The premise is a single display face — Stardos Stencil — handling every headline, every numeral, every featured moment, with characteristic stencil ink-breaks giving each glyph a slightly-distressed industrial register. The supporting cast is Barlow Condensed (extra-heavy 600–900, uppercase, generous tracking) running all metadata, chrome, pills, and legends — and Inter handling the small set of body paragraphs that exist mostly to caption the loud type above them.
+一套西海岸滑板海报遇上市政刻板告示的系统。Stardos Stencil 以其特有的断墨缺口承担每个标题、每个数字与每个厚重的展示时刻；Barlow Condensed 以特重字重跑遍所有元数据与大写界面装饰；Inter 处理正文。配色是骨白（#E2DCC9）与黑，由一组高饱和复古印刷点缀色激活：赭石、洋红、橙、青绿、蓝、芥末、橄榄。柔和圆角的"石板"卡片（22–26px 圆角）以彩色块在幻灯片间平铺。文字巨大且大写，数字以 160–540px 主宰画面，色块充当版式。情绪同时是工业海报、复古工坊招牌与音乐节阵容表。
 
-## Preview Ingredients
+Stencil & Tablet 是一套海报音量、文字主导的演示系统。前提是单一展示字体：Stardos Stencil，处理每个标题、每个数字、每个特写时刻，其特有的刻板断墨给每个字形带上轻微磨损的工业语域。配角阵容是 Barlow Condensed（特重 600–900、大写、宽字距），跑遍所有元数据、界面装饰、胶囊与图例：Inter 则处理少数几段正文，它们存在的意义多半是为上方响亮的文字加注。
 
-- Palette: bone #E2DCC9; black #000000; ink #0A0A0A; paper #F4EFE0; sienna #A06A3C; magenta #C73B7A; orange #EE7A2E; teal #2D7E73
-- Typography: Stardos Stencil; Bowlby One; Barlow Condensed; Inter
-- Signature move: Bone ({colors.bone}) field on most slides; black field with bone type on agenda-style and bold-divider slides.
-- Signature move: Stardos Stencil for every headline, every numeral, every featured stencil moment — the ink-break stencil glyphs are the system's identity.
-- Signature move: Barlow Condensed extra-heavy uppercase for all chrome, metadata, pills, legends, and labels. Generous letter-spacing (0.06–0.14em).
-- Signature move: Inter for body — small role, supporting the loud type above.
-- Signature move: Seven-color accent palette ({colors.sienna}, {colors.magenta}, {colors.orange}, {colors.teal}, {colors.blue}, {colors.mustard}, {colors.olive}) plus paper ({colors.paper}) — used as full card fills.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：bone #E2DCC9; black #000000; ink #0A0A0A; paper #F4EFE0; sienna #A06A3C; magenta #C73B7A; orange #EE7A2E; teal #2D7E73
+- Typography：Stardos Stencil; Bowlby One; Barlow Condensed; Inter
+- Signature move：多数幻灯片用骨白（{colors.bone}）色场；议程式与加粗分隔幻灯片用黑色场配骨白文字。
+- Signature move：Stardos Stencil 用于每个标题、每个数字、每个特写刻板时刻：断墨刻板字形就是系统的身份标识。
+- Signature move：Barlow Condensed 特重大写用于所有界面装饰、元数据、胶囊、图例与标签。字距慷慨（0.06–0.14em）。
+- Signature move：Inter 用于正文：戏份很小，支撑上方响亮的文字。
+- Signature move：七色点缀配色（{colors.sienna}、{colors.magenta}、{colors.orange}、{colors.teal}、{colors.blue}、{colors.mustard}、{colors.olive}）外加纸张色（{colors.paper}）：用作整卡填充。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

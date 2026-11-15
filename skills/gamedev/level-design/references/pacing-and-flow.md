@@ -1,80 +1,75 @@
-# Pacing, teaching, gating and guidance
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/gamedev/level-design/references/pacing-and-flow.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Contents: the tension curve; the teaching loop; critical path, golden path and branches; gating
-tools; guidance without walls; 2D vs 3D; blockout review.
+# 节奏、教学、门控与引导
 
-## The tension curve
+内容：张力曲线；教学循环；关键路径、黄金路径与分支；门控工具；无墙引导；2D 与 3D；白模评审。
 
-Plot intended intensity against progress.
+## 张力曲线
 
-- **Overall rise with local dips.** Intensity trends up toward a climax in a sawtooth: spikes
-  (combat, platforming gauntlets, bosses) separated by rests (exploration, story, safe rooms).
-  A flat high numbs the player; a flat low bores them.
-- **Rest before the climax.** A save point, vista or resource cache right before the hardest
-  beat makes the spike land harder.
-- A useful rhythm is introduce, build, peak, release, then repeat higher. Each peak exceeds the
-  last and each release sits a little above the previous baseline.
+把预期的强度对照进度画成曲线。
 
-## The teaching loop
+- **整体上升，局部回落。** 强度沿锯齿形向高潮攀升：尖峰（战斗、平台跳跃试炼、Boss）之间以
+  休整（探索、剧情、安全屋）分隔。一直高会让玩家麻木；一直低会让玩家无聊。
+- **高潮之前先休整。** 在最难的一拍之前放一个存档点、观景点或资源补给，尖峰落地时冲击力会
+  更强。
+- 一个好用的节奏是：引入、铺垫、顶点、释放，然后以更高的水平重复。每个顶点都超过上一个，
+  每次释放的落点也比上一个基线略高一点。
 
-1. **Introduce** the mechanic alone, where failure is harmless.
-2. **Develop** it with movement or a second element so the player practises on purpose.
-3. **Twist** the context so the player applies the idea rather than a memorised motion.
-4. **Test** it under time or health pressure.
+## 教学循环
 
-The level is a lesson plan: a new mechanic meets the player before a lethal test, never during
-one. In the beat list, a `teach` beat for each mechanic should come before its first `combat`
-or `climax` beat.
+1. **引入**：让机制单独登场，失败没有代价。
+2. **发展**：加入移动或第二个元素，让玩家有意识地练习。
+3. **变奏**：改变情境，让玩家运用的是想法本身，而不是背下来的动作。
+4. **考验**：在时间或血量压力下检验它。
 
-## Critical path, golden path and branches
+关卡就是一份教案：新机制要在致命考验之前与玩家见面，绝不在考验中途。在节拍列表里，每个机制
+的 `teach` 节拍都应排在它的第一个 `combat` 或 `climax` 节拍之前。
 
-- **Critical path:** the minimal route from start to goal, solvable with keys and abilities
-  obtained in order. Check it with the reachability graph.
-- **Golden path:** the route most players actually take. Pace along this one.
-- **Branches:** optional loops for exploration and reward. Keep them short enough to rejoin the
-  golden path without losing momentum, and make the reward worth the detour.
-- **Shortcuts** that unlock back to an earlier hub cut backtracking and make the space feel
-  coherent. Add them to the room graph as exits that need the unlock.
+## 关键路径、黄金路径与分支
 
-## Gating tools
+- **关键路径：** 从起点到目标的最短路线，按顺序取得钥匙和能力即可解开。用可达性图检查它。
+- **黄金路径：** 大多数玩家实际会走的路线。按这条路线安排节奏。
+- **分支：** 供探索和奖励用的可选环路。长度要控制在不打断节奏就能回到黄金路径的范围内，并
+  让奖励配得上这段绕路。
+- **捷径：** 解锁后通回先前枢纽的捷径能减少回头路，让空间显得连贯。把它们作为需要解锁的出
+  口加入房间图。
 
-- **Locks and keys:** explicit, readable order control.
-- **Ability gates:** a chasm that needs the double jump found later (the metroidvania
-  pattern). Check the acquisition order, not just connectivity.
-- **One-way drops and collapsing paths:** enforce direction. Telegraph them, and check that the
-  landing room can still reach a save or exit.
-- **Soft gates:** enemies, hazards or difficulty that say "not yet" without a hard wall.
+## 门控工具
 
-## Guidance without walls
+- **锁与钥匙：** 直观、易读的顺序控制。
+- **能力门：** 要用稍后才能取得的二段跳才能跨过的裂谷（即 metroidvania 模式）。检查的是取得
+  顺序，而不只是连通性。
+- **单向下落与坍塌路径：** 强制行进方向。要给出预警，并检查落点房间仍能到达存档点或出口。
+- **软门控：** 用敌人、危险或难度来传达"还不行"，而不是一堵硬墙。
 
-- **Light and contrast:** a bright doorway reads as "go here"; shadow reads as optional or
-  dangerous.
-- **Leading lines:** architecture, rails and paths that point at the objective.
-- **Landmarks:** a tall, unique silhouette visible from afar orients the player.
-- **Colour and material:** one consistent colour for interactive things or exits teaches players
-  to scan for it.
-- **Framing:** show the next goal from a high point before the player descends to it.
+## 无墙的引导
 
-When playtest reports say "I got lost here", the fix is usually a sightline or a light.
+- **光与对比：** 明亮的门洞读作"往这里走"；阴影读作"可选或危险"。
+- **引导线：** 指向目标的建筑线条、栏杆与道路。
+- **地标：** 远处就能看见的高耸独特剪影，为玩家定向。
+- **颜色与材质：** 给可交互物或出口固定用一种颜色，训练玩家去扫视寻找它。
+- **取景：** 在玩家下降到下一个目标之前，先从高处把它展示出来。
 
-## 2D vs 3D
+当游玩测试报告说"我在这迷路了"，修复办法通常是一条视线或一盏灯。
 
-- **2D:** think in the tile grid and the camera window. The player sees a fixed slice, so
-  telegraph off-screen threats with sound or approach time. Platform spacing and sightlines
-  dominate.
-- **3D:** think in sightlines, verticality and navigation. Players lose their bearings in three
-  dimensions, so landmarks and framed vistas matter more. Tight interiors and the view cone
-  change what feels reachable.
+## 2D 与 3D
 
-## Blockout review
+- **2D：** 在瓦片网格和相机窗口里思考。玩家看到的是固定的一小片，所以要用声音或接近时间来
+  预警屏幕外的威胁。平台间距和视线主导设计。
+- **3D：** 在视线、垂直空间和导航里思考。玩家在三维空间中容易迷失方向，所以地标和取景出的
+  远景更重要。紧凑的室内和视锥会改变"哪里够得着"的感受。
 
-Run the agent checks first, then use this list to write the playtest questions for the user.
+## 白模评审
 
-- Critical path solvable with keys and abilities in order; no one-way drop into a dead end.
-- Every required traversal within the measured metrics.
-- Pacing is a rising sawtooth with a rest before each major spike.
-- Each mechanic is taught before it is tested.
-- The eye is led toward the path. Ask the user where they were unsure where to go.
-- Optional content rewards the detour and rejoins smoothly.
-- It plays well as untextured geometry. Ask the user whether any room felt like a chore or
-  unfair, and how many attempts the hardest required jump took.
+先跑 agent 检查，再用这份清单为用户编写游玩测试问题。
+
+- 关键路径可以按顺序用钥匙和能力解开；没有单向下落进死胡同。
+- 每次必需的通行动作都在测量过的指标范围内。
+- 节奏是上升的锯齿形，每个大尖峰之前都有一次休整。
+- 每个机制都在被考验之前先被教过。
+- 视线被引向道路。问用户在哪些地方不确定该往哪走。
+- 可选内容能回报绕路，并顺畅地汇回主路。
+- 未贴图的几何体阶段就要好玩。问用户哪些房间让人觉得像苦差或不公平，最难的一次必需跳跃尝试
+  了几次。

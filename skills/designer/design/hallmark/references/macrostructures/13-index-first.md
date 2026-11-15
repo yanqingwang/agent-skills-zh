@@ -1,21 +1,25 @@
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/macrostructures/13-index-first.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 ## 13 · Index-First
 
-The page is a list of links. No hero image, no narrative flow. Navigation as design.
+页面就是一份链接列表。没有 hero 图，没有叙事流。导航即设计。
 
-- **Heading:** a short head at the hero size naming the index (*Everything published here, newest first*) and one line; the index starts on the first screen.
-- **Body:** a vertical list of categorised links; a filter row above it or a disclosure, never a sidebar by default.
-- **Divider:** hairline rules between rows, or no rules and bands of paper.
-- **Button:** the links are the buttons.
-- **Image:** none, or one photograph of the collection itself, and a small mark by each entry.
-- **Reveal:** none.
+- **标题：** hero 字号的短标题，点名这份索引（*Everything published here, newest first*）再加一行；索引在第一屏就开始。
+- **正文：** 分类链接的纵向列表；上方一条过滤行或一个折叠，默认绝不用侧边栏。
+- **分隔：** 行之间发丝线，或不用线而用条带换纸。
+- **按钮：** 链接就是按钮。
+- **图像：** 不放，或一张收藏本身的照片，每个条目旁一枚小记号。
+- **Reveal：** 不用。
 
-Reach for it for documentation hubs, knowledge bases, archive front pages, design-system entries, link pages with substance.
+文档中心、知识库、档案首页、设计体系入口、有实质内容的链接页选它。
 
-Avoid for a hard sell (a launch, a checkout). Index-First serves a browsing audience; a personal site that offers its owner's time is fine.
+硬推销（发布、结账）避免使用。Index-First 服务的是浏览型受众；一个出售主人时间的个人站点没问题。
 
-Compositions: Rows at full width (`layout.md` § 5).
+构图：全宽的 Rows（`layout.md` § 5）。
 
-**Sample opening lines** (headers for what sits below, sometimes no more than a line):
-> *"Selected work, 2018 to 2026."* A date range, no preamble.
-> *"Everything published here, newest first."* Names the sort and the scope.
-> *"Writer and photographer."* Three words that summarise the whole site.
+**样例开篇句**（为下方内容写的页头，有时不过一行）：
+> *"Selected work, 2018 to 2026."*（精选作品，2018 至 2026。）一个日期区间，没有铺垫。
+> *"Everything published here, newest first."*（这里发布的一切，最新的在前。）点出排序与范围。
+> *"Writer and photographer."*（写作者，摄影者。）三个词概括整站。

@@ -1,73 +1,77 @@
-# Pink Editorial — Gradient Stats
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/vivid--pink-editorial/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 粉调编辑风（渐变数据大字）
 
-Contemporary editorial design with dark purple to dusty rose gradient background. Features massive bold numbers (100-200pt) as visual anchors, simulated grain texture, and dramatic morph transitions. Perfect for data-driven annual reports and statistical presentations.
+## 风格概览
 
-- **Scenario**: Annual reports, statistical showcases, editorial publications, data journalism, executive summaries
-- **Mood**: Contemporary, editorial, sophisticated, data-driven
-- **Tone**: Dark purple-pink gradient with high-contrast white typography
+当代编辑风设计，深紫到灰粉的渐变背景。以超大加粗数字（100-200pt）作视觉锚点，配模拟颗粒质感和戏剧化 morph 切换。适合数据驱动的年报与统计演示。
 
-## Color Palette
+- **场景**：年报、统计展示、编辑出版物、数据新闻、高管摘要
+- **气质**：当代、编辑风、精致、数据驱动
+- **基调**：紫粉渐变底，配高对比白色排印
 
-| Name           | Hex                               | Usage                              |
+## 配色
+
+| 名称           | Hex                               | 用途                               |
 | -------------- | --------------------------------- | ---------------------------------- |
-| Background     | #160B33 → #7B2D52 (gradient 135°) | Dark purple to dusty rose          |
-| Primary accent | #C85080                           | Pink for gradient overlays         |
-| Secondary      | #FF8DB8                           | Acid pink for accent dots          |
-| Blush          | #E8A0BC                           | Light pink for decorative elements |
-| Primary text   | #FFFFFF                           | White for main text                |
-| Secondary text | #C090A8                           | Dimmed pink for supporting text    |
-| Cream          | #F5E8F0                           | Off-white for descriptions         |
+| 背景           | #160B33 → #7B2D52（135° 渐变）    | 深紫到灰粉                         |
+| 主点缀         | #C85080                           | 渐变叠层用粉色                     |
+| 次级           | #FF8DB8                           | 点缀圆点的荧光粉                   |
+| 腮红粉         | #E8A0BC                           | 装饰元素的浅粉                     |
+| 主文字         | #FFFFFF                           | 主文字用白色                       |
+| 次级文字       | #C090A8                           | 辅助文字的暗粉                     |
+| 奶油白         | #F5E8F0                           | 描述文字的米白                     |
 
-## Typography
+## 字体排印
 
-| Element      | Font           | Size      |
+| 元素         | 字体           | 字号      |
 | ------------ | -------------- | --------- |
-| Hero numbers | Segoe UI Black | 160-200pt |
-| Title        | Segoe UI Black | 28-36pt   |
-| Stat numbers | Segoe UI Black | 52-64pt   |
-| Body         | Segoe UI       | 14-22pt   |
+| 主视觉数字   | Segoe UI Black | 160-200pt |
+| 标题         | Segoe UI Black | 28-36pt   |
+| 统计数字     | Segoe UI Black | 52-64pt   |
+| 正文         | Segoe UI       | 14-22pt   |
 
-## Design Techniques
+## 设计手法
 
-- **Massive editorial numbers**: 73%, 99.2% at 160-200pt size as hero elements
-- **Gradient overlays**: Semi-transparent rect with gradients (opacity 0.35-0.40)
-- **Simulated grain**: 11 scattered white ellipses at 0.04 opacity for texture
-- **Morph actors**: `!!num-sweep` (rect/ellipse) and `!!accent-dot` (ellipse) transform across slides
-- **Dual gradient system**: Pink-purple and purple-pink for visual variety
-- **High typography contrast**: White bold text on dark gradient background
+- **超大编辑风数字**：73%、99.2% 以 160-200pt 作主视觉元素
+- **渐变叠层**：半透明渐变 rect（透明度 0.35-0.40）
+- **模拟颗粒**：每页散布 11 个透明度 0.04 的白色小椭圆制造质感
+- **Morph actor**：`!!num-sweep`（rect/ellipse）与 `!!accent-dot`（ellipse）跨页变形
+- **双渐变体系**：粉紫与紫粉两向渐变，增加视觉变化
+- **高排印对比**：深渐变底上的白色加粗文字
 
-## Page Structure (6 slides)
+## 页面结构（6 页）
 
-| Slide | Type       | Description                                        |
+| 页码  | 类型       | 描述                                               |
 | ----- | ---------- | -------------------------------------------------- |
-| 1     | hero       | Massive "73%" with full-width gradient sweep       |
-| 2     | evidence   | "99.2%" stat, accent dot moves to top-left         |
-| 3     | comparison | Left gradient panel + right text (editorial split) |
-| 4     | grid       | 4 stat blocks with gradient backgrounds, 2×2 grid  |
-| 5     | quote      | Large quotation with circular gradient overlay     |
-| 6     | cta        | Call to action with full-screen gradient return    |
+| 1     | hero       | 超大 "73%"，配全宽渐变扫掠                         |
+| 2     | evidence   | "99.2%" 统计数字，点缀圆移到左上                   |
+| 3     | comparison | 左渐变面板 + 右侧文字（编辑式分割）                |
+| 4     | grid       | 4 个带渐变底的统计块，2×2 网格                     |
+| 5     | quote      | 大引言配圆形渐变叠层                               |
+| 6     | cta        | 行动号召，全屏渐变回归                             |
 
-## Key Morph Patterns
+## 关键 Morph 模式
 
-- **!!num-sweep**: Transforms from full-width rect → narrower rect → large ellipse (opacity 0.06) → ellipse (opacity 0.28) → large ellipse → full-gradient
-- **!!accent-dot**: Acid pink ellipse that moves: bottom-right (5.5cm) → top-left (4cm) → mid-right (3cm) → embedded in grid (5.5cm) → left (4cm) → center
-- **Gradient direction changes**: Alternates between 90°, 135°, 45° for visual variety
-- **Size drama**: Numbers scale from 200pt → 160pt → 52-64pt grid
+- **!!num-sweep**：从全宽 rect → 窄 rect → 大椭圆（透明度 0.06）→ 椭圆（透明度 0.28）→ 大椭圆 → 全渐变
+- **!!accent-dot**：荧光粉椭圆按序移动：右下（5.5cm）→ 左上（4cm）→ 右中（3cm）→ 嵌入网格（5.5cm）→ 左侧（4cm）→ 居中
+- **渐变方向变化**：在 90°、135°、45° 之间交替，制造视觉变化
+- **尺寸戏剧化**：数字从 200pt → 160pt → 52-64pt 网格逐级缩放
 
-## Special Effects
+## 特效
 
-- **Grain texture function**: Adds 11 white ellipses at random positions, 0.04 opacity on every slide for analog feel
-- **Gradient actor animation**: Semi-transparent gradient rects morph in position, size, and opacity
-- **Typography as decoration**: Massive numbers serve dual purpose as content and visual structure
+- **颗粒质感函数**：每页在随机位置添加 11 个透明度 0.04 的白色椭圆，营造模拟信号感
+- **渐变 actor 动画**：半透明渐变 rect 在位置、尺寸、透明度上 morph
+- **排印即装饰**：超大数字一物两用，既是内容又是视觉结构
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.py` (Python with officecli).
+完整构建脚本见 `build.py`（Python + officecli）。
 
-**Recommended slides to read for core techniques**:
+**建议阅读的核心技巧页**：
 
-- **Slide 1 (hero)** — massive 200pt number with full-width gradient sweep and grain texture
-- **Slide 4 (grid)** — 4-block stats layout with embedded gradient actors and nested ellipses
-- **Slide 5 (quote)** — large circular gradient overlay with quotation mark typography
+- **Slide 1（hero）**：200pt 超大数字配全宽渐变扫掠与颗粒质感
+- **Slide 4（grid）**：四块统计布局，嵌渐变 actor 与嵌套椭圆
+- **Slide 5（quote）**：大圆形渐变叠层配引号排印

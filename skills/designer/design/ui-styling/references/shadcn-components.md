@@ -1,19 +1,23 @@
-# shadcn/ui Component Reference
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/ui-styling/references/shadcn-components.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete catalog of shadcn/ui components with usage patterns and installation.
+# shadcn/ui 组件参考
 
-## Installation
+shadcn/ui 组件完整目录，含用法模式与安装方式。
 
-**Add specific components:**
+## 安装
+
+**添加指定组件：**
 ```bash
 npx shadcn@latest add button
 npx shadcn@latest add button card dialog  # Multiple
 npx shadcn@latest add --all              # All components
 ```
 
-Components install to `components/ui/` with automatic dependency management.
+组件安装到 `components/ui/`，依赖自动管理。
 
-## Form & Input Components
+## 表单与输入组件
 
 ### Button
 ```tsx
@@ -26,8 +30,8 @@ import { Button } from "@/components/ui/button"
 <Button variant="link">Link Style</Button>
 ```
 
-Variants: `default | destructive | outline | secondary | ghost | link`
-Sizes: `default | sm | lg | icon`
+变体：`default | destructive | outline | secondary | ghost | link`
+尺寸：`default | sm | lg | icon`
 
 ### Input
 ```tsx
@@ -40,7 +44,7 @@ import { Label } from "@/components/ui/label"
 </div>
 ```
 
-### Form (with React Hook Form + Zod)
+### Form（配合 React Hook Form + Zod）
 ```tsx
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -165,7 +169,7 @@ const [date, setDate] = useState<Date>()
 </Popover>
 ```
 
-## Layout & Navigation
+## 布局与导航
 
 ### Card
 ```tsx
@@ -236,7 +240,7 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 </NavigationMenu>
 ```
 
-## Overlays & Dialogs
+## 浮层与对话框
 
 ### Dialog
 ```tsx
@@ -341,7 +345,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 </AlertDialog>
 ```
 
-## Feedback & Status
+## 反馈与状态
 
 ### Alert
 ```tsx
@@ -378,7 +382,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 </div>
 ```
 
-## Display Components
+## 展示组件
 
 ### Table
 ```tsx

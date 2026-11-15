@@ -1,56 +1,60 @@
-# Cyber Future — Cyberpunk 2050
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--cyber-future/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Cyber Future：赛博朋克 2050
 
-Futuristic cyberpunk aesthetic with glowing neon cyan elements against near-black backgrounds. Features a glowing orb as the main scene element with geometric accents, creating an immersive sci-fi atmosphere.
+## 风格概览
 
-- **Scenario**: Futuristic topics, tech vision, cyberpunk aesthetics, AI/robotics presentations
-- **Mood**: Futuristic, cyberpunk, immersive, sci-fi
-- **Tone**: Near-black with electric cyan and teal
+未来主义赛博朋克美感：近黑背景上的霓虹青绿发光元素。以发光球体作主场景元素，配几何点缀，营造沉浸式科幻氛围。
 
-## Color Palette
+- **适用场景**：未来主题、科技愿景、赛博朋克美学、AI/机器人演示
+- **氛围**：未来感、赛博朋克、沉浸、科幻
+- **色调**：近黑，配电光青与青绿
 
-| Name           | Hex     | Usage                          |
-| -------------- | ------- | ------------------------------ |
-| Background     | #0B0C10 | Near-black charcoal canvas     |
-| Primary accent | #66FCF1 | Electric cyan for highlights   |
-| Secondary      | #45A29E | Teal for supporting elements   |
-| Card BG        | #1F2833 | Dark gray for content grouping |
-| Primary text   | #FFFFFF | White for main text            |
-| Secondary text | #C5C6C7 | Light gray for secondary text  |
+## 配色方案
 
-## Typography
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 背景 | #0B0C10 | 近黑炭色画布 |
+| 主强调色 | #66FCF1 | 电光青，用于高亮 |
+| 次强调色 | #45A29E | 青绿，用于辅助元素 |
+| 卡片背景 | #1F2833 | 深灰，用于内容分组 |
+| 主文字 | #FFFFFF | 白色，用于主文字 |
+| 次要文字 | #C5C6C7 | 浅灰，用于次要文字 |
 
-| Element    | Font                       |
-| ---------- | -------------------------- |
-| Title (EN) | Montserrat                 |
-| Title (CN) | Source Han Sans (思源黑体) |
-| Body       | Source Han Sans            |
+## 字体排印
 
-## Design Techniques
+| 元素 | 字体 |
+| --- | --- |
+| 标题（英文） | Montserrat |
+| 标题（中文） | Source Han Sans（思源黑体） |
+| 正文 | Source Han Sans |
 
-- Glowing orb as main scene element
-- Dark card backgrounds for content grouping
-- Electric cyan accent for highlights and data
-- Clean geometric scene actors (lines, dots, frames)
-- Morph transitions with scene actor position shifts
-- Cyberpunk color palette (dark + neon cyan)
+## 设计技法
 
-## Page Structure (5 slides)
+- 发光球体作主场景元素
+- 深色卡片背景，用于内容分组
+- 电光青点缀高亮与数据
+- 干净的几何场景 Actor（线、点、框）
+- Morph 转场配合场景 Actor 位移
+- 赛博朋克配色（深色 + 霓虹青）
 
-| Slide | Type      | Elements | Description                                   |
-| ----- | --------- | -------- | --------------------------------------------- |
-| 1     | hero      | 20       | Title with glowing orb and geometric elements |
-| 2     | statement | 20       | Centered statement with shifted scene actors  |
-| 3     | pillars   | 20       | 3-column layout for key concepts              |
-| 4     | evidence  | 20       | Data display with cyan numbers on dark cards  |
-| 5     | cta       | 20       | Closing slide with call to action             |
+## 页面结构（5 页幻灯片）
 
-## Reference Script
+| 幻灯片 | 类型 | 元素数 | 描述 |
+| --- | --- | --- | --- |
+| 1 | hero | 20 | 标题配发光球体与几何元素 |
+| 2 | statement | 20 | 居中陈述句，场景 Actor 位移 |
+| 3 | pillars | 20 | 三列版式，呈现关键概念 |
+| 4 | evidence | 20 | 深色卡片上的青色数字数据展示 |
+| 5 | cta | 20 | 行动号召收尾页 |
 
-Complete build script available in `build.sh`.
+## 参考脚本
 
-**Recommended slides to read for understanding core design techniques**:
+完整构建脚本见 `build.sh`。
 
-- **Slide 1 (hero)** — glowing orb + geometric elements establishing cyberpunk atmosphere
-- **Slide 4 (evidence)** — cyan data numbers on dark cards demonstrating neon accent usage
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1 (hero)**：发光球体 + 几何元素，奠定赛博朋克氛围
+- **Slide 4 (evidence)**：深色卡片上的青色数据数字，演示霓虹强调色的用法

@@ -7,14 +7,18 @@ display: high-contrast-serif Yeseva One
 accent: warm 24
 posture: restrained
 keywords: farm, orchard, cider, perry, winery, harvest, seasonal, food, almanac, produce, vineyard, calendar, market, craft drink, label, bottle, rural, slow, sun, midsummer
-material: cream paper, warm brown ink, Yeseva One over Archivo and Archivo Narrow, gold hairlines and hard paper shadows, photographs in low warm light, one vermilion signal
+material: 奶油色纸张、暖棕墨色、Archivo 与 Archivo Narrow 上压 Yeseva One、金色细线与硬朗纸影、低照暖光照片、一个朱红色信号
 photo: warm high=-12
 pictured: Midsummer, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/solstice.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Solstice
 
-An almanac's warmth: cream paper, warm brown ink, Yeseva One heads, Archivo for the reading and Archivo Narrow for the small print, gold hairlines doing the ruling, square surfaces on hard paper shadows, photographs taken in low late light, and one vermilion signal. It reads as seasonal and rural through the ink, the gold, a fat serif and the light in its pictures, never through drawings of produce. It is not a farmhouse script page and not a terracotta-on-cream template.
+年鉴式的温暖：奶油色纸张、暖棕墨色、Yeseva One 标题、正文用 Archivo、小字用 Archivo Narrow、金色细线负责划线、方形表面配硬纸影、傍晚低照光下的照片，以及一个朱红色信号。季节感与乡土感来自墨色、金色、一颗饱满的衬线和照片里的光线，绝不来自画出来的农产品。它不是农舍手写体页面，也不是奶油底陶土色模板。
 
 ## Tokens
 
@@ -33,59 +37,59 @@ An almanac's warmth: cream paper, warm brown ink, Yeseva One heads, Archivo for 
 }
 ```
 
-The signal is vermilion at hue 24, a red with warmth in it that sits with the gold and the brown, never clay; the gold rules and never fills. Three lights, stated in the stamp (`solstice: long-light`).
+信号色是色相 24 的朱红，一种带暖意的红，与金色、棕色相处融洽，绝不是陶土色；金色只划线，绝不填充。三种光线，写进 stamp（`solstice: long-light`）。
 
-| Light | Paper and ink | Signal and gold |
+| 光线 | 纸与墨 | 信号与金 |
 | --- | --- | --- |
-| `long-light` (default) | cream `oklch(94% 0.03 80)` under brown `oklch(27% 0.05 50)` | vermilion `oklch(54% 0.20 24)`, gold `oklch(74% 0.14 75)` |
-| `dusk` | plum brown `oklch(27% 0.05 40)` under cream ink; raised wells stay cream | vermilion keeps `oklch(54% 0.20 24)` with cream text, gold `oklch(78% 0.14 80)` |
-| `midwinter` | frost `oklch(95% 0.012 230)` under cold brown `oklch(28% 0.03 260)` | vermilion keeps its hue, gold goes pale `oklch(80% 0.06 230)` |
+| `long-light`（默认） | 奶油色 `oklch(94% 0.03 80)` 垫在棕色 `oklch(27% 0.05 50)` 之下 | 朱红 `oklch(54% 0.20 24)`，金色 `oklch(74% 0.14 75)` |
+| `dusk` | 奶油色墨色垫在李子棕 `oklch(27% 0.05 40)` 之下；凸起 well 保持奶油色 | 朱红保持 `oklch(54% 0.20 24)` 配奶油色文字，金色 `oklch(78% 0.14 80)` |
+| `midwinter` | 霜白 `oklch(95% 0.012 230)` 垫在冷棕 `oklch(28% 0.03 260)` 之下 | 朱红保持色相，金色变淡 `oklch(80% 0.06 230)` |
 
-## Type
+## 字体
 
-- **Display:** Yeseva One 400, roman, line-height 1.0, `--tracking-display`, one colour per head; big figures take it too.
-- **Body:** Archivo 400 and 500, 16 to 17px, line-height 1.55, in `--color-ink-2`.
-- **Small print:** Archivo Narrow 600 at 12.5 to 13.5px, sentence case, untracked, the outlier, for dates, months, captions under a photograph and axis labels. Meta and table heads: Archivo 500 a step smaller, sentence case. No mono.
+- **展示字体：**Yeseva One 400、正体、行高 1.0、`--tracking-display`，每个标题只用一种颜色；大数字也用它。
+- **正文：**Archivo 400 与 500，16 到 17px，行高 1.55，用 `--color-ink-2`。
+- **小字：**Archivo Narrow 600、12.5 到 13.5px、句首大写、不加字距，是 outlier 字体，用于日期、月份、照片下的题注和坐标轴标签。元信息与表头：Archivo 500 小一档，句首大写。不用等宽。
 
-## Surfaces
+## 表面
 
-- Rules: `--rule-bar` ink across the top of a section, `--rule-hair` in `--color-rule` between rows, a gold hairline under a head inside a well.
-- Square everywhere but the control pair: no radius on a well, a photograph or an input; the buttons and the stepper take `--radius-pill`.
-- Depth: a raised well takes a `--rule-bar` ink border, a 1px gold rule inset 6px and the hard `--shadow-card`, an offset in paper-3 with no blur; never a soft shadow.
-- Bands: a `--color-paper-2` band, or one warm brown ink band with cream text; two a page at most, never a vermilion field.
-- Photographs: the season in low, late light: fruit on the branch, long grass, a glass or a bottle on a table outside, the orchard at evening; warm, a little hazy, shadows long. Square, a 1px ink hairline at 10%, no shadow. A caption sits under the frame in the small print, one fact (the place, the month, the bottle); type on a photograph sits on its shaded side over a brown scrim at 40 to 60%.
-- No texture: the cream stays clean.
+- 线条：区块顶部一条墨色 `--rule-bar`，行之间用 `--color-rule` 的 `--rule-hair`，well 内标题下一条金色细线。
+- 除按钮对外处处方形：well、照片、输入框一律无圆角；按钮与步进器（stepper）用 `--radius-pill`。
+- 纵深：凸起的 well 带 `--rule-bar` 墨色边框、内缩 6px 的 1px 金色线，以及硬朗的 `--shadow-card`（paper-3 色偏移、无模糊）；绝不软阴影。
+- 色带：`--color-paper-2` 色带，或一条暖棕墨色带配奶油文字；每页至多两条，绝不做朱红大片。
+- 照片：低角度晚光里的季节：枝头的果实、长草、室外桌上的杯子或瓶子、黄昏的果园；暖、微朦胧、影子长。方形，10% 的 1px 墨色细线，无阴影。题注在画框下方用小字，写一个事实（地点、月份、瓶子）；照片上的文字放在背光一侧，压在 40% 到 60% 的棕色压暗层上。
+- 不用纹理：奶油色保持干净。
 
 ## Range
 
-- **The product built, standing in the light:** the bottle cut out at full height with its label set in live type (the name in Yeseva, the kind in vermilion small print, a gold hairline, the run), on a sky that grades from the cream down through dusk into a dark field, a low warm glow behind it.
-- **The label as a ruled list:** a paper-2 well inset with a gold hairline, its facts as rows (style, bottle, run, price, release), small-print labels left and Yeseva values right, dotted gold rules between them.
-- **The year on one line:** the seasons from blossom to bottle as stops on a hairline across the brown band, the months in gold small print, the stages in cream Yeseva, the present one marked in the sun's colour.
-- **An order that counts:** a pill stepper beside the one vermilion button whose label carries the running total, under a statement head at display size on a cream to dusk ground.
+- **造出来的产品立在光里：**瓶子整高抠出，标签用真实排版呈现（名字用 Yeseva、品类用朱红小字、一条金色细线、批号），背景天空从奶油色渐入黄昏再到深色场域，瓶后一圈低暖光晕。
+- **标签做成划线列表：**paper-2 的 well 内缩金色细线，事实排成行（风格、瓶型、批号、价格、发布），左侧小字标签、右侧 Yeseva 数值，中间点状金线。
+- **一年排成一行：**从开花到装瓶的各季作为细线上的节点横跨棕色带，月份用金色小字，阶段用奶油色 Yeseva，当下那个用太阳的颜色标记。
+- **会算数的下单：**一个胶囊步进器挨着唯一的朱红按钮，按钮标签上带累计数量，上方是 display 字号的宣言标题，底色从奶油色渐入黄昏。
 
-## Controls
+## 控件
 
-- The pair: a vermilion-filled pill in Archivo Narrow 600 with `--color-accent-ink` text, beside a plain one in ink over a 2px ink underline, no box.
-- Links underline in ink and turn vermilion on hover; inputs square on `--color-paper-2` with a 1px ink border.
-- Restrained: vermilion sits on the primary, the focus ring and one figure, under 5% of a screen; gold never colours text.
+- 按钮对：朱红填充胶囊、Archivo Narrow 600、`--color-accent-ink` 文字，旁边一枚朴素的墨色文字按钮，压在 2px 墨色下划线上，无外框。
+- 链接墨色下划线，hover 转朱红；输入框方形，`--color-paper-2` 底、1px 墨色边框。
+- 克制：朱红只出现在主按钮、焦点圈和一个数字上，不足一屏的 5%；金色从不给文字上色。
 
-## Motion
+## 动效
 
-Quiet: a tab swaps its panel and a row lights on hover, over `--dur-short` on `--ease-out`. No reveal, no counter, no loop.
+安静：标签页切换面板、某行在 hover 时点亮，时长 `--dur-short`、缓动 `--ease-out`。无显现动画、无计数器、无循环。
 
-## Voice
+## 语气
 
-The almanac: the hour of light, the pressing day, the orchard by name. Never a toast to the good life.
+年鉴的语气：日照的钟点、压榨的日子、果园的名字。绝不为美好生活举杯。
 
-## Do-nots
+## 禁止事项
 
-- Never a second warm colour; a second orange makes a fruit stand.
-- Never a neutral ink; a grey-black kills the cream.
-- Never a rounded card or a soft shadow; a raised well is square, ruled and hard-shadowed.
-- Never a cold or flat-lit photograph: a blue noon sky or a flash turns the cream sickly.
-- Never clay or terracotta in place of vermilion; past hue 28 the theme becomes the cream, serif and clay page every generator makes.
+- 绝不引入第二个暖色；第二个橙色会让页面变成水果摊。
+- 绝不用中性墨色；灰黑会杀死奶油色。
+- 绝不用圆角卡片或软阴影；凸起的 well 是方形、划线、硬阴影的。
+- 绝不用冷调或平光照片：蓝色正午天空或闪光会让奶油色发闷。
+- 绝不用陶土色或赤陶色顶替朱红；色相一过 28，主题就变成每个生成器都会产出的那种"奶油色加衬线加陶土色"页面。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@600&display=swap" rel="stylesheet">

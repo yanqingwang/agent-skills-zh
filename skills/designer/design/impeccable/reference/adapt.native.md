@@ -1,30 +1,34 @@
-> **Additional context needed**: target platforms/devices and usage contexts.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/adapt.native.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Adapt an existing **native** design (`ios` / `android` / `adaptive`) to a different context: another device class, orientation, platform, or origin. The trap is treating adaptation as scaling. The job is rethinking the experience for the new context, inside the platform conventions of [ios.md](ios.md) / [android.md](android.md); read the target platform's reference before planning if Setup hasn't already.
+> **Additional context needed**: 目标平台/设备与使用情境。
 
-## Assess Adaptation Challenge
+把一个既有的 **native** 设计（`ios` / `android` / `adaptive`）适配到另一个情境：另一种设备类别、方向、平台或来源。陷阱是把适配当成缩放。这份工作是为新情境重新构思体验，同时停留在 [ios.md](ios.md) / [android.md](android.md) 的平台惯例之内；如果 Setup 阶段还没有读过目标平台的参考文件，先读再规划。
 
-1. **Source context**: what was it designed for, and what assumptions did it make? (Phone-only? Portrait-only? One platform's idioms? A website?)
-2. **Target context**: which device class (phone, tablet, foldable), orientation, platform, and usage posture (one-handed on the go vs two-handed at rest)?
-3. **What breaks**: navigation that doesn't fit the target, layouts that stretch instead of restructure, gestures or controls that don't exist there?
+## 评估适配难度
 
-## Adaptation Strategies
+1. **Source context**: 它原本为谁设计，做了哪些假设？（只考虑手机？只考虑竖屏？只用某个平台的习惯用法？还是一个网站？）
+2. **Target context**: 哪种设备类别（手机、平板、折叠屏）、方向、平台与使用姿态（路上单手操作，还是静息双手操作）？
+3. **什么会坏掉：** 不适配目标的导航、只会拉伸而不会重构的布局、目标上不存在的手势或控件？
 
-### Phone → Tablet (iPad / large screens)
+## 适配策略
 
-- **Restructure, don't stretch.** A scaled-up phone UI on a tablet is the failure mode. Use size classes (iOS) / window size classes (Android) to switch structure.
-- **Navigation changes shape**: tab bar stays or becomes a sidebar on iPad; Android navigation bar becomes a rail or drawer on expanded width.
-- **Use the width**: split view / master-detail (list + detail side by side), multi-column grids, popovers where phones used sheets.
-- **Multitasking is a size, not an edge case**: iPad Split View and Android multi-window can hand you a phone-width window on a tablet; size-class-driven layout handles both for free.
+### 手机 → 平板（iPad / 大屏）
 
-### Orientation & foldables
+- **重构，不要拉伸。** 放大版手机 UI 出现在平板上就是失败模式。用 size classes（iOS）/ window size classes（Android）切换结构。
+- **导航改变形状：** iPad 上 tab bar 保留或变成侧边栏；Android 的 navigation bar 在加宽后变成 rail 或 drawer。
+- **利用宽度：** split view / master-detail（列表与详情并排）、多列网格、手机上用 sheet 的地方改用 popover。
+- **多任务是尺寸，不是边界情况：** iPad Split View 与 Android 多窗口会把手机宽度的窗口交到平板上；由 size class 驱动的布局两种都免费处理。
 
-- Landscape restructures (side-by-side panes, repositioned controls); never clip or letterbox. Lock orientation only when the task truly demands it.
-- Foldables (Android): react to posture and hinge via window size classes; test folded, unfolded, and tabletop.
+### 方向与折叠屏
 
-### Platform → platform (iOS ↔ Android)
+- 横屏是重构（并排面板、控件重新布位），绝不裁切或加黑边。只有任务真正要求时才锁定方向。
+- 折叠屏（Android）：经 window size classes 响应姿态与铰链；在折起、展开、桌面支架三种状态都测试。
 
-Translate idioms; never transplant them:
+### 平台 → 平台（iOS ↔ Android）
+
+翻译习惯用法；绝不移植：
 
 | iOS | Android |
 |---|---|
@@ -36,23 +40,23 @@ Translate idioms; never transplant them:
 | Semantic system colors, materials | Material color roles, tonal elevation |
 | System push/sheet transitions | Container transform, shared-axis, fade-through |
 
-Rebuild navigation and controls in the target's vocabulary; carry over the brand's expressive layer (palette intent, type accent, motion personality) through the target's theming system.
+在目标的词汇里重建导航与控件；品牌的表达层（配色意图、字体点缀、动效性格）经目标的 theming 系统带过去。
 
-### Web → native (porting a website or web app)
+### Web → native（移植网站或 Web 应用）
 
-Reconform, don't reflow. Replace web navigation with the platform's model, HTML-shaped controls with platform controls, hover affordances with touch-first ones, and px-based type with Dynamic Type / sp. Then treat the result to the full platform reference; the slop test there is the acceptance bar.
+重新贴合，而不是重排。把 web 导航换成平台的模型，把 HTML 形状的控件换成平台控件，把 hover 交互换成触控优先的，把基于 px 的字体换成 Dynamic Type / sp。然后把结果交给完整的平台参考；那里的 slop 测试就是验收线。
 
-## Implement & Verify
+## 实现与验证
 
-- Drive structure from **size classes / window size classes**, never from device-model checks.
-- Respect safe areas and window insets in every new configuration (notch, hinge, status bar, keyboard).
-- Test on simulators for breadth, then real hardware for truth: at least one phone and one tablet per shipped platform, both orientations, split-screen where supported.
+- 结构由 **size classes / window size classes** 驱动，绝不基于设备型号判断。
+- 在每种新配置下都尊重 safe areas 与 window insets（刘海、铰链、状态栏、键盘）。
+- 先在模拟器上测广度，再到真机上求真相：每个交付平台至少一台手机加一台平板，两种方向，支持的则测分屏。
 
-When the adaptation feels native to each context, hand off to `/impeccable polish` for the final pass.
+当适配在每个情境里都显得 native 时，交给 `/impeccable polish` 做最后一遍打磨。
 
 **Avoid**:
-- Ship a stretched phone layout on a tablet
-- Port one platform's controls or navigation onto the other
-- Hide core functionality on smaller devices (if it matters, make it work)
-- Lock orientation to dodge a layout bug
-- Trust simulators alone (posture, gestures, and performance need hardware)
+- 把拉伸的手机布局交付到平板上
+- 把一个平台的控件或导航移植到另一个平台
+- 在小设备上隐藏核心功能（要紧的功能就让它能用）
+- 用锁定方向来绕过一个布局 bug
+- 只信模拟器（姿态、手势与性能需要真机）

@@ -12,11 +12,15 @@ photo: mono high=-20 shad=-12
 pictured: Photographic, Poster hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/darkroom.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Darkroom
 
-A print room with the lights off: a warm black ground a step lighter than a print's own black, so a photograph sits on it as an object; fibre-white ink; hairline extra-condensed capitals over Barlow; one amber safelight. Photographs are black and white, printed deep and large, and the type carries the rest. It is not a film-strip costume, a moody gradient, flat screen black or a white-matted gallery.
+关了灯的冲印室：暖调黑底比印片自己的黑浅一档，照片因此作为一件物体坐在上面；纤维白墨色；发丝线极窄大写压在 Barlow 之上；一盏琥珀安全灯。照片黑白，印得深且大，其余交给文字。它不是胶片齿孔的戏服，不是情绪化渐变，不是平板屏幕的纯黑，也不是白卡纸装裱的画廊。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -31,57 +35,57 @@ A print room with the lights off: a warm black ground a step lighter than a prin
 }
 ```
 
-Three colourways, stated in the stamp (`darkroom: amber`).
+三种配色，写入 stamp（印记）：`darkroom: amber`。
 
-| Colourway | Ground, ink, signal |
+| 配色 | 底色、墨色、信号色 |
 | --- | --- |
-| **amber** (default) | the tokens above |
-| **red** | signal `oklch(62% 0.19 32)`, deep `oklch(44% 0.16 32)` |
-| **fibre paper** | ground `oklch(95% 0.01 80)`, ink `oklch(14% 0.006 40)`, muted `oklch(46% 0.01 50)`, signal `oklch(50% 0.2 30)`, rule `oklch(80% 0.014 70)`; dark specks at 0.12 |
+| **amber**（默认） | 上面的 Token |
+| **red** | 信号 `oklch(62% 0.19 32)`，深色 `oklch(44% 0.16 32)` |
+| **fibre paper** | 底 `oklch(95% 0.01 80)`，墨色 `oklch(14% 0.006 40)`，淡色 `oklch(46% 0.01 50)`，信号 `oklch(50% 0.2 30)`，横线 `oklch(80% 0.014 70)`；暗斑 0.12 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Sofia Sans Extra Condensed in capitals, 200 on the hero, section heads and figures, 400 on an item title and a control, line-height 1.0, `--tracking-display`, roman. The hairline at scale is the look: being extra-condensed, every display step may set one step above the shared scale, and the hero head runs to poster size across eight columns.
-- **Body:** Barlow 400 for prose at 17px and 1.6, so the reading text holds on the dark; Barlow 300 only at lead size and above.
-- **Labels, captions, table heads:** Barlow 400 a step smaller, sentence case, untracked, in `--color-muted`; a plate number and a month are this voice. Figures are tabular. No mono.
+- **展示字体：**Sofia Sans Extra Condensed 大写，Hero、章节标题与数字用 200，条目标题与控件用 400，行高 1.0，`--tracking-display`，正体。放大后的发丝线就是那副样子：因为极窄，每个展示层级可以比共享字阶高出一档，Hero 标题横跨八列排到海报字号。
+- **正文：**散文用 Barlow 400，17px、行高 1.6，让阅读文字在暗底上站稳；Barlow 300 只用于导语字号及以上。
+- **标签、图注、表头：**Barlow 400 小一档，句首大写，不加字距，用 `--color-muted`；版号与月份就是这个语气。数字用表格数字。不用等宽字体。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Depth is lightness, never light: ground 12.5, well 16, surface 20.5. No vignette, no bloom, no shadow; a print's blacks sit below the ground, which is what makes it read as a print.
-- Rules: 1px `--color-rule`, run full width between rows of a sheet and as vertical hairlines between figures; radius 0 everywhere.
-- Bands: a `--color-paper-2` well, grained, for the sections that carry no picture; two a page at most, never an amber field.
-- Photographs: the work. Black and white, printed deep (open highlights, full blacks, the film's grain); a subject at a distance with room around it, or close and flat. Radius 0, no frame, no mat; full-bleed or held to the columns, never thumbnail size, a caption beneath with the plate number. Type crosses a photograph only over its darkest third, on a scrim of the ground at 40 to 70%.
-- Texture: the speck grain of `texture.md` § 1 at `--grain`, on a well; never over a photograph.
+- 深度是明度，不是光：底 12.5，凹槽 16，表面 20.5。无晕影、无辉光、无阴影；印片的黑色比底色更深，这正是页面读起来像一张印片的原因。
+- 横线：1px `--color-rule`，在一张单子的行间通栏横过，并在数字之间作竖向发丝线；处处圆角 0。
+- 色带：带颗粒的 `--color-paper-2` 凹槽，给不承载图片的章节；每页至多两条，绝不用琥珀色场。
+- 照片：即作品本身。黑白，印得深（高光通透、黑部饱满、胶片的颗粒）；主体带留白的远景，或近景平拍。圆角 0，无框，无卡纸；通栏或收在栏内，绝不缩略图尺寸，下方配带版号的图注。文字只在照片最暗的三分之一上横过，压一层 40 至 70% 的底色暗化。
+- 纹理：`texture.md` § 1 的斑点颗粒以 `--grain` 铺在凹槽上；绝不压在照片上。
 
-## Range
+## 版式（Range）
 
-- **Figures as an edition:** the prompt's real numbers (plates, prints of each, the run) in the 200 hairline at 12rem and over on a grained well, vertical hairlines between them, each with a muted Barlow line beneath; the size is the drama, the colour stays ink.
-- **A collector's sheet:** Rows under full-width hairlines, the label in muted Barlow on the left and the value in display capitals at title size on the right: series, subject, negative, paper, edition, sizes.
-- **A process as a contact strip:** Steps across the twelve columns, each stage a hairline numeral at section size over a short line (exposed, developed, printed, editioned), parted by verticals; nothing drawn.
-- **A choice set as numerals:** a working picker of plates or sizes in 1px rule cells, each a display numeral at title size, the chosen one lit by the safelight, beside a plain form on the ground.
+- **数字排成一个版次：**提示词的真实数字（版数、每种印数、印量）用 200 发丝线排在 12rem 及以上的颗粒凹槽上，之间竖向发丝线，各配一行淡色 Barlow；字号就是戏剧性，颜色保持墨色。
+- **一张藏家单：**通栏发丝线下的行，左侧淡色 Barlow 标签，右侧展示大写的值排标题字号：系列、题材、底片、相纸、版次、尺寸。
+- **流程化作试条：**步骤横跨十二列，每段是章节字号的一条发丝线数字压一行短句（曝光、显影、印相、成版），竖线分隔；不画任何东西。
+- **选择组化作数字：**版数或尺寸的可用选择器，1px 线单元格，各是一个标题字号的展示数字，选中的那个被安全灯点亮，旁边是底色上的朴素表单。
 
-## Controls
+## 控件（Controls）
 
-- The pair: a 1px ink-outlined secondary beside an amber-filled primary in `--color-accent-ink`, both display capitals at 400, untracked, radius 0, 48px tall.
-- Links are ink, underlined in `--color-rule`; the underline turns amber on hover. Inputs: radius 0, a 1px `--color-muted` border on the ground, a steady outline on focus.
-- The safelight is scarce: the one filled control, a selected plate, a caption on hover; `--color-accent-deep` is the quieter fill under ink text.
+- 一对：琥珀填充的主按钮配 `--color-accent-ink`，旁边是 1px 墨色描边的次按钮，两者展示大写 400，不加字距，圆角 0，48px 高。
+- 链接用墨色，下划线用 `--color-rule`；悬停下划线转琥珀。输入框：圆角 0，底色上 1px `--color-muted` 边框，聚焦时一条稳定的描边。
+- 安全灯稀缺：唯一的填充控件、选中的版号、悬停出现的图注；`--color-accent-deep` 是墨字之下更安静的填色。
 
-## Motion
+## 动效（Motion）
 
-Still as a print. A photograph may rise once from the ground over `--dur-long`, as in the tray, from a visible default; hover on a linked plate turns its number amber. Nothing else moves.
+静如印片。一张照片可以从底色之上升起一次，时长 `--dur-long`，像在显影盘里，从可见的默认态开始；悬停在有链接的版片上，其编号转琥珀。其余一律不动。
 
-## Voice
+## 语气（Voice）
 
-Lab notes and a collector's sheet: series, plate, place, month, edition, paper. Exact numbers, short lines, no adjectives about light or soul.
+实验记录与藏家单：系列、版号、地点、月份、版次、相纸。数字精确，句子短，不说关于光或灵魂的形容词。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never an amber wash, band, glow or amber head; the safelight lights a control or a number, never a section.
-- Never a sprocket hole, a film strip, a grease-pencil ring or a drawn frame.
-- Never Sofia Sans Extra Condensed above 400 for a head, and never a figure in anything but the 200.
-- Never sepia, duotone or a tint on a picture, and never flat screen black under the prints.
+- 绝不用琥珀色晕染、色带、辉光或琥珀标题；安全灯照亮一个控件或一个数字，绝不清一节。
+- 绝不要齿孔、胶片条、蜡笔圈或画出来的框。
+- 绝不让 Sofia Sans Extra Condensed 在标题上超过 400，数字绝不用 200 以外的字重。
+- 绝不给照片加棕褐色、双色调或染色，也绝不让印片坐在平板屏幕的纯黑上。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@200;400&family=Barlow:wght@300;400&display=swap" rel="stylesheet">

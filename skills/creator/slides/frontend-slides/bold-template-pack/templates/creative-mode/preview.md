@@ -1,55 +1,59 @@
-# Creative Mode Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/creative-mode/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Creative Mode 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/creative-mode/design.md`
-- Preview card: `bold-template-pack/templates/creative-mode/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/creative-mode/design.md`
+- 预览卡：`bold-template-pack/templates/creative-mode/preview.md`
 
-- Slug: `creative-mode`
-- Tagline: Cream paper canvas with confident multi-color (green, pink, orange, yellow) accents and Archivo Black display.
-- Mood: creative, confident, playful, design-led
-- Tone: graphic, expressive, modern
-- Formality: medium
-- Density: medium-high
-- Scheme: light
-- Best for: Anything that should feel design-led and confident: creative agency pitches, design studio decks, ad shop credentials, brand creative reviews, art-direction reviews. Also a great unexpected pick for a tech talk, research findings, or finance review when the speaker wants to lead with taste rather than convention.
-- Avoid for: Contexts that demand institutional restraint and a quiet authority — the saturated multi-accent palette will read as expressive, not formal.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`creative-mode`
+- Tagline：米白纸张画布，配自信的多色（绿、粉、橙、黄）点缀色与 Archivo Black 展示字体。
+- Mood：creative、confident、playful、design-led
+- Tone：graphic、expressive、modern
+- Formality：medium
+- Density：medium-high
+- Scheme：light
+- 适合：一切应当显得设计主导且自信的内容：创意代理商提案、设计工作室演示、广告公司资历介绍、品牌创意评审、艺术指导评审。当演讲者想以品味而非惯例开场时，用于技术分享、研究发现或财务评审也是出人意料的佳选。
+- 避免：要求机构式克制与安静权威的场景：高饱和的多点缀色配色会显得外放而非正式。
 
-A neo-brutalist editorial presentation system built for 1920x1080 slides. The deck anchors on a warm cream canvas with heavy 4px ink borders, hard offset drop-shadows, and a bold four-color accent palette (forest green, hot pink, burnt orange, sunshine yellow). Display headlines run Archivo Black in pure uppercase — aggressive, loud, zero letter-spacing softness. Monospace labels in JetBrains Mono echo a typesetting rule-sheet. Body copy sits in Space Grotesk. Every slide uses flat color-blocking with no gradients, no rounded cards, and no subtlety. The aesthetic is part Bauhaus grid, part punk zine, part Swiss editorial.
+## 视觉速览
 
-Creative Mode is a neo-brutalist editorial slide system for 1920x1080 presentations. The foundational aesthetic choice is restraint of technique paired with aggression of expression: no rounded cards, no gradients, no shadows that suggest light sources — only flat color-blocking and hard offset drop-shadows (the "Risograph" or "screen-print" kind where the shadow is a sold same-color offset).
+一套为 1920x1080 幻灯片打造的新粗野主义编辑演示系统。整套演示锚定在暖米白画布上，配以厚重的 4px 墨色边框、硬偏移投影和大胆的四色点缀配色（森林绿、亮粉、焦橙、阳光黄）。展示标题以 Archivo Black 纯大写呈现：激进、响亮、字距毫无柔化。JetBrains Mono 等宽标签呼应排印规则单。正文使用 Space Grotesk。每页幻灯片都是平涂色块：无渐变、无圆角卡片、不玩含蓄。美学是三分包豪斯网格、三分朋克 zine、三分瑞士编辑风。
 
-## Preview Ingredients
+Creative Mode 是一套面向 1920x1080 演示的新粗野主义编辑幻灯片系统。奠基性的美学选择是技法克制配表达激进：无圆角卡片、无渐变、无暗示光源的阴影，只有平涂色块与硬偏移投影（"孔版印刷"或"丝网印刷"式，阴影是一块同色实心偏移）。
 
-- Palette: cream #EFE9D9; cream-2 #E4DCC4; ink #0F0F0F; ink-2 #2A2A2A; green #1F8A4C; green-dark #136636; pink #F06CA8; pink-dark #D14E8B
-- Typography: Archivo Black; Space Grotesk; JetBrains Mono
-- Signature move: Cream canvas ({colors.cream} — #EFE9D9) as the universal background; green ({colors.green} — #1F8A4C) used for the closing slide only.
-- Signature move: 4px solid ink borders on every structural element — cards, panels, table cells, chart axes.
-- Signature move: Hard offset box-shadows in place of blurred drops: 24px 24px 0 color, 24px 24px 0 4px ink on featured blocks.
-- Signature move: Archivo Black display type in uppercase with 0.92 line-height for extreme tightness.
-- Signature move: Four accent colors used as flat fills; each slide uses two or three of the four, never all simultaneously.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：cream #EFE9D9; cream-2 #E4DCC4; ink #0F0F0F; ink-2 #2A2A2A; green #1F8A4C; green-dark #136636; pink #F06CA8; pink-dark #D14E8B
+- Typography：Archivo Black; Space Grotesk; JetBrains Mono
+- Signature move：米白画布（{colors.cream}，#EFE9D9）作为通用背景；绿色（{colors.green}，#1F8A4C）仅用于收尾页。
+- Signature move：每个结构元素上都有 4px 实线墨色边框：卡片、面板、表格单元格、图表坐标轴。
+- Signature move：以硬偏移盒阴影取代模糊投影：featured 区块用 24px 24px 0 color，24px 24px 0 4px ink。
+- Signature move：Archivo Black 展示字体，大写配 0.92 行高，紧凑到极致。
+- Signature move：四种点缀色均作平涂填充；每页只用四色中的两三种，绝不同时全用。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

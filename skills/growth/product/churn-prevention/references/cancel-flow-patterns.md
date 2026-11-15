@@ -1,156 +1,160 @@
-# Cancel Flow Patterns
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/growth/product/churn-prevention/references/cancel-flow-patterns.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Detailed cancel flow patterns by business type, billing provider, and industry.
+# 取消流程模式
+
+按业务类型、计费服务商和行业细分的取消流程模式。
 
 ---
 
-## Cancel Flow by Business Type
+## 按业务类型的取消流程
 
-### B2C / Self-Serve SaaS
+### B2C / 自助式 SaaS
 
-High volume, low touch. The flow must work without human intervention.
+量大、低接触。流程必须在无人介入的情况下运转。
 
-**Flow structure:**
+**流程结构：**
 ```
 Cancel button → Exit survey (1 question) → Dynamic offer → Confirm → Post-cancel
 ```
 
-**Characteristics:**
-- Fully automated, no human in the loop
-- Quick — 2-3 screens maximum
-- One offer + one fallback, not a menu of options
-- Mobile-optimized (significant cancellations on mobile)
-- Clear "continue cancelling" at every step
+**特征：**
+- 全自动，无需人工介入
+- 快速：最多 2-3 个屏幕
+- 一个优惠 + 一个后备方案，不是一堆选项菜单
+- 针对移动端优化（移动端取消占比可观）
+- 每一步都有清晰的"继续取消"入口
 
-**Typical save rate:** 20-30%
+**典型挽留率：** 20-30%
 
-**Example flow for a $29/mo productivity app:**
-1. "What's the main reason?" → 6 options
-2. Selected "Too expensive" → "Get 25% off for 3 months (save $21.75)"
-3. Declined → "Or switch to our Starter plan at $12/mo"
-4. Declined → "We're sorry to see you go. Your access continues until [date]."
+**某 29 美元/月效率应用的示例流程：**
+1. "主要原因是什么？" → 6 个选项
+2. 选中"太贵了" → "3 个月享 75 折（省 21.75 美元）"
+3. 拒绝 → "或者以 12 美元/月切换到我们的 Starter 套餐"
+4. 拒绝 → "很遗憾你要离开。你的访问权限将持续到 [date]。"
 
 ---
 
-### B2B / Team Plans
+### B2B / 团队套餐
 
-Lower volume, higher stakes. Personal outreach is worth the cost.
+量小、风险高。人工触达值得投入。
 
-**Flow structure:**
+**流程结构：**
 ```
 Cancel button → Exit survey → Offer (or route to CS) → Confirm → Post-cancel
 ```
 
-**Characteristics:**
-- Route accounts above MRR threshold to customer success
-- Show team impact ("Your 8 team members will lose access")
-- Offer admin-to-admin call for enterprise accounts
-- Longer consideration — allow "schedule a call" as a save option
-- Require admin/owner role to cancel (not any team member)
+**特征：**
+- 把高于 MRR 阈值的账户转给客户成功（CS）
+- 展示对团队的影响（"你的 8 位团队成员将失去访问权限"）
+- 为企业账户提供管理员对管理员的通话
+- 决策周期更长：允许把"预约通话"作为挽留选项
+- 要求管理员/所有者角色才能取消（而非任意团队成员）
 
-**Typical save rate:** 30-45% (higher because of personal touch)
+**典型挽留率：** 30-45%（人工触达带来更高挽留）
 
-**MRR-based routing:**
+**基于 MRR 的分流：**
 
-| Account MRR | Cancel Flow |
+| 账户 MRR | 取消流程 |
 |-------------|-------------|
-| <$100/mo | Automated flow with offers |
-| $100-$500/mo | Automated + flag for CS follow-up |
-| $500-$2,000/mo | Route to CS before cancel completes |
-| $2,000+/mo | Block self-serve cancel, require CS call |
+| <$100/mo | 自动化流程 + 优惠 |
+| $100-$500/mo | 自动化 + 标记待 CS 跟进 |
+| $500-$2,000/mo | 取消完成前转给 CS |
+| $2,000+/mo | 阻止自助取消，必须 CS 通话 |
 
 ---
 
-### Freemium / Free-to-Paid
+### Freemium / 免费转付费
 
-Users cancelling paid to return to free tier. Different psychology — they're not leaving, they're downgrading.
+用户取消付费、退回免费版。心理不同：他们不是离开，而是降级。
 
-**Flow structure:**
+**流程结构：**
 ```
 Cancel button → "Switch to Free?" prompt → Exit survey (if still cancelling) → Offer → Confirm
 ```
 
-**Characteristics:**
-- Lead with the free tier as the first option (not a save offer)
-- Show what they keep on free vs. what they lose
-- The "save" is keeping them on free, not losing them entirely
-- Track free-tier users for future re-upgrade campaigns
+**特征：**
+- 把免费版作为第一选项呈现（而不是挽留优惠）
+- 展示免费版保留什么、失去什么
+- "挽留"是让他们留在免费版，而不是彻底流失
+- 跟踪免费版用户，用于未来的重新升级活动
 
 ---
 
-## Cancel Flow by Billing Interval
+## 按计费周期的取消流程
 
-### Monthly Subscribers
+### 月付订阅者
 
-- More price-sensitive, shorter commitment
-- Discount offers work well (20-30% for 2-3 months)
-- Pause is effective (1-2 months)
-- Suggest annual plan at a discount as an alternative
+- 对价格更敏感，承诺期更短
+- 折扣优惠有效（2-3 个月享 20-30%）
+- 暂停有效（1-2 个月）
+- 把折扣年付套餐作为替代方案提出
 
-**Offer priority:**
-1. Discount (if reason = price)
-2. Pause (if reason = not using / temporary)
-3. Annual plan switch (if engaged but price-sensitive)
+**优惠优先级：**
+1. 折扣（原因 = 价格时）
+2. 暂停（原因 = 未使用 / 临时性时）
+3. 切换年付套餐（有活跃度但对价格敏感时）
 
-### Annual Subscribers
+### 年付订阅者
 
-- Higher commitment, often cancelling for stronger reasons
-- Prorate refund expectations matter
-- Longer save window (they've already paid)
-- Personal outreach more justified (higher LTV at stake)
+- 承诺更高，取消的理由往往更坚决
+- 按比例退款（prorate）的预期很重要
+- 挽留窗口更长（他们已经付过款）
+- 人工触达更合理（牵涉更高 LTV）
 
-**Offer priority:**
-1. Pause remainder of term (if temporary)
-2. Plan adjustment + credit for next renewal
-3. Personal outreach from CS
-4. Partial refund + downgrade (better than full refund + cancel)
+**优惠优先级：**
+1. 暂停剩余期限（临时原因时）
+2. 调整套餐 + 下次续费抵扣金
+3. CS 人工触达
+4. 部分退款 + 降级（好于全额退款 + 取消）
 
-**Refund handling:**
-- Offer prorated refund if significant time remaining
-- "Pause until renewal" if less than 3 months left
-- Be generous — bad refund experiences create vocal detractors
+**退款处理：**
+- 剩余时间较长时提供按比例退款
+- 剩余不足 3 个月时提供"暂停至下次续费"
+- 大方一点：糟糕的退款体验会制造大声抱怨的批评者
 
 ---
 
-## Save Offer Patterns
+## 挽留优惠模式
 
-### The Discount Ladder
+### 折扣阶梯
 
-Don't lead with your biggest discount. Escalate:
+不要一上来就给最大折扣。逐步升级：
 
 ```
 Cancel click → 15% off → Still cancelling → 25% off → Still cancelling → Let them go
 ```
 
-**Rules:**
-- Maximum 2 discount offers per cancel session
-- Never exceed 30% (higher trains cancel-for-discount behavior)
-- Time-limit discounts (2-3 months, then full price resumes)
-- Track discount accepters — if they cancel again at full price, don't re-offer
+**规则：**
+- 每次取消流程最多 2 个折扣优惠
+- 折扣不超过 30%（更高会训练出"为拿折扣而取消"的行为）
+- 限时折扣（2-3 个月，之后恢复原价）
+- 跟踪接受折扣的用户：如果他们恢复原价后再次取消，就不再重复报价
 
-### The Pause Playbook
+### 暂停策略
 
-Pause is often better than a discount because it doesn't devalue your product.
+暂停往往比折扣更好，因为它不会让你的产品贬值。
 
-**Implementation:**
+**实现配置：**
 
-| Setting | Recommendation |
+| 配置项 | 建议 |
 |---------|---------------|
-| Pause duration options | 1 month, 2 months, 3 months |
-| Default selection | 1 month (shortest) |
-| Maximum pause | 3 months (longer pauses rarely return) |
-| During pause | Keep data, remove access |
-| Reactivation | Auto-reactivate with 7-day advance email |
-| Repeat pauses | Allow 1 pause per 12-month period |
+| 暂停时长选项 | 1 个月、2 个月、3 个月 |
+| 默认选中 | 1 个月（最短） |
+| 最长暂停 | 3 个月（更长的暂停很少回归） |
+| 暂停期间 | 保留数据，移除访问权限 |
+| 重新激活 | 自动重新激活，提前 7 天发邮件告知 |
+| 重复暂停 | 每 12 个月允许 1 次 |
 
-**Pause reactivation sequence:**
-- Day -7: "Your pause ends in 7 days. We've been busy — here's what's new."
-- Day -1: "Welcome back tomorrow! Here's what's waiting for you."
-- Day 0: "You're back! Here's a quick tour of what's new."
+**暂停重新激活序列：**
+- 第 -7 天："暂停将在 7 天后结束。我们这段时间没闲着，看看有什么新东西。"
+- 第 -1 天："明天欢迎回来！这些内容在等你。"
+- 第 0 天："你回来了！快速浏览一下新功能。"
 
-### The Downgrade Path
+### 降级路径
 
-For multi-plan products, downgrade is the strongest save:
+对多套餐产品来说，降级是最强的挽留手段：
 
 ```
 ┌─────────────────────────────────────────┐
@@ -173,33 +177,33 @@ For multi-plan products, downgrade is the strongest save:
 └─────────────────────────────────────────┘
 ```
 
-**Downgrade best practices:**
-- Show exactly what they keep and what they lose
-- Use checkmarks and X marks for scanability
-- Preserve their data even on the lower plan
-- If they downgrade, don't show upgrade prompts for at least 30 days
+**降级最佳实践：**
+- 明确展示他们保留什么、失去什么
+- 用对勾和叉号提升可扫读性
+- 即使在低档套餐上也保留他们的数据
+- 如果他们降级，至少 30 天内不要展示升级提示
 
-### The Competitor Switch Handler
+### 竞品流失处理
 
-When the cancel reason is "switching to competitor":
+当取消原因是"转投竞品"时：
 
-1. **Ask which competitor** (optional, don't force it)
-2. **Show a comparison** if you have one (see competitors skill)
-3. **Offer a migration credit** ("We'll match their price for 3 months")
-4. **Request a feedback call** ("15 minutes to understand what we're missing")
+1. **询问是哪家竞品**（可选，不要强求）
+2. **有现成材料就展示对比**（参见 competitors skill）
+3. **提供迁移抵扣金**（"我们按他们的价格给你匹配 3 个月"）
+4. **约一次反馈通话**（"只要 15 分钟，了解我们缺了什么"）
 
-This data is gold for product and marketing teams.
+这些数据对产品和营销团队是金子。
 
 ---
 
-## Post-Cancel Experience
+## 取消后的体验
 
-What happens after cancel matters for:
-- Win-back potential
-- Word of mouth
-- Review sentiment
+取消之后发生什么，关系到：
+- 赢回潜力
+- 口碑
+- 评价情绪
 
-### Confirmation Page
+### 确认页面
 
 ```
 Your subscription has been cancelled.
@@ -215,102 +219,102 @@ We'd love to have you back. We'll keep improving based on feedback
 from customers like you.
 ```
 
-### Post-Cancel Sequence
+### 取消后动作序列
 
-| Timing | Action |
+| 时机 | 动作 |
 |--------|--------|
-| Immediately | Confirmation email with access end date |
-| Day 1 | (Nothing — don't be desperate) |
-| Day 7 | NPS/satisfaction survey about overall experience |
-| Day 30 | "What's new" email with recent improvements |
-| Day 60 | Address their specific cancel reason if resolved |
-| Day 90 | Final win-back with special offer |
+| 立即 | 发送确认邮件，注明访问截止日期 |
+| 第 1 天 | （什么都不做，别显得急切） |
+| 第 7 天 | 对整体体验做 NPS/满意度调查 |
+| 第 30 天 | 发送"最近更新"邮件，介绍近期改进 |
+| 第 60 天 | 如果其取消原因已解决，针对性回应 |
+| 第 90 天 | 用特别优惠做最后一次赢回 |
 
-**For detailed win-back email sequences**: See the emails skill.
+**详细的赢回邮件序列**：参见 emails skill。
 
 ---
 
-## Segmentation Rules
+## 分层规则
 
-The most effective cancel flows use segmentation to show different offers to different customers.
+最有效的取消流程会用分层，向不同客户展示不同优惠。
 
-### Segmentation Dimensions
+### 分层维度
 
-| Dimension | Why It Matters |
+| 维度 | 为什么重要 |
 |-----------|---------------|
-| Plan / MRR | Higher-value customers get personal outreach |
-| Tenure | Long-term customers get more generous offers |
-| Usage level | High-usage customers get different messaging than dormant ones |
-| Billing interval | Monthly vs. annual need different approaches |
-| Previous saves | Don't re-offer the same discount to a repeat canceller |
-| Cancel reason | Drives which offer to show (core mapping) |
+| 套餐 / MRR | 高价值客户获得人工触达 |
+| 使用时长 | 长期客户获得更大方的优惠 |
+| 使用程度 | 高活跃客户与沉睡客户用不同的信息传达 |
+| 计费周期 | 月付与年付需要不同打法 |
+| 历史挽留记录 | 不要向反复取消者重复同一折扣 |
+| 取消原因 | 决定展示哪个优惠（核心映射） |
 
-### Segment-Specific Flows
+### 分层专属流程
 
-**New customer (< 30 days):**
-- They haven't activated. The save is onboarding, not discounts.
-- Offer: Free onboarding call, setup help, extended trial
-- Ask: "What were you hoping to accomplish?" (learn what's missing)
+**新客户（< 30 天）：**
+- 他们还没完成激活。挽留靠的是上手引导，不是折扣。
+- 优惠：免费上手通话、配置帮助、延长试用
+- 询问："你当初想达成什么？"（了解缺失了什么）
 
-**Engaged customer cancelling on price:**
-- They love the product but can't justify the cost.
-- Offer: Discount, annual plan switch, downgrade
-- High save potential
+**活跃客户因价格取消：**
+- 他们喜欢产品，只是觉得不值这个价。
+- 优惠：折扣、切换年付套餐、降级
+- 挽留潜力高
 
-**Dormant customer (no login 30+ days):**
-- They forgot about you. A discount won't bring them back.
-- Offer: Pause subscription, "what changed?" conversation
-- Low save potential — focus on learning why
+**沉睡客户（30+ 天未登录）：**
+- 他们已经把你忘了。折扣带不回他们。
+- 优惠：暂停订阅、"发生了什么变化"对话
+- 挽留潜力低，重点在于弄清原因
 
-**Power user switching to competitor:**
-- They're actively choosing something else.
-- Offer: Competitive match, feedback call, roadmap preview
-- Medium save potential — depends on reason
-
----
-
-## Implementation Checklist
-
-### Phase 1: Foundation (Week 1)
-- [ ] Add cancel flow (survey + 1 offer + confirmation)
-- [ ] Set up exit survey with 5-7 reason categories
-- [ ] Map one offer per reason (simple 1:1 mapping)
-- [ ] Track cancel reasons and save rate in analytics
-- [ ] Enable pre-dunning card expiry emails
-
-### Phase 2: Optimization (Weeks 2-4)
-- [ ] Add fallback offers (primary + secondary per reason)
-- [ ] Implement pause subscription option
-- [ ] Set up dunning email sequence (4 emails over 10 days)
-- [ ] Enable smart retries (Stripe Smart Retries or equivalent)
-- [ ] Add MRR-based routing for high-value accounts
-
-### Phase 3: Advanced (Month 2+)
-- [ ] Build health score from usage signals
-- [ ] Set up proactive intervention triggers
-- [ ] A/B test discount amounts and offer types
-- [ ] Segment flows by plan, tenure, and usage
-- [ ] Post-cancel win-back sequence (coordinate with emails skill)
-- [ ] Cohort analysis: churn by channel, plan, tenure
+**重度用户转投竞品：**
+- 他们在主动选择别的产品。
+- 优惠：竞品价格匹配、反馈通话、路线图预览
+- 挽留潜力中等，取决于原因
 
 ---
 
-## Compliance Notes
+## 实施清单
 
-### FTC Click-to-Cancel Rule (US)
-- Cancellation must be as easy as signup
-- Cannot require a phone call to cancel if signup was online
-- Cannot add excessive steps to discourage cancellation
-- Save offers are allowed but "continue cancelling" must be clear
+### Phase 1: 基础（第 1 周）
+- [ ] 加上取消流程（问卷 + 1 个优惠 + 确认页）
+- [ ] 配置退出问卷，含 5-7 个原因类别
+- [ ] 为每个原因映射一个优惠（简单 1:1 映射）
+- [ ] 在分析工具中跟踪取消原因与挽留率
+- [ ] 开启催缴前的卡片过期提醒邮件
 
-### GDPR / Data Retention (EU)
-- Inform users about data retention period post-cancel
-- Offer data export before account deletion
-- Honor deletion requests within 30 days
-- Don't use post-cancel data for marketing without consent
+### Phase 2: 优化（第 2-4 周）
+- [ ] 增加后备优惠（每个原因一主一备）
+- [ ] 实现暂停订阅选项
+- [ ] 配置催缴邮件序列（10 天内 4 封）
+- [ ] 开启智能重试（Stripe Smart Retries 或同类）
+- [ ] 为高价值账户加上基于 MRR 的分流
 
-### General Best Practices
-- Always show a clear path to complete cancellation
-- Never hide the cancel button (dark pattern)
-- Process cancellation even if save flow has errors
-- Confirm cancellation with email receipt
+### Phase 3: 进阶（第 2 个月起）
+- [ ] 用使用信号构建健康分
+- [ ] 配置主动干预触发器
+- [ ] 对折扣力度与优惠类型做 A/B 测试
+- [ ] 按套餐、时长、使用程度给流程分层
+- [ ] 取消后赢回序列（与 emails skill 协同）
+- [ ] 同期群分析：按渠道、套餐、时长看流失
+
+---
+
+## 合规注意事项
+
+### FTC 点击取消规则（美国）
+- 取消必须和注册一样容易
+- 如果注册是在线完成，不得要求打电话才能取消
+- 不得用过多步骤劝退取消
+- 允许展示挽留优惠，但"继续取消"必须清晰
+
+### GDPR / 数据保留（欧盟）
+- 告知用户取消后的数据保留期限
+- 在账户删除前提供数据导出
+- 在 30 天内响应删除请求
+- 未经同意，不得将取消后数据用于营销
+
+### 通用最佳实践
+- 始终展示完成取消的清晰路径
+- 绝不隐藏取消按钮（暗黑模式）
+- 即使挽留流程出错，也要照常处理取消
+- 用邮件回执确认取消

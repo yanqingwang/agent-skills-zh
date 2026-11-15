@@ -1,99 +1,103 @@
-Quiet design is harder than bold design. Subtlety needs precision. Reduce visual intensity in designs that are too loud, aggressive, or overstimulating without losing personality or making the result generic.
+> **中文汉化版** · 上游：[pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 原文件：`.claude/skills/impeccable/reference/quieter.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+安静的设计比大胆的设计更难。含蓄需要精确。把过于吵闹、咄咄逼人或过度刺激的设计的视觉强度降下来，同时不丢个性、不把结果做成通用货。
 
 ---
 
-## Visitor mode
+## 访客模式（Visitor mode）
 
-Persuade + Experience: "quieter" means more restrained palette, more whitespace, more typographic air. Drama is reduced, not eliminated; the POV stays intact.
+Persuade + Experience： "quieter" 意味着更克制的配色、更多留白、更松的排印空气。戏剧性被降低，不是被消灭；POV 原样保留。
 
-Operate + Read: "quieter" means reducing visual noise. Fewer background accents, flatter cards, less color, less motion. The tool should disappear more completely into the task.
+Operate + Read： "quieter" 意味着减少视觉噪音。更少的背景强调、更平的卡片、更少的颜色、更少的动效。工具应当更彻底地隐入任务。
 
 ---
 
-## Assess Current State
+## 评估现状
 
-Analyze what makes the design feel too intense:
+分析是什么让设计显得过于强烈：
 
-1. **Identify intensity sources**:
-   - **Color saturation**: Overly bright or saturated colors
-   - **Contrast extremes**: Too much high-contrast juxtaposition
-   - **Visual weight**: Too many bold, heavy elements competing
-   - **Animation excess**: Too much motion or overly dramatic effects
-   - **Complexity**: Too many visual elements, patterns, or decorations
-   - **Scale**: Everything is large and loud with no hierarchy
+1. **找出强度来源**：
+   - **色彩饱和**：过亮或过饱和的颜色
+   - **对比极端**：太多高对比的并置
+   - **视觉重量**：太多粗重元素互相争抢
+   - **动效过量**：太多运动或过于戏剧化的效果
+   - **复杂度**：太多视觉元素、图案或装饰
+   - **尺度**：一切都大而响，没有层级
 
-2. **Understand the context**:
-   - What's the purpose? (Marketing vs tool vs reading experience)
-   - Who's the audience? (Some contexts need energy)
-   - What's working? (Don't throw away good ideas)
-   - What's the core message? (Preserve what matters)
+2. **理解语境**：
+   - 目的是什么？（营销 vs 工具 vs 阅读体验）
+   - 受众是谁？（有些语境需要能量）
+   - 什么在起作用？（不要把好想法也扔掉）
+   - 核心信息是什么？（保住要紧的东西）
 
-If any of these are unclear from the codebase, do not guess. Ask with the AskUserQuestion tool and wait for the answer before continuing.
+代码库里看不清其中任何一条时，不要猜。用 AskUserQuestion 工具提问，等答案出来再继续。
 
-"Quieter" means refined and easier on the eyes, not generic. Generic quiet looks like gray text on white, one sans at a uniform weight, and a grid of identical cards; restraint still needs a point of view.
+"quieter" 意味着精炼、看着省力，不是通用。通用的安静是白底灰字、一种无衬线一个字重、一排一模一样的卡片；克制也需要观点。
 
-## Plan Refinement
+## 规划收敛
 
-Create a strategy to reduce intensity while maintaining impact:
+制定一条降低强度同时保住冲击力的策略：
 
-- **Color approach**: Desaturate or shift to more restrained tones?
-- **Hierarchy approach**: Which elements should stay bold (very few), which should recede?
-- **Simplification approach**: What can be removed entirely?
-- **Sophistication approach**: How can we signal quality through restraint?
+- **颜色路线**：去饱和，还是换成更克制的色调？
+- **层级路线**：哪些元素保持粗重（极少数），哪些退后？
+- **简化路线**：什么可以整个移除？
+- **质感路线**：如何用克制来传达品质？
 
-Subtlety requires precision. Quiet without intent collapses to generic.
+含蓄需要精确。没有意图的安静会塌成通用。
 
-## Refine the Design
+## 收敛设计
 
-Systematically reduce intensity across these dimensions:
+系统地沿这些维度降低强度：
 
-### Color Refinement
-- **Reduce saturation**: Shift from fully saturated to 70-85% saturation
-- **Soften palette**: Replace bright colors with muted tones
-- **Reduce color variety**: Use fewer colors more thoughtfully
-- **Neutral dominance**: Let neutrals do more work, use color as accent (10% rule)
-- **Gentler contrasts**: High contrast only where it matters most
-- **Tinted grays**: Use warm or cool tinted grays instead of pure gray. Adds depth without loudness
-- **Never gray on color**: If you have gray text on a colored background, use a darker shade of that color instead; transparency ties contrast to whatever sits behind the text
+### 颜色收敛
+- **降低饱和**：从全饱和降到 70-85% 饱和度
+- **柔和配色**：用灰调色替换鲜亮色
+- **减少颜色种类**：更少的颜色、更用心地用
+- **中性色主导**：让中性色多干活，颜色只作强调（10% 规则）
+- **更温和的对比**：高对比只留给最要紧的地方
+- **带色相的灰**：用偏暖或偏冷的灰替换纯灰。不加响度地增加深度
+- **绝不在彩色上放灰**：彩色底上有灰字时，改用该色的深一档；透明度会把对比拴在文字背后的东西上
 
-### Visual Weight Reduction
-- **Typography**: Reduce font weights (900 → 600, 700 → 500), decrease sizes where appropriate
-- **Hierarchy through subtlety**: Use weight, size, and space instead of color and boldness
-- **White space**: Increase breathing room, reduce density
-- **Borders & lines**: Reduce thickness, decrease opacity, or remove entirely
+### 降低视觉重量
+- **字体**：降低字重（900 → 600，700 → 500），该减的字号减下来
+- **靠含蓄做层级**：用字重、字号与空间，而不是颜色与加粗
+- **留白**：增加呼吸空间，降低密度
+- **边框与线**：变细、降低不透明度，或整个移除
 
-### Simplification
-- **Remove decorative elements**: Gradients, shadows, patterns, textures that don't serve purpose
-- **Simplify shapes**: Reduce border radius extremes, simplify custom shapes
-- **Reduce layering**: Flatten visual hierarchy where possible
-- **Clean up effects**: Reduce or remove blur effects, glows, multiple shadows
+### 简化
+- **移除装饰元素**：不服务于目的的渐变、阴影、图案、纹理
+- **简化形状**：收敛圆角的极端值，简化自定义形状
+- **减少叠层**：能压平的视觉层级就压平
+- **清理效果**：减少或移除模糊、辉光、多重阴影
 
-### Motion Reduction
-- **Reduce animation intensity**: Shorter distances (10-20px instead of 40px), gentler easing
-- **Remove decorative animations**: Keep functional motion, remove flourishes
-- **Subtle micro-interactions**: Replace dramatic effects with gentle feedback
-- **Refined easing**: Use ease-out-quart for smooth, understated motion. Never bounce or elastic
-- **Remove animations entirely** if they're not serving a clear purpose
+### 减少动效
+- **降低动效强度**：更短的距离（10-20px 而不是 40px），更缓的缓动
+- **移除装饰性动画**：保留功能性运动，去掉花活
+- **含蓄的微交互**：用温和的反馈替换戏剧化效果
+- **精炼的缓动**：用 ease-out-quart 做顺滑、低调的运动。绝不弹跳或弹簧
+- **如果动画没有清晰的目的，整个移除**
 
-### Composition Refinement
-- **Reduce scale jumps**: Smaller contrast between sizes creates calmer feeling
-- **Align to grid**: Bring rogue elements back into systematic alignment
-- **Even out spacing**: Replace extreme spacing variations with consistent rhythm
+### 构图收敛
+- **减小尺度跳跃**：字号之间对比更小，感觉更平静
+- **对齐网格**：把脱缰的元素拉回系统对齐
+- **匀开间距**：用一致的节奏替换极端的间距变化
 
-**Avoid**:
-- Make everything the same size/weight (hierarchy still matters)
-- Remove all color (quiet ≠ grayscale)
-- Eliminate all personality (maintain character through refinement)
-- Sacrifice usability for aesthetics (functional elements still need clear affordances)
-- Make everything small and light (some anchors needed)
+**避免**：
+- 把所有东西做成同一尺寸/字重（层级仍然要紧）
+- 移除全部颜色（quiet ≠ 灰度）
+- 抹掉全部个性（靠收敛保住性格）
+- 为美学牺牲可用性（功能性元素仍需要清晰的可供性）
+- 把一切都做小做轻（总需要几个锚点）
 
-## Verify Quality
+## 验证质量
 
-Ensure refinement maintains quality:
+确认收敛保住了质量：
 
-- **Still functional**: Can users still accomplish tasks easily?
-- **Still distinctive**: Does it have character, or is it generic now?
-- **Better reading**: Is text easier to read for extended periods?
-- **Restrained, not absent**: Does the POV survive the cuts?
+- **仍然可用**：用户还能轻松完成任务吗？
+- **仍然独特**：它有性格吗，还是已经通用？
+- **更好读**：长时间阅读文字更轻松了吗？
+- **克制而非缺席**：POV 活过了这些删减吗？
 
-When the result feels right, hand off to `/impeccable polish` for the final pass.
+结果感觉对了，交给 `/impeccable polish` 做最后一遍。

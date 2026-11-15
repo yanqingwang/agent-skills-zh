@@ -1,17 +1,21 @@
-# 07-spring-launch — Spring Launch Fresh
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/light--spring-launch/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 07-spring-launch（春日发布）
 
-Light green gradient with tender green and yellow-green color scheme, using natural curves + petal layout, suitable for spring launch events, new product releases, seasonal marketing, and other fresh natural occasions
+## 风格概览
 
-- **Scene**: Spring launch events, new product releases, seasonal marketing, brand activities
-- **Mood**: Fresh, natural, vibrant, energetic, hopeful
-- **Color Tone**: Green tone, light color system, natural colors, fresh gradients
-- **Industry**: Consumer goods, environmental, health, beauty, food
+浅绿渐变配嫩绿与黄绿配色，采用自然曲线 + 花瓣式版式，适合春季发布会、新品上市、季节营销等清新自然场合
 
-## Color Palette
+- **场景**：春季发布会、新品上市、季节营销、品牌活动
+- **气质**：清新、自然、有活力、元气、希望感
+- **色调**：绿色调、浅色系、自然色、清新渐变
+- **行业**：消费品、环保、健康、美妆、食品
 
-| Name           | Hex     | Usage          |
+## 配色
+
+| 名称           | Hex     | 用途           |
 | -------------- | ------- | -------------- |
 | Background     | #E8F5E9 | background     |
 | Primary        | #4CAF50 | primary        |
@@ -22,43 +26,43 @@ Light green gradient with tender green and yellow-green color scheme, using natu
 | Secondary Text | #388E3C | text_secondary |
 | Muted Text     | #66BB6A | text_muted     |
 
-## Typography
+## 字体排印
 
-| Element  | Font            |
+| 元素     | 字体            |
 | -------- | --------------- |
 | title_en | Arial Black     |
 | title_cn | Microsoft YaHei |
 | body     | Microsoft YaHei |
 | data     | Arial Black     |
 
-## Design Techniques
+## 设计手法
 
-- Light green gradient with tender green and yellow-green color scheme
-- Natural curve layout
-- Petal decorative elements
-- Four-leaf clover arrangement
-- Vertical timeline design
-- Morph transition animations
-- Standardized decorative elements
+- 浅绿渐变配嫩绿与黄绿配色
+- 自然曲线版式
+- 花瓣装饰元素
+- 四叶草式排布
+- 纵向时间轴设计
+- Morph 切换动画
+- 标准化装饰元素
 
-## Page Structure (6 pages)
+## 页面结构（6 页）
 
-| Slide | Type       | Elements | Description                                                          |
+| 页码  | 类型       | 元素数量 | 描述                                                                 |
 | ----- | ---------- | -------- | -------------------------------------------------------------------- |
-| S1    | hero       | 45       | Cover page - curve division + petal decorations + central card       |
-| S2    | highlights | 55       | Highlights page - four-leaf clover style staggered arrangement cards |
-| S3    | features   | 55       | Features page - left product + vertical feature flow                 |
-| S4    | pricing    | 55       | Pricing page - three column pricing cards                            |
-| S5    | timeline   | 50       | Timeline page - sprout growth style vertical timeline                |
-| S6    | cta        | 50       | CTA page - top green area + action button                            |
+| S1    | hero       | 45       | 封面页：曲线分割 + 花瓣装饰 + 中央卡片                               |
+| S2    | highlights | 55       | 亮点页：四叶草式交错排布卡片                                         |
+| S3    | features   | 55       | 特性页：左侧产品 + 纵向特性流                                        |
+| S4    | pricing    | 55       | 定价页：三栏定价卡片                                                 |
+| S5    | timeline   | 50       | 时间轴页：嫩芽生长式纵向时间轴                                       |
+| S6    | cta        | 50       | CTA 页：顶部绿色区 + 行动按钮                                        |
 
-## Reference Script
+## 参考脚本
 
-Complete build script is in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (hero)** — Cover page - curve division + petal decorations + central card
-- **Slide 5 (timeline)** — Timeline page - sprout growth style vertical timeline
+- **Slide 1（hero）**：封面页，曲线分割 + 花瓣装饰 + 中央卡片
+- **Slide 5（timeline）**：时间轴页，嫩芽生长式纵向时间轴
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

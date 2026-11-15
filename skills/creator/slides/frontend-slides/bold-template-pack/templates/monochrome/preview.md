@@ -1,55 +1,59 @@
-# Monochrome Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/monochrome/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Monochrome 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/monochrome/design.md`
-- Preview card: `bold-template-pack/templates/monochrome/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/monochrome/design.md`
+- 预览卡：`bold-template-pack/templates/monochrome/preview.md`
 
-- Slug: `monochrome`
-- Tagline: Ivory ledger paper with all-black type; Lora serif headlines, Jost body, no color at all.
-- Mood: restrained, literary, archival, ledger
-- Tone: literary, considered, neutral, honest
-- Formality: high
-- Density: high
-- Scheme: light
-- Best for: Anything that should feel like a hand-typeset ledger: user research synthesis, white papers, longform reports, academic and policy briefs, advisory deliverables, bilingual EN/CN reports. Equally good for tech, design, or brand decks that want their words to be the only thing on the page.
-- Avoid for: Decks that need visual personality or color-led storytelling — the all-ink palette is intentionally austere.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`monochrome`
+- Tagline：象牙白账本纸配全黑文字；Lora 衬线标题、Jost 正文，完全没有颜色。
+- Mood：restrained、literary、archival、ledger
+- Tone：literary、considered、neutral、honest
+- Formality：high
+- Density：high
+- Scheme：light
+- 适合：一切应当像手工排字账本的内容：用户研究综合、白皮书、长篇报告、学术与政策简报、咨询交付物、EN/CN 双语报告。同样适合科技、设计或品牌演示中想让文字成为页面上唯一主角的那一类。
+- 避免：需要视觉个性或以色彩主导叙事的演示文稿：全油墨配色刻意保持清苦。
 
-A literary editorial system rendered in black ink on cream paper. Ultra-light geometric sans (Jost at weight 200–300) carries every headline; Lora italic serif handles quote text and insight-card titles; JetBrains Mono provides the structural chrome. There are no chromatic accents — every color in the palette is a graphite or cream tone, and "accent" simply means "darker ink." The aesthetic borrows from independent research reports, scholarly monographs, and the quietest end of contemporary editorial design — closer to a printed journal than a tech presentation.
+## 视觉速览
 
-Monochrome (Ivory Ledger) is a literary editorial system built on a single material constraint: black ink on cream paper, and nothing else. The palette has eight tokens, but seven of them are tonal variations of cream or graphite. There is no chromatic accent — the "accent" color is just darker ink. The result is a system that reads as a carefully typeset research report or a quiet contemporary monograph, not a presentation.
+一套以黑油墨印在米白纸上的文学编辑系统。超轻几何无衬线（Jost 字重 200–300）承担每个标题；Lora 斜体衬线处理引语文字与洞察卡标题；JetBrains Mono 提供结构化界面装饰。没有任何彩色点缀：配色中的每种颜色都是石墨或米白色调，"点缀"只是"更深的油墨"的意思。美学借鉴独立研究报告、学术专著与当代编辑设计中最安静的一端：更像一本印刷期刊，而非技术演示。
 
-## Preview Ingredients
+Monochrome（Ivory Ledger）是一套文学编辑系统，建立在单一材质约束上：黑油墨配米白纸，别无其他。配色有八个 token，但其中七个是米白或石墨的色调变体。没有彩色点缀："点缀"色只是更深的油墨。最终得到的是一套读起来像精心排字的研报或安静的当代专著的系统，而不像一场演示。
 
-- Palette: cream-paper #FAFADF; cream-paper-2 #F2F2D2; cream-paper-3 #F0F0D4; cream-warm #F5F0E4; ink-black #1A1A16; ink-graphite #5E5E54; ink-graphite-light #8A8A80
-- Typography: Jost; JetBrains Mono; Lora; {typography.label.fontFamily}
-- Signature move: Cream paper background ({colors.cream-paper}) on every slide — never white, never dark by default. The cream is the surface, not a stylistic choice.
-- Signature move: Ultra-light Jost (weight 200 for display, weight 300 for body) is the dominant typographic voice.
-- Signature move: Lora italic serif appears in two specific moments: pull-quote bodies and insight-card titles. Nowhere else.
-- Signature move: JetBrains Mono uppercase with 0.12em+ tracking handles every structural label, chrome tag, axis, and bullet marker.
-- Signature move: The system has no chromatic accent. The accent color is {colors.ink-black} — slightly darker ink.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：cream-paper #FAFADF; cream-paper-2 #F2F2D2; cream-paper-3 #F0F0D4; cream-warm #F5F0E4; ink-black #1A1A16; ink-graphite #5E5E54; ink-graphite-light #8A8A80
+- Typography：Jost; JetBrains Mono; Lora; {typography.label.fontFamily}
+- Signature move：每页幻灯片都用米白纸张背景（{colors.cream-paper}）：从不用白，默认也不暗。米白就是表面，不是风格选择。
+- Signature move：超轻 Jost（展示字重 200，正文字重 300）是主导的排印声音。
+- Signature move：Lora 斜体衬线只出现在两个特定时刻：拉引语正文与洞察卡标题。别无他处。
+- Signature move：JetBrains Mono 大写配 0.12em 以上字距，处理每个结构标签、界面装饰标签、坐标轴与列表符。
+- Signature move：系统没有任何彩色点缀。点缀色就是 {colors.ink-black}：稍微更深的油墨。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

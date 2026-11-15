@@ -1,35 +1,39 @@
-# architectural-plan — Architectural Plan
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--architectural-plan/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# architectural-plan：建筑图纸
 
-Dark blue-gray background with light blue panels and gold accents, using structured panel divisions to simulate the professional layout of architectural plans.
+## 风格概览
 
-- **Scene**: Architectural design, business plans, real estate development
-- **Mood**: Professional, structured, architectural
-- **Color Tone**: Dark blue-gray background + light blue panels + gold accents
+深蓝灰背景配浅蓝面板与金色点缀，用结构化的面板划分模拟建筑图纸的专业排版。
 
-## Color Palette
+- **适用场景**：建筑设计、商业计划、房地产开发
+- **氛围**：专业、结构化、建筑感
+- **色调**：深蓝灰背景 + 浅蓝面板 + 金色点缀
 
-| Name        | Hex    | Usage                                  |
-| ----------- | ------ | -------------------------------------- |
-| Dark Blue   | 1C2B3A | Background                             |
-| Panel Blue  | B8D4E0 | Content panels, sidebars               |
-| Gold Accent | F4C430 | Accent color, title underlines, badges |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 深蓝 | 1C2B3A | 背景 |
+| 面板蓝 | B8D4E0 | 内容面板、侧栏 |
+| 金色强调 | F4C430 | 强调色、标题下划线、徽章 |
 
-- Pages divided into dark areas and light panel areas, simulating the white space and annotation zones of architectural drawings
-- Left-right content panel alternating layout (left content/right panel or right content/left panel), adding rhythmic variation
-- Top navigation bar + numbering system (01, 02...), reinforcing the sectional coding aesthetic of architectural drawings
-- star_badge star-shaped badges as decorations, gold title underlines elevate hierarchy
-- roundRect rounded buttons with gold fill, unifying CTA visual style
+## 设计技法
 
-## Reference Script
+- 页面划分为深色区与浅色面板区，模拟建筑图纸的留白与标注区
+- 左右内容面板交替版式（左内容/右面板，或右内容/左面板），增加节奏变化
+- 顶部导航栏 + 编号系统（01、02……），强化建筑图纸的分区编号美感
+- star_badge 星形徽章作装饰，金色标题下划线提升层级
+- roundRect 圆角按钮填金色，统一 CTA 视觉风格
 
-Full build script available in `build.sh`.
-**Recommended slides to read for understanding core design techniques**:
+## 参考脚本
 
-- **Slide 1 (title)** — Left-right panel division layout and star_badge decoration
-- **Slide 3 (services)** — Alternating panel layout and top navigation bar implementation
-- **Slide 5 (contact)** — Multi-statistic arrangement and CTA button design
-  No need to read all — skim 2-3 representative slides.
+完整构建脚本见 `build.sh`。
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1 (title)**：左右面板划分版式与 star_badge 装饰
+- **Slide 3 (services)**：面板交替版式与顶部导航栏实现
+- **Slide 5 (contact)**：多数据排列与 CTA 按钮设计
+  无需全部精读，浏览 2-3 张代表性幻灯片即可。

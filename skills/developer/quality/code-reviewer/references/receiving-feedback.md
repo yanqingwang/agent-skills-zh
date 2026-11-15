@@ -1,29 +1,33 @@
-# Receiving Feedback
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/code-reviewer/references/receiving-feedback.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
+# 接收反馈
 
 ---
 
-## Core Mindset
+## 核心心态
 
-> "Verify before implementing. Ask before assuming. Technical correctness over social comfort."
+> "先验证，再实现。先提问，再假设。技术正确性优先于社交舒适。"
 
-Code review feedback is a technical discussion, not a social one. Focus on the code, not on feelings.
+代码审查反馈是技术讨论，不是社交讨论。关注代码本身，不关注情绪。
 
 ---
 
-## The Six-Step Process
+## 六步流程
 
-### Step 1: Read Completely
+### Step 1: 完整阅读
 
-**Without reacting.** Read the entire comment before forming any response.
+**先不做反应。** 在形成任何回应之前，读完整条评论。
 
 ```markdown
 ❌ BAD: Read first sentence → start typing defense
 ✅ GOOD: Read entire comment → understand full context → then respond
 ```
 
-### Step 2: Restate Requirements
+### Step 2: 复述需求
 
-Rephrase the reviewer's feedback in your own words to confirm understanding.
+用自己的话复述审查者的反馈，确认理解无误。
 
 ```markdown
 Reviewer: "This function is doing too much. It handles validation,
@@ -33,9 +37,9 @@ Your restatement: "You're suggesting I split this into three separate
 functions: validate(), transform(), and persist()?"
 ```
 
-### Step 3: Check Against Codebase
+### Step 3: 对照代码库核实
 
-Verify the feedback against actual code conditions before responding.
+在回应之前，对照真实代码情况验证反馈。
 
 ```typescript
 // Reviewer says: "This will throw if user is null"
@@ -51,9 +55,9 @@ function getUsername(user: User): string {
 }
 ```
 
-### Step 4: Evaluate Technical Soundness
+### Step 4: 评估技术合理性
 
-Consider whether the feedback applies to your specific stack and context.
+考虑这条反馈是否适用于你的具体技术栈和上下文。
 
 ```markdown
 Reviewer: "You should use useMemo here for performance"
@@ -64,9 +68,9 @@ Evaluate:
 - Does React 19's compiler auto-optimize this? → Check version
 ```
 
-### Step 5: Respond with Substance
+### Step 5: 有实质地回应
 
-Provide technical acknowledgment or reasoned objection.
+给出技术性确认，或有理有据的反驳。
 
 ```markdown
 ✅ GOOD: "Fixed. Split into validate(), transform(), persist()
@@ -79,9 +83,9 @@ Provide technical acknowledgment or reasoned objection.
 ❌ BAD: "I don't think that's necessary."
 ```
 
-### Step 6: Implement One at a Time
+### Step 6: 逐条实现
 
-Address each piece of feedback individually with verification.
+逐条处理每项反馈，并逐条验证。
 
 ```markdown
 Feedback item 1: Add null check
@@ -95,23 +99,23 @@ NOT: Try to address all feedback in one massive commit
 
 ---
 
-## Avoiding Agreement Theater
+## 避免"表演式认同"
 
-### The Problem
+### 问题所在
 
-Performative agreement wastes time and provides no information. When you write "Great point!" you're adding noise, not signal.
+表演式的认同浪费时间，也不提供任何信息。当你写下"好观点！"时，你只是在增加噪音，不是在增加信号。
 
-### Forbidden Phrases
+### 禁用短语
 
-| Phrase | Why It's Wrong |
+| 短语 | 为什么错 |
 |--------|----------------|
-| "You're absolutely right!" | Sycophantic, adds no information |
-| "Great point!" | Empty praise, not a response |
-| "Excellent feedback!" | Flattery, not engagement |
-| "Thanks for catching this!" | Unnecessary, just fix it |
-| "I really appreciate..." | Social fluff, not technical |
+| "你说得太对了！" | 谄媚，不提供信息 |
+| "好观点！" | 空洞夸奖，不是回应 |
+| "反馈太棒了！" | 奉承，不是投入讨论 |
+| "谢谢你发现这个问题！" | 多余，直接修就行 |
+| "我非常感谢……" | 社交客套，不涉技术 |
 
-### Actions Demonstrate Understanding
+### 行动证明理解
 
 ```markdown
 ❌ "You're absolutely right! Great catch on that null check!
@@ -120,11 +124,11 @@ Performative agreement wastes time and provides no information. When you write "
 ✅ "Fixed. Added null check at line 42."
 ```
 
-The code change shows you understood. Words are redundant.
+代码改动表明你理解了。语言是多余的。
 
-### When Acknowledgment IS Appropriate
+### 何时简短致谢是合适的
 
-Brief, technical acknowledgment when learning something new:
+学到新东西时，简短、技术性的致谢是合适的：
 
 ```markdown
 ✅ "I wasn't aware of that edge case. Added handling at line 42."
@@ -133,21 +137,21 @@ Brief, technical acknowledgment when learning something new:
 
 ---
 
-## When to Push Back
+## 何时反驳
 
-### Valid Reasons to Disagree
+### 反驳的正当理由
 
-Push back with technical reasoning when feedback:
+当反馈出现以下情况时，用技术理由反驳：
 
-| Situation | How to Respond |
+| 情况 | 如何回应 |
 |-----------|----------------|
-| Breaks existing functionality | "This change would break Feature X (see test at tests/feature-x.spec.ts:34)" |
-| Lacks full codebase context | "This pattern exists because of Y (see architecture.md#constraints)" |
-| Violates YAGNI | "This flexibility isn't needed yet - only one caller exists" |
-| Is technically incorrect | "This actually works because of Z (link to docs)" |
-| Conflicts with established architecture | "This conflicts with our JWT approach (see auth/README.md)" |
+| 会破坏现有功能 | "这个改动会破坏功能 X（见 tests/feature-x.spec.ts:34 的测试）" |
+| 缺少完整的代码库上下文 | "这个模式存在是因为 Y（见 architecture.md#constraints）" |
+| 违反 YAGNI | "目前不需要这种灵活性，只有一个调用方" |
+| 技术上不正确 | "这实际上能工作，因为 Z（附文档链接）" |
+| 与既有架构冲突 | "这与我们的 JWT 方案冲突（见 auth/README.md）" |
 
-### Good Pushback Format
+### 好的反驳格式
 
 ```markdown
 ## Template
@@ -159,7 +163,7 @@ Switching to sessions would require restructuring the API middleware.
 Was that the intent, or should we keep JWT?
 ```
 
-### Bad Pushback
+### 糟糕的反驳
 
 ```markdown
 ❌ "I don't think that's right."
@@ -170,19 +174,19 @@ Was that the intent, or should we keep JWT?
 
 ---
 
-## Verification Before Claiming Fixed
+## 宣称修复之前的验证
 
-### The Checklist
+### 清单
 
-Before writing "Fixed" or "Done":
+写下"已修复"或"完成"之前：
 
-- [ ] Change is implemented
-- [ ] Tests pass (full suite, not just changed files)
-- [ ] Specific behavior mentioned in feedback is verified
-- [ ] Edge cases are tested
-- [ ] No unintended side effects introduced
+- [ ] 改动已实现
+- [ ] 测试通过（完整测试套件，不只是改动的文件）
+- [ ] 反馈中提到的具体行为已验证
+- [ ] 边界情况已测试
+- [ ] 没有引入意外的副作用
 
-### Acceptable Responses
+### 可接受的回应
 
 ```markdown
 ✅ "Fixed. Added null check. Tests pass."
@@ -190,7 +194,7 @@ Before writing "Fixed" or "Done":
 ✅ "Implemented. All 47 tests pass."
 ```
 
-### Unacceptable Responses
+### 不可接受的回应
 
 ```markdown
 ❌ "I think this addresses your concern."
@@ -199,9 +203,9 @@ Before writing "Fixed" or "Done":
 ❌ "Fixed (probably)."
 ```
 
-### When You Can't Verify
+### 无法验证时
 
-If you cannot verify a fix:
+如果无法验证修复：
 
 ```markdown
 ✅ "Implemented the change, but I'm unable to verify because
@@ -210,29 +214,29 @@ If you cannot verify a fix:
 
 ---
 
-## Quick Reference
+## 速查表
 
-| Situation | Response |
+| 情况 | 回应 |
 |-----------|----------|
-| Reviewer is correct | "Fixed. [What you changed]." |
-| You need clarification | "To confirm: you're suggesting [restatement]?" |
-| Reviewer is incorrect | "This works because [evidence]. [Link to proof]." |
-| You disagree on approach | "This conflicts with [X]. Should we [alternative]?" |
-| You learned something | "I wasn't aware of [X]. Fixed at line [N]." |
-| You can't verify | "Implemented. Unable to verify because [reason]." |
+| 审查者正确 | "已修复。[你改了什么]。" |
+| 你需要澄清 | "确认一下：你是建议[复述]吗？" |
+| 审查者不正确 | "这能工作是因为[证据]。[证明链接]。" |
+| 你不同意方案 | "这与 [X] 冲突。是否应该[替代方案]？" |
+| 你学到了新东西 | "我此前不知道 [X]。已在第 [N] 行修复。" |
+| 你无法验证 | "已实现。无法验证，因为[原因]。" |
 
 ---
 
-## Anti-Patterns
+## 反模式
 
-| Pattern | Problem | Fix |
+| 模式 | 问题 | 修复 |
 |---------|---------|-----|
-| Defensive responses | Creates conflict, wastes time | Assume good faith, respond technically |
-| Apologetic responses | Unprofessional, adds noise | Just fix it |
-| Delayed responses | Blocks review cycle | Respond within hours, not days |
-| Vague responses | Leaves reviewer uncertain | Be specific about changes |
-| Ignoring feedback | Disrespectful, creates friction | Address every point |
+| 防御性回应 | 制造冲突，浪费时间 | 假设对方善意，用技术方式回应 |
+| 道歉式回应 | 不专业，增加噪音 | 直接修 |
+| 延迟回应 | 阻塞审查循环 | 几小时内回应，而不是几天 |
+| 模糊回应 | 让审查者拿不准 | 具体说明改动 |
+| 忽略反馈 | 不尊重，制造摩擦 | 逐条回应 |
 
 ---
 
-*Content adapted from [obra/superpowers](https://github.com/obra/superpowers) by Jesse Vincent (@obra), MIT License.*
+*内容改编自 [obra/superpowers](https://github.com/obra/superpowers)（作者 Jesse Vincent (@obra)），MIT License。*

@@ -12,11 +12,15 @@ photo: duotone ink paper con=8
 pictured: Specimen Book, Poster hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/specimen.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Specimen
 
-A foundry's material: warm oat paper, warm near-black ink, Bodoni Moda 400 pinned at its highest optical size so the hairlines thin to a razor against the stems, a Geist body beneath it, square 1px rules and one ink-blue signal. It reads as hand-set and exact because all the contrast lives inside the letters, none in colour or depth. It is not a cream luxury page with a terracotta accent, and not a fashion masthead in bold Didone.
+一家字库的材料：暖调燕麦纸、暖调近黑墨色、钉在最大光学字号上的 Bodoni Moda 400，发丝线在主笔画旁细到刀锋，之下是 Geist 正文，方正的 1px 横线与一个墨蓝信号色。它读起来像手工排版、精确无误，因为所有对比都住在字母内部，颜色与深度里没有一点。它不是带陶土色强调的奶油色奢华页，也不是粗壮 Didone 的时尚刊头。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -33,51 +37,51 @@ A foundry's material: warm oat paper, warm near-black ink, Bodoni Moda 400 pinne
 }
 ```
 
-`--color-guide` is the blue's second strength: a translucent hairline for a metric guide (cap height, x-height, baseline) drawn under a word, never a fill. `--color-rule-2` is the darker hairline for a control's track or a table's head.
+`--color-guide` 是蓝色的第二档强度：一条半透明发丝线，作字高参考线（大写字高、x 字高、基线）画在词下，绝不做填色。`--color-rule-2` 是更深的发丝线，用于控件的滑轨或表格的表头。
 
-## Type
+## 字体（Type）
 
-- **Display:** Bodoni Moda 400, `--tracking-display`, line-height 1.02, sentence case, roman. `h1` and `h2` take `"opsz" 96`, where the hairline nearly vanishes against the stem and that contrast is the graphic; an `h3` lets the axis follow its size, since a razor hairline breaks at 25px. A word set as a poster may run to 20vw.
-- **Body:** Geist 400 at 17px, line-height 1.55; the plain sans under the Didone is the tension. Bodoni Moda italic stays inside running text or a sample, never a head.
-- **Labels, captions, table heads:** Geist 500 a step smaller, sentence case, `--color-muted`. Geist Mono only on figures that compare (a size, a weight, a code point), tabular.
+- **展示字体：**Bodoni Moda 400，`--tracking-display`，行高 1.02，句首大写，正体。`h1` 与 `h2` 取 `"opsz" 96`，发丝线在主笔画旁几乎消失，这组对比就是图形本身；`h3` 让光学轴随字号走，因为刀锋发丝线在 25px 会断。排成海报的一个词可以到 20vw。
+- **正文：**Geist 400，17px，行高 1.55；Didone 之下的朴素无衬线就是张力所在。Bodoni Moda 斜体只留在行文或字例里，绝不做标题。
+- **标签、图注、表头：**Geist 500 小一档，句首大写，用 `--color-muted`。Geist Mono 只用于相互比较的数字（字号、字重、码点），用表格数字。
 
-## Surfaces
+## 表面（Surfaces）
 
-- 1px `--color-rule` hairlines on divisions, table rows and between cells; a 3px `double` rule heads the one table that matters, once a page.
-- No depth: nothing lifts, nothing casts a shadow, nothing is rounded. A well is a paper step (`--color-paper-2`) inside a hairline.
-- Bands: a `--color-paper-2` band, or one `--color-ink` band with oat type, where the Didone reads sharpest; two a page at most, never a blue one.
-- Photographs: one at most, the face's world: a reading room, a book open on a desk, metal sorts in a case; it prints in ink on oat (the duotone) as a plate, square, inside a hairline, eight columns or the full container. Its caption names the setting beneath it; type never sits on it.
-- No texture, no mesh, no gradient behind type: the oat is a colour, not a paper scan.
+- 分界、表格行与单元格之间用 1px `--color-rule` 发丝线；3px `double` 双线为页面上唯一重要的那张表起头，每页一次。
+- 无深度：无浮起、无投影、无圆角。凹槽是发丝线内的一档纸面（`--color-paper-2`）。
+- 色带：`--color-paper-2` 色带，或一条 `--color-ink` 色带配燕麦色文字，Didone 在其上最锐利；每页至多两条，绝不用蓝色。
+- 照片：至多一张，字面的世界：阅览室、摊开在桌上的书、字盘里的金属活字；以墨色印在燕麦色上（双色调），如一块印版，方正，收在发丝线内，八列或整个容器。图注在其下方说明场景；文字绝不压在照片上。
+- 无纹理、无网格、文字之后无渐变：燕麦是一种颜色，不是纸张扫描。
 
-## Range
+## 版式（Range）
 
-- **Statement with guides:** one word or line at poster size with `--color-guide` hairlines at its real cap height, x-height and baseline, each named in the label style.
-- **Rows as a waterfall:** one line falling through sizes, each row its size in Geist Mono at left, hairlines between, every line cut to fit its row.
-- **Grid as a character set:** hairline cells across twelve columns, one lead cell four wide holding a glyph at display size; the current cell fills ink.
-- **Comparison and price list:** roman beside italic on the ink band, one passage each at reading size; the licence as a ruled table under the double rule, the price in Didone at `--text-display-s`.
+- **带参考线的宣言：**一个词或一行排成海报字号，`--color-guide` 发丝线画在它真实的大写字高、x 字高与基线上，各以标签字体命名。
+- **行排成瀑布：**一行字逐级坠落字号，每行左侧用 Geist Mono 标出它的字号，行间发丝线，每一行都裁到贴合所在行。
+- **网格化作字符集：**发丝线单元格横跨十二列，一个四格宽的主格放一个展示字号的字形；当前格填墨色。
+- **对比与价目：**墨色色带上正体与斜体并排，各排一段阅读字号；许可条款作为划线表格压在双线之下，价格用 Didone 排 `--text-display-s`。
 
-## Controls
+## 控件（Controls）
 
-- The pair: an ink-filled rectangle with oat text beside a 1px ink-outlined one, both square, Geist 500, 48px tall.
-- A range is a 1px `--color-rule-2` track with a square ink thumb; a toggle is two square cells inside one ink hairline, the pressed one paper with a 2px ink rule beneath, so the ink fill stays the primary's. Inputs are square with the `--color-focus` ring.
-- Links carry a 1px ink-blue underline at 0.18em that thickens on hover. The blue stays under 5% of a screen: a link, the focus ring, the guides, one figure.
+- 一对：墨色填充的矩形配燕麦色文字，旁边是 1px 墨色描边的另一个，两者方正，Geist 500，48px 高。
+- 滑杆是 1px `--color-rule-2` 滑轨配方形墨色滑块；开关是一根墨色发丝线里的两格方格，按下的那格用纸色、底下压一条 2px 墨线，墨色填色留给主按钮。输入框方正，焦点环用 `--color-focus`。
+- 链接带 1px 墨蓝下划线，偏移 0.18em，悬停加粗。蓝色不超过一块屏幕的 5%：一个链接、焦点环、参考线、一个数字。
 
-## Motion
+## 动效（Motion）
 
-Nothing moves except state: an underline thickens, a cell fills, a sample takes the size and weight it was given. No reveal, no loop, nothing on arrival.
+除状态外皆不动：下划线加粗，一格填色，字例接受给定的字号与字重。无显现，无循环，到来时无动作。
 
-## Voice
+## 语气（Voice）
 
-Editorial, hand-set, lightly literary. Verbs over adjectives; name the face, the size, the number.
+编辑腔、手工排版、略带文学气。动词优先于形容词；说出字面、字号、数字。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a heavy display head; bold turns the Didone into a fashion masthead. Heavier weights appear only as samples of a family.
-- Never an optical size under 72 on an `h1` or `h2`; fat hairlines are this theme's most common failure.
-- Never a warm accent, never cool paper: the signal is ink blue, the warmth comes from the oat.
-- Never a drawn book, page or device to show text; set the text itself at its size.
+- 绝不用重磅展示标题；加粗会把 Didone 变成时尚刊头。更重的字重只作为字族的字例出现。
+- 绝不让 `h1` 或 `h2` 的光学字号低于 72；发丝线变胖是本主题最常见的失败。
+- 绝不用暖色强调，也绝不用冷调纸面：信号色是墨蓝，暖意来自燕麦。
+- 绝不画书、页面或设备来展示文字；把文字本身按它的字号排出来。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400&family=Geist:wght@400;500&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">

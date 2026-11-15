@@ -1,102 +1,106 @@
-# Bauhaus Color Block — Geometric Grid
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/mixed--bauhaus-blocks/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 包豪斯色块（几何网格）
 
-Bold modernist design inspired by Bauhaus movement. Features flat solid color blocks in geometric grid compositions, high-contrast typography, and signature Bauhaus elements (stacked circles, vertical bar clusters). Perfect for creative studios, branding agencies, and portfolio presentations.
+## 风格概览
 
-- **Scenario**: Creative studios, design portfolios, branding agencies, architectural firms, art galleries
-- **Mood**: Bold, modernist, geometric, artistic, confident
-- **Tone**: Cream background with forest green, amber, tangerine, and dark accents
+受包豪斯运动启发的粗犷现代主义设计。特点是几何网格构图中的扁平纯色块、高对比排印，以及标志性的包豪斯元素（堆叠圆、竖条簇）。适合创意工作室、品牌代理和作品集演示。
 
-## Color Palette
+- **场景**：创意工作室、设计作品集、品牌代理、建筑事务所、美术馆
+- **气质**：大胆、现代主义、几何、艺术、自信
+- **基调**：奶油色背景，配森林绿、琥珀、橘红与深色点缀
 
-| Name       | Hex     | Usage                           |
+## 配色
+
+| 名称       | Hex     | 用途                        |
 | ---------- | ------- | ------------------------------- |
-| Background | #F0EBE0 | Warm cream canvas               |
-| Forest     | #1D5C38 | Deep green for primary blocks   |
-| Amber      | #F4C040 | Golden yellow for accents       |
-| Tangerine  | #E06828 | Orange for secondary blocks     |
-| Teal       | #1B6060 | Dark teal for variation         |
-| Dark       | #1E1818 | Near-black for headers and text |
-| White      | #FFFFFF | White for text on dark blocks   |
-| Dim        | #888878 | Muted grey for supporting text  |
+| Background | #F0EBE0 | 暖奶油色画布                    |
+| Forest     | #1D5C38 | 主色块的深绿                    |
+| Amber      | #F4C040 | 点缀用金黄                      |
+| Tangerine  | #E06828 | 次级色块的橙色                  |
+| Teal       | #1B6060 | 增加变化的深青                  |
+| Dark       | #1E1818 | 标题与正文的近黑                |
+| White      | #FFFFFF | 深色块上的白字                  |
+| Dim        | #888878 | 辅助文字的哑灰                  |
 
-## Typography
+## 字体排印
 
-| Element        | Font           | Size             |
+| 元素           | 字体           | 字号             |
 | -------------- | -------------- | ---------------- |
-| Hero title     | Segoe UI Black | 40pt             |
-| Stats          | Segoe UI Black | 48pt             |
-| Section labels | Segoe UI       | 10pt (uppercase) |
-| Body           | Segoe UI       | 11-13pt          |
+| 主标题         | Segoe UI Black | 40pt             |
+| 数据大字       | Segoe UI Black | 48pt             |
+| 区块标签       | Segoe UI       | 10pt（全大写）   |
+| 正文           | Segoe UI       | 11-13pt          |
 
-## Design Techniques
+## 设计手法
 
-- **Flat color mosaic**: Rect blocks in solid colors with no gradients or shadows
-- **Bauhaus signature elements**:
-  - 3 stacked circles with progressive opacity (0.90 → 0.70 → 0.50)
-  - Vertical bar cluster (0.5cm width bars in alternating colors)
-- **Geometric grid layouts**: Asymmetric divisions creating visual rhythm
-- **High-contrast flat typography**: Bold black text on colored blocks or vice versa
-- **Stat badges**: Rounded rect buttons with bold numbers
-- **!!panel morph actor**: Large rect that transforms across slides (right-block → top-stripe → left-col → top-band → accent-bar → full-slide)
+- **扁平色块马赛克**：纯色矩形块，不用渐变和阴影
+- **包豪斯标志性元素**：
+  - 3 个透明度递进的堆叠圆（0.90 → 0.70 → 0.50）
+  - 竖条簇（0.5cm 宽、颜色交替的竖条）
+- **几何网格布局**：非对称分割，制造视觉节奏
+- **高对比扁平排印**：彩色块上的加粗黑字，或反之
+- **数据徽章**：带加粗数字的圆角矩形按钮
+- **!!panel morph actor**：跨页变换的大矩形（right-block → top-stripe → left-col → top-band → accent-bar → full-slide）
 
-## Page Structure (7 slides)
+## 页面结构（7 页）
 
-| Slide | Type       | !!panel Position                      | Description                                                  |
+| 页码  | 类型       | !!panel 位置                          | 描述                                                         |
 | ----- | ---------- | ------------------------------------- | ------------------------------------------------------------ |
-| 1     | hero       | Right block (13.5cm-28.37cm)          | Mosaic: left content / right color grid with stacked circles |
-| 2     | grid       | Top stripe (full-width, 2.8cm height) | 2×2 stat cards in forest/amber/tangerine/teal                |
-| 3     | pillars    | Left column (0-12.5cm)                | Forest left panel + 4 feature rows right                     |
-| 4     | comparison | Top band (8cm height)                 | Amber top band + 2-column content below                      |
-| 5     | timeline   | Vertical accent bar (4cm width)       | Tangerine left bar + 3-step process right                    |
-| 6     | hero       | Full slide (33.87cm width)            | Complete forest background                                   |
-| 7     | cta        | Full forest background                | Call to action with centered content                         |
+| 1     | hero       | 右侧块（13.5cm-28.37cm）              | 马赛克：左侧内容 / 右侧带堆叠圆的色块网格                    |
+| 2     | grid       | 顶部条带（全宽，2.8cm 高）            | forest/amber/tangerine/teal 四色的 2×2 数据卡片              |
+| 3     | pillars    | 左侧列（0-12.5cm）                    | 左侧 forest 面板 + 右侧 4 行特性                             |
+| 4     | comparison | 顶部横带（8cm 高）                    | 顶部 amber 横带 + 下方双栏内容                               |
+| 5     | timeline   | 竖向强调条（4cm 宽）                  | 左侧 tangerine 竖条 + 右侧三步流程                           |
+| 6     | hero       | 整页（33.87cm 宽）                    | 通铺 forest 背景                                             |
+| 7     | cta        | 通铺 forest 背景                      | 居中内容的行动号召                                           |
 
-## Key Morph Patterns
+## 关键 Morph 模式
 
-- **!!panel actor**: Main geometric block that morphs through dramatic transformations:
-  1. S1: Right block (14.87×16.55cm) with stacked circles
-  2. S2: Top stripe (33.87×2.8cm) header
-  3. S3: Left column (12.5cm width, full height)
-  4. S4: Top band (33.87×8cm)
-  5. S5: Vertical accent bar (4×19.05cm, left edge)
-  6. S6: Full slide (33.87×19.05cm)
-  7. S7: Full slide (maintained)
+- **!!panel actor**：贯穿大幅变形的主几何块：
+  1. S1：右侧块（14.87×16.55cm），带堆叠圆
+  2. S2：顶部条带（33.87×2.8cm）作页眉
+  3. S3：左列（12.5cm 宽，全高）
+  4. S4：顶部横带（33.87×8cm）
+  5. S5：竖向强调条（4×19.05cm，左缘）
+  6. S6：整页（33.87×19.05cm）
+  7. S7：整页（保持不变）
 
-- **Position changes**: Panel moves from right → top → left → top → left → full
-- **Size changes**: From partial block → thin stripe → column → band → narrow bar → full canvas
-- **Color consistency**: Panel stays forest green across all transformations
+- **位置变化**：面板从右 → 顶 → 左 → 顶 → 左 → 全页
+- **尺寸变化**：局部块 → 细条带 → 纵列 → 横带 → 窄条 → 全画布
+- **颜色一致**：面板在所有变换中保持 forest 绿
 
-## Bauhaus Signature Elements
+## 包豪斯标志性元素
 
-1. **3 Stacked Circles** (S1, S4):
-   - Cream ellipses with progressive opacity (0.90, 0.70, 0.50)
-   - Overlapping placement creating depth
-   - Positioned on forest green background
+1. **3 个堆叠圆**（S1、S4）：
+   - 奶油色椭圆，透明度递进（0.90、0.70、0.50）
+   - 交叠摆放，制造纵深
+   - 置于 forest 绿背景上
 
-2. **Vertical Bar Cluster** (S1, S5):
-   - 0.5cm width bars in alternating colors (cream, amber, cream, tangerine)
-   - 1.9cm height, 1cm spacing
-   - Creates rhythmic visual accent
+2. **竖条簇**（S1、S5）：
+   - 0.5cm 宽、颜色交替的竖条（cream、amber、cream、tangerine）
+   - 高 1.9cm，间距 1cm
+   - 形成有节奏的视觉点缀
 
-3. **Rounded Rect Badges**:
-   - Stat badges with bold numbers
-   - High contrast: forest/dark background + white/cream text
+3. **圆角矩形徽章**：
+   - 带加粗数字的数据徽章
+   - 高对比：forest/dark 背景 + white/cream 文字
 
-## Grid Compositions
+## 网格构图
 
-- **Mosaic Grid** (S1): Asymmetric division with multiple rect blocks
-- **2×2 Grid** (S2): Four equal stat cards with consistent padding
-- **Left-Right Split** (S3): 12.5cm left column + remaining right content
-- **Top-Bottom Split** (S4): 8cm top band + lower content area
+- **马赛克网格**（S1）：多个矩形块的非对称分割
+- **2×2 网格**（S2）：四张等大数据卡片，内边距一致
+- **左右分割**（S3）：12.5cm 左列 + 右侧余下内容
+- **上下分割**（S4）：8cm 顶部横带 + 下方内容区
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.py` (Python with officecli).
+完整构建脚本见 `build.py`（Python + officecli）。
 
-**Recommended slides to read for core techniques**:
+**建议阅读的核心技巧页**：
 
-- **Slide 1 (hero)** — mosaic composition with stacked circles and bar cluster
-- **Slide 2 (grid)** — 2×2 stat cards with !!panel as thin top stripe
-- **Slide 3 (pillars)** — left panel with numbered feature rows and ellipse badge system
+- **第 1 页（hero）**：带堆叠圆与竖条簇的马赛克构图
+- **第 2 页（grid）**：!!panel 变细顶条带的 2×2 数据卡片
+- **第 3 页（pillars）**：左面板配编号特性行与椭圆徽章体系

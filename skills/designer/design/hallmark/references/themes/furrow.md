@@ -12,11 +12,15 @@ photo: natural con=8 sat=-6
 pictured: Field Record, Map hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/furrow.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Furrow
 
-A working records voice drawn on the land itself: warm manila paper, near-black ink, and the place the work happens generated as a survey map (contours, hedges, walls, water, the holding edged in tangerine like a title plan) with the records pinned where they happened. Entries open as waterproof notebook pages; the rest is ruled lists, figures with their units and moulded keys. Tangerine is ear tag and baler twine; green is what is in date. It is not a pastoral lifestyle page, not a glossy dashboard and not a sat-nav.
+画在土地本身上的耕作记录之声：暖调牛皮纸、近黑墨色，工作发生的地方生成为一张测绘图（等高线、灌木篱、石墙、水，地块边缘描着像地籍图一样的橘色界线），记录钉在它们发生的位置。条目以防水笔记本页面展开；其余是划线列表、带单位的数字与模压按键。橘色是耳标与打捆绳；绿色是仍在有效期内的。它不是田园生活方式页，不是光鲜仪表盘，也不是车载导航。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -35,51 +39,51 @@ A working records voice drawn on the land itself: warm manila paper, near-black 
 }
 ```
 
-## Type
+## 字体（Type）
 
-- **Display:** Red Hat Display 600, `--tracking-display`, line-height 1.0, sentence case; a price that is the offer sets in it at display size; an entry's time in it at 44px, tabular.
-- **Body:** Red Hat Text 400, line-height 1.55, `--color-muted`; 500 for a row's title.
-- **Labels, chips, tabs:** Red Hat Text 500 a step smaller, sentence case, untracked. Never mono, never uppercase.
-- **Figures (mono as material):** Red Hat Mono 400 and 500, tabular, a step smaller than the text beside them, only for what gets copied onto a form: dates, times, tag numbers, doses, batches, hectares. Place names on the map in Red Hat Text 500, sentence case, set along their field as a surveyor would.
+- **展示字体：**Red Hat Display 600，`--tracking-display`，行高 1.0，句首大写；作为报价的价格用它排展示字号；条目的钟点用它排 44px，表格数字。
+- **正文：**Red Hat Text 400，行高 1.55，用 `--color-muted`；行的标题用 500。
+- **标签、chips、标签页：**Red Hat Text 500 小一档，句首大写，不加字距。绝不用等宽，绝不用大写。
+- **数字（等宽即材料）：**Red Hat Mono 400 与 500，表格数字，比旁边文字小一档，只给要誊到表格上的东西：日期、钟点、耳标号、剂量、批次、公顷。地图上的地名用 Red Hat Text 500，句首大写，沿田块排布，像测绘员那样。
 
-## Surfaces
+## 表面（Surfaces）
 
-- The survey map, generated on a canvas on load and resize, never a picture: contours traced from noise by marching squares in `--color-contour`, every fifth heavier and labelled; hedges dotted in `--color-hedge`, walls solid ink, water in `--color-water`, buildings hatched, a lane and a gate; the holding edged in tangerine. Paper grain, fibre and two fold creases are drawn into the map only. A still frame of it is the no-script fallback.
-- On the map: pins in three shapes (disc, diamond, triangle) for the kinds of record, an ink tag beside each with its time; the open one turns tangerine; a movement draws as a dashed route. A map loupe (1.9x, fine ring, reticle) rests on one landmark and glides to the pointer.
-- The notebook card: `--color-paper-2` at `--radius-entry`, a 1px ink ring and `--shadow-lift`, an ink head with the kind and the time, then cells on an 8px `--color-grid` notebook grid parted by 1px ink lines, and 56px step keys at the foot.
-- An exported record is a letter-folded sheet opened flat: `--color-sheet`, 3px corners, two creases lit from above.
-- Rules: a 1px ink rule over a list, `--color-rule` hairlines between rows, a 2px ink rule over a total. Only the card and the white sheet lift.
-- Photographs: the holding in ordinary weather at mid distance; natural, never golden hour; 10px radius, or full-bleed under an ink scrim.
+- 测绘图在加载与缩放时生成于画布上，绝不是图片：等高线用 marching squares 从噪声描出、`--color-contour` 色，每五条加重并标注；灌木篱用 `--color-hedge` 点线，石墙实线墨色，水用 `--color-water`，建筑画阴影线，一条小路与一道门；地块边缘描橘色。纸面颗粒、纤维与两道折痕只画进地图里。它的静帧是无脚本时的降级。
+- 图上：三种形状的图钉（圆片、菱形、三角）区分记录种类，每枚旁一枚墨色小牌写它的钟点；打开的那枚转橘色；一次移动画成虚线路线。一枚地图放大镜（1.9x，细环，十字线）停在一处地标上，滑向指针。
+- 笔记本卡：`--color-paper-2`、`--radius-entry` 圆角，1px 墨色圆环与 `--shadow-lift`，墨色标题写种类与钟点，之后是 8px `--color-grid` 笔记本网格上的格子、以 1px 墨线分隔，脚底 56px 步进键。
+- 导出的记录是一张三折信纸摊平：`--color-sheet`，3px 圆角，两道折痕从上方受光。
+- 横线：列表之上 1px 墨线，行间 `--color-rule` 发丝线，合计之上 2px 墨线。只有卡与白纸抬起。
+- 照片：平常天气里中距的这块地；自然，绝不是黄金时刻；10px 圆角，或墨色暗化层下通栏。
 
-## Range
+## 版式（Range）
 
-- **The day on the map:** entries pinned where they happened, one open as a notebook card.
-- **The book as an index:** a ruled table on the white sheet, a segmented filter of the logs above, chips for in date and in withdrawal.
-- **One day by the hour:** logs as rows against the hours, each entry a pin with its tag.
-- **The bill over the land:** the price as ruled lines on the tangerine field, a contour fragment with a hedge, a gate and one pin behind it.
+- **地图上的一天：**条目钉在它们发生的位置，其中一条打开为笔记本卡。
+- **台账化作索引：**白纸上的划线表格，上方日志的分段过滤器，chips 标注在有效期内与停药期中。
+- **一天按钟点：**日志对钟点排成行，每条是一个带小牌的图钉。
+- **土地上的账单：**价格作为划线写在橘色色场上，一片等高线残片、一道篱、一扇门与一枚图钉垫在后面。
 
-## Controls
+## 控件（Controls）
 
-- Moulded keys at 6px, 48px tall: the primary tangerine with ink text, a lit inset top edge and a shaded inset bottom; the secondary white with a 1px `--color-rule` border and the same lit edge. Active sinks 1px.
-- Fields hold their label inside the box, small and muted at the top left, the value beneath; white, 52px, a 1px `--color-muted` border; a figure field sets in mono.
-- Tangerine is a fill with ink on it: the primary, the selected tab, the open pin, the holding's edge, the field band, the focus ring.
+- 模压按键 6px 圆角、48px 高：主按钮橘色配墨色文字，顶部一圈受光内嵌边、底部一圈阴影内嵌边；次按钮白色，1px `--color-rule` 边框与同款受光边。按下下沉 1px。
+- 字段把标签收在框内，左上小字压淡，其下是值；白色，52px，1px `--color-muted` 边框；数字字段用等宽排。
+- 橘色是压着墨色的填色：主按钮、选中的标签页、打开的图钉、地块界线、色场色带、焦点环。
 
-## Motion
+## 动效（Motion）
 
-Once, in view: pins land in time order, the route draws, the card opens, the loupe settles. Transforms and opacity, `--ease-out`, paused off screen. Reduced motion or no script: the pins down, one entry open.
+一次，在视野内：图钉按时间顺序落下，路线画出，卡片打开，放大镜落定。只用变换与透明度，`--ease-out`，屏幕外暂停。Reduced motion（减少动效）或无脚本：图钉已落，一条条目打开。
 
-## Voice
+## 语气（Voice）
 
-Plain and unit-bearing: 3.6 ha, 10 ml, 28 days, a pound sign on a price. Never a number without its unit, never a pastoral adjective.
+平实、带单位：3.6 ha、10 ml、28 天，价格带镑号。绝没有不带单位的数字，绝不用田园形容词。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never tangerine as type; it is a fill with ink on it.
-- Never a map tile, a satellite photograph or a pin-drop icon; the land is a generated survey.
-- Never grain or creases outside the map.
-- Never mono on a label, a chip or a head.
+- 绝不用橘色做文字；它是压着墨色的填色。
+- 绝不用地图瓦片、卫星照片或落钉图标；土地是生成的测绘图。
+- 颗粒与折痕绝不走出地图。
+- 绝不在标签、chip 或标题上用等宽。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@600&family=Red+Hat+Text:wght@400;500&family=Red+Hat+Mono:wght@400;500&display=swap" rel="stylesheet">

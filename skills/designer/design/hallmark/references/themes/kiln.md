@@ -12,11 +12,15 @@ photo: warm sepia=50 sat=-12 con=8 exp=-6
 pictured: Workbench, Stage hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/kiln.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Kiln
 
-A dark workshop with the kiln door open a crack: a near-black ground, cream ink, Boska's cut high-contrast serif over a plain Geist, and heat only where something is hot. The photographs carry the fire; a ramp from ash through oxblood, ember and amber to white heat colours a temperature as it climbs. Warm in one place, cold everywhere else. It is not a dark luxury page with an orange button, and not a glowing gradient poster.
+一间窑门半开的幽暗工坊：近黑的底色、奶白的墨色，Boska 的高反差衬线压在朴素的 Geist 之上，热度只出现在真正灼热的地方。照片承载火：一条从灰烬经牛血红、余烬与琥珀到白热的色阶，随温度攀升给温度着色。一处温热，其余皆冷。它不是带橙色按钮的暗色奢华页，也不是发光的渐变海报。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -34,61 +38,61 @@ A dark workshop with the kiln door open a crack: a near-black ground, cream ink,
 }
 ```
 
-Three colourways, stated in the stamp (`kiln: ember`).
+三种配色，写入 stamp（印记）：`kiln: ember`。
 
-| Colourway | Ground, ink, accent |
+| 配色 | 底色、墨色、强调色 |
 | --- | --- |
-| `ember` (default) | the block above |
-| `bisque` | ground `oklch(96.5% 0.014 80)`, ink `oklch(20% 0.02 40)`, accent `oklch(54% 0.17 62)` with the ground as its text; the ramp starts at `oklch(90% 0.035 75)`; wells turn bone |
-| `reduction` | ground `oklch(21% 0.06 22)`, ink `oklch(95% 0.02 85)`, accent `oklch(84% 0.12 62)`; the ramp begins at the ground |
+| `ember`（默认） | 上面的代码块 |
+| `bisque` | 底色 `oklch(96.5% 0.014 80)`，墨色 `oklch(20% 0.02 40)`，强调色 `oklch(54% 0.17 62)` 并以底色作其文字色；色阶从 `oklch(90% 0.035 75)` 起步；内嵌面板转为骨白色 |
+| `reduction` | 底色 `oklch(21% 0.06 22)`，墨色 `oklch(95% 0.02 85)`，强调色 `oklch(84% 0.12 62)`；色阶从底色开始 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Boska 500, `--tracking-display`, line-height 1.04, sentence case, roman, one colour per head; a statement set in it may run to `--text-display` at line-height 1.0.
-- **Figures:** a temperature, a firing time or the price that carries the story is Boska 500, lining and tabular, at -0.03em, its unit (°C, h, £) in the same face; a lone figure may run twice the hero head.
-- **Body:** Geist 400 and 500 at 16 to 18px, line-height 1.55.
-- **Labels, captions, axis ticks, table heads:** Geist 500 a step smaller, sentence case, untracked, in `--color-muted`. Geist Mono only inside code.
+- **展示字体：**Boska 500，`--tracking-display`，行高 1.04，句首大写，正体，每个标题一种颜色；用它排的大字陈述可以放到 `--text-display`，行高 1.0。
+- **数字：**承载叙事的温度、烧成时长或价格用 Boska 500，等高数字与表格数字，字距 -0.03em，单位（°C、h、£）用同一字体；孤立的大数字可以放到 Hero 标题的两倍。
+- **正文：**Geist 400 与 500，16 至 18px，行高 1.55。
+- **标签、图注、坐标轴刻度、表头：**Geist 500，小一号，句首大写，不加字距，用 `--color-muted`。Geist Mono 只出现在代码里。
 
-## Surfaces
+## 表面（Surfaces）
 
-- 1px `--color-rule` between rows, on a well's edge and on a chart's grid; no rule brighter than that.
-- Radius 28px on photographs and built screens, scaled down with the viewport; `--radius-well` on wells and inputs; pills on controls.
-- Wells are smoked: `--color-paper-2` a clear step above the ground, a 1px rule edge, no shadow, never blurred, never nested. `--shadow-card`, a deep low drop, only under a built screen standing on the ground or a photograph, never with a ring.
-- Heat marks temperature and nothing else: the ramp colours a firing curve in steps, each band of degrees its own colour, oxblood low to white heat at the peak, and a range track (three stops). It never fills a box, a band, a slot or the ground, and no text sits on it.
-- Bands: a `--color-paper-2` band, two a page at most.
-- Photographs: the work, close and in low light: a kiln at temperature, a loaded kiln, glaze, pots on a shelf, hands in clay, lit by the kiln, a bench lamp or a window, shadows falling into the ground. A 28px frame with a 1px inset ring of cream at 8%; type on one sits only on its dark side, over a paper scrim at 40 to 65%.
+- 行与行、内嵌面板边缘、图表网格线都用 1px 的 `--color-rule`；任何线都不比这更亮。
+- 照片与成品界面圆角 28px，随视口缩小；内嵌面板与输入框用 `--radius-well`；控件用胶囊形。
+- 内嵌面板是烟熏色的：`--color-paper-2`，比底色亮出清晰的一档，1px 细线描边，无阴影，绝不模糊，绝不嵌套。`--shadow-card` 是一道深而低的投影，只允许立在底色或照片之上的成品界面使用，绝不与描边环同用。
+- 热度只标记温度，别无他用：色阶按段给烧成曲线上色，每一档温度一种颜色，低处牛血红、峰值白热，另加一条范围轨道（三个停靠点）。它绝不填充任何盒子、色带、槽位或底色，其上也不得压任何文字。
+- 色带：`--color-paper-2` 色带，每页至多两条。
+- 照片：作品本身，特写、弱光：达到温度的窑、装满的窑、釉、架上的器物、揉泥的手，由窑火、工作台灯或窗户照明，阴影沉入底色。28px 圆角边框，内嵌 1px 的奶白描边环，透明度 8%；压在照片上的文字只能落在暗面，底下垫 40 至 65% 的纸色蒙版。
 
-## Range
+## 版式（Range）
 
-- A firing schedule as rows: each segment's rate and target in Boska figures, keyed by a short bar of the ramp step its target reaches.
-- A reading or a warning set as a statement: Boska at `--text-display` across ten columns, cream on the ground, the hour and the kiln beside it in Geist; nothing else on the screen.
-- A log as a full-width table: date, firing and cone in Geist, the peak in Boska keyed to its ramp step, a sparkline of the whole curve per row in `--color-ink-2`.
-- A price or a temperature as one figure on a smoked band, the action beside it.
+- 烧成制度排成行：每段的升温速率与目标温度用 Boska 数字，目标所在色阶档位以一小段色条标示。
+- 读数或警示排成大字陈述：Boska、`--text-display`，横贯十列，奶白字压底色，旁边用 Geist 标钟点与窑号；屏幕上别无他物。
+- 记录表横贯全宽：日期、窑次与测温锥用 Geist，峰值用 Boska 并对应其色阶档位，每行一条整段曲线的 sparkline，用 `--color-ink-2`。
+- 价格或温度作为单个数字放在烟熏色色带上，操作按钮在其旁。
 
-## Controls
+## 控件（Controls）
 
-- The pair: an ember pill (`--color-accent` with `--color-accent-ink` text, Geist 500), 50px tall, beside a ghost pill with a 1px inset `--color-rule` ring and cream text.
-- Inputs are smoked wells at 16px radius; a range input runs a 2px track filled along the ramp under a 28px ember thumb.
-- Ember is only ever a fill: the primary, a thumb, the live point on a curve, the focus ring in `--color-focus`. Every letter stays cream.
+- 控件对：余烬色胶囊按钮（`--color-accent` 底、`--color-accent-ink` 字，Geist 500），高 50px，旁边是幽灵胶囊按钮，带 1px 内嵌 `--color-rule` 描边环，奶白文字。
+- 输入框是 16px 圆角的烟熏色内嵌面板；滑杆（range）用 2px 轨道，沿色阶填充，滑块为 28px 余烬色圆点。
+- 余烬色只作填充：主按钮、滑块、曲线上的实时点、`--color-focus` 的焦点环。所有文字保持奶白。
 
-## Motion
+## 动效（Motion）
 
-Slow and thermal: colour changes run `--dur-long` on `--ease-out`, controls answer over `--dur-short`. Nothing pulses, flickers or glows on hover.
+缓慢而有热度：颜色变化用 `--ease-out` 跑满 `--dur-long`，控件在 `--dur-short` 内响应。悬停时不脉动、不闪烁、不发光。
 
-## Voice
+## 语气（Voice）
 
-Calm and physical, in a potter's words: the cone, the degrees, the hour, the load. Name the firing, never the feeling.
+平静而具体，用陶艺师的话说：测温锥、温度、钟点、装窑量。说烧成，不说感受。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never the ramp as a fill: no heat gradient behind text, on the ground, in a slot or across a band.
-- Never orange type; the ember is a fill, and every letter stays cream.
-- Never a brown or warm-lit ground; it stays near-black so the heat has somewhere to rise from.
-- Never a bright, flat-lit photograph or a pot on white seamless.
-- Never a third hue beside the ramp.
-- Never a photograph on every screen: the fire lives in the curve and the figures too.
+- 绝不把色阶当填充：文字背后、底色上、槽位里、色带横跨处都不出现热渐变。
+- 绝不出现橙色文字；余烬色只是填充，文字永远是奶白。
+- 绝不让底色发棕或偏暖光；底色保持近黑，热度才有升腾之处。
+- 绝不用明亮平光的照片，也不用白背景棚拍的器物。
+- 色阶之外绝无第三种色相。
+- 绝不每屏都是照片：火也活在曲线与数字里。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://api.fontshare.com/v2/css?f[]=boska@500&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">

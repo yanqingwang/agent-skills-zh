@@ -1,25 +1,29 @@
-# CIP Design Reference
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/design/references/cip-design.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Corporate Identity Program design with 50+ deliverables, 20 styles, 20 industries. Generate mockups with Gemini Nano Banana (Flash/Pro).
+# CIP 设计参考
 
-## Scripts
+企业视觉识别（Corporate Identity Program）设计：50+ 交付物、20 种风格、20 个行业。用 Gemini Nano Banana（Flash/Pro）生成 mockup。
 
-| Script | Purpose |
+## 脚本
+
+| 脚本 | 用途 |
 |--------|---------|
-| `scripts/cip/search.py` | Search deliverables, styles, industries; generate CIP briefs |
-| `scripts/cip/generate.py` | Generate CIP mockups with Gemini (Flash/Pro) |
-| `scripts/cip/render-html.py` | Render HTML presentation from CIP mockups |
-| `scripts/cip/core.py` | BM25 search engine for CIP data |
+| `scripts/cip/search.py` | 检索交付物、风格、行业；生成 CIP 简报 |
+| `scripts/cip/generate.py` | 用 Gemini（Flash/Pro）生成 CIP mockup |
+| `scripts/cip/render-html.py` | 从 CIP mockup 渲染 HTML 演示页 |
+| `scripts/cip/core.py` | CIP 数据的 BM25 检索引擎 |
 
-## Commands
+## 命令
 
-### CIP Brief (Start Here)
+### CIP 简报（从这里开始）
 
 ```bash
 python3 scripts/cip/search.py "tech startup" --cip-brief -b "BrandName"
 ```
 
-### Search Domains
+### 检索域
 
 ```bash
 # Deliverables
@@ -35,7 +39,7 @@ python3 scripts/cip/search.py "hospitality hotel" --domain industry
 python3 scripts/cip/search.py "office reception" --domain mockup
 ```
 
-### Generate Mockups
+### 生成 mockup
 
 ```bash
 # With logo (RECOMMENDED - uses image editing)
@@ -54,23 +58,23 @@ python3 scripts/cip/generate.py --brand "GreenLeaf" --logo logo.png --industry "
 python3 scripts/cip/generate.py --brand "TechFlow" --deliverable "business card" --no-logo-prompt
 ```
 
-### Render HTML Presentation
+### 渲染 HTML 演示页
 
 ```bash
 python3 scripts/cip/render-html.py --brand "TopGroup" --industry "consulting" --images /path/to/cip-output
 python3 scripts/cip/render-html.py --brand "TopGroup" --industry "consulting" --images ./topgroup-cip --output presentation.html
 ```
 
-## Models
+## 模型
 
-- `flash` (default): `gemini-2.5-flash-image` - Fast, cost-effective
-- `pro`: `gemini-3-pro-image` - Quality, 4K text rendering
+- `flash`（默认）：`gemini-2.5-flash-image` - 快、省成本
+- `pro`：`gemini-3-pro-image` - 重质量、4K 文字渲染
 
-Set `GEMINI_FLASH_IMAGE_MODEL` or `GEMINI_PRO_IMAGE_MODEL` to use another Gemini model id.
+设置 `GEMINI_FLASH_IMAGE_MODEL` 或 `GEMINI_PRO_IMAGE_MODEL` 可改用其他 Gemini 模型 id。
 
-## Deliverable Categories
+## 交付物分类
 
-| Category | Items |
+| 分类 | 条目 |
 |----------|-------|
 | Core Identity | Logo, Logo Variations |
 | Stationery | Business Card, Letterhead, Envelope, Folder, Notebook, Pen |
@@ -83,9 +87,9 @@ Set `GEMINI_FLASH_IMAGE_MODEL` or `GEMINI_PRO_IMAGE_MODEL` to use another Gemini
 | Product | Packaging Box, Labels, Tags, Retail Display |
 | Events | Trade Show Booth, Banner Stand, Table Cover, Backdrop |
 
-## Design Styles
+## 设计风格
 
-| Style | Colors | Best For |
+| 风格 | 颜色 | 适用 |
 |-------|--------|----------|
 | Corporate Minimal | Navy, White, Blue | Finance, Legal, Consulting |
 | Modern Tech | Purple, Cyan, Green | Tech, Startups, SaaS |
@@ -93,29 +97,29 @@ Set `GEMINI_FLASH_IMAGE_MODEL` or `GEMINI_PRO_IMAGE_MODEL` to use another Gemini
 | Warm Organic | Brown, Green, Cream | Food, Organic, Artisan |
 | Bold Dynamic | Red, Orange, Black | Sports, Entertainment |
 
-## HTML Presentation Features
+## HTML 演示页特性
 
-- Hero section with brand name, industry, style, mood
-- Deliverable cards with mockup images
-- Descriptions: concept, purpose, specifications
-- Responsive desktop/mobile, dark theme
-- Images embedded as base64 (single-file portable)
+- Hero 区带品牌名、行业、风格、情绪
+- 交付物卡片带 mockup 图
+- 描述：概念、用途、规格
+- 响应式桌面/移动，暗色主题
+- 图片以 base64 内嵌（单文件可携带）
 
-## Workflow
+## 工作流
 
-1. Generate CIP brief → `scripts/cip/search.py --cip-brief`
-2. Generate mockups with logo → `scripts/cip/generate.py --brand --logo --industry --set`
-3. Render HTML presentation → `scripts/cip/render-html.py --brand --industry --images`
+1. 生成 CIP 简报 → `scripts/cip/search.py --cip-brief`
+2. 带 logo 生成 mockup → `scripts/cip/generate.py --brand --logo --industry --set`
+3. 渲染 HTML 演示页 → `scripts/cip/render-html.py --brand --industry --images`
 
-**Tip:** If no logo exists, use Logo Design (built-in) to generate one first.
+**提示：** 没有 logo 时，先用内置的 Logo Design 生成一个。
 
-## Detailed References
+## 详细参考
 
-- `references/cip-deliverable-guide.md` - Deliverable specifications
-- `references/cip-style-guide.md` - Design style descriptions
-- `references/cip-prompt-engineering.md` - AI generation prompts
+- `references/cip-deliverable-guide.md` - 交付物规格
+- `references/cip-style-guide.md` - 设计风格描述
+- `references/cip-prompt-engineering.md` - AI 生成 prompt
 
-## Setup
+## 环境准备
 
 ```bash
 export GEMINI_API_KEY="your-key"

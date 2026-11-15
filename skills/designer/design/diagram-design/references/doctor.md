@@ -1,54 +1,47 @@
-# Environment doctor
+> **中文汉化版** · 上游：[cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) · 原文件：`skills/diagram-design/references/doctor.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Load this file when the user asks to run diagnostics, health checks, or first-run troubleshooting, or when they invoke `/diagram-design:doctor` or `/doctor`.
+# 环境诊断（doctor）
 
-The goal is a one-shot report that checks local readiness for Diagram Design import/export and command routing, without mutating user files or installing dependencies.
+当用户要求运行诊断、健康检查或首次运行排障，或调用 `/diagram-design:doctor` 或 `/doctor` 时，加载本文件。
 
-Resolve the Diagram Design installation from this loaded reference, not from the
-user's current working directory. A normal project directory is the expected
-place to invoke the doctor and must not be treated as a repository-path error.
+目标是一份一次到位的报告：检查本地是否具备 Diagram Design 导入/导出与命令路由的就绪条件，不改动用户文件、不安装依赖。
 
-Use two diagnostic modes:
+Diagram Design 的安装位置要从本参考文件解析，而不是从用户当前工作目录解析。在普通项目目录里调用 doctor 是预期场景，绝不能当成"仓库路径错误"处理。
 
-- **Installed-skill mode** (default): check the runtime and the resolved skill
-  installation. Do not require maintainer-only repository files.
-- **Maintainer-checkout mode**: use this only when the resolved installation
-  root contains `CONTRIBUTING.md`, `.github/workflows/ci.yml`, and
-  `scripts/verify-plugin-package.py`. Add the repository integrity checks below.
+使用两种诊断模式：
 
-## Inputs
+- **已安装 Skill 模式**（默认）：检查运行时和解析出的 Skill 安装。不要求只有维护者仓库才有的文件。
+- **维护者检出模式**：仅当解析出的安装根目录同时包含 `CONTRIBUTING.md`、`.github/workflows/ci.yml` 和 `scripts/verify-plugin-package.py` 时使用。此时加入下方的仓库完整性检查。
 
-Optional flags:
+## 输入
 
-- `--strict` — treat warnings as failures in the final summary.
-- `--json` — print a machine-readable JSON report in addition to human summary.
+可选旗标：
 
-If no flags are provided, run in standard mode.
+- `--strict`：在最终汇总里把警告当失败。
+- `--json`：在人类可读汇总之外，额外打印机器可读的 JSON 报告。
 
-## Required checks
+不给旗标时按标准模式运行。
 
-Run all checks in this order and report each as `pass`, `warn`, or `fail`.
+## 必做检查
 
-1. Python runtime
-- Resolve `python3` first, then `python`. A name that is on PATH but cannot report
-  its own version does not win the resolution: fall through to the next candidate.
-  (Windows ships a `python3` App Execution Alias that is a Microsoft Store stub, not
-  an interpreter, and it sits on PATH ahead of a python.org install.) A name that
-  cannot be launched at all counts as the same kind of dud, and is reported as a
-  failed check rather than ending the run.
-- Require version >= 3.10.
-- `fail` if no Python interpreter is found.
-- `fail` if version is below 3.10.
+按以下顺序全部执行，每项报告为 `pass`、`warn` 或 `fail`。
 
-2. Playwright availability for PNG export
-- Check whether Playwright import works in the active Python interpreter (`import playwright`); an optional package version attribute is not required.
-- Verify the default headless Chromium can launch in that interpreter and close it after the probe. This includes a supported headless-shell-only installation; the full Chromium executable path is not required for default PNG export. Bound browser startup to 5 seconds and the subprocess probe to 10 seconds, then terminate the owned probe tree on timeout. Windows tree cleanup and parent reaping each have an additional 2-second limit; report cleanup failures as warnings.
-- If missing, mark `warn` and report that the host environment must provision
-  an approved Playwright installation and compatible browser.
-- Never auto-install dependencies.
+1. Python 运行时
+- 先解析 `python3`，再解析 `python`。一个名字虽然在 PATH 上、却报不出自己的版本，不配赢得解析：落到下一个候选。（Windows 自带一个 `python3` App Execution Alias，那是 Microsoft Store 的占位 stub，不是解释器，而且它排在 python.org 安装之前。）一个完全无法启动的名字算同类废品，按检查失败上报，而不是终止整个运行。
+- 要求版本 >= 3.10。
+- 找不到任何 Python 解释器：`fail`。
+- 版本低于 3.10：`fail`。
 
-3. Expected script presence (maintainer-checkout mode only)
-- Verify these repository scripts exist:
+2. PNG 导出所需的 Playwright
+- 检查当前 Python 解释器里 Playwright 是否可导入（`import playwright`）；不要求可选的包版本属性。
+- 验证默认的 headless Chromium 能在该解释器里启动，探测后关闭。这包括只装受支持 headless-shell 的安装；默认 PNG 导出不要求完整 Chromium 可执行文件路径。浏览器启动限 5 秒，子进程探测限 10 秒，超时即终止自己拥有的探测进程树。Windows 的进程树清理和父进程收割各另有 2 秒限额；清理失败按警告上报。
+- 缺失时标 `warn`，并报告宿主环境必须准备一个受认可的 Playwright 安装和兼容浏览器。
+- 绝不自动安装依赖。
+
+3. 预期脚本存在（仅维护者检出模式）
+- 验证这些仓库脚本存在：
   - `scripts/verify-drawio-import.py`
   - `scripts/verify-mermaid-import.py`
   - `scripts/verify-excalidraw-import.py`
@@ -56,12 +49,11 @@ Run all checks in this order and report each as `pass`, `warn`, or `fail`.
   - `scripts/verify-motion.py`
   - `scripts/lint-skin.py`
   - `scripts/verify-docs-sync.py`
-- Missing scripts are `fail` in maintainer-checkout mode.
-- In installed-skill mode, report that maintainer scripts are not applicable;
-  their absence is not a warning or failure.
+- 维护者检出模式下脚本缺失为 `fail`。
+- 已安装 Skill 模式下，报告维护者脚本不适用；它们的缺席不算警告或失败。
 
-4. Plugin wiring surfaces (maintainer-checkout mode only)
-- Verify Claude command files exist and point to their references:
+4. Plugin 接线面（仅维护者检出模式）
+- 验证 Claude 命令文件存在并指向各自的参考文件：
   - `commands/export-diagram.md` -> `references/export.md`
   - `commands/import-drawio.md` -> `references/import-drawio.md`
   - `commands/import-mermaid.md` -> `references/import-mermaid.md`
@@ -69,53 +61,49 @@ Run all checks in this order and report each as `pass`, `warn`, or `fail`.
   - `commands/import-plantuml.md` -> `references/import-plantuml.md`
   - `commands/profile.md` -> `references/profiles.md`
   - `commands/doctor.md` -> `references/doctor.md`
-- Verify Pi prompt files exist and point to their references:
+- 验证 Pi prompt 文件存在并指向各自的参考文件：
   - `prompts/export-diagram.md` -> `references/export.md`
   - `prompts/import-mermaid.md` -> `references/import-mermaid.md`
   - `prompts/import-excalidraw.md` -> `references/import-excalidraw.md`
   - `prompts/import-plantuml.md` -> `references/import-plantuml.md`
   - `prompts/profile.md` -> `references/profiles.md`
   - `prompts/doctor.md` -> `references/doctor.md`
-- Missing files are `fail`.
-- Mismatched reference routing is `fail`.
-- In installed-skill mode, report that maintainer command/prompt wiring is not
-  applicable; partial or absent repository routing trees are not failures.
+- 文件缺失为 `fail`。
+- 参考路由不匹配为 `fail`。
+- 已安装 Skill 模式下，报告维护者命令/prompt 接线不适用；仓库路由树残缺或缺失不算失败。
 
-5. Common path mistakes
-- Verify `SKILL.md` beneath the resolved installation root. Do not search for it
-  relative to the user's current project and do not instruct users to enter the
-  maintainer repository.
-- Detect Windows path quoting risk when paths contain spaces and the provided command examples omit quotes.
-- Detect references to local installed skill paths that do not exist (if command output includes one).
-- Mark these as `warn` with a precise fix suggestion.
-- A missing resolved `SKILL.md` should suggest reinstalling or updating Diagram
-  Design, not changing into a repository checkout.
+5. 常见路径错误
+- 验证解析出的安装根目录之下有 `SKILL.md`。不要相对用户当前项目去搜索它，也不要指导用户进入维护者仓库。
+- 路径含空格而给出的命令示例没有加引号时，检测出这个 Windows 引号风险。
+- 检测对本地已安装 Skill 路径的引用（如果命令输出里出现）指向不存在的位置。
+- 这些都标 `warn`，并给出精确的修复建议。
+- 解析出的 `SKILL.md` 缺失时，建议重装或更新 Diagram Design，而不是切换进仓库检出。
 
-## Output contract
+## 输出契约
 
-Always print:
+始终打印：
 
-1. A compact summary line:
+1. 一行紧凑汇总：
 - `Doctor summary: <PASS|WARN|FAIL> (<pass_count> pass, <warn_count> warn, <fail_count> fail)`
 
-2. A checklist with one line per check:
+2. 一张清单，每个检查一行：
 - `[PASS] Python 3.11.9 found at ...`
 - `[WARN] Playwright not installed ...`
 - `[FAIL] Missing scripts/verify-docs-sync.py`
 
-3. A `Next actions` section only when warn/fail exists.
+3. 仅当存在 warn/fail 时，输出 `Next actions` 小节。
 
-4. If `--json` is present, append JSON object with:
-- `status`, `counts`, `checks[]` (`name`, `status`, `message`, `fix` optional), `timestamp`.
+4. 带 `--json` 时，追加 JSON 对象，包含：
+- `status`、`counts`、`checks[]`（`name`、`status`、`message`、可选 `fix`）、`timestamp`。
 
-## Safety and behavior rules
+## 安全与行为规则
 
-- Read-only diagnostics only: do not modify files, do not install packages, do not run destructive git commands.
-- If any command fails unexpectedly, capture stderr and continue remaining checks.
-- Never claim a check passed unless verified directly in this run.
-- Prefer explicit, copy-pastable remediation commands.
+- 只做只读诊断：不改文件、不装包、不跑破坏性 git 命令。
+- 任何命令意外失败：抓取 stderr，继续剩余检查。
+- 绝不声称某个检查通过，除非本次运行里直接验证过。
+- 优先给出明确、可直接复制粘贴的修复命令。
 
-## Example result
+## 示例结果
 
 ```text
 Doctor summary: WARN (6 pass, 2 warn, 0 fail)

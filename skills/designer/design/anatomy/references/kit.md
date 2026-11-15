@@ -1,25 +1,29 @@
+> **中文汉化版** · 上游：[wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) · 原文件：`references/kit.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Kit API
 
-Everything is in `kit/iso-kit.ts`, with the same API in `kit/iso-kit.mjs`. World coordinates are `[x, y, z]`, with x and y on the floor and z up, in units of about 1 px. Screen coordinates are `[sx, sy]` in the SVG viewBox. Paths come back as SVG `d` strings, rounded to 0.1.
+一切都在 `kit/iso-kit.ts`，`kit/iso-kit.mjs` 提供相同 API。世界坐标为 `[x, y, z]`，x 和 y 在地面、z 向上，单位约 1 px。屏幕坐标为 SVG viewBox 中的 `[sx, sy]`。路径以 SVG `d` 字符串返回，四舍五入到 0.1。
 
-## Contents
-1. Types
-2. Camera
-3. Solids
-4. Lines on faces
-5. Parts library
-6. Moving things
-7. SVG strings (framework-free)
-8. Card and page
-9. React components
-10. Round parts on any axis (`kit/lathe.mjs`)
-11. Pipes, tubes and cables (`kit/tube.mjs`)
-12. The audit (`kit/audit.mjs`)
-13. The WebGL layer (`kit/gl.mjs`)
-14. Tools
-15. Turning groups (`kit/turn.mjs`, `turn-build.mjs`, `turn-audit.mjs`)
+## 目录
+1. 类型
+2. 相机
+3. 实体
+4. 面上的线
+5. 零件库
+6. 移动物体
+7. SVG 字符串（不依赖框架）
+8. 卡片与页面
+9. React 组件
+10. 任意轴上的回转件（`kit/lathe.mjs`）
+11. 管道、管路与线缆（`kit/tube.mjs`）
+12. 审计（`kit/audit.mjs`）
+13. WebGL 层（`kit/gl.mjs`）
+14. 工具
+15. 旋转组（`kit/turn.mjs`、`turn-build.mjs`、`turn-audit.mjs`）
 
-## 1. Types
+## 1. 类型
 ```ts
 type Flat = [number, number];            // screen point
 type Point3 = [number, number, number];  // world point
@@ -31,237 +35,237 @@ type Tone = "hi" | "mid" | "lo" | "faint";
 type LineTone = Tone | "lit" | "red" | "green" | "blue";
 ```
 
-## 2. Camera
-| Function | What it does |
+## 2. 相机
+| 函数 | 作用 |
 |---|---|
-| `fitProjection(points: Point3[], width, height, { pad = 24, headroom = 0, azimuth = 45, elevation = 30 })` | A projection that centres and fits these points in the viewBox. Pass every extreme point, such as `boxCorners(plan, z0, z1)` and the tallest tip. |
-| `iso(point, P)` | World to screen. |
-| `depthOf(point, P)` | Larger means nearer the viewer. Sort ascending to paint back to front. |
-| `towardViewer(P)` | The floor direction pointing at the viewer, `[cos a, sin a]`. Faces whose normal points this way are visible. |
-| `screenRise(h, P)` | How many screen px a height of `h` covers. |
-| `cameraOf(P)` | The raw sines and cosines. |
+| `fitProjection(points: Point3[], width, height, { pad = 24, headroom = 0, azimuth = 45, elevation = 30 })` | 一个把这组点在 viewBox 内居中并适配的投影。传入每个极值点，例如 `boxCorners(plan, z0, z1)` 和最高的尖端。 |
+| `iso(point, P)` | 世界坐标转屏幕坐标。 |
+| `depthOf(point, P)` | 数值越大离观察者越近。升序排序即可从后往前绘制。 |
+| `towardViewer(P)` | 指向观察者的地面方向，`[cos a, sin a]`。法线朝此方向的面可见。 |
+| `screenRise(h, P)` | 高度 `h` 覆盖多少屏幕像素。 |
+| `cameraOf(P)` | 原始的正弦与余弦值。 |
 
-## 3. Solids
-All solids are prisms: a floor outline extruded straight up.
+## 3. 实体
+所有实体都是棱柱：地面轮廓竖直向上拉伸。
 
-| Function | What it does |
+| 函数 | 作用 |
 |---|---|
-| `slabOf(plan, z, h, P, steps = 8, bevel = 0)` | A rounded box. `steps` is the points per corner (2–4 for small parts, 8–10 for large rounded ones). `bevel` (0.3–1.6) adds a highlight line inset on the top along the visible edges, running into the silhouette corners. |
-| `cylinder(cx, cy, r, z, h, P, steps = 32, bevel = 0)` | A round post, puck, foot, knob or pad. Use 16–20 steps for small ones and 56–72 for big discs. |
-| `extrude(ring: Plane[], z, h, P, { convex = true, bevel })` | Any floor outline. For concave outlines pass `convex: false` (the fill becomes faces rather than a hull). |
-| `ringOf(plan, steps)` | A rounded-rectangle outline as points. |
-| `roundedPlan(plan, steps)` | The same thing. |
-| `circleRing(cx, cy, r, steps)` | A circle outline as points. |
-| `insetPlan(plan, by)` | Shrinks a plan (use a negative `by` to grow it). Keeps the radius sensible. |
-| `corners(plan, inset)` | Four floor points inset from the corners, for feet and screws. |
-| `boxCorners(plan, z0, z1)` | The eight corners, for `fitProjection`. |
-| `haloOf(plan, z, h, P)` | A fill path for a soft shadow: `<path class="iso-halo" d=…>`. |
+| `slabOf(plan, z, h, P, steps = 8, bevel = 0)` | 一个圆角盒子。`steps` 是每个角的采样点数（小零件用 2–4，大圆角件用 8–10）。`bevel`（0.3–1.6）在顶面沿可见边向内加一条高光线，一直延伸到轮廓角。 |
+| `cylinder(cx, cy, r, z, h, P, steps = 32, bevel = 0)` | 圆柱立柱、圆饼、底脚、旋钮或垫片。小件用 16–20 steps，大圆盘用 56–72。 |
+| `extrude(ring: Plane[], z, h, P, { convex = true, bevel })` | 任意地面轮廓。凹轮廓传 `convex: false`（填充变成一个个面而非凸包）。 |
+| `ringOf(plan, steps)` | 以点表示的圆角矩形轮廓。 |
+| `roundedPlan(plan, steps)` | 同一件事。 |
+| `circleRing(cx, cy, r, steps)` | 以点表示的圆形轮廓。 |
+| `insetPlan(plan, by)` | 收缩一个 plan（`by` 为负则放大）。半径会保持合理。 |
+| `corners(plan, inset)` | 从四角向内缩进的四个地面点，用于底脚和螺钉。 |
+| `boxCorners(plan, z0, z1)` | 八个角点，供 `fitProjection` 使用。 |
+| `haloOf(plan, z, h, P)` | 用于软阴影的填充路径：`<path class="iso-halo" d=…>`。 |
 
-What a `SolidPaths` contains:
-- `fill`: paper-coloured, it hides whatever is behind.
-- `shades[0..3]`: visible sides, bucketed by how they face the light.
-- `top`: the top face, lighter.
-- `crease`: where top meets the visible sides.
-- `bevel`: optional.
-- `outline`: the silhouette.
+`SolidPaths` 包含的内容：
+- `fill`：纸色，遮住背后的一切。
+- `shades[0..3]`：可见侧面，按朝光方向分档。
+- `top`：顶面，更亮。
+- `crease`：顶面与可见侧面相交处。
+- `bevel`：可选。
+- `outline`：轮廓线。
 
-`solidSvg` and `<Solid>` paint them in that order.
+`solidSvg` 和 `<Solid>` 按此顺序绘制它们。
 
-## 4. Lines on faces
-| Function | What it draws |
+## 4. 面上的线
+| 函数 | 绘制内容 |
 |---|---|
-| `onTop(points: Plane[], z, P, closed?)` | A polyline on a horizontal face. |
-| `lineOnTop(a, b, z, P)` | One segment on a horizontal face. |
-| `planOutline(plan, z, P, steps)` | A rounded-rectangle outline on a face, used for grooves and inlays (`insetPlan`). |
-| `ring(cx, cy, r, z, P, steps)` | A circle on a face, used for screw rings, bezels and seats. |
-| `segment(a, b, P)` | Any 3D segment. |
-| `rise(at, z0, z1, P)` | A vertical segment. |
-| `pointsAt(points, P)` | Projects a list of points, for screw and rivet dots. |
-| `dotGrid(x, y, cols, rows, gap, z, P)` | Projected perforations. |
-| `topMatrix(at, z, P, along = "x")` | A transform that lays text flat on a top face, for `faceTextSvg`/`FaceText`. |
-| `sideMatrix(at, z, P, "left" \| "right")` | The same, on a vertical face. |
+| `onTop(points: Plane[], z, P, closed?)` | 水平面上的折线。 |
+| `lineOnTop(a, b, z, P)` | 水平面上的一条线段。 |
+| `planOutline(plan, z, P, steps)` | 面上的圆角矩形轮廓，用于凹槽和镶嵌（`insetPlan`）。 |
+| `ring(cx, cy, r, z, P, steps)` | 面上的圆，用于螺钉环、边圈和座圈。 |
+| `segment(a, b, P)` | 任意 3D 线段。 |
+| `rise(at, z0, z1, P)` | 竖直线段。 |
+| `pointsAt(points, P)` | 投影一组点，用于螺钉和铆钉圆点。 |
+| `dotGrid(x, y, cols, rows, gap, z, P)` | 投影后的孔点阵。 |
+| `topMatrix(at, z, P, along = "x")` | 把文字平铺在顶面上的变换，供 `faceTextSvg`/`FaceText` 使用。 |
+| `sideMatrix(at, z, P, "left" \| "right")` | 同上，用于垂直面。 |
 
-## 5. Parts library
-| Function | Returns |
+## 5. 零件库
+| 函数 | 返回 |
 |---|---|
-| `knurl(cx, cy, r, z0, z1, count, P, inset = 0.4)` | Vertical lines on the visible half of a cylinder. |
-| `sideArc(cx, cy, r, z, P, steps)` | The visible front half of a horizontal circle on a cylinder side: seams and bands. |
-| `sideSeam(plan, z, P, steps = 8)` | The same for a box: the visible near half of the rounded plan at height `z`, wrapping its corners and ending exactly on the slab's vertical silhouette edges. Pass the slab's own `steps`, and draw it as the slab's `inner`. It is the way to draw a weld bead, a band, a lid seam or a trim line on a box: never a `segment` inset from the corners. |
-| `ringSeam(ring, z, P)` | `sideSeam` for any floor outline (the ring you gave `extrude`). |
-| `sideRing(center: Point3, r, "x" \| "y", P)` | A circle on a vertical face: bores, rod ends, lenses. |
-| `coil(from, to, [cy, cz], r, turns, "x" \| "y", P)` | `{ back, front }` spring halves, so you can paint back → rod → front. |
-| `topTicks(from, to, step, every, edge, z, [minor, major], P, axis)` | `{ minor, major }` ruler ticks on a top face, growing from the line `edge` in +y (or +x). |
-| `sideTicks(from, to, step, every, face, top, [minor, major], P, axis)` | Ticks hanging down a vertical face. |
-| `radialTicks(cx, cy, r, count, every, z, [minor, major], P, from = 0, span = 2π)` | Dial and turntable ticks. Angle 0 points to −y, increasing clockwise as seen from above. |
+| `knurl(cx, cy, r, z0, z1, count, P, inset = 0.4)` | 圆柱可见半面上的竖线。 |
+| `sideArc(cx, cy, r, z, P, steps)` | 圆柱侧面上水平圆的可见前半段：接缝与环带。 |
+| `sideSeam(plan, z, P, steps = 8)` | 盒子的对应版本：高度 `z` 处圆角轮廓的可见近半段，包住各角并正好终止于盒体的竖直轮廓边。传入盒体自己的 `steps`，并把它画成盒体的 `inner`。在盒子上画焊缝、环带、盖沿接缝或饰条就该用它：绝不要用从角点内缩的 `segment`。 |
+| `ringSeam(ring, z, P)` | 任意地面轮廓版的 `sideSeam`（即传给 `extrude` 的那个 ring）。 |
+| `sideRing(center: Point3, r, "x" \| "y", P)` | 垂直面上的圆：孔口、杆端、透镜。 |
+| `coil(from, to, [cy, cz], r, turns, "x" \| "y", P)` | `{ back, front }` 两半弹簧，按 back → rod → front 的顺序绘制。 |
+| `topTicks(from, to, step, every, edge, z, [minor, major], P, axis)` | 顶面上的 `{ minor, major }` 刻度线，从 `edge` 线沿 +y（或 +x）生长。 |
+| `sideTicks(from, to, step, every, face, top, [minor, major], P, axis)` | 沿垂直面向下垂挂的刻度线。 |
+| `radialTicks(cx, cy, r, count, every, z, [minor, major], P, from = 0, span = 2π)` | 表盘和转台刻度。角度 0 指向 −y，从上往下看顺时针增大。 |
 
-## 6. Moving things
-| Function | What it does |
+## 6. 移动物体
+| 函数 | 作用 |
 |---|---|
-| `translateAlong(P, [dx, dy, dz])` | A `"translate(x y)"` string that moves a pre-built group by a world offset. Use it for carriages, drawers, plungers and lifts. |
-| `holdStill(element, [dx, dy])` | Gives every `[data-hold]` element inside `element` the opposite translate, so a clip stays where it is while the group it sits in moves by `[dx, dy]` screen units. Call it with the same offset whenever you move an item that holds a `G.rodOut` clip. |
-| `axisVector(P, [1, 0, 0])` | The screen vector of one world unit. Use it to turn pointer movement into world movement. |
+| `translateAlong(P, [dx, dy, dz])` | 一个 `"translate(x y)"` 字符串，把预先构建的组按世界坐标偏移移动。用于滑座、抽屉、柱塞和升降件。 |
+| `holdStill(element, [dx, dy])` | 给 `element` 内每个 `[data-hold]` 元素一个反向 translate，这样当它所在的组移动 `[dx, dy]` 屏幕单位时，裁剪保持原位。移动带有 `G.rodOut` 裁剪的条目时，都要用相同偏移调用它。 |
+| `axisVector(P, [1, 0, 0])` | 一个世界单位对应的屏幕向量。用它把指针移动换算成世界移动。 |
 
-Rotations about z can't be done with a screen transform: rebuild the rotating paths for each frame or step. That is cheap for a needle, a pointer or a small part.
+绕 z 轴的旋转无法用屏幕变换完成：每帧或每步重建旋转后的路径。对表针、指针或小零件来说这样开销很小。
 
-## 7. SVG strings (framework-free)
-| Function | Notes |
+## 7. SVG 字符串（不依赖框架）
+| 函数 | 说明 |
 |---|---|
-| `solidSvg(paths, { tone = "hi", crease = "faint", halo, lit, flat, className, inner })` | When `paths.seamless` is set (smooth lathe shading, `sphereOf`), the group gets `data-seamless` and `ISO_CSS` strokes each tone region in its own colour, 0.4 wide, so the many abutting tone sheets show no hairline seams. `inner` is extra line markup placed just before the outline (`iso-edge`), for seams, weld lines and band lines that must sit under the silhouette stroke; the React `Solid` takes it as a prop. |
-| `lineSvg(d, { tone = "lo", dotted, dashed, flow, className, free })` | `flow` animates dashes; use it for things moving along a path. `free: true` (or `"start"`, `"end"`) writes `data-free`, telling `scripts/lines.mjs` that an end is meant to stop on a bare face: rule lines that stand for printed text, a needle's tail, a pointer's tip. Every other line end must land on something. |
-| `dotsSvg(points, { size = 0.5, tone = "mid", pulse })` | A point may carry a third value, its opacity (`[x, y, 0.4]`), which is how `dotsOf(..., { fade })` fades a bolt circle out instead of stopping it. |
-| `fadedSvg(list, style)` | Draws a set of lines that each carry an opacity, `[{ d, alpha }]` or `[d, alpha]`, as returned by `ribsOf(..., { fade })`. Lines are grouped by opacity in steps of 0.05, each group in one `<g opacity>`, and lines under 0.02 are dropped. Use it for any texture whose members fade one by one toward a limb: ribs, fins, knurls, rule lines. |
-| `fadeLineSvg(points, { fade = [start, end], tone = "lo", className, stops = 6 })` | One line (screen points) that fades out over its first `start` and last `end` px instead of stopping (each ramp carries `data-free` on its faded end, so the line check passes it). Each ramp is stroked with a `userSpaceOnUse` linear gradient along its own chord (a smoothstep in `stops` steps, the colour taken from `var(--anatomy-<tone>)`, so both themes work), and the middle is a plain `lineSvg`, so there are no overlapping caps, beads or seams. Use it for a texture line that ends in the middle of a face: a groove that runs out, a weld line that stops short of a corner, a rule on a curved plate. Keep a ramp shorter than a quarter turn of the line, since a linear gradient follows the chord. Gradient ids are a hash of the path, so the same line drawn twice shares one. |
-| `wireSvg(from, to, { via = [], tone = "lo", dotted, dashed, flow, ends: "both" \| "from" \| "to" \| "none", size = 1.2 })` | A connector with terminal dots. |
+| `solidSvg(paths, { tone = "hi", crease = "faint", halo, lit, flat, className, inner })` | 设置了 `paths.seamless`（平滑回转着色、`sphereOf`）时，组会带上 `data-seamless`，`ISO_CSS` 以各自的颜色、宽 0.4 描每个色调区域，使众多相邻的色调面片之间不出现发丝缝。`inner` 是放在轮廓（`iso-edge`）之前的额外线条标记，用于必须压在轮廓描边之下的接缝、焊缝和环带线；React 的 `Solid` 以 prop 接收它。 |
+| `lineSvg(d, { tone = "lo", dotted, dashed, flow, className, free })` | `flow` 让虚线动起来；用于沿路径移动的东西。`free: true`（或 `"start"`、`"end"`）写入 `data-free`，告诉 `scripts/lines.mjs` 这一端是有意停在裸面上的：代表印刷文字的标尺线、表针尾、指针尖。其余所有线端必须落在某个对象上。 |
+| `dotsSvg(points, { size = 0.5, tone = "mid", pulse })` | 点可以带第三个值，即不透明度（`[x, y, 0.4]`），`dotsOf(..., { fade })` 就是这样让螺栓圆渐隐而不是中途截断。 |
+| `fadedSvg(list, style)` | 绘制一组各自带不透明度的线，`[{ d, alpha }]` 或 `[d, alpha]`，即 `ribsOf(..., { fade })` 的返回值。按 0.05 步长把线按不透明度分组，每组放进一个 `<g opacity>`，低于 0.02 的丢弃。用于成员朝轮廓边缘逐个渐隐的纹理：棱肋、鳍片、滚花、标尺线。 |
+| `fadeLineSvg(points, { fade = [start, end], tone = "lo", className, stops = 6 })` | 一条（屏幕坐标点的）线，在开头 `start` 像素和结尾 `end` 像素内渐隐而不是戛然而止（每段渐变端带 `data-free`，因此线端检查会放行）。每段渐变用沿自身弦线的 `userSpaceOnUse` 线性渐变描边（按 `stops` 步数的 smoothstep，颜色取自 `var(--anatomy-<tone>)`，两种主题都适用），中间部分是普通 `lineSvg`，因此不会出现重叠的端帽、圆珠或接缝。用于终止在面中间的纹理线：跑完即消失的凹槽、止步于角前的焊缝、曲面平板上的标尺线。渐变段要保持短于线的四分之一转，因为线性渐变沿弦线走。渐变 id 是路径的哈希，同一条线画两次共用一个。 |
+| `wireSvg(from, to, { via = [], tone = "lo", dotted, dashed, flow, ends: "both" \| "from" \| "to" \| "none", size = 1.2 })` | 带端点的连接线。 |
 | `faceTextSvg(transform, text, { size = 3, tone = "mid", anchor })` | |
 | `groupSvg(children, { class, transform, "data-part": … })` | |
-| `figureSvg({ width, height, label, body, standalone: false \| "dark" \| "light", className })` | The `<svg>`. `label` is the accessible description: say what the object is and what it shows. `className` is added to its class, which helps when you stack it under a canvas (`rt-back`, `rp-back`). |
+| `figureSvg({ width, height, label, body, standalone: false \| "dark" \| "light", className })` | 这个 `<svg>`。`label` 是无障碍描述：说明物体是什么、展示了什么。`className` 会附加到它的 class 上，把图形叠在 canvas 之下时有用（`rt-back`、`rp-back`）。 |
 
-## 8. Card and page
-| Function | Notes |
+## 8. 卡片与页面
+| 函数 | 说明 |
 |---|---|
-| `plateHtml({ fig, title, hint, readout, keys: [{ mark, label }], caption, body })` | The card. `mark` is one of `raised`, `flat`, `lit`, `edge`, `dim`, `dotted`, `dashed`, `red`, `green`, `blue`. The readout element carries `data-readout`, so live code writes to it. |
-| `pageHtml({ title, theme = "dark", body, script, width = 650 })` | A standalone document with `ISO_CSS` inlined. |
-| `kitScript()` | From `scripts/inline-kit.mjs`. Prepend it to `script` so the page can call kit functions such as `lineOnTop` and `translateAlong` while animating. |
-| `glScript()` | From `scripts/inline-kit.mjs`. The source of `kit/gl.mjs` (`GLSL_ISO`, `glCamera`, `glLayer`, `smooth`, `burst`, `settle`), to inline after `kitScript()` on a page with a shader: `script: kitScript() + glScript() + live`. It doesn't depend on the kit, so a page whose live code calls no kit function can inline it alone (the Raptor uses `glScript() + LIVE`). Everything is one module script, so live code must not redeclare `smooth`, `burst` or `settle`: a second `const smooth` is a SyntaxError that kills the page. |
-| `turnScript()` | From `scripts/inline-kit.mjs`. The 3D runtime (`TURN`, `TURN_CSS`) with `export` stripped, for a page with live parts: `script: turnScript() + glScript() + live`. Its internals are prefixed `t3`/`T3_`, so it inlines beside the kit and the WebGL layer. |
-| `ISO_CSS` | All the styles. `kit/iso.css` is the same text. |
+| `plateHtml({ fig, title, hint, readout, keys: [{ mark, label }], caption, body })` | 卡片本体。`mark` 取 `raised`、`flat`、`lit`、`edge`、`dim`、`dotted`、`dashed`、`red`、`green`、`blue` 之一。读数元素带 `data-readout`，实时代码可直接写入。 |
+| `pageHtml({ title, theme = "dark", body, script, width = 650 })` | 内联了 `ISO_CSS` 的独立文档。 |
+| `kitScript()` | 来自 `scripts/inline-kit.mjs`。把它放在 `script` 前面，页面动画时就能调用 `lineOnTop`、`translateAlong` 等 kit 函数。 |
+| `glScript()` | 来自 `scripts/inline-kit.mjs`。`kit/gl.mjs` 的源码（`GLSL_ISO`、`glCamera`、`glLayer`、`smooth`、`burst`、`settle`），在带 shader 的页面上内联在 `kitScript()` 之后：`script: kitScript() + glScript() + live`。它不依赖 kit，实时代码不调用 kit 函数的页面可以只内联它（Raptor 用的是 `glScript() + LIVE`）。它们都在同一个模块脚本里，因此实时代码不得重复声明 `smooth`、`burst` 或 `settle`：第二个 `const smooth` 是会让页面挂掉的 SyntaxError。 |
+| `turnScript()` | 来自 `scripts/inline-kit.mjs`。去掉 `export` 的 3D 运行时（`TURN`、`TURN_CSS`），供带实时部件的页面使用：`script: turnScript() + glScript() + live`。其内部标识符以 `t3`/`T3_` 为前缀，因此能与 kit 和 WebGL 层并排内联。 |
+| `ISO_CSS` | 全部样式。`kit/iso.css` 是同样的内容。 |
 
-## 9. React components
-From `kit/react/draw.tsx`, which is server-safe:
+## 9. React 组件
+来自 `kit/react/draw.tsx`，服务端安全：
 
-- `<Solid paths tone crease halo lit flat className inner />` (`inner` is line markup placed under the outline, as for `solidSvg`)
+- `<Solid paths tone crease halo lit flat className inner />`（`inner` 是放在轮廓之下的线条标记，同 `solidSvg`）
 - `<Line d tone dotted dashed flow free />`
 - `<Wire from to via tone dotted dashed flow ends size />`
-- `<Dots points size tone pulse />` (a point may carry opacity as `[x, y, alpha]`, as for `dotsSvg`)
+- `<Dots points size tone pulse />`（点可以带不透明度 `[x, y, alpha]`，同 `dotsSvg`）
 - `<FaceText transform size tone anchor>text</FaceText>`
-- `<IsoFigure width height label>` …svg children… `</IsoFigure>`
-- `<Plate fig title hint readout keys caption>` …figure… `</Plate>`
+- `<IsoFigure width height label>` …svg 子元素… `</IsoFigure>`
+- `<Plate fig title hint readout keys caption>` …图形… `</Plate>`
 
-From `kit/react/live.tsx`, which is `"use client"`:
+来自 `kit/react/live.tsx`，带 `"use client"`：
 
-- `useReadout()` returns `{ anchor, say }`. Put `anchor` on your root element; `say(text)` writes the card's readout.
-- `useLoop(tick: (dt, calm) => keepGoing, running)` runs a frame loop while `running` and while `tick` returns true. It returns `kick()` to restart it.
-- `follow(current, target, dt, seconds, calm)` is exponential easing.
-- `spring(state, target, dt, stiffness, damping, calm)` is a sub-stepped spring. It returns true when settled.
-- `useEased(target, seconds)` returns an eased number as React state. Fine for small figures.
-- `useInView(ref)`, `useStillness()`, `asksForStillness()`.
-- `Stage` is the wrapper `IsoFigure` uses. It adds `data-inview` for CSS animations.
+- `useReadout()` 返回 `{ anchor, say }`。把 `anchor` 放在根元素上；`say(text)` 写入卡片读数。
+- `useLoop(tick: (dt, calm) => keepGoing, running)` 在 `running` 为真且 `tick` 返回真时运行帧循环。返回 `kick()` 可重新启动。
+- `follow(current, target, dt, seconds, calm)` 是指数缓动。
+- `spring(state, target, dt, stiffness, damping, calm)` 是分步弹簧。稳定后返回 true。
+- `useEased(target, seconds)` 以 React state 返回缓动后的数值。小图形够用。
+- `useInView(ref)`、`useStillness()`、`asksForStillness()`。
+- `Stage` 是 `IsoFigure` 用的包装器。它加 `data-inview` 以支持 CSS 动画。
 
-## 10. Round parts on any axis (`kit/lathe.mjs`)
-`kit/iso-kit.mjs` builds prisms that stand on the floor. `kit/lathe.mjs` turns a profile around **any** axis, for bells, chambers, flanges, valve bodies, pump volutes, pipe fittings, actuators lying at an angle, and connectors on a vertical face. It returns the same `SolidPaths` as `slabOf`, so `solidSvg` paints them. Import it as `import * as G from "../../kit/lathe.mjs"`.
+## 10. 任意轴上的回转件（`kit/lathe.mjs`）
+`kit/iso-kit.mjs` 构建立在地面的棱柱。`kit/lathe.mjs` 把轮廓绕**任意**轴回转，用于钟形件、腔体、法兰、阀体、泵蜗壳、管接头、斜置的执行器和垂直面上的接头。它返回与 `slabOf` 相同的 `SolidPaths`，因此 `solidSvg` 可以直接绘制。引入方式：`import * as G from "../../kit/lathe.mjs"`。
 
-**Frames.** A frame is `{ o, a, u, v }`: an origin, the unit axis, and two unit radial directions. A point on the part is `(s, r, angle)`: `s` along the axis from `o`, `r` from the axis, and `angle` from `u` toward `v`.
+**坐标系（Frame）。** Frame 是 `{ o, a, u, v }`：一个原点、单位轴向和两个单位径向方向。零件上的点表示为 `(s, r, angle)`：`s` 沿轴离开 `o`，`r` 是离轴距离，`angle` 从 `u` 转向 `v`。
 
-| Function | What it does |
+| 函数 | 作用 |
 |---|---|
-| `frameAlong(o, a)` | A frame on axis `a` through `o`, with `u` and `v` chosen for you. Use it for pipes, bosses and flanges at any angle. |
-| `frameOf(o, a, u, v)` | A frame with explicit radial directions, so angles mean something: `G.frameOf([0, 0, z], [0, 0, 1], [1, 0, 0], [0, 1, 0])` makes angle 0 point along +x. |
-| `pointOf(F, s, r, angle)` | The world point. |
-| `radialOf(F, angle)`, `tangentOf(F, angle)`, `angleToward(F, direction)` | Directions in the frame, and the angle that faces a direction. |
+| `frameAlong(o, a)` | 过 `o`、沿轴 `a` 的 frame，`u`、`v` 自动选好。任意角度的管子、凸台和法兰都用它。 |
+| `frameOf(o, a, u, v)` | 显式指定径向方向的 frame，角度因此有确定含义：`G.frameOf([0, 0, z], [0, 0, 1], [1, 0, 0], [0, 1, 0])` 让角度 0 指向 +x。 |
+| `pointOf(F, s, r, angle)` | 对应的世界坐标点。 |
+| `radialOf(F, angle)`、`tangentOf(F, angle)`、`angleToward(F, direction)` | frame 内的方向，以及面向某方向的角度。 |
 
-**Solids.** A meridian is a list of `[s, r]` points along the axis. Add a third element (`[s, r, 1]`) to mark a smooth ring, so no crease line is drawn there. Use that for curved profiles such as a bell or a dome. A meridian with any smooth vertex is shaded smoothly on its own (`smooth` defaults to `"auto"`, which is `softOf(meridian)`); pass `smooth: false` to opt out, `true` or `{ rows }` to force it on a profile without smooth vertices, and `{ slope }` or `{ slope, radius }` for an analytic curve.
+**实体。** 子午线是沿轴排列的 `[s, r]` 点列。加第三个元素（`[s, r, 1]`）把该环标记为平滑，该处就不画折痕线。钟形、穹顶这类曲线轮廓用它。子午线只要含任一平滑顶点就自动平滑着色（`smooth` 默认 `"auto"`，即 `softOf(meridian)`）；传 `smooth: false` 关闭，传 `true` 或 `{ rows }` 可在无平滑顶点的轮廓上强制开启，传 `{ slope }` 或 `{ slope, radius }` 则用解析曲线。
 
-**Smooth shading.** Without it every facet row gets one flat tone, and a curved profile shows a staircase of tone blocks (the first Raptor bell and throat did, and the reviewer saw it at once). With `smooth` the side of each meridian segment is shaded from an interpolated normal: the tone boundaries become the true iso-light curves, sampled at `rows` levels and emitted as one polygon per tone region, so they run as clean curves across the whole part.
-- `smooth: true` interpolates each run of smooth vertices (`[s, r, 1]`) with a monotone cubic Hermite curve (Fritsch–Carlson slopes: zero where the profile turns, a weighted harmonic mean elsewhere), and uses that one curve for the normals, the tone sheets, the silhouette and the hull, resampled until it is within 0.2 px of the chord. Shading and outline then describe the same shape, and the normal can only change sign where the profile does. Use it for any profile with smooth vertices: domes, throats, cones, valve bulges, a flame cone. (A natural spline overshoots near a peak; on a valve bulge it zig-zagged the tone bands across the body.)
-- `smooth: { slope }` takes the normal from an analytic `dr/ds`, so a body cut into bands shares one normal field and the tone curves cross the band joints without a step. With a `slope` alone the profile points are joined straight, so sample the analytic `r(s)` densely (20–30 knots on a throat), and the silhouette of a waisted body uses the same `slope`, so the outline follows the true curve too.
-- `smooth: { slope, radius }` also takes the surface from an analytic `r(s)`: the tone sheets, the hull and the silhouette all follow `radius` between the knots, so two knots are enough for a band. This is what `bandsOf` passes to every band.
-- **Hand-typed knots are not a curve.** The monotone Hermite is only C1: its `dr/ds` is a piecewise quadratic that plateaus at every knot and overshoots between them, so tone bands stall and then lurch, a staircase in scallops. The Raptor throat (`[128, 31, 1], [134, 27.6, 1], …`) showed it at 5×. Any curved body larger than a fitting gets an analytic profile and `smooth: { slope }`: the throat is `r = √(24.2² + (c·(s − 146))²)`, the flame cone `r = 48·(1 − x)^0.8` closed to `r = 0` at the tip, the valve bulge an ellipse, the gimbal puck `18.4 − a·|s − 297.5|⁴`. The audit's `wobble` lists every profile smoothed without a `slope` whose `dr/ds` turns between its ends.
-- `rows` (default 6) is the starting sampling along each segment. Rows are then split until every tone boundary is within `error` (0.35 px) of a straight chord, and wherever the number of bands changes down to `depth` (8) levels or to `fineness` (0.1 px) on screen, whichever comes first, so a band that appears or disappears is born at zero width in a sliver instead of ending on a straight cut. Each tone is then emitted as one polygon for as long as its own number of regions holds, across every meridian segment and smooth knot of the body, and only that tone is bridged where its count changes; a band that comes and goes no longer cuts the other tones into rows. That made a small turned ball about half the size and removed the row seams. Visibility uses the drawn facet's normal, so the tones always reach the outline; every tone polygon is wound the same way, so overlapping pieces of one tone never cancel into a hole.
-- The result is marked `seamless` (see `solidSvg`). Flat caps (rings where `s` doesn't change) keep their facet shading.
+**平滑着色。** 不开平滑时每个面片行只有一个平色，曲线轮廓会呈现色块阶梯（最初的 Raptor 钟形件和喉管就是这样，评审一眼就看出来了）。开 `smooth` 后，每段子午线的侧面按插值法线着色：色调边界变成真实的等照度曲线，按 `rows` 层采样、每个色调区域输出为一个多边形，因此它们以干净的曲线贯穿整个零件。
+- `smooth: true` 用单调三次 Hermite 曲线插值每段连续的平滑顶点（`[s, r, 1]`）（Fritsch–Carlson 斜率：轮廓转折处为零，其余取加权调和平均），并把这条曲线同时用于法线、色调面、轮廓和凸包，重采样直到与弦线误差不超过 0.2 px。着色与轮廓因此描述同一个形状，法线也只能在轮廓转折处变号。任何含平滑顶点的轮廓都用它：穹顶、喉管、锥体、阀鼓包、火焰锥。（自然样条在峰值附近会过冲；在阀鼓包上它曾让色带在躯体上锯齿状扭动。）
+- `smooth: { slope }` 的法线取自解析 `dr/ds`，分带的躯体共享同一个法线场，色调曲线跨带缝不出现台阶。只用 `slope` 时轮廓点之间直线相连，所以要密集采样解析 `r(s)`（喉管上 20–30 个节点），束腰躯体的轮廓也用同一个 `slope`，因此外形同样贴合真实曲线。
+- `smooth: { slope, radius }` 连曲面也取自解析 `r(s)`：色调面、凸包和轮廓在节点之间都跟随 `radius`，因此一条环带两个节点就够。`bandsOf` 给每条带传的就是它。
+- **手敲节点不是曲线。** 单调 Hermite 只有 C1 连续：它的 `dr/ds` 是分段二次函数，在每个节点处趋平、节点间过冲，色带于是走走停停，形成扇贝状阶梯。Raptor 喉管（`[128, 31, 1], [134, 27.6, 1], …`）在 5× 放大下暴露了这一点。任何大于一个接头的曲面体都用解析轮廓加 `smooth: { slope }`：喉管是 `r = √(24.2² + (c·(s − 146))²)`，火焰锥是 `r = 48·(1 − x)^0.8` 并在尖端闭合到 `r = 0`，阀鼓包是椭圆，万向节圆饼是 `18.4 − a·|s − 297.5|⁴`。审计的 `wobble` 会列出每个开了平滑却没给 `slope`、且 `dr/ds` 在两端之间转向的轮廓。
+- `rows`（默认 6）是每段的初始采样数。随后不断拆分行，直到每个色调边界与直弦的偏差都在 `error`（0.35 px）以内，并且凡带数发生变化处，细分持续到 `depth`（8）层或屏幕上的 `fineness`（0.1 px），以先到者为准，这样出现或消失的环带以零宽度的细条形式诞生，而不是终止于一条平直切口。只要某个色调自身的区域数保持不变，它就贯穿躯体的每段子午线和每个平滑节点、输出为一个多边形；区域数变化处只对该色调做桥接，时有时无的环带不再把其他色调切成一行行。这让一个小回转球的体积缩小约一半，并消除了行缝。可见性按绘制面片的法线计算，色调总能到达轮廓；每个色调多边形环绕方向一致，同一色调的重叠部分绝不会相消成洞。
+- 结果标记为 `seamless`（见 `solidSvg`）。平端盖（`s` 不变的环）保留面片着色。
 
-| Function | What it does |
+| 函数 | 作用 |
 |---|---|
-| `lathe(meridian, F, P, { steps = stepsFor(rMax, 32, 160, scaleOf(P)), fill = "auto", hole = null, bevel = 0, rims = "all", smooth = "auto", waist = 0.5 })` | The general solid of revolution. Facets are shaded in four tones by the kit's light and bucketed like `extrude`. `fill: "auto"` uses the hull of the rings unless the true silhouette lies more than `waist` px inside it (a throat, a spool), and then fills and outlines the body with `silhouettePoints` on both sides joined by the visible end arcs (only when the silhouette is unbroken along the whole side: a body whose surface faces you head-on somewhere, like a valve bulge that leaves its neck at a right angle, falls back to the hull, because joining the broken pieces drew stray triangles across it); `"surface"` forces that, `"hull"` forces the hull; `fill: "facets"` fills only the visible facets and draws no outline, which you need for a concave or open shape seen from inside. `hole: [s, r]` cuts a round hole into the fill and outline, for the end of a tube. `bevel` adds a highlight inset from a closed cap (a meridian end at `r = 0`). `rims` keeps the outline on the end rings: `"all"`, `"none"`, `"first"`, `"last"` or `"ends"`. Only hull edges along the first or last ring are dropped; edges along interior rings always stay, so the side silhouette stays whole. |
-| `solidOf(profile, F, P, options)` | Closes a profile to the axis at both ends and picks `steps` from the largest radius. It is the usual way to make a turned part: `G.solidOf([[0, 12], [6, 12], [8, 9, 1], [20, 9]], F, P)`. |
-| `bandOfProfile(profile, F, P, options)` | An open band with no caps, for one stretch of a long body that is split into depth-sorted pieces. Prefer `bandsOf`, which cuts the whole body at once. |
-| `bandsOf(profile, cuts, F, P, { slope, radius, steps, rows = 6, rims = "none", fill = "auto", samples = 72 })` | One curved body (`s` rising along `profile`) cut at the `s` values in `cuts` into depth-sortable bands that share one normal field, one surface and one facet count. Pass the analytic `slope` and `radius`, or neither: then `profileCurve(profile)` makes them from the profile (the monotone Hermite through each run of smooth knots, straight elsewhere), so no band ever has its own end slopes. Returns `{ bands, sidesOf, radius, slope, steps, s0, s1 }`. Each band is `{ s0, s1, profile, paths, outline, seam }`: `paths` is ready for `solidSvg` with its outline cleared, `outline` is the band's own chord outline if you need it (the last band of the Raptor skirt keeps it), `seam` is the visible arc where it meets the next band (put it in `inner`), and `profile` is what to record for the audit (`A.solid(F, band.profile, { radius })`). `sidesOf(from = s0, to = s1, { ends = false \| true \| "first" \| "last", count = samples })` returns `{ d, points }`: the body's two analytic side edges over that span as one path, optionally with the visible rim arcs at its ends, plus their 3D points to record (`points.map((list) => A.tube(list, 0.4 / scale))`). Draw `d` as one item with a small depth bias over the bands, so the outline is one continuous curve. |
-| `profileCurve(profile, { slope, radius })` | `{ s0, s1, radius(s), slope(s) }` for a profile whose `s` rises: the curve `smooth` draws through it. Throws if `s` doesn't rise, since a step in a profile is a crease and belongs to a separate solid. |
-| `outlineOf(meridian, F, P, { steps, fill, hole, rims, smooth, waist })` | Only the `fill` and `outline` of `lathe`, without the shading, for a body whose outline you draw separately. |
-| `softOf(meridian)` | True when any vertex is marked smooth. |
-| `disc(s0, s1, r, F, P, options)` | A short cylinder on the axis: pucks, flanges, bosses, pins, plugs. |
-| `ringBand(s0, s1, rIn, rOut, F, P, options)` | An annulus with thickness: a flange or collar around something. |
-| `stepsFor(radius, least = 16, most = 112, scale = 0)` | A facet count. With `scale` (screen px per unit, `scaleOf(P)`) it keeps every facet about 3 px long on screen; `disc`, `ringBand`, `solidOf`, `bandOfProfile` and `lathe` use that (32–160) when you pass no `steps`. Facets only set the tone fills: outlines, rims, creases and bevels are sampled from the true circle at about 1.5 px and end exactly where the faces turn away. |
-| `saddleOf(F, a, start, s1, P, { steps })` | A saddle pad: a cylinder of radius `a` along `F.a` from a curved host surface to a flat face at `s1`. `start(angle)` is where each generator leaves the host (find it by bisecting the host's `sdf`), or a number `R` for a host cylinder perpendicular to `F.a` (then `saddleStart(R, a, angle)` gives each generator's start). The fill is the union of its visible facets and face, the outline its two side generators, the visible part of the saddle curve and the face rim, so it meets the host along the true intersection. Seat flanges on it wherever a flat flange on a curved body would leave a rim gap. |
-| `prismOf(F, polygon, s0, s1, P)` and `stadium(r0, r1, offset)` | A prism of any convex `[x, y]` polygon in the frame's `u`, `v` plane, extruded along `F.a`, with facet tones, the hull as fill and outline, and creases only at sharp corners. `stadium` is the hull of two circles, for a gearbox plate joining a motor to an actuator. |
-| `sphereOf(centre, r, P, { steps = 48 })` | A ball with exact smooth tones: each tone region is the projected hull of a spherical cap, so it costs four small polygons instead of a turned profile. Use it for rod-end bearings, tee fittings and knobs. It is `seamless`. |
-| `silhouettePoints(profile, F, P, { samples = 72, slope, radius })` | The two side edges of `silhouetteOf` as 3D point lists, to record the outline's shape for the audit. |
-| `silhouetteOf(profile, F, P, { samples = 72, slope, radius })` | The two analytic side edges of the surface of revolution through `profile` (`[s, r]` points, linearly interpolated), as one path of two polylines: the points where the surface turns away from the viewer (`cos(θ − φ) = r′·aV/|V⊥|`). Use it to draw one continuous outline over a body built in bands. Where the surface faces the viewer head-on (`|c| > 1`) a sample is skipped. Pass the analytic `slope` (the same one the bands are shaded with) so the edge doesn't kink at every profile point. |
+| `lathe(meridian, F, P, { steps = stepsFor(rMax, 32, 160, scaleOf(P)), fill = "auto", hole = null, bevel = 0, rims = "all", smooth = "auto", waist = 0.5 })` | 通用的回转体。面片按 kit 的光照分四档着色，分档方式同 `extrude`。`fill: "auto"` 用各环的凸包填充，除非真实轮廓比凸包内缩超过 `waist` px（喉管、线轴），这时改用两侧的 `silhouettePoints` 加可见端弧连接来填充并描轮廓（仅当轮廓沿整个侧面连续不断：表面在某个位置正对观察者的躯体，比如以直角离开颈部的阀鼓包，会退回凸包，因为拼接断开会画出杂散三角形）；`"surface"` 强制前者，`"hull"` 强制凸包；`fill: "facets"` 只填充可见面片、不画轮廓，从内部看的凹形或开放形体需要它。`hole: [s, r]` 在填充和轮廓上切一个圆孔，用于管口。`bevel` 从闭合端盖（`r = 0` 处的子午线端）向内加高光线。`rims` 控制端环上的轮廓：`"all"`、`"none"`、`"first"`、`"last"` 或 `"ends"`。只有沿第一或最后一个环的凸包边会被丢弃；内部环上的边始终保留，因此侧面轮廓完整。 |
+| `solidOf(profile, F, P, options)` | 把轮廓在两端闭合到轴上，并按最大半径选 `steps`。这是做回转件的常规方式：`G.solidOf([[0, 12], [6, 12], [8, 9, 1], [20, 9]], F, P)`。 |
+| `bandOfProfile(profile, F, P, options)` | 无端盖的开口带，用于被拆成深度排序多段的长躯体中的一段。优先用 `bandsOf`，它一次性切分整个躯体。 |
+| `bandsOf(profile, cuts, F, P, { slope, radius, steps, rows = 6, rims = "none", fill = "auto", samples = 72 })` | 一条曲面体（`s` 沿 `profile` 递增）按 `cuts` 中的 `s` 值切成可深度排序的环带，各带共享同一法线场、同一曲面和同一面片数。传入解析 `slope` 和 `radius`，或者都不传：后者由 `profileCurve(profile)` 从轮廓推导（平滑节点段走单调 Hermite，其余走直线），因此没有任何一条带会自带端部斜率。返回 `{ bands, sidesOf, radius, slope, steps, s0, s1 }`。每条带是 `{ s0, s1, profile, paths, outline, seam }`：`paths` 已清掉自身轮廓、可直接给 `solidSvg`；`outline` 是该带自己的弦线轮廓，需要时可用（Raptor 裙部的最后一条带保留了它）；`seam` 是它与下一条带相接的可见弧（放进 `inner`）；`profile` 是给审计记录用的（`A.solid(F, band.profile, { radius })`）。`sidesOf(from = s0, to = s1, { ends = false \| true \| "first" \| "last", count = samples })` 返回 `{ d, points }`：该区间内躯体两条解析侧边合成的一条路径，可选带上两端可见的边弧，以及用于记录的 3D 点（`points.map((list) => A.tube(list, 0.4 / scale))`）。把 `d` 作为一个条目、带小的深度偏移画在环带之上，轮廓就是一条连续曲线。 |
+| `profileCurve(profile, { slope, radius })` | 面向 `s` 递增轮廓的 `{ s0, s1, radius(s), slope(s) }`：即 `smooth` 穿过它画的曲线。`s` 不递增就抛错，因为轮廓上的台阶是折痕，属于另一个实体。 |
+| `outlineOf(meridian, F, P, { steps, fill, hole, rims, smooth, waist })` | 只有 `lathe` 的 `fill` 和 `outline`、不含着色，供自行绘制轮廓的躯体使用。 |
+| `softOf(meridian)` | 任一顶点标记为平滑时为真。 |
+| `disc(s0, s1, r, F, P, options)` | 轴上的短圆柱：圆饼、法兰、凸台、销、塞。 |
+| `ringBand(s0, s1, rIn, rOut, F, P, options)` | 有厚度的圆环：套在别的东西外面的法兰或箍环。 |
+| `stepsFor(radius, least = 16, most = 112, scale = 0)` | 面片数量。给 `scale`（每世界单位对应的屏幕像素，`scaleOf(P)`）时，它让每个面片在屏幕上约 3 px 长；不传 `steps` 时 `disc`、`ringBand`、`solidOf`、`bandOfProfile` 和 `lathe` 都用它（32–160）。面片只决定色调填充：轮廓、边圈、折痕和倒角按约 1.5 px 从真实圆采样，并正好终止在面转向背面的位置。 |
+| `saddleOf(F, a, start, s1, P, { steps })` | 鞍座垫：半径 `a`、沿 `F.a` 的圆柱，从曲面宿主表面延伸到 `s1` 处的平面。`start(angle)` 给出每条母线离开宿主的位置（用宿主 `sdf` 二分求得），或传数字 `R` 表示宿主是垂直于 `F.a` 的圆柱（此时 `saddleStart(R, a, angle)` 给出每条母线的起点）。填充是可见面片与端面的并集，轮廓是两条侧母线、鞍曲线的可见部分和端面边圈，因此它与宿主沿真实相交线贴合。曲面上装平法兰会留下边圈缝隙的地方，都用它来装法兰。 |
+| `prismOf(F, polygon, s0, s1, P)` 与 `stadium(r0, r1, offset)` | 在 frame 的 `u`、`v` 平面内取任意凸 `[x, y]` 多边形、沿 `F.a` 拉伸的棱柱，带面片色调、凸包作填充和轮廓，只在尖角处有折痕。`stadium` 是两个圆的凸包，用于连接电机与执行器的变速箱板。 |
+| `sphereOf(centre, r, P, { steps = 48 })` | 带精确平滑色调的球：每个色调区域是球冠的投影凸包，因此只需四个小多边形，不用回转轮廓。用于杆端轴承、三通接头和旋钮。它是 `seamless` 的。 |
+| `silhouettePoints(profile, F, P, { samples = 72, slope, radius })` | `silhouetteOf` 的两条侧边，以 3D 点列表示，用于给审计记录轮廓形状。 |
+| `silhouetteOf(profile, F, P, { samples = 72, slope, radius })` | 穿过 `profile`（`[s, r]` 点列，线性插值）的回转面的两条解析侧边，合并为一条含两段折线的路径：即曲面转向背对观察者处的点（`cos(θ − φ) = r′·aV/|V⊥|`）。用于在分带构建的躯体上画一条连续轮廓。表面正对观察者处（`|c| > 1`）跳过采样。传入解析 `slope`（与环带着色用的相同），边缘才不会在每个轮廓点处打结。 |
 
-**Lines and dots on round surfaces.** These draw only what faces the viewer. `slope` is `dr/ds` of the surface at that ring, so a line on a cone or bell hides where the real surface turns away.
+**曲面上的线与点。** 它们只画朝向观察者的部分。`slope` 是该环处曲面的 `dr/ds`，锥面或钟形面上的线因此会在真实曲面转走的地方隐藏。
 
-| Function | What it does |
+| 函数 | 作用 |
 |---|---|
-| `arcOf(F, s, r, P, { slope = 0, steps, least = 0.02, inward = false, from = 0, to = 2π, trim = 0.3 })` | The visible arc of a ring on the surface: seams, bands, weld lines, a lip. The limb angles are solved exactly (`t = φ ± acos(c)`), and each end that stops at the limb is shortened by `trim` px so its round cap stays inside the outline stroke. `inward: true` draws the arc you see on an inner surface, such as the inside of a nozzle. `least: -1` gives the whole ring. Draw seams *under* the outline: `solidSvg(paths, { inner: lineSvg(arcOf(…), { tone: "faint" }) })`. Appended after the solid, a faint seam cap paints over the edge stroke and notches the silhouette at every seam. |
-| `circleOf(F, s, r, P, steps)` | A full closed circle, such as a face ring, a bore or a void you fill. |
-| `ribsOf(F, s0, s1, r, count, P, { phase, twist, least = 0.12, r1 = r, fade, seams })` | Visible axial lines: a knurl, ribs or fins along any axis. `twist` makes them helical and `r1` lets them run along a cone. With `fade: [lo, hi]` it returns `[{ d, alpha }]`, each rib's opacity a smoothstep of how much it faces you, so the set fades out toward the turn instead of stopping at `least`. Draw them with `fadedSvg`. `seams: true` (or `"first"`, `"last"`) adds the seam arcs at `s0` and `s1` to the result (at full opacity), so a rib row and the seams it ends on always share one `s`; leave it off only where the ribs end on a step or a band end that is already drawn. |
-| `rodOut(F, from, to, r, P, { stroke, ...latheOptions })` | A rod that slides out of a gland at `s = from` (`F.a` points out of it), its tip at `to` at rest, travelling up to `stroke` further out, or the same rod retracting into it. Returns `{ paths, clip, from, to, stroke, reach }`: `paths` is one rod from `from − stroke` to `to`, and `clip` a path covering the rod from the gland face to `to + stroke`. Draw `<clipPath id><path data-hold d=clip/></clipPath><g clip-path=url(#id)>solidSvg(paths)</g>`, move the item, call `holdStill`, and record `A.slide(F, from, to, r)` (`craft.md`, section 3). |
-| `spokesOf(F, s, r0, r1, count, P, { phase, sweep, from, to })` | Radial lines on a face, for vanes and turbine blades. |
-| `dotsOf(F, s, r, count, P, { phase, slope, least = 0.08, all = false, fade })` | Screen points of a bolt circle on the visible side. Pass them to `dotsSvg`. Use `all: true` for a face you see head-on. A `least` well above 0 stops the circle in the middle of the surface; pass `fade: [0.04, 0.42]` instead and the dots carry a falling opacity. |
-| `fadeOf(value, [lo, hi])` | The smoothstep both fades use. |
-| `facingOf(F, angle, P, slope)` | How much a surface at that angle faces the viewer. Positive means visible. |
+| `arcOf(F, s, r, P, { slope = 0, steps, least = 0.02, inward = false, from = 0, to = 2π, trim = 0.3 })` | 面上圆环的可见弧：接缝、环带、焊缝、口沿。轮廓角精确求解（`t = φ ± acos(c)`），止于轮廓角的每一端都缩短 `trim` px，使圆头端帽留在轮廓描边之内。`inward: true` 画内表面上看到的弧，例如喷管内壁。`least: -1` 给出整圆。接缝画在轮廓*之下*：`solidSvg(paths, { inner: lineSvg(arcOf(…), { tone: "faint" }) })`。若追加在实体之后，浅色接缝端帽会盖住边缘描边，并在每个接缝处把轮廓切出缺口。 |
+| `circleOf(F, s, r, P, steps)` | 完整闭合的圆，如端面环、孔口或待填充的空腔。 |
+| `ribsOf(F, s0, s1, r, count, P, { phase, twist, least = 0.12, r1 = r, fade, seams })` | 可见的轴向线：沿任意轴的滚花、棱条或鳍片。`twist` 让它们成螺旋，`r1` 让它们沿锥面走。给 `fade: [lo, hi]` 时返回 `[{ d, alpha }]`，每条棱的不透明度是其朝向程度的 smoothstep，整组朝转折处渐隐而不是止于 `least`。用 `fadedSvg` 绘制。`seams: true`（或 `"first"`、`"last"`）把 `s0`、`s1` 处的接缝弧加进结果（全不透明度），棱条行与其终止的接缝因此共享同一个 `s`；只有棱条终止在台阶或已画出的带端时才可省略。 |
+| `rodOut(F, from, to, r, P, { stroke, ...latheOptions })` | 从 `s = from` 处的密封函滑出的杆（`F.a` 指向函外），静止时杆端在 `to`，最多再伸出 `stroke`，或同一根杆缩回去。返回 `{ paths, clip, from, to, stroke, reach }`：`paths` 是从 `from − stroke` 到 `to` 的一根杆，`clip` 是覆盖从密封函面到 `to + stroke` 这段杆的路径。按 `<clipPath id><path data-hold d=clip/></clipPath><g clip-path=url(#id)>solidSvg(paths)</g>` 绘制，移动条目，调用 `holdStill`，并记录 `A.slide(F, from, to, r)`（`craft.md` 第 3 节）。 |
+| `spokesOf(F, s, r0, r1, count, P, { phase, sweep, from, to })` | 面上的径向线，用于叶片和涡轮桨叶。 |
+| `dotsOf(F, s, r, count, P, { phase, slope, least = 0.08, all = false, fade })` | 可见侧螺栓圆的屏幕坐标点。传给 `dotsSvg`。正对观察者的面用 `all: true`。`least` 明显大于 0 会让圆停在曲面中间；改传 `fade: [0.04, 0.42]`，圆点会带递减的不透明度。 |
+| `fadeOf(value, [lo, hi])` | 两种渐隐共用的 smoothstep。 |
+| `facingOf(F, angle, P, slope)` | 该角度的表面朝向观察者的程度。正值表示可见。 |
 
-**Paths in 3D**, for pipes and cables.
+**3D 路径**，用于管道和线缆。
 
-| Function | What it does |
+| 函数 | 作用 |
 |---|---|
-| `fillet(points, radius, perArc = 7, { P, tube, margin = 1.3 })` | Rounds every corner of a polyline with a bend of `radius`, clamped to the room available (0.48 of the shorter leg). Lay out a pipe as a few straight legs, then fillet it. With `P` and `tube` (the pipe radius) each corner's bend grows to `margin · tube / (0.7 · f²)`, where `f = |n · V|` is how squarely the bend's plane faces the viewer: a bend seen edge-on projects to a radius `R·f²`, and below the tube's own radius the outline folds back on itself. The legs still cap it, so a turn next to a port facing you needs long legs or an elbow fitting. |
-| `resample(points, spacing)`, `pathLength(points)`, `cut(points, from, to)` | Even spacing, total length, and a sub-path by arc length. |
-| `pointAlong(points, at)`, `tangentAlong(points, at)` | Position and direction at an arc length. Use them to place flanges, bands, valves and clamps on a route. |
-| `spiral(F, s, r0, r1, a0, a1, steps = 28)` | 3D points of a widening spiral, such as a pump volute. Feed them to `tubePieces` with a radius function. |
-| `arcPoints(F, s, r, a0, a1, steps = 24)` | 3D points around a ring, such as a manifold, a deluge ring or a harness lane. |
+| `fillet(points, radius, perArc = 7, { P, tube, margin = 1.3 })` | 用 `radius` 大小的弯把折线的每个角变圆，上限是可用空间（短边的 0.48）。先把管道布置成几段直边，再做圆角。给 `P` 和 `tube`（管道半径）时，每个角的弯会放大到 `margin · tube / (0.7 · f²)`，其中 `f = |n · V|` 表示弯所在平面正对观察者的程度：侧向看的弯投影半径是 `R·f²`，低于管道自身半径时轮廓会自折叠。直边仍会封顶，因此紧邻朝向你的接口的转弯需要长直边或弯头接头。 |
+| `resample(points, spacing)`、`pathLength(points)`、`cut(points, from, to)` | 等距重采样、总长度，以及按弧长截取的子路径。 |
+| `pointAlong(points, at)`、`tangentAlong(points, at)` | 给定弧长处的位置与方向。用于在管线上放置法兰、环带、阀门和卡箍。 |
+| `spiral(F, s, r0, r1, a0, a1, steps = 28)` | 渐宽螺线的 3D 点，例如泵蜗壳。连同半径函数一起喂给 `tubePieces`。 |
+| `arcPoints(F, s, r, a0, a1, steps = 24)` | 绕环一周的 3D 点，例如歧管、喷淋环或线束通道。 |
 
-**Camera and vectors.**
-- `viewOf(P)` is the unit direction to the viewer, so `dot3(p, viewOf(P))` equals `depthOf(p, P)`.
-- `lightOf(P)` is the kit's light.
-- `scaleOf(P)` is the screen units per world unit.
-- `toneOf(normal, P)` and `bandOf(score)` give the four-tone bucket.
-- `hullOf(points)` and `runsOf(flags)` are the hull and run helpers the module uses itself.
-- The vector helpers are `dot3`, `add3`, `sub3`, `mul3`, `len3`, `unit3`, `cross3` and `lerp3`.
+**相机与向量。**
+- `viewOf(P)` 是指向观察者的单位方向，因此 `dot3(p, viewOf(P))` 等于 `depthOf(p, P)`。
+- `lightOf(P)` 是 kit 的光源。
+- `scaleOf(P)` 是每世界单位对应的屏幕单位数。
+- `toneOf(normal, P)` 和 `bandOf(score)` 给出四档色调。
+- `hullOf(points)` 和 `runsOf(flags)` 是模块自己也在用的凸包与游程辅助函数。
+- 向量辅助函数有 `dot3`、`add3`、`sub3`、`mul3`、`len3`、`unit3`、`cross3` 和 `lerp3`。
 
-**A long curved body in bands.** Cut it with `bandsOf` so each band depth-sorts against the pipes that wrap it. Every band shares the body's `steps`, its normal field and its surface, so tone curves cross every joint without a step, and the outline comes from `sidesOf` as one curve instead of a chord per band that kinks at every joint. The Raptor bell:
+**分带的长曲面体。** 用 `bandsOf` 切分，让每条带与缠绕其上的管道正确深度排序。每条带共享躯体的 `steps`、法线场和曲面，色调曲线跨每个接缝无缝，轮廓来自 `sidesOf` 的一条曲线，而不是每带一段弦线、在每个接缝处打结。Raptor 钟形件：
 ```js
 const BELL = G.bandsOf([[3.2, bell(3.2)], [116, bell(116)]], [14, 28, 44, 60, 76, 92, 106], ENGINE, P, { radius: bell, slope: bellSlope, steps: 96, rows: 8 });
 BELL.bands.forEach((band, index) => put("nozzle", ex(ENGINE, (band.s0 + band.s1) / 2), S(band.paths, { tone: "hi", inner: index === 2 ? Ln(band.seam, { tone: "faint" }) : "" }), { shapes: [record(A.solid(ENGINE, band.profile, { radius: bell }))] }));
 const SIDES = BELL.sidesOf(3.2, 106, { ends: "first" });
 put("nozzle", ex(ENGINE, 105), Ln(SIDES.d, { tone: "hi" }), { bias: 0.2, shapes: SIDES.points.map((points) => A.tube(points, 0.4 / KS)) });
 ```
-Don't build bands by hand from separate `bandOfProfile` calls on two-knot chords with their own Hermite fits: each band then has its own end slopes, its tones step at every joint, and its chord outline kinks.
+不要用多次 `bandOfProfile` 手工拼带、每段在两个节点的弦上各自做 Hermite 拟合：这样每条带都有自己的端部斜率，色调在每个接缝处跳变，弦线轮廓也会打结。
 
-**Known traps.**
-- **Four-tone quantisation follows the slope of each facet row** when a body isn't smoothed. Mark every curved knot smooth (`[s, r, 1]`) and the shading follows on its own; a profile of hard knots that still describes a curve needs `smooth: true`. Use `bandsOf` on a body cut into bands.
-- **Smooth shading is heavier.** A small turned ball with `smooth` costs about 9 KB; `sphereOf` costs under 3 KB. Use `sphereOf` for balls and keep `rows` low on small parts.
+**已知的坑。**
+- **躯体不开平滑时，四档量化会跟随每个面片行的斜率。** 把每个曲线节点都标记为平滑（`[s, r, 1]`），着色自然跟上；硬节点但仍描述曲线的轮廓需要 `smooth: true`。分带的躯体用 `bandsOf`。
+- **平滑着色更重。** 开 `smooth` 的小回转球约 9 KB；`sphereOf` 不到 3 KB。球体用 `sphereOf`，小零件把 `rows` 保持低位。
 
-## 11. Pipes, tubes and cables (`kit/tube.mjs`)
+## 11. 管道、管路与线缆（`kit/tube.mjs`）
 ```js
 import { tubePieces, tubeSvg, runsOf, crossingsOf } from "../../kit/tube.mjs";
 ```
-| Function | What it does |
+| 函数 | 作用 |
 |---|---|
-| `tubePieces(points3, radius, P, { maxLength = 30, spacing = 2.2, closed = false, breaks = [], gaps = [], caps = true, stripes = "auto" })` | Splits a 3D route into chunks of at most `maxLength` world units. Each one is drawn as a 2D ribbon with a paper body, a shine band toward the light, a shade band away from it, and two edge lines. Neighbouring pieces overlap by 0.5 units, and the edge lines are cut from the same overlapped span as the body, so neither a seam nor a notch in the outline shows at a joint. The shine and shade run 0.5 further than the body at every open end, so a stripe covers the anti-aliased cut of the body under it and its own cut lies on the neighbour's identical stripe; every frame normal is a central difference along the whole route, so the stripes of two chunks coincide exactly where they overlap (with both cut on one line, a hairline crossed the volute's shade band at every joint). `radius` is a number or a function of `t` (0 to 1 along the route), for tapers and volutes. `breaks` are arc lengths where a chunk must end (at a crossing, or where the pipe turns back past a part). `gaps` are `[from, to]` arc-length spans that are not drawn because a collar, clamp, valve or fitting covers them; the pipe ends flat on each side of a gap. Every end next to a gap gets an elliptical cap (the projected cross-section, with its outer half-arc as an edge), and so do the route's own two ends unless you pass `caps: false` (or `[start, end]`, such as `[false, true]` for a branch whose start hides inside a tee collar), so a pipe meets a flange face along the right curve instead of a straight cut. The shine and shade stripes follow the cap: onto the outward half of the ellipse when the end face is turned away, and up to its inner rim (drawn as an edge) when the face is turned toward you, so no stripe stops short of the end. A closed route with no gaps wraps its first and last pieces round each other. Returns `[{ mid, body, shine, shade, edges, wide, points, radii, ends, from, to }]`: `mid` is the chunk's centre in world space, to depth-sort it; `wide` is true when the route is wide enough on screen for its shine and shade bands (decided once for the whole route from its widest point, so a taper never drops its stripes at one chunk joint; `stripes: true` or `false` overrides it); `points` and `radii` are the chunk's 3D centreline and radii (record them for the audit); `ends` says which ends are real ends rather than joints with a neighbour. |
-| `tubeSvg(piece, { tone = "hi" })` | One piece as `<g class="tb">`. Shine and shade appear only on `wide` pieces, then the piece's rings (`.tb-ring`), then the edges. |
-| `tubePieces(…, { rings: { pitch = 3, twist = 0, cross = false, fade = [0.1, 0.55], phase = 0, steps = 16, tone = "lo" } })` | A texture that follows the pipe's cross-section: a braid, corrugation, tape wrap or armour. Stations sit every `pitch` units of 3D arc length from the route's start (`phase` shifts them), so the pattern is continuous through every chunk joint; each is drawn as the visible front arc of the cross-section there, split into short segments whose opacity is `fadeOf(facing, fade)`, so the texture fades toward both limbs instead of ending on a hard line. `twist` (in radii) turns each ring into a helix that advances that far from limb to limb, and `cross: true` adds the other hand, for a braid. Rings run over each chunk's stripe overhang, so the later chunk at a joint draws an identical piece over its own body's cut, and stop on real ends and gap faces (rings keep a third of a pitch off an end face, helices end on it). Each piece carries `rings: [{ d, alpha }]`; `ringsSvg(rings, tone)` draws them alone. |
-| `runsOf(total, gaps)` | The drawn `[from, to]` spans of a route of length `total` once `gaps` are taken out. Record each run as its own tube for the audit. |
-| `crossingsOf(points, centre, axis, radius)` | Arc lengths where a route crosses the disc of a clamp or collar (the plane through `centre` normal to `axis`, within `radius`). Turn each into a gap of the clamp's thickness. |
+| `tubePieces(points3, radius, P, { maxLength = 30, spacing = 2.2, closed = false, breaks = [], gaps = [], caps = true, stripes = "auto" })` | 把 3D 路线切成每段至多 `maxLength` 世界单位的小段。每段画成 2D 丝带：纸色主体、朝光的高光带、背光的阴影带和两条边线。相邻段重叠 0.5 单位，边线与主体从同一段重叠区间裁出，接缝处既不露缝也不缺轮廓。每个开放端上，高光和阴影比主体多延伸 0.5，让条纹盖住下层主体的抗锯齿切口，而自己的切口落在邻段相同的条纹上；每帧法线都取整条路线上的中心差分，两段的条纹在重叠处精确重合（此前两边各按一条线裁切，蜗壳的阴影带在每个接缝处都有一条发丝线）。`radius` 是数字或 `t` 的函数（沿路线 0 到 1），用于锥度和蜗壳。`breaks` 是段必须终止的弧长位置（交叉处，或管道绕回经过零件处）。`gaps` 是不绘制的 `[from, to]` 弧长区间，因为有箍环、卡箍、阀门或接头盖住；管口在 gap 两侧平齐截断。每个紧邻 gap 的端部都加椭圆端盖（投影截面，外半弧作为边线），路线自身的两端也一样，除非传 `caps: false`（或 `[start, end]`，例如起始端藏进三通箍环的支管用 `[false, true]`），这样管道沿正确曲线贴合法兰面而不是一条平直切口。高光与阴影条纹跟随端盖：端面背向你时延伸到椭圆外侧半边，端面朝向你时延伸到内沿（画为边线），条纹不会提前止步。无 gap 的闭合路线首尾两段互相包裹。返回 `[{ mid, body, shine, shade, edges, wide, points, radii, ends, from, to }]`：`mid` 是该段世界空间中心，用于深度排序；`wide` 表示路线在屏幕上足够宽、可以画出高光和阴影带（按路线最宽处一次性判定，锥度管不会在某个接缝掉条纹；`stripes: true` 或 `false` 可强制覆盖）；`points` 和 `radii` 是该段的 3D 中心线与半径（记录下来供审计）；`ends` 指明哪些端是真实端点而非与邻段的接缝。 |
+| `tubeSvg(piece, { tone = "hi" })` | 单段输出为 `<g class="tb">`。高光和阴影只出现在 `wide` 段上，然后是该段的环（`.tb-ring`），最后是边线。 |
+| `tubePieces(…, { rings: { pitch = 3, twist = 0, cross = false, fade = [0.1, 0.55], phase = 0, steps = 16, tone = "lo" } })` | 跟随管道截面的纹理：编织、波纹、缠带或铠装。截面站点从路线起点起每 `pitch` 个 3D 弧长单位放一个（`phase` 可平移），图案因此在每个分段接缝处连续；每个站点画成该处截面的可见前弧，切成短段，不透明度取 `fadeOf(facing, fade)`，纹理朝两侧轮廓渐隐而不是止于硬边。`twist`（以半径计）把每个环变成螺旋，从一侧轮廓到另一侧前进那么多，`cross: true` 再加另一旋向，即编织。环会越过每段的条纹外延，接缝处后画的段在自己主体的切口上画出完全相同的一段；在真实端点和 gap 面上停止（环与端面保持三分之一 pitch，螺旋终止在端面上）。每段带 `rings: [{ d, alpha }]`；`ringsSvg(rings, tone)` 单独绘制它们。 |
+| `runsOf(total, gaps)` | 长度 `total` 的路线去掉 `gaps` 后实际绘制的 `[from, to]` 区间。每个 run 各自记为一条 tube 供审计。 |
+| `crossingsOf(points, centre, axis, radius)` | 路线穿过卡箍或箍环圆盘（过 `centre`、法向 `axis`、半径 `radius` 内）的弧长位置。每个位置都换成卡箍厚度的 gap。 |
 
-The fills for `.tb-body`, `.tb-shine` and `.tb-shade` are part of `ISO_CSS` (and `kit/iso.css`), so `tubeSvg` works on any kit page with no extra CSS. Override them in page CSS only to restyle tubes, as the Raptor does for selected parts (`.it[data-on] .tb-body`).
+`.tb-body`、`.tb-shine` 和 `.tb-shade` 的填充属于 `ISO_CSS`（以及 `kit/iso.css`），因此 `tubeSvg` 在任何 kit 页面上无需额外 CSS 即可工作。只有在页面 CSS 里重新设计管子样式时才覆盖它们，Raptor 对选中部件就是这么做的（`.it[data-on] .tb-body`）。
 
-**Depth-sorting tubes.** A pipe runs between parts at many depths, so draw each piece at its own depth: put it in your item list with key `G.dot3(piece.mid, G.viewOf(P))`, next to the solids it passes. Use short pieces (`maxLength` 6–18) where a pipe weaves between neighbours, and long ones (400) for a ring that lies flat on the floor. To split a pipe between SVG layers, test `piece.mid`. The ripple tank's motor cable goes three ways: pieces over the bridge (`piece.mid[2] > Z.top - 1 && piece.mid[1] < IN.y + IN.d - 10`) to the front SVG before the bar, the rest above the rim to the front SVG after the near caps, and the run down the leg to the control box to the middle SVG. Its lamp cable sends the pieces that hang over the base edge (`piece.mid[1] < BASE.y - 0.2`) to the back SVG. In a figure as dense as the Raptor, don't tune these keys by eye: record the pieces and let `orderKeys` (section 12) settle them.
+**管子深度排序。** 管道在多个深度之间穿行，所以每段按自己的深度绘制：以 `G.dot3(piece.mid, G.viewOf(P))` 为键放进条目列表，紧挨它经过的实体。管道在邻近部件间穿行的地方用短段（`maxLength` 6–18），平躺在地面上的环用长段（400）。要把管道拆到不同 SVG 层，就按 `piece.mid` 判断。涟漪水箱的电机电缆分三路：桥上方的段（`piece.mid[2] > Z.top - 1 && piece.mid[1] < IN.y + IN.d - 10`）归入前层 SVG、排在横杆之前；其余在缸沿上方的段归入前层 SVG、排在近端端盖之后；沿支腿下行到控制盒的一段归入中层 SVG。它的灯电缆把悬出底座边缘的段（`piece.mid[1] < BASE.y - 0.2`）送去后层 SVG。在 Raptor 这种密集图形里不要靠眼睛调这些键：记录这些段，交给 `orderKeys`（第 12 节）处理。
 
-**Anything that wraps a pipe splits it.** A collar, band, bellows disc, clamp or valve body is wider than the pipe it sits on. If the pipe runs through it as one chunk, the chunk is both behind and in front of the collar and no key can order them: the collar either hides the pipe's near side or the pipe paints over the collar's face. Gap the pipe at the collar (`gaps: [[at - t/2, at + t/2]]`): the far piece ends at the collar's back face, the near piece starts at its front face, and both order cleanly. The Raptor's `pipe()` does this for its own end flanges, bands, bellows and valve, and `cable()` for the harness clamps via `crossingsOf`.
+**任何包住管道的东西都要把它切开。** 箍环、环带、波纹管盘、卡箍或阀体都比所套的管道宽。如果管道作为一整段穿过它，这段既在箍环后面又在前面，任何键都无法排序：要么箍环挡住管道近侧，要么管道盖住箍环面。在箍环处给管道开 gap（`gaps: [[at - t/2, at + t/2]]`）：远侧段终止于箍环背面，近侧段从箍环正面开始，两者都能干净排序。Raptor 的 `pipe()` 对自己的端法兰、环带、波纹管和阀门这么做，`cable()` 则通过 `crossingsOf` 处理线束卡箍。
 
-The Raptor's `pipe()` helper is a good pattern:
-1. `fillet` the control points with a bend of 2.6 × r (at least 3). A valve or bellows needs a straight leg at least as long as its body plus both fillet cuts (`r_bend · tan(turn / 2)` each); put it on a bend and its ends cut into the pipe.
-2. Work out the collars first (end flanges, bands, bellows discs, the valve body) and pass their spans as `gaps`.
-3. `tubePieces` the route, recording each chunk with its `points` and `radii`, and each drawn run as a tube for the audit.
-4. Draw the collars, owned by the pipe (`owner`), so the audit doesn't count a pipe's own flange as a collision.
+Raptor 的 `pipe()` 辅助函数是个好范式：
+1. 对控制点做 `fillet`，弯半径 2.6 × r（至少 3）。阀门或波纹管需要至少与自身长度加两侧圆角切除（各 `r_bend · tan(turn / 2)`）等长的直边；把它放在弯上，两端就会切进管道。
+2. 先算好各箍环（端法兰、环带、波纹管盘、阀体），把它们的区间作为 `gaps` 传入。
+3. 对路线跑 `tubePieces`，记录每段的 `points` 和 `radii`，每个绘制 run 作为一条 tube 供审计。
+4. 绘制箍环并归属给管道（`owner`），审计就不会把管道自己的法兰算成碰撞。
 
-`cable()` adds a terminal dot at an end that stays with its own assembly and a connector shell (`shells: [start, end]`) at an end that lands on another one, so every cable still ends on something when the figure comes apart. Both helpers take `free: [start, end]` for an end that comes off its mount when the figure is apart, and fillet with `{ P, tube: r }` (see `fillet`). A line that must leave a port facing the viewer starts from an `elbow` (a ball on the boss, rim on sphere at both joints, the line leaving it toward its next point), so the turn happens inside a fitting. `pipe()` puts each end flange's back face on the route end and can end a line in a `coupling` (a union nut at a quick-disconnect) instead of a flange.
+`cable()` 在随自身组件保留的端部加端点圆点，在接到另一组件的端部加连接器外壳（`shells: [start, end]`），这样图形拆开时每根线缆仍终止在某个对象上。两个辅助函数都接受 `free: [start, end]`，表示拆开时脱离安装座的端部；圆角都用 `{ P, tube: r }`（见 `fillet`）。必须朝向观察者离开接口的线从 `elbow`（凸台上的球，两个接合处都是球面贴合，线从球出发指向下一点）出发，转弯发生在接头内部。`pipe()` 把每个端法兰的背面放在路线端点上，也可以让线终止于 `coupling`（快接接头处的活接螺母）而不是法兰。
 
-## 12. The audit (`kit/audit.mjs`)
+## 12. 审计（`kit/audit.mjs`）
 ```js
 import * as A from "../../kit/audit.mjs";
 ```
-**The one-line hook.** Make a recorder, let every drawing helper put its items and record its shapes into it, settle the keys, and end the build with `auditOrExit`:
+**一行接入。** 建一个记录器，让每个绘制辅助函数把条目放进它、把形状记录进去，用 settle 算好键，最后以 `auditOrExit` 结束构建：
 ```js
 const R = A.recorder(P, { order: STAGGER, spring: SPRING });
 R.put({ piece: "base", at: centre, bias: 0.1, svg, shapes: [R.solid(A.slab(plan, 0, 6, { name: "base.plate" }))] });
@@ -270,117 +274,117 @@ A.settle(R, P);
 R.items.sort((a, b) => a.key - b.key);
 A.auditOrExit(R, P, { crowd: [] });
 ```
-`node build.mjs --audit` then prints the report and exits non-zero on any failing line; without the flag `auditOrExit` returns at once. A figure that doesn't come apart passes no `order` and every explode check reduces to the rest pose.
+之后 `node build.mjs --audit` 会打印报告，任一行失败即以非零码退出；不带 flag 时 `auditOrExit` 立即返回。不拆解的图形不传 `order`，每个拆解检查都退化为静置姿态。
 
-| Function | What it does |
+| 函数 | 作用 |
 |---|---|
-| `recorder(P, { order = [], spring = {}, ground = grounded })` | `{ items, solids, tubes, routes, put, solid, route, nameFor }`. `put({ at, bias, key, name, piece, move, ride, shapes, ...rest })` adds a drawn item (its key is `dot3(at, V) + bias` unless you pass `key`; the rest, such as `svg`, `route` and `chunk`, is kept on the item) and stamps its shapes with the item's `move`, `ride` and `piece`. `solid(shape)` records a shape and returns it, for the item's `shapes` or for static parts drawn outside the sorted layer. `route(name, points, radius, { owner, touch, bundle, limp, gaps, closed, ends, rims, free, piece, move, ride })` records a pipe or cable: one tube per drawn run between `gaps`, with its `tips`, `tipAxes`, `tipRims` and `free` ends, plus the route for `folds` and `crowding`. `nameFor(base)` numbers repeated names (`base`, `base#2`, …). `order` and `spring` are the live page's stagger and spring. |
-| `explodeStates(order, spring, { uniform = 10, stride = 4 })` | `{ depth, frames, apart }`: the depth-solver states (uniform shares, every `stride`th replayed frame with reversals at every stagger boundary, prefix states) and the clearance frames (every replayed frame plus the prefix states). `{ depth: [0], frames: [] }` when nothing comes apart. |
-| `settle(R, P, { states, skip = sameRun, ...overlapOptions })` | Runs `overlapsOf` and `orderKeys` and writes the keys onto the items. It keeps the order the items had, so you may sort `R.items` afterwards. Run it on every build. |
-| `audit(R, P, { allow, crowd, cover, ground, frames, apart })` | Every check below on the recorded shapes, as one result for `report` and `failures`: clearance at rest, apart and in every frame, solid clearance, crowding at rest and apart (against slender solids too), stand-in shapes, terminals, loose ends, folds, self-overlaps, wobble, seats, supports and depth order. `allow` excuses depth pairs, `crowd` crowding pairs, `cover` stand-in items. It never sees line markup: run `scripts/lines.mjs` on the page for that. |
-| `auditOrExit(R, P, { flag = "--audit", argv, ...auditOptions })` | With the flag: `audit`, print the report and a summary line, and set `process.exitCode = 1` on any failure. |
-| `sameRun(a, b)`, `grounded(shape)` | Neighbouring chunks of one route (skipped by the overlap pass), and the default ground (a shape with `ground: true` in its meta or a name starting `stand.`). |
-| `keyAt(item, state, V)`, `labelOf(state)`, `cameraBasis(P)` | An item's sort key in an explode state (`key + lift · share`), a state's printable label, and the camera's screen-right, screen-down and toward-viewer unit vectors `{ R, D, V }`, for probes of your own. |
+| `recorder(P, { order = [], spring = {}, ground = grounded })` | `{ items, solids, tubes, routes, put, solid, route, nameFor }`。`put({ at, bias, key, name, piece, move, ride, shapes, ...rest })` 添加一个绘制条目（不传 `key` 时键为 `dot3(at, V) + bias`；其余字段如 `svg`、`route`、`chunk` 会保留在条目上），并把条目的 `move`、`ride`、`piece` 盖到其形状上。`solid(shape)` 记录一个形状并返回它，用于条目的 `shapes` 或排序层之外绘制的静态部件。`route(name, points, radius, { owner, touch, bundle, limp, gaps, closed, ends, rims, free, piece, move, ride })` 记录管道或线缆：`gaps` 之间每个绘制 run 一条 tube，带上它的 `tips`、`tipAxes`、`tipRims` 和 `free` 端，另记录路线本身供 `folds` 和 `crowding` 用。`nameFor(base)` 给重复名字编号（`base`、`base#2`、…）。`order` 和 `spring` 是实时页面的错峰与弹簧参数。 |
+| `explodeStates(order, spring, { uniform = 10, stride = 4 })` | `{ depth, frames, apart }`：深度求解状态（均分份额、每个错峰边界带反转的重放帧中每 `stride` 帧、前缀状态）与间隙检查帧（所有重放帧加前缀状态）。什么都不拆开时是 `{ depth: [0], frames: [] }`。 |
+| `settle(R, P, { states, skip = sameRun, ...overlapOptions })` | 运行 `overlapsOf` 和 `orderKeys` 并把键写回条目。它保持条目原有顺序，因此之后可以自行排序 `R.items`。每次构建都要跑。 |
+| `audit(R, P, { allow, crowd, cover, ground, frames, apart })` | 对记录的形状跑下面所有检查，汇总为 `report` 和 `failures` 两项结果：静置、拆开和每帧的间隙，实体间隙，静置与拆开的拥挤（也含细长实体），替身形状，端接，悬空端，折返，自重叠，wobble，坐合，支撑与深度顺序。`allow` 豁免深度对，`crowd` 豁免拥挤对，`cover` 豁免替身条目。它看不到线条标记：那要对该页面跑 `scripts/lines.mjs`。 |
+| `auditOrExit(R, P, { flag = "--audit", argv, ...auditOptions })` | 带 flag 时：执行 `audit`，打印报告和一行摘要，任何失败则设 `process.exitCode = 1`。 |
+| `sameRun(a, b)`、`grounded(shape)` | 同一路线的相邻段（重叠检查会跳过），以及默认地面（meta 里带 `ground: true` 的形状，或名字以 `stand.` 开头）。 |
+| `keyAt(item, state, V)`、`labelOf(state)`、`cameraBasis(P)` | 条目在拆解状态下的排序键（`key + lift · share`）、状态的打印标签，以及相机的屏幕右、屏幕下与朝向观察者的单位向量 `{ R, D, V }`，供自建探针使用。 |
 
-A detailed figure fails in ways the eye misses until a reviewer zooms in: a pipe or cable that passes through something, at rest or in any frame of the explode, a flange that floats off its mount, a part that hangs in the air or is sunk into its neighbour, a route that doubles back or pinches to a point on screen, a bend or end that lands on another line's outline, a cable end that dangles when the figure comes apart, and two things drawn in the wrong order where they overlap. The audit measures all of them from the real geometry. On the Raptor (478 items, 1,119 depth states, about 4,400 replayed and prefix frames for clearance) the keys take about a minute on every build and a full `--audit` about three minutes in all, most of it the per-frame clearance.
+精细图形的失败方式肉眼难以察觉，评审放大才看得见：管道或线缆穿过别的东西（静置或拆解的任何一帧）、法兰悬离安装座、零件悬空或陷入邻件、路线在屏幕上折返或收缩成一点、弯或端头压在另一条线的轮廓上、拆开时线缆端头悬空、以及重叠处两件绘制顺序颠倒。审计从真实几何测量全部这些。Raptor 上（478 个条目、1,119 个深度状态、约 4,400 个重放与前缀帧的间隙检查）键值计算每次构建约一分钟，完整 `--audit` 共约三分钟，大头是逐帧间隙。
 
-**Shapes.** Record a shape for everything you draw, in world units, as you build it:
+**形状。** 构建时给绘制的每样东西记录一个形状，用世界单位：
 
-| Constructor | Shape |
+| 构造器 | 形状 |
 |---|---|
-| `solid(F, profile, { radius, ...meta })` | A turned part: the profile closed to the axis at both ends, the same `[s, r]` list you give `solidOf`. Runs of smooth knots are traced along the same Hermite curve the drawing uses (or along `radius(s)`, as for a `bandsOf` band), so the recorded surface is the drawn one, not its chords. |
-| `lathe(F, meridian, { radius, ...meta })` | The shape of `G.lathe(meridian, F, P)` with the same tracing: any closed meridian (rings, valve bodies, cans). |
-| `body(F, polygon, meta)` | Any closed `[s, r]` polygon turned round `F`, taken as it is. Edges that lie on the axis are not surface, so a point deep inside a disc measures its true depth. |
-| `disc(F, s0, s1, r, meta)`, `ring(F, s0, s1, rIn, rOut, meta)` | Flanges, bosses, pins, collars. |
-| `box(min, max, meta)`, `orientedBox(centre, axes, half, meta)` | Square blocks; a beam at 45°. |
-| `slab(plan, z, height, meta, steps = 8)`, `extruded(ring, z, height, meta)`, `cylinder(cx, cy, r, z, height, meta)` | The shapes of `slabOf`, `extrude` and `cylinder`: the same rounded plan or any polygon ring (convex or not) stood on the floor, so a rounded deck corner or an L-shaped bracket is checked as drawn. |
-| `prism(F, polygon, s0, s1, meta)` | The shape of `G.prismOf`: any polygon in the frame's `u`, `v` plane extruded along `F.a`. |
-| `traced(meridian, { radius, error = 0.02, depth = 6 })` | The polygon `solid` and `lathe` record. |
-| `ball(at, r, meta)` | Spheres and terminal dots (`size / scale` world units). `meta.flats: [[nx, ny, nz, d]]` cuts flats (the half-space n·(p − c) ≤ d is kept): `sdf` is `max(\|p − c\| − r, n·(p − c) − d …)`, surface samples include the flats' rims, `boundsOf` is unchanged (conservative). The 3D mode's knuckle balls record this. |
-| `tube(points, radius, meta)` | A pipe or cable centreline with a radius (number, function of 0..1, or a list per point). |
-| `slide(F, from, to, r, meta)` | A rod sliding out of a gland at `from` (a `disc` from `from` to `to`). Posed in an explode or stroke state, it stretches from the gland face to `to + offset · F.a` instead of translating, so every check sees the rod that is drawn. Put it on the moving item (the one with the stroke `move`). |
-| `moved(shape, offset)`, `sdf(shape, p)`, `boundsOf(shape)` | Helpers: translate, signed distance (negative inside), world bounds. |
+| `solid(F, profile, { radius, ...meta })` | 回转件：轮廓在两端闭合到轴上，即传给 `solidOf` 的同一份 `[s, r]` 列表。平滑节点段沿绘制所用的同一条 Hermite 曲线描迹（或沿 `radius(s)`，如 `bandsOf` 的带），因此记录的曲面就是画出来的那个，不是它的弦线。 |
+| `lathe(F, meridian, { radius, ...meta })` | `G.lathe(meridian, F, P)` 的形状，描迹方式相同：任意闭合子午线（圆环、阀体、罐体）。 |
+| `body(F, polygon, meta)` | 绕 `F` 回转的任意闭合 `[s, r]` 多边形，按原样处理。位于轴上的边不是表面，因此圆盘深处一点的深度是真实深度。 |
+| `disc(F, s0, s1, r, meta)`、`ring(F, s0, s1, rIn, rOut, meta)` | 法兰、凸台、销、箍环。 |
+| `box(min, max, meta)`、`orientedBox(centre, axes, half, meta)` | 方块；45° 的梁。 |
+| `slab(plan, z, height, meta, steps = 8)`、`extruded(ring, z, height, meta)`、`cylinder(cx, cy, r, z, height, meta)` | `slabOf`、`extrude` 和 `cylinder` 的形状：同一份圆角 plan 或任意多边形环（凸凹皆可）立在地面上，圆角甲板角或 L 形支架都会按绘制原样检查。 |
+| `prism(F, polygon, s0, s1, meta)` | `G.prismOf` 的形状：frame 的 `u`、`v` 平面内任意多边形沿 `F.a` 拉伸。 |
+| `traced(meridian, { radius, error = 0.02, depth = 6 })` | `solid` 和 `lathe` 记录的多边形。 |
+| `ball(at, r, meta)` | 球与端点圆点（`size / scale` 世界单位）。`meta.flats: [[nx, ny, nz, d]]` 切平面（保留半空间 n·(p − c) ≤ d）：`sdf` 为 `max(\|p − c\| − r, n·(p − c) − d …)`，表面采样包含平面的边圈，`boundsOf` 不变（保守）。3D 模式的关节球就记录这个。 |
+| `tube(points, radius, meta)` | 带半径的管道或线缆中心线（数字、0..1 的函数，或逐点列表）。 |
+| `slide(F, from, to, r, meta)` | 从 `from` 处密封函滑出的杆（一个从 `from` 到 `to` 的 `disc`）。在拆解或行程状态下摆放时，它从密封函面拉伸到 `to + offset · F.a` 而不是整体平移，因此每个检查看到的就是画出来的那根杆。放在移动条目上（带行程 `move` 的那个）。 |
+| `moved(shape, offset)`、`sdf(shape, p)`、`boundsOf(shape)` | 辅助函数：平移、带符号距离（内部为负）、世界包围盒。 |
 
-`meta` carries `name` (used in reports, and matched by prefix: `"nozzle.bell*"`), `owner` (a pipe's own flanges, bands and valve), `touch` (names a tube may touch on purpose, such as the clamps round a harness), `bundle` (cables in one harness may lie side by side, and a clamp carries its harness's bundle), `joined` (runs of one gapped pipe), `limp` (a cable: it holds nothing up), `anchor: false` (a clamp: an end may not count it as its mount), `fitting` (a clamp or collar whose centre `crowding` checks against other lines), `seated` (a pad or rim-on-sphere joint sunk into its host by design), `cut` (a shape or list of shapes subtracted from this one: a saddle pad is a disc cut by its host) and `curve` (the smoothed profile of a turned part with no analytic slope, for `wobble`). Tube runs also carry `tips` (the route's true end points, or `null` for an end that merges into a body, like a volute's start), `tipAxes`, `tipRims` (the flange or connector radius at each end), `free` (ends that are meant to come off their mount apart), `offset` and `total` (where the run sits on its route). Every shape carries the `move`, `ride` and `piece` of the item that draws it, so it can be posed in any explode state.
+`meta` 携带 `name`（用于报告，按前缀匹配：`"nozzle.bell*"`）、`owner`（管道自己的法兰、环带和阀门）、`touch`（允许 tube 有意接触的对象名，如线束周围的卡箍）、`bundle`（同一线束的线缆可以并排，卡箍继承其线束的 bundle）、`joined`（一条开了 gap 的管道的各 run）、`limp`（线缆：不承重）、`anchor: false`（卡箍：端点不得把它当作安装座）、`fitting`（中心会被 `crowding` 与其他线检查的卡箍或箍环）、`seated`（按设计陷进宿主的垫片或球面贴合接头）、`cut`（从本形状中减去的形状或形状列表：鞍座垫就是被宿主切过的盘）以及 `curve`（无解析斜率的回转件的平滑轮廓，供 `wobble` 用）。Tube run 还携带 `tips`（路线的真实端点；端部并入躯体时为 `null`，如蜗壳起点）、`tipAxes`、`tipRims`（每端的法兰或接头半径）、`free`（拆开时有意脱离安装座的端部）、`offset` 和 `total`（run 在路线上的位置）。每个形状都带着绘制它的条目的 `move`、`ride` 和 `piece`，因此可在任意拆解状态下摆放。
 
-**States.** An explode state is a number (every assembly at that share) or `{ label, shares }`, one share per assembly. `uniformStates(10)` gives 0, 0.1 … 1; they are not frames anyone sees, so they only feed the key solver. `springStates(order, { stagger, stiffness, damping, substeps, fps = 60, settle = 1e-3, stride = 1, reversals = [] })` replays the live page's own springs with their stagger, opening from rest and closing from apart, one state per frame at `fps` until every spring is within `settle` of its target (about 1.2 s each way on the Raptor, so the slow tail of every collapse is checked too). `stride: 4` keeps every fourth frame, for the depth raster. `reversals` adds the paths a quick hover makes: open, then close again after that many seconds (and the reverse), with the page's own scheduling: on a reversal only the assemblies whose target changes are rescheduled, staggered among themselves, so one that has just left comes straight back and one still waiting simply stays home. **`reversalsOf(order, stagger)`** gives a reversal 8 ms either side of every stagger boundary: that is where the bad windows are (a reversal 15 ms before the next start left the hot-gas duct flying out into a methane pump still parked at home), and three hand-picked times missed every one. **`prefixStates(order, { shares = [0.25, 0.5, 0.75, 1] })`** adds the static states behind the prefix rule: the first `k − 1` assemblies fully out, the `k`-th at each share, the rest home. Shares along the stagger are always non-increasing (earlier assemblies lead, opening, closing and reversing), so every reachable frame lies between these. A 40 ms sample missed whole pass-throughs: between two samples the nozzle travelled 15 units, more than twice the widest pipe. `shareOf(item, state)` reads an item's share from its `ride` (or `piece`), and `offsetOf(item, state)` is its move times that share.
+**状态。** 拆解状态是一个数字（所有组件处于该份额）或 `{ label, shares }`（每个组件一个份额）。`uniformStates(10)` 给出 0, 0.1 … 1；它们不是任何人都看到的帧，只供键求解器使用。`springStates(order, { stagger, stiffness, damping, substeps, fps = 60, settle = 1e-3, stride = 1, reversals = [] })` 按实时页面自己的弹簧与错峰重放：从静置展开、从拆开收拢，每 `fps` 一帧，直到每个弹簧与目标差距小于 `settle`（Raptor 上单程约 1.2 s，因此每次收拢的慢尾巴也会被检查）。`stride: 4` 每 4 帧保留一帧，供深度栅格。`reversals` 加上快速悬停产生的路径：先展开，隔那么多秒再收拢（以及反向），调度与页面一致：反转时只重新调度目标变化的组件，它们之间互相错峰，刚出发的直接折返，还在等待的原地不动。**`reversalsOf(order, stagger)`** 在每个错峰边界两侧 8 ms 各给一个反转：坏窗口就在那里（下一次启动前 15 ms 的反转曾让热气管路飞进还停在家里的甲烷泵），三个手挑的时刻一个都没碰上。**`prefixStates(order, { shares = [0.25, 0.5, 0.75, 1] })`** 加上前缀规则背后的静态状态：前 `k − 1` 个组件全部伸出，第 `k` 个处于各份额，其余在家。沿错峰方向的份额始终不增（展开、收拢、反转时都是前面的组件领先），因此每个可达帧都落在这些静态状态之间。40 ms 采样曾漏掉整段穿越：两个采样点之间喷管移动了 15 个单位，是最宽管道的两倍多。`shareOf(item, state)` 从条目的 `ride`（或 `piece`）读取它的份额，`offsetOf(item, state)` 是其位移乘该份额。
 
-**`overlapsOf(items, P, { step = 0.25, tolerance = 0.3, least = 0.25, states = [0], skip })`** finds every pair of drawn items whose screen footprints overlap in each state and, on a grid of `step` viewBox units over the overlap, ray-casts both shapes along the camera ray. A cell counts when one surface is more than `tolerance` nearer. Each side's flagged cells are closed (one dilate, one erode, so an aliased sliver becomes solid), eroded once (so the hairline along a real contact drops out), and the largest connected piece is measured in px²; a side is "in front" when that area is at least `least`. At the old 0.5 step with a 4-neighbour core count, a whole flange sunk into a pump housing and every cable crossing (a 0.5 cable is under three cells wide) read as noise. Each item is ray-cast once, at home; in any state its raster is that one shifted on screen by its offset (rounded to the grid) and in depth by `offset · V`, which is exact for a translation. Pair results are cached by the pair's relative shift, so pairs that move together are measured once. On the Raptor, 1,119 states (uniform, every fourth frame of every replayed path, prefix states) cost less than the old 61. `skip(a, b)` excludes pairs, such as neighbouring chunks of one pipe.
+**`overlapsOf(items, P, { step = 0.25, tolerance = 0.3, least = 0.25, states = [0], skip })`** 找每个状态下屏幕投影重叠的每一对绘制条目，在重叠区域按 `step` viewBox 单位的网格上沿相机射线对两个形状做 ray-cast。一个表面比另一个近 `tolerance` 以上时该格计为有效。每侧被标记的格子做闭运算（一次膨胀、一次腐蚀，锯齿细条变成实心），再腐蚀一次（真实接触处沿线的发丝随之消失），取最大连通块按 px² 度量；面积至少 `least` 的一侧算"在前面"。旧的 0.5 步长加 4 邻域核数时，整个法兰陷进泵壳、每条线缆交叉（0.5 的线缆不足三格宽）都被当成噪声。每个条目只在其静置位置 ray-cast 一次；任何状态下它的栅格就是那一份在屏幕上按偏移平移（对齐到网格）、深度上加 `offset · V`，对平移这是精确的。配对结果按两件的相对位移缓存，一起移动的对只测一次。Raptor 上 1,119 个状态（均分、每条重放路径每四帧、前缀状态）比旧的 61 个还便宜。`skip(a, b)` 排除某些对，例如同一管道的相邻段。
 
-**`orderKeys(items, overlaps, { gap = 0.02 })`** turns every one-sided pair into a rule in that pair's state: `keyFront − keyBack ≥ gap + shareBack · liftBack − shareFront · liftFront`. It is linear in the keys, so one longest-path relaxation settles all states at once and only ever moves an item later. A loop that can't be met drops its weakest rule (`dropped`). Pairs in front of each other in different places are `cycles`.
+**`orderKeys(items, overlaps, { gap = 0.02 })`** 把每个单向重叠对变成该对所处状态下的规则：`keyFront − keyBack ≥ gap + shareBack · liftBack − shareFront · liftFront`。它对键是线性的，一次最长路径松弛就能同时解出所有状态，且只会把条目往后挪。无法满足的环会丢弃其最弱规则（`dropped`）。在不同位置互为前后的是 `cycles`。
 
-**`depthOrder(items, P, { overlaps, solved, rest, allow })`** checks the final order in every state. At rest (`rest`, default the states 0 and 1) and in every replayed spring frame, every wrong pair is a problem: a clean misorder, an interlock and a pair no key of the form `k + lift · share` can hold all show on screen. In the uniform states only a clean misorder counts; interlocks there are listed as passing. `allow` takes `[patternA, patternB]` pairs to excuse explicitly.
+**`depthOrder(items, P, { overlaps, solved, rest, allow })`** 检查每个状态下的最终顺序。静置（`rest`，默认状态 0 和 1）与每个重放弹簧帧中，每个错误对都是问题：干净颠倒、互锁、以及任何 `k + lift · share` 形式的键都无法维持的对，都会出现在屏幕上。均分状态里只算干净颠倒；那里的互锁列为通过。`allow` 接受显式豁免的 `[patternA, patternB]` 对。
 
-**`clearances(tubes, solids, { ratio = 0.5, least = 0.2, state, only, mounts })`** samples every tube and lists every place it comes closer than `max(least, ratio · r)` to a solid or another tube. Near a run's flat end it measures the end ring, not a sphere that would overhang the cut. Only an end's own mount (the shape its rim sits on, see `mountsOf`), that mount's pipe, and the fittings of a line that shares the mount or lands on this tube are excused, and only within `r + gap + 1` of the end; near an end anything else may still not be entered by more than 0.1. Pass `state` to pose everything (the excuse holds only while tube and mount are within 0.05 of where they sit together) and `only: "through"` to list penetrations alone. A tube's distance to another tube is the true capped-cylinder distance, so a run that ends flat under a flange doesn't grow a phantom round cap that the next run seems to enter.
+**`clearances(tubes, solids, { ratio = 0.5, least = 0.2, state, only, mounts })`** 对每条 tube 采样，列出它距实体或另一 tube 小于 `max(least, ratio · r)` 的所有位置。在 run 的平端附近量的是端环，而不是会悬出切口的球。只有端部自己的安装座（边圈落在其上的形状，见 `mountsOf`）、该安装座的管道，以及共享该安装座或落到本 tube 的那条线的接头可以豁免，且只在端部 `r + gap + 1` 范围内；端部附近其他任何东西侵入都不得超过 0.1。传 `state` 摆放一切（豁免只在 tube 与安装座保持相对位置 0.05 以内时成立），传 `only: "through"` 只列穿透。tube 之间的距离是真实的截头圆柱距离，因此平端终止于法兰下方的 run 不会长出幻影圆头、让下一段看似穿入。
 
-**`mountsOf(tubes, solids)`**, **`terminals(tubes, solids)`** find, for every tube end, the nearest anchored shape to its end rim (12 points at the flange or connector radius) and list every end whose rim isn't within 0.15 of it: a flange standing off its port, a flat flange on a curved body (the rim gap), a cable that stops beside the bundle or inside a clamp.
+**`mountsOf(tubes, solids)`** 与 **`terminals(tubes, solids)`** 对每个管端找出距其端圈（按法兰或接头半径取 12 个点）最近的锚定形状，并列出端圈与其距离超过 0.15 的每个端：悬离接口的法兰、曲面躯体上的平法兰（边圈缝隙）、停在束旁或卡箍里的线缆。
 
-**`looseEnds(tubes, solids, { state = 1 })`** lists every tube end that, in that explode state, touches no solid of another owner that moves with it. Its own flange, coupling or connector shell does not count (with it, the check could never fail: 25 Raptor ends rested only on their own fitting). Ends marked `free` are reported separately as a deliberate list; everything else fails.
+**`looseEnds(tubes, solids, { state = 1 })`** 列出在该拆解状态下没有接触任何随其移动的其他归属实体的每个管端。它自己的法兰、活接或连接器外壳不算（算上的话这个检查永远不会失败：Raptor 有 25 个端只搭在自己的接头上）。标记为 `free` 的端单独作为有意为之的清单报告；其余全部算失败。
 
-**`supports(solids, tubes, { ground, touch = 0.15, sunk = 0.5 })`** builds a contact graph of solids and rigid tubes and lists every solid not connected to the `ground` (default: names starting `stand.`), plus every pair of solids sunk more than `sunk` into each other unless they share an owner or one is `seated` on the other (named in its `cut`). A seated pad is excused against its host only: the Raptor's igniter flange sunk 0.5 into the hot-gas pad of another assembly hid behind a blanket `seated` flag. `hanging` lists rigid tubes that connect to nothing held, and fails too.
+**`supports(solids, tubes, { ground, touch = 0.15, sunk = 0.5 })`** 构建实体与刚性 tube 的接触图，列出每个未连到 `ground`（默认：名字以 `stand.` 开头）的实体，以及每对相互陷入超过 `sunk` 的实体，除非它们同属一个 owner 或一方 `seated` 在另一方上（在其 `cut` 中指名）。坐合的垫片只对宿主豁免：Raptor 的点火器法兰陷入另一组件的热气垫 0.5，曾藏在一个一刀切的 `seated` 标记后面。`hanging` 列出没有连接到任何被支撑物的刚性 tube，同样算失败。
 
-**`solidClearances(solids, { state, sunk = 0.5 })`** poses the solids and, for every pair that sits at a different offset in that state, tests each one's surface points against the other's `sdf`; anything more than `sunk` inside fails (a seated pad and its host are excused). Run it at state 1 and in every replayed and prefix state: a housing, pad or flange of one assembly sweeping through another's body is invisible to the tube checks.
+**`solidClearances(solids, { state, sunk = 0.5 })`** 摆放各实体，对该状态下偏移不同的每一对，把一方的表面点对另一方的 `sdf` 检测；陷入超过 `sunk` 即失败（坐合的垫片与宿主豁免）。在状态 1 和每个重放、前缀状态都跑：一个组件的壳体、垫片或法兰扫过另一组件躯体，tube 检查是看不见的。
 
-**`seats(solids)`** lists every `seated` shape cut to a host that moves with another assembly. Apart, its cut base is on show: the hot-gas duct's saddle, cut to the methane pump's turbine and ring, flew out as a jagged shard with a pointed tail. A saddle belongs to its host's assembly; the moving line meets it on its flat face.
+**`seats(solids)`** 列出每个 `seated` 且被切给随另一组件移动的宿主的形状。拆开时它的切口底面暴露在外：热气管路的鞍座，切到甲烷泵的涡轮和圆环上，曾作为一个带尖尾的锯齿碎片飞出去。鞍座属于其宿主的组件；移动的管线在其平面上相接。
 
-**`selfOverlaps(items, P, { fold = 0.25, least = 0.5 })`** checks each drawn tube chunk against itself: where the screen centreline turns on a radius under the tube's screen half-width, the inner edge of the ribbon runs backwards and the single-chunk outline crosses itself (a knot with the hidden leg's edges showing through). It fails when that fold is at least `least` px and the spot isn't covered by another item. A leg that points at the viewer and turns within a radius or two of a port is the usual cause.
+**`selfOverlaps(items, P, { fold = 0.25, least = 0.5 })`** 检查每个绘制的 tube 段自身：屏幕中心线转弯半径小于管子屏幕半宽处，丝带内缘倒行，单段轮廓自交（一个结，隐腿的边缘透出来）。该折返至少 `least` px 且该处未被其他条目盖住时失败。指向观察者、在接口一两个半径内转弯的支腿是常见原因。
 
-**`wobble(solids, { samples = 20 })`** samples `dr/ds` of every recorded `curve` at 20 points per segment and lists the `s` values where it turns between the run's ends.
+**`wobble(solids, { samples = 20 })`** 对每条记录的 `curve` 每段采样 20 点的 `dr/ds`，列出 run 两端之间转向的 `s` 值。
 
-**`folds(routes, P, { fold = 140, turn = 110, pinch = 2, items })`** lists every route (`{ name, points, r }`) whose screen direction turns more than `fold` degrees within four radii while its real turn is under `turn` (the cusp of a pipe that runs away from the viewer and then drops), and every bend that turns more than 90° on screen round a radius under `pinch` × the tube's screen radius, measured over spans of 1.5, 3 and 6 radii (a fillet seen edge-on: the V of a leg that points at the viewer and then climbs). A pinch within three tube widths of an end is a stub seen end-on and doesn't count. With `items`, only bends you can see count: each is ray-cast against every drawn shape.
+**`folds(routes, P, { fold = 140, turn = 110, pinch = 2, items })`** 列出每个（`{ name, points, r }`）路线：屏幕方向在四个半径内转角超过 `fold` 度而实际转角小于 `turn`（背离观察者然后坠落的管道尖点），以及屏幕上绕小于 `pinch` × 管子屏幕半径的圆转过 90° 以上的每个弯，度量跨度取 1.5、3 和 6 个半径（侧看的圆角：指向观察者然后爬升的支腿形成的 V）。端部三个管宽内的 pinch 是正对观察者的短截，不计。给 `items` 时只算看得见的弯：每个都对着所有绘制形状 ray-cast。
 
-**`crowding(routes, P, { gap = 1, bend = 30, links, items, allow, state, clear = 2 })`** lists every place where a route's bend (a 3D turn over `bend` degrees within ±2 radii) or end lands on another route's outline on screen: the outlines closer than `gap` px or overlapping, with both lines visible there (ray-cast against `items`; a route's own flanges, shells and clamps count as the route). Those read as a joint or a line threaded through another, whatever the true depth. A bend is never excused by overlapping deeply; an end only when the other line is straight there and the end's tip itself is clear of it. Every `fitting` (a harness clamp) is checked too: a clamp whose outline lands within `clear` px of another line reads as that line growing out of the clamp, as the Raptor's harness clamp did on the oxygen-to-preburner line in the apart pose. `links` (from **`linksOf(tubes, mounts)`**) excuses lines that really meet: one mounted on the other, both on one mount. `state` poses routes and items in an explode state, so the apart pose is checked too (routes carry `move`, `ride`, `piece`). `allow` takes `[patternA, patternB]` pairs you have looked at and judged clear.
+**`crowding(routes, P, { gap = 1, bend = 30, links, items, allow, state, clear = 2 })`** 列出每处路线的弯（±2 半径内转角超过 `bend` 度的 3D 转弯）或端头在屏幕上压到另一条路线轮廓的位置：轮廓间距小于 `gap` px 或重叠，且两条线在该处都可见（对 `items` ray-cast；路线自己的法兰、外壳和卡箍算作该路线）。无论真实深度如何，这些都会被看成接头或一条线穿进另一条。弯绝不因重叠很深而豁免；端头只有当另一条线在该处是直线、且端头本身离它有余量时才豁免。每个 `fitting`（线束卡箍）也检查：轮廓落在另一条线 `clear` px 内的卡箍，会被看成那条线从卡箍里长出来，Raptor 的线束卡箍在拆开姿态里就压在氧气到预燃室的管线上。`links`（来自 **`linksOf(tubes, mounts)`**）豁免真正相接的线：一条装在另一条上，或两者共有一个安装座。`state` 把路线和条目摆到某个拆解状态，因此拆开姿态也会检查（路线带 `move`、`ride`、`piece`）。`allow` 接受你已查看并判定无碍的 `[patternA, patternB]` 对。
 
-**`slenderOf(solids, { ratio = 4, least = 0.3 })`** turns every slender recorded solid (a turned part, prism or box longer than `ratio` × its radius or half-width: tie rods, piston rods, posts, rails, handles) into a pseudo-route, which `audit` passes to `crowding` as `rods`. A tube's bend or end that lands on one fails like one landing on another tube (`crowding: hose.B end × cyl.tie-rod (rod)`), unless the tube is mounted on it or on something linked to it. Rods are only ever the line landed on: their own ends aren't checked.
+**`slenderOf(solids, { ratio = 4, least = 0.3 })`** 把每个细长的记录实体（长于 `ratio` × 其半径或半宽的回转件、棱柱或方块：拉杆、活塞杆、立柱、导轨、把手）变成伪路线，`audit` 以 `rods` 传给 `crowding`。tube 的弯或端头压上去就像压在另一条 tube 上一样失败（`crowding: hose.B end × cyl.tie-rod (rod)`），除非该 tube 装在它上面或装在与它相连的东西上。杆只充当被压的线：它们自己的端不检查。
 
-**`coverage(items, P, { least = 0.6, pad = 1, allow })`** compares, for every item with an `svg` string, the screen box of what it draws (`markupBox(svg)`: every path, circle, line, rect and polyline, through `transform`s and `clip-path`s, without halos, text and defs) with the screen box of its recorded shapes (`footprintOf(shape, cameraBasis(P))`), and lists every item whose shapes cover less than `least` of its drawing: `stand-in shapes: rod.rod  its shapes cover 4% of its drawing`. A sliver recorded for a long rod, or one shape recorded for an item that draws three parts, makes every other check blind to the rest. `audit` takes `cover: [names]` to excuse items whose drawing really reaches past their body; look at each first.
+**`coverage(items, P, { least = 0.6, pad = 1, allow })`** 对每个带 `svg` 字符串的条目，比较它绘制内容的屏幕包围盒（`markupBox(svg)`：每个 path、circle、line、rect 和 polyline，穿过 `transform` 和 `clip-path`，不含 halo、文本和 defs）与其记录形状的屏幕包围盒（`footprintOf(shape, cameraBasis(P))`），列出形状覆盖不足绘制 `least` 的每个条目：`stand-in shapes: rod.rod  its shapes cover 4% of its drawing`。为长杆只记录一条细条，或画三个部件的条目只记一个形状，会让其他所有检查对其余部分失明。`audit` 接受 `cover: [names]` 豁免绘制确实超出本体的条目；每个都要先看过。
 
-**`report(result)`** formats everything; **`failures(result)`** counts what should fail the build.
+**`report(result)`** 格式化全部内容；**`failures(result)`** 统计应当让构建失败的数量。
 
-The Raptor wires it like this (`examples/raptor-engine/build.mjs`): its `put`, `tubeItems` and `record` are thin wrappers over `R.put`, `R.route` and `R.solid`, and the end of the build is
+Raptor 这样接线（`examples/raptor-engine/build.mjs`）：它的 `put`、`tubeItems` 和 `record` 是 `R.put`、`R.route` 和 `R.solid` 的薄封装，构建结尾是
 ```js
 A.settle(R, P);
 items.sort((a, b) => a.key - b.key);
 A.auditOrExit(R, P, { crowd: CROWD_OK });
 ```
-The live page reads the same `STAGGER` and `SPRING` from its data, so the audit and the page can't drift apart. Every helper (`turned`, `band`, `flangeAt`, `boss`, `padOn`, `boxAt`, `valveOn`, `pipe`, `cable`, `clampAt`, `strut`, the actuators) records its shape as it puts its item, and the static stand drawn in the back layer (deck, flame cone, deluge ring and feed, columns, splices) is recorded as fixed shapes owned by `stand.frame`, so an explode vector that drove a part into the stand would fail too. Nothing escapes the check.
+实时页面从数据里读同一份 `STAGGER` 和 `SPRING`，审计与页面因此不会漂移。每个辅助函数（`turned`、`band`、`flangeAt`、`boss`、`padOn`、`boxAt`、`valveOn`、`pipe`、`cable`、`clampAt`、`strut`，以及各执行器）放入条目的同时记录形状；后层绘制的静态底座（甲板、火焰锥、喷淋环与供给、立柱、拼接件）记录为归属 `stand.frame` 的固定形状，因此把零件推进底座的拆解向量也会失败。没有东西能逃过检查。
 
-## 13. The WebGL layer (`kit/gl.mjs`)
-| Export | What it is |
+## 13. WebGL 层（`kit/gl.mjs`）
+| 导出 | 是什么 |
 |---|---|
-| `GLSL_ISO` | The GLSL prelude that `glLayer` prepends. It holds the camera uniforms (`uCanvas`, `uView`, `uOrigin`, `uK`, `uCam`, `uTime`) and the functions `viewOf`, `project`, `towardViewer`, `rayOf`, `pixelOf`, `lightDir`, `onFloor`, `onWallX`, `onWallY`, `hash12`, `hash13`, `noise2`, `noise3`, `fbm2`, `fbm3`, `window` and `tonemap`. Don't redefine any of them in your fragment: GLSL rejects a second `rayOf`. |
-| `rayOf(vb)` (GLSL) | The world point under viewBox point `vb` on the vertical plane through the origin that faces the camera. `rayOf(vb) + t·towardViewer()` is that pixel's whole ray; larger `t` is nearer the viewer. |
-| `pixelOf()` (GLSL) | World units per canvas pixel, `(uView.x / uCanvas.x) / uK`. Divide by `uCam.z` for the floor's depth direction, or by `uCam.w` up a wall. |
-| `glCamera(P)` | `{ origin, k, cam }` for a projection. Works in Node, so put it in the page `DATA`. |
-| `glLayer({ canvas, fragment, view, camera, uniforms = [], fixed = {}, extensions = [], maxRatio = 1.5, onError })` | Returns `{ gl, extensions, set(values), draw(values, time), clear() }`, or `null` without WebGL or on a compile error. `uniforms` names the uniforms you will send per frame. `fixed` is `{ name: value }`, set once at creation, for everything that never changes (plans, heights, theme constants). `extensions` lists GLSL extensions such as `"GL_OES_standard_derivatives"`; each one the context supports is enabled and prepended as `#extension … : enable`, and the returned `extensions` lists those that were. |
-| `set(values)` | Sets uniforms without drawing, for a value that changes rarely. |
-| `draw(values, time)` | Fits the canvas, sets the camera uniforms and `uTime`, then `values`, and draws. |
-| `clear()` | Clears to transparent, only if something was drawn. |
-| `smooth(a, b, x)` | Smoothstep in JS. |
-| `burst(age, rise, fall)` | An event envelope: a smoothstep attack over `rise` seconds, then exponential decay with time constant `fall`. 0 for `age ≤ 0`. |
-| `settle(state, target, dt, seconds, calm = false)` | A critically damped spring on `state = { x, v }` with time constant `seconds`, four sub-steps. Snaps to the target once both error and velocity are below 1e-4. Returns true while still moving. `calm` jumps straight to the target. |
+| `GLSL_ISO` | `glLayer` 前置的 GLSL 序言。包含相机 uniform（`uCanvas`、`uView`、`uOrigin`、`uK`、`uCam`、`uTime`）和函数 `viewOf`、`project`、`towardViewer`、`rayOf`、`pixelOf`、`lightDir`、`onFloor`、`onWallX`、`onWallY`、`hash12`、`hash13`、`noise2`、`noise3`、`fbm2`、`fbm3`、`window` 和 `tonemap`。不要在 fragment 里重定义任何一个：GLSL 拒绝第二个 `rayOf`。 |
+| `rayOf(vb)` (GLSL) | 过原点、朝向相机的竖直平面上，viewBox 点 `vb` 下方的世界点。`rayOf(vb) + t·towardViewer()` 是该像素的完整射线；`t` 越大越靠近观察者。 |
+| `pixelOf()` (GLSL) | 每个 canvas 像素对应的世界单位，`(uView.x / uCanvas.x) / uK`。除以 `uCam.z` 得地面深度方向，除以 `uCam.w` 得沿墙方向。 |
+| `glCamera(P)` | 给定投影的 `{ origin, k, cam }`。可在 Node 中运行，因此放进页面 `DATA`。 |
+| `glLayer({ canvas, fragment, view, camera, uniforms = [], fixed = {}, extensions = [], maxRatio = 1.5, onError })` | 返回 `{ gl, extensions, set(values), draw(values, time), clear() }`；无 WebGL 或编译出错时返回 `null`。`uniforms` 列出你每帧要传的 uniform 名。`fixed` 是 `{ name: value }`，创建时设置一次，用于一切不变的量（plan、高度、主题常量）。`extensions` 列出 GLSL 扩展，如 `"GL_OES_standard_derivatives"`；上下文支持的每个都会启用并以 `#extension … : enable` 前置，返回的 `extensions` 列出已启用的那些。 |
+| `set(values)` | 只设 uniform 不绘制，用于很少变化的值。 |
+| `draw(values, time)` | 适配 canvas，设置相机 uniform 和 `uTime`，再设 `values`，然后绘制。 |
+| `clear()` | 清为透明，仅当画过东西。 |
+| `smooth(a, b, x)` | JS 版 smoothstep。 |
+| `burst(age, rise, fall)` | 事件包络：`rise` 秒的 smoothstep 起振，然后按时间常数 `fall` 指数衰减。`age ≤ 0` 时为 0。 |
+| `settle(state, target, dt, seconds, calm = false)` | 作用于 `state = { x, v }` 的临界阻尼弹簧，时间常数 `seconds`，四个子步。误差与速度都低于 1e-4 即吸附到目标。仍在运动时返回 true。`calm` 直接跳到目标。 |
 
-| `GLSL_TURN` | Opt-in GLSL for 3D figures, prepended by the figure to its fragment: `uGroupX/Y/Z/T`, `toGroup(p)` (world → the group's rest-world coordinates), `toWorld(g)`, `dirToGroup(d)`, `dirToWorld(d)`, and the cover masks `uCoverEdge[60]`, `uCoverCount[6]`, `coverOf(vb, soft)` (1 inside a part painted after the effect). It defines `toWorld`: don't prepend it to a fragment that declares its own. The chunk uses 70 uniform vectors. |
-| `glslPose(Name, prefix = "uName")` | The same four functions for any group: `toName`, `fromName`, `dirToName`, `dirFromName` over `prefixX/Y/Z/T`, so one shader follows several groups. Feed it `TURN.poseUniforms(controller, group, prefix)`. |
+| `GLSL_TURN` | 3D 图形可选的 GLSL，由图形前置到自己的 fragment：`uGroupX/Y/Z/T`、`toGroup(p)`（世界 → 组的静置世界坐标）、`toWorld(g)`、`dirToGroup(d)`、`dirToWorld(d)`，以及遮盖掩码 `uCoverEdge[60]`、`uCoverCount[6]`、`coverOf(vb, soft)`（在效果之后绘制的部件内部为 1）。它定义了 `toWorld`：不要前置到自行声明 `toWorld` 的 fragment。该代码块用 70 个 uniform 向量。 |
+| `glslPose(Name, prefix = "uName")` | 任意 group 的同样四个函数：基于 `prefixX/Y/Z/T` 的 `toName`、`fromName`、`dirToName`、`dirFromName`，一个 shader 可跟随多个 group。喂给它 `TURN.poseUniforms(controller, group, prefix)`。 |
 
-A value for `fixed`, `set` or `draw` can be a number (float), an array of length 2–4 (`vec2`–`vec4`), or an array or `Float32Array` longer than 4, which goes to the uniform array of the declared type: `uniform3fv` for `uniform vec3 name[N]` (cover edges, spark positions), `uniform2fv`/`uniform4fv` likewise, and `uniform1fv` for `uniform float name[N]`. There are no ints, matrices or samplers through these calls; a `sampler2D` defaults to texture unit 0, so bind a texture with `layer.gl` (the ripple tank's history texture). Names that aren't in `uniforms` or `fixed`, and uniforms the compiler optimised away, are skipped.
+`fixed`、`set` 或 `draw` 的值可以是数字（float）、长度 2–4 的数组（`vec2`–`vec4`），或长度大于 4 的数组或 `Float32Array`，后者按声明类型送入 uniform 数组：`uniform vec3 name[N]` 用 `uniform3fv`（遮盖边、火花位置），`uniform2fv`/`uniform4fv` 类推，`uniform float name[N]` 用 `uniform1fv`。这些调用不支持 int、矩阵或采样器；`sampler2D` 默认纹理单元 0，要用 `layer.gl` 绑定纹理（涟漪水箱的历史纹理）。不在 `uniforms` 或 `fixed` 里的名字，以及被编译器优化掉的 uniform，都会跳过。
 
-`smooth`, `burst` and `settle` are plain JS: import them from `kit/gl.mjs` in a module, or get them for free on a page that inlines `glScript()`. `references/webgl.md` has the full contract, a minimal page and the craft rules.
+`smooth`、`burst` 和 `settle` 是纯 JS：在模块里从 `kit/gl.mjs` 引入，或在内联了 `glScript()` 的页面上直接可用。`references/webgl.md` 有完整契约、最小页面和工艺规则。
 
-## 14. Tools
-| Script | Use it for |
+## 14. 工具
+| 脚本 | 用途 |
 |---|---|
-| `scripts/capture.mjs` | One-shot screenshots: desktop, phone, hover, keys, timed shots, 4× zooms, reduced motion, console check. Chrome starts with WebGL on (SwiftShader allowed), so shaders show. `--times` delays are measured from the first shot; `--key` sends the same key codes as `drive.mjs` (`7` is `Digit7`, `Comma` sends `,`). |
-| `scripts/drive.mjs` | Scripted sessions in headless Chrome with WebGL on: scroll, move, click, key, slow, until, eval, shots and contact sheets. `--no-webgl` checks the SVG fallback and `--preload file.js` runs a script before the page's own. Use it for shader transitions and anything with a sequence. See `references/verify.md`. |
-| `scripts/lines.mjs` | The line-end check: every texture line in the card must end on a stroke, a dot or an outline, or under a later fill. `--out` rings the failures; exits 1 on any. The same check is the `["lines"]` action of `drive.mjs`. See `references/verify.md`, "Line ends". |
-| `scripts/inline-kit.mjs` | `kitScript()`, `glScript()` and `turnScript()` return the kit, the WebGL layer and the 3D runtime as plain script, to inline into a standalone page. |
-| `scripts/drive.mjs` `["turn", value, group?]` | 3D figures: sets the first turn group (or `group`, or a values object) through `window.__isoTurn` and waits two frames. |
-| `scripts/drive.mjs` `["orbit", out.png, from, to, step, sel?, scale?, [x,y,w,h]?, columns?]` | 3D figures: a contact sheet across angles, each frame labelled θ°. 15° over a full turn; 0.1° across an order change; 1° across a fold-prone bend. |
-| `scripts/turn-check.mjs` | 3D figures. `build.mjs --fidelity` (Node: prisms, rounds, lathes and tubes against the kit builders at P′(θ)); `page.html --order` (needs a `--verify` build), `--pops`, `--lines`, `--perf`, `--states file.json`, `--part name`, `--out dir`. Every check runs its planted control first. `references/3d.md`, section 14. |
-| `scripts/turn-bench.mjs` | 3D figures: `emit` and `order` CPU time in Node over 360 angles, per part kind (median of 7). |
+| `scripts/capture.mjs` | 一次性截图：桌面、手机、悬停、按键、定时截图、4× 放大、减弱动态、控制台检查。Chrome 启动即开 WebGL（允许 SwiftShader），shader 能显示。`--times` 的延迟从第一张截图算起；`--key` 发送与 `drive.mjs` 相同的键码（`7` 是 `Digit7`，`Comma` 发送 `,`）。 |
+| `scripts/drive.mjs` | 无头 Chrome 中开启 WebGL 的脚本化会话：滚动、移动、点击、按键、慢放、等待、eval、截图与拼图。`--no-webgl` 检查 SVG 回退，`--preload file.js` 在页面自身脚本之前先跑一个脚本。shader 过渡和一切有序列的东西都用它。见 `references/verify.md`。 |
+| `scripts/lines.mjs` | 线端检查：卡片中每条纹理线必须终止于描边、圆点或轮廓，或压在更晚的填充之下。`--out` 圈出失败项；有任何失败即以 1 退出。同一检查也是 `drive.mjs` 的 `["lines"]` 动作。见 `references/verify.md` 的 "Line ends"。 |
+| `scripts/inline-kit.mjs` | `kitScript()`、`glScript()` 和 `turnScript()` 把 kit、WebGL 层和 3D 运行时作为纯脚本返回，供内联进独立页面。 |
+| `scripts/drive.mjs` `["turn", value, group?]` | 3D 图形：通过 `window.__isoTurn` 设置第一个旋转组（或 `group`，或一个值对象），然后等两帧。 |
+| `scripts/drive.mjs` `["orbit", out.png, from, to, step, sel?, scale?, [x,y,w,h]?, columns?]` | 3D 图形：跨角度的拼图，每帧标注 θ°。整圈用 15°；顺序变化处用 0.1°；易折弯处用 1°。 |
+| `scripts/turn-check.mjs` | 3D 图形。`build.mjs --fidelity`（Node：棱柱、圆角件、回转件与 tube 对照 kit 构建器在 P′(θ)）；`page.html --order`（需要 `--verify` 构建）、`--pops`、`--lines`、`--perf`、`--states file.json`、`--part name`、`--out dir`。每项检查先跑它埋设的对照。`references/3d.md` 第 14 节。 |
+| `scripts/turn-bench.mjs` | 3D 图形：Node 中跨 360 角度的 `emit` 与 `order` CPU 时间，按部件种类（7 次取中位数）。 |
 
-## 15. Turning groups (`kit/turn.mjs`, `turn-build.mjs`, `turn-audit.mjs`)
-The optional 3D mode. `references/3d.md` is the guide; this is the reference.
+## 15. 旋转组（`kit/turn.mjs`、`turn-build.mjs`、`turn-audit.mjs`）
+可选的 3D 模式。`references/3d.md` 是指南；这里是参考。
 ```js
 import { turning, separate, gjk } from "../../kit/turn-build.mjs";
 import { TURN, TURN_CSS } from "../../kit/turn.mjs";
@@ -388,32 +392,32 @@ import * as TA from "../../kit/turn-audit.mjs";
 ```
 
 ### `turning(P, { recorder, scale = 1 })` → `T`
-| Member | What it does |
+| 成员 | 作用 |
 |---|---|
-| `T.group(name, { parent?, turn: { pivot } \| slide: { direction, travel } \| hinge: { point, axis, range } \| free: { origin } })` | A rigid group. Values: degrees (turn, hinge), world units (slide), `{ R \| q \| axis+angle, t, world? }` or `null` (free). |
-| `T.layer(name)`, `T.stack(names)` | Live layers and the full back-to-front stack of live and static layer names. |
-| `T.prism`, `T.round`, `T.lathe`, `T.ball`, `T.tube`, `T.fixed`, `T.plane`, `T.billboard`, `T.split` | Parts, in world coordinates at rest. Common options `{ name, group, layer, tone, crease, lit, material, owner, details }`. Signatures in `3d.md`, section 4. |
-| `T.build({ statics, poses, verify, strict })` | `{ svg, data, css, report, layerSvg(name, { width, height }), verify, planesByName }`. |
-| `T.parts`, `T.groups`, `T.layers`, `T.routes`, `T.data`, `T.built` | The scene, for the audit and the checks. |
+| `T.group(name, { parent?, turn: { pivot } \| slide: { direction, travel } \| hinge: { point, axis, range } \| free: { origin } })` | 刚性组。取值：角度（turn、hinge）、世界单位（slide）、`{ R \| q \| axis+angle, t, world? }` 或 `null`（free）。 |
+| `T.layer(name)`、`T.stack(names)` | 实时层，以及实时与静态层名完整的由后至前栈。 |
+| `T.prism`、`T.round`、`T.lathe`、`T.ball`、`T.tube`、`T.fixed`、`T.plane`、`T.billboard`、`T.split` | 部件，静置时用世界坐标。常用选项 `{ name, group, layer, tone, crease, lit, material, owner, details }`。签名见 `3d.md` 第 4 节。 |
+| `T.build({ statics, poses, verify, strict })` | `{ svg, data, css, report, layerSvg(name, { width, height }), verify, planesByName }`。 |
+| `T.parts`、`T.groups`、`T.layers`、`T.routes`、`T.data`、`T.built` | 场景数据，供审计和各项检查使用。 |
 
-`details`: `seams`, `ribs: { s0, s1, count, phase, twist, fade, seams, tone }`, `bolts: [{ s, r, count, phase, size, tone, fade }]`, `dots: [{ at, normal, size, tone }]`, `rings: [{ at, normal, r, tone }]`, `rules: [{ points, tone, free }]`, `bevel`. Each constructor takes its own subset in its own frame (a ball's `s` runs along its first flat's normal; a prism takes dots, seams and bevel only): the table in `3d.md`, section 4. Materials: `gold`, `chrome`, `steel`, `gunmetal`, `rubber`, `brass`, `copper`.
+`details`：`seams`、`ribs: { s0, s1, count, phase, twist, fade, seams, tone }`、`bolts: [{ s, r, count, phase, size, tone, fade }]`、`dots: [{ at, normal, size, tone }]`、`rings: [{ at, normal, r, tone }]`、`rules: [{ points, tone, free }]`、`bevel`。每个构造器只取自己 frame 内的子集（球的 `s` 沿其第一个平面的法线；棱柱只接受 dots、seams 和 bevel）：见 `3d.md` 第 4 节的表。材质：`gold`、`chrome`、`steel`、`gunmetal`、`rubber`、`brass`、`copper`。
 
-`separate(A, B, hints)` and `gjk(A, B, warm)` return `{ n, d, margin }` for two point sets (the build's plane solver).
+`separate(A, B, hints)` 和 `gjk(A, B, warm)` 对两个点集返回 `{ n, d, margin }`（构建时的平面求解器）。
 
-### `TURN` (runtime)
-| Member | What it does |
+### `TURN`（运行时）
+| 成员 | 作用 |
 |---|---|
-| `TURN.mount(stage, data, { onHold, onFrame, follow })` | The controller: `set(values \| θ, { detail })`, `render()`, `angleAt(x, y, z, group)`, `values`, `pose(name)`, `detach(name)`, `anchor(group, restPoint, restDir?)`, `cover(names, options)`, `order(layer)`, `orderIndex(layer)`, `events()`, `stats()`, `frames()`, `cams()`, `scene()`, `destroy()`. Installs `window.__isoTurn`. |
-| `TURN.cover(controller, names \| [names…], { polygons = 6, edges = 10, pad = 0.3, layers })` | `{ uCoverEdge, uCoverCount, dropped, parts }` for `coverOf`. |
-| `TURN.poseUniforms(controller, group, prefix = "uGroup")` | Four `vec3` for `GLSL_TURN` or `glslPose`. |
-| `TURN.anchor(scene, cams, group, point, dir)`, `TURN.floorOf(scene, group, R)` | Anchors outside a controller; the lowest z of a group under a rotation. |
-| `TURN.rotation(axis, deg)`, `TURN.quat(q)`, `TURN.compose(A, B)` | Rotations as `[9]`, for free poses. |
-| `TURN.materials`, `TURN.materialCss()`, `TURN.css()`, `TURN_CSS` | Material names; the CSS. |
-| `TURN.camera`, `TURN.poses`, `TURN.cams`, `TURN.prepare`, `TURN.emit`, `TURN.order`, `TURN.frame`, `TURN.gjk`, `TURN.disjoint`, `TURN.q`, `TURN.levels` | The pipeline, for tools: cameras per group, a prepared scene, one part's frame, a layer's order. |
+| `TURN.mount(stage, data, { onHold, onFrame, follow })` | 控制器：`set(values \| θ, { detail })`、`render()`、`angleAt(x, y, z, group)`、`values`、`pose(name)`、`detach(name)`、`anchor(group, restPoint, restDir?)`、`cover(names, options)`、`order(layer)`、`orderIndex(layer)`、`events()`、`stats()`、`frames()`、`cams()`、`scene()`、`destroy()`。安装 `window.__isoTurn`。 |
+| `TURN.cover(controller, names \| [names…], { polygons = 6, edges = 10, pad = 0.3, layers })` | 供 `coverOf` 用的 `{ uCoverEdge, uCoverCount, dropped, parts }`。 |
+| `TURN.poseUniforms(controller, group, prefix = "uGroup")` | 供 `GLSL_TURN` 或 `glslPose` 用的四个 `vec3`。 |
+| `TURN.anchor(scene, cams, group, point, dir)`、`TURN.floorOf(scene, group, R)` | 控制器之外的锚定；旋转下组的最低 z。 |
+| `TURN.rotation(axis, deg)`、`TURN.quat(q)`、`TURN.compose(A, B)` | 以 `[9]` 表示的旋转，用于自由姿态。 |
+| `TURN.materials`、`TURN.materialCss()`、`TURN.css()`、`TURN_CSS` | 材质名；CSS。 |
+| `TURN.camera`、`TURN.poses`、`TURN.cams`、`TURN.prepare`、`TURN.emit`、`TURN.order`、`TURN.frame`、`TURN.gjk`、`TURN.disjoint`、`TURN.q`、`TURN.levels` | 供工具使用的流水线：每个 group 的相机、预备好的场景、单个部件的 frame、一个层的顺序。 |
 
-### Orbit audit (`kit/turn-audit.mjs`)
-| Export | What it does |
+### 轨道审计（`kit/turn-audit.mjs`）
+| 导出 | 作用 |
 |---|---|
-| `orbitOrExit(T, R, P, { flag = "--audit", argv, sweep, clips, poses, crowd, cover, fittings, quick, only, log })` | Runs `orbit` when the flag is present, prints the report, sets exit code 1 on any failure. Ends `turn audit passed` only for a full run; with `only` it ends `turn audit partial`, with `quick` `turn audit quick` (`3d.md`, section 13). |
-| `orbit(T, R, P, options)`, `orbitReport(result)`, `orbitFailures(result)` | The checks, the text, the count. `result.skipped` lists the lines `only` left out (printed `skipped`); `result.quick` is set for a quick run. |
-| `posed(shape, pose)`, `eventsOf(T, layer)` | A recorded shape moved by a group pose; a layer's edge-on angles. |
+| `orbitOrExit(T, R, P, { flag = "--audit", argv, sweep, clips, poses, crowd, cover, fittings, quick, only, log })` | flag 存在时运行 `orbit`，打印报告，任何失败设退出码 1。只有完整运行才以 `turn audit passed` 结束；带 `only` 以 `turn audit partial` 结束，带 `quick` 以 `turn audit quick` 结束（`3d.md` 第 13 节）。 |
+| `orbit(T, R, P, options)`、`orbitReport(result)`、`orbitFailures(result)` | 检查、报告文本、失败数。`result.skipped` 列出 `only` 略过的检查线（打印为 `skipped`）；`result.quick` 在快速运行时设置。 |
+| `posed(shape, pose)`、`eventsOf(T, layer)` | 被组姿态移动后的记录形状；一个层的侧视角度。 |

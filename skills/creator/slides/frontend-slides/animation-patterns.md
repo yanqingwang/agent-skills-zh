@@ -1,19 +1,23 @@
-# Animation Patterns Reference
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`plugins/frontend-slides/skills/frontend-slides/animation-patterns.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this reference when generating presentations. Match animations to the intended feeling.
+# 动画模式参考
 
-## Effect-to-Feeling Guide
+生成演示文稿时参考本文件。让动画贴合想要传达的感觉。
 
-| Feeling | Animations | Visual Cues |
+## 效果与感觉对照
+
+| 感觉 | 动画 | 视觉线索 |
 |---------|-----------|-------------|
-| **Dramatic / Cinematic** | Slow fade-ins (1-1.5s), large scale transitions (0.9 to 1), parallax scrolling | Dark backgrounds, spotlight effects, full-bleed images |
-| **Techy / Futuristic** | Neon glow (box-shadow), glitch/scramble text, grid reveals | Particle systems (canvas), grid patterns, monospace accents, cyan/magenta/electric blue |
-| **Playful / Friendly** | Bouncy easing (spring physics), floating/bobbing | Rounded corners, pastel/bright colors, hand-drawn elements |
-| **Professional / Corporate** | Subtle fast animations (200-300ms), clean slides | Navy/slate/charcoal, precise spacing, data visualization focus |
-| **Calm / Minimal** | Very slow subtle motion, gentle fades | High whitespace, muted palette, serif typography, generous padding |
-| **Editorial / Magazine** | Staggered text reveals, image-text interplay | Strong type hierarchy, pull quotes, grid-breaking layouts, serif headlines + sans body |
+| **戏剧 / 电影感** | 慢速淡入（1-1.5s）、大幅缩放过渡（0.9 到 1）、视差滚动 | 深色背景、聚光效果、全出血图片 |
+| **科技 / 未来感** | 霓虹辉光（`box-shadow`）、故障/字符乱码文字、网格揭示 | 粒子系统（canvas）、网格纹、等宽点缀、青/洋红/电光蓝 |
+| **俏皮 / 亲和** | 弹性缓动（弹簧物理）、漂浮/上下浮动 | 圆角、柔和/明亮配色、手绘元素 |
+| **专业 / 商务** | 克制快速的动画（200-300ms）、干净的滑动 | 海军蓝/石板灰/炭黑、精确间距、以数据可视化为主 |
+| **平静 / 极简** | 极慢的细微运动、柔和淡入淡出 | 大量留白、低饱和配色、衬线排印、宽裕内边距 |
+| **编辑 / 杂志感** | 文字错落揭示、图文互动 | 强字体层级、拉页引文、破格布局、衬线标题配无衬线正文 |
 
-## Entrance Animations
+## 入场动画
 
 ```css
 /* Fade + Slide Up (most versatile) */
@@ -50,7 +54,7 @@ Use this reference when generating presentations. Match animations to the intend
 }
 ```
 
-## Background Effects
+## 背景效果
 
 ```css
 /* Gradient Mesh — layered radial gradients for depth */
@@ -75,7 +79,7 @@ Use this reference when generating presentations. Match animations to the intend
 }
 ```
 
-## Interactive Effects
+## 交互效果
 
 ```javascript
 /* 3D Tilt on Hover — adds depth to cards/panels */
@@ -99,12 +103,12 @@ class TiltEffect {
 }
 ```
 
-## Troubleshooting
+## 故障排查
 
-| Problem | Fix |
+| 问题 | 修复 |
 |---------|-----|
-| Fonts not loading | Check Fontshare/Google Fonts URL; ensure font names match in CSS |
-| Animations not triggering | Verify Intersection Observer is running; check `.visible` class is being added |
-| Scroll snap not working | Ensure `scroll-snap-type: y mandatory` on html; each slide needs `scroll-snap-align: start` |
-| Mobile issues | Disable heavy effects at 768px breakpoint; test touch events; reduce particle count |
-| Performance issues | Use `will-change` sparingly; prefer `transform`/`opacity` animations; throttle scroll handlers |
+| 字体加载失败 | 检查 Fontshare/Google Fonts 的 URL；确认 CSS 里的字体名一致 |
+| 动画不触发 | 确认 Intersection Observer 在运行；检查是否添加了 `.visible` 类 |
+| 滚动吸附失效 | 确认 html 上有 `scroll-snap-type: y mandatory`；每页需要 `scroll-snap-align: start` |
+| 移动端问题 | 在 768px 断点关闭重效果；测试触摸事件；减少粒子数量 |
+| 性能问题 | 谨慎使用 `will-change`；优先用 `transform`/`opacity` 动画；对滚动处理函数做节流 |

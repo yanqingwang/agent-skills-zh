@@ -1,105 +1,109 @@
-> **Additional context needed**: quality bar and shipping constraints.
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/polish.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Polish is refinement, never concealed redesign. Preserve the incumbent visual world, content, behavior, and everything outside scope. If the concept itself is wrong, say so and recommend redesign or `bolder` instead of smuggling in a replacement.
+> **需要补充的上下文**：质量标准与发布约束。
 
-A detector result is defect evidence, not proof of quality. Inspect the rendered experience and real interaction path.
+打磨是精修，绝不是暗度陈仓的重设计。保留现有的视觉世界、内容、行为以及范围之外的一切。如果概念本身错了，直说，并建议重设计或改用 `bolder`，而不是偷偷塞进一个替代品。
 
-## 1. Establish the system
+检测器的结果是缺陷证据，不是质量证明。要亲自检查渲染后的体验与真实的交互路径。
 
-Read DESIGN.md and representative tokens, shared components, patterns, and neighboring flows. If no formal system exists, use coherent project conventions.
+## 1. 摸清体系
 
-Classify each drift before fixing it:
+阅读 DESIGN.md 与有代表性的 Token（设计令牌）、共享组件、模式与相邻流程。若不存在正式体系，就用连贯的项目约定。
 
-- **missing token:** the system needs a reusable value;
-- **one-off implementation:** an existing shared component or pattern should replace it;
-- **conceptual mismatch:** the flow, information architecture, or hierarchy differs from comparable product areas;
-- **local defect:** the implementation is simply incomplete or inconsistent.
+修复前先给每一处漂移分类：
 
-Fix the cause at the narrowest correct level. Ask when a binding system principle cannot be inferred.
+- **缺失 Token：**体系需要一个可复用的值；
+- **一次性实现：**应由现有的共享组件或模式替换；
+- **概念错位：**流程、信息架构或层级与同类产品区域不同；
+- **局部缺陷：**实现只是没做完或前后不一致。
 
-## 2. Gather the evidence
+在最窄的正确层面修因。当无法推断出有约束力的体系原则时，先发问。
 
-Use the feature yourself at the surface's representative sizes: desktop and mobile on the web; on a native platform (`ios` / `android` / `adaptive`), the shipped device classes on the simulator, emulator, or hardware, captured per the platform reference's Verifying the build section. Determine:
+## 2. 收集证据
 
-- whether the path is functionally complete;
-- the intended quality bar and time available;
-- known constraints or deliberately unfinished work;
-- the states, content lengths, roles, and input methods users will actually encounter.
+在表面的代表性尺寸下亲自使用这个功能：Web 上是桌面与移动端；原生平台（`ios` / `android` / `adaptive`）则在模拟器、仿真器或真机上按已发布的设备档位操作，截图方式依平台参考的 Verifying the build 一节。要弄清：
 
-If a prior critique exists, use it as one input:
+- 路径在功能上是否完整；
+- 预期的质量标准与可用时间；
+- 已知约束或有意未完成的工作；
+- 用户实际会遇到的状态、内容长度、角色与输入方式。
+
+如已有此前的 critique 记录，把它作为输入之一：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable critique-storage latest "<resolved target>" --json
 ```
 
-Exit 0 returns JSON with the latest snapshot's `body` and an exact `snapshot_file` identity. Retain `snapshot_file` until the end of the pass. For a local file target, the helper compares the file's exact current content fingerprint with the fingerprint captured by critique. Unchanged staged, unstaged, or untracked content remains current; any byte change, deletion, or replacement with a non-file closes the backlog it identified while preserving its trend history and exits 2. A URL target has no local fingerprint and remains current until explicitly closed. When current, incorporate relevant P0/P1 findings from `body` and name the snapshot read. Exit 2 means none exists or the target changed. Perform an independent pass either way.
+退出码 0 时返回 JSON，含最新快照的 `body` 与确切的 `snapshot_file` 标识。本轮全程都要保留 `snapshot_file`。对本地文件目标，助手会把该文件当前内容的精确指纹与 critique 捕获的指纹比对。未变的已暂存、未暂存或未跟踪内容仍视为现行；任何字节变更、删除或替换为非文件，都会关闭它所识别的待办（同时保留趋势历史），并以退出码 2 结束。URL 目标没有本地指纹，保持现行直到被显式关闭。现行时，把 `body` 中相关的 P0/P1 发现纳入进来，并注明读取了哪个快照。退出码 2 表示没有快照或目标已变更。无论哪种情况，都要独立执行一轮。
 
-## 3. Triage
+## 3. 分诊
 
-Separate functional defects from cosmetic ones and fix in this order:
+区分功能缺陷与外观缺陷，按此顺序修复：
 
-1. broken or blocked tasks, data loss, misleading state, and inaccessible paths;
-2. missing loading, empty, error, success, disabled, and permission states;
-3. flow, hierarchy, responsive, and design-system drift;
-4. visual and motion inconsistencies;
-5. code and asset cleanup.
+1. 中断或阻塞的任务、数据丢失、误导性状态、不可达的路径；
+2. 缺失的加载、空态、错误、成功、禁用与权限状态；
+3. 流程、层级、响应式与设计体系的漂移；
+4. 视觉与动效的不一致；
+5. 代码与素材清理。
 
-Do not perfect one corner while leaving the rest below the same quality bar.
+不要把一个角落磨到完美，其余部分却低于同一质量标准。
 
-## 4. Polish the whole path
+## 4. 打磨整条路径
 
-### Flow and hierarchy
+### 流程与层级
 
-- Match neighboring mental models, terminology, disclosure, routing, save behavior, and optimistic or pessimistic patterns.
-- Make the primary task and current state obvious without flattening every element to equal weight.
-- Ensure arrival, transition, empty, and recovery paths connect instead of behaving as isolated screens.
+- 对齐相邻区域的思维模型、术语、信息展开方式、路由、保存行为与乐观/悲观更新模式。
+- 让主任务与当前状态一目了然，同时不把所有元素压成同等分量。
+- 确保进入、过渡、空态与恢复路径彼此衔接，而不是各自孤立成屏。
 
-### Layout and type
+### 布局与字体
 
-- Align to the project's grid and spacing scale; fix optical as well as mathematical alignment.
-- Group related content tightly and separate distinct groups generously.
-- Keep same-role typography consistent; test measure, wrapping, localization expansion, zoom, and font loading.
-- Verify every supported viewport rather than correcting only the current screenshot.
+- 对齐项目的网格与间距尺度；光学对齐与数学对齐都要修正。
+- 相关内容紧凑分组，不同组之间留足间距。
+- 同一角色的排版保持一致；检验行长、换行、本地化文本膨胀、缩放与字体加载。
+- 验证每一个受支持的视口，而不是只修当前截图。
 
-### Color, imagery, and icons
+### 颜色、图像与图标
 
-- Use semantic tokens and stable color meanings across themes.
-- Verify text, control, and focus contrast in every state.
-- Keep icon families, stroke/weight, sizing, and optical alignment coherent.
-- Prevent image layout shift; use correct aspect ratios, responsive sources, and useful alt text.
+- 使用语义 Token，颜色含义在各主题间保持稳定。
+- 验证文字、控件与焦点对比度在每种状态下都达标。
+- 图标族、描边/字重、尺寸与光学对齐保持一致。
+- 防止图片引起的布局位移；使用正确的宽高比、响应式来源与有用的 alt 文本。
 
-### Interaction and state
+### 交互与状态
 
-- Every control needs appropriate default, hover, focus, active, disabled, loading, error, and success behavior.
-- Preserve visible keyboard focus, logical tab order, labels, and platform-appropriate touch targets.
-- Keep motion coherent, interruptible, and performant. Do not add animation merely to make polish visible.
-- Validate long, missing, localized, offline, slow, and permission-limited content where the product can encounter it.
+- 每个控件都要有得体的默认、悬停、聚焦、激活、禁用、加载、错误与成功表现。
+- 保留可见的键盘焦点、合理的 Tab 顺序、标签与平台合适的触控目标。
+- 动效保持连贯、可中断、高性能。不要为了让打磨显得可见而添加动画。
+- 在产品可能遇到的地方验证超长、缺失、本地化、离线、缓慢与受限权限的内容。
 
-### Content and code
+### 内容与代码
 
-- Keep terminology, capitalization, punctuation, and factual copy consistent. Ask before changing claims.
-- Remove debug output, dead code, unused imports, obsolete styles, and polish-created duplication.
-- Replace custom implementations with shared components where the system owns the pattern.
-- Promote genuinely reusable values to tokens; do not create a system abstraction for one local exception.
+- 术语、大小写、标点与事实性文案保持一致。改动主张之前先发问。
+- 移除调试输出、死代码、未使用的导入、过时样式与打磨过程中产生的重复。
+- 体系已拥有该模式的地方，用共享组件替换自定义实现。
+- 真正可复用的值提升为 Token；不要为单个局部例外创建体系抽象。
 
-## 5. Verify and finish
+## 5. 验证并收尾
 
-Walk the complete path again with mouse, keyboard, and touch where applicable. Check:
+用鼠标、键盘与触控（如适用）把完整路径再走一遍。检查：
 
-- mobile, intermediate, and wide layouts on the web; phone and tablet size classes in both supported orientations on native;
-- loading, empty, error, success, disabled, long-content, and missing-content states;
-- zoom, contrast, focus, semantics, and screen-reader names;
-- console errors, layout shift, interaction latency, and image loading everywhere; supported browsers on the web; supported OS versions, runtime warnings, and dropped frames on native;
-- agreement with DESIGN.md, neighboring features, and the user's scope.
+- Web 上的移动、中间与宽屏布局；原生设备在两种受支持方向下的手机与平板尺寸档；
+- 加载、空态、错误、成功、禁用、超长内容与缺失内容状态；
+- 缩放、对比度、焦点、语义与屏幕阅读器名称；
+- 各处的控制台报错、布局位移、交互延迟与图片加载；Web 上受支持的浏览器；原生上受支持的 OS 版本、运行时警告与掉帧；
+- 与 DESIGN.md、相邻功能及用户范围的一致性。
 
-Follow the quality guidance supplied by `impeccable context` and hooks, then run any other relevant QA commands. Context requests a manual scan only when no automatic detector is active; never add another detector pass. Fix real defects and document only narrow intentional exceptions. A clean scan does not replace visual judgment.
+遵循 `impeccable context` 与 hooks 给出的质量指引，然后运行其他相关的 QA 命令。context 只在没有自动检测器运行时才要求人工扫描；绝不再叠加一轮检测器。修复真实缺陷，只为有意的窄例外留档。干净的扫描不能替代视觉判断。
 
-Finish with a source diff: remove accidental churn, orphaned code, redundant values, and temporary artifacts. Ship only when the feature is functionally complete and consistently finished across the path.
+最后做一次源码 diff：清掉意外改动、孤儿代码、冗余值与临时产物。只有功能完整且整条路径打磨一致时才可发布上线。
 
-When this pass clears every Priority Issue it took from a snapshot, close that snapshot:
+当本轮清掉了它从快照接下的全部 Priority Issue 时，关闭该快照：
 
 ```bash
 .claude/skills/impeccable/scripts/impeccable critique-storage close "<resolved target>" "<snapshot_file returned by latest>"
 ```
 
-This closes only the snapshot this pass actually processed; if a newer critique landed meanwhile, its backlog stays live. Do not close when no snapshot was read, when `snapshot_file` was not retained, or when Priority Issues remain.
+这只会关闭本轮实际处理的那份快照；若期间有更新的 critique 落地，其待办仍然有效。没有读取快照、未保留 `snapshot_file`，或仍有 Priority Issue 时，不要关闭。

@@ -1,12 +1,16 @@
-# Supply Chain and Release Hunting
+> **中文汉化版** · 上游：[cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) · 原文件：`skills/security-audit/SUPPLY-CHAIN-AND-RELEASE.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-#### When to use this file
+# 供应链与发布排查
 
-Reach for this file when the target resolves dependencies, builds from untrusted contributions, runs CI, creates release artifacts, signs or promotes builds, loads plugins, or updates deployed software. This domain covers trust handoffs from source and dependency to the artifact a user runs. Use `MEMORY-SAFETY-AND-BINARY.md` for flaws inside a local binary loader and `CLOUD-AND-DEPLOYMENT.md` for runtime workload authority.
+#### 何时使用本文件
 
-Split large targets into dependency resolution, CI isolation, artifact provenance, release authorization, and updater/plugin trust.
+当目标解析依赖、用不可信贡献构建、运行 CI、生成发布产物、签名或晋升构建、加载插件或更新已部署软件时，使用本文件。本领域覆盖从源码与依赖到用户实际运行产物之间的信任交接。本地二进制加载器内部的缺陷用 `MEMORY-SAFETY-AND-BINARY.md`，运行时工作负载权限用 `CLOUD-AND-DEPLOYMENT.md`。
 
-## Core discipline (include in every agent prompt for this domain)
+把大型目标拆分为：依赖解析、CI 隔离、产物来源（provenance）、发布授权、更新器/插件信任。
+
+## 核心纪律（加入本领域每个 Agent 的提示词中）
 
 ```
 - A mutable or known-vulnerable dependency is not a finding by itself. Show who can influence resolution, which build consumes it, and what execution or release boundary follows.
@@ -16,58 +20,58 @@ Split large targets into dependency resolution, CI isolation, artifact provenanc
 - Use `confirmed` for in-repo control-flow failures with bounded local validation. Use `needs_validation` for branch protection, hosted-runner, registry, signing-service, or production promotion facts that are not observable.
 ```
 
-## Dependency and build-input attack classes (subagent_type: `general`)
+## 依赖与构建输入攻击类别（subagent_type: `general`）
 
-**Dependency source and namespace confusion**
-Resolver configuration can select an unintended public/private namespace, fallback registry, mirror, repository, or source URL. Review package names, source priority, lockfile and checksum use, alternate build files, platform-specific resolution, and first-install versus update behavior.
+**依赖来源与命名空间混淆**
+解析器配置可能选中非预期的公共/私有命名空间、回退 registry、镜像、仓库或源 URL。审查包名、来源优先级、lockfile 与校验和的使用、备选构建文件、平台相关解析，以及首次安装与更新时的行为差异。
 
-**Mutable and unbound build inputs**
-Builds consume branches, tags, unverified submodules, downloaded tools, generated assets, remote includes, floating CI actions, or container tags whose content can change without source review. Require a lower-trust writer and a path into trusted build output; reproducibility by itself does not prove authenticity.
+**可变且未绑定的构建输入**
+构建会消费分支、tag、未验证的 submodule、下载的工具、生成的资源、远程 include、浮动版本的 CI action 或容器 tag，这些内容不经源码审查就能改变。要求存在一个低信任的写入方，以及一条进入可信构建产物的路径；可复现性本身不能证明真实性。
 
-**Generated-source and codegen provenance gaps**
-Schemas, vendored archives, generated clients, localization, documentation examples, or binary blobs produce executable or shipped content without the same review and integrity gate as source. Compare local regeneration with committed output and verify who controls input and generator.
+**生成源码与 codegen 的来源缺口**
+Schema、vendored 压缩包、生成的客户端、本地化文件、文档示例或二进制 blob，产生可执行或随产品发布的内容，却没有与源码相同的审查与完整性闸门。比较本地重新生成与已提交的产物，并核实输入与生成器分别由谁控制。
 
-**Build-context inclusion**
-Secrets, local configuration, repository metadata, test fixtures, or developer artifacts enter a package or image because the build context and ignore rules exceed intended release inputs. Confirm that the resulting artifact exposes a real credential, private data, or privileged configuration.
+**构建上下文夹带**
+机密、本地配置、仓库元数据、测试 fixture 或开发者产物进入包或镜像，原因是构建上下文与 ignore 规则超出了预期的发布输入。确认最终产物确实暴露了真实凭证、私有数据或特权配置。
 
-## CI and automation attack classes (subagent_type: `general`)
+## CI 与自动化攻击类别（subagent_type: `general`）
 
-**Untrusted code in a privileged workflow**
-A pull request, issue comment, fork, dependency update, or external event runs contributor-controlled code with protected secrets, write tokens, deployment authority, or a trusted runner. Compare trigger type, checkout ref, approval gate, environment protection, and permission narrowing. Do not assume repository-host defaults that are not in source.
+**特权工作流中的不可信代码**
+pull request、issue 评论、fork、依赖更新或外部事件会运行贡献者可控的代码，而环境中存在受保护的机密、写令牌、部署权限或受信任的 runner。比较触发类型、checkout ref、审批闸门、环境保护与权限收敛。不要假设源码中不存在的托管平台默认行为。
 
-**Workflow command and expression confusion**
-Attacker-controlled branch names, commit messages, issue fields, artifact names, matrix values, or generated output enter shell commands, template expressions, paths, or privileged workflow inputs without canonical validation.
+**工作流命令与表达式混淆**
+攻击者可控的分支名、commit message、issue 字段、产物名、matrix 值或生成输出进入 shell 命令、模板表达式、路径或特权工作流输入，缺少规范化校验。
 
-**Cache, artifact, and workspace trust mixing**
-A lower-trust job can populate a cache, artifact, shared workspace, or output that a higher-trust job later restores and executes or releases. Review cache keys and namespaces, artifact producer identity, digest binding, retention, and whether promotion re-resolves by mutable name.
+**缓存、产物与工作区的信任混用**
+低信任的 job 可以填充一个缓存、产物、共享工作区或输出，随后被更高信任的 job 恢复并执行或发布。审查缓存键与命名空间、产物生产者身份、摘要绑定、保留策略，以及晋升时是否按可变名称重新解析。
 
-**Automation identity overreach**
-CI jobs receive permissions beyond the operation, repository, environment, or duration needed, and untrusted job inputs can select the affected resource. Missing least privilege alone is hardening; require a reachable privileged action.
+**自动化身份权限过大**
+CI job 拿到超出所需操作、仓库、环境或时限的权限，且不可信的 job 输入可以选中受影响的资源。仅缺最小权限属于加固；要求存在可达的特权操作。
 
-## Release and update attack classes (subagent_type: `general`)
+## 发布与更新攻击类别（subagent_type: `general`）
 
-**Build-to-promotion substitution**
-Tests, review, signature, and publication refer to mutable tags, filenames, channels, or artifact IDs rather than the same immutable digest. Check every copy, repack, architecture merge, and provenance step between build and release.
+**构建到晋升的替换**
+测试、审查、签名与发布引用的是可变的 tag、文件名、渠道或产物 ID，而非同一个不可变摘要。检查构建与发布之间的每一次复制、重打包、多架构合并与来源记录步骤。
 
-**Release authorization and signing-policy gaps**
-A release or signature is accepted from the wrong workflow, repository, branch, environment, key role, or threshold. Review identity claims inside attestations and verify the consumer validates them, not just a valid signature. Rotation, expiry, and revocation must fail closed where policy requires.
+**发布授权与签名策略缺口**
+发布或签名被接受时，其来源的工作流、仓库、分支、环境、密钥角色或阈值不对。审查 attestation 内部的身份声明，并验证消费方确实校验这些声明，而不只是验证签名有效。策略要求之处，轮换、过期与吊销必须 fail closed。
 
-**Update metadata and rollback confusion**
-An updater authenticates payload bytes but not version, product, platform, channel, target path, expiry, or rollback state, or it accepts metadata and payload from different authorized transactions. Verify atomic installation and recovery behavior. A signature API call without policy binding is incomplete.
+**更新元数据与回滚混淆**
+更新器只认证载荷字节，却不认证版本、产品、平台、渠道、目标路径、有效期或回滚状态；或者它把元数据与载荷当作两次不同的授权事务来接受。验证原子安装与恢复行为。缺少策略绑定的签名 API 调用是不完整的。
 
-**Plugin and extension trust expansion**
-An extension package gains host authority beyond its declared scope, a lower-trust publisher can replace another publisher's identity, or install/update hooks run before authenticity and capability checks. Intended installation of arbitrary same-user plugins is not a privilege boundary.
+**插件与扩展的信任扩张**
+扩展包获得超出其声明范围的主机权限；低信任发布者可以替换另一个发布者的身份；或者安装/更新 hook 在真实性与能力检查之前运行。有意安装任意同用户插件不构成权限边界。
 
-## Universal moves (apply across the above)
+## 通用动作（适用于以上各类）
 
-- Walk backward from a released digest or installed update to every source, generated input, credential, worker, cache, test result, and authorization decision.
-- Compare untrusted and protected workflow events side by side. Mark each persisted channel crossing between them and require an immutable identity plus producer trust.
-- Review revoked key, failed download, missing attestation, partial platform release, rollback, and registry outage paths. The failure policy is part of release integrity.
+- 从一个已发布的摘要或已安装的更新反向追溯：每一个来源、生成输入、凭证、worker、缓存、测试结果与授权决策。
+- 并排比较不可信与受保护的工作流事件。标出两者之间每个持久化的信道跨越点，要求不可变身份加上生产者信任。
+- 审查密钥吊销、下载失败、attestation 缺失、平台部分发布、回滚与 registry 故障等路径。失败策略是发布完整性的一部分。
 
-## Validation rules (apply before reporting ANY finding here)
+## 验证规则（报告本文件任何发现之前必须执行）
 
-1. Name the lower-trust actor, controllable source/cache/artifact/metadata, consuming trusted job or updater, and resulting unauthorized publication, code inclusion, secret disclosure, or privileged execution.
-2. Prove artifact identity across the broken handoff. A different mutable name or unbound digest must reach a real consumer.
-3. Verify built-in package-manager, repository-host, registry, and signing defaults for the pinned version. Unknown hosted controls require `needs_validation`.
-4. Keep local validation bounded: use a harmless fixture repository, dummy credential marker, local registry/config, and non-production artifact namespace. Do not publish or alter a real release.
-5. Return `confirmed` only with a complete source-visible handoff and meaningful result. Return `needs_validation` with the precise branch, runner, registry, signing, or deployment fact an owner must observe.
+1. 指明低信任行为者、其可控的来源/缓存/产物/元数据、消费该结果的可信 job 或更新器，以及由此导致的未授权发布、代码引入、机密泄露或特权执行。
+2. 证明产物身份在断裂的交接点两侧不一致。一个不同的可变名称或未绑定摘要必须能到达真实消费者。
+3. 针对锁定版本验证包管理器、托管平台、registry 与签名服务的内建默认行为。未知的托管控制记为 `needs_validation`。
+4. 本地验证保持有界：使用无害的 fixture 仓库、假凭证标记、本地 registry/配置与非生产产物命名空间。不要发布或改动真实发布。
+5. 只有具备完整的源码可见交接链与有意义结果才返回 `confirmed`；返回 `needs_validation` 时写明负责人必须观察的确切分支、runner、registry、签名或部署事实。

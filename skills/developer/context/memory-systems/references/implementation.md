@@ -1,10 +1,14 @@
-# Memory Systems: Technical Reference
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/memory-systems/references/implementation.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document provides implementation details for memory system components.
+# 记忆系统：技术参考
 
-## Vector Store Implementation
+本文档给出记忆系统各组件的实现细节。
 
-### Basic Vector Store
+## 向量存储实现
+
+### 基础向量存储
 
 ```python
 import numpy as np
@@ -91,7 +95,7 @@ class VectorStore:
         return self.texts[index] if index < len(self.texts) else ""
 ```
 
-### Metadata-Enhanced Vector Store
+### 元数据增强的向量存储
 
 ```python
 class MetadataVectorStore(VectorStore):
@@ -146,9 +150,9 @@ class MetadataVectorStore(VectorStore):
         } for idx, score, meta in scored[:limit]]
 ```
 
-## Knowledge Graph Implementation
+## 知识图谱实现
 
-### Property Graph Storage
+### 属性图存储
 
 ```python
 from typing import Dict, List, Optional
@@ -266,7 +270,7 @@ class PropertyGraph:
         return results
 ```
 
-## Temporal Knowledge Graph
+## 时序知识图谱
 
 ```python
 from datetime import datetime
@@ -342,7 +346,7 @@ class TemporalKnowledgeGraph(PropertyGraph):
         return f"{start_str}::{end_str}"
 ```
 
-## Memory Consolidation
+## 记忆整合
 
 ```python
 class MemoryConsolidator:
@@ -408,7 +412,7 @@ class MemoryConsolidator:
                 target["properties"][key].extend(value)
 ```
 
-## Memory-Context Integration
+## 记忆与上下文集成
 
 ```python
 class MemoryContextIntegrator:
@@ -479,9 +483,9 @@ class MemoryContextIntegrator:
         return " ".join(truncated)
 ```
 
-## Framework Integration Examples
+## 框架集成示例
 
-### Mem0 Quick Start
+### Mem0 快速上手
 
 ```python
 from mem0 import Memory
@@ -503,7 +507,7 @@ m.add([
 ], user_id="dev-alice")
 ```
 
-### Graphiti (Zep's Open-Source Temporal KG Engine)
+### Graphiti（Zep 的开源时序知识图谱引擎）
 
 ```python
 from graphiti_core import Graphiti
@@ -524,7 +528,7 @@ await graphiti.add_episode(
 results = await graphiti.search("Where does Alice live?")
 ```
 
-### Cognee (Open-Source Knowledge Engine for AI Memory)
+### Cognee（面向 AI 记忆的开源知识引擎）
 
 ```python
 import cognee
@@ -548,4 +552,3 @@ chunks = await cognee.search(
     query_type=SearchType.CHUNKS,
 )
 ```
-

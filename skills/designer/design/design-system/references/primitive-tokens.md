@@ -1,10 +1,14 @@
-# Primitive Tokens
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/design-system/references/primitive-tokens.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Raw design values - foundation of the design system.
+# 基础令牌（Primitive Tokens）
 
-## Color Scales
+原始设计值，是整个设计体系的地基。
 
-### Gray Scale
+## 颜色阶梯
+
+### 灰阶
 
 ```css
 :root {
@@ -22,7 +26,7 @@ Raw design values - foundation of the design system.
 }
 ```
 
-### Primary Colors (Blue)
+### 主色（蓝）
 
 ```css
 :root {
@@ -39,7 +43,7 @@ Raw design values - foundation of the design system.
 }
 ```
 
-### Status Colors
+### 状态色
 
 ```css
 :root {
@@ -60,9 +64,9 @@ Raw design values - foundation of the design system.
 }
 ```
 
-## Spacing Scale
+## 间距阶梯
 
-4px base unit system.
+以 4px 为基准单位的体系。
 
 ```css
 :root {
@@ -90,7 +94,7 @@ Raw design values - foundation of the design system.
 }
 ```
 
-## Typography Scale
+## 字体排印阶梯
 
 ```css
 :root {
@@ -128,7 +132,7 @@ Raw design values - foundation of the design system.
 }
 ```
 
-## Border Radius
+## 圆角
 
 ```css
 :root {
@@ -144,7 +148,7 @@ Raw design values - foundation of the design system.
 }
 ```
 
-## Shadows
+## 阴影
 
 ```css
 :root {
@@ -163,7 +167,7 @@ Raw design values - foundation of the design system.
 }
 ```
 
-## Motion / Duration
+## 动效 / 时长
 
 ```css
 :root {
@@ -183,7 +187,7 @@ Raw design values - foundation of the design system.
 }
 ```
 
-## Z-Index Scale
+## Z-Index 阶梯
 
 ```css
 :root {

@@ -1,12 +1,16 @@
-# Integration and Merge Strategies
+> **中文汉化版** · 上游：[wshobson/agents](https://github.com/wshobson/agents) · 原文件：`plugins/agent-teams/skills/parallel-feature-development/references/merge-strategies.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Patterns for integrating parallel work streams and resolving conflicts.
+# 集成与合并策略
 
-## Integration Patterns
+整合并行工作流与解决冲突的模式。
 
-### Pattern 1: Direct Integration
+## 集成模式
 
-All implementers commit to the same branch; integration happens naturally.
+### Pattern 1: 直接集成
+
+所有实现者都向同一个分支提交，集成自然发生。
 
 ```
 feature/auth ← implementer-1 commits
@@ -14,11 +18,11 @@ feature/auth ← implementer-1 commits
              ← implementer-3 commits
 ```
 
-**When to use**: Small teams (2-3), strict file ownership (no conflicts expected).
+**何时使用**：小团队（2-3 人）、严格的文件所有权（预期不会出现冲突）。
 
-### Pattern 2: Sub-Branch Integration
+### Pattern 2: 子分支集成
 
-Each implementer works on a sub-branch; lead merges them sequentially.
+每个实现者在各自的子分支上工作，由负责人按顺序合并。
 
 ```
 feature/auth
@@ -27,49 +31,49 @@ feature/auth
   └── feature/auth-tests     ← implementer-3
 ```
 
-Merge order: follow dependency graph (foundation → dependent → integration).
+合并顺序：遵循依赖图（先基础、再依赖方、最后集成）。
 
-**When to use**: Larger teams (4+), overlapping concerns, need for review gates.
+**何时使用**：较大团队（4 人以上）、关注点有重叠、需要评审关卡。
 
-### Pattern 3: Trunk-Based with Feature Flags
+### Pattern 3: 主干开发与功能开关
 
-All implementers commit to the main branch behind a feature flag.
+所有实现者都在功能开关的保护下向主分支提交。
 
 ```
 main ← all implementers commit
      ← feature flag gates new code
 ```
 
-**When to use**: CI/CD environments, short-lived features, continuous deployment.
+**何时使用**：CI/CD 环境、短生命周期功能、持续部署。
 
-## Integration Verification Checklist
+## 集成验证清单
 
-After all implementers complete:
+所有实现者完成后：
 
-1. **Build check**: Does the code compile/bundle without errors?
-2. **Type check**: Do TypeScript/type annotations pass?
-3. **Lint check**: Does the code pass linting rules?
-4. **Unit tests**: Do all unit tests pass?
-5. **Integration tests**: Do cross-component tests pass?
-6. **Interface verification**: Do all interface contracts match their implementations?
+1. **构建检查**：代码能否无错误地编译/打包？
+2. **类型检查**：TypeScript/类型注解能否通过？
+3. **lint 检查**：代码能否通过 lint 规则？
+4. **单元测试**：所有单元测试能否通过？
+5. **集成测试**：跨组件测试能否通过？
+6. **接口验证**：所有接口契约是否与实现一致？
 
-## Conflict Resolution
+## 冲突解决
 
-### Prevention (Best)
+### 预防（最佳）
 
-- Strict file ownership eliminates most conflicts
-- Interface contracts define boundaries before implementation
-- Shared type files are owned by the lead and modified sequentially
+- 严格的文件所有权可消除大多数冲突
+- 接口契约在实现开始前就界定好边界
+- 共享类型文件由负责人拥有并按顺序修改
 
-### Detection
+### 发现
 
-- Git merge will report conflicts if they occur
-- TypeScript/lint errors indicate interface mismatches
-- Test failures indicate behavioral conflicts
+- 若发生冲突，Git 合并会报告出来
+- TypeScript/lint 错误表明接口不匹配
+- 测试失败表明存在行为冲突
 
-### Resolution Strategies
+### 解决策略
 
-1. **Contract wins**: If code doesn't match the interface contract, the code is wrong
-2. **Lead arbitrates**: The team lead decides which implementation to keep
-3. **Tests decide**: The implementation that passes tests is correct
-4. **Merge manually**: For complex conflicts, the lead merges by hand
+1. **契约优先**：若代码与接口契约不符，错的是代码
+2. **负责人仲裁**：由团队负责人决定保留哪个实现
+3. **测试裁决**：能通过测试的实现才是正确的
+4. **手动合并**：复杂冲突由负责人手动合并

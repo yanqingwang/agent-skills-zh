@@ -1,21 +1,25 @@
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/macrostructures/08-photographic.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 ## 08 · Photographic
 
-Huge photographs lead the page. Text is small annotation, not headline. The design says look before it says read.
+巨幅照片领先页面。文字是小注解，不是标题。设计先说"看"，再说"读"。
 
-- **Heading:** small: the headline and its one sentence sit on a paper plate at the image's base, and a caption near a corner carries a fact in the body face; never a centred display.
-- **Body:** full-bleed photograph bands alternating with sections the theme's material carries alone (its Range: a menu as rows, the hours as a table, a statement), so photographs cover up to about 45% of the page below the hero and never lead two sections in a row (83).
-- **Divider:** the image edge is the divider; no rules.
-- **Button:** a typographic link on the plate, under the sentence, carrying a verb; it is the fold's one visible action (44b).
-- **Image:** the whole point: full-bleed, edge to edge, from the user; library photographs in slots until theirs arrive (`imagery.md` § 2).
-- **Reveal:** no spatial motion; the photographs do the work.
+- **标题：** 小：标题及其一句话坐在图像底部的一块纸面托板上，角落附近的图注用正文字体带出一条事实；绝不用居中展示字。
+- **正文：** 满幅出血的照片条带，与仅靠主题材料承载的小节交替（它的 Range：菜单做成行、营业时间做成表、一段陈述），照片在 hero 之下最多覆盖约 45% 的页面，绝不连续领两个小节（83）。
+- **分隔：** 图像边缘就是分隔；不用线。
+- **按钮：** 托板上的字排链接，在句子之下，带动词；它是首屏唯一可见的动作（44b）。
+- **图像：** 全部意义所在：满幅出血、边到边、来自用户；他们的图到位之前，槽位里用图库照片（`imagery.md` § 2）。
+- **Reveal：** 不用空间动效；照片自己干活。
 
-Reach for it for fashion, hospitality, photography portfolios, lifestyle commerce, any brand whose product is a feeling.
+时装、酒店、摄影作品集、生活方式电商，任何产品就是一种感觉的品牌选它。
 
-Avoid when the subject has nothing to photograph.
+拍摄对象无图可拍时避免使用。
 
-Compositions: the Poster hero (`layout.md` § 6) and full-bleed Showcases (§ 5).
+构图：Poster hero（`layout.md` § 6）与满幅出血的 Showcase（§ 5）。
 
-**Sample opening lines** (captions are dates, places and plate numbers, not marketing):
-> *"Plate 47, scored before the proof."* A number and a moment in the process (Maple Street Bread).
-> *"Spring, 2026."* Two words, full stop.
-> *"From the working archive."* Gives the photograph provenance without explaining it.
+**样例开篇句**（图注是日期、地点和盘号，不是营销）：
+> *"Plate 47, scored before the proof."*（47 号烤盘，在醒发前划了刀。）一个编号，一道工序中的瞬间（Maple Street Bread）。
+> *"Spring, 2026."*（2026 年春。）两个词，一个句号。
+> *"From the working archive."*（来自工作档案。）给照片一个出处，不做解释。

@@ -1,29 +1,33 @@
-# Motion and interaction
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/anatomy/references/motion.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-A figure is alive when its mechanism moves the way the real thing would: a carriage glides and settles, a spring overshoots once, a needle swings to the new reading. Motion should be calm enough to follow and true to the model.
+# 动效与交互
 
-## Principles
-- **Time-based.** Take `dt` from `requestAnimationFrame` timestamps and clamp it to 1/30 s so a background tab doesn't jump. Never step a fixed amount per frame.
-- **Ease toward targets.** Pointer and keyboard set a *target*, and the part follows with exponential easing (`x += (target − x)·(1 − e^(−dt/τ))`, τ = 0.1–0.3 s) or a spring. Parts never snap to the cursor.
-- **Real springs where the subject is springy.** Use stiffness and damping from the real model, sub-stepped about 240 times a second for stability. Snap to the target once both error and velocity fall below 5e-4.
-- **One loop per figure.** A single `tick(dt)` updates the model, then writes the DOM through refs: `setAttribute("transform" | "d")`, `textContent`, `dataset`. Don't re-render React per frame.
-- **Stop when settled or offscreen.** Use an `IntersectionObserver` with rootMargin `120px 0px`, and read the newest entry (`entries[entries.length - 1]`): when the stage leaves and comes back between two callbacks, one callback delivers both entries oldest first, and reading the first one leaves the figure frozen on screen. Stop the loop once everything has reached its target.
-- **Reduced motion.** When `prefers-reduced-motion: reduce` is set, jump to targets with no tour, flow or pulse. The figure must still respond to input.
-- **Idle tour.** When nobody is interacting, play a scripted loop after about 1.4 s that shows the point of the figure. Pause it on hover, focus or press, and resume about 3.6 s after the last interaction. The tour drives the same targets the user would.
-- **Readout updates live** from the same model, in true units and short: `block 2 · reads 14.0 px`, `120.0 × 32.0 · lean 10.6 px`. Read it from where the parts are, not from the target: the Raptor says `taking apart` or `closing up` while any spring is moving or pending, and only then `apart · 11 assemblies` or `1,630 kg · cold`. Take a phase word and the number beside it from the same instant of the same source: a blind-test bench printed `end of stroke · relief 85 bar` (the word from the model, the number from a gauge needle lagging 0.25 s behind it) although its relief valve cracks at 92, and `idle · 44 bar` just after retracting.
+当图形的机构像真实物体那样运动时，它才是活的：滑架滑动后平稳停住，弹簧只回弹一次，指针摆向新的读数。动效要平静到能跟上，又要忠实于模型。
 
-## Pointer
-- Map the pointer to world space with the screen vector of an axis. Use `axisVector(P, [1, 0, 0])` for motion along x, or map the figure's width fraction onto the part's travel range. The range mapping is simpler and feels better when the travel is short.
-- Hover previews and press commits. On touch there is no hover, so make a tap act and keep `touch-action: pan-y` so the page still scrolls.
-- Use pointer capture while dragging, and release it on `pointerup` or `pointercancel`.
+## 原则
+- **基于时间。** 从 `requestAnimationFrame` 时间戳取 `dt`，并钳制到 1/30 s，这样后台标签页恢复时不会跳变。绝不按帧步进固定量。
+- **向目标缓动。** 指针和键盘设定的是一个*目标值*，部件用指数缓动（`x += (target − x)·(1 − e^(−dt/τ))`，τ = 0.1–0.3 s）或弹簧跟随。部件绝不直接吸附到光标位置。
+- **主体有弹性就用真实的弹簧。** 刚度和阻尼取自真实模型，为稳定起见每秒子步进约 240 次。误差和速度都低于 5e-4 后直接吸附到目标值。
+- **每个图形一个循环。** 单个 `tick(dt)` 更新模型，再通过 ref 写 DOM：`setAttribute("transform" | "d")`、`textContent`、`dataset`。不要每帧重渲染 React。
+- **到位或离开视口就停。** 用 `IntersectionObserver`，rootMargin 设 `120px 0px`，并读取最新一条 entry（`entries[entries.length - 1]`）：当舞台在两次回调之间离开又回来，一次回调会按从旧到新交付两条 entry，若读第一条，图形会冻在屏幕上。所有东西到达目标后就停掉循环。
+- **减少动效。** 设置了 `prefers-reduced-motion: reduce` 时，直接跳到目标值，不做导览、流动或脉冲。图形仍必须响应输入。
+- **空闲导览。** 无人交互约 1.4 s 后，播放一段脚本化循环，展示图形的要点。悬停、聚焦或按下时暂停，最后一次交互约 3.6 s 后恢复。导览驱动的是用户会驱动的同一批目标。
+- **读数实时更新**，来自同一个模型，用真实单位且简短：`block 2 · reads 14.0 px`、`120.0 × 32.0 · lean 10.6 px`。读数取自部件实际所在处，而不是目标值：只要任何弹簧在动或有待办，Raptor 就显示 `taking apart` 或 `closing up`，之后才显示 `apart · 11 assemblies` 或 `1,630 kg · cold`。阶段词和它旁边的数字要取自同一时刻、同一来源：盲测台架打印出 `end of stroke · relief 85 bar`（词来自模型，数字来自滞后 0.25 s 的表针），而它的泄压阀实际在 92 才开启；回缩后紧接着又打印 `idle · 44 bar`。
 
-## Keyboard and accessibility
-- The figure's root is focusable (`tabIndex=0`) with `role="slider"` (or `"group"` plus buttons when there are discrete choices), an `aria-label` that explains the controls, and `aria-valuenow`/`aria-valuetext` in words, such as "Pressed: 129.6 by 34.6 pixels, leaning 10.6 px". Write the value text when the reader's choice changes (a part selected, apart or assembled, firing or cold), not from the loop: screen readers announce every change of a focused slider's value text, so a readout ticking each frame ("Pc 290 bar · 222 tf") became a stream of numbers. Keep the visual readout and the accessible value separate (the Raptor's `say()` writes only the readout, `describe()` the value text); the live region carries the phases.
-- Keys: arrows step by a sensible unit (Shift for bigger steps), Home and End go to the extremes, Space or Enter presses or toggles, and Escape releases.
-- Show a focus ring: `outline: 1px solid var(--anatomy-muted); outline-offset: 6px`.
-- The `<svg>` carries `role="img"` and an `aria-label` describing the object and what it shows.
+## 指针
+- 用某条轴的屏幕向量把指针映射到世界坐标。沿 x 方向的运动用 `axisVector(P, [1, 0, 0])`，或者把图形的宽度比例映射到部件的行程范围。行程短的时候，范围映射更简单、手感也更好。
+- 悬停预览、按下提交。触屏没有悬停，所以让点击直接生效，并保留 `touch-action: pan-y`，页面才能继续滚动。
+- 拖拽期间使用 pointer capture，在 `pointerup` 或 `pointercancel` 时释放。
 
-## Vanilla loop (framework-free)
+## 键盘与可访问性
+- 图形根节点可聚焦（`tabIndex=0`），带 `role="slider"`（若有离散选项则用 `"group"` 加按钮）、解释控件的 `aria-label`，以及用文字表述的 `aria-valuenow`/`aria-valuetext`，比如 "Pressed: 129.6 by 34.6 pixels, leaning 10.6 px"。值文本在读者的选择变化时写入（选中了部件、分解或装配、点火或冷态），而不是在循环里写：屏幕阅读器会播报聚焦滑杆值文本的每一次变化，每帧都变的读数（"Pc 290 bar · 222 tf"）会变成一串数字流。可视读数与无障碍值分开维护（Raptor 的 `say()` 只写读数，`describe()` 写值文本）；live region 承载阶段。
+- 按键：方向键按合理单位步进（Shift 为大步长），Home 和 End 到两端，Space 或 Enter 按下或切换，Escape 释放。
+- 显示焦点环：`outline: 1px solid var(--anatomy-muted); outline-offset: 6px`。
+- `<svg>` 带 `role="img"` 和描述对象及其内容的 `aria-label`。
+
+## 原生循环（无框架）
 ```js
 let frame = 0, last = 0, visible = false, touring = !still.matches, clock = 0;
 function tick(now) {
@@ -40,10 +44,10 @@ function tick(now) {
 const run = () => { if (!frame && visible) { last = 0; frame = requestAnimationFrame(tick); } };
 new IntersectionObserver((entries) => { visible = entries[entries.length - 1].isIntersecting; if (visible) run(); }, { rootMargin: "120px 0px" }).observe(stage);
 ```
-`examples/dial-indicator/build.mjs` contains a complete version, with the tour, pointer mapping and keyboard stops.
+`examples/dial-indicator/build.mjs` 有完整版本，包含导览、指针映射和键盘停止逻辑。
 
-## React loop
-Keep static art in props built on the server and move only `<g>` wrappers and the paths that change shape:
+## React 循环
+把静态图稿放在服务端构建的 props 里，只移动 `<g>` 包裹层和改变形状的 path：
 
 ```tsx
 "use client";
@@ -74,92 +78,92 @@ export function RigLive(props: { base: React.ReactNode; carriage: React.ReactNod
   );
 }
 ```
-`examples/test-rig/live.tsx` is the full production version, with springs, a tour, press and pull, keyboard handling and aria.
+`examples/test-rig/live.tsx` 是完整的正式版本，带弹簧、导览、按压与拉动、键盘处理和 aria。
 
-## Shapes that change
-When a part changes shape rather than position (a swelling capsule, a compressing spring, a needle turning), rebuild only its paths each frame with the kit, using `slabOf`, `coil` or `lineOnTop`, and write them to its paths: `fill`, `shades[0..3]`, `top`, `crease`, `bevel`, `outline`. One solid costs well under 0.1 ms. Measure it: a frame should stay under about 1 ms of script.
-- **Precomputed frames step.** A lever drawn from 41 prebuilt frames over ±15° moved its knob about 0.8 px per frame, visible in slow motion. Rebuild a rotating part each frame, or precompute enough frames that one step moves nothing more than 0.25 px.
-- **A rod that slides out of a gland** doesn't change shape: it is one full-length rod that moves, clipped at the gland face by a clip that stays put (`G.rodOut`, `holdStill`, `craft.md`, section 3). Never draw it as several overlapping copies.
+## 会变形的部件
+当部件变的是形状而不是位置（膨胀的胶囊、压缩的弹簧、转动的指针）时，每帧只用工具包重建它的 path，用 `slabOf`、`coil` 或 `lineOnTop`，并写回它的各条 path：`fill`、`shades[0..3]`、`top`、`crease`、`bevel`、`outline`。单个实体远低于 0.1 ms。要实测：每帧脚本耗时应保持在约 1 ms 以内。
+- **预烘焙帧会跳步。** 用 ±15° 范围内 41 帧预建帧绘制的杠杆，每帧让旋钮移动约 0.8 px，慢放时可见。旋转部件要么每帧重建，要么预烘焙足够多的帧，使单步移动不超过 0.25 px。
+- **从填料函（gland）里滑出的杆**不改变形状：它是一根全长杆在移动，在填料函端面被一个不动的 clip 裁剪（`G.rodOut`、`holdStill`，见 `craft.md` 第 3 节）。绝不要画成多个重叠副本。
 
-## Envelopes for one-shot events
-A flash, a click, a pop, a shake or a shock is an event with an age, not a value you set. Drive it with an envelope that has an attack and a decay. `kit/gl.mjs` exports `smooth(a, b, x)` (smoothstep) and `burst(age, rise, fall)`, which is `smooth(0, rise, age)` times `exp(−(age − rise)/fall)` after the peak and 0 before the event:
+## 一次性事件的包络
+闪光、咔哒、弹跳、抖动或冲击是带时间年龄的事件，不是你设定的一个值。用带 attack（起振）和 decay（衰减）的包络驱动它。`kit/gl.mjs` 导出 `smooth(a, b, x)`（smoothstep）和 `burst(age, rise, fall)`，后者在峰值后等于 `smooth(0, rise, age)` 乘以 `exp(−(age − rise)/fall)`，事件前为 0：
 ```js
 import { smooth, burst, settle } from "../../kit/gl.mjs";
 const flash = calm ? 0 : burst(clock - mainAt, 0.08, 0.13);
 ```
-On a standalone page `glScript()` already inlines all three, so use them directly and don't declare your own: a second `const smooth` in the same module script is a SyntaxError.
-- The attack is 40–120 ms, and the smoothstep gives it zero slope at onset. Setting a value to 1 in one frame is a pop.
-- Store the event's start time (`mainAt = clock`) and compute every envelope from its age each frame. Two events that overlap then simply add.
-- Give each event its own flag (`popped`), so a quick restart can't swallow the next one and can't cut off one that is still fading.
-- Under reduced motion every event envelope is 0.
+在独立页面上，`glScript()` 已内联这三者，直接使用即可，不要自己再声明：同一个 module script 里出现第二个 `const smooth` 是 SyntaxError。
+- attack 为 40–120 ms，smoothstep 保证起振点斜率为零。一帧内把值设到 1 就是爆点。
+- 记下事件的起始时间（`mainAt = clock`），每帧按其年龄计算所有包络。两个事件重叠时直接相加即可。
+- 每个事件有自己的标志（`popped`），这样快速重启不会吞掉下一个事件，也不会掐断还在衰减中的那个。
+- 减少动效时，所有事件包络为 0。
 
-## Critically damped settle
-For a value that should arrive without overshoot (a hue, a brightness, a lamp, a reach, a frequency), use the kit's `settle(state, target, dt, seconds, calm)`: a critically damped spring on `state = { x, v }` with time constant `seconds`, `v += (w²·(target − x) − 2w·v)·dt` with `w = 1/seconds`, in four sub-steps. It is smoother than exponential follow, because velocity is continuous too. It snaps to the target once error and velocity are both below 1e-4, jumps there under `calm`, and returns true while still moving, so it can keep the loop alive:
+## 临界阻尼 settle
+对于应该无过冲到位的值（色相、亮度、灯、伸出量、频率），用工具包的 `settle(state, target, dt, seconds, calm)`：作用在 `state = { x, v }` 上的临界阻尼弹簧，时间常数为 `seconds`，`v += (w²·(target − x) − 2w·v)·dt`，其中 `w = 1/seconds`，分四个子步进。它比指数跟随更平滑，因为速度也连续。误差和速度都低于 1e-4 时直接吸附到目标，`calm` 时直接跳过去，仍在运动时返回 true，因此能维持循环：
 ```js
 const moving = settle(freq, state.tf, dt, 0.625, calm);
 ```
-The ripple tank runs its frequency (0.625 s) and dipper spacing (0.4 s) through `settle`, so a key press or a pointer move never jumps the wavelength.
-- **Separate what a phase changes.** When one physical quantity (say chamber pressure) drives colour, shape and brightness, a fast spring on that quantity makes all three jump at once. Give colour its own slower `settle` (0.3–1 s), and compute brightness so it moves one way through the change.
-- **A fade-out only gets darker.** When a stop begins, freeze the brightness at its current level and scale it only by quantities that fall.
-- **Changing a spring changes its neighbours.** Damping one spring critically slows every phase that relied on its old overshoot, so recheck all of them.
+涟漪水槽把频率（0.625 s）和拨水片间距（0.4 s）都走 `settle`，因此按键或指针移动绝不会让波长跳变。
+- **把一个相位改变的东西分开。** 当一个物理量（比如燃烧室压力）同时驱动颜色、形状和亮度，对它加快速弹簧会让三者一起跳。给颜色单独一个更慢的 `settle`（0.3–1 s），亮度则算成在变化过程中单向移动。
+- **淡出只会变暗。** 停机开始时，把亮度冻结在当前值，只用递减的量去缩放它。
+- **改一个弹簧会牵连邻居。** 把一个弹簧调成临界阻尼，会让所有依赖它旧过冲的相位变慢，所以要逐一复查。
 
-## Exploded views
-Taking a machine apart on hover is a strong way to show its parts (`examples/raptor-engine/`):
-- **Build every piece at its assembled position**, tagged with an assembly name, and give each assembly a world move vector (`PIECES.nozzle.move = [0, 0, -120]`). Moves follow the real assembly: the nozzle drops furthest, side units slide out radially (`out(deg, r, z)`), and the stand doesn't move.
-- **One spring per assembly**, with value 0 for assembled and 1 for apart. The Raptor uses stiffness 64 and drag 14.2, just under critical, so the parts settle with a hint of weight, and sub-steps 4 times per frame.
-- **Stagger the springs.** Opening, each assembly's target changes 35 ms after the previous one, in an order that lets nothing pass through anything (the Raptor: `nozzle, downcomer, controller, plumbing, lox, ftp, hotgas, chamber, orpb, otp, gimbal, stand`, see "Order the stagger" below). Closing uses the reverse order, so the machine folds back together from the inside out. Keep pending targets as `{ value, at }` and apply them when `clock >= at`.
-- **On a reversal, reschedule only what changes.** When the reader reverses mid-way (a quick hover, Space, a tap), cancel the pending target of every assembly that hasn't left yet and stagger only the ones whose target changes, by their index in that shorter list. The last one out is then the first one back, at once. Rescheduling the whole list left the early assemblies flying out toward apart for 0.3 s while later ones sat at home, and the explode only worked because the next assembly moved out of the way 35 ms later: a reversal in that window drove the hot-gas duct into a methane pump that hadn't left. With this rule, shares along the stagger stay in order in every frame (earlier assemblies always lead), which is what the prefix rule below relies on.
-- **Move with transforms.** Each item's screen offset is its move vector, projected and multiplied by the spring value: `translate(tx ty)`. Remove the attribute at 0, so an assembled figure is exactly the static art.
-- **Keep the lines landing.** Parts that join two assemblies (an actuator between the frame and a pump lug, or a cable between a box and a plug) belong to the assembly they physically stay with, and they still end on something when apart. Cables get terminal dots at both ends.
-- **Selection.** Hover, the keyboard arrows and a parts list all select one assembly. The selected parts become the one `lit` accent: CSS on `.it[data-on]` moves `hi` to `lit` and `mid` to `hi`, and switches tops and sides to the lit fills. Every other part steps down one tone (`hi` to `mid`, `mid` to `lo`) through CSS on `[data-focus]`, and the readout says what the selected part does.
+## 分解视图
+悬停时把机器拆开，是展示其部件的有力手段（`examples/raptor-engine/`）：
+- **每个零件都建在装配位置上**，打上总成名标签，并给每个总成一个世界坐标移动向量（`PIECES.nozzle.move = [0, 0, -120]`）。移动遵循真实装配关系：喷管下移最远，侧挂单元沿径向滑出（`out(deg, r, z)`），支架不动。
+- **每个总成一个弹簧**，装配态为 0、拆开态为 1。Raptor 用刚度 64、阻尼 14.2，略低于临界值，部件到位时带一点重量感，每帧子步进 4 次。
+- **给弹簧错峰。** 打开时，每个总成的目标值在前一个之后 35 ms 变化，顺序要保证任何东西都不会穿过任何东西（Raptor：`nozzle, downcomer, controller, plumbing, lox, ftp, hotgas, chamber, orpb, otp, gimbal, stand`，见下文"排定错峰顺序"）。关闭按相反顺序，机器从内向外折回。待处理目标存成 `{ value, at }`，`clock >= at` 时应用。
+- **反向时只重排真正变化的。** 读者中途反向（快速悬停、Space、轻点）时，取消尚未离开的总成的待处理目标，只对目标值有变化的总成按其在更短列表中的序号错峰。这样最后出去的就是第一个回来的，立即返回。整表重排会让先出的总成朝拆开方向飞 0.3 s 而后出的还坐在原位，爆炸图之所以没出事，只是因为 35 ms 后下一个总成让开了路：在这个窗口内反向，会让燃气导管撞进尚未离开的甲烷泵。用了这条规则，错峰序列在各帧内保持有序（先出的总成永远领先），这正是下文前缀规则所依赖的。
+- **用 transform 移动。** 每个元素的屏幕偏移是它的移动向量经投影后乘以弹簧值：`translate(tx ty)`。值为 0 时移除该属性，装配态图形就与静态图稿完全一致。
+- **让连线始终有落点。** 连接两个总成的部件（机架与泵耳之间的作动器、盒子与插头之间的缆线）归属它们物理上贴着的那个总成，拆开时仍要落在某个东西上。缆线两端加端点圆点。
+- **选择。** 悬停、键盘方向键和零件列表都能选中一个总成。被选中的部件成为唯一的 `lit` 高亮：`.it[data-on]` 上的 CSS 把 `hi` 换成 `lit`、`mid` 换成 `hi`，并把顶面和侧面切到 lit 填色。其余部件经 `[data-focus]` 的 CSS 各降一档（`hi` 降 `mid`，`mid` 降 `lo`），读数说明被选部件的功能。
 
-## Depth re-sorting of moving parts
-Parts that move toward or away from the viewer change painter's order as they move. When they do, sort every frame:
-- Give every item a static key `k = dot3(ref, viewOf(P)) + bias`, where `ref` is its centre and `bias` settles ties between touching parts. Also give it a lift: `lift = dot3(move, viewOf(P))`.
-- Each frame, its key is `k + lift × spring`. Sort the indices by that key, and **re-append the DOM nodes only when the order actually changed** (one `DocumentFragment`). Most frames change nothing.
-- Store the key and the move vector on the element (`data-k`, `data-m`), so the live script needs no geometry.
-- Tubes are sorted per piece (`tubePieces` → `piece.mid`), so a pipe can pass in front of one part and behind another.
-- **Settle the static keys from the motion, not just the rest poses.** Each item's key is `k + lift × spring`, but with staggered springs every assembly has its own share in any frame, so two items that are ordered right assembled and apart can still be drawn the wrong way round in between: in the first Raptor a pressurisation line hid behind an actuator column it was in front of for 40% of every explode. The Raptor measures true depth for every overlapping pair at 0, 0.1 … 1, at every fourth frame of its own springs replayed with the live stagger until they settle, opening, closing and reversed either side of every stagger boundary, and in the prefix states (`A.explodeStates(STAGGER, SPRING).depth`, which is `[...A.uniformStates(10), ...A.springStates(STAGGER, { ...SPRING, stride: 4, reversals: A.reversalsOf(STAGGER, SPRING.stagger) }), ...A.prefixStates(STAGGER)]`, 1,119 states, and the default of `A.settle(R, P)` for a recorder made with `{ order: STAGGER, spring: SPRING }`), and `orderKeys` solves all of them at once (each rule uses that frame's shares). Opening and closing alone left wrong pairs in the frames a quick hover makes: a purge flange that should sit in front of the chamber band vanished behind it on a reversal at 0.20 s. The audit fails on any wrong pair at rest and in any replayed frame; only the uniform states, which nobody sees, may hold an interlock.
-- **One source for the springs.** Keep the stagger order and the spring constants (`SPRING = { stagger, stiffness, damping, substeps }`) in the build and pass them to the page in its data, so the audit replays exactly what the viewer sees.
-- **Move a part with what it is mounted on (`ride`).** A sensor bolted to the chamber highlights with the plumbing but rides the chamber's spring. Each item records `ride` (the assembly whose spring moves it, found from its move vector) next to `piece` (the assembly it highlights with), the page reads `data-ride`, and `place()` uses `piece[node.ride].x` for both the translate and the sort. An item that borrows another assembly's vector but keeps its own spring slides along its mount and sinks into it mid-flight.
-- **The prefix rule.** Every assembly's path must be clear of every later-leaving assembly parked at home, with the earlier ones out: that is the frame a reversal at a stagger boundary freezes. `A.prefixStates(STAGGER)` poses exactly those (the first `k − 1` out, the `k`-th at 0.25 … 1, the rest home) and the audit checks them with the replayed frames. On the Raptor it moved the hot-gas manifold after the methane pump it bolts to (its vector points into the pump), and the controller before the plumbing (the oxygen-to-preburner line is enclosed by the controller's sense lines, so it can only leave after them).
-- **Order the stagger so nothing has to pass through.** The springs overlap: with 35 ms between starts and about a second to settle, every assembly is moving at once, and relative motion is a blend of every vector. The first Raptor explode passed 66 pairs through each other in mid-flight. The rules that took it to zero, checked every frame and on reversals by the audit:
-  - **Whoever is outside leaves first.** On each side, the part that everything else is tucked behind or under moves first: the Raptor's nozzle drops before anything (everything sits on it), and the downcomer, which runs outside every sense line and harness that reaches the methane pump, goes second. Closing reverses it, so the outer part is also the last one home.
-  - **When a part's explode vector points into a face of another assembly, that assembly comes earlier in the order.** The downcomer drops 84 onto the nozzle's port tee; the nozzle drops 120 and leaves 35 ms earlier, so the port is always below the flange, opening and closing.
-  - **Point every vector away from every face the part touches while the other side is still in place**, not only the two it bolts to: a line threaded between the chamber and the pump must move in the sector both mount normals allow (the Raptor's jacket lines go to −120° with no drop, sliding off both pads), a cable wrapped round a core part may only move in the sector that is outward for its whole wrap (a 90° wrap allows 90°; a wrap over 180° allows nothing, so shorten it or end it on the near side), and a line that would sweep down over a part bolted below it must not drop.
-  - **Things threaded through each other share a spring.** Sense lines that rise through the harness ring into a block, and the harness under that block, cannot have separate springs: with 35 ms between them they shear past each other. The Raptor's sense lines and block ride the controller (`BLOCK_MOVE = PIECES.controller.move`, so `ride` resolves to `controller`) while still highlighting as plumbing.
-  - **Give each line that is mounted on one part only the move of that part.**
-  - **Check the paths a viewer can make**, not only the two from rest: a quick hover reverses the springs halfway (`reversals`), and an assembly that is late on the way back can sweep through a cable that is already home. Reverse at every stagger boundary (`A.reversalsOf`), not at a few round times: the bad windows are about 15 ms wide, and 0.15, 0.3 and 0.5 s missed all of them. Feed those frames to the depth states as well as to the clearance check, and test solids against solids too (`A.solidClearances`): a flange tucked under an overhang on its host met the host's spring tail on the way home, 0.67 deep, with every tube check at zero.
+## 运动部件的深度重排
+朝向或远离观看者移动的部件，会随移动改变画家算法的绘制顺序。出现这种情况时，每帧都排序：
+- 给每个元素一个静态键 `k = dot3(ref, viewOf(P)) + bias`，`ref` 是它的中心，`bias` 用于平息相触部件之间的并列。再给它一个抬升量：`lift = dot3(move, viewOf(P))`。
+- 每帧，它的键是 `k + lift × spring`。按该键对索引排序，且**只在顺序真的变了时才重新挂载 DOM 节点**（用一个 `DocumentFragment`）。大多数帧什么都不会变。
+- 把键和移动向量存在元素上（`data-k`、`data-m`），这样实时脚本不需要几何信息。
+- 管子按段排序（`tubePieces` → `piece.mid`），这样管道可以在一个部件前经过、在另一个部件后经过。
+- **静态键要依据运动来定，不能只看静止姿态。** 每个元素的键是 `k + lift × spring`，但弹簧错峰后，任何一帧里每个总成的份额都不同，所以装配态和拆开态顺序都对的两件东西，中间过程仍可能画反：初版 Raptor 里，一条增压管线在每个爆炸过程中有 40% 的时间躲在一根它本应在其前的作动器立柱后面。Raptor 对每个重叠对在 0、0.1 … 1 各点实测真实深度，采样点覆盖它自己的弹簧以实时错峰重放直到收敛的每第四帧、打开、关闭以及在每条错峰边界两侧的反向，以及前缀状态（`A.explodeStates(STAGGER, SPRING).depth`，即 `[...A.uniformStates(10), ...A.springStates(STAGGER, { ...SPRING, stride: 4, reversals: A.reversalsOf(STAGGER, SPRING.stagger) }), ...A.prefixStates(STAGGER)]`，共 1,119 个状态，也是用 `{ order: STAGGER, spring: SPRING }` 创建的 recorder 的 `A.settle(R, P)` 默认值），`orderKeys` 一次性解出全部（每条规则都用那一帧的份额）。只测打开和关闭，快速悬停产生的帧里仍会留下错对：一个应位于燃烧室环带之前的吹除法兰，在 0.20 s 处的一次反向中消失在它后面。静态以及每个重放帧中任何错对都会让审计失败；只有无人可见的 uniform 状态里才允许保留倒序对。
+- **弹簧只有一个来源。** 错峰顺序和弹簧常数（`SPRING = { stagger, stiffness, damping, substeps }`）保存在构建里，并经数据传给页面，审计重放的才是观看者看到的同一份。
+- **部件跟着它安装其上的东西动（`ride`）。** 装在燃烧室上的传感器以管路高亮，却跟燃烧室的弹簧走。每个元素在 `piece`（它跟随高亮的总成）旁边记录 `ride`（其移动向量对应的、驱动它弹簧的总成），页面读取 `data-ride`，`place()` 对平移和排序都用 `piece[node.ride].x`。借了别的总成的向量却保留自己弹簧的元素，会沿其安装座滑移并在半途陷进去。
+- **前缀规则。** 在先出的已经离开、后出的还停在原位的帧里，每个总成的路径都必须避开每一个比它晚离开、仍停在原位的总成：这正是错峰边界处反向冻结的那一帧。`A.prefixStates(STAGGER)` 摆出的正是这些姿态（前 `k − 1` 个已出，第 `k` 个在 0.25 … 1，其余在原位），审计把它们与重放帧一起检查。在 Raptor 上，它把燃气歧管排到其所栓接的甲烷泵之后（其向量指向泵内），把控制器排到管路之前（氧到预燃室的管路被控制器的感测线包住，只能等它们之后离开）。
+- **排定错峰顺序，让任何东西都不必穿过。** 弹簧是重叠的：起始间隔 35 ms、收敛耗时约一秒，所有总成同时都在动，相对运动是所有向量的混合。初版 Raptor 爆炸时 66 对零件在半途互相穿过。审计逐帧并在反向时检查、把它们归零的规则如下：
+  - **在外者先出。** 每一侧，其他东西都收纳在其后或其下的部件先动：Raptor 的喷管最先下移（一切都装在它上面），而下行管（downcomer）走在通往甲烷泵的每条感测线和线束之外，第二个走。关闭时反过来，外侧部件也是最后回家的。
+  - **当一个部件的爆炸向量指向另一个总成的某个面时，那个总成排在更前。** 下行管下落 84、落在喷管的端口三通上；喷管下落 120 且早 35 ms 出发，于是无论打开还是关闭，端口始终在法兰之下。
+  - **在另一侧还在原位时，把每个向量指离该部件接触到的每一个面**，而不只是它栓接的那两个：穿行于燃烧室与泵之间的管线，必须沿两个安装面法线都允许的扇区移动（Raptor 的外套管线走 −120°、不下落，从两个垫板侧面滑出）；绕核心部件一圈的缆线，只能在其整段包覆都朝外的扇区内移动（包 90° 可走 90°；包超过 180° 则无处可走，只能缩短或让其在近侧终止）；会向下扫过其下方所栓部件的管线，不得下落。
+  - **互相穿绕的东西共用一个弹簧。** 沿线束环上升进入接线块的感测线，与该块下方的线束，不能各用各的弹簧：错开 35 ms 它们就会互相剪切。Raptor 的感测线和接线块跟随控制器（`BLOCK_MOVE = PIECES.controller.move`，所以 `ride` 解析为 `controller`），高亮仍按管路。
+  - **只安装在一个部件上的线，只取该部件的移动。**
+  - **检查观看者能走出的每条路径**，而不只是从静止出发的那两条：快速悬停会让弹簧半途反向（`reversals`），回程迟的总成可能扫过已经到家的缆线。要在每条错峰边界处反向（`A.reversalsOf`），而不是挑几个整数时刻：坏窗口宽约 15 ms，0.15、0.3、0.5 s 一个都没碰到。这些帧既要喂给深度状态，也要喂给间隙检查，实体还要对实体测（`A.solidClearances`）：一个缩进宿主悬突下方的法兰，在回家路上撞上宿主弹簧的尾部，深度 0.67，而所有管路检查都是零。
 
-## Turning by hand
-For a 3D figure (`references/3d.md`):
-- **Drag.** `controller.angleAt(clientX, clientY, zFace, "dial")` is the pointer's angle on the face's plane, unwrapped across turns. On pointer down, store it and the current target. On move, set target = start + Δ, and capture the pointer once the move passes about 1.5°. The group follows with exponential follow (τ = 0.12 s). The stage keeps `touch-action: pan-y`.
-- **Keys.** Arrow keys step by one division, Shift steps by ten, Home returns to the index.
-- **Coupled groups.** Drive them from one value through `follow(values)` (a wheel at a quarter of the dial, a finger chain from one `lift`), so a tool, a drag and the tour all agree.
-- **Gestures and clips are pure functions of time** (`tapAt(t)`, `breakAt(t)`): the build samples them, the audit walks them frame by frame, and the page can play them backwards to reset with no jump.
-- **Hook takeover.** Any `window.__isoTurn` call runs `onHold`: stop the tour, and keep values a tool set until the reader acts again.
-- **Half rate.** A dense figure keeps an average of `controller.set` time and renders on alternate frames above 14 ms, every frame below 9 ms, with time-based motion unchanged.
-- Reduced motion gets one still frame. Offscreen, the loop stops (IntersectionObserver).
+## 手动转动
+对 3D 图形（`references/3d.md`）：
+- **拖拽。** `controller.angleAt(clientX, clientY, zFace, "dial")` 是指针在该面平面上的角度，跨圈不回卷。pointer down 时记下它和当前目标值。move 时设 target = start + Δ，移动超过约 1.5° 后捕获指针。组用指数跟随（τ = 0.12 s）。舞台保持 `touch-action: pan-y`。
+- **按键。** 方向键步进一格，Shift 一次十格，Home 回到基准位。
+- **联动组。** 从一个值经 `follow(values)` 驱动（表盘四分之一处的轮子、由单个 `lift` 带出的指链），工具、拖拽和导览才会一致。
+- **手势与剪辑是时间的纯函数**（`tapAt(t)`、`breakAt(t)`）：构建对它们采样，审计逐帧走查，页面可以倒放它们来实现无跳变的重置。
+- **钩子接管。** 任何 `window.__isoTurn` 调用都会触发 `onHold`：停掉导览，并保留工具设定的值，直到读者再次操作。
+- **半帧率。** 稠密图形维持 `controller.set` 的平均耗时，14 ms 以上隔帧渲染，9 ms 以下逐帧渲染，基于时间的运动不变。
+- 减少动效时只给一帧静止画面。离开视口时循环停止（IntersectionObserver）。
 
-## Arming
-If an action needs the machine in a certain state (assembled before firing, door closed before spinning), arm first:
-1. Set the targets that bring it into that state (`setApart(false)`, `select(null)`).
-2. Mark it armed: the button shows `data-state="armed"` and the readout says `closing up · arming`.
-3. Start the action's clock only when every spring has arrived and nothing is pending.
+## 待发
+如果一个动作需要机器处于特定状态（点火前装配到位、旋转前舱门关闭），先进入待发：
+1. 设定让它进入该状态的目标值（`setApart(false)`、`select(null)`）。
+2. 标记为待发：按钮显示 `data-state="armed"`，读数显示 `closing up · arming`。
+3. 只有每个弹簧都到位、没有待办时，才启动该动作的时钟。
 
-Never run the action on a half-exploded machine, and never snap the parts home to save time.
+绝不要在半拆开的机器上运行动作，也绝不要为省时间把零件直接吸附归位。
 
-## Taking over from the tour
-When the user acts during the idle tour, stop the tour and leave the state where it is. If your take-over helper resets something (for example, it forces the power on), and the user's action is itself a toggle of that thing, the two cancel out in the same frame and replay an animation. Pass the helper a flag (`takeOver(switching)`), and test every toggle in every phase of the tour, not only the default one.
+## 从导览手中接管
+用户在空闲导览中操作时，停掉导览，状态留在原地。如果你的接管辅助函数会重置某个东西（比如强制开机），而用户的操作本身就是对这个东西的切换，两者会在同一帧里互相抵消并重放一段动画。给辅助函数传一个标志（`takeOver(switching)`），并在导览的每个阶段测试每个切换开关，而不只测默认阶段。
 
-A step key pressed during the tour must step from the value the reader sees, not from the tour's target, which may be far ahead. The ripple tank's keys start from `freq.x` and `gap.x` while touring (`state.tf` and `state.td` otherwise), and `steer()` zeroes both springs' velocity when it takes over, so the value only moves in the key's direction.
+导览期间按下的步进键必须从读者看到的值出发，而不是从可能遥遥领先于前的导览目标值出发。涟漪水槽的按键在导览中从 `freq.x` 和 `gap.x` 起步（其余情况用 `state.tf` 和 `state.td`），`steer()` 接管时把两个弹簧的速度清零，值就只会朝按键的方向移动。
 
-## Announcing phases
-For a machine with phases, add a visually hidden `aria-live="polite"` element and write only phase changes to it: `arming`, `chill-down, venting`, `preburners lit`, `main stage`, `shutdown`, `cold`. Never write per-frame numbers to it. For a continuous control, wait until the input has been quiet for about 700 ms before you announce (the ripple tank's `announce`). Leave the live region empty at load and fill it with the current state on `focus`, so a screen reader hears the state when it arrives rather than a stale line. A button whose label changes ("Ignite" to "Shut down") doesn't also need `aria-pressed`.
+## 播报阶段
+有阶段的机器，加一个视觉隐藏的 `aria-live="polite"` 元素，只把阶段变化写进去：`arming`、`chill-down, venting`、`preburners lit`、`main stage`、`shutdown`、`cold`。绝不要往里写逐帧数字。连续控制要等输入安静约 700 ms 后再播报（涟漪水槽的 `announce`）。加载时让 live region 为空，在 `focus` 时填入当前状态，屏幕阅读器听到的是它到达时的状态，而不是一行过期文本。标签会变化的按钮（"Ignite" 换成 "Shut down"）不需要再加 `aria-pressed`。
 
-## CSS motion
-- `.iso-line[data-flow]` animates dashes, for things travelling along a path.
-- `.iso-dots circle[data-pulse]` blinks a dot grid slowly, for an "active" surface.
-- For hover lifts, wrap a group with `transition: transform 700ms var(--anatomy-ease)` and translate it up on hover.
+## CSS 动效
+- `.iso-line[data-flow]` 让虚线动起来，用于沿路径行进的东西。
+- `.iso-dots circle[data-pulse]` 缓慢闪烁点阵，用于"激活中"的表面。
+- 悬停抬升：给组包一层 `transition: transform 700ms var(--anatomy-ease)`，悬停时向上平移。
 
-All of these switch off under reduced motion in `ISO_CSS`.
+以上全部在 `ISO_CSS` 的减少动效模式下关闭。

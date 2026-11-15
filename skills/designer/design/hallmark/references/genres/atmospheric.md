@@ -1,24 +1,28 @@
-# Genre: atmospheric
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/genres/atmospheric.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The AI-creative and after-dark product page: generative music, video, image, voice, model playgrounds, anything the prompt calls moody, cinematic or nocturnal. A canvas first, then a tool. The deal leans toward this genre's themes, light-paper exceptions included.
+# 流派：atmospheric
 
-## Voice
+AI 创作与入夜之后的产品页：生成式音乐、视频、图像、语音、模型游乐场，以及提示词形容为 moody、cinematic 或 nocturnal 的一切。先是画布，然后才是工具。发牌偏向这个流派的主题，浅纸例外也在内。
 
-- **Accent:** one hue, used in the canvas treatment, on focus rings and on small tags; never on display text unless the theme's type names an accented word (Lumen).
-- **Layout:** a centred hero is the normal answer when the type is the visual (a Poster or Banner posture); with a visual, it stands beside the text (44c). The canvas is the design and the type sits on it.
-- **Motion:** fade only; the atmosphere does the work.
-- **Copy:** direct, slightly poetic, specific: *Make a house song about quitting your job.*
+## 语气
 
-## Allowed here
+- **强调色：** 一个色相，用在画布处理、焦点环和小标签上；展示文字上绝不使用，除非主题的字面点名一个强调词（Lumen）。
+- **版式：** 字体本身是视觉时（Poster 或 Banner 姿态），居中 hero 是正常答案；有视觉素材时，hero 立在文字旁（44c）。画布就是设计，字体坐在画布上。
+- **动效：** 只用淡入淡出；氛围自己干活。
+- **文案：** 直接、略带诗意、具体：*写一首关于辞职的 house 歌曲。*
 
-At most two fixed radial blooms on the body, each 20 to 30% of the canvas in size, never animated (gate 29 is loosened this far and no further); the nav pill on a backdrop blur over the canvas, the one glass licence; a centred hero (gate 6b loosened); pill controls with an accent fill; elevated cards by lightness step (`--color-paper-2`, `-3`) instead of hairlines; display up to 6rem.
+## 此处允许
 
-## Refused here
+正文上最多两个固定的径向光晕，各占画布的 20% 到 30%，绝不加动画（gate 29 就松到这一步，不再多松）；canvas 之上以背景模糊托住的导航胶囊，这是唯一一张玻璃许可证；居中 hero（gate 6b 放开）；以强调色填充的胶囊控件；以明度阶梯（`--color-paper-2`、`-3`）代替发丝线的浮起卡片；展示字号最大 6rem。
 
-A coloured glow shadow, a radial spotlight behind the hero, or a mesh gradient (the bloom is the one licence); light sections sneaking into a dark build; a third hue; glass panels or cards; gradient text.
+## 此处拒绝
 
-## Chrome that fits
+彩色辉光阴影、hero 背后的径向聚光，或网格渐变（光晕是唯一许可证）；浅色小节溜进深色构建；第三个色相；玻璃面板或卡片；渐变文字。
 
-A floating pill on a blur backdrop, an edge-aligned bar, a command palette, a statement footer. Dense link furniture fights the register. Affinities, not assignments.
+## 相配的镶边
 
-Stamp: `genre: atmospheric`.
+模糊底上的悬浮胶囊、贴边对齐的栏、命令面板、一句话页脚。密集的链接家具与这里的语气相抵触。是亲和，不是指派。
+
+印记：`genre: atmospheric`。

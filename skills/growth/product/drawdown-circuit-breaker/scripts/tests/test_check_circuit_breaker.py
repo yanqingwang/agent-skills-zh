@@ -978,12 +978,20 @@ def test_producer_legacy_close_outcome_falls_back_to_drawdown_metrics(tmp_path: 
                 "100",
                 "--actual-date",
                 "2026-07-01",
+                "--shares",
+                "1",
                 "--event-date",
                 "2026-07-01",
             ]
         )
         == 0
     )
+    # Simulate a pre-#703 record: ACTIVE with no recorded position. The CLI
+    # now refuses to open without a quantity, so rewrite the YAML directly.
+    legacy_path = state_dir / f"{thesis_id}.yaml"
+    legacy = yaml.safe_load(legacy_path.read_text(encoding="utf-8"))
+    legacy["position"] = None
+    legacy_path.write_text(yaml.safe_dump(legacy, sort_keys=False), encoding="utf-8")
     assert (
         thesis_store.main(
             [
@@ -1043,12 +1051,20 @@ def test_producer_legacy_invalidated_outcome_falls_back_to_drawdown_metrics(tmp_
                 "100",
                 "--actual-date",
                 "2026-07-01",
+                "--shares",
+                "1",
                 "--event-date",
                 "2026-07-01",
             ]
         )
         == 0
     )
+    # Simulate a pre-#703 record: ACTIVE with no recorded position. The CLI
+    # now refuses to open without a quantity, so rewrite the YAML directly.
+    legacy_path = state_dir / f"{thesis_id}.yaml"
+    legacy = yaml.safe_load(legacy_path.read_text(encoding="utf-8"))
+    legacy["position"] = None
+    legacy_path.write_text(yaml.safe_dump(legacy, sort_keys=False), encoding="utf-8")
     assert (
         thesis_store.main(
             [
@@ -1764,3 +1780,45 @@ def test_overflowing_derived_threshold_fails_without_report(tmp_path: Path):
 
     assert exit_code == 1
     assert not output_dir.exists()
+
+
+def test_missing_calendar_dependency_exits_2_with_hint(tmp_path: Path, monkeypatch, capsys):
+    import sys
+
+    state_dir = tmp_path / "state"
+    write_thesis(
+        state_dir,
+        "th_loss_1",
+        status="CLOSED",
+        pnl_dollars=-5000.0,
+        exit_date="2026-07-02T16:00:00-04:00",
+        history=[
+            {
+                "status": "CLOSED",
+                "at": "2026-07-02T15:00:00-04:00",
+                "reason": "stop",
+                "realized_pnl": -5000.0,
+            }
+        ],
+    )
+    monkeypatch.setitem(sys.modules, "pandas_market_calendars", None)  # import raises
+
+    exit_code = main(
+        [
+            "--state-dir",
+            str(state_dir),
+            "--account-size",
+            "100000",
+            "--as-of",
+            "2026-07-02T16:00:00-04:00",
+            "--output-dir",
+            str(tmp_path / "reports"),
+            "--json-only",
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 2
+    assert "ERROR: pandas-market-calendars library not found" in captured.err
+    assert "requirements.txt" in captured.err
+    assert not (tmp_path / "reports").exists()

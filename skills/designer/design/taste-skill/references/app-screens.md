@@ -1,979 +1,1030 @@
-# App screens
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/taste-skill/references/app-screens.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Dashboards, admin, analytics, settings, inboxes, wallets and builders: the screens people work in.
-Read this file whole before you start one. The page run in `SKILL.md` does not apply to them.
+# 应用界面
 
-A generated dashboard is the average of every dashboard template: a dark or tinted sidebar with a
-coloured pill on the active item, "Welcome back" and a waving hand, four KPI cards each with an icon
-in a tinted circle, a green "+12.5%" and a sparkline, a gradient area chart, a zebra table under
-uppercase headers. Nothing in it is wrong and none of it was decided.
+仪表盘、后台管理、数据分析、设置、收件箱、钱包与构建器：这些是人们在其间工作的界面。
+动手做一个之前，先通读本文件。`SKILL.md` 里针对页面的流程不适用于它们。
 
-This chapter is distilled from a study of 23 real product screens chosen by the owner: 17 products,
-17 light screens and 6 dark, all at desktop width (1440 or 1512px). Each screen was measured from its
-pixels and noted for what works and what fails; the numbers below are those measurements and their
-medians. The products are not named. What separates these screens from the generated kind, in order
-of how much it shows:
+一个生成出来的仪表盘，是所有仪表盘模板的平均值：深色或着色的侧边栏、当前项上有一颗彩色胶囊，
+"欢迎回来"配一只挥动的手，四张 KPI 卡片各带一枚淡色圆底里的图标，绿色的"+12.5%"加一条迷你趋势图，
+渐变面积图，全大写表头之下的斑马纹表格。
+它没有一处是错的，也没有一处是经过决策的。
 
-1. **Colour goes on data, not chrome.** The median screen has about 3% coloured pixels; 17 of 23 stay
-   at 5% or less. 12 have no filled primary button at all.
-2. **KPIs are type, not tiles.** No screen puts an icon in a coloured circle on a KPI, and none draws a
-   sparkline on one.
-3. **Surfaces are flat.** 17 of 23 give their cards no shadow; separation is a 1px line or one tone
-   step.
-4. **There is no hero header.** 9 screens have no heading over 16px; where there is one, its median is
-   24px.
-5. **Charts carry almost no chrome.** A single series has no legend; gridlines are 3-7 faint lines or
-   none.
-6. **Navigation recedes.** The active item is a neutral grey pill or a change of text colour; a
-   coloured left bar appears once.
-7. **Tables are rules and alignment.** No zebra striping, no header bands, numbers right-aligned.
-8. **Data states are honest.** Zeros print as zeros, missing values as a grey dash, and an empty
-   section keeps its frame.
+本章蒸馏自一项对 23 个真实产品界面的研究，样本由仓库所有者挑选：17 个产品，
+17 个浅色界面、6 个深色，全部为桌面宽度（1440 或 1512px）。每个界面都从像素级测量，
+记下什么有效、什么失败；下文的数字就是这些测量值及其中位数。
+产品不具名。把这些界面与生成式产物区分开来的因素，按其显著程度排序：
 
-Taking the template's devices away is half the job, as it is on a page. The other half is substance:
-the product's real data, a screen that answers its one question first, and a grid whose arithmetic
-closes.
+1. **颜色用在数据上，不用在界面装饰上。** 中位数界面的彩色像素约占 3%；23 个里 17 个
+   保持在 5% 以下。12 个根本没有实心主按钮。
+2. **KPI 是文字，不是磁贴。** 没有界面把图标放进彩色圆圈摆在 KPI 上，也没有界面
+   给 KPI 画迷你趋势图。
+3. **表面是平的。** 23 个里 17 个不给卡片阴影；分隔靠 1px 细线或一档色阶。
+4. **没有 hero 式大标题头。** 9 个界面没有超过 16px 的标题；有标题的，中位是 24px。
+5. **图表几乎不带装饰。** 单一系列没有图例；网格线是 3-7 条淡线，或者没有。
+6. **导航向后退。** 当前项是一颗中性灰胶囊，或文字变色；彩色左竖条
+   在 23 个里只出现一次。
+7. **表格靠分隔线与对齐。** 无斑马纹，无表头色带，数字右对齐。
+8. **数据状态诚实。** 零印成零，缺失值印成灰短横，空分区保留自己的外框。
 
-**A warning learned in testing.** In the first blind round, screens built with this chapter were
-clean, quiet and correct, and they lost to richer screens built without it. The judges' reasons were
-the same every time, and each is now a rule below:
+去掉模板那套手法只是工作的一半，对页面也是如此。另一半是实质：
+产品的真实数据、一个先回答自己唯一问题的界面，
+以及一套算得拢的栅格。
 
-- **The first screen was thin.** One large chart of a flat line filled it, and half the blocks the
-  brief asked for started below the fold. On a 1440×900 screen, every block the brief names shows its
-  header and its first rows (§2.2).
-- **The product was missing.** No name, no workspace, no mark: the screen could have belonged to
-  anyone. The shell names the product and the scope (§3.2).
-- **Restraint hid meaning.** A latency rise and a request rise were the same grey. Colour on a change
-  says good or bad, not up or down (§5).
-- **There was nothing to do.** No control for the job the screen exists for. The most frequent job is
-  one click from the first screen (§2.2).
-- **Rows ended ragged** and **a style's move was over-applied** (a tray around every card, an icon
-  rail where people needed labels). Keep the move to where it carries meaning.
+**测试中学到的教训。** 第一轮盲测里，按本章搭出的界面干净、安静、正确，
+却输给了不按本章搭的更"丰满"的界面。
+评审的理由每次都一样，如今每条都成了下文的规则：
 
-Quiet is the starting point, not the goal. A screen that a person would trust shows more of the
-product than a template does: its people, its objects, its numbers and the one thing to do next.
+- **首屏太薄。** 一张画着平线的大图表占满了它，简报要求的一半区块
+  起始于首屏之下。在 1440×900 的屏幕上，简报点名的每个区块都要露出
+  标题和头几行（§2.2）。
+- **产品不见了。** 没有名字、没有工作区、没有标志：这个界面像是随便哪家都可以。
+  外壳要写明产品与范围（§3.2）。
+- **克制掩盖了含义。** 延迟上升和请求上升是同一种灰。
+  变化上的颜色表达的是好与坏，不是升与降（§5）。
+- **无事可做。** 界面为之存在的那个工作没有控件。最高频的工作
+  应该离首屏一次点击（§2.2）。
+- **行的底边参差不齐**，以及**风格的标志性手法被过度套用**（每张卡片都加一圈框，
+  人们需要文字标签的地方却放了图标栏）。手法只用在承载含义的地方。
 
-**Give the product a face.** After four rounds the judges' top complaint was the same on most
-screens: "a well-applied kit, not a product with its own identity" (stock Geist or Inter, a #f8f8f8
-ground, white 12px cards, lime on black). The style's tokens make a screen correct; these make it
-this product's, and choosing them is a step of the run, not a finish (§2.3):
+安静是起点，不是目标。一个让人信任的界面，比模板露出更多产品：
+它的人、它的对象、它的数字，以及接下来要做的那一件事。
 
-- **One face from the sheet, chosen before you build.** Each style lists two or three ways it takes a
-  face from the brief: a ground tinted from the product's world, a figure face with character, the
-  brand's hue on the main data element. Choose one, write it in your notes next to the screen's
-  question, and check that it shows on the first screenshot.
-- **The dealt typeface, really loaded.** A build that fell back to the default face landed on the
-  default look; the inspector now fails it.
-- **The product's mark and name** at the top of the shell, drawn for this product (a simple
-  monogram or symbol in the accent, from its name or its object), never a black square with a letter.
-- **One element only this product has**, built from its own things: an energy home's power flow, a
-  bakery's sell-out strip, a leave planner's cover against the minimum, the pace groups of a running
-  club as a unit chart, the couple as three lanes, a deploy's commit as the hero of the overview. The
-  sheet lists the library's signature elements whose words appear in the brief; otherwise invent one.
-  Name it in your notes next to the screen's question.
-- **The one chart hue on the main data element**: today's line, the booked bars, the current period,
-  the margin that breaks. A screen whose only hue is a delta reads as a kit, and the inspector warns
-  when a screen with charts carries no hue on its data (`no-data-hue`).
-- **Its people and objects as themselves**: each person gets a stable initial and a pale tint of their
-  own hue, with people listed next to each other at least 60 degrees apart. These tints are identity,
-  not data: they stay pale and out of the chart legends. Products show their thumbnails, cover art
-  shows the cover.
-- **Words of the trade** in labels and empty states ("Waiting on the customer", "Off sick", "Due
-  on the 28th"), never the generic noun of a template ("Items", "Records", "Status").
+**给产品一张面孔。** 四轮之后，评审对大多数界面的首要抱怨都一样：
+"一套用得很好的组件包，而不是一个有自己身份的产品"
+（原样 Geist 或 Inter、#f8f8f8 底色、白色 12px 卡片、黑底柠檬绿）。
+风格的 tokens 让界面正确；
+下面这些让它成为这个产品的，而且选定它们是流程中的一步，不是收尾（§2.3）：
 
-**Calendars and timelines** (house rule, from testing; the study has none). People down the left on a
-fixed 160-220px column, grouped under a team subheader rather than repeating the team on every row;
-days across with faint 1px day lines, weekends one tone step darker, and today marked by a 1px line
-in the one data hue with its date in ink. Bars are 20-24px tall at radius 4. One-line names sit on a
-32px pitch; a name with a subline (team, office) needs 40-44px, or the subline touches the next name.
-**Every kind of booking has its own mark**, so sickness reads apart from a holiday at a glance:
-holiday a pale fill, off sick a 1px diagonal hatch, long leave a darker grey step, working away an
-outline, a pending request a dashed outline. A style with a hue budget may add a 3px left edge in the
-hue for the kind the screen is about. Full colour is only for what needs a decision (a request that
-breaks cover). A label sits inside its bar; a bar too short for it shows the kind's code inside and
-the full label in its tooltip, or the label after the bar's end, never over the days before it.
-Holiday markers name their office in a multi-office product. Every swatch in the legend is the mark
-itself, scaled down, and lists only kinds on screen: `Charts.timeline(el, rows, kinds)` draws the bars
-and returns that legend from the same kinds map.
+- **从样式单选一张字体面貌，动手前选好。** 每种风格列出两三种从简报取得面貌的方式：
+  从产品所处世界取色的底色、有个性的数字字体、用在主数据元素上的品牌色相。
+  选定一个，写进笔记、紧挨着界面的核心问题，并确认它出现在第一张截图上。
+- **抽到的字体要真正加载。** 有一次构建回退到默认字体，成品就是默认的样子；
+  检查器现在会判它失败。
+- **产品的标志与名字**放在外壳顶部，为这个产品专门绘制
+  （用主色画一枚简单的字母组合标或符号，取自名字或经营对象），
+  绝不是一个黑方块里放个字母。
+- **一个只有这个产品才有的元素**，用它自己的东西搭出来：能源家庭的电力流向、
+  烘焙店的售罄条、休假规划器相对最低人手的覆盖、跑团配速组的单元图、
+  一对伴侣拆成三条泳道、把部署的 commit 做成总览的主角。
+  样式单会列出库中招牌元素里、其关键词出现在简报中的那些；
+  没有就自己发明一个。写进笔记，挨着界面的核心问题。
+- **唯一的主色相放在主数据元素上**：今天的折线、已预订的条形、当前周期、
+  那条会破的余量线。唯一颜色只出现在变化量上的界面读起来像组件包；
+  有图表的界面若数据上没有色相，检查器会警告（`no-data-hue`）。
+- **人和对象以本来面目出现**：每个人有稳定的首字母和属于自己色相的浅淡底色，
+  相邻摆放的人之间色相至少相差 60 度。这些浅色是身份，不是数据：
+  保持浅淡，不进图表图例。产品显示自己的缩略图，封面内容就显示封面。
+- **行话**用在标签和空状态里（"等客户回话"、"请病假"、"28 号到期"），
+  绝不用模板式的泛泛名词（"条目"、"记录"、"状态"）。
 
-## Contents
+**日历与时间线**（house rule，来自测试；研究里没有）。人排在左侧一条固定 160-220px 的列上，
+按团队子标题分组，而不是每行都重复团队名；日期横排，配淡色的 1px 日线，
+周末深一档色阶，今天用主数据色相的 1px 竖线标出、日期用墨色。
+条高 20-24px、圆角 4。单行名字用 32px 节距；带副行（团队、办公室）的名字需要 40-44px，
+否则副行会碰到下一个名字。**每一类预约都有自己的标记**，
+病假与休假一眼可分：休假用浅淡填充，病假用 1px 斜纹，长假用更深一档的灰，
+外出办公用描边，待审请求用虚线描边。带色相预算的风格可以为界面所关注的那一类
+加一条 3px 主色左缘。全彩只留给需要决策的东西（一处会跌破覆盖线的请求）。
+标签放在自己的条内；条太短放不下时，条内显示该类别的代号、完整标签放进 tooltip，
+或把标签放在条末端之后，绝不压在它之前的日期上。
+多办公室产品里，休假标记写明所属办公室。图例里的每个色样都是标记本身缩小版，
+且只列出屏上出现的类别：`Charts.timeline(el, rows, kinds)` 画出条形
+并从同一张 kinds 映射返回该图例。
 
-1. When this applies
-2. The run for an app screen
-3. The shell
-4. The canvas and the page title
-5. KPIs
-6. Charts
-7. Tables and lists
-8. Forms and settings
-9. Type and colour
-10. Density
-11. Empty, zero, loading and error states
-12. The phone
-13. House rules for app screens
-14. Tells of generated dashboards
+## 目录
 
-## 1. When this applies
+1. 适用范围
+2. 应用界面的流程
+3. 外壳
+4. 画布与页面标题
+5. KPI
+6. 图表
+7. 表格与列表
+8. 表单与设置
+9. 字体与颜色
+10. 密度
+11. 空、零、加载与错误状态
+12. 手机端
+13. 应用界面的 house rules
+14. 生成式仪表盘的辨识特征
 
-An app screen is worked in rather than read. This chapter covers:
+## 1. 适用范围
 
-- dashboards and overviews: a seller's day, a project's health, a publication's growth;
-- admin and back office: members, orders, events, a catalogue;
-- analytics and reports, including a generated report with no app around it;
-- settings and billing;
-- list screens to work through: inboxes, queues, tables with filters;
-- wallets and finance homes;
-- builders and editors: flow, form and page builders, canvases;
-- the detail page of one object: an event, a deployment, a customer.
+应用界面是用来操作的，不是用来读的。本章覆盖：
 
-A product site that shows its interface is a page; the interface fragments on it follow these rules
-for their insides (mark each fragment's root with `data-ui`). When a request holds both, build each
-with its own run and share one palette and one typeface.
+- 仪表盘与总览：销售的一天、项目的健康度、刊物的增长；
+- 后台管理：会员、订单、活动、商品目录；
+- 数据分析与报告，包括没有应用外壳环绕、单独成页的生成式报告；
+- 设置与账单；
+- 要逐条处理的列表界面：收件箱、队列、带筛选的表格；
+- 钱包与财务主页；
+- 构建器与编辑器：流程、表单、页面构建器，画布；
+- 单个对象的详情页：一场活动、一次部署、一个客户。
 
-The study is 23 desktop screens. It has no phone screens, no loading or error states, one settings
-page, no inbox and no dense operations table (the densest screen shows about 120 data points). Where a
-rule below goes past the study, it says **house rule**.
+展示自家界面的产品官网属于页面；页面上的界面片段在内部遵循这些规则
+（给每个片段的根元素标上 `data-ui`）。当一个需求同时包含两者时，
+各自按各自的流程来做，共用一套调色板和一种字体。
 
-## 2. The run for an app screen
+研究样本是 23 个桌面界面。没有手机界面，没有加载或错误状态，只有一页设置，
+没有收件箱，也没有高密度运营表格（最密的一屏约 120 个数据点）。
+下文凡超出研究范围的规则，都会标明 **house rule**。
 
-Do these in order. The first three steps decide whether the screen is any good.
+## 2. 应用界面的流程
 
-### 2.1 Inventory the data and the jobs
+按顺序做。前三步决定这个界面好不好。
 
-The page run inventories the subject's world; an app screen inventories its data. Write in your notes,
-in 8 to 12 lines:
+### 2.1 盘点数据与任务
 
-- **the objects** the screen shows (deployments, invoices, members, events, conversations) and their
-  fields, with units;
-- **realistic magnitudes**: how many objects, a typical amount, the range of a rate, how values move
-  over a day, a month, a year, and for a new account how small they really are;
-- **the people**: who opens this screen, how often (a glance once a day, or an eight-hour session),
-  on what device;
-- **the jobs**: what they do next from here (approve, reply, pay, ship, invite), and which job comes
-  up most;
-- **the product's own things**: its name and mark, the workspace or account it is scoped to, the people
-  in it (two partners, a team of six, the club's members), and the objects people recognise by sight
-  (product photographs in a shop, cover art in a media tool, a map of the route). These are what make
-  a screen belong to this product instead of to a template; plan where each one appears.
+页面流程盘点主题的世界；应用界面盘点自己的数据。在笔记里写 8 到 12 行：
 
-Then write the data itself: a small dataset in a JSON or JS file that the screen renders from, with
-believable names, amounts that add up to their totals, dates in order and a unit on every figure.
-Totals are computed from the rows, never typed in separately. Small numbers stay small: the studied
-screens show new accounts with 1, 6 or 9 of something, drawn honestly at their real size. Write the
-figures that must agree as assertions in the data file (`console.assert(sold - cancelled === rsvps)`,
-the bins sum to the total, the parts to the whole) and read the console: in testing, a ticket table
-that did not reconcile with its own KPI cost a judge's trust in the whole screen. Checks that need
-computed values (allowance after a request, cover per day) go in the script that computes them.
+- **界面上展示的对象**（部署、发票、会员、活动、会话）及其字段，带单位；
+- **真实的数量级**：对象有多少、典型的金额、比率的变化范围，数值在一天、
+  一个月、一年里如何波动，以及新账户的数据实际上有多小；
+- **人**：谁会打开这个界面，多频繁（一天瞄一眼，还是八小时挂着），用什么设备；
+- **任务**：从这里出发接下来做什么（批准、回复、付款、发货、邀请），
+  哪件最常出现；
+- **产品自己的东西**：名字与标志、归属的工作区或账户、里面的人（两个合伙人、
+  六人小队、俱乐部会员），以及人们一眼认得出的对象（商店里的商品照片、
+  媒体工具里的封面图、路线地图）。正是这些让界面属于这个产品而不是模板；
+  为每个东西安排出现的位置。
 
-**Data that tells the truth** (house rules, from testing; judges checked every one of these):
+然后写数据本身：一小份 JSON 或 JS 数据文件，界面从它渲染；名字可信，
+金额能加总到合计，日期按顺序排，每个数字都带单位。合计从行数据算出，
+绝不单独手填。小数字保持小：研究样本展示新账户时就是 1、6 或 9 个什么东西，
+如实按真实大小画。必须吻合的数字写成断言放进数据文件
+（`console.assert(sold - cancelled === rsvps)`、各分桶之和等于总数、
+部分加总等于整体），并读控制台：测试中，一张对不上自家 KPI 的票务表格，
+让评审对整个界面失去信任。需要计算值的校验（请假后的余额、每日覆盖人数）
+放进执行计算的那个脚本。
 
-- **A fact shown twice is one variable.** A time window, a total or a state that appears in two cards
-  (the battery full 13:30-16:30 in the KPI label, the shaded span and the battery card) is one value in
-  the data file, and the copy and the chart annotation are both built from it. Two cards that
-  disagree by half an hour cost more trust than a missing card.
-- **Totals and deltas come from the parts as shown.** Sum the rounded pennies the screen displays,
-  never round the unrounded total separately: £21.68 + £8.34 − £3.81 is £26.21, and a screen that
-  says £26.22 is caught. A change is the difference of the two values on screen (£5.28 against
-  £5.22 is +£0.06, not +£0.07).
-- **Every relative figure names its baseline** in the same phrase: "3 h 40 m before close", "45 m
-  earlier than last Sunday", "+5 on the usual Monday". "Early", "up" or a bare "+5" next to another
-  time or figure reads as measured against that one.
-- **One name per time.** Shops close at 15:00 and the tills are cashed up at 15:12; the header and
-  the card use the same words for the same moment, and an error state rewrites the status line.
-- **If a caption has to say which bars are which, encode it in the chart instead**: a marked period in
-  a second tone with its own legend entry, a signed axis, a label on the mark.
+**数据要说真话**（house rules，来自测试；评审逐条核过）：
 
-### 2.2 Name the screen's one question
+- **同一事实出现两次，就是一个变量。** 时间窗口、合计或状态若出现在两张卡片上
+  （KPI 标签里的"电池 13:30-16:30 充满"、图中的阴影区间、电池卡片），
+  在数据文件里就是同一个值，文案与图表标注都从它生成。
+  两张卡片差出半小时，比缺一张卡片更伤信任。
+- **合计与变化量来自界面所显示的各部分。** 把界面显示的已约数相加，
+  绝不对未约的合计单独再约一次：£21.68 + £8.34 − £3.81 是 £26.21，
+  界面写成 £26.22 就会被抓。变化量是屏幕上两个值的差
+  （£5.28 对 £5.22 是 +£0.06，不是 +£0.07）。
+- **每个相对数字都在同一句里写明基准**："距打烊 3 小时 40 分"、
+  "比上周日早 45 分钟"、"比平常的周一多 5 单"。"更早"、"上涨"或
+  孤零零的"+5"挨着另一个时间或数字时，会被读成跟它比。
+- **同一时刻只用一个说法。** 店铺 15:00 打烊，15:12 结账清点；
+  标题和卡片对同一时刻用同一措辞，错误状态改写状态行。
+- **如果图注得解释哪根条是哪根，就把信息编码进图表**：
+  标记的周期用第二色调并配自己的图例项、带正负号的轴、在标记上放标签。
 
-Every screen answers one question first: "Did today's sales come in?", "Which deploy broke?", "Who is
-waiting for a reply?", "How much of this month's plan is left?". Write it in one line. It decides
-three things:
+### 2.2 给界面写下唯一的核心问题
 
-- **what is biggest.** In the study the largest block is always the one that carries the screen's
-  question, whatever form it takes (a chart, a plan, a ring, a list). The same holds for figures:
-  the largest figure on the screen answers the question the title row's sentence answers. In testing,
-  an 88% sun ratio at 32px out-shouted the 24px charging window the title led with;
-- **what comes first** in the reading order;
-- **what is left out.** The studied settings page shows three usage numbers and links to the
-  analytics screen instead of drawing a chart; four screens draw no chart at all because a few
-  numbers say it.
+每个界面先回答一个问题："今天的销售额进来了吗？"、"哪次部署出的事？"、
+"谁在等回复？"、"这个月的计划还剩多少？"。用一行写下它。它决定三件事：
 
-Then name the screen's **one finding**: the fact in today's data that most needs attention ("9 no-shows
-while 8 people waited for a place", "the 23:28 deploy doubled the error rate", "eating out is £36 over").
-Put it where it is read first, as the line under the title or the subline of the headline figure,
-next to the action it drives. In testing, the finding that mattered sat in a 14px caption at the
-bottom of a card and the screen read as flat.
+- **什么最大。** 本研究里最大的区块永远是承载界面核心问题的那个，
+  无论它是什么形态（图表、计划条、圆环、列表）。数字同理：
+  屏幕上最大的数字回答的就是标题行那句话回答的问题。测试中，
+  32px 的 88% 太阳能占比，声量压过了标题想领着的 24px 充电时段；
+- **阅读顺序里什么排第一**；
+- **什么被舍弃。** 研究里的设置页显示三个用量数字，然后链接到数据分析界面，
+  而不是画一张图；四个界面干脆一张图都不画，因为几个数字就说清了。
 
-**Do not rebuild a studied screen.** When the product is of the same kind as a screen in the study (a
-finance home, a deploy overview), its arrangement is the trap: judges recognised the copies at once.
-Take the structure from the product's own things instead: for a couple's budget, Mia, Joint and Tom
-as three columns running through accounts, plan and bills; for a running club, the pace groups.
+然后给界面写下**唯一的关键发现**：今天的数据里最需要注意的那个事实
+（"9 人爽约，同时 8 人在等位"、"23:28 的部署让错误率翻倍"、"外食超支 £36"）。
+放在最先被读到的地方：标题下那一行，或头条数字的副行，紧挨着它驱动的那步操作。
+测试中，最重要的发现躺在卡片底部一条 14px 的图注里，
+整个界面读起来平平无奇。
 
-Then list the screen's blocks as the answers to its next questions, one line each, the way the page
-run lists claims. A block with no question is deleted. This is how you avoid the stock order of KPI
-row, big chart, two small charts, table.
+**不要复刻研究里的界面。** 当产品与研究样本同类（财务主页、部署总览），
+照搬布局就是陷阱：评审一眼认出抄袭。结构要从产品自己的东西里取：
+情侣预算，就让 Mia、Joint（联名）与 Tom 三列贯穿账户、计划与账单；
+跑团，就用配速组。
 
-Three more lines, each tested:
+再把界面的区块列出来，每个区块回答一个后续问题，一行一条，
+就像页面流程列出主张那样。回答不出问题的区块直接删掉。
+这样才能避开"KPI 行、大图、两张小图、表格"的套路顺序。
 
-- **Everything the brief names is on the first screen.** At 1440×900, every block the brief asks for
-  shows its header and its first rows or its figure. Size the headline block to the question (about
-  200-360px tall), cap long lists at 4-6 rows with "View all", and put time-sensitive blocks (bills
-  due, SLAs running out, a failed deploy) before long tables. A chart whose line is flat for most of
-  the window does not get the full width: give it two-thirds and put the next answer beside it.
-- **The most frequent job is one click away.** Name it ("pack the orders due today", "reply to the
-  oldest breach", "redeploy the failed build") and put its control where the answer shows: a primary
-  button in the title row, an action on the row that needs it, a "View logs" on the failed item. A
-  screen with no control for its main job reads as a report, not as a tool.
-- **Show the evidence beside the answer.** A judge trusts "Error rate 0.28%" more with its spike
-  annotated ("peaked at 3.9% after the 23:28 deploy, reverted") than with the number alone. One line
-  of explanation on the event that matters is worth more than a second chart.
+再加三条，每条都经过测试：
 
-### 2.3 Choose a style
+- **简报点到的每样东西都在首屏上。** 在 1440×900 下，简报要求的每个区块
+  都要露出标题和头几行，或露出它的数字。头条区块的大小跟着问题走
+  （高约 200-360px），长列表截到 4-6 行配"查看全部"，时间敏感的区块
+  （到期账单、快到期的 SLA、失败的部署）排在长表格前面。
+  一条线在整个窗口大半时间里都是平的图表，不配拿全宽：
+  给它三分之二，把下一个答案放在旁边。
+- **最高频的任务离一次点击。** 给它命名（"打包今天到期订单"、
+  "回复最早的超时"、"重新部署失败的构建"），把控件放在答案显示的位置：
+  标题行里的主按钮、需要它的那一行上的操作、失败条目上的"查看日志"。
+  界面对自己的主要工作没有控件，读起来就是一份报告，不是工具。
+- **答案旁边摆证据。** 相比孤零零一个数，评审更信任带尖峰标注的
+  "错误率 0.28%"（"23:28 部署后冲到 3.9%，随后回落"）。
+  给关键事件一行解释，胜过再加第二张图。
+
+### 2.3 选一种风格
 
 ```bash
 node <skill>/scripts/draw.mjs --app --kind <kind> --brief "<one line about the product>" \
   --screens <screens> [--theme light|dark] [--keep palette,type] --options 3
 ```
 
-This deals up to three styles from `library/app.json` (fewer when only two suit the kind and the
-theme). `draw.mjs --app --list kinds` (or `styles`, `screens` or `signatures`) prints the choices; the
-screens are `overview`, `analytics`, `list`, `detail`, `settings`, `wallet`,
-`builder`, `inbox`, `home` and `report`. The library holds seven styles, each distilled from the
-studied screens that share its move:
+这会从 `library/app.json` 里最多抽出三种风格
+（若只有两种同时适合该类型与主题，就少一些）。
+`draw.mjs --app --list kinds`（或 `styles`、`screens`、`signatures`）会打印可选项；
+界面类型有 `overview`、`analytics`、`list`、`detail`、`settings`、`wallet`、
+`builder`、`inbox`、`home` 和 `report`。库里共七种风格，
+每种都蒸馏自与其标志性手法相同的研究界面：
 
-| Style | Theme | For | The move |
+| 风格 | 主题 | 适用 | 标志性手法 |
 | --- | --- | --- | --- |
-| `achromatic-ledger` | light | money homes, reports, settings with usage | No colour in the chrome; charts in ink; one small signal where a figure changed |
-| `framed-sheet` | light | B2B analytics, developer platforms, builders | One tinted L-frame; the page on a white sheet inset 8px, no shadow |
-| `accent-ladder` | light | creator and small-business admin with plans | The full hue on small marks only; its pale tints on every area |
-| `editorial-greeting` | light | team and personal homes | The greeting as the h1 in a centred 12-column column; every figure at regular weight |
-| `pastel-consumer` | light | wallets, budgeting | Pale same-hue tiles under one large radius; quiet money polarity |
-| `true-black-flat` | dark | community, events, media | Elevation by lightness alone; colour only on data |
-| `data-terminal` | dark | markets, monitoring | Every selection is the same 1px accent line; signs, not colour, on numbers |
+| `achromatic-ledger` | light | 资金主页、报告、带用量的设置 | 装饰上无彩色；图表用墨色；数字变化处有一处小信号 |
+| `framed-sheet` | light | B2B 数据分析、开发者平台、构建器 | 一圈着色 L 形框；页面放在内缩 8px 的白纸上，无阴影 |
+| `accent-ladder` | light | 带套餐的创作者与小微商家后台 | 全饱和色相只出现在小标记上；各处大面积用它的浅淡色 |
+| `editorial-greeting` | light | 团队与个人主页 | 问候语作 h1，居中 12 栏；所有数字用常规字重 |
+| `pastel-consumer` | light | 钱包、记账 | 同色相浅色磁贴统一大圆角；金额正负表达克制 |
+| `true-black-flat` | dark | 社区、活动、媒体 | 层级只靠明度；颜色只用在数据上 |
+| `data-terminal` | dark | 市场、监控 | 所有选中态都是同一条 1px 主色线；数字靠正负号，不靠颜色 |
 
-Choose by how the product is used (long sessions or a quick look, money or media, a team or one
-person, day or night), not by what is most familiar, and write one line on why. Then deal the sheet:
+按产品如何被使用来选（长时间驻留还是快速一瞥、钱还是内容、团队还是个人、
+白天还是夜晚），不要按最熟悉的来选，并写一行理由。然后抽取样式单：
 
 ```bash
 node <skill>/scripts/draw.mjs --app <the same arguments, without --options> --style <id>
 ```
 
-The sheet gives the style's tokens and type, its shell and one pattern for each screen you named.
-Keep the style's one move intact and take every other value from the defaults in this file. Redraw
-(`--redraw style | shell | screen:<name>`) only for a reason you can state: it contradicts the brand,
-or the product is used in a way the style does not suit. With an existing brand, pass
-`--keep palette,type`, map its colours onto the roles in §9 and keep the style's colour budget.
+样式单给出该风格的 tokens 与字体、外壳，以及你点名的每种界面各一个模式。
+风格的标志性手法保持不动，其余值一律取本文件的默认值。
+重抽（`--redraw style | shell | screen:<name>`）只在你能说出理由时做：
+它与品牌冲突，或产品的使用方式与风格不合。
+已有品牌时传 `--keep palette,type`，把品牌色映射到 §9 的角色上，
+并保持该风格的用色预算。
 
-**Then choose its face, before any markup.** The sheet's "Its face" list gives two or three ways this
-style takes a face from the brief, and "Signature elements" lists the library's elements whose words
-appear in the brief (a power flow for an energy home, a sell-out strip for a bakery, a cover matrix
-and a kind-encoded timeline for a leave planner). Write in your notes, next to the screen's question:
-the face you chose, the signature element (from the sheet, or your own built from the product's
-things), and where each appears on the first screen. A style dealt to two products must not give them
-the same face: in four rounds, the screens that skipped this step were scored as the same kit.
+**然后在写任何标记之前，选定它的字体面貌。** 样式单的"Its face"清单给出
+这种风格从简报取面貌的两三种方式，"Signature elements"列出库中
+关键词出现在简报里的元素（能源家庭的电力流向、烘焙店的售罄条、
+休假规划器的封面矩阵与按类别编码的时间线）。写进笔记，挨着界面的核心问题：
+选定的面貌、招牌元素（来自样式单，或用产品自己的东西自造），
+以及各自出现在首屏的哪个位置。同一种风格抽给两个产品，
+不能给它们同一张面孔：四轮测试里，跳过这一步的界面
+被打分视为同一套组件包。
 
-### 2.4 Build the shell
+### 2.4 搭外壳
 
-Build the frame first, empty: the sidebar or rail, the top bar if the shell has one, the canvas with
-its gutters, the title row (§3 and §4). `<skill>/assets/app.css` is a neutral start for all of it:
-copy it into the project and put the sheet's tokens in its `:root`. Look at it at 1440 and at 390 before any data goes in. Do the
-grid arithmetic now and write it in a comment: the column count, the gutter, and the sum that proves
-the cards land on the canvas edges.
+先空着搭框架：侧边栏或图标栏、顶栏（若外壳有）、带间距的画布、标题行（§3 与 §4）。
+`<skill>/assets/app.css` 是这一切的中性起点：复制进项目，
+把样式单的 tokens 放进它的 `:root`。放任何数据之前，
+先在 1440 和 390 宽度下各看一遍。现在就把栅格算术做完，写进注释：
+列数、间距，以及证明卡片落在画布边缘上的那笔总和。
 
-### 2.5 Put in the data
+### 2.5 灌入数据
 
-Render every block from the dataset; draw the charts from it too, with `<skill>/assets/charts.js`
-(`Charts.line`, `Charts.bars`, `Charts.diverging`, `Charts.ring`, `Charts.barList`, `Charts.plan`,
-`Charts.bullet`, `Charts.timeline`, `Charts.matrix`, `Charts.timeStrip`; the file's header lists their
-options) or your own SVG to the rules of §6, never a chart library's defaults and never a picture of a
-chart. The newer helpers return `{ svg, legend }`: put that legend in the card's header rather than
-drawing your own, so each swatch is the mark it explains. Format every figure by §7.4: separators, fixed decimals per
-metric, a sign on every change, units as smaller grey suffixes, tabular figures, right alignment in
-columns. Use the product's own words for labels. No placeholder data: the inspector fails lorem ipsum,
-Acme, John Doe and their kind. Proof is not invented here either: no vanity totals, no "+12%" on an
-account that is a week old.
+每个区块都从数据集渲染；图表也从它画，用 `<skill>/assets/charts.js`
+（`Charts.line`、`Charts.bars`、`Charts.diverging`、`Charts.ring`、
+`Charts.barList`、`Charts.plan`、`Charts.bullet`、`Charts.timeline`、
+`Charts.matrix`、`Charts.timeStrip`；文件头部列有各函数的选项），
+或按 §6 的规则手写 SVG；绝不用图表库的默认样式，
+也绝不用一张图表的截图。较新的辅助函数返回 `{ svg, legend }`：
+把返回的图例放进卡片头部，不要自己另画，
+这样每个色样就是它所解释的那个标记。每个数字按 §7.4 格式化：
+千位分隔符、每种指标固定小数位、每个变化量带正负号、
+单位作为更小的灰色后缀、等宽数字、列内右对齐。
+标签用产品自己的话。不用占位数据：检查器会判 lorem ipsum、Acme、
+John Doe 之类失败。证明也不在这里编造：没有虚荣合计，
+给开了仅一周的账户不写"+12%"。
 
-### 2.6 Build the states
+### 2.6 做出各状态
 
-For every block, build its empty, zero, loading and error state (§11); for every row and control, its
-hover, selected, focus and disabled state. Look at each one in the browser. A screen that only works
-with full data is half built.
+每个区块做出它的空、零、加载与错误状态（§11）；每行、每个控件做出
+悬停、选中、聚焦与禁用状态。逐个在浏览器里看。
+只会在满数据下成立的界面只建了一半。
 
-### 2.7 The check
+### 2.7 检查
 
 ```bash
 node <skill>/scripts/lint.mjs --app <source files or folder>
 node <skill>/scripts/inspect.mjs --app <url or path/to/index.html>
 ```
 
-A sheet dealt with `--app` switches both tools to the app rules by itself. The inspector opens the
-screen at 1440, 768 and 390 and measures what this chapter asks for: an h1 (and reports it as the
-screen's hero); a sidebar that folds on the phone; the canvas used to its right edge; panel shadows
-and borders; the number of corner radii; cards in one row that end apart, where a column of cards
-stacked with the gutter counts as one block (`ragged-row`); a blank band inside a card of over 40px,
-or over 64px before a new section's heading (`panel-void`); icons in tinted squares; numeric alignment and tabular figures; chart hues; colour
-share, and a screen with charts but no hue on its data (`no-data-hue`); placeholder data; text under
-11px; and the page rules that still hold (contrast, gradients, the banned palettes, emoji). Fix every
-`FAIL`. Treat each `WARN` as wrong unless you can defend it to a designer in one sentence.
+用 `--app` 抽出的样式单会让两个工具自动切到应用规则。
+检查器在 1440、768 和 390 三个宽度打开界面，度量本章要求的一切：
+有无 h1（并作为界面的 hero 上报）；侧边栏在手机上是否收起；
+画布是否用到右缘；面板阴影与边框；圆角种数；
+同一行里卡片底边错开，一列卡片连同间距叠放算一个区块（`ragged-row`）；
+卡片内部超过 40px 的空带，或新区块标题前超过 64px 的空带（`panel-void`）；
+淡色方块里的图标；数字对齐与等宽数字；图表色相；颜色占比，
+以及有图表但数据上没有色相的界面（`no-data-hue`）；占位数据；
+小于 11px 的文字；以及仍然适用的页面规则（对比度、渐变、被禁调色板、emoji）。
+修掉每个 `FAIL`。每个 `WARN` 都当作错误处理，
+除非你能用一句话向设计师辩解过去。
 
-Then look at the screenshots, every width, and answer these in writing. This is the critique for an
-app screen: the caps in `critique.md` for pictures, motion and the page's live element are page rules
-and do not apply here.
+然后逐宽度看截图，把下面的问题写下作答。这就是应用界面的评审：
+`critique.md` 里针对图片、动效与页面动态元素的上限是页面规则，
+在这里不适用。
 
-1. Is the screen's question answered by the biggest thing on it, and is that read first? Is the
-   largest figure the one that answers the title row's sentence?
-2. Does every block share the screen's edges? Is there a dead strip on one side, a card stopping
-   short, an orphan cell, a stretched card with a blank band (a legend pinned to its foot, four rows
-   in a card kept at its neighbour's height)?
-3. Is colour only on data, on status and on the one primary action, and does the main data element
-   carry the one hue? Does the face you chose show on the first screen?
-4. Do the numbers add up, and do they line up digit for digit? List every fact that appears twice
-   and check that the copies agree; recompute each total and change from the values as displayed;
-   check that every relative figure names what it is against.
-5. Does every zero look like a zero and every missing value like a dash? Does every count badge sit
-   on a queue that needs action, with its noun clear from the label?
-6. Does every legend swatch match the mark it explains, and does any caption have to say which bars
-   are which (then encode it in the chart)? Does any label collide with a line or another label?
-7. On the phone, is the navigation folded away, and does each block still answer its question?
+1. 界面的问题由屏上最大的元素回答了吗？它是最先被读到的吗？
+   最大的数字是不是回答标题行那句话的那个？
+2. 每个区块都齐着界面的边缘吗？是否有一侧的空白条、提前收手的卡片、
+   孤立的格子、被拉高且带着空带的卡片（图例钉在脚底、
+   为凑邻居高度硬留四行）？
+3. 颜色是否只出现在数据、状态和唯一的主操作上？
+   主数据元素是否带那个主色相？你选的面孔出现在首屏上了吗？
+4. 数字加总对得上吗？逐位对齐了吗？列出每个出现两次的事实，核对副本一致；
+   按界面显示的值重算每个合计与变化量；
+   核对每个相对数字都写明了对比对象。
+5. 每个零看起来都是零、每个缺失值看起来都是短横吗？
+   每个计数徽标都挂在需要行动的队列上、名词从标签就能看懂吗？
+6. 每个图例色样都与它解释的标记一致吗？有没有图注必须解释哪根条是哪根
+   （那就把信息编进图表）？有没有标签压到线上或与另一标签相撞？
+7. 手机上导航收起来了吗？每个区块还回答自己的问题吗？
 
-Fix the worst three, inspect again, look again. Three rounds at most. Judge the pictures: if a problem
-shows in a screenshot, it is real, whatever the code says.
+修掉最糟的三处，再检查，再看。至多三轮。以截图为准：
+只要问题在截图里看得见，它就是真的，代码怎么说都不算。
 
-### 2.8 Report
+### 2.8 汇报
 
-Tell the user, briefly: the style dealt (name and seed) and any redraws with their reasons; the face
-you chose and the signature element; each screen's one question; any check you allowed and why (for example `--allow icon-chips` for node-type
-tiles in a builder); and the sample data that must be replaced with real data, listed so it can be
-found.
+简要告诉用户：抽到的风格（名字与 seed）及所有重抽及其理由；
+选定的面貌与招牌元素；每个界面的核心问题；你放行了哪些检查及原因
+（例如为构建器里的节点类型磁贴放行 `--allow icon-chips`）；
+以及必须替换为真实数据的样例数据，列成清单方便查找。
 
-App screens have no motion floor. Motion is feedback: press, hover, focus, a menu or a sheet opening,
-a row arriving. Nothing on the screen performs an entrance (house rule).
+应用界面没有动效底线。动效即反馈：按压、悬停、聚焦、菜单或面板展开、
+一行数据到位。屏上没有任何东西表演入场（house rule）。
 
-## 3. The shell
+## 3. 外壳
 
-### 3.1 Five archetypes
+### 3.1 五种原型
 
-| Shell | In the study | What it is |
+| 外壳 | 研究中出现 | 形态说明 |
 | --- | --- | --- |
-| **Open plane** | 5 screens | A labelled sidebar on the page ground (or within 1-2% of it), separated by nothing or by one 1px hairline. No top bar: the header and the cards sit on the ground. The canvas is fluid with a 24-64px gutter, or a centred column. |
-| **Tinted frame, white sheet** | 8 screens | Sidebar and top bar share one tinted ground (#f6f6f6-#f9fbfc) with no rule between them; the page sits on a white sheet inset 8px from the window's right and bottom edges, radius 10-16 (median 16), a 1px #eaeaea-#ededed edge and no shadow. Variants: a flush L-frame, the inset sheet, and floating panels inset 8-12px with a 12px gap. |
-| **Ruled T-frame** | 4 screens | A 210-240px sidebar and a 64px top bar on one ground, divided only by 1px rules. The workspace switcher sits at the top bar's right end behind a full-height divider. Three of the four are dark. |
-| **Icon rail** | 3 screens | An unlabelled rail 50-60px wide (median 55); 15-18px icons on a 34-49px pitch; the active item marked by colour or by a 2% tint band; groups split by 20px hairlines. It saves about 180px of width. |
-| **No sidebar** | 3 screens | A 46-48px top bar over a centred 1088-1208px column with 152-212px gutters; the logo sits on the column's left edge. For reports, viewers and products with few destinations. |
+| **开放平面** | 5 个界面 | 带文字标签的侧边栏直接坐在页面底色上（或与之相差 1-2%），两者之间无分隔或仅一条 1px 发丝线。没有顶栏：标题和卡片坐在底色上。画布为流式、间距 24-64px，或为居中列。 |
+| **着色框内衬白纸** | 8 个界面 | 侧边栏与顶栏共用一块着色底（#f6f6f6-#f9fbfc），中间无分隔线；页面坐在一张白纸上，距窗口右缘与下缘内缩 8px，圆角 10-16（中位 16），1px #eaeaea-#ededed 描边，无阴影。变体：齐平的 L 形框、内缩白纸、以及内缩 8-12px、间距 12px 的浮动面板。 |
+| **细线 T 形框** | 4 个界面 | 210-240px 侧边栏与 64px 顶栏共用一块底色，仅以 1px 细线分隔。工作区切换器在顶栏右端、全高分隔线之后。四个里三个是深色。 |
+| **图标栏** | 3 个界面 | 无文字的窄栏，宽 50-60px（中位 55）；15-18px 图标，节距 34-49px；当前项用颜色或 2% 着色横带标记；分组之间 20px 发丝线。可省约 180px 宽度。 |
+| **无侧边栏** | 3 个界面 | 46-48px 顶栏压在居中 1088-1208px 的栏上，两侧留 152-212px 空白；logo 坐在栏的左缘。适合报告、查看器与目的地很少的产品。 |
 
-All six dark screens use one ground everywhere, divided by 1px rules of #161616-#232323 or by nothing.
-No screen in the study puts a dark or saturated sidebar against a light canvas (0 of 17).
+六个深色界面全都全屏共用一块底色，靠 #161616-#232323 的 1px 细线或什么都不用来分隔。
+研究里没有任何界面把深色或高饱和侧边栏配在浅色画布旁（17 个中 0 个）。
 
-### 3.2 Sidebar
+### 3.2 侧边栏
 
-- **Width.** Labelled sidebars run 210-292px; the median is 230 and most sit at 224-240. One floating
-  sidebar card appears (280px wide, 40px in from the window edge).
-- **Rows.** A 32px hit area on a 34px pitch is the mode (7 screens); the roomy versions run 40-52px on
-  a 42-60px pitch. Icons are 14-20px, median 16, outline at about 1.5px stroke on 14 of 16 screens.
-  Labels are 14px at 400 on 12 of 16, in ink or in a grey of #4b4d4f-#63666e, about 8-10px after the
-  icon, with the label column at x 36-48.
-- **Active item.** A neutral grey pill with the label unchanged, on 8 screens: radius 4-16 (median 8),
-  inset 8-14px from the sidebar's edges, a fill of about #e9e9e9-#ededed. On dark, brightness alone:
-  the label goes from #bbb to #fff (3 screens). Colour alone on the icon or label (3, all of them
-  rails or a floating card). A tinted accent fill (3). A left accent bar once in 23. The weight
-  changes on 2. Default: the grey pill on light, brightness on dark.
-- **Groups.** Sentence-case grey labels at 12-13px, never uppercase (9 screens), with 22-56px of air
-  above and 13-33px to the first item; or hairlines instead (4). Utilities such as settings and help
-  pushed to the bottom (5).
-- **Top and bottom.** The workspace or account switcher at the top of the sidebar (7 screens), at its
-  bottom (2), or in the top bar. The bottom holds a user row (8) or one upsell (8); one of those
-  upsells is a filled accent button.
-- **The product is named** (house rule, from testing). The product's mark and name sit at the top of
-  the sidebar or rail, and the scope (workspace, team, project, account) is shown as a switcher or a
-  breadcrumb. A screen whose product cannot be named from the screenshot reads as a template.
-- **Counts on nav items** (house rule, from testing). A count appears only on a queue that needs
-  action, and its noun is clear from the label: "Requests 5", "Price changes 3". A bare "Range and
-  prices 9" left the judge asking nine of what.
-- **Labels by default.** A labelled sidebar unless the product has five destinations or fewer and the
-  screen needs the width (a research or monitoring view); an icon rail always carries the product's
-  mark at the top, a tooltip and an accessible name on every icon. Nav items are other screens, never
-  anchors into the current page (a sidebar that scroll-spies one long page was marked down twice).
+- **宽度。** 带标签的侧边栏在 210-292px；中位 230，多数在 224-240。
+  有一个浮动侧边栏卡片（宽 280px，距窗口边缘 40px）。
+- **行。** 32px 点击区、34px 节距是众数（7 个界面）；宽松的版本 40-52px 高、
+  节距 42-60px。图标 14-20px，中位 16，其中 14/16 个界面用约 1.5px 描边的
+  轮廓风格。标签 14px、字重 400 的有 12/16，用墨色或 #4b4d4f-#63666e 的灰，
+  距图标约 8-10px，标签列位于 x 36-48。
+- **当前项。** 中性灰胶囊、标签不变，8 个界面：圆角 4-16（中位 8），
+  距侧边栏边缘内缩 8-14px，填充约 #e9e9e9-#ededed。
+  深色下只动亮度：标签从 #bbb 变到 #fff（3 个）。
+  只在图标或标签上用色（3 个，全是窄栏或浮动卡片）。
+  着色的主色填充（3 个）。彩色左竖条在 23 个里出现 1 次。
+  字重变化的 2 个。默认：浅色用灰胶囊，深色动亮度。
+- **分组。** 句首大写的灰色组标签 12-13px，绝不全大写（9 个界面），
+  组标签上方留 22-56px、到第一个条目 13-33px；或者改用发丝线（4 个）。
+  设置、帮助等工具项沉到底部（5 个）。
+- **顶部与底部。** 工作区或账户切换器在侧边栏顶部（7 个）、底部（2）或顶栏里。
+  底部放用户行（8）或一条升级推广（8）；其中一个升级推广是实心主色按钮。
+- **写明产品**（house rule，来自测试）。产品的标志与名字放在侧边栏或窄栏顶部，
+  范围（工作区、团队、项目、账户）用切换器或面包屑显示。
+  截图里看不出产品名的界面，读起来就是模板。
+- **导航项上的计数**（house rule，来自测试）。计数只出现在需要行动的队列上，
+  且名词从标签就能看懂："请求 5"、"价格变更 3"。
+  一个干巴巴的"区间与价格 9"让评审发问：9 个什么？
+- **默认带标签。** 用带标签的侧边栏，除非产品目的地不超过五个
+  且界面需要省宽度（研究或监控视图）；图标栏顶部必须有产品标志，
+  每个图标必须有提示框与无障碍名称。导航项指向其他界面，
+  绝不是当前页内的锚点（一个滚动侦测单长页的侧边栏被扣分两次）。
 
-### 3.3 Top bar
+### 3.3 顶栏
 
-14 of 23 screens have one; the default is none. Heights fall into two groups: 44-51px (median about
-48) on light chrome, and 64px, usually with a 1px rule. A top bar must hold something real: search,
-the workspace switcher, or the page or object name. Search sits centred on the window at 548x32 with
-a shortcut hint (2 screens), or at 457-537x36 in a no-sidebar bar. The right cluster is inset 24-46px
-from the edge. Two screens leave about 1070px of their top bar blank; both are flagged for it.
+23 个里 14 个有顶栏；默认是没有。高度分两档：浅色装饰下 44-51px（中位约 48），
+以及 64px，通常带一条 1px 细线。顶栏必须装真实的东西：搜索、工作区切换器，
+或页面或对象名。搜索框居中于窗口、548x32 带快捷键提示（2 个界面），
+或在无侧边栏布局里 457-537x36。右侧控件群距边缘内缩 24-46px。
+两个界面让顶栏空出约 1070px；两个都被标记。
 
-### 3.4 Right rail and pinned columns
+### 3.4 右侧栏与固定列
 
-One screen has a right rail: a fixed 384px column in a `1fr 384px` grid with a 24px gap, starting
-level with the first card rather than with the title, its section headings outside the cards and 8px
-above each. Use one only for a stable secondary stream: recent items, the details of the selected
-object, share links. A pinned left column appears once: a 306px accounts card at the viewport height
-minus 72px, so net worth stays in view while the rest of the screen scrolls.
+一个界面有右侧栏：`1fr 384px` 栅格里固定 384px 的列、间距 24px，
+起点与第一张卡片齐平而非与标题齐平，区块标题在卡片外、各高 8px。
+右侧栏只用于稳定的次级信息流：最近条目、选中对象的详情、分享链接。
+固定左列出现一次：306px 的账户卡片，高为视口高度减 72px，
+滚动其余界面时净资产始终在视野内。
 
-Five screens float a button (24-56px), and one of those buttons covers the content it sits on and is
-flagged. House rule: no floating button unless it is the screen's one primary action and covers
-nothing at any width.
+五个界面放了浮动按钮（24-56px），其中一个盖住了身下的内容，被标记。
+House rule：不用浮动按钮，除非它是界面唯一的主操作，
+且在任何宽度下都不遮挡任何东西。
 
-## 4. The canvas and the page title
+## 4. 画布与页面标题
 
-### 4.1 Width and gutters
+### 4.1 宽度与间距
 
-- **Fluid** (14 screens): side padding 17-64px, median 29, with 24 and 36-40 the common values;
-  content 1120-1312px wide, median about 1204.
-- **Centred** (8 screens): 624, 864, 1088, 1100, 1152, about 1190 and 1208px; median about 1126.
-  Data pages land at 1100-1250 either way. Only two personal homes go narrow (624 and 864), and both
-  are flagged for wasting the width.
-- **Top offset**, from the canvas top to the title: 20-88px, median about 36. Tools sit at 20-36;
-  greeting homes at 50-88.
-- **One gutter.** Use one gap value horizontally and vertically. Mixed gutters (12 against 16, 20
-  against 24, 16 against 12) are flagged on 8 screens.
+- **流式**（14 个界面）：两侧内边距 17-64px，中位 29，常见值为 24 与 36-40；
+  内容宽 1120-1312px，中位约 1204。
+- **居中**（8 个界面）：624、864、1088、1100、1152、约 1190 与 1208px；
+  中位约 1126。数据类页面无论哪种方式都落在 1100-1250。
+  只有两个个人主页收窄（624 与 864），且都因浪费宽度被标记。
+- **顶部偏移**，从画布顶到标题：20-88px，中位约 36。
+  工具类界面在 20-36；问候式主页在 50-88。
+- **间距统一。** 横向纵向用同一个间距值。
+  混用间距（12 对 16、20 对 24、16 对 12）在 8 个界面上被标记。
 
-### 4.2 One left edge, one right edge
+### 4.2 左缘一条线，右缘一条线
 
-The strongest screens run a single left edge from the header to the last row. One indents its page
-header by the cards' 24px padding, so the title, the card titles, the numbers and the chart all start
-on one line. Row rules may bleed 7-8px past the text column while the text stays on it.
+最强的界面从标题到最后一行保持一条左缘。
+有一个界面把页头按卡片 24px 内边距缩进，
+于是标题、卡片标题、数字与图表都起于同一条线。
+行分隔线可以溢出文字列 7-8px，文字仍留在列上。
 
-The grid's arithmetic closes: 3 x 372 + 2 x 17 = 2 x 568 + 16 = 1152; 12 x 77 + 11 x 16 = 1100;
-4 x 144 + 3 x 16 = 624; a second-row card exactly as wide as the two cards above it
-(251 + 24 + 515). Write your sum down.
+栅格算术要闭合：3 x 372 + 2 x 17 = 2 x 568 + 16 = 1152；
+12 x 77 + 11 x 16 = 1100；4 x 144 + 3 x 16 = 624；
+第二行的卡片恰好等于上方两张之和（251 + 24 + 515）。
+把你的算式写下来。
 
-Failures to avoid, all from the study: cards stopping 120px short of the sheet's right edge; a 0px
-right gutter against a 40px left one; a column centred on the window instead of on the area beside
-the sidebar (204px on its left, 444px on its right); a medallion 108px off the column's axis. The
-inspector warns when the content stops well short of the right edge.
+要避免的失败，全部来自研究：卡片距白纸右缘还差 120px 就停住；
+右间距 0px 对左间距 40px；一列居中于窗口而不是居中于侧边栏旁的区域
+（左 204px、右 444px）；一枚徽章偏离列轴线 108px。
+内容明显不到右缘时检查器会警告。
 
-**Dead space from a grid that does not fit the data** is the commonest failure in the study (10
-screens): four KPI tiles in a three-column grid, orphaning the fourth; one card alone in a
-three-column row beside 810px of nothing; a card stretched to its neighbour's height with 250px of
-blank under its legend. Choose the column count from the number of items, let a lone card span, and
-do not stretch a card's frame over empty space.
+**栅格装不下数据造成的死空间**是研究里最常见的失败（10 个界面）：
+三列栅格里放四个 KPI 磁贴，第四个成了孤儿；三列行里孤零零一张卡片，
+旁边 810px 空着；一张卡片被拉到邻居的高度，图例下 250px 全白。
+列数由条目数量决定，让落单的卡片跨列，
+绝不为凑空间拉高卡片外框。
 
-**Cards that share a row share a bottom edge.** In testing, rows whose cards stopped 26-190px apart
-were marked down every time, by judges and by the inspector (`ragged-row`). Balance the row by its
-content first: move a list's rows so the two columns hold the same number, cap both lists at the same
-count, or pair blocks of similar height. Two cards stacked in one column beside a tall card count as
-one block: they balance when the column ends level. Only when the contents cannot balance, stack the
-two blocks, or let the shorter card fill the row height with its content top-aligned and the footer
-action (a "View all", a total) pinned to its bottom so the extra height is not a hole.
+**同一行的卡片共享同一条底边。** 测试中，卡片底边相差 26-190px 的行
+每次都被扣分，评审和检查器都扣（`ragged-row`）。
+先按内容配平这一行：挪列表的行数让两列行数相同、
+两个列表截到同一行数，或把高度相近的区块配对。
+一列里上下两张卡片算一个区块：列底齐平时就配平了。
+只有内容实在配不平，才把两个区块叠起来，或让较矮的卡片填满行高、
+内容顶端对齐、底部动作（"查看全部"、合计）钉在底边，
+让多出的高度不成为空洞。
 
-**A stretched card stretches only when it has content to fill.** Only an action or a total may be
-pinned to a stretched card's foot; a legend or a note stays directly under its chart. In testing, a
-cover card stretched to its neighbour with its legend pinned to the bottom left 60px of blank under
-the last row, and a sell-out card left 45px above its links. When the content is short, let the card
-keep its own height (`align-items: start` on the row), move its footer link into its header, or give
-the row a block of similar height. A filtered block shrinks to its rows, or keeps a fixed number of
-rows with one sentence in the empty ones; four rows over 270px of empty card is a hole. The inspector
-warns on a blank band of over 40px inside a card (`panel-void`).
+**卡片被拉高，只发生在有内容可填时。** 只有动作或合计
+可以钉在被拉高卡片的底部；图例或注释紧贴图表下方。
+测试中，一张覆盖卡片拉到邻居高度、图例钉在底部，
+最后一行之下空出 60px；一张售罄卡片在其链接之上空出 45px。
+内容不够时，让卡片保持自己的高度（行上设 `align-items: start`），
+把底部链接挪进头部，或给这一行配一个高度相近的区块。
+被筛选的区块缩到只剩自己的行，或保留固定行数、空行里放一句话；
+270px 空卡片里排四行是空洞。
+卡片内部空带超过 40px 检查器会警告（`panel-void`）。
 
-**Narrow blocks do not span the canvas.** A table of five columns or fewer, or a list of six rows or
-fewer, runs to about 760px at 1440 and pairs with the next block; stretched to 1300px it leaves
-400-600px voids between a name and its first figure.
+**窄区块不横跨画布。** 五列以下的表格或六行以下的列表，
+在 1440 宽下约 760px，与下一个区块配对；拉到 1300px，
+名称与第一个数字之间会留下 400-600px 的空洞。
 
-### 4.3 The title
+### 4.3 标题
 
-- **Every screen has one h1**; the inspector fails a screen without one. 14 screens set it in the
-  canvas at 18-48px, median and mode 24, at 600-700 (700 on 8). The rest have nothing over 16px: a
-  breadcrumb or the top bar names the page. Then the breadcrumb's last item is the h1, at 16px, and
-  the screen's name is still the first thing read.
-- **A noun, not a greeting**: "Analytics", "Overview", the project's or the object's name. 3 of 23
-  greet, and one adds an emoji, which goes. A greeting suits a personal or team home only.
-- **An optional second line**: one 14-16px grey sentence about the data or the object (the finding,
-  the period, the scope), never about the interface ("the filters narrow every block…", "this page
-  shows…" read as instructions, not a product), or a 12px line
-  naming the data's source.
-- **Right of the title**: actions only when they are real (10 screens); otherwise nothing. A freshness
-  stamp ("Updated Jul 27, 4:09 PM", with a refresh button) on 6.
-- **The primary action.** 12 of 23 have no filled primary button; 5 make it near-black (#1d1f20,
-  #1f2937) or inverted white on dark; 4 fill it with the brand hue. One primary per screen.
+- **每个界面有一个 h1**；没有 h1 检查器判失败。
+  14 个界面把它放在画布内、18-48px，中位数与众数 24，
+  字重 600-700（700 的有 8 个）。其余的没有超过 16px 的字：
+  用面包屑或顶栏报页面名。此时面包屑最后一项就是 h1，16px，
+  界面名仍是第一眼读到的。
+- **用名词，不用问候**："数据分析"、"总览"、项目名或对象名。
+  23 个里 3 个用了问候，其中一个还加 emoji，去掉。
+  问候只适合个人或团队主页。
+- **可选的第二行**：一句 14-16px 的灰字，说数据或对象
+  （关键发现、周期、范围），绝不说界面（"筛选会收窄每个区块…"、
+  "本页展示…"读起来是指令，不是产品），
+  或一条 12px 的行写明数据来源。
+- **标题右侧**：只在动作真实时放动作（10 个界面）；否则什么都不放。
+  6 个界面放更新时间戳（"更新于 7 月 27 日 16:09"，带刷新按钮）。
+- **主操作。** 23 个里 12 个没有实心主按钮；5 个做成近黑色
+  （#1d1f20、#1f2937）或深色下的反白；4 个填品牌色相。
+  每屏一个主按钮。
 
-### 4.4 Tabs, filters and the date range
+### 4.4 标签页、筛选与日期范围
 
-- **The date range** at page level (7 screens) or on each card (7), never both. A card that states its
-  own period puts it in its header, right-aligned, in grey.
-- **Underline tabs** (8 screens) always sit on a full-width 1px rule; the indicator is 1-4px (median
-  2), as wide as the label or running 8-11px past it.
-- **A segmented track** once: 48px, #f3f4f6, a white 36px active pill, and the date select inside its
-  right end, so tabs and range read as one row. A segmented control is as wide as its options, and full
-  width only below about 480px: three options spread across a 680px tablet card read as a progress bar.
-- **Control height** in title and filter rows: 28-40px, median 34, clustering at 32 and 36.
-- **Order**: scope on the left (the date first, then the filters), utility and refresh on the right.
-- **Compound filters** that read as a sentence ("Date | Jun 14 - Jul 13 | Daily"), 28px tall and 8px
-  apart, once.
-- **To the first card**: 13-64px, median 24.
+- **日期范围**放在页面级（7 个界面）或每张卡片上（7），绝不同时放。
+  自述周期的卡片把它放在卡片头部、右对齐、灰色。
+- **下划线标签页**（8 个界面）总坐在通栏 1px 细线上；
+  指示条 1-4px（中位 2），与标签同宽，或超出标签 8-11px。
+- **分段轨道**出现一次：48px 高、#f3f4f6、白色 36px 当前胶囊，
+  日期选择器嵌在右端，标签页与日期范围读作一行。
+  分段控件与选项等宽，只有在约 480px 以下才通栏：
+  三个选项摊满 680px 平板卡片，读起来像进度条。
+- **控件高度**在标题行与筛选行：28-40px，中位 34，集中在 32 与 36。
+- **顺序**：范围在左（先日期，后筛选），工具与刷新在右。
+- **复合筛选器**读起来像一句话（"日期 | 6 月 14 日 - 7 月 13 日 | 每天"），
+  高 28px、彼此 8px，出现一次。
+- **到第一张卡片**：13-64px，中位 24。
 
-## 5. KPIs
+## 5. KPI
 
-- **No tile of its own.** 11 of the 20 screens with headline numbers give a KPI no tile: bare text on
-  the page or on a card (5), or one container split by 1px hairlines (6). 9 use one card per KPI,
-  61-147px tall (median about 108). The default is one container split by 1px dividers into equal
-  columns. 7 screens have no KPI row at all and put each headline number in the card that explains
-  it, which is often better.
-- **Count.** 1-6 per row, median 3-4. The count matches the grid: four KPIs get four columns.
-- **Size.** Values 16-40px, median 26, mode 24. Values in their own tile run larger (median 30) than
-  in a shared strip (median 24). Nothing at 48px or over. Labels 12-16px, median 14; the value is
-  about 1.7 times the label.
-- **Weight.** An even split: 400 on 8 screens, 600 on 6, 700-800 on 6. A large number at regular
-  weight under a semibold label is the common pattern. Bold for money only.
-- **Order.** Label above the value on 14 screens; labels grey (#6b6b6b-#aaa) on 13; sentence case.
-- **Nothing else.** No icon in a coloured circle (0 of 23), no sparkline (0 of 23), no tinted tile.
-  An info icon beside the label is fine (5 screens). Units are a smaller grey suffix: "5 mins" at 24
-  over 14, "2 m 24 s", "5 /10".
-- **The answer figure leads.** When one figure is the screen's answer (a balance, net worth, the
-  portfolio's value), it is 30-36px and at least 1.3 times its sibling figures (those at 18-24px). In
-  testing, a 24px portfolio value beside two 24px figures left the screen without a lead. No other
-  figure on the screen is larger: the biggest number answers the title row's sentence, so a
-  secondary ratio in another card stays at the siblings' size.
-- **One figure, one place.** A figure shown in the strip is not repeated in a legend beside it, and a
-  KPI strip whose every cell names a panel below (RSVPs, then an RSVPs panel) is dropped: lead each
-  panel with its own number instead.
-- **A second job.** KPIs may be the chart's series tabs or the list's type filter (the selected card
-  takes a 1.5px border). As tabs, the selected one carries a 2px rule or the active fill and an ink
-  label; the others keep a grey label and their value in ink, at 400 against the selected one's 500.
-  A grey value reads as disabled: in testing, three shops' takings set in grey because they were tabs
-  read as secondary, though they were the brief's first ask. When the tabs are the per-entity
-  breakdown the brief asks for, grey nothing and let the rule alone mark the selection. On a phone the
-  tabs become a 2-up grid with the selected cell filled, or a row that scrolls sideways; never an
-  underline floating inside the grid (`app.css` does both).
+- **不占独立磁贴。** 20 个有头条数字的界面里 11 个不给 KPI 磁贴：
+  页面或卡片上的裸文字（5），或一个容器用 1px 发丝线分隔（6）。
+  9 个给每个 KPI 一张卡，高 61-147px（中位约 108）。
+  默认是一个容器用 1px 分隔线分成等宽列。7 个界面根本没有 KPI 行，
+  把每个头条数字放进解释它的那张卡片，这往往更好。
+- **数量。** 每行 1-6 个，中位 3-4。数量匹配栅格：四个 KPI 就给四列。
+- **字号。** 数值 16-40px，中位 26，众数 24。独占磁贴的数值更大（中位 30），
+  共享条里的更小（中位 24）。没有任何 48px 及以上的。
+  标签 12-16px，中位 14；数值约为标签的 1.7 倍。
+- **字重。** 大致均分：400 的 8 个，600 的 6 个，700-800 的 6 个。
+  大数字用常规字重、标签用半粗，是常见组合。加粗只留给钱。
+- **顺序。** 14 个界面标签在数值上方；13 个标签用灰（#6b6b6b-#aaa）；
+  句首大写。
+- **不放别的。** 没有彩色圆圈里的图标（23 个中 0 个），
+  没有迷你趋势图（23 个中 0 个），没有着色磁贴。
+  标签旁放一个信息图标可以（5 个界面）。
+  单位是更小的灰色后缀："5 分钟"（24px 配 14px）、"2 分 24 秒"、"5 /10"。
+- **答案数字领衔。** 当某个数字就是界面的答案（余额、净资产、组合价值），
+  它用 30-36px，至少是同级数字（18-24px 那些）的 1.3 倍。
+  测试中，24px 的组合价值挨着两个 24px 数字，界面就没有领衔者。
+  屏上没有别的数字更大：最大的数字回答标题行那句话，
+  所以另一张卡片里的次要比率保持同级大小。
+- **一个数字只出现一处。** 条里出现过的数字不在旁边的图例里重复；
+  每个格都点名下方面板的 KPI 条直接砍掉（先列 RSVPs，
+  又来一个 RSVPs 面板）：改成每个面板用自己的数字打头。
+- **兼第二职。** KPI 可以充当图表的系列标签页或列表的类型筛选
+  （选中的卡片加 1.5px 边框）。作标签页时，选中的那个带 2px 细线
+  或当前填充与墨色标签；其余保持灰标签、数值用墨色，
+  字重 400 对选中项的 500。灰数值会被读成禁用：测试中，
+  三家店铺的营收因为充当标签页就设成灰色，被读成次要信息，
+  虽然它们是简报的第一项要求。当标签页正是简报要的分主体拆解时，
+  什么都不要变灰，只用那条细线标记选中。
+  手机上标签页变成选中格实心的两列栅格，或横向滚动的行；
+  绝不是漂在栅格内部的下划线（`app.css` 两种都做了）。
 
-### Deltas
+### 变化量
 
-- Optional: 9 of the 20 KPI screens show one; 11 do not.
-- 10-15px (median 14), never larger than the label. Text or a small glyph on 6 screens; a pale pill
-  on 3.
-- **The window in words**: "vs prior 30 days", "in the last 90 days", "from 0 (last 4 weeks)" (7 of
-  the 9).
-- **Colour only the number**, or set the whole delta in grey.
-- **Colour says good or bad, not up or down** (house rule, from testing). Every metric has a good
-  direction: latency, error rate, cost, churn and time-to-reply are better when they fall. A change
-  in the bad direction puts `--negative` on the number (or a small down-pointing glyph in that
-  colour); a change in the good direction is `--positive` or grey. A judge read a 2.5× rise in errors
-  set in the same grey as a rise in visits as hiding the screen's only bad news.
-- **Zero or undefined change is grey.** The study's commonest KPI failure is a zero or undefined change
-  shown as a signal: three identical green "up 100%" pills grown from zero, a ">999%", a bold red
-  "0.00%", a green "+0". When the prior period was zero, write "+4 (new)"; when there is nothing to
-  compare, a short grey dash where the delta would be.
+- 可选：20 个有 KPI 的界面里 9 个显示了变化量，11 个没有。
+- 10-15px（中位 14），绝不大于标签。
+  6 个界面用文字或小符号；3 个用浅色胶囊。
+- **对比窗口写成文字**："对比前 30 天"、"近 90 天内"、
+  "从 0 起步（近 4 周）"（9 个里 7 个）。
+- **只给数字上色**，或整个变化量用灰。
+- **颜色表达好与坏，不是升与降**（house rule，来自测试）。
+  每个指标都有好方向：延迟、错误率、成本、流失与回复时长
+  都是越低越好。向坏方向的变化给数字上 `--negative`
+  （或用该色的小下指符号）；向好方向的变化用 `--positive` 或灰。
+  评审把错误率 2.5× 的上升与访问量上升设成同一种灰，
+  读作隐瞒了界面唯一的坏消息。
+- **零变化或无定义的变化用灰。** 研究里最常见的 KPI 失败，
+  是把零变化或无定义的变化画成信号：三个一模一样、从零长出来的
+  绿色"上升 100%"胶囊，一个">999%"，一个加粗红色"0.00%"，
+  一个绿色"+0"。上期为零时写"+4（新增）"；没有可比对象时，
+  在变化量的位置放一条短的灰短横。
 
-## 6. Charts
+## 6. 图表
 
-### 6.1 Which chart for which question
+### 6.1 什么问题用什么图
 
-| Question | Form | In the study |
+| 问题 | 形式 | 研究中出现 |
 | --- | --- | --- |
-| Is it moving over time? | One line; an area only with a fill of 15% or less | 9 screens |
-| How much per period? | Columns with square corners | 3 |
-| How is it distributed? | A histogram with equal bins | 1 (its unequal bins are flagged) |
-| Who ranks? | A sorted horizontal bar list, or the row's fill as the bar in a one-figure list | 3 |
-| What share? | A thin ring, or a 100% stacked bar with 2px seams; five parts at most | 5 |
-| How far to the target? | A progress bar, both ends labelled, the fill the true ratio | 4 |
-| How much of the plan is used? | A track as long as the plan, the spent part filled, what is already committed as a lighter segment, an overrun past the track's end in the negative colour (`Charts.plan`) | house rule |
-| Has it drifted from its target? | One row per part: the current share as a bar with a 1px tick at the target (`Charts.bullet`); never two stacked bars to compare | house rule |
-| Where? | A map with a list beside it; the list carries the magnitudes | 1 |
-| Per period, and the running total? | The two side by side at equal width, with the same dates | 1 |
-| Which way did it flow, and how much? | Columns above and below one zero line on one scale, the axis signed and captioned on each side ("Sold" above, "Bought" below), a marked period in a second tone with its own legend entry (`Charts.diverging`) | house rule |
-| Who is away when? | A timeline of people by day, each kind of booking its own mark (`Charts.timeline`) | house rule |
-| Is there enough cover? | A team-by-day matrix of slack against the minimum (+2, +1, 0, −1), one hue ramping toward the negative colour, the headcount on hover (`Charts.matrix`) | house rule |
-| When in the day, against last time? | One row per item on a shared opening-to-closing axis: a 2px grey track, an ink dot for today, a hollow tick for the comparison day (`Charts.timeStrip`) | house rule |
+| 它随时间怎么走？ | 一条线；面积图仅限填充 15% 或更少 | 9 个界面 |
+| 每个周期多少？ | 直角柱形 | 3 |
+| 分布如何？ | 等宽分桶的直方图 | 1（其不等宽分桶被标记） |
+| 谁排在前面？ | 排序的横向条形列表，或单数字列表里以行填充作条 | 3 |
+| 占比几何？ | 细圆环，或带 2px 接缝的 100% 堆叠条；至多五部分 | 5 |
+| 距目标多远？ | 进度条，两端都有标签，填充为真实比例 | 4 |
+| 计划用掉多少？ | 一条与计划等长的轨道，已花部分填充，已承诺部分为更浅一段，超出轨道末端的透支用负面色（`Charts.plan`） | house rule |
+| 相对目标偏了多少？ | 每部分一行：当前份额作条，目标处一根 1px 刻度（`Charts.bullet`）；绝不用两根叠起的条作比较 | house rule |
+| 在哪里？ | 地图旁配列表；数量级由列表承载 | 1 |
+| 每期多少，累计多少？ | 两者等宽并排，日期一致 | 1 |
+| 往哪个方向流，流量多少？ | 柱形分布在同一条零线上下、同一比例尺，轴带正负号且两侧各有说明（上"卖出"、下"买入"），标记周期用第二色调并配自己的图例项（`Charts.diverging`） | house rule |
+| 谁什么时候不在？ | 按天排人的时间线，每种预约各有标记（`Charts.timeline`） | house rule |
+| 人手够吗？ | 团队×天的余量矩阵（相对最低要求 +2、+1、0、−1），单一色相向负面色加深，悬停显示人数（`Charts.matrix`） | house rule |
+| 一天中的什么时候，与上次比呢？ | 每项一行、共用一条从开门到打烊的轴：2px 灰轨道，今天用墨色圆点，对比日用空心刻度（`Charts.timeStrip`） | house rule |
 
-Three more, from testing:
+再加三条，来自测试：
 
-- **The pair of per-period bars and the running total is used once per screen**, and only when the
-  total crosses a line that matters (capacity, a target). Three such pairs in six charts read as one
-  pattern stamped out.
-- **A series that is flat except for one event** gets at most two-thirds of the width and about 140px of
-  height, or a range capped at about twice its reference line with the off-scale peak labelled
-  (`Charts.line({ max })`). A full-width plot that is 85% empty was the biggest block on a first
-  screen and was marked down.
-- **A forecast is not a fact**: after today the line is dashed and the end value is labelled
-  (`Charts.line({ today, endLabel })`), with the gap to the target bracketed when there is one.
-- **What the brief asks to see over time is drawn on the first screen.** KPI cells may switch the chart
-  only between metrics the brief did not name.
+- **每期柱形加累计的这对组合每屏只用一次**，且只在累计会越过
+  一条有意义的线时（容量、目标）。六张图里三对这样的组合，
+  读起来像流水线印出来的。
+- **除一个事件外全程平坦的系列**至多占三分之二宽、约 140px 高，
+  或把量程压到参考线的约两倍并标出超界尖峰（`Charts.line({ max })`）。
+  一张 85% 空白的全宽绘图区曾是首屏最大的区块，被扣了分。
+- **预测不是事实**：今天之后线画成虚线并标注终点值
+  （`Charts.line({ today, endLabel })`），
+  与目标之间有差距时用括弧标出。
+- **简报要求看时间走势的东西画在首屏上。** KPI 格切换图表时，
+  只能在简报没有点名的指标之间切。
 
-When there are only a few numbers, draw no chart: four screens skip it, and the settings page links
-to the analytics screen with "View more".
+数字很少时不画图：四个界面直接省掉，
+设置页用"查看更多"链接到数据分析界面。
 
-### 6.2 One question, one series
+### 6.2 一个问题，一个系列
 
-One series per chart is the norm; three is the most any screen draws. To show another metric, switch
-it with a control (a segmented control, a dropdown, the KPIs as tabs) instead of overlaying lines.
-Plots run 112-264px tall (median about 195) and 316-1136px wide (median about 570), an aspect of 1.8
-to 5.2.
+每张图一个系列是常态；任何界面最多画三个。要展示另一个指标，
+用控件切换（分段控件、下拉框、KPI 充当标签页），
+而不是把线叠在一起。绘图区高 112-264px（中位约 195）、
+宽 316-1136px（中位约 570），宽高比 1.8 到 5.2。
 
-### 6.3 Axes and gridlines
+### 6.3 轴与网格线
 
-- **Gridlines** run horizontally only on 7 of the 12 cartesian charts, both ways on 3, and not at all
-  on 2. Use 3-5 (the study runs 3-7, median 4-5): 1px, solid, about #e5e5e5 on light (range
-  #cfcfd2-#f2f2f2), #2b2b2b on #111. Dashed lines are allowed in chart grids (4 screens: 3/3, 4/4,
-  3/2.5) and nowhere else on the screen.
-- **No y-axis line.** The baseline is the one heavier line (2px on two screens, 1px on one); full axes
-  on one.
-- **Y ticks**: 4-7, median 5, at 11-16px (median 12) in grey (#5f5f5f-#6c6c6c), on the left (8
-  screens) or the right (2). Round, even steps (0/5/10/15%; 0-600 by 150), the top tick above the
-  maximum, integers for counts, and zero as the baseline for bars and counts.
-- **Never without a scale.** Two screens draw no y-scale and show magnitude only on hover; both are
-  flagged. So are uneven ticks (0/3/6/10), a 0.8 tick on a count, a top tick equal to the maximum so
-  the line hits the plot's edge, and a cumulative axis that starts at 1.
-- **Axis text no larger than the data.** 15-16px ticks beside 14px values are flagged as louder than
-  the numbers.
-- **X labels**: 4-8 per chart, flat, never rotated (40 degrees is flagged), the first and last pulled
-  inside the plot, on one step all the way: a forced closing label after 14:00 on a 90-minute step
-  left a short last gap that a judge measured. Choose a step that lands on the end (hourly from 08:00
-  to 15:00) or leave the end unlabelled. Labelling only the two ends hides when things happened. Irregular dates on a
-  categorical axis are flagged: time goes on a time scale.
+- **网格线**：12 个直角坐标系图表里 7 个只有横向，3 个双向，2 个没有。
+  用 3-5 条（研究样本 3-7 条，中位 4-5）：1px、实线，
+  浅色下约 #e5e5e5（范围 #cfcfd2-#f2f2f2），#111 上用 #2b2b2b。
+  虚线只允许出现在图表网格里（4 个界面：3/3、4/4、3/2.5），
+  屏上其他地方一概不许。
+- **不画 y 轴线。** 基线是唯一更重的那条（两个界面 2px，一个 1px）；
+  一个界面画了全轴。
+- **y 刻度**：4-7 个，中位 5，11-16px（中位 12）灰字（#5f5f5f-#6c6c6c），
+  放左边（8 个界面）或右边（2）。取整、等步长
+  （0/5/10/15%；0-600 按 150 递增），顶端刻度高于最大值，
+  计数用整数，柱形与计数以零为基线。
+- **绝不能没有标度。** 两个界面不画 y 标度、只在悬停时显示数量级；
+  两个都被标记。不均匀刻度（0/3/6/10）、计数轴上出现 0.8 刻度、
+  顶端刻度等于最大值导致线顶到绘图区边缘、
+  从 1 起步的累计轴，同样被标记。
+- **轴文字不大于数据。** 15-16px 的刻度挨着 14px 的数值，
+  会被标记为比数字更响。
+- **x 标签**：每图 4-8 个，水平，绝不旋转（40 度被标记），
+  首尾标签收进绘图区，全程同一节距：在 90 分钟节距上硬塞一个
+  14:00 之后的打烊标签，留下一段很短的尾距，被评审量了出来。
+  选一个正好落在终点的节距（08:00 到 15:00 每小时一根），
+  或让终点空着不标。只标两端会掩盖事情发生的时刻。
+  分类轴上放不规则日期被标记：时间要放在时间标度上。
 
-### 6.4 Marks
+### 6.4 标记
 
-- **Lines** 1-3px, median 2, in straight segments. Four screens smooth their lines, and one smoothed
-  curve invents values between daily totals (flagged), so draw straight segments. No point markers,
-  except a hover dot (8px on one screen).
-- **Fill**: none on 7 of 10 time charts. At most a flat tint of about 14%, or a fade from the line to
-  transparent over 150-200px.
-- **Bars** have square corners (4 screens), or at most a 4px top radius with a square bottom on the
-  baseline. Stacked segments are split by a 1-2px seam.
-- **Colour.** One hue per chart. The accent touches only data on 8 screens, and data ink is under 3%
-  of the pixels on most. Neutral series are fine and often better: a near-black line that turns pale
-  grey after the cursor; a white line against a red one; signs instead of colour ("+$24,000,000").
-  But the one hue, when the style has one, goes on the screen's main data element (today's series,
-  the booked bars, the current period, the margin that breaks), not on a secondary chart or a delta:
-  in testing, an all-ink screen with no hue on any of its data read as a kit.
-  One subject keeps one hue across the screen: the same subscribers drawn pink in one chart and indigo
-  in the next is flagged. Unrelated hues on one screen (three, five) are flagged every time. Status
-  colours are for status. The inspector warns over four hues and fails over six.
-- **Legends.** None for a single series (9 charts): the title or the dropdown names it. Otherwise five
-  items at most, as a 5-8px dot with a 12-14px grey label in the card's header, or as a small table
-  (dot, name, value, change) that makes the legend carry data. Never list a series that has no data
-  (flagged). Every swatch is the mark it explains, scaled down: the legend dot is the line's colour,
-  a hatched bar's swatch is hatched. A swatch drawn separately from the mark drifted from it in testing
-  (a black outline with a red edge explaining a red outline); the helpers return the legend built from
-  the same style object as the marks.
-- **Rings** only for three to five parts of a whole that are not already listed beside them (a ring
-  redrawing the spent, due and left figures of the tile next to it was marked redundant). Never
-  labelled on the slices; the total sits in the centre or beside the ring. The
-  screens noted for their rings use thin strokes: 3-5px on a 90-154px ring, 8px on 182px. Two others
-  use 28 and 37px.
-- **Progress bars** are 4-24px tall (median 8), fully rounded, with both ends labelled ("Skilled 200"
-  and "Expert 2,000"); the fill is the true ratio, so 303 on that scale fills 22px of 392. A zero has
-  no stub (a 6px stub at zero is flagged).
-- **Tooltips** are bare text or a plain box without an arrow: label and value on one line.
-- **Annotate the event that matters.** A step or a spike more than about three times the usual change
-  gets a 1px marker and a 12px label naming its cause ("Deploy a3f09c1", "Newsletter featured");
-  reference lines (a budget, an SLO, a start time) are 1px dashed with their label at the end. In
-  testing, an unexplained jump was the first thing a judge asked about. `Charts.line`,
-  `Charts.bars` and `Charts.diverging` take `annotations` and `reference`.
-- **Labels never collide.** Annotation labels sit in rows above the plot, each beside the top of its
-  own leader line, and no leader line runs through another label; the rows are reserved only when a
-  label exists, so a chart without one has no dead band above it. The "Now" label of a forecast goes
-  on whichever side of its line the series does not cross. Lay labels out after the fonts load, or
-  the label set changes between loads (it did in testing). The helpers do all of this; give a label
-  that may not fit a `short` form.
-- **Use the helper, then extend it.** Draw charts with `assets/charts.js` and add what a chart needs to
-  it, rather than writing new axis code: in testing, every chart written from scratch on a phone put
-  its y labels on top of its line.
-- **Short and empty histories are drawn honestly**: a flat zero line with one spike, missing bars for
-  empty periods, no padded y-range, no "No data" picture. Do not give one point the screen's largest
-  plot, though: a lone dot in a full-size grid reads as barren (flagged once).
+- **折线** 1-3px，中位 2，直线段。四个界面把线磨圆，
+  其中一条平滑曲线在每日合计之间编造数值（被标记），所以画直线段。
+  不加数据点标记，悬停圆点除外（一个界面 8px）。
+- **填充**：10 张时间图里 7 张无填充。至多一层约 14% 的平色淡染，
+  或从线向下 150-200px 渐隐到透明。
+- **柱形**直角（4 个界面），或至多顶部 4px 圆角、
+  底边在基线上保持直角。堆叠段之间以 1-2px 接缝分隔。
+- **颜色。** 每图一个色相。8 个界面上主色只碰数据，
+  大多数界面数据墨色低于 3% 像素。中性系列完全可行且往往更好：
+  一条近黑线在光标之后转为淡灰；白线对红线；
+  用正负号代替颜色（"+$24,000,000"）。但风格带主色时，
+  这一个色相要放在界面的主数据元素上（今天的系列、已预订的柱形、
+  当前周期、会破的余量），不是放在次要图表或变化量上：测试中，
+  一张全墨色、任何数据都不带色相的界面读起来像组件包。
+  同一主体在整个界面保持同一色相：同一批订阅者一张图画成粉色、
+  另一张画成靛蓝会被标记。同一界面出现互不相干的色相（三个、五个）
+  每次都被标记。状态色只用于状态。
+  检查器对超过四个色相警告，超过六个判失败。
+- **图例。** 单一系列不放图例（9 张图）：由标题或下拉框点名。
+  否则至多五项，做成卡片头里 5-8px 圆点配 12-14px 灰标签，
+  或做成小表格（圆点、名称、数值、变化量），让图例承载数据。
+  绝不列出没有数据的系列（被标记）。
+  每个色样就是它解释的标记的缩小版：图例圆点用线的颜色，
+  斜纹柱的色样就带斜纹。单独另画的色样在测试中会与标记漂移
+  （黑描边加红边去解释一个红描边）；辅助函数返回的图例
+  与标记出自同一个样式对象。
+- **圆环**只用于整体的三到五个部分，且这些部分没有已经在旁边列出来的
+  （一个圆环把旁边磁贴里已花、应付、剩余三个数字重画一遍，被判冗余）。
+  绝不在扇区上标数字；总数放在环心或环旁。
+  以圆环见长的界面用细描边：90-154px 的环配 3-5px，
+  182px 的配 8px。另有两个用 28 与 37px。
+- **进度条**高 4-24px（中位 8），全圆角，
+  两端都有标签（"熟练 200"与"专家 2,000"）；填充是真实比例，
+  303 在那个标度上填 392px 里的 22px。
+  零不留小段（零处留 6px 小段被标记）。
+- **提示框**是裸文字或无箭头的素净方框：标签与数值同一行。
+- **给关键事件加标注。** 超过日常变化约三倍的台阶或尖峰，
+  配一根 1px 标记线与一条 12px 标签写明原因
+  （"Deploy a3f09c1"、"Newsletter 精选"）；
+  参考线（预算、SLO、起始时刻）用 1px 虚线、标签放末端。
+  测试中，一段无法解释的跳变是评审问的第一个问题。
+  `Charts.line`、`Charts.bars` 与 `Charts.diverging`
+  支持 `annotations` 与 `reference`。
+- **标签绝不相撞。** 标注标签按行排在绘图区上方，
+  各自挨着自己引导线的顶端，引导线绝不穿过其他标签；
+  只有存在标签时才保留这些行，没有标签的图表上方就没有死带。
+  预测的"Now"标签放在其线不与系列相交的那一侧。
+  标签排版在字体加载完成之后做，否则两次加载之间标签集合会变
+  （测试中真的变了）。辅助函数都处理好了；
+  可能放不下的标签给一个 `short` 形式。
+- **先用辅助函数，再扩展它。** 图表用 `assets/charts.js` 画，
+  缺什么往它身上加，而不是另写轴代码：测试中，
+  手机上从零手写的图表无一例外把 y 标签压在了线上。
+- **短而空的历程如实画**：一条平的零线加一个尖峰、
+  空缺周期不留柱、不撑 y 量程、不放"暂无数据"占位图。
+  但不要把最大的绘图区让给一个点：满幅网格里一个孤点
+  读起来像荒地（被标记过一次）。
 
-## 7. Tables and lists
+## 7. 表格与列表
 
-### 7.1 Rows
+### 7.1 行
 
-- Single-line data rows: 36-53px, median 45.
-- Two-line rows with media: 56-92px, median 72. The pitch is the media's height plus 24-32px
-  (48 + 24, 48 + 32, 50 + 30).
-- Key-value and legend rows inside cards: 21-32px.
-- In a two-line cell, line 2 sits about 21px below line 1 (19-23), one size smaller (12-14px) and
-  grey. Two-line labels need a 40-44px pitch at least: on a 32px pitch a subline nearly touched the
-  next row's name and the list ran together (house rule, from testing).
-- Overview lists show 2-5 rows.
+- 单行数据行：36-53px，中位 45。
+- 带媒体的两行行：56-92px，中位 72。节距是媒体高度加 24-32px
+  （48 + 24、48 + 32、50 + 30）。
+- 卡片内的键值行与图例行：21-32px。
+- 两行单元格里，第二行距第一行约 21px（19-23），小一号（12-14px）且为灰。
+  两行标签的节距至少要 40-44px：32px 节距下副行几乎碰到下一行的名字，
+  整个列表粘成一团（house rule，来自测试）。
+- 总览列表显示 2-5 行。
 
-### 7.2 Header
+### 7.2 表头
 
-- 11-14px, median 12, mostly regular weight, grey, sentence case (9 of the 11 headed tables). The one
-  uppercase header in the study is flagged as louder than the data.
-- **No fill band** (0 of 11) and **no rule under it** on 8 of 11. Where there is a rule, it is the
-  strongest line in the table (#e5e7eb over #f3f4f6 row rules).
-- Header row 36-40px.
-- Numeric headers are right-aligned and flush with their values; a header that stops 15px short of
-  its column is flagged. A header over a control aligns with the control it labels (centred over a
-  column of steppers), and a delta beside a stepper gets its own narrow unlabelled column; three
-  alignments in one header row were flagged.
-- A sort glyph on the active column only.
+- 11-14px，中位 12，多为常规字重，灰色，句首大写
+  （11 个带表头的表格里 9 个）。研究里唯一的全大写表头
+  被标记为比数据更响。
+- **无填充色带**（11 个中 0 个），**表头下无分隔线**的 8/11。
+  有分隔线时，它是表内最重的一条
+  （#e5e7eb 压过 #f3f4f6 的行分隔线）。
+- 表头行 36-40px。
+- 数字表头右对齐、与数值齐边；表头距所在列还差 15px 就停住会被标记。
+  控件上方的表头与其标注的控件对齐（在步进器一列上方居中），
+  步进器旁的变化量独占一条窄的无标签列；
+  一行表头里出现三种对齐被标记。
+- 排序符号只出现在当前排序列上。
 
-### 7.3 Dividers
+### 7.3 分隔线
 
-- **No zebra striping** (0 of 23).
-- No row dividers on about half the lists; they rely on a 61-92px pitch or on 2-8px gaps between
-  filled rows.
-- When present: 1px, 3-7% darker than the surface (#ededed-#f4f4f4 on white; #161616 on #000,
-  #1b1a1f on #131217).
-- Extent: bleeding 8-9px past the text edge; starting at the text column and skipping the media; or
-  the full inner width. Pick one per screen.
+- **无斑马纹**（23 个中 0 个）。
+- 约一半的列表没有行分隔线；它们靠 61-92px 的节距，
+  或靠填充行之间 2-8px 的空隙。
+- 有分隔线时：1px，比表面深 3-7%
+  （白上 #ededed-#f4f4f4；#000 上 #161616，#131217 上 #1b1a1f）。
+- 覆盖范围：溢出文字边缘 8-9px；从文字列起、跳过媒体；
+  或通栏内宽。每屏选定一种。
 
-### 7.4 Figures and alignment
+### 7.4 数字与对齐
 
-- **Numbers right-aligned**, in tabular figures or a monospace. Every left-aligned numeric column and
-  every column of proportional digits in the study is flagged (durations "00:00:12" and "00:00:04"
-  that jitter, cents that drift).
-- **Fixed decimals per metric**: money 2, percentages 1 or 2, counts none. Thousands separators
-  everywhere ("$16,531.54"); abbreviate only in a capacity line ("12.7k of 20.0k"). A sign on every
-  change ("-$0.09", "+10,100 (+0.20%)"). No space after the currency sign (one screen's "$ 89.00"
-  beside "$15.00" is flagged).
-- **The identity column gets the most width**, about a third to a half of the table, and it is never
-  the one cut off at desktop width: shorten names editorially first (drop the issuer every row
-  shares, the share class, "Ltd") and use the same short name at every width.
-- **One right edge per row or card**: every right-aligned figure inside a card or row ends on the same
-  padding line (a days-in-stage figure 18px short of the value above it reads as a second edge).
-- **Two measures stack in one cell** rather than taking two columns: a count over its 12px grey
-  percentage, a date over its time, a money value over the amount in units, both lines on one right
-  edge.
-- **Dates** in ISO form and right-aligned where rows are compared ("2024-02-15"); in words for
-  recency ("Today", "Yesterday", "6 days").
-- **IDs** in a monospace at body size, truncated to about 8 characters with an ellipsis and a copy
-  icon 12px after.
-- Truncate to one line with an ellipsis; never break inside a word.
-- **A breakdown in a narrow card** ("Headingley 6 · Chapel Allerton 5 · Meanwood 3") goes in fixed
-  mini-columns, or each item is `nowrap` with its separator attached to the next item, so no line ends
-  on a dangling "·".
-- **An edited cell shows that it changed** (house rule, from testing). In an editable grid a changed
-  value carries a mark (a dot, a tinted border), and the column header or a caption names the
-  baseline ("vs the usual Monday"); a bare grey "+5" beside a stepper was read as noise.
+- **数字右对齐**，用等宽数字或等宽字体。研究里每个左对齐的数字列、
+  每列比例数字都被标记（"00:00:12"与"00:00:04"的时长抖动、
+  分位漂移）。
+- **每种指标固定小数位**：钱 2 位，百分比 1 或 2 位，计数不带。
+  到处用千位分隔符（"$16,531.54"）；只在容量行里缩写
+  （"12.7k of 20.0k"）。每个变化量带正负号
+  （"-$0.09"、"+10,100 (+0.20%)"）。货币符号后不留空格
+  （一个界面"$ 89.00"挨着"$15.00"被标记）。
+- **身份列拿最宽的份**，约占表格的三分之一到一半，
+  且绝不是桌面宽度下被截断的那列：先从编辑角度缩短名称
+  （去掉每行共有的发行方、股份类别、"Ltd"），
+  并在任何宽度下用同一个短名。
+- **每行或每卡一条右缘**：卡片或行内所有右对齐数字
+  都结束在同一条内边距线上（停留天数比上方数值短 18px，
+  会被读成第二条边）。
+- **两个量叠在一个单元格**，而不是占两列：计数压着 12px 灰色百分比，
+  日期压着时间，金额压着按单位的数量，两行共一条右缘。
+- **日期**在需要逐行比较时用 ISO 形式并右对齐（"2024-02-15"）；
+  表达新旧用文字（"今天"、"昨天"、"6 天"）。
+- **ID** 用等宽字体、正文字号，截到约 8 字符加省略号，
+  12px 后跟一个复制图标。
+- 截成一行加省略号；绝不在词中间断开。
+- **窄卡片里的细分数据**（"Headingley 6 · Chapel Allerton 5 · Meanwood 3"）
+  放进固定的迷你列，或每项 `nowrap` 且分隔符挂在下一项上，
+  行尾绝不悬着一个"·"。
+- **被编辑的单元格要显示它变过**（house rule，来自测试）。
+  可编辑栅格里，改动过的值带标记（一个点、一圈着色边框），
+  列头或图注写明基准（"对比平常的周一"）；
+  步进器旁一个孤零零的灰"+5"被读成噪声。
 
-### 7.5 Ink inside rows
+### 7.5 行内墨色
 
-- Only the identity and the key number get the primary ink; everything else is grey ("5" in ink,
-  " /10" in grey).
-- A missing value is a grey dash; a real zero is printed ("$0", "0.00%", "0% (0)").
-- The sign lives in the text, not in the colour: income green with a "+", expenses in ink, no red on
-  every negative.
-- Link colour on the name cell only, with no underline.
+- 只有身份与关键数字用主墨色；其余都是灰
+  （"5"用墨色、" /10"用灰）。
+- 缺失值是灰短横；真实的零照印（"$0"、"0.00%"、"0% (0)"）。
+- 正负号写在文字里，不靠颜色：收入用绿色配"+"，支出用墨色，
+  不要每个负数都标红。
+- 链接色只用于名称格，不带下划线。
 
-### 7.6 Status pills
+### 7.6 状态胶囊
 
-- 15-28px tall (median 20), text 9-14px in the study (median 12) at 500; nothing under 11px here. A
-  full pill or a 3-5px tag.
-- A pale tint with dark text of the same hue, optionally a 1px border one step darker: #dcfae5 with
-  #04250e, #ffedea with #831c1e.
-- Neutral states are monochrome chips with a glyph ("Public" with a globe).
-- A state machine uses one hue at three intensities: grey for off, the full hue for the call to
-  action, a dark tint for running. A saturated fill with white text only for that one call to action,
-  and only while it is rare: when more than about a fifth of the visible rows carry it, it becomes a
-  stripe of black blobs louder than the data (marked down in testing); use the pale pair or a 6px dot
-  with an ink label instead.
-- **One status mark per row.** A tag and a badge that say the same thing are flagged.
-- **A chip is never squeezed.** Tags and pills are `flex: none; white-space: nowrap`: in testing a
-  table column collapsed an environment chip to a 12px box with its word spilling out.
+- 高 15-28px（中位 20），文字 9-14px（中位 12）字重 500；
+  这里没有任何小于 11px 的字。整颗胶囊或 3-5px 的小标签。
+- 浅淡底色配同色相深文字，可选一条深一档的 1px 边框：
+  #dcfae5 配 #04250e，#ffedea 配 #831c1e。
+- 中性状态是单色小标签配符号（"公开"配地球图标）。
+- 状态机用一个色相的三档强度：灰=停用，全饱和色相=召唤操作，
+  深色调=运行中。饱和填充配白字只留给那一个召唤操作，
+  且只在它稀少时用：可见行里超过约五分之一都带着它时，
+  它就成了一条比数据更响的黑点子条纹（测试中被扣分）；
+  改用浅色对或 6px 圆点配墨色标签。
+- **每行一个状态标记。** 一个标签加一个徽标说同一件事，会被标记。
+- **小标签绝不被挤压。** 标签与胶囊设 `flex: none; white-space: nowrap`：
+  测试中一个表格列把环境小标签压成 12px 的方块，
+  文字溢出在外。
 
-### 7.7 Media
+### 7.7 媒体
 
-16px logos in dense rows; 24-32px avatars; 48-50px in two-line rows. Circles for people, tokens and
-companies; a 2-3px radius for artwork and flags; 8px for photographs. One fixed media slot down the
-list so the text starts on one edge (a 50px slot with the text 16px after it). Media-to-text gap
-10-16px, median 12.
+密排行里 16px logo；头像 24-32px；两行行里 48-50px。
+人、代币与公司用圆形；艺术图与旗帜用 2-3px 圆角；照片用 8px。
+整列固定一个媒体槽，让文字起于同一条边
+（50px 槽，文字在其后 16px）。媒体与文字间距 10-16px，中位 12。
 
-### 7.8 Actions and paging
+### 7.8 操作与翻页
 
-- **No pagination on an overview** (0 of 23). Cap the rows and link out: "View all" in the section
-  header, a 30px outlined button under the list, a full-width 32px bar. State the total ("3 tracks").
-- Row actions: none on 9 screens; otherwise one kebab at the far right. Reserve a trailing action
-  column only when most rows carry the action; otherwise the action is an ink text action on the
-  row's second line and the figures stay flush to the card edge. When a row needs doing
-  (a bill to pay, an order to pack, a failed deploy), its action is a visible ghost button or an ink
-  text action in one fixed trailing column, at the same pitch for every row; never muted grey text,
-  and never stacked under the amount so the rows change height.
-- Checkboxes only where bulk actions exist (one screen: 18px, 2px stroke, 3px radius).
-- Hover and selected: a 1px outline at 6px radius overhanging the panel by 1px, or a darker border
-  with a 1px ring. No hover that changes the fill was seen. In a list that drives a detail pane (an
-  inbox, a queue), the selected row takes the `--active` fill of the nav pill instead, so it cannot be
-  mistaken for a focus ring or a hover (house rule, from testing).
-- Toolbar: one search, 30-36px tall (256x30, 252x36, 316x32).
-- **A full list screen** (house rule; the study has none): state the total above the table, keep the
-  header row in view while scrolling, and page or load more at the end with the range shown
-  ("1-50 of 1,284").
+- **总览不分页**（23 个中 0 个）。截住行数、用链接出去：
+  区块头的"查看全部"、列表下 30px 的描边按钮、通栏 32px 的横条。
+  写明总数（"共 3 条曲目"）。
+- 行操作：9 个界面没有；其余在最右一个 kebab 菜单。
+  只有多数行都带操作时才保留尾列；否则操作是第二行上的墨色文字动作，
+  数字仍齐卡片边。当一行需要处理（要付的账单、要打包的订单、
+  失败的部署），它的操作是一枚看得见的幽灵按钮或墨色文字动作，
+  放在同一条固定尾列、每行同一节距；绝不用弱化灰字，
+  也绝不叠在金额下面让行高变化。
+- 复选框只出现在有批量操作的地方（一个界面：18px、2px 描边、3px 圆角）。
+- 悬停与选中：6px 圆角的 1px 描边、比面板外扩 1px，
+  或更深的边框加 1px 光环。没有见到改变填充色的悬停。
+  在驱动详情面板的列表（收件箱、队列）里，
+  选中行改用导航胶囊的 `--active` 填充，
+  避免被误认成聚焦环或悬停（house rule，来自测试）。
+- 工具栏：一个搜索框，高 30-36px（256x30、252x36、316x32）。
+- **完整的列表界面**（house rule；研究里没有）：表格上方写明总数，
+  滚动时表头行保持可见，末尾翻页或加载更多并显示范围
+  （"共 1,284 条，当前 1-50"）。
 
-### 7.9 Lists that carry data
+### 7.9 承载数据的列表
 
-- **The row fill is the bar**: the row's rounded background (radius 8) as wide as its share of the
-  largest share; 44px rows, 2px gaps. Only in a one-figure ranking list (a label and one value): in a
-  row with several columns or two lines, the fill's edge cuts through the words (failed in testing).
-  Planned against spent is a separate 6-8px track under the label (`Charts.plan`).
-- **Bar list**: a 64px pitch, a label line, then a 10px pill bar with the value 5px after its end; the
-  longest bar about 88% of the width; one colour, no track.
-- **Inline bars in a list are thin and grey** unless they are the screen's main series: 2-3px at
-  most. A ranked list of money in a narrow card carries a 2px proportional bar under each label, grey
-  with the top item in ink (`Charts.barList(el, rows, { thin: true })`), so "most costly first" is
-  seen and not only read. In testing, six 4px black bars were the loudest marks on the screen.
-- **A timeline draws its comparison.** When the brief asks "against last Sunday", the comparison is a
-  mark on the same axis (`Charts.timeStrip`: an ink dot for today, a hollow tick for the comparison
-  day), not only a line of text.
-- **Legend as table**: dot, name, pill, value and change on a 57px pitch.
-- **Key-value well**: a tinted well, radius 8, 32px rows, label left, figure right.
-- **Feed as row cards**: 63px tall, 8px gaps, radius 14, a fill one step lighter and a border one step
-  darker than the panel, a relative date on the right.
-- **Tree**: no dividers, 8px of indent per level, ink against grey by level, a pitch of about 30px,
-  about 45px between groups.
+- **行填充就是条形**：行的圆角背景（圆角 8），
+  宽度等于它占最大份额的比例；行高 44px，间隙 2px。
+  只用于单数字排名列表（一个标签一个数值）：
+  多列或两行的行里，填充边缘会切过文字（测试中失败）。
+  计划对支出是标签下另一条 6-8px 的轨道（`Charts.plan`）。
+- **条形列表**：节距 64px，一行标签，然后 10px 胶囊条、
+  数值在其末端后 5px；最长的条约占宽度 88%；单色，无轨道。
+- **列表内的行内条又细又灰**，除非它就是界面的主系列：至多 2-3px。
+  窄卡片里的金额排名列表，每个标签下带 2px 比例条，
+  灰色、首位用墨色（`Charts.barList(el, rows, { thin: true })`），
+  让"花费最多在前"被看见而不只是被读到。测试中，
+  六根 4px 黑条是全屏最响的标记。
+- **时间线要画出对比。** 简报要求"对比上周日"时，
+  对比是同一根轴上的一个标记（`Charts.timeStrip`：今天用墨色圆点，
+  对比日用空心刻度），不只是一行文字。
+- **图例做成表格**：圆点、名称、胶囊、数值与变化量，节距 57px。
+- **键值凹槽**：着色凹槽，圆角 8，行高 32px，标签在左、数字在右。
+- **信息流做成行卡片**：高 63px，间隙 8px，圆角 14，
+  填充比面板浅一档、边框深一档，右侧放相对日期。
+- **树**：无分隔线，每级缩进 8px，墨色与灰色按层级区分，
+  节距约 30px，组间约 45px。
 
-## 8. Forms and settings
+## 8. 表单与设置
 
-The study holds forms on three screens and one settings page, so this section rests on little. It is
-enough for the defaults.
+研究里只有三个界面带表单和一页设置，所以本节根基很薄。
+对默认值来说够用了。
 
-### 8.1 Fields
+### 8.1 字段
 
-- **Label above the field**, 14px at 500, 8-10px gap. No floating labels and no placeholder standing
-  in for a label.
-- **Inputs** 38-40px in forms (radius 8-10); toolbar and filter controls 28-40px, median 32. One
-  control height per context.
-- Inputs stay white with a 1px #e5e7eb-#e8e8e8 border even on a grey panel; filter and select
-  controls take a border one step darker (#cdcfcf-#d1d5db).
-- A leading icon at 14px, 13px in from the edge, with the text starting at 38px.
-- **Spacing**: 24px from a description to the first label, 16px between fields, 16px to the Save
-  button.
-- **A joined input and action** (a read-only link and its Copy button) share a border and square
-  their inner corners.
-- **Toggles** 28x16 to 33x20. The on colour is a semantic green or near-black, not the brand accent.
-- **Disabled** controls stay legible and say why they are disabled: the study's disabled Save
-  (#cecece on #f4f4f4, about 1.4:1) and its plan-locked panel at 30% opacity are flagged as
-  unreadable.
+- **标签在字段上方**，14px、字重 500，间距 8-10px。
+  不用浮动标签，也不让占位文字冒充标签。
+- **输入框**在表单里 38-40px（圆角 8-10）；工具栏与筛选控件 28-40px，
+  中位 32。同一语境一种控件高度。
+- 输入框即使在灰色面板上也保持白色、1px #e5e7eb-#e8e8e8 边框；
+  筛选与下拉控件用深一档的边框（#cdcfcf-#d1d5db）。
+- 前置图标 14px，距边缘内缩 13px，文字从 38px 起。
+- **间距**：描述到第一个标签 24px，字段之间 16px，到保存按钮 16px。
+- **相连的输入框与动作**（只读链接和它的复制按钮）
+  共用边框、内侧直角相接。
+- **开关** 28x16 到 33x20。开启色是语义绿或近黑，不是品牌主色。
+- **禁用**的控件保持可读，并说明为何禁用：研究里禁用的保存按钮
+  （#cecece on #f4f4f4，约 1.4:1）和 30% 不透明度的套餐锁定面板
+  被标记为不可读。
 
-### 8.2 Settings layout
+### 8.2 设置布局
 
-- Each section is a row: a label column (about 450px: a 16/500 title and a 14px grey description)
-  beside a panel (about 700px, #fafafa, radius 16, padding 16, no border, no shadow). The title's cap
-  top aligns with the panel's first line, 6-8px below the panel's top.
-- Sections are split by a full-width 1px rule with 32px above and below.
-- A switch row: a 14/500 title, a status badge 8px after it, a 14px grey description, and the toggle
-  on the right, 16px from the edge and centred on the title line.
-- A plan-gated feature: a 48px tinted strip with a 32px button directly above the locked panel; the
-  panel stays readable.
-- Narrow containers stack: label, 10px, field, then 26px to the next pair.
-- Do not leave the label column empty beside a tall panel (a 250px void is flagged): put the section's
-  help or a summary of its current values there, or narrow the column.
-- **Destructive actions** (house rule; none in the study) go last, in a section of their own, as a
-  text or outlined button in the negative colour, with the consequence in words and a confirmation
-  that names the object.
-- **One view per area** (house rule, from testing). When settings span several areas (general,
-  members, billing, notifications), each sidebar item opens its own view (a hash route is enough in
-  a static build), with the area's name as the h1. One long page of every area, with the sidebar
-  scrolling to anchors, put the first area the brief named four screens down and was marked down.
-- **One save model per view**: every control saves itself and shows a quiet "Saved" stamp, or one
-  Save per panel at the panel's bottom right. Never a mix of both on one view.
-- **Show what the setting produces.** Beside the control that changes it, a small preview of the
-  result (the invite email, the notification as it will arrive, the plan's next invoice) is the
-  product-specific substance a settings screen otherwise lacks.
-- A settings view opens with a usage strip only when usage is its question (a plan or quota view),
-  and its figures stay smaller than its h1.
+- 每个分区是一行：标签列（约 450px：16/500 的标题加 14px 灰色描述）
+  旁配一块面板（约 700px，#fafafa，圆角 16，内边距 16，无边框，无阴影）。
+  标题的顶端对齐面板首行，位于面板顶下 6-8px。
+- 分区之间用通栏 1px 细线分隔，上下各 32px。
+- 开关行：14/500 的标题、其后 8px 一枚状态徽标、14px 灰色描述，
+  开关在右、距边缘 16px、与标题行垂直居中。
+- 套餐门槛功能：一条 48px 的着色横带、一枚 32px 按钮，
+  紧贴锁定面板上方；面板保持可读。
+- 窄容器纵向堆叠：标签、10px、字段，然后 26px 到下一对。
+- 不要让标签列在高面板旁空着（250px 空洞被标记）：
+  放该分区的帮助或当前值摘要，或收窄该列。
+- **危险操作**（house rule；研究里没有）放最后，单独一个分区，
+  用负面色的文字或描边按钮，写明后果，确认框点名对象。
+- **每个区域一个视图**（house rule，来自测试）。当设置横跨多个区域
+  （通用、成员、账单、通知），每个侧边栏条目打开自己的视图
+  （静态构建里一个 hash 路由就够），以区域名作 h1。
+  把所有区域做成一个长页、侧边栏滚动到锚点的做法，
+  让简报点名的第一个区域沉到了四屏之下，被扣分。
+- **每个视图一种保存模式**：要么每个控件自行保存并安静地显示"已保存"戳，
+  要么每个面板底部右侧一个保存按钮。同一视图绝不混用两种。
+- **展示设置产出的东西。** 在改动它的控件旁放一小块结果预览
+  （邀请邮件、通知到达时的样子、套餐下一张发票），
+  这是设置界面原本最缺的产品专属实质。
+- 设置视图只在用量就是它的问题时才以用量条开场（套餐或配额视图），
+  且其数字保持小于它的 h1。
 
-### 8.3 Buttons
+### 8.3 按钮
 
-Controls run 27-40px tall (median 34; 32 is the commonest), with a 6-8px radius in the tight styles
-and full pills in the soft ones. One filled primary per screen, usually near-black; a secondary is
-white with a 1px border; a tertiary is text. The controls in one row share one height.
+控件高 27-40px（中位 34；32 最常见），紧凑风格用 6-8px 圆角，
+柔和风格用全胶囊。每屏一个实心主按钮，通常近黑；
+次按钮为白色加 1px 边框；三级按钮是文字。
+同一行的控件共用一种高度。
 
-## 9. Type and colour
+## 9. 字体与颜色
 
-### 9.1 Type
+### 9.1 字体
 
-- **One grotesk.** All 23 screens use a neo-grotesk, and 14 use that one family alone. A second face
-  always has one job: a monospace for every number or for IDs only, a serif for one greeting, a brand
-  face kept to the wordmark or the switcher. Never three. Axis ticks, chart notes and labels stay in
-  the text face even when IDs are in a monospace.
-- **App type is not display type.** The h1 stays at 18-32px and no figure reaches 48px: in testing, a
-  50px serif title and a 76px balance made a budgeting screen read as a landing page (the inspector
-  warns at 34px and 48px).
-- **Sizes**:
+- **一种 grotesk。** 23 个界面全用 neo-grotesk，其中 14 个只用这一个字族。
+  第二张面孔永远只干一件事：等宽字体用于所有数字或仅用于 ID，
+  衬线体用于一处问候，品牌字体只留在字标或切换器上。绝不用三张。
+  即使 ID 用等宽字体，轴刻度、图表注释与标签也留在正文字体里。
+- **应用字体不是展示字体。** h1 保持在 18-32px，没有任何数字到 48px：
+  测试中，50px 的衬线标题加 76px 的余额，
+  让一个记账界面读起来像落地页（检查器在 34px 与 48px 处警告）。
+- **字号**：
 
-| Role | Range in the study | Median |
+| 角色 | 研究中范围 | 中位数 |
 | --- | --- | --- |
-| Page title | 14-48 | 24 |
-| KPI value | 16-40 | 24 |
-| Card title (500-600) | 14-24 | 16 |
-| Body, nav, cells | 13-16 | 14 |
-| Labels, meta | 11-14 | 12 |
-| Axis ticks | 11-16 | 12 |
-| Pills, badges | 9-14 | 11-12 (house floor 11) |
+| 页面标题 | 14-48 | 24 |
+| KPI 数值 | 16-40 | 24 |
+| 卡片标题（500-600） | 14-24 | 16 |
+| 正文、导航、单元格 | 13-16 | 14 |
+| 标签、元信息 | 11-14 | 12 |
+| 轴刻度 | 11-16 | 12 |
+| 胶囊、徽标 | 9-14 | 11-12（house 下限 11） |
 
-  A screen uses 4-9 sizes, median 6. The cleanest scales in the study are 12/14/18/24, 12/14/16/30
-  and 12/14/16/24.
-- **Weights**: a median of 3 per screen; 10 of 23 never go above 600; 700 does one job per screen
-  (money, the greeting or the title).
-- **Figures**: tabular on every number in a table, in a KPI, or anywhere it updates. Check that the
-  face really has tabular figures: `font-variant-numeric: tabular-nums` must change its digit widths;
-  if it does not, take another face.
-- **Case**: sentence case on about 19 of 23; uppercase content labels on 4 only. Tracking 0, and
-  negative only on large type (-0.02em at 32px). Line height 20px for 14px text, 24px for 16px.
-- **Dark** screens set body at 13px on three, and titles at 18-20/600 or 26-28/700.
+  一个界面用 4-9 种字号，中位 6。研究里最干净的字号阶梯是
+  12/14/18/24、12/14/16/30 和 12/14/16/24。
 
-### 9.2 Colour on light screens
+- **字重**：每屏中位 3 种；23 个里 10 个从不超过 600；
+  700 每屏只干一件事（钱、问候或标题）。
+- **数字**：表格里、KPI 里、任何会刷新的地方，数字一律等宽。
+  核实字体真的带等宽数字：`font-variant-numeric: tabular-nums`
+  必须改变数字宽度；改不了就换字体。
+- **大小写**：约 19/23 用句首大写；内容标签用全大写的只有 4 个。
+  字距 0，负字距只用于大字号（32px 下 -0.02em）。
+  14px 文字行高 20px，16px 行高 24px。
+- **深色**界面里三个用 13px 正文，标题用 18-20/600 或 26-28/700。
 
-- **Ground models**: white cards on an off-white ground (10 screens; #f3f5f7 to #fdfdfd, median
-  #f9f9f9-#f9fafb); grey panels on white (6); a framed sheet (7).
-- **The sidebar is never dark or saturated** (0 of 17): it matches the page, sits 1-3 levels off it,
-  or is white on a grey page.
-- **Lines in three steps.** Card edges median #eaeaea, the working band #e5e7eb-#ededed (about 1.2:1 on
-  white). Row rules one step lighter, #efefef-#f4f4f4. Control borders one step darker, median
-  #d1d5db. #cbcecd on cards reads heavy; #f5f5f5 disappears.
-- **Text in three tiers.** Primary about #111 (range #000 to a tinted #272446). Secondary about #606060
-  (#3a3b3b-#8e8e8e). Tertiary in the study runs #969696-#9f9d9b and placeholders #9ca3af-#b0b2b6,
-  which is 2.5-3:1 on white and under the house floor. House rule: every tier that carries words
-  reaches 4.5:1 on the surface it sits on, placeholders included; #6b6b6b is about the lightest grey
-  that holds on white and on #f9fafb.
-- **Accent placement**: on data only with greyscale chrome (4 screens), on actions only (2), or no
-  accent at all (2). The primary button is usually near-black. Every screen with more than one accent
-  family is flagged.
-- **Status**: positive greens in the study run #16a34a-#40a670, which is under 4.5:1 as text; use a
-  darker green such as #247b50 (5.2:1) for text, and the pale pairs for pills: positive #dcfae5 with
-  #04250e, negative #ffedea with #831c1e, a notice #fffbeb with a #fde68a border and #92400e text, a
-  count badge #c4242a-#dc3532.
+### 9.2 浅色界面的颜色
 
-### 9.3 Colour on dark screens
+- **底色模式**：白卡片放在米白底上（10 个界面；#f3f5f7 到 #fdfdfd，
+  中位 #f9f9f9-#f9fafb）；白底上放灰面板（6）；框内白纸（7）。
+- **侧边栏绝不深色或高饱和**（17 个中 0 个）：它与页面一致，
+  或相差 1-3 档，或灰页上放白色。
+- **线条分三档。** 卡片边缘中位 #eaeaea，工作带 #e5e7eb-#ededed
+  （白底上约 1.2:1）。行分隔线浅一档，#efefef-#f4f4f4。
+  控件边框深一档，中位 #d1d5db。#cbcecd 在卡片上显得重；
+  #f5f5f5 直接消失。
+- **文字分三档。** 主文字约 #111（范围 #000 到着色的 #272446）。
+  次级约 #606060（#3a3b3b-#8e8e8e）。三级在研究里是 #969696-#9f9d9b，
+  占位文字 #9ca3af-#b0b2b6，在白底上 2.5-3:1，低于 house 下限。
+  House rule：凡承载文字的层级，在所在表面上达到 4.5:1，
+  占位文字也算；#6b6b6b 约是在白色与 #f9fafb 上守得住的最浅灰。
+- **主色落点**：只放在数据上、装饰全灰阶（4 个界面），
+  只放在动作上（2），或完全无主色（2）。主按钮通常近黑。
+  主色系超过一个的界面一律被标记。
+- **状态**：研究里的正向绿是 #16a34a-#40a670，作文字时低于 4.5:1；
+  文字用更深的绿，如 #247b50（5.2:1），胶囊用浅色对：
+  正向 #dcfae5 配 #04250e，负向 #ffedea 配 #831c1e，
+  提示 #fffbeb 配 #fde68a 边框与 #92400e 文字，
+  计数徽标 #c4242a-#dc3532。
 
-- **Ground**: #000 (3 screens), #111 (2), #171719 (1). No navy and no slate.
-- **Surfaces**, three ways: a lighter step with no border (#111 on #000, nested panels at
-  #222-#2a2a2a); the ground's own fill with a 1px line (#2e2e2e on #111); darker than the ground with
-  a soft shadow (once: #131217 on #171719 with 0 12px 28px rgba(0,0,0,.2)).
-- **Lines**: structural lines 22-31 levels above the ground (#1a1a1a on #000, #2e2e2e on #111,
-  #222224 on #171719); interactive outlines brighter, #373737-#4c4c4c, so an outlined button reads as
-  clickable without a fill.
-- **Text**: #fff; secondary about #aaa (#82848a-#bbb); tertiary about #888. #4c4c4f (about 2:1) is
-  flagged. The house floor of 4.5:1 holds here too. Two greys at most, and far enough apart to read
-  as two: about #b4b4b4 for secondary text and #949494 for meta (in testing, #aaaaaa, #969696 and
-  #bbbbbb on one screen read as one grey used three ways).
-- **Accent** on data only, or on one selected state. Active nav by brightness. Emphasis without
-  colour: an inverted white pill, a grey-filled button (#212121), an outline.
-- **Status** as a hue on a dark tint of itself: #3fc07a on #172a1d; #44a282 on #1b2828. **When the
-  accent is green or yellow-green, `--positive` is the accent** (a lime accent: lime on a dark lime
-  tint), or the sign carries the meaning in neutral ink; a mint "+£3.81" beside a lime "Sold" read as
-  two greens. The same holds on light screens.
-- **Colour share** at or under 3% on all six.
+### 9.3 深色界面的颜色
 
-### 9.4 Surfaces, radius, icons, spacing
+- **底色**：#000（3 个界面）、#111（2）、#171719（1）。
+  不用藏青，不用石板灰。
+- **表面**，三种做法：亮一档且无边框（#000 上 #111，
+  嵌套面板 #222-#2a2a2a）；底色自填加 1px 线（#111 上 #2e2e2e）；
+  比底色更深加柔影（一次：#171719 上 #131217，
+  阴影 0 12px 28px rgba(0,0,0,.2)）。
+- **线条**：结构线高出底色 22-31 级（#000 上 #1a1a1a，
+  #111 上 #2e2e2e，#171719 上 #222224）；可交互描边更亮，
+  #373737-#4c4c4c，让描边按钮不带填充也读得出可点。
+- **文字**：#fff；次级约 #aaa（#82848a-#bbb）；三级约 #888。
+  #4c4c4f（约 2:1）被标记。4.5:1 的 house 下限在这里同样有效。
+  灰至多两种，且要分得足够开、读得出是两种：次级文字约 #b4b4b4，
+  元信息 #949494（测试中，一个界面上 #aaaaaa、#969696 与 #bbbbbb
+  被读成同一种灰用了三回）。
+- **主色**只放在数据上，或一个选中态上。当前导航靠亮度。
+  不用颜色的强调：反白胶囊、灰填充按钮（#212121）、描边。
+- **状态**用色相配它自己的深色调：#172a1d 上 #3fc07a；
+  #1b2828 上 #44a282。**当主色是绿或黄绿时，`--positive` 就是主色**
+  （柠檬绿主色：深柠檬绿底上配柠檬绿），或让正负号用中性墨色承载含义；
+  薄荷绿"+£3.81"挨着柠檬绿"Sold"会被读成两种绿。
+  浅色界面同理。
+- **颜色占比**在全部六个界面都 ≤3%。
 
-- **Edges.** A 1px border separates surfaces on 12 of the 17 light screens; three use a fill step
-  alone and one a shadow alone. A border or a shadow, never both. The shadows that exist are faint
-  (alpha .06 or less at 0 2px 8px; once 0 1px 4px at .12). Real shadows are for what floats: a menu,
-  a popover, a tooltip, a composer.
-- **Radius is bimodal**: tight, 4-8px (9 screens, plus square cards on one), or soft, 16-24px (10);
-  11-12px on only 3. Controls follow the cards: 6px with tight cards, full pills with soft ones.
-  Nested radii step down (20, 10, 8, 5, 4). The inspector warns over three panel radii.
-- **Group, don't box.** A set of KPIs is one card split by 1px dividers, or a bare strip with 48-52px
-  vertical dividers.
-- **Icons**: outline on 22 of 23; nav icons 14-20px (median 16) at about 1.5px; inline icons 12-14px;
-  about 10px to the label; grey (#454545-#73737f in a light nav, white or #81858a-#999 on dark). Never
-  in a saturated circle (0 of 23). A container, if any, is neutral (a #f0f0f0 disc) or codes a node
-  type in a builder.
-- **Spacing** on a 4px base: card gap 6-24px (median 16); card padding 12-34px (median 20); section
-  gap 24-64px; control height 27-40px (median 34).
+### 9.4 表面、圆角、图标与间距
 
-### 9.5 Default tokens
+- **边缘。** 17 个浅色界面里 12 个用 1px 边框分隔表面；
+  三个只用填充色阶，一个只用阴影。边框或阴影，绝不同用。
+  存在的阴影都很淡（0 2px 8px 下透明度 ≤.06；
+  一次 0 1px 4px 配 .12）。真阴影留给浮起来的东西：
+  菜单、弹出层、提示框、撰写框。
+- **圆角双峰**：紧凑 4-8px（9 个界面，另有一个用直角卡片），
+  或柔和 16-24px（10）；11-12px 只有 3 个。
+  控件跟随卡片：紧凑卡片配 6px，柔和卡片配全胶囊。
+  嵌套圆角逐级递减（20、10、8、5、4）。
+  面板圆角超过三种检查器会警告。
+- **分组，不要装盒。** 一组 KPI 是一张用 1px 分隔线切开的卡，
+  或一条带 48-52px 竖直分隔线的裸条。
+- **图标**：23 个里 22 个用轮廓风格；导航图标 14-20px（中位 16）、
+  约 1.5px 描边；行内图标 12-14px；距标签约 10px；
+  灰色（浅色导航里 #454545-#73737f，深色下白色或 #81858a-#999）。
+  绝不放进饱和圆圈（23 个中 0 个）。若有容器，则是中性的
+  （#f0f0f0 圆盘），或在构建器里编码节点类型。
+- **间距**以 4px 为基：卡片间隙 6-24px（中位 16）；
+  卡片内边距 12-34px（中位 20）；分区间距 24-64px；
+  控件高度 27-40px（中位 34）。
 
-Each style in `library/app.json` carries its own tokens. These are the study's medians for anything a
-style does not set, with the greys moved to pass 4.5:1.
+### 9.5 默认 tokens
 
-The names match the sheet `draw.mjs --app` prints and `assets/app.css`, a neutral start set to these
-defaults (shell, title row, panels, the divided KPI strip, tables, pills, controls, tabs, empty states
-and the phone fold). `assets/charts.js` draws the charts of §6 in SVG from your data (line, bars,
-diverging columns, ring, bar list, plan, bullet, timeline, cover matrix and time strip), with these
-rules built in and its colours read from these tokens.
+`library/app.json` 里每种风格带自己的 tokens。
+以下是风格未设定之处的研究中位数，灰值已调整到通过 4.5:1。
+
+这些名字与 `draw.mjs --app` 打印的样式单及 `assets/app.css` 一致；
+后者是一套按这些默认值设好的中性起点（外壳、标题行、面板、
+分格 KPI 条、表格、胶囊、控件、标签页、空状态与手机折叠）。
+`assets/charts.js` 用 SVG 从你的数据画出 §6 的图表（折线、柱形、
+分向柱、圆环、条形列表、计划、子弹图、时间线、覆盖矩阵与时间段），
+这些规则内建其中，颜色从这些 tokens 读取。
 
 ```css
 :root {
@@ -1007,193 +1058,206 @@ rules built in and its colours read from these tokens.
 td.num, th.num { text-align: right; }
 ```
 
-## 10. Density
+## 10. 密度
 
-- The studied screens hold 6 to about 120 data points, median about 25.
-  - **Sparse** (6-25): homes, settings, a single object. Card padding 20-24px, rows 56-92px, body
-    14-16px.
-  - **Medium** (25-50): analytics overviews, finance homes, list screens. Rows 44-56px, padding
-    16-24px.
-  - **Dense** (about 120, one screen): research and monitoring, read in long sessions. A 13px body,
-    28px list rows and 42px table rows, framed with generous air: 100px gutters, 64px between bands,
-    32px of card padding.
-- Density is three settings moved together: row pitch, padding and type size. Do not shrink the type
-  and keep the padding.
-- **Placed space reads as calm; leftover space reads as unfinished.** In the study, emptiness looks
-  deliberate when it comes from a fixed grid and repeated gaps, and accidental when it comes from a
-  grid that does not fit the data, a column that is empty in every row (a 300px dead band), a mostly
-  empty top bar, or a card stretched to its neighbour's height.
-- **Design for the data the account has as well as the data it will have.** Several studied screens
-  were built for a busy account and show a new one: a 673x240 plot for a line that sits on zero for
-  two thirds of its length. Keep the honest drawing, but size the block to the question, not to the
-  data the product hopes for.
+- 研究界面承载 6 到约 120 个数据点，中位约 25。
+  - **稀疏**（6-25）：主页、设置、单个对象。卡片内边距 20-24px，
+    行高 56-92px，正文 14-16px。
+  - **中等**（25-50）：分析总览、财务主页、列表界面。
+    行高 44-56px，内边距 16-24px。
+  - **致密**（约 120，一个界面）：研究与监控，长时间驻守阅读。
+    正文 13px、列表行 28px、表格行 42px，四周留足空气：
+    100px 边距、条带之间 64px、卡片内边距 32px。
+- 密度是三个参数一起动：行节距、内边距与字号。
+  不要缩字号却保留内边距。
+- **摆好的空间读作从容，剩下的空间读作没做完。** 研究里，
+  空来自固定栅格与重复的间距时显得有意，空来自装不下数据的栅格、
+  每行都空着的一列（300px 死带）、大半空着的顶栏、
+  或拉到邻居高度的卡片时显得偶然。
+- **既为账户现有的数据设计，也为它将来的数据设计。** 好几个研究界面
+  为繁忙账户而建、展示的却是新账户：一条三分之二长度贴着零的线，
+  配了 673x240 的绘图区。诚实的画法保留，但区块大小跟着问题走，
+  不跟着产品期盼的数据走。
 
-## 11. Empty, zero, loading and error states
+## 11. 空、零、加载与错误状态
 
-- **A real zero** is printed in the normal style: "$0", "0", "0%", "0.00%", "0% (0)" (10 screens). A
-  zero may be dimmed to grey when the caption beside it becomes the next step ("$0.00", then
-  "Automate your savings with up to 3.50% APY").
-- **Missing or not applicable** is a grey dash: an em dash, a "-", a 6x2px mark. Never a dash at full
-  value size: "--" at 24px reads as loading (flagged).
-- **Counts follow the view, and so does the frame.** Counts shown in scope (tabs, KPI tiles, "12
-  open") are computed from the rows in the current view or filter and recomputed on every switch. A
-  filtered block shrinks to its rows and its row-mate aligns to the top, or the block keeps a fixed
-  number of rows with one empty-state sentence; each view's subline is computed for that view.
-- **An empty side card fills with the reference data**, not one dashed box in 400px of white: before
-  anything has sold out, last Sunday's sell-out times as a quiet list under "Nothing has sold out yet
-  today".
-- **Red is a signal, not a texture**: one red mark per object at most, on the overdue or failing fact;
-  thirteen red strings on one board read as noise, and a list of deals needing attention does not
-  repeat the same flags on the board beside it.
-- **An empty section keeps its frame and its header** and adds one sentence spanning the block (in a
-  row grid, `grid-column: 1 / -1`; a message squeezed into one 34px column broke word by word in
-  testing): a 1px dashed box, radius
-  8, about 38px tall ("No channel usage in this range."), or a bordered box with an add link
-  ("+ Liability account"). In a builder, an empty slot is a dashed 1px box on the canvas colour.
-- **An empty chart is drawn**: the zero line, missing bars for empty periods, no padded range, no
-  picture.
-- **First run** (the whole screen empty): keep the frame and the title, and put the first action where
-  the data will appear, with a setup progress at its true percentage if there are steps (one screen
-  shows "Complete your setup" at 67%; another a four-cell getting-started strip above its tables).
-- **Loading** (house rule; not in the study): the final layout with each value replaced by a flat grey
-  bar at its real size (a 24px value gets a 24px-tall bar; rows keep their pitch), labels and headers
-  shown at once, no shimmer gradient, and no shift of the layout when the data lands. A refresh of
-  data already on screen keeps the old values and updates the freshness stamp.
-- **Error** (house rule; not in the study): inside the block that failed, never as a full-screen
-  banner. One sentence saying what failed and when the data was last good ("Couldn't load
-  deployments. Last updated 09:14."), and a Retry text button. The negative colour only on a small
-  icon or in the pill pair.
-- **Stale or static data**: a freshness stamp with a refresh button (6 screens). A snapshot that
-  cannot refresh says so in one quiet notice (once: #fffbeb, a 1px #fde68a border, 12px #92400e
-  text). A notice tint is never a ground; the inspector reads a pale amber ground as cream.
-- **Limits and usage**: a bar at the true ratio with both ends labelled ("12.7k of 20.0k").
+- **真实的零**按正常样式印出："$0"、"0"、"0%"、"0.00%"、"0% (0)"
+  （10 个界面）。当旁边的图注变成下一步行动时，零可以调成灰
+  （"$0.00"，接着"用最高 3.50% APY 自动存钱"）。
+- **缺失或不适用**是灰短横：长破折号、一个"-"、一枚 6x2px 的小横。
+  绝不用完整数值字号画短横：24px 的"--"读起来像加载中（被标记）。
+- **计数跟随视图，外框也是。** 范围内显示的计数（标签页、KPI 磁贴、
+  "12 个待处理"）从当前视图或筛选的行算出，每次切换都重算。
+  被筛选的区块缩到只剩自己的行、同行邻居顶对齐，
+  或区块保留固定行数、放一句空状态文案；
+  每个视图的副行都按该视图计算。
+- **空的侧卡用参照数据填满**，而不是 400px 白底上孤零零一个虚线框：
+  还没有任何东西售罄时，把上周日的售罄时刻做成安静的列表，
+  放在"今天还没有商品售罄"之下。
+- **红是信号，不是纹理**：每个对象至多一处红标，
+  放在逾期或出错的事实上；一块板子上十三串红字读起来就是噪声，
+  旁边列着待跟进交易的列表也不在板子上重复同样的旗标。
+- **空的分区保留外框与标题**，再加一句横跨区块的话
+  （行栅格里用 `grid-column: 1 / -1`；测试中挤进一条 34px 窄列的话
+  被逐词折断）：1px 虚线框、圆角 8、高约 38px
+  （"该区间没有渠道使用记录。"），或带添加链接的描边框
+  （"+ 负债账户"）。构建器里，空槽位是画布底色上的 1px 虚线框。
+- **空的图表照样画**：零线、空缺周期不补柱、不撑量程、不放占位图。
+- **首次使用**（整屏皆空）：保留外框与标题，
+  把第一步操作放在数据将要出现的位置，
+  有步骤的话放真实百分比的设置进度
+  （一个界面显示"完成初始设置"67%；
+  另一个在表格上方放四格入门条）。
+- **加载**（house rule；不在研究里）：最终布局，
+  每个值换成真实大小的平灰色条（24px 的值配 24px 高的条；
+  行保持节距），标签与表头立即显示，不用微光渐变，
+  数据到达时布局不跳动。对已在屏上的数据刷新时，
+  保留旧值并更新时间戳。
+- **错误**（house rule；不在研究里）：放在出错区块内部，
+  绝不做成全屏横幅。一句话说清什么失败了、数据上次何时正常
+  （"无法加载部署。最后更新于 09:14。"），
+  加一枚"重试"文字按钮。负面色只出现在小图标上或胶囊对里。
+- **过期或静态数据**：更新时间戳配刷新按钮（6 个界面）。
+  无法刷新的快照用一条安静的提示说明（一次：#fffbeb、
+  1px #fde68a 边框、12px #92400e 文字）。
+  提示色绝不是底色；检查器把淡琥珀底读成奶油色。
+- **限额与用量**：真实比例的条，两端都有标签（"12.7k of 20.0k"）。
 
-## 12. The phone
+## 12. 手机端
 
-The study has no phone screens. This section is house rule, built from the skill's phone rules
-(`layout.md` §9) and from what the desktop screens imply. The inspector fails a sidebar that still
-takes more than 30% of a phone's width.
+研究里没有手机界面。本节是 house rule，由本 skill 的手机规则
+（`layout.md` §9）与桌面界面所暗示的东西构成。
+侧边栏在手机上仍占超过 30% 宽度，检查器判失败。
 
-- **Navigation folds.** The sidebar becomes a 48px top bar with the screen's name, a menu button that
-  opens a full-screen sheet (nav, workspace switcher, account) and at most one action; or a bottom
-  bar of four or five destinations with short labels. An icon rail becomes that bottom bar.
-- **Margins** 16-20px; touch targets at least 44px tall; data and labels at 14px, sublines no smaller
-  than 12px.
-- **The title stays**, at 20-24px. Header actions move into a kebab, except the one primary.
-- **Filters** collapse into one row of chips or a Filters sheet; tabs scroll sideways inside their own
-  row, never the page. The first list row starts in the top 60% of the phone screen: three rows of
-  filter controls above it pushed the list off the first screen in testing.
-- **KPIs**: a divided container becomes a 2-column grid, or a list with the label on the left and the
-  value on the right. Never four squeezed columns. In a 2-column grid the count after any full-width
-  lead is even; otherwise use three narrow columns or a divided list, or let the last cell take the
-  full width (`app.css` does that for an odd count). A lone "Sold 3.18 kWh" beside an empty half-row
-  was flagged.
-- **At most one row of controls above a chart**: an office select and a week switch share one row.
-  Two stacked full-width segmented controls pushed the data down in testing.
-- **Charts** go full width, 160-200px tall, with 3-4 x labels and a legend of dots above, set in a
-  2-column grid (or behind a "Key" disclosure) when it would wrap to three lines. The y ticks keep
-  their own lane at the left (or move to the right edge); a tick label never sits on the line.
-- **Row actions on a phone** are text actions or one compact trailing button, with one filled bulk
-  action for the list ("Approve 3 that fit"); five 44px grey Approve blocks turned a list into a stack
-  of buttons.
-- **When a strip collapses, drop the item least relevant to the screen's main action**, not the last
-  in source order: the live price stays on an energy screen whose plan depends on it.
-- **Tables become lists of two-line rows below about 640px**: the identity and the key number on line
-  1, the other fields the brief names in 13px grey on line 2 ("fra1 · 1m 38s"), the one action at the
-  right. Fields move to line 2; they are never dropped. A table that must stay a table scrolls inside
-  its own frame with its first column fixed; the page never scrolls sideways.
-- **The tablet (641-1100px) is its own band**: the sidebar folds to the top bar, but tables keep four
-  or five columns with secondary fields as sublines, two narrow panels stack once either would be
-  under about 340px, and the identity column is never the one truncated while another has room.
-- **Blocks that carry an action move up, not down**: a right rail with an action (low stock and its
-  Reorder, bills due and Pay) becomes a one-line summary row above the list ("5 items low · Review"),
-  never a block under twenty orders.
-- **Several panes** (a list and its detail, an inbox): one region at a time. Choosing a row pushes the
-  detail; back returns to the list at its scroll position.
-- **Settings**: the label column stacks above its panel.
-- **A right rail** moves under the main column or into a tab.
-- **Builders** show the work read-only, with the palette as a bottom sheet if editing stays.
-- Check 390px in the inspector's screenshots every round.
+- **导航折叠。** 侧边栏变成 48px 顶栏：带界面名、
+  一个打开全屏面板的菜单按钮（导航、工作区切换、账户）、
+  至多一个动作；或变成四五个目的地的底栏，标签从短。
+  图标栏就变成那条底栏。
+- **边距** 16-20px；触控目标至少 44px 高；数据与标签 14px，
+  副行不小于 12px。
+- **标题保留**，20-24px。头部动作收进 kebab 菜单，
+  唯一的主操作除外。
+- **筛选**收成一行 chip 或一个筛选面板；标签页在自己的行内横向滚动，
+  绝不连页面一起滚。第一行列表起于手机屏上部 60% 以内：
+  测试中，上方三行筛选控件把列表推出了首屏。
+- **KPI**：分格容器变成两列栅格，或标签在左、数值在右的列表。
+  绝不四列硬挤。两列栅格里，任何通栏打头项之后的数量应为偶数；
+  否则用三条窄列或分格列表，或让最后一格吃下整行
+  （`app.css` 对奇数就是这么处理的）。孤零零的"已售出 3.18 kWh"
+  挨着半行空白，被标记。
+- **图表上方至多一行控件**：门店选择与周切换共用一行。
+  测试中，两条上下叠放的全宽分段控件把数据压了下去。
+- **图表**通栏，高 160-200px，x 标签 3-4 个，图例用圆点放在上方，
+  会折成三行时改两列栅格（或收进"图例"折叠）。
+  y 刻度在左侧自占一条道（或挪到右缘）；
+  刻度标签绝不压在线上。
+- **手机上的行操作**是文字动作或一枚紧凑的尾部按钮，
+  列表配一枚实心的批量动作（"批准符合的 3 个"）；
+  五块 44px 的灰色"批准"把一份列表变成了一摞按钮。
+- **条带收窄时，砍掉与界面主动作关联最小的项**，
+  而不是源顺序里的最后一个：实时电价留在依赖它的能源界面上。
+- **约 640px 以下，表格变成两行行式列表**：第一行是身份与关键数字，
+  简报点名的其他字段以 13px 灰字排在第二行（"fra1 · 1m 38s"），
+  唯一的动作在右。字段挪到第二行；绝不删掉。
+  必须保持表格形态的表格在自己的框内滚动、第一列固定；
+  页面绝不横向滚动。
+- **平板（641-1100px）是独立的档**：侧边栏折进顶栏，
+  但表格保留四五列、次级字段作副行；
+  两块窄面板在任一将低于约 340px 时叠放一次；
+  身份列绝不在别的列还有余量时被截断。
+- **带动着的区块向上移，不向下移**：带动作的右侧栏
+  （低库存与其"补货"、到期账单与其"付款"）
+  变成列表上方一行摘要（"5 项低库存 · 去查看"），
+  绝不是压在二十笔订单下的区块。
+- **多个面板**（列表与详情、收件箱）：一次只显示一个区域。
+  选中一行推入详情；返回时回到列表原滚动位置。
+- **设置**：标签列叠在面板上方。
+- **右侧栏**挪到主栏下方或收进一个标签页。
+- **构建器**只读展示成果，若保留编辑，调色板做成底部面板。
+- 每一轮都在检查器截图里核对 390px。
 
-## 13. House rules for app screens
+## 13. 应用界面的 house rules
 
-The house rules in `SKILL.md` were written for pages that are read once. An app screen is read every
-day, and part of what those rules ban is the structure of a working screen. These relax, with limits:
+`SKILL.md` 里的 house rules 是为读一次的页面写的。应用界面天天被读，
+那些规则禁止的东西里有一部分恰是工作界面的结构。
+以下放宽，但有界限：
 
-| Allowed on app screens | Limit |
+| 应用界面上允许 | 界限 |
 | --- | --- |
-| **1px borders** on cards, panels, tables and controls | About 1.1-1.3:1 against the ground on light (#e5e7eb-#ededed on white); #1a1a1a on #000, #2e2e2e on #111. Controls one step stronger. A border or a shadow, never both. |
-| **Row rules** in tables and lists | 1px, 3-7% darker than the surface. No zebra, no header band. |
-| **Dashed lines** | In chart grids and empty slots only. |
-| **Small labels** above values | 12-14px, sentence case, grey at 4.5:1. Meta and axis text 11-12px. Nothing under 11px. At most one tracked uppercase label on a screen (a switcher's context label). |
-| **Rows of identical cards** | Peer metrics or peer objects only: 3-6 across, equal widths, one gap, no orphan, edges aligned across rows, no icon on top. Prefer one divided card; mixed spans beat a uniform grid. |
-| **Monospace** | IDs, keys and code; or every figure, as one style's decision. Otherwise tabular figures in the text face. |
-| **Pills** | Inside rows and beside a value only: 16-24px tall, a pale tint with dark text of the same hue. Never above a heading. |
-| **Index numbers** | Only as data: a rank ("1."), a node number. |
-| **Icons** | 14-20px outline, one set, grey: in the nav, before a label, or as a single affordance (kebab, chevron, info). A container only if it is neutral, or node-type tiles in a builder (pass `--allow icon-chips` and give the reason in the report). |
-| **Shadows** | On what floats: a menu, a popover, a tooltip, a composer, a dialog. A resting card gets at most a small blur under 8% black. |
-| **A second typeface** | With one job: a mono for IDs or figures, a serif for one greeting. |
-| **A gradient** | Only as an area fade under one line chart; a flat tint of about 14% is safer. |
+| 卡片、面板、表格与控件上的 **1px 边框** | 浅色下相对底色约 1.1-1.3:1（白上 #e5e7eb-#ededed）；#000 上 #1a1a1a，#111 上 #2e2e2e。控件深一档。边框或阴影，绝不同用。 |
+| 表格与列表的**行分隔线** | 1px，比表面深 3-7%。无斑马纹，无表头色带。 |
+| **虚线** | 只在图表网格与空槽位里。 |
+| 数值上方的**小标签** | 12-14px，句首大写，灰、4.5:1。元信息与轴文字 11-12px。没有小于 11px 的字。每屏至多一个带字距的全大写标签（切换器的语境标签）。 |
+| **一排同款卡片** | 只放同级指标或同级对象：横向 3-6 个、等宽、统一间距、无孤儿、跨行边缘对齐、顶部无图标。优先一张分格卡；混合跨距胜过均匀栅格。 |
+| **等宽字体** | ID、密钥与代码；或全部数字，作为某风格的一项决策。否则正文字体里的等宽数字。 |
+| **胶囊** | 只在行内与数值旁：高 16-24px，浅色底配同色相深文字。绝不放在标题上方。 |
+| **序号数字** | 只作为数据：名次（"1."）、节点编号。 |
+| **图标** | 14-20px 轮廓、同一套、灰色：导航里、标签前，或作为单一可供性（kebab、chevron、info）。容器只有中性时可用，或构建器里的节点类型磁贴（传 `--allow icon-chips` 并在报告里写明理由）。 |
+| **阴影** | 浮起的东西：菜单、弹出层、提示框、撰写框、对话框。静置卡片至多 8% 黑的小模糊。 |
+| **第二字体** | 只干一件事：等宽用于 ID 或数字，衬线用于一处问候。 |
+| **渐变** | 只作为一张折线图下的面积渐隐；约 14% 的平色淡染更稳。 |
 
-Still banned, as on pages, and checked:
+仍然禁止，与页面一致，且被检查：
 
-| Banned | Instead |
+| 禁止 | 改用 |
 | --- | --- |
-| Gradients on grounds, buttons, cards, text and KPI tiles (the study's two gradient buttons are flagged) | Flat fills |
-| Glows, glass, backdrop blur | Opaque surfaces one tone step from the ground |
-| An icon in a coloured circle or tinted square on every KPI or card (0 of 23) | A label and a number |
-| Rainbow charts: more than four hues, a hue per bar, one subject in two hues | One hue per chart, neutrals for the rest |
-| Sparklines on KPIs (0 of 23) | The trend in its own chart, or nowhere |
-| Emoji in greetings, labels, nav or empty states | Words |
-| Lorem ipsum, Acme, John Doe, "User 1"; vanity figures ("10,000+ teams"); totals that do not add up | Believable sample data computed from rows, listed in the report |
-| Status colour on a zero or undefined change | Grey, or the change in words ("+4 (new)") |
-| A dark or saturated sidebar on a light screen; a navy or slate dark theme | The page ground for the sidebar; true neutral darks |
-| The accent on chrome: a tinted nav row with a left bar, coloured tab pills, a brand fill on every button | The accent on data and at most one control; a near-black primary |
-| Uppercase tracked table headers, zebra rows, header bands | 12px grey sentence-case headers; rules or space |
-| Left-aligned numbers, proportional figures in columns | Right-aligned tabular figures |
-| A hero header, a greeting with an emoji, an illustrated welcome banner | A noun title at 24px |
-| Pagination under a five-row overview list | Capped rows, "View all", the total |
-| Violet and indigo accents; cream with terracotta | The dealt style's palette |
-| A landing-page title (over 32px) or a figure at 48px or more | An 18-32px title; figures at 16-40px |
-| Icons in boxes repeated down a list or on top of every peer card, tinted or neutral | One plain 16px icon where it helps, or none |
-| Every row a different hue, a "left" amount in green on every budget row | Grey for what is fine; colour only on the rows at risk or over |
-| A screen that names no product and offers no action | The product's mark and scope in the shell; its main job one click away |
+| 底色、按钮、卡片、文字与 KPI 磁贴上的渐变（研究里的两个渐变按钮被标记） | 平色填充 |
+| 光晕、玻璃、背景模糊 | 距底色一档色阶的不透明表面 |
+| 每个 KPI 或卡片上彩色圆圈或着色方块里的图标（23 个中 0 个） | 一个标签加一个数字 |
+| 彩虹图表：超过四个色相、每根柱一个色相、同一主体两种色相 | 每图一个色相，其余用中性色 |
+| KPI 上的迷你趋势图（23 个中 0 个） | 趋势放进自己的图表，或不显示 |
+| 问候、标签、导航或空状态里的 emoji | 文字 |
+| Lorem ipsum、Acme、John Doe、"用户 1"；虚荣数字（"10,000+ 团队"）；对不上的合计 | 从行数据算出的可信样例数据，在报告里列明 |
+| 零变化或无定义变化上的状态色 | 灰，或用文字表达变化（"+4（新增）"） |
+| 浅色界面上的深色或高饱和侧边栏；藏青或石板灰的深色主题 | 侧边栏用页面底色；真中性的深色 |
+| 装饰上的主色：带左竖条的着色导航行、彩色标签页胶囊、每颗按钮都填品牌色 | 主色放在数据与至多一个控件上；主按钮近黑 |
+| 全大写带字距的表头、斑马行、表头色带 | 12px 灰色句首大写表头；分隔线或留白 |
+| 左对齐数字、列内比例数字 | 右对齐等宽数字 |
+| hero 标题头、带 emoji 的问候、插画式欢迎横幅 | 24px 的名词标题 |
+| 五行总览列表下的分页 | 截行、"查看全部"、总数 |
+| 紫罗兰与靛蓝主色；奶油色配陶土色 | 抽到的风格的调色板 |
+| 落地页式标题（超 32px）或 48px 及以上的数字 | 18-32px 标题；数字 16-40px |
+| 列表里逐行重复、或每张同级卡片顶上都放一个的盒装图标，无论着色还是中性 | 有帮助处一枚素净的 16px 图标，否则不用 |
+| 每行一个色相；每个预算行都把"剩余"标绿 | 正常的用灰；颜色只放在有风险或超支的行上 |
+| 既不写产品名也不提供任何动作的界面 | 外壳里放产品标志与范围；主任务一次点击可达 |
 
-**On violet and indigo.** 10 of the 23 studied screens use violet or indigo, always as a data hue or a
-single control. The ban is the owner's taste, not a finding of the study: the library deals other
-hues for the styles that came from those screens, and the inspector's palette check stays on.
+**关于紫罗兰与靛蓝。** 23 个研究界面里 10 个用了紫罗兰或靛蓝，
+都是作为数据色相或单一控件。禁令是所有者的品味，不是研究的结论：
+库为源自那些界面的风格抽配了其他色相，
+检查器的调色板检查照常开启。
 
-## 14. Tells of generated dashboards
+## 14. 生成式仪表盘的辨识特征
 
-Each line sets a habit of generated dashboards against what the 23 screens do instead.
+每一行都把生成式仪表盘的一种积习，与 23 个界面所用的替代做法对举。
 
-| Tell | What replaces it |
+| 特征 | 替代做法 |
 | --- | --- |
-| A dark navy or tinted sidebar with a coloured active pill and a left bar | The sidebar on the page ground; a neutral grey pill, or the label brightening on dark. A left bar appears once in 23. |
-| "Welcome back, Alex" with a waving hand and a subtitle | A noun title at 24/600. Three screens greet; the one emoji goes. |
-| Four KPI cards, each with an icon in a tinted circle | One container split by hairlines, label over value. No icons on any of the 23. |
-| A green "+12.5%" pill on every KPI | A delta on 9 of 20 screens, in words with its window; grey for zero; "+4 (new)" from zero. |
-| A sparkline on every KPI | None on any of the 23. The trend has its own chart. |
-| KPI values at 36-48px, bold, in the brand colour | 24-30px at 400-600 in ink; nothing at 48. |
-| A gradient area chart with a smoothed spline and a dot on every point | A 2px straight line, no fill on 7 of 10, no markers. |
-| A rainbow palette, a hue per bar or per chart | One hue per chart; the accent on data only; four hues at most on a screen. |
-| Gridlines every 20px, axis lines on both sides, a legend for one series | 3-5 faint lines, no y-axis line, no legend for a single series; round ticks above the maximum. |
-| A fat donut with labels on the slices and a big total in the hole | A thin ring, no slice labels, the legend as a table with the values. |
-| Cards with a 16-24px radius, a 1px border and a large soft shadow | A border or a tone step, no shadow; a tight or a soft radius, chosen once. |
-| A zebra table under uppercase tracked headers, with a checkbox, an avatar, a status chip and a kebab on every row | Rules and alignment: 12px grey headers, one status mark, one action where it is needed. |
-| Left-aligned numbers in proportional digits | Right-aligned tabular figures, fixed decimals, units in grey. |
-| Saturated status chips with white text | Pale tints with dark text of the same hue. |
-| The accent on every button, tab and link | No filled primary on 12 of 23; near-black where there is one. |
-| A top bar with search, a bell and an avatar on every screen, or one left mostly empty | No top bar on 9 of 23; when there is one, it carries search, the switcher or the object's name. |
-| Export, Share and a date picker clustered by the title | Actions only when they are real; a freshness stamp instead. |
-| Placeholder people and companies, round vanity totals, growth on a week-old account | The product's own data, small numbers at their real size, totals summed from the rows. |
-| Pagination under a short list | Capped rows and "View all". |
-| An equal four-up grid whatever the data, with orphan cells and stretched cards | A column count chosen by the item count; spans that change by row and land on the same lines. |
-| Neon on dark, glowing borders, glass | True neutral darks, lightness steps, colour on the data. |
-| The kit's own face: Geist or Inter on #f8f8f8 with white 12px cards and no hue on the data, or lime on black | One face taken from the brief (a ground from the product's world, a figure face with character, the brand's hue on the main data element) and one element only this product has. |
-| A coloured icon per category in a list | One grey icon set; colour, if any, on the numbers. |
-| An illustration and "No data yet" in an empty chart | The zero line drawn, and one sentence in the frame. |
+| 深藏青或着色侧边栏，当前项彩色胶囊加左竖条 | 侧边栏坐在页面底色上；中性灰胶囊，或深色下标签变亮。左竖条在 23 个里只出现一次。 |
+| "欢迎回来，Alex"配挥手与副标题 | 24/600 的名词标题。三个界面用了问候；那个 emoji 去掉。 |
+| 四张 KPI 卡片，各带淡色圆圈里的图标 | 一个容器用发丝线分隔，标签在上、数值在下。23 个里没有任何图标。 |
+| 每个 KPI 都带绿色"+12.5%"胶囊 | 20 个界面里 9 个有变化量，用文字写明窗口；零用灰；从零起步写"+4（新增）"。 |
+| 每个 KPI 都带迷你趋势图 | 23 个里一个都没有。趋势有自己的图表。 |
+| KPI 数值 36-48px、加粗、用品牌色 | 24-30px、字重 400-600、墨色；没有 48 的。 |
+| 渐变面积图、平滑样条、每个点都打圆点 | 2px 直线，10 张里 7 张无填充，无标记点。 |
+| 彩虹调色板、每根柱或每张图一个色相 | 每图一个色相；主色只放在数据上；每屏至多四个色相。 |
+| 每 20px 一条网格线、两侧都画轴线、单系列也配图例 | 3-5 条淡线、无 y 轴线、单系列无图例；整数刻度高于最大值。 |
+| 厚环形图、扇区上标数字、环心里塞个大总数 | 细圆环、扇区不标数字、图例做成带数值的表格。 |
+| 卡片 16-24px 圆角、1px 边框、大片柔影 | 边框或色阶，无阴影；紧凑或柔和圆角，一次选定。 |
+| 全大写带字距表头下的斑马表格，每行复选框、头像、状态 chip 与 kebab | 分隔线与对齐：12px 灰表头、一个状态标记、需要处一个动作。 |
+| 比例数字的左对齐数值 | 右对齐等宽数字、固定小数位、灰色单位。 |
+| 白字的高饱和状态 chip | 浅色底配同色相深文字。 |
+| 每颗按钮、每个标签页、每条链接都上主色 | 23 个里 12 个没有实心主按钮；有的地方近黑。 |
+| 每屏顶栏都塞搜索、铃铛与头像，或大半空着 | 23 个里 9 个没有顶栏；有顶栏时，装的是搜索、切换器或对象名。 |
+| 导出、分享与日期选择器挤在标题旁 | 动作只在真实时出现；改用更新时间戳。 |
+| 占位人物与公司、凑整的虚荣合计、开了一周的账户就有增长 | 产品自己的数据、小数字按真实大小、合计从行数据加总。 |
+| 短列表下的分页 | 截行与"查看全部"。 |
+| 无论数据如何都是均等四列栅格，配孤儿格与被拉高的卡片 | 列数由条目数决定；跨距逐行变化、落在同一条线上。 |
+| 深色上的霓虹、发光边框、玻璃 | 真中性深色、明度分层、颜色放在数据上。 |
+| 组件包自己的面孔：Geist 或 Inter 配 #f8f8f8 底、白色 12px 卡片、数据上无色相，或黑底柠檬绿 | 从简报取来的面孔（从产品世界取的底色、有个性的数字字体、主数据元素上的品牌色相），加一个只有该产品才有的元素。 |
+| 列表里每个类别一枚彩色图标 | 一套灰色图标；颜色若有，放在数字上。 |
+| 空图表里放插画与"暂无数据" | 画出零线，框内放一句话。 |
 
-A screen with every tell removed and nothing put in their place is a tidy template. What fills the
-space is the product: its own data at its real size, the screen's one question answered by its
-biggest block, and a grid whose sums close.
+把所有特征都去掉、却什么也没放回去的界面，只是一个整洁的模板。
+填满空间的是产品：它自己的数据按真实大小，
+界面唯一的核心问题由最大的区块回答，
+以及一套加总闭合的栅格。

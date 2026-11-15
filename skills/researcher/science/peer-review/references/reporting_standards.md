@@ -1,32 +1,36 @@
-# Reporting Guidelines and Domain Metadata Standards
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/peer-review/references/reporting_standards.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Reviewed against primary or official sources on **2026-10-01**; source-specific access limitations are recorded in the ledger. The dated evidence record is `assets/source_ledger.csv`; the machine-readable selector catalog is `assets/reporting_guidelines.json`.
+# 报告规范与领域元数据标准
 
-## What reporting guidelines do—and do not do
+已于 **2026-10-01** 对照一手或官方来源复核；各来源特有的访问限制记录在台账中。带日期的证据记录是 `assets/source_ledger.csv`；机器可读的选择器目录是 `assets/reporting_guidelines.json`。
 
-A reporting guideline identifies information that should be reported so readers can understand and appraise a study. It is not, by itself:
+## 报告规范做什么、不做什么
 
-- A method for designing or conducting the study
-- A risk-of-bias tool
-- A statistical reanalysis
-- A measure of truth, importance, novelty, or manuscript merit
-- A publication recommendation
+报告规范指出应当报告哪些信息，让读者能理解并评价一项研究。它本身不是：
 
-Checklist completion must never be converted automatically into a quality score. A fully reported study can have serious design problems; an incompletely reported study may be impossible to assess. Record missing information as a reporting gap, then separately assess any design, conduct, analysis, reproducibility, or ethics concern using appropriate evidence and expertise.
+- 设计或实施研究的方法
+- 偏倚风险工具
+- 统计再分析
+- 对真实性、重要性、新颖性或稿件价值的度量
+- 发表建议
 
-Use the guideline’s current statement together with its explanation and elaboration. Check applicable extensions and the target venue’s instructions. Do not copy checklist wording into a review when a specific, contextual comment is more useful.
+绝不能把核对清单的完成情况自动换算成质量分数。报告完整的研究可能有严重的设计问题；报告不完整的研究可能根本无法评估。把缺失信息记录为报告缺口，再用合适的证据与专业知识，另行评估设计、实施、分析、可复现性或伦理方面的问题。
 
-## Selection workflow
+使用指南的现行声明时，要配合其说明与详述（explanation and elaboration）文档。检查适用的扩展版与目标期刊的投稿要求。当具体的、结合情境的意见更有用时，不要照抄核对清单的措辞。
 
-1. Identify the **report kind**: results, protocol, abstract, or data release.
-2. Identify the **study design**, not merely the topic or journal section.
-3. Add cross-cutting features: AI intervention, diagnostic AI, routinely collected data, clustered design, qualitative interviews, and so on.
-4. Select the current base guideline and applicable extensions.
-5. Use the official checklist to record `reported`, `partly_reported`, `not_reported`, `not_applicable`, or `not_assessed`.
-6. Explain `not_applicable`; do not treat it as a defect.
-7. Keep reporting coverage separate from methodological appraisal.
+## 选择流程
 
-Run:
+1. 确认**报告类型**：结果、方案、摘要，还是数据发布。
+2. 确认**研究设计**，而不只是主题或期刊栏目。
+3. 叠加横切特征：AI 干预、诊断 AI、常规采集数据、整群设计、定性访谈等。
+4. 选定现行基础指南与适用的扩展版。
+5. 用官方核对清单记录 `reported`、`partly_reported`、`not_reported`、`not_applicable` 或 `not_assessed`。
+6. 对 `not_applicable` 给出理由；不要把它当作缺陷。
+7. 报告覆盖度与方法学评价分开处理。
+
+运行：
 
 ```bash
 python3 scripts/select_reporting_guidelines.py \
@@ -34,220 +38,220 @@ python3 scripts/select_reporting_guidelines.py \
   --coverage assets/reporting_checklist_template.csv
 ```
 
-The bundled catalog is a dated aid, not a live registry. Consult the [EQUATOR Network](https://www.equator-network.org/) and official guideline site when the study type is unclear or a newer extension may apply.
+内置目录是带日期的辅助资料，不是实时注册库。当研究类型不明确或可能有更新的扩展版时，查阅 [EQUATOR Network](https://www.equator-network.org/) 与指南官网。
 
-## Major current health-research guidelines
+## 主要现行健康研究指南
 
-### Randomized trial results — CONSORT 2025
+### 随机试验结果：CONSORT 2025
 
-- Current statement: **CONSORT 2025**, published 14 April 2025
-- Structure: 30 main checklist items and a participant flow diagram
-- Supersedes: CONSORT 2010
-- Use for: reports of randomized trials
-- Review with: explanation and elaboration plus design/intervention extensions
-- Important boundary: the statement explicitly says it is not a quality assessment instrument
+- 现行声明：**CONSORT 2025**，2025 年 4 月 14 日发表
+- 结构：30 条主核对清单条目和一张受试者流程图
+- 取代：CONSORT 2010
+- 适用对象：随机试验报告
+- 配套使用：说明与详述文档，加上设计/干预扩展版
+- 重要边界：声明明确表示它不是质量评估工具
 
-Check registration, protocol and statistical analysis plan consistency, allocation, participant flow, outcomes and harms, effect estimates and uncertainty, protocol changes, data sharing, conflicts, and patient/public involvement where applicable.
+检查注册情况、方案与统计分析计划的一致性、随机分配、受试者流程、结局与危害、效应估计与不确定性、方案变更、数据共享、利益冲突，以及如适用的患者/公众参与。
 
-Official sources: [CONSORT–SPIRIT](https://www.consort-spirit.org/) and the [CONSORT 2025 statement](https://www.bmj.com/content/389/bmj-2024-081123).
+官方来源：[CONSORT–SPIRIT](https://www.consort-spirit.org/) 与 [CONSORT 2025 声明](https://www.bmj.com/content/389/bmj-2024-081123)。
 
-### Randomized trial protocols — SPIRIT 2025
+### 随机试验方案：SPIRIT 2025
 
-- Current statement: **SPIRIT 2025**, published 28 April 2025
-- Structure: 34 main checklist items and a participant timeline
-- Supersedes: SPIRIT 2013
-- Use for: randomized trial protocols
+- 现行声明：**SPIRIT 2025**，2025 年 4 月 28 日发表
+- 结构：34 条主核对清单条目和一张受试者时间线
+- 取代：SPIRIT 2013
+- 适用对象：随机试验方案
 
-Compare the protocol with registration, statistical analysis plan, ethics records, amendments, and any completed-trial report. Explicitly stated non-applicability with rationale is not missing reporting.
+将方案与注册信息、统计分析计划、伦理记录、修订以及已完成的试验报告相互对照。有理由的明确不适用声明不算报告缺失。
 
-Official sources: [CONSORT–SPIRIT](https://www.consort-spirit.org/) and the [SPIRIT 2025 statement](https://www.bmj.com/content/389/bmj-2024-081477).
+官方来源：[CONSORT–SPIRIT](https://www.consort-spirit.org/) 与 [SPIRIT 2025 声明](https://www.bmj.com/content/389/bmj-2024-081477)。
 
-### Systematic reviews — PRISMA 2020
+### 系统综述：PRISMA 2020
 
-- Current statement: **PRISMA 2020** (named 2020; published 2021)
-- Structure: 27 main items, expanded checklist, abstract checklist, and flow diagrams
-- Use for: completed systematic reviews, primarily reviews of intervention effects
-- Protocols: use PRISMA-P
-- Extensions: use the appropriate extension for scoping, diagnostic, individual-participant-data, network, equity, harms, or other specialized reviews
+- 现行声明：**PRISMA 2020**（名称为 2020，发表于 2021）
+- 结构：27 条主条目、扩展核对清单、摘要核对清单与流程图
+- 适用对象：已完成的系统综述，主要是干预效应综述
+- 方案：使用 PRISMA-P
+- 扩展版：范围综述、诊断准确性、个体参与者数据、网状 Meta 分析、公平性、危害或其他专门综述，使用相应扩展版
 
-PRISMA explicitly does not assess review conduct or methodological quality. Use appropriate methods and risk-of-bias tools separately.
+PRISMA 明确不评估综述的实施过程或方法学质量。请另行使用合适的方法与偏倚风险工具。
 
-Official sources: [PRISMA 2020 resources](https://www.prisma-statement.org/prisma-2020) and the [primary statement](https://www.bmj.com/content/372/bmj.n71).
+官方来源：[PRISMA 2020 资源](https://www.prisma-statement.org/prisma-2020) 与 [原始声明](https://www.bmj.com/content/372/bmj.n71)。
 
-### Observational studies — STROBE
+### 观察性研究：STROBE
 
-- Current base statement: **STROBE 2007**
-- Structure: 22 main items with cohort, case-control, cross-sectional, and combined checklists
-- Use for: reports of observational epidemiologic studies
-- Extensions: examples include RECORD for routinely collected health data, STREGA for genetic association studies, STROBE-MR, and domain-specific extensions
+- 现行基础声明：**STROBE 2007**
+- 结构：22 条主条目，附队列、病例对照、横断面及合并版核对清单
+- 适用对象：观察性流行病学研究报告
+- 扩展版：例如常规采集健康数据的 RECORD、遗传关联研究的 STREGA、STROBE-MR，以及领域专用扩展版
 
-STROBE helps identify whether selection, measurement, bias, confounding, missing data, sensitivity analyses, and generalizability are reported. It does not establish that those methods were adequate.
+STROBE 帮助识别选择、测量、偏倚、混杂、缺失数据、敏感性分析与外推性是否得到报告。它不能证明这些方法用得恰当。
 
-Official source: [STROBE](https://www.strobe-statement.org/).
+官方来源：[STROBE](https://www.strobe-statement.org/)。
 
-### Diagnostic accuracy — STARD 2015
+### 诊断准确度：STARD 2015
 
-- Current base statement: **STARD 2015**
-- Structure: 30 main items and a flow diagram
-- Use for: studies estimating diagnostic accuracy against a reference standard
+- 现行基础声明：**STARD 2015**
+- 结构：30 条主条目和一张流程图
+- 适用对象：以参考标准估计诊断准确度的研究
 
-Separately assess risk of bias and applicability with a suitable tool such as the current QUADAS family when relevant. STARD’s official implementation guidance explicitly says not to use the reporting checklist as a design-quality tool.
+如相关，用合适的工具（如现行 QUADAS 系列）另行评估偏倚风险与适用性。STARD 官方实施指南明确表示不要把报告核对清单当作设计质量工具。
 
-Official source: [STARD 2015](https://www.equator-network.org/reporting-guidelines/stard/).
+官方来源：[STARD 2015](https://www.equator-network.org/reporting-guidelines/stard/)。
 
-### AI-centered diagnostic accuracy — STARD-AI
+### 以 AI 为核心的诊断准确度：STARD-AI
 
-- Current statement: **STARD-AI 2025**
-- Published: 15 September 2025; an author correction was published 13 July 2026
-- Structure: 40 items, including 18 new or modified items relative to STARD 2015
-- Use for: AI-centered diagnostic accuracy studies, including suitable diagnostic classification tasks
+- 现行声明：**STARD-AI 2025**
+- 发表：2025 年 9 月 15 日；2026 年 7 月 13 日发布了作者更正
+- 结构：40 条条目，其中相对 STARD 2015 有 18 条新增或修改
+- 适用对象：以 AI 为核心的诊断准确度研究，包括合适的诊断分类任务
 
-Check dataset practices, index-test specification, evaluation, algorithmic bias and fairness, applicability, and generalizability. If the primary aim is development or evaluation of a multivariable prediction model, use TRIPOD+AI instead.
+检查数据集实践、待评价试验（index test）的规格、评估、算法偏倚与公平性、适用性与外推性。若主要目的是开发或评估多变量预测模型，改用 TRIPOD+AI。
 
-Official source: [STARD-AI](https://www.nature.com/articles/s41591-025-03953-8).
+官方来源：[STARD-AI](https://www.nature.com/articles/s41591-025-03953-8)。
 
-### Clinical prediction models — TRIPOD+AI
+### 临床预测模型：TRIPOD+AI
 
-- Current statement: **TRIPOD+AI 2024**
-- Structure: 27 main items plus a 13-item abstract checklist
-- Replaces: TRIPOD 2015
-- Use for: development, evaluation, or updating of diagnostic or prognostic prediction models using regression or machine-learning methods
+- 现行声明：**TRIPOD+AI 2024**
+- 结构：27 条主条目，外加 13 条的摘要核对清单
+- 取代：TRIPOD 2015
+- 适用对象：用回归或机器学习方法开发、评估或更新诊断或预后预测模型
 
-Do not select it solely because software called “AI” appears in a paper. Select it when the study’s primary object is a prediction model. Relevant extensions include TRIPOD-Cluster, TRIPOD-SRMA, and TRIPOD-LLM.
+不要仅因论文中出现了名为"AI"的软件就选它。当研究的主要对象是预测模型时才选用。相关扩展版包括 TRIPOD-Cluster、TRIPOD-SRMA 与 TRIPOD-LLM。
 
-Official sources: [TRIPOD](https://www.tripod-statement.org/) and the [TRIPOD+AI statement](https://www.bmj.com/content/385/bmj-2023-078378).
+官方来源：[TRIPOD](https://www.tripod-statement.org/) 与 [TRIPOD+AI 声明](https://www.bmj.com/content/385/bmj-2023-078378)。
 
-### Case reports — CARE
+### 病例报告：CARE
 
-- Current base checklist: **CARE 2013**
-- Explanation and elaboration/manual: 2017
-- Structure: 13 main items
-- Use for: clinical case reports
+- 现行基础核对清单：**CARE 2013**
+- 说明与详述/手册：2017
+- 结构：13 条主条目
+- 适用对象：临床病例报告
 
-Check timeline, diagnostic reasoning, interventions, outcomes, adverse events, patient perspective where available, informed consent, privacy, and venue requirements.
+检查时间线、诊断推理、干预、结局、不良事件、可得时的患者视角、知情同意、隐私与目标期刊要求。
 
-Official source: [CARE checklist](https://www.care-statement.org/checklist).
+官方来源：[CARE 核对清单](https://www.care-statement.org/checklist)。
 
-### In vivo animal research — ARRIVE 2.0
+### 在体动物研究：ARRIVE 2.0
 
-- Current statement: **ARRIVE 2.0**, published July 2020
-- Structure: Essential 10 plus 11 Recommended Set items
-- Use for: research involving live animals across bioscience disciplines
+- 现行声明：**ARRIVE 2.0**，2020 年 7 月发表
+- 结构：10 条必备项（Essential 10）加 11 条推荐项
+- 适用对象：生物科学各学科中涉及活体动物的研究
 
-The Essential 10 are a minimum reporting set, not a ranking. Review study design, sample size, inclusion/exclusion, randomization, blinding, outcome measures, statistics, animal details, procedures, and results; also assess ethics, welfare, humane endpoints, adverse events, protocol registration, data access, and interests.
+10 条必备项是最低报告集，不是重要性排序。审查研究设计、样本量、纳入/排除、随机化、盲法、结局测量、统计、动物细节、操作流程与结果；同时评估伦理、福利、人道终点、不良事件、方案注册、数据获取与利益相关情况。
 
-Official source: [ARRIVE 2.0](https://arriveguidelines.org/arrive-guidelines).
+官方来源：[ARRIVE 2.0](https://arriveguidelines.org/arrive-guidelines)。
 
-### Quality improvement — SQUIRE 2.0
+### 质量改进：SQUIRE 2.0
 
-- Current statement: **SQUIRE 2.0**, published 2015
-- Structure: 18 main items
-- Use for: system-level work intended to improve healthcare quality, safety, value, or equity where methods seek to relate outcomes to the intervention
+- 现行声明：**SQUIRE 2.0**，2015 年发表
+- 结构：18 条主条目
+- 适用对象：旨在改进医疗质量、安全、价值或公平的系统层面工作，且其方法致力于把结局与干预联系起来
 
-SQUIRE states that every item should be considered, but not every element belongs in every manuscript. Attend to local context, rationale, intervention evolution, measures, analysis, ethics, unintended consequences, and sustainability.
+SQUIRE 指出每一条都应考虑，但并非每个要素都要写进每篇稿件。关注局部情境、理由、干预演变、测量、分析、伦理、意外后果与可持续性。
 
-Official source: [SQUIRE 2.0](https://www.squire-statement.org/index.cfm?fuseaction=page.viewPage&pageID=471&nodeID=1).
+官方来源：[SQUIRE 2.0](https://www.squire-statement.org/index.cfm?fuseaction=page.viewPage&pageID=471&nodeID=1)。
 
-### Health economic evaluations — CHEERS 2022
+### 卫生经济学评价：CHEERS 2022
 
-- Current statement: **CHEERS 2022**
-- Structure: 28 main items
-- Replaces: CHEERS 2013
-- Use for: economic evaluations of health interventions
+- 现行声明：**CHEERS 2022**
+- 结构：28 条主条目
+- 取代：CHEERS 2013
+- 适用对象：卫生干预的经济学评价
 
-Assess perspective, comparators, time horizon, discounting, outcome and cost measurement, model assumptions, heterogeneity, distributional effects where applicable, uncertainty, engagement, funding, and conflicts. Use a separate critical-appraisal framework for methodological quality.
+评估视角、对照、时间范围、贴现、结局与成本测量、模型假设、异质性、如适用的分布效应、不确定性、相关方参与、资助与利益冲突。方法学质量请使用单独的批判性评价框架。
 
-Official source: [ISPOR CHEERS](https://www.ispor.org/heor-resources/good-practices/cheers).
+官方来源：[ISPOR CHEERS](https://www.ispor.org/heor-resources/good-practices/cheers)。
 
-### Qualitative research — SRQR and COREQ
+### 定性研究：SRQR 与 COREQ
 
-- **SRQR**: broad qualitative research reporting standard
-- **COREQ**: 32-item checklist specifically for interviews and focus groups
+- **SRQR**：覆盖面广的定性研究报告标准
+- **COREQ**：专门针对访谈与焦点小组的 32 条核对清单
 
-Select by methods, not by the presence of quotations. Review researcher reflexivity, sampling, context, data collection, analytic process, credibility, participant voice, ethics, and limitations without imposing one epistemology on all qualitative traditions.
+按方法选择，而不是看有没有引语。审查研究者反身性、抽样、情境、数据收集、分析过程、可信度、参与者声音、伦理与局限，不要把某一种认识论强加给所有定性研究传统。
 
-Official registry records: [SRQR](https://www.equator-network.org/reporting-guidelines/srqr) and [COREQ](https://www.equator-network.org/reporting-guidelines/coreq/).
+官方注册记录：[SRQR](https://www.equator-network.org/reporting-guidelines/srqr) 与 [COREQ](https://www.equator-network.org/reporting-guidelines/coreq/)。
 
-## AI extensions and overlap
+## AI 扩展版与重叠
 
-Use the guideline that matches the study’s primary design and claim:
+选用与研究主要设计和论断匹配的指南：
 
-- Randomized trial of an AI intervention: CONSORT 2025 plus CONSORT-AI 2020
-- Protocol for such a trial: SPIRIT 2025 plus SPIRIT-AI 2020
-- AI diagnostic accuracy: STARD-AI
-- Prediction model development or performance evaluation: TRIPOD+AI
-- Biomedical LLM development, tuning, prompt engineering, or evaluation, including non-prediction tasks: TRIPOD-LLM 2025; add TRIPOD+AI when prediction-model reporting also applies
-- Medical imaging AI: consider current modality guidance in addition to the design-specific base
+- AI 干预的随机试验：CONSORT 2025 加 CONSORT-AI 2020
+- 此类试验的方案：SPIRIT 2025 加 SPIRIT-AI 2020
+- AI 诊断准确度：STARD-AI
+- 预测模型开发或性能评估：TRIPOD+AI
+- 生物医学 LLM 的开发、调参、提示词工程或评估，包括非预测任务：TRIPOD-LLM 2025；当预测模型报告也适用时，加用 TRIPOD+AI
+- 医学影像 AI：在按设计选择的基础指南之外，考虑现行模态指南
 
-The 2020 AI extensions were written against CONSORT 2010 and SPIRIT 2013. Use their substantive requirements with the current base guidelines, mapping by meaning rather than reusing old item numbers. The [official extension index](https://www.consort-spirit.org/extensions) distinguishes extensions built on the 2025 checklists from those built on the previous versions. [CONSORT-AI](https://www.equator-network.org/reporting-guidelines/consort-artificial-intelligence/) and [SPIRIT-AI](https://www.equator-network.org/reporting-guidelines/spirit-artificial-intelligence/) remain listed in EQUATOR.
+2020 年的 AI 扩展版是针对 CONSORT 2010 与 SPIRIT 2013 编写的。应将其实质要求与现行基础指南配合使用，按含义映射，而不是复用旧条目编号。[官方扩展版索引](https://www.consort-spirit.org/extensions)区分了基于 2025 核对清单的扩展版与基于旧版本的扩展版。[CONSORT-AI](https://www.equator-network.org/reporting-guidelines/consort-artificial-intelligence/) 与 [SPIRIT-AI](https://www.equator-network.org/reporting-guidelines/spirit-artificial-intelligence/) 仍列于 EQUATOR。
 
-TRIPOD-LLM has 19 main items and a separate abstract checklist. In the local selector, `llm_study` with feature `large_language_model` selects it without incorrectly classifying a summarization or question-answering evaluation as a prediction model. See the [TRIPOD-LLM record](https://www.equator-network.org/reporting-guidelines/the-tripod-llm-reporting-guideline-for-studies-using-large-language-models/).
+TRIPOD-LLM 有 19 条主条目和单独的摘要核对清单。在本地选择器中，`llm_study` 搭配特征 `large_language_model` 会选中它，且不会把摘要生成或问答评估误判为预测模型。参见 [TRIPOD-LLM 记录](https://www.equator-network.org/reporting-guidelines/the-tripod-llm-reporting-guideline-for-studies-using-large-language-models/)。
 
-Multiple guidelines can apply, but do not create redundant demands. State which base and extension address each concern. The catalog is intentionally selective: abstract-specific checklists and many extensions require manual selection from the official source.
+可以同时适用多份指南，但不要制造重复要求。说明每个关注点由哪个基础版与哪个扩展版覆盖。该目录有意保持精简：针对摘要的核对清单与许多扩展版需要从官方来源手动选择。
 
-## Domain metadata standards: verified legacy status
+## 领域元数据标准：经核验的沿用状态
 
-These standards describe minimum experiment or repository metadata. They complement, rather than replace, study-design reporting and methodological appraisal.
+这些标准描述实验或仓库的最低元数据。它们是对研究设计报告与方法学评价的补充，而非替代。
 
-### MIAME and MINSEQE
+### MIAME 与 MINSEQE
 
-**Retain with qualification.** NCBI GEO’s official guidance states that its submission procedures support:
+**保留，但需加限定。**NCBI GEO 官方指南说明其提交流程支持：
 
-- MIAME for microarray experiments
-- MINSEQE for high-throughput functional genomics sequencing experiments
+- 微阵列实验用 MIAME
+- 高通量功能基因组学测序实验用 MINSEQE
 
-The October 2026 live fetch returned a browser challenge; official search-indexed GEO guidance still describes both standards. Verify the current repository’s fields, file formats, raw/processed data expectations, and accession requirements; do not treat this as an executed repository submission check.
+2026 年 10 月的实时抓取遇到浏览器人机验证；官方搜索索引中的 GEO 指南仍描述这两个标准。请核实现行仓库的字段、文件格式、原始/处理后数据要求与登录号要求；不要把这当作已执行过的仓库提交检查。
 
-Official implementation source: [GEO and MIAME/MINSEQE](https://www.ncbi.nlm.nih.gov/geo/info/MIAME.html).
+官方实施来源：[GEO 与 MIAME/MINSEQE](https://www.ncbi.nlm.nih.gov/geo/info/MIAME.html)。
 
 ### MIAPE
 
-**Retain as a modular current-qualified standard.** The HUPO Proteomics Standards Initiative lists released components with separate versions, including mass spectrometry, mass-spectrometry informatics, quantification, gel electrophoresis, gel informatics, chromatography, and capillary electrophoresis.
+**保留为分模块、经时效核验的标准。**HUPO 蛋白质组学标准计划列出了已发布、各自带版本号的组件，包括质谱、质谱信息学、定量、凝胶电泳、凝胶信息学、色谱与毛细管电泳。
 
-Select only components relevant to the actual workflow and verify current repository expectations. Do not present “MIAPE” as one unversioned universal checklist.
+只选与实际工作流相关的组件，并核实现行仓库要求。不要把"MIAPE"呈现成一份无版本号的通用核对清单。
 
-Official source: [HUPO-PSI MIAPE](https://www.psidev.info/miape).
+官方来源：[HUPO-PSI MIAPE](https://www.psidev.info/miape)。
 
 ### MIFlowCyt
 
-**Retain with qualification.** ISAC continues to identify MIFlowCyt 1.0 as an ISAC recommendation for experiment overview, samples, instrumentation, and data analysis. Also check current FCS, gating, panel, controls, and FlowRepository requirements.
+**保留，但需加限定。**ISAC 仍将 MIFlowCyt 1.0 列为 ISAC 推荐标准，覆盖实验概述、样本、仪器与数据分析。同时核查现行的 FCS、设门（gating）、panel、对照与 FlowRepository 要求。
 
-Official source: [ISAC MIFlowCyt](https://isac-net.org/miflowcyt-2/).
+官方来源：[ISAC MIFlowCyt](https://isac-net.org/miflowcyt-2/)。
 
 ### MIAPPE
 
-**Use MIAPPE 1.2**, released October 2024, for plant phenotyping metadata. It remains compatible with 1.1; version 2.0 was still in early development on the verification date.
+植物表型元数据**使用 MIAPPE 1.2**，2024 年 10 月发布。它与 1.1 保持兼容；截至核验日期，2.0 版仍在早期开发中。
 
-Official source: [MIAPPE releases](https://www.miappe.org/releases).
+官方来源：[MIAPPE 发布页](https://www.miappe.org/releases)。
 
-### MIGS and MIMS
+### MIGS 与 MIMS
 
-**Do not present standalone MIGS/MIMS as the current umbrella.** The Genomic Standards Consortium now organizes these legacy checklists within **MIxS** (Minimum Information about any Sequence), alongside newer checklists and environmental packages. Select the current MIxS release and applicable checklist plus environmental extension; GSC now calls their pairing a combination (older documents use package).
+**不要把单独的 MIGS/MIMS 当作现行总纲。**基因组标准联盟（GSC）现已把这些旧核对清单归入 **MIxS**（Minimum Information about any Sequence），与更新的核对清单及环境包并列。选择现行 MIxS 版本及适用的核对清单加环境扩展；GSC 现在把这种配对称为 combination（旧文档用 package 一词）。
 
-Official source: [GSC standards](https://www.gensc.org/pages/standards-intro.html).
+官方来源：[GSC 标准](https://www.gensc.org/pages/standards-intro.html)。
 
-## Other study types
+## 其他研究类型
 
-The EQUATOR database contains hundreds of guidelines. Common additional choices include:
+EQUATOR 数据库收录了数百份指南。常见的补充选择包括：
 
-- Protocols: design-specific protocol guidance
-- Routinely collected health data: RECORD
-- Clinical practice guidelines: RIGHT and AGREE reporting guidance
-- Surveys: design-appropriate survey reporting guidance
-- Implementation studies: current implementation-reporting guidance
-- Mixed methods: current mixed-methods guidance
-- Laboratory and omics studies: study-design reporting plus current repository metadata standards
+- 方案：按设计选择的方案指南
+- 常规采集的健康数据：RECORD
+- 临床实践指南：RIGHT 与 AGREE 报告指南
+- 调查研究：与设计匹配的调查报告指南
+- 实施研究：现行实施研究报告指南
+- 混合方法：现行混合方法指南
+- 实验室与组学研究：研究设计报告加现行仓库元数据标准
 
-If no suitable guideline exists, say so. Do not force the nearest checklist or invent one.
+如果没有合适的指南，就明说。不要硬套最接近的核对清单，也不要自己编造。
 
-## Coverage language for reviews
+## 评审中的覆盖性表述
 
-Use:
+应当这样写：
 
-> “Item 12 is not reported clearly enough to determine the analysis population. Please identify the included participants and reconcile this denominator with Figure 1.”
+> "第 12 条的报告不够清晰，无法确定分析人群。请指明纳入的参与者，并使该分母与图 1 一致。"
 
-Avoid:
+不要这样写：
 
-> “The manuscript scores 18/30 on CONSORT and is therefore low quality.”
+> "该稿件在 CONSORT 上得 18/30 分，因此质量低下。"
 
-Report counts or item identifiers only as navigation aids. The local selector deliberately emits no percentage or merit score.
+报告计数或条目编号仅作为导航辅助。本地选择器刻意不输出任何百分比或价值评分。

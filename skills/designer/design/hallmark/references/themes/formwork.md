@@ -12,11 +12,15 @@ photo: natural sat=-100 con=35 exp=8
 pictured: Site Board, Poster hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/formwork.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Formwork
 
-A site-office voice: warm grey concrete for paper, near-black ink, Oswald 700 capitals over Archivo, square cast edges, hard shadows and one safety orange. It feels heavy and exact because the surface is poured, every edge is straight and the photographs show the concrete itself in black and white, so the orange is the only colour on the page. It is not a black-and-yellow hazard page and not a glossy architecture portfolio.
+工地办公室的口吻：暖灰混凝土作纸、近黑的墨色、Oswald 700 大写压在 Archivo 之上、浇筑出来的直角边缘、硬阴影，外加一处安全橙。它厚重而精确，因为表面是浇筑的，每条边都笔直，照片用黑白呈现混凝土本身，于是橙色成了页面上唯一的颜色。它不是黑黄相间的警示页，也不是光鲜的建筑作品集。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -35,59 +39,59 @@ A site-office voice: warm grey concrete for paper, near-black ink, Oswald 700 ca
 }
 ```
 
-Three pours, stated in the stamp (`formwork: cast`). Muted sits on paper and paper-2 only; on anything darker the text is ink.
+三种浇筑（配色），写入 stamp（印记）：`formwork: cast`。Muted 色只落在 paper 与 paper-2 之上；更深的底面上文字用墨色。
 
-| Pour | Wall and ink | Orange |
+| 浇筑 | 墙面与墨色 | 橙色 |
 | --- | --- | --- |
-| **Cast** (default) | concrete `oklch(74% 0.008 80)` under near-black, grain multiplied across it | `oklch(66% 0.21 38)` |
-| **Night pour** | `oklch(27% 0.006 270)` under `oklch(95% 0.006 80)`, grain screened | `oklch(70% 0.21 40)` |
-| **Drawing** | tracing paper `oklch(95% 0.012 85)` under blue-black ink `oklch(22% 0.02 260)`, no grain | a red `oklch(58% 0.21 30)` |
+| **Cast**（默认） | 混凝土 `oklch(74% 0.008 80)` 压在近黑之上，颗粒以正片叠底铺满 | `oklch(66% 0.21 38)` |
+| **Night pour** | 底 `oklch(27% 0.006 270)`，上覆 `oklch(95% 0.006 80)`，颗粒滤色 | `oklch(70% 0.21 40)` |
+| **Drawing** | 描图纸 `oklch(95% 0.012 85)` 压蓝黑墨 `oklch(22% 0.02 260)`，无颗粒 | 一支红 `oklch(58% 0.21 30)` |
 
-## Type
+## 字体（Type）
 
-- **Display:** Oswald 700, uppercase, `--tracking-display`, roman; line-height 1.0 to 1.05 (55a), 0.9 only on a line that cannot wrap. One colour per head. Condensed, a section head takes one step up (`--text-display-s` and up), and a lone figure may run to 20rem.
-- **Body:** Archivo 400 and 500, 16 to 17px, line-height 1.5, in `--color-ink-2`.
-- **Figures (the outlier):** Archivo Narrow 500, tabular, sentence case, for measurements and counts: a radius in millimetres, a depth, a week, a park's number.
-- **Labels, captions, table heads, meta:** Archivo 500 a step smaller, sentence case, untracked. No mono on the page.
+- **展示字体：**Oswald 700，大写，`--tracking-display`，正体；行高 1.0 至 1.05（55a），只有不可换行的行才用 0.9。每个标题一种颜色。窄体，区块标题升一档（`--text-display-s` 及以上），孤立大数字可放到 20rem。
+- **正文：**Archivo 400 与 500，16 至 17px，行高 1.5，用 `--color-ink-2`。
+- **数字（outlier 字体）：**Archivo Narrow 500，表格数字，句首大写，用于测量与计数：毫米计的半径、深度、周数、公园编号。
+- **标签、图注、表头、元信息：**Archivo 500，小一号，句首大写，不加字距。页面不出现等宽字体。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Rules: `--rule-bar` in ink across the top of a section or a table, `--rule-hair` in `--color-paper-3` between rows.
-- Radius 0 on everything; concrete is cast against straight boards.
-- Depth is cast, never soft: a plate is `--color-plate` with a `--rule-bar` ink border and the hard `--shadow-card` in ink, one or two a page; nothing is blurred.
-- Bands: `--color-paper-2` (a darker pour) or one `--color-ink` band with `--color-paper` text; never an orange field. Two a page at most.
-- Photographs: concrete close and at work in hard daylight: a bowl's transition from the deck, board-marked walls, coping and edges, the pour and the float, a skater from behind or far off. Hard black and white, the whites clean and the blacks deep (the `photo:` line), so a picture stands off the grey paper and the orange stays the only colour. Square in a 2px ink frame, no shadow; a caption beneath in the label style; type on a photograph only over an ink scrim from its edge.
-- Texture, the grain: `texture.md` § 1 across the whole paper at `--texture-opacity` (0.05, so it may sit under running text), multiplied, screened on the night pour; it is what makes the paper read as cast.
+- 横线：区块或表格顶端压墨色 `--rule-bar`，行间用 `--color-paper-3` 的 `--rule-hair`。
+- 一切圆角为 0；混凝土是贴着直木板浇筑的。
+- 深度是浇筑出来的，绝不柔软：卡板用 `--color-plate`，加 `--rule-bar` 墨色边框与墨色的硬 `--shadow-card`，每页一两块；任何东西都不模糊。
+- 色带：`--color-paper-2`（更深一档的浇筑）或一条墨色色带配 `--color-paper` 文字；绝不用橙色色场。每页至多两条。
+- 照片：硬日光下近拍的作业中的混凝土：碗池与台面的交接、木板纹墙面、压顶与边缘、浇筑与抹平，滑手只从背后或远景入镜。硬朗的黑白，白要干净、黑要深沉（即 `photo:` 一行），照片因此从灰纸面上跳出来，橙色保持唯一颜色。直角，2px 墨色边框，无阴影；下方图注用标签样式；压在照片上的文字必须垫从边缘起的墨色蒙版。
+- 纹理，即颗粒：`texture.md` § 1 以 `--texture-opacity`（0.05，因此可垫在正文之下）铺满整张纸，正片叠底，夜间浇筑改滤色；纸面读起来像浇筑物，靠的就是它。
 
-## Range
+## 版式（Range）
 
-- **A figure cast as a plate:** the prompt's one real count in Oswald at 14 to 20rem on a plate with the hard shadow, its unit and what it counts in Archivo beside it.
-- **Steps as a pour sequence:** three or four stages across the twelve columns under a `--rule-bar`, each an Oswald numeral at `--text-display-s`, a one-word stage and one plain line, verticals in `--color-paper-3` between.
-- **Comparison as two plates:** two audiences or two jobs side by side, each a plate with its rows on hairlines; orange only on the one action.
-- **Statement on the ink band:** one line of Oswald capitals at display size in `--color-plate-ink` on `--color-ink`, grain screened.
+- **浇筑成卡板的数字：**提示词中那个真实计数用 Oswald 排到 14 至 20rem，放在带硬阴影的卡板上，单位与计数对象用 Archivo 写在旁边。
+- **步骤排成浇筑顺序：**三四个阶段横跨十二列，压在 `--rule-bar` 之下，每段一个 Oswald 数字（`--text-display-s`）、一个单词的阶段名与一句平实说明，列间用 `--color-paper-3` 竖线分隔。
+- **对比排成两块卡板：**两类受众或两件事并排，各一块卡板，行间发丝线；橙色只落在唯一的那一个动作上。
+- **墨色色带上的陈述：**一行 Oswald 大写、展示字号，`--color-plate-ink` 色压在 `--color-ink` 上，颗粒改滤色。
 
-## Controls
+## 控件（Controls）
 
-- The pair: an orange primary raised on a hard `0 3px 0` shadow in `--color-accent-deep` that presses down 3px on `:active`, beside a pressed-in secondary (`inset 0 2px 3px`, a 2px ink border). Both in Oswald 700 capitals, untracked, following the display; radio labels are labels, Archivo sentence case.
-- Links are ink, underlined, orange on hover; inputs are pressed in like the secondary.
-- Orange stays under 5% of a screen: the primary, one figure, the focus ring.
+- 控件对：橙色主按钮由硬 `0 3px 0` 的 `--color-accent-deep` 阴影抬起，`:active` 时下压 3px；旁边是凹陷式次按钮（`inset 0 2px 3px`，2px 墨色边框）。两者都用 Oswald 700 大写，不加字距，跟随展示字体；单选的标签就是普通标签，Archivo 句首大写。
+- 链接用墨色、带下划线，悬停转橙；输入框像次按钮一样凹陷。
+- 橙色保持在一屏的 5% 以内：主按钮、一个数字、焦点环。
 
-## Motion
+## 动效（Motion）
 
-Concrete does not move. A control presses in over `--dur-micro` on `--ease-out`; state lands at once. Nothing on scroll, nothing ambient.
+混凝土不动。控件在 `--dur-micro` 内以 `--ease-out` 按下；状态即时落定。滚动无事发生，也无环境动效。
 
-## Voice
+## 语气（Voice）
 
-A foreman's plain talk: what was poured, where, for whom and when it opens. Short lines, every figure with its unit.
+工长的白话：浇筑了什么、在哪里、给谁用、何时开放。句子短，每个数字带单位。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a rounded corner, a blurred shadow or a second accent; the hard shadow and the orange are the material.
-- Never draw the concrete (board seams, tie holes, cracks, a hazard stripe); photograph it.
-- Never a colour photograph beside the orange; pictures print in black and white.
-- Never Oswald in lowercase or at a light weight; it is 700 capitals.
+- 绝无圆角、模糊阴影或第二种强调色；硬阴影与橙色就是材质本身。
+- 绝不手绘混凝土（板缝、对拉螺栓孔、裂缝、警示条纹）；拍照。
+- 橙色在侧时绝不用彩色照片；照片一律黑白。
+- 绝不用小写或细字重的 Oswald；它就是 700 大写。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Archivo:wght@400;500&family=Archivo+Narrow:wght@500&display=swap" rel="stylesheet">

@@ -1,8 +1,10 @@
-# Public Reply Mechanics (maintainer, issue or PR)
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/check/references/public-reply.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Used by Triage Mode and Ship / Release Follow-through for the actions around a reply. The reply body belongs to `/write` Public Reply Mode; without `/write`, open with `@<login>` and at most one short thanks, match the opener's language, and give one or two sentences naming the exact ship state and the reporter's next step, each true at the moment of posting. `AGENTS.md` or `CLAUDE.md` in the target repo overrides this shape.
-
-1. Resolve `@<login>` from `gh issue view` / `gh pr view --json author` before posting, and re-read the live item there rather than replying from memory. When requesting logs, crash dumps, screenshots, or local-state archives, ask only for the minimum non-sensitive public facts; use a private support channel only when the project's public context provides one. Choose a next step the reporter can perform with the reported failure or accessibility constraint still present; do not require disabling the assistive capability they need to follow it. This applies even when `/write` is unavailable.
-2. Edit your own comment in place (`PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}`) only while nobody has replied after it. Once the reporter or anyone else has replied, post a new comment instead of rewriting history; never delete and repost unless the old text must disappear.
-3. After posting or editing, re-read the comment body, author, target item, and issue/PR state. The public action is not complete without that receipt.
-4. Close only when the fix is shipped, already available in the latest release, the report is invalid, the report is a duplicate, or the maintainer explicitly asked for closure. Otherwise leave it open with the next-release acknowledgement.
+# 公开回复操作规范（维护者，issue 或 PR）
+分诊模式与 Ship / 发布跟进在回复相关动作上使用本文件。回复正文属于 `/write` Public Reply Mode；没有 `/write` 时，以 `@<login>` 开头加最多一句简短致谢，跟随提问者的语言，用一两句话写明确切的发布状态与报告者的下一步，每句在发帖时刻都为真。目标仓库的 `AGENTS.md` 或 `CLAUDE.md` 优先于本形态。
+1. 发帖之前用 `gh issue view` / `gh pr view --json author` 解析 `@<login>`，并从那里重读该条目的实时内容，不要凭记忆回复。索要日志、崩溃转储、截图或本地状态存档时，只索要最少的非敏感公开事实；仅当项目公开上下文提供了私有支持渠道时才使用它。选择的下一步要让报告者在所述故障或无障碍约束仍然存在时也能执行；不要要求对方禁用其遵循步骤所必需的辅助能力。`/write` 不可用时同样适用。
+2. 只有尚无人跟帖时，才原位编辑自己的评论（`PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}`）。一旦报告者或任何人已回复，就发新评论而不是改写历史；除非旧文本必须消失，绝不删除重发。
+3. 发帖或编辑之后，重读评论正文、作者、目标条目与 issue/PR 状态。没有这个回执，公开动作就不算完成。
+4. 只有修复已上线、最新 release 已可用、报告无效、报告重复，或维护者明确要求关闭时才关闭。否则保持打开并确认会在下一个版本发布。

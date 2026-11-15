@@ -1,67 +1,71 @@
-# 12 Duotone Split — Duotone Split
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/mixed--duotone-split/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 12 Duotone Split（双色调分割）
 
-Charcoal and terracotta dual-color panels split the canvas in different proportions, morph produces "shifting canvas" effect.
+## 风格概览
 
-- **Scene**: Brand launches, architectural design, high-end presentations
-- **Mood**: Bold, architectural feel, high-end, minimalist
-- **Tone**: Dual-color contrast (deep dark + warm color), white dividers
+炭灰与陶土双色面板按不同比例分割画布，morph 产生"画布流动"效果。
 
-## Color Palette
+- **场景**：品牌发布、建筑设计、高端演示
+- **气质**：大胆、建筑感、高端、极简
+- **基调**：双色的对比（深暗 + 暖色），白色分隔线
 
-| Name          | Hex     | Usage                          |
+## 配色
+
+| 名称          | Hex     | 用途                           |
 | ------------- | ------- | ------------------------------ |
-| Pure White    | #FFFFFF | Page background, divider lines |
-| Charcoal Gray | #2D3436 | Dark panel                     |
-| Terracotta    | #E17055 | Warm panel                     |
+| 纯白          | #FFFFFF | 页面背景、分隔线               |
+| 炭灰          | #2D3436 | 暗面板                         |
+| 陶土色        | #E17055 | 暖面板                         |
 
-## Typography
+## 字体排印
 
-| Element       | Font           | Size    |
+| 元素          | 字体           | 字号    |
 | ------------- | -------------- | ------- |
-| Main Title    | Segoe UI Black | 40-64pt |
-| Data Numbers  | Segoe UI Black | 48-64pt |
-| Column Title  | Segoe UI Black | 28pt    |
-| Body/Subtitle | Segoe UI Light | 16-24pt |
+| 主标题        | Segoe UI Black | 40-64pt |
+| 数据数字      | Segoe UI Black | 48-64pt |
+| 栏目标题      | Segoe UI Black | 28pt    |
+| 正文/副标题   | Segoe UI Light | 16-24pt |
 
-## Design Techniques
+## 设计手法
 
-- **Dual-panel split**: Two large rect (!!panel-dark + !!panel-warm) cover entire canvas, split in different proportions
-- **White divider line**: 0.3cm wide white rect as precise divider between two panels
-- **Split proportion changes**: S1 left-right 50/50 → S2 top-bottom 70/30 → S3 left-right 30/70 → S4 diagonal rotation → S5 top-bottom 80/20
-- **Morph choreography**: Massive changes in panel size and position produce "shifting canvas" effect, divider line follows movement
-- **Rotation variation**: S4 panels rotated -8 degrees, breaking orthogonal layout for added dynamism
-- **Restrained decoration**: Only 2 semi-transparent dots + 1 ultra-thin line, maintaining minimalism
+- **双面板分割**：两个大 rect（!!panel-dark + !!panel-warm）铺满画布，按不同比例分割
+- **白色分隔线**：0.3cm 宽的白色 rect，作两面板之间的精确分隔
+- **分割比例变化**：S1 左右 50/50 → S2 上下 70/30 → S3 左右 30/70 → S4 斜向旋转 → S5 上下 80/20
+- **Morph 编排**：面板尺寸与位置大幅变化，产生"画布流动"效果，分隔线跟随移动
+- **旋转变体**：S4 面板旋转 -8 度，打破正交布局，增加动感
+- **克制的装饰**：只有 2 个半透明圆点 + 1 条超细线，保持极简
 
-## Scene Elements
+## 场景元素
 
-| Name             | Type              | Description                                |
+| 名称             | 类型              | 描述                                       |
 | ---------------- | ----------------- | ------------------------------------------ |
-| `!!panel-dark`   | rect              | Charcoal main panel                        |
-| `!!panel-warm`   | rect              | Terracotta warm panel                      |
-| `!!divider`      | rect (0.3cm)      | White panel divider line                   |
-| `!!accent-dot-1` | ellipse           | White semi-transparent decorative dot      |
-| `!!accent-dot-2` | ellipse           | Terracotta semi-transparent decorative dot |
-| `!!accent-line`  | rect (ultra-thin) | White semi-transparent decorative line     |
+| `!!panel-dark`   | rect              | 炭灰主面板                                 |
+| `!!panel-warm`   | rect              | 陶土色暖面板                               |
+| `!!divider`      | rect (0.3cm)      | 白色面板分隔线                             |
+| `!!accent-dot-1` | ellipse           | 白色半透明装饰圆点                         |
+| `!!accent-dot-2` | ellipse           | 陶土色半透明装饰圆点                       |
+| `!!accent-line`  | rect (ultra-thin) | 白色半透明装饰线                           |
 
-## Page Structure (5 pages)
+## 页面结构（5 页）
 
-| Slide | Type      | Elements                                                                                                        | Description |
+| 页码  | 类型      | 元素                                                                                                            | 描述 |
 | ----- | --------- | --------------------------------------------------------------------------------------------------------------- | ----------- |
-| S1    | hero      | Cover — left-right 50/50 split, title on dark panel                                                             |
-| S2    | statement | Statement — top-bottom 70/30 split (dark occupies top 70%), centered large title                                |
-| S3    | pillars   | Three-column — left-right 30/70 (narrow dark left column + wide warm right column), three pillars on warm panel |
-| S4    | evidence  | Data — panels rotated -8 degrees forming diagonal split, data scattered across both panels                      |
-| S5    | cta       | Closing — top-bottom 80/20 (dark occupies top 80%), call to action centered                                     |
+| S1    | hero      | 封面：左右 50/50 分割，标题在暗面板上                                                                           |             |
+| S2    | statement | 宣言：上下 70/30 分割（暗色占顶部 70%），大标题居中                                                             |             |
+| S3    | pillars   | 三栏：左右 30/70（窄暗左列 + 宽暖右栏），三根支柱在暖面板上                                                     |             |
+| S4    | evidence  | 数据：面板旋转 -8 度形成斜向分割，数据散布双面板                                                                |             |
+| S5    | cta       | 结尾：上下 80/20（暗色占顶部 80%），行动号召居中                                                                |             |
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (hero)** — Initial layout of 6 scene actors, understanding panel + divider line structure
-- **Slide 4 (evidence)** — Panel rotation + diagonal split implementation
+- **Slide 1（hero）**：6 个场景 actor 的初始布局，理解面板 + 分隔线结构
+- **Slide 4（evidence）**：面板旋转 + 斜向分割的实现
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

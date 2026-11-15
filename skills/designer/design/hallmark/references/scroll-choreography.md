@@ -1,20 +1,24 @@
-# Scroll choreography: the one earned pattern
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/scroll-choreography.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The default is still none: the reveal-once in `craft.md` § 5 is the page norm. This file is the exception: a scroll-linked pattern used once, on structure, when the content has a sequence worth pinning or scrubbing. sloplint's F8 counts pattern families and flags a second one.
+# 滚动编排：唯一凭本事挣来的模式
 
-## Budget
+默认依然是没有滚动动效：`craft.md` § 5 的一次性显现（reveal-once）才是页面常态。本文件是那个例外：一种滚动联动（scroll-linked）模式，只使用一次、只用在结构上，且内容确有值得钉住（pin）或擦洗（scrub）的序列时才用。sloplint 的 F8 会统计模式家族的数量，并把第二个标出来。
 
-- **One pattern per page.** Two scroll behaviours compete for the same attention.
-- **Never on body text.** Targets are structural: a pinned section, one display element, a 2px spine, figures. Prose never moves under the reader.
-- **Hero entrance rules unchanged.** The page-load orchestration in `craft.md` § 5 stays as is; scroll choreography never replaces it, and no element carries both.
-- **Static end-state mandatory.** Base CSS shows the finished layout. The choreography lives entirely inside `@supports (animation-timeline: view())` and `@media (prefers-reduced-motion: no-preference) and (min-width: 40rem)`; reduced motion, small screens and browsers without support get the complete page.
-- **Order matters:** the `animation` shorthand resets `animation-timeline` and `animation-range`, so declare them after it.
-- **`linear` is correct here:** scrubbing maps scroll distance to progress one to one; an easing curve detaches the page from the thumb.
-- A pattern counts as one of the page's three motion primitives (`microinteractions.md`).
+## 预算
 
-## 1 · Pinned chapter: steps reveal while the section is pinned
+- **每页一种模式。**两种滚动行为会争夺同一份注意力。
+- **绝不用于正文文本。**目标只能是结构性元素：一个被钉住的区块、一个展示元素、一条 2px 竖线、插图。散文绝不在读者眼皮底下移动。
+- **Hero 入场规则不变。**`craft.md` § 5 的页面加载编排保持原样；滚动编排绝不取代它，也没有元素同时承担两者。
+- **必须有静态终态。**基础 CSS 直接呈现完成后的布局。整套编排完全放在 `@supports (animation-timeline: view())` 与 `@media (prefers-reduced-motion: no-preference) and (min-width: 40rem)` 之内；减弱动效的用户、小屏幕与不支持的浏览器拿到的都是完整页面。
+- **顺序很重要：**`animation` 简写会重置 `animation-timeline` 与 `animation-range`，所以要在它之后声明这两项。
+- **`linear` 在这里是正确的：**擦洗把滚动距离一比一映射为进度；缓动曲线会让页面与滚动条脱钩。
+- 一种模式计入页面三个动效原语之一（`microinteractions.md`）。
 
-The tall track owns a named view-timeline; the pinned pane's steps consume it in slices. (Elements inside a stuck pane cannot drive their own `view()`: they are not moving.)
+## 1 · 钉住的章节：区块被钉住期间步骤逐条显现
+
+高个轨道拥有命名的 view-timeline；被钉住窗格里的步骤分段消费它。（钉住的窗格内部的元素驱动不了自己的 `view()`：它们并不在移动。）
 
 ```html
 <section class="chapter">
@@ -39,9 +43,9 @@ The tall track owns a named view-timeline; the pinned pane's steps consume it in
 }
 ```
 
-## 2 · Scrub-linked headline: one display element, clip wipe
+## 2 · 擦洗联动的大标题：一个展示元素，剪裁擦除
 
-For a mid-page Statement head (`layout.md` § 5), never the hero `h1`, whose entrance is the load reveal. One element a page.
+用于页面中部的 Statement 标题（`layout.md` § 5），绝不用于 Hero 的 `h1`，后者的入场就是加载显现。每页一个元素。
 
 ```css
 .statement__head { /* base: fully drawn */ }
@@ -60,9 +64,9 @@ For a mid-page Statement head (`layout.md` § 5), never the hero `h1`, whose ent
 }
 ```
 
-## 3 · Progress spine: `scroll(root)` scaling a 2px rule
+## 3 · 进度竖线：用 `scroll(root)` 缩放一条 2px 细线
 
-Reading progress as a hairline, not a chrome bar. A functional indicator, so `linear` is canon. Hidden below 40rem (it eats the mobile gutter).
+阅读进度呈发丝线状，而不是浏览器控件条。它是功能性指示器，所以 `linear` 是标准选择。低于 40rem 时隐藏（它会吃掉移动端的留白）。
 
 ```css
 .spine { position: fixed; inset-block: 0; left: max(1rem, 2vw); width: 2px; background: var(--color-rule); }
@@ -77,9 +81,9 @@ Reading progress as a hairline, not a chrome bar. A functional indicator, so `li
 }
 ```
 
-## 4 · Sticky diptych: a two-pane pin
+## 4 · 粘性双联：两窗格钉住
 
-The structure is a Split (`layout.md` § 5) with one side pinned: `.sticky-stack { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--gap-columns); }`, `.pane-sticky { position: sticky; top: calc(var(--banner-height, 0px) + var(--space-xl)); align-self: start; z-index: var(--z-sticky); }` (it docks below a sticky nav, 56), `.pane-scroll { display: grid; gap: var(--space-2xl); }`, each figure at 16:10 and 440px tall or more; under 60rem one column and `position: static`. The choreography adds only this: the scrolling figures fade in on their own `view()` (they move, so self-timelines work); the pinned side holds from one diptych to the next.
+结构是分栏（Split，`layout.md` § 5）且其中一栏被钉住：`.sticky-stack { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--gap-columns); }`、`.pane-sticky { position: sticky; top: calc(var(--banner-height, 0px) + var(--space-xl)); align-self: start; z-index: var(--z-sticky); }`（它停靠在 sticky 导航之下，56）、`.pane-scroll { display: grid; gap: var(--space-2xl); }`，每张插图为 16:10、高 440px 或更多；低于 60rem 时改单列、`position: static`。编排只添加这一点：滚动一侧的插图在各自的 `view()` 上淡入（它们在移动，所以自时间线可用）；钉住的一侧从一副双联撑到下一副。
 
 ```css
 /* base: .sticky-stack grid + .pane-sticky pin, above; the pinned side holds down the page */
@@ -92,9 +96,9 @@ The structure is a Split (`layout.md` § 5) with one side pinned: `.sticky-stack
 }
 ```
 
-## JS fallback (optional, shared)
+## JS 回退（可选，共用）
 
-When JS is present and `animation-timeline` is not, the one fallback is the reveal-once in `craft.md` § 5, never a scroll listener or a scrub polyfill:
+当有 JS 而 `animation-timeline` 不受支持时，唯一的回退是 `craft.md` § 5 的一次性显现，绝不用滚动监听器或擦洗 polyfill：
 
 ```html
 <script>
@@ -107,4 +111,4 @@ When JS is present and `animation-timeline` is not, the one fallback is the reve
 </script>
 ```
 
-Pair it with a `--dur-long` `--ease-out` transition to the end state, and hide `[data-reveal]` only under the `.js` class the script adds (62). Without script and without support, the static layout is already the finished page.
+再配一个 `--dur-long` 的 `--ease-out` 过渡到终态，并且只在脚本添加的 `.js` 类之下隐藏 `[data-reveal]`（62）。没有脚本也没有支持时，静态布局本身就是完成的页面。

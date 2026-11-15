@@ -7,14 +7,18 @@ display: slab-serif Zilla Slab
 accent: warm 32
 posture: restrained
 keywords: newspaper, broadsheet, journalism, publication, magazine, newsletter, local news, op-ed, opinion, essay, longform, column, reportage, press, gazette, review, dispatch, literary
-material: pale newsprint stock, warm black ink, Zilla Slab heads over a Spectral body with Libre Franklin agate for listed figures, justified columns under hairline column rules, a double rule, one dried-brick signal
+material: 浅色新闻纸、暖黑墨色、Spectral 正文上压 Zilla Slab 标题、Libre Franklin agate 排列表数字、细栏线下的两端对齐分栏、一条双线、一个干砖色信号
 photo: mono
 pictured: Broadsheet Front, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/newsprint.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Newsprint
 
-A broadsheet in a browser: pale newsprint stock, warm black ink, a blunt Zilla Slab head over a calm Spectral book serif, hairlines and column rules for ordinary breaks, a double rule for the major ones, and a dried-brick signal that never fills anything. Photographs run in black and white with a caption, as a paper prints them. It reads reported and edited, not decorated. It is not a magazine of rounded cards, not a sans-serif blog, and not the cream editorial template with a terracotta button.
+浏览器里的一份大报：浅色新闻纸、暖黑墨色、平静的 Spectral 书卷衬线上压一颗钝感的 Zilla Slab 标题、细线与栏线管普通的分隔、双线管重要的分隔，以及一个干砖色信号，它绝不填充任何东西。照片黑白、带题注，像报纸印的那样。它读起来是报道与编辑出来的，不是装饰出来的。它不是圆角卡片的杂志，不是无衬线博客，也不是带陶土色按钮的奶油色编辑部模板。
 
 ## Tokens
 
@@ -32,53 +36,53 @@ A broadsheet in a browser: pale newsprint stock, warm black ink, a blunt Zilla S
 }
 ```
 
-## Type
+## 字体
 
-- **Display:** Zilla Slab 700, `--tracking-display`, line-height 1.05, sentence case, roman, for heads, decks and the masthead. Bracketed serifs at nearly stem weight: hold the one weight and let the shared scale make the hierarchy.
-- **Body:** Spectral 400 and 500 at 1.0625rem, line-height 1.55. The blunt slab over the calm book serif is the voice; Spectral italic is emphasis in running text only.
-- **Bylines, datelines, captions, table heads, meta:** Spectral 500 a step smaller, sentence case, untracked, `--color-muted`.
-- **Agate, Libre Franklin 500:** the paper's listings face, only for figures in a ruled list or table (times, prices, counts, results), tabular and right-aligned, the size of the text beside it. Never a label, a head or running text. Three weights a page: 400, 500, 700.
-- **Columns:** running text of more than one paragraph may set in two or three justified columns with `hyphens: auto` and a hairline column rule, each 28 to 40ch.
-- **Drop cap:** may open one long passage, a Zilla Slab initial about three lines tall in ink or brick, once a page at most.
+- **展示字体：**Zilla Slab 700、`--tracking-display`、行高 1.05、句首大写、正体，用于标题、导语（deck）和报头。括弧形衬线几乎与主干同重：守住这一个字重，让共享的字号阶梯去制造层级。
+- **正文：**Spectral 400 与 500、1.0625rem、行高 1.55。钝感的粗衬线压在平静的书卷衬线上，这就是语气；Spectral 斜体只作行文中的强调。
+- **署名、日期栏、题注、表头、元信息：**Spectral 500 小一档，句首大写，不加字距，用 `--color-muted`。
+- **Agate，Libre Franklin 500：**报纸的分类栏字体，只用于划线列表或表格里的数字（时刻、价格、数量、结果），tabular、右对齐，字号与旁边正文一致。绝不做标签、标题或正文。每页三个字重：400、500、700。
+- **分栏：**超过一段的行文可排成两或三栏两端对齐，用 `hyphens: auto` 和细栏线，每栏 28 到 40ch。
+- **首字下沉：**可以给一段长文开头用，Zilla Slab 首字母约三行高，墨色或砖色，每页至多一次。
 
-## Surfaces
+## 表面
 
-- Hairlines in `--color-rule` carry ordinary breaks, and text set in columns takes a hairline column rule; the double rule, two 1px lines in `--color-rule-2` 2px apart, is the heaviest divider the theme owns and marks the major breaks.
-- Rules, never boxes: radius 0 and no shadow anywhere. A well is a `--color-paper-2` field ruled top and bottom, never a bordered card.
-- Bands: `--color-paper-2`, or one `--color-ink` band with paper type; two a page at most, never a brick field.
-- Photographs: black-and-white documentary, the place and its people at a working distance or from behind, in available light, the tones running from paper white to ink; the lead picture wide, the rest cropped to the story. Square, a 1px `--color-rule` border, no shadow. Every picture takes a one-line caption beneath it in the byline voice, a fact; type never sits on a photograph.
-- Texture, if any: the faintest fibre grain (`texture.md` § 1) on one band, off by default and never under running text.
+- `--color-rule` 的细线承担普通分隔，分栏的行文带一条细栏线；双线，两条相距 2px 的 `--color-rule-2` 1px 线，是主题拥有的最重分隔，标记大的断裂处。
+- 用线，绝不用盒子：圆角 0、任何地方无阴影。well 是上下划线的 `--color-paper-2` 场域，绝不是带边框的卡片。
+- 色带：`--color-paper-2`，或一条 `--color-ink` 色带配纸张色文字；每页至多两条，绝不做砖色场域。
+- 照片：黑白纪实，地点与它的人们，工作距离或背影，自然光，色调从纸白走向墨黑；头图宽幅，其余按报道裁切。方形，1px `--color-rule` 边框，无阴影。每张照片下方一行题注、署名腔，写一个事实；文字绝不压在照片上。
+- 纹理，若用：一条色带上极淡的纤维颗粒（`texture.md` § 1），默认关闭，绝不垫在正文下。
 
 ## Range
 
-- **Front page in columns:** one head at `--text-display-s` across the full measure over three justified columns of Spectral, a drop cap, a dateline in the byline voice; a 1px column rule between, a double rule above.
-- **Listings as agate:** a week, a programme or a price list as ruled rows, the day or item in Zilla Slab at title size, the line in Spectral, the figure in Franklin agate at the right edge.
-- **Figures as a box score:** the publication's own numbers in Zilla Slab at display size between two double rules, each over one Spectral line, parted by column rules.
-- **The ink band:** a notice reversed in paper on `--color-ink` (a price, a call to subscribe) with its form; the brick becomes a hairline on it, never a fill.
+- **分栏的头版：**一个 `--text-display-s` 的标题横跨整个版心，压在三栏两端对齐的 Spectral 之上，一个首字下沉、一条署名腔的日期栏；栏间 1px 栏线，上方一条双线。
+- **分类信息用 agate：**一周日程、节目单或价目表排成划线行，日期或条目用 Zilla Slab、标题字号，那行说明用 Spectral，数字用 Franklin agate 靠右缘。
+- **数字做成比分栏：**刊物自己的数字用 Zilla Slab、display 字号，夹在两条双线之间，每个下面一行 Spectral，栏线分隔。
+- **墨色带：**一条公告在 `--color-ink` 上反白成纸张色（一个价格、一次订阅邀请），带它的表单；砖色在它上面只作细线，绝不作填充。
 
-## Controls
+## 控件
 
-- The control pair: an ink-filled rectangle with paper type beside one ruled top and bottom in ink, both square, set in Zilla Slab 700 a step smaller.
-- Links in brick with a 1px brick underline that thickens on hover; inputs are square with a 1px `--color-rule-2` border on `--color-paper-2`.
-- The brick stays under 5%: links, the focus ring, a short tick on a rule; never a fill.
+- 控件对：一枚墨色填充矩形配纸张色文字，旁边一枚上下墨色划线的，两者方形，用 Zilla Slab 700、小一档。
+- 链接砖色、1px 砖色下划线、hover 变粗；输入框方形，`--color-paper-2` 底上 1px `--color-rule-2` 边框。
+- 砖色保持在 5% 以内：链接、焦点圈、线条上的一小段刻度；绝不作填充。
 
-## Motion
+## 动效
 
-State only: a link's underline thickens on hover. No reveal, no counter, nothing that types or scrolls itself.
+只有状态：链接下划线 hover 变粗。无显现、无计数器，没有任何自动打字或自动滚动的东西。
 
-## Voice
+## 语气
 
-Specific and declarative, with a dry editorial wit: name the place, the day and the fact, and write heads a sub-editor would pass, in sentence case and full stops.
+具体、陈述式，带干燥的编辑幽默：点名地点、日期与事实，标题要写得过得了版面编辑那一关，句首大写、句号结尾。
 
-## Do-nots
+## 禁止事项
 
-- Never a sans-serif body or a sans label voice; Spectral does all the small work.
-- Never a cool or bright accent; dried brick is furniture, not a shout.
-- Never boxed cards, shadows or rounded corners; rules carry the structure.
-- Never Zilla Slab under 700 or in italic; one blunt roman weight.
-- Never a colour, toned or tinted photograph, and never one without its caption.
+- 正文绝不用无衬线，标签也绝不用无衬线腔；细活全归 Spectral。
+- 绝不用冷调或鲜艳的强调色；干砖色是家具，不是呐喊。
+- 绝不用盒装卡片、阴影或圆角；结构由线条承担。
+- Zilla Slab 绝不低于 700，也绝不用斜体；就一个钝感的正体字重。
+- 绝不用彩色、调色或染色照片，也绝不用没有题注的照片。
 
-## Build hint
+## 构建提示
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@700&family=Spectral:ital,wght@0,400;0,500;1,400&family=Libre+Franklin:wght@500&display=swap" rel="stylesheet">

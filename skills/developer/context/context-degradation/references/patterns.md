@@ -1,12 +1,16 @@
-# Context Degradation Patterns: Technical Reference
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/context-degradation/references/patterns.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document provides technical details on diagnosing and measuring context degradation.
+# 上下文退化模式：技术参考
 
-## Attention Distribution Analysis
+本文档提供诊断与度量上下文退化的技术细节。
 
-### U-Shaped Curve Measurement
+## 注意力分布分析
 
-Measure attention distribution across context positions:
+### U 型曲线测量
+
+测量注意力在上下文各位置上的分布：
 
 ```python
 def measure_attention_distribution(model, context_tokens, query):
@@ -38,9 +42,9 @@ def measure_attention_distribution(model, context_tokens, query):
     return attention_by_position
 ```
 
-### Lost-in-Middle Detection
+### Lost-in-Middle（中段迷失）检测
 
-Detect when critical information falls in degraded attention regions:
+检测关键信息何时落入注意力退化的区域：
 
 ```python
 def detect_lost_in_middle(critical_positions, attention_distribution):
@@ -78,11 +82,11 @@ def detect_lost_in_middle(critical_positions, attention_distribution):
     return results
 ```
 
-## Context Poisoning Detection
+## 上下文污染检测
 
-### Hallucination Tracking
+### 幻觉跟踪
 
-Track potential hallucinations across conversation turns:
+跨对话轮次跟踪潜在的幻觉：
 
 ```python
 class HallucinationTracker:
@@ -117,9 +121,9 @@ class HallucinationTracker:
         }
 ```
 
-### Error Propagation Analysis
+### 错误传播分析
 
-Track how errors flow through context:
+跟踪错误如何在上下文中流动：
 
 ```python
 def analyze_error_propagation(context, error_points):
@@ -152,11 +156,11 @@ def analyze_error_propagation(context, error_points):
     }
 ```
 
-## Distraction Metrics
+## 干扰指标
 
-### Relevance Scoring
+### 相关性评分
 
-Score relevance of context elements to current task:
+为上下文元素对当前任务的相关性打分：
 
 ```python
 def score_context_relevance(context_elements, task_description):
@@ -191,11 +195,11 @@ def score_context_relevance(context_elements, task_description):
     }
 ```
 
-## Degradation Monitoring System
+## 退化监测系统
 
-### Context Health Dashboard
+### 上下文健康看板
 
-Implement continuous monitoring of context health:
+实现对上下文健康的持续监测：
 
 ```python
 class ContextHealthMonitor:
@@ -254,9 +258,9 @@ class ContextHealthMonitor:
             return "critical"
 ```
 
-### Alert Thresholds
+### 告警阈值
 
-Configure appropriate alert thresholds:
+配置合适的告警阈值：
 
 ```python
 CONTEXT_ALERTS = {
@@ -268,11 +272,11 @@ CONTEXT_ALERTS = {
 }
 ```
 
-## Recovery Procedures
+## 恢复流程
 
-### Context Truncation Strategy
+### 上下文截断策略
 
-When context degrades beyond recovery, truncate strategically:
+当上下文退化到无法恢复时，进行战略性截断：
 
 ```python
 def truncate_context_for_recovery(context, preserved_elements, target_size):
@@ -311,4 +315,3 @@ def truncate_context_for_recovery(context, preserved_elements, target_size):
     
     return truncated
 ```
-

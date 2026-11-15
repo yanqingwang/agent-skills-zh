@@ -1,29 +1,33 @@
-# Logo Usage Rules
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/brand/references/logo-usage-rules.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Guidelines for proper logo implementation across all marketing materials.
+# Logo 使用规范（Logo Usage Rules）
 
-## Logo Variants
+在所有营销物料中正确落地 logo 的指南。
 
-### Primary Variants
-| Variant | File Name | Use Case |
+## Logo 变体
+
+### 主变体
+| 变体 | 文件名 | 使用场景 |
 |---------|-----------|----------|
-| Full Horizontal | logo-full-horizontal.{ext} | Website headers, documents |
-| Stacked | logo-stacked.{ext} | Square spaces, social avatars |
-| Icon Only | logo-icon.{ext} | Favicons, app icons, small spaces |
-| Wordmark Only | logo-wordmark.{ext} | When icon already present |
+| 完整横排 | logo-full-horizontal.{ext} | 网站页头、文档 |
+| 竖排堆叠 | logo-stacked.{ext} | 方形空间、社交头像 |
+| 仅图标 | logo-icon.{ext} | Favicon、应用图标、小空间 |
+| 仅字标 | logo-wordmark.{ext} | 图标已在场时 |
 
-### Color Variants
-| Variant | Use Case |
+### 颜色变体
+| 变体 | 使用场景 |
 |---------|----------|
-| Full Color | Default on white/light backgrounds |
-| Reversed | On dark backgrounds |
-| Monochrome Dark | On light backgrounds when color not possible |
-| Monochrome Light | On dark backgrounds when color not possible |
+| 全彩 | 白色/浅色背景上的默认选项 |
+| 反白 | 深色背景上 |
+| 深色单色 | 浅色背景且无法用彩色时 |
+| 浅色单色 | 深色背景且无法用彩色时 |
 
-## Clear Space
+## 留白（Clear Space）
 
-### Minimum Clear Space
-The clear space around the logo should equal the height of the logo mark (icon portion).
+### 最小留白
+logo 周围的留白应等于 logo 图形（图标部分）的高度。
 
 ```
     ┌─────────────────────────────┐
@@ -37,55 +41,55 @@ The clear space around the logo should equal the height of the logo mark (icon p
     └─────────────────────────────┘
 ```
 
-Where [x] = height of logo mark
+其中 [x] = logo 图形的高度
 
-## Minimum Size
+## 最小尺寸
 
-### Digital
-| Format | Minimum Width | Notes |
+### 数字端
+| 格式 | 最小宽度 | 说明 |
 |--------|---------------|-------|
-| Full Logo | 120px | All elements legible |
-| Icon Only | 24px | Favicon/small icons |
-| Icon Only | 32px | UI elements |
+| 完整 logo | 120px | 所有元素清晰可辨 |
+| 仅图标 | 24px | Favicon/小图标 |
+| 仅图标 | 32px | UI 元素 |
 
-### Print
-| Format | Minimum Width | Notes |
+### 印刷
+| 格式 | 最小宽度 | 说明 |
 |--------|---------------|-------|
-| Full Logo | 35mm | Business cards, letterhead |
-| Icon Only | 10mm | Small print items |
+| 完整 logo | 35mm | 名片、信纸 |
+| 仅图标 | 10mm | 小型印刷品 |
 
-## Color Usage
+## 颜色使用
 
-### Approved Backgrounds
-| Background | Logo Version |
+### 批准使用的背景
+| 背景 | logo 版本 |
 |------------|--------------|
-| White | Full color or dark mono |
-| Light gray (#F5F5F5+) | Full color or dark mono |
-| Brand primary | Reversed (white) |
-| Dark (#333 or darker) | Reversed (white) |
-| Photography | Ensure sufficient contrast |
+| 白色 | 全彩或深色单色 |
+| 浅灰（#F5F5F5 以上） | 全彩或深色单色 |
+| 品牌主色 | 反白（白色） |
+| 深色（#333 或更深） | 反白（白色） |
+| 照片 | 确保对比度充足 |
 
-### Color Rules
-1. Never change logo colors outside approved palette
-2. Don't use gradients on the logo
-3. Don't apply transparency to logo elements
-4. Don't add shadows or effects
+### 颜色规则
+1. 绝不改用批准调色板之外的 logo 颜色
+2. 不给 logo 用渐变
+3. 不给 logo 元素加透明度
+4. 不加阴影或特效
 
-## Incorrect Usage
+## 错误用法
 
-### Absolute Don'ts
-- ❌ Stretch or compress logo
-- ❌ Rotate at angles
-- ❌ Add drop shadows
-- ❌ Apply gradient fills
-- ❌ Use unapproved colors
-- ❌ Add strokes or outlines
-- ❌ Place on busy backgrounds
-- ❌ Crop any portion
-- ❌ Rearrange elements
-- ❌ Add additional elements
+### 绝对禁止
+- ❌ 拉伸或压缩 logo
+- ❌ 倾斜旋转
+- ❌ 加投影
+- ❌ 用渐变填充
+- ❌ 用未批准的颜色
+- ❌ 加描边或轮廓线
+- ❌ 放在杂乱背景上
+- ❌ 裁掉任何部分
+- ❌ 重排元素
+- ❌ 添加额外元素
 
-### Visual Examples
+### 图示示例
 ```
 WRONG: Stretched      WRONG: Rotated       WRONG: Wrong color
 ┌──────────────┐      ┌────────┐          ┌────────┐
@@ -94,16 +98,16 @@ WRONG: Stretched      WRONG: Rotated       WRONG: Wrong color
                       └───────/
 ```
 
-## Co-branding
+## 联合品牌（Co-branding）
 
-### Partner Logo Guidelines
-1. Equal visual weight (same height)
-2. Adequate separation between logos
-3. Use divider line if needed
-4. Both logos in their approved colors
-5. Clear space applies to both
+### 合作伙伴 logo 规范
+1. 视觉分量相等（同高）
+2. 两个 logo 之间间隔充分
+3. 需要时用分隔线
+4. 两个 logo 都用各自批准的颜色
+5. 留白规则对两者都适用
 
-### Layout Options
+### 排版选项
 ```
 Option A: Side by side with divider
 [OUR LOGO] | [PARTNER LOGO]
@@ -114,18 +118,18 @@ Option B: Stacked
   [PARTNER LOGO]
 ```
 
-## File Formats
+## 文件格式
 
-### Recommended Formats
-| Usage | Format | Notes |
+### 推荐格式
+| 用途 | 格式 | 说明 |
 |-------|--------|-------|
-| Web | SVG | Preferred, scalable |
-| Web fallback | PNG | With transparency |
-| Print | PDF | Vector, high quality |
-| Print alt | EPS | Legacy systems |
-| Documents | PNG | High res (300dpi) |
+| 网页 | SVG | 首选，可缩放 |
+| 网页备选 | PNG | 带透明通道 |
+| 印刷 | PDF | 矢量，高质量 |
+| 印刷替代 | EPS | 老旧系统 |
+| 文档 | PNG | 高分辨率（300dpi） |
 
-### File Organization
+### 文件组织
 ```
 assets/logos/
 ├── full-horizontal/
@@ -143,43 +147,43 @@ assets/logos/
     └── logo-white.svg
 ```
 
-## Platform-Specific Guidelines
+## 平台专项指南
 
-### Social Media
-| Platform | Format | Size | Notes |
+### 社交媒体
+| 平台 | 格式 | 尺寸 | 说明 |
 |----------|--------|------|-------|
-| LinkedIn | PNG | 300x300px | Icon only |
-| Twitter/X | PNG | 400x400px | Icon only |
-| Facebook | PNG | 180x180px | Icon only |
-| Instagram | PNG | 320x320px | Icon only |
+| LinkedIn | PNG | 300x300px | 仅图标 |
+| Twitter/X | PNG | 400x400px | 仅图标 |
+| Facebook | PNG | 180x180px | 仅图标 |
+| Instagram | PNG | 320x320px | 仅图标 |
 
-### Website
-| Location | Variant | Size |
+### 网站
+| 位置 | 变体 | 尺寸 |
 |----------|---------|------|
-| Header | Full horizontal | 120-200px width |
-| Footer | Full horizontal | 100-150px width |
-| Favicon | Icon only | 32x32px |
-| Apple Touch | Icon only | 180x180px |
+| 页头 | 完整横排 | 宽 120-200px |
+| 页脚 | 完整横排 | 宽 100-150px |
+| Favicon | 仅图标 | 32x32px |
+| Apple Touch | 仅图标 | 180x180px |
 
-### Documents
-| Document | Variant | Placement |
+### 文档
+| 文档 | 变体 | 摆放位置 |
 |----------|---------|-----------|
-| Letterhead | Full horizontal | Top left |
-| Presentation | Icon + wordmark | Title slide |
-| Report | Full horizontal | Cover + footer |
+| 信纸 | 完整横排 | 左上 |
+| 演示文稿 | 图标 + 字标 | 标题页 |
+| 报告 | 完整横排 | 封面 + 页脚 |
 
-## Logo Approval Process
+## Logo 审批流程
 
-### Before Using Logo
-1. Verify you have the correct version
-2. Check background compatibility
-3. Ensure minimum size requirements
-4. Confirm clear space allocation
-5. Review against these guidelines
+### 使用 logo 之前
+1. 确认拿到的版本正确
+2. 检查背景兼容性
+3. 确认满足最小尺寸要求
+4. 确认留白分配
+5. 对照本指南复查
 
-### Requesting Approval
-For non-standard uses:
-1. Submit mockup showing proposed usage
-2. Include context (medium, audience)
-3. Wait for brand team approval
-4. Document approved exceptions
+### 申请批准
+非标准用途：
+1. 提交展示拟用法的效果图
+2. 附上语境（媒介、受众）
+3. 等品牌团队批准
+4. 把批准的例外写成文档

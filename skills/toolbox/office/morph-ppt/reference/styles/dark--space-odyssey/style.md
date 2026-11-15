@@ -1,61 +1,65 @@
-# Space Odyssey — Cosmic Exploration
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/dark--space-odyssey/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 太空奥德赛（宇宙探索）
 
-An epic cosmic design featuring a planetary sphere with orbital rings, stars, and space-themed color progression. Extensive ghost mechanism enables complex 7-slide narratives with consistent visual elements.
+## 风格概览
 
-- **Scenario**: Space/astronomy presentations, science education, exploration narratives, technology showcases
-- **Mood**: Cosmic, inspiring, epic, exploratory
-- **Tone**: Deep space blue with gold and cyan accents
+史诗级宇宙设计：行星球体配轨道环、星辰与太空主题的色彩推进。大量 ghost 机制支撑 7 页复杂叙事，视觉元素保持一致。
 
-## Color Palette
+- **场景**：太空/天文演示、科学教育、探索叙事、技术展示
+- **气质**：宇宙感、鼓舞、史诗、探索
+- **基调**：深空蓝，配金色与青色点缀
 
-| Name           | Hex     | Usage                                       |
+## 配色
+
+| 名称           | Hex     | 用途                                        |
 | -------------- | ------- | ------------------------------------------- |
-| Background     | #0A0E27 | Deep space navy                             |
-| Planet         | #1E3A5F | Dark blue for planetary sphere              |
-| Glow           | #4A5FFF | Electric blue (opacity 0.08) for atmosphere |
-| Star gold      | #FFD700 | Gold for star decorations                   |
-| Dot cyan       | #00D9FF | Cyan for accent dots                        |
-| Orbit line     | #4A90E2 | Blue for orbital ring                       |
-| Primary text   | #FFFFFF | White for headings                          |
-| Secondary text | #B8C5D6 | Light blue-gray for body text               |
+| 背景           | #0A0E27 | 深空藏青                                    |
+| 行星           | #1E3A5F | 行星球体的深蓝                              |
+| 光晕           | #4A5FFF | 电光蓝（透明度 0.08）作大气层               |
+| 星辰金         | #FFD700 | 星星装饰用金色                              |
+| 点缀青         | #00D9FF | 点缀圆点用青色                              |
+| 轨道线         | #4A90E2 | 轨道环用蓝色                                |
+| 主文字         | #FFFFFF | 标题用白色                                  |
+| 次级文字       | #B8C5D6 | 正文用浅蓝灰                                |
 
-## Typography
+## 字体排印
 
-| Element         | Font                  |
+| 元素            | 字体                  |
 | --------------- | --------------------- |
-| Title (Chinese) | PingFang SC (苹方-简) |
-| Body (Chinese)  | PingFang SC           |
+| 标题（中文）    | PingFang SC (苹方-简) |
+| 正文（中文）    | PingFang SC           |
 
-## Design Techniques
+## 设计手法
 
-- Planetary sphere as main scene actor
-- Orbital ring line decoration for cosmic context
-- Star decorations (star5 preset) with varying sizes and opacity
-- Extensive ghost mechanism (25+ actors pre-defined on slide 1)
-- Space-themed color progression across slides
-- 7-slide narrative structure for comprehensive storytelling
+- 行星球体作主场景 actor
+- 轨道环线条装饰，营造宇宙语境
+- 星星装饰（star5 preset），尺寸与透明度各异
+- 大量 ghost 机制（第 1 页预定义 25+ 个 actor）
+- 跨页的太空主题色彩推进
+- 7 页叙事结构，支撑完整故事
 
-## Page Structure (7 slides)
+## 页面结构（7 页）
 
-| Slide | Type      | Elements | Description                                 |
+| 页码  | 类型      | 元素数量 | 描述                                        |
 | ----- | --------- | -------- | ------------------------------------------- |
-| 1     | hero      | 32       | Planet with stars and orbital ring          |
-| 2     | statement | 32       | Centered quote with shifted planet position |
-| 3     | pillars   | 32       | 3-column with numbering on space background |
-| 4     | showcase  | 32       | Featured display with inspirational quote   |
-| 5     | pillars   | 32       | Second pillar set for additional content    |
-| 6     | evidence  | 32       | Data points display with cosmic backdrop    |
-| 7     | cta       | 32       | Closing with full cosmic scene              |
+| 1     | hero      | 32       | 行星配星辰与轨道环                          |
+| 2     | statement | 32       | 居中引言，行星位置偏移                      |
+| 3     | pillars   | 32       | 太空背景上的 3 栏编号内容                   |
+| 4     | showcase  | 32       | 特色展示配励志引言                          |
+| 5     | pillars   | 32       | 第二组支柱，承载更多内容                    |
+| 6     | evidence  | 32       | 宇宙背景上的数据点展示                      |
+| 7     | cta       | 32       | 收尾：完整宇宙场景                          |
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1 (hero)** — planetary sphere + orbital ring + star field composition
-- **Slide 3 (pillars)** — numbered 3-column layout on space background
+- **Slide 1（hero）**：行星球体 + 轨道环 + 星野构图
+- **Slide 3（pillars）**：太空背景上的编号三栏布局
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

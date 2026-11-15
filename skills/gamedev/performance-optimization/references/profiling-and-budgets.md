@@ -1,17 +1,21 @@
-# Profiling and budgets
+> **中文汉化版** · 上游：[gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) · 原文件：`skills/disciplines/performance-optimization/references/profiling-and-budgets.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Targets Godot 4.7, Unity 6.3 LTS and Unreal 5.8.
+# 性能剖析与预算
 
-Contents:
-1. CPU-vs-GPU triage
-2. Per-engine profiler quick start (Godot, Unity, Unreal, external tools)
-3. Pooling manager
-4. Batching and instancing rules
-5. Allocation and GC guidance
-6. Do-less techniques
-7. Asset budgets and mobile thermals
+适用 Godot 4.7、Unity 6.3 LTS 与 Unreal 5.8。
 
-## 1. CPU-vs-GPU triage (decide before you fix)
+目录：
+1. CPU 与 GPU 分诊
+2. 各引擎剖析器快速上手（Godot、Unity、Unreal、外部工具）
+3. 对象池管理器
+4. 合批与实例化规则
+5. 内存分配与 GC 指南
+6. 少做技术
+7. 资产预算与移动端发热
+
+## 1. CPU 与 GPU 分诊（先判断，再动手）
 
 ```text
 1. Read total frame time vs your budget (16.67 ms @60).
@@ -24,52 +28,32 @@ Contents:
 4. Re-measure. If it didn't move the frame time, you fixed the wrong thing — revert and re-triage.
 ```
 
-Optimize the measured bottleneck. Reducing draw calls or state changes can lower CPU rendering
-cost when submission is limiting the frame, even if the GPU has spare capacity. Batching and
-instancing also have costs, so compare main-thread, render-thread and GPU time before and after
-the change. Faster scripts alone usually won't help a frame limited by GPU work.
+优化实测出的瓶颈。当 draw 提交是帧的限制因素时，减少 draw call（绘制调用）或状态切换能降低 CPU 渲染开销，即使 GPU 尚有余量。合批与实例化自身也有开销，所以改动前后要对比主线程、渲染线程和 GPU 耗时。只有脚本更快，通常救不了被 GPU 工作量限制的帧。
 
-## 2. Per-engine profiler quick start
+## 2. 各引擎剖析器快速上手
 
 **Godot 4.7**
-- Editor: **Debugger ▸ Profiler** (per-function script + physics time, frame time), **Debugger ▸
-  Visual Profiler** (CPU and GPU time spent on rendering — the Profiler tab does not show GPU cost),
-  and the **Monitors** tab (FPS, draw calls, video/static memory, object/node counts).
-- Code: `Performance.get_monitor(Performance.TIME_PROCESS)` (the slowest process frame of the
-  last second, in **seconds**, refreshed once a second), `Performance.TIME_PHYSICS_PROCESS`,
-  `Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME`, `Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME`,
-  `Performance.MEMORY_STATIC`, and the `PIPELINE_COMPILATIONS_*` monitors (4.4+) for shader
-  hitches: a jump in the Surface or Draw counts outside a loading screen is a first-play stutter.
-- Visual debugging: 3D viewport **View Information / View Frame Time** overlays.
-- Native-code traces: an engine built from source with `scons profiler=tracy` (or `perfetto`,
-  `instruments`) streams engine zones to that profiler.
+- 编辑器：**Debugger ▸ Profiler**（逐函数的脚本 + 物理耗时、帧时间）、**Debugger ▸ Visual Profiler**（渲染占用的 CPU 和 GPU 时间；Profiler 标签页不显示 GPU 开销），以及 **Monitors** 标签页（FPS、draw call 数、显存/静态内存、对象/节点计数）。
+- 代码：`Performance.get_monitor(Performance.TIME_PROCESS)`（最近一秒里最慢的一帧 process，单位是**秒**，每秒刷新一次）、`Performance.TIME_PHYSICS_PROCESS`、`Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME`、`Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME`、`Performance.MEMORY_STATIC`，以及 `PIPELINE_COMPILATIONS_*` 监视器（4.4+，排查 shader 卡顿）：Surface 或 Draw 计数在加载画面之外跳升，就是首次游玩卡顿。
+- 可视化调试：3D 视口的 **View Information / View Frame Time** 覆盖层。
+- 原生代码追踪：用 `scons profiler=tracy`（或 `perfetto`、`instruments`）从源码编译引擎，引擎 zone 会流式输出到对应的剖析器。
 
 **Unity 6.3 LTS**
-- **Profiler** window: CPU Usage, GPU Usage, Rendering, Memory modules. Use **Deep Profile**
-  sparingly (high overhead, skews numbers).
-- **Frame Debugger** to step draw calls and see what breaks batching (SetPass calls, batches).
-- Code: `ProfilerRecorder` on the built-in counters `"CPU Main Thread Frame Time"`,
-  `"GPU Frame Time"` (release players need **Frame Timing Stats** enabled) and
-  `"GC Allocated In Frame"` (development players only) for an in-build HUD/CSV;
-  `FrameTimingManager` for CPU/GPU frame times.
-- **Profile a Development build on device** (`Autoconnect Profiler`), not just the editor.
-- **Project Auditor** (`com.unity.project-auditor` package) statically flags costly code and
-  settings before you profile.
+- **Profiler** 窗口：CPU Usage、GPU Usage、Rendering、Memory 各模块。**Deep Profile** 节制使用（开销大，且会扭曲数据）。
+- 用 **Frame Debugger** 逐步查看 draw call，找出破坏合批的原因（SetPass calls、batches）。
+- 代码：把 `ProfilerRecorder` 挂在内置计数器 `"CPU Main Thread Frame Time"`、`"GPU Frame Time"`（release 版需启用 **Frame Timing Stats**）和 `"GC Allocated In Frame"`（仅 development 版）上，做包内 HUD/CSV；CPU/GPU 帧时间用 `FrameTimingManager`。
+- **在真机上剖析 Development 构建**（`Autoconnect Profiler`），别只看编辑器。
+- **Project Auditor**（`com.unity.project-auditor` 包）在剖析前静态标记高开销的代码与设置。
 
 **Unreal 5.8**
-- Console: `stat unit` (Frame / Game / Draw / RHIT / GPU ms — Game is the game thread, Draw the
-  render thread, both CPU), `stat fps`, `stat scenerendering` (draw calls, primitives),
-  `stat game`, `stat gpu`, `stat hitches` (logs frames over `t.HitchFrameTimeThreshold`).
-- **Unreal Insights** for full timeline traces; `ProfileGPU` (Ctrl+Shift+,) for a GPU breakdown.
+- 控制台：`stat unit`（Frame / Game / Draw / RHIT / GPU 毫秒；Game 是游戏线程，Draw 是渲染线程，两者都是 CPU）、`stat fps`、`stat scenerendering`（draw call 数、图元数）、`stat game`、`stat gpu`、`stat hitches`（记录超过 `t.HitchFrameTimeThreshold` 的帧）。
+- 完整时间线追踪用 **Unreal Insights**；GPU 耗时分解用 `ProfileGPU`（Ctrl+Shift+,）。
 
-**External tools (engine-agnostic)**
-- **RenderDoc**: GPU frame capture for Vulkan, D3D11/12 and OpenGL/ES on
-  Windows, Linux and Android; no Metal. On Apple platforms use the Xcode Metal debugger and
-  Instruments; on Windows D3D12, PIX.
-- **Tracy**: instrumented CPU/GPU timeline for native code; keep the
-  client library and the viewer on the same release, because the network protocol can change.
+**外部工具（跨引擎通用）**
+- **RenderDoc**：对 Vulkan、D3D11/12 和 OpenGL/ES 做 GPU 帧捕获，覆盖 Windows、Linux 和 Android；不支持 Metal。Apple 平台用 Xcode Metal debugger 和 Instruments；Windows 的 D3D12 用 PIX。
+- **Tracy**：面向原生代码的插桩式 CPU/GPU 时间线；客户端库与查看器要用同一个 release，因为网络协议可能变动。
 
-## 3. Pooling manager (generic)
+## 3. 对象池管理器（通用）
 
 ```text
 class Pool<T>:
@@ -80,59 +64,39 @@ class Pool<T>:
     release(t):  reset_fn(t); deactivate(t); free.push(t)  # never destroy; recycle
 ```
 
-Pool anything spawned frequently and briefly: bullets, shells, particles, damage numbers,
-enemies in waves, audio one-shots. Pre-warm at load to avoid first-use hitches. Cap the pool and
-decide an overflow policy (grow, or recycle the oldest).
+凡是频繁生成、存活很短的对象都进池：子弹、弹壳、粒子、伤害数字、一波波刷出的敌人、一次性音效。加载时预热，避免首次使用卡顿。给池设上限，并定好溢出策略（扩容，或回收最旧的）。
 
-## 4. Batching & instancing rules
+## 4. 合批与实例化规则
 
-- **What breaks a batch:** a different material, texture, or render state between objects. Share
-  materials and **atlas** textures so runs of objects submit as one draw call.
-- **Identical meshes, many instances** → GPU instancing: Unity (enable *GPU Instancing* on the
-  material — but under URP/HDRP an SRP Batcher-compatible shader is drawn by the SRP Batcher
-  instead; for large counts enable the **GPU Resident Drawer**, which needs the Forward+ path and
-  a compute-capable graphics API other than OpenGL ES) / Godot `MultiMesh` +
-  `MultiMeshInstance2D/3D` / Unreal Instanced Static Mesh or Hierarchical ISM.
-- **Static geometry** → static batching (Unity), mark static; bake where possible. Unity's
-  dynamic batching is no longer recommended outside low-end devices: its CPU cost can exceed the
-  draw calls it saves.
-- **2D** → texture atlases + a shared material batch sprites; avoid per-sprite materials.
-- **UI** → minimize canvas rebuilds (Unity: split static/dynamic canvases); a changing element
-  shouldn't dirty the whole canvas.
-- **Lights/shadows** → bake static lighting; cap real-time shadow casters; cull small shadows.
+- **什么会拆散一批：**对象之间材质、纹理或渲染状态不同。共享材质、把纹理打成**图集（atlas）**，让一串对象合并成一次 draw call 提交。
+- **网格相同、实例很多** → GPU instancing：Unity（在材质上勾选 *GPU Instancing*；但 URP/HDRP 下，SRP Batcher 兼容的 shader 会改由 SRP Batcher 绘制；数量很大时启用 **GPU Resident Drawer**，它需要 Forward+ 路径，以及一个支持 compute 的图形 API（OpenGL ES 除外））/ Godot `MultiMesh` + `MultiMeshInstance2D/3D` / Unreal Instanced Static Mesh 或 Hierarchical ISM。
+- **静态几何体** → static batching（Unity 里标记 static）；能烘焙就烘焙。Unity 的 dynamic batching 在低端设备之外已不推荐：它的 CPU 开销可能超过省下的 draw call。
+- **2D** → 纹理图集 + 共享材质来合批 sprite；避免每个 sprite 单独材质。
+- **UI** → 尽量减少 canvas 重建（Unity：把静态/动态 canvas 拆分）；单个元素变化不该弄脏整个 canvas。
+- **灯光/阴影** → 静态光照烘焙；限制实时阴影投射者数量；剔除过小的阴影。
 
-## 5. Allocation / GC guidance
+## 5. 内存分配 / GC 指南
 
-- **C# (Unity):** no per-frame `new`, no LINQ in `Update`, avoid boxing (e.g. `enum` as dictionary
-  key), use `NonAlloc` physics queries, reuse `List`/arrays (`Clear()` not realloc), prefer
-  structs for small hot data, cache `GetComponent`/`Find` results. The goal is **0 B GC.Alloc per
-  frame** in steady state.
-- **GDScript (Godot):** don't build new `Array`/`Dictionary` each `_process`; reuse; prefer typed
-  arrays; avoid heavy work in `_process` that belongs on a timer/signal.
-- **General:** strings are a classic hidden allocator (concatenation, formatting) — build them
-  rarely, cache results.
+- **C# (Unity)：**每帧不 `new`、`Update` 里不用 LINQ、避免装箱（如把 `enum` 当字典键）、物理查询用 `NonAlloc` 版本、复用 `List`/数组（用 `Clear()` 而非重新分配）、小而热的数据用 struct、缓存 `GetComponent`/`Find` 的结果。目标是稳态下**每帧 0 B GC.Alloc**。
+- **GDScript (Godot)：**别在每次 `_process` 里新建 `Array`/`Dictionary`；要复用；优先用类型化数组；属于 timer/signal 的重活不要放进 `_process`。
+- **通用：**字符串是典型的隐性分配来源（拼接、格式化），少构造，缓存结果。
 
-## 6. Do-less techniques (algorithmic wins)
+## 6. 少做技术（算法层面的收益）
 
-- **Run less often:** update AI/HUD/expensive checks on a timer or every N frames, not every
-  frame; stagger across frames (time-slicing).
-- **Spatial partition:** grid/quadtree/octree so queries touch nearby objects only, not all N.
-- **LOD & culling:** lower detail at distance; frustum/occlusion culling; despawn off-screen
-  far entities.
-- **Cache results:** memoize pathfinding, line-of-sight, and derived data; invalidate on change.
-- **Defer/Amortize:** spread procedural generation and loading across frames to avoid spikes.
+- **降低执行频率：**AI/HUD/高开销检查放到 timer 上或每 N 帧更新一次，不要每帧都跑；跨帧错开（time-slicing）。
+- **空间划分：**grid/quadtree/octree，让查询只碰到附近对象，而不是全部 N 个。
+- **LOD 与剔除：**远处降低细节；视锥/遮挡剔除；屏幕外的远处实体直接回收。
+- **缓存结果：**寻路、视线、派生数据做记忆化；数据一变就失效。
+- **延迟/分摊：**把程序化生成和加载摊到多帧，避免尖峰。
 
-## 7. Asset budgets (prevent regressions at the source)
+## 7. 资产预算（从源头防回归）
 
-| Asset | Typical desktop budget | Mobile budget | Notes |
+| 资产 | 桌面端典型预算 | 移动端预算 | 备注 |
 |-------|------------------------|---------------|-------|
-| Texture max size | 2048–4096 | 1024–2048 | use mipmaps; compress (BCn / ASTC) |
-| Character triangles | 30k–80k | 5k–20k | LODs for distance |
-| Draw calls / frame | low thousands | a few hundred | the count that matters most on mobile |
-| Real-time lights | a few | 1–2 + baked | bake the rest |
-| Audio | streamed music, short SFX in memory | same | don't decompress everything at load |
+| 纹理最大尺寸 | 2048–4096 | 1024–2048 | 用 mipmaps；压缩（BCn / ASTC） |
+| 角色三角面数 | 30k–80k | 5k–20k | 远处用 LOD |
+| draw call 数/帧 | 小几千 | 几百 | 移动端最要紧的指标 |
+| 实时灯光 | 少量几个 | 1–2 + 烘焙 | 其余烘焙 |
+| 音频 | 音乐流式播放，短音效驻留内存 | 同上 | 不要加载时全部解压 |
 
-Mobile adds **thermal throttling**: a game that hits 60 FPS for two minutes and then drops is
-overheating. Keep headroom, cap the frame rate and reduce sustained GPU load. The agent cannot
-feel a device heat up, so ask the user to play 15 minutes on the target phone and report the
-frame time (or FPS counter) in the first and last minute.
+移动端还多出**热节流（thermal throttling）**问题：前两分钟能跑 60 FPS、随后就掉帧的游戏，是在发热。留足余量，锁住帧率，降低持续 GPU 负载。Agent 感受不到设备发热，所以要请用户在目标手机上玩 15 分钟，报告第一分钟和最后一分钟的帧时间（或 FPS 计数）。

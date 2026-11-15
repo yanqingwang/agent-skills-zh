@@ -12,11 +12,15 @@ photo: natural vib=12 con=4
 pictured: Bento Grid, Stage hero
 ---
 
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/themes/squeeze.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Squeeze
 
-A market stall in colour: a forest-green ground with real chroma, warm white ink, Gabarito's round, heavy heads and figures over a sturdy Manrope, soft tiles a step lighter or deeper, fruit photographed bright and close, juicy peach controls and one warm-white card. It is cheerful because the green is the whole surface and the fruit is the colour on it; a price or a day set huge in Gabarito is as much the material as a crate of fruit. It is not a neutral grocery template with a green button, and not an organic label in serif and kraft.
+一摊色彩里的市集果摊：带真实彩度的森林绿底、暖白墨色、Gabarito 圆润厚重的标题与数字压在结实的 Manrope 上、浅一档或深一档的软贴片、明亮近摄的水果、多汁的蜜桃色控件与一张暖白卡片。它欢快，因为绿是整个表面、水果是它身上的颜色；一个用 Gabarito 排到巨大的价格或日子，与一筐水果同样是材料本身。它不是带绿色按钮的中性生鲜模板，也不是衬线加牛皮纸的有机标签。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -32,52 +36,52 @@ A market stall in colour: a forest-green ground with real chroma, warm white ink
 }
 ```
 
-## Type
+## 字体（Type）
 
-- **Display:** Gabarito 800, `--tracking-display`, line-height 1.0, sentence case, one colour per head. Round, compact and heavy, so it takes the shared display scale without a cap; never under 700.
-- **Figures:** prices, dates and days in Gabarito 800 with tabular, lining numerals; a single figure may run three to four times the section head, tracked to -0.04em, with its unit at the same weight.
-- **Body:** Manrope 500, line-height 1.55, in `--color-muted`; links and row titles at 700. Three weights in all: 800, 700, 500.
-- **Labels, captions, table heads, meta:** Manrope 700 a step smaller, sentence case, untracked. Never mono, never uppercase.
+- **展示字体：**Gabarito 800，`--tracking-display`，行高 1.0，句首大写，每个标题单色。圆、紧、重，所以共享展示字阶不必封顶；绝不低于 700。
+- **数字：**价格、日期与星期用 Gabarito 800、表格数字、等高数字；单个数字可以到章节标题的三四倍，字距收到 -0.04em，单位用同字重。
+- **正文：**Manrope 500，行高 1.55，用 `--color-muted`；链接与行标题用 700。总共三个字重：800、700、500。
+- **标签、图注、表头、元信息：**Manrope 700 小一档，句首大写，不加字距。绝不用等宽，绝不用大写。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Tiles, not cards: a tile is the ground one step lighter (`--color-paper-2`) at `--radius-card`, no border, no shadow; a sunk well takes `--color-paper-3`. A tile a visitor can choose sinks to `--color-paper-3` when chosen and takes a 3px `--color-accent` ring.
-- The one raised surface is the warm-white card (`--color-card`, `--color-card-ink` type, `--shadow-card`), once a page, for the thing a visitor pays for; inside it the focus ring takes `--color-card-ink`.
-- Rules at `--rule-bar` in `--color-rule`; only a rule between list rows is `--rule-hair`.
-- Bands: the page is green, so a band is the lighter or the deeper green (`--color-paper-2`, `--color-paper-3`); two a page at most, never a white, grey or peach band.
-- Photographs: fruit close in daylight, a crate from above, fruit held out, a heap on a stall; bright, the fruit filling the frame. `--radius-card`, no ring, no shadow; captions under in the label style; type on a photograph sits over a `--color-paper-3` scrim at 45 to 65%.
-- No texture: the green is a flat colour.
+- 贴片，不是卡片：贴片是比地面浅一档的 `--color-paper-2`，`--radius-card` 圆角，无边框，无阴影；下陷的凹槽用 `--color-paper-3`。访客可以选的贴片，选中时沉到 `--color-paper-3` 并套上 3px `--color-accent` 圆环。
+- 唯一抬起的表面是暖白卡片（`--color-card`、`--color-card-ink` 文字、`--shadow-card`），每页一次，给访客要付钱的东西；卡片内部焦点环用 `--color-card-ink`。
+- 横线用 `--color-rule` 的 `--rule-bar`；只有列表行之间的线用 `--rule-hair`。
+- 色带：页面已是绿色，所以色带用浅一档或深一档的绿（`--color-paper-2`、`--color-paper-3`）；每页至多两条，绝不用白、灰或蜜桃色带。
+- 照片：日光下近摄的水果、俯拍的一筐、递到镜头前的水果、摊上的一堆；明亮，水果撑满画框。`--radius-card` 圆角，无环，无阴影；图注在下方、用标签字体；照片上的文字压一层 45 至 65% 的 `--color-paper-3` 暗化。
+- 无纹理：绿是一块平涂颜色。
 
-## Range
+## 版式（Range）
 
-- A price, a size or a day set as one figure at statement size: Gabarito 800 in ink straight on the green, its unit at full weight, the head and one line beside it on the remaining columns. The green and the figure carry the screen alone.
-- A timetable of real dates as tiles or full-width rows: each date big in Gabarito, the weekday in the label style, the chosen one sunk to `--color-paper-3` and ringed in peach; a stall's chalkboard that works as a control.
-- A promise set as a statement on the deeper green band, Gabarito at display size across ten columns, one action under it.
-- Questions or plain terms as rows: Gabarito titles on the left, Manrope answers on the right, hair rules in `--color-rule` between.
+- 一个价格、一个尺寸或一个日子，作为陈述字号的单个数字：Gabarito 800 墨色直接压在绿上，单位全字重，标题与一行文字排在旁边剩下的列里。绿与数字自己撑起整块屏幕。
+- 真实日期排成贴片或通栏行的时刻表：每个日期 Gabarito 大字，星期用标签字体，选中的沉到 `--color-paper-3` 并套上蜜桃色圆环；一块能当控件用的摊位黑板。
+- 一句承诺作为陈述压在更深的绿色带上，Gabarito 展示字号横跨十列，下方一个动作。
+- 问题或平实的条款排成行：左侧 Gabarito 标题，右侧 Manrope 回答，之间 `--color-rule` 发丝线。
 
-## Controls
+## 控件（Controls）
 
-- The control pair: a peach-filled primary with `--color-accent-ink` text beside a 2px ink-outlined secondary, both at `--radius-control`, Manrope 700. Tags and chips are pills; nav links may be `--color-paper-2` pills.
-- Links are ink at 700, the underline turning peach on hover; inputs take a 2px `--color-rule` border at `--radius-control` and the `--color-focus` ring.
-- Peach stays on controls: the primary, a chosen chip or tile ring, a link's hover; `--color-accent-2` is the primary's pressed and hover step only. Never peach type and never a peach field.
+- 控件对：蜜桃填充的主按钮配 `--color-accent-ink` 文字，旁边是 2px 墨色描边的次按钮，两者 `--radius-control` 圆角，Manrope 700。标签与 chips 用胶囊；导航链接可以是 `--color-paper-2` 胶囊。
+- 链接用墨色 700，下划线悬停转蜜桃；输入框 2px `--color-rule` 边框、`--radius-control` 圆角、`--color-focus` 焦点环。
+- 蜜桃只落在控件上：主按钮、选中的 chip 或贴片圆环、链接悬停；`--color-accent-2` 只作主按钮的按压与悬停阶。绝不用蜜桃文字，绝不用蜜桃色场。
 
-## Motion
+## 动效（Motion）
 
-Cheerful and quick, state only: a control presses 1px down at `--dur-micro`, a chosen tile rings at `--dur-short` on `--ease-out`, a choosable tile steps a green lighter on hover. No reveal, no parallax, no loop; nothing that cannot be pressed reacts.
+欢快而快，只动状态：控件以 `--dur-micro` 按下 1px，选中的贴片以 `--dur-short`、`--ease-out` 套上圆环，可选贴片悬停时绿浅一档。无显现、无视差、无循环；按不动的东西不作反应。
 
-## Voice
+## 语气（Voice）
 
-The stall-holder's, out loud on a Thursday morning: the fruit, the day it comes, what ripe feels like in the hand. Short, warm sentences with the price said plainly; never gourmet, never a wellness pitch.
+摊主的声音，周四早晨大声说出来：什么水果、哪天到、熟在手里是什么手感。句子短而暖，价格直说；绝不美食腔，绝不养生推销。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a neutral ground. White is for the one card; grey does not exist. The page is green.
-- Never a dull or greyed green; the ground keeps its chroma, or it turns to army surplus.
-- Never a weight under 500, a serif, or a mono figure: numbers are Gabarito.
-- Never a hairline border; a 1px rule lives only between list rows.
-- Never a dim photograph, and never one on every screen: the fruit is brightest when the green and the type get screens of their own.
+- 绝不用中性底色。白色只给那一张卡；灰色不存在。页面就是绿。
+- 绝不用发暗或发灰的绿；底色保持彩度，否则就成了军需库。
+- 绝不用低于 500 的字重、衬线或等宽数字：数字就是 Gabarito。
+- 绝不用发丝线边框；1px 线只活在列表行之间。
+- 绝不用暗调照片，也绝不每屏都放照片：当绿与文字各有自己的屏幕时，水果才最亮。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@800&family=Manrope:wght@500;700&display=swap" rel="stylesheet">

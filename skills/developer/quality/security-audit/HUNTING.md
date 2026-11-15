@@ -1,30 +1,34 @@
-# Vulnerability Hunting
+> **中文汉化版** · 上游：[cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) · 原文件：`skills/security-audit/HUNTING.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-### Phase 2: Run coverage-led hunting waves
+# 漏洞狩猎
 
-The parent assigns `planned` ledger units to `general` agents. Use enough focused hunters to cover the units without combining unrelated boundaries. One hunter may own closely related units in one subsystem; no unit may be silently unassigned because of an agent-count limit — a unit the budget cannot reach is explicitly `deferred` with reason `budget_cannot_reserve_critics_and_validation`.
+### Phase 2: 运行以覆盖为导向的狩猎波次
 
-When a budget or profile caps hunter count, assign units in priority order and record the ordering rationale in the ledger. Rank by: (1) unauthenticated or lowest-trust entry surfaces before authenticated ones; (2) boundaries protecting the most valuable resources (credentials, cross-tenant data, code execution, release authority); (3) prior-run gaps, revalidation targets, and changed source before same-source re-passes; (4) units whose class historically yields confirmed findings for this target type over speculative ones. Ties break lexicographically by `coverage_id` so runs stay deterministic.
+父代理把 `planned` 状态的台账单元分配给 `general` 子代理。安排足够多的专注猎手覆盖这些单元，不要把不相关的边界合并进同一单元。一个猎手可以负责同一子系统中紧密相关的多个单元；任何单元都不得因子代理数量上限而被静默搁置，预算够不到的单元必须显式标记为 `deferred`，理由为 `budget_cannot_reserve_critics_and_validation`。
 
-Before launch, the parent changes assigned units to `in_progress`, sets a canonical lowercase `agent_id`, and creates that agent's `scratch/` and parent-owned `artifacts/`. Hunters read source and parent-provided context, write only to their unique `scratch/`, and return one structured result through the Task tool. They never write retained artifacts or edit target source, `architecture.md`, `coverage-ledger.json`, `findings.json`, or another agent's files.
+当预算或 profile 限制猎手数量时，按优先级顺序分配单元，并在台账中记录排序理由。排序依据：(1) 未认证或信任级别最低的入口面优先于已认证入口面；(2) 保护最有价值资源（凭证、跨租户数据、代码执行、发布权限）的边界；(3) 既往运行的缺口、待复验目标与已变更的源码，优先于同源码的重复扫描；(4) 其攻击类别在该目标类型上历史上产出过 `confirmed` 发现的单元，优先于偏推测的单元。平局时按 `coverage_id` 字典序打破，保证运行可确定。
 
-## Required hunter prompt
+启动前，父代理把已分配单元改为 `in_progress`，设定规范的小写 `agent_id`，并创建该代理的 `scratch/` 目录与父代理持有的 `artifacts/` 目录。猎手阅读源码与父代理提供的上下文，只写入自己专属的 `scratch/`，并通过 Task 工具返回一个结构化结果。它们绝不写入保留产物，也绝不修改目标源码、`architecture.md`、`coverage-ledger.json`、`findings.json` 或其他代理的文件。
 
-Every hunter prompt contains these parts in this order:
+## 必需的猎手提示词
 
-1. A two-sentence role preamble: the hunter's goal is to find source-grounded security invariant failures in its assigned units, and it must return exactly one JSON object matching the structured-result contract at the end of this prompt.
-2. `architecture.md` verbatim.
-3. Assigned coverage IDs, subsystem, boundary, repository-relative starting paths, and each unit's assignment block map from `coverage-ledger.json`.
-4. The exact selected blocks, copied verbatim: each selected ordinary attack-class block from `ATTACK-CLASSES.md`, and from each selected companion its `Core discipline`, each chosen attack-class subsection, `Universal moves`, and `Validation rules`. Ordinary blocks are self-contained and carry no companion-style `Core discipline`, `Universal moves`, or `Validation rules` sections. Do not send block or companion names alone.
-5. Explicit excluded ordinary and companion blocks with a reason for each exclusion.
-6. The core hunting method below, followed by the promotion procedure block.
-7. The core validation rules below.
-8. Carried same-source prior confirmed exclusions, each limited to fingerprint, title, and root cause, plus peer-owned current coverage IDs that this hunter must not duplicate.
-9. The unique scratch/artifact paths, safe agent ID, predeclared promotion allowlist and byte limits, and the structured-result contract, including the Structured hunter result block below and the `confirmed` and `needs_validation` branches of `report-schema.json` copied verbatim.
+每份猎手提示词按此顺序包含以下部分：
 
-A prompt may select several companion blocks when the same path crosses several domains. Keep their constraints together. Scope is the hunter's coverage obligation, not permission to duplicate excluded work. If an unexpected different boundary appears, return it under `uncovered` so the parent creates a stable ledger unit and assigns it in the next wave.
+1. 两句话的角色开场：猎手的目标是在其被分配的单元中找到有源码依据的安全不变量失效，且必须返回恰好一个 JSON 对象，符合本提示词末尾的结构化结果契约。
+2. `architecture.md` 原文照录。
+3. 已分配的 coverage ID、子系统、边界、仓库相对起始路径，以及来自 `coverage-ledger.json` 的每个单元的 assignment 块映射。
+4. 精确选中的块，逐字复制：来自 `ATTACK-CLASSES.md` 的每个选中的普通攻击类块，以及每个选中的伴生块的 `Core discipline`、所选攻击类小节、`Universal moves` 和 `Validation rules`。普通块自成一体，不带伴生块式的 `Core discipline`、`Universal moves` 或 `Validation rules` 小节。不要只发送块名或伴生块名。
+5. 明确列出的被排除普通块与伴生块，每项排除附理由。
+6. 下方的核心狩猎方法，随后是提升流程块。
+7. 下方的核心验证规则。
+8. 携带的同源既往已确认排除项，每项仅限指纹、标题与根因，以及本猎手不得重复的其他代理名下的当前 coverage ID。
+9. 专属的 scratch/产物路径、安全代理 ID、预声明的提升允许清单与字节上限，以及结构化结果契约，包括下方的"结构化猎手结果"块，以及逐字复制的 `report-schema.json` 的 `confirmed` 与 `needs_validation` 分支。
 
-#### Core hunting method — include in every hunter prompt
+同一条路径跨越多个领域时，提示词可以选择多个伴生块。要把它们的约束放在一起传达。范围是猎手的覆盖义务，不是重复已排除工作的许可。出现意外的不同边界时，把它放进 `uncovered` 返回，由父代理创建稳定的台账单元并在下一波次分配。
+
+#### 核心狩猎方法（放进每份猎手提示词）
 
 ```text
 ## Defensive vulnerability-finding method
@@ -96,7 +100,7 @@ outside source is not proof either way. If one such fact is decisive, return a
 needs_validation record with the exact missing observation and safe owner-observed check.
 ```
 
-#### Promotion procedure — copy this promotion procedure verbatim into every hunter prompt
+#### 提升流程（把本提升流程逐字复制进每份猎手提示词）
 
 ```text
 Artifact promotion procedure (trusted parent-side code only):
@@ -135,7 +139,7 @@ file separately:
     promotion blocker.
 ```
 
-#### Core validation rules — include in every hunter prompt
+#### 核心验证规则（放进每份猎手提示词）
 
 ```text
 ## Candidate gate
@@ -156,18 +160,18 @@ file separately:
 7. Return an empty candidate array when nothing survives these gates.
 ```
 
-## Local validation boundaries
+## 本地验证边界
 
-Local execution is for confirmation, not impact expansion:
+本地执行用于确认，不用于扩大影响面：
 
-- **Allowed only in the required OS sandbox:** offline builds with present dependencies; isolated-loopback processes using dummy state; unit and integration tests; small fixture processing; sanitizers; bounded fuzz/regression tests; deterministic concurrency checks; local browser/emulator tests with dummy accounts; rendered manifests and policy evaluation with dummy identities; mocked external or paid calls.
-- **Disallowed:** live or deployed traffic; requests to services not started for this isolated check; network dependency installation; real accounts or credentials; production data; shared queues, cloud resources, runners, registries, signing or release services; publishing; stress, saturation, or cost generation; any work after the minimum dummy-data boundary result.
+- **仅限在必需的 OS 沙箱内进行：** 使用现有依赖的离线构建；使用假数据的隔离环回进程；单元与集成测试；小型 fixture 处理；sanitizer；有界 fuzz/回归测试；确定性并发检查；使用假账户的本地浏览器/模拟器测试；使用假身份的清单渲染与策略求值；mock 的外部或付费调用。
+- **禁止：** 真实或已部署流量；向未为本隔离检查启动的服务发请求；联网安装依赖；真实账户或凭证；生产数据；共享队列、云资源、runner、镜像仓库、签名或发布服务；对外发布；压力、饱和或成本制造；在得到最小假数据边界结果之后的任何后续工作。
 
-The sandbox starts with an empty environment, gives target code no external network or host writable path, and enforces explicit low resource and time limits for every check, not only checks expected to be expensive. Scratch output remains target-controlled after exit. Promote it only with the no-follow, path-confined, regular-file, bounded-size host procedure in `SKILL.md`. Missing any sandbox or promotion capability does not erase a source-grounded candidate; represent the exact blocker in `needs_validation`.
+沙箱以空环境启动，不给目标代码任何外部网络或宿主机可写路径，并为每次检查强制施加明确偏低的资源与时间限制，而不只对预期昂贵的检查。退出后，scratch 输出仍受目标代码控制。只能用 `SKILL.md` 中那个 no-follow、路径受限、仅普通文件、有界大小的宿主机流程来提升它。缺少任何沙箱或提升能力都不会抹掉有源码依据的候选；把确切的阻塞项写进 `needs_validation`。
 
-## Structured hunter result
+## 结构化猎手结果
 
-Return exactly one JSON object, with no surrounding prose:
+返回恰好一个 JSON 对象，除它以外不带任何文字：
 
 ```json
 {
@@ -205,22 +209,22 @@ Return exactly one JSON object, with no surrounding prose:
 }
 ```
 
-Each `candidates` entry is schema-shaped except that it uses `proposed_verdict` in place of `verdict`:
+每个 `candidates` 条目都符合 schema 结构，只是用 `proposed_verdict` 代替 `verdict`：
 
-- `proposed_verdict: "confirmed"`: include every field required by the `confirmed` branch of `report-schema.json` other than `verdict`: `fingerprint`, title, description, `root_cause`, `intended_behavior`, ordered `trace`, `evidence`, `conditions`, target-neutral `execution`, `remediation`, `severity`, and `confidence`. The execution instructions describe only the bounded local check already performed. `payloads` holds the minimum test input, fixture, or native invocation. `observed_result` records actual local output. Overall severity must not exceed observed impact.
-- `proposed_verdict: "needs_validation"`: include every field required by that schema branch other than `verdict`: `fingerprint`, title, description, `claimed_root_cause`, ordered `trace`, `evidence`, nonempty `blockers`, and `validation_plan` with at least one applicable `local` or `deployment` step. Do not invent an inapplicable context. Do not include severity, execution, remediation, reason, or a confirmed `root_cause`. `deployment` is an owner-observed check, not a request to probe a live target.
+- `proposed_verdict: "confirmed"`：包含 `report-schema.json` 的 `confirmed` 分支要求的除 `verdict` 外的每个字段：`fingerprint`、标题、描述、`root_cause`、`intended_behavior`、有序的 `trace`、`evidence`、`conditions`、目标中立的 `execution`、`remediation`、`severity` 与 `confidence`。execution 说明只描述已执行过的那次有界本地检查。`payloads` 保存最小测试输入、fixture 或原生调用。`observed_result` 记录实际本地输出。总体严重度不得超过观察到的 impact（影响）。
+- `proposed_verdict: "needs_validation"`：包含该 schema 分支要求的除 `verdict` 外的每个字段：`fingerprint`、标题、描述、`claimed_root_cause`、有序的 `trace`、`evidence`、非空的 `blockers`，以及 `validation_plan`（至少包含一个适用的 `local` 或 `deployment` 步骤）。不要编造不适用的上下文。不要包含 severity、execution、remediation、reason 或已确认的 `root_cause`。`deployment` 是由资产所有者观察的检查，不是探测真实目标的请求。
 
-Every assigned coverage ID appears exactly once in `units`. A `covered` unit needs an owner, nonempty `reviewed_paths` and `checks`, no unresolved fact, and no candidate. A `candidate` unit has the same owned evidence and is the only state that carries linked fingerprints. A `blocked` unit is an owned partial review with nonempty paths, checks, and unresolved facts but no fingerprint. All source paths are repository-relative, never absolute or traversal paths. A trace with several entries begins at `entrypoint`, ends at `sink`, and labels intermediate steps `propagation`. Every check has its own canonical lowercase `agent_id` and nonempty `reviewed_paths`; the unit-level list is exactly the union of those owned paths. A `source` check uses `artifact: null`. A `local` check uses one successfully parent-promoted regular file beneath `agents/<check.agent_id>/artifacts/`; this permits a verifier to add independently owned evidence without taking ownership from the hunter. Never link scratch, an output-root file, or another check owner's artifact.
+每个已分配的 coverage ID 在 `units` 中恰好出现一次。`covered` 单元需要有归属者、非空的 `reviewed_paths` 与 `checks`、没有未决事实，且没有候选。`candidate` 单元拥有同样的归属证据，并且是唯一携带关联指纹的状态。`blocked` 单元是一次有归属的部分审查，有非空的 paths、checks 与未决事实，但没有指纹。所有源码路径都是仓库相对路径，绝不使用绝对路径或带目录遍历的路径。含多个条目的 trace 从 `entrypoint` 开始、到 `sink` 结束，中间步骤标为 `propagation`。每个 check 都有自己的规范小写 `agent_id` 和非空的 `reviewed_paths`；单元级列表恰好是这些归属路径的并集。`source` check 使用 `artifact: null`。`local` check 使用一个由父代理成功提升到 `agents/<check.agent_id>/artifacts/` 之下的普通文件；这允许验证者补充独立归属的证据，而不从猎手手中夺走归属。绝不链接 scratch、输出根目录下的文件或其他 check 归属者的产物。
 
-## Parent consolidation and ledger update
+## 父代理合并与台账更新
 
-The parent validates each unit result, maps it to exactly one assigned `coverage_id`, and updates only that ledger unit. Reject duplicate or absent IDs, unsafe unit or check agent IDs, source checks with artifacts, and local artifacts that trusted parent-side code did not promote into the check owner's artifacts subtree. Copy the unit's `reviewed_paths`, its `checks` into the unit's `local_checks`, linked artifact paths, candidate fingerprints, and unresolved facts into the ledger. Retain each hunter's `hardening` list in a parent bookkeeping field on the relevant units (outside the semantic fields) so Phase 6 can report it. A failed, malformed, or unsupported conclusion leaves that unit `planned` for reassignment. Untouched budget/profile units become unassigned `deferred` units with empty evidence and a reason; do not hide partial evidence in `deferred`. Run `validate-coverage-ledger.cjs` after the update; an invalid ledger cannot drive another assignment. This per-unit contract allows one hunter to close one unit while returning a candidate or blocker for another.
+父代理验证每个单元结果，把它映射到恰好一个已分配的 `coverage_id`，并只更新那个台账单元。拒绝重复或缺席的 ID、不安全的单元或 check 代理 ID、带产物的 source check，以及未经可信父代理侧代码提升进 check 归属者 artifacts 子树的本地产物。把单元的 `reviewed_paths`、其 `checks`（写入单元的 `local_checks`）、关联产物路径、候选指纹和未决事实复制进台账。把每个猎手的 `hardening` 列表保留在相关单元的父代理记账字段中（语义字段之外），以便 Phase 6 汇报。失败、畸形或无依据的结论会让该单元保持 `planned`，等待重新分配。预算/profile 未触及的单元变为未分配的 `deferred` 单元，证据为空并附理由；不要把部分证据藏进 `deferred`。更新后运行 `validate-coverage-ledger.cjs`；无效的台账不能驱动下一次分配。这个按单元契约允许一个猎手关闭一个单元，同时为另一个单元返回候选或阻塞项。
 
-Consolidate candidate entries by fingerprint and then by root cause. One root cause that exposes several entry paths or effects is one candidate with the strongest complete trace. Related but independent missing controls use separate fingerprints. Record duplicate fingerprints in the relevant ledger unit and do not send duplicate candidates to validation.
+先按指纹、再按根因合并候选条目。暴露多个入口路径或效果的同一条根因是一个候选，取最强的完整 trace。相关但相互独立的缺失控制使用不同指纹。把重复指纹记录在相关台账单元中，不要把重复候选送进验证。
 
-## Coverage-critic waves
+## 覆盖评审者波次
 
-Immediately after each hunter wave, spend the reserved invocation on one fresh `research` post-wave coverage critic. It receives `architecture.md`, the full coverage ledger including each assignment block map, current candidate fingerprints and states, and the prior-ledger gap summary. It reads source but does not write or run targets. Require exactly this JSON:
+每轮猎手波次结束后立即执行：把预留的一次调用用于一个全新的 `research` 波后覆盖评审者（coverage critic）。它接收 `architecture.md`、包含每个 assignment 块映射的完整覆盖台账、当前候选指纹与状态，以及既往台账的缺口摘要。它只读源码，不写入也不运行目标。要求它恰好返回这个 JSON：
 
 ```json
 {
@@ -242,10 +246,10 @@ Immediately after each hunter wave, spend the reserved invocation on one fresh `
 }
 ```
 
-The critic checks for unmapped entry points, unchecked parallel paths, missing lifecycle modes, selected companion classes without a unit, unjustified exclusions, units closed without paths/checks, and prior `needs_validation` or changed-source gaps that no unit addresses. It proposes coverage, not findings. `stop` is the critic's own assessment: `true` only when it accepts no `missing_units` and no `reassign_ids`; the parent's loop condition below, not `stop` alone, decides whether another wave runs. For each fingerprint in `resolved_prior_leads`, the parent marks the linked unit or prior-lead entry resolved and records the critic's source-backed reason.
+评审者检查未映射的入口点、未检查的并行路径、缺失的生命周期模式、选中了伴生类却没有对应单元、无理由的排除、关闭时没有 paths/checks 的单元，以及没有任何单元处理的既往 `needs_validation` 或已变更源码缺口。它提出的是覆盖建议，不是发现。`stop` 是评审者自己的判断：仅当它不接受任何 `missing_units` 也不接受任何 `reassign_ids` 时才为 `true`；是否再跑一波由下文的父代理循环条件决定，而不是只看 `stop`。对 `resolved_prior_leads` 中的每个指纹，父代理把关联单元或既往线索条目标记为已解决，并记录评审者给出的有源码依据的理由。
 
-The parent rejects proposed units outside the review scope or source/local boundary, derives canonical IDs for accepted units, and deduplicates them against current units. A prior same-source completed unit may supply evidence; prior `deferred`, `blocked`, `out_of_scope`, or changed-source units become current work and never suppress an accepted unit. Fail rather than merge a canonical ID collision. For each legitimate `reassign_id` with live `blocked`, `covered`, or `candidate` evidence, append that exact terminal record to the unit's `attempts` with the critic's source-backed `reassignment_reason`. Preserve its owner, checks, artifacts, fingerprints, and unresolved facts in that archive. Increment the live `wave`; the next hunter must be a fresh owner and receives an `in_progress` unit with empty live evidence. The hunter's terminal result writes only its new evidence into the live fields. Never copy an archived owner's checks or artifacts into the new live attempt. Sort IDs and validate the ledger before another assignment. In `standard` and `deep`, when the post-wave critic reports no accepted `missing_units` or legitimate `reassign_ids` and no `planned` units remain, spend the separately reserved invocation on a distinct final-clean critic. Complete coverage only when that critic also returns no accepted work. If it finds work, queue it and repeat the wave, post-wave critic, and final-clean process. If time or resources force an early stop, mark every untouched unit `deferred`, preserve the critic's reason, and disclose the gap in the report. Never use a silent wave or agent cap as evidence of complete coverage.
+父代理拒绝超出审查范围或源码/本地边界的建议单元，为接受的单元推导规范 ID，并与当前单元去重。既往同源已完成单元可以提供证据；既往 `deferred`、`blocked`、`out_of_scope` 或已变更源码的单元变为当前工作，绝不压制已接受单元。出现规范 ID 冲突时宁可失败，也不要合并。对每个带活跃 `blocked`、`covered` 或 `candidate` 证据的合法 `reassign_id`，把该确切的终结记录连同评审者给出的有源码依据的 `reassignment_reason` 追加到单元的 `attempts`。把其归属者、checks、产物、指纹和未决事实保存在该归档中。递增活跃 `wave`；下一个猎手必须是新的归属者，并收到一个活跃证据为空的 `in_progress` 单元。猎手的终结结果只把其新证据写入活跃字段。绝不把归档归属者的 checks 或产物复制进新的活跃尝试。在下一次分配前对 ID 排序并验证台账。在 `standard` 与 `deep` 档位下，当波后评审者没有报告任何被接受的 `missing_units` 或合法 `reassign_ids`、也没有剩余 `planned` 单元时，把单独预留的那次调用用于一个独立的最终清洁评审者（final-clean critic）。只有该评审者也未返回被接受的工作时，覆盖才算完成。若它发现了工作，将其排队并重复"波次、波后评审、最终清洁"这一流程。若时间或资源迫使提前停止，把每个未触及单元标记为 `deferred`，保留评审者理由，并在报告中披露缺口。绝不把"静默的波次或代理数量上限"当作覆盖完整的证据。
 
-The run profile bounds this loop. A `quick` run has exactly one hunter wave followed by exactly one final critic pass. Add each accepted `missing_unit` to the current ledger and mark it `deferred` with reason `quick_profile_final_critic`. For each legitimate evidence-bearing `reassign_id`, archive the live terminal state in `attempts`, increment `wave`, and set the live state to unassigned `deferred` with empty evidence and reason `quick_profile_final_critic`. Do not launch a second hunter wave or another critic. In a scoped run, the critic still reports out-of-scope gaps it notices, but the parent records them as `out_of_scope` with the critic's reason instead of assigning them. The early-stop rule above is the same mechanism: `quick` is a pre-declared early stop, not evidence of complete coverage.
+运行 profile 限定这个循环。`quick` 运行恰好一轮猎手波次，随后恰好一次最终评审。把每个被接受的 `missing_unit` 加入当前台账，并标记为 `deferred`，理由为 `quick_profile_final_critic`。对每个带证据的合法 `reassign_id`，把活跃终结状态归档进 `attempts`，递增 `wave`，并把活跃状态设为未分配的 `deferred`，证据为空，理由为 `quick_profile_final_critic`。不再启动第二轮猎手波次或另一个评审者。在限定范围（scoped）的运行中，评审者仍会报告它注意到的范围外缺口，但父代理把它们连同评审者理由记录为 `out_of_scope`，而不分配。上文的提前停止规则是同一机制：`quick` 是预先声明的提前停止，不是覆盖完整的证据。
 
-A budget bounds it the same way. Before assigning each wave, compare remaining budget against its hunter count, the validation reserve, the immediate post-wave critic, and the retained final-clean critic (`quick` reserves only its single final post-wave critic). Shrink the hunter wave to fit, taking units in priority order. If those mandatory reserves do not fit, launch no hunter from that wave and mark its planned units `deferred` with reason `budget_cannot_reserve_critics_and_validation`. Critic-proposed units enter the same ranked queue rather than extending the budget. If surviving candidates exceed the validation reserve, follow the incomplete-run rule in `SKILL.md`: stop hunting, validate in fingerprint order, retain unvalidated units as unresolved candidates, and never present them as findings.
+预算以同样方式限定这个循环。每轮波次分配前，把剩余预算与其猎手数量、验证预留、紧随其后的波后评审者以及保留的最终清洁评审者比较（`quick` 只预留其单个最终波后评审者）。压缩猎手波次以适配预算，按优先级顺序取单元。若这些强制预留放不下，该波次不启动任何猎手，并将其 planned 单元标记为 `deferred`，理由为 `budget_cannot_reserve_critics_and_validation`。评审者建议的单元进入同一个排序队列，而不是扩大预算。若存活候选超过验证预留，遵循 `SKILL.md` 中的不完整运行规则：停止狩猎，按指纹顺序验证，未验证单元保留为未决候选，绝不把它们当作 findings 呈现。

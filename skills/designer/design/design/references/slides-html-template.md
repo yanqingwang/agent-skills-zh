@@ -1,8 +1,12 @@
-# HTML Slide Template
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/design/references/slides-html-template.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete HTML structure with navigation, tokens, and Chart.js integration.
+# HTML 幻灯片模板
 
-## Base Structure
+完整的 HTML 结构，含导航、token 与 Chart.js 集成。
+
+## 基础结构
 
 ```html
 <!DOCTYPE html>
@@ -201,7 +205,7 @@ Complete HTML structure with navigation, tokens, and Chart.js integration.
 </html>
 ```
 
-## Chart.js Integration
+## Chart.js 集成
 
 ```html
 <div class="chart-container" style="width: min(80%, 600px); height: clamp(200px, 40vh, 350px);">
@@ -236,7 +240,7 @@ new Chart(document.getElementById('revenueChart'), {
 </script>
 ```
 
-## Animation Classes
+## 动画类
 
 ```css
 /* Fade Up */
@@ -272,7 +276,7 @@ new Chart(document.getElementById('revenueChart'), {
 .animate-stagger > *:nth-child(4) { animation-delay: 0.4s; }
 ```
 
-## Background Images
+## 背景图片
 
 ```html
 <div class="slide slide-with-bg" style="background-image: url('https://images.pexels.com/...')">
@@ -283,13 +287,13 @@ new Chart(document.getElementById('revenueChart'), {
 </div>
 ```
 
-## CSS Variables Reference
+## CSS 变量参考
 
-| Variable | Usage |
+| 变量 | 用途 |
 |----------|-------|
-| `--color-primary` | Brand primary (CTA, highlights) |
-| `--color-background` | Slide background |
-| `--color-secondary` | Secondary elements |
-| `--primitive-gradient-primary` | Title gradients |
-| `--typography-font-heading` | Headlines |
-| `--typography-font-body` | Body text |
+| `--color-primary` | 品牌主色（CTA、高亮） |
+| `--color-background` | 幻灯片背景 |
+| `--color-secondary` | 次级元素 |
+| `--primitive-gradient-primary` | 标题渐变 |
+| `--typography-font-heading` | 标题字体 |
+| `--typography-font-body` | 正文字体 |

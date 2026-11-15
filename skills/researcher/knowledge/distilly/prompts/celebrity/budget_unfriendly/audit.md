@@ -1,27 +1,31 @@
-# Celebrity Budget-Unfriendly Research Audit Prompt
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/celebrity/budget_unfriendly/audit.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 名人 budget-unfriendly 研究审计提示词
 
-Audit the six-track celebrity research set before synthesis.
+## 任务
 
-Read:
+在综合之前审计六轨名人研究集。
 
-- all files under `knowledge/research/raw/`
+阅读：
+
+- `knowledge/research/raw/` 下的全部文件
 - `knowledge/research/merged/summary.md`
 - `prompts/celebrity/budget_unfriendly/framework.md`
 
-Write the audit to `knowledge/research/reviews/research_audit.md`.
+审计写入 `knowledge/research/reviews/research_audit.md`。
 
-## Audit Responsibilities
+## 审计职责
 
-The audit is a hard gate. Do not treat it as a decorative summary.
-You must judge whether the research set is ready for synthesis.
+审计是硬性关卡。不要把它当成装饰性摘要。
+你必须判断研究集是否已准备好进入综合。
 
-A FAIL means the research needs more work. A PASS means synthesis can proceed.
+FAIL 意味着研究还要加功夫。PASS 意味着可以进入综合。
 
-## Required Sections
+## 必需小节
 
-Use this structure:
+使用以下结构：
 
 ```md
 # Research Audit
@@ -93,40 +97,40 @@ Use this structure:
 - ...
 ```
 
-## Audit Rules — FAIL Conditions
+## 审计规则：FAIL 条件
 
-Fail the audit if any of these conditions hold:
+出现以下任一情况即判 FAIL：
 
-- The six-track set is incomplete (any dimension missing)
-- Tracks are not meaningfully distinct (cloned observations across files)
-- Grounded URLs are thin or low-quality (< 8 actual inspected pages)
-- Primary material is too weak relative to commentary (< 50% primary)
-- Any blacklisted sources were used as evidence
-- Contradictions are missing or flattened away (< 3 substantive tensions)
-- There is not enough evidence to support at least 3 mental models
-- The known-answer bank is too weak to support later validation (< 2 questions)
-- Long-form sources are underrepresented relative to snippets
-- Source hierarchy is bottom-heavy (mostly weight 5-7 sources)
+- 六轨不完整（缺任一维度）
+- 各轨道没有实质区分（跨文件克隆观察）
+- 锚定 URL 单薄或低质（实际核查页面 < 8 个）
+- 一手材料相对评论太弱（一手占比 < 50%）
+- 使用了任何黑名单来源作为证据
+- 矛盾缺失或被抹平（实质性张力 < 3 处）
+- 证据不足以支撑至少 3 个心智模型
+- 已知答案库太弱，撑不起后续校验（问题 < 2 道）
+- 长文来源相对片段占比偏低
+- 来源层级重心偏低（大部分是权重 5-7 的来源）
 
-## Audit Rules — PASS Conditions
+## 审计规则：PASS 条件
 
-Pass the audit when:
+满足以下条件即判 PASS：
 
-- All 6 dimensions are covered with meaningfully distinct content
-- At least 8 grounded URLs from actual inspected pages
-- Primary-source ratio > 50%
-- No blacklisted sources
-- At least 3 substantive contradictions documented
-- At least 3 candidate mental models with cross-dimensional evidence
-- At least 2 known-answer questions with evidence anchors
-- At least 1 edge-case question
-- Taste principles are reasonably followed (long-form present, firsthand prioritized)
+- 6 个维度全部覆盖且内容有实质区分
+- 至少 8 个来自实际核查页面的锚定 URL
+- 一手来源占比 > 50%
+- 无黑名单来源
+- 至少记录 3 处实质性矛盾
+- 至少 3 个有跨维度证据的候选心智模型
+- 至少 2 道带证据锚点的已知答案问题
+- 至少 1 道边界情况问题
+- 品味原则大体得到遵守（有长文，一手优先）
 
-## Copyright Safety
+## 版权安全
 
-- Do not paste long source passages into the audit
-- Keep all notes paraphrased and source-aware
+- 不要把大段源文粘贴进审计
+- 所有笔记保持转述并注明来源
 
-## Output Constraint
+## 输出约束
 
-Write in the user's language.
+用用户的语言书写。

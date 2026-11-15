@@ -1,16 +1,20 @@
-# Response Shapes
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-error-handling/RESPONSE_SHAPES.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Conventions for webhook API response bodies — both success and error. The goal is **predictability**: a caller, a dashboard, or a retry loop should be able to branch on your response without guessing. Pick a shape and hold it across every endpoint on the instance.
+# 响应形状
 
-This file is opinions with reasons. The one hard rule is consistency: **consistency within your project beats consistency with this file.** If your repo or company already has a documented API style, that wins.
+webhook API 响应体的约定，成功与错误都涵盖。目标是**可预测**：调用方、仪表盘或重试循环应能不靠猜地对你的响应做分支判断。选定一种形状，并在实例上的每个端点都保持一致。
+
+本文件是一组带理由的偏好。唯一的硬规则是一致性：**项目内部的一致性优先于与本文件的一致。**如果你的仓库或公司已有成文的 API 风格，以它为准。
 
 ---
 
-## First, match what's already on the instance
+## 第一步：先对齐实例上已有的做法
 
-Before adopting any shape here, look at the API workflows already running and reuse their conventions. A one-off custom shape is hard to undo once callers depend on it, and inconsistency across endpoints is worse than any single choice.
+采用本文件任何形状之前，先看已在运行的 API 工作流，复用它们的约定。一次性自定义形状一旦被调用方依赖就很难撤销；端点之间不一致比任何单个选择都糟。
 
-Search with the MCP, then read each result:
+先用 MCP 搜索，再逐个读取结果：
 
 ```javascript
 search_nodes({ query: "webhook" })          // find webhook-shaped workflows via templates
@@ -18,20 +22,20 @@ n8n_list_workflows({ /* filter */ })          // list workflows on the instance
 n8n_get_workflow({ id: "<id>" })               // read each one's Respond to Webhook nodes
 ```
 
-In each existing `Respond to Webhook`, note:
+在每个已有的 `Respond to Webhook` 里记下：
 
-- Top-level keys — envelope vs bare, presence of `error`/`message`/`request_id`.
-- Whether success bodies wrap the payload or return it bare.
-- The exact error-code strings in use (`validation_error` vs `bad_request` vs `INVALID_INPUT`).
-- Header conventions (`Content-Type`, `Retry-After`, `X-Request-Id`).
+- 顶层键：信封还是裸数据，有没有 `error`/`message`/`request_id`。
+- 成功响应体是包住 payload 还是裸返回。
+- 实际在用的错误码字符串（`validation_error`、`bad_request` 还是 `INVALID_INPUT`）。
+- 请求头约定（`Content-Type`、`Retry-After`、`X-Request-Id`）。
 
-If results are sparse, mixed, or you can't tell whether a convention exists — **ask the user.** "Endpoints A and B use shape X, C uses Y; which is house style?" saves a future migration. Don't invent a domain prefix or envelope from nothing.
+如果结果稀少、混杂，或看不出是否存在约定，**问用户**。"端点 A 和 B 用形状 X，C 用 Y；哪个是内部标准？"一句话省掉将来一次迁移。不要凭空发明领域前缀或信封。
 
 ---
 
-## Success shape
+## 成功形状
 
-Return the data bare. For requests that **create or update** a resource, prefer returning the **full resource** with a 200, not `{ "ok": true }` or just the new ID:
+数据裸返回。对**创建或更新**资源的请求，优先在 200 里返回**完整资源**，而不是 `{ "ok": true }` 或只返回新 ID：
 
 ```json
 {
@@ -42,17 +46,17 @@ Return the data bare. For requests that **create or update** a resource, prefer 
 }
 ```
 
-Returning the resource saves the caller a follow-up GET, lets them confirm what actually persisted (server defaults, normalized values, generated timestamps), and makes the endpoint a single round-trip for a UI that renders the result immediately.
+返回资源省掉调用方一次后续 GET，让它能确认实际落库的内容（服务端默认值、归一化后的值、生成的时间戳），也让要立即渲染结果的 UI 一次往返就拿到全部。
 
-Deviate only when:
+只在以下情况偏离：
 
-- The resource is genuinely large and the caller doesn't need it → return the ID, document why.
-- There is no resource (event ingestion, fire-and-forget) → `{}` or `204 No Content`.
-- The payload is list-shaped → a top-level array, or `{ "items": [...] }` (friendlier to future pagination metadata).
+- 资源确实很大且调用方不需要 → 返回 ID，并写明原因。
+- 没有资源（事件采集、发完即忘）→ `{}` 或 `204 No Content`。
+- payload 是列表形 → 顶层数组，或 `{ "items": [...] }`（对将来加分页元数据更友好）。
 
 ---
 
-## Error shape (the default envelope)
+## 错误形状（默认信封）
 
 ```json
 {
@@ -61,84 +65,84 @@ Deviate only when:
 }
 ```
 
-- `error` is a **stable string identifier**, not a sentence. Clients branch on it.
-- `message` is the human version — safe to log, safe to show users *after* sanitization.
-- No `ok: false` flag — the HTTP status code already separates success from failure.
+- `error` 是**稳定的字符串标识符**，不是一句话。客户端按它分支。
+- `message` 是给人看的版本：可安全记录，脱敏*之后*可安全展示给用户。
+- 不要 `ok: false` 标志：HTTP 状态码已经区分了成功与失败。
 
-Optional fields by case:
+按需附加的可选字段：
 
-| Field | When to include |
+| 字段 | 何时包含 |
 |---|---|
-| `details` | Validation errors, with a field-by-field map |
-| `retry_after` | Rate limits (also set the `Retry-After` header) |
-| `request_id` | When you run distributed tracing (then on *every* response, not just errors) |
-| `documentation_url` | Public APIs where you want callers to RTFM |
+| `details` | 校验错误，附逐字段映射 |
+| `retry_after` | 速率限制（同时设置 `Retry-After` 请求头） |
+| `request_id` | 启用分布式追踪时（且要出现在*每条*响应上，不只错误） |
+| `documentation_url` | 希望调用方先读文档的公开 API |
 
 ---
 
-## `responseCode` defaults to 200 — set it on every error branch
+## `responseCode` 默认 200：每个错误分支都要显式设置
 
-This is the single most common API error-handling bug, and it's worth its own section because it produces a *worse-than-useless* result: the body says failure while the status says success.
+这是最常见的 API 错误处理 bug，值得单独一节，因为它产生*比没用更糟*的结果：响应体说失败，状态码说成功。
 
-**Every `Respond to Webhook` node defaults `responseCode` to 200** — including the ones you wired to error paths. An error branch that returns 200 with `{ "error": "..." }` looks like success to the caller's HTTP client, so their error handling (which keys off the status code) **never fires**. They process your error body as if it were data.
+**每个 `Respond to Webhook` 节点的 `responseCode` 都默认 200**，包括你接到错误路径上的那些。返回 200 加 `{ "error": "..." }` 的错误分支，在调用方的 HTTP 客户端看来就是成功，于是它们的错误处理（以状态码为准）**永远不会触发**，错误响应体被当成数据处理。
 
-So: set `options.responseCode` **explicitly** on every Respond node — not just the success one. It lives under `options`; a top-level `responseCode` is ignored, and the node still returns 200. (This trap is also documented in **n8n-node-configuration** NODE_FAMILY_GOTCHAS.md, "Webhook / Respond to Webhook".) A workflow can have many Respond nodes, one per response shape; n8n returns whichever fires first.
+所以：每个 Respond 节点都**显式**设置 `options.responseCode`，不只是成功那个。它在 `options` 之下；顶层 `responseCode` 会被忽略，节点照样返回 200。（这个坑也写在 **n8n-node-configuration** 的 NODE_FAMILY_GOTCHAS.md，"Webhook / Respond to Webhook"一节。）一个工作流可以有多个 Respond 节点，每种响应形状一个；n8n 返回最先触发的那个。
 
 ```json
 { "responseBody": "={{ { error: 'upstream_error', message: 'External service failed' } }}",
   "options": { "responseCode": 502 } }
 ```
 
-To pick the status by cause, route with a Switch to one static Respond per status — see **API_WORKFLOWS.md**, "5xx: route by cause".
+要按原因选择状态码，用 Switch 路由到每个状态码一个静态 Respond：见 **API_WORKFLOWS.md** 的 "5xx: route by cause"。
 
 ---
 
-## Status code → cause
+## 状态码 → 原因
 
-The status code is the caller's first signal; be deliberate.
+状态码是调用方收到的第一个信号，要认真选。
 
-- **2xx** — success. 200 sync, 202 "accepted, processing".
-- **4xx** — caller's fault. 400 bad input, 401 no auth, 403 not allowed, 404 not found, 409 conflict, 429 rate limited.
-- **5xx** — your fault. 500 unexpected internal, 502 upstream broken, 503 temporarily down, 504 upstream timeout.
+- **2xx**：成功。200 同步完成，202 "accepted, processing"（已受理，处理中）。
+- **4xx**：调用方的问题。400 输入错误、401 未鉴权、403 不允许、404 不存在、409 冲突、429 限流。
+- **5xx**：服务端的问题。500 内部意外错误、502 上游故障、503 暂不可用、504 上游超时。
 
-Distinguishing 4xx from 5xx matters because the caller's tooling depends on it:
+区分 4xx 和 5xx 很重要，调用方的工具链依赖这个区分：
 
-- Caller monitoring alerts on 5xx (your fault) but not 4xx (their fault). Returning 500 for bad input fires *their* pager on *their* bug.
-- 5xx implies "retry", 4xx implies "don't bother".
-- Aggregated error rates segment by class — collapse everything to 500 and you lose that.
+- 调用方的监控对 5xx（你方问题）告警，不对 4xx（他们的问题）告警。对坏输入返回 500，等于让*他们*因*自己*的 bug 被*你*的告警吵醒。
+- 5xx 意味着"可重试"，4xx 意味着"别重试了"。
+- 汇总错误率按类别分段：全压成 500，这个分段就没了。
 
-### Error codes (a small, stable set)
+### 错误码（小而稳定的一组）
 
-Adding a code is fine; renaming an existing one breaks callers.
+加一个码没问题；改已有码的名字会破坏调用方。
 
-**4xx — caller's fault**
+**4xx：调用方的问题**
 
-| Code | Meaning |
+| 码 | 含义 |
 |---|---|
-| `validation_error` | Required field missing / type wrong |
-| `invalid_input` | Field present but value invalid |
-| `unauthorized` | No auth or expired auth |
-| `forbidden` | Authenticated but not allowed |
-| `not_found` | Resource doesn't exist |
-| `conflict` | Conflicts with current state (duplicate key, race) |
-| `rate_limit_exceeded` | Too many requests |
-| `unsupported_media_type` | Content-Type wrong |
+| `validation_error` | 必填字段缺失 / 类型错误 |
+| `invalid_input` | 字段存在但值无效 |
+| `unauthorized` | 未鉴权或鉴权过期 |
+| `forbidden` | 已鉴权但不被允许 |
+| `not_found` | 资源不存在 |
+| `conflict` | 与当前状态冲突（键重复、竞态） |
+| `rate_limit_exceeded` | 请求过多 |
+| `unsupported_media_type` | Content-Type 错误 |
 
-**5xx — your fault**
+**5xx：服务端的问题**
 
-| Code | Meaning |
+| 码 | 含义 |
 |---|---|
-| `internal_error` | Catch-all, something failed unexpectedly |
-| `upstream_error` | Third-party API returned an error |
-| `upstream_timeout` | Third-party API didn't respond in time |
-| `service_unavailable` | Temporarily can't process (down, or rate-limited upstream) |
-| `not_implemented` | Operation not supported in this version |
+| `internal_error` | 兜底，意外失败 |
+| `upstream_error` | 第三方 API 返回错误 |
+| `upstream_timeout` | 第三方 API 未及时响应 |
+| `service_unavailable` | 暂时无法处理（宕机，或上游限流） |
+| `not_implemented` | 此版本不支持该操作 |
 
 ---
 
-## Validation error details (400)
+## 校验错误详情（400）
 
-For `validation_error`, include per-field detail so the caller can fix the request without guessing. The per-field Code validator (API_WORKFLOWS.md → "Exception: per-field messages") produces this directly:
+`validation_error` 要带逐字段详情，让调用方不用猜就能修正请求。逐字段 Code 校验器（API_WORKFLOWS.md → "Exception: per-field messages"）直接产出这种结构：
 
 ```json
 {
@@ -149,11 +153,11 @@ For `validation_error`, include per-field detail so the caller can fix the reque
 }
 ```
 
-`message` is the human summary (safe to show), `details` is the structured per-field map (safe to bind to UI fields), and `request_schema` is the schema echoed back so an LLM-driven or programmatic caller can self-correct on the next attempt.
+`message` 是给人看的概要（可展示），`details` 是结构化的逐字段映射（可绑定到 UI 字段），`request_schema` 是回显的 schema，让 LLM 驱动或程序化调用方在下一次尝试时自我修正。
 
 ---
 
-## Rate-limit responses (429)
+## 限流响应（429）
 
 ```json
 {
@@ -163,28 +167,28 @@ For `validation_error`, include per-field detail so the caller can fix the reque
 }
 ```
 
-Also set the HTTP `Retry-After` header (in the Respond node's `options.responseHeaders`). Well-behaved clients respect the header without parsing the body.
+同时设置 HTTP `Retry-After` 请求头（在 Respond 节点的 `options.responseHeaders` 里）。守规矩的客户端只看请求头，不解析响应体。
 
 ---
 
-## What NOT to put in an error response
+## 错误响应里不能放什么
 
-The body goes to the caller. Treat everything in it as public.
+响应体会交给调用方。里面的所有内容都按公开对待。
 
-| Don't include | Why |
+| 不要包含 | 原因 |
 |---|---|
-| **Stack traces** — `{ "stack": "Error at line 42 of /opt/..." }` | Reveals paths, versions, library names. A gift to attackers, useless to callers. |
-| **Upstream errors verbatim** — `{ "details": "<raw upstream body>" }` | Upstream may embed *their* tokens and PII. Surface "upstream service failed" + a request id; details go to your logs. |
-| **SQL queries** — `{ "query": "SELECT * FROM users WHERE ..." }` | Exposes schema and access patterns. |
-| **Tokens / credentials / auth values** | Even innocuous-looking `headers`, `config`, or `request` fields can carry token values. Audit error bodies — leaks are easier than you'd expect. |
+| **堆栈跟踪**：`{ "stack": "Error at line 42 of /opt/..." }` | 暴露路径、版本、库名。对攻击者是礼物，对调用方没用。 |
+| **上游错误原文**：`{ "details": "<raw upstream body>" }` | 上游可能在其中内嵌*它方*的 token 和 PII。对外只说 "upstream service failed" 加一个 request id；细节进你的日志。 |
+| **SQL 查询**：`{ "query": "SELECT * FROM users WHERE ..." }` | 暴露 schema 和访问模式。 |
+| **token / 凭据 / 鉴权值** | 看似无害的 `headers`、`config` 或 `request` 字段也可能带 token 值。审计错误响应体：泄露比你想象的容易。 |
 
-The pattern is always the same: **log the full error privately, return a sanitized message.** See "Don't leak internals" in API_WORKFLOWS.md for the log-then-respond wiring.
+模式始终一样：**完整错误只进私有日志，对外返回脱敏信息。**先记日志再响应的接线见 API_WORKFLOWS.md 的 "Don't leak internals"。
 
 ---
 
-## Respond node shape (JSON, for the community MCP)
+## Respond 节点形状（JSON，供社区 MCP 用）
 
-Success:
+成功：
 
 ```json
 {
@@ -198,7 +202,7 @@ Success:
 }
 ```
 
-Error:
+错误：
 
 ```json
 {
@@ -212,7 +216,7 @@ Error:
 }
 ```
 
-Two notes that bite people:
+两个容易坑人的点：
 
-- **Always set `Content-Type: application/json` explicitly.** Default behavior depends on the body shape and isn't reliable.
-- **With `respondWith: "json"`, pass the object, not a stringified string.** If you hand it `JSON.stringify(obj)` it serializes that string *again* and you get a double-encoded body. Either use `respondWith: "json"` with an object expression (`={{ { error: 'x' } }}`), or keep `JSON.stringify(...)` and let the node treat it as the already-final body — pick one and be consistent. (See **n8n-node-configuration** NODE_FAMILY_GOTCHAS.md.)
+- **始终显式设置 `Content-Type: application/json`。**默认行为取决于响应体形状，不可靠。
+- **用 `respondWith: "json"` 时传对象，不要传字符串化后的字符串。**给它 `JSON.stringify(obj)`，节点会把那个字符串*再*序列化一次，得到双重编码的响应体。要么用 `respondWith: "json"` 配对象表达式（`={{ { error: 'x' } }}`），要么保留 `JSON.stringify(...)` 让节点把它当作已定稿的响应体：二选一并保持一致。（见 **n8n-node-configuration** 的 NODE_FAMILY_GOTCHAS.md。）

@@ -1,55 +1,59 @@
-# BlockFrame Preview Card
+> **中文汉化版** · 上游：[zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides) · 原文件：`plugins/frontend-slides/skills/frontend-slides/bold-template-pack/templates/block-frame/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# BlockFrame 预览卡
 
-## Files
+本文件仅用于标题页预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/block-frame/design.md`
-- Preview card: `bold-template-pack/templates/block-frame/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/block-frame/design.md`
+- 预览卡：`bold-template-pack/templates/block-frame/preview.md`
+
+## 选型元数据
 
 - Slug: `block-frame`
-- Tagline: Neobrutalist deck with pastel-neon color blocks and chunky black borders.
-- Mood: bold, playful, graphic, fresh
-- Tone: confident, graphic, pop, design-led
-- Formality: medium-low
-- Density: high
-- Scheme: light
-- Best for: Anything that should feel pop-graphic and design-led: indie SaaS launches, agency credentials, creative reviews, brand redesigns. Also a strong unexpected pick for tech, finance, or research when the speaker wants to land as confident and contemporary rather than buttoned-up.
-- Avoid for: Contexts that require quiet institutional restraint or traditional weight (regulated disclosures, formal legal briefs).
+- Tagline: 新粗野主义演示，柔和霓虹色块配粗黑边框。
+- Mood: 大胆、俏皮、图形感、清新
+- Tone: 自信、图形感、波普、设计主导
+- Formality: 中偏低
+- Density: 高
+- Scheme: 浅色
+- Best for: 一切该有波普图形与设计主导感的内容：独立 SaaS 发布、代理商资质展示、创意评审、品牌改版。科技、金融或研究主题若想显得自信而当代、而非一本正经，也是出人意料的好选择。
+- Avoid for: 需要安静机构克制或传统分量的场合（受监管的披露、正式法律文书）。
 
-## Visual Snapshot
+## 视觉速览
 
-A maximalist neobrutalist presentation system built on 4px solid black borders, 8px hard offset shadows, and a high-key candy palette of five saturated pastels plus cream and off-white. Display type runs Inter at weight 800-900 in tight uppercase; secondary chrome uses Space Grotesk as a quasi-monospace label face. Tilted decorative shapes (rotated stars, rectangles, badges) puncture the borders and break the grid intentionally. Pastels are paired loudly: pink + blue + green + yellow + cream cycle through every region with deliberate juxtaposition. The aesthetic borrows from zine layout, 1990s-revival sticker books, and contemporary toy packaging — bold, joyful, slightly chaotic, never timid.
+一套极繁的新粗野主义演示系统，建立在 4px 实心黑边框、8px 硬边偏移阴影，以及五种饱和柔和浅彩加奶油与米白的高明度糖果配色之上。展示字体用 Inter 800-900 字重的紧凑全大写，次级边框装饰用 Space Grotesk 充当准等宽标签字面。倾斜的装饰形状（旋转的星形、矩形、徽章）刺穿边框，刻意打破网格。浅彩大胆配对：粉 + 蓝 + 绿 + 黄 + 奶油在各区域循环，并置经过安排。美学借鉴 zine 排版、1990 年代复兴贴纸书与当代玩具包装：大胆、欢快、略带混乱，从不怯场。
 
-BlockFrame is a maximalist neobrutalist presentation system built on five structural laws: every region has a 4px black border, every elevated element has an 8px hard offset shadow, every corner is square, every accent color is a saturated pastel, and every layout is allowed to be a little bit crooked. The system's joy comes from the deliberate collision of these laws — bordered cards meet bordered cards, shadows stack against shadows, tilted decorations puncture the grid intentionally.
+BlockFrame 是一套极繁的新粗野主义演示系统，建立在五条结构法则之上：每个区域都有 4px 黑边框，每个浮起元素都有 8px 硬边偏移阴影，每个角都是直角，每个强调色都是饱和浅彩，每个布局都允许稍微歪一点。这套系统的乐趣来自这些法则的刻意碰撞：带边框的卡片与带边框的卡片相遇，阴影叠着阴影，倾斜的装饰有意刺穿网格。
 
-## Preview Ingredients
+## 预览要素
 
 - Palette: black #000000; white #FFFFFF; offwhite #FFFDF5; pink #FE90E8; blue #C0F7FE; green #99E885; yellow #F7CB46; cream #FFDC8B
-- Typography: See full design doc after selection.
-- Signature move: 4px solid black borders on primary cards, 3px on secondary chrome — never thinner.
-- Signature move: 8px hard offset shadows on primary cards, 4px on secondary chrome — solid black, zero blur.
-- Signature move: Five-pastel palette (pink, blue, green, yellow, cream) plus black, white, off-white — cycled across surfaces.
-- Signature move: Inter weight 800-900 uppercase with negative tracking is the display voice; Space Grotesk weight 600 uppercase with 0.08em tracking is the label voice.
-- Signature move: Square corners everywhere except a single circular accent dot on stat cards.
+- Typography: 选定后阅读完整设计文档。
+- Signature move: 主卡片 4px 实心黑边框，次级边框装饰 3px，绝不更细。
+- Signature move: 主卡片 8px 硬边偏移阴影，次级边框装饰 4px，纯黑、零模糊。
+- Signature move: 五色浅彩（粉、蓝、绿、黄、奶油）加黑、白、米白，在各表面间循环。
+- Signature move: Inter 800-900 字重全大配负字距是展示声部；Space Grotesk 600 字重全大配 0.08em 字距是标签声部。
+- Signature move: 处处直角，唯一的例外是数字卡片上一个圆形强调点。
 
-## International / CJK Preview Note
+## 国际化 / CJK 预览注意
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-## Preview Rules
+## 预览规则
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

@@ -1,111 +1,115 @@
-# Cold Email Deliverability
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/deliverability.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The best cold email does nothing if it lands in spam. Deliverability is set up before the first send and watched every week after. This reference covers the sending setup, the mailbox providers' rules, volume limits, warmup, monitoring, and when to stop.
+# 冷邮件送达能力
 
-Numbers here come mostly from sending-infrastructure vendors and mailbox providers' own guidelines. Mailbox providers change enforcement without notice, so treat the volume figures as starting points and let your own placement tests decide.
+冷邮件写得再好，进了垃圾箱就毫无用处。送达能力要在第一封邮件发出前搭好，之后每周盯一次。本参考文档涵盖发送基础设施配置、邮箱服务商的规则、量级限制、预热、监控，以及何时收手。
 
-## The rules from Google, Yahoo, and Microsoft
+这里的数字大多来自发送基础设施厂商和邮箱服务商自己的指南。邮箱服务商可能随时收紧执行力度，所以把量级数字当作起点，最终以你自己的到达率测试为准。
 
-| Provider | What it requires | Enforcement |
+## Google、Yahoo、Microsoft 的规则
+
+| 服务商 | 要求 | 执行情况 |
 |----------|------------------|-------------|
-| **Gmail** | SPF and DKIM for everyone; for bulk senders (about 5,000+ messages a day to personal Gmail), also DMARC, alignment, one-click unsubscribe on marketing mail, and spam complaints under 0.3% | Since November 2025, non-compliant mail gets permanent rejections rather than temporary deferrals. Once you're classified as a bulk sender, the status is permanent |
-| **Yahoo** | Matches Google's requirements | Since 2024 |
-| **Microsoft** (Outlook.com, Hotmail, Live) | SPF, DKIM, and DMARC for senders above 5,000 a day | Since May 5, 2025, non-compliant mail is rejected (`550 5.7.515`) |
+| **Gmail** | 所有人都要配 SPF 和 DKIM；批量发件人（每天向个人 Gmail 发送约 5,000 封以上）还要求 DMARC、对齐、营销邮件一键退订，以及垃圾投诉率低于 0.3% | 自 2025 年 11 月起，不合规邮件会被永久拒收，而不是临时延后。一旦被归类为批量发件人，这个状态就是永久的 |
+| **Yahoo** | 与 Google 的要求一致 | 自 2024 年起 |
+| **Microsoft**（Outlook.com、Hotmail、Live） | 日发 5,000 封以上的发件人要求 SPF、DKIM 和 DMARC | 自 2025 年 5 月 5 日起，不合规邮件直接拒收（`550 5.7.515`） |
 
-Google's bulk-sender rules apply to mail sent to personal Gmail accounts, not to Google Workspace business addresses. A cold program under 5,000 a day isn't technically a "bulk sender." Follow the rules anyway: they describe what every filter rewards, and the complaint threshold applies to everyone.
+Google 的批量发件人规则针对发往个人 Gmail 账户的邮件，不包括 Google Workspace 企业地址。日发量低于 5,000 的冷邮件项目在技术上不算"批量发件人"，但规则照样要遵守：它们描述的是每个过滤器都奖励的做法，而且投诉率阈值对所有人都适用。
 
-**Complaint rate:** keep spam complaints under 0.1% and never reach 0.3%. Practitioners report Workspace sending degrading well before 0.3%.
+**投诉率：**把垃圾投诉率控制在 0.1% 以下，永远别碰 0.3%。一线从业者反映，Workspace 的发送质量在远低于 0.3% 时就开始劣化。
 
-## Sending setup
+## 发送基础设施配置
 
-**Never send cold email from your primary domain.** One bad campaign can damage the domain your customers, invoices, and password resets depend on.
+**永远不要用主域名发冷邮件。**一次糟糕的活动可能损害客户收件、发票、密码重置所依赖的那个域名。
 
-1. **Buy secondary domains** that are obviously yours (`getacme.com`, `acmehq.com`, `tryacme.com`). Redirect each to your main site.
-2. **Authenticate every domain:** SPF, DKIM, and DMARC (start at `p=none` with reporting), aligned to the From domain. Add a custom tracking domain only if you track clicks (see Tracking, below).
-3. **Create 2–3 mailboxes per domain**, each a real-looking person with a name, photo, and signature. Never use aliases of a single mailbox; both Google and Microsoft treat that as abuse of their terms.
-4. **Only buy mailboxes from properly licensed tenants.** In late 2025 Google reportedly suspended large numbers of resold Workspace mailboxes built on education, nonprofit, or legacy accounts. Cheap "reseller" inboxes are disposable at best.
-5. **Match the provider to your prospects where you can.** Google-hosted mailboxes for audiences on Google Workspace (most startups and SaaS), Microsoft-hosted for enterprise audiences on Microsoft 365. Vendors report better inbox placement when the two match. Check a prospect's mail host from their MX record.
+1. **购买明显属于你的辅助域名**（`getacme.com`、`acmehq.com`、`tryacme.com`），并将每个域名重定向到主站。
+2. **为每个域名做认证：**SPF、DKIM 和 DMARC（从 `p=none` 加报表起步），与发件人域名对齐。只有要追踪点击时才加自定义追踪域名（见下文 Tracking）。
+3. **每个域名建 2–3 个邮箱**，每个都要像一个真人：有姓名、头像和签名。绝不要用单个邮箱的别名；Google 和 Microsoft 都把这种行为视为违反其服务条款。
+4. **只从正规授权租户购买邮箱。**据报道，2025 年底 Google 封停了大量建立在教育、非营利或旧版账户之上的转售 Workspace 邮箱。廉价的"转售商"收件箱最好也只当一次性用品。
+5. **尽量让邮箱服务商与潜客匹配。**受众在 Google Workspace（多数初创公司和 SaaS）就用 Google 托管的邮箱；企业受众在 Microsoft 365 上就用 Microsoft 托管的。厂商反映两边匹配时收件箱到达率更好。通过潜客的 MX 记录查其邮件托管方。
 
-### Volume math
+### 量级计算
 
-| Setting | Starting point |
+| 配置项 | 起点 |
 |---------|----------------|
-| Sends per mailbox per day | 20–30 (Google-hosted); test lower for Microsoft-hosted, where 2026 operator reports range from single digits to dozens |
-| Mailboxes per domain | 2–3 |
-| Daily volume | Mailboxes × sends per mailbox |
+| 每个邮箱每日发送量 | 20–30 封（Google 托管）；Microsoft 托管的要测更低的量，2026 年运营者报告从个位数到几十封不等 |
+| 每个域名的邮箱数 | 2–3 |
+| 日发总量 | 邮箱数 × 每邮箱发送量 |
 
-Example: 500 sends a day ≈ 20 mailboxes at 25 each ≈ 7–10 domains. Follow-ups count toward the daily volume.
+举例：日发 500 封 ≈ 20 个邮箱各发 25 封 ≈ 7–10 个域名。跟进邮件计入日发总量。
 
-Plan for spares. Keep 10–20% extra domains warmed and idle, so a burned domain can be swapped out without stopping the program.
+预留备用。多养 10–20% 的域名保持预热并闲置，这样某个域名被烧掉时可以换上，项目不停摆。
 
-## Warmup
+## 预热
 
-New mailboxes need 3–4 weeks of ramp before full cold volume:
-- **Weeks 1–2:** warmup only, plus a handful of real emails to people likely to reply.
-- **Weeks 3–4:** start cold sends at 5–10 a day per mailbox and increase gradually.
-- **After that:** keep light warmup running in the background.
+新邮箱需要 3–4 周爬坡期，才能承担完整的冷邮件量：
+- **第 1–2 周：**只做预热，外加少量发给可能回复者的真实邮件。
+- **第 3–4 周：**开始冷发送，每邮箱每天 5–10 封，逐步加量。
+- **之后：**让轻度预热在后台持续运行。
 
-Warmup networks still help new mailboxes, but a mailbox whose only engagement is warmup traffic is a recognizable pattern. Real replies are the strongest reputation signal there is, which is one more reason to write emails people answer.
+预热网络对新邮箱仍有帮助，但一个只有预热流量的邮箱是可识别的模式。真实回复是现有最强的信誉信号，这也是要让邮件值得回复的又一个理由。
 
-## The email itself
+## 邮件本身
 
-- **Plain text.** No images, no HTML templates, no attachments.
-- **No link in the first email,** and at most one link in later ones. Never use link shorteners.
-- **Turn off open tracking.** Apple Mail Privacy Protection makes opens meaningless, and the tracking pixel itself is a spam signal. One large sender dataset found reply rates roughly doubled when open tracking was off. Measure replies instead.
-- **Turn off click tracking** unless you need it, and then only with a custom tracking domain.
-- **Under about 80 words** for the first email.
-- **Vary the copy.** Identical bodies across thousands of sends look like bulk mail. Segment-specific copy and real personalization fix this naturally. Keep spintax as a last resort.
-- **Opt-out line.** A plain-text line ("If this isn't relevant, reply 'no' and I won't follow up") plus your postal address in the signature. CAN-SPAM requires both; see the prospecting skill's compliance reference.
+- **纯文本。**不放图片、不用 HTML 模板、不带附件。
+- **第一封邮件不放链接**，后续邮件至多一个链接。绝不使用短链接。
+- **关闭打开率追踪。**Apple Mail Privacy Protection 让打开数失去意义，而追踪像素本身就是垃圾邮件信号。一份大型发件方数据集显示，关闭打开率追踪后回复率大约翻倍。改为衡量回复。
+- **关闭点击追踪**，除非确有需要，且必须搭配自定义追踪域名。
+- 第一封邮件**控制在约 80 词以内**。
+- **文案要有变化。**上千次发送用同一正文，看上去就像批量邮件。分人群写文案和真正的个性化能自然解决这个问题。spintax 只作最后手段。
+- **退订声明。**一行纯文本（"如果内容不相关，回复'no'，我不会再跟进"），并在签名里写上你的通信地址。CAN-SPAM 两者都要求；见 prospecting skill 的合规参考。
 
-## Verify before you send
+## 发送前先验证
 
-Bounces are the fastest way to damage a domain. Keep them under 2% per campaign; under 1% is best in class. A single day with several percent bounces can trigger a review at Google.
+退信是损害域名最快的方式。每场活动退信率控制在 2% 以下；1% 以下是顶尖水平。单日百分之几的退信就可能触发 Google 的审查。
 
-- Verify every list before upload, and re-verify anything older than about a week.
-- Handle catch-all domains with a policy. See the prospecting skill's sourcing and enrichment reference.
-- Pause any campaign automatically when its bounce rate passes 2%.
+- 每份名单上传前先验证，超过约一周的数据重新验证。
+- 对 catch-all 域名要有处理策略。见 prospecting skill 的名单来源与增强参考。
+- 任何活动退信率超过 2% 时自动暂停。
 
-## Monitoring
+## 监控
 
-| Check | How | When |
+| 检查项 | 方式 | 频率 |
 |-------|-----|------|
-| Inbox placement | Seed tests (MailReach, GlockApps, or your sending tool's built-in test) | Before every new campaign and weekly |
-| Domain reputation | Google Postmaster Tools; Microsoft SNDS | Weekly |
-| Bounce rate | Sending tool, per campaign and per mailbox | Daily |
-| Spam complaints | Postmaster Tools; replies containing "spam" or "stop" | Weekly |
-| Blocklists | A blocklist checker for each sending domain | Weekly |
-| Authentication | DMARC aggregate reports | Monthly |
+| 收件箱到达率 | 种子测试（MailReach、GlockApps，或发送工具的内置测试） | 每场新活动前，每周一次 |
+| 域名信誉 | Google Postmaster Tools；Microsoft SNDS | 每周 |
+| 退信率 | 发送工具，按活动和按邮箱 | 每天 |
+| 垃圾投诉 | Postmaster Tools；包含 "spam" 或 "stop" 的回复 | 每周 |
+| 黑名单 | 每个发送域名配一个黑名单检查工具 | 每周 |
+| 认证 | DMARC 聚合报表 | 每月 |
 
-## Stop-loss rules
+## 止损规则
 
-Decide these before launch and enforce them automatically where your tool allows:
+上线前就定好这些规则，工具支持的地方自动执行：
 
-| Trigger | Action |
+| 触发条件 | 动作 |
 |---------|--------|
-| Bounce rate above 2% on a campaign | Pause the campaign and re-verify the list |
-| Inbox placement below ~70% on a mailbox or domain | Pull it from rotation, return it to warmup, investigate |
-| Spam complaints approaching 0.1% | Pause, cut volume, review targeting and copy |
-| Domain appears on a major blocklist | Stop sending from it; delist or retire it |
-| Reply rate under ~1% after 300+ sends | Stop the campaign; the targeting or offer is wrong, and more volume makes it worse |
+| 某场活动退信率超过 2% | 暂停活动，重新验证名单 |
+| 某邮箱或域名收件箱到达率低于约 70% | 移出轮换，退回预热，排查原因 |
+| 垃圾投诉逼近 0.1% | 暂停，砍量，复查定向与文案 |
+| 域名上了主流黑名单 | 停止用它发送；申请移除或弃用 |
+| 发送 300+ 后回复率低于约 1% | 停掉活动；定向或报价有问题，加量只会更糟 |
 
-## Common mistakes
+## 常见错误
 
-- Sending from the primary domain
-- Buying the cheapest reseller mailboxes and losing all of them at once
-- Skipping verification "because the data provider verified it"
-- Leaving open tracking on and optimizing for a number that isn't real
-- Scaling volume to fix a low reply rate
-- Running warmup and cold sends at full volume from day one
+- 用主域名发送
+- 买最便宜的转售商邮箱，然后一夜之间全部失效
+- "数据商已经验证过了"，于是跳过验证
+- 开着打开率追踪，为一个不真实的数字做优化
+- 靠加量解决回复率低
+- 第一天起就满量跑预热和冷发送
 
-## Tools
+## 工具
 
-| Job | Options |
+| 用途 | 可选项 |
 |-----|---------|
-| Sending and mailbox rotation | Instantly, Smartlead, lemlist, EmailBison, Salesforge |
-| Domain and mailbox provisioning | Inframail, Maildoso, Mailforge, Truelist Outbound (managed domains, mailboxes, and a dedicated IP with an enforced ramp), Zapmail, or Google Workspace and Microsoft 365 directly |
-| Placement testing | GlockApps, MailReach, or your sending tool's built-in test (Instantly has one) |
-| Reputation | Google Postmaster Tools, Microsoft SNDS |
-| DMARC monitoring | EasyDMARC, dmarcian, Valimail |
-| List verification | Bouncer, MillionVerifier, NeverBounce, Truelist, ZeroBounce, and others |
+| 发送与邮箱轮换 | Instantly、Smartlead、lemlist、EmailBison、Salesforge |
+| 域名与邮箱开通 | Inframail、Maildoso、Mailforge、Truelist Outbound（托管域名、邮箱，以及带强制爬坡的独立 IP）、Zapmail，或直接用 Google Workspace 和 Microsoft 365 |
+| 到达率测试 | GlockApps、MailReach，或发送工具的内置测试（Instantly 自带） |
+| 信誉 | Google Postmaster Tools、Microsoft SNDS |
+| DMARC 监控 | EasyDMARC、dmarcian、Valimail |
+| 名单验证 | Bouncer、MillionVerifier、NeverBounce、Truelist、ZeroBounce 等 |
 
-Setup guides: [tools registry](https://github.com/coreyhaines31/marketingskills/blob/main/tools/REGISTRY.md).
+配置指南：[tools registry](https://github.com/coreyhaines31/marketingskills/blob/main/tools/REGISTRY.md)。

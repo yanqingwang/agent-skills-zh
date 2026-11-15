@@ -1,98 +1,73 @@
-# Agent-friendly pages: page-level audit reference
+> **中文汉化版** · 上游：[AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) · 原文件：`skills/seo-agentic/references/agent-friendly-pages.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Agents act for people: they search, compare, fill forms and buy. They read a
-page through three channels, and most combine all three:
+# Agent 友好页面：页面级审计参考
 
-1. **Screenshots and a vision model**: visual hierarchy, button prominence,
-   layout. Slow and token-expensive.
-2. **Raw HTML and the DOM**: nesting, IDs, classes, data attributes.
-3. **The accessibility tree**: the browser's semantic summary (roles, names,
-   states). The cleanest signal of the three, and the one vendors agree on.
-   OpenAI's publisher guidance says its browser "uses ARIA tags ... to interpret
-   page structure and interactive elements"; the Lighthouse Agentic Browsing
-   docs call the accessibility tree the agents' primary data model; WebKit's
-   objection to WebMCP argues for using the accessibility tree instead of a
-   parallel tool layer.
+Agent 代替人行事：搜索、比较、填表、下单。它们通过三条通道读取页面，多数 agent 三条并用：
 
-Prefer native elements over ARIA (the W3C first rule of ARIA). ARIA repairs
-custom widgets; it does not replace a real `<button>`.
+1. **截图 + 视觉模型**：视觉层级、按钮显著度、布局。慢且费 token。
+2. **原始 HTML 与 DOM**：嵌套结构、ID、class、data 属性。
+3. **无障碍树（accessibility tree）**：浏览器的语义摘要（role、name、状态）。三者中最干净的信号，也是厂商共识的一条。OpenAI 的发布者指南说其浏览器"使用 ARIA 标签……来理解页面结构和交互元素"；Lighthouse Agentic Browsing 文档把无障碍树称为 agent 的主要数据模型；WebKit 对 WebMCP 的反对意见也主张使用无障碍树，而不是另建一层并行工具层。
 
-**Primary sources:** Google AI optimization guide
-(developers.google.com/search/docs/fundamentals/ai-optimization-guide), the
-web.dev agent-friendly article it links, and Chrome's Lighthouse Agentic
-Browsing docs (developer.chrome.com/docs/lighthouse/agentic-browsing).
+原生元素优先于 ARIA（W3C ARIA 第一原则）。ARIA 是修复自定义控件的，它不能替代真正的 `<button>`。
 
-## Audit checklist
+**一手来源：** Google 的 AI 优化指南（developers.google.com/search/docs/fundamentals/ai-optimization-guide）、其中链接的 web.dev agent-friendly 文章，以及 Chrome 的 Lighthouse Agentic Browsing 文档（developer.chrome.com/docs/lighthouse/agentic-browsing）。
 
-### 1. Use real interactive elements
+## 审计清单
 
-| Pass | Fail |
+### 1. 使用真实的交互元素
+
+| 通过 | 失败 |
 |---|---|
-| `<button>` for actions | `<div onclick="...">` |
-| `<a href="...">` for navigation | `<div onclick="window.location...">` |
-| `<input>` / `<select>` / `<textarea>` | Custom `contenteditable` widgets |
+| 用 `<button>` 做操作 | `<div onclick="...">` |
+| 用 `<a href="...">` 做导航 | `<div onclick="window.location...">` |
+| `<input>` / `<select>` / `<textarea>` | 自定义 `contenteditable` 控件 |
 
-If a real element is impossible, supply `role`, `tabindex="0"`, an accessible
-name, and key handlers for Enter and Space. Custom div widgets often reach the
-accessibility tree with no role, and agents skip them.
+如果真实元素实在用不了，提供 `role`、`tabindex="0"`、可访问名称（accessible name），以及 Enter 和 Space 的按键处理器。自定义 div 控件进入无障碍树时常常没有 role，agent 会直接跳过它们。
 
-### 2. Accessible names and labels
+### 2. 可访问名称与标签
 
-Every input needs a `<label for>`, `aria-label`, or `aria-labelledby`. Every
-icon-only button needs an accessible name. These map to the axe rules
-`label`, `button-name`, `link-name`, `select-name` and `input-button-name`
-inside Lighthouse's `agent-accessibility-tree` audit (full list in
-`references/lighthouse-agentic-category.md`).
+每个输入框都需要 `<label for>`、`aria-label` 或 `aria-labelledby`。每个纯图标按钮都需要可访问名称。这些对应 Lighthouse `agent-accessibility-tree` 审计内的 axe 规则 `label`、`button-name`、`link-name`、`select-name` 和 `input-button-name`（完整列表见 `references/lighthouse-agentic-category.md`）。
 
-### 3. Interactive target size
+### 3. 交互目标尺寸
 
-Visual pipelines drop interactive elements with very small unobscured area.
-WCAG 2.2 AA asks for 24 x 24 CSS pixels (Apple HIG 44 x 44); meeting those
-also clears the agent threshold. Treat anything smaller as a candidate for
-agent invisibility.
+视觉通道会丢弃未遮挡面积极小的交互元素。WCAG 2.2 AA 要求 24 x 24 CSS 像素（Apple HIG 为 44 x 44）；满足这两者也就过了 agent 的门槛。比这更小的，一律视为"对 agent 不可见"的候选。
 
-### 4. No transparent overlays on interactive nodes
+### 4. 交互节点上不要有透明覆盖层
 
-Vision models discard covered nodes. Common offenders:
+视觉模型会丢弃被遮挡的节点。常见肇事者：
 
-- Full-card click handlers laid over every child link.
-- Cookie-consent layers that persist after consent.
-- Modal portals left with `pointer-events: auto` after dismissal.
-- Tracking layers with `position: absolute; inset: 0`.
+- 盖在每个子链接之上的整卡点击处理器。
+- 用户同意后仍残留的 cookie 同意层。
+- 关闭后仍保留 `pointer-events: auto` 的 modal portal。
+- 使用 `position: absolute; inset: 0` 的追踪层。
 
-### 5. Layout stability
+### 5. 布局稳定性
 
-Keep CLS at or under 0.1 (Lighthouse counts it in the Agentic Browsing
-fraction), and keep functionally identical actions in the same place across
-templates. An "Add to cart" button that moves between `/shoes` and `/bags`
-forces screenshot agents to relearn each page.
+CLS 保持在 0.1 或以下（Lighthouse 把它计入 Agentic Browsing 分数），并且让功能相同的操作在各模板中待在同一个位置。一个在 `/shoes` 和 `/bags` 之间换位置的"加入购物车"按钮，会迫使截图类 agent 每页重新学习。
 
-### 6. `cursor: pointer` as a signal
+### 6. `cursor: pointer` 作为信号
 
-Vision models read `cursor: pointer` as "actionable". Keep it on real
-controls and never add it to non-interactive elements.
+视觉模型把 `cursor: pointer` 读作"可操作"。把它留在真实控件上，绝不加到非交互元素上。
 
-### 7. Stable, meaningful selectors
+### 7. 稳定且有含义的选择器
 
-DOM-parsing agents rely on landmarks (`<nav>`, `<main>`, `<article>`,
-`<aside>`), stable `id`s on layout containers, and `data-*` attributes that
-describe purpose. Hashed class names alone tell an agent nothing.
+解析 DOM 的 agent 依赖 landmark（`<nav>`、`<main>`、`<article>`、`<aside>`）、布局容器上稳定的 `id`，以及描述用途的 `data-*` 属性。只有哈希过的 class 名对 agent 什么信息都给不了。
 
-### 8. Failure patterns to flag (practitioner consensus, not vendor-measured)
+### 8. 需要标注的失败模式（从业者共识，非厂商实测）
 
-- Hover-only menus, and infinite scroll with no paginated links.
-- Custom selects and date pickers without the ARIA pattern for their role.
-- Closed shadow DOM and canvas-only interfaces.
-- Consent banners or modals that trap focus or cover controls.
-- CAPTCHAs or bot challenges on content and informational pages.
-- Client-only rendering of primary content (check with
-  `agentic_check.py`, `server-rendered`).
-- Confirmation states that only flash briefly or live in a toast.
+- 仅悬停才出现的菜单，以及没有分页链接的无限滚动。
+- 缺少对应 ARIA 模式的自定义下拉框和日期选择器。
+- 封闭的 shadow DOM 和纯 canvas 界面。
+- 陷阱焦点或遮挡控件的同意横幅或 modal。
+- 内容页和信息页上的 CAPTCHA 或 bot 挑战。
+- 主内容仅在客户端渲染（用 `agentic_check.py` 的 `server-rendered` 检查）。
+- 一闪而过或只存在于 toast 里的确认状态。
 
-No controlled public study links accessibility-tree quality to agent task
-success. Present these as reasoned practice, not measured uplift.
+目前没有受控的公开研究把无障碍树质量与 agent 任务成功率联系起来。把这些当作有推理依据的实践呈现，不要当作实测的提升。
 
-## Tools
+## 工具
 
 ```bash
 # Local 0-100 Agent-UX heuristic (HTML semantics + Chromium accessibility tree)
@@ -105,20 +80,16 @@ success. Present these as reasoned practice, not measured uplift.
 "${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run lighthouse_agentic.py <URL> --json
 ```
 
-The Agent-UX score is a local heuristic. Never present it as the Lighthouse
-Agentic Browsing result, which is a fraction (X of N), not a 0-100 score.
+Agent-UX 分数是本地启发式。绝不要把它当作 Lighthouse Agentic Browsing 结果来呈现，后者是一个分数（X/N），不是 0-100 分。
 
-## Quick manual check
+## 快速人工检查
 
-In DevTools, open the Accessibility pane or the full-page accessibility tree
-and look for:
+在 DevTools 里打开 Accessibility 面板或整页无障碍树，查看：
 
-- Interactive elements exposed as `generic` (broken semantics).
-- Inputs or buttons with no accessible name.
-- A `<div>` with a click handler and no role or tabindex.
+- 被暴露为 `generic` 的交互元素（语义坏了）。
+- 没有可访问名称的输入框或按钮。
+- 有点击处理器但没有 role 或 tabindex 的 `<div>`。
 
-## Last verified
+## 最后核验
 
-2026-09-23 against Lighthouse 13.5.0 source and Chrome's Agentic Browsing
-docs. Recheck when web.dev revises its agent-friendly criteria or Lighthouse
-changes the `agent-accessibility-tree` rule set.
+2026-09-23，对照 Lighthouse 13.5.0 源码与 Chrome 的 Agentic Browsing 文档。当 web.dev 修改 agent-friendly 标准、或 Lighthouse 变更 `agent-accessibility-tree` 规则集时，需要重新核验。

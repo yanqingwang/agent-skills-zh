@@ -1,54 +1,58 @@
-# Swiss Bauhaus — Swiss Bauhaus
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/bw--swiss-bauhaus/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Swiss Bauhaus：瑞士包豪斯
 
-Strict red-black-white three-color geometric grid, classic Swiss/Bauhaus design style.
+## 风格概览
 
-- **Scene**: Design agencies, architectural firms, art exhibitions, brand design
-- **Mood**: Rational, rigorous, classic, restrained
-- **Tone**: Red-black-white three colors
+严格的红黑白三色几何网格，经典瑞士/包豪斯设计风格。
 
-## Color Palette
+- **适用场景**：设计机构、建筑事务所、艺术展览、品牌设计
+- **氛围**：理性、严谨、经典、克制
+- **色调**：红黑白三色
 
-| Name        | Hex    | Usage                        |
-| ----------- | ------ | ---------------------------- |
-| Off-White   | F5F5F5 | Background                   |
-| Bauhaus Red | E63322 | Main blocks, accent color    |
-| Near Black  | 1C1C1C | Blocks, text                 |
-| White       | F5F5F5 | Blocks (matching background) |
+## 配色方案
 
-Strict red/black/white three-color palette, no other colors used.
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 米白 | F5F5F5 | 背景 |
+| 包豪斯红 | E63322 | 主色块、强调色 |
+| 近黑 | 1C1C1C | 色块、文字 |
+| 白色 | F5F5F5 | 色块（与背景同色） |
 
-## Typography
+严格的红/黑/白三色配色，不使用其他颜色。
 
-- Titles: Segoe UI Black
-- Body: Segoe UI
-- Note: Impact font not used (explicitly stated in script comments)
+## 字体排印
 
-## Scene Elements
+- 标题：Segoe UI Black
+- 正文：Segoe UI
+- 说明：未使用 Impact 字体（脚本注释中明确写明）
 
-- blk-a (red rectangle), blk-b (dark rectangle), blk-c (white rectangle) — Main color blocks
-- bar-1 (thin lines) — Grid/divider lines
-- dot-1, dot-2 (small squares) — Geometric punctuation decorations
-- photo-1, photo-2 — Photo elements
-- Uses image assets (design-workshop.jpg, design-abstract.jpg, team1.jpg) — can be ignored when using as style reference
+## 场景元素
 
-## Design Techniques
+- blk-a（红矩形）、blk-b（深矩形）、blk-c（白矩形）：主色块
+- bar-1（细线）：网格/分隔线
+- dot-1、dot-2（小方块）：几何标点装饰
+- photo-1、photo-2：图片元素
+- 使用图片素材（design-workshop.jpg、design-abstract.jpg、team1.jpg）；仅作风格参考时可忽略图片部分
 
-- Classic Swiss/Bauhaus design — strict geometric grid
-- Large color blocks dramatically reorganize on each page: left column → top bar → middle band → bottom fill → full coverage
-- Thin lines (bar) create grid/ruler lines
-- Small squares (dot) as geometric punctuation decorations
-- Text follows strict margin rules (x≥1.6cm, width≤block-2cm)
-- 6 slides
+## 设计技法
 
-## Reference Script
+- 经典瑞士/包豪斯设计：严格几何网格
+- 大色块在每页剧烈重组：左列 → 顶栏 → 中带 → 底部填充 → 全覆盖
+- 细线（bar）构成网格/标尺线
+- 小方块（dot）作几何标点装饰
+- 文字遵循严格的边距规则（x≥1.6cm，宽度≤色块宽-2cm）
+- 6 页幻灯片
 
-Complete build script available in `build.sh`.
-Note: Script uses image resources from assets/ directory, image parts can be ignored when using as style reference.
-**Recommended slides to read for understanding core design techniques**:
+## 参考脚本
 
-- **Slide 1** — Title page, initial geometric layout of blocks + thin line grid
-- **Slide 4** — Major block reorganization, demonstrating dramatic transformation from left column to horizontal bar
-- **Slide 6** — Full block coverage final state, understanding complete transformation sequence
-  No need to read all — skim 2-3 representative slides.
+完整构建脚本见 `build.sh`。
+说明：脚本使用 assets/ 目录下的图片资源，仅作风格参考时可忽略图片部分。
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1**：标题页，色块 + 细线网格的初始几何布局
+- **Slide 4**：色块大重组，演示从左列到横向条带的剧烈变换
+- **Slide 6**：色块全覆盖的最终状态，理解完整变换序列
+  无需全部精读，浏览 2-3 张代表性幻灯片即可。

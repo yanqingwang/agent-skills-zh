@@ -1,55 +1,59 @@
-# Editorial Tri-Tone Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/editorial-tri-tone/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Editorial Tri-Tone 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/editorial-tri-tone/design.md`
-- Preview card: `bold-template-pack/templates/editorial-tri-tone/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/editorial-tri-tone/design.md`
+- 预览卡：`bold-template-pack/templates/editorial-tri-tone/preview.md`
 
-- Slug: `editorial-tri-tone`
-- Tagline: Three-color editorial system: dusty pink, mustard cream, and deep burgundy, set in Bricolage + Instrument Serif.
-- Mood: editorial, warm, intentional, moody
-- Tone: literary, warm, considered, stylish
-- Formality: medium-high
-- Density: medium
-- Scheme: mixed
-- Best for: Anything that should feel like a fashion-magazine spread: editorial pitches, fashion brand decks, lifestyle media, art direction reviews. Equally good for any deck — including tech, research, or business — that wants tri-tone discipline and serif/sans contrast instead of the usual neutrals.
-- Avoid for: Decks that need to read as soft or comforting — the burgundy/pink/cream tri-tone is intentionally high-contrast and styled.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`editorial-tri-tone`
+- Tagline：三色编辑系统：灰粉、芥末米白与深勃艮第酒红，用 Bricolage + Instrument Serif 排出。
+- Mood：editorial、warm、intentional、moody
+- Tone：literary、warm、considered、stylish
+- Formality：medium-high
+- Density：medium
+- Scheme：mixed
+- 适合：一切应当像时尚杂志跨页的内容：编辑提案、时尚品牌演示、生活方式媒体、艺术指导评审。同样适合任何想要三色纪律与衬线/无衬线对比、而非惯常中性色的演示文稿，科技、研究或商业皆可。
+- 避免：需要读起来柔软或抚慰的演示文稿：勃艮第/粉/米白三色刻意追求高对比与造型感。
 
-A literary magazine-meets-annual-report presentation system built on a strict three-color palette — blush pink, golden butter, and deep burgundy wine. Despite having eleven CSS variable names, only three hex values exist in the entire system; every alias is a semantic rename of one of those three. Headlines run Bricolage Grotesque (a variable grotesque with an optical-size axis) at extreme weights and negative letter-spacing. Instrument Serif (italic-cut only) appears as the expressive accent face for chapter numerals, pull-quotes, years, and signatures. JetBrains Mono carries all metadata, labels, and section markers at tight uppercase tracking. The aesthetic is "independent arts publication" — the kind with a colophon, hand-numbered editions, and an editorial desk.
+## 视觉速览
 
-Editorial Tri-Tone is a literary magazine presentation system built on the strictest possible palette: three hex values, eleven CSS variable names. The naming system reveals editorial intent — --pink and --sky point at the same blush; --cream, --butter, --lime, and --terracotta all resolve to the same golden yellow; --burgundy, --navy, --forest, and --ink all collapse to the same deep wine. The aliases exist to communicate the role of the color in context, not to introduce variation.
+一套文学杂志遇上年报的演示系统，建立在严格的三色配色上：腮红粉、金黄奶油与深勃艮第酒红。尽管有十一个 CSS 变量名，整个系统只存在三个 hex 值；每个别名只是三者之一的语义化重命名。标题用 Bricolage Grotesque（带光学尺寸轴的可变怪诞体）以极端字重与负字距呈现。Instrument Serif（仅斜体切）作为富于表现力的点缀字体，用于章节数字、拉引语、年份与署名。JetBrains Mono 以紧凑大写字距承担所有元数据、标签与分节标记。美学是"独立艺术出版物"：带版权页、手工编号版本和编辑桌的那种。
 
-## Preview Ingredients
+Editorial Tri-Tone 是一套文学杂志式演示系统，建立在尽可能严格的三色配色上：三个 hex 值，十一个 CSS 变量名。命名系统透露了编辑意图：--pink 与 --sky 指向同一抹腮红；--cream、--butter、--lime 与 --terracotta 都解析为同一种金黄；--burgundy、--navy、--forest 与 --ink 全部坍缩为同一种深酒红。这些别名的存在是为了传达颜色在语境中的角色，而不是引入变化。
 
-- Palette: pink #F2B6C6; butter #F2D86A; burgundy #7A1F35
-- Typography: Bricolage Grotesque; Instrument Serif; JetBrains Mono
-- Signature move: Three-color palette with semantic aliases: blush pink (#F2B6C6), golden butter (#F2D86A), deep burgundy (#7A1F35).
-- Signature move: Mixed typography: Bricolage Grotesque grotesque for display and body; Instrument Serif for expressive accent numerals, quotes, and years; JetBrains Mono for all labels.
-- Signature move: The em tag within Bricolage Grotesque headlines always triggers a switch to Instrument Serif italic — the system's primary typographic mix.
-- Signature move: Pills (border-radius 999px) are the universal tag component; used at three different sizes across cover, chart legend, and closer.
-- Signature move: Value cards have a generous 28px border-radius — soft, rounded, not brutalist.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：pink #F2B6C6; butter #F2D86A; burgundy #7A1F35
+- Typography：Bricolage Grotesque; Instrument Serif; JetBrains Mono
+- Signature move：带语义别名的三色配色：腮红粉（#F2B6C6）、金黄奶油（#F2D86A）、深勃艮第（#7A1F35）。
+- Signature move：混搭排印：Bricolage Grotesque 怪诞体负责展示与正文；Instrument Serif 负责富表现力的点缀数字、引语与年份；JetBrains Mono 负责所有标签。
+- Signature move：Bricolage Grotesque 标题内的 em 标签总会切换为 Instrument Serif 斜体：这是系统的首要排印混搭。
+- Signature move：胶囊形（border-radius 999px）是通用标签组件，在封面、图表图例与收尾页使用三种不同尺寸。
+- Signature move：数值卡片有 28px 的慷慨圆角：柔和圆润，不走粗野主义。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

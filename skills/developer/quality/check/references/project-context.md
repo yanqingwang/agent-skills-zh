@@ -1,28 +1,32 @@
-# Project Review Context Template
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/check/references/project-context.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this template to compress repository context before running Waza `/check`. The context must come from public project files, the diff, CI configuration, or explicit user instructions. Do not depend on private machine paths or unpublished project instructions.
+# 项目审查上下文模板
 
-## What Belongs In Project Context
+运行 Waza `/check` 之前，用本模板压缩仓库上下文。上下文必须来自公开项目文件、diff、CI 配置或明确的用户指示。不得依赖私有机器路径或未公开的项目指令。
 
-The template below names most of it. Also capture:
+## 哪些内容属于项目上下文
 
-- Protected files and directories.
-- Packaging source of truth: whether archives are built from `git ls-files`, explicit allowlists, generated manifests, or source directories.
-- Delivery surfaces: whether generated outputs are tracked, ignored, external release assets, registry uploads, appcasts, installer metadata, checksums, or site/download copy; how they are regenerated, inspected, staged, or uploaded.
-- Runtime dependencies introduced by the diff: Python packages, CLIs, network services, package managers, or platform tools that are not already declared in CI/docs.
-- Domain-specific safety rules.
-- Known CI or test flakes documented by the project and how to distinguish them from real failures.
+下面的模板已覆盖大部分。另外还要记录：
 
-## What Does Not Belong In Public Context
+- 受保护的文件和目录。
+- 打包的事实来源：归档是由 `git ls-files`、显式 allowlist、生成的 manifest 还是源目录构建。
+- 交付面：生成的产物是被追踪、被忽略、外部 release 资产、registry 上传、appcast、安装器元数据，还是站点/下载文案；它们如何再生成、检查、staging 或上传。
+- diff 引入的运行时依赖：CI/文档中尚未声明的 Python 包、CLI、网络服务、包管理器或平台工具。
+- 领域专属的安全规则。
+- 项目已记录的已知 CI 或测试 flaky，以及如何把它们与真实失败区分开。
 
-- Credential paths, private key filenames, passwords, tokens, or secret values.
-- Maintainer-only machine paths.
-- One-off personal preferences that do not affect project behavior.
-- One-off review reports, scorecards, or diagnostic snapshots copied as guidance instead of distilled into stable project rules.
-- Raw memory, chat excerpts, screenshots, private support details, local paths, project-specific commands, issue/PR numbers, release tags, or commit hashes from another project.
-- Full copies of Waza `/check` sections.
+## 哪些内容不属于公开上下文
 
-## Recommended Context Shape
+- 凭证路径、私钥文件名、密码、token 或秘密值。
+- 仅维护者可用的机器路径。
+- 不影响项目行为的一次性个人偏好。
+- 被当作指引复制过来的一次性审查报告、记分卡或诊断快照，而不是蒸馏成稳定的项目规则。
+- 来自其他项目的原始记忆、聊天摘录、截图、私有支持细节、本地路径、项目专属命令、issue/PR 编号、release tag 或 commit 哈希。
+- Waza `/check` 各节的完整复制。
+
+## 推荐的上下文形态
 
 ```markdown
 ## Project Commands
@@ -76,40 +80,40 @@ See `public-reply.md` for posting, edit-or-new-comment, read-back, and closure c
 - Public state to re-read after publishing or closing: `<registry/release/issue URL or command>`.
 ```
 
-Keep this context brief. It should guide the review, not replace the review method.
+保持这份上下文简短。它为审查提供指引，不替代审查方法。
 
-## Release Gate 2.0 Matrix
+## Release Gate 2.0 矩阵
 
-Fill this before claiming a change is release-ready. Use "n/a" only when the project clearly has no such surface.
+声称改动可以发布之前，先填完这张表。只有当项目确实没有对应面时才写 "n/a"。
 
-| Surface | Evidence |
+| 面 | 证据 |
 |---|---|
-| Review base | Base branch, latest tag, and commit range reviewed |
-| Worktree state | Dirty, staged, and untracked files accounted for |
-| Remote state | `origin/main` or release branch sync checked |
-| Version fields | Manifest, app config, changelog, appcast, and lockfile versions aligned |
-| Distribution lane | Preview, beta, nightly, stable, registry, or app-store lane named, with unrelated lanes left untouched |
-| Runtime dependencies | Newly introduced Python packages, CLIs, package managers, and network tools declared and available in CI |
-| Generated artifacts | Tracked archives, ignored dist outputs, bundled/minified files, appcasts, installer metadata, checksums, and site/download copy regenerated or proven not needed |
-| Package/archive contents | Built package inspected for required files, newly introduced helpers/references, and missing extras |
-| Installed runtime | Package, skill, plugin, CLI, or marketplace install exercised from a clean environment when the diff changes installable surfaces |
-| Release assets | GitHub release, appcast, download archive, checksum, or installer assets downloaded or read back and verified beyond page text or file size |
-| Registry/appcast | npm/crates/Homebrew/appcast/App Store or equivalent state re-read after publish |
-| CI status | Latest required checks passed or blocker named |
-| Issue/PR state | Target issue or PR re-read before commenting, closing, merging, or saying shipped |
+| Review base | 已审查的基线分支、最新 tag 和 commit 范围 |
+| Worktree state | 脏文件、暂存文件和 untracked 文件都有交代 |
+| Remote state | 已核对 `origin/main` 或发布分支的同步 |
+| Version fields | manifest、应用配置、changelog、appcast 和 lockfile 的版本对齐 |
+| Distribution lane | 指明了 preview、beta、nightly、stable、registry 或应用商店通道，无关通道未被触碰 |
+| Runtime dependencies | 新引入的 Python 包、CLI、包管理器和网络工具已声明且在 CI 中可用 |
+| Generated artifacts | 被追踪的归档、被忽略的 dist 输出、bundle/压缩文件、appcast、安装器元数据、checksum、站点/下载文案已再生成，或证明不再需要 |
+| Package/archive contents | 检查了构建包中的必需文件、新引入的 helper/引用，以及缺失的 extras |
+| Installed runtime | 当 diff 改动可安装面时，在干净环境中实际执行了包、skill、插件、CLI 或 marketplace 安装 |
+| Release assets | GitHub release、appcast、下载归档、checksum 或安装器资产已下载或读回，验证超出页面文字或文件大小 |
+| Registry/appcast | 发布后重新读取了 npm/crates/Homebrew/appcast/App Store 或等价状态 |
+| CI status | 最新必需检查通过，或点名了阻塞项 |
+| Issue/PR state | 评论、关闭、合并或宣布发布之前重新读取了目标 issue 或 PR |
 
-## Safety Sink Review
+## 安全敏感汇点（sink）审查
 
-Any diff that touches one of these sinks needs explicit validation and rollback thinking:
+任何触碰以下汇点的 diff 都需要明确的验证和回滚思考：
 
-- Deleting, moving, or overwriting user files, caches, history, preferences, or generated outputs.
-- Building shell, AppleScript, SQL, URL, or filesystem paths from user input.
-- Changing cwd handling, symlink resolution, path traversal guards, sandbox permissions, approval checks, or auth prompts.
-- Changing signing, notarization, appcast, update, license, payment, or release asset generation.
-- Changing CI workflows, release or publish scripts, installers, or anything that runs with elevated privilege.
+- 删除、移动或覆盖用户文件、缓存、历史记录、偏好设置或生成产物。
+- 从用户输入构建 shell、AppleScript、SQL、URL 或文件系统路径。
+- 改变 cwd 处理、symlink 解析、路径穿越防护、沙箱权限、审批检查或鉴权提示。
+- 改变签名、公证、appcast、更新、许可、支付或 release 资产生成。
+- 改变 CI workflow、发布或发布脚本、安装器，或任何以提升权限运行的东西。
 
-Review the smallest entry point that reaches the sink, then the downstream call. If validation is missing or rollback is unclear, treat it as a hard stop.
+审查到达汇点的最小入口，再向下看调用链。验证缺失或回滚不清晰时，按硬停处理。
 
-### Risk tiers by path
+### 按路径划分的风险层级
 
-The tier follows the paths a change touches, not its size or author. A one-line change to a workflow, updater, license check, installer, privilege helper, or deletion path gets the project's heaviest gate (its full or native test run, a security pass, and a human maintainer's review), and an agent's, bot's, or automated reviewer's approval never stands in for that human. Extract the project's tiers from its docs; when it keeps a table-driven script that prints the gates for the changed paths, run it and paste its lines. Such a script is advice, not a pass: the gates it names may run where this session cannot prove they ran. Commits and PRs in a tier also state how they were verified and how to revert them (`mode-ship.md` step 4).
+层级跟随改动触碰的路径，不跟随其大小或作者。对 workflow、更新器、许可检查、安装器、提权 helper 或删除路径的一行改动，适用项目最重的门（完整或原生测试运行、一次安全审查、一名人类维护者的审查），agent、bot 或自动化审查者的批准不能顶替那个人。从项目文档提取它的层级；当项目保存了一个表驱动脚本、会为被改路径打印对应的门时，运行它并粘贴其输出行。这样的脚本只是建议，不是通行证：它点名的门可能在本会话无法证明其运行过的地方执行。该层级的 commit 和 PR 还要说明自己如何被验证、如何回滚（`mode-ship.md` 第 4 步）。

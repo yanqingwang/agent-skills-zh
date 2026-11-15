@@ -1,12 +1,16 @@
-# Plain English Alternatives
+> **中文汉化版** · 上游：[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) · 原文件：`skills/copy-editing/references/plain-english-alternatives.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Replace complex or pompous words with plain English alternatives.
+# 平实英语替代词
 
-Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Government Style Manual (2024), plainlanguage.gov
+用平实的英文词替换复杂或浮夸的词。
+
+来源：Plain English Campaign《A-Z of Alternative Words》(2001)、Australian Government Style Manual (2024)、plainlanguage.gov
 
 ---
 
-## Contents
+## 目录
 - A
 - B
 - C
@@ -22,11 +26,11 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 - S
 - T-U
 - V-Z
-- Phrases to Remove Entirely
+- 应整体删除的短语
 
 ## A
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | (an) absence of | no, none |
 | abundance | enough, plenty, many |
@@ -62,7 +66,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## B
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | belated | late |
 | beneficial | helpful, useful |
@@ -73,7 +77,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## C
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | calculate | work out |
 | cease | stop, end |
@@ -100,7 +104,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## D
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | deduct | take off |
 | deem | treat as, consider |
@@ -125,7 +129,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## E
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | economical | cheap, good value |
 | eligible | allowed, qualified |
@@ -152,7 +156,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## F
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | fabricate | make |
 | facilitate | help, make possible |
@@ -170,7 +174,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## G-H
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | generate | produce, create |
 | henceforth | from now on |
@@ -180,7 +184,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## I
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | if and when | if, when |
 | illustrate | show |
@@ -213,7 +217,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## L-M
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | (a) large number of | many |
 | liaise with | work with, talk to |
@@ -229,7 +233,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## N-O
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | negligible | small |
 | nevertheless | but, however |
@@ -255,7 +259,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## P
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | partially | partly |
 | participate | take part |
@@ -288,7 +292,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## R
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | reconsider | think again |
 | reduction | cut |
@@ -312,7 +316,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## S
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | scrutinise | examine, check |
 | select | choose |
@@ -333,7 +337,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## T-U
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | terminate | end, stop |
 | thereafter | then |
@@ -351,7 +355,7 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ## V-Z
 
-| Complex | Plain Alternative |
+| 复杂措辞 | 平实替代 |
 |---------|-------------------|
 | variation | change |
 | virtually | almost |
@@ -367,9 +371,9 @@ Source: Plain English Campaign A-Z of Alternative Words (2001), Australian Gover
 
 ---
 
-## Phrases to Remove Entirely
+## 应整体删除的短语
 
-These phrases often add nothing. Delete them:
+这些短语往往不添加任何信息。删掉它们：
 
 - a total of
 - absolutely
@@ -379,9 +383,9 @@ These phrases often add nothing. Delete them:
 - at the end of the day
 - at this moment in time
 - basically
-- currently (when "now" or nothing works)
-- I am of the opinion that (use: I think)
-- in due course (use: soon, or say when)
+- currently（当换成 "now" 或直接省略也说得通时）
+- I am of the opinion that（用：I think）
+- in due course（用：soon，或写明具体时间）
 - in the final analysis
 - it should be understood
 - last but not least

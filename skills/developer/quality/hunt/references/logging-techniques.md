@@ -1,16 +1,20 @@
-# Logging Techniques for Debugging
+> **中文汉化版** · 上游：[tw93/Waza](https://github.com/tw93/Waza) · 原文件：`skills/hunt/references/logging-techniques.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Every log answers a yes/no question about a hypothesis: "if this prints X before Y, hypothesis A holds; otherwise A is dead." A log that cannot rule a hypothesis in or out is noise.
+# 调试用的日志技术
 
-## Discriminating Content
+每条日志都在回答一个关于假设的"是/否"问题："如果 X 在 Y 之前打印，假设 A 成立；否则 A 出局。"不能证实或证伪任何假设的日志就是噪音。
 
-Log what discriminates between hypotheses: ordering (sequence number or timestamp), input identity key, branch taken, old-vs-new state transition, and error code plus context. Place logs at boundaries where behavior should be predictable (handler entry/exit, cache hit or miss with key, state setter with old value and caller, async callback entry, external API result) rather than in tight-loop interiors. Never log credentials, PII, or full request/response bodies.
+## 有区分力的内容
 
-For race conditions, flicker, or intermittent failures, also capture event identity, monotonic ordering, start and end (not just "it ran"), and thread/task/queue identity. If adding a log changes the behavior, that is evidence of a timing, lifecycle, or concurrency problem, not "logging side effects" to dismiss.
+记录能区分假设的内容：顺序（序号或时间戳）、输入标识键、走了哪个分支、新旧状态迁移、错误码加上下文。日志放在行为应当可预测的边界处（处理器入口/出口、带键的缓存命中或未命中、带旧值与调用方的状态设置器、异步回调入口、外部 API 结果），而不是紧凑循环内部。绝不记录凭证、PII 或完整请求/响应体。
 
-## Runner-Only Failures
+对竞态、闪烁或间歇性失败，还要捕获事件身份、单调顺序、开始与结束（不只是"跑过了"），以及线程/任务/队列身份。如果加一条日志就改变了行为，那是时序、生命周期或并发问题的证据，不是可以挥手带过的"日志副作用"。
 
-When a script fails only under a specific runner (make target, CI job, test harness, cron) but passes standalone, do not edit the script with debug hacks you might forget to remove. Inject tracing from the outside via the environment the runner already passes through:
+## 只在运行器下失败
+
+当脚本只在特定运行器下失败（make target、CI job、测试 harness、cron）而单独运行通过时，不要用可能忘记移除的调试 hack 改脚本。从外部经由运行器本就传递的环境注入追踪：
 
 ```bash
 # xtrace-env.sh: sourced by every non-interactive bash via BASH_ENV
@@ -20,24 +24,24 @@ export PS4='+ [$0:$LINENO] '
 set -x
 ```
 
-Run the failing pipeline as `BASH_ENV=/path/to/xtrace-env.sh make test` (or the runner's equivalent). Every bash the runner spawns appends `file:line`-stamped traces to one persistent file, surviving the runner's temp-dir cleanup, so the exact dying line is on record even when the failure needs the full pipeline to reproduce. Guard the injection with a sentinel variable if nested shells would re-source it, and delete the env file when done.
+以 `BASH_ENV=/path/to/xtrace-env.sh make test`（或运行器的等价方式）运行失败的流水线。运行器派生的每个 bash 都把带 `file:line` 戳记的追踪追加到同一个持久文件，能挺过运行器的临时目录清理；即使失败需要完整流水线才能复现，出问题的那一行也有记录。如果嵌套 shell 会重复 source 该文件，用哨兵变量保护注入；结束后删除该 env 文件。
 
-## Native App Freeze Mode
+## 原生应用卡死模式
 
-Activate when a desktop or mobile native app reports beachball, not responding, tab-switch freeze, first-open lag, idle wake stall, overlay lockup, or a screenshot shows a frozen app.
+桌面或移动原生应用报告卡死彩球（beachball）、无响应、切换标签冻结、首次打开迟滞、空闲唤醒停滞、遮罩锁死，或截图显示应用冻结时激活。
 
-Evidence to collect before changing code:
+改代码之前要收集的证据：
 
-1. Exact user path and version: first launch versus warm launch, the tab or window transition, idle duration, permissions, display count, and any setting that makes the freeze disappear.
-2. Runtime capture while frozen: `sample <process>`, recent app logs, CPU and memory footprint, thread count, and whether the main thread is blocked, spinning, or allocating.
-3. First-frame surface: view body work, first `.task`, synchronous icon or metadata lookup, filesystem scans, URL parent walks, notification callbacks, and app/window wake handlers.
-4. Blast search after the fix: grep the same API shape across the repo, especially path parent walks, synchronous icon loading, metadata reads in render paths, and callbacks that run on the main thread.
+1. 精确的用户路径与版本：首次启动对比热启动、标签或窗口切换、空闲时长、权限、显示器数量，以及任何能让冻结消失的设置。
+2. 冻结时的运行时捕获：`sample <process>`、最近的应用日志、CPU 与内存占用、线程数，以及主线程是被阻塞、空转还是在分配内存。
+3. 首帧表面：view body 工作、第一个 `.task`、同步的图标或元数据查找、文件系统扫描、URL 父目录遍历、通知回调与应用/窗口唤醒处理器。
+4. 修复后的波及搜索：grep 整个仓库中相同的 API 形态，尤其是路径父目录遍历、同步图标加载、渲染路径中的元数据读取，以及在主线程上运行的回调。
 
-Common native freeze traps:
+常见的原生冻结陷阱：
 
-- Launch, terminate, permission, audio, display, or workspace notifications doing path walks, icon lookup, filesystem scans, or process enumeration on the main thread.
-- First paint hydrating a full app list, directory tree, media thumbnail set, or system status table before showing an interactive shell.
-- An input-lock or full-screen overlay without a guaranteed teardown path for Escape, app deactivation, permission denial, process termination, and window close.
-- Timer or sampler work that survives hidden windows, long idle periods, sleep/wake, or app reactivation.
+- 启动、终止、权限、音频、显示器或工作区通知在主线程上做路径遍历、图标查找、文件系统扫描或进程枚举。
+- 首帧绘制就把完整应用列表、目录树、媒体缩略图集或系统状态表灌满，然后才显示可交互外壳。
+- 输入锁或全屏遮罩没有保证的拆除路径，覆盖 Escape、应用失活、权限拒绝、进程终止与窗口关闭。
+- 定时器或采样工作在窗口隐藏、长时间空闲、睡眠/唤醒或应用重新激活后仍在持续。
 
-Compile-only and source-only checks are insufficient for this mode. The outcome must include the runtime capture, the root-cause frame or state transition, the focused regression guard, and any sibling matches that were fixed or explicitly left safe.
+仅编译或仅源码检查对本模式不够。结果必须包含运行时捕获、根因栈帧或状态迁移、针对性的回归守卫，以及已修复或明确确认安全的同类匹配。

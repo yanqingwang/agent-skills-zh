@@ -1,19 +1,23 @@
-# Persuade and Experience
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/mode-persuade.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-`impeccable concept-seed --mode persuade` (or `experience`) prints the two sections below as its MODE RULES block. On these surfaces the design is what the visitor judges, so the world may own and structure the page.
+# Persuade 与 Experience
 
-## Directions
+`impeccable concept-seed --mode persuade`（或 `experience`）把下面两节作为它的 MODE RULES 块打印。在这些界面上，设计就是访客评判的对象，所以世界可以拥有页面并为它定结构。
 
-When a catalog world's source is itself an interface language, the surface may carry its native grammar across navigation, content, controls, and states, within the platform conventions a native app keeps.
+## 方向
 
-For **Persuade**, the opening must make the offer intelligible and desirable, expose a clear action, and demonstrate something only this product can prove. The action is the one the category's visitors came to take, in its working form: an airline's route-and-dates search, a clinic's open appointment slots, a store's add to cart. A decorative link pointing at it elsewhere does not count. Conversion lives inside the form's own vocabulary: a hook that lands in one line, a visible primary action, a legible reading order. A committed form that hides the offer or the action has not finished translating. For **Experience**, the work itself leads from the first viewport.
+目录世界的来源本身就是一门界面语言时，界面可以在导航、内容、控件与状态上携带这门语言的母语语法，前提是遵守原生应用保留的平台惯例。
 
-## Comps
+对 **Persuade** 而言，开篇必须让报价可理解、可渴望，亮出一个清楚的动作，并演示一件只有这个产品能证明的事。动作是该品类访客本来就要做的那一个，且是其可用形态：航空公司的航线加日期搜索、诊所的空余号源、商店的加入购物车。别处一个指向它的装饰性链接不算数。转化活在形态自己的词汇里：一句就能落地的钩子、一个看得见的主行动、一条读得清的阅读顺序。一个贯彻了形态却藏住报价或动作的界面，还没译完。对 **Experience** 而言，作品本身从首视口起领跑。
 
-The world may be the carrier of the page, never a picture of it: a facade, a shutter or a book can be what the page is built on, while a viewport painted whole as a facade, a book cover or a travel poster, with no working parts in it, is a picture of the world, not its website. Material coverage is wanted: the world's material is the ground and the major surfaces, its type sets the headlines, and a world reduced to an accent on a neutral template is the category default with a sticker on it. Coverage is not performance: how many regions act out the concept is limited by the depth rule in visualize.md, and the rest stay in the world's material without performing it. Both ends erase the direction: the painted poster, and the generic product page (a headline over subcopy and a button, a row of equal cards below). The dealt composition sets the skeleton, and the compositions you write for comps two and three answer to the same test: a split hero (copy on one side, the product on the other, a badge row under it) or a centred headline over a row of cards is the template whatever world paints it.
+## 设计稿
 
-The world carries the page's parts and never absorbs them, so wherever it puts one, the page still works as a page: navigation set into a facade reads as links, copy on a shutter as set text a visitor reads, an action on a door plaque as plainly clickable, text reads against whatever sits behind it, the sections keep a steady vertical rhythm, the primary action is unmistakable, and the section below starts as a section rather than more painting. Fix a poster by making its parts work where the world put them, never by moving them into a standard layout on the world's colour: a cover that becomes copy beside a device on marigold has lost the cover.
+世界可以是页面的载体，绝不是页面的画像：一整面门脸、一块窗板或一本书可以就是页面的基座；而把整个视口画成门脸、书封或旅行海报、里面没有一个能动的部件，那是世界的画像，不是它的网站。要的是材质覆盖：世界的材质就是底面与主要表面，它的字体排标题；一个被缩成中性模板上一个强调色的世界，就是品类默认加一张贴纸。覆盖不是表演：多少个区域演绎概念，由 visualize.md 的深度规则限定，其余的待在世界材质里，不做表演。两端都会抹掉方向：画出来的海报，和千篇一律的产品页（一行副文案上一个标题加一个按钮，下面一排等宽卡片）。发到你手里的构图定骨架，你为第二、三张设计稿写的构图要过同一道测试：分栏 hero（一边文案，另一边产品，下面一排徽章），或居中标题压一排卡片，无论哪个世界来画，都是模板。
 
-When the world is an object, the page is that one object seen once, at one scale and from one point of view, and the object keeps its real form: a book opens to two pages on one gutter, never a third panel, and a spine that carries the navigation belongs to the book on the page, never a second book beside it. More content goes on the object's own surfaces or on the next spread below, never on extra copies or impossible folds.
+世界承载页面的部件，绝不吞掉它们，所以无论它把部件放在哪，页面仍作为页面工作：嵌进门脸的导航读起来是链接，窗板上的文案读起来是访客要读的排定文字，门牌上的动作一眼可点，文字在其背后的任何东西上都读得清，各小节保持稳定的纵向节奏，主行动毫无疑问，下方的小节以小节开场而不是更多的画。修海报的办法是让部件在世界放置它们的地方工作起来，绝不是把它们搬进世界配色下的标准版式：封面上万寿菊底色旁变成文案的那个封面，已经失去了封面。
 
-Comps two and three each go further than the first, never cleaner: a bolder use of the same world, where the world's material carries more of the page's structure (still one dominant move, per the depth rule), a larger or stranger focal move, or a composition the category would not attempt.
+世界是一个物件时，页面就是那个物件被看一次的样子，一个尺度、一个视角，物件保持它真实的形式：书摊开在一条书沟上的两页，绝不出第三块板；承载导航的书脊属于页面上的那本书，绝不是旁边第二本。更多内容放在物件自己的表面上，或下方下一个跨页上，绝不放在多出来的副本或不可能的折叠上。
+
+第二、三张设计稿各比第一张更进一步，绝不是更干净：同一世界更大胆的用法，让世界的材质承载更多页面结构（仍是一次主导动作，按深度规则来），一个更大或更怪的焦点动作，或一种该品类不敢尝试的构图。

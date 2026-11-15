@@ -12,11 +12,15 @@ photo: muted
 pictured: Catalogue, Settled hero
 ---
 
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/themes/ink.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
+
 # Ink
 
-A notice printed in plain black: white paper, a black with no hue, Epilogue at 700 for the head and 400 for everything you read, hairline rules, and one teal that means in or open. Its photographs show the things on the shelves, in daylight with the colour turned down. It feels competent, local and kind, the way a well-run community desk does. It is not a cold corporate monochrome and not a warm cream editorial page.
+一张纯黑印刷的告示：白纸、无色相的黑，Epilogue 700 作标题、400 作一切阅读文字，发丝线，外加一个表示"在库/开放"的青绿。照片拍摄架上的物品，日光下压低色彩。它干练、本地、友善，像一个运转良好的社区服务台。它不是冷峻的企业单色页，也不是温暖的奶油色编辑页。
 
-## Tokens
+## Token（设计令牌）
 
 ```css
 :root {
@@ -33,58 +37,58 @@ A notice printed in plain black: white paper, a black with no hue, Epilogue at 7
 }
 ```
 
-Two colourways, both light, stated in the stamp (`ink: paper` or `ink: board`).
+两种配色，都是浅色，写入 stamp（印记）：`ink: paper` 或 `ink: board`。
 
-| Colourway | Ground and teal |
+| 配色 | 底色与青绿 |
 | --- | --- |
-| `paper` (default) | the block above: white, hueless black, teal at 50% |
-| `board` | notice-board yellow `oklch(93% 0.10 95)` with rules at `oklch(84% 0.10 92)`, ink `oklch(20% 0.02 80)`, teal deepened to `oklch(46% 0.078 190)`; wells and tags turn white |
+| `paper`（默认） | 上面的代码块：白、无色相的黑、50% 的青绿 |
+| `board` | 公告板黄 `oklch(93% 0.10 95)`，横线用 `oklch(84% 0.10 92)`，墨色 `oklch(20% 0.02 80)`，青绿加深为 `oklch(46% 0.078 190)`；内嵌面板与标记转为白色 |
 
-## Type
+## 字体（Type）
 
-- **Display:** Epilogue 700, `--tracking-display`, line-height 1.0 at hero size and 1.05 below, sentence case, roman; a figure (a count, a price, an hour) takes the same setting, a step larger than the head beside it.
-- **Body:** Epilogue 400 at 16 to 17px, line-height 1.55, in `--color-ink-2` (muted greys tire on white); the name in a row, links and tags at 600.
-- **Labels, captions, table heads, meta:** Epilogue 400 a step smaller, sentence case, untracked; never mono.
-- **Outlier:** IBM Plex Mono only inside code and on figures that compare in a column (loan counts, a card number, times on a rota). Large figures and prices are Epilogue 700 in ink; the teal marks only what is in or open.
+- **展示字体：**Epilogue 700，`--tracking-display`，Hero 字号行高 1.0、以下 1.05，句首大写，正体；数字（计数、价格、钟点）用同样设置，比旁边的标题大一档。
+- **正文：**Epilogue 400，16 至 17px，行高 1.55，用 `--color-ink-2`（白底上灰字容易疲劳）；行内名称、链接与标记用 600。
+- **标签、图注、表头、元信息：**Epilogue 400，小一号，句首大写，不加字距；绝不用等宽字体。
+- **Outlier 字体：**IBM Plex Mono 只用于代码和纵向比较的数字（借出次数、证卡号、值班时刻）。大数字与价格用 Epilogue 700 的墨色；青绿只标记在库或开放。
 
-## Surfaces
+## 表面（Surfaces）
 
-- Rules: a list or a table opens on a 1px `--color-ink` rule and continues on `--color-rule` hairlines between its rows; `--color-rule-2` parts quieter rows.
-- Radius 12px on wells and photographs, 10px on controls and inputs, pills on tags.
-- Flat paper: a well is `--color-paper-2` with a 1px `--color-rule` edge; `--shadow-card` sits only under something that floats over the page (a menu, a dialog), never under a surface at rest.
-- Bands: a `--color-paper-2` band or an ink band with paper text. Two a page at most; never a teal field.
-- Photographs: the things and the street that shares them, in plain daylight at arm's length: a pegboard of tools, a ladder against a wall, a neighbour carrying something home, seen from behind; no face to the lens, no brand mark to the camera. The colour is turned down (the `photo:` muted) so the teal stays the one colour that means anything; 12px radius, a 1px `--color-rule` hairline, no shadow. A thing's name and its state tag sit under its picture, never on it.
-- No texture.
+- 横线：列表或表格以 1px 的 `--color-ink` 起头，行间续用 `--color-rule` 发丝线；更安静的行用 `--color-rule-2` 分隔。
+- 内嵌面板与照片圆角 12px，控件与输入框 10px，标记用胶囊。
+- 平坦纸面：内嵌面板是 `--color-paper-2` 加 1px `--color-rule` 边缘；`--shadow-card` 只允许浮在页面之上的东西使用（菜单、对话框），静止的表面绝不使用。
+- 色带：`--color-paper-2` 色带，或墨色色带配纸色文字。每页至多两条；绝无青绿色场。
+- 照片：物品与共享它们的街道，平实日光、臂距拍摄：挂满工具的洞洞板、靠墙的梯子、抱着东西回家的邻居，只拍背影；没有正对镜头的脸，没有正对相机的品牌标。色彩压低（`photo:` 的 muted），青绿因此保持唯一有含义的颜色；12px 圆角，1px `--color-rule` 发丝线，无阴影。物品的名称与状态标记放在照片下方，绝不压在照片上。
+- 无纹理。
 
-## Range
+## 版式（Range）
 
-- **The shelf as a ruled list:** every thing a row under the ink rule, its name at 600, one line on what it is, its state pill at the row's end, a filter field that narrows the rows as you type.
-- **Steps as a notice:** how it works as three or four numbered stages across the columns, each numeral in Epilogue 700 at display size over a hairline, the stage that means in carrying the pale teal pill.
-- **A timetable of opening days:** the next dates as rows, the hours in each, the next one inked; the dates come from the clock, never typed in.
-- **Figures in plain black:** a count, a fee and the hours set large in Epilogue 700 on a `--color-paper-2` well, the one that means open in teal.
+- **架子排成划线列表：**每件物品一行，压在墨线之下，名称用 600 字重，一句话说明它是什么，状态胶囊放在行尾，过滤框随输入收窄行数。
+- **步骤排成告示：**使用方法分三四段编号，横跨各列，每个数字用 Epilogue 700 排展示字号、压在发丝线之上，表示"在库"的阶段带浅青绿胶囊。
+- **开放日时刻表：**接下来的日期排成行，各配钟点，最近的一次用墨色标出；日期取自系统时钟，绝不手填。
+- **纯黑大数字：**计数、费用与钟点用 Epilogue 700 排大，放在 `--color-paper-2` 内嵌面板上，表示"开放"的那个用青绿。
 
-## Controls
+## 控件（Controls）
 
-- The pair: an ink-filled button with paper text beside a 1px `--color-rule` bordered button on `--color-paper-2`, both at 10px radius in Epilogue 600.
-- Tags carry state and nothing else: in is pale teal (`--color-accent-soft`) with `--color-accent-soft-ink`, out is outlined in the rule colour, on is ink-filled.
-- Teal means in or open: a tag, a large figure, a link's hover, the focus ring. Links are ink at 600, underlined, teal on hover.
+- 控件对：墨色填充按钮配纸色文字，旁边是 1px `--color-rule` 边框的按钮、底 `--color-paper-2`；两者都 10px 圆角、Epilogue 600。
+- 标记只承载状态，别无他用：在库用浅青绿（`--color-accent-soft`）配 `--color-accent-soft-ink`，已借出用线色描边，使用中用墨色填充。
+- 青绿表示在库或开放：一个标记、一个大数字、链接悬停、焦点环。链接用 600 字重的墨色、带下划线，悬停转青绿。
 
-## Motion
+## 动效（Motion）
 
-Nothing moves but state: a filter applies as you type, a tag changes state on click, an underline turns teal over `--dur-micro`. No marquee, no reveal, no counter.
+除状态外皆不动：过滤随输入生效，标记点击即切换状态，下划线在 `--dur-micro` 内转青绿。无跑马灯，无显现动效，无计数动画。
 
-## Voice
+## 语气（Voice）
 
-The desk volunteer's: what is in, when it is back, who is on Saturday. Short, kind, exact, never institutional.
+服务台志愿者的话：什么东西在库、何时归还、周六谁值班。短、友善、准确，绝无官腔。
 
-## Do-nots
+## 禁止事项（Do-nots）
 
-- Never a second colour: teal means in, and out is an outline, never red.
-- Never a warm black. The ink has no hue, and the page says so: `waive 22 · ink and greys at zero chroma · a notice board is printed in plain black`.
-- Never a teal field or teal running text; teal is a state, not a surface.
-- Never a resting shadow; the paper stays flat.
+- 绝无第二种颜色：青绿表示在库，借出用描边表示，绝不用红色。
+- 绝不用偏暖的黑。墨色没有色相，页面也这样声明：`waive 22 · ink and greys at zero chroma · a notice board is printed in plain black`。
+- 绝无青绿色场或青绿正文；青绿是状态，不是表面。
+- 绝无静止阴影；纸面保持平坦。
 
-## Build hint
+## 构建提示（Build hint）
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">

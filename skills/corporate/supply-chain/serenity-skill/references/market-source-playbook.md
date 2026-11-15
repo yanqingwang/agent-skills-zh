@@ -1,33 +1,37 @@
-# Market Source Playbook
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/corporate/supply-chain/serenity-skill/references/market-source-playbook.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this file when the market determines which source path matters.
+# 市场信息源手册
 
-For A-share research, start with the company code, reporting year and document type on [CNINFO](https://www.cninfo.com.cn/) or the listing exchange. Verify the issuer, consolidated versus parent-only scope, publication date and reporting period before extracting figures. Check subsequent investor records when product status is the question.
+当市场决定了哪条信息源路径最关键时，使用本文件。
 
-If an official PDF endpoint returns an error page or cannot be read, try the company's IR site or another official disclosure venue, such as HKEX for a dual-listed company. An accessible report reproduction can be used with its provenance labeled and key figures cross-checked against an official source. Record a material retrieval gap rather than relying on the search snippet.
+A 股研究从公司代码、报告年度与文档类型入手，在[巨潮资讯网](https://www.cninfo.com.cn/)（CNINFO）或上市交易所检索。提取数据前，先核实发行人、合并口径还是母公司口径、发布日期与报告期。若问题关键在产品进展，需查其后的投资者互动记录。
 
-## US
+若官方 PDF 地址返回错误页或无法读取，可改试公司投资者关系（IR）页面或其他官方披露渠道，例如双重上市公司的港交所（HKEX）。可使用一份可访问的报告转载版本，前提是标注其出处，并对照官方来源交叉核对关键数字。宁可如实记录重大检索缺口，也不能依赖搜索摘要。
 
-Primary source path:
+## 美国
 
-- SEC 10-K, 10-Q, 8-K, S-1, S-3, Form 4.
-- Earnings transcripts and investor presentations.
-- Company press releases and product pages.
-- Customer and supplier filings.
-- Standards bodies, patents, conference papers, and trade publications.
+主要信息源路径：
 
-Important checks:
+- SEC 的 10-K、10-Q、8-K、S-1、S-3、Form 4。
+- 业绩电话会记录与投资者演示材料。
+- 公司新闻稿与产品页面。
+- 客户与供应商的申报文件。
+- 标准组织、专利、会议论文与行业刊物。
 
-- shelf registration, ATM, converts, SBC, insider selling;
-- customer concentration;
-- backlog and revenue mix;
-- gross margin and utilization;
-- short interest and options-driven volatility;
-- sell-side estimate gap.
+重要核查项：
 
-## A-shares
+- 储架注册、ATM 增发、可转债、股份支付（SBC）、内部人减持；
+- 客户集中度；
+- 在手订单与收入结构；
+- 毛利率与产能利用率；
+- 空头持仓与期权驱动的波动；
+- 卖方预期差。
 
-Primary source path:
+## A 股
+
+主要信息源路径：
 
 - 年报、半年报、季报、临时公告；
 - 交易所问询函、监管函；
@@ -37,7 +41,7 @@ Primary source path:
 - 专利、标准、行业协会数据；
 - 海关数据、上下游上市公司交叉验证。
 
-Important checks:
+重要核查项：
 
 - 应收、存货、合同负债、经营现金流；
 - 毛利率、产能利用率、在建工程转固；
@@ -46,93 +50,93 @@ Important checks:
 - 政策补贴和订单商业性；
 - 主题炒作后的估值压力。
 
-## Hong Kong
+## 香港
 
-Primary source path:
+主要信息源路径：
 
-- HKEX filings.
-- Annual and interim reports.
-- Placing, subscription, convertible, and connected-transaction announcements.
-- Company presentations.
-- Mainland regulatory documents when the business is China-heavy.
+- HKEX 申报文件。
+- 年报与中报。
+- 配售、认购、可转债与关联交易公告。
+- 公司演示材料。
+- 业务重心在中国内地时，查内地监管文件。
 
-Important checks:
+重要核查项：
 
-- liquidity and spread;
-- refinancing pressure;
-- related-party governance;
-- Stock Connect eligibility;
-- mainland policy exposure;
-- management alignment.
+- 流动性与价差；
+- 再融资压力；
+- 关联方治理；
+- 互联互通（Stock Connect）资格；
+- 内地政策风险敞口；
+- 管理层利益一致性。
 
-## Taiwan
+## 台湾
 
-Primary source path:
+主要信息源路径：
 
-- MOPS filings.
-- Monthly revenue reports.
-- Company IR decks.
-- Customer and supplier cross-checks.
-- Trade publications and conference materials.
+- MOPS 申报文件。
+- 月度营收报告。
+- 公司 IR 演示材料。
+- 客户与供应商交叉验证。
+- 行业刊物与会议材料。
 
-Important checks:
+重要核查项：
 
-- monthly revenue inflection;
-- customer concentration;
-- FX sensitivity;
-- cross-strait/geopolitical risk;
-- capacity and qualification schedule.
+- 月度营收拐点；
+- 客户集中度；
+- 汇率敏感性；
+- 两岸/地缘政治风险；
+- 产能与认证进度。
 
-## Japan
+## 日本
 
-Primary source path:
+主要信息源路径：
 
-- TDnet filings.
-- Earnings materials.
-- Integrated reports.
-- Segment data.
-- Trade journals and industry association materials.
+- TDnet 申报文件。
+- 业绩材料。
+- 综合报告（Integrated reports）。
+- 分部数据。
+- 行业期刊与行业协会材料。
 
-Important checks:
+重要核查项：
 
-- conservative guidance;
-- currency sensitivity;
-- cross-shareholdings and governance reform;
-- low coverage;
-- acquisition optionality.
+- 保守的业绩指引；
+- 汇率敏感性；
+- 交叉持股与治理改革；
+- 分析师覆盖少；
+- 并购带来的期权价值。
 
-## Korea
+## 韩国
 
-Primary source path:
+主要信息源路径：
 
-- DART filings.
-- Export statistics.
-- Company IR materials.
-- Customer ecosystem disclosures.
-- Trade publications.
+- DART 申报文件。
+- 出口统计数据。
+- 公司 IR 材料。
+- 客户生态圈的披露信息。
+- 行业刊物。
 
-Important checks:
+重要核查项：
 
-- large-customer dependence;
-- memory-cycle exposure;
-- FX and geopolitical risk;
-- retail theme volatility;
-- capex cycle timing.
+- 大客户依赖；
+- 存储周期敞口；
+- 汇率与地缘政治风险；
+- 散户题材波动；
+- 资本开支周期节奏。
 
-## Europe
+## 欧洲
 
-Primary source path:
+主要信息源路径：
 
-- local exchange filings;
-- annual reports and ad hoc releases;
-- EU grant/project documents;
-- customer partnership announcements;
-- trade journals and standards bodies.
+- 当地交易所申报文件；
+- 年报与临时公告；
+- 欧盟资助/项目文件；
+- 客户合作公告；
+- 行业期刊与标准组织。
 
-Important checks:
+重要核查项：
 
-- liquidity;
-- translation risk;
-- government grant dependence;
-- acquisition optionality;
-- specialist investor coverage gaps.
+- 流动性；
+- 折算汇率风险；
+- 政府补贴依赖；
+- 并购带来的期权价值；
+- 专业投资者覆盖缺口。

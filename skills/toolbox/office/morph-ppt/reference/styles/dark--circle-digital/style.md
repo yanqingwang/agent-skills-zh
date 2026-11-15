@@ -1,37 +1,41 @@
-# circle-digital — Dark Cool Digital Agency
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--circle-digital/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# circle-digital：暗色酷感数字机构
 
-Near-black background with dark gray cards and neon lime accent color, creating a dark mode digital marketing agency aesthetic.
+## 风格概览
 
-- **Scene**: Digital marketing, creative agencies, tech companies
-- **Mood**: Modern, dark-cool, digital
-- **Color Tone**: Near-black background + dark gray card layers + neon lime accents
+近黑背景配深灰卡片与霓虹青柠强调色，营造深色模式的数字营销机构美感。
 
-## Color Palette
+- **适用场景**：数字营销、创意机构、科技公司
+- **氛围**：现代、暗酷、数字感
+- **色调**：近黑背景 + 深灰卡片层次 + 霓虹青柠点缀
 
-| Name        | Hex    | Usage                               |
-| ----------- | ------ | ----------------------------------- |
-| Near Black  | 0D0E11 | Background                          |
-| Dark Gray 1 | 171A20 | Card bottom layer                   |
-| Dark Gray 2 | 22252E | Card middle layer                   |
-| Dark Gray 3 | 2D3140 | Card top layer                      |
-| Neon Lime   | C4FF00 | Accent color, CTA, decorative lines |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 近黑 | 0D0E11 | 背景 |
+| 深灰 1 | 171A20 | 卡片底层 |
+| 深灰 2 | 22252E | 卡片中层 |
+| 深灰 3 | 2D3140 | 卡片顶层 |
+| 霓虹青柠 | C4FF00 | 强调色、CTA、装饰线 |
 
-- Extensive use of circles (ellipse) as image placeholders and decorative elements, embodying the "circle" theme
-- Multi-layer dark gray cards stacked to create dark mode hierarchy and depth
-- Neon lime as the only bright color, used for CTA buttons, decorative dots, and dividers, creating strong contrast
-- Left vertical decorative bars + numbering system, adding structural sense to the layout
-- roundRect rounded buttons with neon lime fill, highlighting calls to action
+## 设计技法
 
-## Reference Script
+- 大量使用圆形（ellipse）作图片占位与装饰元素，呼应“圆”主题
+- 多层深灰卡片堆叠，构建深色模式的层级与纵深
+- 霓虹青柠是唯一亮色，用于 CTA 按钮、装饰圆点与分隔线，形成强对比
+- 左侧竖向装饰条 + 编号系统，为版面增加结构感
+- roundRect 圆角按钮填霓虹青柠色，突出行动号召
 
-Full build script available in `build.sh`.
-**Recommended slides to read for understanding core design techniques**:
+## 参考脚本
 
-- **Slide 1 (title)** — Circle image placeholder, neon lime CTA button, and left vertical decorative bar
-- **Slide 2 (services)** — Dark gray multi-layer card arrangement and hierarchy construction
-- **Slide 4 (portfolio)** — Application of circle elements in content display
-  No need to read all — skim 2-3 representative slides.
+完整构建脚本见 `build.sh`。
+**建议精读以下幻灯片，理解核心设计技法**：
+
+- **Slide 1 (title)**：圆形图片占位、霓虹青柠 CTA 按钮与左侧竖向装饰条
+- **Slide 2 (services)**：深灰多层卡片的排布与层级构建
+- **Slide 4 (portfolio)**：圆形元素在内容展示中的应用
+  无需全部精读，浏览 2-3 张代表性幻灯片即可。

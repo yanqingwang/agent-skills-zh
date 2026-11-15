@@ -1,94 +1,98 @@
-# Brand Consistency Checklist
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/brand/references/consistency-checklist.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Visual Consistency
+# 品牌一致性检查清单
 
-### Logo
-- [ ] Correct logo version used
-- [ ] Proper clear space maintained
-- [ ] Approved colors only
-- [ ] Legible at all sizes
-- [ ] No unauthorized modifications
+## 视觉一致性
 
-### Colors
-- [ ] Only brand palette colors
-- [ ] Consistent color application
-- [ ] Proper contrast for accessibility
-- [ ] Color ratios maintained
+### 标志
+- [ ] 使用了正确的标志版本
+- [ ] 净空保持得当
+- [ ] 只用已批准的颜色
+- [ ] 所有尺寸下清晰可读
+- [ ] 无未经批准的修改
 
-### Typography
-- [ ] Brand fonts used
-- [ ] Correct weights/styles
-- [ ] Proper hierarchy
-- [ ] Consistent formatting
+### 颜色
+- [ ] 只用品牌色板内的颜色
+- [ ] 颜色用法一致
+- [ ] 对比度满足无障碍要求
+- [ ] 颜色比例保持不变
 
-### Imagery
-- [ ] Matches brand style
-- [ ] Consistent editing/filters
-- [ ] Appropriate subjects
-- [ ] Quality standards met
+### 字体排印
+- [ ] 使用品牌字体
+- [ ] 字重/样式正确
+- [ ] 层级得当
+- [ ] 格式一致
 
-## Voice Consistency
+### 图像
+- [ ] 符合品牌风格
+- [ ] 调色/滤镜一致
+- [ ] 主题恰当
+- [ ] 质量达标
 
-### Tone
-- [ ] Matches brand personality
-- [ ] Appropriate for context
-- [ ] Consistent across channels
-- [ ] No conflicting messages
+## 语气一致性
 
-### Language
-- [ ] Brand terminology used
-- [ ] Consistent capitalization
-- [ ] Proper abbreviations
-- [ ] Jargon level appropriate
+### 语调
+- [ ] 符合品牌个性
+- [ ] 语境恰当
+- [ ] 各渠道一致
+- [ ] 无相互冲突的信息
 
-### Messaging
-- [ ] Aligns with key messages
-- [ ] Value prop clear
-- [ ] Differentiators highlighted
-- [ ] CTAs consistent
+### 用语
+- [ ] 使用品牌术语
+- [ ] 大小写规则一致
+- [ ] 缩写规范
+- [ ] 行话程度合适
 
-## Channel Audit
+### 信息传达
+- [ ] 与关键信息一致
+- [ ] 价值主张清晰
+- [ ] 差异点突出
+- [ ] 行动号召（CTA）一致
 
-### Website
-- [ ] Homepage
-- [ ] Product pages
-- [ ] Blog/content
-- [ ] Footer/navigation
+## 渠道审查
 
-### Social Media
-- [ ] Profile images
-- [ ] Cover images
-- [ ] Bio/about sections
-- [ ] Post templates
+### 网站
+- [ ] 首页
+- [ ] 产品页
+- [ ] 博客/内容
+- [ ] 页脚/导航
 
-### Email
-- [ ] Header/footer
-- [ ] Templates
-- [ ] Signatures
-- [ ] Automated messages
+### 社交媒体
+- [ ] 头像图
+- [ ] 封面图
+- [ ] 简介/关于区块
+- [ ] 帖子模板
 
-### Collateral
-- [ ] Presentations
-- [ ] One-pagers
-- [ ] Business cards
-- [ ] Promotional materials
+### 邮件
+- [ ] 页眉/页脚
+- [ ] 模板
+- [ ] 签名
+- [ ] 自动消息
 
-## Common Issues
+### 物料
+- [ ] 演示文稿
+- [ ] 单页介绍
+- [ ] 名片
+- [ ] 宣传材料
 
-| Issue | Fix |
+## 常见问题
+
+| 问题 | 处理 |
 |-------|-----|
-| Outdated logo | Replace with current version |
-| Off-brand colors | Update to palette |
-| Wrong font | Replace with brand font |
-| Inconsistent voice | Apply style guide |
-| Mixed messaging | Align to framework |
+| 标志过时 | 换成当前版本 |
+| 颜色偏离品牌 | 更新为色板色 |
+| 字体错误 | 换成品牌字体 |
+| 语气不一致 | 按风格指南执行 |
+| 信息混杂 | 向框架对齐 |
 
-## Audit Frequency
+## 审查频率
 
-| Asset Type | Frequency |
+| 资产类型 | 频率 |
 |------------|-----------|
-| Website | Monthly |
-| Social profiles | Quarterly |
-| Email templates | Quarterly |
-| Sales materials | Quarterly |
-| Full brand audit | Annually |
+| 网站 | 每月 |
+| 社交媒体资料 | 每季度 |
+| 邮件模板 | 每季度 |
+| 销售物料 | 每季度 |
+| 全面品牌审查 | 每年 |

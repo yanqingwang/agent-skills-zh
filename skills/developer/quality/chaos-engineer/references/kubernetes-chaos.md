@@ -1,6 +1,10 @@
-# Kubernetes Chaos Engineering
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/chaos-engineer/references/kubernetes-chaos.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Litmus Chaos - ChaosEngine
+# Kubernetes 混沌工程
+
+## Litmus Chaos 的 ChaosEngine
 
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
@@ -71,7 +75,7 @@ spec:
   jobCleanUpPolicy: 'delete'
 ```
 
-## Chaos Mesh Experiments
+## Chaos Mesh 实验
 
 ```yaml
 # Network partition between services
@@ -177,7 +181,7 @@ spec:
   duration: '3m'
 ```
 
-## Node Drain Simulation
+## 节点排水（drain）模拟
 
 ```python
 from kubernetes import client, config
@@ -289,7 +293,7 @@ class K8sNodeChaos:
         print("Node restored")
 ```
 
-## Pod Autoscaling Chaos
+## Pod 自动扩缩容混沌实验
 
 ```yaml
 # Test HPA behavior under load
@@ -337,7 +341,7 @@ spec:
         done
 ```
 
-## Custom Resource Chaos
+## 自定义资源混沌实验
 
 ```python
 # Python script to test custom CRD resilience
@@ -418,15 +422,15 @@ chaos_delete_custom_resources(
 )
 ```
 
-## Quick Reference
+## 快速参考
 
-| Chaos Type | Tool | YAML/Command |
+| 混沌类型 | 工具 | YAML/命令 |
 |------------|------|--------------|
-| Pod delete | Litmus | `pod-delete` experiment |
-| Network latency | Chaos Mesh | `NetworkChaos` with action: delay |
-| Node drain | kubectl/API | `kubectl drain <node>` |
-| CPU stress | Chaos Mesh | `StressChaos` with cpu stressor |
-| DNS failure | Chaos Mesh | `DNSChaos` random/error action |
-| I/O latency | Chaos Mesh | `IOChaos` with latency action |
-| Network partition | Chaos Mesh | `NetworkChaos` partition |
-| Pod failure | Chaos Mesh | `PodChaos` pod-failure |
+| Pod 删除 | Litmus | `pod-delete` experiment |
+| 网络延迟 | Chaos Mesh | `NetworkChaos`，action: delay |
+| 节点排水 | kubectl/API | `kubectl drain <node>` |
+| CPU 压力 | Chaos Mesh | `StressChaos`，cpu stressor |
+| DNS 故障 | Chaos Mesh | `DNSChaos`，random/error action |
+| I/O 延迟 | Chaos Mesh | `IOChaos`，latency action |
+| 网络分区 | Chaos Mesh | `NetworkChaos` partition |
+| Pod 故障 | Chaos Mesh | `PodChaos` pod-failure |

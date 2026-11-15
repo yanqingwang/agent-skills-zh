@@ -1,17 +1,21 @@
-# A/B Test Templates Reference
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/growth/product/ab-testing/references/test-templates.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Templates for planning, documenting, and analyzing experiments.
+# A/B 测试模板参考
+
+用于计划、记录和分析实验的模板。
 
 ## Contents
-- Test Plan Template
-- Results Documentation Template
-- Test Repository Entry Template
-- Quick Test Brief Template
-- Stakeholder Update Template
-- Experiment Prioritization Scorecard
-- Hypothesis Bank Template
+- 测试计划模板
+- 结果记录模板
+- 测试库条目模板
+- 快速测试简报模板
+- 干系人更新模板
+- 实验优先级评分卡
+- 假设库模板
 
-## Test Plan Template
+## 测试计划模板
 
 ```markdown
 # A/B Test: [Name]
@@ -96,7 +100,7 @@ We'll know this is true when [metrics].
 
 ---
 
-## Results Documentation Template
+## 结果记录模板
 
 ```markdown
 # A/B Test Results: [Name]
@@ -193,9 +197,9 @@ We'll know this is true when [metrics].
 
 ---
 
-## Test Repository Entry Template
+## 测试库条目模板
 
-For tracking all tests in a central location:
+用于在统一位置跟踪所有测试：
 
 ```markdown
 | Test ID | Name | Page | Dates | Primary Metric | Result | Lift | Link |
@@ -207,9 +211,9 @@ For tracking all tests in a central location:
 
 ---
 
-## Quick Test Brief Template
+## 快速测试简报模板
 
-For simple tests that don't need full documentation:
+适用于不需要完整文档的简单测试：
 
 ```markdown
 ## [Test Name]
@@ -224,7 +228,7 @@ For simple tests that don't need full documentation:
 
 ---
 
-## Stakeholder Update Template
+## 干系人更新模板
 
 ```markdown
 ## A/B Test Update: [Name]
@@ -247,26 +251,26 @@ For simple tests that don't need full documentation:
 
 ---
 
-## Experiment Prioritization Scorecard
+## 实验优先级评分卡
 
-For deciding which tests to run:
+用于决定先跑哪些测试：
 
-| Factor | Weight | Test A | Test B | Test C |
+| 因素 | 权重 | 测试 A | 测试 B | 测试 C |
 |--------|--------|--------|--------|--------|
-| Potential impact | 30% | | | |
-| Confidence in hypothesis | 25% | | | |
-| Ease of implementation | 20% | | | |
-| Risk if wrong | 15% | | | |
-| Strategic alignment | 10% | | | |
-| **Total** | | | | |
+| 潜在影响 | 30% | | | |
+| 对假设的信心 | 25% | | | |
+| 实现容易度 | 20% | | | |
+| 判断错误的代价 | 15% | | | |
+| 战略契合度 | 10% | | | |
+| **总分** | | | | |
 
-Scoring: 1-5 (5 = best)
+打分：1-5（5 = 最好）
 
 ---
 
-## Hypothesis Bank Template
+## 假设库模板
 
-For collecting test ideas:
+用于收集测试点子：
 
 ```markdown
 | ID | Page/Area | Observation | Hypothesis | Potential Impact | Status |

@@ -1,23 +1,27 @@
-# PubMed Search Guide
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/citation-management/references/pubmed_search.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Comprehensive guide to searching PubMed for biomedical and life sciences literature, including MeSH terms, field tags, advanced search strategies, and E-utilities API usage.
+# PubMed 检索指南
 
-## Overview
+在 PubMed 中检索生物医学与生命科学文献的综合指南，涵盖 MeSH 主题词、字段标识、高级检索策略以及 E-utilities API 的用法。
 
-PubMed is the premier database for biomedical literature:
-- **Coverage**: Biomedical citations, including MEDLINE records and online books
-- **Scope**: Biomedical and life sciences
-- **Sources**: MEDLINE, life science journals, online books
-- **Authority**: Maintained by National Library of Medicine (NLM) / NCBI
-- **Access**: Free, no account required
-- **Updates**: Daily with new citations
-- **Curation**: High-quality metadata, MeSH indexing
+## 概述
 
-## Basic Search
+PubMed 是生物医学文献领域的首要数据库：
+- **覆盖范围**：生物医学引文，包括 MEDLINE 记录和在线图书
+- **学科范围**：生物医学与生命科学
+- **来源**：MEDLINE、生命科学期刊、在线图书
+- **权威性**：由美国国家医学图书馆（NLM）/ NCBI 维护
+- **访问**：免费，无需注册账号
+- **更新**：每日加入新引文
+- **策展**：元数据质量高，有 MeSH 标引
 
-### Simple Keyword Search
+## 基础检索
 
-PubMed automatically maps terms to MeSH and searches multiple fields:
+### 简单关键词检索
+
+PubMed 会自动把检索词映射到 MeSH，并在多个字段中搜索：
 
 ```
 diabetes
@@ -26,15 +30,15 @@ Alzheimer's disease treatment
 cancer immunotherapy
 ```
 
-**Automatic Features**:
-- Automatic MeSH mapping
-- Plural/singular variants
-- Abbreviation expansion
-- Spell checking
+**自动功能**：
+- 自动 MeSH 映射
+- 单复数变体
+- 缩写展开
+- 拼写检查
 
-### Exact Phrase Search
+### 精确短语检索
 
-Use quotation marks for exact phrases:
+用引号检索精确短语：
 
 ```
 "CRISPR-Cas9"
@@ -43,35 +47,35 @@ Use quotation marks for exact phrases:
 "machine learning"
 ```
 
-## MeSH (Medical Subject Headings)
+## MeSH（医学主题词表）
 
-### What is MeSH?
+### 什么是 MeSH？
 
-MeSH is a controlled vocabulary thesaurus for indexing biomedical literature:
-- **Hierarchical structure**: Organized in tree structures
-- **Consistent indexing**: Same concept always tagged the same way
-- **Comprehensive**: Covers diseases, drugs, anatomy, techniques, etc.
-- **Indexing**: NLM assigns MeSH using automated indexing and curation; recent and non-MEDLINE records can lack MeSH
+MeSH 是用于标引生物医学文献的受控叙词表：
+- **层级结构**：按树状结构组织
+- **标引一致**：同一概念始终用同一个主题词标引
+- **覆盖全面**：涵盖疾病、药物、解剖结构、技术方法等
+- **标引机制**：NLM 通过自动标引和人工策展分配 MeSH；较新记录和非 MEDLINE 记录可能没有 MeSH
 
-### Finding MeSH Terms
+### 查找 MeSH 主题词
 
-**MeSH Browser**: https://meshb.nlm.nih.gov/search
+**MeSH 浏览器**：https://meshb.nlm.nih.gov/search
 
-**Example**:
+**示例**：
 ```
 Search: "heart attack"
 MeSH term: "Myocardial Infarction"
 ```
 
-**In PubMed**:
-1. Search with keyword
-2. Open a relevant article record and inspect its MeSH terms when present
-3. Confirm descriptors in the MeSH Browser
-4. Combine descriptors with title/abstract synonyms
+**在 PubMed 中**：
+1. 用关键词检索
+2. 打开一篇相关文献的记录，若带有 MeSH 主题词则查看
+3. 在 MeSH 浏览器中确认叙词
+4. 将叙词与标题/摘要中的同义词组合使用
 
-### Using MeSH in Searches
+### 在检索中使用 MeSH
 
-**Basic MeSH search**:
+**基础 MeSH 检索**：
 ```
 "Diabetes Mellitus"[MeSH]
 "CRISPR-Cas Systems"[MeSH]
@@ -79,72 +83,72 @@ MeSH term: "Myocardial Infarction"
 "Neoplasms"[MeSH]
 ```
 
-**MeSH with subheadings**:
+**带副主题词的 MeSH 检索**：
 ```
 "Diabetes Mellitus/drug therapy"[MeSH]
 "Neoplasms/genetics"[MeSH]
 "Heart Failure/prevention and control"[MeSH]
 ```
 
-**Common subheadings**:
-- `/drug therapy`: Drug treatment
-- `/diagnosis`: Diagnostic aspects
-- `/genetics`: Genetic aspects
-- `/epidemiology`: Occurrence and distribution
-- `/prevention and control`: Prevention methods
-- `/etiology`: Causes
-- `/surgery`: Surgical treatment
-- `/metabolism`: Metabolic aspects
+**常用副主题词**：
+- `/drug therapy`：药物治疗
+- `/diagnosis`：诊断方面
+- `/genetics`：遗传方面
+- `/epidemiology`：发生与分布
+- `/prevention and control`：预防措施
+- `/etiology`：病因
+- `/surgery`：外科治疗
+- `/metabolism`：代谢方面
 
-### MeSH Explosion
+### MeSH 扩展（Explosion）
 
-By default, MeSH searches include narrower terms (explosion):
+默认情况下，MeSH 检索会包含更下位的主题词（即 explosion 扩展）：
 
 ```
 "Neoplasms"[MeSH]
 # Includes: Breast Neoplasms, Lung Neoplasms, etc.
 ```
 
-**Disable explosion** (exact term only):
+**关闭扩展**（只检索该主题词本身）：
 ```
 "Neoplasms"[MeSH:NoExp]
 ```
 
-### MeSH Major Topic
+### MeSH 主要主题词
 
-Search only where MeSH term is a major focus:
+只检索该 MeSH 主题词作为主要焦点的文献：
 
 ```
 "Diabetes Mellitus"[MeSH Major Topic]
 # Only papers where diabetes is main topic
 ```
 
-## Field Tags
+## 字段标识
 
-Field tags specify which part of the record to search.
+字段标识指定在记录的哪个部分中检索。
 
-### Common Field Tags
+### 常用字段标识
 
-**Title and Abstract**:
+**标题与摘要**：
 ```
 cancer[Title]                    # In title only
 treatment[Title/Abstract]        # In title or abstract
 "machine learning"[Title/Abstract]
 ```
 
-**Author**:
+**作者**：
 ```
 "Smith J"[Author]
 "Doudna JA"[Author]
 "Collins FS"[Author]
 ```
 
-**Author - Full Name**:
+**作者（全名）**：
 ```
 "Smith, John"[Full Author Name]
 ```
 
-**Journal**:
+**期刊**：
 ```
 "Nature"[Journal]
 "Science"[Journal]
@@ -152,19 +156,19 @@ treatment[Title/Abstract]        # In title or abstract
 "Nat Commun"[Journal]           # Abbreviated form
 ```
 
-**Publication Date**:
+**出版日期**：
 ```
 2023[Publication Date]
 2020:2024[Publication Date]      # Date range
 2023/01/01:2023/12/31[Publication Date]
 ```
 
-**Date Created**:
+**入库日期**：
 ```
 2023[Date - Create]              # When added to PubMed
 ```
 
-**Publication Type**:
+**文献类型**：
 ```
 "Review"[Publication Type]
 "Clinical Trial"[Publication Type]
@@ -172,28 +176,28 @@ treatment[Title/Abstract]        # In title or abstract
 "Randomized Controlled Trial"[Publication Type]
 ```
 
-**Language**:
+**语言**：
 ```
 English[Language]
 French[Language]
 ```
 
-**DOI**:
+**DOI**：
 ```
 10.1038/nature12345[DOI]
 ```
 
-**PMID (PubMed ID)**:
+**PMID（PubMed ID）**：
 ```
 12345678[PMID]
 ```
 
-**Article ID**:
+**文章 ID**：
 ```
 PMC1234567[PMC]                  # PubMed Central ID
 ```
 
-### Less Common But Useful Tags
+### 较少用但实用的标识
 
 ```
 humans[MeSH Terms]               # Only human studies
@@ -204,13 +208,13 @@ nih[Grant Number]                # NIH-funded research
 "Aged, 80 and over"[MeSH Terms]        # Elderly subjects
 ```
 
-## Boolean Operators
+## 布尔运算符
 
-Combine search terms with Boolean logic.
+用布尔逻辑组合检索词。
 
 ### AND
 
-Both terms must be present (default behavior):
+两个检索词都必须出现（默认行为）：
 
 ```
 diabetes AND treatment
@@ -220,7 +224,7 @@ cancer AND immunotherapy AND "clinical trial"[Publication Type]
 
 ### OR
 
-Either term must be present:
+任一检索词出现即可：
 
 ```
 "heart attack" OR "myocardial infarction"
@@ -228,11 +232,11 @@ diabetes OR "diabetes mellitus"
 CRISPR OR Cas9 OR "gene editing"
 ```
 
-**Use case**: Synonyms and related terms
+**适用场景**：同义词及相关词
 
 ### NOT
 
-Exclude terms:
+排除检索词：
 
 ```
 cancer NOT review
@@ -240,11 +244,11 @@ diabetes NOT animal
 "machine learning" NOT "deep learning"
 ```
 
-**Caution**: May exclude relevant papers that mention both terms.
+**注意**：可能把同时提到两个检索词的相关论文也排除掉。
 
-### Combining Operators
+### 组合运算符
 
-Use parentheses for complex logic:
+用括号表达复杂逻辑：
 
 ```
 (diabetes OR "diabetes mellitus") AND (treatment OR therapy)
@@ -256,29 +260,29 @@ Use parentheses for complex logic:
   AND ("clinical trial"[Publication Type] OR "randomized controlled trial"[Publication Type])
 ```
 
-## Advanced Search Builder
+## 高级检索构建器
 
-**Access**: https://pubmed.ncbi.nlm.nih.gov/advanced/
+**入口**：https://pubmed.ncbi.nlm.nih.gov/advanced/
 
-**Features**:
-- Visual query builder
-- Add multiple query boxes
-- Select field tags from dropdowns
-- Combine with AND/OR/NOT
-- Preview results
-- Shows final query string
-- Save queries
+**功能**：
+- 可视化查询构建器
+- 可添加多个查询框
+- 从下拉菜单选择字段标识
+- 用 AND/OR/NOT 组合
+- 预览结果
+- 显示最终查询字符串
+- 保存查询
 
-**Workflow**:
-1. Add search terms in separate boxes
-2. Select field tags
-3. Choose Boolean operators
-4. Preview results
-5. Refine as needed
-6. Copy final query string
-7. Use in scripts or save
+**操作流程**：
+1. 在不同查询框中输入检索词
+2. 选择字段标识
+3. 选择布尔运算符
+4. 预览结果
+5. 按需调整
+6. 复制最终查询字符串
+7. 用于脚本或保存
 
-**Example built query**:
+**构建好的查询示例**：
 ```
 #1: "Diabetes Mellitus, Type 2"[MeSH]
 #2: "Metformin"[MeSH]
@@ -287,9 +291,9 @@ Use parentheses for complex logic:
 #5: #1 AND #2 AND #3 AND #4
 ```
 
-## Filters and Limits
+## 过滤器与限定条件
 
-### Article Types
+### 文献类型
 
 ```
 "Review"[Publication Type]
@@ -301,7 +305,7 @@ Use parentheses for complex logic:
 "Comparative Study"[Publication Type]
 ```
 
-### Species
+### 物种
 
 ```
 humans[MeSH Terms]
@@ -309,14 +313,14 @@ mice[MeSH Terms]
 rats[MeSH Terms]
 ```
 
-### Sex
+### 性别
 
 ```
 "Female"[MeSH Terms]
 "Male"[MeSH Terms]
 ```
 
-### Age Groups
+### 年龄组
 
 ```
 "Infant"[MeSH Terms]
@@ -327,13 +331,13 @@ rats[MeSH Terms]
 "Aged, 80 and over"[MeSH Terms]
 ```
 
-### Text Availability
+### 全文可得性
 
 ```
 free full text[Filter]           # Free full-text available
 ```
 
-### Journal Categories
+### 期刊类别
 
 ```
 "Journal Article"[Publication Type]
@@ -341,44 +345,41 @@ free full text[Filter]           # Free full-text available
 
 ## E-utilities API
 
-NCBI provides programmatic access via E-utilities (Entrez Programming Utilities).
+NCBI 通过 E-utilities（Entrez Programming Utilities）提供程序化访问。
 
-### Overview
+### 概述
 
-**Base URL**: `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/`
+**基础 URL**：`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/`
 
-**Main Tools**:
-- **ESearch**: Search and retrieve PMIDs
-- **EFetch**: Retrieve full records
-- **ESummary**: Retrieve document summaries
-- **ELink**: Find related articles
-- **EInfo**: Database statistics
+**主要工具**：
+- **ESearch**：检索并返回 PMID
+- **EFetch**：获取完整记录
+- **ESummary**：获取文档摘要
+- **ELink**：查找相关文献
+- **EInfo**：数据库统计信息
 
-**No API key required**, but recommended for:
-- Higher rate limits (10/sec vs 3/sec)
-- Better performance
-- Identify your project
+**无需 API key**，但建议申请，理由如下：
+- 更高的速率限制（10 次/秒 vs 3 次/秒）
+- 更好的性能
+- 标明你的项目身份
 
-**Get API key**: https://www.ncbi.nlm.nih.gov/account/
+**获取 API key**：https://www.ncbi.nlm.nih.gov/account/
 
-### ESearch - Search PubMed
+### ESearch - 检索 PubMed
 
-Retrieve PMIDs for a query. The 10,000 ceiling is a total query window, not
-a per-page limit that cursor/history parameters bypass. Split larger searches
-into disjoint date ranges and deduplicate, or use NCBI EDirect. See
-[NCBI's PubMed update](https://ncbiinsights.ncbi.nlm.nih.gov/2021/10/05/updated-pubmed-api/).
+为查询返回 PMID。10,000 上限是总查询窗口，不是能用 cursor/history 参数绕开的单页限制。更大的检索请拆分成互不重叠的日期区间并去重，或使用 NCBI EDirect。参见 [NCBI 的 PubMed 更新公告](https://ncbiinsights.ncbi.nlm.nih.gov/2021/10/05/updated-pubmed-api/)。
 
-**Endpoint**: `/esearch.fcgi`
+**端点**：`/esearch.fcgi`
 
-**Parameters**:
-- `db`: Database (pubmed)
-- `term`: Search query
-- `retmax`: Maximum results (default 20, max 10000)
-- `retstart`: Zero-based offset within the first 10,000 matches; `retstart + retmax` cannot exceed 10,000
-- `sort`: PubMed values include `relevance`, `pub_date`, `Author`, and `JournalName`
-- `api_key`: Your API key (optional but recommended)
+**参数**：
+- `db`：数据库（pubmed）
+- `term`：检索查询
+- `retmax`：最大结果数（默认 20，上限 10000）
+- `retstart`：前 10,000 条匹配内的零起算偏移；`retstart + retmax` 不能超过 10,000
+- `sort`：PubMed 取值包括 `relevance`、`pub_date`、`Author` 和 `JournalName`
+- `api_key`：你的 API key（可选，建议提供）
 
-**Example URL**:
+**URL 示例**：
 ```
 https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?
   db=pubmed&
@@ -388,7 +389,7 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?
   api_key=YOUR_API_KEY
 ```
 
-**Illustrative response (two-record excerpt)**:
+**响应示例（两条记录的节选）**：
 ```json
 {
   "esearchresult": {
@@ -399,20 +400,20 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?
 }
 ```
 
-### EFetch - Retrieve Records
+### EFetch - 获取记录
 
-Get full metadata for PMIDs.
+获取 PMID 对应的完整元数据。
 
-**Endpoint**: `/efetch.fcgi`
+**端点**：`/efetch.fcgi`
 
-**Parameters**:
-- `db`: Database (pubmed)
-- `id`: Comma-separated PMIDs
-- `retmode=xml`: Full PubMed XML (omit `rettype`); JSON is not a PubMed EFetch format
-- `retmode=text&rettype=abstract` or `retmode=text&rettype=medline`: Text views
-- `api_key`: Optional NCBI API key; `tool` and `email` identify the caller
+**参数**：
+- `db`：数据库（pubmed）
+- `id`：逗号分隔的 PMID
+- `retmode=xml`：完整 PubMed XML（省略 `rettype`）；JSON 不是 PubMed EFetch 支持的格式
+- `retmode=text&rettype=abstract` 或 `retmode=text&rettype=medline`：文本视图
+- `api_key`：可选的 NCBI API key；`tool` 和 `email` 用于标识调用方
 
-**Example URL**:
+**URL 示例**：
 ```
 https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?
   db=pubmed&
@@ -421,22 +422,22 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?
   api_key=YOUR_API_KEY
 ```
 
-**Response**: XML with complete metadata including:
-- Title
-- Authors (with affiliations)
-- Abstract
-- Journal
-- Publication date
+**响应**：包含完整元数据的 XML，其中含：
+- 标题
+- 作者（含单位）
+- 摘要
+- 期刊
+- 出版日期
 - DOI
-- PMID, PMCID
-- MeSH terms
-- Keywords
+- PMID、PMCID
+- MeSH 主题词
+- 关键词
 
-### ESummary - Get Summaries
+### ESummary - 获取摘要
 
-Lighter-weight alternative to EFetch.
+比 EFetch 更轻量的替代方案。
 
-**Example**:
+**示例**：
 ```
 https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?
   db=pubmed&
@@ -445,15 +446,13 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?
   api_key=YOUR_API_KEY
 ```
 
-**Returns**: JSON `result.uids` plus records keyed by PMID; this is not ESearch's
-`esearchresult` shape. This endpoint is an illustrative manual alternative; the
-bundled search script uses ESearch and EFetch only.
+**返回**：JSON `result.uids` 以及以 PMID 为键的记录；这不是 ESearch 的 `esearchresult` 结构。该端点只是示例性的手动替代方案；随附的检索脚本只用 ESearch 和 EFetch。
 
-### ELink - Find Related Articles
+### ELink - 查找相关文献
 
-Find related articles or links to other databases.
+查找相关文献或通向其他数据库的链接。
 
-**Example**:
+**示例**：
 ```
 https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?
   dbfrom=pubmed&
@@ -464,28 +463,25 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?
   retmode=xml
 ```
 
-**Link types**:
-- `pubmed_pubmed`: Related articles
-- `pubmed_pubmed_citedin`: Papers citing this article
-- `pubmed_pmc`: PMC full-text versions (set target `db=pmc`)
-- `pubmed_protein`: Related protein records
+**链接类型**：
+- `pubmed_pubmed`：相关文献
+- `pubmed_pubmed_citedin`：引用本文的论文
+- `pubmed_pmc`：PMC 全文版本（目标库设为 `db=pmc`）
+- `pubmed_protein`：相关蛋白质记录
 
-ELink XML contains `LinkSet/LinkSetDb/Link/Id` when matching links exist; an
-empty link set is valid. The cited-in relationship is not a complete citation
-index. EInfo (`einfo.fcgi?db=pubmed&retmode=json`) reports database fields and
-link names, not article records. These are illustrative manual API calls.
+存在匹配链接时，ELink XML 中包含 `LinkSet/LinkSetDb/Link/Id`；空链接集也是合法结果。cited-in（被引）关系不是完整的引文索引。EInfo（`einfo.fcgi?db=pubmed&retmode=json`）报告的是数据库字段和链接名称，不是文献记录。以上均为示例性的手动 API 调用。
 
-### Rate Limiting
+### 速率限制
 
-**Without API key**:
-- 3 requests per second
-- Block if exceeded
+**无 API key**：
+- 每秒 3 个请求
+- 超限会被封禁
 
-**With API key**:
-- 10 requests per second
-- Better for programmatic access
+**有 API key**：
+- 每秒 10 个请求
+- 更适合程序化访问
 
-**Best practice**:
+**最佳实践**：
 ```python
 import time
 time.sleep(0.34)  # ~3 requests/second
@@ -493,20 +489,20 @@ time.sleep(0.34)  # ~3 requests/second
 time.sleep(0.11)  # ~10 requests/second with API key
 ```
 
-### API Key Usage
+### API key 的使用
 
-**Get API key**:
-1. Create NCBI account: https://www.ncbi.nlm.nih.gov/account/
+**获取 API key**：
+1. 注册 NCBI 账号：https://www.ncbi.nlm.nih.gov/account/
 2. Settings → API Key Management
-3. Create new API key
-4. Copy key
+3. 创建新的 API key
+4. 复制 key
 
-**Use in requests**:
+**在请求中使用**：
 ```
 &api_key=YOUR_API_KEY_HERE
 ```
 
-**Store securely**:
+**安全存储**：
 ```bash
 # In environment variable
 export NCBI_API_KEY="your_key_here"
@@ -516,11 +512,11 @@ import os
 api_key = os.getenv('NCBI_API_KEY')
 ```
 
-## Search Strategies
+## 检索策略
 
-### Comprehensive Systematic Search
+### 全面系统性检索
 
-For systematic reviews and meta-analyses:
+用于系统综述和 Meta 分析：
 
 ```
 # 1. Identify key concepts
@@ -545,7 +541,7 @@ AND English[Language]
 AND humans[MeSH Terms]
 ```
 
-### Finding Clinical Trials
+### 查找临床试验
 
 ```
 # Specific disease + clinical trials
@@ -560,7 +556,7 @@ AND humans[MeSH Terms]
   AND "Randomized Controlled Trial"[Publication Type]
 ```
 
-### Finding Reviews
+### 查找综述
 
 ```
 # Systematic reviews on topic
@@ -573,7 +569,7 @@ cancer immunotherapy
   AND ("Nature"[Journal] OR "Science"[Journal] OR "Cell"[Journal])
 ```
 
-### Finding Recent Papers
+### 查找最新论文
 
 ```
 # Papers from last year
@@ -587,7 +583,7 @@ cancer immunotherapy
   AND 2023:2024[Publication Date]
 ```
 
-### Author Tracking
+### 追踪作者
 
 ```
 # Specific author's recent work
@@ -597,7 +593,7 @@ cancer immunotherapy
 "Church GM"[Author] AND "synthetic biology"[Title/Abstract]
 ```
 
-### High-Quality Evidence
+### 高质量证据
 
 ```
 # Meta-analyses and systematic reviews
@@ -611,26 +607,24 @@ cancer immunotherapy
   AND 2020:2024[Publication Date]
 ```
 
-## Script Integration
+## 脚本集成
 
-The bundled client fetches explicit PMIDs in batches of 200, checks each batch
-for completeness, and refuses to export when any batch fails or includes
-unsupported PubmedBookArticle records. It does not export the full PubMed XML.
+随附的客户端以 200 条一批的方式获取显式 PMID，逐批检查完整性，任何一批失败或含有不支持的 PubmedBookArticle 记录时拒绝导出。它不导出完整的 PubMed XML。
 
-### search_pubmed.py Usage
+### search_pubmed.py 用法
 
-**Basic search**:
+**基础检索**：
 ```bash
 python scripts/search_pubmed.py "diabetes treatment"
 ```
 
-**With MeSH terms**:
+**带 MeSH 主题词**：
 ```bash
 python scripts/search_pubmed.py \
   --query '"Diabetes Mellitus"[MeSH] AND "Drug Therapy"[MeSH]'
 ```
 
-**Date range filter**:
+**日期范围过滤**：
 ```bash
 python scripts/search_pubmed.py "CRISPR" \
   --date-start 2020-01-01 \
@@ -638,14 +632,14 @@ python scripts/search_pubmed.py "CRISPR" \
   --limit 200
 ```
 
-**Publication type filter**:
+**文献类型过滤**：
 ```bash
 python scripts/search_pubmed.py "cancer immunotherapy" \
   --publication-types "Clinical Trial,Randomized Controlled Trial" \
   --limit 100
 ```
 
-**Export to BibTeX**:
+**导出为 BibTeX**：
 ```bash
 python scripts/search_pubmed.py "Alzheimer's disease" \
   --limit 100 \
@@ -653,7 +647,7 @@ python scripts/search_pubmed.py "Alzheimer's disease" \
   --output alzheimers.bib
 ```
 
-**Complex query from file**:
+**从文件读取复杂查询**：
 ```bash
 # Save complex query in query.txt
 cat > query.txt << 'EOF'
@@ -668,7 +662,7 @@ EOF
 python scripts/search_pubmed.py --query-file query.txt --limit 500
 ```
 
-### Batch Searches
+### 批量检索
 
 ```bash
 # Search multiple topics
@@ -682,7 +676,7 @@ for topic in "${TOPICS[@]}"; do
 done
 ```
 
-### Extract Metadata
+### 提取元数据
 
 ```bash
 # Search returns PMIDs
@@ -694,28 +688,28 @@ python scripts/extract_metadata.py \
   --output references.bib
 ```
 
-## Tips and Best Practices
+## 技巧与最佳实践
 
-### Search Construction
+### 检索式构建
 
-1. **Start with MeSH terms**:
-   - Use MeSH Browser to find correct terms
-   - More precise than keyword search
-   - Combine with text words: not every PubMed record has MeSH indexing
+1. **从 MeSH 主题词入手**：
+   - 用 MeSH 浏览器找到正确的主题词
+   - 比关键词检索更精确
+   - 与文本词组合使用：并非每条 PubMed 记录都有 MeSH 标引
 
-2. **Include text word variants**:
+2. **纳入文本词变体**：
    ```
    # Better coverage
    ("Diabetes Mellitus"[MeSH] OR diabetes OR diabetic)
    ```
 
-3. **Use field tags appropriately**:
-   - `[MeSH]` for standardized concepts
-   - `[Title/Abstract]` for specific terms
-   - `[Author]` for known authors
-   - `[Journal]` for specific venues
+3. **恰当使用字段标识**：
+   - `[MeSH]` 用于标准化概念
+   - `[Title/Abstract]` 用于特定词语
+   - `[Author]` 用于已知作者
+   - `[Journal]` 用于特定期刊
 
-4. **Build incrementally**:
+4. **逐步构建**：
    ```
    # Step 1: Basic search
    diabetes
@@ -734,122 +728,121 @@ python scripts/extract_metadata.py \
    ... AND 2020:2024[Publication Date]
    ```
 
-### Optimizing Results
+### 优化结果
 
-1. **Too many results**: Add filters
-   - Restrict publication type
-   - Narrow date range
-   - Add more specific MeSH terms
-   - Use Major Topic: `[MeSH Major Topic]`
+1. **结果太多**：加过滤器
+   - 限定文献类型
+   - 收窄日期范围
+   - 换用更具体的 MeSH 主题词
+   - 使用主要主题词：`[MeSH Major Topic]`
 
-2. **Too few results**: Broaden search
-   - Remove restrictive filters
-   - Use OR for synonyms
-   - Expand date range
-   - Use MeSH explosion (default)
+2. **结果太少**：放宽检索
+   - 移除限制性过滤器
+   - 用 OR 连接同义词
+   - 扩大日期范围
+   - 使用 MeSH 扩展（默认开启）
 
-3. **Irrelevant results**: Refine terms
-   - Use more specific MeSH terms
-   - Add exclusions with NOT
-   - Use Title field instead of all fields
-   - Add MeSH subheadings
+3. **结果不相关**：改进检索词
+   - 换用更具体的 MeSH 主题词
+   - 用 NOT 排除
+   - 改用 Title 字段而不是全字段
+   - 加 MeSH 副主题词
 
-### Quality Control
+### 质量控制
 
-1. **Document search strategy**:
-   - Save exact query string
-   - Record search date
-   - Note number of results
-   - Save filters used
+1. **记录检索策略**：
+   - 保存准确的查询字符串
+   - 记录检索日期
+   - 记录结果数量
+   - 保存所用过滤器
 
-2. **Export systematically**:
-   - Use consistent file naming
-   - Export to JSON for flexibility
-   - Convert to BibTeX as needed
-   - Keep original search results
+2. **系统性导出**：
+   - 使用一致的文件命名
+   - 导出为 JSON，便于后续处理
+   - 按需转换为 BibTeX
+   - 保留原始检索结果
 
-3. **Validate retrieved citations**:
+3. **验证检索到的引文**：
    ```bash
    python scripts/validate_citations.py pubmed_results.bib
    ```
 
-### Staying Current
+### 保持跟进
 
-1. **Set up search alerts**:
-   - PubMed → Save search
-   - Receive email updates
-   - Daily, weekly, or monthly
+1. **设置检索提醒**：
+   - 在 PubMed 中保存检索（Save search）
+   - 接收邮件更新
+   - 可选每日、每周或每月
 
-2. **Track specific journals**:
+2. **追踪特定期刊**：
    ```
    "Nature"[Journal] AND CRISPR[Title]
    ```
 
-3. **Follow key authors**:
+3. **关注关键作者**：
    ```
    "Church GM"[Author]
    ```
 
-## Common Issues and Solutions
+## 常见问题与解决方法
 
-### Issue: MeSH Term Not Found
+### 问题：找不到 MeSH 主题词
 
-**Solution**: 
-- Check spelling
-- Use MeSH Browser
-- Try related terms
-- Use text word search as fallback
+**解决方法**：
+- 检查拼写
+- 使用 MeSH 浏览器
+- 尝试相关主题词
+- 退而用文本词检索
 
-### Issue: Zero Results
+### 问题：结果为零
 
-**Solution**:
-- Remove filters
-- Check query syntax
-- Use OR for broader search
-- Try synonyms
+**解决方法**：
+- 移除过滤器
+- 检查查询语法
+- 用 OR 扩大检索
+- 尝试同义词
 
-### Issue: Poor Quality Results
+### 问题：结果质量差
 
-**Solution**:
-- Add publication type filters
-- Restrict to recent years
-- Use MeSH Major Topic
-- Filter by journal quality
+**解决方法**：
+- 加文献类型过滤器
+- 限定近年文献
+- 使用 MeSH 主要主题词
+- 按期刊质量过滤
 
-### Issue: Duplicates from Different Sources
+### 问题：不同来源的重复记录
 
-**Solution**:
+**解决方法**：
 ```bash
 python scripts/format_bibtex.py results.bib \
   --deduplicate \
   --output clean.bib
 ```
 
-### Issue: API Rate Limiting
+### 问题：API 速率限制
 
-**Solution**:
-- Get API key (increases limit to 10/sec)
-- Add delays in scripts
-- Process in batches
-- Use off-peak hours
+**解决方法**：
+- 申请 API key（上限提升到每秒 10 次）
+- 在脚本中加入延时
+- 分批处理
+- 避开高峰时段
 
-## Summary
+## 小结
 
-PubMed provides authoritative biomedical literature search:
+PubMed 提供权威的生物医学文献检索：
 
-✓ **Curated content**: MeSH indexing, quality control  
-✓ **Precise search**: Field tags, MeSH terms, filters  
-✓ **Programmatic access**: E-utilities API  
-✓ **Free access**: No subscription required  
-✓ **Comprehensive**: 35M+ citations, daily updates  
+✓ **策展内容**：MeSH 标引、质量控制  
+✓ **精确检索**：字段标识、MeSH 主题词、过滤器  
+✓ **程序化访问**：E-utilities API  
+✓ **免费访问**：无需订阅  
+✓ **覆盖全面**：3500 万+ 条引文，每日更新  
 
-Key strategies:
-- Use MeSH terms for precise searching
-- Combine with text words for comprehensive coverage
-- Apply appropriate field tags
-- Filter by publication type and date
-- Use E-utilities API for automation
-- Document search strategy for reproducibility
+关键策略：
+- 用 MeSH 主题词做精确检索
+- 与文本词组合，获得全面覆盖
+- 恰当使用字段标识
+- 按文献类型和日期过滤
+- 用 E-utilities API 实现自动化
+- 记录检索策略，保证可复现
 
-For broader coverage across disciplines, complement with Google Scholar.
-
+如需跨学科更广的覆盖，可配合 Google Scholar 使用。

@@ -1,810 +1,814 @@
-### Purpose
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/critique.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Resolve one stable target, run two independent assessments, synthesize a design critique, persist a snapshot, and ask the user what to improve next. The chat response is the primary deliverable; the snapshot is an archive of that run.
+### 目的
 
-### Hard Invariants
+解析出一个稳定的目标，运行两项独立评估，综合出一份设计评审，持久化一份快照，然后询问用户接下来改进什么。聊天回复是主要交付物；快照只是该次运行的存档。
 
-- Assessment A (design review) and Assessment B (detector/browser evidence) are both required, except on a native platform (see Assessment Orchestration).
-- Assessment A and B MUST run as two isolated sub-agents whenever a sub-agent/Task tool is exposed. Running them inline in this context is "possible" but is NOT permitted; it is a degraded run. Inline is allowed ONLY when no sub-agent tool exists (or the user declined, on harnesses that ask). Native platforms run A alone (see Assessment Orchestration).
-- If you degrade for any reason, the report's first line MUST be a banner: `⚠️ DEGRADED: single-context (<reason>)`. A silent degraded critique is a failed critique.
-- Assessment A must finish before detector findings enter the parent synthesis context. Detector output is deterministic, but it still anchors judgment.
-- A skipped detector is a failed critique run unless `impeccable detect` is missing or crashes after a real attempt, or the platform is native (see Assessment Orchestration).
-- Viewable targets require browser inspection when available.
-- Any local server started only for critique visualization must run in the background, have a recorded stop method, and be stopped before final reporting unless the user asks to keep it.
-- Do not claim a user-visible overlay exists unless script injection succeeded and the detector ran in the page.
-- The question is the LAST thing in the response. Write the entire report out first, then ask; nothing follows the question. Prose emitted after a structured question is withheld until the user answers it, so a report written after the question reads as if the critique never ran.
-- A run that ends with neither the targeted questions nor a literal `Questions skipped: <reason>` line is an incomplete run. The report is not the finish; the close is.
+### 硬性不变量
 
-### Setup
+- 评估 A（设计审查）与评估 B（检测器/浏览器证据）都必须执行，原生平台除外（见「评估编排」）。
+- 只要暴露了子代理/Task 工具，评估 A 与 B 就必须作为两个隔离的子代理运行。在本上下文中内联运行它们「可行」，但不被允许；那是一次降级运行。只有当不存在子代理工具时（或在会询问的 Harness 上用户拒绝时）才允许内联。原生平台只运行 A（见「评估编排」）。
+- 任何原因导致的降级，报告第一行必须是横幅：`⚠️ DEGRADED: single-context (<reason>)`。静默降级的评审是一次失败的评审。
+- 评估 A 必须先完成，检测器的发现才能进入父级综合上下文。检测器输出是确定性的，但它仍会锚定判断。
+- 跳过检测器即判定本次评审运行失败，除非 `impeccable detect` 缺失、或在真实尝试后崩溃，或平台是原生平台（见「评估编排」）。
+- 浏览器自动化可用时，可查看的目标必须做浏览器检查。
+- 仅为评审可视化而启动的任何本地服务器必须在后台运行、记录停止方法，并在最终报告之前停止，除非用户要求保留。
+- 除非脚本注入成功且检测器已在页面中运行，否则不得声称存在用户可见的叠加层。
+- 问题是回复中的最后一项。先完整写出报告，再提问；问题之后不跟任何内容。结构化提问之后输出的正文会被暂扣，直到用户作答，所以问题之后才写的报告读起来就像评审从未运行过。
+- 一次运行若既没有以定向问题收尾，也没有以字面行 `Questions skipped: <reason>` 收尾，就是不完整的运行。报告不是终点；收尾才是。
 
-1. **Resolve the target** to a concrete file path or URL. Prefer a source path over a dev-server URL when both identify the same surface; ports drift, paths do not.
-   - "the homepage" -> `site/pages/index.astro` or `index.html`
-   - "the settings modal" -> the primary component file
-   - "this page" -> the current URL or source file
-2. **Confirm the target slugs cleanly**:
+### 准备
+
+1. **把目标解析**为具体的文件路径或 URL。当源码路径与开发服务器 URL 指向同一界面时，优先用源码路径；端口会漂移，路径不会。
+   - "首页" -> `site/pages/index.astro` 或 `index.html`
+   - "设置弹窗" -> 主组件文件
+   - "这个页面" -> 当前 URL 或源码文件
+2. **确认目标能干净地生成 slug**：
    ```bash
    .claude/skills/impeccable/scripts/impeccable critique-storage slug "<resolved-path-or-url>"
    ```
-   Every later command also accepts the resolved target directly and derives the same slug internally; never hand-write a slug. If this exits non-zero, skip persistence and trend for this run, but continue the critique.
-3. **Read `.impeccable/critique/ignore.md`** if it exists. Drop matching findings silently; it is the only prior-run input critique consumes.
+   后续每个命令也接受解析后的目标本身，并在内部推导出相同的 slug；绝不要手写 slug。如果该命令以非零值退出，本次运行跳过持久化与趋势读取，但继续评审。
+3. **读取 `.impeccable/critique/ignore.md`**（如果存在）。静默丢弃匹配的发现；它是评审唯一消费的既往运行输入。
 
-### Assessment Orchestration
+### 评估编排
 
-**Native platforms** (`ios` / `android` / `adaptive`): Assessment B does not apply, because `impeccable detect` and the browser overlay read only web markup. Run Assessment A alone in this context and skip both sub-agent gates below, the Codex permission question included: with no B there is nothing to isolate A from, so this is the complete native method and carries no degraded banner. Do not run `impeccable detect` on native source; its empty result reads as clean.
+**原生平台**（`ios` / `android` / `adaptive`）：评估 B 不适用，因为 `impeccable detect` 与浏览器叠加层只读 Web 标记。在本上下文中单独运行评估 A，并跳过下面两道子代理闸门，包括 Codex 权限问题：没有 B 就没有需要把 A 隔离开的对象，所以这就是完整的原生方法，不带降级横幅。不要对原生源码运行 `impeccable detect`；它的空结果会被读作"干净"。
 
-Delegate Assessment A and Assessment B to separate sub-agents. They must not see each other's output. Do not show findings to the user until synthesis.
+把评估 A 与评估 B 分别委托给不同的子代理。它们不得看到彼此的输出。综合之前，不向用户展示任何发现。
 
-Sub-agent gate (all harnesses):
-- Unless a harness-specific gate below overrides this, spawn A and B as two isolated, parallel sub-agents whenever a sub-agent/Task tool is exposed. This is the default and is mandatory; do not run them inline because it is faster.
-- Desktop apps (see **Desktop apps** under Assessment B) are the one exception to parallel: both sub-agents would drive the app's single window at once. Seed the window, spawn A, wait until it has finished and put the window back, then spawn B. They are still two isolated sub-agents, so this is not the degraded path.
-- "Unavailable" means exactly one thing: no sub-agent/Task tool is exposed in this session (or, on harnesses that ask, the user declined). It does not mean inconvenient.
-- If and only if sub-agents are unavailable, fall back sequentially: finish and record Assessment A, then run Assessment B, then synthesize, and emit the degraded banner.
-- Whichever path you take, declare it in the report header (see Report header provenance). Skipping sub-agents without the banner is the most common failure of this command.
+子代理闸门（所有 Harness）：
+- 除非下方的某个 Harness 专属闸门覆盖了本条，只要暴露了子代理/Task 工具，就把 A 与 B 作为两个隔离的、并行的子代理生成。这是默认要求，也是强制的；不要因为内联更快就内联运行。
+- 桌面应用（见评估 B 之下的**桌面应用**）是并行规则的唯一例外：两个子代理会同时驱动应用的唯一窗口。先布置好窗口中的受审状态，生成 A，等它结束并把窗口复原，再生成 B。它们仍是两个隔离的子代理，所以这不属于降级路径。
+- "不可用"只指一件事：本会话没有暴露子代理/Task 工具（或在会询问的 Harness 上，用户拒绝了）。它不指"不方便"。
+- 当且仅当子代理不可用时，按顺序回退：完成并记录评估 A，再运行评估 B，然后综合，并输出降级横幅。
+- 无论走哪条路径，都在报告头部声明它（见「报告头来源」）。不加横幅就跳过子代理，是这条命令最常见的失败方式。
 
-If browser automation is available, each assessment creates its own new tab. Never reuse an existing tab, even if it is already at the right URL. Desktop apps are the exception (see **Desktop apps** under Assessment B).
+如果浏览器自动化可用，每项评估都创建自己的新标签页。绝不复用已有标签页，即使它已经停在正确的 URL 上。桌面应用是例外（见评估 B 之下的**桌面应用**）。
 
-### Assessment A: Design Review
+### 评估 A：设计审查
 
-Read relevant source files and visually inspect the live page when browser automation is available. Think like a design director.
+阅读相关源码文件；浏览器自动化可用时，对实际页面做视觉检查。像设计总监一样思考。
 
-Evaluate:
-- **Design specificity**: Is the composition, interaction, and visual language grounded in this product, or could an unrelated product use it unchanged? Make this judgment before seeing detector output.
-- **Holistic design**: hierarchy, IA, emotional fit, discoverability, composition, typography, color, accessibility, states, copy, and edge cases.
-- **Cognitive load**: consult the [Cognitive Load Assessment](#cognitive-load-assessment) section below; report checklist failures and decision points with >4 visible options.
-- **Emotional journey**: peak-end rule, emotional valleys, reassurance at high-stakes moments.
-- **Nielsen heuristics**: consult the [Heuristics Scoring Guide](#heuristics-scoring-guide) section below; score all 10 heuristics 0-4, marking any heuristic the mode-applicability rule allows as `n/a` instead of forcing a number.
+评估以下方面：
+- **设计特异性**：构图、交互与视觉语言是否扎根于这个产品，还是一个毫不相关的产品也能原样使用？在看到检测器输出之前就做出这一判断。
+- **整体设计**：层级、信息架构（IA）、情感契合度、可发现性、构图、字体排印、色彩、无障碍、状态、文案以及边界情况。
+- **认知负荷**：参考下方[认知负荷评估](#cognitive-load-assessment)一节；报告清单未通过项，以及可见选项数超过 4 的决策点。
+- **情感旅程**：峰终定律、情绪低谷、高风险时刻的安心感。
+- **Nielsen 启发式**：参考下方[启发式评分指南](#heuristics-scoring-guide)一节；对全部 10 条启发式按 0-4 评分，模式适用性规则允许的启发式标记为 `n/a`，不要强行给分。
 
-Return: design-specificity verdict, heuristic scores, cognitive load, emotional journey, 2-3 strengths, 3-5 priority issues, persona red flags, minor observations, and provocative questions.
+返回：设计特异性判定、启发式得分、认知负荷、情感旅程、2-3 个优点、3-5 个优先问题、用户画像红旗、次要观察，以及发人深省的问题。
 
-### Assessment B: Detector + Browser Evidence
+### 评估 B：检测器 + 浏览器证据
 
-Run the bundled detector and browser visualization evidence. On web, Assessment B is mandatory and must remain isolated from Assessment A until both are complete.
+运行随附的检测器并采集浏览器可视化证据。在 Web 上，评估 B 是强制的，且在两者都完成之前必须与评估 A 保持隔离。
 
-CLI scan:
+CLI 扫描：
 ```bash
 .claude/skills/impeccable/scripts/impeccable detect --json [target]
 ```
 
-- Pass markup files/directories as `[target]`; do not pass CSS-only files.
-- For URLs, skip CLI scan and use browser visualization.
-- For very large trees (500+ scannable files), narrow scope or ask.
-- Exit code 0 = clean; 2 = findings.
-- If the detector entrypoint is missing or fails to load, report deterministic scan unavailable and continue with browser/manual review.
+- 将标记文件/目录作为 `[target]` 传入；不要传纯 CSS 文件。
+- 对 URL，跳过 CLI 扫描，使用浏览器可视化。
+- 对非常大的文件树（500 个以上可扫描文件），缩小范围或询问。
+- 退出码 0 = 干净；2 = 有发现。
+- 如果检测器入口缺失或加载失败，报告"确定性扫描不可用"，然后继续浏览器/人工审查。
 
-Browser visualization is required for a viewable target when browser automation is available. Use a localhost dev/static URL for local files; avoid `file://` unless the available browser explicitly supports this workflow. Overlay flow:
+浏览器自动化可用时，可查看的目标必须做浏览器可视化。本地文件使用 localhost 的开发/静态 URL；避免 `file://`，除非可用的浏览器明确支持这种工作流。叠加层流程：
 
-1. Create a fresh tab and navigate. Prefer the harness's native/browser-canvas screenshot path before hand-rolling a Playwright/Puppeteer script; only fall back to a custom script when no native browser tool is exposed.
-2. Preflight mutable injection by setting `document.title` and appending a `<script>` tag. Read-only evaluate APIs do not count.
-3. If mutation is unavailable, skip live server, browser presentation, and injection; report fallback signal.
-4. If mutation is available, start `.claude/skills/impeccable/scripts/impeccable live-server --background`, present the browser if supported, label `[Human]`, scroll top, inject `http://localhost:PORT/detect.js`, wait 2-3 seconds, read `impeccable` console messages, then run `.claude/skills/impeccable/scripts/impeccable live-server stop --keep-inject`. The overlay went in through the browser, so the project's HTML has no script tag to strip; a bare `stop` also runs `live-inject --remove` against the project's entry file, an edit a read-only critique should not make.
-5. For multi-view targets, inject on 3-5 representative pages.
+1. 新建标签页并导航。优先使用 Harness 原生/浏览器画布截图路径，而不是手写 Playwright/Puppeteer 脚本；只有当没有暴露原生浏览器工具时才退回自定义脚本。
+2. 通过设置 `document.title` 并追加一个 `<script>` 标签来预检可变注入。只读的 evaluate 类 API 不算数。
+3. 如果无法修改页面，跳过 live server、浏览器呈现与注入；报告回退信号。
+4. 如果可以修改页面，启动 `.claude/skills/impeccable/scripts/impeccable live-server --background`，在支持的情况下呈现浏览器，标注 `[Human]`，滚动到顶部，注入 `http://localhost:PORT/detect.js`，等待 2-3 秒，读取 `impeccable` 控制台消息，然后运行 `.claude/skills/impeccable/scripts/impeccable live-server stop --keep-inject`。叠加层是经浏览器注入的，所以项目 HTML 中没有需要剥离的脚本标签；裸 `stop` 还会对项目入口文件执行 `live-inject --remove`，这是只读评审不应做出的修改。
+5. 对多视图目标，在 3-5 个代表性页面上注入。
 
-**Desktop apps** (Electron, NW.js, CEF, WebView2): there is no URL to open, so Assessment B attaches to the running app instead.
+**桌面应用**（Electron、NW.js、CEF、WebView2）：没有可打开的 URL，评估 B 改为附着到正在运行的应用上。
 
-1. Launch the app with a local DevTools port: `--remote-debugging-port=9222` (Electron, NW.js, CEF), or `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` for WebView2. Keep the port on 127.0.0.1 and never expose it beyond this machine; prefer a test profile and test data.
-2. Seed the state under review (route, open panel, theme, data). The scan reads the window as it stands. Keep the window on screen: a minimized or hidden window scans without the pixel contrast reads.
-3. Run `.claude/skills/impeccable/scripts/impeccable detect --cdp 9222 --target <part of the page URL or title> --json`. It returns the same JSON as a URL scan and leaves the page as found. With several pages open it fails and lists them; rerun with a `--target` that names one.
-4. Take screenshots through the harness's CDP tooling (`Page.captureScreenshot` on the same target). Skip the live-server overlay: there is no `[Human]` tab.
+1. 以本地 DevTools 端口启动应用：`--remote-debugging-port=9222`（Electron、NW.js、CEF），WebView2 则用 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222`。端口保持在 127.0.0.1 上，绝不暴露到本机之外；优先使用测试 profile 与测试数据。
+2. 布置好受审状态（路由、打开的面板、主题、数据）。扫描按窗口当前样子读取。让窗口保持在屏幕上：最小化或隐藏的窗口做不了像素对比读取。
+3. 运行 `.claude/skills/impeccable/scripts/impeccable detect --cdp 9222 --target <part of the page URL or title> --json`。它返回与 URL 扫描相同的 JSON，并保持页面原样。当打开多个页面时会失败并列出它们；用一个指明单个页面的 `--target` 重跑。
+4. 通过 Harness 的 CDP 工具截图（对同一目标使用 `Page.captureScreenshot`）。跳过 live-server 叠加层：没有 `[Human]` 标签页。
 
-The app has one window, so the assessments take turns in it instead of opening tabs (A, then B; see the sub-agent gate), and each must leave it as found: put back any route, scroll, theme, or panel it changed. Tauri on macOS (WKWebView) and on Linux (WebKitGTK) expose no CDP: run Assessment A and the source scan only, and say so in Run Notes.
+应用只有一个窗口，所以各项评估在同一窗口中轮流进行，而不是开标签页（先 A，后 B；见子代理闸门），且每项评估都必须让窗口保持原样：复原它改动过的任何路由、滚动、主题或面板。macOS（WKWebView）与 Linux（WebKitGTK）上的 Tauri 不暴露 CDP：只运行评估 A 与源码扫描，并在 Run Notes 中说明。
 
-Return: CLI findings JSON/counts, browser console findings if applicable, false positives, and skipped/failed browser steps with concrete reasons.
+返回：CLI 发现 JSON/计数、适用的浏览器控制台发现、误报，以及带具体原因的已跳过/失败浏览器步骤。
 
-After Assessment B returns usable CLI findings, reuse them. Do not rerun `impeccable detect` in the parent unless Assessment B failed, was truncated, or omitted count, rule names, or file locations.
+评估 B 返回可用的 CLI 发现后，直接复用它们。除非评估 B 失败、被截断，或遗漏了计数、规则名或文件位置，否则不要在父级重跑 `impeccable detect`。
 
-### Generate Combined Critique Report
+### 生成综合评审报告
 
-Synthesize both assessments into a single report. Do not simply concatenate. Weave the findings together, noting where the LLM review and detector agree, where the detector caught issues the LLM missed, and where detector findings are false positives.
+把两项评估综合成一份报告。不要简单拼接。把发现编织在一起，指出 LLM 审查与检测器一致之处、检测器抓到而 LLM 遗漏的问题，以及检测器的误报。
 
-The chat response is the primary user-facing deliverable. Present the full structured critique below in chat; do not replace it with a summary and a link. The persisted snapshot is an archive of that run.
+聊天回复是面向用户的主要交付物。在聊天中完整呈现下面的结构化评审；不要用一段摘要加一个链接来替代。持久化的快照只是该次运行的存档。
 
-Structure your feedback as a design director would:
+以设计总监的方式组织反馈：
 
-#### Report header provenance
+#### 报告头来源
 
-The report's first line MUST declare how the assessments were run, so a degraded run is never silent:
-- Dual-agent: `Method: dual-agent (A: <agent-id> · B: <agent-id>)`
-- Degraded: `⚠️ DEGRADED: single-context (<reason, e.g. no sub-agent tool exposed>)`
-- Native: `Method: design review only (detector not applicable, native platform)`
+报告第一行必须声明评估的运行方式，降级运行绝不静默：
+- 双子代理：`Method: dual-agent (A: <agent-id> · B: <agent-id>)`
+- 降级：`⚠️ DEGRADED: single-context (<reason, e.g. no sub-agent tool exposed>)`
+- 原生：`Method: design review only (detector not applicable, native platform)`
 
-#### Design Health Score
-> *Consult the [Heuristics Scoring Guide](#heuristics-scoring-guide) section below.*
+#### 设计健康分
+> *评分方法见下方[启发式评分指南](#heuristics-scoring-guide)一节。*
 
-Present the Nielsen's 10 heuristics scores as a table:
+以表格呈现 Nielsen 10 条启发式的得分：
 
-| # | Heuristic | Score | Key Issue |
+| # | 启发式 | 得分 | 关键问题 |
 |---|-----------|-------|-----------|
-| 1 | Visibility of System Status | ? | [specific finding or "n/a" if solid] |
-| 2 | Match System / Real World | ? | |
-| 3 | User Control and Freedom | ? | |
-| 4 | Consistency and Standards | ? | |
-| 5 | Error Prevention | ? | |
-| 6 | Recognition Rather Than Recall | ? | |
-| 7 | Flexibility and Efficiency | ? | |
-| 8 | Aesthetic and Minimalist Design | ? | |
-| 9 | Error Recovery | ? | |
-| 10 | Help and Documentation | ? | |
-| **Total** | | **??/[applicable max]** | **[Rating band]** |
+| 1 | 系统状态可见性 | ? | [具体发现；若没问题则写 "n/a"] |
+| 2 | 匹配系统与现实世界 | ? | |
+| 3 | 用户控制与自由 | ? | |
+| 4 | 一致性与标准 | ? | |
+| 5 | 防错 | ? | |
+| 6 | 识别而非回忆 | ? | |
+| 7 | 灵活与高效 | ? | |
+| 8 | 美学与极简设计 | ? | |
+| 9 | 错误恢复 | ? | |
+| 10 | 帮助与文档 | ? | |
+| **总分** | | **??/[适用满分]** | **[评级档]** |
 
-The applicable maximum is 4 times the number of heuristics you actually scored: **/40** when all ten apply, **/32** when two are `n/a`. Never print `/40` over a partial set.
+适用满分是你实际评分的启发式数量乘以 4：十条全部适用时为 **/40**，两条为 `n/a` 时为 **/32**。绝不要在部分适用时打印 `/40`。
 
-Be honest with scores. A 4 means genuinely excellent. Most real interfaces score 20-32 out of 40.
+评分要诚实。4 分意味着真正出色。大多数真实界面在 40 分中得到 20-32 分。
 
-**Mode applicability**: heuristics 7 (Flexibility and Efficiency) and 10 (Help and Documentation) may be scored `n/a` on Persuade and Experience surfaces (landing pages, campaigns, portfolios, bodies of work), as may any other heuristic that genuinely cannot apply to the surface under review. Write `n/a` in the Score cell with a one-line reason, and renormalize the total to the applicable maximum (e.g. **24/32** when two heuristics are n/a) so the rating band stays proportional. The persisted snapshot must record the applicable maximum and which heuristics were scored n/a.
+**模式适用性**：在 Persuade 与 Experience 类界面（落地页、营销活动、作品集、系列作品）上，启发式 7（灵活与高效）与 10（帮助与文档）可以评 `n/a`；确实无法适用于受审界面的其他启发式同理。在得分格中写 `n/a` 并附一行原因，并把总分归一到适用满分（例如两条启发式为 n/a 时为 **24/32**），使评级档保持比例。持久化快照必须记录适用满分以及哪些启发式被评了 n/a。
 
-#### Design Specificity Verdict
+#### 设计特异性判定
 
-**Start here.** Does the result feel authored for this product, or category-interchangeable?
+**从这里开始。** 这个成果感觉是为本产品量身创作的，还是同类产品可互换的？
 
-**LLM assessment**: Your unanchored evaluation of design specificity. Cover overall coherence, structural sameness, category-interchangeable choices, and missed opportunities for product character.
+**LLM 评估**：你在未受检测器锚定的情况下对设计特异性做出的评价。覆盖整体连贯性、结构上的同质化、同类可互换的选择，以及错失的产品个性机会。
 
-**Deterministic scan**: Summarize what the automated detector found, with counts and file locations. Note any additional issues the detector caught that you missed, and flag any false positives. On a native platform, write `not applicable (native platform)` instead.
+**确定性扫描**：总结自动化检测器发现了什么，包括计数与文件位置。指出检测器抓到而你遗漏的额外问题，并标出误报。在原生平台上，改写 `not applicable (native platform)`。
 
-**Visual overlays** (if injection succeeded): Tell the user that overlays are now visible in the **[Human]** tab in their browser, highlighting the detected issues. Summarize what the console output reported. If browser visualization was attempted but injection failed, say that no reliable user-visible overlay is available and report the fallback signal instead.
+**可视化叠加层**（注入成功时）：告诉用户叠加层现已出现在其浏览器的 **[Human]** 标签页中，高亮显示了检测到的问题。概述控制台输出报告的内容。如果尝试了浏览器可视化但注入失败，说明没有可靠的用户可见叠加层，并改为报告回退信号。
 
-#### Overall Impression
-A brief gut reaction: what works, what doesn't, and the single biggest opportunity.
+#### 总体印象
+一段简短的直觉反应：什么有效，什么无效，以及最大的一个机会。
 
-#### What's Working
-Highlight 2-3 things done well. Be specific about why they work.
+#### 做得好的地方
+突出 2-3 件做得好的事。具体说明它们为什么有效。
 
-#### Priority Issues
-The 3-5 most impactful design problems, ordered by importance.
+#### 优先问题
+影响最大的 3-5 个设计问题，按重要性排序。
 
-For each issue, tag with **P0-P3 severity** (see [Issue Severity below](#issue-severity-p0p3) for definitions):
-- **[P?] What**: Name the problem clearly
-- **Why it matters**: How this hurts users or undermines goals
-- **Fix**: What to do about it (be concrete)
-- **Suggested command**: Which command could address this (from: /impeccable adapt, /impeccable animate, /impeccable audit, /impeccable bolder, /impeccable clarify, /impeccable colorize, /impeccable critique, /impeccable delight, /impeccable distill, /impeccable document, /impeccable harden, /impeccable layout, /impeccable onboard, /impeccable optimize, /impeccable overdrive, /impeccable polish, /impeccable quieter, /impeccable shape, /impeccable typeset)
+对每个问题标注 **P0-P3 严重度**（定义见下方[问题严重度](#issue-severity-p0p3)）：
+- **[P?] 问题**：清晰命名该问题
+- **为什么重要**：它如何伤害用户或破坏目标
+- **修复**：怎么处理（要具体）
+- **建议命令**：哪条命令可以处理它（可选自：/impeccable adapt, /impeccable animate, /impeccable audit, /impeccable bolder, /impeccable clarify, /impeccable colorize, /impeccable critique, /impeccable delight, /impeccable distill, /impeccable document, /impeccable harden, /impeccable layout, /impeccable onboard, /impeccable optimize, /impeccable overdrive, /impeccable polish, /impeccable quieter, /impeccable shape, /impeccable typeset）
 
-#### Persona Red Flags
-> *Consult the [Personas reference](#persona-based-design-testing) below.*
+#### 用户画像红旗
+> *见下方[用户画像参考](#persona-based-design-testing)。*
 
-Auto-select 2-3 personas most relevant to this interface type (use the selection table in the reference). If PRODUCT.md has a `## Users` section, also generate 1-2 project-specific personas from it and from `## Brand Commitments`.
+自动选择与本界面类型最相关的 2-3 个用户画像（使用参考中的选择表）。如果 PRODUCT.md 有 `## Users` 一节，还要从中以及从 `## Brand Commitments` 生成 1-2 个项目专属画像。
 
-For each selected persona, walk through the primary user action and list specific red flags found:
+对每个选中的画像，走一遍主用户操作，列出发现的具体红旗：
 
-**Alex (Power User)**: No keyboard shortcuts detected. Form requires 8 clicks for primary action. Forced modal onboarding. High abandonment risk.
+**Alex（高级用户）**：未检测到键盘快捷键。主操作在表单中需要点击 8 次。强制弹窗引导。流失风险高。
 
-**Jordan (First-Timer)**: Icon-only nav in sidebar. Technical jargon in error messages ("404 Not Found"). No visible help. Will abandon at step 2.
+**Jordan（初次使用者）**：侧边栏纯图标导航。错误信息含技术行话（"404 Not Found"）。没有可见帮助。会在第 2 步放弃。
 
-Be specific. Name the exact elements and interactions that fail each persona. Don't write generic persona descriptions; write what broke for them.
+要具体。点名让每个画像失败的确切元素与交互。不要写泛泛的画像描述；写清楚他们那里坏掉了什么。
 
-#### Minor Observations
-Quick notes on smaller issues worth addressing.
+#### 次要观察
+对值得处理的小问题的快速记录。
 
-#### Questions to Consider
-Provocative questions that might unlock better solutions:
-- "What if the primary action were more prominent?"
-- "Does this need to feel this complex?"
-- "What would a confident version of this look like?"
+#### 值得思考的问题
+可能打开更好解法的尖锐问题：
+- "如果主操作更醒目，会怎样？"
+- "这真的需要这么复杂吗？"
+- "一个自信的版本会是什么样？"
 
-**Remember**:
-- Be direct. Vague feedback wastes everyone's time.
-- Be specific. "The submit button," not "some elements."
-- Say what's wrong AND why it matters to users.
-- Give concrete suggestions. Cut "consider exploring..." entirely.
-- Prioritize ruthlessly. If everything is important, nothing is.
-- Don't soften criticism. Developers need honest feedback to ship great design.
+**记住**：
+- 直接了当。模糊的反馈浪费所有人的时间。
+- 要具体。说"提交按钮"，不要说"某些元素"。
+- 说出哪里有问题，以及对用户为什么重要。
+- 给出具体建议。把"可以考虑探索……"这类话彻底删掉。
+- 无情地排优先级。如果一切都重要，就什么都不重要。
+- 不要软化批评。开发者需要诚实的反馈才能发布出色的设计。
 
-### Deliver the Report
+### 交付报告
 
-Write the full report into the chat response now, before any persistence work. This is the deliverable; everything below it is bookkeeping.
+现在就把完整报告写进聊天回复，在任何持久化工作之前。这才是交付物；其下的一切都只是例行记录。
 
-Do this first because the alternative is the most common way this command fails: the report gets composed once, straight into the persistence heredoc, and the run ends with a perfect archive nobody has read. Composing it into a file is not delivering it. If the report exists only in `.impeccable/critique/`, the run produced nothing.
+先做这一步，因为替代做法正是这条命令最常见的失败方式：报告被一次性写进持久化的 heredoc，运行以一个没人读过的完美存档结束。把报告写进文件不等于交付它。如果报告只存在于 `.impeccable/critique/`，这次运行等于什么都没产出。
 
-Persistence is not the end of the run. After it, the response continues with the trend line and the close.
+持久化不是运行的终点。之后，回复还要继续输出趋势行和收尾。
 
-### Persist the Snapshot
+### 持久化快照
 
-Once the report above is finalized, write it to `.impeccable/critique/` so the user can refer back, and so `/impeccable polish` can pick up the priority issues without a copy-paste.
+上面的报告定稿后，把它写入 `.impeccable/critique/`，让用户可以回看，也让 `/impeccable polish` 能直接取用优先问题而无需复制粘贴。
 
-Skip this step if the Setup slug was null (vague or root-level target).
+如果准备阶段的 slug 为空（目标含糊或位于根级），跳过本步骤。
 
-1. **Write the body to a temp file** so you can pipe it to the helper. Use the full critique report (heuristic table, design-specificity verdict, priority issues, persona red flags, minor observations, and questions), but stop before the "Ask the User" / "Recommended Actions" sections that come later.
+1. **把正文写入临时文件**，以便通过管道传给辅助脚本。使用完整评审报告（启发式表格、设计特异性判定、优先问题、用户画像红旗、次要观察与问题），但在后面才出现的「向用户提问」/「建议行动」章节之前停止。
 
-   This is a copy of the report you already delivered above, for later commands to read. It is not delivery. If you find yourself composing the report for the first time inside this heredoc, you have skipped Deliver the Report; go back and send it.
+   这是你已在上面交付过的报告的副本，供后续命令读取。这不是交付。如果你发现自己在 heredoc 里才第一次撰写报告，说明你跳过了「交付报告」；回去先把它发出来。
 
-2. **Pass the structured metadata** through `IMPECCABLE_CRITIQUE_META` (JSON), then run the write command:
+2. **通过 `IMPECCABLE_CRITIQUE_META`（JSON）传入结构化元数据**，然后运行写入命令：
    ```bash
    IMPECCABLE_CRITIQUE_META='{"target":"<user phrasing>","total_score":<n>,"max_score":<n>,"na_heuristics":"<comma-separated numbers, or empty>","p0_count":<n>,"p1_count":<n>}' \
      .claude/skills/impeccable/scripts/impeccable critique-storage write "<resolved target>" <body-file>
    ```
-   `max_score` is the applicable maximum from the heuristic table (40 when every heuristic applied), so a later run can tell a renormalized total from a full one. For a local file target, the helper also records an exact content fingerprint so polish can distinguish the assessed bytes from later edits without relying on Git state or timestamps. The helper prints the absolute path it wrote. Leave that file on disk. Polish closes it; this run does not. `REPORTS OFF:` instead means the project opted out of saved reports: skip the trend read and carry on.
+   `max_score` 是启发式表格中的适用满分（所有启发式都适用时为 40），这样后续运行才能区分归一后的总分与全量总分。对本地文件目标，辅助脚本还会记录精确的内容指纹，让 polish 无需依赖 Git 状态或时间戳就能区分被评估的字节与之后的修改。辅助脚本会打印它写入的绝对路径。把该文件留在磁盘上。polish 负责关闭它；本次运行不关。若输出为 `REPORTS OFF:`，则表示项目选择不保存报告：跳过趋势读取，继续往下。
 
-3. **Delete the temp body file** after the write attempt completes, whether the write succeeded or failed. If deletion fails, mention `temp-file cleanup failed: <reason>` briefly in the final output, but do not block the critique.
+3. **删除临时正文文件**，在写入尝试结束后删除，无论写入成功或失败。如果删除失败，在最终输出中简要提及 `temp-file cleanup failed: <reason>`，但不要阻塞评审。
 
-4. **Read the trend** for context:
+4. **读取趋势**作为背景：
    ```bash
    .claude/skills/impeccable/scripts/impeccable critique-storage trend "<resolved target>" 5
    ```
-   This returns a JSON array of the last 5 frontmatter entries (including the one you just wrote).
+   它返回最近 5 条 frontmatter 条目的 JSON 数组（包括你刚写入的那条）。
 
-5. **Append a single line to the user-visible output**, after the report and before the questions:
+5. **在用户可见输出中追加一行**，位于报告之后、问题之前：
 
-   > **Trend for `<slug>` (last 5 runs): 24 → 28 → 32 → 29 → 32 (out of 40)**
-   > Wrote `.impeccable/critique/<filename>`.
+   > **`<slug>` 的趋势（最近 5 次运行）：24 → 28 → 32 → 29 → 32（满分 40）**
+   > 已写入 `.impeccable/critique/<filename>`。
 
-   Read `max_score` on each trend entry. When every entry shares one maximum, state it once as above. When they differ, print each score with its own denominator (`24/32 → 30/40`) and note that the runs scored different heuristic sets, so the line is not a like-for-like comparison. Treat a missing `max_score` on an older entry as 40.
+   读取每条趋势条目的 `max_score`。当所有条目共享同一个满分时，如上一次性说明。当它们不同时，为每个分数带上各自的分母（`24/32 → 30/40`），并说明各次运行评的是不同的启发式集合，这一行不是同口径比较。旧条目缺失 `max_score` 时按 40 处理。
 
-   If this is the first run for the slug, the trend is just one score; say so: "First run for this target, no trend yet."
+   如果这是该 slug 的首次运行，趋势只有一个分数；说明这一点："这是该目标的首次运行，尚无趋势。"
 
-6. **Close the run.** Go to Ask the User below and emit the questions, or the `Questions skipped: <reason>` line when the count allows it. The run is not complete until you do. Persistence is bookkeeping and cleanup is not an ending; stopping here leaves the user with a report and no way forward, and leaves `/impeccable polish` with no priorities to inherit.
+6. **收尾本次运行。** 转到下方的「向用户提问」，输出问题；当数量允许跳过时，输出 `Questions skipped: <reason>` 行。做不到这一点，运行就没有完成。持久化只是例行记录，清理也不是终点；停在这里，用户手里只有一份报告却没有下一步方向，`/impeccable polish` 也没有可继承的优先级。
 
-This is fire-and-forget. Do not show the user the helper's JSON output; only the human-readable trend line and the written path. Failures here should not block the rest of the flow; print the error and move on.
+这一步是发射后不管。不要向用户展示辅助脚本的 JSON 输出；只展示人类可读的趋势行和写入路径。此处的失败不应阻塞流程其余部分；打印错误，继续前进。
 
-### Ask the User
+### 向用户提问
 
-**After presenting findings**, use targeted questions based on what was actually found. Ask with the AskUserQuestion tool and wait for the answer before continuing. These answers will shape the action plan.
+**在呈现发现之后**，基于实际发现的内容使用定向问题。用 AskUserQuestion 工具提问，等待回答后再继续。这些回答将塑造行动计划。
 
-Ask in the same message that carries the report, with the report written out first and the question last. Do not split the two across turns: a turn that ends on the report is a turn that ends, and the questions never arrive. Order within the message is what matters, because prose emitted after a structured question is withheld until the user answers.
+在携带报告的同一条消息中提问，先写完报告，问题放在最后。不要把两者拆到不同轮次：以报告结尾的轮次就是结束的轮次，问题永远到不了。消息内的顺序才是关键，因为结构化提问之后输出的正文会被暂扣，直到用户作答。
 
-Ask questions along these lines (adapt to the specific findings; do not ask generic questions):
+按以下思路提问（结合具体发现调整；不要问泛泛的问题）：
 
-1. **Priority direction**: Based on the issues found, ask which category matters most to the user right now. For example: "I found problems with visual hierarchy, color usage, and information overload. Which area should we tackle first?" Offer the top 2-3 issue categories as options.
+1. **优先方向**：基于发现的问题，询问用户当下最关心哪一类。例如："我发现了视觉层级、色彩使用和信息过载方面的问题。我们先处理哪个方面？"把最靠前的 2-3 个问题类别作为选项提供。
 
-2. **Design intent**: If the critique found a tonal mismatch, ask whether it was intentional. For example: "The interface feels clinical and corporate. Is that the intended tone, or should it feel warmer/bolder/more playful?" Offer 2-3 tonal directions as options based on what would fix the issues found.
+2. **设计意图**：如果评审发现调性不匹配，询问这是否有意为之。例如："这个界面感觉冷峻、企业化。这是想要的调性，还是应该更温暖/更大胆/更活泼？"基于能修复所发现问题的方向，提供 2-3 个调性选项。
 
-3. **Scope**: Ask how much the user wants to take on. For example: "I found N issues. Want to address everything, or focus on the top 3?" Offer scope options like "Top 3 only", "All issues", "Critical issues only".
+3. **范围**：询问用户想处理多少。例如："我发现了 N 个问题。要全部处理，还是聚焦前 3 个？"提供范围选项，如"仅前 3 个"、"全部问题"、"仅严重问题"。
 
-4. **Constraints** (optional; only ask if relevant): If the findings touch many areas, ask if anything is off-limits. For example: "Should any sections stay as-is?" This prevents the plan from touching things the user considers done.
+4. **约束**（可选；仅在相关时询问）：如果发现涉及很多方面，询问是否有禁改区域。例如："有没有哪些部分要保持原样？"这能防止计划去动用户认为已完成的部分。
 
-**Rules for questions**:
-- Every question must reference specific findings from the report. Never ask generic "who is your audience?" questions.
-- Keep it to 2-4 questions maximum. Respect the user's time.
-- Offer concrete options, not open-ended prompts.
-- Skipping is allowed only when the report listed **fewer than 3 Priority Issues**. Count them; do not judge the findings "straightforward" by feel. At 3 or more, the questions are required.
+**提问规则**：
+- 每个问题都必须引用报告中的具体发现。绝不问"你的受众是谁？"这类泛泛问题。
+- 最多 2-4 个问题。尊重用户的时间。
+- 提供具体选项，不要开放式提示。
+- 只有当报告列出的**优先问题少于 3 个**时才允许跳过。数一数；不要凭感觉判断发现"很简单"。3 个及以上，问题必问。
 
-**Final-question gate.** The user-visible response must either include the targeted questions or carry the literal line `Questions skipped: <reason>` naming the count that permitted the skip. Each question must include 2-3 concrete answer options tied to the actual critique findings. Do not end with only open-ended questions, and do not end with neither: stopping after the report, having asked nothing and printed no skip line, is the most common way this command fails.
+**末问闸门。** 用户可见的回复必须包含定向问题，或携带字面行 `Questions skipped: <reason>`，写明允许跳过的数量依据。每个问题都必须包含 2-3 个与实际评审发现挂钩的具体答案选项。不要只以开放式问题收尾，也不要两者皆无：报告写完就停，什么都没问也没打印跳过行，是这条命令最常见的失败方式。
 
-### Recommended Actions
+### 建议行动
 
-**After receiving the user's answers**, present a prioritized action summary reflecting the user's priorities and scope from Ask the User.
+**收到用户回答之后**，呈现一份按优先级排列的行动摘要，反映用户在「向用户提问」中给出的优先级与范围。
 
-#### Action Summary
+#### 行动摘要
 
-List recommended commands in priority order, based on the user's answers:
+根据用户的回答，按优先顺序列出建议命令：
 
-1. **`/command-name`**: Brief description of what to fix (specific context from critique findings)
-2. **`/command-name`**: Brief description (specific context)
+1. **`/command-name`**：要修复什么的简述（来自评审发现的具体上下文）
+2. **`/command-name`**：简述（具体上下文）
 ...
 
-**Rules for recommendations**:
-- Only recommend commands from: /impeccable adapt, /impeccable animate, /impeccable audit, /impeccable bolder, /impeccable clarify, /impeccable colorize, /impeccable critique, /impeccable delight, /impeccable distill, /impeccable document, /impeccable harden, /impeccable layout, /impeccable onboard, /impeccable optimize, /impeccable overdrive, /impeccable polish, /impeccable quieter, /impeccable shape, /impeccable typeset
-- Order by the user's stated priorities first, then by impact
-- Each item's description should carry enough context that the command knows what to focus on
-- Map each Priority Issue to the appropriate command
-- Skip commands that would address zero issues
-- If the user chose a limited scope, only include items within that scope
-- If the user marked areas as off-limits, exclude commands that would touch those areas
-- End with `/impeccable polish` as the final step if any fixes were recommended
+**建议规则**：
+- 只推荐以下命令：/impeccable adapt, /impeccable animate, /impeccable audit, /impeccable bolder, /impeccable clarify, /impeccable colorize, /impeccable critique, /impeccable delight, /impeccable distill, /impeccable document, /impeccable harden, /impeccable layout, /impeccable onboard, /impeccable optimize, /impeccable overdrive, /impeccable polish, /impeccable quieter, /impeccable shape, /impeccable typeset
+- 先按用户声明的优先级排序，再按影响排序
+- 每项描述都要带足够上下文，让命令知道该聚焦什么
+- 把每个优先问题映射到合适的命令
+- 跳过处理不了任何问题的命令
+- 如果用户选择了有限范围，只包含该范围内的条目
+- 如果用户把某些区域标为禁改，排除会触碰这些区域的命令
+- 如果推荐了任何修复，以 `/impeccable polish` 作为最后一步收尾
 
-After presenting the summary, tell the user:
+呈现摘要后，告诉用户：
 
-> You can ask me to run these one at a time, all at once, or in any order you prefer.
+> 你可以让我逐条运行这些命令、一次性全部运行，或按你喜欢的任何顺序运行。
 >
-> Re-run `/impeccable critique` after fixes to see your score improve.
+> 修复后重新运行 `/impeccable critique`，看你的分数提升。
 
 ---
 
-## Reference Material
+## 参考资料
 
-The sections below were previously separate reference files (`cognitive-load.md`, `heuristics-scoring.md`, `personas.md`). They live inline now so the critique flow has all its deep context in one place.
+以下章节此前是独立的参考文件（`cognitive-load.md`、`heuristics-scoring.md`、`personas.md`）。现在内联在此，让评审流程的所有深层背景集中在一处。
 
-### Cognitive Load Assessment
+### 认知负荷评估
 
-Cognitive load is the total mental effort required to use an interface. Overloaded users make mistakes, get frustrated, and leave. This reference helps identify and fix cognitive overload.
-
----
-
-#### Three Types of Cognitive Load
-
-##### Intrinsic Load: The Task Itself
-Complexity inherent to what the user is trying to do. You can't eliminate this, but you can structure it.
-
-**Manage it by**:
-- Breaking complex tasks into discrete steps
-- Providing scaffolding (templates, defaults, examples)
-- Progressive disclosure: show what's needed now, hide the rest
-- Grouping related decisions together
-
-##### Extraneous Load: Bad Design
-Mental effort caused by poor design choices. **Eliminate this ruthlessly.** It's pure waste.
-
-**Common sources**:
-- Confusing navigation that requires mental mapping
-- Unclear labels that force users to guess meaning
-- Visual clutter competing for attention
-- Inconsistent patterns that prevent learning
-- Unnecessary steps between user intent and result
-
-##### Germane Load: Learning Effort
-Mental effort spent building understanding. This is *good* cognitive load; it leads to mastery.
-
-**Support it by**:
-- Progressive disclosure that reveals complexity gradually
-- Consistent patterns that reward learning
-- Feedback that confirms correct understanding
-- Onboarding that teaches through action, not walls of text
+认知负荷是使用一个界面所需的心智努力总和。负荷过载的用户会犯错、恼火、离开。本参考帮助识别并修复认知过载。
 
 ---
 
-#### Cognitive Load Checklist
+#### 三种认知负荷
 
-Evaluate the interface against these 8 items:
+##### 内在负荷：任务本身
+用户要做的事情本身固有的复杂度。你无法消除它，但可以为它建立结构。
 
-- [ ] **Single focus**: Can the user complete their primary task without distraction from competing elements?
-- [ ] **Chunking**: Is information presented in digestible groups (≤4 items per group)?
-- [ ] **Grouping**: Are related items visually grouped together (proximity, borders, shared background)?
-- [ ] **Visual hierarchy**: Is it immediately clear what's most important on the screen?
-- [ ] **One thing at a time**: Can the user focus on a single decision before moving to the next?
-- [ ] **Minimal choices**: Are decisions simplified (≤4 visible options at any decision point)?
-- [ ] **Working memory**: Does the user need to remember information from a previous screen to act on the current one?
-- [ ] **Progressive disclosure**: Is complexity revealed only when the user needs it?
+**这样管理它**：
+- 把复杂任务拆成离散步骤
+- 提供脚手架（模板、默认值、示例）
+- 渐进披露：显示当前所需的，隐藏其余
+- 把相关决策归到一起
 
-**Scoring**: Count the failed items. 0–1 failures = low cognitive load (good). 2–3 = moderate (address soon). 4+ = high cognitive load (critical fix needed).
+##### 外在负荷：糟糕的设计
+由糟糕的设计选择造成的心智努力。**无情地消除它。**它是纯粹的浪费。
 
----
+**常见来源**：
+- 需要心智地图才能用的混乱导航
+- 迫使用户猜测含义的模糊标签
+- 争夺注意力的视觉杂乱
+- 阻碍学习的不一致模式
+- 用户意图与结果之间的多余步骤
 
-#### The Working Memory Rule
+##### 相关负荷：学习投入
+用于建立理解的心智努力。这是*好*的认知负荷；它通向熟练。
 
-**Humans can hold ≤4 items in working memory at once** (Miller's Law revised by Cowan, 2001).
-
-At any decision point, count the number of distinct options, actions, or pieces of information a user must simultaneously consider:
-- **≤4 items**: Within working memory limits, manageable
-- **5–7 items**: Pushing the boundary; consider grouping or progressive disclosure
-- **8+ items**: Overloaded; users will skip, misclick, or abandon
-
-**Practical applications**:
-- Action buttons: 1 primary, 1–2 secondary, group the rest in a menu
-- Navigation menus: ≤5 top-level items (group the rest under clear categories)
-- Long-form articles: one reading path; gather related links into a single block at the end instead of scattering them mid-flow
-- Documentation sidebars: ≤4 sibling choices visible per level before grouping kicks in
-- Portfolio and gallery indexes: one decision per screen (which piece to open), not filter, sort, and tag controls all at once
+**这样支持它**：
+- 逐步展现复杂度的渐进披露
+- 让学习有回报的一致模式
+- 确认理解正确的反馈
+- 通过行动而非大段文字来教学的引导
 
 ---
 
-#### Common Cognitive Load Violations
+#### 认知负荷清单
 
-##### 1. The Wall of Options
-**Problem**: Presenting 10+ choices at once with no hierarchy.
-**Fix**: Group into categories, highlight recommended, use progressive disclosure.
+用这 8 项评估界面：
 
-##### 2. The Memory Bridge
-**Problem**: User must remember info from step 1 to complete step 3.
-**Fix**: Keep relevant context visible, or repeat it where it's needed.
+- [ ] **单一焦点**：用户能否在不受竞争元素干扰的情况下完成主要任务？
+- [ ] **分块**：信息是否以可消化的分组呈现（每组 ≤4 项）？
+- [ ] **分组**：相关项是否在视觉上归在一起（邻近、边框、共享背景）？
+- [ ] **视觉层级**：屏幕上什么最重要是否一目了然？
+- [ ] **一次一件事**：用户能否在进入下一个决策前先专注当前这一个？
+- [ ] **最少选择**：决策是否被简化（每个决策点可见选项 ≤4 个）？
+- [ ] **工作记忆**：用户是否需要记住前一屏的信息才能操作当前一屏？
+- [ ] **渐进披露**：复杂度是否只在用户需要时才展现？
 
-##### 3. The Hidden Navigation
-**Problem**: User must build a mental map of where things are.
-**Fix**: Always show current location (breadcrumbs, active states, progress indicators).
-
-##### 4. The Jargon Barrier
-**Problem**: Technical or domain language forces translation effort.
-**Fix**: Use plain language. If domain terms are unavoidable, define them inline.
-
-##### 5. The Visual Noise Floor
-**Problem**: Every element has the same visual weight; nothing stands out.
-**Fix**: Establish clear hierarchy: one primary element, 2–3 secondary, everything else muted.
-
-##### 6. The Inconsistent Pattern
-**Problem**: Similar actions work differently in different places.
-**Fix**: Standardize interaction patterns. Same type of action = same type of UI.
-
-##### 7. The Multi-Task Demand
-**Problem**: Interface requires processing multiple simultaneous inputs (reading + deciding + navigating).
-**Fix**: Sequence the steps. Let the user do one thing at a time.
-
-##### 8. The Context Switch
-**Problem**: User must jump between screens/tabs/modals to gather info for a single decision.
-**Fix**: Co-locate the information needed for each decision. Reduce back-and-forth.
+**计分**：数未通过的项。0–1 项未通过 = 认知负荷低（良好）。2–3 = 中等（尽快处理）。4+ = 认知负荷高（急需修复）。
 
 ---
 
-### Heuristics Scoring Guide
+#### 工作记忆法则
 
-Score each of Nielsen's 10 Usability Heuristics on a 0–4 scale. Be honest: a 4 means genuinely excellent, not "good enough."
+**人类工作记忆一次最多容纳 ≤4 个条目**（Cowan 2001 年修订的米勒定律）。
 
-#### Nielsen's 10 Heuristics
+在任何决策点，数一数用户必须同时考虑的不同选项、动作或信息条目数：
+- **≤4 项**：在工作记忆限度内，可应对
+- **5–7 项**：逼近边界；考虑分组或渐进披露
+- **8 项以上**：过载；用户会跳过、误点或放弃
 
-##### 1. Visibility of System Status
-
-Keep users informed about what's happening through timely, appropriate feedback.
-
-**Check for**:
-- Loading indicators during async operations
-- Confirmation of user actions (save, submit, delete)
-- Progress indicators for multi-step processes
-- Current location in navigation (breadcrumbs, active states)
-- Form validation feedback (inline, not just on submit)
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | No feedback; user is guessing what happened |
-| 1 | Rare feedback; most actions produce no visible response |
-| 2 | Partial; some states communicated, major gaps remain |
-| 3 | Good; most operations give clear feedback, minor gaps |
-| 4 | Excellent; every action confirms, progress is always visible |
-
-##### 2. Match Between System and Real World
-
-Speak the user's language. Follow real-world conventions. Information appears in natural, logical order.
-
-**Check for**:
-- Familiar terminology (no unexplained jargon)
-- Logical information order matching user expectations
-- Recognizable icons and metaphors
-- Domain-appropriate language for the target audience
-- Natural reading flow (left-to-right, top-to-bottom priority)
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | Pure tech jargon, alien to users |
-| 1 | Mostly confusing; requires domain expertise to navigate |
-| 2 | Mixed; some plain language, some jargon leaks through |
-| 3 | Mostly natural; occasional term needs context |
-| 4 | Speaks the user's language fluently throughout |
-
-##### 3. User Control and Freedom
-
-Users need a clear "emergency exit" from unwanted states without extended dialogue.
-
-**Check for**:
-- Undo/redo functionality
-- Cancel buttons on forms and modals
-- Clear navigation back to safety (home, previous)
-- Easy way to clear filters, search, selections
-- Escape from long or multi-step processes
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | Users get trapped; no way out without refreshing |
-| 1 | Difficult exits; must find obscure paths to escape |
-| 2 | Some exits; main flows have escape, edge cases don't |
-| 3 | Good control; users can exit and undo most actions |
-| 4 | Full control; undo, cancel, back, and escape everywhere |
-
-##### 4. Consistency and Standards
-
-Users shouldn't wonder whether different words, situations, or actions mean the same thing.
-
-**Check for**:
-- Consistent terminology throughout the interface
-- Same actions produce same results everywhere
-- Platform conventions followed (standard UI patterns)
-- Visual consistency (colors, typography, spacing, components)
-- Consistent interaction patterns (same gesture = same behavior)
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | Inconsistent everywhere; feels like different products stitched together |
-| 1 | Many inconsistencies; similar things look/behave differently |
-| 2 | Partially consistent; main flows match, details diverge |
-| 3 | Mostly consistent; occasional deviation, nothing confusing |
-| 4 | Fully consistent; cohesive system, predictable behavior |
-
-##### 5. Error Prevention
-
-Better than good error messages is a design that prevents problems in the first place.
-
-**Check for**:
-- Confirmation before destructive actions (delete, overwrite)
-- Constraints preventing invalid input (date pickers, dropdowns)
-- Smart defaults that reduce errors
-- Clear labels that prevent misunderstanding
-- Autosave and draft recovery
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | Errors easy to make; no guardrails anywhere |
-| 1 | Few safeguards; some inputs validated, most aren't |
-| 2 | Partial prevention; common errors caught, edge cases slip |
-| 3 | Good prevention; most error paths blocked proactively |
-| 4 | Excellent; errors nearly impossible through smart constraints |
-
-##### 6. Recognition Rather Than Recall
-
-Minimize memory load. Make objects, actions, and options visible or easily retrievable.
-
-**Check for**:
-- Visible options (not buried in hidden menus)
-- Contextual help when needed (tooltips, inline hints)
-- Recent items and history
-- Autocomplete and suggestions
-- Labels on icons (not icon-only navigation)
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | Heavy memorization; users must remember paths and commands |
-| 1 | Mostly recall; many hidden features, few visible cues |
-| 2 | Some aids; main actions visible, secondary features hidden |
-| 3 | Good recognition; most things discoverable, few memory demands |
-| 4 | Everything discoverable; users never need to memorize |
-
-##### 7. Flexibility and Efficiency of Use
-
-Accelerators, invisible to novices, speed up expert interaction.
-
-**Check for**:
-- Keyboard shortcuts for common actions
-- Customizable interface elements
-- Recent items and favorites
-- Bulk/batch actions
-- Power user features that don't complicate the basics
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | One rigid path; no shortcuts or alternatives |
-| 1 | Limited flexibility; few alternatives to the main path |
-| 2 | Some shortcuts; basic keyboard support, limited bulk actions |
-| 3 | Good accelerators; keyboard nav, some customization |
-| 4 | Highly flexible; multiple paths, power features, customizable |
-
-##### 8. Aesthetic and Minimalist Design
-
-Interfaces should not contain irrelevant or rarely needed information. Every element should serve a purpose.
-
-**Check for**:
-- Only necessary information visible at each step
-- Clear visual hierarchy directing attention
-- Purposeful use of color and emphasis
-- No decorative clutter competing for attention
-- Focused, uncluttered layouts
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | Overwhelming; everything competes for attention equally |
-| 1 | Cluttered; too much noise, hard to find what matters |
-| 2 | Some clutter; main content clear, periphery noisy |
-| 3 | Mostly clean; focused design, minor visual noise |
-| 4 | Perfectly minimal; every element earns its pixel |
-
-##### 9. Help Users Recognize, Diagnose, and Recover from Errors
-
-Error messages should use plain language, precisely indicate the problem, and constructively suggest a solution.
-
-**Check for**:
-- Plain language error messages (no error codes for users)
-- Specific problem identification ("Email is missing @" not "Invalid input")
-- Actionable recovery suggestions
-- Errors displayed near the source of the problem
-- Non-blocking error handling (don't wipe the form)
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | Cryptic errors; codes, jargon, or no message at all |
-| 1 | Vague errors; "Something went wrong" with no guidance |
-| 2 | Clear but unhelpful; names the problem but not the fix |
-| 3 | Clear with suggestions; identifies problem and offers next steps |
-| 4 | Perfect recovery; pinpoints issue, suggests fix, preserves user work |
-
-##### 10. Help and Documentation
-
-Even if the system is usable without docs, help should be easy to find, task-focused, and concise.
-
-**Check for**:
-- Searchable help or documentation
-- Contextual help (tooltips, inline hints, guided tours)
-- Task-focused organization (not feature-organized)
-- Concise, scannable content
-- Easy access without leaving current context
-
-**Scoring**:
-| Score | Criteria |
-|-------|----------|
-| 0 | No help available anywhere |
-| 1 | Help exists but hard to find or irrelevant |
-| 2 | Basic help; FAQ or docs exist, not contextual |
-| 3 | Good documentation; searchable, mostly task-focused |
-| 4 | Excellent contextual help; right info at the right moment |
+**实际应用**：
+- 操作按钮：1 个主按钮、1–2 个次按钮，其余归入菜单
+- 导航菜单：顶层项 ≤5 个（其余归入清晰的类别）
+- 长文章：一条阅读路径；相关链接在文末归成一个区块，不要散落在正文中
+- 文档侧边栏：每层可见的兄弟选项 ≤4 个，超过就该分组
+- 作品集与图库索引：每屏一个决策（打开哪件作品），不要同时抛出筛选、排序和标签控件
 
 ---
 
-#### Score Summary
+#### 常见认知负荷违规
 
-**Total possible**: 40 points (10 heuristics × 4 max)
+##### 1. 选项之墙
+**问题**：一次呈现 10 个以上选项且没有层级。
+**修复**：按类别分组，突出推荐项，使用渐进披露。
 
-| Score Range | Rating | What It Means |
+##### 2. 记忆之桥
+**问题**：用户必须记住第 1 步的信息才能完成第 3 步。
+**修复**：让相关上下文保持可见，或在需要处重复它。
+
+##### 3. 隐藏的导航
+**问题**：用户必须自己在脑中构建位置地图。
+**修复**：始终显示当前位置（面包屑、激活状态、进度指示器）。
+
+##### 4. 行话壁垒
+**问题**：技术或领域语言迫使用户费力翻译。
+**修复**：用平实语言。领域术语不可避免时，就地定义。
+
+##### 5. 视觉噪声底噪
+**问题**：每个元素视觉权重相同；没有任何东西突出。
+**修复**：建立清晰层级：1 个主元素、2–3 个次元素，其余弱化。
+
+##### 6. 不一致的模式
+**问题**：相似的操作在不同地方行为不同。
+**修复**：统一交互模式。同类操作 = 同类 UI。
+
+##### 7. 多任务要求
+**问题**：界面要求同时处理多个输入（阅读 + 决策 + 导航）。
+**修复**：把步骤串行化。让用户一次做一件事。
+
+##### 8. 上下文切换
+**问题**：用户必须在多个屏幕/标签页/弹窗之间跳转，才能凑齐一个决策所需的信息。
+**修复**：把每个决策所需的信息放在一起。减少来回跳转。
+
+---
+
+### 启发式评分指南
+
+对 Nielsen 的 10 条可用性启发式逐条按 0–4 打分。要诚实：4 分意味着真正出色，不是"还行"。
+
+#### Nielsen 的 10 条启发式
+
+##### 1. 系统状态可见性
+
+通过及时、恰当的反馈让用户了解正在发生什么。
+
+**检查项**：
+- 异步操作期间的加载指示
+- 用户操作的确认（保存、提交、删除）
+- 多步流程的进度指示
+- 导航中的当前位置（面包屑、激活状态）
+- 表单校验反馈（内联，而非仅在提交时）
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 没有反馈；用户在猜测发生了什么 |
+| 1 | 反馈稀少；多数操作没有可见响应 |
+| 2 | 部分；一些状态有传达，主要缺口仍在 |
+| 3 | 良好；多数操作反馈清晰，缺口较小 |
+| 4 | 出色；每个操作都有确认，进度始终可见 |
+
+##### 2. 系统与现实世界的匹配
+
+说用户的语言。遵循现实世界的惯例。信息按自然、合乎逻辑的顺序出现。
+
+**检查项**：
+- 熟悉的术语（没有不加解释的行话）
+- 符合用户预期的逻辑信息顺序
+- 可识别的图标与隐喻
+- 对目标受众合适的领域语言
+- 自然的阅读流（从左到右、从上到下的优先级）
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 全是技术行话，对用户形同外语 |
+| 1 | 大多令人困惑；需要领域专业知识才能使用 |
+| 2 | 混合；一些平实语言，一些行话漏了进来 |
+| 3 | 大多自然；偶尔有术语需要上下文 |
+| 4 | 全程流利地讲用户的语言 |
+
+##### 3. 用户控制与自由
+
+用户需要一条明确的"紧急出口"，可以不经过冗长对话就离开不想要的状态。
+
+**检查项**：
+- 撤销/重做功能
+- 表单与弹窗上的取消按钮
+- 清晰的返回安全位置的导航（首页、上一步）
+- 清空筛选、搜索、选中项的便捷方式
+- 从长流程或多步流程中退出
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 用户被困住；不刷新就没有出路 |
+| 1 | 出口困难；必须找到隐蔽路径才能逃出 |
+| 2 | 有一些出口；主流程可逃离，边界情况不行 |
+| 3 | 控制良好；用户能退出并撤销大多数操作 |
+| 4 | 完全掌控；撤销、取消、返回、退出无处不在 |
+
+##### 4. 一致性与标准
+
+用户不应该疑惑不同的词、情境或操作是否表示同一件事。
+
+**检查项**：
+- 整个界面术语一致
+- 相同操作在任何地方产生相同结果
+- 遵循平台惯例（标准 UI 模式）
+- 视觉一致（色彩、字体排印、间距、组件）
+- 交互模式一致（同一手势 = 同一行为）
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 到处不一致；像不同产品缝合在一起 |
+| 1 | 大量不一致；相似的东西外观/行为不同 |
+| 2 | 部分一致；主流程吻合，细节分歧 |
+| 3 | 大体一致；偶有偏差，但无令人困惑之处 |
+| 4 | 完全一致；系统内聚，行为可预期 |
+
+##### 5. 防错
+
+比好的错误信息更好的，是从一开始就防止问题出现的设计。
+
+**检查项**：
+- 破坏性操作（删除、覆盖）前先确认
+- 防止无效输入的约束（日期选择器、下拉框）
+- 减少出错的智能默认值
+- 防止误解的清晰标签
+- 自动保存与草稿恢复
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 错误轻易可犯；没有任何护栏 |
+| 1 | 防护很少；部分输入有校验，多数没有 |
+| 2 | 部分预防；常见错误被拦截，边界情况漏网 |
+| 3 | 预防良好；大多数出错路径被主动阻断 |
+| 4 | 出色；凭借智能约束几乎无法出错 |
+
+##### 6. 识别而非回忆
+
+把记忆负担降到最低。让对象、操作和选项可见或易于找回。
+
+**检查项**：
+- 可见的选项（不埋在隐藏菜单里）
+- 需要时的情境帮助（tooltip、内联提示）
+- 最近项目与历史记录
+- 自动补全与建议
+- 图标带文字标签（不是纯图标导航）
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 大量记忆负担；用户必须记住路径和命令 |
+| 1 | 主要靠回忆；大量隐藏功能，可见线索很少 |
+| 2 | 有一些辅助；主要操作可见，次要功能隐藏 |
+| 3 | 识别良好；多数内容可发现，记忆要求很少 |
+| 4 | 一切皆可发现；用户无需记忆 |
+
+##### 7. 使用的灵活与高效
+
+加速器对新手上不可见，却能加快专家的交互。
+
+**检查项**：
+- 常见操作的键盘快捷键
+- 可自定义的界面元素
+- 最近项目与收藏
+- 批量操作
+- 不让基础功能变复杂的高级用户功能
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 只有一条僵硬路径；没有快捷方式或替代路径 |
+| 1 | 灵活性有限；主路径几乎没有替代方案 |
+| 2 | 有一些快捷方式；基础键盘支持，批量操作有限 |
+| 3 | 加速器良好；键盘导航，部分可定制 |
+| 4 | 高度灵活；多路径、专家功能、可定制 |
+
+##### 8. 美学与极简设计
+
+界面不应包含无关或极少需要的信息。每个元素都应有其用途。
+
+**检查项**：
+- 每一步只显示必要信息
+- 引导注意力的清晰视觉层级
+- 有目的的色彩与强调
+- 没有争夺注意力的装饰性杂乱
+- 聚焦、干净的布局
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 应接不暇；一切都平等地争夺注意力 |
+| 1 | 杂乱；噪声太多，难以找到重点 |
+| 2 | 有些杂乱；主体内容清晰，边缘嘈杂 |
+| 3 | 大体干净；设计聚焦，有少量视觉噪声 |
+| 4 | 极致极简；每个元素都配得上它的像素 |
+
+##### 9. 帮助用户识别、诊断并从错误中恢复
+
+错误信息应使用平实语言，精确指出问题，并有建设性地建议解决方案。
+
+**检查项**：
+- 平实语言的错误信息（不给用户看错误码）
+- 具体的问题定位（"邮箱缺少 @"，而非"输入无效"）
+- 可执行的恢复建议
+- 错误显示在问题源头附近
+- 非阻塞的错误处理（不清空表单）
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 错误晦涩；错误码、行话，或根本没有消息 |
+| 1 | 错误含糊；"出错了"且没有任何指引 |
+| 2 | 清晰但无用；点出了问题却没给修法 |
+| 3 | 清晰并带建议；识别问题并给出下一步 |
+| 4 | 完美恢复；精确定位问题、给出修复、保住用户的工作 |
+
+##### 10. 帮助与文档
+
+即使系统没有文档也能用，帮助也应易于找到、聚焦任务、简洁。
+
+**检查项**：
+- 可搜索的帮助或文档
+- 情境帮助（tooltip、内联提示、引导式漫游）
+- 按任务组织（而非按功能组织）
+- 简洁、可扫读的内容
+- 无需离开当前上下文即可获取
+
+**评分**：
+| 分数 | 标准 |
+|-------|----------|
+| 0 | 到处都没有帮助 |
+| 1 | 有帮助但难找到，或不相关 |
+| 2 | 基础帮助；有 FAQ 或文档，但没有情境性 |
+| 3 | 文档良好；可搜索，大多聚焦任务 |
+| 4 | 情境帮助出色；恰当时机给出恰当信息 |
+
+---
+
+#### 评分汇总
+
+**总分上限**：40 分（10 条启发式 × 每条最高 4 分）
+
+| 分数区间 | 评级 | 含义 |
 |-------------|--------|---------------|
-| 36–40 | Excellent | Minor polish only; ship it |
-| 28–35 | Good | Address weak areas, solid foundation |
-| 20–27 | Acceptable | Significant improvements needed before users are happy |
-| 12–19 | Poor | Major UX overhaul required; core experience broken |
-| 0–11 | Critical | Redesign needed; unusable in current state |
+| 36–40 | 优秀 | 只需小幅打磨；可以发布 |
+| 28–35 | 良好 | 处理薄弱区域，基础扎实 |
+| 20–27 | 尚可 | 用户满意之前还需大幅改进 |
+| 12–19 | 差 | 需要大改体验；核心体验已坏 |
+| 0–11 | 危急 | 需要重新设计；当前状态不可用 |
 
-When heuristics were scored `n/a`, the maximum is lower than 40; read the band off the percentage instead of the raw number (90%+ Excellent, 70%+ Good, 50%+ Acceptable, 30%+ Poor, below that Critical). 24/32 is 75%, so Good.
+当有启发式被评 `n/a` 时，满分低于 40；按百分比而不是原始数字读档（90%+ 优秀，70%+ 良好，50%+ 尚可，30%+ 差，再往下是危急）。24/32 是 75%，所以是良好。
 
 ---
 
-#### Issue Severity (P0–P3)
+#### 问题严重度（P0–P3）
 
-Tag each individual issue found during scoring with a priority level:
+给评分过程中发现的每个问题标一个优先级：
 
-| Priority | Name | Description | Action |
+| 优先级 | 名称 | 描述 | 行动 |
 |----------|------|-------------|--------|
-| **P0** | Blocking | Prevents task completion entirely | Fix immediately; this is a showstopper |
-| **P1** | Major | Causes significant difficulty or confusion | Fix before release |
-| **P2** | Minor | Annoyance, but workaround exists | Fix in next pass |
-| **P3** | Polish | Nice-to-fix, no real user impact | Fix if time permits |
+| **P0** | 阻断 | 完全阻止任务完成 | 立即修复；这是一票否决项 |
+| **P1** | 重大 | 造成显著困难或困惑 | 发布前修复 |
+| **P2** | 轻微 | 恼人，但有绕过办法 | 下一轮修复 |
+| **P3** | 打磨 | 修了更好，对用户无实际影响 | 有时间就修 |
 
-**Tip**: If you're unsure between two levels, ask: "Would a user contact support about this?" If yes, it's at least P1.
-
----
-
-### Persona-Based Design Testing
-
-Test the interface through the eyes of 5 distinct user archetypes. Each persona exposes different failure modes that a single "design director" perspective would miss.
-
-**How to use**: Select 2–3 personas most relevant to the interface being critiqued. Walk through the primary user action as each persona. Report specific red flags, not generic concerns.
+**提示**：在两个级别之间拿不准时，问一句："用户会为此联系客服吗？"会，则至少是 P1。
 
 ---
 
-#### 1. Impatient Power User: "Alex"
+### 基于用户画像的设计测试
 
-**Profile**: Expert with similar products. Expects efficiency, hates hand-holding. Will find shortcuts or leave.
+通过 5 个不同的用户原型来测试界面。每个画像暴露的失败模式各不相同，单一"设计总监"视角会漏掉它们。
 
-**Behaviors**:
-- Skips all onboarding and instructions
-- Looks for keyboard shortcuts immediately
-- Tries to bulk-select, batch-edit, and automate
-- Gets frustrated by required steps that feel unnecessary
-- Abandons if anything feels slow or patronizing
-
-**Test Questions**:
-- Can Alex complete the core task in under 60 seconds?
-- Are there keyboard shortcuts for common actions?
-- Can onboarding be skipped entirely?
-- Do modals have keyboard dismiss (Esc)?
-- Is there a "power user" path (shortcuts, bulk actions)?
-
-**Red Flags** (report these specifically):
-- Forced tutorials or unskippable onboarding
-- No keyboard navigation for primary actions
-- Slow animations that can't be skipped
-- One-item-at-a-time workflows where batch would be natural
-- Redundant confirmation steps for low-risk actions
+**用法**：选择与受审界面最相关的 2–3 个画像。以每个画像的身份走一遍主用户操作。报告具体红旗，不要泛泛担忧。
 
 ---
 
-#### 2. Confused First-Timer: "Jordan"
+#### 1. 急躁的高级用户："Alex"
 
-**Profile**: Never used this type of product. Needs guidance at every step. Will abandon rather than figure it out.
+**画像**：是同类产品的专家。期待高效，反感手把手。要么找到捷径，要么离开。
 
-**Behaviors**:
-- Reads all instructions carefully
-- Hesitates before clicking anything unfamiliar
-- Looks for help or support constantly
-- Misunderstands jargon and abbreviations
-- Takes the most literal interpretation of any label
+**行为**：
+- 跳过所有引导和说明
+- 立刻寻找键盘快捷键
+- 尝试批量选择、批量编辑和自动化
+- 对感觉不必要的必经步骤感到恼火
+- 任何感觉慢或被居高临下对待的地方都会让他放弃
 
-**Test Questions**:
-- Is the first action obviously clear within 5 seconds?
-- Are all icons labeled with text?
-- Is there contextual help at decision points?
-- Does terminology assume prior knowledge?
-- Is there a clear "back" or "undo" at every step?
+**测试问题**：
+- Alex 能在 60 秒内完成核心任务吗？
+- 常见操作有键盘快捷键吗？
+- 引导能完全跳过吗？
+- 弹窗支持键盘关闭（Esc）吗？
+- 有"高级用户"路径（快捷键、批量操作）吗？
 
-**Red Flags** (report these specifically):
-- Icon-only navigation with no labels
-- Technical jargon without explanation
-- No visible help option or guidance
-- Ambiguous next steps after completing an action
-- No confirmation that an action succeeded
-
----
-
-#### 3. Accessibility-Dependent User: "Sam"
-
-**Profile**: Uses screen reader (VoiceOver/NVDA), keyboard-only navigation. May have low vision, motor impairment, or cognitive differences.
-
-**Behaviors**:
-- Tabs through the interface linearly
-- Relies on ARIA labels and heading structure
-- Cannot see hover states or visual-only indicators
-- Needs adequate color contrast (4.5:1 minimum)
-- May use browser zoom up to 200%
-
-**Test Questions**:
-- Can the entire primary flow be completed keyboard-only?
-- Are all interactive elements focusable with visible focus indicators?
-- Do images have meaningful alt text?
-- Is color contrast WCAG AA compliant (4.5:1 for text)?
-- Does the screen reader announce state changes (loading, success, errors)?
-
-**Red Flags** (report these specifically):
-- Click-only interactions with no keyboard alternative
-- Missing or invisible focus indicators
-- Meaning conveyed by color alone (red = error, green = success)
-- Unlabeled form fields or buttons
-- Time-limited actions without extension option
-- Custom components that break screen reader flow
+**红旗**（具体报告这些）：
+- 强制教程或不可跳过的引导
+- 主要操作没有键盘导航
+- 无法跳过的慢动画
+- 明明适合批量却只能逐条处理的工作流
+- 低风险操作上的多余确认步骤
 
 ---
 
-#### 4. Deliberate Stress Tester: "Riley"
+#### 2. 困惑的初次使用者："Jordan"
 
-**Profile**: Methodical user who pushes interfaces beyond the happy path. Tests edge cases, tries unexpected inputs, and probes for gaps in the experience.
+**画像**：从未用过这类产品。每一步都需要指引。宁可放弃也不肯自己琢磨。
 
-**Behaviors**:
-- Tests edge cases intentionally (empty states, long strings, special characters)
-- Submits forms with unexpected data (emoji, RTL text, very long values)
-- Tries to break workflows by navigating backwards, refreshing mid-flow, or opening in multiple tabs
-- Looks for inconsistencies between what the UI promises and what actually happens
-- Documents problems methodically
+**行为**：
+- 仔细阅读所有说明
+- 点击任何不熟悉的东西之前都会犹豫
+- 不断寻找帮助或支持
+- 误解行话和缩写
+- 对任何标签都按最字面的意思理解
 
-**Test Questions**:
-- What happens at the edges (0 items, 1000 items, very long text)?
-- Do error states recover gracefully or leave the UI in a broken state?
-- What happens on refresh mid-workflow? Is state preserved?
-- Are there features that appear to work but produce broken results?
-- How does the UI handle unexpected input (emoji, special chars, paste from Excel)?
+**测试问题**：
+- 第一个动作在 5 秒内是否显而易见？
+- 所有图标都有文字标签吗？
+- 决策点上有情境帮助吗？
+- 术语是否预设了先验知识？
+- 每一步都有清晰的"返回"或"撤销"吗？
 
-**Red Flags** (report these specifically):
-- Features that appear to work but silently fail or produce wrong results
-- Error handling that exposes technical details or leaves UI in a broken state
-- Empty states that show nothing useful ("No results" with no guidance)
-- Workflows that lose user data on refresh or navigation
-- Inconsistent behavior between similar interactions in different parts of the UI
-
----
-
-#### 5. Distracted Mobile User: "Casey"
-
-**Profile**: Using phone one-handed on the go. Frequently interrupted. Possibly on a slow connection.
-
-**Behaviors**:
-- Uses thumb only; prefers bottom-of-screen actions
-- Gets interrupted mid-flow and returns later
-- Switches between apps frequently
-- Has limited attention span and low patience
-- Types as little as possible, prefers taps and selections
-
-**Test Questions**:
-- Are primary actions in the thumb zone (bottom half of screen)?
-- Is state preserved if the user leaves and returns?
-- Does it work on slow connections (3G)?
-- Can forms use autocomplete and smart defaults?
-- Are touch targets at least 44×44pt?
-
-**Red Flags** (report these specifically):
-- Important actions positioned at the top of the screen (unreachable by thumb)
-- No state persistence; progress lost on tab switch or interruption
-- Large text inputs required where selection would work
-- Heavy assets loading on every page (no lazy loading)
-- Tiny tap targets or targets too close together
+**红旗**（具体报告这些）：
+- 纯图标导航且没有标签
+- 未经解释的技术行话
+- 没有可见的帮助选项或指引
+- 完成操作后的下一步含糊不清
+- 操作成功与否没有确认
 
 ---
 
-#### Selecting Personas
+#### 3. 依赖无障碍支持的用户："Sam"
 
-Choose personas based on the interface type:
+**画像**：使用屏幕阅读器（VoiceOver/NVDA）、纯键盘导航。可能有低视力、运动障碍或认知差异。
 
-| Interface Type | Primary Personas | Why |
+**行为**：
+- 用 Tab 键线性遍历界面
+- 依赖 ARIA 标签和标题结构
+- 看不到悬停状态或纯视觉指示
+- 需要足够的色彩对比度（最低 4.5:1）
+- 可能使用最高 200% 的浏览器缩放
+
+**测试问题**：
+- 整条主流程能否仅用键盘完成？
+- 所有可交互元素都可聚焦且有可见的焦点指示吗？
+- 图片有有意义的 alt 文本吗？
+- 色彩对比度符合 WCAG AA 吗（文本 4.5:1）？
+- 屏幕阅读器会播报状态变化（加载、成功、错误）吗？
+
+**红旗**（具体报告这些）：
+- 只能点击的交互，没有键盘替代
+- 焦点指示缺失或不可见
+- 含义仅靠颜色传达（红 = 错误，绿 = 成功）
+- 无标签的表单字段或按钮
+- 有时限的操作且无法延长
+- 破坏屏幕阅读器流程的自定义组件
+
+---
+
+#### 4. 有意施压的测试者："Riley"
+
+**画像**：有条理的用户，会把界面推到主流程之外。测试边界情况，尝试意外输入，探查体验中的缺口。
+
+**行为**：
+- 有意测试边界情况（空状态、长字符串、特殊字符）
+- 用意外数据提交表单（emoji、RTL 文本、超长值）
+- 通过后退导航、流程中途刷新或多标签页打开来尝试破坏工作流
+- 寻找 UI 承诺与实际发生之事之间的不一致
+- 有条理地记录问题
+
+**测试问题**：
+- 边界处会发生什么（0 项、1000 项、超长文本）？
+- 错误状态是优雅恢复，还是让 UI 停留在坏掉的状态？
+- 工作流中途刷新会怎样？状态能保留吗？
+- 有没有看似正常却产出坏结果的功能？
+- UI 如何处理意外输入（emoji、特殊字符、从 Excel 粘贴）？
+
+**红旗**（具体报告这些）：
+- 看似正常却静默失败或产出错误结果的功能
+- 暴露技术细节或让 UI 停在坏状态的错误处理
+- 没有任何有用内容的空状态（"无结果"且无指引）
+- 刷新或导航时丢失用户数据的工作流
+- UI 不同位置相似交互之间的行为不一致
+
+---
+
+#### 5. 分心的移动用户："Casey"
+
+**画像**：在外出时单手用手机。频繁被打断。可能网速很慢。
+
+**行为**：
+- 只用拇指；偏好屏幕底部的操作
+- 中途被打断，稍后回来
+- 频繁在应用之间切换
+- 注意力有限，耐心很低
+- 尽量少打字，偏好点按和选择
+
+**测试问题**：
+- 主要操作在拇指区（屏幕下半部）吗？
+- 用户离开后回来，状态能保留吗？
+- 慢网络（3G）下能用吗？
+- 表单能用自动补全和智能默认值吗？
+- 触摸目标至少 44×44pt 吗？
+
+**红旗**（具体报告这些）：
+- 重要操作放在屏幕顶部（拇指够不到）
+- 状态不持久；切换标签页或被打断就丢失进度
+- 本可用选择却要求大段文字输入
+- 每个页面都加载重资源（没有懒加载）
+- 触摸目标过小或彼此过近
+
+---
+
+#### 选择画像
+
+根据界面类型选择画像：
+
+| 界面类型 | 首选画像 | 原因 |
 |---------------|-----------------|-----|
-| Landing page / marketing | Jordan, Riley, Casey | First impressions, trust, mobile |
-| Dashboard / admin | Alex, Sam | Power users, accessibility |
-| E-commerce / checkout | Casey, Riley, Jordan | Mobile, edge cases, clarity |
-| Onboarding flow | Jordan, Casey | Confusion, interruption |
-| Data-heavy / analytics | Alex, Sam | Efficiency, keyboard nav |
-| Form-heavy / wizard | Jordan, Sam, Casey | Clarity, accessibility, mobile |
+| 落地页 / 营销 | Jordan、Riley、Casey | 第一印象、信任、移动端 |
+| 仪表盘 / 后台 | Alex、Sam | 高级用户、无障碍 |
+| 电商 / 结账 | Casey、Riley、Jordan | 移动端、边界情况、清晰度 |
+| 引导流程 | Jordan、Casey | 困惑、被打断 |
+| 数据密集 / 分析 | Alex、Sam | 效率、键盘导航 |
+| 表单密集 / 向导 | Jordan、Sam、Casey | 清晰度、无障碍、移动端 |
 
 ---
 
-#### Project-Specific Personas
+#### 项目专属画像
 
-If PRODUCT.md has a `## Users` section (written by `impeccable init`), derive 1–2 additional personas from it and from `## Brand Commitments`:
+如果 PRODUCT.md 有 `## Users` 一节（由 `impeccable init` 写入），从中以及从 `## Brand Commitments` 推导出 1–2 个额外画像：
 
-1. Read the target audience description
-2. Identify the primary user archetype not covered by the 5 predefined personas
-3. Create a persona following this template:
+1. 阅读目标受众描述
+2. 找出 5 个预定义画像未覆盖的主要用户原型
+3. 按此模板创建画像：
 
 ```
 ##### [Role]: "[Name]"
@@ -816,4 +820,4 @@ If PRODUCT.md has a `## Users` section (written by `impeccable init`), derive 1�
 **Red Flags**: [3-4 things that would alienate this specific user type]
 ```
 
-Only generate project-specific personas when PRODUCT.md describes real users. Don't invent audience details; use the 5 predefined personas when no context exists.
+只在 PRODUCT.md 描述了真实用户时才生成项目专属画像。不要编造受众细节；没有背景信息时使用 5 个预定义画像。

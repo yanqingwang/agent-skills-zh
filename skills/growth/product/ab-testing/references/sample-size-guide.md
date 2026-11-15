@@ -1,49 +1,53 @@
-# Sample Size Guide
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/growth/product/ab-testing/references/sample-size-guide.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Reference for calculating sample sizes and test duration.
+# 样本量指南
+
+计算样本量与测试时长的参考。
 
 ## Contents
-- Sample Size Fundamentals (required inputs, what these mean)
-- Sample Size Quick Reference Tables
-- Duration Calculator (formula, examples, minimum duration rules, maximum duration guidelines)
-- Online Calculators
-- Adjusting for Multiple Variants
-- Common Sample Size Mistakes
-- When Sample Size Requirements Are Too High
-- Sequential Testing
-- Quick Decision Framework
+- 样本量基础（必需输入、各参数含义）
+- 样本量速查表
+- 时长计算器（公式、示例、最短时长规则、最长时长指南）
+- 在线计算器
+- 多变体调整
+- 常见样本量错误
+- 样本量要求过高时怎么办
+- 序贯检验
+- 快速决策框架
 
-## Sample Size Fundamentals
+## 样本量基础
 
-### Required Inputs
+### 必需输入
 
-1. **Baseline conversion rate**: Your current rate
-2. **Minimum detectable effect (MDE)**: Smallest change worth detecting
-3. **Statistical significance level**: Usually α = 0.05 (5%)
-4. **Statistical power**: Usually 80% (β = 0.20)
+1. **基线转化率**：你当前的转化率
+2. **最小可检测效应（MDE）**：值得检测的最小变化
+3. **统计显著性水平**：通常 α = 0.05（5%）
+4. **统计功效**：通常 80%（β = 0.20）
 
-### What These Mean
+### 各参数含义
 
-**Baseline conversion rate**: If your page converts at 5%, that's your baseline.
+**基线转化率**：如果页面转化率是 5%，那就是你的基线。
 
-**MDE (Minimum Detectable Effect)**: The smallest improvement you care about detecting. Set this based on:
-- Business impact (is a 5% lift meaningful?)
-- Implementation cost (worth the effort?)
-- Realistic expectations (what have past tests shown?)
+**MDE（最小可检测效应）**：你在意检测的最小提升幅度。设定依据：
+- 业务影响（5% 的提升有意义吗？）
+- 实现成本（值得花这个力气吗？）
+- 现实预期（过去的测试表现如何？）
 
-**Significance level (α = 0.05)**: For the planned test and its assumptions, limits the long-run probability of rejecting a true null hypothesis to 5%. It is not the probability that an observed difference is “due to chance.” Repeated unadjusted looks or multiple comparisons do not retain that error rate. See the [ASA's interpretation guidance](https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf).
+**显著性水平（α = 0.05）**：就计划中的测试及其假设而言，它把错误拒绝真零假设的长期概率限制在 5%。它不是"观测到的差异由偶然造成"的概率。反复不加调整地查看结果、或做多重比较，都不会保持这一错误率。参见 [ASA 的解读指南](https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf)。
 
-**Statistical power (80%)**: Means if there's a real effect of size MDE, you have 80% chance of detecting it.
+**统计功效（80%）**：意思是如果存在大小为 MDE 的真实效应，你有 80% 的概率检测到它。
 
 ---
 
-## Sample Size Quick Reference Tables
+## 样本量速查表
 
-All tables assume α = 0.05 (two-sided) and 80% power, two-proportion test, rounded to two significant figures. Use a calculator for your exact numbers.
+以下所有表均假设 α = 0.05（双侧）、80% 功效、两比例检验，数值四舍五入到两位有效数字。精确数字请用计算器。
 
-### Conversion Rate: 1%
+### 转化率：1%
 
-| Lift to Detect | Sample per Variant | Total Sample |
+| 待检测提升 | 每变体样本量 | 总样本量 |
 |----------------|-------------------|--------------|
 | 5% (1% → 1.05%) | 640,000 | 1,280,000 |
 | 10% (1% → 1.1%) | 160,000 | 320,000 |
@@ -51,9 +55,9 @@ All tables assume α = 0.05 (two-sided) and 80% power, two-proportion test, roun
 | 50% (1% → 1.5%) | 7,700 | 15,400 |
 | 100% (1% → 2%) | 2,300 | 4,600 |
 
-### Conversion Rate: 3%
+### 转化率：3%
 
-| Lift to Detect | Sample per Variant | Total Sample |
+| 待检测提升 | 每变体样本量 | 总样本量 |
 |----------------|-------------------|--------------|
 | 5% (3% → 3.15%) | 210,000 | 420,000 |
 | 10% (3% → 3.3%) | 53,000 | 106,000 |
@@ -61,9 +65,9 @@ All tables assume α = 0.05 (two-sided) and 80% power, two-proportion test, roun
 | 50% (3% → 4.5%) | 2,500 | 5,000 |
 | 100% (3% → 6%) | 750 | 1,500 |
 
-### Conversion Rate: 5%
+### 转化率：5%
 
-| Lift to Detect | Sample per Variant | Total Sample |
+| 待检测提升 | 每变体样本量 | 总样本量 |
 |----------------|-------------------|--------------|
 | 5% (5% → 5.25%) | 120,000 | 240,000 |
 | 10% (5% → 5.5%) | 31,000 | 62,000 |
@@ -71,9 +75,9 @@ All tables assume α = 0.05 (two-sided) and 80% power, two-proportion test, roun
 | 50% (5% → 7.5%) | 1,500 | 3,000 |
 | 100% (5% → 10%) | 430 | 860 |
 
-### Conversion Rate: 10%
+### 转化率：10%
 
-| Lift to Detect | Sample per Variant | Total Sample |
+| 待检测提升 | 每变体样本量 | 总样本量 |
 |----------------|-------------------|--------------|
 | 5% (10% → 10.5%) | 58,000 | 116,000 |
 | 10% (10% → 11%) | 15,000 | 30,000 |
@@ -81,9 +85,9 @@ All tables assume α = 0.05 (two-sided) and 80% power, two-proportion test, roun
 | 50% (10% → 15%) | 690 | 1,380 |
 | 100% (10% → 20%) | 200 | 400 |
 
-### Conversion Rate: 20%
+### 转化率：20%
 
-| Lift to Detect | Sample per Variant | Total Sample |
+| 待检测提升 | 每变体样本量 | 总样本量 |
 |----------------|-------------------|--------------|
 | 5% (20% → 21%) | 26,000 | 52,000 |
 | 10% (20% → 22%) | 6,500 | 13,000 |
@@ -93,9 +97,9 @@ All tables assume α = 0.05 (two-sided) and 80% power, two-proportion test, roun
 
 ---
 
-## Duration Calculator
+## 时长计算器
 
-### Formula
+### 公式
 
 ```
 Duration (days) = (Sample per variant × Number of variants) / (Daily traffic × % exposed)
@@ -105,156 +109,156 @@ Days per arm = Required sample for that arm / (Daily eligible traffic × Exposur
 Total collection time = longest arm duration
 ```
 
-Use fractions for exposure and allocation (50% = 0.5). Count eligible randomized units consistently with the sample-size calculation; repeat pageviews are not additional participants. The balanced formula assumes equal sample requirements and equal allocation.
+曝光比例与分配比例使用小数（50% = 0.5）。符合条件的随机化单元的计数方式要与样本量计算保持一致；重复的页面浏览不是新增参与者。均衡公式假设各臂样本量需求相同、分配比例相同。
 
-### Examples
+### 示例
 
-**Scenario 1: High-traffic page**
-- Need: 10,000 per variant (2 variants = 20,000 total)
-- Daily traffic: 5,000 visitors
-- 100% exposed to test
-- Duration: 20,000 / 5,000 = **4 days**
+**场景 1：高流量页面**
+- 需要：每变体 10,000（2 个变体 = 共 20,000）
+- 日流量：5,000 访客
+- 100% 暴露于测试
+- 时长：20,000 / 5,000 = **4 天**
 
-**Scenario 2: Medium-traffic page**
-- Need: 30,000 per variant (60,000 total)
-- Daily traffic: 2,000 visitors
-- 100% exposed
-- Duration: 60,000 / 2,000 = **30 days**
+**场景 2：中等流量页面**
+- 需要：每变体 30,000（共 60,000）
+- 日流量：2,000 访客
+- 100% 暴露
+- 时长：60,000 / 2,000 = **30 天**
 
-**Scenario 3: Low-traffic with partial exposure**
-- Need: 15,000 per variant (30,000 total)
-- Daily traffic: 500 visitors
-- 50% exposed to test
-- Effective daily: 250
-- Duration: 30,000 / 250 = **120 days** (too long!)
+**场景 3：低流量且部分曝光**
+- 需要：每变体 15,000（共 30,000）
+- 日流量：500 访客
+- 50% 暴露于测试
+- 有效日流量：250
+- 时长：30,000 / 250 = **120 天**（太长了！）
 
-### Minimum Duration Rules
+### 最短时长规则
 
-Even with sufficient sample size, run tests for at least:
-- **1 full week**: To capture day-of-week variation
-- **2 business cycles**: If B2B (weekday vs. weekend patterns)
-- **Through paydays**: If e-commerce (beginning/end of month)
+即使样本量充足，测试至少也要跑满：
+- **1 个完整周**：捕捉星期几带来的差异
+- **2 个业务周期**：B2B 场景（工作日与周末模式不同）
+- **覆盖发薪日**：电商场景（月初/月末）
 
-### Maximum Duration Guidelines
+### 最长时长指南
 
-Avoid running tests longer than 4-8 weeks:
-- Novelty effects wear off
-- External factors intervene
-- Opportunity cost of other tests
+测试不要超过 4-8 周：
+- 新奇效应会消退
+- 外部因素会介入
+- 占用其他测试的机会成本
 
 ---
 
-## Online Calculators
+## 在线计算器
 
-### Recommended Tools
+### 推荐工具
 
-**Evan Miller's Calculator**
+**Evan Miller 计算器**
 https://www.evanmiller.org/ab-testing/sample-size.html
-- Simple interface
-- Bookmark-worthy
+- 界面简单
+- 值得收藏
 
-**Optimizely's Calculator**
+**Optimizely 计算器**
 https://www.optimizely.com/sample-size-calculator/
-- Business-friendly language
-- Duration estimates
+- 用词面向业务人员
+- 提供时长估算
 
-**AB Test Guide Calculator**
+**AB Test Guide 计算器**
 https://www.abtestguide.com/calc/
-- Includes Bayesian option
-- Multiple test types
+- 含贝叶斯选项
+- 支持多种测试类型
 
-**VWO Duration Calculator**
+**VWO 时长计算器**
 https://vwo.com/tools/ab-test-duration-calculator/
-- Duration-focused
-- Good for planning
+- 专注时长
+- 适合做规划
 
 ---
 
-## Adjusting for Multiple Variants
+## 多变体调整
 
-With more than 2 variants (A/B/n tests), you need more sample:
+变体多于 2 个（A/B/n 测试）时，需要更多样本：
 
-| Variants | Multiplier |
+| 变体数 | 倍数 |
 |----------|------------|
 | 2 (A/B) | 1x |
 | 3 (A/B/C) | ~1.5x |
 | 4 (A/B/C/D) | ~2x |
-| 5+ | Consider reducing variants |
+| 5+ | 考虑减少变体 |
 
-**Why?** More comparisons increase chance of false positives. You're comparing:
+**为什么？** 比较次数越多，假阳性概率越高。你在做这些比较：
 - A vs B
 - A vs C
-- B vs C (sometimes)
+- B vs C（有时）
 
-Apply Bonferroni correction or use tools that handle this automatically.
-
----
-
-## Common Sample Size Mistakes
-
-### 1. Underpowered tests
-**Problem**: Not enough sample to detect realistic effects
-**Fix**: Be realistic about MDE, get more traffic, or don't test
-
-### 2. Overpowered tests
-**Problem**: Waiting for sample size when you already have significance
-**Fix**: This is actually fine—you committed to sample size, honor it
-
-### 3. Wrong baseline rate
-**Problem**: Using wrong conversion rate for calculation
-**Fix**: Use the specific metric and page, not site-wide averages
-
-### 4. Ignoring segments
-**Problem**: Calculating for full traffic, then analyzing segments
-**Fix**: If you plan segment analysis, calculate sample for smallest segment
-
-### 5. Testing too many things
-**Problem**: Dividing traffic too many ways
-**Fix**: Prioritize ruthlessly, run fewer concurrent tests
+使用 Bonferroni 校正，或用能自动处理此事的工具。
 
 ---
 
-## When Sample Size Requirements Are Too High
+## 常见样本量错误
 
-Options when you can't get enough traffic:
+### 1. 功效不足的测试
+**问题**：样本不足以检测出现实中会出现的效应
+**解法**：把 MDE 定得现实些，去争取更多流量，或者干脆别测
 
-1. **Increase MDE**: Accept only detecting larger effects (20%+ lift)
-2. **Lower confidence**: Use 90% instead of 95% (risky, document it)
-3. **Reduce variants**: Test only the most promising variant
-4. **Combine traffic**: Test across multiple similar pages
-5. **Test upstream**: Test earlier in funnel where traffic is higher
-6. **Don't test**: Make decision based on qualitative data instead
-7. **Longer test**: Accept longer duration (weeks/months)
+### 2. 功效过剩的测试
+**问题**：已经出现显著性了还在等样本量
+**解法**：这其实没问题：你承诺过样本量，就要兑现
+
+### 3. 基线率用错
+**问题**：计算时用了错误的转化率
+**解法**：用具体指标和具体页面，不要用全站平均值
+
+### 4. 忽略细分
+**问题**：按全量流量计算，然后却去分析细分
+**解法**：如果计划做细分分析，就按最小细分来算样本量
+
+### 5. 同时测太多东西
+**问题**：把流量切得太碎
+**解法**：狠心排优先级，减少并发测试数量
 
 ---
 
-## Sequential Testing
+## 样本量要求过高时怎么办
 
-If you must check results before reaching sample size:
+拿不到足够流量时的选项：
 
-### What is it?
-Statistical method that adjusts for multiple looks at data.
+1. **提高 MDE**：只接受检测更大的效应（20%+ 提升）
+2. **降低置信水平**：用 90% 而不是 95%（有风险，记录在案）
+3. **减少变体**：只测最有希望的变体
+4. **合并流量**：跨多个相似页面测试
+5. **测上游**：在漏斗更上游、流量更大的位置测试
+6. **不测了**：改用定性数据做决策
+7. **拉长测试**：接受更长时长（数周/数月）
 
-### When to use
-- High-risk changes
-- Need to stop bad variants early
-- Time-sensitive decisions
+---
 
-### Tools that support it
+## 序贯检验
+
+如果你必须在达到样本量之前查看结果：
+
+### 是什么？
+对多次查看数据做调整的统计方法。
+
+### 何时使用
+- 高风险变更
+- 需要尽早停掉差的变体
+- 时间敏感的决策
+
+### 支持它的工具
 - Optimizely (Stats Accelerator)
 - VWO (SmartStats)
-- PostHog (Bayesian approach)
+- PostHog（贝叶斯方法）
 
-### Tradeoff
-- More flexibility to stop early
-- Slightly larger sample size requirement
-- More complex analysis
+### 代价
+- 更灵活，可以提前停止
+- 样本量要求略高
+- 分析更复杂
 
 ---
 
-## Quick Decision Framework
+## 快速决策框架
 
-### Can I run this test?
+### 这个测试能跑吗？
 
 ```
 Daily eligible traffic (randomization units): _____
@@ -275,4 +279,4 @@ If days < 14: Likely feasible
 If days < 7: Easy to run, consider running longer anyway
 ```
 
-**Duration check (illustrative):** with 2,000 participants required per arm and 1,000 eligible participants/day, two arms at 50/50 with full exposure require four days, not two. At 50% exposure they require eight days. With full exposure and 90/10 allocation, the smaller arm needs 20 days to reach 2,000. These are collection estimates; honor planned business cycles and the analysis stopping rule.
+**时长核对（示意）：** 每臂需要 2,000 名参与者、每天有 1,000 名符合条件参与者时，两臂按 50/50 分配且全量曝光需要 4 天，而不是 2 天。曝光率 50% 时需要 8 天。全量曝光且按 90/10 分配时，较小的那臂需要 20 天才能凑满 2,000。这些只是数据收集的估算；仍要遵守计划好的业务周期和分析停止规则。

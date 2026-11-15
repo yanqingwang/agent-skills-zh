@@ -1,55 +1,59 @@
-# Mat Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/mat/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Mat 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/mat/design.md`
-- Preview card: `bold-template-pack/templates/mat/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/mat/design.md`
+- 预览卡：`bold-template-pack/templates/mat/preview.md`
 
-- Slug: `mat`
-- Tagline: Dark sage canvas with bone paper and burnt-orange accent; mid-century modern with wood undertones.
-- Mood: warm-modern, considered, tactile, mid-century
-- Tone: warm, design-led, intentional, considered
-- Formality: medium
-- Density: medium
-- Scheme: mixed
-- Best for: Anything that should feel mid-century, tactile, and intentional: design studio credentials, architecture / interior brands, ceramics / craft / furniture, advisory decks. Also a warm, distinctive choice for tech, research, or business decks that want a considered analog feel instead of digital-cool.
-- Avoid for: Contexts that need fast tech energy or institutional restraint — the muted sage and burnt-orange palette is intentionally warm and slow.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`mat`
+- Tagline：暗鼠尾草绿画布配骨白纸张与焦橙点缀色；世纪中叶现代风，带木质底色。
+- Mood：warm-modern、considered、tactile、mid-century
+- Tone：warm、design-led、intentional、considered
+- Formality：medium
+- Density：medium
+- Scheme：mixed
+- 适合：一切应当显得世纪中叶、有材质触感且用心的内容：设计工作室资历介绍、建筑/室内品牌、陶瓷/手作/家具、咨询演示。对想要用心模拟质感而非数字冷感的科技、研究或商业演示而言，也是一个温暖而独特的选择。
+- 避免：需要快速科技能量或机构式克制的场景：低饱和鼠尾草绿与焦橙配色刻意保持温暖与缓慢。
 
-A warm, material-tactile presentation system inspired by a high-end product landing page. Dark forest green is the dominant environment, warmed by a low atmospheric wood-brown glow from the bottom-right corner of every dark slide. Cream type floats directly on the field; warm orange acts as the single accent. The typeface stack pairs Bricolage Grotesque (a heavy, rounded grotesque) for display with DM Sans for body and DM Mono for labels — the result reads as industrial-design portfolio meets boutique product launch, never tech demo.
+## 视觉速览
 
-Mat is a material-tactile presentation system built around a single environmental premise: a deep forest-green surface warmed from the bottom-right corner by a low wood-brown glow. The atmosphere does the heavy lifting — before any content lands, the slide already feels like a workbench in afternoon light. Cream type floats directly on the green field; there are no cards, no panels, no frames. Where the system needs to break the green, it does so with a single cream inset box (the info-card) that reads as a piece of warm paper laid on the dark surface.
+一套温暖、材质触感强、灵感来自高端产品落地页的演示系统。暗森林绿是主导环境，每页暗色幻灯片的右下角透出低沉的木质棕色氛围光。米白文字直接浮在色场上；暖橙充当唯一点缀色。字体栈把 Bricolage Grotesque（厚重圆润的怪诞体）用于展示，DM Sans 用于正文，DM Mono 用于标签：成品读起来像工业设计作品集遇上精品产品发布，绝不是技术演示。
 
-## Preview Ingredients
+Mat 是一套材质触感演示系统，围绕单一的环境前提构建：深森林绿表面，右下角透出低沉的木质棕色光晕。氛围承担了主要工作：在任何内容落位之前，幻灯片就已经像午后光线里的工作台。米白文字直接浮在绿色场面上；没有卡片、没有面板、没有边框。系统需要打破绿色时，只用一个米白内嵌盒（信息卡），读起来像铺在深色表面上的一张暖纸。
 
-- Palette: bg-dark #232E26; bg-dark-alt #2E3D30; bg-cream #EDE6D0; bg-cream-alt #E4DAC4; ink-cream #F0E8D2; ink-dark #1E2820; accent-orange #C07030; wood-glow #7A4E24
-- Typography: Bricolage Grotesque; DM Sans; DM Mono; {typography.label.fontFamily}
-- Signature move: Dark forest green canvas ({colors.bg-dark}) with a warm wood-brown radial glow ({components.atmospheric-glow}) anchored to the bottom-right corner of every dark slide.
-- Signature move: Cream text ({colors.ink-cream}) floats directly on the green field with no card, panel, or frame around it.
-- Signature move: Bricolage Grotesque display type is always mixed case — never uppercase. Uppercase is reserved for DM Mono labels.
-- Signature move: A single accent color, warm orange ({colors.accent-orange}), used only as small inline emphasis (kicker, bullet marker, inline <em>, quote glyph, one chart bar).
-- Signature move: The cream info-card ({components.info-card}) is the signature material-contrast component — a warm paper rectangle inset on the dark field.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：bg-dark #232E26; bg-dark-alt #2E3D30; bg-cream #EDE6D0; bg-cream-alt #E4DAC4; ink-cream #F0E8D2; ink-dark #1E2820; accent-orange #C07030; wood-glow #7A4E24
+- Typography：Bricolage Grotesque; DM Sans; DM Mono; {typography.label.fontFamily}
+- Signature move：暗森林绿画布（{colors.bg-dark}），每页暗色幻灯片右下角锚定一圈温暖的木质棕色径向光晕（{components.atmospheric-glow}）。
+- Signature move：米白文字（{colors.ink-cream}）直接浮在绿色场面上，周围没有任何卡片、面板或边框。
+- Signature move：Bricolage Grotesque 展示字体始终大小写混排，从不大写。大写只保留给 DM Mono 标签。
+- Signature move：唯一点缀色暖橙（{colors.accent-orange}），只用作小型行内强调（眉题、列表符、行内 <em>、引号字形、一根图表柱）。
+- Signature move：米白信息卡（{components.info-card}）是招牌的材质对比组件：嵌在暗色场面上的一块暖纸矩形。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

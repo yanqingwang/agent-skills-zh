@@ -1,35 +1,39 @@
-# GraphQL Language Prompt Snippet
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/researcher/analysis/understand/languages/graphql.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Key Concepts
+# GraphQL 语言提示词片段
 
-- **Type System**: Strongly typed schema defining the API contract with scalar, object, enum, and union types
-- **Queries**: Read operations fetching data with field-level selection (no over-fetching)
-- **Mutations**: Write operations for creating, updating, and deleting data
-- **Subscriptions**: Real-time data push over WebSocket connections
-- **Resolvers**: Functions mapping schema fields to data sources (database, API, cache)
-- **Fragments**: Reusable field selections reducing query duplication across operations
-- **Directives**: `@deprecated`, `@include`, `@skip` for conditional field inclusion and schema metadata
-- **Input Types**: `input` keyword for complex mutation arguments
-- **Interfaces and Unions**: Polymorphic types for shared fields across multiple object types
-- **Schema Stitching / Federation**: Composing multiple GraphQL services into a unified graph
+## 核心概念
 
-## Notable File Patterns
+- **类型系统**：强类型 schema 定义 API 契约，含标量、对象、枚举与联合类型
+- **查询（Query）**：读取操作，按字段级选择获取数据（不过量取数）
+- **变更（Mutation）**：写入操作，创建、更新、删除数据
+- **订阅（Subscription）**：通过 WebSocket 连接实时推送数据
+- **Resolver**：把 schema 字段映射到数据源（数据库、API、缓存）的函数
+- **Fragment**：可复用的字段选择，减少跨操作的查询重复
+- **指令**：`@deprecated`、`@include`、`@skip` 用于条件字段包含与 schema 元数据
+- **输入类型**：`input` 关键字定义复杂变更参数
+- **接口与联合**：多态类型，让多个对象类型共享字段
+- **Schema Stitching / Federation**：把多个 GraphQL 服务组合成统一图谱
 
-- `schema.graphql` / `*.graphql` — Schema definition files
-- `*.gql` — Alternative extension for GraphQL files
-- `schema/*.graphql` — Split schema files by domain (users.graphql, orders.graphql)
-- `*.resolvers.ts` / `*.resolvers.js` — Resolver implementations (TypeScript/JavaScript convention)
-- `codegen.yml` — GraphQL Code Generator configuration
+## 重要文件模式
 
-## Edge Patterns
+- `schema.graphql` / `*.graphql`：schema 定义文件
+- `*.gql`：GraphQL 文件的另一种扩展名
+- `schema/*.graphql`：按领域拆分的 schema 文件（users.graphql、orders.graphql）
+- `*.resolvers.ts` / `*.resolvers.js`：Resolver 实现（TypeScript/JavaScript 约定）
+- `codegen.yml`：GraphQL Code Generator 配置
 
-- GraphQL schema files `defines_schema` for the resolver code that implements query/mutation handlers
-- Type definitions create `related` edges between types connected by field references
-- Schema files `defines_schema` for client-side query/mutation files that consume the API
-- Codegen config `configures` the schema-to-code generation pipeline
+## 边模式
 
-## Summary Style
+- GraphQL schema 文件为实现查询/变更处理器的 resolver 代码建立 `defines_schema` 边
+- 类型定义在由字段引用连接的类型之间创建 `related` 边
+- schema 文件为消费该 API 的客户端查询/变更文件建立 `defines_schema` 边
+- codegen 配置对 schema 到代码的生成管线建立 `configures` 边
 
-> "GraphQL schema defining N types, M queries, and K mutations for the user management API."
-> "API schema with type definitions for products, orders, and payment processing with pagination."
-> "Subscription schema enabling real-time notifications for order status updates."
+## 摘要风格
+
+> "GraphQL schema：为用户管理 API 定义 N 个类型、M 个查询与 K 个变更。"
+> "API schema：含产品、订单与支付处理的类型定义，支持分页。"
+> "订阅 schema：为订单状态更新启用实时通知。"

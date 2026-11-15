@@ -1,8 +1,12 @@
-# BDI RDF Examples
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/bdi-mental-states/references/rdf-examples.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete RDF/Turtle examples for BDI mental state modeling.
+# BDI RDF 示例
 
-## Complete Cognitive Workflow
+用于 BDI 心智状态建模的完整 RDF/Turtle 示例。
+
+## 完整认知工作流
 
 ```turtle
 @prefix bdi: <https://w3id.org/fossr/ontology/bdi/> .
@@ -176,7 +180,7 @@ ex:TimeInterval_execution a bdi:TimeInterval ;
     bdi:hasEndTime "2026-01-04T08:52:00"^^xsd:dateTime .
 ```
 
-## Multi-Agent Coordination Example
+## 多智能体协调示例
 
 ```turtle
 @prefix bdi: <https://w3id.org/fossr/ontology/bdi/> .
@@ -233,7 +237,7 @@ ex:Message_M1 a fipa:ACLMessage ;
     fipa:performative fipa:inform .
 ```
 
-## Conflict Resolution Example
+## 冲突解决示例
 
 ```turtle
 @prefix bdi: <https://w3id.org/fossr/ontology/bdi/> .
@@ -270,7 +274,7 @@ ex:Intention_resolution a bdi:Intention ;
     bdi:isJustifiedBy ex:Justification_location_conflict .
 ```
 
-## T2B2T Payment Processing Example
+## T2B2T 支付处理示例
 
 ```turtle
 @prefix bdi: <https://w3id.org/fossr/ontology/bdi/> .
@@ -312,4 +316,3 @@ ex:WorldState_payment_complete a bdi:WorldState ;
     rdfs:comment "Payment of $250 sent to Ghadeh via Zelle" ;
     bdi:atTime "2025-10-27T10:20:00"^^xsd:dateTime .
 ```
-

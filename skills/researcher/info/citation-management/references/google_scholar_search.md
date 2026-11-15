@@ -1,21 +1,25 @@
-# Google Scholar Search Guide
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/citation-management/references/google_scholar_search.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Comprehensive guide to searching Google Scholar for academic papers, including advanced search operators, filtering strategies, and metadata extraction.
+# Google Scholar 检索指南
 
-## Overview
+在 Google Scholar 上检索学术论文的综合指南，涵盖高级检索操作符、过滤策略与元数据抽取。
 
-Google Scholar provides the most comprehensive coverage of academic literature across all disciplines:
-- **Coverage**: Broad scholarly discovery; Google does not publish a complete current index count
-- **Scope**: All academic disciplines
-- **Content types**: Journal articles, books, theses, conference papers, preprints, patents, court opinions
-- **Citation tracking**: "Cited by" links for forward citation tracking
-- **Accessibility**: Free to use, no account required
+## 概述
 
-## Basic Search
+Google Scholar 对所有学科的学术文献覆盖最全面：
+- **覆盖面**：广泛的学术发现能力；Google 不公布当前索引的完整数量
+- **范围**：所有学科
+- **内容类型**：期刊论文、图书、学位论文、会议论文、预印本、专利、法院判决意见
+- **引文追踪**："Cited by" 链接支持前向引文追踪
+- **可访问性**：免费使用，无需账号
 
-### Simple Keyword Search
+## 基础检索
 
-Search for papers containing specific terms anywhere in the document (title, abstract, full text):
+### 简单关键词检索
+
+检索文档任意位置（标题、摘要、全文）包含特定词的论文：
 
 ```
 CRISPR gene editing
@@ -24,15 +28,15 @@ climate change impact agriculture
 quantum computing algorithms
 ```
 
-**Tips**:
-- Use specific technical terms
-- Include key acronyms and abbreviations
-- Start broad, then refine
-- Check spelling of technical terms
+**技巧**：
+- 使用具体的技术术语
+- 包含关键缩略语与缩写
+- 先宽后窄，逐步收窄
+- 检查技术术语的拼写
 
-### Exact Phrase Search
+### 精确短语检索
 
-Use quotation marks to search for exact phrases:
+用引号检索精确短语：
 
 ```
 "deep learning"
@@ -41,17 +45,17 @@ Use quotation marks to search for exact phrases:
 "randomized controlled trial"
 ```
 
-**When to use**:
-- Technical terms that must appear together
-- Proper names
-- Specific methodologies
-- Exact titles
+**适用场景**：
+- 必须连在一起出现的技术术语
+- 专有名称
+- 特定方法论
+- 确切标题
 
-## Advanced Search Operators
+## 高级检索操作符
 
-### Author Search
+### 作者检索
 
-Find papers by specific authors:
+检索特定作者的论文：
 
 ```
 author:LeCun
@@ -59,20 +63,20 @@ author:"Geoffrey Hinton"
 author:Church synthetic biology
 ```
 
-**Variations**:
-- Single last name: `author:Smith`
-- Full name in quotes: `author:"Jane Smith"`
-- Author + topic: `author:Doudna CRISPR`
+**变化形式**：
+- 单姓：`author:Smith`
+- 带引号的全名：`author:"Jane Smith"`
+- 作者 + 主题：`author:Doudna CRISPR`
 
-**Tips**:
-- Authors may publish under different name variations
-- Try with and without middle initials
-- Consider name changes (marriage, etc.)
-- Use quotation marks for full names
+**技巧**：
+- 作者可能以不同的姓名变体发文
+- 中间名缩写带上与不带都试一遍
+- 考虑改名（婚姻等）情况
+- 全名加引号
 
-### Title Search
+### 标题检索
 
-Search only in article titles:
+只在论文标题中检索：
 
 ```
 intitle:transformer
@@ -80,22 +84,22 @@ intitle:"attention mechanism"
 intitle:review climate change
 ```
 
-**Use cases**:
-- Finding papers specifically about a topic
-- More precise than full-text search
-- Reduces irrelevant results
-- Good for finding reviews or methods
+**适用场景**：
+- 找专门讨论某主题的论文
+- 比全文检索更精确
+- 减少无关结果
+- 适合找综述或方法论文
 
-### Publication Search
+### 出版物检索
 
-Use the Advanced Search window's publication field for a journal or conference.
-The official help does not document `source:` as a stable public API operator;
-verify the resulting venue manually. Title and date constraints are also
-available in Advanced Search.
+检索特定期刊或会议时，使用高级检索窗口的 publication 字段。
+官方帮助并未把 `source:` 记录为稳定的公开操作符，
+请人工核实结果的发表载体。标题与年份限制同样
+可在高级检索中使用。
 
-### Exclusion Operator
+### 排除操作符
 
-Exclude terms from results:
+从结果中排除某些词：
 
 ```
 machine learning -survey
@@ -104,17 +108,17 @@ climate change -news
 deep learning -tutorial -review
 ```
 
-**Common exclusions**:
-- `-survey`: Exclude survey papers
-- `-review`: Exclude review articles
-- `-patent`: Exclude patents
-- `-book`: Exclude books
-- `-news`: Exclude news articles
-- `-tutorial`: Exclude tutorials
+**常用排除**：
+- `-survey`：排除综述类论文
+- `-review`：排除评论/综述文章
+- `-patent`：排除专利
+- `-book`：排除图书
+- `-news`：排除新闻文章
+- `-tutorial`：排除教程
 
-### OR Operator
+### OR 操作符
 
-Search for papers containing any of multiple terms:
+检索包含多个词中任意一个的论文：
 
 ```
 "machine learning" OR "deep learning"
@@ -122,15 +126,15 @@ CRISPR OR "gene editing"
 "climate change" OR "global warming"
 ```
 
-**Best practices**:
-- OR must be uppercase
-- Combine synonyms
-- Include acronyms and spelled-out versions
-- Use with exact phrases
+**最佳实践**：
+- OR 必须大写
+- 组合同义词
+- 缩略语与全称都包含
+- 与精确短语搭配使用
 
-### Wildcard Search
+### 通配符检索
 
-Use asterisk (*) as wildcard for unknown words:
+用星号（*）作为通配符匹配未知词：
 
 ```
 "machine * learning"
@@ -138,86 +142,86 @@ Use asterisk (*) as wildcard for unknown words:
 "* neural network"
 ```
 
-**Note**: Limited wildcard support in Google Scholar compared to other databases.
+**注意**：与其他数据库相比，Google Scholar 的通配符支持有限。
 
-## Advanced Filtering
+## 高级过滤
 
-### Year Range
+### 年份范围
 
-Filter by publication year:
+按发表年份过滤：
 
-**Using interface**:
-- Click "Since [year]" on left sidebar
-- Select custom range
+**使用界面**：
+- 点击左侧边栏的 "Since [year]"
+- 选择自定义范围
 
-**Using search operators**:
+**使用检索操作符**：
 ```
 # Not directly in search query
 # Use interface or URL parameters
 ```
 
-**In script**:
+**在脚本中**：
 ```bash
 python scripts/search_google_scholar.py "quantum computing" \
   --year-start 2020 \
   --year-end 2024
 ```
 
-### Sorting Options
+### 排序选项
 
-**By relevance** (default):
-- Google's algorithm determines relevance
-- Considers citations, author reputation, publication venue
-- Generally good for most searches
+**按相关性**（默认）：
+- 由 Google 算法判定相关性
+- 综合考虑引用数、作者声誉、发表载体
+- 对多数检索都适用
 
-**By date**:
-- Most recent papers first
-- Good for fast-moving fields
-- May miss highly cited older papers
-- Click "Sort by date" in interface
+**按日期**：
+- 最新论文优先
+- 适合快速演进的领域
+- 可能漏掉高被引的早期论文
+- 在界面中点击 "Sort by date"
 
-**By citation count** (local sort of the retrieved sample, not a Scholar-wide sort):
+**按引用数**（对取回样本的本地排序，不是 Scholar 全库排序）：
 ```bash
 python scripts/search_google_scholar.py "transformers" \
   --sort-by citations \
   --limit 50
 ```
 
-### Language Filtering
+### 语言过滤
 
-**In interface**:
+**在界面中**：
 - Settings → Languages
-- Select preferred languages
+- 选择偏好语言
 
-Language preferences depend on the user settings; do not assume an English-only default.
+语言偏好取决于用户设置；不要假定默认只有英语。
 
-## Search Strategies
+## 检索策略
 
-### Finding Seminal Papers
+### 寻找奠基性论文
 
-Identify highly influential papers in a field:
+找出某领域影响最大的论文：
 
-1. **Search by topic** with broad terms
-2. **Inspect citation counts within the retrieved sample**
-3. **Look for review articles** for comprehensive overviews
-4. **Check publication dates** for foundational vs recent work
+1. **按主题检索**，用宽泛的词
+2. **检查取回样本内的引用数**
+3. **找综述文章**获取全面概览
+4. **核对发表日期**，区分奠基工作与新近工作
 
-**Example**:
+**示例**：
 ```
 "generative adversarial networks"
 # Inspect the returned sample; use citation chaining to find earlier work
 ```
 
-### Finding Recent Work
+### 寻找最新工作
 
-Stay current with latest research:
+掌握最新研究动态：
 
-1. **Search by topic**
-2. **Filter to recent years** (last 1-2 years)
-3. **Sort by date** for newest first
-4. **Set up alerts** for ongoing tracking
+1. **按主题检索**
+2. **过滤到近几年**（最近 1-2 年）
+3. **按日期排序**，最新优先
+4. **设置快讯（alerts）**做持续跟踪
 
-**Example**:
+**示例**：
 ```bash
 python scripts/search_google_scholar.py "AlphaFold protein structure" \
   --year-start 2023 \
@@ -225,9 +229,9 @@ python scripts/search_google_scholar.py "AlphaFold protein structure" \
   --limit 50
 ```
 
-### Finding Review Articles
+### 寻找综述文章
 
-Get comprehensive overviews of a field:
+获取某领域的全面概览：
 
 ```
 intitle:review "machine learning"
@@ -235,27 +239,27 @@ intitle:review "machine learning"
 intitle:survey "natural language processing"
 ```
 
-**Indicators**:
-- "review", "survey", "perspective" in title
-- Often highly cited
-- Published in review journals (Nature Reviews, Trends, etc.)
-- Comprehensive reference lists
+**识别特征**：
+- 标题含 "review"、"survey"、"perspective"
+- 通常被引很高
+- 发表在综述类期刊（Nature Reviews、Trends 等）
+- 参考文献列表全面
 
-### Citation Chain Search
+### 引文链检索
 
-**Forward citations** (papers citing a key paper):
-1. Find seminal paper
-2. Click "Cited by X"
-3. See all papers that cite it
-4. Identify how field has developed
+**前向引文**（引用某关键论文的论文）：
+1. 找到奠基论文
+2. 点击 "Cited by X"
+3. 查看所有引用它的论文
+4. 梳理领域如何发展
 
-**Backward citations** (references in a key paper):
-1. Find recent review or important paper
-2. Check its reference list
-3. Identify foundational work
-4. Trace development of ideas
+**后向引文**（某关键论文的参考文献）：
+1. 找到近期综述或重要论文
+2. 查看其参考文献列表
+3. 识别奠基性工作
+4. 追溯思想的演进
 
-**Example workflow**:
+**示例工作流**：
 ```
 # Find original transformer paper
 "Attention is all you need" author:Vaswani
@@ -267,30 +271,30 @@ intitle:survey "natural language processing"
 # Find RNN, LSTM, attention mechanism origins
 ```
 
-### Comprehensive Literature Search
+### 系统性文献检索
 
-For thorough coverage (e.g., systematic reviews):
+需要彻底覆盖时（例如系统综述）：
 
-1. **Generate synonym list**:
-   - Main terms + alternatives
-   - Acronyms + spelled out
-   - US vs UK spelling
+1. **生成同义词清单**：
+   - 主词 + 备选词
+   - 缩略语 + 全称
+   - 美式 vs 英式拼写
 
-2. **Use OR operators**:
+2. **使用 OR 操作符**：
    ```
    ("machine learning" OR "deep learning" OR "neural networks")
    ```
 
-3. **Combine multiple concepts**:
+3. **组合多个概念**：
    ```
    ("machine learning" OR "deep learning") ("drug discovery" OR "drug development")
    ```
 
-4. **Search without date filters** initially:
-   - Get total landscape
-   - Filter later if too many results
+4. **初次检索不加年份过滤**：
+   - 先看全景
+   - 结果太多之后再过滤
 
-5. **Export results** for systematic analysis:
+5. **导出结果**供系统分析：
    ```bash
    python scripts/search_google_scholar.py \
      '"machine learning" OR "deep learning" drug discovery' \
@@ -298,31 +302,31 @@ For thorough coverage (e.g., systematic reviews):
      --output comprehensive_search.json
    ```
 
-## Extracting Citation Information
+## 提取引文信息
 
-### From Google Scholar Results Page
+### 从 Google Scholar 结果页
 
-Each result shows:
-- **Title**: Paper title (linked to full text if available)
-- **Authors**: Author list (often truncated)
-- **Source**: Journal/conference, year, publisher
-- **Cited by**: Number of citations + link to citing papers
-- **Related articles**: Link to similar papers
-- **All versions**: Different versions of the same paper
+每条结果显示：
+- **标题**：论文标题（如有全文则带链接）
+- **作者**：作者列表（常被截断）
+- **来源**：期刊/会议、年份、出版方
+- **被引数（Cited by）**：引用数 + 指向引用论文的链接
+- **相关文章**：指向相似论文的链接
+- **所有版本**：同一论文的不同版本
 
-### Export Options
+### 导出选项
 
-**Manual export**:
-1. Click "Cite" under paper
-2. Select BibTeX format
-3. Copy citation
+**手动导出**：
+1. 点击论文下方的 "Cite"
+2. 选择 BibTeX 格式
+3. 复制引文
 
-**Limitations**:
-- One paper at a time
-- Manual process
-- Time-consuming for many papers
+**局限**：
+- 一次只能处理一篇
+- 纯手动流程
+- 论文多时很耗时
 
-**Automated export** (using script):
+**自动导出**（用脚本）：
 ```bash
 # Search and export to BibTeX
 python scripts/search_google_scholar.py "quantum computing" \
@@ -331,80 +335,80 @@ python scripts/search_google_scholar.py "quantum computing" \
   --output quantum_papers.bib
 ```
 
-### Metadata Available
+### 可获取的元数据
 
-From Google Scholar you can typically extract:
-- Title
-- Authors (may be incomplete)
-- Year
-- Source (journal/conference)
-- Citation count
-- Link to full text (when available)
-- Link to PDF (when available)
+从 Google Scholar 通常可以提取：
+- 标题
+- 作者（可能不完整）
+- 年份
+- 来源（期刊/会议）
+- 引用数
+- 全文链接（如有）
+- PDF 链接（如有）
 
-**Note**: Metadata quality varies:
-- Some fields may be missing
-- Author names may be incomplete
-- Need to verify with DOI lookup for accuracy
+**注意**：元数据质量参差：
+- 某些字段可能缺失
+- 作者姓名可能不完整
+- 需要用 DOI 查询核实准确性
 
-## Rate Limiting and Access
+## 频率限制与访问
 
-### Rate Limits
+### 频率限制
 
-Google Scholar has rate limiting to prevent automated scraping:
+Google Scholar 有频率限制以防自动化抓取：
 
-**Symptoms of rate limiting**:
-- CAPTCHA challenges
-- Temporary IP blocks
-- 429 "Too Many Requests" errors
+**被限流的症状**：
+- 弹出 CAPTCHA 验证
+- IP 被临时封锁
+- 429 "Too Many Requests" 错误
 
-**Best practices**:
-1. **Add delays between requests**: 2-5 seconds minimum
-2. **Limit query volume**: Don't search hundreds of queries rapidly
-3. **Treat `scholarly` as an unofficial scraper**, not a supported Google API
-4. **Stop on blocking** and use OpenAlex or PubMed for bulk work
-5. Respect robots.txt; Google does not provide bulk record access
+**最佳实践**：
+1. **在请求之间加延迟**：至少 2-5 秒
+2. **控制查询量**：不要快速连发几百个查询
+3. **把 `scholarly` 当作非官方抓取器**，不是 Google 支持的 API
+4. **被封锁就停**，批量工作改用 OpenAlex 或 PubMed
+5. 遵守 robots.txt；Google 不提供批量记录访问
 
-**In our scripts**:
+**在我们的脚本中**：
 ```python
 # Automatic rate limiting built in
 time.sleep(random.uniform(2, 5))  # Client pacing, not a guaranteed safe quota
 ```
 
-### Ethical Considerations
+### 伦理考量
 
-**DO**:
-- Respect rate limits
-- Use reasonable delays
-- Cache results (don't re-query)
-- Use official APIs when available
-- Attribute data properly
+**应该做**：
+- 遵守频率限制
+- 使用合理的延迟
+- 缓存结果（不要重复查询）
+- 有官方 API 就用官方 API
+- 正确标注数据来源
 
-**DON'T**:
-- Scrape aggressively
-- Use multiple IPs to bypass limits
-- Violate terms of service
-- Burden servers unnecessarily
-- Use data commercially without permission
+**不应该做**：
+- 激进抓取
+- 用多个 IP 绕过限制
+- 违反服务条款
+- 给服务器造成不必要负担
+- 未经许可将数据用于商业用途
 
-### Institutional Access
+### 机构访问
 
-**Benefits of institutional access**:
-- Access to full-text PDFs through library subscriptions
-- Better download capabilities
-- Integration with library systems
-- Link resolver to full text
+**机构访问的好处**：
+- 通过图书馆订阅获取全文 PDF
+- 更好的下载能力
+- 与图书馆系统集成
+- 链接解析器直达全文
 
-**Setup**:
+**设置**：
 - Google Scholar → Settings → Library links
-- Add your institution
-- Links appear in search results
+- 添加你的机构
+- 链接会出现在检索结果中
 
-## Tips and Best Practices
+## 技巧与最佳实践
 
-### Search Optimization
+### 检索优化
 
-1. **Start simple, then refine**:
+1. **先简单，再收窄**：
    ```
    # Too specific initially
    intitle:"deep learning" intitle:review
@@ -416,19 +420,19 @@ time.sleep(random.uniform(2, 5))  # Client pacing, not a guaranteed safe quota
    # Add title, publication, and year controls as needed
    ```
 
-2. **Use multiple search strategies**:
-   - Keyword search
-   - Author search for known experts
-   - Citation chaining from key papers
-   - Source search in top journals
+2. **使用多种检索策略**：
+   - 关键词检索
+   - 已知专家用作者检索
+   - 从关键论文做引文链
+   - 在顶级期刊内按来源检索
 
-3. **Check spelling and variations**:
+3. **检查拼写与变体**：
    - Color vs colour
    - Optimization vs optimisation
    - Tumor vs tumour
-   - Try common misspellings if few results
+   - 结果太少时试试常见拼写错误
 
-4. **Combine operators strategically**:
+4. **有策略地组合操作符**：
    ```
    # Good combination
    author:Church intitle:"synthetic biology"
@@ -437,48 +441,48 @@ time.sleep(random.uniform(2, 5))  # Client pacing, not a guaranteed safe quota
    # Find reviews by specific author on topic in recent years
    ```
 
-### Result Evaluation
+### 结果评估
 
-1. **Check citation counts**:
-   - High citations indicate influence
-   - Recent papers may have low citations but be important
-   - Citation counts vary by field
+1. **查看引用数**：
+   - 高引用说明有影响力
+   - 新论文可能引用数低但很重要
+   - 引用数因学科而异
 
-2. **Verify publication venue**:
-   - Peer-reviewed journals vs preprints
-   - Conference proceedings
-   - Book chapters
-   - Technical reports
+2. **核实发表载体**：
+   - 同行评审期刊 vs 预印本
+   - 会议论文集
+   - 图书章节
+   - 技术报告
 
-3. **Check for full text access**:
-   - [PDF] link on right side
-   - "All X versions" may have open access version
-   - Check institutional access
-   - Try author's website or ResearchGate
+3. **检查全文可得性**：
+   - 右侧的 [PDF] 链接
+   - "All X versions" 里可能有开放获取版本
+   - 检查机构访问权限
+   - 试试作者个人网站或 ResearchGate
 
-4. **Look for review articles**:
-   - Comprehensive overviews
-   - Good starting point for new topics
-   - Extensive reference lists
+4. **找综述文章**：
+   - 全面概览
+   - 新主题的好起点
+   - 参考文献列表详尽
 
-### Managing Results
+### 结果管理
 
-1. **Use citation manager integration**:
-   - Export to BibTeX
-   - Import to Zotero, Mendeley, EndNote
-   - Maintain organized library
+1. **使用文献管理器集成**：
+   - 导出为 BibTeX
+   - 导入 Zotero、Mendeley、EndNote
+   - 维护有序的文献库
 
-2. **Set up alerts** for ongoing research:
+2. **设置快讯（alerts）**支持持续研究：
    - Google Scholar → Alerts
-   - Get emails for new papers matching query
-   - Track specific authors or topics
+   - 有匹配查询的新论文就发邮件
+   - 跟踪特定作者或主题
 
-3. **Create collections**:
-   - Save papers to Google Scholar Library
-   - Organize by project or topic
-   - Add labels and notes
+3. **建立收藏集**：
+   - 把论文存入 Google Scholar Library
+   - 按项目或主题组织
+   - 加标签和笔记
 
-4. **Export systematically**:
+4. **系统性导出**：
    ```bash
    # Save search results for later analysis
    python scripts/search_google_scholar.py "your topic" \
@@ -490,11 +494,11 @@ time.sleep(random.uniform(2, 5))  # Client pacing, not a guaranteed safe quota
      --output topic_refs.bib
    ```
 
-## Advanced Techniques
+## 高级技巧
 
-### Boolean Logic Combinations
+### 布尔逻辑组合
 
-Combine multiple operators for precise searches:
+组合多个操作符做精确检索：
 
 ```
 # Highly cited reviews on specific topic by known authors
@@ -510,7 +514,7 @@ CRISPR
 # Use Advanced Search publication and date controls; inspect actual venue
 ```
 
-### Finding Open Access Papers
+### 寻找开放获取论文
 
 ```
 # Search with generic terms
@@ -521,43 +525,43 @@ machine learning
 # Check arXiv, bioRxiv versions
 ```
 
-**In script**: the Scholar client has no open-access filter, but each result
-carries an `eprint_url` when a free copy exists, so filter the JSON:
+**在脚本中**：Scholar 客户端没有开放获取过滤器，但只要存在免费副本，每条结果
+都会带 `eprint_url` 字段，所以可以过滤 JSON：
 
 ```bash
 python scripts/search_google_scholar.py "topic" --output papers.json
 python -c "import json;d=json.load(open('papers.json'));print(json.dumps([r for r in d['results'] if r['eprint_url']],indent=2))" > open_access_papers.json
 ```
 
-OpenAlex exposes this directly as a field:
+OpenAlex 直接以字段形式提供这一信息：
 
 ```bash
 python scripts/search_openalex.py "topic" --output papers.json   # each result has is_open_access
 ```
 
-### Tracking Research Impact
+### 追踪研究影响力
 
-**For a specific paper**:
-1. Find the paper
-2. Click "Cited by X"
-3. Analyze citing papers:
-   - How is it being used?
-   - What fields cite it?
-   - Recent vs older citations?
+**对单篇论文**：
+1. 找到论文
+2. 点击 "Cited by X"
+3. 分析引用它的论文：
+   - 它被如何使用？
+   - 哪些领域在引用它？
+   - 引用是偏新还是偏旧？
 
-**For an author**:
-1. Search `author:LastName`
-2. Check h-index and i10-index
-3. View citation history graph
-4. Identify most influential papers
+**对某位作者**：
+1. 检索 `author:LastName`
+2. 查看 h-index 与 i10-index
+3. 查看引用历史图
+4. 识别影响力最大的论文
 
-**For a topic**:
-1. Search topic
-2. Sort by citations
-3. Identify seminal papers (highly cited, older)
-4. Check recent highly-cited papers (emerging important work)
+**对某个主题**：
+1. 检索主题
+2. 按引用数排序
+3. 识别奠基论文（高被引、较早）
+4. 关注近期高被引论文（新兴重要工作）
 
-### Finding Preprints and Early Work
+### 寻找预印本与早期工作
 
 ```
 # arXiv papers
@@ -570,89 +574,89 @@ site:biorxiv.org CRISPR
 ("arxiv" OR "biorxiv" OR "medrxiv") your topic
 ```
 
-**Note**: Preprints are not peer-reviewed. Always check if published version exists.
+**注意**：预印本未经同行评审。务必检查是否已有正式发表版本。
 
-## Common Issues and Solutions
+## 常见问题与解决
 
-### Too Many Results
+### 结果太多
 
-**Problem**: Search returns 100,000+ results, overwhelming.
+**问题**：检索返回 10 万条以上结果，令人无从下手。
 
-**Solutions**:
-1. Add more specific terms
-2. Use `intitle:` to search only titles
-3. Filter by recent years
-4. Add exclusions (e.g., `-review`)
-5. Search within specific journals
+**解决**：
+1. 加更具体的词
+2. 用 `intitle:` 只检索标题
+3. 按近期年份过滤
+4. 加排除项（例如 `-review`）
+5. 限定在特定期刊内检索
 
-### Too Few Results
+### 结果太少
 
-**Problem**: Search returns 0-10 results, suspiciously few.
+**问题**：检索只返回 0-10 条结果，少得可疑。
 
-**Solutions**:
-1. Remove restrictive operators
-2. Try synonyms and related terms
-3. Check spelling
-4. Broaden year range
-5. Use OR for alternative terms
+**解决**：
+1. 去掉限制性操作符
+2. 试试同义词与相关词
+3. 检查拼写
+4. 放宽年份范围
+5. 用 OR 连接备选词
 
-### Irrelevant Results
+### 结果不相关
 
-**Problem**: Results don't match intent.
+**问题**：结果与意图不符。
 
-**Solutions**:
-1. Use exact phrases with quotes
-2. Add more specific context terms
-3. Use `intitle:` for title-only search
-4. Exclude common irrelevant terms
-5. Combine multiple specific terms
+**解决**：
+1. 用引号做精确短语检索
+2. 加更具体的上下文词
+3. 用 `intitle:` 只检索标题
+4. 排除常见无关词
+5. 组合多个具体词
 
-### CAPTCHA or Rate Limiting
+### CAPTCHA 或频率限制
 
-**Problem**: Google Scholar shows CAPTCHA or blocks access.
+**问题**：Google Scholar 弹出 CAPTCHA 或封锁访问。
 
-**Solutions**:
-1. Wait several minutes before continuing
-2. Reduce query frequency
-3. Use longer delays in scripts (5-10 seconds)
-4. Stop automated requests and switch to an official metadata API
-5. Consider using institutional access
+**解决**：
+1. 等几分钟再继续
+2. 降低查询频率
+3. 在脚本里用更长延迟（5-10 秒）
+4. 停止自动化请求，改用官方元数据 API
+5. 考虑使用机构访问
 
-### Missing Metadata
+### 元数据缺失
 
-**Problem**: Author names, year, or venue missing from results.
+**问题**：结果缺作者姓名、年份或载体信息。
 
-**Solutions**:
-1. Click through to see full details
-2. Check "All versions" for better metadata
-3. Look up by DOI if available
-4. Extract metadata from CrossRef/PubMed instead
-5. Manually verify from paper PDF
+**解决**：
+1. 点进去看完整详情
+2. 查看 "All versions" 找更好的元数据
+3. 有 DOI 就按 DOI 查
+4. 改从 CrossRef/PubMed 提取元数据
+5. 用论文 PDF 人工核对
 
-### Duplicate Results
+### 重复结果
 
-**Problem**: Same paper appears multiple times.
+**问题**：同一篇论文出现多次。
 
-**Solutions**:
-1. Click "All X versions" to see consolidated view
-2. Choose version with best metadata
-3. Use deduplication in post-processing:
+**解决**：
+1. 点击 "All X versions" 查看合并视图
+2. 选元数据最好的版本
+3. 在后处理中去重：
    ```bash
    python scripts/format_bibtex.py results.bib \
      --deduplicate \
      --output clean_results.bib
    ```
 
-## Integration with Scripts
+## 与脚本集成
 
-### search_google_scholar.py Usage
+### search_google_scholar.py 用法
 
-**Basic search**:
+**基础检索**：
 ```bash
 python scripts/search_google_scholar.py "machine learning drug discovery"
 ```
 
-**With year filter**:
+**带年份过滤**：
 ```bash
 python scripts/search_google_scholar.py "CRISPR" \
   --year-start 2020 \
@@ -660,21 +664,21 @@ python scripts/search_google_scholar.py "CRISPR" \
   --limit 100
 ```
 
-**Sort by citations**:
+**按引用数排序**：
 ```bash
 python scripts/search_google_scholar.py "transformers" \
   --sort-by citations \
   --limit 50
 ```
 
-**Export to BibTeX**:
+**导出为 BibTeX**：
 ```bash
 python scripts/search_google_scholar.py "quantum computing" \
   --format bibtex \
   --output quantum.bib
 ```
 
-**Export to JSON for later processing**:
+**导出 JSON 供后续处理**：
 ```bash
 python scripts/search_google_scholar.py "topic" \
   --format json \
@@ -686,9 +690,9 @@ python scripts/extract_metadata.py \
   --output references.bib
 ```
 
-### Batch Searching
+### 批量检索
 
-For multiple topics:
+多个主题时：
 
 ```bash
 # Create file with search queries (queries.txt)
@@ -703,25 +707,25 @@ while read query; do
 done < queries.txt
 ```
 
-## Summary
+## 总结
 
-Google Scholar is the most comprehensive academic search engine, providing:
+Google Scholar 是覆盖最全面的学术搜索引擎，提供：
 
-✓ **Broad coverage**: All disciplines, 100M+ documents  
-✓ **Free access**: No account or subscription required  
-✓ **Citation tracking**: "Cited by" for impact analysis  
-✓ **Multiple formats**: Articles, books, theses, patents  
-✓ **Full-text search**: Not just abstracts  
+✓ **覆盖面广**：所有学科，1 亿+ 文献  
+✓ **免费使用**：无需账号或订阅  
+✓ **引文追踪**：用 "Cited by" 做影响力分析  
+✓ **格式多样**：论文、图书、学位论文、专利  
+✓ **全文检索**：不止摘要  
 
-Key strategies:
-- Use advanced operators for precision
-- Combine author, title, source searches
-- Track citations for impact
-- Export systematically to citation manager
-- Respect rate limits and access policies
-- Verify metadata with CrossRef/PubMed
+关键策略：
+- 用高级操作符提高精度
+- 组合作者、标题、来源检索
+- 用引文追踪评估影响力
+- 系统性导出到文献管理器
+- 遵守频率限制与访问政策
+- 用 CrossRef/PubMed 核实元数据
 
-For biomedical research, complement with PubMed for MeSH terms and curated metadata.
+生物医学研究可补充 PubMed，获取 MeSH 词表与经过整理的元数据。
 
 
-Reviewed sources: [Google Scholar Help](https://scholar.google.com/intl/en/scholar/help.html), [scholarly search_pubs API](https://scholarly.readthedocs.io/en/stable/scholarly_user.html). Searches are illustrative; this refresh did not scrape Scholar or test proxy services.
+已核阅来源：[Google Scholar 帮助](https://scholar.google.com/intl/en/scholar/help.html)、[scholarly search_pubs API](https://scholarly.readthedocs.io/en/stable/scholarly_user.html)。文中检索式仅供说明；本次更新未抓取 Scholar，也未测试代理服务。

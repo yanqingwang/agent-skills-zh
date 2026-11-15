@@ -1,101 +1,105 @@
-# Copy Editing Checklist
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/copy-editing/references/checklist.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this checklist alongside the Seven Sweeps Framework (see SKILL.md) as a final QA pass before delivering edited copy.
+# 文案编辑清单
 
-## Pick the Edit Mode
+把这份清单与七遍扫查框架（Seven Sweeps Framework，见 SKILL.md）配合使用，作为交付编辑稿前的最后一道质量检查。
 
-Decide what you were handed before running any sweep. The mode sets how much you're allowed to change.
+## 选定编辑模式
 
-| Mode | Signs | What to do |
+在执行任何扫查之前，先判断拿到的是什么稿子。模式决定你被允许改动多少。
+
+| 模式 | 特征 | 怎么做 |
 |---|---|---|
-| **A. Blank or slop** | Generic company-speak, AI mush, no point of view | Run all seven sweeps. You may rebuild sentences from the underlying facts; never invent stats, customers, or results |
-| **B. Real voice** | A clear angle or opinion, recognizable word choices, rough execution | Run all seven sweeps as restoration. Keep their argument, vocabulary, and emphasis. Fix the buried lead, vague lines, AI tells, and structure |
-| **C. Point edit** | "Fix this headline," "is this sentence OK?", "tighten paragraph two" | Skip the sweeps. Use point-edit mode below |
+| **A. 空白稿或 AI 腔** | 泛泛的公司话术、AI 糊状文、毫无观点 | 跑满全部七遍扫查。可以基于底层事实重写句子；绝不编造数据、客户或结果 |
+| **B. 真实声音** | 角度或观点清晰、用词有辨识度、执行粗糙 | 把七遍扫查当修复来跑。保留对方的论证、词汇和强调。修好被埋没的导语、含糊句子、AI 腔痕迹和结构 |
+| **C. 点状修改** | "改一下这个标题""这句话行吗""收紧第二段" | 跳过扫查，用下文的点状修改模式 |
 
-**Point-edit mode**
-- [ ] Change only the line, word, or section named, plus the minimum around it needed for the edit to read cleanly (a pronoun, a transition)
-- [ ] Check the edit against the AI Tells list and the surrounding voice, so the new line doesn't stand out
-- [ ] Return only the changed text with a one-line reason per change, and offer one alternative if the choice is close
-- [ ] Mention a serious problem elsewhere in one line at the end (a false claim, a broken CTA) without fixing it unasked
-- [ ] Don't rewrite neighboring lines, add sections, or run a full sweep report
+**点状修改模式**
+- [ ] 只改被点名的行、词或段落，加上为让上下文读起来顺畅所需的最少周边改动（一个代词、一处过渡）
+- [ ] 用 AI 腔痕迹清单和周边文风检验这处修改，让新句子不突兀
+- [ ] 只返回改动文本，每处改动附一行理由；如果两种写法差别不大，给出一个备选
+- [ ] 末尾用一行提及别处的严重问题（虚假声明、失效 CTA），未经要求不要顺手去修
+- [ ] 不要重写相邻句子、添加小节，或输出完整扫查报告
 
-**Reading taste (B and C).** What the author gave you is evidence of their choices. Their vocabulary is a voice decision ("stuff" and "ship" stay), where they spent words is a priority decision, and what they left out is a scope decision. Match those; don't swap in your own.
+**阅读品味（B 和 C）。**作者交给你的文字是其选择的证据。他们的词汇是文风决定（"stuff" 和 "ship" 保留），把字花在哪里是优先级决定，省掉什么范围决定。顺着这些来，不要换成你自己的。
 
-**Leave-it-alone test (all modes).** For each change, ask whether it's measurably better or just different. Revert anything you can't give a reason for.
+**"不动手"检验（所有模式）。**对每处改动自问：是可衡量的更好，还是只是不同。给不出理由的改动一律回退。
 
-*Modes adapted from Profound's `improved-copywriting` and Wispr Flow's `copy-editing` skills ([skills-marketing-library](https://github.com/retieedra-profound/skills-marketing-library), MIT).*
+*模式改编自 Profound 的 `improved-copywriting` 与 Wispr Flow 的 `copy-editing` skill（[skills-marketing-library](https://github.com/retieedra-profound/skills-marketing-library)，MIT）。*
 
-## Before You Start
+## 开始之前
 
-- [ ] Pick the edit mode (above); for a point edit, stop here and use point-edit mode
-- [ ] Understand the goal of this copy
-- [ ] Know the target audience
-- [ ] Identify the desired action
-- [ ] Read through once without editing
+- [ ] 选定编辑模式（见上）；点状修改到此为止，直接用点状修改模式
+- [ ] 理解这稿文案的目标
+- [ ] 明确目标受众
+- [ ] 确定期望的动作
+- [ ] 通读一遍，先不动笔
 
-## Clarity (Sweep 1)
+## 清晰（第 1 遍）
 
-- [ ] Every sentence is immediately understandable
-- [ ] No jargon without explanation
-- [ ] Pronouns have clear references
-- [ ] No sentences trying to do too much
+- [ ] 每句话都能立刻读懂
+- [ ] 行话必须解释，否则不用
+- [ ] 代词指代清楚
+- [ ] 没有一句话塞太多事
 
-## Voice & Tone (Sweep 2)
+## 声音与语调（第 2 遍）
 
-- [ ] Consistent formality level throughout
-- [ ] Brand personality maintained
-- [ ] No jarring shifts in mood
-- [ ] Reads well aloud
+- [ ] 全文正式程度一致
+- [ ] 品牌个性保持
+- [ ] 情绪转换不突兀
+- [ ] 朗读顺口
 
-## So What (Sweep 3)
+## 那又怎样（第 3 遍）
 
-- [ ] Every feature connects to a benefit
-- [ ] Claims answer "why should I care?"
-- [ ] Benefits connect to real desires
-- [ ] No impressive-but-empty statements
+- [ ] 每个功能都连到一项好处
+- [ ] 每个声明都回答"关我什么事？"
+- [ ] 好处连着真实欲望
+- [ ] 没有好看但空洞的话
 
-## Prove It (Sweep 4)
+## 拿出证据（第 4 遍）
 
-- [ ] Claims are substantiated
-- [ ] Social proof is specific and attributed
-- [ ] Numbers and stats have sources
-- [ ] No unearned superlatives
+- [ ] 声明有依据
+- [ ] 社会证明具体且注明出处
+- [ ] 数字与统计有来源
+- [ ] 没有无凭无据的最高级
 
-## Specificity (Sweep 5)
+## 具体（第 5 遍）
 
-- [ ] Vague words replaced with concrete ones
-- [ ] Numbers and timeframes included
-- [ ] Generic statements made specific
-- [ ] Filler content removed
+- [ ] 含糊词换成具体词
+- [ ] 有数字和时间范围
+- [ ] 泛泛之谈落到具体
+- [ ] 填充内容删掉
 
-## Heightened Emotion (Sweep 6)
+## 情绪升温（第 6 遍）
 
-- [ ] Copy evokes feeling, not just information
-- [ ] Pain points feel real
-- [ ] Aspirations feel achievable
-- [ ] Emotion serves the message authentically
+- [ ] 文案唤起感受，不只是传递信息
+- [ ] 痛点显得真实
+- [ ] 愿景显得可达成
+- [ ] 情绪真实地服务于信息
 
-## Zero Risk (Sweep 7)
+## 零风险（第 7 遍）
 
-- [ ] Objections addressed near CTA
-- [ ] Trust signals present
-- [ ] Next steps are crystal clear
-- [ ] Risk reversals stated (guarantee, trial, etc.)
+- [ ] 异议在 CTA 附近被回应
+- [ ] 有信任信号
+- [ ] 下一步清清楚楚
+- [ ] 写明风险逆转（保证、试用等）
 
-## AI Tells
+## AI 腔痕迹
 
-- [ ] No "it's not X, it's Y" or "not because X, because Y" reveals
-- [ ] No "no X, no Y, no Z" negation lists
-- [ ] No sentences that trail restating comma clauses after the main claim (a clause adding a new fact is fine)
-- [ ] No self-answered questions or colon reveals (FAQ questions and a reader's own question are fine)
-- [ ] No stock openers or phrases ("In today's...", "Whether you're...", "Say goodbye to...")
-- [ ] No em dashes in headlines, subheads, CTAs, ads, social posts, or subject lines; 1–2 per page max in long copy
-- [ ] At most one fragment and one list of three per section (CTA microcopy and real three-feature lists don't count)
-- [ ] Every vague adjective replaced with the fact it stood for
+- [ ] 没有"不是 X，而是 Y"或"不是因为 X，是因为 Y"式的揭示句
+- [ ] 没有"没有 X、没有 Y、没有 Z"式的否定排比
+- [ ] 没有在主句声明后用逗号从句复述收尾的句子（补充新事实的从句没问题）
+- [ ] 没有自问自答或冒号揭示（FAQ 问题与读者自己的疑问没问题）
+- [ ] 没有套话开场或套话短语（"In today's..."、"Whether you're..."、"Say goodbye to..."）
+- [ ] 标题、副标题、CTA、广告、社交帖子和邮件主题里不用破折号；长文案每页至多 1–2 个
+- [ ] 每个章节至多一个无主谓短句和一组三项排比（CTA 微文案和真实的三功能列表不算）
+- [ ] 每个含糊形容词都还原为它所代表的事实
 
-## Final Checks
+## 最终检查
 
-- [ ] No typos or grammatical errors
-- [ ] Consistent formatting
-- [ ] Links work (if applicable)
-- [ ] Core message preserved through all edits
+- [ ] 没有错别字或语法错误
+- [ ] 格式一致
+- [ ] 链接可用（如适用）
+- [ ] 核心信息在所有编辑后保持

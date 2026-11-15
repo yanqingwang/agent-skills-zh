@@ -1,150 +1,154 @@
-Run systematic **technical** quality checks and generate a comprehensive report. Don't fix issues; document them for other commands to address.
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/audit.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This is a code-level audit, not a design critique. Check what's measurable and verifiable in the implementation.
+运行系统化的**技术**质量检查并生成综合报告。不要修复问题；把问题记录下来，交给其他命令处理。
 
-**Web only.** Native platforms (`ios` / `android` / `adaptive`) route to [audit.native.md](audit.native.md) instead; if the project is native, switch to it now.
+这是代码级审计，不是设计批评。检查实现中可测量、可验证的部分。
 
-## Diagnostic Scan
+**仅限 Web。** 原生平台（`ios` / `android` / `adaptive`）改走 [audit.native.md](audit.native.md)；项目是原生的就立即切换过去。
 
-Run comprehensive checks across 5 dimensions. Score each dimension 0-4 using the criteria below.
+## 诊断扫描
 
-### 1. Accessibility (A11y)
+围绕 5 个维度运行综合检查。按下述标准给每个维度打 0-4 分。
 
-**Check for**:
-- **Contrast issues**: Text contrast ratios < 4.5:1, or < 3:1 for large text (or 7:1 for AAA)
-- **Motion sensitivity**: `prefers-reduced-motion` needs an intentional alternative that preserves state change and hierarchy; flag a global `0.01ms` kill that destroys useful feedback, flashing above threshold, and motion that blocks focus, reading, or task completion
-- **Missing ARIA**: Interactive elements without proper roles, labels, or states
-- **Keyboard navigation**: Missing focus indicators, illogical tab order, keyboard traps
-- **Semantic HTML**: Improper heading hierarchy, missing landmarks, divs instead of buttons
-- **Alt text**: Missing or poor image descriptions
-- **Form issues**: Inputs without labels, poor error messaging, missing required indicators
+### 1. 可访问性（A11y）
 
-**Score 0-4**: 0=Inaccessible (fails WCAG A), 1=Major gaps (few ARIA labels, no keyboard nav), 2=Partial (some a11y effort, significant gaps), 3=Good (WCAG AA mostly met, minor gaps), 4=Excellent (WCAG AA fully met, approaches AAA)
+**检查项**：
+- **对比度问题**：文本对比度 < 4.5:1，大文本 < 3:1（AAA 为 7:1）
+- **动效敏感**：`prefers-reduced-motion` 需要有意的替代方案，保留状态变化与层级；标记破坏有用反馈的全局 `0.01ms` 一刀切、超阈值的闪烁，以及阻碍聚焦、阅读或完成任务的动效
+- **缺少 ARIA**：交互元素缺少正确的 role、标签或状态
+- **键盘导航**：缺少焦点指示器、Tab 顺序混乱、键盘陷阱
+- **语义化 HTML**：标题层级不当、缺少 landmark、用 div 代替 button
+- **替代文本**：图片描述缺失或低质
+- **表单问题**：输入框无标签、错误提示差、缺少必填标识
 
-### 2. Performance
+**评分 0-4**：0=不可访问（不满足 WCAG A），1=重大缺口（几乎没有 ARIA 标签、无键盘导航），2=部分（有一些 a11y 努力、缺口显著），3=良好（基本满足 WCAG AA、有小缺口），4=优秀（完全满足 WCAG AA、接近 AAA）
 
-**Check for**:
-- **Layout thrashing**: Reading/writing layout properties in loops
-- **Expensive animations**: Casual layout-property animation, unbounded blur/filter/shadow effects, or effects that visibly drop frames
-- **Missing optimization**: Images without lazy loading, unoptimized assets
-- **will-change overuse**: `will-change` applied broadly or left on at rest (it is a targeted hint for known expensive animations, not a baseline requirement)
-- **Bundle size**: Unnecessary imports, unused dependencies
-- **Render performance**: Unnecessary re-renders, missing memoization
+### 2. 性能
 
-**Score 0-4**: 0=Severe issues (layout thrash, unoptimized everything), 1=Major problems (no lazy loading, expensive animations), 2=Partial (some optimization, gaps remain), 3=Good (mostly optimized, minor improvements possible), 4=Excellent (fast, lean, well-optimized)
+**检查项**：
+- **布局抖动**：循环中读写布局属性
+- **昂贵动画**：随意动画布局属性、无界的 blur/filter/shadow 效果，或明显掉帧的效果
+- **缺少优化**：图片未懒加载、素材未优化
+- **will-change 滥用**：`will-change` 大范围应用或静止时仍保留（它是针对已知昂贵动画的定向提示，不是基线要求）
+- **包体积**：不必要的导入、未使用的依赖
+- **渲染性能**：不必要的重渲染、缺少 memoization
 
-### 3. Theming
+**评分 0-4**：0=严重问题（布局抖动、全无优化），1=重大问题（无懒加载、昂贵动画），2=部分（有一些优化、仍有缺口），3=良好（基本已优化、可小幅改进），4=优秀（快、精、优化到位）
 
-**Check for**:
-- **Hard-coded colors**: Colors not using design tokens
-- **Broken dark mode**: Missing dark mode variants, poor contrast in dark theme
-- **Inconsistent tokens**: Using wrong tokens, mixing token types
-- **Theme switching issues**: Values that don't update on theme change
+### 3. 主题化
 
-**Score 0-4**: 0=No theming (hard-coded everything), 1=Minimal tokens (mostly hard-coded), 2=Partial (tokens exist but inconsistently used), 3=Good (tokens used, minor hard-coded values), 4=Excellent (full token system, dark mode works perfectly)
+**检查项**：
+- **硬编码颜色**：颜色未使用设计 token
+- **深色模式损坏**：缺少深色变体、深色主题下对比度差
+- **token 不一致**：用错 token、混用 token 类型
+- **主题切换问题**：主题切换时值不更新
 
-### 4. Responsive Design
+**评分 0-4**：0=无主题化（全部硬编码），1=极少 token（大多硬编码），2=部分（token 存在但使用不一致），3=良好（token 已用、少量硬编码值），4=优秀（完整 token 体系、深色模式完美工作）
 
-**Check for**:
-- **Fixed widths**: Hard-coded widths that break on mobile
-- **Touch targets**: Interactive elements < 44x44px. WCAG AA (SC 2.5.8) requires at least 24x24 CSS px unless an exception applies: spacing, an equivalent control, inline text, user-agent styling, or an essential size. Spacing passes when a 24 CSS px circle centered on the target's bounding box overlaps no other target and no other undersized target's circle
-- **Broken touch interaction**: Custom sliders, drag surfaces, and scrollable control strips whose primary gesture fails under touch, that swallow page scroll or lose the drag to it, or that stay stuck after an interrupted gesture. Code tells: mouse-only handlers, no `touch-action` on a pointer-event drag surface, drag state that nothing clears on cancel, lost capture, or blur. Exercise the gesture when a browser tool can synthesize touch (a rendered viewport proves layout, not the gesture), then say what produced the evidence (emulated viewport, synthesized touch, which engine, physical device) and what stayed untested
-- **Horizontal scroll**: Content overflow on narrow viewports
-- **Text scaling**: Layouts that break when text size increases
-- **Missing breakpoints**: No mobile/tablet variants
+### 4. 响应式设计
 
-On RTL-declared pages, each of the following is a signal to verify the rendered result, not a defect in itself; flag only where the rendering is actually wrong:
-- **Physical directional properties**: `margin-left/right`, `padding-left/right`, `text-align: left/right`, `float: left/right`, `border-left/right` where logical equivalents (`margin-inline-start/end`, `padding-inline-start/end`, `text-align: start/end`, `float: inline-start/end`, `border-inline-start/end`) would be expected. A direction-scoped override like `[dir="rtl"] .x { margin-right:1rem }` is correct only when it also clears the conflicting base property (e.g. `margin-left: 0`); without that, both margins apply
-- **Physical positioning on positioned elements**: `left:` or `right:` instead of `inset-inline-start` / `inset-inline-end`. Note: `left:50%; transform:translateX(-50%)` is a direction-agnostic centering pattern that works correctly in both LTR and RTL; replacing `left` with `inset-inline-start` there breaks the centering because `translateX` is physical and does not mirror
-- **Directional icons and assets**: arrows, chevrons, and navigation icons that point the wrong direction for the reading order. An RTL-only page may ship assets already drawn correctly without a `[dir="rtl"]` flip; verify the rendered icon rather than assuming a missing `transform: scaleX(-1)` is a defect
+**检查项**：
+- **固定宽度**：硬编码宽度在移动端破版
+- **触控目标**：交互元素小于 44x44px。WCAG AA（SC 2.5.8）要求至少 24x24 CSS px，除非有例外：间距、等效控件、行内文本、用户代理样式或必要尺寸。当以目标包围盒为中心的 24 CSS px 圆不与任何其他目标重叠、也不与任何其他过小目标的圆重叠时，靠间距即可通过
+- **触控交互损坏**：自定义滑杆、拖拽面、可滚动控制条的主手势在触屏下失效、吞掉页面滚动或在滚动中丢失拖拽、或手势被打断后卡死。代码特征：只有鼠标事件处理、pointer-event 拖拽面上没有 `touch-action`、取消时没有任何东西清除拖拽状态、捕获丢失或失焦。浏览器工具能合成触控时实际演练该手势（渲染出的视口只能证明布局，证明不了手势），然后说明证据来源（模拟视口、合成触控、哪个引擎、物理设备）与未测部分
+- **横向滚动**：窄视口下内容溢出
+- **文本缩放**：文本放大时布局破版
+- **缺少断点**：没有移动端/平板变体
 
-**RTL scope**: flag physical directional properties only on pages that declare `dir="rtl"` on the `<html>` or `<body>` element. A `lang` attribute alone does not set direction (browsers take direction from `dir`, never from `lang`), but treat an RTL-script `lang` (`ar`, `fa`, `ur`, `ps`, `ckb`, `he`, `yi`, `ug`, `sd`, `dv`) without an explicit `dir` as a signal worth noting.
+在声明了 RTL 的页面上，以下各项都是"核实渲染结果"的信号，本身不是缺陷；只在渲染确实错误时标记：
+- **物理方向属性**：`margin-left/right`、`padding-left/right`、`text-align: left/right`、`float: left/right`、`border-left/right`，而逻辑等价属性（`margin-inline-start/end`、`padding-inline-start/end`、`text-align: start/end`、`float: inline-start/end`、`border-inline-start/end`）本应可用。形如 `[dir="rtl"] .x { margin-right:1rem }` 的方向限定覆盖，只有在同时清除冲突的基础属性（如 `margin-left: 0`）时才正确；否则两个 margin 都会生效
+- **定位元素上的物理定位**：用 `left:` 或 `right:` 而不是 `inset-inline-start` / `inset-inline-end`。注意：`left:50%; transform:translateX(-50%)` 是方向无关的居中模式，在 LTR 和 RTL 下都正确；在那里把 `left` 换成 `inset-inline-start` 反而破坏居中，因为 `translateX` 是物理属性，不会镜像
+- **方向性图标与素材**：箭头、chevron、导航图标指向与阅读顺序相反的方向。纯 RTL 页面可能直接交付了画对方向的素材而不带 `[dir="rtl"]` 翻转；核实渲染出的图标，而不是把缺少 `transform: scaleX(-1)` 想当然地当缺陷
 
-**Score 0-4**: 0=Desktop-only (breaks on mobile), 1=Major issues (some breakpoints, many failures), 2=Partial (works on mobile, rough edges), 3=Good (responsive, minor touch target or overflow issues), 4=Excellent (fluid, all viewports, proper touch targets, gestures work under touch). On RTL-declared pages, reduce by 1 for pervasive rendered RTL failures
+**RTL 范围**：只在 `<html>` 或 `<body>` 元素声明了 `dir="rtl"` 的页面上标记物理方向属性。仅有 `lang` 属性不设定方向（浏览器从 `dir` 取方向，从不从 `lang` 取），但带 RTL 文字 `lang`（`ar`、`fa`、`ur`、`ps`、`ckb`、`he`、`yi`、`ug`、`sd`、`dv`）而无显式 `dir` 时，值得记录为信号。
 
-### 5. Implementation Integrity (CRITICAL)
+**评分 0-4**：0=仅桌面（移动端破版），1=重大问题（有一些断点、大量失败），2=部分（移动端可用、毛边多），3=良好（响应式、有轻微触控目标或溢出问题），4=优秀（流式、全视口、触控目标正确、手势在触屏下可用）。声明了 RTL 的页面，渲染层面的 RTL 失败遍地时减 1 分
 
-Run the bundled detector and verify each finding in context. Look for repeated implementation shortcuts, design-system drift, misleading or decorative content, and structure that is interchangeable with an unrelated product. Keep deterministic findings separate from visual judgment and call out false positives.
+### 5. 实现完整性（关键）
 
-**Desktop apps** (Electron, NW.js, CEF, WebView2): launch the app with a local DevTools port (`--remote-debugging-port=9222`, or `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` for WebView2; keep it on 127.0.0.1, never exposed), seed the state to audit, keep the window on screen (a hidden one skips the pixel contrast reads), then run `.claude/skills/impeccable/scripts/impeccable detect --cdp 9222 --target <part of the page URL or title> --json`. It returns the same JSON as a URL scan and leaves the window as found. Take screenshots through the harness's CDP tooling, and leave the window as you found it too. Tauri on macOS (WKWebView) and on Linux (WebKitGTK) expose no CDP: scan the source and say the rendered check did not run.
+运行随包检测器并逐项在上下文中核实其发现。寻找反复出现的实现捷径、设计系统漂移、误导性或装饰性内容，以及换成无关产品也能成立的结构。确定性发现与视觉判断分开，并指出误报。
 
-**Score 0-4**: 0=systemic drift, 1=major repeated failures, 2=several verified issues, 3=minor isolated issues, 4=coherent and intentional
+**桌面应用**（Electron、NW.js、CEF、WebView2）：以本地 DevTools 端口启动应用（`--remote-debugging-port=9222`，WebView2 用 `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222`；保持在 127.0.0.1，绝不外露），先种入要审计的状态，让窗口留在屏幕上（隐藏窗口会跳过像素对比读取），然后运行 `.claude/skills/impeccable/scripts/impeccable detect --cdp 9222 --target <页面 URL 或标题的一部分> --json`。它返回与 URL 扫描相同的 JSON，并让窗口保持原样。截屏走 Harness 的 CDP 工具，结束时同样让窗口保持原样。macOS（WKWebView）与 Linux（WebKitGTK）上的 Tauri 不暴露 CDP：扫描源码，并说明渲染检查没有运行。
 
-## Generate Report
+**评分 0-4**：0=系统性漂移，1=重大反复失败，2=若干已核实问题，3=轻微孤立问题，4=连贯且有意图
 
-### Audit Health Score
+## 生成报告
 
-| # | Dimension | Score | Key Finding |
+### 审计健康分
+
+| # | 维度 | 得分 | 关键发现 |
 |---|-----------|-------|-------------|
-| 1 | Accessibility | ? | [most critical a11y issue or "--"] |
-| 2 | Performance | ? | |
-| 3 | Theming | ? | |
-| 4 | Responsive Design | ? | |
-| 5 | Implementation Integrity | ? | |
-| **Total** | | **??/20** | **[Rating band]** |
+| 1 | 可访问性 | ? | [最关键的 a11y 问题或 "--"] |
+| 2 | 性能 | ? | |
+| 3 | 主题化 | ? | |
+| 4 | 响应式设计 | ? | |
+| 5 | 实现完整性 | ? | |
+| **总计** | | **??/20** | **[评分档]** |
 
-**Rating bands**: 18-20 Excellent (minor polish), 14-17 Good (address weak dimensions), 10-13 Acceptable (significant work needed), 6-9 Poor (major overhaul), 0-5 Critical (fundamental issues)
+**评分档**：18-20 优秀（小幅打磨），14-17 良好（补齐弱项维度），10-13 可接受（需要大量工作），6-9 差（需要大改），0-5 危急（根本性问题）
 
-### Implementation Integrity Verdict
-**Start here.** Pass/fail: does the implementation express a coherent product-specific system? Cite verified evidence and detector findings.
+### 实现完整性判定
+**从这里开始。** 通过/不通过：实现是否表达了一个连贯的、产品专属的系统？引用已核实的证据和检测器发现。
 
-### Executive Summary
-- Audit Health Score: **??/20** ([rating band])
-- Total issues found (count by severity: P0/P1/P2/P3)
-- Top 3-5 critical issues
-- Recommended next steps
+### 执行摘要
+- 审计健康分：**??/20**（[评分档]）
+- 发现问题总数（按严重度计数：P0/P1/P2/P3）
+- 前 3-5 个关键问题
+- 建议的下一步
 
-### Detailed Findings by Severity
+### 按严重度排列的详细发现
 
-Tag every issue with **P0-P3 severity**:
-- **P0 Blocking**: Prevents task completion. Fix immediately
-- **P1 Major**: Significant difficulty or WCAG AA violation. Fix before release
-- **P2 Minor**: Annoyance, workaround exists. Fix in next pass
-- **P3 Polish**: Nice-to-fix, no real user impact. Fix if time permits
+给每个问题标 **P0-P3 严重度**：
+- **P0 阻断**：阻止任务完成。立即修复
+- **P1 重大**：显著困难或 WCAG AA 违例。发布前修复
+- **P2 轻微**：令人恼火、存在变通。下一轮修复
+- **P3 打磨**：修了更好，对真实用户无影响。有空再修
 
-For each issue, document:
-- **[P?] Issue name**
-- **Location**: Component, file, line
-- **Category**: Accessibility / Performance / Theming / Responsive / Implementation Integrity
-- **Impact**: How it affects users
-- **WCAG/Standard**: Which standard it violates (if applicable)
-- **Recommendation**: How to fix it
-- **Suggested command**: Which command to use (prefer: /impeccable adapt, /impeccable animate, /impeccable audit, /impeccable bolder, /impeccable clarify, /impeccable colorize, /impeccable critique, /impeccable delight, /impeccable distill, /impeccable document, /impeccable harden, /impeccable layout, /impeccable onboard, /impeccable optimize, /impeccable overdrive, /impeccable polish, /impeccable quieter, /impeccable shape, /impeccable typeset)
+每个问题记录：
+- **[P?] 问题名**
+- **位置**：组件、文件、行
+- **类别**：可访问性 / 性能 / 主题化 / 响应式 / 实现完整性
+- **影响**：对用户的影响
+- **WCAG/标准**：违反了哪条标准（如适用）
+- **建议**：如何修复
+- **建议命令**：用哪个命令（优先从这些里选：/impeccable adapt、/impeccable animate、/impeccable audit、/impeccable bolder、/impeccable clarify、/impeccable colorize、/impeccable critique、/impeccable delight、/impeccable distill、/impeccable document、/impeccable harden、/impeccable layout、/impeccable onboard、/impeccable optimize、/impeccable overdrive、/impeccable polish、/impeccable quieter、/impeccable shape、/impeccable typeset）
 
-### Patterns & Systemic Issues
+### 模式与系统性问题
 
-Identify recurring problems that indicate systemic gaps rather than one-off mistakes:
-- "Hard-coded colors appear in 15+ components, should use design tokens"
-- "Touch targets consistently too small (<44px) throughout mobile experience"
+指出反复出现、指向系统性缺口而非一次性失误的问题：
+- "15+ 个组件出现硬编码颜色，应使用设计 token"
+- "移动端体验全程触控目标过小（<44px）"
 
-### Positive Findings
+### 正面发现
 
-Note what's working well: good practices to maintain and replicate.
+记录做得好的部分：值得保持和复制的实践。
 
-## Recommended Actions
+## 建议行动
 
-List recommended commands in priority order (P0 first, then P1, then P2):
+按优先级列出建议命令（P0 在前，然后 P1、P2）：
 
-1. **[P?] `/command-name`**: Brief description (specific context from audit findings)
-2. **[P?] `/command-name`**: Brief description (specific context)
+1. **[P?] `/command-name`**：简述（来自审计发现的具体上下文）
+2. **[P?] `/command-name`**：简述（具体上下文）
 
-**Rules**: Only recommend commands from: /impeccable adapt, /impeccable animate, /impeccable audit, /impeccable bolder, /impeccable clarify, /impeccable colorize, /impeccable critique, /impeccable delight, /impeccable distill, /impeccable document, /impeccable harden, /impeccable layout, /impeccable onboard, /impeccable optimize, /impeccable overdrive, /impeccable polish, /impeccable quieter, /impeccable shape, /impeccable typeset. Map findings to the most appropriate command. End with `/impeccable polish` as the final step if any fixes were recommended.
+**规则**：只能推荐这些命令：/impeccable adapt、/impeccable animate、/impeccable audit、/impeccable bolder、/impeccable clarify、/impeccable colorize、/impeccable critique、/impeccable delight、/impeccable distill、/impeccable document、/impeccable harden、/impeccable layout、/impeccable onboard、/impeccable optimize、/impeccable overdrive、/impeccable polish、/impeccable quieter、/impeccable shape、/impeccable typeset。把发现映射到最合适的命令。若推荐了任何修复，最后以 `/impeccable polish` 收尾。
 
-After presenting the summary, tell the user:
+呈现摘要之后，告诉用户：
 
-> You can ask me to run these one at a time, all at once, or in any order you prefer.
+> 你可以让我逐条运行这些命令、一次性全部运行，或按你偏好的任意顺序运行。
 >
-> Re-run `/impeccable audit` after fixes to see your score improve.
+> 修复后重新运行 `/impeccable audit`，就能看到分数提升。
 
-Keep P3s few: a long tail of minor issues buries the ones that matter.
+P3 要少：一大串小问题会淹没真正要紧的那些。
 
-**Avoid**:
-- Report issues without explaining impact (why does this matter?)
-- Provide generic recommendations (be specific and actionable)
-- Skip positive findings (celebrate what works)
-- Forget to prioritize (everything can't be P0)
-- Report false positives without verification
+**避免**：
+- 报告问题却不解释影响（这事为什么重要？）
+- 给出泛泛的建议（要具体、可执行）
+- 跳过正面发现（做得好的要肯定）
+- 忘了排优先级（不可能所有事都是 P0）
+- 报告未经核实的误报
 
-## Save the Report
+## 保存报告
 
-After the report is delivered, save a copy so the findings outlive this conversation: write it, from the score table through Recommended Actions, to a temp file, then run `.claude/skills/impeccable/scripts/impeccable audit-storage write "<resolved target, or . for the whole project>" <temp-file>` and delete the temp file. The helper prints the path it wrote, which you mention in one line; `REPORTS OFF:` means the project opted out, and you mention nothing. Saving never replaces delivering: the user reads the report in chat first.
+报告交付之后，另存一份让发现活过这次对话：把从得分表到建议行动的部分写入临时文件，然后运行 `.claude/skills/impeccable/scripts/impeccable audit-storage write "<解析后的目标，整个项目则用 .>" <temp-file>` 并删除临时文件。辅助命令会打印写入路径，你用一行提及；`REPORTS OFF:` 表示项目选择不保存，什么都不要提。保存绝不替代交付：用户先在聊天里读到报告。

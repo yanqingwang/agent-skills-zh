@@ -1,51 +1,55 @@
-# Midnight Blueprint — Architecture Professional
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--midnight-blueprint/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Midnight Blueprint：建筑专业感
 
-Sophisticated architecture and professional services design with navy gradient background, ghost numbers, and textFill fade effects. Features asymmetric corner glows and stark metrics layouts for high-end corporate presentations.
+## 风格概览
 
-- **Scenario**: Architecture firms, professional services, corporate showcases, luxury real estate, high-end consultancies
-- **Mood**: Sophisticated, professional, premium, architectural
-- **Tone**: Deep navy gradient with electric blue and gold accents
+面向建筑与专业服务的精致设计：海军蓝渐变背景、幽灵数字与 textFill 渐隐效果。以非对称角落光晕与硬朗的数据版式，服务高端企业演示。
 
-## Color Palette
+- **适用场景**：建筑事务所、专业服务、企业展示、高端房地产、高端咨询公司
+- **氛围**：精致、专业、高端、建筑感
+- **色调**：深海军蓝渐变，配电光蓝与金色点缀
 
-| Name          | Hex                               | Usage                            |
-| ------------- | --------------------------------- | -------------------------------- |
-| Background    | #080B2A → #181B55 (gradient 135°) | Navy gradient                    |
-| Ghost         | #131650                           | Barely visible numbers (on navy) |
-| Electric Blue | #4B7FFF                           | Primary accent, glows            |
-| Gold          | #F5B942                           | Secondary accent                 |
-| White         | #FFFFFF                           | Primary text                     |
-| Dim           | #7A80BB                           | Supporting text                  |
-| Pale          | #B8C0F0                           | Light blue for accents           |
-| Mid           | #0F1242                           | Card backgrounds                 |
+## 配色方案
 
-## Typography
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 背景 | #080B2A → #181B55（135° 渐变） | 海军蓝渐变 |
+| 幽灵色 | #131650 | 几乎不可见的数字（海军蓝底上） |
+| 电光蓝 | #4B7FFF | 主强调色、光晕 |
+| 金色 | #F5B942 | 次强调色 |
+| 白色 | #FFFFFF | 主文字 |
+| 暗文字 | #7A80BB | 辅助文字 |
+| 淡蓝 | #B8C0F0 | 浅蓝，用于点缀 |
+| 中深色 | #0F1242 | 卡片背景 |
 
-| Element       | Font           | Size    |
-| ------------- | -------------- | ------- |
-| Hero title    | Segoe UI Black | 56pt    |
-| Stats         | Segoe UI Black | 52pt    |
-| Section title | Segoe UI Black | 32pt    |
-| Body          | Segoe UI       | 13-14pt |
-| Labels        | Segoe UI       | 10pt    |
+## 字体排印
 
-## Design Techniques
+| 元素 | 字体 | 字号 |
+| --- | --- | --- |
+| 主标题 | Segoe UI Black | 56pt |
+| 数据 | Segoe UI Black | 52pt |
+| 小节标题 | Segoe UI Black | 32pt |
+| 正文 | Segoe UI | 13-14pt |
+| 标签 | Segoe UI | 10pt |
 
-- **Ghost numbers**: Massive 200pt numbers in barely-visible color (#131650 on #080B2A)
-- **TextFill fade**: Title text fades into background using gradient fill
-- **Asymmetric corner glows**: Two ellipse actors with low opacity (0.06-0.13) that reposition across slides
-- **Thin accent lines**: 0.14cm height rects in electric blue/gold
-- **Stark metrics layout**: Vertical dividers creating clean 3-column stat display
-- **Vertical bar cluster**: Decorative thin bars (0.25cm width) as architectural detail
+## 设计技法
 
-## Key Morph Actors
+- **幽灵数字**：200pt 超大数字，用几乎不可见的颜色（#131650 叠于 #080B2A 上）
+- **textFill 渐隐**：标题文字用渐变填充淡入背景
+- **非对称角落光晕**：两个低透明度（0.06-0.13）的 ellipse Actor，跨页重新定位
+- **细强调线**：0.14cm 高的矩形，电光蓝/金色
+- **硬朗数据版式**：竖直分隔线切出干净的三列数据展示
+- **竖直细条簇**：0.25cm 宽的装饰细条，作建筑感细节
 
-- `!!glow-a`: Electric blue ellipse, repositions for asymmetric lighting effect
-- `!!glow-b`: Purple ellipse, creates depth and atmosphere
-- `!!accent`: Thin horizontal rect that moves and resizes as visual anchor
+## 关键 Morph Actor
 
-## Reference Script
+- `!!glow-a`：电光蓝椭圆，跨页重新定位，形成非对称光照效果
+- `!!glow-b`：紫色椭圆，营造纵深与氛围
+- `!!accent`：细横条矩形，移动并缩放，作视觉锚点
 
-Complete build script available in `build.py` (Python with officecli).
+## 参考脚本
+
+完整构建脚本见 `build.py`（Python，配合 officecli）。

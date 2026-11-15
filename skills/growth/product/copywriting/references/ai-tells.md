@@ -1,309 +1,313 @@
-# AI Tells: The Copy Blacklist
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/growth/product/copywriting/references/ai-tells.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Patterns that make marketing copy read as machine-written. Clients and buyers spot these fast, and a reader who decides a page was generated starts doubting its claims too.
+# AI 破绽：文案黑名单
 
-Most of these are old human rhetoric. AI copy gives itself away by using them **by default**, **stacked**, and **with nothing specific behind them**. So the rules below are a mix of hard bans (for patterns that are tells even once) and frequency caps (for devices that are fine when chosen on purpose).
+让营销文案读起来像机器写的那些模式。客户和买家很快就能识别它们；而一旦读者认定页面是生成的，也会开始怀疑其内容是否属实。
 
-**Confidence key**
-- **Ban**: a tell even once. Don't write it.
-- **Cap**: fine once, a tell when repeated or stacked. Stay under the cap.
+这些大多是人类的老修辞。AI 文案露馅，是因为它**默认使用**、**叠加堆砌**，且**背后没有任何具体事实**。因此下面的规则混合了两类：硬性禁用（针对出现一次就算破绽的模式）和频率上限（针对有意选用时没问题的手法）。
 
-**What the scopes mean**
-- **Short copy**: headlines, subheads, the hero, CTAs, ads, social posts, email subject lines.
-- **Long copy**: body sections of a page, articles, long emails.
-- **Section**: one hero, one page section, or one whole short post.
-- CTA microcopy ("No card required") doesn't count toward the fragment cap.
+**标记说明**
+- **Ban（禁用）**：出现一次就是破绽。不要写。
+- **Cap（限频）**：用一次没问题，重复或叠加就是破绽。不要超过上限。
 
-**Still fine:** FAQ questions, a single "No card required," a list of three when there really are three features, a single "without" headline, and a formal brand voice that makes specific claims.
+**作用范围说明**
+- **短文案**：标题、副标题、首屏、CTA、广告、社交帖子、邮件主题行。
+- **长文案**：页面的正文区块、文章、长邮件。
+- **区块**：一个首屏、一个页面区块，或一篇完整短文。
+- CTA 微文案（"No card required"）不计入碎句上限。
+
+**仍然没问题：** FAQ 问题、单独一句 "No card required"、确实有三个功能时的三项列表、单独一个 "without" 式标题，以及做出具体主张的正式品牌语气。
 
 ---
 
 ## Contents
-- Structural Patterns (the worst offenders)
-- Openers, Closers, and Setups
-- Marketing Phrases
-- Vocabulary
-- Hedges, Puffery, and Weasels
-- Tone
-- Formatting
-- Second-Generation Tells
-- Build a Writer
-- Rewrite Rules
-- The Self-Check
-- Sources
+- 结构模式（最严重的惯犯）
+- 开场、收尾与铺垫
+- 营销套话
+- 词汇
+- 含糊、吹嘘与滑头措辞
+- 语气
+- 排版
+- 第二代破绽
+- 构建写作者
+- 重写规则
+- 自检
+- 来源
 
 ---
 
-## Structural Patterns
+## 结构模式
 
-These matter more than any word list. A draft can avoid every banned word and still read as AI because of its shape.
+这些比任何词表都重要。一份草稿可以避开所有被禁词汇，却仍因结构形状而读起来像 AI。
 
-### 1. The contrast reveal: "Not X. Y." (Ban)
+### 1. 反转揭示："Not X. Y."（Ban）
 
-Sets up an assumption nobody stated, denies it, then gives the "real" answer.
+先立一个没人说过的假设，否认它，然后给出"真正"的答案。
 
-Variants: "It's not X, it's Y." "Not because X. Because Y." "This isn't X. This is Y." "Not just X, but Y." "Less X, more Y." "The question isn't X, it's Y." "X? Think again."
+变体："It's not X, it's Y." "Not because X. Because Y." "This isn't X. This is Y." "Not just X, but Y." "Less X, more Y." "The question isn't X, it's Y." "X? Think again."
 
 - ✗ Most marketing teams have a list of campaign ideas that never launch. Not because they're bad. Because each one needs a developer.
 - ✓ Most marketing teams have a list of campaign ideas that never launch, because each one needs a developer they can't get.
 
-**Why it's a tell:** It's one of the most frequently cited AI patterns. Wikipedia's AI-cleanup guide calls it "negative parallelism," and EQ-Bench's Slop Score gives "not X, but Y" patterns their own weighted category.
+**为什么算破绽：** 它是最常被引用的 AI 模式之一。Wikipedia 的 AI 清理指南称之为 "negative parallelism"（负向平行），EQ-Bench 的 Slop Score 给 "not X, but Y" 模式单设了一个加权类别。
 
-**Rewrite:** State Y directly and attach the concrete reason or cost. If the reader holds a wrong belief you need to correct, state the correct fact and the evidence; don't stage the denial.
+**改写：** 直接说出 Y，并附上具体原因或代价。如果读者持有你需要纠正的错误观念，就陈述正确的事实和证据；不要排演这场否认。
 
-### 2. The negation list: "No X, no Y, no Z." (Ban)
+### 2. 否定列表："No X, no Y, no Z."（Ban）
 
-Defines the product by what's absent, usually in threes, often with a fragment tacked on.
+用"没有什么"来定义产品，通常凑成三个，常在后面缀一个碎句。
 
-Variants: "No X. No Y. Just Z." "Without X, without Y." "Zero X, zero Y."
+变体："No X. No Y. Just Z." "Without X, without Y." "Zero X, zero Y."
 
 - ✗ No setup call, no templates to fill in, no waiting on IT. No contract.
 - ✓ Install it from the app store and it's running on your data in five minutes.
 
-**Rewrite:** Say what does happen, in the order it happens. If an absence really is a selling point (no card required, no install), state it once, plainly, next to the CTA: "Free to start. No card required." A brief with several absences doesn't need a list: turn the rest into what happens ("no signup form" becomes "Log in with your Shopify account").
+**改写：** 按发生的顺序说出确实会发生什么。如果某种"没有"确实是卖点（无需信用卡、无需安装），就在 CTA 旁边平实地说明一次："Free to start. No card required." 一份含多个"没有"的 brief 不需要列表：把其余的转成"会发生什么"（"no signup form" 改成 "Log in with your Shopify account"）。
 
-A single "without" or "Never X again" headline is fine. Don't follow it with a negation list in the subhead.
+单独一个 "without" 式或 "Never X again" 式标题没问题。不要在副标题里跟一个否定列表。
 
-### 3. The trailing pile-on (Ban)
+### 3. 尾部堆叠（Ban）
 
-A complete claim, then a comma, then a run of add-ons: a negation list, an "-ing" clause, or a string of extra benefits.
+一个完整的主张，然后一个逗号，然后一串附加物：否定列表、"-ing" 从句，或一串额外好处。
 
 - ✗ Reports pull directly from the data you already have, no exports, no spreadsheets, no second copy to keep updated.
 - ✗ It syncs your calendar automatically, ensuring nothing slips through the cracks.
 - ✓ Reports pull from the data you already have. There's nothing to export.
 
-**Rewrite:** End the sentence when the main claim ends. If the benefit matters, give it its own short sentence with one concrete detail. Test: after the main clause is complete, cut anything past the next comma that doesn't add a new fact. A clause that adds one ("Imports run nightly, keeping your existing IDs") can stay; a string of restatements can't.
+**改写：** 主张说完，句子就结束。如果那个好处重要，给它单独一个短句，带一个具体细节。检验方法：主句说完之后，下一个逗号之后凡是不提供新事实的内容一律删掉。真正补充新事实的从句可以留（"Imports run nightly, keeping your existing IDs"）；一串复述不行。
 
-### 4. Rhetorical question, then answer (Ban)
+### 4. 设问后自答（Ban）
 
 "The result? 3x faster onboarding." "The catch? There isn't one." "Why does this matter? Because..."
 
 - ✗ The result? Onboarding that takes minutes, not weeks.
 - ✓ New hires finish onboarding on day one.
 
-**Rewrite:** Delete the question and keep the answer.
+**改写：** 删掉问题，保留答案。
 
-Still fine: FAQ questions ("Does it work with Shopify?"), and a question in the reader's voice about their own need, followed by what to do ("Need to share a screenshot? Drop it in the thread."). The tell is a question that labels your own claim ("The result?" "The catch?" "Why does this matter?").
+仍然没问题：FAQ 问题（"Does it work with Shopify?"），以及用读者口吻问其自身需求、随后给出做法的问句（"Need to share a screenshot? Drop it in the thread."）。破绽是那种给自己主张贴标签的问句（"The result?" "The catch?" "Why does this matter?"）。
 
-### 5. The colon reveal (Ban)
+### 5. 冒号揭示（Ban）
 
 "The best part: it learns." "Here's the secret: consistency." "One word: speed."
 
-**Rewrite:** Write it as a normal sentence ("It learns from every correction"). Save colons for lists, labels, and quotes.
+**改写：** 写成正常句子（"It learns from every correction"）。冒号只留给列表、标签和引文。
 
-### 6. Fragment drumbeat (Cap: one per section)
+### 6. 碎句鼓点（Cap：每区块一个）
 
-Stacked fragments or one-line paragraphs for manufactured punch. "Simple. Fast. Done." "That's it. That's the whole thing."
+堆叠碎句或单行段落，制造人为的力度。"Simple. Fast. Done." "That's it. That's the whole thing."
 
-**Rewrite:** Merge them into one full sentence that carries a fact. One fragment that lands a real payoff is a copywriting device. A paragraph of them is a tic.
+**改写：** 把它们合并成一个承载事实的完整句。落在一个真实收益上的单个碎句是文案手法；整段碎句是毛病。
 
-### 7. Reflexive threes (Cap: one per section)
+### 7. 条件反射式三连（Cap：每区块一个）
 
-Everything comes in threes: adjectives, benefits, clauses, bullets. "Fast, secure, and scalable." "Save time, cut costs, and grow revenue."
+什么都凑三个：形容词、好处、从句、列表项。"Fast, secure, and scalable." "Save time, cut costs, and grow revenue."
 
-**Rewrite:** Use as many items as the facts support: one, two, or four. Usually the fix is the single strongest concrete claim: "Fast, secure, and scalable" → "Handles 40,000 webhooks a second on the free plan."
+**改写：** 事实支撑几个就用几个：一、二或四。通常的修法是换成唯一那个最强的具体主张："Fast, secure, and scalable" → "Handles 40,000 webhooks a second on the free plan."
 
-### 8. Em dashes (Ban in short copy; cap at 1–2 per page in long copy)
+### 8. 破折号（短文案禁用；长文案每页 1-2 个为上限）
 
-The dash as the default pause, several per paragraph, often carrying a contrast reveal ("It's not a tool — it's a teammate").
+把破折号当默认停顿，每段好几个，常常承载反转揭示（"It's not a tool — it's a teammate"）。
 
-**Rewrite:** Use a period, a comma, a colon, or parentheses. In heroes, ads, subject lines, and social posts, use none.
+**改写：** 改用句号、逗号、冒号或括号。首屏、广告、主题行和社交帖子中一个都不要用。
 
-### 9. Uniform rhythm (Cap)
+### 9. 节奏均匀（Cap）
 
-Every sentence 12–18 words. Every paragraph is topic sentence → elaboration → wrap-up. Every section the same length. Three pros, three cons, every time.
+每句 12-18 个词。每段都是主题句 → 展开 → 收束。每节一样长。每次都是三个优点、三个缺点。
 
-**Rewrite:** Vary on purpose. A long sentence, then a short one. Let a section be two lines if that's all it needs. Put the payoff first sometimes.
+**改写：** 有意制造变化。一句长，再一句短。某节只需要两行，就让它只有两行。有时候把收益放在最前面。
 
-### 10. Dodging "is" and "has" (Cap)
+### 10. 躲避 "is" 和 "has"（Cap）
 
 "Serves as a central hub." "Stands as a testament." "Boasts a library of 200 templates." "Represents a new approach."
 
-**Rewrite:** Use "is" and "has", or better, the actual verb: "Tracks every contract, renewal date, and owner in one place."
+**改写：** 用 "is" 和 "has"，或者更好的是真正的动词："Tracks every contract, renewal date, and owner in one place."
 
-### 11. Abstract subjects (Cap)
+### 11. 抽象主语（Cap）
 
-"The platform empowers teams to..." "Our solution enables..." Nobody does anything.
+"The platform empowers teams to..." "Our solution enables..." 没有任何人做了任何事。
 
-**Rewrite:** Make the customer the subject. "Your team ships experiments without filing a ticket."
+**改写：** 让客户当主语。"Your team ships experiments without filing a ticket."
 
-### 12. False ranges (Cap)
+### 12. 虚假区间（Cap）
 
-"From startups to enterprises." "From onboarding to renewal." The two ends don't describe a real span.
+"From startups to enterprises." "From onboarding to renewal." 两端并不构成真实的跨度。
 
-**Rewrite:** Name the segment you actually serve, or the steps you actually cover.
+**改写：** 写明你实际服务的人群，或你实际覆盖的环节。
 
-### 13. Synonym cycling (Cap)
+### 13. 同义词轮换（Cap）
 
-Calling the same thing a dashboard, an interface, a portal, and a hub in one page to avoid repeating a word.
+在同一页里把同一个东西一会儿叫 dashboard、一会儿叫 interface、portal、hub，只为避免重复一个词。
 
-**Rewrite:** Pick the word your customer uses and repeat it.
+**改写：** 选客户用的那个词，然后重复它。
 
 ---
 
-## Openers, Closers, and Setups (Ban)
+## 开场、收尾与铺垫（Ban）
 
-| Pattern | Example | Instead |
+| 模式 | 示例 | 改为 |
 |---------|---------|---------|
-| Era opener | "In today's fast-paced world..." | Open with the customer's problem |
-| False-choice opener | "Whether you're a solo founder or a Fortune 500..." | Name who the page is for |
-| "Imagine..." | "Imagine never chasing an invoice again." | Show the actual before and after |
-| "When it comes to..." | "When it comes to billing, ..." | Start with the subject |
-| Throat-clearing | "Here's the thing:" "The truth is" "Let me be clear" "Here's what nobody tells you" | Cut it. If the claim can't stand alone, it needs evidence, not a drumroll |
-| Announcing | "In this guide, we'll explore..." "Let's dive in" | Start with the content |
-| Recap ending | "In conclusion" "Ultimately" "At the end of the day" | End on the last concrete point or the CTA |
-| Fake-profound kicker | "Because growth shouldn't wait." "And that changes everything." | Cut it. End on a concrete sentence |
-| Filler transitions | "It's worth noting" "Moreover" "Additionally" "Importantly" | Delete. The sentence usually works without it |
+| 时代开场 | "In today's fast-paced world..." | 直接从客户的问题切入 |
+| 假两难开场 | "Whether you're a solo founder or a Fortune 500..." | 写明这个页面给谁看 |
+| "Imagine..." | "Imagine never chasing an invoice again." | 展示真实的转变前后 |
+| "When it comes to..." | "When it comes to billing, ..." | 直接从主题开始 |
+| 清嗓子 | "Here's the thing:" "The truth is" "Let me be clear" "Here's what nobody tells you" | 删掉。主张若站不住，需要的是证据，不是锣鼓点 |
+| 宣布式开场 | "In this guide, we'll explore..." "Let's dive in" | 直接从内容开始 |
+| 总结式收尾 | "In conclusion" "Ultimately" "At the end of the day" | 收在最后一个具体要点或 CTA 上 |
+| 假深刻结尾 | "Because growth shouldn't wait." "And that changes everything." | 删掉。收在一个具体句子上 |
+| 填充式过渡 | "It's worth noting" "Moreover" "Additionally" "Importantly" | 删掉。通常没有它句子照样成立 |
 
 ---
 
-## Marketing Phrases (Ban)
+## 营销套话（Ban）
 
-| Phrase | Instead |
+| 套话 | 改为 |
 |--------|---------|
-| "Say goodbye to X" / "Say hello to Y" | Show the new workflow: "Reconciliation runs nightly. You review the exceptions." |
-| "Unlock / unleash the power of X" | Name the outcome and the number |
-| "X, reimagined" / "X, redefined" | Say what's actually different: "Billing that retries on payday" |
-| "Take X to the next level" | Name the level: the metric and the target |
-| "Transform the way you work" | A before and after with numbers |
-| "The X you deserve" | The specific gap you close |
-| "The future of X is here" | What ships today |
-| "Built for teams who move fast" | The real customer and trigger: "For subscription teams past $1M ARR fighting failed payments" |
-| "Everything you need to X" / "all-in-one" | The 2–3 things buyers actually check for |
-| "Effortless" / "in just a few clicks" | The real step count or time: "3 steps, about 4 minutes" |
-| "Join thousands of happy customers" | The real count, logos, or a named quote |
-| "Game-changer" / "this changes everything" | What changes, for whom, by how much |
+| "Say goodbye to X" / "Say hello to Y" | 展示新工作流："Reconciliation runs nightly. You review the exceptions." |
+| "Unlock / unleash the power of X" | 直接给出结果和数字 |
+| "X, reimagined" / "X, redefined" | 说出实际不同之处："Billing that retries on payday" |
+| "Take X to the next level" | 说出那个层级：指标和目标值 |
+| "Transform the way you work" | 带数字的转变前后 |
+| "The X you deserve" | 你弥补的那个具体缺口 |
+| "The future of X is here" | 今天就能上线的东西 |
+| "Built for teams who move fast" | 真实客户与触发场景："For subscription teams past $1M ARR fighting failed payments" |
+| "Everything you need to X" / "all-in-one" | 买家实际会核对的 2-3 件事 |
+| "Effortless" / "in just a few clicks" | 真实步骤数或耗时："3 steps, about 4 minutes" |
+| "Join thousands of happy customers" | 真实数字、客户 logo，或具名引用 |
+| "Game-changer" / "this changes everything" | 什么变了、对谁变、变多少 |
 
 ---
 
-## Vocabulary
+## 词汇
 
-Swapping a banned word for a synonym just creates a new tell. Replace the word with the fact it was standing in for: "robust" → "99.99% uptime over two years"; "seamless" → "imports your Stripe data in about 90 seconds."
+把被禁词换成同义词只会制造新的破绽。用这个词所替代的事实来替换它："robust" → "99.99% uptime over two years"；"seamless" → "imports your Stripe data in about 90 seconds"。
 
-**Ban:** delve, tapestry, testament to, realm, embark, beacon, multifaceted, paradigm, synergy, myriad, plethora, meticulous, intricate, utilize, leverage (as a verb), supercharge, turbocharge, game-changer, "ever-evolving landscape," "plays a crucial role"
+**Ban：** delve, tapestry, testament to, realm, embark, beacon, multifaceted, paradigm, synergy, myriad, plethora, meticulous, intricate, utilize, leverage (as a verb), supercharge, turbocharge, game-changer, "ever-evolving landscape," "plays a crucial role"
 
-**Cap (two in a paragraph means rewrite it):** seamless, robust, streamline, empower, elevate, unlock, unleash, harness, foster, enhance, optimize, cutting-edge, innovative, revolutionary, transformative, holistic, comprehensive, pivotal, crucial, vital, powerful, next-level, world-class, best-in-class, landscape, navigate, ecosystem, journey (unless literal)
+**Cap（一段出现两个就该重写）：** seamless, robust, streamline, empower, elevate, unlock, unleash, harness, foster, enhance, optimize, cutting-edge, innovative, revolutionary, transformative, holistic, comprehensive, pivotal, crucial, vital, powerful, next-level, world-class, best-in-class, landscape, navigate, ecosystem, journey (unless literal)
 
-**Cap (empty intensifiers):** truly, genuinely, incredibly, deeply, fundamentally, significantly, simply, actually, literally, quietly
+**Cap（空洞加强词）：** truly, genuinely, incredibly, deeply, fundamentally, significantly, simply, actually, literally, quietly
 
-Favored words drift as models change ("delve" peaked in 2024; "enhance," "showcase," "foster," and "align with" rose after). Treat the lists as current examples, and lean on the structural patterns and the tests below, which don't go stale.
-
----
-
-## Hedges, Puffery, and Weasels
-
-- **Hedge stacks** (Cap): "can help you potentially reduce..." State what you know, or scope the claim honestly.
-- **Importance puffery** (Ban): "marks a pivotal moment," "redefines the category." State the fact; let the reader judge.
-- **Weasel sources** (Ban): "experts agree," "studies show," "trusted by industry leaders." Name the source or the customer, or cut it.
-- **Invented labels** (Cap): "the integration tax," "the growth trap." Only coin a term you'll define and use across the site.
+受偏好词汇会随模型迭代而漂移（"delve" 在 2024 年达到峰值；随后 "enhance"、"showcase"、"foster"、"align with" 升高）。把这些列表当作当前示例，重点依靠结构模式和下文的检验方法，它们不会过时。
 
 ---
 
-## Tone
+## 含糊、吹嘘与滑头措辞
 
-- **Chummy openers** (Ban in email and social): "Great question!" "Let's be honest..." "We get it."
-- **Fake vulnerability** (Ban): "I'll be honest, I was skeptical too..." with no real story behind it.
-- **Over-explaining** (Cap): "Let's break this down," "Think of it as..." Give the explanation directly.
-- **Hype punctuation** (Ban): "Ready to level up?!" Exclamation points and interrobangs in body copy.
-
----
-
-## Formatting
-
-- **Emoji as structure** (Ban in B2B): 🚀 ✨ ✅ leading bullets or headings.
-- **Bold label on every bullet** (Cap): "**Seamless integration:** ..." Keep it for reference tables, not every list.
-- **Parallel bullet openers** (Cap): every bullet starting "Ensures... / Provides... / Enables..." Start bullets with the customer outcome and vary the grammar.
-- **Title Case Everywhere** (Cap): use sentence case unless the brand style guide says otherwise.
-- **Unicode decoration** (Ban): arrows, ×, 𝗯𝗼𝗹𝗱 letters in body copy.
-- **Label headings** (Cap): "What / Why / How" sections. Write headings that make a claim.
+- **堆叠含糊**（Cap）："can help you potentially reduce..."。写出你知道的，或诚实地限定主张范围。
+- **重要性吹嘘**（Ban）："marks a pivotal moment," "redefines the category."。陈述事实，让读者自己判断。
+- **滑头信源**（Ban）："experts agree," "studies show," "trusted by industry leaders."。写明来源或客户，否则删掉。
+- **自造标签**（Cap）："the integration tax," "the growth trap."。只有当你会在全站定义并使用这个词时才造它。
 
 ---
 
-## Second-Generation Tells
+## 语气
 
-These show up in copy that has already been de-slopped. The banned words and contrast reveals are gone, but the draft still reads as generated because the model swapped one set of habits for another. Check for them after the patterns above are fixed.
+- **套近乎开场**（邮件与社交中 Ban）："Great question!" "Let's be honest..." "We get it."
+- **假装坦白**（Ban）："I'll be honest, I was skeptical too..."，背后没有真实故事。
+- **过度解说**（Cap）："Let's break this down," "Think of it as..."。直接给出解释。
+- **炒作标点**（Ban）："Ready to level up?!"。正文中使用感叹号和感叹问号。
 
-| Tell | Example (✗) | Fix |
+---
+
+## 排版
+
+- **Emoji 当结构**（B2B 中 Ban）：🚀 ✨ ✅ 领起列表项或标题。
+- **每条都加粗标签**（Cap）："**Seamless integration:** ..."。留给参考表用，不是每个列表都要。
+- **列表项开头平行**（Cap）：每条都以 "Ensures... / Provides... / Enables..." 开头。让列表项以客户收益开头，并变化句式。
+- **到处 Title Case**（Cap）：除非品牌风格指南另有规定，否则用 sentence case。
+- **Unicode 装饰**（Ban）：正文中的箭头、×、𝗯𝗼𝗹𝗱 字母。
+- **标签式标题**（Cap）："What / Why / How" 式分节。写有主张的标题。
+
+---
+
+## 第二代破绽
+
+它们出现在已经去除了 AI 腔的文案里。被禁词汇和反转揭示都清掉了，但草稿仍像生成的，因为模型只是用另一套习惯替换了原来那套。修完上面的模式后再检查这些。
+
+| 破绽 | 示例（✗） | 修法 |
 |---|---|---|
-| **Wisdom-shaped sentences** (Ban) | "Great tools get out of the way." "Speed is a feature." | A sentence with the shape of an insight that nobody would disagree with. Replace it with the specific fact it gestures at, or cut it |
-| **Performed cleverness** (Cap) | "Your inbox, minus the noise." "Spreadsheets with a pulse." | Unexpected word pairings built to sound witty. Keep one if the brand is playful and it says something true; otherwise say the plain thing |
-| **Staccato bursts** (Cap) | "It's fast. It's simple. And it just works." | Three or more short sentences in a row, then a longer one, as a rhythm device. Merge them into a sentence that carries a fact (see Fragment drumbeat) |
-| **Perfect balance** (Cap) | Every section has a heading, two sentences, and three bullets; every benefit gets the same weight | Real writers spend more words on what they care about. Let the strongest section run long and the weakest shrink or go |
-| **Omniscient casual** (Cap) | A relaxed, chatty voice that knows every answer and never admits a limit | Casual tone plus total certainty reads as generated. Scope claims honestly and say who the product isn't for |
-| **Self-narration** (Ban) | "Here's why this matters." "This is where it gets interesting." "The takeaway is simple." | Sentences that comment on the copy itself. Delete them; if the point needs help, add a detail |
-| **Tidy closers** (Ban) | "Because your team deserves better." "The future of billing starts now." | A balanced, quotable last line that could close any page. End on a number, a named customer, the offer, or the CTA |
-| **Reflexive specificity** (Cap) | Every claim has a suspiciously round stat or a too-neat customer anecdote | Specificity copied as a style. Every number and story must be real and sourced; mark gaps `[NEED: proof]` instead of filling them |
+| **格言形状的句子**（Ban） | "Great tools get out of the way." "Speed is a feature." | 一句话有洞见的形状，但没人会反对。用它所指的那个具体事实替换，或删掉 |
+| **表演聪明**（Cap） | "Your inbox, minus the noise." "Spreadsheets with a pulse." | 为显得俏皮而组装的意外词组。如果品牌本身俏皮、且它说了真话，可以留一个；否则就平实地说 |
+| **短句连发**（Cap） | "It's fast. It's simple. And it just works." | 连续三个以上短句、再接一个长句，作为节奏手段。合并成一个承载事实的句子（见"碎句鼓点"） |
+| **完美均衡**（Cap） | 每节都是标题加两句加三个列表项；每个好处权重相同 | 真人作者会把更多笔墨花在他们在意的部分。让最强的那节写长，最弱的缩短或删掉 |
+| **全知闲谈**（Cap） | 一种轻松闲聊的口吻，无所不知，从不承认局限 | 轻松语气加十足断言，读起来就是生成的。诚实限定主张范围，并说明产品不适合谁 |
+| **自我旁白**（Ban） | "Here's why this matters." "This is where it gets interesting." "The takeaway is simple." | 对文案本身进行评论的句子。删掉；如果论点需要帮助，加一个细节 |
+| **整齐收尾**（Ban） | "Because your team deserves better." "The future of billing starts now." | 一句均衡、可引用、能收任何页面的结尾句。收在数字、具名客户、报价或 CTA 上 |
+| **条件反射式具体**（Cap） | 每个主张都配一个可疑的整数统计，或一个过于工整的客户轶事 | 把"具体"当风格来模仿。每个数字和故事都必须真实且有出处；缺口用 `[NEED: proof]` 标出，不要编造填满 |
 
 ---
 
-## Build a Writer
+## 构建写作者
 
-Removing patterns leaves copy that's clean and flat. Human-sounding copy comes from a specific person with uneven knowledge and real opinions. Before a full rewrite of Situation A copy (see the Diagnosis section in SKILL.md), answer these silently:
+把模式去掉之后，文案会干净但平淡。像人写的文案，来自一个具体的人：知识不均匀、有真实观点。在对 Situation A 文案做完整重写之前（见 SKILL.md 的 Diagnosis 一节），先在心里回答这些问题：
 
-1. **Who is writing?** Name the person and role: the founder, the head of support, the engineer who built the feature. Say why they're writing this page.
-2. **What do they know cold?** Those parts get the most words and the most specific detail.
-3. **What do they find boring or not know well?** Those parts get compressed, or cut.
-4. **What's their honest, arguable opinion** about the problem, the category, or the old way of doing it?
-5. **If they had to cut a third, what goes first?** Cut it now.
+1. **谁在写？** 写明这个人及其角色：创始人、客服负责人、做了这个功能的工程师。说明他为什么写这个页面。
+2. **什么内容他了如指掌？** 这些部分拿到最多的笔墨和最具体的细节。
+3. **什么内容他觉得无趣或不熟悉？** 这些部分压缩，或删掉。
+4. **对这个问题、这个品类、或旧做法，他有什么诚实且可争论的观点？**
+5. **如果必须砍掉三分之一，先砍什么？** 现在就砍。
 
-The answers produce traits that generated copy lacks:
+这些答案会产出生成文案缺少的特质：
 
-- **Uneven density.** The section the writer cares about runs longest. Equal coverage of everything is a tell.
-- **Mixed register.** A precise technical term in one sentence, plain words in the next. Don't polish every word to the same level.
-- **Honest limits.** When the writer doesn't know something, the copy skips it or says so. Saying who the product isn't for is a strong version of this.
-- **Lopsided structure.** At least one section is noticeably longer, and at least one is short, because that's how much there was to say.
-- **Sentence length from the thought.** Write each sentence as long as its idea needs. Don't plan short-short-long rhythms.
-- **Opinions that cost something.** A real opinion is specific and someone could disagree with it ("Most onboarding checklists are busywork. Ours has three steps."). "We believe in quality" costs nothing.
-- **First person only when it means something.** "I built this after losing a client to a missed invoice" earns the "I." First person that adds no fact is decoration.
+- **密度不均。** 作者在意的部分最长。万事均匀覆盖本身就是破绽。
+- **语域混杂。** 上一句用精确的技术术语，下一句用大白话。不要把每个词都打磨到同一水准。
+- **诚实的边界。** 作者不知道的东西，文案就跳过或直说。说明产品不适合谁，是这一点的强化版。
+- **失衡的结构。** 至少一节明显更长，至少一节很短，因为该说的本来就那么多。
+- **句子长度来自想法本身。** 每个句子写到它的想法所需的长度。不要预设短-短-长的节奏。
+- **有代价的观点。** 真实的观点是具体的，且有人可以反对（"Most onboarding checklists are busywork. Ours has three steps."）。"We believe in quality" 不付任何代价。
+- **只在有意义时用第一人称。** "I built this after losing a client to a missed invoice" 里的 "I" 是挣来的。不增加事实的第一人称只是装饰。
 
-**Rules that override the persona:**
-- **Never invent experience.** The writer's opinions and emphasis can be constructed; their anecdotes, customers, and results cannot. A made-up "when I ran my agency..." story is fabrication, and so is a fake customer quote. Use what the user gave you or mark `[NEED: founder story]`.
-- **In Situation B, the writer already exists.** Match the real voice from the draft or sample; don't build a new one.
-- **Keep the brand's register.** A persona for an enterprise security product is still formal. Uneven density and real opinions work in a formal voice too.
-
----
-
-## Rewrite Rules
-
-1. **Rewrite from the facts.** Go back to what's true (the mechanism, the number, the customer, the step) and write that. Synonym swaps and "humanizer" substitutions produce new tells.
-2. **Specificity test.** Every claim sentence needs a number, a name, a mechanism, or a concrete action.
-3. **Swap test.** If the line would work unchanged on a competitor's site, rewrite it.
-4. **Stacking test.** Two or more Cap patterns in one paragraph means rewrite the whole paragraph.
-5. **Don't invent to de-slop.** Replacing "industry-leading" with a made-up stat is worse. Mark it `[NEED: proof]` and ask.
-6. **Choose devices on purpose.** A fragment you picked once, for a reason, is copywriting. The same device on every line is slop.
-7. **Keep the brand's register.** A formal sentence that makes a specific claim is fine. Don't flatten an enterprise voice into clipped startup copy, which is its own tell.
-8. **Vary the fixes.** The ✓ examples show one way out. Don't reuse them as templates. If every reveal becomes ", because..." and every negation list becomes "There's nothing to X," those are the new tics.
-9. **Flag a missing differentiator.** If no headline can pass the swap test with what you have, write the best one and mark `[NEED: differentiator vs. named competitors]`.
+**凌驾于人设之上的规则：**
+- **绝不虚构经历。** 写作者的观点和侧重可以构建；他的轶事、客户和结果不能。编造的 "when I ran my agency..." 故事是捏造，假客户引用同样是。用用户提供的素材，或标 `[NEED: founder story]`。
+- **Situation B 中写作者已存在。** 对齐草稿或样本中的真实声音，不要另建一个。
+- **保持品牌的语域。** 企业安全产品的人设仍然正式。密度不均和真实观点在正式语气里同样成立。
 
 ---
 
-## The Self-Check
+## 重写规则
 
-Run this on every draft before delivering it:
-
-1. **Search for the bans.** Look for "not ", "isn't", "no ", "without", "?", ":" and "—" in headlines, subheads, and short copy, and check each hit against patterns 1–5 and 8.
-2. **Read every sentence over 20 words.** If it has more than two commas, check for a trailing pile-on (pattern 3).
-3. **Count the caps.** Fragments, threes, and Cap vocabulary per section.
-4. **Read it aloud.** Mark anywhere you'd sound like a press release or a LinkedIn post.
-5. **Apply the swap test** to the headline, subhead, and every section heading.
-6. **Scan for second-generation tells.** Check the last line of every section for a tidy closer, look for wisdom-shaped sentences, and compare section lengths. If they're all about the same, the draft has perfect balance.
-
-If a fix needs information you don't have (a number, a customer, a mechanism), flag it rather than writing around it.
+1. **从事实出发重写。** 回到真实的东西（机制、数字、客户、步骤），然后写它。同义词替换和 "humanizer" 式替换只会制造新破绽。
+2. **具体性检验。** 每个主张句都需要一个数字、一个名字、一个机制，或一个具体动作。
+3. **换站检验。** 如果这句话原封不动放到竞品网站上照样成立，就重写它。
+4. **叠加检验。** 一段里出现两个及以上 Cap 模式，就重写整段。
+5. **不要为去 AI 腔而编造。** 用编造的数据替换 "industry-leading" 更糟。标 `[NEED: proof]` 并去问。
+6. **有意选择手法。** 你为某个理由选用过一次的碎句，是文案手法；每行都用的同一手法是 AI 腔。
+7. **保持品牌的语域。** 做出具体主张的正式句子没问题。不要把企业腔压平成短促的创业腔，那本身就是破绽。
+8. **变化修法。** ✓ 示例只展示了一条出路。不要把它们当模板复用。如果每个揭示句都改成 ", because..."，每个否定列表都改成 "There's nothing to X,"，这些就成了新的毛病。
+9. **标出缺失的差异点。** 如果手头素材撑不起任何能通过换站检验的标题，就写出最好的那个，并标 `[NEED: differentiator vs. named competitors]`。
 
 ---
 
-## Sources
+## 自检
 
-Patterns and evidence drawn from, and rewritten in our own words:
+交付每份草稿前跑一遍：
+
+1. **搜索禁用项。** 在标题、副标题和短文案中搜索 "not "、"isn't"、"no "、"without"、"?"、":" 和 "—"，逐个对照模式 1-5 和 8 核查。
+2. **通读每个超过 20 词的句子。** 如果逗号超过两个，检查尾部堆叠（模式 3）。
+3. **清点 Cap 项。** 每区块的碎句、三连和 Cap 词汇数量。
+4. **朗读一遍。** 凡是听起来像新闻稿或 LinkedIn 帖子的地方，标出来。
+5. **对标题、副标题和每个节标题做换站检验。**
+6. **扫描第二代破绽。** 检查每节最后一行是否是整齐收尾，查找格言形状的句子，比较各节长度。如果都差不多，草稿就得了"完美均衡"。
+
+如果某个修法需要你没有的信息（一个数字、一个客户、一个机制），把它标出来，不要绕过去。
+
+---
+
+## 来源
+
+模式与证据来自以下来源，并以我们自己的话重写：
 
 - Wikipedia, [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) (WikiProject AI Cleanup)
-- Kobak et al., excess vocabulary in 15M+ PubMed abstracts ([arXiv 2406.07016](https://arxiv.org/abs/2406.07016))
+- Kobak 等，15M+ 篇 PubMed 摘要中的冗余词汇（[arXiv 2406.07016](https://arxiv.org/abs/2406.07016)）
 - Juzek & Ward, [Why Does ChatGPT "Delve" So Much?](https://aclanthology.org/2025.coling-main.426/) (COLING 2025)
-- Paech et al., Antislop ([arXiv 2510.15061](https://arxiv.org/abs/2510.15061)) and [EQ-Bench Slop Score](https://eqbench.com/slop-score.html)
-- [tropes.fyi](https://tropes.fyi/tropes-md) catalog of AI writing tropes
+- Paech 等，Antislop（[arXiv 2510.15061](https://arxiv.org/abs/2510.15061)）与 [EQ-Bench Slop Score](https://eqbench.com/slop-score.html)
+- [tropes.fyi](https://tropes.fyi/tropes-md) AI 写作套路目录
 - Charlie Guo, [The Field Guide to AI Slop](https://www.ignorance.ai/p/the-field-guide-to-ai-slop)
 - Blake Stockton, [Don't write like AI: negation](https://www.blakestockton.com/p/dont-write-like-ai-1-101-negation)
-- Profound's `humanizer` and `improved-copywriting` skills and Wispr Flow's `writing` skill, published in [skills-marketing-library](https://github.com/retieedra-profound/skills-marketing-library) (MIT): the build-a-writer questions, human-writing traits, and second-generation tells
-- Counter-view: [A case for the defense](https://robotsatemyhomework.substack.com/p/ai-writing-patterns) (devices are fine when chosen, not defaulted)
+- Profound 的 `humanizer` 与 `improved-copywriting` skill、Wispr Flow 的 `writing` skill，发布于 [skills-marketing-library](https://github.com/retieedra-profound/skills-marketing-library)（MIT）：构建写作者问题、人写文案特质与第二代破绽来自这些来源
+- 反方观点：[A case for the defense](https://robotsatemyhomework.substack.com/p/ai-writing-patterns)（手法有意选用时没问题，默认滥用才是问题）
 
-For a broader word-level list used in content audits, see the seo-audit skill's `references/ai-writing-detection.md`.
+内容审查中使用的更完整的词汇级清单，见 seo-audit skill 的 `references/ai-writing-detection.md`。

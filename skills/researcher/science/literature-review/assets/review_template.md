@@ -1,98 +1,102 @@
-# [Literature Review Title]
+> **中文汉化版** · 上游：[K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) · 原文件：`skills/literature-review/assets/review_template.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-**Authors**: [Author Names and Affiliations]
-**Date**: [Date]
-**Review Type**: [Narrative / Systematic / Scoping / Meta-Analysis / Umbrella Review]
-**Review Protocol**: [PROSPERO ID if registered, or state "Not registered"]
-**PRISMA Compliance**: [Yes/No/Partial - specify which guidelines]
+# [文献综述标题]
 
----
-
-## Abstract
-
-**Background**: [Context and rationale]  
-**Objectives**: [Primary and secondary objectives]  
-**Methods**: [Databases, dates, selection criteria, quality assessment]  
-**Results**: [n studies included; key findings by theme]  
-**Conclusions**: [Main conclusions and implications]  
-**Registration**: [PROSPERO ID or "Not registered"]  
-**Keywords**: [5-8 keywords]
+**作者**：[作者姓名与单位]
+**日期**：[日期]
+**综述类型**：[叙述性综述 / 系统综述 / 范围综述 / Meta 分析 / 伞状综述]
+**综述方案**：[已注册则填 PROSPERO ID，否则注明"未注册"]
+**PRISMA 合规**：[是/否/部分 - 说明依据哪些指南]
 
 ---
 
-## 1. Introduction
+## 摘要
 
-### 1.1 Background and Context
-
-[Provide background information on the topic. Establish why this literature review is important and timely. Discuss the broader context and current state of knowledge.]
-
-### 1.2 Scope and Objectives
-
-[Clearly define the scope of the review and state the specific objectives. What questions will this review address?]
-
-**Primary Research Questions:**
-1. [Research question 1]
-2. [Research question 2]
-3. [Research question 3]
-
-### 1.3 Significance
-
-[Explain the significance of this review. Why is it important to synthesize this literature now? What gaps does it fill?]
+**背景**：[情境与理由]  
+**目的**：[主要与次要目的]  
+**方法**：[数据库、时间范围、筛选标准、质量评估]  
+**结果**：[纳入 n 项研究；按主题归纳的关键发现]  
+**结论**：[主要结论与启示]  
+**注册**：[PROSPERO ID 或"未注册"]  
+**关键词**：[5-8 个关键词]
 
 ---
 
-## 2. Methodology
+## 1. 引言
 
-### 2.1 Protocol and Registration
+### 1.1 背景与情境
 
-**Protocol**: [PROSPERO ID / OSF link / Not registered]  
-**Deviations**: [Document any protocol deviations]  
-**PRISMA**: [Checklist in Appendix B]
+[提供该主题的背景信息。说明这篇文献综述为何重要且及时。讨论更宏观的情境与当前知识状况。]
 
-### 2.2 Search Strategy
+### 1.2 范围与目的
 
-**Databases:** [PubMed, Scopus, Web of Science, bioRxiv, etc.]  
-**Supplementary:** [Citation chaining, grey literature, trial registries]
+[明确界定综述范围并陈述具体目的。本综述将回答哪些问题？]
 
-**Search String Example:**
+**主要研究问题：**
+1. [研究问题 1]
+2. [研究问题 2]
+3. [研究问题 3]
+
+### 1.3 意义
+
+[说明本综述的意义。为什么现在综合这批文献很重要？它填补了哪些空白？]
+
+---
+
+## 2. 方法
+
+### 2.1 方案与注册
+
+**方案**：[PROSPERO ID / OSF 链接 / 未注册]  
+**方案偏离**：[记录任何方案偏离]  
+**PRISMA**：[核对清单见附录 B]
+
+### 2.2 检索策略
+
+**数据库：**[PubMed、Scopus、Web of Science、bioRxiv 等]  
+**补充来源：**[引文追溯、灰色文献、试验注册库]
+
+**检索式示例：**
 ```
 ("CRISPR"[Title/Abstract] OR "Cas9"[Title/Abstract]) AND
 ("disease"[MeSH Terms]) AND ("2015/01/01"[Publication Date] : "2024/12/31"[Publication Date])
 ```
 
-**Dates:** [YYYY-MM-DD to YYYY-MM-DD] | **Executed:** [Date]  
-**Validation:** [Key papers used to test search strategy]
+**时间范围：**[YYYY-MM-DD 至 YYYY-MM-DD] | **执行日期：**[日期]  
+**验证：**[用于检验检索策略的关键文献]
 
-### 2.3 Tools and Software
+### 2.3 工具与软件
 
-**Screening:** [Rayyan, Covidence, ASReview]  
-**Analysis:** [VOSviewer, R, Python]  
-**Citation Management:** [Zotero, Mendeley, EndNote]  
-**AI Tools:** [Any AI-assisted tools used; document validation approach]
+**筛选：**[Rayyan、Covidence、ASReview]  
+**分析：**[VOSviewer、R、Python]  
+**文献管理：**[Zotero、Mendeley、EndNote]  
+**AI 工具：**[所用任何 AI 辅助工具；记录其验证方式]
 
-### 2.4 Inclusion and Exclusion Criteria
+### 2.4 纳入与排除标准
 
-**Inclusion Criteria:**
-- [Criterion 1: e.g., Published between 2015-2024]
-- [Criterion 2: e.g., Peer-reviewed articles and preprints]
-- [Criterion 3: e.g., English language]
-- [Criterion 4: e.g., Human or animal studies]
-- [Criterion 5: e.g., Original research or systematic reviews]
+**纳入标准：**
+- [标准 1：例如 2015-2024 年间发表]
+- [标准 2：例如同行评审论文与预印本]
+- [标准 3：例如英文文献]
+- [标准 4：例如人体或动物研究]
+- [标准 5：例如原始研究或系统综述]
 
-**Exclusion Criteria:**
-- [Criterion 1: e.g., Case reports with n<5]
-- [Criterion 2: e.g., Conference abstracts without full text]
-- [Criterion 3: e.g., Editorials and commentaries]
-- [Criterion 4: e.g., Duplicate publications]
-- [Criterion 5: e.g., Retracted articles]
-- [Criterion 6: e.g., Studies with unavailable full text after author contact]
+**排除标准：**
+- [标准 1：例如样本量 n<5 的病例报告]
+- [标准 2：例如无全文的会议摘要]
+- [标准 3：例如社论与评论]
+- [标准 4：例如重复发表]
+- [标准 5：例如已撤稿文献]
+- [标准 6：例如联系作者后仍无法获取全文的研究]
 
-### 2.5 Study Selection
+### 2.5 研究筛选
 
-**Reviewers:** [n independent reviewers] | **Conflict resolution:** [Method]  
-**Inter-rater reliability:** [Cohen's kappa = X]
+**评审人：**[n 名独立评审人] | **冲突解决：**[方法]  
+**评审者间一致性：**[Cohen's kappa = X]
 
-**PRISMA Flow:**
+**PRISMA 流程：**
 ```
 Records identified (by source): n=[X]
 Removed before screening (duplicates/other reasons): n=[D]
@@ -102,177 +106,177 @@ Reports assessed: n=[S-U]; reports excluded with reasons: n=[F]
 Reports included: n=[S-U-F]; studies included: n=[N from study-report map]
 ```
 
-**Exclusion reasons:** [List with counts; distinguish reports not retrieved]
-**Study-report map:** [Study ID -> all reports, versions, trial IDs, and outcome sources]
+**排除原因：**[列出原因与数量；区分"未获取到报告"的情况]
+**研究-报告映射：**[研究 ID -> 全部报告、版本、试验 ID 与结局数据来源]
 
-### 2.6 Data Extraction
+### 2.6 数据提取
 
-**Method:** [Standardized form (Appendix E); pilot-tested on n studies]  
-**Extractors:** [n independent] | **Verification:** [Double-checked]
+**方法：**[标准化表格（附录 E）；先在 n 项研究中试测]  
+**提取人：**[n 名独立] | **验证：**[双重核对]
 
-**Items:** Study ID, design, population, interventions/exposures, outcomes, statistics, funding, COI, bias domains
+**条目：**研究 ID、设计、人群、干预/暴露、结局、统计方法、资助、利益冲突（COI）、偏倚域
 
-**Missing data:** [Author contact protocol]
+**缺失数据：**[作者联系流程]
 
-### 2.7 Quality Assessment
+### 2.7 质量评估
 
-**Tool:** [Cochrane RoB 2 / ROBINS-I / Newcastle-Ottawa / AMSTAR 2 / JBI]\
-**Method:** [2 independent reviewers; third for conflicts]  
-**Rating:** [Use tool-specific domain and overall judgments; RoB 2: low/some concerns/high]\
-**Publication bias:** [Funnel plots, Egger's test - if meta-analysis]
+**工具：**[Cochrane RoB 2 / ROBINS-I / Newcastle-Ottawa / AMSTAR 2 / JBI]\
+**方法：**[2 名独立评审；冲突时引入第三人]  
+**评级：**[采用该工具的领域级与总体判断；RoB 2：low/some concerns/high]\
+**发表偏倚：**[漏斗图、Egger 检验 - Meta 分析时适用]
 
-### 2.8 Synthesis and Analysis
+### 2.8 综合与分析
 
-**Approach:** [Narrative / Meta-analysis / Both]  
-**Statistics** (if meta-analysis): Effect measures, heterogeneity (I², τ²), sensitivity analyses, subgroups  
-**Software:** [RevMan, R, Stata]  
-**Certainty:** [GRADE per outcome/body of evidence; risk of bias, inconsistency, indirectness, imprecision, publication bias]\
+**路径：**[叙述性综合 / Meta 分析 / 两者兼用]  
+**统计**（若做 Meta 分析）：效应量指标、异质性（I²、τ²）、敏感性分析、亚组  
+**软件：**[RevMan、R、Stata]  
+**证据质量：**[按结局/证据体使用 GRADE；偏倚风险、不一致性、间接性、不精确性、发表偏倚]\
 
 ---
 
-## 3. Results
+## 3. 结果
 
-### 3.1 Study Selection
+### 3.1 研究筛选
 
-**Summary:** [Records screened; reports sought/not retrieved/assessed/excluded/included; N distinct studies (M in meta-analysis)]\
-**Study types:** [RCTs: n=X, Observational: n=Y, Reviews: n=Z]  
-**Years:** [Range; peak year]  
-**Geography:** [Countries represented]  
-**Source:** [Peer-reviewed: n=X, Preprints: n=Y]
+**摘要：**[筛选的记录数；报告的检索/未获取/评估/排除/纳入数；N 项不同研究（其中 M 项进入 Meta 分析）]\
+**研究类型：**[RCT：n=X，观察性研究：n=Y，综述：n=Z]  
+**年份：**[范围；峰值年份]  
+**地域：**[涉及的国家]  
+**来源：**[同行评审：n=X，预印本：n=Y]
 
-### 3.2 Bibliometric Overview
+### 3.2 文献计量概览
 
-[Optional: Trends, journal distribution, author networks, citations, keywords - if analyzed with VOSviewer or similar]
+[可选：趋势、期刊分布、作者合作网络、引用、关键词 - 若用 VOSviewer 或类似工具分析]
 
-### 3.3 Study Characteristics
+### 3.3 研究特征
 
-| Study | Year | Design | Sample Size | Key Methods | Main Findings | Quality |
+| 研究 | 年份 | 设计 | 样本量 | 关键方法 | 主要发现 | 质量 |
 |-------|------|--------|-------------|-------------|---------------|---------|
-| First Author et al. | 2023 | [Type] | n=[X] | [Methods] | [Brief findings] | [Tool-specific judgment] |
+| 第一作者 et al. | 2023 | [类型] | n=[X] | [方法] | [简要发现] | [工具特定判断] |
 
-**Risk of bias:** [Report tool-specific outcome/domain judgments and denominators]
+**偏倚风险：**[报告该工具的结局/领域判断与分母]
 
-### 3.4 Thematic Synthesis
+### 3.4 主题综合
 
-[Organize by themes, NOT study-by-study. Synthesize across studies to identify consensus, controversies, and gaps.]
+[按主题组织，不要逐项罗列研究。跨研究综合，找出共识、争议与空白。]
 
-#### 3.4.1 Theme 1: [Title]
+#### 3.4.1 主题 1：[标题]
 
-**Findings:** [Synthesis of key findings from multiple studies]  
-**Supporting studies:** [X, Y, Z]  
-**Contradictory evidence:** [If any]  
-**Certainty:** [GRADE rating if applicable]
+**发现：**[多项研究关键发现的综合]  
+**支持研究：**[X、Y、Z]  
+**矛盾证据：**[若有]  
+**证据质量：**[如适用，给出 GRADE 评级]
 
-### 3.5 Methodological Approaches
+### 3.5 方法学路径
 
-**Common methods:** [Method 1 (n studies), Method 2 (n studies)]  
-**Emerging techniques:** [New approaches observed]  
-**Methodological quality:** [Overall assessment]
+**常用方法：**[方法 1（n 项研究）、方法 2（n 项研究）]  
+**新兴技术：**[观察到的新方法]  
+**方法学质量：**[总体评价]
 
-### 3.6 Meta-Analysis Results
+### 3.6 Meta 分析结果
 
-[Include only if conducting meta-analysis]
+[仅在做 Meta 分析时包含]
 
-**Effect estimates:** [Primary/secondary outcomes with 95% CI, p-values]  
-**Heterogeneity:** [I²=X%, τ²=Y, interpretation]  
-**Subgroups & sensitivity:** [Key findings from analyses]  
-**Publication bias:** [Funnel plot, Egger's p=X]  
-**Forest plots:** [Include for primary outcomes]
+**效应估计：**[主要/次要结局及 95% CI、p 值]  
+**异质性：**[I²=X%、τ²=Y、解读]  
+**亚组与敏感性：**[各项分析的关键发现]  
+**发表偏倚：**[漏斗图、Egger p=X]  
+**森林图：**[主要结局须附]
 
-### 3.7 Knowledge Gaps
+### 3.7 知识空白
 
-**Knowledge:** [Unanswered research questions]  
-**Methodological:** [Study design/measurement issues]  
-**Translational:** [Research-to-practice gaps]  
-**Populations:** [Underrepresented groups/contexts]
-
----
-
-## 4. Discussion
-
-### 4.1 Main Findings
-
-[Synthesize key findings by research question]
-
-**Principal findings:** [Top 3-5 takeaways]  
-**Consensus:** [Where studies agree]  
-**Controversy:** [Conflicting results]
-
-### 4.2 Interpretation and Implications
-
-**Context:** [How findings advance/challenge current understanding]  
-**Mechanisms:** [Potential explanations for observed patterns]
-
-**Implications for:**
-- **Practice:** [Actionable recommendations]
-- **Policy:** [If relevant]
-- **Research:** [Theoretical, methodological, priority directions]
-
-### 4.3 Strengths and Limitations
-
-**Strengths:** [Comprehensive search, rigorous methods, large evidence base, transparency]
-
-**Limitations:**
-- Search/selection: [Language bias, database coverage, grey literature, publication bias]
-- Methodological: [Heterogeneity, study quality]
-- Temporal: [Rapid evolution, search cutoff date]
-
-**Impact:** [How limitations affect conclusions]
-
-### 4.4 Comparison with Previous Reviews
-
-[If relevant: How does this review update/differ from prior reviews?]
-
-### 4.5 Future Research
-
-**Priority questions:**
-1. [Question] - Rationale, suggested approach, expected impact
-2. [Question] - Rationale, suggested approach, expected impact
-3. [Question] - Rationale, suggested approach, expected impact
-
-**Recommendations:** [Methodological improvements, understudied populations, emerging technologies]
+**知识层面：**[未解答的研究问题]  
+**方法层面：**[研究设计/测量问题]  
+**转化层面：**[研究到实践的落差]  
+**人群：**[代表性不足的群体/情境]
 
 ---
 
-## 5. Conclusions
+## 4. 讨论
 
-[Concise conclusions addressing research questions]
+### 4.1 主要发现
 
-1. [Conclusion directly addressing primary research question]
-2. [Key finding conclusion]
-3. [Gap/future direction conclusion]
+[按研究问题综合关键发现]
 
-**Evidence certainty:** [High/Moderate/Low/Very Low]  
-**Translation readiness:** [Ready / Needs more research / Preliminary]
+**核心发现：**[最重要的 3-5 条要点]  
+**共识：**[研究结果一致之处]  
+**争议：**[结果相互冲突之处]
+
+### 4.2 解读与启示
+
+**情境：**[这些发现如何推进/挑战现有认识]  
+**机制：**[对观察到的模式的可能解释]
+
+**对以下方面的启示：**
+- **实践：**[可执行的建议]
+- **政策：**[如相关]
+- **研究：**[理论、方法学、优先方向]
+
+### 4.3 优势与局限
+
+**优势：**[检索全面、方法严谨、证据体量大、过程透明]
+
+**局限：**
+- 检索/筛选：[语言偏倚、数据库覆盖、灰色文献、发表偏倚]
+- 方法学：[异质性、研究质量]
+- 时间：[领域快速演进、检索截止日期]
+
+**影响：**[这些局限如何影响结论]
+
+### 4.4 与既往综述的比较
+
+[如相关：本综述相对既往综述有何更新或差异？]
+
+### 4.5 未来研究
+
+**优先问题：**
+1. [问题] - 理由、建议方法、预期影响
+2. [问题] - 理由、建议方法、预期影响
+3. [问题] - 理由、建议方法、预期影响
+
+**建议：**[方法学改进、研究不足的人群、新兴技术]
 
 ---
 
-## 6. Declarations
+## 5. 结论
 
-### Author Contributions
-[CRediT taxonomy: Author 1 - Conceptualization, Methodology, Writing; Author 2 - Analysis, Review; etc.]
+[针对研究问题给出简明结论]
 
-### Funding
-[Grant details with numbers] OR [No funding received]
+1. [直接回答主要研究问题的结论]
+2. [关于关键发现的结论]
+3. [关于空白/未来方向的结论]
 
-### Conflicts of Interest
-[Author-specific declarations] OR [None]
-
-### Data Availability
-**Protocol:** [PROSPERO/OSF ID or "Not registered"]  
-**Data/Code:** [Repository URL/DOI or "Available upon request"]  
-**Materials:** [Search strategies (Appendix A), PRISMA checklist (Appendix B), extraction form (Appendix E)]
-
-### Acknowledgments
-[Contributors not meeting authorship criteria, librarians, patient involvement]
+**证据质量：**[高/中/低/极低]  
+**转化就绪度：**[可转化 / 需更多研究 / 初步]
 
 ---
 
-## 7. References
+## 6. 声明
 
-[Use consistent style: APA / Nature / Vancouver]
+### 作者贡献
+[按 CRediT 分类：作者 1 - Conceptualization, Methodology, Writing；作者 2 - Analysis, Review；等等]
 
-**Format examples:**
+### 资助
+[资助详情及编号] 或 [未获得资助]
+
+### 利益冲突
+[按作者分别声明] 或 [无]
+
+### 数据可用性
+**方案：**[PROSPERO/OSF ID 或"未注册"]  
+**数据/代码：**[仓库 URL/DOI 或"可应要求提供"]  
+**材料：**[检索策略（附录 A）、PRISMA 核对清单（附录 B）、提取表（附录 E）]
+
+### 致谢
+[未达到署名标准的贡献者、图书馆员、患者参与]
+
+---
+
+## 7. 参考文献
+
+[使用统一的引用风格：APA / Nature / Vancouver]
+
+**格式示例：**
 
 APA: Author, A. A., & Author, B. B. (Year). Title. *Journal*, *volume*(issue), pages. https://doi.org/xx.xxxx
 
@@ -280,54 +284,54 @@ Nature: Author, A. A. & Author, B. B. Title. *J. Name* **volume**, pages (year).
 
 Vancouver: Author AA, Author BB. Title. J Abbrev. Year;volume(issue):pages. doi:xx.xxxx
 
-1. [First reference]
-2. [Second reference]
-3. [Continue...]
+1. [第一条参考文献]
+2. [第二条参考文献]
+3. [依此继续……]
 
 ---
 
-## 8. Appendices
+## 8. 附录
 
-### Appendix A: Search Strings
+### 附录 A：检索式
 
-**PubMed** (Date: YYYY-MM-DD; Results: n)
+**PubMed**（日期：YYYY-MM-DD；结果数：n）
 ```
 [Complete search string with operators and MeSH terms]
 ```
 
-[Repeat for each database: Scopus, Web of Science, bioRxiv, etc.]
+[每个数据库重复一次：Scopus、Web of Science、bioRxiv 等]
 
-### Appendix B: PRISMA Checklist
+### 附录 B：PRISMA 核对清单
 
-[Summary below is not the complete checklist. Attach the official PRISMA 2020 checklist, including all applicable items/subitems, or the appropriate extension.]
+[下表仅为概要，并非完整清单。请附上官方 PRISMA 2020 核对清单（含所有适用条目/子条目）或相应扩展版。]
 
-| Section | Item | Reported? | Page |
+| 章节 | 条目 | 是否报告 | 页码 |
 |---------|------|-----------|------|
-| Title | Identify as systematic review | Yes/No | # |
-| Abstract | Structured summary | Yes/No | # |
-| Methods | Eligibility, sources, search, selection, data, quality | Yes/No | # |
-| Results | Selection, characteristics, risk of bias, syntheses | Yes/No | # |
-| Discussion | Interpretation, limitations, conclusions | Yes/No | # |
-| Other | Registration, support, conflicts, availability | Yes/No | # |
+| 标题 | 标明为系统综述 | 是/否 | # |
+| 摘要 | 结构化摘要 | 是/否 | # |
+| 方法 | 合格性、来源、检索、筛选、数据、质量 | 是/否 | # |
+| 结果 | 筛选、特征、偏倚风险、综合 | 是/否 | # |
+| 讨论 | 解读、局限、结论 | 是/否 | # |
+| 其他 | 注册、资助、利益冲突、数据可用性 | 是/否 | # |
 
-### Appendix C: Excluded Studies
+### 附录 C：排除的研究
 
-| Study | Year | Reason | Category |
+| 研究 | 年份 | 原因 | 类别 |
 |-------|------|--------|----------|
-| Author et al. | Year | [Reason] | [Wrong population/outcome/design/etc.] |
+| 作者 et al. | 年份 | [原因] | [人群/结局/设计等不符] |
 
-**Summary:** Wrong population (n=X), Wrong outcome (n=Y), etc.
+**汇总：**人群不符（n=X）、结局不符（n=Y）等
 
-### Appendix D: Quality Assessment
+### 附录 D：质量评估
 
-**Tool:** [Cochrane RoB 2 / ROBINS-I / Newcastle-Ottawa / etc.]\
+**工具：**[Cochrane RoB 2 / ROBINS-I / Newcastle-Ottawa / 等]\
 
-| Study | Domain 1 | Domain 2 | Domain 3 | Overall |
+| 研究 | 领域 1 | 领域 2 | 领域 3 | 总体 |
 |-------|----------|----------|----------|---------|
-| Study 1 | Low | Low | Some concerns | Some concerns |
-| Study 2 | [Score] | [Score] | [Score] | [Overall] |
+| 研究 1 | Low | Low | Some concerns | Some concerns |
+| 研究 2 | [评级] | [评级] | [评级] | [总体] |
 
-### Appendix E: Data Extraction Form
+### 附录 E：数据提取表
 
 ```
 STUDY: Author______ Year______ DOI______
@@ -340,80 +344,80 @@ RISK OF BIAS: Tool______ Outcome______ Judgment______ Rationale______
 FUNDING/COI: _____
 ```
 
-### Appendix F: Meta-Analysis Details
+### 附录 F：Meta 分析细节
 
-[Only if meta-analysis performed]
+[仅当进行了 Meta 分析]
 
-**Software:** [R 4.x.x with meta/metafor packages / RevMan / Stata]  
-**Model:** [Random-effects; justification]  
-**Code:** [Link to repository]  
-**Sensitivity analyses:** [Details]
+**软件：**[R 4.x.x 及 meta/metafor 包 / RevMan / Stata]  
+**模型：**[随机效应模型；说明理由]  
+**代码：**[仓库链接]  
+**敏感性分析：**[细节]
 
-### Appendix G: Author Contacts
+### 附录 G：作者联系记录
 
-| Study | Contact Date | Response | Data Received |
+| 研究 | 联系日期 | 是否回复 | 是否提供数据 |
 |-------|--------------|----------|---------------|
-| Author et al. | YYYY-MM-DD | Yes/No | Yes/No/Partial |
+| 作者 et al. | YYYY-MM-DD | 是/否 | 是/否/部分 |
 
 ---
 
-## 9. Supplementary Materials
+## 9. 补充材料
 
-[If applicable]
+[如适用]
 
-**Tables:** S1 (Full study characteristics), S2 (Quality scores), S3 (Subgroups), S4 (Sensitivity)  
-**Figures:** S1 (PRISMA diagram), S2 (Risk of bias), S3 (Funnel plot), S4 (Forest plots), S5 (Networks)  
-**Data:** S1 (Extraction file), S2 (Search results), S3 (Analysis code), S4 (PRISMA checklist)  
-**Repository:** [OSF/GitHub/Zenodo URL with DOI]
-
----
-
-## Review Metadata
-
-**Registration:** [Registry] ID: [Number] (Date: YYYY-MM-DD)  
-**Search dates:** Initial: [Date]; Updated: [Date]  
-**Version:** [1.0] | **Last updated:** [Date]
-
-**Quality checks:**
-- [ ] DOI registration checked; identity, claim support, and correction/retraction status manually reviewed
-- [ ] PRISMA checklist completed
-- [ ] Search reproducible
-- [ ] Independent data verification
-- [ ] Code peer-reviewed
-- [ ] All authors approved
+**表格：**S1（完整研究特征）、S2（质量评分）、S3（亚组）、S4（敏感性）  
+**图：**S1（PRISMA 流程图）、S2（偏倚风险）、S3（漏斗图）、S4（森林图）、S5（网络图）  
+**数据：**S1（提取文件）、S2（检索结果）、S3（分析代码）、S4（PRISMA 核对清单）  
+**仓库：**[OSF/GitHub/Zenodo URL 及 DOI]
 
 ---
 
-## Usage Notes
+## 综述元数据
 
-**Review type adaptations:**
-- Systematic Review: Use all sections
-- Meta-Analysis: Include sections 3.6, Appendix F
-- Narrative Review: May omit some methodology detail
-- Scoping Review: Follow PRISMA-ScR, may omit quality assessment
+**注册：**[注册库] ID：[编号]（日期：YYYY-MM-DD）  
+**检索日期：**首次：[日期]；更新：[日期]  
+**版本：**[1.0] | **最后更新：**[日期]
 
-**Key principles:**
-1. Remove all [bracketed placeholders]
-2. Follow PRISMA 2020 guidelines
-3. Pre-register when feasible (PROSPERO/OSF)
-4. Use thematic synthesis, not study-by-study
-5. Be transparent and reproducible
-6. Verify reference identity and claim support, including items without DOIs
-7. Make data/code openly available
+**质量检查：**
+- [ ] 已核对 DOI 注册信息；人工审查文献身份、论断支持情况与更正/撤稿状态
+- [ ] 已完成 PRISMA 核对清单
+- [ ] 检索可复现
+- [ ] 数据经独立验证
+- [ ] 代码经同行评审
+- [ ] 全体作者已批准
 
-**Common pitfalls to avoid:**
-- Don't list studies - synthesize them
-- Don't cherry-pick results
-- Don't ignore limitations
-- Don't overstate conclusions
-- Don't skip publication bias assessment
+---
 
-**Resources:**
+## 使用说明
+
+**按综述类型调整：**
+- 系统综述：使用全部章节
+- Meta 分析：包含 3.6 节与附录 F
+- 叙述性综述：可省略部分方法学细节
+- 范围综述：遵循 PRISMA-ScR，可省略质量评估
+
+**关键原则：**
+1. 删除所有[方括号占位符]
+2. 遵循 PRISMA 2020 指南
+3. 可行时预先注册（PROSPERO/OSF）
+4. 采用主题综合，不要逐项罗列研究
+5. 保持透明、可复现
+6. 核验参考文献的身份与论断支持情况，包括无 DOI 的条目
+7. 公开提供数据/代码
+
+**要避免的常见误区：**
+- 不要罗列研究，要综合研究
+- 不要只挑对自己有利的结果
+- 不要回避局限
+- 不要夸大结论
+- 不要跳过发表偏倚评估
+
+**资源：**
 - PRISMA 2020: https://www.prisma-statement.org/
 - PROSPERO: https://www.crd.york.ac.uk/prospero/
 - Cochrane Handbook: https://training.cochrane.org/handbook
 - GRADE: https://www.gradeworkinggroup.org/
 
-**DELETE THIS SECTION FROM YOUR FINAL REVIEW**
+**定稿时请删除本节**
 
 ---

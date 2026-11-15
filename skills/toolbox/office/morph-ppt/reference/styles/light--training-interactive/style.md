@@ -1,17 +1,21 @@
-# 10-training-interactive — Training Interactive
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/light--training-interactive/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 10-training-interactive（互动培训）
 
-Elegant and lively color scheme, suitable for corporate training, online courses, knowledge sharing, and other interactive learning occasions
+## 风格概览
 
-- **Scene**: Corporate training, online courses, knowledge sharing, skill teaching
-- **Mood**: Learning, interactive, progressive, energetic, friendly
-- **Color Tone**: Warm tone, medium saturation, comfortable and eye-friendly
-- **Industry**: Education, corporate training, human resources, consulting
+优雅活泼的配色，适合企业培训、在线课程、知识分享等互动学习场合
 
-## Color Palette
+- **场景**：企业培训、在线课程、知识分享、技能教学
+- **气质**：学习感、互动、渐进、有活力、友好
+- **色调**：暖色调、中等饱和、舒适护眼
+- **行业**：教育、企业培训、人力资源、咨询
 
-| Name           | Hex     | Usage          |
+## 配色
+
+| 名称           | Hex     | 用途           |
 | -------------- | ------- | -------------- |
 | Background     | #FFF9E6 | background     |
 | Primary        | #FF6B6B | primary        |
@@ -22,42 +26,42 @@ Elegant and lively color scheme, suitable for corporate training, online courses
 | Secondary Text | #636E72 | text_secondary |
 | Muted Text     | #B2BEC3 | text_muted     |
 
-## Typography
+## 字体排印
 
-| Element  | Font            |
+| 元素     | 字体            |
 | -------- | --------------- |
 | title_en | Arial Black     |
 | title_cn | Microsoft YaHei |
 | body     | Microsoft YaHei |
 | data     | Arial Black     |
 
-## Design Techniques
+## 设计手法
 
-- Light yellow eye-friendly background
-- Interactive Q&A elements
-- Progress bar indicators
-- Card-style module layout
-- Friendly rounded corner design
-- Morph transition animations
+- 浅黄护眼背景
+- 互动问答元素
+- 进度条指示
+- 卡片式模块版式
+- 友好的圆角设计
+- Morph 切换动画
 
-## Page Structure (7 pages)
+## 页面结构（7 页）
 
-| Slide | Type       | Elements | Description                                                        |
+| 页码  | 类型       | 元素数量 | 描述                                                               |
 | ----- | ---------- | -------- | ------------------------------------------------------------------ |
-| S1    | cover      | 59       | Cover page - course title + instructor info + schedule             |
-| S2    | objectives | 54       | Learning objectives page - 3 objective cards + progress indicators |
-| S3    | content1   | 60       | Content page 1 - knowledge point explanation + diagrams            |
-| S4    | content2   | 69       | Content page 2 - key points list + diagrams                        |
-| S5    | content3   | 66       | Content page 3 - core concepts + summary                           |
-| S6    | practice   | 58       | Practice interaction page - interactive Q&A + options              |
-| S7    | summary    | 54       | Summary page - course summary + next steps                         |
+| S1    | cover      | 59       | 封面页：课程标题 + 讲师信息 + 日程                                  |
+| S2    | objectives | 54       | 学习目标页：3 张目标卡片 + 进度指示                                 |
+| S3    | content1   | 60       | 内容页 1：知识点讲解 + 图示                                         |
+| S4    | content2   | 69       | 内容页 2：要点清单 + 图示                                           |
+| S5    | content3   | 66       | 内容页 3：核心概念 + 小结                                           |
+| S6    | practice   | 58       | 练习互动页：互动问答 + 选项                                         |
+| S7    | summary    | 54       | 总结页：课程总结 + 下一步                                           |
 
-## Reference Script
+## 参考脚本
 
-Complete build script is in `build.sh`.
+完整构建脚本见 `build.sh`。
 
-**Recommended slides to read for understanding core design techniques**:
+**建议阅读以下页理解核心设计手法**：
 
-- **Slide 1** — Cover page - course title + instructor info + schedule
+- **Slide 1**：封面页，课程标题 + 讲师信息 + 日程
 
-No need to read all — skim 2-3 representative slides.
+不必通读，浏览 2-3 个代表页即可。

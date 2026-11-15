@@ -1,52 +1,56 @@
-# Custom: a page of its own
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/direction.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The opt-in path, taken only when the user asks for it (**custom**, "bespoke", "no theme", "a world of its own", "derive it"); silence deals a theme. The catalog takes it back when the user names a theme ("custom, something like Newsprint" is that theme with a mood note), when a `design.md` or a real brand already exists (inherit it), in component scope, and under `--fast` (say so).
+# Custom：一页只属于自己的页面
 
-## Yours, all of it
+主动选择才走的路径，仅当用户明确要求时进入（**custom**、"bespoke"、"no theme"、"a world of its own"、"derive it"）；沉默则发给一个主题。用户点出主题名时目录会把它收回（"custom, something like Newsprint" 就是那个主题加一条情绪备注）；已有 `design.md` 或真实品牌时（继承它）、组件级范围、以及 `--fast` 下（要说明），也都回到目录。
 
-On a custom run nothing is dealt and nothing is prescribed: no theme, no shape, no section list, no component, no palette recipe, no draw. What the page is, how it is built and how it looks are your decisions, made for this one client. Hallmark keeps three things: the floor, the gates against machine-made pages, and the sweep. SKILL.md calls you a capable designer; here it means it in full.
+## 一切都归你
 
-So aim higher than a good page. Make the one a design lead would bring to a client who has already turned down every template: something you have never made before, that no other prompt could have produced, that a designer would stop to look at twice. Be ambitious in the idea and exact in the execution.
+在定制 run 里什么都不发放、什么都不规定：没有主题、没有形态、没有区块清单、没有组件、没有配色配方、没有抽签。页面是什么、怎么建、长什么样，都是你的决定，为这一个客户而做。Hallmark 只保留三样：底线（the floor）、拦截机器感页面的闸门（gates）、以及清扫（sweep）。SKILL.md 说你是一位有能力的设计师；在这里它完全当真。
 
-- **Unique is specific.** Every large decision belongs to this client: its subject, its place, its materials, its numbers, the way its people talk. Put the nearest competitor's name on the page; if it still works, keep going.
-- **Clean is exact, not empty.** A system you can see (a few type sizes far apart, one spacing rhythm, edges that line up), nothing on the page that is not doing a job, and on every screen one thing strong enough to be its reason.
-- **Full is the floor.** A custom page is a whole site, not a hero and a sampler: everything the client has to say and show, from the first screen to the footer, usually six to nine sections, each built around something worth looking at (the product working, a photograph, real facts set large, something to try). Less to look at is not cleaner, only thinner; a section that is a head and a paragraph is unfinished.
-- **Free is free.** Dark or light, one colour or four, type as the picture or photographs edge to edge, a structure no template has, something the visitor can try: every road is open when the idea asks for it.
+所以要比"一个好页面"瞄准得更高。做出那种设计负责人会带给一个已经拒掉所有模板的客户的页面：你从未做过的东西，任何其他提示词都产不出的东西，设计师会停下来看两眼的东西。想法上雄心勃勃，执行上精确到位。
 
-## Before the first line of code
+- **独特即具体。** 每个大决策都属于这个客户：它的题材、它的地点、它的材质、它的数字、它的人说话的方式。把最接近竞品的名字贴到页面上；如果页面依然成立，就继续做。
+- **干净是精确，不是空洞。** 一套看得见的系统（少数几个相距很远的字号、一个间距节奏、对齐的边缘），页面上没有任何不做实事的东西，每一屏都有强到足以成为其存在理由的一件事。
+- **饱满是底线。** 定制页面是整个站点，不是一个 hero 加一个样本集：客户必须说和展示的一切，从第一屏到页脚，通常六到九个区块，每个区块围绕一件值得看的东西构建（产品运转中、一张照片、放大排布的真实事实、一个可以试玩的东西）。可看的东西更少不是更干净，只是更单薄；一个只有头部和一段话的区块是未完成品。
+- **自由就是自由。** 深色或浅色、一种颜色或四种、文字当画面或照片铺满边缘、模板没有的结构、访客可以试的东西：想法需要时条条大路都开。
 
-1. **Learn the subject.** What only this client has: the name and what it means, the place and how it looks, what it does in one verb, its real numbers, its hours and rituals, what its world makes, prints or wears, the words its customers use, and whatever the prompt supplies.
-2. **Set aside the page you would make anyway.** Picture the page this prompt gets without trying, and its obvious twist; neither ships. Yours is usually a split hero with the head on the left and a picture on the right, three numbered steps, rows of label and value between hairlines, a closing band with a form, a dark footer under a huge wordmark, small grey labels, and a pale ground with one careful accent. Two of those in one plan means the plan is the template: start again from the idea.
-3. **Go wide, then choose.** Sketch three directions as far apart as you can make them, two lines each: the idea, how the page is built, how it looks. Build the one a design lead would fight for, never the safest; borrow from the other two only what makes it stronger.
-4. **Let the idea run the page.** One thought the whole page grows from, true of this client and no other. It can live in the type, the colour, the structure, the motion, the way the product is shown, or something the visitor does. Let it decide the rest, top to bottom: an idea that stops at the hero is a template with a good hero.
-5. **Let the content build the structure.** Decide what a visitor must see, understand and do, and in what order, then give each part the form that shows it best. What the sections are, their order, the nav and the footer are yours; the stamp names what you made.
+## 第一行代码之前
 
-## Spent
+1. **研究题材。** 只有这个客户才有的东西：名字及其含义、地点及其样貌、用一个动词说清它做什么、它的真实数字、它的营业时间与惯例、它的世界生产什么印刷什么穿戴什么、它的顾客用的词，以及提示词提供的一切。
+2. **把你会顺手做的那页放到一边。** 想象这个提示词不加思考会得到的那页，以及它的显然转折；两者都不许交付。你的默认版本通常是这样：头部在左图片在右的分屏 hero、三个编号步骤、发丝线之间的标签值行、带表单的收尾横带、巨大字标下的深色页脚、小号灰色标签、带一个小心强调色的浅色底。一个计划里出现其中两条，这个计划就是模板：回到想法重新开始。
+3. **先放开，再选择。** 画三个彼此拉开最远距离的方向，每个两行：想法、页面怎么建、长什么样。选那个设计负责人会为之力争的，绝选最安全的；只从另外两个方向借让它更强的东西。
+4. **让想法驱动整页。** 一个想法，整页从中生长，属于这个客户而不属于别人。它可以住在字体、颜色、结构、动效、产品的呈现方式，或访客的一个动作里。让它自上而下决定其余一切：止步于 hero 的想法只是一个带好 hero 的模板。
+5. **让内容构建结构。** 决定访客必须看见、理解、做什么，按什么顺序，然后给每个部分最能展示它的形式。区块是什么、顺序如何、导航与页脚，都归你；stamp 记录你做了什么。
 
-What every model ships, refused on sight:
+## 用滥的套路
 
-- cream, off-white or beige paper with a high-contrast serif and a clay accent (65); near-black with one neon accent; a pale ground with one timid accent; purple into blue (2a); a hue picked for the category, such as blue for software or green for health;
-- the faces you reach for first (`fonts.md`, its banned and saturated lists) and any face a catalog theme sets;
-- a centred head over three cards, or the run of hero, features, call to action and footer (3, 8); a stock second action;
-- a subject painted on instead of known: paper or grain as a surface, a stamp, a dial or a knob as ornament, bevels, an engraving, a drawing of the thing (47c, 80);
-- an eyebrow, tracked capitals, mono labels, one coloured word in a head, middle-dot strings (54, 67, 64, 38iii, 63).
+每个模型都会交付、见到即拒绝的东西：
 
-## Pictures
+- 奶油色、米白或米黄纸面配高对比衬线加陶土色强调（65）；近黑底加一种霓虹强调色；浅底加一种怯生生的强调色；紫入蓝（2a）；按品类挑的色相，比如软件用蓝、健康用绿；
+- 你第一反应抓的那些字体（`fonts.md` 的禁用与 saturated 清单），以及任何目录主题在用的字体；
+- 三张卡片上方居中的头部，或 hero、features、call to action、footer 这条流水线（3, 8）；库存的次级动作按钮；
+- 画上去而不是研究出来的题材：纸纹或颗粒当表面、邮票、表盘或旋钮当装饰、斜面浮雕、雕版、把事物画成插画（47c, 80）；
+- eyebrow 小引导词、拉开字距的大写、mono 标签、标题里一个带色的词、中点串联的字符串（54, 67, 64, 38iii, 63）。
 
-Only when the subject has something to show. A place, food, people at work, an object, a craft: photographs, few and large, the user's or the library's (`imagery.md` § 2), credited, never a wall of them (83). Software: the product itself, built and working (`imagery.md` § 4). A service, an idea or a body of words: type and colour can carry the whole page, and often should. Every picture passes the deletion test: take it away and the page loses a fact. A picture for mood alone goes.
+## 图片
 
-## Words
+只有题材有东西可展示时才用。地点、食物、工作中的人、物件、手艺：照片，少而大，用用户的或库里的（`imagery.md` § 2），注明来源，绝不做照片墙（83）。软件：产品本身，建出来并运转（`imagery.md` § 4）。服务、想法或以文字为主的主体：文字与颜色可以撑起整页，而且常常应该如此。每张图片都要过删除测试：拿掉它，页面就丢失一个事实。只为氛围存在的图片删掉。
 
-The copy is half the design, and the first place a generated page gives itself away. `craft.md` § 6 binds in full: the owner's own nouns, a fact in every head, no line a competitor could use unchanged, about 80 words a screen. Give the headline a shape of its own: two clipped fragments in a row is the one every model reaches for. Then read the headings alone: they should tell this client's story and no one else's.
+## 文字
 
-## What still binds
+文案是设计的一半，也是生成页面最先露馅的地方。`craft.md` § 6 全文有效：所有者自己的名词、每个头部一个事实、没有任何一句竞品可以原样使用的句子、每屏约 80 词。给标题一个自己的形状：两个被削短的碎片连排是每个模型的第一反应。然后只读标题：它们讲的是这个客户的故事，不是别人的。
 
-The Floor, every gate in `gates.md` (44a and 44c leave a custom hero free), `craft.md` wherever it states a rule (its sizes and its Restrained default are a theme's starting point, not yours), the facts rule (46a), licensed pictures, the stamp, the log, the sweep and both reviews. Not `layout.md`, the genre file, the shape catalog or the draw. `patterns.md` shows how states, slots and forms work, never how they look.
+## 仍然有效的东西
 
-## Mechanics
+The Floor、`gates.md` 的每一条闸门（44a 与 44c 给定制 hero 留出自由）、`craft.md` 凡是陈述规则之处（它的字号与 Restrained 默认是主题的起点，不是你的）、事实规则（46a）、有授权的图片、stamp、日志、sweep 以及两道审查。不适用的是 `layout.md`、genre 文件、形态目录与抽签。`patterns.md` 展示状态、槽位与表单如何工作，从不规定它们长什么样。
 
-- **Scaffold:** `theme.mjs scaffold --custom`. Fill every `--color-*` and `--font-*`; the scale it writes is a start, not a style, so set the sizes, spacing, widths and gaps the design needs and keep the names.
-- **Faces:** one family or two, three with an outlier that carries one role; free faces unless the user confirms a licence; the display face is one no catalog theme sets (`node <skill-dir>/scripts/theme.mjs check --face "<face>"`). `fonts.md` lists faces no theme uses: a start, not a menu.
-- **Colour:** OKLCH, any posture (`craft.md` § 2), declared in the stamp with its reason (23); contrast and focus unchanged (40, 41, 26a). Check the accent against the catalog with `theme.mjs check --hue <h>`, or with `--axes` once you know them.
-- **Picks block:** Shape and Theme become **Idea** (one sentence) and **Look** (ground, ink, accent and faces, each with where it came from); every other row says what you decided.
-- **Stamp and log:** `theme: custom · idea: "<one sentence>" · vibe: "<4 to 8 words>"`, the paper, accent and faces, `hero:` in your own words, and `posture` and `axes` as on any build: `<paper>/<display>/<accent>`, the values `theme.mjs check` prints (paper light, mid or dark; display a class such as roman-serif or grotesk-heavy; accent warm, cool, neutral or chromatic-<hue name>). The finish reviewer reads the idea where a theme build has its theme (`review-finish.md`).
+## 机制
+
+- **Scaffold:** `theme.mjs scaffold --custom`。填满每个 `--color-*` 与 `--font-*`；它写出的刻度只是起点不是风格，所以按设计需要设置字号、间距、宽度与间隙，但保留名字。
+- **Faces:** 一个或两个字族，第三个作为只承担一个角色的离群字体；除非用户确认授权，只用免费字体；展示字体不得与任何目录主题重复（`node <skill-dir>/scripts/theme.mjs check --face "<face>"`）。`fonts.md` 列出了没有主题用过的字体：是起点，不是菜单。
+- **Colour:** OKLCH，任何姿态（`craft.md` § 2），在 stamp 里连同理由一起声明（23）；对比与焦点规则不变（40, 41, 26a）。用 `theme.mjs check --hue <h>` 对照目录检查强调色，或在你确定 axes 后用 `--axes`。
+- **Picks block:** Shape 与 Theme 变为 **Idea**（一句话）与 **Look**（底色、墨色、强调色与字体，各注来历）；其余每行写你的决定。
+- **Stamp 与 log:** `theme: custom · idea: "<one sentence>" · vibe: "<4 to 8 words>"`，纸面、强调色与字体，用自己的话写 `hero:`，`posture` 与 `axes` 同任何构建：`<paper>/<display>/<accent>`，取值为 `theme.mjs check` 打印的值（paper 为 light、mid 或 dark；display 为 roman-serif 或 grotesk-heavy 之类的类别；accent 为 warm、cool、neutral 或 chromatic-<色相名>）。finish 审查者会在主题构建读主题的位置读这个想法（`review-finish.md`）。

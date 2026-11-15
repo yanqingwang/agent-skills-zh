@@ -1,24 +1,28 @@
-# Genre: modern-minimal
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/hallmark/references/genres/modern-minimal.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The polished product page: SaaS, enterprise, API, platform, developer tool, infra, B2B, dashboards, billing. Minimalism with conviction, not the absence of choice. Also picked when the user names a brand colour and the rest of the prompt is restrained. The deal leans toward this genre's themes.
+# 流派：modern-minimal
 
-## Voice
+打磨到位的产品页：SaaS、企业、API、平台、开发者工具、基础设施、B2B、仪表盘、计费。有信念的极简，不是没有选择。用户点名品牌色且提示词其余部分克制时也选它。发牌偏向这个流派的主题。
 
-- **Accent:** ink, or one hue on focus rings and one control; colour floods only under a declared posture.
-- **Layout:** two-column heroes (the title and its line beside a big slot), wide product visuals, thin visible borders rather than hairlines.
-- **Motion:** minimal; reveals off; the page is composed.
-- **Copy:** declarative, specific, technical. "Built for X" only when X is concrete.
+## 语气
 
-## Allowed here
+- **强调色：** 墨色，或焦点环与一个控件上的一个色相；只有声明了姿态时才允许颜色泛滥。
+- **版式：** 双栏 hero（标题及其一行文字伴着一个大槽位）、宽幅产品视觉、细而可见的边框，而不是发丝线。
+- **动效：** 极简；reveal 关闭；页面是被构图的。
+- **文案：** 宣言式、具体、技术化。"Built for X"（为 X 而建）只在 X 具体时才说。
 
-Pill controls, filled and outlined, with an ink-filled primary beside an outlined secondary; pure white paper (gate 7b is loosened) and zero-chroma neutrals (gate 22 is loosened); a refined surface with a very subtle border and an 8px radius; large tight-set display.
+## 此处允许
 
-## Refused here
+胶囊控件，实心与描边，墨色实心的主按钮配描边的次按钮；纯白纸面（gate 7b 放开）与零色度的中性色（gate 22 放开）；带极细边框与 8px 圆角的精修表面；大号排得紧的展示字。
 
-An italic serif body; hairline-everything; asymmetric prose columns; drop caps, fleurons, ornament; overshoot easing; gradient text; glass; a code or terminal register as decoration when the product is not a developer tool; a monospace label voice (64).
+## 此处拒绝
 
-## Chrome that fits
+斜体衬线正文；一切发丝线；不对称散文栏；首字下沉、花饰、装饰件；过冲缓动；渐变文字；玻璃；产品不是开发者工具时把代码或终端语气当装饰；等宽字体的标签语气（64）。
 
-A dense balanced bar, a floating pill, a mega-menu, a visible search pill, or vast space between a wordmark and one action. Broadsheet furniture and marquee footers fight the register. Affinities, not assignments.
+## 相配的镶边
 
-Stamp: `genre: modern-minimal`.
+一条致密均衡的栏、悬浮胶囊、超级菜单、可见的搜索胶囊，或字标与一个动作之间的大片留白。大报式家具与跑马灯页脚与语气相抵触。是亲和，不是指派。
+
+印记：`genre: modern-minimal`。

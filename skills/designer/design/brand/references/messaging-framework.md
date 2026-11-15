@@ -1,6 +1,10 @@
-# Messaging Framework
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/brand/references/messaging-framework.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Framework Structure
+# 信息传达框架
+
+## 框架结构
 
 ```
 Mission (Why we exist)
@@ -16,19 +20,19 @@ Key Messages (What we say)
 Proof Points (Why to believe)
 ```
 
-## Core Statements
+## 核心陈述
 
-### Mission Statement
+### 使命陈述
 ```
 We [action] for [audience] by [method] so they can [outcome].
 ```
 
-### Vision Statement
+### 愿景陈述
 ```
 A world where [aspiration/change we want to see].
 ```
 
-### Value Proposition
+### 价值主张
 ```
 For [target customer] who [need/problem],
 [Product/Brand] is a [category]
@@ -37,49 +41,49 @@ Unlike [competitors],
 we [unique differentiator].
 ```
 
-### Positioning Statement
+### 定位陈述
 ```
 [Brand] is the [category] for [audience]
 who want [desired outcome]
 because [reason to believe].
 ```
 
-## Message Architecture
+## 信息架构
 
-### Primary Message
-One sentence that captures your core value.
+### 主信息
+一句话概括你的核心价值。
 
-### Supporting Messages (3-5)
-Each addresses a different benefit or audience need.
+### 支撑信息（3-5 条）
+每条对应一个不同的收益或受众需求。
 
-| Message | Audience Need | Proof Point |
+| 信息 | 受众需求 | 证明点 |
 |---------|---------------|-------------|
-| [Message 1] | [Need] | [Evidence] |
-| [Message 2] | [Need] | [Evidence] |
-| [Message 3] | [Need] | [Evidence] |
+| [信息 1] | [需求] | [证据] |
+| [信息 2] | [需求] | [证据] |
+| [信息 3] | [需求] | [证据] |
 
-### Elevator Pitches
+### 电梯演讲
 
-**10-second:**
-[One sentence that sparks interest]
+**10 秒版：**
+[一句话勾起兴趣]
 
-**30-second:**
-[Problem + solution + differentiation]
+**30 秒版：**
+[问题 + 方案 + 差异化]
 
-**60-second:**
-[Full pitch with proof points]
+**60 秒版：**
+[带证明点的完整推介]
 
-## Message by Audience
+## 按受众传达信息
 
-| Audience | Pain Point | Key Message | CTA |
+| 受众 | 痛点 | 关键信息 | 行动号召 |
 |----------|------------|-------------|-----|
-| [Segment 1] | [Pain] | [Message] | [Action] |
-| [Segment 2] | [Pain] | [Message] | [Action] |
+| [细分 1] | [痛点] | [信息] | [动作] |
+| [细分 2] | [痛点] | [信息] | [动作] |
 
-## Message Testing
+## 信息测试
 
-1. Is it clear? (No jargon)
-2. Is it differentiated? (Competitors can't say it)
-3. Is it credible? (Can we prove it)
-4. Is it compelling? (Does audience care)
-5. Is it consistent? (Aligns with brand)
+1. 清晰吗？（无行话）
+2. 有差异吗？（竞争对手说不出）
+3. 可信吗？（我们能证明）
+4. 有吸引力吗？（受众在乎）
+5. 一致吗？（与品牌对齐）

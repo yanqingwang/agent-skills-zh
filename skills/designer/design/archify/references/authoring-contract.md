@@ -1,188 +1,167 @@
-# Authoring contract
+> **中文汉化版** · 上游：[tt-a1i/archify](https://github.com/tt-a1i/archify) · 原文件：`archify/references/authoring-contract.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Read this reference only after the Fast authoring path calls for more detail. The schemas and examples remain authoritative.
+# 创作契约（Authoring contract）
 
-## Composition repair
+只在快速创作路径需要更多细节时才读本参考。schema 与示例仍是权威依据。
 
-When correcting an authored overview's abstraction, map every affected role, relationship direction, protocol, boundary, condition, and source reference to its surviving node or relationship before regrouping. A startup citation does not prove a message protocol. Preserve each claim's inspected evidence. Keep user-supplied or agreed topology fixed; fewer routes alone do not justify merging. A boundary around one node requires an explicit isolation fact and must not merely repeat its label.
+## 构成修复
 
-## Label repair
+修正已创作总览图的抽象层次时，先在重新分组之前，把每一条受影响的角色、关系方向、协议、边界、条件与来
+源引用映射到其存留的节点或关系上。引用一家初创公司并不能证明存在一条消息协议。保留每条论断已被查验的
+证据。用户给定或已商定的拓扑保持不动；仅"路由变少"不足以支撑合并。围绕单个节点画边界需要一条明确的隔
+离事实，不得只是复述其标签。
 
-When a relationship label collides, move the label, adjust the route or spacing, then shorten the wording while preserving meaning. Omit wording only when both endpoints fully imply it and it conveys no protocol, action, direction, synchronous or asynchronous behavior, or cross-boundary mechanism. Spacing means clear gap rather than center distance; measured mask width takes precedence. The first-draft gap budget is in [Layout and routing](authoring-defaults.md#layout-and-routing).
+## 标签修复
 
-For a disproportionate sublabel, keep its exact role or protocol concise and place the supplementary fact in a note or card. Preserve every required responsibility, protocol, and boundary fact. Use the first-draft node-width budget in [Layout and routing](authoring-defaults.md#layout-and-routing).
+关系标签发生碰撞时，先移动标签、调整路由或间距，再在保留语义的前提下缩短措辞。只有当两端点已完全隐含
+该含义、且它不传达协议、动作、方向、同步或异步行为或跨边界机制时，才可省略措辞。间距指清晰间隙而非中
+心距；以实测遮罩宽度为准。第一稿的间隙预算见 [布局与布线](authoring-defaults.md#layout-and-routing)
+。
 
-## Schema lookup
+对过大的子标签，保持其确切角色或协议简短，把补充事实放进备注或卡片。保留每一条必需的职责、协议与边界
+事实。第一稿的节点宽度预算见 [布局与布线](authoring-defaults.md#layout-and-routing)。
 
-Read both the mode schema and `schemas/common.schema.json`. The mode schemas use `$ref`, so the common file is where shared enums live.
+## Schema 查阅
 
-- `componentType`: `frontend`, `backend`, `database`, `cloud`, `security`, `messagebus`, `external`
-- Entity-relationship documents use `entities` and `relationships`; `key` accepts `pk`, `fk`, or `uk`, and `fromCardinality`/`toCardinality` accept `one` or `many`.
-- `variant`: `default`, `emphasis`, `security`, `dashed`
-- Relationship IDs use the shared identifier pattern and must be unique in their collection.
+模式 schema 与 `schemas/common.schema.json` 都要读。各模式 schema 使用 `$ref`，共享枚举都在 common
+文件里。
 
-Do not invent fields. Before writing any new field, enum, or constrained text, read its schema definition, including common `$ref` targets. In particular, check boundary kinds, repository identity, and source-reference shapes. An example demonstrates structure; it does not enumerate every valid value. Author fresh IDs, wording, facts, and layout.
+- `componentType`：`frontend`、`backend`、`database`、`cloud`、`security`、`messagebus`、`external`
+- 实体关系文档使用 `entities` 与 `relationships`；`key` 接受 `pk`、`fk` 或 `uk`，
+  `fromCardinality`/`toCardinality` 接受 `one` 或 `many`。
+- `variant`：`default`、`emphasis`、`security`、`dashed`
+- 关系 ID 使用共享标识符模式，并且必须在其集合内唯一。
 
-## Workflow layout contracts
+不要发明字段。写下任何新字段、枚举或受限文本之前，先读它的 schema 定义，包括 common 的 `$ref` 目标。
+尤其要检查边界种类、仓库身份与来源引用的形状。示例展示的是结构，并不枚举每个合法值。ID、措辞、事实与
+布局都要全新创作。
 
-Use schema v2 for new workflows and keep schema v1 when an existing source must
-retain fixed geometry. In both versions, `col` stays in `0..5` and semantic
-edge labels are never deleted as a spacing repair. Do not change only
-`schema_version` when absolute coordinates exist: follow the canonical
-[migration and layout-receipt contract](../renderers/workflow/README.md#migration-and-layout-receipt).
-The complete normative invariants live in the workflow renderer's
-[layout contracts](../renderers/workflow/README.md#layout-contracts).
-For sequential stages stacked in one container, use one v2 lane and group,
-omit `meta.viewBox`, and center nodes around the lane content with symmetric
-`yOffset` values such as `-90 / 0 / 90`. Keep semantic edge labels and act on
-compiler diagnostics.
+## 工作流布局契约
 
-## Legend contract
+新工作流使用 schema v2；当既有源必须保留固定几何时，保留 schema v1。两个版本中 `col` 都保持在 `0..5`
+内，语义边标签永不作为间距修复而被删除。存在绝对坐标时，不要只改 `schema_version`：遵循规范的[迁移与
+布局回执契约](../renderers/workflow/README.md#migration-and-layout-receipt)。完整的规范性不变量位于
+工作流渲染器的[布局契约](../renderers/workflow/README.md#layout-contracts)。对叠放在一个容器内的顺序
+阶段，使用一条 v2 lane 与 group，省略 `meta.viewBox`，并用对称的 `yOffset` 值（如 `-90 / 0 / 90`）使
+节点围绕 lane 内容居中。保留语义边标签，并按编译器诊断采取行动。
 
-Omit `meta.legend` for the truthful default: `auto` lists only semantic kinds
-present in typed IR. Use `mode: "all"` for a renderer reference or
-`mode: "hidden"` to remove the full legend. Under `entries`, only keys listed
-by the selected mode schema are valid; each key accepts `label`, `visible`, or
-both. `visible: true` may show an unused supported convention, while
-`visible: false` hides it. `hidden` cannot be overridden.
+## 图例契约
 
-A label override changes reader wording only. Never infer a kind from prose or
-use the legend to compensate for missing nodes, states, messages, or flows.
-Long labels are measured and wrap into deterministic rows. Architecture's
-implicit automatic viewBox grows from that same measured footprint, and an
-automatic ERD canvas is sized the same way so its default legend is always in
-the generated content. For backwards compatibility, a legacy document with no
-`meta.legend` may omit an implicit auto legend that cannot fit its explicit
-viewBox; this never changes its typed topology. An ERD that authors a
-`meta.viewBox` keeps that fixed area and reports the capacity instead of
-dropping the legend. Adding `meta.legend` makes the presentation intentional and
-strict: if its resolved labels cannot fit the authored viewBox, shorten or hide
-them, or widen the viewBox using the emitted diagnostic.
+省略 `meta.legend` 即得到真实的默认值：`auto` 只列出 typed IR 中存在的语义种类。渲染器参考图用
+`mode: "all"`；要移除完整图例用 `mode: "hidden"`。在 `entries` 下，只有所选模式 schema 列出的键才合
+法；每个键接受 `label`、`visible` 或两者。`visible: true` 可以显示一个未被使用的受支持约定，
+`visible: false` 则隐藏它。`hidden` 不可被覆盖。
 
-## Language consistency
+标签覆盖只改变读者看到的措辞。绝不从散文中推断种类，也不用图例去补偿缺失的节点、状态、消息或流。长标
+签会被实测并折行成确定的行。Architecture 的隐式自动 viewBox 从同一实测足迹生长，自动 ERD 画布也按同
+样方式定尺寸，因此其默认图例总在生成内容内。为了向后兼容，没有 `meta.legend` 的旧文档可以省略一个放
+不进其显式 viewBox 的隐式 auto 图例；这永不改变其 typed 拓扑。创作了 `meta.viewBox` 的 ERD 保留该固
+定区域并报告图例容量，而不是丢弃图例。添加 `meta.legend` 意味着呈现是有意且严格的：若解析出的标签放
+不进所创作的 viewBox，就缩短或隐藏它们，或按发出的诊断加宽 viewBox。
 
-Choose one primary authored language. An explicit user choice wins; otherwise
-use the language of the request, or the conversation's dominant language when
-the request itself is language-neutral. Separately choose the Viewer locale.
-Always write the matching `meta.locale` as a well-formed language tag: `"en"`
-for English, `"zh-CN"` for Simplified Chinese, `"es"` for Spanish, or any
-other tag for another language. The renderer consumes the authored locale without inferring language
-from diagram strings. Documents that omit it remain valid and default to
-English.
+## 语言一致性
 
-`meta.locale` controls only renderer-owned reader surfaces: `<html lang>`, the
-document-title suffix, default SVG description and focus labels, default legend
-labels, and fixed Viewer controls, statuses, accessibility names, and errors.
-It never translates authored content. Apply the primary language separately to
-titles, subtitles, node and relationship copy, boundaries, lanes, groups,
-legend label overrides, and cards. A bilingual diagram still
-chooses one primary locale for the Viewer; follow an explicit primary-language
-request, then prompt order or conversation dominance.
+选定一种主要创作语言。用户的明确选择优先；否则使用请求的语言，若请求本身语言中立则使用对话的主导语言
+。Viewer locale 单独选择。始终把匹配的 `meta.locale` 写成格式良好的语言标签：英语用 `"en"`，简体中文
+用 `"zh-CN"`，西班牙语用 `"es"`，其他语言用对应标签。渲染器消费所创作的 locale，不从图内容字符串推断
+语言。省略该字段的文档仍然有效，默认为英语。
 
-Bundled Viewer catalogs are enrolled in `locales/manifest.json`: currently
-`en`, `zh-CN`, `zh-TW`, `es`, `ko`, and `ar`. For these, `meta.locale` alone selects the full
-catalog. Tags match case-insensitively (`zh-cn` selects `zh-CN`), but region
-and script variants are distinct: `zh-Hant`, `es-MX`, or `ko-KR` select no
-bundled catalog.
+`meta.locale` 只控制渲染器拥有的读者界面：`<html lang>`、文档标题后缀、默认 SVG description 与焦点标
+签、默认图例标签，以及固定的 Viewer 控件、状态、无障碍名称与错误文本。它从不翻译已创作内容。主要语言
+单独应用到标题、副标题、节点与关系文案、边界、lane、group、图例标签覆盖与卡片。双语图仍要为 Viewer
+选定一种主要 locale；遵循明确的主要语言请求，其次按提示词顺序或对话主导语言。
 
-`meta.translations` is an optional per-key override: an object mapping the
-renderer's canonical message keys (`locales/en.json`, or `catalogKeys()` in
-`renderers/shared/i18n.mjs`) to translated strings whose `{placeholder}` tokens
-match the English source exactly. Each message resolves as: valid
-`meta.translations` value → the selected bundled catalog → English. For a
-bundled locale, supply only the keys whose wording the diagram needs to change;
-the rest of the language is kept. Omitting the field or supplying `{}` means no
-override. For a language without a bundled catalog, supply the catalog here.
-Reuse suitable translations from `examples/locales/` or a previously reviewed
-catalog, translate missing keys, and use the English source to check keys and
-placeholders.
+捆绑的 Viewer 语言目录登记在 `locales/manifest.json`：目前有 `en`、`zh-CN`、`zh-TW`、`es`、`ko` 与
+`ar`。对这些语言，仅凭 `meta.locale` 就能选中完整目录。标签匹配不区分大小写（`zh-cn` 选中 `zh-CN`）
+，但地区与文字变体各自独立：`zh-Hant`、`es-MX` 或 `ko-KR` 不会选中任何捆绑目录。
 
-An unknown key or a value with mismatched placeholders is rejected and keeps
-the lower-priority message; it is reported as `i18n/invalid-translation` on
-stderr and as a warning in the `validate --json`, `deliver`, and `finalize`
-receipt `diagnostics[]`. Keys that still resolve to English in a
-non-English locale are reported as `i18n/translation-coverage`, with the missing
-keys and their English source text; add exactly those keys to repair the gap.
-Coverage describes the final resolved catalog, not the size of the override.
+`meta.translations` 是可选的按键覆盖：一个对象，把渲染器的规范消息键（`locales/en.json`，或
+`renderers/shared/i18n.mjs` 中的 `catalogKeys()`）映射到译文字符串，其 `{placeholder}` 记号必须与英
+文源完全一致。每条消息按此顺序解析：合法的 `meta.translations` 值 → 选中的捆绑目录 → 英语。对捆绑
+locale，只提供图中需要改措辞的键；其余语言保留。省略该字段或提供 `{}` 表示无覆盖。对没有捆绑目录的语
+言，在这里提供目录。从 `examples/locales/` 或之前已评审的目录复用合适的译文，翻译缺失的键，并用英文
+源核对键与占位符。
 
-For a requested language you cannot supply `meta.translations` for, do not
-write a `meta.locale` with no bundled catalog and no translations. Keep every
-reader-facing authored string in the requested language, omit `meta.locale` so
-the renderer safely uses English, and explicitly tell the user that fixed
-Viewer UI and `<html lang>` remain English and the artifact is not fully localized.
-The fallback applies only to renderer-owned surfaces; it never
-permits authored copy to fall back to English. Do not silently substitute
-`zh-CN` for another language or Chinese locale, and do not machine-translate
-`meta.translations` values without disclosing that they are unreviewed.
+未知键或占位符不匹配的值会被拒绝并保留较低优先级的消息；它在 stderr 上报告为
+`i18n/invalid-translation`，并作为警告出现在 `validate --json`、`deliver` 与 `finalize` 回执的
+`diagnostics[]` 中。在非英语 locale 下仍解析为英语的键报告为 `i18n/translation-coverage`，附缺失键及
+其英文源文本；补上恰好这些键即可修复缺口。覆盖率描述的是最终解析出的目录，不是覆盖集的大小。
 
-Keep exact product names, code identifiers, commands, protocols, API paths, and
-environment names intact. Those terms may remain English inside localized copy,
-but surrounding explanatory prose must still use the selected language.
-Renderer-owned default legend labels follow `meta.locale`; author a
-`meta.legend.entries.*.label` override only when the diagram needs different
-domain wording, and keep that authored override in the primary language.
+对无法提供 `meta.translations` 的请求语言，不要写一个既无捆绑目录也无译文的 `meta.locale`。把每条面
+向读者的创作字符串都保持为请求语言，省略 `meta.locale` 让渲染器安全地使用英语，并明确告诉用户：固定
+的 Viewer UI 与 `<html lang>` 仍是英语，产物没有完全本地化。该回退只适用于渲染器拥有的界面；它绝不许
+可创作文案回退为英语。不要把 `zh-CN` 静默替换为其他语言或中文 locale，也不要在未披露"未经评审"的情况
+下机翻 `meta.translations` 的值。
 
-## Visual preset default
+保持确切的产品名、代码标识符、命令、协议、API 路径与环境名不变。这些术语在本地化文案中可以保持英文，
+但其周围的解释性散文必须使用所选语言。渲染器拥有的默认图例标签跟随 `meta.locale`；只有当图需要不同的
+领域措辞时才创作 `meta.legend.entries.*.label` 覆盖，并且该创作覆盖保持主要语言。
 
-Omit `meta.visual_preset` by default. The renderer then opens the diagram in
-`classic` for both light and dark color modes. Color mode and visual preset are
-independent viewer state: switching Light / Dark must preserve the current
-preset. Author `signal-flow`, `blueprint`, or `editorial` only when the user
-explicitly requests that visual style.
+## 视觉预设默认
 
-## Engineering profile default
+默认省略 `meta.visual_preset`。此时渲染器在浅色与深色两种颜色模式下都以 `classic` 打开图。颜色模式与
+视觉预设是相互独立的 Viewer 状态：切换 Light / Dark 必须保留当前预设。只在用户明确要求该视觉风格时才
+创作 `signal-flow`、`blueprint` 或 `editorial`。
 
-Omit `meta.engineering_profile` for an ordinary system architecture. Region,
-cluster, and security boundary wording do not by themselves enable an
-engineering profile. Enable `deployment-ownership` only when the user
-explicitly asks for a production deployment topology, ownership handoff, or
-fail-closed deployment review and the source facts are known. Once enabled,
-do not remove the engineering profile merely to pass validation; repair the
-authored facts or report the diagnostics truthfully.
+## 工程画像默认
 
-## Title hierarchy
+普通系统架构省略 `meta.engineering_profile`。区域、集群与安全边界的措辞本身并不启用工程画像。只在用
+户明确要求生产部署拓扑、所有权交接或 fail-closed 部署评审、且源事实已知时，才启用
+`deployment-ownership`。一旦启用，不要仅仅为了通过验证而移除工程画像；修复所创作的事实，或如实报告诊
+断。
 
-Use one concise title and let the diagram carry the explanation. Omit
-`meta.subtitle` by default, and never use it to restate the title, nodes, edges,
-or cards. Include one short supporting line only when the user explicitly asks
-for a subtitle; an omitted or blank subtitle must not leave an empty visual row
-in the generated viewer.
+## 标题层级
 
-## Executable geometry rules
+使用一条简洁标题，让图本身承担解释。默认省略 `meta.subtitle`，绝不用它复述标题、节点、边或卡片。只在
+用户明确要求副标题时才包含一条简短支撑行；省略或空白的副标题不得在生成的查看器中留下空行。
 
-Generate one responsive artifact for laptops and external displays, preserving the authored SVG/viewBox, proportions, semantic geometry, and normal document flow. Use meaningful content rows and the Reader-declared readable page-scroll behavior when the complete diagram needs more height; viewport fitting does not authorize alternate topology or smaller typography.
+## 可执行几何规则
 
-- Node anchors start at side midpoints. `left`/`right` change the horizontal endpoint; `top`/`bottom` change the vertical endpoint. For an automatic Architecture relationship, unobstructed facing ports whose axis offset is under 16px may share one horizontal or vertical axis when both endpoints retain the 16px corner gutter. If exactly one endpoint belongs to a spread group, only its unshared counterpart moves; relationships spread at both endpoints keep their distinct ports and outside bridge unless a reciprocal facing pair can jointly use separate straight lanes while preserving endpoint spacing, labels, and all surrounding route and obstacle clearances.
-- A side is a direction contract. The first and final route segment must be perpendicular and outward/inward in the named direction.
-- In architecture and data-flow diagrams, explicit `route: "straight"` requests one direct segment, which may be diagonal when endpoint sides are not pinned. The artifact checker preserves this intent; explicit sides, opaque-node clearance, and other quality gates still apply. `via` takes precedence and retains existing rules, including data-flow's requirement for orthogonal via segments.
-- Automatic Port Spread is a default renderer behavior for architecture, workflow, and data-flow diagrams. Shared automatic endpoints spread deterministically and symmetrically with a 16px corner gutter. It does not apply to sequence messages, single relationships, or explicit `via`, `channelX`, `channelY`, `labelAt`, or non-`auto` routes.
-- Showcase route rhythm: every nonzero segment must be at least 8px; every interior segment must be at least 16px. When spread ports are nearly parallel, the router uses a 24px endpoint stub and a 16px outside bridge instead of manufacturing a tiny dogleg.
-- Showcase route compactness: an explicit Architecture route fails with `composition/excessive-route-detour` when its orthogonal length is at least 2.5 times an obstacle-aware legal route, adds at least 200px, and sends a control point at least 96px beyond the content envelope. The evidence records both lengths, ratio, excess, bounds, and excursion. Remove an unnecessary `via` or move the diagnosed corridor inward instead of enlarging the canvas. Related relationships that overlap on the same outer corridor by at least 32px are treated as an intentional bus and remain valid.
-- Shared endpoint corridors are allowed only when they remain semantically unambiguous. Unrelated collinear overlap of 8px or more fails showcase.
-- Container borders are intentional pass-through geometry, but a long edge running along a structural border is not.
-- An edge crossing an unrelated opaque node is always a hard failure, independent of quality profile.
+为笔记本与外接显示器生成一个响应式产物，保留所创作的 SVG/viewBox、比例、语义几何与正常文档流。完整图
+需要更高时，使用有实际内容的行与 Reader 声明的可读页面滚动；视口适配不授权改变拓扑或缩小字号。
 
-### Explicit `via` coordinates
+- 节点锚点从边中点开始。`left`/`right` 改变水平端点；`top`/`bottom` 改变垂直端点。对自动
+  Architecture 关系，轴偏移小于 16px 的无遮挡对向端口，在两端都保留 16px 角落留白时可以共享一条水
+  平或垂直轴。若恰好一个端点属于扩散组，则只有其未配对的另一端移动；两端都扩散的关系保持各自的端口
+  与外侧桥，除非一对相向端口能共同使用分离的直 lane，同时保持端点间距、标签以及所有周围路由与障碍
+  物的间隙。
+- 侧是一个方向契约。路由的首段与末段必须垂直，并沿所指方向向外/向内。
+- 在 architecture 与 data-flow 图中，显式 `route: "straight"` 请求一条直段；当端点侧未被固定时，该段
+  可以是对角线。产物检查器保留此意图；显式侧、不透明节点间隙与其他质量门槛仍然适用。`via` 优先并保
+  留既有规则，包括 data-flow 对正交 via 段的要求。
+- 自动端口扩散（Port Spread）是 architecture、workflow 与 data-flow 图的默认渲染器行为。共享的自动端
+  点以 16px 角落留白确定且对称地扩散。它不适用于 sequence 消息、单一关系，或显式 `via`、`channelX`
+  、`channelY`、`labelAt` 与非 `auto` 路由。
+- showcase 路由节奏：每个非零段至少 8px；每个内部段至少 16px。当扩散端口近乎平行时，路由器使用 24px
+  端点短段与 16px 外侧桥，而不是制造一个微小的折角。
+- showcase 路由紧凑性：显式 Architecture 路由在其正交长度达到障碍感知合法路由的至少 2.5 倍、至少多出
+  200px、并把一个控制点送到内容包络之外至少 96px 时，以 `composition/excessive-route-detour` 失败
+  。证据记录两个长度、比值、超出量、边界与偏移。移除不必要的 `via` 或把诊断出的走廊向内移，而不是
+  扩大画布。在同一外侧走廊上重叠至少 32px 的相关关系被视为有意的总线，仍然有效。
+- 共享端点走廊只在语义上保持无歧义时才被允许。不相关共线重叠达 8px 或更多时 showcase 失败。
+- 容器边框是有意的穿行几何，但沿结构边框长距离贴边运行的长边不是。
+- 穿过不相关不透明节点的边永远是硬失败，与质量画像无关。
 
-Use the resolved departure anchor `S = [sx, sy]` and arrival anchor
-`T = [tx, ty]`. Anchors start at side midpoints, but automatic routing and
-Port Spread can move them as described above; do not assume an anchor copied
-from an automatic route is the anchor of a newly authored explicit route.
-Explicit `via` routes do not receive automatic Port Spread.
+### 显式 `via` 坐标
 
-For the first waypoint `F = via[0]` and last waypoint `L = via[via.length - 1]`,
-use these alignments and directions (SVG y increases downward):
+使用解析出的出发锚点 `S = [sx, sy]` 与到达锚点 `T = [tx, ty]`。锚点从边中点开始，但自动路由与 Port
+Spread 可以按上述方式移动它们；不要假设从自动路由复制的锚点就是一条新创作显式路由的锚点。显式 `via`
+路由不会获得自动 Port Spread。
 
-| Side | Departure (`fromSide`): `S` → `F` | Arrival (`toSide`): `L` → `T` |
+对第一个航点 `F = via[0]` 与最后一个航点 `L = via[via.length - 1]`，使用以下对齐与方向（SVG 的 y 向
+下增大）：
+
+| 侧 | 出发（`fromSide`）：`S` → `F` | 到达（`toSide`）：`L` → `T` |
 | --- | --- | --- |
-| `top` | `F[0] === sx`, `F[1] < sy` | `L[0] === tx`, `L[1] < ty` |
-| `bottom` | `F[0] === sx`, `F[1] > sy` | `L[0] === tx`, `L[1] > ty` |
-| `left` | `F[1] === sy`, `F[0] < sx` | `L[1] === ty`, `L[0] < tx` |
-| `right` | `F[1] === sy`, `F[0] > sx` | `L[1] === ty`, `L[0] > tx` |
+| `top` | `F[0] === sx`，`F[1] < sy` | `L[0] === tx`，`L[1] < ty` |
+| `bottom` | `F[0] === sx`，`F[1] > sy` | `L[0] === tx`，`L[1] > ty` |
+| `left` | `F[1] === sy`，`F[0] < sx` | `L[1] === ty`，`L[0] < tx` |
+| `right` | `F[1] === sy`，`F[0] > sx` | `L[1] === ty`，`L[0] > tx` |
 
-For example, given a bottom departure anchor `S = [180, 160]` and a left
-arrival anchor `T = [360, 260]`, this relationship fragment leaves downward
-and enters the target rightward:
+例如，给定 bottom 出发锚点 `S = [180, 160]` 与 left 到达锚点 `T = [360, 260]`，下面这条关系片段向下
+离开、向右进入目标：
 
 ```json
 {
@@ -194,28 +173,22 @@ and enters the target rightward:
 }
 ```
 
-The full path is `[180, 160] → [180, 200] → [300, 200] → [300, 260] → [360, 260]`.
-Changing only the first waypoint to `[200, 200]` makes the departure diagonal;
-changing it to `[180, 120]` keeps its x aligned but leaves upward through the
-source instead of outward from its bottom. Both violate `fromSide: "bottom"`
-and produce `clean-flow/endpoint-side-direction`. The example establishes
-endpoint direction only: keep the full route clear of unrelated nodes and
-apply the other geometry rules above.
+完整路径是 `[180, 160] → [180, 200] → [300, 200] → [300, 260] → [360, 260]`。只把第一个航点改成
+`[200, 200]` 会让出发变成对角线；改成 `[180, 120]` 则保持 x 对齐，但向上穿过 source 离开，而不是从其
+底部向外。两者都违反 `fromSide: "bottom"` 并产生 `clean-flow/endpoint-side-direction`。该示例只确定
+端点方向：保持整条路由远离不相关节点，并应用上述其他几何规则。
 
-### Spacing and labels
+### 间距与标签
 
-In showcase Architecture, an unpinned connection label keeps its default position
-when clear. If it collides, the renderer tries a bounded set of nearby positions
-along the existing route, avoiding nodes, boundary titles, other labels and
-other routes within the resolved canvas. Explicit `labelAt`, `labelDx`, `labelDy`
-or `labelSegment` (including zero) disables this fallback. Routes and topology
-stay unchanged; if no nearby position is clear, validation reports the original
-collision. Inspect resolved labels with `--layout-json` before adding controls.
-Standard placement retains its existing behavior.
+在 showcase Architecture 中，未固定的连接标签在无碰撞时保持默认位置。若发生碰撞，渲染器沿既有路由尝
+试一组有界的邻近位置，避开已解析画布内的节点、边界标题、其他标签与其他路由。显式 `labelAt`、
+`labelDx`、`labelDy` 或 `labelSegment`（包括零值）会禁用该回退。路由与拓扑保持不变；若没有邻近位置是
+干净的，验证仍报告原始碰撞。添加控件之前，先用 `--layout-json` 检查解析出的标签。standard 放置保持既
+有行为。
 
-Spacing recommendations mean clear gap between boxes, not center distance. A 200px center distance between 165px-wide nodes leaves only 35px of clear gap.
+间距建议指方框之间的清晰间隙，不是中心距。165px 宽的节点之间 200px 的中心距只剩 35px 清晰间隙。
 
-For a relationship label, require:
+对关系标签，要求：
 
 ```text
 clear gap > label mask width + 8px breathing room
@@ -223,353 +196,258 @@ label mask width ≈ 6.5px × ASCII units + 13px
 CJK characters count as two units
 ```
 
-Relationship labels are semantic data. If the gap is too small, move the label,
-adjust the route or spacing, then shorten the wording while preserving meaning.
-Omit only wording already fully implied by both endpoints and carrying no
-protocol, action, direction, synchronous/asynchronous behavior, or
-cross-boundary mechanism. Preserve every meaningful label.
-Deleting it is not a spacing repair. If a relationship starts unlabeled because
-its endpoints fully imply it, explain why the wording is redundant; this is a
-semantic authoring choice, not a spacing repair. In workflow v2, let the compiler
-allocate its measured mask before applying a diagnosed `labelAt`,
-`labelDx`/`labelDy`, or `labelSegment`. Apply one diagnosed geometry control at
-a time unless several edges share a constrained channel. In that case, plan the smallest coupled change from measured geometry and
-validate it together. Architecture/workflow provide layout evidence through
-`validate <type> <candidate.json> --layout-json`; for other types, use validation
-diagnostics and the rendered SVG geometry.
-Before adding manual routes, check whether unnecessary agent-added controls
-disable automatic port spread; preserve user-required route intent. Use the
-measured clearance rules above rather than guessing coordinates.
+关系标签是语义数据。若间隙太小，先移动标签、调整路由或间距，再在保留语义的前提下缩短措辞。只有已被两
+端点完全隐含、且不携带协议、动作、方向、同步/异步行为或跨边界机制的措辞才可省略。保留每条有意义的标
+签。删除标签不是间距修复。若一条关系因端点完全隐含而初始就无标签，要解释为何该措辞是冗余的；这是语义
+创作选择，不是间距修复。在 workflow v2 中，先让编译器分配其实测遮罩，再应用诊断出的 `labelAt`、
+`labelDx`/`labelDy` 或 `labelSegment`。除非多条边共享受限通道，否则一次只应用一个诊断出的几何控件。
+若共享受限通道，按实测几何计划最小的一组耦合改动，并一起验证。Architecture/workflow 通过 `validate
+<type> <candidate.json> --layout-json` 提供布局证据；其他类型使用验证诊断与渲染 SVG 的几何。添加手动
+路由之前，检查是否有多余的代理添加控件禁用了自动端口扩散；保留用户要求的路由意图。使用上述实测间隙规
+则，不要猜测坐标。
 
-### Repair evidence
+### 修复证据
 
-For architecture, `validate architecture <input.json> --layout-json` exposes the
-resolved component boxes, boundary frames, connection points, and label positions.
-A measurable rejected layout also returns these fields, with `ok: false`,
-`contract: "archify-architecture-layout-v1"`, diagnostics, and exit 1. This is
-repair evidence, not artifact acceptance; it writes no HTML. Malformed input or
-an implementation failure retains the ordinary failure receipt without layout.
+对 architecture，`validate architecture <input.json> --layout-json` 暴露解析出的组件方框、边界框、连
+接点与标签位置。可测量的被拒布局也返回这些字段，附带 `ok: false`、`contract:
+"archify-architecture-layout-v1"`、诊断与退出码 1。这是修复证据，不是产物验收；它不写 HTML。畸形输入
+或实现失败保留普通失败回执，不带布局。
 
-Use the measured failing side for `layout/boundary-out-of-bounds`. Left/top
-negative coordinates need an inward move; increasing viewBox width/height only
-addresses right/bottom overflow. Boundaries may wrap members across rows. Keep
-real membership intact and recheck connected routes after moving members.
+对 `layout/boundary-out-of-bounds` 使用实测到的失败侧。左/上负坐标需要向内移动；增加 viewBox 宽/高只
+解决右/下溢出。边界可以让成员跨行排布。保持真实成员关系不变，移动成员后重新检查相连的路由。
 
-Automatic architecture canvases include route points as well as nodes, frames,
-and labels. An authored viewBox remains authoritative. In showcase,
-`layout/route-out-of-bounds` identifies clipped route points; negative coordinates
-need an inward route, while right/bottom overflow can also use a larger authored
-canvas. Recheck desktop readability after enlarging a canvas.
+自动 architecture 画布包含路由点，以及节点、框与标签。已创作的 viewBox 仍是权威。在 showcase 中，
+`layout/route-out-of-bounds` 指出被裁剪的路由点；负坐标需要向内路由，右/下溢出也可以用更大的创作画布
+。放大画布后重新检查桌面可读性。
 
-When several crossing/corridor diagnoses involve the same nodes, consider their
-placement together before adding route controls. Apply one coherent repair and
-validate it; independent label nudges cannot fix a shared layout bottleneck.
-Compare diagnostics by code, subject, and stage instead of total count alone.
+当多个交叉/走廊诊断涉及同一批节点时，先综合考虑它们的位置，再添加路由控件。应用一次连贯的修复并验证
+；独立的标签微调修不好共享的布局瓶颈。按代码、对象与阶段比较诊断，不要只看总数。
 
-### Repair order
+### 修复顺序
 
-1. Fix missing/invalid `meta.quality_profile` and schema errors.
-2. Fix node overlap or out-of-range placement.
-3. Fix edge-through-node and endpoint-direction errors.
-4. Fix crossings, ambiguous corridors, border runs, excessive detours, and route rhythm.
-5. Fix label-to-node, label-to-label, then label-to-route clearance.
-6. Fix labels that leave the canvas: move the label with `labelAt`/`labelDx`/`labelDy`/`labelSegment`, or widen `meta.viewBox`. Suggested `labelDx`/`labelDy` values replace the authored field; they are not added to it.
+1. 修复缺失/非法的 `meta.quality_profile` 与 schema 错误。
+2. 修复节点重叠或越界放置。
+3. 修复穿节点的边与端点方向错误。
+4. 修复交叉、歧义走廊、贴边长跑、过度绕行与路由节奏。
+5. 修复标签到节点、标签到标签，然后标签到路由的间隙。
+6. 修复离开画布的标签：用 `labelAt`/`labelDx`/`labelDy`/`labelSegment` 移动标签，或加宽
+   `meta.viewBox`。建议的 `labelDx`/`labelDy` 值是替换所创作字段，不是在其上累加。
 
-After every edit, rerun the complete `finalize` as the delivery contract requires; use `validate` only for focused diagnosis between finalize runs. Consume `diagnostics[]` by stable `code`, exact `subject`, measured `evidence`, and `supportedFixes`. If the diagnostic gives `labelAt`, use that point instead of estimating another offset.
+每次编辑后，按交付契约的要求重跑完整的 `finalize`；两次 finalize 之间只用 `validate` 做聚焦诊断。按
+稳定的 `code`、精确的 `subject`、实测的 `evidence` 与 `supportedFixes` 消费 `diagnostics[]`。若诊断
+给出 `labelAt`，就使用那个点，不要另估偏移。
 
-## Mode placement
+## 模式放置
 
 ### Architecture
 
-Choose overview or mechanism detail using [Composition and meaning](authoring-defaults.md#composition-and-meaning). Use one obvious primary reading path, which may step across meaningful rows when the requested topology needs room. Keep the overview readable at its chosen abstraction; expand implementation details when they answer the reader's question. Group only real ownership, trust, process, or deployment boundaries. Boundaries do not replace relationships.
+用 [构成与语义](authoring-defaults.md#composition-and-meaning) 选择总览还是机制细节。使用一条明显的
+主读路径；当所请求拓扑需要空间时，它可以跨越有内容的行。总览在其选定抽象层次上保持可读；当实现细节能
+回答读者的问题时再展开。只对真实的所有权、信任、进程或部署边界分组。边界不替代关系。
 
-Grid placement is preferred when the schema supports it. Free positions are appropriate for a bounded exception, not for prose-level coordinate planning. Keep external actors outside the system boundary when that is factually true. A boundary is drawn as the padded box around all of its members, so place them as one compact axis-aligned cluster (no empty bay that lets a non-member sit inside the padded frame) and keep every non-member outside that box; `layout/boundary-encloses-non-member` reports a component the box swallows in showcase quality. Standard retains its existing acceptance behavior.
+schema 支持时优先网格放置。自由位置适合有界例外，不适合散文级的坐标规划。当事实如此时，让外部参与者
+留在系统边界之外。边界绘制为围绕其全部成员的带内边距方框，因此要把成员放成一个紧凑的轴对齐簇（不留任
+何空档让非成员坐进带内边距的框内），并让每个非成员都在该框之外；showcase 质量下，
+`layout/boundary-encloses-non-member` 会报告被框吞进的组件。standard 保持既有验收行为。
 
 ### Workflow
 
-Lanes express responsibility or phase. Columns `0..5` express logical
-progression. Start new workflows on `readable-v2`; retain `fixed-v1` only for
-legacy geometry compatibility. In readable-v2, nodes may share a `(lane, col)`
-when distinct `yOffset` values leave room for their full rectangles, labels and
-connecting routes. Keep the happy path monotonic, preserve semantic edge labels,
-and route retries and exception returns outside the main lane corridor.
+lane 表达职责或阶段。列 `0..5` 表达逻辑推进。新工作流从 `readable-v2` 开始；只为旧几何兼容保留
+`fixed-v1`。在 readable-v2 中，当不同的 `yOffset` 值为完整矩形、标签与连接路由留出空间时，节点可以共
+享 `(lane, col)`。保持主路径单调，保留语义边标签，把重试与异常返回路由到主 lane 走廊之外。
 
-#### Workflow viewport repair
+#### Workflow 视口修复
 
-When `viewer/viewport-overflow` includes `workflowLanes`, inspect the tallest
-rendered frames and their node span before changing the source. Measurements
-are CSS pixels; space above/below nodes includes lane titles and routing, so it
-is not a removable-space budget. Frame IDs identify rendered lane indices.
+当 `viewer/viewport-overflow` 包含 `workflowLanes` 时，先检查最高的渲染帧及其节点跨度，再改源。测量
+值是 CSS 像素；节点上下的空间包含 lane 标题与路由，因此不是可移除空白预算。帧 ID 标识渲染出的 lane
+序号。
 
-Run `validate workflow <source.json> --layout-json` and match those frames to
-source lanes and nodes. Check whether many steps share the last logical column
-and use large `yOffset` values. Readable-v2 reserves symmetric space around
-offsets. With a same-column vertical stack, an implicit canvas and no absolute
-route or label pins, it measures each lane independently. Other cases retain
-shared-height geometry for compatibility; see the canonical
-[lane measurement contract](../renderers/workflow/README.md#readable-v2).
+运行 `validate workflow <source.json> --layout-json`，把这些帧匹配到源 lane 与节点。检查是否很多步骤
+共享最后一个逻辑列并使用大的 `yOffset` 值。readable-v2 在偏移周围保留对称空间。在同列垂直堆叠、隐式
+画布、无绝对路由或标签固定时，它逐 lane 独立测量。其他情形出于兼容保留共享高度几何；见规范的 [lane
+测量契约](../renderers/workflow/README.md#readable-v2)。
 
-Where the source's ownership and explicit geometry permit, redistribute steps
-across logical columns and meaningful lanes, keeping the main path monotonic.
-Preserve every required node, relationship, label and semantic check. If ownership
-or absolute pins prevent reflow, report that constraint instead of merging lanes
-or moving pins automatically. Validate the changed JSON, deliver a fresh HTML,
-then rerun browser checks and inspect the first screen; a static pass alone does
-not settle viewport fit. These are repair directions, not guaranteed coordinates.
+在源的所有权与显式几何允许之处，把步骤重排到各逻辑列与有意义的 lane 上，保持主路径单调。保留每条必需
+的节点、关系、标签与语义检查。若所有权或绝对固定阻止重排，报告该约束，而不是自动合并 lane 或移动固定
+点。验证改后的 JSON，交付新的 HTML，然后重跑浏览器检查并检查首屏；仅静态通过不能断定视口适配。这些是
+修复方向，不是保证坐标。
 
 ### Sequence
 
-Participants are ordered by conversation role. Messages own their vertical order. Use return/async/security variants for meaning, not decoration; sequence does not use Automatic Port Spread. A segment's `from`/`to` edges must stay at least 4px off every message arrow (`message.y`): an edge along an arrow leaves the reader unable to tell which phase the message belongs to, and showcase quality reports `sequence/segment-message-border-run`. Standard retains its existing acceptance behavior.
+参与者按对话角色排序。消息拥有自己的垂直顺序。return/async/security 变体按语义使用，不作装饰；
+sequence 不使用自动 Port Spread。段的 `from`/`to` 边必须与每条消息箭头（`message.y`）保持至少 4px：
+沿箭头的边让读者无法判断消息属于哪个阶段，showcase 质量会报告 `sequence/segment-message-border-run`
+。standard 保持既有验收行为。
 
-First-draft shape: every message needs an `id`, `from`, `to`, `label`, and integer `y` at least 160. `from` and `to` must be different participants — self-messages are unsupported (`sequence/self-message-unsupported`). Optional phase bands are `segments[]` with only `from`, `to`, and `label` (no segment `id`). Inventing `pos`/`size` on participants fails schema validation — order alone places them. Omit `meta.viewBox` so automatic height fits the timeline + legend (minimum 327px readable band) instead of a fixed 760px floor, and so 2–3 participant spreads pack below the 920px default when labels fit (4+ stay at 920px; long labels still widen).
+第一稿形状：每条消息需要 `id`、`from`、`to`、`label` 与不小于 160 的整数 `y`。`from` 与 `to` 必须是
+不同的参与者：不支持自消息（`sequence/self-message-unsupported`）。可选的阶段带是 `segments[]`，只有
+`from`、`to` 与 `label`（segment 没有 `id`）。在参与者上发明 `pos`/`size` 会导致 schema 验证失败：顺
+序本身就决定位置。省略 `meta.viewBox`，让自动高度适配时间线 + 图例（最小 327px 可读带）而不是固定
+760px 下限；这样 2–3 个参与者的扩散在标签放得下时收在 920px 默认值之下（4 个及以上仍为 920px；长标签
+仍会加宽）。
 
 ### Dataflow
 
-Stages express transformation or custody. Rows separate parallel streams. Give every flow a concise data-contract or movement label; choose its visual convention using the required [Dataflow authoring defaults](authoring-defaults.md#presentation-and-modes).
+阶段表达变换或托管。行分隔并行流。给每条流一个简明的数据契约或移动标签；按必需的 [Dataflow 创作默认
+值](authoring-defaults.md#presentation-and-modes) 选择其视觉约定。
 
-First-draft shape: declare `stages[]` (each a `{label}`), then place every node with integer `stage` and `row` — not `pos`/`size`. Flows are `flows[]` with required `from`, `to`, and non-empty `label`.
+第一稿形状：声明 `stages[]`（每个是 `{label}`），然后用整数 `stage` 与 `row` 放置每个节点，不用
+`pos`/`size`。流是 `flows[]`，必需 `from`、`to` 与非空 `label`。
 
-Omit `meta.viewBox` to fit canvas width to all stages and nodes in either quality
-profile, including explicit node widths. Width uses content + 24px right padding
-with a 480px minimum (five default stages still need ~1068); left-edge overflow
-still needs a node repair. An authored viewBox stays fixed. Showcase node growth, readable typography, content height, port bridges
-and bounded label placement apply only when the canvas and all node widths are
-omitted. `--quality` overrides `meta.quality_profile`; without it, the renderer
-uses `ARCHIFY_QUALITY_PROFILE` when set, otherwise the JSON profile.
+省略 `meta.viewBox`，在任一质量画像下让画布宽度适配全部阶段与节点，包括显式节点宽度。宽度用内容 +
+24px 右侧内边距，最小 480px（五个默认阶段仍需约 1068）；左缘溢出仍需节点修复。已创作的 viewBox 保持
+固定。showcase 的节点增长、可读字号、内容高度、端口桥与有界标签放置，只在画布与全部节点宽度都省略时
+适用。`--quality` 覆盖 `meta.quality_profile`；未给定时，渲染器使用设置的 `ARCHIFY_QUALITY_PROFILE`
+，否则使用 JSON 画像。
 
 ### ERD
 
-Treat a schema ERD as a table catalogue as well as a relationship map. If the
-schema has more than 8 tables or 50 fields, it is a dense full-schema map: start
-with `meta.quality_profile: "standard"` so complete field visibility is not
-traded away for repeated showcase route repairs. Include every physical column in
-`attributes`, keep the source SQL type, and preserve the
-field's Chinese comment in the type string as `SQL_TYPE｜中文备注` because the
-schema has no separate comment property. The default viewer shows these rows at
-the `read` level; do not rely on hover/focus or cards to reveal physical fields.
-Cards may explain constraints, inferred relationships, or domain rules, but never
-replace a field list.
+把 schema ERD 既当作表目录也当作关系图。若 schema 超过 8 张表或 50 个字段，它是密集的全 schema 图：
+从 `meta.quality_profile: "standard"` 开始，不要用完整的字段可见性去换反复的 showcase 路由修复。把每
+个物理列放进 `attributes`，保留源 SQL 类型，并在类型串中保留该字段的中文备注，形如 `SQL_TYPE｜中文备
+注`，因为 schema 没有单独的 comment 属性。默认查看器在 `read` 级显示这些行；不要依赖悬停/聚焦或卡片
+来展示物理字段。卡片可以解释约束、推断关系或领域规则，但绝不替代字段清单。
 
-Before placing boxes, classify tables into functional domains using verified table
-names, comments, module paths, and foreign-key meaning. Put the domain name in
-`tag` and give each domain one solid rectangle of grid cells: a single row, a
-single column, or a filled rectangular block — not an L or a diagonal — with
-every cell of the rectangle holding one of its tables.
-All tables with the same tag stay together; do not interleave unrelated tables
-between members. A domain that fills one such rectangle is drawn as a labelled
-band behind its tables, so the
-grouping is visible without reading every box;
-a tag whose tables do not fill one rectangle earns no band, and because the band
-is the only place a domain name is drawn the renderer reports
-`erd/domain-not-drawn` rather than publishing a diagram that cannot name the
-domain. Absolute
-coordinates have no grid cells at all, so a tagged table always needs `row`/`col`.
-Order parent/core tables
-toward the shared boundary and
-place their direct children beside or beneath them. Columns read left to right and
-rows read top to bottom, so a relationship between neighbouring columns is one
-straight corridor. Never place an unrelated entity between two aligned anchors;
-the router can detour around it, but the clear corridor is shorter and reads
-better. A junction table has two parents: put it in a cell beside or between
-both, not beneath one of them with tables stacked between it and the other,
-and keep every table that shares its domain tag in one solid rectangle of cells. A relationship must connect two different entities; a self-reference such as manager_id stays as a foreign-key column (and optionally a card), not an `employees`→`employees` edge.
-Use `row`/`col` for this normal grouped layout, and only use explicit
-`pos`/`via` after a diagnostic identifies a concrete geometry problem.
+放方框之前，用核实过的表名、注释、模块路径与外键含义把表分类到功能域。把域名放进 `tag`，并给每个域一
+整块实心网格矩形：单行、单列或填满的矩形块，不是 L 形或对角线，且矩形的每个格子都装着它的表之一。同
+tag 的所有表聚在一起；不要在成员之间插入无关表。填满这样一个矩形的域绘制为其表后面的一条带标签色带，
+因此不用逐框阅读也能看出分组；表没有填满一个矩形的 tag 得不到色带，而因为色带是唯一绘制域名的位置，
+渲染器会报告 `erd/domain-not-drawn`，而不是发布一张无法命名该域的图。绝对坐标完全没有网格格，所以带
+tag 的表总需要 `row`/`col`。把父表/核心表排向共享边界，并把它们的直接子表放在旁边或下方。列从左往右
+读，行从上往下读，因此相邻列之间的关系是一条直走廊。绝不把无关实体放在两个对齐锚点之间；路由器可以绕
+行，但干净走廊更短、读起来更好。连接表（junction table）有两个父表：把它放在紧邻两者或两者之间的格子
+里，不要放在其中一个下方且两表之间隔着其他表，并保持共享其域 tag 的每张表都在一个实心格矩形内。关系
+必须连接两个不同实体；`manager_id` 这样的自引用保持为外键列（可选加卡片），而不是
+`employees`→`employees` 边。这种常规分组布局用 `row`/`col`，只有在诊断指出具体几何问题之后才用显式
+`pos`/`via`。
 
-State every key role a column carries in `key`, and the real references in
-`references`. A column is often more than one at once — a junction table's
-`tenant_id` is both part of the primary key and a foreign key to `tenant.id` — so
-`key` takes a role or a list (`["pk", "fk"]`), and dropping a role claims less
-than the schema does.
-A many-to-many pair is a real fact about the model, so state it and identify the join
-table when one exists. A relationship has two ends and each one declares its own
-maximum, so a `many`-to-`one` foreign key needs both `fromCardinality` and
-`toCardinality`; `fromOptional`/`toOptional` only lowers that same end's minimum
-from one to zero (an optional `one` end reads zero-or-one, an optional `many` end
-reads zero-or-many), and `identifying: false` draws the non-identifying dashed
-line and owns that dash — the schema rejects a `variant` that would draw the
-relationship solid beside it. The foot opens toward the entity it describes, so the
-drawn glyph states the end's maximum, not a direction of travel.
+在 `key` 中声明一列承载的每一个键角色，在 `references` 中声明真实引用。一列常常同时是多种角色：连接
+表的 `tenant_id` 既在主键中，又是指向 `tenant.id` 的外键，因此 `key` 接受单个角色或列表（`["pk",
+"fk"]`），丢掉角色就等于声明得比 schema 少。多对多对是模型的真实事实，要声明它，并在存在连接表时指出
+连接表。关系有两个端，每端声明自己的最大基数，因此 `many` 对 `one` 的外键需要同时给出
+`fromCardinality` 与 `toCardinality`；`fromOptional`/`toOptional` 只把同一端的最小基数从一降为零（可
+选的 `one` 端读作零或一，可选的 `many` 端读作零或多）；`identifying: false` 绘制非标识虚线并拥有这条
+虚线：schema 拒绝会让关系在其旁边画成实线的 `variant`。叉脚朝向它所描述的实体，所以绘制出的符号声明
+的是该端的最大基数，不是行进方向。
 
-A table side only has room for so many ends: the ports spread at most `(side
-extent - 32) / (ends - 1)` apart, and a cardinality glyph is 14 units tall. More
-relationship ends than that room allows is `layout/marker-capacity`, which names
-the table, the side, and the ways out — add fields so the side is taller, spread
-the relationships, or reduce the fan-in. Never fix it by hiding the cardinality.
+表的一侧容纳的端数有限：端口最多按 `(side extent - 32) / (ends - 1)` 间隔扩散，而一个基数符号高 14
+单位。关系端数超过这个容纳量就是 `layout/marker-capacity`，它会指出表、侧与出路：加字段让这一侧更高
+、扩散各关系，或减少扇入。绝不用隐藏基数来修复。
 
-Give the domains a column each when the model has to read completely inside a
-laptop viewport. The Reader scales a wide canvas up to the reader width and
-narrows a tall one until the whole page fits, so the same eleven tables cost text
-size when they are stacked as four horizontal domains instead of four vertical
-ones. Leave a whole tile of the grid free where a long relationship has to cross
-a domain: a run that crosses an occupied cell forces a jog, and a jog below the
-interior floor is a `composition/short-interior-segment` failure.
+当模型必须在一块笔记本视口内完整读下来时，给每个域各留一列。Reader 把宽画布放大到读者宽度，把高画布
+收窄到整页适配，因此同样十一张表按四个水平域堆叠时比按四个垂直域堆叠更费字号。在长关系必须穿过域的地
+方留出整块格：穿过被占用格的走廊会强制折行，而低于内部下限的折行是
+`composition/short-interior-segment` 失败。
 
-An automatic canvas is sized so the default legend is always in the generated
-content, and a canvas the author fixes with `meta.viewBox` reports its legend
-capacity instead of dropping the key; see
-[`../renderers/erd/README.md`](../renderers/erd/README.md) for the band, port, and
-reader contract.
+自动画布的尺寸保证默认图例总在生成内容内；作者用 `meta.viewBox` 固定的画布会报告其图例容量而不是丢掉
+键。带、端口与读者契约见 [`../renderers/erd/README.md`](../renderers/erd/README.md)。
 
 ### Tree
 
-A tree answers "how is this decomposed?": one root, and every other node names
-exactly one `parent`. Links mean containment only; do not use a tree for calls,
-data movement, or cross-branch dependencies. Nothing is inferred: a missing
-parent (`tree/missing-parent`), zero or several roots (`tree/root-count`), a
-parent cycle (`tree/cycle`, which also covers every node stranded beneath it),
-and duplicate ids are refused. Children read in declaration order.
+树回答"这是如何分解的？"：一个根，其余每个节点都恰好命名一个 `parent`。链接只表示包含；不要用树表达
+调用、数据移动或跨分支依赖。不做任何推断：缺失的父节点（`tree/missing-parent`）、零个或多个根（
+`tree/root-count`）、父循环（`tree/cycle`，同时覆盖其下所有搁浅节点）与重复 id 都会被拒绝。子节点按
+声明顺序阅读。
 
-Use `layout.direction: "down"` (default) for a shallow, balanced breakdown and
-`"right"` for a deep or leaf-heavy tree such as a repository layout; a rightward
-tree aligns each parent with its first child and scrolls vertically in the
-reader. Labels wrap between words. `collapsed: true` makes a branch start
-collapsed in the Viewer; it never removes content from the artifact, and every
-export is the complete tree. For a real codebase, ground each node in the
-observed path and attach `sources`. See
-[`../renderers/tree/README.md`](../renderers/tree/README.md).
+浅而均衡的分解用 `layout.direction: "down"`（默认）；深或叶多的树（如仓库布局）用 `"right"`。向右的
+树把每个父与其第一个子对齐，并在 reader 中垂直滚动。标签在词间折行。`collapsed: true` 让分支在
+Viewer 中初始折叠；它从不从产物中移除内容，每次导出都是完整树。对真实代码库，每个节点都要落在观察到
+的路径上并附 `sources`。见 [`../renderers/tree/README.md`](../renderers/tree/README.md)。
 
 ### Class
 
-A class diagram explains the contracts inside one module: which types exist,
-which members matter to the explanation, and how the types relate. Choose the
-members the question needs; a type may show none. Each type states its `kind`
-(`class`, `abstract`, `interface`, `enum`, `record`); every kind except `class`
-draws its UML keyword, so an interface never reads as an empty class. For a real
-codebase, ground every type, member, and relationship in repository evidence and
-attach `sources`.
+类图解释一个模块内部的契约：存在哪些类型、哪些成员对解释重要、类型之间如何关联。按问题需要选择成员；
+一个类型可以一个成员都不显示。每个类型声明其 `kind`（`class`、`abstract`、`interface`、`enum`、
+`record`）；除 `class` 外的每种 kind 都绘制其 UML 关键字，因此 interface 永不会被读成空类。对真实代
+码库，每个类型、成员与关系都要落在仓库证据上并附 `sources`。
 
-Every relationship reads `from` -> `to` and its `kind` owns the notation:
-`dependency` (`from` uses `to`, dashed open arrow), `association` (`from` holds a
-`to`, solid open arrow), `inheritance` (`from` extends `to`, solid hollow
-triangle), `realization` (`from` implements interface `to`, dashed hollow
-triangle), `composition` and `aggregation` (`from` is the whole, filled or
-hollow diamond at `from`). Realization must target an interface from a
-non-interface; inheritance must not cross the interface boundary; an
-inheritance cycle is rejected.
+每条关系读作 `from` -> `to`，其 `kind` 决定记号：`dependency`（`from` 使用 `to`，虚线开箭头）、
+`association`（`from` 持有 `to`，实线开箭头）、`inheritance`（`from` 扩展 `to`，实线空心三角）、
+`realization`（`from` 实现接口 `to`，虚线空心三角）、`composition` 与 `aggregation`（`from` 是整体，
+实心或空心菱形在 `from` 端）。realization 必须从非接口指向接口；inheritance 不得跨越接口边界；继承循
+环会被拒绝。
 
-Place types on the `row`/`col` grid with supertypes above their subtypes. Two
-or more automatic generalizations into one supertype draw as one hierarchy bus
-with a single triangle. Members never truncate: a type grows to its widest
-member up to `layout.typeMaxW` and longer members wrap at parameter boundaries.
-See [`../renderers/class/README.md`](../renderers/class/README.md).
+类型放在 `row`/`col` 网格上，父类型在子类型之上。指向同一父类型的两个或更多自动泛化画成一条带单个三
+角的层级总线。成员永不截断：类型长到其最宽成员为止，上限 `layout.typeMaxW`，更长的成员在参数边界处折
+行。见 [`../renderers/class/README.md`](../renderers/class/README.md)。
 
-First-draft shape: types use `row`/`col` (not `pos`/`size`), fields go in
-`attributes[]`, operations in `methods[]` with `parameters` as one string such as
-`"msg: Message"` (not an array of objects). Enum members are attributes with only
-`name`. Relationships need an `id`, `from`, `to`, and `kind`.
+第一稿形状：类型用 `row`/`col`（不用 `pos`/`size`），字段放 `attributes[]`，操作放 `methods[]`，
+`parameters` 是单个字符串如 `"msg: Message"`（不是对象数组）。枚举成员是只有 `name` 的 attribute。关
+系需要 `id`、`from`、`to` 与 `kind`。
 
 ### Timeline
 
-A timeline answers "when did what happen, and how far apart?". Every event
-needs an ISO 8601 `at` with an explicit `Z` or `±HH:MM` offset; a timestamp
-without one is rejected rather than guessed. `meta.timezone` (IANA, default
-`UTC`) is the display clock for ticks and labels, and the axis caption states
-it. `meta.evidence` is required: `observed` for recorded events (logs, git
-history, pager records) and `illustrative` for explanatory input. Never mark
-invented or approximate times as observed, and never fill gaps with events the
-input does not contain.
+时间线回答"何时发生了什么，相隔多远？"。每个事件都需要带显式 `Z` 或 `±HH:MM` 偏移的 ISO 8601 `at`；
+缺偏移的时间戳会被拒绝，而不是被猜。`meta.timezone`（IANA，默认 `UTC`）是刻度与标签的显示时钟，轴标
+题会说明它。`meta.evidence` 必填：记录过的事件（日志、git 历史、值班记录）用 `observed`，解释性输入
+用 `illustrative`。绝不把发明或近似的时间标为 observed，也绝不用输入中没有的事件填补空隙。
 
-Use `lanes` for sources or categories (release, monitoring, response); every
-event then names one. Each event's visible text is `title` (not `label`). `kind`
-(`default`, `change`, `alert`, `action`, `recovery`) only
-colours the card; inventing values such as `milestone` fails schema validation. Events are drawn in time order whatever the authored order;
-simultaneous and close events stack. By default a quiet period longer than 8×
-the median gap and 10% of the span is drawn as a fixed-width break labelled
-with the omitted duration; `layout.breaks: "none"` keeps one proportional axis.
-See [`../renderers/timeline/README.md`](../renderers/timeline/README.md).
+用 `lanes` 表达来源或类别（发布、监控、响应）；每个事件随后命名其中之一。每个事件的可见文本是
+`title`（不是 `label`）。`kind`（`default`、`change`、`alert`、`action`、`recovery`）只给卡片上色；
+发明 `milestone` 之类的值会导致 schema 验证失败。无论创作顺序如何，事件都按时间顺序绘制；同时与接近
+的事件堆叠。默认情况下，超过中位间隙 8 倍且超过跨度 10% 的安静期绘制为固定宽度的断口，并标注被省略的
+时长；`layout.breaks: "none"` 保留一条比例轴。见
+[`../renderers/timeline/README.md`](../renderers/timeline/README.md)。
 
 ### Waterfall
 
-A waterfall answers "where did the time go?" for one request, job, or agent
-run. Each span has `id`, `name`, `start`, and `end` or `duration` in
-`meta.unit` (`us`, `ms`, `s`; default `ms`), plus optional `parent`, `status`,
-`service`, and `detail`. Bar position and length come only from these numbers.
-`meta.evidence` is required: `measured` only for recorded timing (trace export,
-logs, profiler, timed run); otherwise `illustrative`. Never infer a duration
-from code structure, and never present estimated numbers as measured.
+瀑布图对一个请求、任务或 agent 运行回答"时间去哪了？"。每个 span 有 `id`、`name`、`start`，以及以
+`meta.unit`（`us`、`ms`、`s`；默认 `ms`）计的 `end` 或 `duration`，另有可选的 `parent`、`status`、
+`service` 与 `detail`。条的位置与长度只来自这些数字。`meta.evidence` 必填：只有记录过的计时（trace
+导出、日志、profiler、计时运行）用 `measured`；否则用 `illustrative`。绝不从代码结构推断时长，也绝不
+把估算数字呈现为实测。
 
-A span with no recorded end must be `status: "incomplete"`; it is drawn as an
-open lower bound to the last recorded instant. Contradictory end/duration,
-an end before the start, a missing parent, or a parent cycle is refused.
-Percentages are always "of the wall-clock total"; parent and child durations
-are inclusive and never summed. Do not mark a critical path or waiting time
-unless the input states the dependency. See
-[`../renderers/waterfall/README.md`](../renderers/waterfall/README.md).
+没有记录到结束的 span 必须是 `status: "incomplete"`；它绘制为指向最后记录时刻的下界。矛盾的
+end/duration、早于开始的 end、缺失的 parent 或 parent 循环都会被拒绝。百分比总是"占墙钟总时长"；父子
+时长是包含性的，永不求和。除非输入声明了依赖，否则不要标注关键路径或等待时间。见
+[`../renderers/waterfall/README.md`](../renderers/waterfall/README.md)。
 
 ### Lifecycle
 
-Schema v3 is the only lifecycle contract. `mainPath` lists the happy path from
-the initial state; every consecutive pair needs a transition. The renderer owns
-all geometry: the main path is one row, transitions back to an earlier phase
-(or skipping ahead) become arcs above it, and every other state sits below the
-state it branches from, one row deeper per step away from the main path.
-Equivalent exits share one arrow only when their labels, notes and variants
-match and exactly one group from at least two main-path phases qualifies for
-that target. Consecutive phases receive a composite frame; non-consecutive
-phases share a bus. Other exits stay separate, including distinct notes on
-their original transitions. Do not remove or copy notes to force sharing.
-There are no lanes, columns, sizes, or routing controls. Layout retries retain
-the transition text's minimum gap and stop widening the main-path row when its
-minimum width would exceed the original text readability budget; the final
-width and label-clearance checks still apply.
+Schema v3 是唯一的 lifecycle 契约。`mainPath` 列出从初始状态开始的主路径；每个相邻对都需要一条转移。
+渲染器拥有全部几何：主路径是一行，回到较早阶段（或跳前）的转移变成其上方的弧，其他每个状态都位于其分
+支来源状态之下，离主路径每远一步就深一行。等价出口只在以下条件同时成立时共享一条箭头：标签、备注与变
+体都匹配，且至少两个主路径阶段中恰好有一个组符合该目标。相邻阶段获得复合框；不相邻阶段共享一条总线。
+其他出口保持独立，包括其原转移上的不同备注。不要为强行共享而删除或复制备注。没有 lane、列、尺寸或路
+由控件。布局重试保持转移文本的最小间隙，并在主路径行的最小宽度将超出原文本可读预算时停止加宽；最终的
+宽度与标签间隙检查仍然适用。
 
-Keep the main path to the phases a reader follows, at most about six states,
-and keep transition labels short. A recoverable failure needs a real transition
-back to an active state; a card saying “retry” is not topology.
+主路径保持读者会走到的阶段，最多约六个状态，转移标签保持简短。可恢复的失败需要一条回到活跃状态的真实
+转移；一张写着"retry"的卡片不是拓扑。
 
-Pick each state's `type` by what the reader should notice, since color and the
-corner sigil follow it: `waiting` for a pause on a person, time, or input;
-`decision` for a review or branch point; `success` or `failure` for a good or
-bad outcome; `neutral` for parked states and outcomes that are neither;
-`external` when an outside party holds the work; `active` otherwise. From a
-Mermaid `stateDiagram`, `[*] -->` names the first `mainPath` state, a state
-with `--> [*]` is an outcome (`success`, `failure`, or `neutral`; it is drawn as
-final when it has no other outgoing transition), and `<<choice>>` becomes a
-`decision` state. Flatten a composite `state X { ... }` into its inner states
-and repeat its exit from each of them with one label; consecutive main-path
-phases sharing that exit are framed automatically. Concurrent regions (`--`)
-have no lifecycle form: draw one lifecycle per region.
+按读者应该注意到什么来选每个状态的 `type`，因为颜色与角落印记跟随它：对人、时间或输入的暂停用
+`waiting`；评审或分支点用 `decision`；好或坏的结果用 `success` 或 `failure`；停放状态与两者皆非的结
+果用 `neutral`；外部方持有工作时用 `external`；其余用 `active`。从 Mermaid `stateDiagram`：`[*] -->`
+命名第一个 `mainPath` 状态；带 `--> [*]` 的状态是结果（`success`、`failure` 或 `neutral`；当它没有其
+他出边时画为终结）；`<<choice>>` 变成 `decision` 状态。把复合 `state X { ... }` 展平为其内部状态，并
+从每个内部状态以一个标签重复其出口；共享该出口的相邻主路径阶段自动成框。并发区域（`--`）没有
+lifecycle 形态：每个区域画一张 lifecycle。
 
-## Repository evidence
+## 仓库证据
 
-When the diagram must reflect real code, inspect repository entrypoints,
-runtime boundaries, storage, transports, and deployment configuration before
-authoring. Record only evidence you actually verified. `--repo-root <path>` is
-accepted by `render`, `validate`, `deliver`, and `preview` for every diagram
-type, by architecture `compare`, and by workflow `migrate`; every mode verifies `meta.repository` and
-node `sources` the same way. Migrating a source-backed workflow requires the same
-`--repo-root` so its candidate is verified before replacing the destination.
-Never infer runtime causality from file proximity
-or naming alone.
+当图必须反映真实代码时，先检查仓库入口、运行时边界、存储、传输与部署配置，再创作。只记录你真正验证过
+的证据。`--repo-root <path>` 被每种图类型的 `render`、`validate`、`deliver` 与 `preview`、
+architecture 的 `compare` 以及 workflow 的 `migrate` 接受；每种模式以同样方式验证 `meta.repository`
+与节点 `sources`。迁移带源证据的 workflow 需要同样的 `--repo-root`，使其候选在替换目标之前得到验证。
+绝不只凭文件邻近或命名推断运行时因果。
 
-Declare `meta.repository.url` and one full 40-character `revision`, then attach
-`sources` to the mode's node collection (Architecture `components[]`, Workflow
-and Data Flow `nodes[]`, Sequence `participants[]`, Lifecycle `states[]`) with
-repository-relative `path`, optional `line`, `end_line`, and `label`.
-Verification reads blobs at that commit, independently of working-tree edits.
-Verification ignores local Git replacement refs, including those selected by
-`GIT_REPLACE_REF_BASE`, and always reads the original objects at the pinned SHA.
-It does not change repository configuration or delete replacement refs.
-A matching local origin, available commit, bounded path,
-blob, and valid line range are required in every link mode. Verification is
-local and makes no remote requests; it establishes neither public availability
-nor the current reader's access rights.
+声明 `meta.repository.url` 与一个完整的 40 字符 `revision`，然后把 `sources` 附到该模式的节点集合上
+（Architecture 的 `components[]`，Workflow 与 Data Flow 的 `nodes[]`，Sequence 的 `participants[]`，
+Lifecycle 的 `states[]`），带仓库相对 `path`、可选 `line`、`end_line` 与 `label`。验证在该 commit 读
+取 blob，独立于工作树编辑。验证忽略本地 Git replacement refs，包括 `GIT_REPLACE_REF_BASE` 选中的那些
+，并始终读取固定 SHA 处的原始对象。它不修改仓库配置，也不删除 replacement refs。每种链接模式都要求：
+匹配的本地 origin、可用的 commit、有界路径、blob 与合法行号范围。验证是本地的，不发出远程请求；它既
+不确立公开可用性，也不确立当前读者的访问权限。
 
-`link_mode` defaults to `web`. GitHub, Gitee, and GitLab HTTPS repository URLs
-generate revision-pinned links; the public hosts github.com, gitee.com, and
-gitlab.com select the provider automatically. Optional `provider: "github"`,
-`"gitee"`, or `"gitlab"` must agree with a public host. A self-managed GitLab
-host declares `provider: "gitlab"`; Archify never contacts the host to detect
-its forge. Existing GitHub declarations and default delivery receipt fields
-remain compatible.
+`link_mode` 默认为 `web`。GitHub、Gitee 与 GitLab 的 HTTPS 仓库 URL 生成固定 revision 的链接；公共主
+机 github.com、gitee.com 与 gitlab.com 自动选择 provider。可选的 `provider: "github"`、`"gitee"` 或
+`"gitlab"` 必须与公共主机一致。自管 GitLab 主机声明 `provider: "gitlab"`；Archify 从不联系主机去探测
+其 forge。既有的 GitHub 声明与默认交付回执字段保持兼容。
 
-GitLab URLs may name nested groups (`group/subgroup/project`). Source links use
-`<url>/-/blob/<revision>/<path>#L<line>-<end_line>` and the repository link
-uses `<url>/-/tree/<revision>`. A Markdown source (`.md`, `.markdown`) with a
-line range links to the plain view (`?plain=1`) so the cited lines are
-highlighted instead of the rendered document. GitLab repository paths compare
-case-insensitively, like GitHub.
+GitLab URL 可以命名嵌套组（`group/subgroup/project`）。源链接使用
+`<url>/-/blob/<revision>/<path>#L<line>-<end_line>`，仓库链接使用 `<url>/-/tree/<revision>`。带行区
+间的 Markdown 源（`.md`、`.markdown`）链接到纯文本视图（`?plain=1`），使被引用的行高亮，而不是渲染文
+档。GitLab 仓库路径与 GitHub 一样按不区分大小写比较。
 
 ```json
 {
@@ -587,12 +465,9 @@ case-insensitively, like GitHub.
 }
 ```
 
-For an internal or unsupported forge, select `link_mode: "local-only"`. The
-Viewer retains SRC markers, searchable file paths, line ranges, and revision
-labels without repository or source hyperlinks. The evidence receipt adds
-`linkMode: "local-only"`. `url` remains required as the expected origin identity;
-local-only disables links, not identity verification. A repository without an
-origin is not supported.
+对内部或不受支持的 forge，选择 `link_mode: "local-only"`。Viewer 保留 SRC 标记、可搜索的文件路径、行
+区间与 revision 标签，不带仓库或源超链接。证据回执增加 `linkMode: "local-only"`。`url` 仍是必需的，
+作为预期的来源身份；local-only 禁用的是链接，不是身份验证。没有 origin 的仓库不受支持。
 
 ```json
 {
@@ -602,44 +477,32 @@ origin is not supported.
 }
 ```
 
-Local-only accepts HTTP(S), `git@host:path`, and `ssh://git@host[:port]/path`
-addresses, including nested namespaces. Declare a credential-free address;
-HTTP(S) credentials on the checkout's origin are ignored for identity and
-redacted from diagnostics. Hostnames compare case-insensitively; repository
-paths retain case except for GitHub and GitLab. A trailing slash
-normalizes away. Only GitHub, Gitee, and GitLab (gitlab.com, or a host declared
-with `provider: "gitlab"`) normalize a terminal `.git` and match standard
-HTTPS/443 with Git SSH/22 on the same host; a GitLab SSH endpoint on another host
-or port is not inferred. For other hosts, use the actual clone address:
-transport, port, `.git` suffix, and remote-relative versus absolute paths must
-match. For example, `git@host:Team/repo` differs from
-`ssh://git@host/Team/repo`; `git@host:/Team/repo` matches the latter. SCP-style
-paths preserve literal percent escapes, while URI paths decode them. SSH host
-aliases and forge-specific browse/clone prefixes are not guessed.
-Gitea/Forgejo/Bitbucket web links are not implemented in this version;
-use local-only until a tested link provider is available. Unknown web providers
-fail with a diagnostic rather than emitting a guessed link.
+local-only 接受 HTTP(S)、`git@host:path` 与 `ssh://git@host[:port]/path` 地址，包括嵌套命名空间。声
+明不带凭证的地址；checkout 的 origin 上的 HTTP(S) 凭证不用于身份，并从诊断中脱敏。主机名按不区分大小
+写比较；除 GitHub 与 GitLab 外，仓库路径保留大小写。末尾斜杠被归一化掉。只有 GitHub、Gitee 与 GitLab
+（gitlab.com，或以 `provider: "gitlab"` 声明的主机）会归一化末尾 `.git`，并在同一主机上匹配标准
+HTTPS/443 与 Git SSH/22；另一主机或端口的 GitLab SSH 端点不被推断。对其他主机，使用实际克隆地址：传
+输、端口、`.git` 后缀以及 remote 相对与绝对路径都必须匹配。例如，`git@host:Team/repo` 与
+`ssh://git@host/Team/repo` 不同；`git@host:/Team/repo` 与后者匹配。SCP 风格路径保留字面百分号转义，
+而 URI 路径会解码它们。SSH 主机别名与 forge 特有的浏览/克隆前缀不做猜测。本版本未实现
+Gitea/Forgejo/Bitbucket 的 web 链接；在经过测试的链接 provider 可用之前使用 local-only。未知 web
+provider 以诊断失败，而不是发出猜测的链接。
 
-## Hand-placed fallback
+## 手工放置回退
 
-Use only when no renderer can run. Start from `assets/template.html`, keep semantic CSS classes, preserve the inline SVG/accessibility structure, and run the delivery visual checklist. Never introduce inline literal colors that break dark/light parity.
+只在没有任何渲染器可运行时使用。从 `assets/template.html` 出发，保持语义 CSS 类，保留内联 SVG/无障碍
+结构，并执行交付视觉清单。绝不引入破坏深/浅色一致性的内联字面色。
 
-## Node icons
+## 节点图标
 
-For domain-specific diagrams, set an optional `icon` on architecture components,
-workflow/dataflow nodes, sequence participants, or lifecycle states. Choose
-`calendar`, `clock`, `person`, `briefcase`, `flag`, or `moon` for everyday concepts;
-the complete catalog (including existing technical and lifecycle symbols) is
-`common.schema.json#/$defs/nodeIcon`. Use `icon: "none"` to hide the corner symbol.
-Omitting `icon` keeps the type-based default; lifecycle `start`, `active`, and
-`neutral` states default to no symbol. These inline SVG symbols are
-renderer-owned and export with the diagram; URLs and raw SVG are not accepted.
+对领域特定图，在 architecture 组件、workflow/dataflow 节点、sequence 参与者或 lifecycle 状态上设置可
+选 `icon`。日常概念选 `calendar`、`clock`、`person`、`briefcase`、`flag` 或 `moon`；完整目录（包括既
+有技术与 lifecycle 符号）在 `common.schema.json#/$defs/nodeIcon`。用 `icon: "none"` 隐藏角落符号。省
+略 `icon` 保留基于类型的默认；lifecycle 的 `start`、`active` 与 `neutral` 状态默认无符号。这些内联
+SVG 符号由渲染器拥有并随图导出；不接受 URL 与原始 SVG。
 
-Icon selection changes only the corner symbol. The node's type still determines
-color and semantic grouping; brand marks remain independent. For a holiday
-workflow, pair `type: "backend", icon: "calendar"` with
-`meta.legend.entries.backend.label: "假期"`, and use `icon: "briefcase"` plus
-an appropriate legend label for make-up work. Keep the node label meaningful:
-icons are decorative and are hidden from assistive technology.
+图标选择只改变角落符号。节点的类型仍决定颜色与语义分组；品牌标识保持独立。对假日工作流，把 `type:
+"backend", icon: "calendar"` 与 `meta.legend.entries.backend.label: "假期"` 配对，补班工作用 `icon:
+"briefcase"` 加合适的图例标签。保持节点标签有意义：图标是装饰性的，并对辅助技术隐藏。
 
-See [holiday planning](../examples/holiday-planning.workflow.json) for a complete workflow example.
+完整 workflow 示例见 [假日规划](../examples/holiday-planning.workflow.json)。

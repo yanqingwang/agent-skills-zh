@@ -1,50 +1,54 @@
-# Common n8n Expression Mistakes
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-expression-syntax/COMMON_MISTAKES.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Complete catalog of expression errors with explanations and fixes.
+# n8n 表达式常见错误
+
+表达式错误的完整清单，附解释与修复方法。
 
 ---
 
-## 1. Missing Curly Braces
+## 1. 缺少花括号
 
-**Problem**: Expression not recognized, shows as literal text
+**问题**：表达式未被识别，显示为字面文本
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 $json.email
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$json.email}}
 ```
 
-**Why it fails**: n8n treats text without {{ }} as a literal string. Expressions must be wrapped to be evaluated.
+**为什么会出错**：n8n 把不含 {{ }} 的文本当作字面字符串。表达式必须包起来才会被求值。
 
-**How to identify**: Field shows exact text like "$json.email" instead of actual value.
+**如何识别**：字段显示 "$json.email" 这样的原文，而不是实际值。
 
 ---
 
-## 2. Webhook Body Access
+## 2. Webhook Body 访问
 
-**Problem**: Undefined values when accessing webhook data
+**问题**：访问 webhook 数据时得到 undefined
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{$json.name}}
 {{$json.email}}
 {{$json.message}}
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$json.body.name}}
 {{$json.body.email}}
 {{$json.body.message}}
 ```
 
-**Why it fails**: Webhook node wraps incoming data under `.body` property. The root `$json` contains headers, params, query, and body.
+**为什么会出错**：Webhook 节点把传入数据包在 `.body` 属性下。根级 `$json` 包含 headers、params、query 和 body。
 
-**Webhook structure**:
+**Webhook 结构**：
 ```javascript
 {
   "headers": {...},
@@ -57,128 +61,128 @@ $json.email
 }
 ```
 
-**How to identify**: Webhook workflow shows "undefined" for fields that are definitely being sent.
+**如何识别**：Webhook 工作流对明确已发送的字段显示 "undefined"。
 
 ---
 
-## 3. Spaces in Field Names
+## 3. 字段名带空格
 
-**Problem**: Syntax error or undefined value
+**问题**：语法错误或 undefined 值
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{$json.first name}}
 {{$json.user data.email}}
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$json['first name']}}
 {{$json['user data'].email}}
 ```
 
-**Why it fails**: Spaces break dot notation. JavaScript interprets space as end of property name.
+**为什么会出错**：空格会打断点号写法。JavaScript 把空格解释为属性名的结束。
 
-**How to identify**: Error message about unexpected token, or undefined when field exists.
+**如何识别**：报"意外 token"类错误，或字段明明存在却得到 undefined。
 
 ---
 
-## 4. Spaces in Node Names
+## 4. 节点名带空格
 
-**Problem**: Cannot access other node's data
+**问题**：无法访问其他节点的数据
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{$node.HTTP Request.json.data}}
 {{$node.Respond to Webhook.json}}
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$node["HTTP Request"].json.data}}
 {{$node["Respond to Webhook"].json}}
 ```
 
-**Why it fails**: Node names are treated as object property names and need quotes when they contain spaces.
+**为什么会出错**：节点名被当作对象属性名处理，含空格时必须加引号。
 
-**How to identify**: Error like "Cannot read property 'Request' of undefined"
+**如何识别**：报 "Cannot read property 'Request' of undefined" 之类的错误
 
 ---
 
-## 5. Incorrect Node Reference Case
+## 5. 节点引用大小写错误
 
-**Problem**: Undefined or wrong data returned
+**问题**：返回 undefined 或错误数据
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{$node["http request"].json.data}}  // lowercase
 {{$node["Http Request"].json.data}}  // wrong capitalization
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$node["HTTP Request"].json.data}}  // exact match
 ```
 
-**Why it fails**: Node names are **case-sensitive**. Must match exactly as shown in workflow.
+**为什么会出错**：节点名**区分大小写**。必须与工作流中显示的完全一致。
 
-**How to identify**: Undefined value even though node exists and has data.
+**如何识别**：节点存在且有数据，值却是 undefined。
 
 ---
 
-## 6. Double Wrapping
+## 6. 双重包裹
 
-**Problem**: Literal {{ }} appears in output
+**问题**：输出里出现字面 {{ }}
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{{$json.field}}}
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$json.field}}
 ```
 
-**Why it fails**: Only one set of {{ }} is needed. Extra braces are treated as literal characters.
+**为什么会出错**：只需要一组 {{ }}。多余的括号会被当作字面字符。
 
-**How to identify**: Output shows "{{value}}" instead of just "value".
+**如何识别**：输出显示 "{{value}}" 而不是 "value"。
 
 ---
 
-## 7. Array Access with Dots
+## 7. 用点号访问数组
 
-**Problem**: Syntax error or undefined
+**问题**：语法错误或 undefined
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{$json.items.0.name}}
 {{$json.users.1.email}}
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$json.items[0].name}}
 {{$json.users[1].email}}
 ```
 
-**Why it fails**: Array indices require brackets, not dots. Number after dot is invalid JavaScript.
+**为什么会出错**：数组下标要用方括号，不能用点号。点号后跟数字不是合法的 JavaScript。
 
-**How to identify**: Syntax error or "Cannot read property '0' of undefined"
+**如何识别**：语法错误，或 "Cannot read property '0' of undefined"
 
 ---
 
-## 8. Using Expressions in Code Nodes
+## 8. 在 Code 节点里用表达式
 
-**Problem**: Literal string instead of value, or errors
+**问题**：得到字面字符串而非值，或报错
 
-❌ **Wrong (in Code node)**:
+❌ **错误**（Code 节点内）：
 ```javascript
 const email = '{{$json.email}}';
 const name = '={{$json.body.name}}';
 ```
 
-✅ **Correct (in Code node)**:
+✅ **正确**（Code 节点内）：
 ```javascript
 const email = $json.email;
 const name = $json.body.name;
@@ -188,69 +192,69 @@ const email = $input.item.json.email;
 const allItems = $input.all();
 ```
 
-**Why it fails**: Code nodes have **direct access** to data. The {{ }} syntax is for expression fields in other nodes, not for JavaScript code.
+**为什么会出错**：Code 节点对数据是**直接访问**的。{{ }} 语法是给其他节点的表达式字段用的，不是给 JavaScript 代码用的。
 
-**How to identify**: Literal string "{{$json.email}}" appears in Code node output instead of actual value.
+**如何识别**：Code 节点输出里出现字面字符串 "{{$json.email}}" 而不是实际值。
 
 ---
 
-## 9. Missing Quotes in $node Reference
+## 9. $node 引用缺引号
 
-**Problem**: Syntax error
+**问题**：语法错误
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{$node[HTTP Request].json.data}}
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$node["HTTP Request"].json.data}}
 ```
 
-**Why it fails**: Node names must be quoted strings inside brackets.
+**为什么会出错**：方括号里的节点名必须是带引号的字符串。
 
-**How to identify**: Syntax error "Unexpected identifier"
+**如何识别**：语法错误 "Unexpected identifier"
 
 ---
 
-## 10. Incorrect Property Path
+## 10. 属性路径错误
 
-**Problem**: Undefined value
+**问题**：undefined 值
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{$json.data.items.name}}       // items is an array
 {{$json.user.email}}            // user doesn't exist, it's userData
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$json.data.items[0].name}}    // access array element
 {{$json.userData.email}}        // correct property name
 ```
 
-**Why it fails**: Wrong path to data. Arrays need index, property names must be exact.
+**为什么会出错**：数据路径错了。数组要用下标，属性名必须完全一致。
 
-**How to identify**: Check actual data structure using expression editor preview.
+**如何识别**：用表达式编辑器预览检查真实数据结构。
 
 ---
 
-## 11. Using = Prefix Outside JSON
+## 11. 在 JSON 之外使用 = 前缀
 
-**Problem**: Literal "=" appears in output
+**问题**：输出里出现字面 "="
 
-❌ **Wrong (in text field)**:
+❌ **错误**（文本字段中）：
 ```
 Email: ={{$json.email}}
 ```
 
-✅ **Correct (in text field)**:
+✅ **正确**（文本字段中）：
 ```
 Email: {{$json.email}}
 ```
 
-**Note**: The `=` prefix is **only** needed in JSON mode or when you want to set entire field value to expression result:
+**注意**：`=` 前缀**只**在 JSON 模式下、或想把整个字段值设为表达式结果时才需要：
 
 ```javascript
 // JSON mode (set property to expression)
@@ -262,185 +266,185 @@ Email: {{$json.email}}
 Hello {{$json.body.name}}!
 ```
 
-**Why it fails**: The `=` is parsed as literal text in non-JSON contexts.
+**为什么会出错**：在非 JSON 上下文里 `=` 被解析为字面文本。
 
-**How to identify**: Output shows "=john@example.com" instead of "john@example.com"
+**如何识别**：输出显示 "=john@example.com" 而不是 "john@example.com"
 
 ---
 
-## 12. Expressions in Webhook Path
+## 12. Webhook 路径里用表达式
 
-**Problem**: Path doesn't update, validation error
+**问题**：路径不更新，校验报错
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 path: "{{$json.user_id}}/webhook"
 path: "users/={{$env.TENANT_ID}}"
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 path: "my-webhook"              // Static paths only
 path: "user-webhook/:userId"    // Use dynamic URL parameters instead
 ```
 
-**Why it fails**: Webhook paths must be static. Use dynamic URL parameters (`:paramName`) instead of expressions.
+**为什么会出错**：Webhook 路径必须是静态的。改用动态 URL 参数（`:paramName`），不要用表达式。
 
-**How to identify**: Webhook path doesn't change or validation warns about invalid path.
+**如何识别**：Webhook 路径不变，或校验提示路径非法。
 
 ---
 
-## 13. Forgetting .json in $node Reference
+## 13. $node 引用漏掉 .json
 
-**Problem**: Undefined or wrong data
+**问题**：undefined 或错误数据
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{$node["HTTP Request"].data}}          // Missing .json
 {{$node["Webhook"].body.email}}         // Missing .json
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$node["HTTP Request"].json.data}}
 {{$node["Webhook"].json.body.email}}
 ```
 
-**Why it fails**: Node data is always under `.json` property (or `.binary` for binary data).
+**为什么会出错**：节点数据总是在 `.json` 属性下（二进制数据在 `.binary`）。
 
-**How to identify**: Undefined value when you know the node has data.
+**如何识别**：明知节点有数据，值却是 undefined。
 
 ---
 
-## 14. Template Literals & Concatenation Outside `{{ }}`
+## 14. `{{ }}` 之外的模板字符串与拼接
 
-**Problem**: A backtick template literal or `+` concatenation shows up as literal text
+**问题**：反引号模板字符串或 `+` 拼接被显示为字面文本
 
-❌ **Wrong** (written as the whole field value, with no `{{ }}`):
+❌ **错误**（写成整个字段值，没有 `{{ }}`）：
 ```
 `Hello ${$json.name}!`          // bare backticks — printed verbatim
 "Hello " + $json.name + "!"     // bare concatenation — printed verbatim
 ```
 
-✅ **Correct** (any of these):
+✅ **正确**（以下任一）：
 ```
 Hello {{$json.name}}!                   // adjacent text + {{ }} auto-concatenate
 {{ `Hello ${$json.name}!` }}            // a template literal INSIDE {{ }}
 {{ "Hello " + $json.name + "!" }}       // + concatenation INSIDE {{ }}
 ```
 
-**Why it fails**: n8n only evaluates what's inside `{{ }}`; everything else is literal text. The backticks and `+` aren't the problem — the **missing `{{ }}`** is. **Inside** an expression, backtick template literals with `${...}` interpolation are fully supported modern JavaScript, so this is valid and evaluates:
+**为什么会出错**：n8n 只对 `{{ }}` 里面的内容求值，其余都是字面文本。反引号和 `+` 不是问题所在，问题在于**缺了 `{{ }}`**。在表达式**内部**，带 `${...}` 插值的反引号模板字符串是完全支持的现代 JavaScript，所以下面这样是合法且会求值的：
 
 ```
 ={{ $json.items.map(i => `${i.name} — ${i.qty}`).join(', ') }}
 ```
 
-The same holds for optional chaining (`{{ $json.user?.email }}`) and string-keyed bracket access (`{{ $json['some-prop'] }}`) — both are valid n8n expressions. As of n8n-mcp ≥ 2.63.0 the validator no longer flags template literals, optional chaining, or bracket access inside expressions (earlier versions raised false-positive errors on them).
+可选链（`{{ $json.user?.email }}`）和字符串键的方括号访问（`{{ $json['some-prop'] }}`）同理，二者都是合法的 n8n 表达式。从 n8n-mcp ≥ 2.63.0 起，校验器不再对表达式内的模板字符串、可选链或方括号访问报错（更早的版本会对它们误报）。
 
-**How to identify**: Literal backticks or `+` symbols appear in output → the code wasn't wrapped in `{{ }}`.
+**如何识别**：输出里出现字面反引号或 `+` 符号 → 代码没包在 `{{ }}` 里。
 
 ---
 
-## 15. Empty Expression Brackets
+## 15. 空表达式括号
 
-**Problem**: Literal {{}} in output
+**问题**：输出里出现字面 {{}}
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{}}
 {{ }}
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{$json.field}}                 // Include expression content
 ```
 
-**Why it fails**: Empty expression brackets have nothing to evaluate.
+**为什么会出错**：空表达式括号里没有可求值的内容。
 
-**How to identify**: Literal "{{ }}" text appears in output.
+**如何识别**：输出里出现字面 "{{ }}" 文本。
 
 ---
 
-## 16. JMESPath String in Double Quotes
+## 16. JMESPath 字符串用了双引号
 
-**Problem**: `$jmespath` filter returns `[]` even though matching data exists — no error
+**问题**：`$jmespath` 过滤器返回 `[]`，明明存在匹配数据，却不报错
 
-❌ **Wrong**:
+❌ **错误**：
 ```
 {{ $jmespath($json, 'customers[?country=="PL"].name') }}      // → []
 ```
 
-✅ **Correct**:
+✅ **正确**：
 ```
 {{ $jmespath($json, "customers[?country=='PL'].name") }}      // → ["Acme", "Bar"]
 {{ $jmespath($json, "customers[?revenue > `100000`].name") }} // numbers in backticks
 ```
 
-**Why it fails**: in JMESPath, `"PL"` is a quoted **field name**, not a string. The filter compares `country` to a field called `PL`, which doesn't exist, so nothing matches. String literals use single quotes; numbers and booleans use backticks. A bare number (`revenue > 100000`) or `and`/`=` instead of `&&`/`==` is a parse error, and the whole expression becomes `null` (see #17).
+**为什么会出错**：在 JMESPath 里，`"PL"` 是带引号的**字段名**，不是字符串。过滤器拿 `country` 和名为 `PL` 的字段比较，而该字段不存在，所以什么也匹配不上。字符串字面量用单引号，数字和布尔值用反引号。裸数字（`revenue > 100000`）、或用 `and`/`=` 代替 `&&`/`==`，都是解析错误，整个表达式会变成 `null`（见 #17）。
 
-**Same trap over items**: `$jmespath($('Node').all(), "[?country=='PL']")` also returns `[]`. Items are `{json: …}` wrappers, so write `[?json.country=='PL'].json.name`, or map first: `$input.all().map(i => i.json)`.
+**对条目列表同样的坑**：`$jmespath($('Node').all(), "[?country=='PL']")` 也返回 `[]`。条目是 `{json: …}` 包装，所以要写成 `[?json.country=='PL'].json.name`，或先 map：`$input.all().map(i => i.json)`。
 
-**How to identify**: `[]` or `null` from a query whose data you can see in the input panel.
+**如何识别**：输入面板里明明能看到数据，查询却返回 `[]` 或 `null`。
 
 ---
 
-## 17. Runtime Error Hidden as `null`
+## 17. 运行时错误被隐藏成 `null`
 
-**Problem**: A field comes out `null`/empty (or a Filter drops every item) while the node and execution show success
+**问题**：某个字段输出 `null`/为空（或 Filter 把所有条目都滤掉了），而节点和执行却显示成功
 
-❌ **Wrong assumption**: "It ran green, so the expression works."
+❌ **错误假设**："运行是绿的，说明表达式没问题。"
 
-**Why it happens**: verified on n8n 2.38 with the default expression runtime: at runtime n8n swallows JavaScript errors inside `{{ }}` other than its own `ExpressionError`s. `$json.missing.field`, `JSON.parse` on bad input, a thrown `Error` and a JMESPath syntax error all resolved to `null` instead of failing the node. The editor preview shows the error; the execution doesn't. Other versions or engines may fail the node instead. Either way, never trust a green run on its own.
+**原因**：在 n8n 2.38 默认表达式运行时上验证过：运行时 n8n 会吞掉 `{{ }}` 内除自带 `ExpressionError` 之外的 JavaScript 错误。`$json.missing.field`、对坏输入执行 `JSON.parse`、抛出的 `Error`、JMESPath 语法错误，全都解析为 `null` 而不是让节点失败。编辑器预览会显示错误，执行不会。其他版本或引擎可能改为让节点失败。无论哪种情况，都不要只凭一次绿色运行就放心。
 
-✅ **Fix / check**:
+✅ **修复/检查**：
 ```
 {{ (() => { try { return JSON.stringify($json.payload.items.map(i => i.id)) } catch (e) { return 'ERROR: ' + e.message } })() }}
 ```
-Wrap temporarily to see the message, fix the path, then remove the wrapper. Always inspect output values after a test run, and guard optional paths with `?.` / `??`.
+临时套上它看报错信息，修好路径后再去掉包装。测试运行后务必检查输出值，可选路径用 `?.` / `??` 防护。
 
-**How to identify**: unexpected `null`s in output; Filter/IF sending everything to the false side.
+**如何识别**：输出里出现意料之外的 `null`；Filter/IF 把所有条目都送到了 false 一侧。
 
 ---
 
-## Quick Reference Table
+## 快速参考表
 
-| Error | Symptom | Fix |
+| 错误 | 症状 | 修复 |
 |-------|---------|-----|
-| No {{ }} | Literal text | Add {{ }} |
-| Webhook data | Undefined | Add `.body` |
-| Space in field | Syntax error | Use `['field name']` |
-| Space in node | Undefined | Use `["Node Name"]` |
-| Wrong case | Undefined | Match exact case |
-| Double {{ }} | Literal braces | Remove extra {{ }} |
-| .0 array | Syntax error | Use [0] |
-| {{ }} in Code | Literal string | Remove {{ }} |
-| No quotes in $node | Syntax error | Add quotes |
-| Wrong path | Undefined | Check data structure |
-| = in text | Literal = | Remove = prefix |
-| Dynamic path | Doesn't work | Use static path |
-| Missing .json | Undefined | Add .json |
-| Template literal / `+` outside {{ }} | Literal text | Wrap in {{ }} (both work inside) |
-| Empty {{ }} | Literal braces | Add expression |
-| JMESPath `"PL"` in a filter | `[]`, no error | `'PL'` for strings, `` `100` `` for numbers |
-| JMESPath over `.all()` without `json.` | `[]` | `[?json.field=='x'].json.name` |
-| Any JS error inside {{ }} at runtime | `null`, node still succeeds | Check preview + output values; try/catch wrapper to see the message |
+| 没有 {{ }} | 字面文本 | 加上 {{ }} |
+| Webhook 数据 | undefined | 加上 `.body` |
+| 字段名带空格 | 语法错误 | 用 `['field name']` |
+| 节点名带空格 | undefined | 用 `["Node Name"]` |
+| 大小写错误 | undefined | 严格匹配大小写 |
+| 双重 {{ }} | 字面括号 | 去掉多余的 {{ }} |
+| .0 数组 | 语法错误 | 用 [0] |
+| Code 里用 {{ }} | 字面字符串 | 去掉 {{ }} |
+| $node 缺引号 | 语法错误 | 加引号 |
+| 路径错误 | undefined | 检查数据结构 |
+| 文本中的 = | 字面 = | 去掉 = 前缀 |
+| 动态路径 | 不生效 | 用静态路径 |
+| 漏掉 .json | undefined | 加上 .json |
+| {{ }} 外的模板字符串 / `+` | 字面文本 | 包进 {{ }}（两者在内部都可用） |
+| 空 {{ }} | 字面括号 | 填入表达式 |
+| 过滤器里 JMESPath 写 `"PL"` | `[]`，不报错 | 字符串用 `'PL'`，数字用 `` `100` `` |
+| JMESPath 作用于 `.all()` 但没写 `json.` | `[]` | `[?json.field=='x'].json.name` |
+| {{ }} 内任何 JS 运行时错误 | `null`，节点仍成功 | 检查预览和输出值；用 try/catch 包装看报错信息 |
 
 ---
 
-## Debugging Process
+## 调试流程
 
-When expression doesn't work:
+表达式不工作时：
 
-1. **Check braces**: Is it wrapped in {{ }}?
-2. **Check data source**: Is it webhook data? Add `.body`
-3. **Check spaces**: Field or node name has spaces? Use brackets
-4. **Check case**: Does node name match exactly?
-5. **Check path**: Is the property path correct?
-6. **Use expression editor**: Preview shows actual result
-   - At runtime errors become `null` silently. If output is `null`, the preview's error is the real cause.
-7. **Check context**: Is it a Code node? Remove {{ }}
+1. **检查括号**：有没有包在 {{ }} 里？
+2. **检查数据来源**：是 webhook 数据吗？加上 `.body`
+3. **检查空格**：字段名或节点名带空格？用方括号
+4. **检查大小写**：节点名是否完全一致？
+5. **检查路径**：属性路径对吗？
+6. **用表达式编辑器**：预览会显示实际结果
+   - 运行时错误会静默变成 `null`。如果输出是 `null`，预览里的错误才是真正原因。
+7. **检查上下文**：是 Code 节点吗？去掉 {{ }}
 
 ---
 
-**Related**: See [EXAMPLES.md](EXAMPLES.md) for working examples of correct syntax.
+**相关**：正确语法的可用示例见 [EXAMPLES.md](EXAMPLES.md)。

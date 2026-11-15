@@ -1,88 +1,92 @@
-# Review Checklist
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/code-reviewer/references/review-checklist.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Comprehensive Review Checklist
+# 审查清单
 
-| Category | Key Questions |
+## 综合审查清单
+
+| 类别 | 关键问题 |
 |----------|---------------|
-| **Design** | Does it fit existing patterns? Right abstraction level? |
-| **Logic** | Edge cases handled? Race conditions? Null checks? |
-| **Security** | Input validated? Auth checked? Secrets safe? |
-| **Performance** | N+1 queries? Memory leaks? Caching needed? |
-| **Tests** | Adequate coverage? Edge cases tested? Mocks appropriate? |
-| **Naming** | Clear, consistent, intention-revealing? |
-| **Error Handling** | Errors caught? Meaningful messages? Logged? |
-| **Documentation** | Public APIs documented? Complex logic explained? |
+| **设计** | 符合既有模式吗？抽象层次合适吗？ |
+| **逻辑** | 边界情况处理了吗？有竞态条件吗？空值检查了吗？ |
+| **安全** | 输入验证了吗？鉴权检查了吗？秘密安全吗？ |
+| **性能** | 有 N+1 查询吗？内存泄漏？需要缓存吗？ |
+| **测试** | 覆盖充分吗？边界情况测了吗？mock 用得合适吗？ |
+| **命名** | 清晰、一致、能表达意图吗？ |
+| **错误处理** | 错误被捕获了吗？消息有意义吗？记录日志了吗？ |
+| **文档** | 公开 API 有文档吗？复杂逻辑有解释吗？ |
 
-## Review Process
+## 审查流程
 
-### 1. Context (5 min)
-- [ ] Read PR description
-- [ ] Understand the problem being solved
-- [ ] Check linked issues/tickets
-- [ ] Note expected changes
+### 1. 上下文（5 分钟）
+- [ ] 读 PR 描述
+- [ ] 理解要解决的问题
+- [ ] 查看关联的 issue/工单
+- [ ] 记下预期的改动
 
-### 2. Structure (10 min)
-- [ ] Review file organization
-- [ ] Check architectural fit
-- [ ] Verify design patterns used
-- [ ] Note any breaking changes
+### 2. 结构（10 分钟）
+- [ ] 审查文件组织
+- [ ] 检查架构契合度
+- [ ] 核实所用设计模式
+- [ ] 记下任何破坏性变更
 
-### 3. Code Details (20 min)
-- [ ] Review logic correctness
-- [ ] Check edge cases
-- [ ] Verify error handling
-- [ ] Look for security issues
-- [ ] Check performance concerns
-- [ ] Review naming clarity
+### 3. 代码细节（20 分钟）
+- [ ] 审查逻辑正确性
+- [ ] 检查边界情况
+- [ ] 核实错误处理
+- [ ] 查找安全问题
+- [ ] 检查性能隐患
+- [ ] 审查命名清晰度
 
-### 4. Tests (10 min)
-- [ ] Verify test coverage
-- [ ] Check test quality
-- [ ] Look for edge case tests
-- [ ] Ensure mocks are appropriate
+### 4. 测试（10 分钟）
+- [ ] 核实测试覆盖
+- [ ] 检查测试质量
+- [ ] 寻找边界情况测试
+- [ ] 确保 mock 使用合适
 
-### 5. Final Pass (5 min)
-- [ ] Note positive patterns
-- [ ] Prioritize feedback
-- [ ] Write summary
+### 5. 最终过一遍（5 分钟）
+- [ ] 记下正面模式
+- [ ] 给反馈排优先级
+- [ ] 写摘要
 
-## Category Deep Dive
+## 分类深挖
 
-### Design Questions
-- Does this change belong in this file/module?
-- Is the abstraction level appropriate?
-- Could this be simpler?
-- Does it follow existing patterns?
-- Is it extensible without modification?
+### 设计问题
+- 这个改动应该放在这个文件/模块里吗？
+- 抽象层次合适吗？
+- 能不能更简单？
+- 遵循既有模式了吗？
+- 不修改就能扩展吗？
 
-### Logic Questions
-- What happens with null/undefined inputs?
-- Are boundary conditions handled?
-- Could there be race conditions?
-- Is the order of operations correct?
-- Are all code paths tested?
+### 逻辑问题
+- null/undefined 输入时会发生什么？
+- 边界条件处理了吗？
+- 会有竞态条件吗？
+- 操作顺序正确吗？
+- 所有代码路径都测过了吗？
 
-### Security Questions
-- Is all user input validated?
-- Are SQL queries parameterized?
-- Is output properly encoded?
-- Are secrets handled safely?
-- Is authentication checked?
-- Is authorization enforced?
+### 安全问题
+- 所有用户输入都验证了吗？
+- SQL 查询参数化了吗？
+- 输出正确编码了吗？
+- 秘密处理安全吗？
+- 认证（Authentication）检查了吗？
+- 授权（Authorization）强制执行了吗？
 
-### Performance Questions
-- Are there N+1 query patterns?
-- Is data fetched efficiently?
-- Are expensive operations cached?
-- Could this cause memory leaks?
-- Is pagination implemented?
+### 性能问题
+- 有 N+1 查询模式吗？
+- 数据获取高效吗？
+- 昂贵操作有缓存吗？
+- 会导致内存泄漏吗？
+- 实现分页了吗？
 
-## Quick Reference
+## 快速参考
 
-| Review Focus | Time % |
+| 审查重点 | 时间占比 |
 |--------------|--------|
-| Context & PR description | 10% |
-| Architecture & design | 20% |
-| Code logic & details | 40% |
-| Tests & coverage | 20% |
-| Final review & summary | 10% |
+| 上下文与 PR 描述 | 10% |
+| 架构与设计 | 20% |
+| 代码逻辑与细节 | 40% |
+| 测试与覆盖 | 20% |
+| 最终审查与摘要 | 10% |

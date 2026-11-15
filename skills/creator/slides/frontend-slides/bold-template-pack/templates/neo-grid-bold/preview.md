@@ -1,55 +1,59 @@
-# Neo-Grid Bold Preview Card
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/creator/slides/frontend-slides/bold-template-pack/templates/neo-grid-bold/preview.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Use this small file for title-slide previews only. For final deck generation, read the full design doc listed below.
+# Neo-Grid Bold 预览卡
 
-## Files
+本文件仅用于标题页（title slide）预览。若要生成完整演示文稿，请阅读下方列出的完整设计文档。
 
-- Full design doc: `bold-template-pack/templates/neo-grid-bold/design.md`
-- Preview card: `bold-template-pack/templates/neo-grid-bold/preview.md`
+## 文件
 
-## Selection Metadata
+- 完整设计文档：`bold-template-pack/templates/neo-grid-bold/design.md`
+- 预览卡：`bold-template-pack/templates/neo-grid-bold/preview.md`
 
-- Slug: `neo-grid-bold`
-- Tagline: Editorial neo-brutalism with a single neon yellow accent on off-white paper.
-- Mood: confident, punchy, editorial, modern
-- Tone: bold, minimal, design-led, graphic
-- Formality: medium
-- Density: high
-- Scheme: light
-- Best for: Anything that should feel confident and editorial-graphic: design-led pitches, brand work, founder talks, conference keynotes. Excellent for stat-heavy slides, comparisons, and process flows. Just as strong for tech, research, or finance when the speaker wants to read as design-led rather than corporate.
-- Avoid for: Contexts that need to feel quiet, traditional, or warm — the neon-yellow accent and uppercase display commit to a confident editorial voice.
+## 选型元数据
 
-## Visual Snapshot
+- Slug：`neo-grid-bold`
+- Tagline：米白纸面上的编辑风新粗野主义，配单一霓虹黄点缀色。
+- Mood：confident、punchy、editorial、modern
+- Tone：bold、minimal、design-led、graphic
+- Formality：medium
+- Density：high
+- Scheme：light
+- 适合：一切应当显得自信且编辑图形化的内容：设计主导的提案、品牌工作、创始人演讲、大会主题演讲。特别适合统计密集的幻灯片、对比与流程图。当演讲者想显得设计主导而非企业化时，用于科技、研究或金融同样出色。
+- 避免：需要显得安静、传统或温暖的场景：霓虹黄点缀色与大写展示字体押注于自信的编辑语气。
 
-A heavy editorial poster system built on a strict 12-column × 8-row block grid with neon-yellow accents on putty-ecru. Space Grotesk at weight 700 in strict uppercase carries every display moment; JetBrains Mono carries every label and metadata tag. Each slide reads as a magazine spread divided into colored panels — paper-ecru, ink-black, and electric lemon-yellow trading roles across cells. The aesthetic borrows from contemporary editorial print, brutalist annual reports, and the populist-poster end of design week showcases.
+## 视觉速览
 
-Neo-Grid Bold is a heavy editorial poster system built on a single structural premise: every slide is a 12-column × 8-row CSS grid inset 40px from the slide edges, with 12px gaps between cells. Composition happens by assigning colored panels to grid spans — grid-column: 4 / span 5 and grid-row: 1 / span 5 is how layout is described. The grid is rigid; the visual variety comes from how panels of {colors.paper}, {colors.ink}, and {colors.accent-lemon} are arranged across cells.
+一套厚重的编辑海报系统，建立在严格的 12 列 × 8 行块网格上，以霓虹黄点缀色铺在油灰米白上。Space Grotesk 字重 700 严格大写承担每个展示时刻；JetBrains Mono 承担每个标签与元数据标牌。每页幻灯片读起来像一期被切成彩色面板的杂志跨页：纸米白、墨黑与电光柠檬黄在各单元格间互换角色。美学借鉴当代编辑印刷、粗野主义年报，以及设计周展示中最民粹海报的一端。
 
-## Preview Ingredients
+Neo-Grid Bold 是一套厚重的编辑海报系统，建立在单一的结构前提上：每页幻灯片是一个 12 列 × 8 行的 CSS 网格，自幻灯片边缘内缩 40px，单元格之间留 12px 间隙。构图通过给网格跨度指派彩色面板完成：grid-column: 4 / span 5 与 grid-row: 1 / span 5 就是版式的描述方式。网格是刚性的；视觉变化来自 {colors.paper}、{colors.ink} 与 {colors.accent-lemon} 面板在单元格间的排布。
 
-- Palette: paper #F5F4EF; bg #ECECE8; ink #0A0A0A; accent-lemon #E6FF3D; muted #8A8A85; stage-bg #1A1A1A
-- Typography: Space Grotesk; JetBrains Mono
-- Signature move: Universal 12-column × 8-row CSS grid ({components.frame}) inset 40px from each slide edge, with 12px gaps between cells.
-- Signature move: Three-color panel system: paper ecru ({colors.paper}) as default, ink black ({colors.ink}) for inverted blocks, accent lemon ({colors.accent-lemon}) for signal blocks.
-- Signature move: Space Grotesk weight 700 uppercase with negative letter-spacing for every display element.
-- Signature move: JetBrains Mono uppercase with 0.08–0.12em tracking for every label, page number, axis tag.
-- Signature move: A signature corner-mark and blockmark — small 2×2 block stamps that act as decorative identity tags.
+## 预览要素
 
-## International / CJK Preview Note
+- Palette：paper #F5F4EF; bg #ECECE8; ink #0A0A0A; accent-lemon #E6FF3D; muted #8A8A85; stage-bg #1A1A1A
+- Typography：Space Grotesk; JetBrains Mono
+- Signature move：通用 12 列 × 8 行 CSS 网格（{components.frame}），自每页幻灯片边缘内缩 40px，单元格间 12px 间隙。
+- Signature move：三色面板系统：纸米白（{colors.paper}）为默认，墨黑（{colors.ink}）用于反色区块，点缀柠檬黄（{colors.accent-lemon}）用于信号区块。
+- Signature move：Space Grotesk 字重 700 大写配负字距，用于每个展示元素。
+- Signature move：JetBrains Mono 大写配 0.08–0.12em 字距，用于每个标签、页码与坐标轴标牌。
+- Signature move：招牌角标与块标：小的 2×2 块状印记，充当装饰性身份标签。
 
-- If the preview uses Chinese or other CJK text, keep CJK letter-spacing at 0, loosen line-height, and avoid uppercase transforms on CJK runs.
-- Use the full `design.md` CJK section after selection for exact font pairings and script-specific adjustments.
+## 国际化 / CJK 预览注意
 
-## Preview Rules
+- 若预览使用中文或其他 CJK 文本，请保持 CJK 字距为 0、放宽行高，并避免对 CJK 文本应用大写变换。
+- 选定后请使用完整 `design.md` 的 CJK 章节，获取确切的字体搭配与各文字系统专属调整。
 
-- Build exactly one title slide at 1920x1080 inside the fixed-stage model.
-- Preserve the palette, type roles, surface rhythm, and decorative vocabulary described above.
-- Use the user's real title/subtitle/context; do not copy demo slide content.
-- The rendered preview must look like a real first slide, not a template-selection card.
-- Never place internal workflow text on the slide: no `preview`, `generated from`, `preview.md`, `template`, `preset`, `style option`, `Option A/B/C`, file names, paths, or source-doc labels.
-- Never place the template name or slug on the slide itself; mention it only in the chat message.
-- Never place user requirement notes such as desired vibe, audience, or internal-use labels on the slide unless the user explicitly wants those exact words in the deck.
-- Use only real deck content for visible chrome: deck title, real section title, date, author, company, page number, or genuine content phrases from the user material.
-- Do not read `template.html` for preview generation.
-- Do not read other templates' `design.md` files.
-- After the user picks this template for the full deck, read the full design doc before generating final slides.
+## 预览规则
+
+- 在固定舞台模型内精确构建一页 1920x1080 的标题页。
+- 保留上述的配色、字体角色、表面节奏与装饰语汇。
+- 使用用户的真实标题/副标题/语境信息；不要复制演示示例内容。
+- 渲染出的预览必须看起来像真实的第一页，而不是模板选型卡。
+- 永远不要在页面上放置内部工作流文字：不得出现 `preview`、`generated from`、`preview.md`、`template`、`preset`、`style option`、`Option A/B/C`、文件名、路径或来源文档标签。
+- 永远不要把模板名称或 slug 放到页面本身；只在聊天消息中提及。
+- 永远不要在页面上放置用户需求备注（如期望的气质、受众、内部使用标签），除非用户明确要求这些字面词出现在演示中。
+- 可见边框装饰只使用真实演示内容：演示标题、真实的分节标题、日期、作者、公司、页码，或来自用户材料的真实内容短语。
+- 生成预览时不要读取 `template.html`。
+- 不要读取其他模板的 `design.md` 文件。
+- 在用户为完整演示选定本模板后，先阅读完整设计文档再生成最终幻灯片。

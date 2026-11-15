@@ -1,41 +1,45 @@
-# Liquid Flow — Fluid Light Effects
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/dark--liquid-flow/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Liquid Flow：流体光效
 
-Deep purple background with multicolor fluid light spots, large ellipses with low transparency overlapping to create a liquid flow effect.
+## 风格概览
 
-- **Scene**: Brand visual upgrade, creative launches, fashion showcases, premium products
-- **Mood**: Flowing, dreamy, premium, avant-garde
-- **Tone**: Dark tones, multicolor gradient light effects
+深紫色背景，多彩流体光斑；低透明度的大椭圆相互叠压，形成流体流动效果。
 
-## Color Palette
+- **适用场景**：品牌视觉升级、创意发布、时尚展示、高端产品
+- **氛围**：流动、梦幻、高端、前卫
+- **色调**：深色调，多彩渐变光效
 
-| Name              | Hex     | Usage                |
-| ----------------- | ------- | -------------------- |
-| Deep Purple Night | #0F0F2D | Page background      |
-| Violet            | #6C63FF | Primary light spot   |
-| Mint Green        | #48E5C2 | Auxiliary light spot |
-| Coral Pink        | #FF6B8A | Auxiliary light spot |
-| Electric Blue     | #3D5AFE | Auxiliary light spot |
-| Amber             | #F5AF19 | Small droplets       |
-| Title White       | #F5F5FF | Title text           |
-| Body Blue         | #C8C8FF | Body text            |
-| Auxiliary Gray    | #8888CC | Auxiliary text       |
+## 配色方案
 
-## Design Techniques
+| 名称 | Hex | 用途 |
+| --- | --- | --- |
+| 深紫夜 | #0F0F2D | 页面背景 |
+| 紫罗兰 | #6C63FF | 主光斑 |
+| 薄荷绿 | #48E5C2 | 辅助光斑 |
+| 珊瑚粉 | #FF6B8A | 辅助光斑 |
+| 电光蓝 | #3D5AFE | 辅助光斑 |
+| 琥珀色 | #F5AF19 | 小水滴 |
+| 标题白 | #F5F5FF | 标题文字 |
+| 正文蓝 | #C8C8FF | 正文文字 |
+| 辅助灰 | #8888CC | 辅助文字 |
 
-- **Fluid light spots**: 4 large ellipses (12-14cm) + 3 small droplets (3-4cm), different colors, different transparency (0.28-0.55), with rotation
-- **Liquid flow effect**: Ellipses overlap each other, color mixing creates depth effect
-- **Morph choreography**: Light spots shift significantly between pages (10-15cm) + rotation changes, creating a sense of flow
-- **Characteristics**: Irregular fluid light spots + multicolor layering, creating liquid flow effect
+## 设计技法
 
-## Reference Script
+- **流体光斑**：4 个大椭圆（12-14cm）+ 3 个小水滴（3-4cm），颜色各异、透明度各异（0.28-0.55），并带旋转
+- **流体流动效果**：椭圆相互叠压，混色产生纵深效果
+- **Morph 编排**：光斑跨页大幅位移（10-15cm）并改变旋转，营造流动感
+- **特点**：不规则的流体光斑 + 多色叠层，形成流体流动效果
 
-Complete build script is in `build.sh`.
+## 参考脚本
 
-**Recommended slides to read for understanding core design techniques**:
+完整构建脚本见 `build.sh`。
 
-- **Slide 1 (hero)** — Fluid light spot layout and layering effects
-- **Slide 3 (pillars)** — How light spots complement content cards
+**建议精读以下幻灯片，理解核心设计技法**：
 
-No need to read all — skim 2-3 representative slides.
+- **Slide 1 (hero)**：流体光斑的布局与叠层效果
+- **Slide 3 (pillars)**：光斑如何衬托内容卡片
+
+无需全部精读，浏览 2-3 张代表性幻灯片即可。

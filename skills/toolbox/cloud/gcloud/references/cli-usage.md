@@ -1,167 +1,156 @@
-# gcloud CLI Usage
+> **中文汉化版** · 上游：[google/skills](https://github.com/google/skills) · 原文件：`plugins/cloud/google-cloud-developer/skills/gcloud/references/cli-usage.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-This document provides reference information for installing, authorizing, and
-configuring the Google Cloud SDK (`gcloud` CLI) in local and automated
-environments.
+# gcloud CLI 使用说明
 
-## Installation
+本文档提供在本地与自动化环境中安装、授权和配置 Google Cloud SDK（`gcloud` CLI）的参考
+信息。
 
-If the `gcloud` binary is not installed in the execution environment, refer to
-the authoritative
-[Google Cloud CLI Installation Guide](https://docs.cloud.google.com/sdk/docs/install-sdk.md.txt)
-for platform-specific installation instructions (Linux, macOS, Windows, package
-managers, and container images).
+## 安装
+
+如果执行环境中没有 `gcloud` 二进制文件，请参考权威的
+[Google Cloud CLI 安装指南](https://docs.cloud.google.com/sdk/docs/install-sdk.md.txt)
+获取各平台的安装说明（Linux、macOS、Windows、包管理器和容器镜像）。
 
 > [!CAUTION]
-> **Explicit User Confirmation Required Before Installing `gcloud` CLI:**
-> Never install the Google Cloud CLI (`gcloud` CLI) or additional `gcloud` CLI
-> components (`gcloud components install` / `gcloud components update`)
-> autonomously.
+> **安装 `gcloud` CLI 前必须获得用户明确确认：**
+> 绝不能自主安装 Google Cloud CLI（`gcloud` CLI）或额外的 `gcloud` CLI 组件
+> （`gcloud components install` / `gcloud components update`）。
 >
-> Before executing any installation command or package manager script:
-> 1. Inform the user that the `gcloud` CLI (or required component) is not
->    installed and summarize the installation method you plan to use.
-> 2. Ask the user for explicit consent: `"I am ready to install the Google Cloud
->    CLI (gcloud) on your machine. Do you want me to proceed?"`
-> 3. **CRITICAL**: The agent **MUST NOT** execute any `gcloud` installation or
->    component installation commands during this turn. You must ask the consent
->    query and **strictly stop** to wait for the user's positive affirmation.
+> 在执行任何安装命令或包管理器脚本之前：
+> 1. 告知用户 `gcloud` CLI（或所需组件）尚未安装，并概述你计划使用的安装方式。
+> 2. 请求用户明确同意：`"I am ready to install the Google Cloud CLI (gcloud) on your
+>    machine. Do you want me to proceed?"`
+> 3. **关键**：在当前这一轮中，代理**绝不能**执行任何 `gcloud` 安装或组件安装命令。你必须
+>    发出征询同意的提问，然后**严格停下**，等待用户的肯定答复。
 
-### Component Management
+### 组件管理
 
-The `gcloud components` command group manages optional CLI components (such as
-additional tools, emulators, and language runtimes):
+`gcloud components` 命令组管理可选的 CLI 组件（例如额外的工具、模拟器和语言运行时）：
 
--   **List available components:**
+-   **列出可用组件：**
 
     ```bash
     gcloud components list
     ```
 
--   **Install a component:**
+-   **安装组件：**
 
     ```bash
     gcloud components install {component_id} --quiet
     ```
 
--   **Update all installed components:**
+-   **更新所有已安装组件：**
 
     ```bash
     gcloud components update --quiet
     ```
 
-*(Note: If `gcloud` was installed via a system package manager like APT or DNF,
-use the system package manager to install components instead of `gcloud
-components install`.)*
+*（注：如果 `gcloud` 是通过 APT 或 DNF 之类的系统包管理器安装的，请改用该系统包管理器
+安装组件，而不是 `gcloud components install`。）*
 
-## Authorization & Authentication
+## 授权与认证
 
-Authenticate the CLI with Google Cloud according to the operational environment:
+根据运行环境，用以下方式向 Google Cloud 认证 CLI：
 
--   **User Account (Interactive):**
+-   **用户账号（交互式）：**
 
     ```bash
     gcloud auth login
     ```
 
-    Follow the browser prompts to sign in and grant access.
+    按浏览器提示登录并授予访问权限。
 
--   **User Account (Headless Flow):**
+-   **用户账号（无浏览器流程）：**
 
-    For environments without an accessible web browser (containers, remote SSH):
+    适用于没有可用网页浏览器的环境（容器、远程 SSH）：
 
     ```bash
     gcloud auth login --no-browser
     ```
 
-    Copy the generated URL, open it on another machine to complete sign-in, and
-    paste the authorization code back into the terminal.
+    复制生成的 URL，在另一台机器上打开以完成登录，再把授权码粘贴回终端。
 
--   **Application Default Credentials (ADC):**
+-   **Application Default Credentials（ADC）：**
 
-    Configures credentials for client libraries and local applications:
+    为客户端库和本地应用配置凭证：
 
     ```bash
     gcloud auth application-default login
     ```
 
-    Append `--no-browser` in headless environments.
+    在无头环境中追加 `--no-browser`。
 
--   **Service Account Key (Headless Automation):**
+-   **服务账号密钥（无头自动化）：**
 
     ```bash
     gcloud auth activate-service-account --key-file=path/to/key.json
     ```
 
-    *Security note: Restrict file permissions on JSON keys or prefer Workload
-    Identity / Impersonation.*
+    *安全提示：严格限制 JSON 密钥文件的权限，或优先改用 Workload Identity / 身份模拟。*
 
--   **Service Account Impersonation (Preferred for Development & Agents):**
+-   **服务账号身份模拟（开发与 Agent 场景首选）：**
 
-    Allows a user identity to temporarily assume a service account identity
-    without storing long-lived private key files:
+    允许用户身份临时充当某个服务账号的身份，无需长期保存私钥文件：
 
     ```bash
     gcloud config set auth/impersonate_service_account {service_account_email}
     ```
 
-    Requires the `roles/iam.serviceAccountTokenCreator` role on the target
-    service account. This enforces least privilege and ensures audited access
-    under the target identity.
+    需要在目标服务账号上持有 `roles/iam.serviceAccountTokenCreator` 角色。这样能落实
+    最小权限，并保证访问以目标身份执行、可审计。
 
--   **Workload Identity Federation:**
+-   **Workload Identity Federation：**
 
-    For CI/CD and external compute environments (GitHub Actions, AWS, on-prem),
-    authenticate using federated tokens without managing service account keys.
-    See
-    [Authenticate for the gcloud CLI](https://docs.cloud.google.com/sdk/docs/authenticate.md.txt).
+    适用于 CI/CD 和外部计算环境（GitHub Actions、AWS、本地机房），使用联合 token 认证，
+    无需管理服务账号密钥。参见
+    [Authenticate for the gcloud CLI](https://docs.cloud.google.com/sdk/docs/authenticate.md.txt)。
 
-## Local Configuration Management
+## 本地配置管理
 
-The `gcloud config` command group manages local configuration settings,
-profiles, and default properties.
+`gcloud config` 命令组管理本地配置设置、profile 和默认属性。
 
-### Named Configurations
+### 命名配置（Named Configurations）
 
-Configurations allow maintaining multiple isolated sets of properties (e.g.,
-dev, staging, prod):
+配置（configuration）允许维护多套相互隔离的属性集（例如 dev、staging、prod）：
 
--   **Create a new configuration:**
+-   **新建配置：**
 
     ```bash
     gcloud config configurations create {config_name}
     ```
 
--   **List existing configurations:**
+-   **列出现有配置：**
 
     ```bash
     gcloud config configurations list
     ```
 
--   **Activate a configuration:**
+-   **激活某个配置：**
 
     ```bash
     gcloud config configurations activate {config_name}
     ```
 
-### Setting Common Properties
+### 设置常用属性
 
-Properties set default values for flags across `gcloud` invocations:
+属性为跨 `gcloud` 调用的标志设置默认值：
 
--   **Set active project:**
+-   **设置当前项目：**
 
     ```bash
     gcloud config set core/project {project_id}
     ```
 
--   **Set default compute region and zone:**
+-   **设置默认的 compute region 与 zone：**
 
     ```bash
     gcloud config set compute/region {region}
     gcloud config set compute/zone {zone}
     ```
 
--   **View all active configuration properties:**
+-   **查看所有生效的配置属性：**
 
     ```bash
     gcloud config list

@@ -1,62 +1,66 @@
-# Energy Neon — Editorial Conference
+> **中文汉化版** · 上游：[iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) · 原文件：`skills/morph-ppt/reference/styles/vivid--energy-neon/style.md` · License: Apache-2.0
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# 能量霓虹（编辑风会议）
 
-High-energy editorial design with light grey background and bold neon green blocks. Features condensed black typography and multi-column layouts, ideal for conferences, events, and dynamic presentations.
+## 风格概览
 
-- **Scenario**: Conferences, energy summits, tech events, editorial publications, speaker showcases
-- **Mood**: Energetic, modern, impactful, editorial
-- **Tone**: Light grey with neon green accent blocks
+高能量编辑风设计，浅灰底配大胆的霓虹绿色块。窄黑体排印与多栏版式，适合会议、活动和高动态演示。
 
-## Color Palette
+- **场景**：会议、能源峰会、科技活动、编辑出版物、讲者展示
+- **气质**：有活力、现代、冲击力、编辑风
+- **基调**：浅灰底，霓虹绿点缀色块
 
-| Name           | Hex     | Usage                                |
+## 配色
+
+| 名称           | Hex     | 用途                                 |
 | -------------- | ------- | ------------------------------------ |
-| Background     | #E8E8E8 | Light grey canvas                    |
-| Primary accent | #00FF41 | Neon green for blocks and highlights |
-| Primary text   | #111111 | Near-black for main text             |
-| Secondary text | #555555 | Mid-grey for supporting text         |
-| White          | #FFFFFF | White for text on green blocks       |
+| 背景           | #E8E8E8 | 浅灰画布                             |
+| 主点缀         | #00FF41 | 色块与高光用霓虹绿                   |
+| 主文字         | #111111 | 主文字用近黑                         |
+| 次级文字       | #555555 | 辅助文字用中灰                       |
+| 白色           | #FFFFFF | 绿色块上的文字用白                   |
 
-## Typography
+## 字体排印
 
-| Element | Font           |
+| 元素    | 字体           |
 | ------- | -------------- |
-| Title   | Segoe UI Black |
-| Body    | Segoe UI       |
+| 标题    | Segoe UI Black |
+| 正文    | Segoe UI       |
 
-## Design Techniques
+## 设计手法
 
-- Large neon green rect blocks as morph actors
-- Condensed bold typography for impact
-- Multi-column text layouts
-- Asymmetric block positioning that morphs across slides
-- Editorial conference aesthetic
-- Light background for high energy feel
+- 大型霓虹绿 rect 色块作 morph actor
+- 窄体加粗排印制造冲击力
+- 多栏文字版式
+- 非对称色块定位，跨页 morph
+- 编辑风会议美学
+- 浅色底营造高能量感
 
-## Page Structure (7 slides)
+## 页面结构（7 页）
 
-| Slide | Type      | Description                                           |
+| 页码  | 类型      | 描述                                                  |
 | ----- | --------- | ----------------------------------------------------- |
-| 1     | hero      | Neon block left-half, large title right               |
-| 2     | pillars   | 4-column speaker showcase, small neon block top-right |
-| 3     | statement | Centered message, neon blocks morph to corners        |
-| 4     | pillars   | 3-column benefits, neon top stripe                    |
-| 5     | evidence  | Large stat with neon background block                 |
-| 6     | timeline  | 4-step process, vertical neon accent                  |
-| 7     | cta       | Call to action, neon block returns to center          |
+| 1     | hero      | 霓虹块占左半，大标题在右                              |
+| 2     | pillars   | 4 栏讲者展示，小霓虹块在右上                          |
+| 3     | statement | 居中宣言，霓虹块 morph 到四角                         |
+| 4     | pillars   | 3 栏收益点，霓虹顶部条带                              |
+| 5     | evidence  | 大统计数字配霓虹背景块                                |
+| 6     | timeline  | 四步流程，竖向霓虹强调                                |
+| 7     | cta       | 行动号召，霓虹块回归居中                              |
 
-## Key Morph Patterns
+## 关键 Morph 模式
 
-- **Neon block actor** (`!!neon-block`): Large rect that moves from left-half → top-right → corners → top-stripe → background → vertical bar → center
-- **Dramatic size changes**: Block scales from 16cm wide full-height down to 4cm accent strips
-- **Color consistency**: Neon green stays constant, creating visual thread across slides
+- **霓虹块 actor**（`!!neon-block`）：大 rect，按序移动：左半 → 右上 → 四角 → 顶部条带 → 背景 → 竖条 → 居中
+- **戏剧化尺寸变化**：色块从 16cm 宽全高缩到 4cm 强调条
+- **颜色恒定**：霓虹绿保持不变，形成贯穿各页的视觉线索
 
-## Reference Script
+## 参考脚本
 
-Complete build script available in `build.py` (Python with officecli).
+完整构建脚本见 `build.py`（Python + officecli）。
 
-**Recommended slides to read for core techniques**:
+**建议阅读的核心技巧页**：
 
-- **Slide 1 (hero)** — asymmetric neon block composition with condensed title
-- **Slide 5 (evidence)** — neon block as content background with white text overlay
+- **Slide 1（hero）**：非对称霓虹块构图配窄体标题
+- **Slide 5（evidence）**：霓虹块作内容背景，白色文字叠加其上

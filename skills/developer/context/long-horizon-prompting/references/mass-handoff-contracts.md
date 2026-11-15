@@ -1,34 +1,38 @@
-# MASS Handoff Contracts, Annotated
+> **中文汉化版** · 上游：[muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) · 原文件：`skills/long-horizon-prompting/references/mass-handoff-contracts.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Status and provenance, as of 2026-10-11:
+# MASS 交接契约（注释版）
 
-- Source: Hyunin Lee, Jinglue Xu, Jeffrey Seely, Donghyun Lee, Somayeh Sojoudi, Matei Zaharia, Yujin Tang, "Recursive Self-Improvement through Multi-Agent Self-Supervision" (Sakana AI and UC Berkeley), arXiv 2610.12176v1, October 2026. Project page: `https://pub.sakana.ai/mass/`. Code: `https://github.com/SakanaAI/mass`.
-- MASS is a recursive self-improvement method. One shared model (Qwen3.6-27B in the experiments) acts as executor, workflow optimizer, and evaluator. The optimizer searches multi-agent workflow text using the evaluator's pairwise judgments, then the model is fine-tuned with LoRA on orchestrator and subagent trajectories from the self-judged best workflows. The paper reports two full rounds.
-- This skill does not cover the weight-update loop; that belongs to `self-improvement-loops`. What transfers to launch-prompt design is the workflow representation, the contracts the optimizer converged on, the execution directive the authors wrote for trajectory collection, and three findings about verification and search.
-- Preprint, unreviewed at retrieval. Training used eight synthetic research tasks in finance, robotics, and pharmacy. The component analysis covers 8 to 9 tasks and 43 to 51 agents, which the authors describe as descriptive text statistics rather than independent replications. Progress was scored by external judges (GPT-5.5 and Claude Opus 4.8) whose judgments were withheld from the loop.
+状态与出处，截至 2026-10-11：
 
-## Workflow as a prompt
+- 来源：Hyunin Lee、Jinglue Xu、Jeffrey Seely、Donghyun Lee、Somayeh Sojoudi、Matei Zaharia、Yujin Tang，"Recursive Self-Improvement through Multi-Agent Self-Supervision"（Sakana AI 与 UC Berkeley），arXiv 2610.12176v1，2026 年 10 月。项目页：`https://pub.sakana.ai/mass/`。代码：`https://github.com/SakanaAI/mass`。
+- MASS 是一种递归自我改进方法。一个共享模型（实验中为 Qwen3.6-27B）同时充当执行器、工作流优化器和评估器。优化器利用评估器的成对判断搜索多 Agent 工作流文本，然后用 LoRA 在来自"自我评判最优工作流"的编排者与子代理轨迹上微调该模型。论文报告了完整的两轮。
+- 本 Skill 不覆盖权重更新循环；那属于 `self-improvement-loops`。能迁移到启动提示词设计的是：工作流的表示方式、优化器收敛出的契约、作者为轨迹收集亲手写的执行指令，以及关于验证与搜索的三条发现。
+- 预印本，检索时未经同行评审。训练使用金融、机器人、药学领域的 8 个合成研究任务。组件分析覆盖 8 到 9 个任务和 43 到 51 个 Agent，作者称其为描述性文本统计，而非独立复现。进度由外部裁判（GPT-5.5 与 Claude Opus 4.8）打分，其判断对循环内部保密。
 
-MASS represents a workflow as text appended to the task prompt, with four components per subagent:
+## 把工作流写进提示词
 
-- Role: the responsibility assigned to the subagent.
-- Instruction: the work the subagent should carry out.
-- Contract: "the information and artifacts it must return, including any required checks."
-- Hop: the order of subagent calls, including any return to an earlier step.
+MASS 把工作流表示为附加在任务提示词后的文本，每个子代理四个组件：
 
-The optimizer's system prompt emphasizes contracts and hops, directing search toward what information agents exchange and when they receive it.
+- Role：分配给子代理的职责。
+- Instruction：子代理应执行的工作。
+- Contract："它必须返回的信息和产物，包括任何要求的检查。"
+- Hop：子代理调用的顺序，包括回跳到更早的步骤。
 
-This decomposition lines up with the four-part delegation spec in vendor guidance (objective, output format, tool guidance, boundaries), with one difference that matters. An output format says what shape to return. A contract also says what must be established, and checked, before the next agent may proceed.
+优化器的系统提示词强调 contract 和 hop，把搜索引向 Agent 之间交换什么信息、何时收到。
 
-## Finding 1: task information moves into contracts and hops
+这一分解与厂商指南中的四要素委派规格（目标、输出格式、工具指引、边界）对得上，但有一处关键差异。输出格式规定返回什么形状。契约还规定：在下一个 Agent 可以继续之前，必须先确立什么、检查什么。
 
-Between workflow-search iterations 3 and 11, estimated mutual information between component text and task descriptions fell for roles and instructions and rose for contracts and hops, across two embedding models and two estimators. Redundancy among components generally fell (claim-long-horizon-contract-information-shift). The project page gives the intuition: "a role such as 'careful data scientist' could apply to many tasks. A contract specifying leakage checks for a trading backtest is much more distinctive."
+## 发现 1：任务信息迁移进契约与调用顺序
 
-Implication: when an optimizer is free to put task knowledge anywhere in a worker prompt, it moves that knowledge into what the worker must return and when. Brief writers should do the same: keep roles short, and spend task-specific words on contracts and call order.
+在工作流搜索的第 3 到第 11 次迭代之间，组件文本与任务描述之间的估计互信息在 role 和 instruction 上下降、在 contract 和 hop 上上升，且在两个嵌入模型和两个估计器下都成立。组件间的冗余普遍下降（claim-long-horizon-contract-information-shift）。项目页给出的直觉解释是："一个像'仔细的数据科学家'这样的角色可以套用到很多任务上；而一份为交易回测规定泄漏检查的契约要有辨识度得多。"
 
-## Annotated contract: the finance data stage
+推论：当优化器可以随意把任务知识放进 worker 提示词的任何位置时，它选择把知识移进"worker 必须返回什么、在什么节点"。简报作者也应如此：角色写短，任务相关的字数花在契约和调用顺序上。
 
-Condensed from the evolved finance workflow on the project page:
+## 注释契约：金融数据阶段
+
+由项目页上演化出的金融工作流浓缩而来：
 
 ```text
 Call order
@@ -42,59 +46,59 @@ Data specialist's output contract
     val_end_before_test_start:   bool
 ```
 
-The authors' gloss: "A backtest can look convincing if it lets historical decisions use information from the future. This contract requires the data specialist to check for that error and report whether the time splits are valid. It also tells later agents what evidence they should receive before proceeding."
+作者的解读："如果回测允许历史决策使用来自未来的信息，它可以显得很有说服力。这份契约要求数据专员检查这类错误，并报告时间切分是否有效。它也告诉后续 Agent，在继续之前应当收到什么证据。"
 
-Three properties of this contract generalize:
+这份契约有三条可推广的性质：
 
-1. Each check is named after the failure it rules out (`no_future_leakage`), not after a quality ("rigorous data preparation").
-2. Each check is typed. A boolean in a validation report can be read by the next agent and by a harness without judgment.
-3. The check sits at the handoff where the error is introduced, not only in the final audit, so downstream work does not build on a broken input.
+1. 每个检查以它排除的失败命名（`no_future_leakage`），而不是以一种品质命名（"严谨的数据准备"）。
+2. 每个检查都有类型。验证报告里的布尔值，下一个 Agent 和 Harness 都能无歧义读取。
+3. 检查位于引入错误的那个交接点，而不只在最终审计，下游工作就不会建立在坏输入之上。
 
-A research report is non-verifiable in the paper's sense: no automatic rule-based signal exists for the whole artifact. The contract carves verifiable pieces out of it anyway. The same move applies to code (`tests_pass`, `tests_unmodified`), to modeling (`no_target_leakage`, `split_overlap_free`), and to documents (`every_claim_cites_a_source`).
+研究报告在论文的意义上不可验证：整个成果不存在自动的规则化信号。契约照样从中切出可验证的部分。同样的手法适用于代码（`tests_pass`、`tests_unmodified`）、建模（`no_target_leakage`、`split_overlap_free`）和文档（`every_claim_cites_a_source`）。
 
-## The evolved orchestrator: gates, degenerate values, recall
+## 演化出的编排者：闸门、退化值、召回
 
-The complete evolved workflow for one finance task (paper Appendix I.1, task 51, workflow version 10) adds three patterns on top of per-stage contracts. The paper notes that its thresholds and heuristics "are optimizer proposals, not additional benchmark requirements or validated scientific criteria."
+一个金融任务的完整演化工作流（论文附录 I.1，任务 51，工作流版本 10）在阶段契约之上又加了三个模式。论文注明，这些阈值和启发式"是优化器的提案，不是额外的基准要求或经过验证的科学标准"。
 
-- Gates on every handoff: "Enforce strict JSON schema validation on every subagent output," and "Halt synthesis until all gates pass or max hops exhausted with documented fallbacks."
-- Degenerate-value rejection: "Reject any output containing NaN, Inf, or degenerate values (e.g., regime_accuracy==1.0, confusion_matrix=[[N]], IC==RankIC, ablation_delta_sharpe>0)." The auditor's checklist adds "Sharpe > 10" and a "stability = 0.5 placeholder." These are too-good-to-be-true signatures: values that appear only when something upstream is broken.
-- Recall with its own acceptance criteria: "if a gate fails, issue a RECALL command with {target_agent, failed_checks, error_context, narrowed_scope, acceptance_criteria, code_patch_hint, max_retries: 3}." The fix request names one responsible agent, the checks that failed, a narrower scope, what will count as fixed, and a retry cap.
+- 每个交接点设闸门："对每个子代理输出强制严格的 JSON schema 校验"，以及"在所有闸门通过、或达到最大跳数且备有书面回退方案之前，暂停综合"。
+- 退化值拒绝："拒绝任何包含 NaN、Inf 或退化值的输出（例如 regime_accuracy==1.0、confusion_matrix=[[N]]、IC==RankIC、ablation_delta_sharpe>0）。"审计者的清单还加了"Sharpe > 10"和"stability = 0.5 占位符"。这些都是"好到不真实"的特征：只有上游某处坏了才会出现的数值。
+- 带专属验收标准的召回："如果闸门失败，发出一条 RECALL 命令，携带 {target_agent, failed_checks, error_context, narrowed_scope, acceptance_criteria, code_patch_hint, max_retries: 3}。"修复请求点名一个责任 Agent、失败的检查、一个更窄的范围、怎样算修复，以及重试上限。
 
-The recall shape is what keeps review from becoming open-ended. A finding turns into a bounded work order with its own definition of done, routed to one agent, instead of reopening the whole artifact for another unbounded pass.
+正是召回的形状让审查不至于变成开放式。一个发现变成一张有边界的工单，自带"怎样算完成"的定义，路由给一个 Agent，而不是把整个成果重新打开、再来一轮无边界审查。
 
-## The authors' execution directive
+## 作者的执行指令
 
-Appendix B.3 reproduces the directive appended to every workflow during trajectory collection. The authors wrote it; it was not evolved. Selected items, verbatim:
+附录 B.3 复现了轨迹收集期间附加在每个工作流后的指令。它由作者手写，不是演化产物。摘录数条：
 
-- "Run the team for real. ... Simulating a role in your own turn does not count. You, the orchestrator, do not write pipeline or analysis code yourself; you set up the project, delegate, verify, and integrate."
-- "One stage at a time. Launch a worker only when the inputs it needs already exist on disk."
-- "Self-contained instructions. A worker sees nothing but your prompt and the filesystem. Each prompt must include: the role's instruction from the team definition above; the absolute workspace path; the exact files to create or modify; the interfaces or artifacts produced by earlier stages that it must use; the command(s) to run to verify its work; and the report you expect back (files written, commands run with results, key numbers, known problems)."
-- "Verify before you build on it. After each report, check the worker's output yourself (run the entry point, inspect the artifacts). If the check fails or the report shows problems, re-delegate to the same role with a corrected, narrower instruction instead of fixing it yourself."
-- "Bounded work. Give each worker one deliverable it can finish in a single run: a handful of files and one verification command."
-- "Finish cleanly. ... Your final answer must summarize every worker call: role, what it was asked, status, and what you verified."
+- "真的把团队跑起来。……在自己的回合里模拟某个角色不算数。你，编排者，不亲自写流水线或分析代码；你的工作是搭好项目、委派、验证、整合。"
+- "一次一个阶段。只有当 worker 所需的输入已经存在于磁盘上时才启动它。"
+- "指令自包含。worker 只能看到你的提示词和文件系统。每条提示词必须包含：上文团队定义中该角色的指令；工作区的绝对路径；要创建或修改的确切文件；它必须使用的、由更早阶段产出的接口或产物；为验证其工作而要运行的命令；以及你期望收到的报告（写入了哪些文件、运行了哪些命令及结果、关键数字、已知问题）。"
+- "在其上构建之前先验证。每份报告之后，亲自检查 worker 的输出（运行入口点，检查产物）。如果检查失败或报告显示问题，用修正后、更窄的指令重新委派给同一角色，而不是自己动手修。"
+- "有界工作。给每个 worker 一个单次运行就能完成的交付物：少量文件加一条验证命令。"
+- "干净收尾。……你的最终回答必须汇总每一次 worker 调用：角色、被要求做什么、状态，以及你验证了什么。"
 
-Every item is a non-counting outcome ("simulating a role does not count"), a gate ("launch only when inputs exist", "verify before you build on it"), or a reporting contract ("summarize every worker call ... and what you verified"). None of it is a persona.
+每一条要么是"不计成果"（"模拟角色不算数"），要么是闸门（"输入存在才启动""在其上构建之前先验证"），要么是汇报契约（"汇总每一次 worker 调用……以及你验证了什么"）。没有一条是人格设定。
 
-## Finding 2: the reviser can be the bottleneck, not the reviewer
+## 发现 2：瓶颈可能是修订者，而不是审查者
 
-With the executor fixed at the base model, replacing only the evaluator with a stronger external model improved workflow search less than replacing both the evaluator and the optimizer. The fully homogeneous loop still reached unanimous wins on 11 of 12 tasks, more slowly (claim-long-horizon-reviser-bottleneck). The authors' reading: strong feedback is wasted when the component that acts on it cannot digest it.
+在执行器固定为基础模型的前提下，只把评估器换成更强的外部模型，对工作流搜索的改进不如把评估器和优化器一起换掉。全同质的循环仍能更慢地在 12 个任务中的 11 个上取得全票胜利（claim-long-horizon-reviser-bottleneck）。作者的解读：当消化反馈的组件消化不了时，强反馈是浪费。
 
-Implication: in an orchestration, the agent that turns audit findings into the next round (usually the root) needs as much capability and prompt design as the auditor. Investing only in a stricter verifier can leave a run holding accurate findings that nobody acts on well.
+推论：在一次编排中，把审计发现转化为下一轮的那个 Agent（通常是根）需要与审计者同等的能力和提示词设计投入。只投资更严的验证者，可能让运行攥着一堆没人会善加处理的准确发现。
 
-## Finding 3: one run is an anecdote
+## 发现 3：单次运行只是个例
 
-On one task, two workflow files and their rendered prompts were byte-identical and shared a generation seed. The first episode completed and won all six external judgments; the second halted under loop detection and lost all six. Workflow search more generally showed strong iterations followed by sharp regressions (claim-long-horizon-run-variance). MASS itself executes each champion workflow 18 times per task before selecting training trajectories.
+在某个任务上，两份工作流文件及其渲染出的提示词逐字节相同，且共享同一个生成种子。第一次运行完成并赢得全部六票外部评判；第二次被循环检测中止，输掉全部六票。更一般地，工作流搜索表现出"强迭代之后急剧回退"的模式（claim-long-horizon-run-variance）。MASS 本身在挑选训练轨迹之前，会把每个冠军工作流在每个任务上执行 18 次。
 
-Implication: judge a brief, or a change to a brief, across several runs. A single success does not validate it and a single failure does not refute it.
+推论：评判一份简报或一次简报修改，要跨多次运行。单次成功不能证实它，单次失败也不能证伪它。
 
-## Shared blind spots
+## 共享的盲区
 
-The paper motivates multi-agent organization with the observation that "generation, evaluation, and revision share the same learned prior, meaning that self-feedback can reinforce rather than correct errors." Its conclusion names shared blind spots as a safety concern for homogeneous loops, where a flawed result can be "produced, accepted as an improvement, and incorporated into the next model." MASS keeps measurement outside the loop: external judges score progress and their judgments are withheld from the optimizer and evaluator. The appendix also shows one supervised revision whose first diagnostic "incorrectly treats NaN correlations as passing," so a check can itself be faulty.
+论文这样论证多 Agent 组织的必要性："生成、评估与修订共享同一个习得的先验，这意味着自我反馈可能强化而非纠正错误。"其结论把共享盲区列为同质循环的安全问题：一个有缺陷的结果可能"被生产出来、被当作改进接受、并被并入下一个模型"。MASS 把度量放在循环之外：外部裁判给进度打分，其判断对优化器和评估器保密。附录还展示了一次有监督的修订，其首个诊断"错误地把 NaN 相关系数当作通过"，可见检查本身也可能出故障。
 
-Implication: fresh context removes the author's build history but not the model family's priors. For results that matter, keep at least one check outside the loop, and test each check on a known-bad input so a vacuous pass gets caught.
+推论：新上下文能去掉作者的构建历史，去不掉模型家族的先验。对重要的结果，至少保留一个循环之外的检查，并在已知错误的输入上测试每个检查，让空洞的"通过"现出原形。
 
-## What this reference does not claim
+## 本参考资料不做的主张
 
-- No ablation isolates contracts as a causal driver of task performance. The information-shift result describes the text of retained workflows.
-- Transfer was uneven. After two rounds, score per output token was 1.2-1.6x the base model on four research benchmarks but 0.96x on Terminal-Bench 2.0 and 0.94x on SWE-bench Verified.
-- The evolved thresholds quoted above are optimizer proposals for one finance task, not validated criteria.
+- 没有消融实验把契约隔离为任务表现的因果驱动因素。信息迁移结果描述的是被保留工作流的文本。
+- 迁移并不均衡。两轮之后，每输出 token 得分在四个研究基准上为基础模型的 1.2-1.6 倍，但在 Terminal-Bench 2.0 上为 0.96 倍、SWE-bench Verified 上为 0.94 倍。
+- 上文引用的演化阈值只是针对一个金融任务的优化器提案，不是经过验证的标准。

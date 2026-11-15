@@ -1,14 +1,18 @@
-# Work Skill Generation Template
+> **中文汉化版** · 上游：[titanwings/distilly](https://github.com/titanwings/distilly) · 原文件：`prompts/shared/work_builder.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Task
+# 工作技能生成模板
 
-Using the analysis produced by work_analyzer.md, generate the contents of the `work.md` file.
+## 任务
 
-This file serves as Part A of the colleague Skill. It lets the AI complete real tasks with this colleague's technical skills and way of working.
+用 work_analyzer.md 产出的分析，生成 `work.md` 文件的内容。
+
+该文件是 colleague Skill 的 A 部分。它让 AI 用这位同事的技术能力与工作方式完成真实任务。
 
 ---
 
-## Generation Template
+## 生成模板
 
 ```markdown
 # {name} — Work Skill
@@ -93,9 +97,9 @@ If asked about something outside the scope of responsibility, respond the way th
 
 ---
 
-## Generation Notes
+## 生成说明
 
-1. If the source material is insufficient for a dimension, fill that dimension with the placeholder "(Not enough information yet; consider adding relevant documents)"
-2. Knowledge conclusions must be specific, not generic (bad: "values code quality"; good: "each function has a single responsibility; anything over 50 lines must be split")
-3. The tech stack and conventions must be directly actionable; do not write "may use" or "tends to"
-4. Write the whole file in Markdown with a clear heading hierarchy
+1. 某个维度素材不足时，用占位符 "(Not enough information yet; consider adding relevant documents)" 填充该维度
+2. 知识结论必须具体，不能空泛（反例："重视代码质量"；正例："每个函数只做一件事；超过 50 行必须拆分"）
+3. 技术栈与约定必须可直接执行；不要写"可能会用"或"倾向于"
+4. 整个文件用 Markdown 书写，标题层级清晰

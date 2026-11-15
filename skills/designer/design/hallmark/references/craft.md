@@ -1,116 +1,120 @@
-# Craft
+> **中文汉化版** · 上游：[Nutlope/hallmark](https://github.com/Nutlope/hallmark) · 原文件：`skills/hallmark/references/craft.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Type, colour, surfaces, motion, copy, section openings, missing facts and finish, read on every page build, as numbers wherever a number exists. `layout.md` owns the canvas, the sizes, the sections and the hero; `imagery.md` owns the pictures; the theme supplies the material.
+# 工艺
 
-## 1. Type
+字排、颜色、表面、动效、文案、区块开头、缺失事实与收尾，每次页面构建都要读；凡是有数字的地方就给数字。`layout.md` 管画布、尺寸、区块和 hero；`imagery.md` 管图片；主题供给材料。
 
-At most two families, a display face and a body face (one family may do both). A third is one **outlier** with exactly one role (a wordmark, a headline figure, code; mono for code and measured figures counts as one); a second role makes it a third family in running use (37, F13). One family at different weights is one family.
+## 1. 字排
 
-- **Weights:** three at most across the page, display and body together (F19), picked as extremes: 300 beside 800, or 400 beside 700.
-- **Sizes:** on a theme build, the roles in `layout.md` § 2, built on a 1.25 ratio from a 16px body, plus a wordmark size if the theme names one; a custom build sets its own scale from the scaffold's (`direction.md` § Mechanics). Hierarchy past those comes from weight and colour.
-- **Display:** tracking -0.02 to -0.04em on a regular-width face, 0 to -0.015em on a condensed or very heavy one (two letters touching is a fault); line-height 1.0 to 1.15, tighter as it grows (1.2 reads as inherited; a mixed-case poster head may close to 0.92). An uppercase head that can wrap never goes under 1.0 (55a). A head is one weight, one style and one colour: one word set apart by italic, colour, weight or a highlight is the accented word (38i, 38iii); stress comes from a line break or a second line at a second size.
-- **Display size:** `--text-display` (84px at 1440); a theme may set 5.5rem, 6rem when display-heavy, 7rem for a single word. A poster-scale theme or shape (Manifesto, Marquee Hero, a Poster hero) sizes with the screen, `clamp(4rem, 10vw, 9rem)`, full size at 1440 and held at 1920 (Floor 14), while the fold still holds the headline, one sentence and the action. A wide face takes the poster scale a step down.
-- **Headline by length:** count the rendered `h1`: 20 characters or fewer, full display (a single word may reach 7rem); 21 to 50, display; 51 to 90, `--text-display-s` or split at the sense break with `<br>`; over 90, rewrite. A `<br>` goes only between phrases and is checked at 375, where it often lands badly; heads take `text-wrap: balance`, body copy `pretty`, so no head ends on a stub and no paragraph on one word (F26).
-- **Heading measure** rides on the element in `ch` (the scaffold sets `h1` 20ch, `h2` 30ch, `h3` 40ch; a head at display-s about 24ch), never on the heading group's wrapper.
-- **Body:** 16px minimum, line-height 1.5 to 1.65, measure 45 to 75ch (25); never all caps, never justified without hyphenation (F22), never tracked past 0.05em.
-- **Labels, captions, table heads, meta, tags, chips, nav links:** the body face a step smaller, sentence case (lowercase on a theme whose voice is lowercase), untracked (67). Mono only for code, a figure or a measurement, or when mono is the theme's material (64). Capitals belong to a wordmark and to a theme whose display voice is uppercase, where a control may follow at 0.04em or less.
-- **Required:** `font-display: swap`; a fallback of the same build (a grotesk to `system-ui`, a serif to Georgia), metric overrides only where published; `font-synthesis: none`, only the weights you use; `tabular-nums` on figures that compare (F6); `text-wrap: balance` on heads (F3) and `pretty` on body; curly quotes, a true ellipsis, a non-breaking space inside unit pairs (`10 MB`, `⌘ K`) in a proportional face.
-- **Wordmark:** may take another face than the body, and on tone-rich themes should (`fonts.md` § The wordmark); one family throughout only when the body voice is the brand (a letter, a manifesto, a long document).
+至多两个字体家族，一个展示字体加一个正文字体（一个家族可以兼任）。第三个只能是一个**例外者**，且恰好只有一个角色（字标、标题里的数字、代码；代码和计量数字用的 mono 算一个角色）；多一个角色它就成了常役的第三家族（37、F13）。同一家族的不同字重仍是一个家族。
 
-## 2. Colour
+- **字重：** 整页加起来至多三个，展示和正文合算（F19），按极端挑：300 配 800，或 400 配 700。
+- **字号：** 主题构建用 `layout.md` § 2 的角色，从 16px 正文按 1.25 比率搭出，主题点名字标尺寸就再加一档；自定义构建从脚手架的阶梯自定（`direction.md` § Mechanics）。再往上的层级靠字重和颜色。
+- **展示字：** 常规宽度字体 tracking -0.02 到 -0.04em，condensed 或极重的字体 0 到 -0.015em（两个字母相碰是故障）；line-height 1.0 到 1.15，越大越紧（1.2 读起来像继承默认；混合大小写的海报标题可以收到 0.92）。可能换行的大写标题绝不低于 1.0（55a）。一个标题一种字重、一种样式、一种颜色：一个词用斜体、颜色、字重或高亮单独拎出来，那就是"强调词"（38i、38iii）；强调靠换行，或靠第二行换一个字号。
+- **展示字号：** `--text-display`（1440 宽下 84px）；主题可以设 5.5rem，展示字主导时 6rem，单词标题 7rem。海报尺度的主题或形态（Manifesto、Marquee Hero、Poster hero）随屏幕定字号，`clamp(4rem, 10vw, 9rem)`，1440 达到全尺寸、1920 保持（Floor 14），同时首屏仍装得下标题、一句话和行动点。宽字体比海报尺度再降一档。
+- **标题按长度：** 数渲染出来的 `h1`：20 字符以内，全展示字号（单词可到 7rem）；21 到 50，展示字号；51 到 90，`--text-display-s` 或在语义断点用 `<br>` 拆行；超过 90，重写。`<br>` 只放在短语之间，并在 375 宽下检查，它常在那里落得很糟；标题用 `text-wrap: balance`，正文用 `pretty`，标题不以残词收尾，段落不剩一个词（F26）。
+- **标题行宽**挂在元素上，用 `ch`（脚手架给 `h1` 20ch、`h2` 30ch、`h3` 40ch；展示-s 的标题约 24ch），绝不挂在标题组的包裹层上。
+- **正文：** 16px 起步，line-height 1.5 到 1.65，行宽 45 到 75ch（25）；绝不全大写，不断词就不用两端对齐（F22），字距绝不超过 0.05em。
+- **标签、说明字幕、表头、meta、tags、chips、导航链接：** 正文字体小一档，句首大写（主题语气本身全小写就小写），不加字距（67）。Mono 只给代码、数字或计量，或者 mono 就是主题的材料（64）。全大写属于字标，以及展示语气就是大写的主题，那里控件可以跟到 0.04em 以内。
+- **必备项：** `font-display: swap`；后备字体同一血统（grotesk 配 `system-ui`，衬线配 Georgia），有公开度量覆写才覆写；`font-synthesis: none`，只用你实际用的字重；对比用的数字上 `tabular-nums`（F6）；标题上 `text-wrap: balance`（F3）、正文上 `pretty`；弯引号、真省略号、比例字体时成对单位之间用不换行空格（`10 MB`、`⌘ K`）。
+- **字标：** 可以用正文字体之外的另一款，tone-rich 的主题更该如此（`fonts.md` § The wordmark）；只有当正文语气就是品牌本身（一封信、一篇宣言、一份长文档）才全程单一家族。
 
-- **OKLCH everywhere.**
-- **Four layers.** Paper (light: L 92 to 98, chroma 0.005 to 0.015 toward the anchor hue; dark: L 12 to 18, 0.008 to 0.015). Ink (on light paper L 16 to 24, on dark L 88 to 96, tinted 0.005 to 0.014). Five to nine neutrals between them, each tinted 0.005 to 0.018 (22). One accent at chroma 0.12 to 0.22 with a paired `--color-accent-ink` (41). A focus colour on the accent's hue, chroma 0.18 to 0.22, L within 5% of the accent.
-- **Never a pure absolute** as a surface or an improvised value (7a, 7b); tint the greys toward the anchor.
-- **The accent is a signal, not a fill:** under 5% of any viewport under the default Restrained posture (23): an active nav item, a focus ring, a link underline on hover, the primary control, the one series a chart argues from.
-- **Postures,** declared in the stamp before code. **Restrained** (above). **Committed:** one colour carries 30 to 60% of the surface through `--color-field` or the paper family; the accent stays a signal. **Full palette:** three or four named roles (field, signal, seal, ink), each with a job and a footprint. **Drenched:** the surface is the colour; ink and rules derive from it. A declared surface colour is not accent footprint.
-- **Contrast:** body 4.5:1 (target 7:1) or APCA Lc 60; large text, icons, focus rings and field edges 3:1 or Lc 45 (40). Every rule that paints a dark surface swaps its text colour in the same rule (41); grey text never sits on a coloured surface.
-- **Bans:** gradients past three stops; purple-blue, purple-pink or cyan-on-dark anywhere (2a); glow shadows on dark, chromatic halos, spotlights (29); alpha as a colour's definition (alpha is for overlays and shadows); red and green as the only signal.
-- **Dark mode** is opt-in and derived, never inverted (`dark-mode.md`).
+## 2. 颜色
 
-## 3. Surfaces
+- **OKLCH 处处用。**
+- **四层。** Paper（浅色：L 92 到 98，chroma 0.005 到 0.015 偏向锚点色相；深色：L 12 到 18，0.008 到 0.015）。Ink（浅纸上 L 16 到 24，深纸上 L 88 到 96，tint 0.005 到 0.014）。两者之间五到九个中性色，各带 0.005 到 0.018 的 tint（22）。一个强调色 chroma 0.12 到 0.22，配一对 `--color-accent-ink`（41）。focus 色取强调色的色相，chroma 0.18 到 0.22，L 与强调色相差 5% 以内。
+- **绝不出现纯绝对值**当表面或临时凑的值（7a、7b）；灰色向锚点色 tint。
+- **强调色是信号，不是填色：** 默认 Restrained 姿态下，任何视口里占比低于 5%（23）：一个激活的导航项、一个 focus 环、悬停时的链接下划线、主控件、图表据以立论的那一条系列。
+- **姿态，** 在代码之前先写进印记。**Restrained**（如上）。**Committed：** 一种颜色经 `--color-field` 或纸色家族占住 30 到 60% 的表面；强调色仍是信号。**Full palette：** 三四个具名角色（field、signal、seal、ink），各有职责和地盘。**Drenched：** 表面就是颜色；ink 和线条由它派生。声明过的表面色不算强调色地盘。
+- **对比度：** 正文 4.5:1（目标 7:1）或 APCA Lc 60；大字、图标、focus 环和输入框边缘 3:1 或 Lc 45（40）。每条画深色表面的规则在同一条里换掉文字颜色（41）；灰字绝不落在有色表面上。
+- **禁项：** 超过三站的渐变；紫蓝、紫粉或暗底青色，任何地方都不要（2a）；暗底上的光晕阴影、彩色光斑、聚光灯（29）；把 alpha 当颜色的定义（alpha 只用于浮层和阴影）；红与绿当唯一信号。
+- **深色模式**是可选项且是派生的，绝不是反相（`dark-mode.md`）。
 
-- **A primary axis:** left-biased, right-biased, top-heavy or bottom-weighted. Centre-biased is a default, not a choice (6b).
-- **Spacing is a scale:** `--space-3xs` 2px · `2xs` 4 · `xs` 8 · `sm` 12 · `md` 16 · `lg` 24 · `xl` 40 · `2xl` 64 · `3xl` 96 · `4xl` 144. A raw length where a token exists fails (24a); at most three optical nudges off the scale (24b). `gap` for siblings, `margin` only to break the flow.
-- **Grids:** CSS Grid for the page, Flexbox inside components; flex children that must shrink take `min-width: 0`, icons and images `flex-shrink: 0`. No empty cell and no orphan on a last row: change the count (F20). Grids hold their column count above 1440, and `vw` visuals carry a `max-width` (44d).
-- **The surface ladder:** whitespace, then a hairline (1px `--color-rule`), then a tinted well (`--color-paper-2` or `-3`, no border), then a card (a border or a shadow, never both, F24), kept for content that is independently interactive or of a different kind. Never white cards on a tinted page, a card in a card (4), or a bordered box inside a well; climb different rungs at different seams (9, F7). Sibling stats part with a top or vertical hairline: no leading padding on the first, no trailing on the last, the pattern reset wherever the column count changes.
-- **Depth is weight and scale.** One shadow at most: `0 1px 2px oklch(20% 0.01 <hue> / 0.05)` or `0 0 0 1px oklch(30% 0.01 <hue> / 0.06)`. Elevated surfaces are never darker than their canvas. Eight z levels: base 1, raised 10, dropdown 100, sticky 200, sticky-nav 300, modal 400, toast 500, tooltip 600 (56).
-- **Clipping:** `overflow-x: clip` keeps `sticky` and `fixed` working where `hidden` breaks them (34); the section holding a deliberate overflow keeps `overflow: visible`.
-- **Radii:** one per level, concentric (`inner = outer - padding`, at least 2px); image radii `min(1vw, var(--radius-card))`.
+## 3. 表面
 
-## 4. The hero's motion
+- **一条主轴：** 偏左、偏右、头重或脚沉。居中是默认，不算选择（6b）。
+- **间距是一把尺：** `--space-3xs` 2px · `2xs` 4 · `xs` 8 · `sm` 12 · `md` 16 · `lg` 24 · `xl` 40 · `2xl` 64 · `3xl` 96 · `4xl` 144。有 token 可用却写裸长度即不通过（24a）；偏离这把尺的光学校准至多三处（24b）。兄弟之间用 `gap`，`margin` 只用于打断流。
+- **网格：** 页面用 CSS Grid，组件内部用 Flexbox；必须能收缩的 flex 子项加 `min-width: 0`，图标和图片 `flex-shrink: 0`。不留空单元格，末行不留孤儿：改数量（F20）。网格在 1440 以上守住列数，`vw` 视觉元素带 `max-width`（44d）。
+- **表面阶梯：** 先留白，然后一根发丝线（1px `--color-rule`），然后一块带色的凹底（`--color-paper-2` 或 `-3`，无边框），然后才是卡片（边框或阴影二选一，绝不同时，F24），卡片只留给可独立交互或性质不同的内容。绝不往带色页面上放白卡片、卡片里套卡片（4）、凹底里放描边盒子；不同接缝爬不同档（9、F7）。并列的统计之间用顶部或竖向发丝线分隔：第一块不留前导 padding，最后一块不留尾随，列数一变就重置这个模式。
+- **深度靠字重和尺度。** 至多一个阴影：`0 1px 2px oklch(20% 0.01 <hue> / 0.05)` 或 `0 0 0 1px oklch(30% 0.01 <hue> / 0.06)`。抬升的表面绝不比画布更暗。八级 z：base 1、raised 10、dropdown 100、sticky 200、sticky-nav 300、modal 400、toast 500、tooltip 600（56）。
+- **裁剪：** `overflow-x: clip` 在 `hidden` 会弄坏 `sticky` 和 `fixed` 的地方保住它们（34）；故意溢出的区块保持 `overflow: visible`。
+- **圆角：** 每级一个，同心（`inner = outer - padding`，至少 2px）；图片圆角 `min(1vw, var(--radius-card))`。
 
-Size, posture and composition are `layout.md` § 6; what it shows is `imagery.md` § 1.
+## 4. hero 的动效
 
-- **Entrance:** one settle of 0.4 to 0.8s including its stagger, from an already-visible default; a fade with an 8px rise is one motion. Never a fade, a sweep and a scale on one element; never bounce; never a starfield, a mouse parallax or an auto-rotating carousel.
-- **Before it ships,** the hero's visual shows the real thing, is big, keeps the accent under its footprint and weighs under 2 MB with a reduced-motion fallback; any no changes the visual, never the copy.
+尺寸、姿态和构图在 `layout.md` § 6；它展示什么在 `imagery.md` § 1。
 
-## 5. Motion
+- **进场：** 一次 0.4 到 0.8s 的落定，含它的 stagger，从本就可见的默认态出发；8px 上浮的淡入算一个动作。绝不淡入、扫过、缩放三件事叠在一个元素上；绝不弹跳；绝不星空、鼠标视差或自动轮播。
+- **上线之前，** hero 的视觉是真实内容、够大、强调色守住自己的地盘、2 MB 以下，带 reduced-motion 后备；任何一项答"否"，改的都是视觉，绝不是文案。
 
-- **Who decides:** the theme's Motion section; a shape's reveal runs only where the theme allows one, the genre's default only where the theme is silent.
-- **Only `transform` and `opacity`** (10a); blur, `clip-path`, mask and shadow may join when they stay smooth on the element alone.
-- **Easings:** `--ease-out` for arrivals, `--ease-in` for exits, `--ease-in-out` for toggles; never the browser's `ease`, `linear` only for progress and scrubbing, no overshoot on UI state (12).
-- **Durations:** `--dur-micro` 120ms (press, tick, colour), `--dur-short` 220ms (hover, tooltip, menu), `--dur-long` 420ms (modal, drawer, accordion, reveal). Exits at 60 to 75% of the enter. Stagger 30 to 50ms between rows, 60 to 100ms between blocks, 500ms in all at most, once.
-- **One reveal per page,** staggered by `--i`, 0.4 to 0.8s in all, content visible without it (62; `patterns.md` § One reveal). Under reduced motion every reveal shows its end state at once and the render tier shoots that way; what must still run (a loader, a 150ms fade) takes `.keep-motion`.
-- **Scroll:** IntersectionObserver for reveals and threshold states; a passive, frame-throttled scroll listener only where direction matters; scroll-scrubbed motion only as one pattern from `scroll-choreography.md` (F8).
-- **State:** hover is one signal (11) that raises contrast: a colour step, or a 1px lift at micro on a control that keeps its colour. Tooltips wait 800 to 1000ms on hover, 0 on focus (17); focus rings never animate (15); menus, modals and accordions follow `microinteractions.md`.
-- **Never:** parallax, custom cursors, cursor followers, a marquee that will not pause on hover and focus (18), `will-change` on a whole class, a pulsing dot, a caret blinking past five beats, an infinite loop other than a loader, one small loop of 4s or less, or one ambient loop the theme declares (8s or slower). Every loop stops under reduced motion and off-screen, and one past 5 seconds carries a visible pause control (`patterns.md` § A loop that can pause).
+## 5. 动效
 
-## 6. Copy
+- **谁说了算：** 主题的 Motion 一节；形态的 reveal 只放在主题允许的地方，体裁默认只在主题沉默时用。
+- **只动 `transform` 和 `opacity`**（10a）；blur、`clip-path`、mask 和 shadow 在元素自身保持顺滑时可以加入。
+- **缓动：** 到场用 `--ease-out`，离场用 `--ease-in`，切换用 `--ease-in-out`；绝不用浏览器的 `ease`，`linear` 只给进度和 scrubbing，UI 状态不做过冲（12）。
+- **时长：** `--dur-micro` 120ms（按压、跳动、变色），`--dur-short` 220ms（hover、tooltip、菜单），`--dur-long` 420ms（modal、drawer、accordion、reveal）。离场取进场的 60 到 75%。行间 stagger 30 到 50ms，块间 60 到 100ms，整页 500ms 封顶，只做一次。
+- **每页一次 reveal，** 按 `--i` 错开，总长 0.4 到 0.8s，没有它内容也可见（62；`patterns.md` § One reveal）。reduced motion 下每个 reveal 直接呈现终态，渲染档位也照此拍；必须继续跑的（loader、150ms 淡入）加 `.keep-motion`。
+- **滚动：** reveal 和阈值状态用 IntersectionObserver；被动、按帧节流的滚动监听只在需要方向时用；滚动擦洗的动效只作为 `scroll-choreography.md` 里的一种模式（F8）。
+- **状态：** hover 是一个信号（11），它抬高对比度：一次颜色步进，或控件保持原色时 1px 的微升。Tooltip 悬停等 800 到 1000ms，focus 上 0（17）；focus 环绝不动画（15）；菜单、modal 和 accordion 按 `microinteractions.md`。
+- **绝不：** 视差、自定义光标、光标跟随、hover 和 focus 上不暂停的 marquee（18）、整类上加 `will-change`、脉动的点、闪烁超过五拍的插入符、loader 之外的无限循环、4s 以内的小循环，或主题声明的一个环境循环（8s 或更慢）。每个循环在 reduced motion 和离屏时都停，超过 5 秒的循环带一个可见的暂停控件（`patterns.md` § A loop that can pause）。
 
-Write as the owner would say it across a counter: the prompt's own nouns, a real place, a number the user gave, the verb a customer would use.
+## 6. 文案
 
-- **The swap test:** a head that would work on a competitor's page is rewritten with a noun only this prompt has. *Software that works for you* fits anyone; *Invoices that chase themselves* fits one product.
-- **Three tests a line:** can the reader picture it, could it be proven false, could only this business say it. Specific beats clever: the place, the hour, the material, the result (*Sourdough at four, gone by ten*); a pun is a second-draft move, once a page at most.
-- **The subhead** says what it is, for whom and the one difference, in twelve words or fewer. **Section heads** say what the visitor will see or get (*Three loaves a morning*), never a category label (*Features*, *Our story*, *Why us*); a staged shape's one-word stage names are the exception.
-- **Rhythm:** a short line beside a longer one; verbs over adjectives; one idea a sentence; no triads of adjectives (*fast, simple, powerful*).
-- **Budget** (58): headlines seven words or fewer, section heads six or fewer; section intros one line; paragraphs two short sentences; lists four items of a three-word label and a ten-word line (five for steps that cannot merge; past that, a table); tables five rows; a set the user gave keeps its true count; 450 visible words a page at most. Read only the headings and the hero: if they tell the story, the rest is the right length.
-- **Refuse the generated voice:** everything gate 19 names, plus *Reimagine*, *Whether you're X or Y*, *It's not just X, it's Y*, *Say goodbye to*, *game-changer*, *journey*, a colon title (*Focus: the app for*), *Click here*, *Enter your email below*, a version string in marketing copy.
-- **Buttons:** the verb of the action (*Book a fitting*); *Continue* only as a flow's second step. **Errors:** what happened, why if known, what to do; no *Oops*, no exclamation marks. **Empty states:** what is empty, why it matters, one action. **Loading:** a spinner after 150 to 300ms, shown at least 300ms, beside the label; *Loading…* past 2s.
-- **Sample data** inside a built product uses `example.com`, the prompt's field names and values that read as samples (*Example Kitchen*, round amounts), never a figure a visitor could take as a claim (46a).
-- **Punctuation:** curly quotes, `…`, a true apostrophe, no `--` and no em or en dash (a comma, a colon, a full stop or parentheses instead), a non-breaking space before units. A full stop on every standalone sentence, none on list items.
+像柜台后的主人那样说话：提示词自己的名词，一个真实地点，用户给的一个数字，顾客会用的动词。
 
-## 7. Opening a section
+- **交换测试：** 一条能原封不动放上竞品页面的标题，要重写，塞进一个只有本提示词才有的名词。*Software that works for you* 谁都能用；*Invoices that chase themselves* 只属于一个产品。
+- **一行三问：** 读者能想象出画面吗，能被证伪吗，是不是只有这家生意说得出。具体胜过聪明：地点、钟点、材料、结果（*Sourdough at four, gone by ten*）；双关是二稿手段，一页至多一次。
+- **副标题**说清它是什么、给谁、那一个差别，十二个词以内。**区块标题**说访客将看到或得到什么（*Three loaves a morning*），绝不用类目标签（*Features*、*Our story*、*Why us*）；分幕形态的单词幕名是例外。
+- **节奏：** 短行挨着长行；动词多于形容词；一句话一个想法；不用三连形容词（*fast, simple, powerful*）。
+- **预算**（58）：标题七个词以内，区块标题六个以内；区块引言一行；段落两个短句；列表四项，每项三个词的标签加十个词的一行（不可合并的步骤给五项；再超就上表格）；表格五行；用户给的集合保留真实数量；每页可见词 450 个封顶。只读标题和 hero：如果它们把故事讲完了，剩下的长度就是对的。
+- **拒绝生成腔：** 关卡 19 点名的一切，外加 *Reimagine*、*Whether you're X or Y*、*It's not just X, it's Y*、*Say goodbye to*、*game-changer*、*journey*、冒号式标题（*Focus: the app for*）、*Click here*、*Enter your email below*、营销文案里的版本号字符串。
+- **按钮：** 写动作的动词（*Book a fitting*）；*Continue* 只当流程的第二步。**错误信息：** 发生了什么、为何（知道就说）、怎么办；不说 *Oops*，不用感叹号。**空状态：** 什么空了、为什么重要、一个动作。**加载：** 150 到 300ms 后出 spinner，至少展示 300ms，放在标签旁边；超过 2s 显示 *Loading…*。
+- **示例数据**在成品里用 `example.com`、提示词自己的字段名，以及一眼即样品的值（*Example Kitchen*、整数金额），绝不用访客可能当真的数字（46a）。
+- **标点：** 弯引号、`…`、真撇号，不用 `--`、不用 em 或 en dash（改用逗号、冒号、句号或括号），单位前用不换行空格。独立句句末有句号，列表项不加。
 
-The reflex is a small tracked-caps label above the heading, and the reflex is the tell (54). Ask *what does the reader not yet know?* If nothing, open with nothing. If something, it rides on a fact, a destination or an identifier, never on a name for what comes next. Twelve ways in:
+## 7. 区块开头
 
-1. **Nothing:** air above, the heading flush.
-2. **The heading announces itself:** the subject in its first two words. Usually the best move.
-3. **A lead-in inside the paragraph** in a heavier weight, never on its own line.
-4. **A drop cap,** one a page, first paragraph only.
-5. **A rule that does more than rule:** hairline, fleuron, double rule, colour edge or pure gap; one divider language, varied in weight and placement from seam to seam (9).
-6. **A numeral at graphic scale,** one a page at most and never in the hero by habit: `clamp(6rem, 16vw, 14rem)`, only when the number is real and is the point (an issue, a year, a price that is the offer).
-7. **A real `<ol>`** with `counter()` when the sequence is genuine.
-8. **A caption below** the content instead of a label above it.
-9. **Marginalia** in the outer margin beside the body.
-10. **A change of paper:** the band's edge is the break.
-11. **A running head or folio:** continuous chrome at the page edge, legal because it persists rather than announces.
-12. **Persistence:** the heading stays in view while its content scrolls beneath.
+本能反应是标题上方一个小号带字距的大写标签，而本能反应就是破绽（54）。问：*读者还不知道什么？* 没有，就什么都不加。有，就让它落在事实、目的地或标识符上，绝不落在"接下来是什么"的名字上。十二种开场：
 
-Two moves may share a section; three is noise. Use one opening, or two alternating, rotated against the log. Legal because each names something present: a `<figcaption>`, a `<th>`, a `<label>`, a `<legend>`, a nav or tab label, a byline or `<time>`, a unit after its figure, a code block's real filename, a live `role="status"` chip, one linked announcement that goes somewhere real, a plan name (which usually wants to be the heading).
+1. **什么都不加：** 上方留白，标题齐平。
+2. **标题自己报门：** 主题出现在头两个词里。通常最好的一手。
+3. **段内引子：** 加重字重的引导语嵌在段落里，绝不独立成行。
+4. **首字下沉：** 一页一个，只在第一段。
+5. **一条不止于分隔的线：** 发丝线、花饰、双线、色边或纯留白；一种分隔语言，重量和位置逐缝变化（9）。
+6. **图形尺度的数字：** 一页至多一个，绝不习惯性放进 hero：`clamp(6rem, 16vw, 14rem)`，只在数字真实且是重点时（一期号、一个年份、一个就是卖点的价格）。
+7. **真 `<ol>`** 配 `counter()`，当序列是真的。
+8. **说明字幕放在内容之下**，而不是标签放在其上。
+9. **旁注**放在外侧边距、正文旁边。
+10. **换纸：** 色带的边缘就是分隔。
+11. **页眉或页码：** 页缘的连续 chrome，合法因为它持续存在而不宣告。
+12. **持续：** 内容从标题下方滚过时标题留在视野里。
 
-## 8. Missing facts
+两个手法可以同区共用；三个就是噪音。用一种开场，或两种交替，并对照日志轮换。合法因为每个都点名在场的东西：`<figcaption>`、`<th>`、`<label>`、`<legend>`、导航或 tab 标签、署名或 `<time>`、数字后面的单位、代码块的真实文件名、活的 `role="status"` chip、一条通向真实去向的链接公告、一个计划名（它通常更想当标题）。
 
-Pictures, slots and the built product are `imagery.md` § 1 to § 4.
+## 8. 缺失事实
 
-- **A missing fact** (a venue, a date, a price) is a text slot, never an invented value: `<span class="fill" data-fill="venue">Venue to be announced</span>` in `--color-muted` inside a dashed outline (`patterns.md` § A fact the prompt did not give), so it reads as a blank to fill, never as a link or selected text; two a page at most, each in the handoff. When the job's anatomy asks for more facts than the prompt gave (hours, an address, dates, prices), slot the two a visitor needs to act and let the rest wait in the handoff. Only a fact the page cannot do without takes a slot: a row, a column or a line that would hold nothing but a missing fact is cut, never announced.
-- **A face the page is about** that the user has not supplied is a font slot: the display token names it first, a free face of the same build stands in and says so in one caption (stamp `waive 37`), and the handoff asks for the files.
-- **A section the user named but gave nothing for** is its heading, one line on what will go there and one text slot, or it merges into a neighbour; never a block of pending rows.
-- **A link whose URL the prompt does not give** points at the section of this page that does the most of it (`#lookbook`); the handoff names the URL it needs. Never an invented route.
-- **A form whose endpoint the prompt does not give** carries an empty `data-endpoint`, says plainly that nothing was sent, and never prints a success state (70; `patterns.md` § A form that posts nowhere yet).
+图片、slot 和成品是 `imagery.md` § 1 到 § 4。
 
-## 9. Finish
+- **一个缺失事实**（场地、日期、价格）是文本 slot，绝不是编造的值：`<span class="fill" data-fill="venue">Venue to be announced</span>`，用 `--color-muted`、套虚线描边（`patterns.md` § A fact the prompt did not give），让它读作待填的空格，绝不读作链接或选中文字；一页至多两个，每个都写进交接说明。当这份活的解剖要求的事实多于提示词给的（营业时间、地址、日期、价格），把访客行动需要的两个做成 slot，其余等交接。只有页面离不开的事实才配 slot：一行、一列或一句里除了缺失事实什么都没有的，直接删掉，绝不宣告。
+- **页面要讲的那个字体**用户没给，就是字体 slot：展示 token 先写它的名字，一款同血统的免费字体顶上并用一句说明字幕讲明（印记 `waive 37`），交接说明里要文件。
+- **用户点名却什么都没给的区块**就是它的标题、一句"这里将放什么"和一个文本 slot，或者并进邻居；绝不做一排待填行。
+- **提示词没给 URL 的链接**指向本页里最干这件事的区块（`#lookbook`）；交接说明里写需要什么 URL。绝不发明路由。
+- **提示词没给 endpoint 的表单**带一个空的 `data-endpoint`，明说什么都没发送，绝不打印成功状态（70；`patterns.md` § A form that posts nowhere yet）。
 
-The last 2%; sloplint's F-checks (`gates.md` § 5) report most of it.
+## 9. 收尾
 
-- **Controls:** one filled primary a page, dialogs counted as their own page (F4); secondaries outlined or typographic, never louder than the primary; nav actions quieter than the hero's. Marketing controls 44 to 52px, app UI 32 to 40px with a 44px hit target (48px on coarse pointers) (39b); two button sizes at most, 6px or more apart; an input matches the button beside it (39a). Delete takes a secondary style unless deleting is the page's one action.
-- **Inputs:** constant border width; the focus ring an `outline` (inset on inputs), never a border change; disabled by `opacity: 0.55`, `cursor: not-allowed` and the native attribute together (39a); `min-height: 1lh` reserved for helper text (F14); 16px on mobile; a `name`, `autocomplete`, the right `type` and `inputmode`, a `<label>` or `aria-label` on every field; paste never blocked; submit enabled until the request starts, and a failed submit focuses the first invalid field; an explicit `type` on every `<button>`. Full recipe: `interaction-and-states.md`.
-- **Testimonials** only when the user supplied them (46a): the attribution bottom-aligned, the avatar the real person or nothing; hanging punctuation on pull quotes.
-- **Pricing:** emphasise a tier with its button and a word, never a different card colour; buttons aligned across tiers at the bottom; a taller featured tier is a grid sibling on explicit rows, never negative margins.
-- **Tables:** sentence-case heads that never wrap, horizontal rules only, no outer border or card, full width. On a phone the column that names the row and the one that acts on it stay in view (F25): restack each row as a labelled block, or pin the first column.
-- **Responsive:** body-adjacent UI (meta, nav links, controls) larger on a phone, stepping down at 60rem; body never under 16px; every desktop sidebar or filter column collapses into a menu or disclosure; container queries for widgets whose layout depends on their box.
-- **Browser surfaces** (F16): keep what `base.css` themes (selection, caret, scrollbar, focus ring, underline).
-- **Nav:** one line, 56 to 80px; a sticky one taller than the scaffold's `scroll-padding-top` raises it. Text links in one weight across states (state is a colour or a soft background, never a primary fill); a tab row scrolls sideways rather than wrapping; under 60rem, links that no longer fit go behind a menu; the logo links home with an `aria-label`.
-- **The document:** `lang`, a `<title>` in the page's own words, a one-sentence meta description (F23); heading levels step one at a time (F21); every `<img>` has `width`, `height` and a file that exists (76).
-- **Prose pages:** line-height 1.65 to 1.75, a measure of 60 to 75ch (25). **Stats:** a title that never wraps, no icon. **Features and metadata** are a `<dl>`, the `<dt>` one weight heavier. **A one-field form:** 20rem wide, never an input and a button sharing one border.
-- **Assets:** `alt=""` when the subject is named beside the image; footer links at body weight; logo rows split evenly (3 + 3, never 5 + 1).
+最后那 2%；sloplint 的 F 检查（`gates.md` § 5）报出其中的大部分。
+
+- **控件：** 一页一个实心主按钮，dialog 各算自己的一页（F4）；次级用描边或字排式，绝不比主按钮更响；导航动作比 hero 的安静。营销控件 44 到 52px，应用 UI 32 到 40px、命中区 44px（粗指针 48px）（39b）；按钮尺寸至多两档，相差 6px 以上；输入框与旁边的按钮同高（39a）。删除用次级样式，除非删除就是本页唯一的动作。
+- **输入框：** 边框宽度恒定；focus 环用 `outline`（输入框上 inset），绝不改边框；禁用由 `opacity: 0.55`、`cursor: not-allowed` 和原生属性一起完成（39a）；`min-height: 1lh` 留给辅助文字（F14）；移动端 16px；每个字段有 `name`、`autocomplete`、正确的 `type` 和 `inputmode`、`<label>` 或 `aria-label`；粘贴绝不被拦；提交按钮保持可用直到请求开始，失败的提交聚焦第一个无效字段；每个 `<button>` 写明 `type`。完整配方：`interaction-and-states.md`。
+- **推荐语**只在用户给了的时候用（46a）：署名底对齐，头像是真人或没有；引文提行做悬挂标点。
+- **定价：** 突出一档靠它的按钮和一个词，绝不靠另一种卡片颜色；按钮跨档在底部对齐；加高的主打档是显式行上的网格兄弟，绝不用负 margin。
+- **表格：** 表头句首大写且绝不换行，只有横向线，没有外框或卡片，全宽。手机上，给行命名的列和对行操作的列留在视野里（F25）：把每行重排成带标签的块，或钉住第一列。
+- **响应式：** 正文旁边的 UI（meta、导航链接、控件）在手机上更大，60rem 以下降档；正文绝不低于 16px；每个桌面侧栏或筛选列折成菜单或展开件；布局取决于自身盒子的挂件用容器查询。
+- **浏览器表面**（F16）：保留 `base.css` 主题化的那些（选区、插入符、滚动条、focus 环、下划线）。
+- **导航：** 一行，56 到 80px；吸顶导航比脚手架的 `scroll-padding-top` 高时把它抬高。文字链接各状态一种字重（状态用颜色或淡背景表达，绝不用实心主色填充）；tab 行横向滚动而不是换行；60rem 以下装不下的链接收进菜单；logo 链回首页带 `aria-label`。
+- **文档：** `lang`、用页面自己的话写的 `<title>`、一句 meta description（F23）；标题层级逐级走（F21）；每个 `<img>` 带 `width`、`height` 和一个真实存在的文件（76）。
+- **散文页：** line-height 1.65 到 1.75，行宽 60 到 75ch（25）。**统计：** 标题绝不换行，不带图标。**功能与元数据**用 `<dl>`，`<dt>` 重一档字重。**单字段表单：** 20rem 宽，绝不让输入框和按钮共用一条边。
+- **素材：** 主体已在图旁写出时 `alt=""`；页脚链接用正文字重；logo 行均分（3 + 3，绝不 5 + 1）。

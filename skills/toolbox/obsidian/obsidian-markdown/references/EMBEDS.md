@@ -1,6 +1,10 @@
-# Embeds Reference
+> **中文汉化版** · 上游：[kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) · 原文件：`skills/obsidian-markdown/references/EMBEDS.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Embed Notes
+# 嵌入参考
+
+## 嵌入笔记
 
 ```markdown
 ![[Note Name]]
@@ -8,7 +12,7 @@
 ![[Note Name#^block-id]]
 ```
 
-## Embed Images
+## 嵌入图片
 
 ```markdown
 ![[image.png]]
@@ -16,21 +20,21 @@
 ![[image.png|300]]        Width only (maintains aspect ratio)
 ```
 
-## External Images
+## 外部图片
 
 ```markdown
 ![Alt text](https://example.com/image.png)
 ![Alt text|300](https://example.com/image.png)
 ```
 
-## Embed Audio
+## 嵌入音频
 
 ```markdown
 ![[audio.mp3]]
 ![[audio.ogg]]
 ```
 
-## Embed PDF
+## 嵌入 PDF
 
 ```markdown
 ![[document.pdf]]
@@ -38,20 +42,20 @@
 ![[document.pdf#height=400]]
 ```
 
-## Embed Bases
+## 嵌入 Bases
 
 ```markdown
 ![[BaseFile.base]]
 ![[BaseFile.base#View Name]]
 ```
 
-## Embed Lists
+## 嵌入列表
 
 ```markdown
 ![[Note#^list-id]]
 ```
 
-Where the list has a block ID:
+当列表带有块 ID 时：
 
 ```markdown
 - Item 1
@@ -61,7 +65,7 @@ Where the list has a block ID:
 ^list-id
 ```
 
-## Embed Search Results
+## 嵌入搜索结果
 
 ````markdown
 ```query

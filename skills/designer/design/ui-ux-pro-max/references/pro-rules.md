@@ -1,117 +1,121 @@
-# Common Rules for Professional UI + Pre-Delivery Checklist
+> **中文汉化版** · 上游：[nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · 原文件：`.claude/skills/ui-ux-pro-max/references/pro-rules.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Load this file before final delivery of native/mobile app UI (iOS/Android/React Native/Flutter), or when the user reports the UI "doesn't look professional" and the cause isn't obvious from the priority table in SKILL.md.
+# 专业 UI 通用规则 + 交付前检查清单
 
-**Scope notice:** everything below targets native/mobile app UI. For web/desktop interaction patterns, use `references/quick-reference.md` (stack-agnostic) instead — these tables assume touch targets, safe areas, and platform gesture conventions that don't apply 1:1 to desktop web.
+在最终交付原生/移动应用 UI（iOS/Android/React Native/Flutter）之前加载本文件；或当用户反馈 UI"看起来不专业"、而原因无法从 SKILL.md 的优先级表直接看出时加载。
 
-These are frequently overlooked issues that make UI look unprofessional.
+**范围说明：** 以下全部针对原生/移动应用 UI。Web/桌面交互模式请改用 `references/quick-reference.md`（跨技术栈通用）：这些表格假设了触控目标、安全区和平台手势惯例，它们不会 1:1 适用于桌面 Web。
 
-## Icons & Visual Elements
+这些是常被忽视、却让 UI 显得不专业的问题。
 
-| Rule | Standard | Avoid | Why It Matters |
+## 图标与视觉元素
+
+| 规则 | 标准 | 避免 | 为什么重要 |
 |------|----------|--------|----------------|
-| **No Emoji as Structural Icons** | Use vector-based icons (e.g., Lucide, react-native-vector-icons, @expo/vector-icons). | Using emojis (🎨 🚀 ⚙️) for navigation, settings, or system controls. | Emojis are font-dependent, inconsistent across platforms, and cannot be controlled via design tokens. |
-| **Vector-Only Assets** | Use SVG or platform vector icons that scale cleanly and support theming. | Raster PNG icons that blur or pixelate. | Ensures scalability, crisp rendering, and dark/light mode adaptability. |
-| **Contextual Semantics** | Choose semantics from use, not glyph: hide decorative icons beside visible text from the accessibility tree; give meaningful standalone icons a text alternative; give icon controls an accessible name and expose selected/pressed/expanded state when applicable. | Treating one icon name as permanently decorative, meaningful, or interactive. | The same glyph can serve different purposes in different components. |
-| **Stable Interaction States** | Use color, opacity, or elevation transitions for press states without changing layout bounds. | Layout-shifting transforms that move surrounding content or trigger visual jitter. | Prevents unstable interactions and preserves smooth motion/perceived quality on mobile. |
-| **Correct Brand Logos** | Use official brand assets and follow their usage guidelines (spacing, color, clear space). | Guessing logo paths, recoloring unofficially, or modifying proportions. | Prevents brand misuse and ensures legal/platform compliance. |
-| **Consistent Icon Sizing** | Define icon sizes as design tokens (e.g., icon-sm, icon-md = 24pt, icon-lg). | Mixing arbitrary values like 20pt / 24pt / 28pt randomly. | Maintains rhythm and visual hierarchy across the interface. |
-| **Stroke Consistency** | Use a consistent stroke width within the same visual layer (e.g., 1.5px or 2px). | Mixing thick and thin stroke styles arbitrarily. | Inconsistent strokes reduce perceived polish and cohesion. |
-| **Filled vs Outline Discipline** | Use one icon style per hierarchy level. | Mixing filled and outline icons at the same hierarchy level. | Maintains semantic clarity and stylistic coherence. |
-| **Touch Target Minimum** | Use at least 44pt on iOS and 48dp on Android; expand the hit area when the visual icon is smaller. | Small icons without expanded tap area, or one unit reused across platforms. | Matches platform-specific target guidance. |
-| **Icon Alignment** | Align icons to text baseline and maintain consistent padding. | Misaligned icons or inconsistent spacing around them. | Prevents subtle visual imbalance that reduces perceived quality. |
-| **Icon Contrast** | Meaningful icons and control boundaries need at least 3:1 against adjacent colors; decorative icons must not carry information. | Low-contrast icons that carry meaning or state. | Applies the non-text contrast role instead of a text-size rule. |
+| **不用 emoji 当结构性图标** | 用矢量图标（如 Lucide、react-native-vector-icons、@expo/vector-icons）。 | 用 emoji（🎨 🚀 ⚙️）做导航、设置或系统控件。 | emoji 依赖字体、跨平台不一致，且无法用 design token 控制。 |
+| **仅矢量资产** | 用可干净缩放、支持主题化的 SVG 或平台矢量图标。 | 放大就糊或出锯齿的位图 PNG 图标。 | 保证可缩放、渲染锐利、深浅色模式自适应。 |
+| **语境语义** | 语义取自用途，不取自图形：旁边有可见文本的装饰性图标要从无障碍树隐藏；有意义的独立图标要给文本替代；图标控件要有可访问名称，适用时暴露选中/按下/展开状态。 | 把一个图标名永久当成装饰性、有意义或可交互的。 | 同一图形在不同组件里可以承担不同用途。 |
+| **稳定的交互状态** | 按压态用颜色、透明度或高度过渡，不改变布局边界。 | 会挪动周围内容或引发视觉抖动的位移式 transform。 | 避免交互不稳，保住移动端的流畅感和品质感。 |
+| **正确的品牌 logo** | 用官方品牌资产并遵守其使用规范（间距、颜色、留白）。 | 猜 logo 路径、私自改色、改比例。 | 防止品牌滥用，保证法律/平台合规。 |
+| **图标尺寸一致** | 把图标尺寸定义为 design token（如 icon-sm、icon-md = 24pt、icon-lg）。 | 随意混用 20pt / 24pt / 28pt 之类的值。 | 保住界面的节奏与视觉层级。 |
+| **描边一致** | 同一视觉层内用一致的描边宽度（如 1.5px 或 2px）。 | 随意混用粗细描边。 | 描边不一削弱精致感与整体感。 |
+| **实心 vs 描边的纪律** | 每个层级只用一种图标风格。 | 同一层级混用实心与描边图标。 | 保住语义清晰与风格连贯。 |
+| **触控目标下限** | iOS 至少 44pt、Android 至少 48dp；视觉图标更小时扩大命中区。 | 小图标不带扩大的点按区，或跨平台复用同一个值。 | 对齐平台专属的目标尺寸指引。 |
+| **图标对齐** | 图标对齐文本基线，保持一致的 padding。 | 图标错位或周围间距不一。 | 避免削弱品质感的细微失衡。 |
+| **图标对比度** | 有意义的图标和控件边界对相邻颜色至少 3:1；装饰性图标不得携带信息。 | 承载含义或状态的低对比图标。 | 这里适用的是非文本对比角色，不是字号规则。 |
 
-## Interaction (App)
+## 交互（应用）
 
-| Rule | Do | Don't |
+| 规则 | 要 | 不要 |
 |------|----|----- |
-| **Tap feedback** | Provide clear pressed feedback (ripple/opacity/elevation) within 80-150ms | No visual response on tap |
-| **Animation timing** | Use shared tokens chosen for distance, complexity, platform, and user context | One duration/easing copied to every transition |
-| **Accessibility focus** | Ensure screen reader focus order matches visual order and labels are descriptive | Unlabeled controls or confusing focus traversal |
-| **Disabled state clarity** | Use disabled semantics (`disabled`/native disabled props), reduced emphasis, and no tap action | Controls that look tappable but do nothing |
-| **Touch target minimum** | Keep tap areas >=44x44pt (iOS) or >=48x48dp (Android), expand hit area when icon is smaller | Tiny tap targets or icon-only hit areas without padding |
-| **Gesture conflict prevention** | Keep one primary gesture per region and avoid nested tap/drag conflicts | Overlapping gestures causing accidental actions |
-| **Semantic native controls** | Prefer native interactive primitives (`Button`, `Pressable`, platform equivalents) with proper accessibility roles | Generic containers used as primary controls without semantics |
+| **点按反馈** | 80-150ms 内给出清晰的按压反馈（ripple/透明度/高度） | 点按没有任何视觉响应 |
+| **动画时序** | 按距离、复杂度、平台和用户语境选共享 token | 一个时长/缓动复制给所有转场 |
+| **无障碍焦点** | 屏幕阅读器焦点顺序与视觉顺序一致，标签描述准确 | 控件无标签或焦点漫游混乱 |
+| **禁用态清晰** | 用禁用语义（`disabled`/原生 disabled 属性）、降低强调、不给点按动作 | 看着可点却毫无反应的控件 |
+| **触控目标下限** | 点按区 >=44x44pt（iOS）或 >=48x48dp（Android），图标更小时扩大命中区 | 微小点按目标，或图标型命中区不带 padding |
+| **手势冲突预防** | 每个区域一个主手势，避免嵌套的点按/拖拽冲突 | 手势重叠导致误操作 |
+| **语义化原生控件** | 优先用带正确无障碍角色的原生交互原语（`Button`、`Pressable`、平台等价物） | 用无语义的通用容器当主控件 |
 
-## Light/Dark Mode Contrast
+## 浅色/深色模式对比度
 
-| Rule | Do | Don't |
+| 规则 | 要 | 不要 |
 |------|----|----- |
-| **Surface readability (light)** | Keep cards/surfaces clearly separated from background with sufficient opacity/elevation | Overly transparent surfaces that blur hierarchy |
-| **Text contrast (light)** | Maintain body text contrast >=4.5:1 against light surfaces | Low-contrast gray body text |
-| **Text contrast (dark)** | Maintain normal text contrast >=4.5:1 on dark surfaces; 3:1 is only for large text or non-text UI | Muted normal text that falls below the text threshold |
-| **Border and divider visibility** | Ensure separators are visible in both themes (not just light mode) | Theme-specific borders disappearing in one mode |
-| **State contrast parity** | Keep pressed/focused/disabled states equally distinguishable in light and dark themes | Defining interaction states for one theme only |
-| **Token-driven theming** | Use semantic color tokens mapped per theme across app surfaces/text/icons | Hardcoded per-screen hex values |
-| **Scrim and modal legibility** | Measure the composed result and use a scrim strong enough to isolate foreground content | Reusing one opacity without checking the actual background |
+| **表面可读性（浅色）** | 卡片/表面用足够的透明度/高度与背景明确分开 | 过度透明的表面糊掉层级 |
+| **文本对比度（浅色）** | 正文文本对浅色表面 >=4.5:1 | 低对比的灰色正文 |
+| **文本对比度（深色）** | 深色表面上普通文本 >=4.5:1；3:1 只给大字或非文本 UI | 低于文本阈值的暗淡普通文本 |
+| **边框与分隔线可见性** | 分隔线在两套主题里都可见（不能只在浅色模式可见） | 主题专属边框在某一种模式下消失 |
+| **状态对比度对等** | 按压/聚焦/禁用态在浅深两套主题里同等可辨 | 只为一种主题定义交互状态 |
+| **token 驱动主题化** | 应用表面/文本/图标用按主题映射的语义色 token | 每屏写死的 hex 值 |
+| **scrim 与 modal 可读性** | 度量合成结果，用足够强的 scrim 把前景内容隔出来 | 不查实际背景就复用同一个透明度 |
 
-## Layout & Spacing
+## 布局与间距
 
-| Rule | Do | Don't |
+| 规则 | 要 | 不要 |
 |------|----|----- |
-| **Safe-area compliance** | Respect top/bottom safe areas for all fixed headers, tab bars, and CTA bars | Placing fixed UI under notch, status bar, or gesture area |
-| **System bar clearance** | Add spacing for status/navigation bars and gesture home indicator | Let tappable content collide with OS chrome |
-| **Consistent content width** | Keep predictable content width per device class (phone/tablet) | Mixing arbitrary widths between screens |
-| **8dp spacing rhythm** | Use a consistent 4/8dp spacing system for padding/gaps/section spacing | Random spacing increments with no rhythm |
-| **Readable text measure** | Keep long-form text readable on large devices (avoid edge-to-edge paragraphs on tablets) | Full-width long text that hurts readability |
-| **Section spacing hierarchy** | Define clear vertical rhythm tiers (e.g., 16/24/32/48) by hierarchy | Similar UI levels with inconsistent spacing |
-| **Adaptive gutters by breakpoint** | Increase horizontal insets on larger widths and in landscape | Same narrow gutter on all device sizes/orientations |
-| **Scroll and fixed element coexistence** | Add bottom/top content insets so lists are not hidden behind fixed bars | Scroll content obscured by sticky headers/footers |
+| **安全区合规** | 所有固定 header、tab 栏、CTA 栏都尊重上下安全区 | 把固定 UI 放进刘海、状态栏或手势区之下 |
+| **系统栏避让** | 为状态/导航栏和手势 home indicator 留出间距 | 让可点内容撞上 OS chrome |
+| **内容宽度一致** | 每个设备档（手机/平板）保持可预期的内容宽度 | 屏幕之间随意混用宽度 |
+| **8dp 间距节奏** | padding/间隙/区块间距用一致的 4/8dp 系统 | 毫无节奏的随机增量 |
+| **正文行宽可读** | 大设备上长文本保持可读（平板上避免通栏段落） | 全宽长文伤害可读性 |
+| **区块间距层级** | 按层级定义清晰的纵向节奏档（如 16/24/32/48） | 相近 UI 层级间距不一 |
+| **按断点自适应边距** | 更大宽度与横屏时加大水平 inset | 所有设备尺寸/方向用同一条窄边距 |
+| **滚动与固定元素共存** | 加底部/顶部内容 inset，列表不被固定栏遮住 | 滚动内容被吸顶/吸底栏遮蔽 |
 
 ---
 
-## Pre-Delivery Checklist (canonical — the only one)
+## 交付前检查清单（canonical，唯一一份）
 
-Before delivering app UI code, verify every item below. Start with the process steps, then the per-area checkboxes.
+交付应用 UI 代码前，逐项核对以下内容。先过流程项，再过分区项。
 
-### Process
-- [ ] Ran only searches relevant to the interface, such as `"keyboard focus modal" --domain ux` for modal keyboard behavior
-- [ ] Reviewed `quick-reference.md` §1–§3 (CRITICAL + HIGH) as a final pass
-- [ ] Tested on 375px (small phone) and in landscape orientation
-- [ ] Verified behavior with **reduced-motion** enabled and **Dynamic Type**/largest system text size
-- [ ] Checked dark mode contrast independently (never assume light-mode values carry over)
-- [ ] Confirmed all touch targets ≥44pt and no content hidden behind safe areas
+### 流程
+- [ ] 只做与界面相关的搜索，例如查模态框键盘行为时搜 `"keyboard focus modal" --domain ux`
+- [ ] 最后一遍复查 `quick-reference.md` §1–§3（CRITICAL + HIGH）
+- [ ] 在 375px（小手机）和横屏下测过
+- [ ] 开着 **reduced-motion** 和 **Dynamic Type**/最大系统字号验证过行为
+- [ ] 独立检查过深色模式对比度（绝不假设浅色模式的值能平移）
+- [ ] 确认所有触控目标 >=44pt，且没有内容藏在安全区后面
 
-### Visual Quality
-- [ ] No emojis used as icons (use SVG instead)
-- [ ] All icons come from a consistent icon family and style
-- [ ] Official brand assets are used with correct proportions and clear space
-- [ ] Pressed-state visuals do not shift layout bounds or cause jitter
-- [ ] Semantic theme tokens are used consistently (no ad-hoc per-screen hardcoded colors)
+### 视觉质量
+- [ ] 没有 emoji 当图标（改用 SVG）
+- [ ] 所有图标来自同一个图标家族和风格
+- [ ] 官方品牌资产按正确比例和留白使用
+- [ ] 按压态视觉不挪动布局边界、不引发抖动
+- [ ] 语义主题 token 一致使用（没有每屏临时写死的颜色）
 
-### Interaction
-- [ ] All tappable elements provide clear pressed feedback (ripple/opacity/elevation)
-- [ ] Touch targets meet minimum size (>=44x44pt iOS, >=48x48dp Android)
-- [ ] Micro-interaction timing uses shared, platform-appropriate tokens and remains responsive in context
-- [ ] Disabled states are visually clear and non-interactive
-- [ ] Screen reader focus order matches visual order, and interactive labels are descriptive
-- [ ] Gesture regions avoid nested/conflicting interactions (tap/drag/back-swipe conflicts)
+### 交互
+- [ ] 所有可点元素给出清晰的按压反馈（ripple/透明度/高度）
+- [ ] 触控目标达到下限（>=44x44pt iOS，>=48x48dp Android）
+- [ ] 微交互时序用共享的、平台合适的 token，且在语境中保持响应
+- [ ] 禁用态视觉清晰且不可交互
+- [ ] 屏幕阅读器焦点顺序与视觉顺序一致，交互标签描述准确
+- [ ] 手势区域没有嵌套/冲突的交互（点按/拖拽/返回滑动冲突）
 
-### Light/Dark Mode
-- [ ] Primary text contrast >=4.5:1 in both light and dark mode
-- [ ] Normal primary and secondary text contrast >=4.5:1 in both light and dark mode
-- [ ] Dividers/borders and interaction states are distinguishable in both modes
-- [ ] Modal/drawer scrim is measured against the real background and preserves foreground legibility
-- [ ] Both themes are tested before delivery (not inferred from a single theme)
+### 浅色/深色模式
+- [ ] 主文本对比度两种模式都 >=4.5:1
+- [ ] 普通主次文本对比度两种模式都 >=4.5:1
+- [ ] 分隔线/边框和交互状态在两种模式下都可辨
+- [ ] modal/drawer 的 scrim 对真实背景度量过，前景保持可读
+- [ ] 两套主题都在交付前测过（不是从单一主题推断）
 
-### Layout
-- [ ] Safe areas are respected for headers, tab bars, and bottom CTA bars
-- [ ] Scroll content is not hidden behind fixed/sticky bars
-- [ ] Verified on small phone, large phone, and tablet (portrait + landscape)
-- [ ] Horizontal insets/gutters adapt correctly by device size and orientation
-- [ ] 4/8dp spacing rhythm is maintained across component, section, and page levels
-- [ ] Long-form text measure remains readable on larger devices (no edge-to-edge paragraphs)
+### 布局
+- [ ] header、tab 栏、底部 CTA 栏都尊重安全区
+- [ ] 滚动内容不被固定/吸顶栏遮住
+- [ ] 在小手机、大手机、平板（竖屏 + 横屏）上验证过
+- [ ] 水平 inset/边距按设备尺寸和方向正确自适应
+- [ ] 4/8dp 间距节奏在组件、区块、页面各级都保持
+- [ ] 长文本行宽在大设备上保持可读（没有通栏段落）
 
-### Accessibility
-- [ ] Decorative icons beside visible text are hidden from the accessibility tree (`aria-hidden="true"` on web or the native equivalent)
-- [ ] Meaningful images/icons without equivalent visible text have a text alternative
-- [ ] Icon controls have an accessible name and announce applicable selected/pressed/expanded state
-- [ ] Form fields have labels, hints, and clear error messages
-- [ ] Color is not the only indicator
-- [ ] Reduced motion and dynamic text size are supported without layout breakage
-- [ ] Sticky UI and overlays do not obscure keyboard focus
-- [ ] Dragging and swipe-only interactions have button/keyboard alternatives
-- [ ] Authentication allows password managers and paste, with a non-cognitive alternative
-- [ ] Auto-rotating content has pause/stop controls and stops on focus or reduced motion
-- [ ] Failed forms retain inline field errors; multi-error forms also focus a linked error summary after submit
+### 无障碍
+- [ ] 可见文本旁的装饰性图标从无障碍树隐藏（Web 用 `aria-hidden="true"`，原生用等价物）
+- [ ] 没有等价可见文本的有意义图片/图标有文本替代
+- [ ] 图标控件有可访问名称，并播报适用的选中/按下/展开状态
+- [ ] 表单字段有标签、提示和清晰的错误信息
+- [ ] 颜色不是唯一指示
+- [ ] 支持 reduced motion 和动态字号，布局不破
+- [ ] 吸顶 UI 和浮层不遮挡键盘焦点
+- [ ] 拖拽和纯滑动手势有按钮/键盘替代
+- [ ] 认证允许密码管理器和粘贴，并提供非认知性替代方式
+- [ ] 自动轮播内容有暂停/停止控件，并在聚焦或 reduced motion 时停下
+- [ ] 失败的表单保留行内字段错误；多错误表单提交后还会聚焦关联的错误汇总

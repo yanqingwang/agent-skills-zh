@@ -1,20 +1,24 @@
-# Coral Culture — Company Culture Deck
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/toolbox/office/morph-ppt/reference/styles/warm--coral-culture/style.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-## Style Overview
+# Coral Culture：企业文化演示
 
-Horizontal blue-to-coral gradient background with vertical decorative bar clusters. Extreme typographic contrast with alternating light/dark slides.
+## 风格概览
 
-- **Scenario**: Company culture decks, HR presentations, team showcases
-- **Mood**: Warm, cultural, human-centered, dynamic
-- **Tone**: Blue to coral gradient
+水平蓝到珊瑚色渐变背景，配竖向装饰条簇。极端的字体排印对比，浅/深幻灯片交替。
 
-## Design Techniques
+- **适用场景**：企业文化演示、HR 演示、团队展示
+- **氛围**：温暖、文化感、以人为本、动感
+- **色调**：蓝到珊瑚色渐变
 
-- Horizontal gradient BG (blue → coral)
-- Vertical bar cluster (abstract skyline)
-- Circle ring elements
-- Hard contrast between adjacent slides
+## 设计技法
 
-## Reference Script
+- 水平渐变背景（蓝 → 珊瑚色）
+- 竖条簇（抽象天际线）
+- 圆环元素
+- 相邻幻灯片之间的硬对比
 
-Complete build script available in `build.py`.
+## 参考脚本
+
+完整构建脚本见 `build.py`。

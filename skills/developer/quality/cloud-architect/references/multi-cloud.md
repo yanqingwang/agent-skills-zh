@@ -1,27 +1,31 @@
-# Multi-Cloud Architecture Reference
+> **中文汉化版** · 上游：[Jeffallan/claude-skills](https://github.com/Jeffallan/claude-skills) · 原文件：`skills/cloud-architect/references/multi-cloud.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Comprehensive guide for multi-cloud strategies, abstraction layers, portability patterns, and vendor lock-in mitigation.
+# 多云架构参考
 
-## Multi-Cloud Strategy
+涵盖多云策略、抽象层、可移植模式与厂商锁定缓解的完整指南。
 
-### When to Use Multi-Cloud
+## 多云策略
 
-**Valid Use Cases**
-- Regulatory compliance requiring data residency in specific regions
-- Best-of-breed service selection (BigQuery for analytics, AWS for ML)
-- Acquisition integration (different clouds in merged organizations)
-- Disaster recovery with cloud provider as failure domain
-- Negotiating leverage with cloud vendors
+### 何时使用多云
 
-**Poor Reasons for Multi-Cloud**
-- "Avoiding vendor lock-in" without specific exit scenario
-- Assuming portability is free (it has significant costs)
-- Political decisions without technical justification
-- Spreading workloads arbitrarily across providers
+**合理场景**
+- 法规合规要求特定区域的数据驻留
+- 择优选择服务（分析用 BigQuery，机器学习用 AWS）
+- 并购整合（合并后的组织各自使用不同的云）
+- 灾难恢复，把云厂商当作故障域
+- 作为与云厂商谈判的筹码
 
-### Multi-Cloud Patterns
+**不适合多云的理由**
+- 没有具体退出场景就谈"避免厂商锁定"
+- 以为可移植性免费（实际成本很高）
+- 缺乏技术依据的政治性决策
+- 在各厂商间随意分散工作负载
 
-**Active-Active**
+### 多云模式
+
+**双活（Active-Active）**
 ```
 Users -> Global Load Balancer
               |
@@ -31,11 +35,11 @@ Users -> Global Load Balancer
     |                   |
     +----> Data Sync <--+
 ```
-- Highest complexity and cost
-- Best for global latency optimization
-- Requires robust data synchronization
+- 复杂度和成本最高
+- 最适合全球延迟优化
+- 需要可靠的数据同步
 
-**Active-Passive (DR)**
+**主备（Active-Passive，DR）**
 ```
 Users -> Primary (AWS)
               |
@@ -43,25 +47,25 @@ Users -> Primary (AWS)
               |
          Secondary (Azure)
 ```
-- Lower complexity than active-active
-- Cloud provider becomes failure domain
-- Cold or warm standby in secondary cloud
+- 复杂度低于双活
+- 云厂商成为故障域
+- 备云中冷备或温备
 
-**Segmented by Workload**
+**按工作负载切分**
 ```
 Analytics -> GCP (BigQuery)
 Core App  -> AWS (ECS, RDS)
 Office    -> Azure (M365 integration)
 ```
-- Each workload on best-fit cloud
-- No cross-cloud data synchronization
-- Simplest multi-cloud pattern
+- 每个工作负载放在最合适的云上
+- 无跨云数据同步
+- 最简单的多云模式
 
-## Abstraction Layers
+## 抽象层
 
-### Infrastructure Abstraction
+### 基础设施抽象
 
-**Terraform (Recommended)**
+**Terraform（推荐）**
 ```hcl
 # Provider-agnostic module structure
 module "compute" {
@@ -87,7 +91,7 @@ resource "azurerm_virtual_machine" "main" {
 }
 ```
 
-**Pulumi (Code-First)**
+**Pulumi（代码优先）**
 ```typescript
 // Abstract cloud resources with TypeScript
 interface ComputeConfig {
@@ -110,9 +114,9 @@ function createCompute(config: ComputeConfig, provider: "aws" | "gcp") {
 }
 ```
 
-### Container Orchestration (Kubernetes)
+### 容器编排（Kubernetes）
 
-**Portable Kubernetes Deployment**
+**可移植的 Kubernetes 部署**
 ```yaml
 # Same manifests work across EKS, AKS, GKE
 apiVersion: apps/v1
@@ -138,17 +142,17 @@ spec:
             cpu: "500m"
 ```
 
-**Cloud-Specific Considerations**
-| Feature | EKS | AKS | GKE |
+**云特定注意事项**
+| 特性 | EKS | AKS | GKE |
 |---------|-----|-----|-----|
-| Load Balancer | ALB/NLB annotations | Azure LB | GCP LB |
-| Storage Class | gp3, io2 | managed-premium | pd-ssd |
-| IAM Integration | IRSA | Workload Identity | Workload Identity |
+| 负载均衡 | ALB/NLB 注解 | Azure LB | GCP LB |
+| 存储类 | gp3, io2 | managed-premium | pd-ssd |
+| IAM 集成 | IRSA | Workload Identity | Workload Identity |
 | Ingress | AWS ALB Controller | AGIC | GKE Ingress |
 
-### Application Abstraction
+### 应用抽象
 
-**Database Abstraction**
+**数据库抽象**
 ```python
 # Use standard protocols (SQL, Redis, S3 API)
 from sqlalchemy import create_engine
@@ -163,7 +167,7 @@ DATABASE_URL = os.environ["DATABASE_URL"]
 engine = create_engine(DATABASE_URL)
 ```
 
-**Object Storage Abstraction**
+**对象存储抽象**
 ```python
 import boto3
 from botocore.config import Config
@@ -182,11 +186,11 @@ s3_client = boto3.client(
 )
 ```
 
-## Data Synchronization
+## 数据同步
 
-### Database Replication
+### 数据库复制
 
-**Cross-Cloud PostgreSQL**
+**跨云 PostgreSQL**
 ```
 AWS RDS Primary
       |
@@ -195,7 +199,7 @@ AWS RDS Primary
 GCP Cloud SQL Replica (read-only)
 ```
 
-Configuration:
+配置：
 ```sql
 -- On primary (AWS RDS)
 CREATE PUBLICATION my_publication FOR ALL TABLES;
@@ -206,15 +210,15 @@ CREATE SUBSCRIPTION my_subscription
   PUBLICATION my_publication;
 ```
 
-**Conflict Resolution Strategies**
-- Last-write-wins (timestamp-based)
-- Application-level conflict resolution
-- CRDT data structures for eventually consistent data
-- Avoid multi-master for transactional data
+**冲突解决策略**
+- 最后写入胜出（基于时间戳）
+- 应用层冲突解决
+- 最终一致数据使用 CRDT 数据结构
+- 事务型数据避免多主
 
-### Object Storage Sync
+### 对象存储同步
 
-**Rclone for Cross-Cloud Sync**
+**用 Rclone 做跨云同步**
 ```bash
 # Sync S3 to GCS
 rclone sync s3:my-bucket gcs:my-bucket \
@@ -227,7 +231,7 @@ rclone bisync s3:bucket gcs:bucket \
   --conflict-resolve newer
 ```
 
-**Event-Driven Replication**
+**事件驱动复制**
 ```
 S3 Bucket -> S3 Event -> Lambda -> GCS Upload
                               |
@@ -235,30 +239,30 @@ S3 Bucket -> S3 Event -> Lambda -> GCS Upload
                        Consistency Check
 ```
 
-## Vendor Lock-In Mitigation
+## 厂商锁定缓解
 
-### Lock-In Risk Assessment
+### 锁定风险评估
 
-| Service Type | Lock-In Risk | Mitigation Strategy |
+| 服务类型 | 锁定风险 | 缓解策略 |
 |--------------|--------------|---------------------|
-| Compute (VMs) | Low | Standard OS images, IaC |
-| Kubernetes | Low | Portable manifests, avoid proprietary add-ons |
-| Object Storage | Low | S3-compatible API, standard formats |
-| Managed Databases | Medium | Standard SQL, logical backups |
-| Serverless Functions | High | Abstraction layers, containers |
-| Proprietary AI/ML | High | Open-source alternatives, ONNX models |
-| Managed Services | High | Evaluate portability before adoption |
+| 计算（VM） | 低 | 标准 OS 镜像、IaC |
+| Kubernetes | 低 | 可移植清单，避免专有插件 |
+| 对象存储 | 低 | S3 兼容 API、标准格式 |
+| 托管数据库 | 中 | 标准 SQL、逻辑备份 |
+| Serverless 函数 | 高 | 抽象层、容器 |
+| 专有 AI/ML | 高 | 开源替代、ONNX 模型 |
+| 托管服务 | 高 | 采用前先评估可移植性 |
 
-### Mitigation Strategies
+### 缓解策略
 
-**1. Use Open Standards**
-- SQL databases over proprietary NoSQL
-- Kubernetes over ECS/Cloud Run
-- S3 API for object storage
-- OpenTelemetry for observability
-- OIDC for authentication
+**1. 使用开放标准**
+- SQL 数据库优先于专有 NoSQL
+- Kubernetes 优先于 ECS/Cloud Run
+- 对象存储用 S3 API
+- 可观测性用 OpenTelemetry
+- 认证用 OIDC
 
-**2. Abstract Proprietary Services**
+**2. 抽象专有服务**
 ```typescript
 // Wrap cloud-specific services
 interface QueueService {
@@ -287,13 +291,13 @@ function createQueue(provider: string): QueueService {
 }
 ```
 
-**3. Maintain Exit Capability**
-- Regular data export testing
-- Document cloud-specific dependencies
-- Keep IaC portable across providers
-- Estimate migration effort annually
+**3. 保持退出能力**
+- 定期测试数据导出
+- 记录云特有依赖
+- IaC 保持跨厂商可移植
+- 每年估算迁移工作量
 
-**4. Containerize Everything**
+**4. 一切容器化**
 ```dockerfile
 # Portable container runs anywhere
 FROM node:20-alpine
@@ -305,11 +309,11 @@ EXPOSE 3000
 CMD ["node", "server.js"]
 ```
 
-## Network Connectivity
+## 网络连通
 
-### Cross-Cloud Networking
+### 跨云网络
 
-**VPN Interconnect**
+**VPN 互联**
 ```
 AWS VPC                          GCP VPC
    |                                |
@@ -320,7 +324,7 @@ AWS VPC                          GCP VPC
               +---> GCP Cloud VPN <-+
 ```
 
-**Dedicated Interconnect (Enterprise)**
+**专线互联（企业级）**
 ```
 On-Premises Data Center
          |
@@ -337,9 +341,9 @@ AWS VPC    GCP VPC
     Transit Hub (e.g., Megaport, Equinix)
 ```
 
-### Service Mesh Across Clouds
+### 跨云服务网格
 
-**Istio Multi-Cluster**
+**Istio 多集群**
 ```yaml
 # Primary cluster (AWS EKS)
 apiVersion: install.istio.io/v1alpha1
@@ -362,17 +366,17 @@ spec:
       network: gcp-network
 ```
 
-## Cost Management
+## 成本管理
 
-### Cross-Cloud Cost Visibility
+### 跨云成本可见性
 
-**FinOps Tools**
-- CloudHealth by VMware
+**FinOps 工具**
+- VMware 的 CloudHealth
 - Apptio Cloudability
-- Spot.io (now part of NetApp)
-- Kubecost for Kubernetes
+- Spot.io（现属 NetApp）
+- Kubernetes 用 Kubecost
 
-**Unified Tagging Strategy**
+**统一打标策略**
 ```
 Required Tags (all clouds):
 - environment: prod/staging/dev
@@ -382,7 +386,7 @@ Required Tags (all clouds):
 - managed-by: terraform/manual
 ```
 
-### Cost Comparison Framework
+### 成本对比框架
 
 ```
 | Workload Type | AWS | Azure | GCP | Decision |
@@ -394,9 +398,9 @@ Required Tags (all clouds):
 | Kubernetes | EKS | AKS | GKE | GKE Autopilot simplest |
 ```
 
-## Observability
+## 可观测性
 
-### Unified Monitoring Stack
+### 统一监控栈
 
 **OpenTelemetry Collector**
 ```yaml
@@ -433,17 +437,17 @@ service:
       exporters: [prometheus]
 ```
 
-**Grafana for Unified Dashboards**
-- AWS CloudWatch data source
-- Azure Monitor data source
-- GCP Cloud Monitoring data source
-- Single pane of glass across all clouds
+**用 Grafana 做统一仪表盘**
+- AWS CloudWatch 数据源
+- Azure Monitor 数据源
+- GCP Cloud Monitoring 数据源
+- 所有云的单一视图
 
-## Security Considerations
+## 安全考量
 
-### Identity Federation
+### 身份联合
 
-**Cross-Cloud Identity**
+**跨云身份**
 ```
 Corporate IdP (Okta/Azure AD)
          |
@@ -455,9 +459,9 @@ Corporate IdP (Okta/Azure AD)
   IAM   AD   IAM  RBAC
 ```
 
-### Secrets Management
+### 密钥管理
 
-**HashiCorp Vault (Cloud-Agnostic)**
+**HashiCorp Vault（云无关）**
 ```hcl
 # Single secrets management across clouds
 resource "vault_aws_secret_backend_role" "aws_role" {
@@ -474,10 +478,10 @@ resource "vault_gcp_secret_roleset" "gcp_role" {
 }
 ```
 
-### Network Security
+### 网络安全
 
-**Zero-Trust Across Clouds**
-- mTLS between all services (service mesh)
-- No implicit trust based on network location
-- Identity-based access control
-- Encrypted transit between clouds (VPN/interconnect)
+**跨云零信任**
+- 所有服务间使用 mTLS（服务网格）
+- 不基于网络位置给予隐式信任
+- 基于身份的访问控制
+- 云间传输加密（VPN/专线）

@@ -1,90 +1,94 @@
-# Personalization at Scale
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/writer/writing/cold-email/references/personalization.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Personalization drives **50–250% more replies** (Lavender). The key insight: **if your personalization has nothing to do with the problem you solve, it's just an attention hack** (Clay).
+# 规模化个性化
 
-## Four Levels of Personalization
+个性化能带来 **50–250% 的回复提升**（Lavender）。关键认知：**如果你的个性化与你解决的问题毫无关系，那它只是个博眼球的把戏**（Clay）。
 
-### Level 1 — Basic (merge tags)
+## 个性化的四个层级
 
-First name, company name, job title. Table stakes, no longer differentiating. ~5% lift.
+### 第 1 层：基础（合并标签）
 
-### Level 2 — Industry/segment
+名字、公司名、职位。入场标配，已无区分度。约 5% 的提升。
 
-Industry-specific pain points, trends, regulatory challenges. Scalable via micro-segmentation.
+### 第 2 层：行业/细分
 
-> Most {{industry}} teams struggle with {{lead gen problem}}, which often leads to wasted effort.
+行业特有的痛点、趋势、监管挑战。通过微细分可以规模化。
 
-### Level 3 — Role-level
+> 大多数 {{industry}} 团队都受困于 {{lead gen problem}}，常常因此白白浪费精力。
 
-Challenges specific to their role and seniority.
+### 第 3 层：角色层
 
-> As Head of Sales, keeping pipeline steady is probably your biggest headache. Your RevOps team is small, so you're likely wearing multiple hats during scaling.
+其角色和层级特有的挑战。
 
-### Level 4 — Individual (gold standard)
+> 作为销售负责人，管道稳定可能就是你最大的头疼事。你们的 RevOps 团队很小，扩张期多半要一人多角。
 
-Specific, timely observations about that person connected to the problem you solve.
+### 第 4 层：个人（黄金标准）
 
-> Noticed you're hiring 3 SDRs. Sounds like you're scaling outbound fast. Most teams hit follow-up fatigue during onboarding.
+对那个人的具体、及时的观察，并与你解决的问题相连。
 
-## Research Signal Stack
+> 注意到你们在招 3 个 SDR。看来你们在快速扩外联。多数团队在上手期会撞上跟进疲劳。
 
-| Signal            | Where to find it                   | How to use it                                                                |
+## 研究信号栈
+
+| 信号            | 去哪找                   | 怎么用                                                                |
 | ----------------- | ---------------------------------- | ---------------------------------------------------------------------------- |
-| Recent funding    | Crunchbase, LinkedIn, press        | "Congrats on Series B. Scaling teams fast usually creates X challenge"      |
-| Job postings      | LinkedIn Jobs, careers page        | "Noticed you're hiring 3 SDRs. Sounds like you're scaling outbound"         |
-| Tech stack        | BuiltWith, Wappalyzer, HG Insights | "I see you're using HubSpot. Most teams at your stage hit a ceiling with X" |
-| LinkedIn activity | Posts, comments, job changes       | "Really enjoyed your post about X"                                           |
-| Company news      | Google News, press releases        | "Congrats on acquiring X. Integrating teams usually creates Y challenge"    |
-| Podcast/talks     | Google, YouTube, podcasts          | "Caught your talk at SaaStr on X. Really insightful"                        |
-| Website changes   | Manual review                      | "Your new pricing page caught my eye. Curious how it's converting"          |
+| 近期融资    | Crunchbase、LinkedIn、新闻稿        | "恭喜完成 B 轮。团队快速扩张通常会带来 X 挑战"      |
+| 招聘职位      | LinkedIn Jobs、招聘页        | "注意到你们在招 3 个 SDR。看来在扩外联"         |
+| 技术栈        | BuiltWith、Wappalyzer、HG Insights | "我看到你们在用 HubSpot。你这个阶段的团队大多会在 X 上撞顶" |
+| LinkedIn 动态 | 帖子、评论、职位变动       | "你的 X 主题帖子写得真好"                                           |
+| 公司新闻      | Google News、新闻稿        | "恭喜收购 X。团队整合通常会带来 Y 挑战"    |
+| 播客/演讲     | Google、YouTube、播客          | "你在 SaaStr 上关于 X 的演讲很有见地"                        |
+| 网站变化   | 人工核查                      | "你们新的定价页引起我注意。好奇转化如何"          |
 
-## The 3-Minute Personalization System
+## 3 分钟个性化系统
 
-From "30 Minutes to President's Club":
+来自 "30 Minutes to President's Club"：
 
-**Step 1:** Build a research stack of top 10 buying signals — 5 company triggers, 5 person triggers. Stack-rank by relevance.
+**第 1 步：**建一个前 10 购买信号的研究栈：5 个公司触发器、5 个人触发器。按相关性排序。
 
-**Step 2:** Build a 3x3 template: (1) personalization attached to a problem, (2) problem you solve, (3) one-sentence solution + low-friction CTA.
+**第 2 步：**做一个 3x3 模板：（1）挂在问题上的个性化，（2）你解决的问题，（3）一句话方案 + 低摩擦 CTA。
 
-**Step 3:** Create 5 "trigger templates" — pre-written personalization paragraphs for each trigger, with a smooth segue into the problem.
+**第 3 步：**写 5 个"触发器模板"：每个触发器一段预写好的个性化文字，并自然过渡到问题。
 
-The personalization must logically connect to the problem. This creates 5 reusable triggers with the rest of the email constant. A top SDR writes a personalized email in **under 3 minutes**.
+个性化必须在逻辑上连到问题上。这样得到 5 个可复用的触发器，邮件其余部分保持不变。顶级 SDR 写一封个性化邮件**不超过 3 分钟**。
 
-## The Four -Graphic Principles (Becc Holland)
+## 四个 "-graphic" 维度原则（Becc Holland）
 
-- **Demographic** — Age, profession, background
-- **Technographic** — Tech stack, tools used
-- **Firmographic** — Company size, funding, industry, growth stage
-- **Psychographic** — Values, passions, beliefs (highest-impact dimension)
+- **人口特征（Demographic）**：年龄、职业、背景
+- **技术特征（Technographic）**：技术栈、所用工具
+- **企业特征（Firmographic）**：公司规模、融资、行业、成长阶段
+- **心理特征（Psychographic）**：价值观、热情、信念（影响最大的维度）
 
-Tapping into what prospects are passionate about drives significantly higher response rates.
+抓住潜客真正热心的事，回复率会显著更高。
 
-## Observation-Based Openers (highest performing)
+## 基于观察的开场（表现最好）
 
-**Trigger-event:** "Congrats on the recent funding round. Scaling the team from here is exciting, and I imagine [challenge] is top of mind."
+**触发事件：**"恭喜完成新一轮融资。从这里开始扩团队很带劲，我猜 [challenge] 正挂在你们心上。"
 
-**Observation:** "Your recent post about [topic] resonated. Especially the part about [detail]. Got me thinking about how that applies to [challenge]."
+**观察：**"你最近关于 [topic] 的帖子说到心坎里了。尤其是 [detail] 那部分。让我想到它如何适用于 [challenge]。"
 
-**Industry insight:** "Most [role titles] I talk to spend [X hours/week] on [problem]. Curious if that matches your experience at [Company]."
+**行业洞见：**"我聊过的大多数 [role titles] 每周在 [problem] 上花 [X hours/week]。不知道这和你在 [Company] 的体验是否一致。"
 
-## What Feels Fake (avoid)
+## 哪些显得假（避免）
 
-- AI-generated emails with similar phrasing ("I hope this email finds you well")
-- Generic attention hacks disconnected from problem ("Cool that you went to UCLA!" → pitch)
-- Over-personalizing to creepiness
-- "I saw your LinkedIn profile and wanted to reach out" — signals mass automation
+- AI 生成、措辞雷同的邮件（"I hope this email finds you well"）
+- 与问题无关的泛泛博眼球（"Cool that you went to UCLA!" → 转入推销）
+- 个性化过头，让人毛骨悚然
+- "I saw your LinkedIn profile and wanted to reach out"：一看就是批量自动化
 
-## The "So What?" Test
+## "那又怎样？"检验
 
-After writing any opening line, read from prospect's perspective: "So what? Why would I care?" If the answer is nothing, rewrite.
+写完任何开场句后，站在潜客视角读一遍："那又怎样？我为什么要在乎？"如果答案是"没什么"，重写。
 
-## Personalizing With AI
+## 用 AI 做个性化
 
-Agents make Level 4 research affordable at scale, and they make invented personalization just as cheap. Buyers in 2026 spot it fast: praise for the company mission, congratulations on a year-old funding round, "I noticed you're in SaaS."
+Agent 让第 4 层研究在规模上变得可负担，也让编造的个性化同样便宜。2026 年的买家一眼识破：赞美公司使命、祝贺一年前的融资轮、"我注意到你们是做 SaaS 的"。
 
-- **Relevance beats personalization.** A specific trigger, the pain it implies, and a concrete offer outperform a clever personal line attached to a generic pitch.
-- **Facts first, then the angle,** in two separate steps, with a source URL for every fact.
-- **Allow "no hook found."** When research turns up nothing specific, use the segment-level message instead of a manufactured one.
-- **Review before sending** for Tier 1 and a sample of Tier 2.
+- **相关性胜过个性化。**一个具体触发器、它暗示的痛点和一个具体的提议，胜过挂在泛泛推销上的巧妙客套句。
+- **先事实，后角度，**分两步走，每个事实都配来源 URL。
+- **允许"没找到钩子"。**研究查不出具体的东西时，用细分人群层面的消息，不要硬造。
+- **发送前人工审阅** Tier 1 全量和 Tier 2 抽样。
 
-The full research rules and the account brief template are in the prospecting skill's account research reference.
+完整的研究规则和客户简报模板，见 prospecting skill 的客户研究参考。

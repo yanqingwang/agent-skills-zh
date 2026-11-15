@@ -1,26 +1,30 @@
-# 2slides Pricing & Credit Information
+> **中文汉化版** · 上游：[sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) · 原文件：`skills/2slides-ppt-generator/references/pricing.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Review update 2026-10-23: API/pricing examples below are a historical snapshot; verify the current [API](https://2slides.com/api.md) and [pricing](https://2slides.com/pricing) before billable calls. Subscription credits and purchased-package credits have different expiry rules. No live generation was tested.
+# 2slides 定价与积分信息
 
-Complete pricing details and credit system information.
+复核更新 2026-10-23：下方 API/定价示例为历史快照；在产生计费调用前，请先核对当前 [API](https://2slides.com/api.md) 与[定价](https://2slides.com/pricing)。订阅积分与购买套餐积分的过期规则不同。未实测任何实际生成流程。
 
-## Credit System Overview
+完整定价细节与积分系统说明。
 
-2slides operates on a **pay-as-you-go credit system** with no monthly subscriptions or recurring charges.
+## 积分系统概览
 
-### Key Benefits
+2slides 采用**按量付费的积分制**，没有月度订阅，也没有周期性扣费。
 
-- ✅ **Credits never expire** - Use them at your own pace
-- ✅ **No subscriptions** - Pay only for what you use
-- ✅ **Volume discounts** - Save up to 20% on larger packages
-- ✅ **3-day refund window** - Risk-free purchase
-- ✅ **500 free credits** - Free trial for new users
+### 主要优势
 
-## Credit Packages
+- ✅ **积分永不过期** - 按自己的节奏使用
+- ✅ **无订阅** - 用多少付多少
+- ✅ **批量折扣** - 大套餐最高省 20%
+- ✅ **3 天退款期** - 购买无风险
+- ✅ **500 免费积分** - 新用户免费试用
 
-**Current Promotion:** Up to 20% off credits for a limited time.
+## 积分套餐
 
-| Credits | Original Price | Current Price | Discount | Cost per 1,000 |
+**当前促销：** 限时优惠，积分最高减免 20%。
+
+| 积分 | 原价 | 现价 | 折扣 | 每 1,000 积分成本 |
 |---------|----------------|---------------|----------|----------------|
 | 2,000 | $5.00 | $5.00 | — | $2.50 |
 | 4,000 | $10.00 | $9.50 | 5% | $2.38 |
@@ -28,170 +32,170 @@ Complete pricing details and credit system information.
 | 20,000 | $50.00 | $42.50 | 15% | $2.13 |
 | 40,000 | $100.00 | $80.00 | 20% | $2.00 |
 
-**Purchase at:** https://2slides.com/pricing
+**购买地址：** https://2slides.com/pricing
 
-## Credit Costs by Feature
+## 各功能积分消耗
 
-| Feature | Credits per Page | Example (10 pages) |
+| 功能 | 每页积分 | 示例（10 页） |
 |---------|-----------------|-------------------|
-| Fast PPT (theme-based) | 10 | 100 credits |
-| Nano Banana 1K/2K (image/custom) | 100 | 1,000 credits |
-| Nano Banana 4K | 200 | 2,000 credits |
-| Voice Narration | +210 | +2,100 credits |
-| Download Export | FREE | 0 credits |
+| Fast PPT（主题式） | 10 | 100 积分 |
+| Nano Banana 1K/2K（图片/自定义） | 100 | 1,000 积分 |
+| Nano Banana 4K | 200 | 2,000 积分 |
+| 语音旁白 | +210 | +2,100 积分 |
+| 下载导出 | 免费 | 0 积分 |
 
-### Detailed Cost Breakdown
+### 费用明细
 
-**Fast PPT Generation (Theme-Based)**
-- 10 credits per page
-- Uses pre-designed themes
-- Fastest generation mode
-- Cost example: 20-page presentation = 200 credits
+**Fast PPT 生成（主题式）**
+- 每页 10 积分
+- 使用预设计主题
+- 最快的生成模式
+- 费用示例：20 页演示文稿 = 200 积分
 
-**Nano Banana (Image Matching / Custom PDF)**
-- **1K/2K resolution:** 100 credits per page
-- **4K resolution:** 200 credits per page
-- Matches reference image style or generates custom design
-- Higher quality output
-- Cost example: 10-page 2K presentation = 1,000 credits
+**Nano Banana（图片匹配 / 自定义 PDF）**
+- **1K/2K 分辨率：** 每页 100 积分
+- **4K 分辨率：** 每页 200 积分
+- 匹配参考图风格，或生成自定义设计
+- 输出质量更高
+- 费用示例：10 页 2K 演示文稿 = 1,000 积分
 
-**Voice Narration**
-- 210 credits per page total
-  - 10 credits for text processing
-  - 200 credits for audio generation
-- 30 voice options available
-- Multi-speaker mode included
-- Cost example: 5-page narration = 1,050 credits
+**语音旁白**
+- 每页合计 210 积分
+  - 文本处理 10 积分
+  - 音频生成 200 积分
+- 提供 30 种音色
+- 含多说话人模式
+- 费用示例：5 页旁白 = 1,050 积分
 
-**Download Export**
-- Completely FREE (0 credits)
-- Export slides as PNG images
-- Export voice files as WAV
-- Includes transcripts
+**下载导出**
+- 完全免费（0 积分）
+- 幻灯片导出为 PNG 图片
+- 语音文件导出为 WAV
+- 附带文字稿
 
-## Free Trial
+## 免费试用
 
-**New users receive 500 free credits** upon account creation.
+**新用户注册即获 500 免费积分。**
 
-**What you can do with 500 credits:**
-- Create ~50 Fast PPT slide pages
-- Create ~5 Nano Banana 2K pages
-- Create ~2 Nano Banana 2K pages with full narration
-- Mix and match features as needed
+**500 积分能做什么：**
+- 创建约 50 页 Fast PPT 幻灯片
+- 创建约 5 页 Nano Banana 2K 页面
+- 创建约 2 页含完整旁白的 Nano Banana 2K 页面
+- 按需混搭各功能
 
-## Example Cost Calculations
+## 费用估算示例
 
-### Scenario 1: Quick Business Presentation
-- **Need:** 15-slide Fast PPT presentation
-- **Credits required:** 150 credits (15 pages × 10 credits)
-- **Cost with 2,000 package:** $0.38
-- **Cost with 40,000 package:** $0.30
+### 场景 1：快速商务演示
+- **需求：** 15 页 Fast PPT 演示
+- **所需积分：** 150 积分（15 页 × 10 积分）
+- **用 2,000 套餐：** $0.38
+- **用 40,000 套餐：** $0.30
 
-### Scenario 2: Branded Marketing Deck
-- **Need:** 20-slide Nano Banana 2K matching brand image
-- **Credits required:** 2,000 credits (20 pages × 100 credits)
-- **Cost with 4,000 package:** $4.75
-- **Cost with 40,000 package:** $4.00
+### 场景 2：品牌营销幻灯片
+- **需求：** 20 页 Nano Banana 2K，匹配品牌图片
+- **所需积分：** 2,000 积分（20 页 × 100 积分）
+- **用 4,000 套餐：** $4.75
+- **用 40,000 套餐：** $4.00
 
-### Scenario 3: Training Presentation with Audio
-- **Need:** 30-slide 2K presentation with voice narration
-- **Credits required:** 9,300 credits
-  - Slides: 3,000 credits (30 pages × 100 credits)
-  - Narration: 6,300 credits (30 pages × 210 credits)
-- **Cost with 10,000 package:** $20.93
-- **Cost with 40,000 package:** $18.60
+### 场景 3：含音频的培训演示
+- **需求：** 30 页 2K 演示，带语音旁白
+- **所需积分：** 9,300 积分
+  - 幻灯片：3,000 积分（30 页 × 100 积分）
+  - 旁白：6,300 积分（30 页 × 210 积分）
+- **用 10,000 套餐：** $20.93
+- **用 40,000 套餐：** $18.60
 
-### Scenario 4: High-Resolution Portfolio
-- **Need:** 10-slide 4K Nano Banana presentation
-- **Credits required:** 2,000 credits (10 pages × 200 credits)
-- **Cost with 4,000 package:** $4.75
-- **Cost with 40,000 package:** $4.00
+### 场景 4：高分辨率作品集
+- **需求：** 10 页 4K Nano Banana 演示
+- **所需积分：** 2,000 积分（10 页 × 200 积分）
+- **用 4,000 套餐：** $4.75
+- **用 40,000 套餐：** $4.00
 
-### Scenario 5: Complete Package
-- **Need:** 25-slide 2K presentation with narration, exported as PNG/WAV
-- **Credits required:** 7,750 credits
-  - Slides: 2,500 credits (25 pages × 100 credits)
-  - Narration: 5,250 credits (25 pages × 210 credits)
-  - Export: 0 credits (FREE)
-- **Cost with 10,000 package:** $17.44
-- **Cost with 40,000 package:** $15.50
+### 场景 5：全套需求
+- **需求：** 25 页 2K 演示，含旁白，导出为 PNG/WAV
+- **所需积分：** 7,750 积分
+  - 幻灯片：2,500 积分（25 页 × 100 积分）
+  - 旁白：5,250 积分（25 页 × 210 积分）
+  - 导出：0 积分（免费）
+- **用 10,000 套餐：** $17.44
+- **用 40,000 套餐：** $15.50
 
-## Payment Methods
+## 支付方式
 
-Accepted payment methods via Stripe:
-- Major credit cards (Visa, Mastercard, American Express, Discover)
+通过 Stripe 支持的支付方式：
+- 主流信用卡（Visa、Mastercard、American Express、Discover）
 - Apple Pay
 - Google Pay
 
-## Refund Policy
+## 退款政策
 
-- **3-day refund window** after purchase
-- Contact support through https://2slides.com for refund requests
-- Credits must not have been substantially used
+- 购买后 **3 天内可退款**
+- 退款请求请通过 https://2slides.com 联系客服
+- 积分不得已被大量使用
 
-## Enterprise & Team Plans
+## 企业与团队方案
 
-Currently in development. For high-volume or team needs, contact 2slides support through https://2slides.com.
+开发中。如有大用量或团队需求，请通过 https://2slides.com 联系 2slides 客服。
 
-## Checking Your Credit Balance
+## 查询积分余额
 
-**Via Web:**
-1. Visit https://2slides.com/api
-2. Log in to your account
-3. View your dashboard for current credit balance and usage history
+**网页端：**
+1. 访问 https://2slides.com/api
+2. 登录你的账户
+3. 在仪表盘查看当前积分余额与用量历史
 
-**Via API:**
-- Credit balance is returned in API error responses when insufficient
-- Check account page for detailed usage tracking
+**API 端：**
+- 积分不足时，API 错误响应中会返回余额
+- 详细的用量记录请查看账户页面
 
-## Credit Expiration
+## 积分过期
 
-**Credits NEVER expire.** Purchase credits and use them at your own pace without time pressure.
+**积分永不过期。** 购买后按自己的节奏使用，没有时间压力。
 
-## Best Practices for Credit Management
+## 积分管理最佳实践
 
-1. **Start with free credits** - Use your 500 free credits to test features
-2. **Calculate needs** - Estimate your typical usage before purchasing
-3. **Buy in bulk** - Larger packages offer better value (up to 20% off)
-4. **Monitor usage** - Check your dashboard regularly to track consumption
-5. **Plan ahead** - Buy credits before you need them to take advantage of promotions
+1. **先用免费积分** - 用 500 免费积分测试各功能
+2. **估算需求** - 购买前估算你的常规用量
+3. **批量购买** - 套餐越大越划算（最高省 20%）
+4. **监控用量** - 定期查看仪表盘跟踪消耗
+5. **提前规划** - 在需要之前购买积分，赶上促销
 
-## Rate Limits
+## 速率限制
 
-Credit purchases do not affect API rate limits:
-- Fast PPT: 10 requests per minute
-- Nano Banana: 6 requests per minute
+积分购买不影响 API 速率限制：
+- Fast PPT：每分钟 10 次请求
+- Nano Banana：每分钟 6 次请求
 
-Rate limits are based on API tier, not credit balance.
+速率限制取决于 API 等级，与积分余额无关。
 
-## Common Questions
+## 常见问题
 
-**Q: Do credits expire?**
-A: No, credits never expire.
+**问：积分会过期吗？**
+答：不会，积分永不过期。
 
-**Q: Can I get a refund?**
-A: Yes, within 3 days of purchase if credits haven't been substantially used.
+**问：可以退款吗？**
+答：可以。购买后 3 天内，且积分未被大量使用。
 
-**Q: What happens if I run out of credits?**
-A: API requests will return an INSUFFICIENT_CREDITS error. Purchase more credits to continue.
+**问：积分用完了会怎样？**
+答：API 请求会返回 INSUFFICIENT_CREDITS 错误。购买更多积分即可继续。
 
-**Q: Can I share credits with my team?**
-A: Currently, credits are tied to individual API keys. Team plans are in development.
+**问：积分可以和团队共享吗？**
+答：目前积分绑定在单个 API key 上。团队方案开发中。
 
-**Q: Are there discounts for students or nonprofits?**
-A: Contact 2slides support for special pricing inquiries.
+**问：学生或非营利组织有折扣吗？**
+答：优惠价格请咨询 2slides 客服。
 
-**Q: How do I know how many credits I have left?**
-A: Check your dashboard at https://2slides.com/api
+**问：怎么查剩余积分？**
+答：在 https://2slides.com/api 的仪表盘查看
 
-## Resources
+## 资源
 
-- **Purchase Credits:** https://2slides.com/pricing
-- **API Dashboard:** https://2slides.com/api
-- **Main Website:** https://2slides.com
-- **API Documentation:** See api-reference.md
-- **Skill Guide:** See SKILL.md
+- **购买积分：** https://2slides.com/pricing
+- **API 仪表盘：** https://2slides.com/api
+- **主站：** https://2slides.com
+- **API 文档：** 见 api-reference.md
+- **Skill 指南：** 见 SKILL.md
 
 ---
 
-*Pricing information last updated: 2026-02-10*
+*定价信息最后更新：2026-02-10*

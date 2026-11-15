@@ -1,33 +1,37 @@
-> **Additional context needed**: which section is the target, and what must stay untouched.
+> **中文汉化版** · 上游：[unknown-upstream](https://github.com/unknown-upstream) · 原文件：`skills/designer/design/impeccable/reference/bolder.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-An open direction round owns the word first: "bolder" said while a direction decision is on the table is the Bolder hand register steer, a fresh deal of foreign forms (see new-work.md), not this command. This command refines a surface whose world already shipped.
+> **需要补充上下文**：哪个小节是目标，哪些内容必须保持原样。
 
-"Bolder" is an amplification request, and almost always it is scoped to something that already exists. The surrounding page, its system, and its conventions are the given. Your job is to raise one part to the conviction the rest already implies, without rebuilding anything the brief did not name. The reflex answer, reaching for more effects, is the opposite of bold; reject it first.
+方向轮还开着时，这个词先归它管：方向决策还在桌上时说出的"bolder"，指的是 Bolder 手牌的语气 steer，即重新发一手外来形态（见 new-work.md），不是本命令。本命令打磨的是一个世界已经上线了的界面。
 
-## Scope is sovereign
+"Bolder" 是一个放大请求，而且几乎总是限定在已经存在的东西上。周围的页面、它的体系与惯例是给定项。你的任务是把其中一部分提到其余部分已经暗示的确信度，而不重建 brief 没点名的任何东西。条件反射式的答案，伸手去加更多效果，与大胆相反；先把它否掉。
 
-"Everything else stays" is a literal instruction. Touch only the named target. Do not restyle its neighbors, do not migrate the page to a new idea, do not add colors, fonts, radii, shadows, or system primitives the surface does not already own. If the existing system genuinely cannot express the direction, do not expand it on your own. Ask with the AskUserQuestion tool and wait for the answer before continuing. Name the exact addition and the job it would do.
+## 范围至高
 
-## Why it reads flat
+"其他一切保持不变"是字面指令。只碰点名的目标。不改它邻居的样式，不把页面迁到新想法上，不加该界面不曾拥有的颜色、字体、圆角、阴影或体系原语。现有体系确实表达不了这个方向时，也不要自行扩充。用 AskUserQuestion 工具问，等答案再继续。说准要加的是什么、它要干的活是什么。
 
-A section usually reads flat for reasons its neighbors have already solved. Look at what the rest of the page does that this section does not: the display type at full strength, the structural devices that carry meaning, the signature motif, the density and pacing. A flat section is typically one that quietly opts out of the system's own strongest moves. The most reliable bolder pass brings the target up to the expressive level its neighbors already reach, in the system's own vocabulary rather than a new one.
+## 为什么它读起来平
 
-## The amplification
+一个小节读起来平，原因通常是它的邻居早已解决的。看页面其余部分做了而这个小节没做的事：全火力开动的展示字体、承载意义的结构手法、签名主题、密度与节奏。平的小节典型地是悄悄退出了体系自己最强几招的那一个。最可靠的 bolder 手法，是用体系自己的词汇（而不是一套新词汇）把目标提到邻居已经达到的表达水平。
 
-- **Amplify what the system already owns.** Reuse its motif and its type scale at full strength, turned up for this section rather than invented for it. The bolder version should look more like the same brand, not less.
-- **Keep content true.** Existing claims are part of the scope: preserve them unless the user supplies replacements. If real evidence is essential to the direction but absent, ask for it.
-- **Commit, then clarify.** Half-measures read as noise. Make the one decisive move completely, then quiet everything around it so the move is legible. If every element got louder, the section got flatter.
-- **Give it its own rhythm.** The target should read as a peak in the scroll, a shift in density or pace from what surrounds it, not simply more of the same.
+## 放大
 
-## The skeleton test
+- **放大体系已经拥有的东西。** 全火力复用它的主题与字号阶梯，为这个小节调高音量，而不是为它新发明。更 bolder 的版本应该看起来更像同一个品牌，而不是更不像。
+- **保持内容真实。** 既有的声明是范围的一部分：保留它们，除非用户给出替换。真实证据对方向必不可少却不在场时，开口要。
+- **先贯彻，再澄清。** 半吊子读起来是噪音。把那一个决定性动作做完整，然后让周围一切安静下来，让动作读得清。每个元素都变响，小节反而更平。
+- **给它自己的节奏。** 目标要读作滚动中的一座峰，密度或步调相对四周的一次变化，而不是同一种东西的更多份。
 
-Strip the copy out of your planned section and study the bare structure. Does the skeleton still say what this section is and why it matters, through hierarchy and the system's devices alone? If it only works once the words return, the boldness is in the text size, not the design. A placeholder for an image or artifact names a job, an anchor and a piece of evidence, not a cue to drop in a decorative photo; fill that job with whatever the subject actually has.
+## 骨架测试
 
-## Before you finish
+把文案从计划的小节里抽掉，研究裸结构。骨架还能仅凭层级和体系的手法说出这节是什么、为什么重要吗？要等词语回来才成立，那大胆就在字号里，不在设计里。图像或制品的占位符点名的是一项工作、一个锚点和一件证据，不是塞一张装饰照片的暗号；用主体实际拥有的任何东西去填这份工作。
 
-- Everything outside the named target is unchanged.
-- No new color, font, or system primitive appeared without being asked for.
-- The conventions the section carried, including anything that drives an action, still work the same way.
-- The section is unmistakably the same brand, only more sure of itself.
+## 收尾之前
 
-When the target holds its own without pulling the page apart, hand off to `/impeccable polish` for the final pass.
+- 点名目标之外的一切未变。
+- 没有未经要求的任何新颜色、字体或体系原语出现。
+- 小节承载的惯例，包括任何驱动动作的东西，仍以同样方式工作。
+- 小节毫无疑问还是同一个品牌，只是更自信。
+
+目标自己站得住、又不把页面扯散时，交给 `/impeccable polish` 做最后一遍。

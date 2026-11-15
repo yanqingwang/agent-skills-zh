@@ -1,23 +1,27 @@
-# Agent memory
+> **中文汉化版** · 上游：[czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) · 原文件：`skills/n8n-agents/MEMORY.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-Memory is a sub-node on the agent, wired via `ai_memory`. Without it, every invocation is stateless. With it, the agent holds a conversation across turns — and across executions, depending on type — keyed by whatever expression you bind to `sessionKey`.
+# Agent 记忆
 
-Memory node availability shifts between n8n versions, so confirm what's installed with `search_nodes({ query: 'memory' })`.
+记忆是 Agent 上的一个子节点，通过 `ai_memory` 接线。没有它，每次调用都是无状态的。有了它，Agent 能跨轮次、（取决于类型）跨执行地维持一段对话，以你绑定到 `sessionKey` 的任何表达式为键。
 
----
-
-## The two non-negotiables
-
-1. **Plumb a stable key through.** Memory buckets by whatever you bind to `sessionKey`. The Chat Trigger fills `sessionId` automatically. For other triggers, derive a stable identifier (Slack `thread_ts`, a webhook conversation ID, a generated UUID, a multi-tenant composite) and forward it to memory and any session-keyed tools. Without consistency across the same conversation, memory never matches.
-2. **Default to `memoryBufferWindow`.** It persists across executions via n8n's internal store, keyed on `sessionKey`, and is the right choice for nearly every chat agent. Reach for Postgres/Redis only when memory must be read **outside** the agent.
+记忆节点的可用性随 n8n 版本变动，用 `search_nodes({ query: 'memory' })` 确认装了什么。
 
 ---
 
-## The memory types
+## 两条没有商量余地的原则
 
-### `memoryBufferWindow` (the default)
+1. **把稳定的键贯通下去。** 记忆按你绑定到 `sessionKey` 的值分桶。Chat Trigger 会自动填 `sessionId`。其他触发器要自己派生稳定标识（Slack `thread_ts`、webhook 会话 ID、生成的 UUID、多租户组合键），并转发给记忆和任何按会话取键的工具。同一会话内不一致，记忆就永远对不上。
+2. **默认用 `memoryBufferWindow`。** 它经 n8n 内部存储跨执行持久化，以 `sessionKey` 为键，对几乎所有聊天 Agent 都是正确选择。只有记忆要在 Agent **之外**被读取时才上 Postgres/Redis。
 
-In-context memory of the last N exchanges, persisted across executions via n8n's store.
+---
+
+## 记忆类型
+
+### `memoryBufferWindow`（默认）
+
+上下文内记忆最近 N 轮对话，经 n8n 存储跨执行持久化。
 
 ```json
 {
@@ -32,15 +36,15 @@ In-context memory of the last N exchanges, persisted across executions via n8n's
 }
 ```
 
-`contextWindowLength` is the number of exchanges retained. **The default is 5 — very low** for modern chat expectations, where users assume a conversation feels close to endless. **50 is a reasonable starting point.** Higher = more context but more tokens per turn.
+`contextWindowLength` 是保留的对话轮数。**默认值是 5，对现代聊天预期来说非常低**，用户默认对话近乎无限延续。**50 是合理的起点。** 越高 = 上下文越多，但每轮 token 越多。
 
-**Messages past the window are removed entirely.** Once the buffer fills, the oldest exchanges are dropped and the agent can't recall, search, or even know they existed. If a user said something 60 turns ago and the window is 50, that's gone from the agent's perspective. For recall beyond the window, raise `contextWindowLength`, or persist key facts in a Data Table that's read and injected into the system prompt.
+**窗口外的消息被整体移除。** 缓冲一满，最老的轮次被丢弃，Agent 无法回忆、搜索，甚至不知道它们存在过。用户 60 轮前说过的话，窗口是 50 时，从 Agent 视角已经不存在。要回忆窗口之外的内容，调高 `contextWindowLength`，或把关键事实持久化到 Data Table，读取后注入系统提示词。
 
-The "window" is a sliding cap on how many messages stay in context — **not** a scope on persistence. With `sessionIdType: 'customKey'` you bind the key to any expression (`{{ $json.sessionId }}`, a Slack `thread_ts`, a multi-tenant composite). Each user/thread/context gets its own bucket.
+"窗口"只是上下文中保留多少消息的滑动上限，**不是**持久化的作用范围。用 `sessionIdType: 'customKey'` 可以把键绑定到任何表达式（`{{ $json.sessionId }}`、Slack `thread_ts`、多租户组合键）。每个用户/会话线程/上下文有自己的桶。
 
 ### `memoryPostgresChat` / `memoryRedisChat`
 
-Reach for these only when memory must be queried or read **outside** the agent: displaying conversation history in your own UI, analytics on past chats, sharing memory across systems, or migrating instances cleanly.
+只在记忆需要在 Agent **之外**被查询或读取时用它们：在自己的 UI 里展示对话历史、对过往聊天做分析、跨系统共享记忆、或干净地迁移实例。
 
 ```json
 {
@@ -54,86 +58,86 @@ Reach for these only when memory must be queried or read **outside** the agent: 
 }
 ```
 
-**Wrong for** the default chat case — `memoryBufferWindow` already survives across executions and is the cleaner pick.
+**默认聊天场景用它们是错的**：`memoryBufferWindow` 已经能跨执行存活，而且是更干净的选择。
 
 ---
 
-## Custom patterns (Chat Memory Manager)
+## 自定义模式（Chat Memory Manager）
 
-Most agents don't need this. But when a fixed window isn't enough, the `@n8n/n8n-nodes-langchain.memoryManager` node operates against any wired memory backend and exposes three modes:
+多数 Agent 用不上。但当固定窗口不够时，`@n8n/n8n-nodes-langchain.memoryManager` 节点可对任何已接线的记忆后端操作，暴露三种模式：
 
-- **`load`** (default) — read current memory into the workflow (for inspection, branching on size, feeding a summarizer).
-- **`insert`** — append a message. An optional `hideFromUI` flag covers messages that should affect the agent but not show in the chat UI.
-- **`delete`** — remove some or all messages.
+- **`load`**（默认）：把当前记忆读进工作流（用于检查、按大小分支、喂给摘要器）。
+- **`insert`**：追加一条消息。可选的 `hideFromUI` 标志覆盖那些要影响 Agent 但不该出现在聊天 UI 里的消息。
+- **`delete`**：删除部分或全部消息。
 
-### Pattern: rolling summarization
+### 模式：滚动摘要
 
-When a conversation runs long and you want the gist of older turns instead of dropping them:
+对话拉长后，想留住旧轮次的大意而不是丢弃它们：
 
-1. After each turn, `load` the buffer.
-2. If it's approaching the cap, route to a summarizer (otherwise no-op).
-3. Summarize the older turns with an LLM.
-4. `delete` the buffer.
-5. `insert` the summary as one message, plus the most recent few turns for continuity.
+1. 每轮之后 `load` 缓冲。
+2. 接近上限时路由到摘要器（否则不做任何事）。
+3. 用 LLM 摘要较老的轮次。
+4. `delete` 缓冲。
+5. `insert` 摘要为一条消息，外加最近几轮以保持连贯。
 
-The agent now sees `[summary of turns 1-40] + [recent 5 turns]`, paying far fewer input tokens while keeping long-history context.
+Agent 现在看到 `[summary of turns 1-40] + [recent 5 turns]`，输入 token 大幅减少，长历史上下文还在。
 
-Other patterns built the same way: **prune by relevance** (`load` → filter → `delete` → `insert` the keepers), **inject runtime facts** (`insert` with `hideFromUI: true`), **reset on command** (`delete` all on `/clear`).
+其他模式同理组装：**按相关性修剪**（`load` → 过滤 → `delete` → `insert` 留下的）、**注入运行时事实**（`insert` 加 `hideFromUI: true`）、**按命令重置**（收到 `/clear` 就 `delete` 全部）。
 
-The Memory Manager node is more recent than the rest of n8n's memory tooling — verify the modes against your installed version before relying on them in production.
+Memory Manager 节点比 n8n 其余记忆工具更新，在生产中依赖之前，先对照你装的版本核实这些模式。
 
 ---
 
-## Session ID handling by trigger
+## 各触发器的 session ID 处理
 
 ### Chat Trigger
-Sets `sessionId` automatically. Wire it everywhere consistently:
-- Memory: `sessionKey: ={{ $('Chat Trigger').first().json.sessionId }}`
-- Tools: `sessionId: ={{ $('Chat Trigger').first().json.sessionId }}` (**NOT** through `$fromAI`)
-- Storage keying: derive bucket keys / filenames from `sessionId` for trivial per-session cleanup.
+自动填 `sessionId`。处处一致地接线：
+- 记忆：`sessionKey: ={{ $('Chat Trigger').first().json.sessionId }}`
+- 工具：`sessionId: ={{ $('Chat Trigger').first().json.sessionId }}`（**不要**经由 `$fromAI`）
+- 存储取键：从 `sessionId` 派生存储桶键/文件名，便于按会话做简单清理。
 
-### Webhook trigger
-You manage it: the caller passes a header or body field (`body.sessionId`) and you forward it, or you issue one on first call and expect it back. Either way, it must be consistent across the whole conversation, including reconnections.
+### Webhook 触发器
+由你管理：调用方传一个 header 或 body 字段（`body.sessionId`）由你转发，或者你首次调用时发放一个并要求带回来。无论哪种，整个会话期间（包括重连）必须一致。
 
-### Manual / scheduled
-Usually no session. Use a stable identifier per "conversation" if one exists (ticket ID, thread ID); otherwise memory adds nothing — omit it.
-
----
-
-## Memory and tools
-
-When a tool is invoked, the tool's sub-workflow does **NOT** see conversation memory — memory is the agent's context, not the tool's input. Pass needed context through `$fromAI` parameters explicitly. For session-keyed state, plumb `sessionId` and have the tool look up state from a Data Table or storage keyed by session.
+### 手动 / 定时
+通常没有会话。存在稳定的"对话"标识（工单 ID、线程 ID）就用它；否则记忆没有意义，直接省略。
 
 ---
 
-## Memory and binary
+## 记忆与工具
 
-Memory stores **text turns**. Binary uploaded mid-conversation is NOT in memory — it's in the Chat Trigger's `files[]` for that turn only. The text memory captures that "the user mentioned uploading a file," but to actually use the file in a later tool call it must still be in storage and its key must be in **that** turn's system prompt. In practice, inject the session's file inventory into the system prompt every turn (loaded by `sessionId`). → **n8n-binary-and-data**.
-
----
-
-## Common mistakes
-
-- **Hardcoding `sessionId: 'default'`** — all conversations share one bucket; memory becomes meaningless.
-- **Different `sessionId` on memory vs tools** — memory looks right but tools can't find related state.
-- **Unbounded `memoryBuffer` for chat** — token cost grows until timeout. Use BufferWindow with a sane limit.
-- **Adding memory where there's no session** — a "summarize this article" workflow doesn't need it.
-- **Expecting tools to see memory** — they see only their `$fromAI` parameters and plumbed context.
-- **Drift between the surface and memory** — if anything posts to the conversation outside the agent (a scheduled reply, a human writing directly), the agent operates on an incomplete view and will contradict messages it can't see. Whatever shows on the user-facing surface must also be `insert`ed into memory.
+工具被调用时，工具的子工作流**看不到**对话记忆——记忆是 Agent 的上下文，不是工具的输入。需要什么上下文就通过 `$fromAI` 参数显式传。对按会话取键的状态，把 `sessionId` 贯通下去，让工具从 Data Table 或按会话取键的存储里查状态。
 
 ---
 
-## Operational notes
+## 记忆与二进制
 
-- **Memory size drives token cost.** A 15-turn buffer of 200-token messages is 3000 tokens of input every turn before the user even speaks. Plan for it.
-- **Rate limits.** A model that hits a limit fails mid-conversation; memory holds everything until then, and the next turn resumes (assuming session-id continuity).
-- **Concurrent sessions.** Persistent backends key on `sessionId`, so concurrent conversations don't interfere. Verify with two simultaneous tests.
+记忆存的是**文本轮次**。会话中上传的二进制不在记忆里，它只在那一轮的 Chat Trigger `files[]` 里。文本记忆只会记下"用户提到上传了文件"，但要在之后的工具调用里真正用上那个文件，它必须还在存储里，且它的键必须出现在**那一轮**的系统提示词里。实践中，每一轮都把该会话的文件清单注入系统提示词（按 `sessionId` 加载）。→ **n8n-binary-and-data**。
 
 ---
 
-## Cross-references
+## 常见错误
 
-- Where the agent fits → parent **SKILL.md**
-- Passing session-keyed state into tools → **SUBWORKFLOW_AS_TOOL.md**
-- Threading-as-session on chat surfaces → **CHAT_AGENT_PATTERNS.md**
-- Session-keyed file storage → **n8n-binary-and-data**
+- **写死 `sessionId: 'default'`**，所有对话共用一个桶，记忆失去意义。
+- **记忆与工具的 `sessionId` 不一致**，记忆看着正常，工具却找不到关联状态。
+- **聊天用无界的 `memoryBuffer`**，token 开销一路涨到超时。用有合理上限的 BufferWindow。
+- **没有会话的地方加记忆**，"总结这篇文章"的工作流用不上。
+- **指望工具看到记忆**，它们只看到自己的 `$fromAI` 参数和贯通下来的上下文。
+- **表层与记忆漂移**，只要有什么绕过 Agent 发进了对话（定时回复、人工直接发言），Agent 就在不完整的视图上运转，并会与它看不见的消息相互矛盾。用户可见表层上出现的任何内容，也必须 `insert` 进记忆。
+
+---
+
+## 运维注意
+
+- **记忆大小驱动 token 成本。** 200 token 一条消息的 15 轮缓冲，在用户开口之前每轮就是 3000 token 输入。提前规划。
+- **限流。** 模型撞上限流会在对话中途失败；在那之前记忆都攒着，下一轮接着来（前提是 session ID 连续）。
+- **并发会话。** 持久后端按 `sessionId` 取键，并发对话互不干扰。用两个同时进行的测试验证。
+
+---
+
+## 交叉引用
+
+- Agent 的定位 → 父级 **SKILL.md**
+- 把按会话取键的状态传进工具 → **SUBWORKFLOW_AS_TOOL.md**
+- 聊天界面上的线程即会话 → **CHAT_AGENT_PATTERNS.md**
+- 按会话取键的文件存储 → **n8n-binary-and-data**

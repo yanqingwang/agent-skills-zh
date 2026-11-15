@@ -1,20 +1,24 @@
-# Publishing a figure to the community gallery
+> **中文汉化版** · 上游：[wheresryan22/anatomy](https://github.com/wheresryan22/anatomy) · 原文件：`references/publish.md` · License: MIT
+> 翻译日期：2026-11-13 · 同步状态：上游 HEAD（2026-11-13 快照）· AI 辅助翻译 + 人工校对
+> 术语以 [GLOSSARY.md](../../../../../GLOSSARY.md) 为准；代码块、命令与 frontmatter 字段名保持原文。本文件为翻译作品，非上游官方中文版。
 
-The community gallery is the repository `wheresryan22/anatomy-community`. People share plain HTML figures there: a build script that writes standalone pages next to itself, as the skill's examples do, in any theme. React and Next.js figures can't be submitted.
+# 把图发布到社区图库
 
-Publish only when the user asks to share or publish a figure. Never send anything without their explicit yes.
+社区图库是仓库 `wheresryan22/anatomy-community`。人们在那里分享纯 HTML 图：一个构建脚本在自身旁边写出独立页面，与本 skill 的示例一致，主题不限。React 与 Next.js 的图不能提交。
 
-## Steps
+只有当用户要求分享或发布某个图时才发布。没有得到他们明确的同意，绝不发送任何东西。
 
-1. **Check the figure is finished.** Its pages are built and up to date, the line check passes, `--audit` passes if it has pipes, cables or round parts, and with reduced motion on it holds one still pose. The gallery checks all of this too.
-2. **Ask the user for what only they can give:**
-   - their GitHub username (the author); `gh api user --jq .login` shows who the GitHub CLI is signed in as;
-   - a title (at most 80 characters) and a short kebab-case id;
-   - the license: MIT (the default) or CC-BY-4.0;
-   - confirmation that it is their own work and they are happy to share it.
-   The prompt is the request that made the figure; reuse it, trimmed to 600 characters.
-3. **Get a local clone of the gallery,** if they have none: `gh repo clone wheresryan22/anatomy-community -- --single-branch` (only `main`: the previews branch holds every image and grows large). Cloning the main repository is fine: the submit step makes a fork for them if they need one.
-4. **Show the plan,** without doing anything:
+## 步骤
+
+1. **确认图已完成。** 页面已构建且是最新的，线条检查通过，含管道、线缆或圆形部件时 `--audit` 通过，开启 reduced motion 后它能保持一个静止姿态。图库自己也会检查所有这些。
+2. **向用户索要只有他们能提供的东西：**
+   - 他们的 GitHub 用户名（作者）；`gh api user --jq .login` 显示 GitHub CLI 当前登录的是谁；
+   - 一个标题（不超过 80 字符）和一个简短的 kebab-case id；
+   - 许可证：MIT（默认）或 CC-BY-4.0；
+   - 确认这是他们自己的作品且愿意分享。
+   prompt 就是生成这幅图的那次请求；复用它，截到 600 字符。
+3. **在本地克隆图库**（如果他们还没有）：`gh repo clone wheresryan22/anatomy-community -- --single-branch`（只要 `main`：previews 分支存放所有图片，体积会很大）。克隆主仓库没关系：提交步骤会在需要时为他们创建 fork。
+4. **展示计划，** 什么都不执行：
    ```sh
    node <skill>/scripts/publish.mjs <figure folder> --into <clone> --id <kebab-id> \
      --title "..." --author <github user> --prompt "..." \
@@ -22,24 +26,24 @@ Publish only when the user asks to share or publish a figure. Never send anythin
      [--license MIT|CC-BY-4.0] \
      [--tags a,b] [--audit] [--pages a.html,b.html] --submit --dry-run
    ```
-   Pass `--agent` for the agent you are running in and `--model` for the model you are (the gallery requires it, like `claude-opus-5-5` or `gpt-5-codex`). In Claude Code the time to make and the tokens spent are read from this session's log on their own: from the request that made the figure to the request to publish it, idle gaps over 10 minutes left out, cache reads not counted. In another agent, pass `--minutes` and `--tokens` if you can see your session's usage; otherwise leave them out rather than guess. Read the plan back to the user: it names the fork (if any), the branch, the folder it adds and where the pull request goes.
-5. **Only after the user says yes,** run the same command with `--yes` instead of `--dry-run`. It copies only the figure's source into `figures/<author>/<id>/src/`, points its kit imports at the clone's `.skill/` link, records the kit fingerprint, checks the build, saves a preview to `shots/<author>-<id>/preview.png`, then commits that folder alone, pushes, and opens the pull request. Give the user the link it prints.
-   - If it says a file reaches outside the figure folder and the skill, copy what that file needs into the figure folder, rebuild, and publish again.
-   - If it can't tell which pages are the figure, pass `--pages`.
-   - To send an updated version later, run it again with `--force`; it updates the same pull request.
-6. **Without `--submit`** the script stops after preparing the folder and prints the git and `gh` commands instead; use that if the user prefers to send it themselves.
+   `--agent` 传你正在运行的 agent，`--model` 传你所用的模型（图库要求提供，如 `claude-opus-5-5` 或 `gpt-5-codex`）。在 Claude Code 里，制作耗时与 token 消耗会自动从本会话日志读取：从生成该图的请求到发布它的请求，剔除超过 10 分钟的空闲间隔，缓存读取不计入。在其他 agent 里，能看到自己会话用量时传 `--minutes` 与 `--tokens`；看不到就省略这两个参数，不要猜。把计划复述给用户：它会写明 fork（如有）、分支、新增的文件夹以及 pull request 去向。
+5. **只有用户说可以之后**，用 `--yes` 替换 `--dry-run` 运行同一条命令。它只把图的源码复制进 `figures/<author>/<id>/src/`，把 kit 导入指向克隆的 `.skill/` 链接，记录 kit 指纹，检查构建，把预览保存到 `shots/<author>-<id>/preview.png`，然后只提交该文件夹、推送并打开 pull request。把它打印出的链接交给用户。
+   - 如果它报告某个文件越出了图文件夹与 skill 的范围，把该文件所需的内容复制进图文件夹，重新构建，再次发布。
+   - 如果它无法判断哪些页面属于这个图，传 `--pages`。
+   - 以后要发送更新版本时，加 `--force` 再运行；它会更新同一个 pull request。
+6. **不带 `--submit`** 时，脚本在准备好文件夹后停下，改为打印 git 与 `gh` 命令；用户想自己发送时就用这种方式。
 
-People without a terminal can also submit through the gallery's **Submit a figure** issue form, with a link to a GitHub Gist holding the figure's source.
+没有终端的人也可以通过图库的 **Submit a figure** issue 表单提交，附上一个存有图源码的 GitHub Gist 链接。
 
-## What the gallery rejects
+## 图库会拒绝的内容
 
-- network calls or outside addresses;
-- `eval` or `new Function`;
-- frames, cookies, or reaching the page around the figure;
-- build imports other than the skill, the figure's own files and `node:fs`, `node:path`, `node:url`, `node:crypto` or `node:process`;
-- reading environment variables;
-- files other than source text under `src/`, or committed built pages;
-- builds that write anything but their pages, or that differ between two runs;
-- figures that keep moving with reduced motion on.
+- 网络调用或外部地址；
+- `eval` 或 `new Function`；
+- frame、cookie，或触及图周围页面的一切；
+- skill、图自身文件以及 `node:fs`、`node:path`、`node:url`、`node:crypto`、`node:process` 之外的构建导入；
+- 读取环境变量；
+- `src/` 下源码文本之外的文件，或提交已构建的页面；
+- 构建产物超出其页面，或两次运行结果不一致的构建；
+- 开启 reduced motion 后仍在持续运动的图。
 
-Write figures that way from the start if the user plans to share them.
+如果用户打算分享，从一开始就按这些规则写图。
