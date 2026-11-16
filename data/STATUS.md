@@ -1,8 +1,8 @@
-# 工作状态（自动生成于 2026-11-15 08:37 UTC，勿手改）
+# 工作状态（自动生成于 2026-11-16 08:46 UTC，勿手改）
 
-- **收录规模**：69 个上游 · 1322 个翻译件 · 4341 个原样件
+- **收录规模**：69 个上游 · 1400 个翻译件 · 4263 个原样件
 - **监控状态**：sync-check CI 每日 UTC 02:00 运行（HEAD 比对 → 原样件自动刷新 → 翻译件变更转重译工单）
-- **最近同步日志**：[data/sync-log/2026-11-15.md](sync-log/2026-11-15.md)
+- **最近同步日志**：[data/sync-log/2026-11-16.md](sync-log/2026-11-16.md)
 - **待重译**：无（全部翻译件与上游一致）
 - **快照 HEAD 总数**：69 个上游已纳入监控
 
@@ -12,16 +12,16 @@
 - `skills/corporate/finance/` — 7 件
 - `skills/corporate/sales/` — 7 件
 - `skills/corporate/supply-chain/` — 4 件
-- `skills/creator/slides/` — 38 件
+- `skills/creator/slides/` — 72 件
 - `skills/creator/video/` — 5 件
-- `skills/designer/design/` — 275 件
+- `skills/designer/design/` — 282 件
 - `skills/developer/` — 9 件
 - `skills/developer/context/` — 27 件
 - `skills/developer/efficiency/` — 3 件
 - `skills/developer/engineering/` — 47 件
 - `skills/developer/framework/` — 8 件
 - `skills/developer/gstack/` — 174 件
-- `skills/developer/quality/` — 101 件
+- `skills/developer/quality/` — 125 件
 - `skills/gamedev/` — 22 件
 - `skills/gamedev/art/` — 1 件
 - `skills/gamedev/camera-systems/` — 1 件
@@ -39,11 +39,11 @@
 - `skills/gamedev/unity-csharp-scripting/` — 1 件
 - `skills/gamedev/unreal-behavior-trees/` — 1 件
 - `skills/gamedev/unreal-cpp-gameplay/` — 1 件
-- `skills/growth/product/` — 87 件
+- `skills/growth/product/` — 91 件
 - `skills/researcher/analysis/` — 44 件
 - `skills/researcher/info/` — 13 件
 - `skills/researcher/knowledge/` — 35 件
-- `skills/researcher/science/` — 17 件
+- `skills/researcher/science/` — 26 件
 - `skills/toolbox/automation/` — 33 件
 - `skills/toolbox/cloud/` — 4 件
 - `skills/toolbox/compute/` — 6 件
