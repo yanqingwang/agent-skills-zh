@@ -16,12 +16,13 @@ import { matchesAny } from './ship-policy';
 import { ruledNoteText } from './ruled-notes';
 import { gateDispositionText } from './gate-dispositions';
 import { laneExceptionBodyLines } from './test-lane-exception';
+import { rerunMarker } from './run-evidence';
 import { stampFileKind, versionStampOnly } from './pregate/stamp-only';
 import { stampOnlyLine, type BranchSide } from './stamp-only';
 
 export const RECEIPT_FENCE = 'gstack-ship-receipt';
 const KEY_ORDER: Array<keyof ShipReceipt | 'docs'> = [
-  'schema_version', 'pr', 'head', 'version', 'base', 'gated_tree', 'predecessor', 'tree', 'gate_reuse', 'gate', 'ci', 'ci_carried', 'spend_usd',
+  'schema_version', 'pr', 'head', 'version', 'base', 'gated_tree', 'predecessor', 'tree', 'gate_reuse', 'gate', 'ci', 'ci_carried', 'spend_usd', 'calls',
   'session_kind', 'artifacts_consumed', 'run', 'thread', 'policy', 'queue_mode', 'preregistration', 'history',
   'head_tree', 'product_patch_id', 'gstack_version', 'review_depth', 'pregate', 'requires_remote', 'issues', 'approval', 'docs', 'review_loop',
   'review_loop_exception', 'review_round_grants', 'ruled_notes', 'gate_dispositions', 'mechanical', 'review_targeted', 'design', 'review_exclude', 'carry', 'base_red', 'flaky_exception', 'no_stop',
@@ -114,6 +115,7 @@ export function bindReceipt(body: string, pr: string | undefined, accepted: read
     const [was, want] = [oneLine(r.base).slice(0, 120), branch(opts.base)];
     return { ok: false, code: 'QUEUE_RECEIPT_BASE_MISMATCH', message: `${subject} ship receipt was reviewed against ${was}, not ${want}, so it covers only the change since ${was}; land the parent (${was}) first, merge ${want} into this branch and push, then gstack-ship-receipt carry --pr ${pr ?? '<n>'} --base ${want} moves the receipt to ${want}`, line };
   }
+  if (recheckCarried(r)) return { ok: false, code: 'QUEUE_RECEIPT_STALE', message: `${subject} ship receipt reached ${oneLine(r.head.slice(0, 12))} through a scoped re-check (carry: ${oneLine(r.carry!.reason).slice(0, 160)}), which is advice only, so the product code it covered never got a full review; run /ship on that head for its full review (GST-2673, docs/review-policy.md#rounds-per-pull-request)`, line };
   if (r.base_red && !opts.conditional) return { ok: false, code: 'QUEUE_RECEIPT_CONDITIONAL', message: `${subject} ship receipt is paused on a red base (${oneLine(r.base_red.cases.join(', ')).slice(0, 160)} fail at ${oneLine(r.base_red.base.slice(0, 12))}); /ship --resume rewrites it once the base passes them`, line };
   return { ok: true, receipt: r, head, line };
 }
@@ -131,11 +133,18 @@ export const RUNS_RE = /```gstack-receipt-runs[ \t]*\r?\n([\s\S]*?)\r?\n```[ \t]
  * carries), `carry` for any other hop. status: a /ship run that
  * started and wrote no receipt yet (`started`, its counters so far) or ended on an infrastructure failure (`voided`).
  */
-export type ReceiptRun = Pick<ShipReceipt, 'head' | 'version' | 'gstack_version' | 'run' | 'review_loop' | 'review_loop_exception'> & { depth?: string; carried_from?: string; carry_kind?: 'carry' | 'recheck'; status?: 'started' | 'voided' };
+export type ReceiptRun = Pick<ShipReceipt, 'head' | 'version' | 'gstack_version' | 'run' | 'review_loop' | 'review_loop_exception'> & { depth?: string; carried_from?: string; carry_kind?: 'carry' | 'recheck'; status?: 'started' | 'voided'; mark?: 'stop' | 'grant'; tree?: string; grant?: string };
+/** The runs block keeps the newest RECEIPT_RUNS_KEPT run entries and every stop or grant marker (lib/pr-review-history.ts), in order. */
+export function keptRuns(runs: readonly ReceiptRun[]): ReceiptRun[] {
+  const keep = new Set(runs.filter(r => !r.mark).slice(-RECEIPT_RUNS_KEPT));
+  return runs.filter(r => r.mark || keep.has(r));
+}
 export function receiptRuns(body: string): ReceiptRun[] {
   const m = RUNS_RE.exec(receiptSource(body));
   return m ? m[1]!.split('\n').flatMap(l => { try { const o = JSON.parse(l); return o && typeof o.head === 'string' ? [o as ReceiptRun] : []; } catch { return []; } }) : [];
 }
+/** Whether any hop of the receipt's carry was a scoped re-check: gstack before GST-2673 let one carry a receipt across a product change, so the code it covered never got a full review, and no later carry or land takes that receipt (GST-2706). */
+export const recheckCarried = (r: ShipReceipt): boolean => !!r.carry?.reason.split(' + ').some(hop => hop.includes('scoped re-check by '));
 export function receiptRun(r: ShipReceipt): ReceiptRun {
   const { head, version, gstack_version, run, review_loop, review_loop_exception } = r;
   const hop = r.carry ? r.carry.reason.split(' + ').pop()! : undefined;
@@ -160,7 +169,7 @@ export function placeReceipt(body: string, receipt: ShipReceipt): string {
   const prior = ex.receipt;
   const runs = receiptRuns(body).filter(r => !r.status || !!receipt.carry || receipt.run === undefined || r.run !== receipt.run);
   if (prior && typeof prior.head === 'string' && JSON.stringify(prior) !== JSON.stringify(receipt)) runs.push(receiptRun(prior));
-  const kept = runs.slice(-RECEIPT_RUNS_KEPT);
+  const kept = keptRuns(runs);
   const block = renderReceiptBlock(receipt) + (kept.length ? '\n```' + RUNS_FENCE + '\n' + kept.map(r => JSON.stringify(r)).join('\n') + '\n```\n' : '');
   if (ex.found && splitAgentNotes(body).notes === null) {
     const rest = body.replace(BLOCK_RE, '').replace(RUNS_RE, '').replace(/^\s+/, '');
@@ -197,13 +206,22 @@ export function receiptSummaryLine(r: ShipReceipt): string {
   if (r.predecessor) parts.push(`predecessor=${r.predecessor.slice(0, 12)}`);
   if (r.session_kind) parts.push(`session_kind=${r.session_kind}`);
   if (r.artifacts_consumed) parts.push(`artifacts_consumed=${r.artifacts_consumed}`);
+  if (typeof r.calls === 'number') parts.push(`calls=${r.calls}`);
   if (r.review_depth && typeof r.review_depth.depth === 'string') parts.push(`depth=${r.review_depth.depth}`);
   if (r.approval) parts.push(`approval=${approvalSummary(r.approval)}`);
   const loop = parseReviewLoop(r.review_loop);
   if (loop) parts.push(`passes=${loop.passes} blocking_found=${loop.blocking_found} deferred=${loop.deferred}`
     + (loop.fix_checks ? ` fix_checks=${loop.fix_checks}` : '') + (loop.rounds !== undefined ? ` rounds=${loop.rounds}` : '') + (loop.dispatches ? ` dispatches=${Object.values(loop.dispatches).reduce((a, c) => a + c, 0)}` : ''));
   if (r.carry && typeof r.carry.from === 'string') parts.push(`carried_from=${r.carry.from.slice(0, 12)}`);
-  if (Array.isArray(r.ci_carried) && r.ci_carried.length) parts.push(`ci_carried=${r.ci_carried.map(c => `${c.lane}:${c.run}/${c.attempt}`).join(',')}`);
+  if (Array.isArray(r.ci_carried) && r.ci_carried.length) {
+    const runs = new Map<string, { files: number; attempts: number[] }>();
+    for (const c of r.ci_carried) {
+      const key = `${c.run}/${c.attempt}`;
+      const seen = runs.get(key) ?? { files: 0, attempts: [] };
+      runs.set(key, { files: Math.max(seen.files, typeof c.rerun === 'number' ? c.rerun : 0), attempts: [...seen.attempts, ...(Array.isArray(c.attempts) ? c.attempts : [])] });
+    }
+    parts.push(`ci_carried=${r.ci_carried.map(c => `${c.lane}:${c.run}/${c.attempt}`).join(',')}${rerunMarker([...runs.values()])}`);
+  }
   if (r.base_red && typeof r.base_red.base === 'string') parts.push(`base_red=${r.base_red.base.slice(0, 12)}`);
   return `SHIP_RECEIPT: ${oneLine(parts.join(' '))}`;
 }

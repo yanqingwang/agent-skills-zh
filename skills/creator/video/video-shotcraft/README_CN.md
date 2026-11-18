@@ -59,6 +59,16 @@
 <table>
 <tr>
 <td align="center" valign="middle" width="25%">
+  <a href="https://apinebula.ai/ref/HLROcb4p"><img src="./assets/readme/sponsors/apinebula.png" width="200" alt="APINEBULA 标志"></a><br>
+  <a href="https://apinebula.ai/ref/HLROcb4p"><b>APINEBULA</b></a>
+</td>
+<td>
+  <p>感谢 APINEBULA 赞助本项目！APINEBULA 是银河录像局旗下的企业级 AI 聚合平台，背靠大平台资源，面向开发者、团队与企业用户提供稳定、高性价比的大模型 API 接入服务。平台聚合 Claude、GPT、Gemini 等主流满血模型，一个接口，接入全球顶尖 AI 大模型，各大模型价格低至 0.6 折起，支持企业级高并发、正式合同、对公打款与开票服务！</p>
+  <p>使用<a href="https://apinebula.ai/ref/HLROcb4p">此链接</a>注册并在充值时填写 <b>video</b> 优惠码可享<b>九折优惠</b>！</p>
+</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="25%">
   <a href="https://aws.amazon.com/"><img src="./assets/readme/sponsors/aws.svg" width="200" alt="AWS 标志"></a><br>
   <a href="https://aws.amazon.com/"><b>AWS</b></a>
 </td>
@@ -268,6 +278,10 @@ Video Shotcraft 的搜索与下载 CLI 为独立实现。
 ## ☕ 支持作者
 
 如果这个项目帮到了你，欢迎请我喝杯咖啡，支持后续开发与维护。
+
+<a href="https://ko-fi.com/vincentwei"><img src="https://storage.ko-fi.com/cdn/kofi2.png?v=6" alt="在 Ko-fi 请我喝杯咖啡" height="40"></a>
+
+海外用户可通过 Ko-fi 用银行卡或 PayPal 一次性支持；国内用户可用下方微信：
 
 <img src="assets/wechat-sponsor.jpg" alt="微信赞助收款码" width="280">
 

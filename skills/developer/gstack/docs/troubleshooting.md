@@ -386,7 +386,12 @@ it; `gstack-outside-voice run` sends that default to Anthropic only.
 **Meaning.** The answer did not contain what the gate checks: a
 `Recommendation: ... because ...` line (or a `## Recommendation` heading whose
 next non-blank line is a plain sentence with a `because` reason), a
-`SCORE:`/`AMBIGUITIES:` pair, or severity tags.
+`SCORE:`/`AMBIGUITIES:` pair, autoplan's `INPUT: <phase> <sha256>` line and
+`gstack-findings` fence, or severity tags. `gstack-outside-voice run` judges a
+prompt that carries autoplan's RESULT FORMAT by that format (`--gate autoplan`),
+so an autoplan second-model review that reports `missing review completion
+recommendation` came from a gstack older than that fix: read its result file
+before re-running it.
 
 **Fix.** Re-run the review.
 
@@ -724,6 +729,50 @@ before the fetch instead of going on unprotected.
 
 **Fix.** Do what the parenthesized `gstack-lease` line names (wait for the
 process holding `<git dir>/gstack-leases/.lock`), then rerun.
+
+<a id="ship-lane-not-carried"></a>
+### `STOP: SHIP_LANE_NOT_CARRIED: lane <label> did not carry from a verified CI run at this tree, and --tests-only never starts a lane on its own ...`
+
+**Meaning.** `gstack-ship-preflight --tests-only` was given a lane whose exact
+command `origin/<base>`'s `.gstack/pregate.json` maps in `ship_lanes_from`,
+and no verified CI run carries it at this tree: the `CI_CARRY: none
+label=<label> (<reason>)` line above the STOP says why (`no_run`: CI has not
+run this tree yet; `dirty_tree`: uncommitted work). A mapped lane is the full
+suite, which can take most of an hour on a small machine (gbrain #9662: a
+50-minute unit lane on 4 CPUs), so `--tests-only` no longer starts it on its
+own (GST-3019).
+
+**What is kept.** Nothing ran: no lane, mapped or not, started. The pregate
+line above it is the pregate's own verdict.
+
+**Fix.** Follow the `NEXT:` lines. Commit and push the tree, dispatch the
+workflow they name (`gh workflow run <workflow> --ref <branch>`), wait with
+`gstack-ci-carry wait --base <base>`, and once it prints `CI_WAIT: green`
+rerun the same `--tests-only` command, which then carries the lane. To run the
+lane on this machine instead, rerun with `--run-uncarried-here`.
+
+**Expected result.** `LANE: <label> carried run=<id>/<attempt> …`, or with
+`--run-uncarried-here`, `LANE: <label> pass …` from the run here.
+
+<a id="ship-base-unknown"></a>
+### `STOP: SHIP_BASE_UNKNOWN: --base <base> names no commit here ...`
+
+**Meaning.** `gstack-ship-preflight --audit --base <base>` could not resolve
+the base to a commit. A value that looks like a commit sha (7 to 64 hex
+characters) is tried as a commit this checkout holds first, then
+`origin/<base>`. Before GST-3019 a sha was read as `origin/<sha>`, which
+resolved to nothing and printed `CONTEXT: … files=0`, an empty diff that
+looked like a branch with no changes.
+
+**What is kept.** Nothing ran: no diff, commit list, coverage map or plan
+lookup was written.
+
+**Fix.** Pass the base branch name after `git fetch origin
++refs/heads/<name>:refs/remotes/origin/<name>`, or a commit sha this checkout
+holds (`git fetch origin <sha>` first when it does not), then rerun.
+
+**Expected result.** `CONTEXT: diff=… files=<n> commits=<n>` for the diff
+against that base.
 
 <a id="review-fingerprint-tmpdir"></a>
 ### `gstack-wtree: cannot create a temp index under <dir>; set TMPDIR to a writable directory` / `gstack-review-log: cannot create a private object directory under <dir>; no working-tree fingerprint. Set TMPDIR to a writable directory.`
@@ -2090,6 +2139,74 @@ per-thread approval record), `gstack-owner-brief render --captain` (the plan ask
 the before/after shape) and `gstack-pr-shots` (before/after images for a PR body).
 The guide is `capy/skill/gstack/captain.md`.
 
+<a id="owner-answers-no-drive"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_NO_DRIVE)`
+
+**Meaning.** On Capy the owner record lives only in the owner's own Drive folder
+(`~/.capy/drive/user-<owner>/owner-answers/`), and none is mounted, or `--owner` names
+one that is not. Exit 3. The tool never falls back to the machine's thrown-away state
+root, so nothing can be taken and every ask goes to the owner. See
+[owner-answers.md](owner-answers.md).
+
+<a id="owner-answers-ambiguous"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_AMBIGUOUS)`
+
+**Meaning.** Two or more `user-*` Drive folders are mounted, so the tool cannot tell
+whose record to use. Exit 3. Pass `--owner <name>`.
+
+<a id="owner-answers-invalid"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_INVALID)`
+
+**Meaning.** A required flag is missing, a value is outside its format (an action or
+target that is not one lower-case token, a scope other than `all`,
+`repo:<owner>/<name>` or `captain:<name>`, a rule id not like `R6`), a field is
+longer than its cap, or the ask file is not the JSON or plain-text form
+[owner-answers.md](owner-answers.md) describes. Exit 2. Nothing was written.
+
+<a id="owner-answers-secret"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_SECRET)`
+
+**Meaning.** A field matched the secret scanner. Exit 3. Nothing was written; the
+error names the field and the rule, never the text.
+
+<a id="owner-answers-write-failed"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_WRITE_FAILED)`
+
+**Meaning.** The record directory could not be written. Exit 1. A write that fails
+after its file is created removes that file, so it leaves no row: fix the path or
+permissions `gstack-owner-answers status` prints, then rerun the same command. A crash
+in the middle of a write can still leave an empty file; the record then reads
+`uncertain` and keeps every ask until that file (named by `status`) is removed.
+
+<a id="owner-answers-not-found"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_NOT_FOUND)`
+
+**Meaning.** `supersede`, `revoke`, `verify` or `log --decision taken` named a row id
+that is not in the record. Exit 3.
+
+<a id="owner-answers-conflict"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_CONFLICT)`
+
+**Meaning.** One source, action, target and scope make one row id, and that row
+already holds different words, a different author or different limits; or a
+`supersede` or `revoke` names a row that another row already replaces. Exit 3.
+Nothing was written. Check what the owner said at that source, then record the
+correction with `supersede <row id>` on the current row (`list --all` shows which
+row replaced which).
+
+<a id="owner-answers-self-verify"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_SELF_VERIFY)`
+
+**Meaning.** The actor that recorded the row tried to verify it. Exit 3. A second
+actor reads the cited thread event and verifies under its own name.
+
+<a id="owner-answers-not-takeable"></a>
+### `gstack-owner-answers: ... (OWNER_ANSWERS_NOT_TAKEABLE)`
+
+**Meaning.** `log --decision taken` named a row that cannot be taken (not a
+verified, current, unlimited standing yes in the owner's own words, or the record is
+uncertain). Exit 3. Send the ask to the owner and log it as `asked`.
+
 <a id="approval-record-invalid"></a>
 ### `gstack-approvals: ... (APPROVAL_RECORD_INVALID)`
 
@@ -2118,7 +2235,8 @@ Nothing was written, locally or to the Drive mirror. `import --autoplan` skips a
 `pii.phone.e164` or `pii.cc` finding that starts inside the autoplan run id's
 14-digit stamp, or the thread-code digits right before it, where import places
 the id (the ask's `autoplan run <id>` and the source's `autoplan:<id>@`), when
-the id has the minted shape `<name>-<14 digits>` (GST-2047); a phone number in
+the id has the minted shape `<name>-<14 digits>` (GST-2047; since GST-3015 the
+name ends in six random letters); a phone number in
 the rest of the directory name, the same id anywhere else, and every other
 finding in the row still refuse.
 
@@ -2156,9 +2274,13 @@ and, as `READ_ALSO:`, the other roots it still reads (a row mirrored before the 
 
 **Meaning.** The local record or its Drive mirror could not be written; the line names
 the path and the error. A failed local append wrote nothing. A failed mirror write
-leaves the local row in place. Exit 1.
+leaves the local row in place. Exit 1. A fixture (a run under `bun test`, or a state root or
+repository in the temp directory) also gets this when its mirror resolves outside the temp
+directory: the line says `outside the temp root`, and nothing reaches that Drive.
 
 **Fix.** Make the named directory writable, then rerun `gstack-approvals sync` to mirror again.
+For a fixture, point `HOME` or `GSTACK_APPROVALS_DIR` inside its temp directory, or set
+`GSTACK_APPROVALS_MIRROR=0`.
 
 <a id="approval-import-unanswered"></a>
 ### `gstack-approvals import: ... (APPROVAL_IMPORT_UNANSWERED)`
@@ -2287,6 +2409,36 @@ whose Plan line differs from the PR body's current line.
 
 **Fix.** The lane fixes the PR body's Plan line if needed and reruns
 `gstack-ship-queue ready --pr <n>` at the pin.
+
+<a id="first-use-plan-unready"></a>
+### `gstack-first-use start: ... (FIRST_USE_PLAN_UNREADY)`
+
+**Meaning.** `start` could not freeze the day-one actions: the plan has no `### Day one` table, the table is missing a column or has fewer than five rows, one of its first five rows has an empty cell, or one of them is still marked `assumed`. Exit 3; nothing is written. **Fix.** Give the plan the pinned table ([first-use-check.md](first-use-check.md#the-day-one-table)) and confirm every assumed row with the owner, then rerun `start`.
+
+<a id="first-use-play-spec-incomplete"></a>
+### `gstack-first-use start: ... (FIRST_USE_PLAY_SPEC_INCOMPLETE)`
+
+**Meaning.** The play spec JSON misses one of the ten parts every ask to play or try a build carries (links, device and setup, what it is, how to start, controls, how long, what we want to learn, how to report back, known quirks, reply word). The line names each missing part and field. Exit 3. **Fix.** Fill them in ([first-use-check.md](first-use-check.md#play-spec)); "none" is a fine value for known quirks.
+
+<a id="first-use-same-family"></a>
+### `gstack-first-use start|record|predict: ... (FIRST_USE_SAME_FAMILY)`
+
+**Meaning.** The check needs an agent from a different model family than the one that built the app. The builder and checker are the same family, a family could not be read from the model id, or `--by` on a result or prediction is not the run's checker family. Exit 3. **Fix.** Pass full `provider/model` ids from different families, and let only the checker record results.
+
+<a id="first-use-no-private-drive"></a>
+### `gstack-first-use: ... (FIRST_USE_NO_PRIVATE_DRIVE)`
+
+**Meaning.** On Capy the record holds the owner's scores and words, so it lives only in his private user-level drive folder. None or several `~/.capy/drive/user-*` folders are mounted, so the tool refuses rather than writing to the machine's throwaway folder. Exit 3. **Fix.** Run it in a thread the owner owns, or set `GSTACK_FIRST_USE_DIR` to his private folder.
+
+<a id="first-use-record-invalid"></a>
+### `gstack-first-use: ... (FIRST_USE_RECORD_INVALID)`
+
+**Meaning.** A value or file is invalid: a bad `--commit`, `--action`, `--verdict` or score, an `--account` or `--device-class` that isn't the run's owner-equivalent audience, a run directory outside the record root, evidence that is not a screenshot or short video (or is empty, a link, or over 100 MB), an unreadable manifest, or a second prediction on a run. Exit 1. **Fix.** Correct the value. Run files are written once; to redo a check, start a new run.
+
+<a id="first-use-refused"></a>
+### `gstack-first-use check|message: ... (FIRST_USE_REFUSED)`
+
+**Meaning.** The build has not cleared its first-use check, so `message` prints no "try this build" text and `check` prints no `FIRST_USE: pass` line. The detail lists every reason: `build_mismatch`, `source_changed`, `source_missing`, `action_<n>_not_played`, `action_<n>_failed`, `action_<n>_evidence_stale`, `link_unchecked`, `link_down`, `link_stale` (over 15 minutes old), `no_predicted_score`, `record_unreadable`. Exit 3. **Fix.** Fix the build and replay failed actions, rerun `links` right before sending, or start a new run for a new build or changed day-one rows.
 
 ## /ship token budget and fresh-context handoffs (gstack-ship-budget)
 
@@ -3343,14 +3495,31 @@ keep the line in the review record.
 ### `autoplan guard: not enforced by this host; publication order is unverified (GUARD_NOT_INSTALLED)`
 
 **Meaning.** The autoplan publication hook only executes inside Claude Code.
-On every other host, and in every `unattended` session, the hook is present
-but never runs, so phase publication order rests on the snapshot hashes
-recorded per phase rather than on the guard.
+On every other host (Capy, Codex and the other env-var hosts), or when the
+installed `autoplan/SKILL.md` does not declare the hook, it never runs, so
+phase publication order rests on the snapshot hashes recorded per phase
+rather than on the guard.
 
 **Fix.** Nothing on this host. The line is printed once per run and belongs
-in the review record; `gstack-artifact validate` requires it for an
-unattended run. On Claude Code a *missing* hook file still denies every
-guarded call (a broken install must not pass as an absent one).
+in the review record; `gstack-artifact validate` requires it (or
+`GUARD_ENFORCED`) for an unattended run. On Claude Code a *missing* hook file
+still denies every guarded call (a broken install must not pass as an absent one).
+
+<a id="guard-enforced"></a>
+### `autoplan guard: enforced by Claude Code's /autoplan hook ... (GUARD_ENFORCED)`
+
+**Meaning.** `gstack-skill-start` runs inside Claude Code (`CLAUDECODE` is set
+and no other host is active) and the installed `autoplan/SKILL.md` declares
+the publication hook. Claude Code runs that hook whenever `/autoplan` was
+started as a skill (the slash command or the Skill tool), in an unattended
+session too: a phase-entry Read or reviewer dispatch is denied until the
+previous phase's report is published. A session that only reads SKILL.md
+with the Read tool does not register skill hooks.
+
+**Fix.** Nothing to change. Publish each phase report as visible message text
+(not reasoning) in a message whose only tool call is
+`true autoplan-published <phase>`; the denial codes are in
+[autoplan-guard-troubleshooting.md](autoplan-guard-troubleshooting.md).
 
 <a id="review-status-mismatch"></a>
 ### `review-log: status mismatch ... (REVIEW_STATUS_MISMATCH)`
@@ -4360,6 +4529,25 @@ or on the comment line directly above it. The marker waives only that line, and
 the check lists it as `waived:`. Don't use `warn: ["literals"]` for this, since
 that turns the check off for every constant.
 
+<a id="arg-limit"></a>
+### `PREGATE_ENVIRONMENT` with `environment: arg-limit — E2BIG` (or `Argument list too long`)
+
+**Meaning.** A command gstack started had a command line or environment over
+the system's limit, so it never ran and no test was counted. Linux caps one
+argument at 128 KiB and a whole command line plus environment at about 2 MiB,
+macOS caps the total at 1 MiB, and Windows caps a command line at 32,767
+characters. The usual trigger is a long file list: thousands of selected test
+files put into one argument.
+
+**Fix.** gstack keeps file lists out of single arguments: a local lane splits
+its files into runner processes of about 96 KB each (24 KB on Windows), and
+the `test_backend` command for the remote gate passes them in a setup script
+(docs/pregate.md#remote-gate). So this cause is a gstack bug: report it with
+the `environment:` line and the lane or command it names. Until it is fixed,
+run the lane remotely (push and let CI's full run carry it, or
+`gstack-pregate --remote`), or select fewer files. When the environment, not
+the file list, is what's large, unset the big variables before the run.
+
 <a id="pregate-no-lane"></a>
 ### `PREGATE_NO_LANE`
 
@@ -5183,7 +5371,10 @@ section is refused before anything is written. The error names the problem.
 **Fix.** Add the missing heading, or rerun the first `next` with `--scaffold`:
 it writes `<out>/plan-source.md` with the missing heading added, reviews that
 copy and prints `SCAFFOLDED:`. Your plan file is never edited. Duplicate,
-reversed or empty sections are ambiguous and must be fixed by hand.
+reversed or empty sections are ambiguous and must be fixed by hand. On
+`revise`, a run whose first plan was scaffolded or had no headings at all gets
+the one missing heading added to its own copy (`SCAFFOLDED:`); a run whose first
+plan had both headings refuses a revision that drops one, and says so.
 
 <a id="plan-amend-pending"></a>
 ### `PLAN_AMEND_PENDING`
@@ -5302,8 +5493,9 @@ directory, and this one already holds files.
 ### `OWNER_REPLY_REQUIRED`
 
 **Meaning.** An agent answered the gate (`--by agent:<id>`) without recording
-what the owner actually said, or answered a `uc` item (a user challenge or a
-round-cap approval, which only the owner settles) in its own words
+what the owner actually said, or answered a `uc` item (a user challenge, a
+reviewer's proposal, a day-one or cut question, or a round-cap approval, which
+only the owner settles) in its own words
 (`--words-by agent:<id>`). Nothing was applied.
 
 **Fix.** Pass the owner's words verbatim: `--owner-reply "<text>"`,
@@ -5417,8 +5609,10 @@ errors.
 
 **Meaning.** A public copy of an autoplan run still quotes the owner's own
 words: a gate reply the private run recorded (on a decision row, the gate or
-the journal), the words a carried gate reused, or a reason a human gave for
-deferring a phase, in prose or in one of gstack's renderings of that reason.
+the journal), the words a carried gate reused, a quote under the plan's
+`### Owner's words` heading (one a later revision removed included), or a
+reason a human gave for deferring a phase, in prose or in one of gstack's
+renderings of that reason.
 Nothing a person wrote leaves without their click. A reply of 3 or more words
 is a quote wherever it appears whole, and from 8 words any 8 consecutive words
 are one, compared across punctuation, line breaks, JSON escapes, entities, HTML and
@@ -5610,6 +5804,40 @@ origin cannot be reached, from its local stable ref and release tags.
 
 **Fix.** Run `git fetch origin --tags` in the gstack checkout, or point
 `GSTACK_STABLE_REPO` at a gstack checkout that has the tags, then rerun.
+
+<a id="push-refused"></a>
+### `PUSH_REFUSED`
+
+**Meaning.** `gstack-ship-release push` stopped before `git push` ran and
+ended with `PUSH: failed reason=PUSH_REFUSED`: a usage error, HEAD on another
+branch than Step 1 saved, the unanswered one-time pre-push offer, open gate
+findings on a ready PR, sealed output, the early secrets scan, the pre-push
+guards, or a never-pushed branch name that is not plain words. Nothing was
+pushed. [The push line](unattended.md#push-line).
+
+**Fix.** Follow the `STOP:` line printed just above it, then rerun
+`gstack-ship-release push`.
+
+<a id="push-rejected"></a>
+### `PUSH_REJECTED`
+
+**Meaning.** `git push` was rejected: the remote branch has commits this
+branch lacks (non-fast-forward), or the remote refused the update. Nothing
+was pushed.
+
+**Fix.** Fetch and inspect the remote, merge it under Step 3's conflict
+rules, run Steps 5-16 again, then rerun push. Never force-push.
+
+<a id="push-git-failed"></a>
+### `PUSH_GIT_FAILED`
+
+**Meaning.** `git ls-remote` could not read the remote branch, or
+`git push` failed for a reason other than a rejection: authentication, a
+pre-push hook or the network. Nothing was pushed.
+
+**Fix.** Repair the cause git printed in the `STOP:` line, repeat Step 16
+(even when the content is unchanged), then rerun push. Never bypass a failed
+guard.
 
 <a id="queue-not-ready"></a>
 ### `QUEUE_NOT_READY`
@@ -6482,6 +6710,10 @@ what would merge. The one accepted difference is a train slot's stamp: when
 the current head is the pinned head's stamp commit (same tree modulo stamp
 files, or the pin with main merged in at slot 2 and later), the receipt
 written for the pinned head is the binding one and `verify --train` accepts it.
+It also refuses a receipt an older gstack carried through a scoped re-check
+(its `carry.reason` names `scoped re-check by`), even at its own head: the code
+that hop covered never got a full review (GST-2706,
+[rounds per pull request](review-policy.md#rounds-per-pull-request)).
 
 **Fix.** Rerun /ship on the current head so the receipt names it, then rerun
 `gstack-ship-queue ready --pr <n> --screen|--no-screen`. A lane never stamps
@@ -7070,6 +7302,23 @@ pass the `gstack-review-scope summary` file as `--review-loop`, put the printed
 line in the PR body, and write again
 ([ship-policy.md](ship-policy.md#ship-receipt)).
 
+<a id="ci-carry-rerun-malformed"></a>
+### `CI_CARRY_RERUN_MALFORMED`
+
+**Meaning.** A CI run's `tree.json` names `rerun_files` or `attempts`, the
+fields that say some test files passed only on a re-run attempt, but in a shape
+gstack cannot read: `rerun_files` is not a list of file paths, or `attempts` is
+not a list of attempt numbers of 1 or more. gstack fails closed: that run is not
+evidence, the carry refuses it (`rerun_malformed` in the `CI_CARRY: none` or
+`no_verified_run` detail), and the lane runs here instead. A well-formed record
+is accepted and marked `rerun=<files> attempts=<list>`
+([ship-policy.md](ship-policy.md#ci-carry-rerun)).
+
+**Fix.** Fix the workflow step that writes `tree.json` so it writes
+`"rerun_files": ["test/a.test.ts", …]` and `"attempts": [1, 2]`, or leaves both
+out. Then dispatch a fresh run at the same head and rerun
+`gstack-ci-carry wait`.
+
 <a id="receipt-carry-tree-mismatch"></a>
 ### `RECEIPT_CARRY_TREE_MISMATCH`
 
@@ -7122,9 +7371,10 @@ the range-diff evidence ([unattended.md](unattended.md#the-terminal-line)).
 **Meaning.** Every product path the branch touches has the reviewed +/- lines
 in the same places, but the base edited context lines next to some of them, so
 the 3-line patches differ (GST-384: main reworded the line above the PR's
-hunk). A hunk whose added lines are unchanged and whose removed lines differ only
-by the base's edit of the lines the branch replaces counts too (GST-1561: the base
-took `SAVE_VERSION := 83` under the branch's `:= 84`). The merge may have spliced the two, as in a JSON entry where the branch
+hunk). A hunk whose added lines are unchanged but whose removed lines changed with
+the base (the base took `SAVE_VERSION := 83` under the branch's `:= 84`) doesn't
+count: the PR's own removed lines changed, so it's `RECEIPT_CARRY_PRODUCT_CHANGED`
+and a full review (GST-2706). The merge may have spliced the two, as in a JSON entry where the branch
 changed one key and the base the next, so the receipt does not carry silently.
 The refusal names the paths and a packet file with the hunks that differ and
 the base's own change. The same lines moved somewhere else are
@@ -7194,15 +7444,62 @@ final head; this stop then means that review found a blocker or a gate-class edi
 `PR_REVIEW_FLAGS:`. A fix below the blocking floor finishes with its notes
 listed instead of stopping.
 
-**Fix.** The lane's Captain decides. Ship with the open notes listed, or, when a finding above the floor is
-open in this PR's own change or the design changed, have the lane or Captain
-record one round with the command the `NEXT:` line prints,
-`gstack-approvals round-grant --pr <n> --head <sha> --kind extra-round --reason
-<why> --by <lane or Captain>`, then rerun `gstack-ship-preflight`: its
-`PR_REVIEW_FLAGS:` line adds `--round-grant <id>` for the plan.
-The grant names one head; a new push needs a new grant. This is not an owner
-ask, and gstack cannot grant itself one (`--by gstack` is refused)
+**Fix.** The lane's Captain decides. Ship with the open notes listed, park, or,
+when a finding above the floor is open in this PR's own change, buy the stopped
+review's fix round:
+
+1. Record the stop: `gstack-ship-receipt stop --pr <n> --run <the /ship run>
+   --since <REVIEW_SINCE>` (`/ship` runs it on `NEXT: stop`). It prints
+   `STOP_RECORD:` and the grant command.
+2. The lane or Captain records that grant: `gstack-approvals round-grant --pr
+   <n> --head <the stop's head> --kind fix-check --stop-run <its run> --findings
+   <the open finding ids> --reason <why> --by <lane or Captain>`.
+3. Commit the fix on top of the stop's head. A new run's `gstack-ship-preflight`
+   prints `PR_REVIEW_FLAGS:`; the same run, whose preflight already ran, gets
+   that line from `gstack-ship-receipt history --pr <n> --base <base> --run
+   <the /ship run>`. It adds `--round-grant <id> --stop <head>`, and the plan is one scoped fix-check of the PR's own change
+   since that head, with no new full review. The run claims the grant first
+   (`gstack-ship-receipt claim`).
+
+A head no review has stopped at takes an `--kind extra-round` grant instead:
+one full round with its fix round. Each grant is spent by the one run that
+claims it. When `PR_REVIEW_GRANT: not applied (...)` prints, the reason names
+what doesn't match (another stop or head, a stale stop, a claimed grant). This
+is not an owner ask, and gstack cannot grant itself one (`--by` naming gstack
+is refused) ([review-policy.md](review-policy.md#rounds-per-pull-request)).
+
+<a id="stop-unbound"></a>
+### `STOP_UNBOUND`
+
+**Meaning.** `gstack-ship-receipt stop` found no review of this run that
+gstack can tie to one commit: the newest `via:ship` review row since
+`--since` is missing, didn't finish, read a tree that moved or wasn't
+committed, or its commit isn't HEAD or under it. It recorded no stop record, so
+no fix-check grant can buy that review's fix round.
+
+**Fix.** Nothing for a grant to answer. The lane's Captain ships with the open
+notes listed or parks; a fresh `/ship` run gives the head its review
 ([review-policy.md](review-policy.md#rounds-per-pull-request)).
+
+<a id="grant-spent"></a>
+### `GRANT_SPENT`
+
+**Meaning.** `gstack-ship-receipt claim` found another `/ship` run's grant
+record for this round grant in the PR body's runs block. A grant buys one round,
+and a voided run's claim still spends it.
+
+**Fix.** Record a new grant for the stop the PR is at now; `gstack-ship-receipt
+stop` prints the command ([troubleshooting](#pr-round-cap)).
+
+<a id="grant-unknown"></a>
+### `GRANT_UNKNOWN`
+
+**Meaning.** `gstack-ship-receipt claim --grant <id>` found no approved
+`review_round_grant` row with that id in the branch's approval record or its
+mirror.
+
+**Fix.** Pass the id `gstack-approvals round-grant` printed, from a checkout
+that sees that record ([troubleshooting](#pr-round-cap)).
 
 <a id="receipt-prose-mismatch"></a>
 ### `RECEIPT_PROSE_MISMATCH`
@@ -7294,7 +7591,10 @@ the audit id (`text follows the JSON result line`) gets the same free re-ask for
 the whole line, but only when every such line is free of content problems (a
 content problem counts as an attempt). A blocked status and its blockers on any
 such line must survive the reply, which may add blockers; nothing else from the
-earlier line is kept or accepted. Otherwise run Step 14.5's one
+earlier line is kept or accepted. The same holds when the last line is a JSON
+result that drops an earlier blocked status or blocker for the audit (`the last
+JSON line drops the blocked result an earlier line gave for this audit`): it is
+never accepted, and its re-ask must stay blocked. Otherwise run Step 14.5's one
 remaining re-audit with the printed `RETRY_NOTE:` text appended to its prompt,
 word for word; it quotes the exact keys. With no attempt left, Step 14.5 stops
 and reports this code and the keys it names
@@ -7308,7 +7608,12 @@ one stdout line per real event, prefixed `#<pr>`; progress and recoverable
 errors go to stderr. `/land-and-deploy` Step 3 runs it with `--until green`.
 Exit 0 means the `--until` condition is met or the PR merged; exit 1 and 2
 end with one of the two codes below. `green` gates on every check on the
-head, as `gstack-ci-gate` does, so the two never disagree; a check the base
+head, as `gstack-ci-gate` does, so the two never disagree. Both read every
+attempt of each check suite as `gstack-ship-queue ready` does: a failed check
+whose rerun attempt created no jobs (GitHub's default list then hides it) and a
+workflow run that failed before creating any job (`check failed: <workflow>
+(run <id>, no jobs)`) block `green`, and a rerun that passed clears its
+failure. A check the base
 branch requires (rulesets and classic branch protection) counts as pending
 until it appears. `--exclude <check,...>` leaves a named non-required check
 out of the verdict, as `gstack-ci-gate --exclude` does: it neither holds
@@ -7478,8 +7783,7 @@ every flag and code.
 
 `bin/gstack-prose-lint` reads the prose /ship is about to publish, a CHANGELOG
 entry (Step 13) and the sections the author writes in the PR body (Step 19:
-`## Why`, `## Summary` and `## Blast radius`, through `--sections`; the
-`## What changed` captions and image text stay a report), and the quality-gate
+`## Why`, `## What changed` and `## Blast radius`, through `--sections`), and the quality-gate
 workflow runs it over `CHANGELOG.md`'s `[Unreleased]` block. It decides only
 what a regular expression can: autopilot vocabulary, "not just X, but Y",
 metaphor nouns, a colon used as a conjunction, a bold label that restates its
@@ -7858,7 +8162,12 @@ These codes come from `bin/gstack-plain-title`, which /ship, gstack-post and the
 <a id="plain-opening-refused"></a>
 ### `PLAIN_TITLE: PLAIN_OPENING_REFUSED <kind> "<match>" — …`
 
-**Meaning.** The readable part of the PR body (everything above the `<!-- gstack:agent-notes -->` marker) does not start with a plain paragraph: it starts with a heading, code block, list, table, HTML or image, runs past two sentences, or names a tracker code or listed word. /ship refuses it; CI only warns. **Fix.** Start the body with one or two sentences saying what changed and which goal of the project it serves. Move codes and records into the Agent notes section at the end.
+**Meaning.** The readable part of the PR body (everything above the `<!-- gstack:agent-notes -->` marker) does not start with a plain paragraph: it starts with a heading, code block, list, table, HTML or image, or names a tracker code or listed word. /ship refuses it, and so does CI in a repository with a policy for PRs created on or after its `body_since` date. **Fix.** Start the body with up to three plain lines: what changed for a user, why, and anything the reader has to do. Move codes and records into the Agent notes section at the end.
+
+<a id="plain-body-refused"></a>
+### `PLAIN_BODY: PLAIN_BODY_REFUSED <kind> "<match>" — …`
+
+**Meaning.** The PR body, folded the way gstack-post posts it, breaks the plain shape (docs/writing-prs.md). `visible-lines`: more than three lines or 600 characters show before the first fold. `unfolded`: text sits outside a fold between the first fold and the Agent notes section. `term`: a listed word appears above the Agent notes section (code spans, code blocks, links and quotes are skipped). `receipt-placement`: the /ship receipt sits outside the Agent notes section, or text follows that section. gstack-post exits 4 and posts nothing, and the Plain title CI check fails, in a repository with `.gstack/plain-titles.json` and for a PR created on or after its `body_since` date; everywhere else, and for comments, these are warnings. **Fix.** Rewrite the body file the way the line says: up to three plain lines first, every other section under a `## ` heading (gstack-post folds it; `gstack-post fold --body-file F` shows the result without posting), and records in the Agent notes section. Then post it again; an edited body reruns the CI check.
 
 <a id="plain-changelog-refused"></a>
 ### `PLAIN_TITLE: PLAIN_CHANGELOG_REFUSED <kind> "<match>" — …`
