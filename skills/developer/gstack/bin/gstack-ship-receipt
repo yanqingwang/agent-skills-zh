@@ -34,7 +34,7 @@
  * RECEIPT_CARRY_PRODUCT_CHANGED and nothing is rewritten.
  * Query commands: no GSTACK_RESULT line. Logic: lib/ship-receipt.ts.
  */
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from '../lib/spawn-sync';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
@@ -51,7 +51,7 @@ import { approvalForReceipt } from '../lib/approval-citations';
 import {
   CARRY_METADATA_GLOBS, CARRY_NAMED_PATHS, CARRY_TEST_GLOBS,
   bindReceipt, carryReceipt, recheckCarried, classifyCarryPath, computeCensus, extractReceipt, landedStackParent, missingIssueLines, orderReceipt, parseReviewLoop, placeReceipt, planCarry, planTreeCarry,
-  receiptIssuesFrom, receiptRuns, receiptSummaryLine, renderCensus, renderReceiptBlock, validateReceipt, type CensusPr,
+  receiptIssuesFrom, receiptRuns, receiptSummaryLine, renderCensus, renderReceiptBlock, unruledOpenBlockers, validateReceipt, type CensusPr,
 } from '../lib/ship-receipt';
 import { checkDocsCaps, docsCapLine, docsExceptionLine, parseReceiptDocs } from '../lib/ship-receipt-docs';
 import { comparePath, contextPacket, PACKET_SECTION_CAP, readScopedReview, touchedPaths } from '../lib/ship-patch';
@@ -61,8 +61,9 @@ import { RISK_CLASSES, type RiskClass } from '../lib/review-risk';
 import { checkReceiptProse, proseLine } from '../lib/ship-receipt-prose';
 import { resolveStateRoot } from '../lib/state-root';
 import { readPause, receiptBaseRed } from '../lib/base-red';
-import { readRuledNotes, ruledNoteText } from '../lib/ruled-notes';
-import { appliedGateDispositions, gateDispositionText } from '../lib/gate-dispositions';
+import { publicRuledNote, readRuledNotes, ruledNoteText } from '../lib/ruled-notes';
+import { appliedGateDispositions, gateDispositionText, publicGateDisposition } from '../lib/gate-dispositions';
+import { securityFingerprints } from '../lib/security-findings';
 import { laneExceptionBodyLines } from '../lib/test-lane-exception';
 import { grantedStop, grantMarker, historyLine, placeRunEntry, prReviewHistory, reviewRoute, runStub, stopFrom, stopMarker } from '../lib/pr-review-history';
 import { grantFor, readReviewRoundGrants, type ReviewRoundGrant } from '../lib/review-round-grant';
@@ -308,6 +309,8 @@ function cmdWrite(rest: string[], json: boolean): number {
     const line = reviewLoopExceptionLine(loopException.exception);
     if (bodyFile && !bodyText.split(/\r?\n/).some(l => l.trim() === line)) return refuse(`${bodyFile} does not carry the exception line verbatim: ${JSON.stringify(line)}`);
   }
+  const leaked = securityFingerprints(bodyText);
+  if (leaked.length) { process.stderr.write(resultLine('gstack-ship-receipt write', 'RECEIPT_INVALID', `${bodyFile} names security finding ${leaked.join(', ')}: a PR body is public, so a security finding appears only as the redacted line gstack-approvals rulings, dispositions or gstack-review-scope render prints, and its location and reason stay in the private record (docs/troubleshooting.md#security-finding-in-body); nothing written`) + '\n'); return EXIT.fail; }
   const ruledNotes = readRuledNotes(repoRoot);
   const unlisted = bodyFile ? ruledNotes.map(n => `Ruled note: ${ruledNoteText(n)}`).find(l => !bodyText.split(/\r?\n/).some(b => b.trim() === l)) : undefined;
   if (unlisted) { process.stderr.write(resultLine('gstack-ship-receipt write', 'RECEIPT_INVALID', `${bodyFile} does not list ruled note ${JSON.stringify(unlisted)} (gstack-approvals rulings prints each line the body carries); nothing written`) + '\n'); return EXIT.fail; }
@@ -367,6 +370,8 @@ function cmdWrite(rest: string[], json: boolean): number {
     const loopRaw = jsonArg(flag(rest, '--review-loop'));
     const reviewLoop = loopRaw ? parseReviewLoop(loopRaw) : undefined;
     if (loopRaw && !reviewLoop) throw new Error('--review-loop needs integer passes, blocking_found and deferred (gstack-review-scope summary --out <file>, then @<file>)');
+    const open = unruledOpenBlockers(loopRaw, ruledNotes, ruledHead => spawnSync('git', ['merge-base', '--is-ancestor', ruledHead, headSha ?? head], { cwd: repoRoot, timeout: 30_000 }).status === 0);
+    if (open.length) { process.stderr.write(resultLineWithDocs('gstack-ship-receipt write', 'RECEIPT_BLOCKER_OPEN', `${open.join(', ')}; nothing written`) + '\n'); return EXIT.refused; }
     input = {
       schema_version: 1, pr: flag(rest, '--pr') !== undefined ? Number(flag(rest, '--pr')) : undefined, head,
       version: flag(rest, '--version') ?? receiptVersion(repoRoot, head, base), base,
@@ -379,7 +384,7 @@ function cmdWrite(rest: string[], json: boolean): number {
       policy: flag(rest, '--policy') ?? tree?.policy, queue_mode: flag(rest, '--queue-mode'), preregistration: flag(rest, '--preregistration'), history: flag(rest, '--history'),
       ...pregate, issues: issuesFile ? receiptIssuesFrom(issuesFile) : undefined, approval: approval.kind === 'ok' ? approval.approval : undefined,
       review_loop: reviewLoop, ...(docs?.ok ? { docs: docs.docs } : {}), ...product,
-      gstack_version: installedGstackVersion(), review_depth: reviewDepth, review_loop_exception: loopException?.ok ? loopException.exception : undefined, review_round_grants: roundGrantsFor(repoRoot, flag(rest, '--pr')), ruled_notes: ruledNotes.length ? ruledNotes : undefined, gate_dispositions: gateDispositions, mechanical: mechanical.length ? mechanical : undefined, review_targeted: targeted?.ok ? targeted.targeted : undefined,
+      gstack_version: installedGstackVersion(), review_depth: reviewDepth, review_loop_exception: loopException?.ok ? loopException.exception : undefined, review_round_grants: roundGrantsFor(repoRoot, flag(rest, '--pr')), ruled_notes: ruledNotes.length ? ruledNotes.map(publicRuledNote) : undefined, gate_dispositions: gateDispositions.map(publicGateDisposition), mechanical: mechanical.length ? mechanical : undefined, review_targeted: targeted?.ok ? targeted.targeted : undefined,
       design: review.frontend ? { mode: 'static', reason: 'no preview declared' } : undefined,
       base_red: pause ? receiptBaseRed(pause) : undefined,
       review_exclude: receiptExclude(review.exclude),

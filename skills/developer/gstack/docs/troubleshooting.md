@@ -68,6 +68,12 @@ custom endpoint or partner platform. A public API catalog identifier is not
 necessarily a valid deployment identifier there. Malformed native provider
 configuration also prevents gstack from assuming the public endpoint.
 
+A custom Codex provider whose `config.toml` `model` is exactly the selected
+tier's catalog ID is used as is. The refusal prints
+`CODEX_MODEL_POLICY: custom_provider_requires_model` when `config.toml` names
+no model, and `CODEX_MODEL_POLICY: custom_provider_model_not_tier` when it names
+a different one.
+
 **Fix.** Supply a compatible model for that request, set the provider's gstack
 environment override or tier-model setting, or choose
 `gstack-config set plan_review_tier host`. Keep credentials in the provider's
@@ -3252,6 +3258,20 @@ exact tokens it finds in these positions:
   the block, under any other key, a run-id field holding other text or a
   10-digit number, or a hand-written, schema-invalid or malformed block still
   reports (GST-2047).
+- inside that same writer-rendered block, the `run` value when it is a
+  session id `gstack-skill-start` minted (`<pid>-<epoch>-<8 hex>`, for example
+  `1234567-1794900000-0a1b2c3d`), and the 12-hex shas in the `pregate` value
+  (`@<tree> (<n> checks, current for <head>)`) and the `requires_remote`
+  values (`heads=`, `tree=`) (#4480);
+- on a line outside any fenced code block that opens with `SHIP_RECEIPT:`,
+  `CI_CARRY:`, `PREGATE:` or `READY_RECEIPT:` (bare, after `- `, `* ` or
+  `> `, or after a backtick), the
+  12-hex sha list after `heads=`, `head=`, `tree=`, `gated_tree=`,
+  `predecessor=`, `carried_from=` or `base_red=`, the run id of each
+  `ci_carried=<lane>:<run>/<attempt>` item, and the shas of the pregate
+  shape above (#4480). The same value on a line without that prefix, on a
+  receipt-prefixed line inside a hand-written or non-receipt code block, or a
+  phone number elsewhere on a receipt line still reports.
 
 A bare 11-digit number with none of that context, a 10-digit national number
 and an E.164 `+14155551234` still report, so the finding means the id stands
@@ -3490,6 +3510,38 @@ record does not state that publication order was unverified.
 
 **Fix.** Start the run through `gstack-skill-start` (it prints the line) and
 keep the line in the review record.
+
+<a id="artifact-not-autoplan-run"></a>
+### `ARTIFACT_NOT_AUTOPLAN_RUN`
+
+**Meaning.** `run.json` parses and matches its schema, but gstack-autoplan did
+not write it: `host` is not `gstack-autoplan`, a field gstack-autoplan writes
+on every run is missing (`plan_input`, `plan_source`, `active_plan`,
+`restore`, `out`, `created_at`, `revision`, `attempt_counter`,
+`outside_enabled`, `phase_order`, `history`, `scope`), or the run directory
+has no `attempts.jsonl` journal. A run.json written by hand or by a script,
+for example one copied from `test/fixtures/multi-agent-wave/reference-run`,
+is refused here even when every structural check passes.
+
+**Fix.** Drive the run with `gstack-autoplan next`, `submit`, `answer` and
+`export`, then validate the directory it wrote. A run written by a gstack
+older than these fields is refused too; rerun it with this gstack.
+
+<a id="artifact-journal-mismatch"></a>
+### `ARTIFACT_JOURNAL_MISMATCH`
+
+**Meaning.** The run directory disagrees with its own record of what happened:
+the journal has no `init` row for this run, a reviewer attempt in `run.json`
+was never journaled as dispatched, a completed voice's output or hash differs
+from its journaled `submitted` row, a bound review output changed after
+submit, or the run's checkpoint (when `GSTACK_AUTOPLAN_CHECKPOINT_DIR` or the
+Drive opt-in names one) is ahead of `run.json`, disagrees on status or gate
+revision at the same revision, or holds a journal the live one no longer begins with.
+
+**Fix.** Treat the run as edited after the fact. Restore it from its
+checkpoint (`gstack-autoplan resume --out <new dir> --from <checkpoint>`) or
+rerun it with gstack-autoplan; never edit `run.json` or `attempts.jsonl` by
+hand.
 
 <a id="guard-not-installed"></a>
 ### `autoplan guard: not enforced by this host; publication order is unverified (GUARD_NOT_INSTALLED)`
@@ -3960,10 +4012,19 @@ finish's `MECHANICAL:` lines as `Mechanical retake: …`, and accept's
 ([ruled notes](ship-policy.md#ruled-notes),
 [gate dispositions](ship-policy.md#gate-dispositions),
 [test-lane exceptions](ship-policy.md#test-lane-exceptions)).
+<a id="security-finding-in-body"></a>
+It also refuses a body that names a raw security finding fingerprint, such as
+`src/x.ts:12:security` (category `security`, `auth`, `secret` or `red-team`),
+and `gstack-post` refuses to send such text, exit 1: a PR body and every GitHub
+post are public, so a security finding appears only in the redacted form gstack
+renders ([security findings stay private](ship-policy.md#security-findings-stay-private)).
 
 **Fix.** Regenerate it with `gstack-ship-receipt write`; never hand-edit the
 block. For a missing body line, add the line the refusal quotes to the body and
-write again. For the `--head` refusal, check out that commit and write there. For a
+write again. For a security fingerprint, replace the text that names it with the
+line `gstack-approvals rulings`, `gstack-approvals dispositions` or
+`gstack-review-scope render` prints, keep the details in your private report,
+and write again. For the `--head` refusal, check out that commit and write there. For a
 targeted refusal, run the targeted reader on HEAD, `gstack-review-dispatch verify
 --targeted-out .gstack/tmp/targeted.json`, and write again with
 `--review-targeted @.gstack/tmp/targeted.json`.
@@ -4016,17 +4077,40 @@ the base policy commit.
   the base into the branch and rerun once; if it is still over, split the PR.
 - **The branch declares the key but the base does not:** only the base copy
   applies; land that hunk on the base first, as above.
-- **A pattern was not applied** (`skipped=` on the `REVIEW_EXCLUDE:` line): its kept
-  files need more than 24,000 argument bytes on the reader's keep command (files
-  kept only for a secret line are excerpted and do not count). Narrow the
-  pattern, move the kept files out of it, or split the PR.
+- **A pattern keeps too many files** stops the plan with
+  [`REVIEW_EXCLUDE_KEEP_TOO_LARGE`](#review-exclude-keep-too-large) before any reader runs.
 - **Still over after exclusion:** add the printed folders to the base policy, or
-  split the PR. Files kept only for a secret line already count as their
+  split the PR. When published data under a pattern is kept as `code`
+  (`REVIEW_EXCLUDE_KEPT: code …` on `.patch`, `.sha256` or extension-less files),
+  add [`review_content_patterns`](ship-policy.md#review-content-patterns) for it. Files kept only for a secret line already count as their
   excerpts ([secret-line excerpts](ship-policy.md#secret-line-excerpts)); one in
   `DIFF_KEEP:` is kept for another reason, and one the excerpt could not be
   built for moves to the reader's keep command and counts whole.
 
 There is no override flag. See [the review ceiling](ship-policy.md#review-diff-ceiling).
+
+<a id="review-exclude-keep-too-large"></a>
+### `REVIEW_EXCLUDE_KEEP_TOO_LARGE`
+
+**Meaning.** A `review_exclude_paths` pattern on the base matches files review
+must keep, and so many of them that the command readers run to read them
+(`DIFF_KEEP:`) would pass 24,000 argument bytes, under Windows' command-line
+limit. `gstack-review-plan` stops (exit 3, nothing planned) instead of dropping
+the pattern and handing readers the whole folder. The line names the pattern,
+the base commit, the kept count with each keep reason
+(`code:1319,named-by-code:2`) and the bytes.
+
+**Fix.** Look at the reasons:
+
+- **`code` on published data** (`.patch` files, `MANIFEST.sha256`,
+  extension-less licence texts): add the same folder to
+  [`review_content_patterns`](ship-policy.md#review-content-patterns) beside the
+  pattern on the base, as its own PR. Once it merges, bring the base into the
+  branch and rerun once.
+- **Real code or another keep reason:** narrow the pattern so it covers only
+  the data, or split the PR.
+
+There is no override flag.
 
 <a id="review-diff-unreadable"></a>
 ### `REVIEW_DIFF_UNREADABLE`
@@ -4742,13 +4826,17 @@ it refuses `caller_job_skipped` when its `<calling job> / <lane job>` job did no
 
 Another tree is accepted in exactly one case: it differs from `pregate.json`'s
 tree only in the repo's stamp rule (`.gstack/ship-policy.json` on the base
-branch: `stamp_files`, `stamp_patterns`, the built-in version, manifest,
-lockfile and CHANGELOG forms), judged by the tree receipt's own classifier on a
+branch: `stamp_files`, `stamp_patterns`, `release_outputs`, the built-in
+version, manifest, lockfile and CHANGELOG forms), judged by the tree receipt's own classifier on a
 `git diff` of the two trees ([the gate ran ahead of the
 stamp](pregate.md#remote-gate-stamp-only)). The refusal line then says `and the
 trees differ beyond the stamp rule of <policy>: <path> (<rule>: <why>, line
 <n>)`, and the path it names is the one that is not a stamp: a file outside
 `stamp_files`, or a stamp file with a hunk that is not the old → new rewrite.
+A `release_outputs` file that is more than that rewrite is a stamp (rule
+`release_tool`) only when `release_tool`, rerun on the head, writes it byte for
+byte; `clear` reruns it only with `--allow-repo-commands`, and without the flag
+the refusal's reason includes `release_tool reruns only under --allow-repo-commands`.
 `the gated tree <t> is not an object in this repository` means the gated
 commit is not fetched here, so the two trees cannot be compared. Three more
 refusals close the substitution without classifying anything: `lists the test
@@ -5276,6 +5364,22 @@ truncates and cannot be fetched in full) the line says
 rename the file and its id, commit, then rerun
 `gstack-pregate regate --against <gated-head> --bundle <file>`. The renamed
 migration is a code change, so the gate reruns.
+
+<a id="spawn-output-incomplete"></a>
+### `SPAWN_OUTPUT_INCOMPLETE`
+
+**Meaning.** gstack ran a command (usually git or gh) and the command's
+result carried an error, so its output could be incomplete. The usual cause
+is ENOBUFS: the output was larger than the read limit (maxBuffer). Bun can
+report that with exit status 0 and the output cut off part way, so gstack
+treats the read as failed whatever the status says. A scanner, gate or git
+read that sees this stops or reports a failure instead of judging part of
+its input. The line names the command and the error.
+
+**Fix.** Rerun once. If it repeats, the output really is that large: narrow
+the commit range or paths the command reads, then rerun. Report a repeat on a
+normal-sized repository to the gstack maintainers with the command the line
+names.
 
 <a id="sealed-output-refused"></a>
 ### `SEALED_OUTPUT_REFUSED`
@@ -7283,6 +7387,26 @@ note:` line ([ship-policy.md](ship-policy.md#ruled-notes)). A ruling at a head
 outside the range is listed as `not applied`, and a path edited after the
 fix-check still routes by the post-review rules. When the owner wants the
 findings fixed instead, fix them and ask for a grant for one more fix-check.
+
+<a id="receipt-blocker-open"></a>
+### `RECEIPT_BLOCKER_OPEN`
+
+**Meaning.** `gstack-ship-receipt write` wrote nothing because the
+`--review-loop` record (`gstack-review-scope summary`) lists a blocking
+finding that is still `open`: a review-log row holds it, its newest action is
+`open`, and no owner ruled note closes it. That happens when /ship
+stops with a blocker unfixed, for example a second-model review finding marked
+`Blocks: yes` in Step 11 that no later Step 9 pass fixed. A receipt there would
+claim a review that never cleared the blocker (GST-3075). Gate findings keep
+their own path (an `open` gate finding makes the PR a draft) and are not
+counted here.
+
+**Fix.** Fix the finding, commit, and run /ship again on the new head; that
+run's Step 9 row records it `fixed`. If it should ship unfixed, take the stop
+to the owner: their ruled note (`gstack-approvals rule`) closes it, or their
+grant buys one fix-check. Never edit the review-log row or the loop file to
+drop the finding, and never write the receipt by hand
+([ship-policy.md](ship-policy.md#ship-receipt)).
 
 <a id="review-loop-exception-invalid"></a>
 ### `REVIEW_LOOP_EXCEPTION_INVALID`

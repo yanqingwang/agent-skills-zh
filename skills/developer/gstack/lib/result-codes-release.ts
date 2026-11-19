@@ -415,6 +415,11 @@ export const RELEASE_RESULT_CODES = {
     summary: 'the prose /ship is about to publish (a CHANGELOG entry or a PR body) carries an AI tell a regular expression can decide',
     fix: 'rewrite each PROSE: line in the draft the way its hint says, then rerun gstack-prose-lint on the same file',
   },
+  RECEIPT_BLOCKER_OPEN: {
+    anchor: 'receipt-blocker-open',
+    summary: 'the review loop stopped at this head with a blocking finding still open (a Step 9 or Step 11 finding, the second-model review included, whose newest review-log action is still open and no owner ruling closed), so no receipt is written',
+    fix: 'fix the finding and run /ship again on the new head, or take the stop to the owner, whose ruled note or grant closes it; never write the receipt by hand or drop the finding from the review-log row',
+  },
   REVIEW_LOOP_EXCEPTION_INVALID: {
     anchor: 'review-loop-exception-invalid',
     summary: 'write --review-loop-exception got an exception that is malformed, accepts a stop the review loop does not show (a fix_check with review_loop.fix_checks 0 or missing, or a second_pass with fewer than two passes or no deferred finding), names a head that is not the receipt head or its ancestor, or is missing from the PR body',
@@ -589,7 +594,12 @@ export const RELEASE_RESULT_CODES = {
   REVIEW_DIFF_TOO_LARGE: {
     anchor: 'review-diff-too-large',
     summary: 'one reviewer\'s diff is over the 2,000,000-byte review ceiling, so /ship stopped before writing a manifest or a brief instead of handing a reader more than it can read',
-    fix: 'follow the fix the line prints for where the base policy stands: land the printed review_exclude_paths JSON on the base as its own PR, then bring the base into the branch and rerun once; or narrow a pattern the kept-file bound skipped; or split the PR',
+    fix: 'follow the fix the line prints for where the base policy stands: land the printed review_exclude_paths JSON on the base as its own PR, then bring the base into the branch and rerun once; or split the PR',
+  },
+  REVIEW_EXCLUDE_KEEP_TOO_LARGE: {
+    anchor: 'review-exclude-keep-too-large',
+    summary: 'a review_exclude_paths pattern keeps so many matched files in review that the command readers run to read them would pass 24,000 argument bytes, so gstack-review-plan stopped instead of silently dropping the pattern; the line names the pattern, the kept count, the reasons they are kept and the bytes',
+    fix: 'when the kept files are published data (reason code on .patch, MANIFEST.sha256 or extension-less files), land a review_content_patterns entry over them beside the pattern on the base as its own PR, then bring the base into the branch and rerun once; otherwise narrow the pattern or split the PR',
   },
   REVIEW_DIFF_UNREADABLE: {
     anchor: 'review-diff-unreadable',
@@ -637,5 +647,10 @@ export const RELEASE_RESULT_CODES = {
     anchor: 'push-git-failed',
     summary: 'git could not read the remote branch or git push failed for another reason (authentication, a pre-push hook or the network), so nothing was pushed',
     fix: 'repair the cause git printed in the STOP: line, repeat Step 16, then rerun push; never bypass a guard',
+  },
+  SPAWN_OUTPUT_INCOMPLETE: {
+    anchor: 'spawn-output-incomplete',
+    summary: 'a child process reported an error (ENOBUFS when its output passed maxBuffer) even though its exit status may be 0, so its output may be cut off and was not used',
+    fix: 'rerun once; if the output really is that large (a huge diff or file list), narrow the range or paths, and report a repeat to the gstack maintainers with the command named here',
   },
 } as const satisfies Record<string, ResultCode>;

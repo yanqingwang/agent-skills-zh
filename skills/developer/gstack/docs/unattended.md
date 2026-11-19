@@ -7,12 +7,21 @@ kind changes, which files a run writes, how the parent decides whether the run
 finished, and how it reads the result without reading any markdown.
 
 The session kinds are: `interactive` (a human answers prompts), `headless`
-(`GSTACK_HEADLESS`, `CI`, the eval harness; a question BLOCKs), `spawned`
+(`GSTACK_HEADLESS`, `CI`, the eval harness, `codex exec`; a question BLOCKs), `spawned`
 (an orchestrator subagent; the recommended option is auto-chosen) and
 `unattended` (this page). `unattended` is honored only as the explicit
 `GSTACK_SESSION_KIND=unattended` override, which outranks `GSTACK_HEADLESS`
 so a parent can drive a run inside CI. Nothing in the test or eval harness sets
 it, so `headless` keeps its BLOCK semantics.
+
+On Codex CLI, `gstack-session-kind` reports `headless` for a skill started
+under `codex exec` (or its alias `codex e`, or `codex review`) and
+`interactive` in the Codex TUI. Codex gives tool shells the same environment
+(`CODEX_THREAD_ID`, `CODEX_CI=1`, no TTY) in both, so the helper reads the
+subcommand of the nearest `codex` process instead: exec runs tool shells
+itself, and the TUI runs them under its `codex app-server` daemon. Conductor's
+markers still win, as they do for Claude Code. A Codex run that a parent agent
+drives still sets `GSTACK_SESSION_KIND=unattended` itself.
 
 ## What the session kind changes
 
@@ -70,8 +79,11 @@ GSTACK_RESULT: skill=<name> status=<status> run=<dir>
 
 `status` is one of `complete`, `reviewed`, `gate_pending`, `incomplete`,
 `interrupted` or `refused`; `run` is where the run's record is. `/autoplan`
-always ends `gate_pending` when it reaches the final gate, because the gate is
-written and never approved. `/autoplan --ceo-only` ends `reviewed`: it runs the
+ends `gate_pending` when it reaches the final gate with no owner reply, because
+the session never approves the gate on its own judgment; when the owner's own
+reply is relayed to it, the session records it with `gstack-autoplan answer
+--by agent:<id> --owner-reply-file <file>` (see the driver steps below).
+`/autoplan --ceo-only` ends `reviewed`: it runs the
 CEO phase alone, asks nothing, writes no gate and approves nothing (see
 [CEO-only runs](#ceo-only-runs)). Pure queries (`gstack-artifact schema`,
 `gstack-gate render`) print no result line.
@@ -387,6 +399,29 @@ owner's own words: nothing a person wrote leaves without their click (GST-1243).
   `gstack-artifact validate --public <pub> --private <dir>/run.json` runs the
   same scan, renderings included, on an existing copy.
 
+## Starting a child agent: type the skill first
+
+When a parent starts another agent to run a gstack skill, the child's prompt
+opens with the skill command typed the way a person types it, for example
+`/ship --continue <brief>`, and everything else comes after it. Claude Code
+expands a skill only when the prompt starts with `/<skill>`. A prompt such as
+"Load gstack. … Run /ship …" reaches the model as plain text, and the model
+then has to decide on its own to load the skill. In gstack-evals#366, Opus 5.5
+found a skill from its description in 0 of 60 unattended sessions, while a
+typed command put the skill's text in front of it in 60 of 60.
+
+- **Use the installed name.** With `skill_prefix: true` the command is
+  `/gstack-<skill>`; a typed name that isn't installed expands to nothing.
+- **No Skill tool needed.** Claude Code expands a typed command itself, without
+  a Skill tool call, so the child's `--allowedTools` doesn't have to list
+  `Skill` for this.
+- **Hosts that don't expand a typed skill**, such as a Capy subagent, get the
+  skill's SKILL.md path to read instead.
+
+`gstack-ship-budget launch` (`lib/ship-handoff.ts`), the token-capped /ship
+child on Claude Code, follows this rule, and `test/ship-budget.test.ts`
+checks its prompt.
+
 ## How a parent consumes a run
 
 1. **Decide whether the run finished.** For an `/autoplan` run directory,
@@ -398,8 +433,14 @@ owner's own words: nothing a person wrote leaves without their click (GST-1243).
    terminal outcome, every listed artifact exists inside the run directory with
    the recorded hash, every JSONL file parses row by row against its schema with
    run-bound unique ids, task dependencies and finding references resolve
-   without cycles, `counts` agree with the files, and (unattended) the guard
-   line is present. Otherwise it exits `1` with one error line per problem and
+   without cycles, `counts` agree with the files, (unattended) the guard
+   line is present, and gstack-autoplan wrote the run: `run.json` carries
+   the fields it writes on every run (`host: gstack-autoplan`, `plan_input`
+   and the rest, `ARTIFACT_NOT_AUTOPLAN_RUN`) and agrees with its
+   `attempts.jsonl` journal, its bound review outputs and its checkpoint
+   (`ARTIFACT_JOURNAL_MISMATCH`). `gstack-artifact ack` runs the same
+   check. A public copy (`validate --public`) carries no journal and is
+   checked against its private run's digests instead. Otherwise it exits `1` with one error line per problem and
    `ARTIFACT_INVALID: <n> error(s)`; `--json` returns the same as
    `{ valid, run, status, run_dir, errors[] }`. A run that was interrupted shows up here as
    `ARTIFACT_RUN_INTERRUPTED`, never as a partial success.
@@ -989,8 +1030,13 @@ line, on an ephemeral state root.
 
 ## Reference run
 
-`test/fixtures/multi-agent-wave/reference-run/` is a complete unattended
-`/autoplan` run (the one that produced this wave's plan) and validates clean.
+`test/fixtures/multi-agent-wave/reference-run/` is the hand-written run
+that produced this wave's plan, from before `gstack-autoplan` existed. It
+pins the structural contract (`validateRun` passes it), but
+`gstack-artifact validate` refuses it with `ARTIFACT_NOT_AUTOPLAN_RUN`: it
+has no `plan_input` and no journal, because no gstack-autoplan wrote it. Copy
+a run gstack-autoplan wrote, never this one, when you need a run that
+validates.
 `test/fixtures/multi-agent-wave/INCIDENTS.md` records what went wrong while it
 was produced by hand and which validator rule now catches each incident.
 
