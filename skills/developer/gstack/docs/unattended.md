@@ -34,7 +34,10 @@ drives still sets `GSTACK_SESSION_KIND=unattended` itself.
   onboarding tips and routing blocks are suppressed exactly as they are for
   `spawned`. An unanswered consent is `off`.
 - **No publishing or sync, enforced at the writers.** Usage analytics are not
-  written (`TELEMETRY_WRITE: skipped (unattended session)`), the artifacts
+  written (`TELEMETRY_WRITE: skipped (unattended session)`; the one exception
+  is a Capy session the owner opted in with `telemetry_capy: anonymous`, which
+  sends one anonymous row per skill run labelled `capy` (or `gt`), see
+  [privacy](privacy.md)), the artifacts
   repo is neither pulled nor pushed (`ARTIFACTS_SYNC: skipped (unattended
   session; mode=<m> queue=<n> retained)`), the sync spool is not fed
   (`gstack-brain-enqueue` is a no-op, and `gstack-review-log` says `review-log:
@@ -1094,9 +1097,11 @@ opening line is not. The reader's read is a trail row with phase `trail-read`
 whose decision names the reader (`gstack-decision-trail <file> trail-read
 "openai/gpt-6.2-sol (Subagent 4)" <why> <evidence> <flags>`).
 `gstack-ship-queue ready --trail <file>` prints the opening line from that row
-for a risk-class receipt, or `MISSING: cross-family trail read` when the trail
+for a risk-class receipt, then that row's flags (`Flags (trail row <n>): …`, or
+`No flags (trail row <n>)`), or `MISSING: cross-family trail read` when the trail
 has none, and one `TRIAL_MERGES` line per open PR that shares a file, from
-`git merge-tree` at both heads. `decisions.jsonl` stays the typed record `gstack-artifact` validates; the
+`git merge-tree` at both heads. A PR from a fork is labelled as an outside PR
+and never fetched or merged. `decisions.jsonl` stays the typed record `gstack-artifact` validates; the
 trail is the plain one a person reads, and `column -s$'\t' -t decisions.tsv`
 renders it in a terminal.
 

@@ -1300,7 +1300,7 @@ an hour or hide an empty diff (GST-3019):
 
 | Code | When | Next |
 |---|---|---|
-| `SHIP_LANE_NOT_CARRIED` | `--tests-only` was given a lane `ship_lanes_from` maps, and no verified CI run carries it at this tree. Nothing runs, not even the other lanes. | Push, dispatch the workflow the `NEXT:` line names, `gstack-ci-carry wait`, rerun; or rerun with `--run-uncarried-here` to run it here. A full preflight still runs a lane that does not carry. [Troubleshooting](troubleshooting.md#ship-lane-not-carried) |
+| `SHIP_LANE_NOT_CARRIED` | A preflight, full or `--tests-only`, was given a lane `ship_lanes_from` maps, and no verified CI run carries it at this tree, whatever the `CI_CARRY: none` reason. Nothing runs, not even the other lanes. | Push and dispatch the workflow the `NEXT:` line names, or, when it cannot be dispatched, push a merge of the base (or ask the pull request's author to); `gstack-ci-carry wait`, rerun; or rerun with `--run-uncarried-here` to run it here. [Troubleshooting](troubleshooting.md#ship-lane-not-carried) |
 | `SHIP_BASE_UNKNOWN` | `--audit --base <base>` resolves to no commit: a sha-like value is tried as a commit first, then `origin/<base>`. | Fetch the base branch or the commit, then rerun. [Troubleshooting](troubleshooting.md#ship-base-unknown) |
 
 A lane carries from a run at an earlier commit when git reads that commit's tree as HEAD's (a base merge
@@ -1468,6 +1468,13 @@ after it lands on <base>)` and a normal review. A base policy that does not
 validate stops the plan (`POLICY_INVALID`), and a base git cannot read stops it
 (`POLICY_SOURCE_UNAVAILABLE`); neither turns exclusion off quietly.
 
+**Land the setting first.** Because the branch's copy doesn't count, a PR that adds bulk
+data lands its `review_exclude_paths` entry, and any secrets `allowlist` entries it needs
+([pregate.md](pregate.md#allowlist)), in a small PR of their own before the data PR opens.
+Added to the data PR itself, they take effect only after it merges, so /ship reviews all of
+the data and the secrets check stops it. Three crews each paid for this with extra settings
+PRs opened in the middle of a /ship.
+
 **Git's glob dialect.** Each pattern is a `:(top,glob)` pathspec: root-anchored
 and case-sensitive. The matched set comes from git itself (`git diff --raw -z`),
 so the plan, the receipt and what readers see are one set. Untracked files are never part of it: no reader's `git diff` shows them, and the receipt reads the committed head.
@@ -1606,6 +1613,33 @@ single changed line over the scanner's 1 MiB cap, for example) go to the reader
 whole through its keep command. Results PRs that capture model requests need
 this: their system prompts name `${…_API_KEY}` variables and keychain commands
 (harness-evals #269: 75 such files, 12.9 MB whole).
+
+<a id="gate-tagged-data-excerpts"></a>
+**Gate-tagged data excerpts (GST-3273).** A kept file whose only reason is
+`gate-tagged` gets the same excerpt, under its own `## Gate-tagged data
+excerpts` heading, only when all of these hold; anything else goes to readers
+whole:
+
+1. It is a `.jsonl`, `.ndjson`, `.csv`, `.tsv` or `.log` file, or a `.json`
+   file under a docs, results or reports tree. A
+   [`review_content_patterns`](#review-content-patterns) declaration alone never
+   qualifies a file.
+2. No gate floor covers its path (test, CI, config, snapshot or golden), and it
+   was not renamed, so no tag can come from the floor or the old path.
+3. It is kept for no other reason (not source, agent prose, config, a gate path,
+   executable, binary or a secret line).
+4. Every tag instance in it is one added line's own tag: the multi-line rule
+   (an empty `catch` or `except: pass` across lines) finds nothing in its added
+   lines, and its untagged added lines, scanned together, tag nothing.
+
+The excerpt shows every changed line the gate scan's line rules tag (and every
+secret-line or secret-shaped line) and names the tags. The plan and the receipt
+apply the same rule to the same input, so they build the same selection. The
+gate class and the record's `gate_tagged` list are unchanged: only how much of
+the data file a reader sees changes. Results PRs that commit captured agent
+sessions need this: the sessions quote lint pragmas, env checks and
+`--no-verify` pushes (harness-evals #494: 25 transcripts, 11.3 MB (11,320,357
+bytes) whole).
 
 <a id="one-selection-every-reader"></a>
 **One selection for every reader (GST-1476).** Every path that renders a
@@ -1793,7 +1827,13 @@ once every blocking finding on it is ruled it binds at that tree as a clean read
 (harness-evals#361, GST-2251). A CRITICAL with no ruling stays open, and while one
 does, finish prints `FIX_CHECK_OPEN: <fingerprints> on the fix-check at <commit12>`
 naming the `gstack-approvals rule` command for each
-([troubleshooting](troubleshooting.md#fix-check-open)). A review-loop exception is
+([troubleshooting](troubleshooting.md#fix-check-open)). On any stopped review row,
+the final review and the native reader included, `gstack-review-read` names them
+too: its UNVERIFIED reason ends `N finding(s) still need an owner ruling at this
+head: <fingerprint> (<severity>, <action>); …`, ten names at most. A `noted` or
+`deferred` CRITICAL is on that list, because neither action closes a CRITICAL,
+and a gate finding is listed with the `gate_id` its gate disposition needs, since a
+ruling never closes one (harness-evals#498, GST-3267). A review-loop exception is
 not a ruling: it accepts edits after a fix-check, never the fix-check's own
 findings. Nothing ruled is hidden:
 `gstack-approvals rulings` prints one `Ruled note: …` line per ruling for the
@@ -1808,6 +1848,27 @@ closed. So a final review or native reader that stopped on findings the owner th
 ruled reads `CURRENT` at the one tree its `incomplete` binding names, while a ruling
 on another branch, at another head, for another finding or by gstack itself
 closes nothing (harness-evals#498).
+A stopped Step 9 row logged with `--findings <file>` carries its findings in that
+file, not on the row, so `gstack-review-read` shows the file's findings on the row
+(`findings_from` names the file) while the file still derives the counts the row
+recorded. A Step 11 native row that lists no findings shows the findings of the
+Step 9 row of the same pass, commit and bound tree, because Step 9 carries Step
+11's queued findings; rulings must then cover every blocker of that pass. A file
+that is missing or changed attaches nothing, and any row that claims issues but
+lists no findings reads `it lists no findings (fcount 0) but claims …` with the
+cause (harness-evals#515, GST-3296).
+A row read on other content still reads `CURRENT` when HEAD is the row's commit
+plus clean merges of `origin/<base>` and nothing else, the head R51 counts as
+already reviewed (harness-evals#515 at 2d3ab19d, GST-3308). Every commit after
+the reviewed one must be a two-parent merge whose second parent the base holds and
+whose tree is exactly what `git merge-tree --write-tree` writes for its parents,
+the working tree must be HEAD's, and the branch's patch against the base must be
+the reviewed one twice over: the product patch-id the receipt carry compares
+(`lib/ship-receipt-patch.ts`) and the patch-id over every path, so tests,
+release metadata and gate paths stay covered. The reason then names the reviewed
+base to save with the reviewed tree for finish's `--reviewed-base`.
+An own edit, a conflict resolution, an edit inside a merge, base context moved
+beside the branch's hunks or an uncommitted change reads `STALE` and says which.
 
 <a id="security-findings-stay-private"></a>
 **Security findings stay private (GST-3076).** A PR body keeps every earlier
@@ -1881,7 +1942,9 @@ finding as `kept` with `reason: owner disposition <id>: <reason>` and
 row as if the findings were kept, so /ship's gate rules (`--blocking-open`,
 `--gate-open`, the draft state, the `Gate edits:` counts) read them as kept once it
 reads the row again. As with rulings, a row derived from a findings file
-(`status_source: derived`) is not cleared. Nothing is hidden: finish prints each as
+(`status_source: derived`) is cleared only through the file's findings
+`gstack-review-read` shows on it, so a missing or changed file clears nothing
+(GST-3296). Nothing is hidden: finish prints each as
 `GATE_DISPOSITION: <fingerprint> [gate <gate_id>] at <head12> by <who> at <time>:
 <reason> — "<words>" (approval <id>)`, ending `(… not applied)` when no review row's
 range holds it; `gstack-approvals dispositions` prints one `Gate disposition: …`
@@ -1898,8 +1961,16 @@ merges one only when the lander passes `--accept-gate-disposition <approval id>`
 for it.
 
 Land works the dispositions out again at the pin from the PR branch's approval
-store: the local record and its mirror. A lander on another machine reads the
-mirror the owner recorded into, so set `GSTACK_APPROVALS_DIR` to that directory
+store: the local record and its mirror, plus the rows `ready` copied into the
+READY note. The store lives on the machine that recorded the row, often the
+/ship machine, so `ready` copies each disposition it applies at the head into the
+READY note on `refs/notes/gstack-trains`, signed and whole, and land on any
+machine reads those rows beside its own store under the same checks: the
+writer's fields, the digest, the PR's branch and the head in the pin's history.
+An edited note row counts for nothing, and the lander still accepts each one
+explicitly (#4581). A security-class disposition stays out of the note, because
+the notes ref is public, so for one of those a lander on another machine reads
+the mirror the owner recorded into: set `GSTACK_APPROVALS_DIR` to that directory
 when it isn't the default. Land counts every disposition whose head the pin
 contains. In a full clone, a row whose head commit is gone (the branch was
 rewritten and garbage-collected, or the name reused) doesn't apply, because the
@@ -2280,7 +2351,11 @@ difference refuses with `RECEIPT_CARRY_PRODUCT_CHANGED`. When merging the commit
 into the current base conflicts because the base edited the landed lines
 afterwards, the base commits since the fork that touched every path of its
 change are tried newest first (at most 200), so the squash itself still counts
-(GST-1399).
+(GST-1399). A commit the reviewed range's own base already held is no parent: it
+landed before the review, so the reviewed diff never held its hunks, and
+measuring from it would compare the wrong range and name the parent's files
+(yc-software/qm#3457, GST-3315). Step 11.5's base-merge check measures a
+reviewed range from a landed parent by the same rule.
 
 **finish after a stack parent lands (GST-1399).** A child reviewed against its
 parent branch passes the parent's head to `gstack-ship-release finish
@@ -3013,6 +3088,9 @@ gstack-release-stamp open            # --dry-run prints the stamp and creates no
 
 It stamps a fresh worktree of `origin/main` with `gstack-restamp --release`,
 commits the result on `release/<version>`, pushes that branch and opens its PR.
+On Capy (`GSTACK_CAPY=1`) it pushes the branch but leaves the PR to the host's
+PR tool, printing a `HOST_PUBLISH: pr-create` line instead
+([host publish](troubleshooting.md#host-publish)).
 The release stamp folds every fragment in `changelog.d/` under one new CHANGELOG
 heading and deletes the files. The new version is the base's plus the highest
 bump any fragment declares (the policy `bump` when none does). It reruns the

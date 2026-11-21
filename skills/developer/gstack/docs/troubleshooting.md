@@ -755,16 +755,17 @@ before the fetch instead of going on unprotected.
 process holding `<git dir>/gstack-leases/.lock`), then rerun.
 
 <a id="ship-lane-not-carried"></a>
-### `STOP: SHIP_LANE_NOT_CARRIED: lane <label> did not carry from a verified CI run at this tree, and --tests-only never starts a lane on its own ...`
+### `STOP: SHIP_LANE_NOT_CARRIED: lane <label> did not carry from a verified CI run at this tree, and preflight never starts a mapped lane on its own ...`
 
-**Meaning.** `gstack-ship-preflight --tests-only` was given a lane whose exact
+**Meaning.** `gstack-ship-preflight`, full or `--tests-only`, was given a lane whose exact
 command `origin/<base>`'s `.gstack/pregate.json` maps in `ship_lanes_from`,
 and no verified CI run carries it at this tree: the `CI_CARRY: none
 label=<label> (<reason>)` line above the STOP says why (`no_run`: CI has not
-run this tree yet; `dirty_tree`: uncommitted work). A mapped lane is the full
-suite, which can take most of an hour on a small machine (gbrain #9662: a
-50-minute unit lane on 4 CPUs), so `--tests-only` no longer starts it on its
-own (GST-3019).
+run this tree yet; `dirty_tree`: uncommitted work; `tree_mismatch`: the run
+tested a merge with an older base). A mapped lane is the full suite, which can
+take most of an hour on a small machine (gbrain #9662: a 50-minute unit lane on
+4 CPUs), so preflight never starts it on its own, whatever the reason (GST-3019;
+a full preflight did until GST-3277).
 
 **What is kept.** Nothing ran: no lane, mapped or not, started. The pregate
 line above it is the pregate's own verdict.
@@ -772,8 +773,13 @@ line above it is the pregate's own verdict.
 **Fix.** Follow the `NEXT:` lines. Commit and push the tree, dispatch the
 workflow they name (`gh workflow run <workflow> --ref <branch>`), wait with
 `gstack-ci-carry wait --base <base>`, and once it prints `CI_WAIT: green`
-rerun the same `--tests-only` command, which then carries the lane. To run the
-lane on this machine instead, rerun with `--run-uncarried-here`.
+rerun with `--tests-only` and the same `--lane` flags, which then carries the
+lane (a full preflight rerun with the same `--run` would stop on its open run). A workflow with no
+`workflow_dispatch` trigger, or a run profile that accepts no dispatched run,
+cannot be dispatched, so the `NEXT:` line says so: merge `origin/<base>` into
+the branch and push it, or, on a pull request you cannot push to, ask its
+author to. To run the lane on this machine instead, rerun with `--tests-only`
+and `--run-uncarried-here`.
 
 **Expected result.** `LANE: <label> carried run=<id>/<attempt> …`, or with
 `--run-uncarried-here`, `LANE: <label> pass …` from the run here.
@@ -1630,7 +1636,12 @@ or too large. Each message names the cap that applied:
 - **64 MiB source cap.** The full size of every such file outside dependency
   and VCS directories counts, including files over 1 MiB whose contents are
   withheld from the audit.
-- **Symlinks.** A tracked symlink anywhere in the repository stops the run.
+- **Special files.** A nonignored FIFO, socket or device inside the audit
+  scope (the whole repository, or the `--paths` directories) stops the run.
+  Symlinks do not: since the first release after v1.102.0.0 (#4540), each
+  tracked or nonignored symlink is listed in the report with its target string, or notes that the target was withheld when it matches a secret pattern
+  and is never followed, so a link to `/etc/passwd` or out through `..` is
+  reported, not read.
 
 **Fix.** No setting raises these caps. For the 64 MiB source cap, rerun with
 `--paths` set to the comma-separated repo-relative directories you want audited
@@ -1642,7 +1653,8 @@ With `--diff`, every changed path outside dependency directories must be inside
 `--paths`, or the run is refused. Do not audit a hand-trimmed copy: /cso would treat it as the whole
 repository and report nothing as skipped. `--paths` does not lower the
 manifest cap or the 100,000-entry limit, because every skipped path still has a
-manifest entry (about 50,000 files fit). Symlinks must be removed. Add your
+manifest entry (about 50,000 files fit). Remove or ignore a FIFO, socket or
+device, or narrow `--paths` past it. Add your
 file count or size to
 [#2993](https://github.com/garrytan/gstack/issues/2993).
 
@@ -3350,6 +3362,9 @@ would have; `gstack-post` on GitLab uses the origin remote), `host=` when it is 
 github.com, a reply's comment, and a new PR's base, head (the current branch when `--head` is not passed) and draft
 state. Nothing reached GitHub yet. When the repository cannot be resolved the command refuses and prints no line,
 because a hand-off without one would land on whatever repository the host tool defaults to.
+`gstack-release-stamp open` does the same for a new release PR (`pr-create`) after it pushes `release/<version>`.
+/ship's test-failure triage prints no `HOST_PUBLISH:` line: on Capy it keeps its issue title and body files,
+prints where they are and runs no `gh issue create`.
 
 **Fix.** Publish the named files with the host's PR tool before the next gstack step, always passing `repo=`
 (Capy's `repo` argument) so a multi-repo or fork thread edits the right pull request; a `host=` the host tool
@@ -4152,9 +4167,13 @@ the base policy commit.
   split the PR. When published data under a pattern is kept as `code`
   (`REVIEW_EXCLUDE_KEPT: code …` on `.patch`, `.sha256` or extension-less files),
   add [`review_content_patterns`](ship-policy.md#review-content-patterns) for it. Files kept only for a secret line already count as their
-  excerpts ([secret-line excerpts](ship-policy.md#secret-line-excerpts)); one in
-  `DIFF_KEEP:` is kept for another reason, and one the excerpt could not be
-  built for moves to the reader's keep command and counts whole.
+  excerpts ([secret-line excerpts](ship-policy.md#secret-line-excerpts)), and so
+  do allowlisted data files kept only for gate tags ([gate-tagged data
+  excerpts](ship-policy.md#gate-tagged-data-excerpts)); one in `DIFF_KEEP:` is
+  kept for another reason, and one the excerpt could not be built for moves to
+  the reader's keep command and counts whole. The line's `files=` field and the
+  fix name the largest files left; a name holding a space, a comma or a colon is
+  quoted in `files=`.
 
 There is no override flag. See [the review ceiling](ship-policy.md#review-diff-ceiling).
 
@@ -5169,7 +5188,13 @@ actions, and `## Scoring` needs a `judge:` line, a model judge from another
 model family than every arm with `labels:` of 40 or more and `agreement:` of
 0.6 or more, and with two or more arms `paired: yes`, `interval: 95%` and
 `mdd:`. A `frozen:` date before 2026-11-15 exempts both
-([docs/TESTING_INTERNALS.md](TESTING_INTERNALS.md#result-checks)).
+([docs/TESTING_INTERNALS.md](TESTING_INTERNALS.md#result-checks)). The
+eval-loop checks add `## Pilot`, `## Cost`, `## Interim look` (a counted run
+above $500), the judge's `per-arm:` and `effort:` lines, a regression-test bar
+for a "smaller change" arm and an `answers:` line under held-out exposure; a
+`frozen:` date before 2026-11-21 exempts them, and a `kind: quick look` plan
+is checked for its three lines and a cap of $100 or less instead
+([docs/TESTING_INTERNALS.md](TESTING_INTERNALS.md#eval-loop-checks)).
 
 **Fix.** Fill the named sections before any priced call. A plan that cannot
 name its stop rule or its held-out exposure is not preregistered; the pilot
@@ -5217,11 +5242,15 @@ in [docs/TESTING_INTERNALS.md](TESTING_INTERNALS.md#no-gstack-arm).
 file, fewer labelled outputs than the preregistered count (at least 40), labels
 that are all one class (agreement is undefined), a repeated id, or a Cohen's
 kappa between the hand labels and the judge below the preregistered bar (at
-least 0.6). Until it passes, the judge's numbers do not count.
+least 0.6). With `per-arm: yes` in `## Scoring`, it also refuses a label row
+with no `arm`, rows naming an arm not in `## Arms`, an arm with no rows, or
+any arm whose own kappa is below the bar (its `JUDGE_ARM:` line). Until it
+passes, the judge's numbers do not count.
 
 **Fix.** Label outputs by hand from development or calibration rows, never
-held-out ones, as JSONL rows `{"id", "human", "judge"}`, covering every kind
-of output the judge scores, and pass the file with `--labels`. A judge below
+held-out ones, as JSONL rows `{"id", "human", "judge"}` (plus `"arm"` with
+`per-arm: yes`), covering every kind of output the judge scores and every
+arm, and pass the file with `--labels`. A judge below
 its bar is replaced or its prompt fixed and relabelled; the bar is not
 lowered. The rule is in
 [docs/TESTING_INTERNALS.md](TESTING_INTERNALS.md#result-checks).
@@ -5253,6 +5282,18 @@ must be read side by side.
 **Fix.** Add an `answer-only` column to the same table, counting failures by
 the grader's rule on the final answer alone, and report both readings. The
 rule is in [docs/TESTING_INTERNALS.md](TESTING_INTERNALS.md#result-checks).
+
+<a id="eval-quick-look-no-number"></a>
+### `EVAL_QUICK_LOOK_NO_NUMBER`
+
+**Meaning.** `gstack-eval-plan results --check` was given a quick look (a plan
+with `kind: quick look`). A quick look costs at most $100, takes a day and only
+opens or closes a question, so it publishes no number.
+
+**Fix.** Record the quick look's answer as an opened or closed question. To
+publish a number, write a counted-run preregistration (`prereg --init`), pilot
+each arm and run it. The rule is in
+[docs/TESTING_INTERNALS.md](TESTING_INTERNALS.md#eval-loop-checks).
 
 <a id="eval-arm-duplicate"></a>
 ### `EVAL_ARM_DUPLICATE`
@@ -6319,9 +6360,11 @@ receipt's `gate_dispositions`, or the PR body's `Gate disposition:` lines, diffe
 from the store (`ready` refuses those too). Nothing was merged. The
 `GATE_DISPOSITION:` lines above the refusal are what the store holds at the pin;
 the receipt and the body aren't trusted for this, because the lane writes them.
-A receipt id the store lacks usually means this lander reads another
-`GSTACK_STATE_ROOT` or approvals mirror than the owner recorded into, or that the row
-was removed after the receipt was written. A pin missing from the clone, a shallow
+Land also reads the signed non-security rows `ready` copied into the READY note at
+the pin, under the same checks. A receipt id the store lacks usually means this
+lander reads another `GSTACK_STATE_ROOT` or approvals mirror than the owner recorded
+into (security-class rows never go in the note), or that the row was removed after
+the receipt was written. A pin missing from the clone, a shallow
 clone that can't prove whether a row's head is in the pin's history, and any other
 git error while checking a head also refuse here. In a full clone, a row whose head
 commit is gone after a rewrite and gc just doesn't apply.
@@ -7477,6 +7520,9 @@ note:` line ([ship-policy.md](ship-policy.md#ruled-notes)). A ruling at a head
 outside the range is listed as `not applied`, and a path edited after the
 fix-check still routes by the post-review rules. When the owner wants the
 findings fixed instead, fix them and ask for a grant for one more fix-check.
+A stopped final review or native reader row works the same way: its
+`gstack-review-read` reason lists each finding still waiting for a ruling, a
+`noted` CRITICAL included, so rule each listed fingerprint at the head it names.
 
 <a id="receipt-blocker-open"></a>
 ### `RECEIPT_BLOCKER_OPEN`
@@ -7533,7 +7579,8 @@ or `no_verified_run` detail) and the lane runs here instead
 ([pregate.md](pregate.md#tree-log-step)).
 
 **Fix.** Print the line only from the named step, after the test step, with
-`sleep 1` before it and `sleep 2` after it, and make sure no test prints `GSTACK_TREE_JSON`. Then
+`sleep 1` before it and `sleep 5` after it (`sleep 2` after it is too short on
+runners that stamp output late), and make sure no test prints `GSTACK_TREE_JSON`. Then
 dispatch a fresh run at the same head and rerun `gstack-ci-carry wait`.
 
 <a id="ci-carry-rerun-malformed"></a>
