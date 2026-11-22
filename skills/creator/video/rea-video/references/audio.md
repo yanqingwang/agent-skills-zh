@@ -24,7 +24,7 @@
 |---|---|
 | `original.wav` | 原声（视频里的完整混音） |
 | `vocals.wav` | 人声干声：旁白、口播、歌声。注意：键盘声、"叮"之类的瞬态音效也会落在这里 |
-| `music.wav` | 配乐 + 环境声 |
+| `music.wav` | 配乐（音效响起的地方已扣掉） |
 | `voice_S1.wav`、`voice_S2.wav` … | 有两个以上说话人时，每人一条：人声干声里只留这个人说话的段落，长度和原片一致 |
 
 模型是 UVR MDX-Net Inst HQ 3（ONNX，CPU 即可，首次运行从 GitHub 下载约 67 MB，缓存在 `~/.cache/rea-video/models`，可用 `REA_VIDEO_MODELS` 改位置）。实测 TTS + Suno BGM 混音分离 SDR 约 19.7 dB；纯 BGM 漏进人声轨 −42 dB。约 0.6 倍实时（4 核）。

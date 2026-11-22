@@ -72,6 +72,8 @@ from . import (
     relevance,
     rerank,
     schema,
+    shortform_envelope,
+    shortform_oss,
     signals,
     snippet,
     stocktwits,
@@ -406,6 +408,17 @@ def _excluded_sources(config: dict[str, Any]) -> set[str]:
     }
 
 
+def with_plan_source_omissions(
+    config: dict[str, Any], plan: dict | None,
+) -> dict[str, Any]:
+    """Apply a validated plan's exclusions without changing shared configuration."""
+    omissions = (plan or {}).get("omit_sources")
+    if not omissions:
+        return config
+    excluded = _excluded_sources(config).union(omissions)
+    return {**config, "EXCLUDE_SOURCES": ",".join(sorted(excluded))}
+
+
 class NoRequestedSourceAvailable(RuntimeError):
     """None of the sources the user asked for with --search is configured."""
 
@@ -440,8 +453,10 @@ def available_sources(
         config.get("_CORPUS_DIRS"), config.get("LAST30DAYS_CORPUS_DIRS")
     ):
         available.append("corpus")
-    if config.get("SCRAPECREATORS_API_KEY"):
-        available.extend(["tiktok", "instagram"])
+    if env.is_tiktok_available(config):
+        available.append("tiktok")
+    if env.is_instagram_available(config):
+        available.append("instagram")
     if env.get_x_source(config, local_only=local_only):
         available.append("x")
     elif x_envelope or (
@@ -2185,7 +2200,10 @@ def diagnose(
         "brightdata_authenticated": brightdata_status["brightdata_authenticated"],
         # Fresh browser session or a cached company record: the host resolves
         # a --trustpilot-domain only then. Local reads; never opens a browser.
-        "trustpilot_can_run": trustpilot.can_run_now(config)["can_run"],
+        "trustpilot_can_run": (
+            "trustpilot" not in _excluded_sources(config)
+            and trustpilot.can_run_now(config)["can_run"]
+        ),
         # safe=True (doctor/--diagnose/--preflight) must stay network-free:
         # answer X availability from local evidence only. x_pending is
         # precomputed by diagnose() to avoid double evaluation.
@@ -2340,8 +2358,13 @@ def run(
     corpus_all_time: bool = False,
     x_posts: x_envelope.Envelope | None = None,
     reddit_threads: reddit_envelope.Envelope | None = None,
+    shortform_urls: shortform_envelope.Envelope | None = None,
 ) -> schema.Report:
     _check_research(config)
+    if external_plan is not None:
+        planner.validate_external_plan(external_plan)
+        config = with_plan_source_omissions(config, external_plan)
+    excluded_sources = _excluded_sources(config)
     # ``suppress_x_host_lane`` is distinct from ``internal_subrun``: comparison
     # entities share the latter and must still honor the connector lane;
     # only discovery enrichment passes set the former.
@@ -2367,7 +2390,6 @@ def run(
         corpus_dirs or config.get("_CORPUS_DIRS"),
         config.get("LAST30DAYS_CORPUS_DIRS"),
     )
-    excluded_sources = _excluded_sources(config)
     corpus_enabled = bool(resolved_corpus_dirs) and "corpus" not in excluded_sources
     corpus_requested = bool(requested_sources and "corpus" in requested_sources)
     if corpus_enabled and requested_sources and "corpus" not in requested_sources:
@@ -2435,6 +2457,22 @@ def run(
     if reddit_refs_envelope is not None:
         config = dict(config)
         config["_reddit_envelope"] = reddit_refs_envelope
+
+    # Host-found TikTok / Instagram URLs (--shortform-urls). Only the keyless
+    # short-form lane reads them; a run searching neither platform ignores them.
+    if shortform_urls is not None and not any(
+        name not in excluded_sources
+        and (not requested_sources or name in requested_sources)
+        for name in ("tiktok", "instagram")
+    ):
+        log.source_log(
+            "TikTok", "host short-form URLs: envelope ignored (TikTok and Instagram are excluded from this run)",
+            tty_only=False,
+        )
+        shortform_urls = None
+    if shortform_urls is not None:
+        config = dict(config)
+        config["_shortform_envelope"] = shortform_urls
 
     # Gate StockTwits to ticker/crypto topics. Single chokepoint: when False,
     # available_sources() never registers stocktwits, so the planner can't
@@ -2531,8 +2569,6 @@ def run(
 
     if external_plan is not None:
         # External plan provided (e.g., from Claude Code via --plan flag).
-        # Explicit input is a contract: validate it before permissive sanitization.
-        planner.validate_external_plan(external_plan)
         if hiring_signals_mode:
             # Hiring-signals mode always runs the jobs lane. Add it before
             # sanitizing: with a jobs-only source set, sanitize would drop every
@@ -4910,30 +4946,6 @@ def _ensure_devto_in_plan(plan: schema.QueryPlan, available: list[str]) -> None:
         plan.source_weights = planner._normalize_weights(plan.source_weights)
 
 
-# Sources that are available only because the user installed their CLI or opted
-# in (INCLUDE_SOURCES, --search, a targeting flag). A host plan that names none
-# of them in any subquery almost always means the host planner never knew to
-# list them, not that it chose to skip them, so they ride the primary subquery.
-# A lane that cannot run this session (Trustpilot with no browser session or
-# cached record) is never added: the host skipped it on purpose.
-# Paid lanes with their own host decision step (amazon, meta_ads) stay out
-# unless this run asked for them (HOST_PLAN_PAID_LANES below);
-# EXCLUDE_SOURCES and --search already filter ``available``.
-HOST_PLAN_BACKFILL_SOURCES = (
-    "digg",
-    "arxiv",
-    "techmeme",
-    "bluesky",
-    "truthsocial",
-    "stocktwits",
-    "linkedin",
-    "dripstack",
-    "devto",
-    "telegram",
-    "trustpilot",
-)
-
-
 # Paid lanes the host requests per run outside the plan (runbook Step 0.5e /
 # 0.5f): source -> (config key of its targeting flag, log label). They join a
 # host plan only when this run asked: the source is in --search, or its
@@ -4990,7 +5002,7 @@ def _ensure_unplanned_lanes_in_host_plan(
     if not plan.subqueries:
         return
     planned = {source for subquery in plan.subqueries for source in subquery.sources}
-    candidates = (*(HOST_PLAN_BACKFILL_SOURCES if installed else ()), *asked)
+    candidates = (*(planner.HOST_PLAN_BACKFILL_SOURCES if installed else ()), *asked)
     missing = []
     for source in candidates:
         if source not in available or source in planned or source in missing:
@@ -5025,7 +5037,7 @@ def _ensure_unplanned_lanes_in_host_plan(
         "Planner",
         "Added installed/opted-in/requested sources absent from every --plan subquery to "
         f"{plan.subqueries[0].label}: {', '.join(missing)} "
-        "(set EXCLUDE_SOURCES to skip them).",
+        "(use EXCLUDE_SOURCES or, for optional lanes, plan omit_sources to skip them).",
         tty_only=False,
     )
 
@@ -6583,6 +6595,73 @@ def _detail_rate_limits_source(source: str, artifact: dict) -> bool:
     return source != "x" or not bool(artifact.get("_x_backup_not_rate_limited"))
 
 
+# TikTok videos per run that get comments from the free public endpoint (the
+# lane keeps about this many; ScrapeCreators comments cover three).
+PUBLIC_COMMENT_POSTS = 12
+# Most of the stream deadline the public attempt may use, and what it always
+# leaves for the ScrapeCreators fallback.
+PUBLIC_COMMENT_BUDGET_SECONDS = 15.0
+SC_COMMENT_RESERVE_SECONDS = 10.0
+
+
+def _comment_candidates(
+    items: list[dict],
+    from_date: str,
+    to_date: str,
+    creators: Iterable[str] | None = None,
+    want: int = 3,
+    topic: str = "",
+) -> list[dict]:
+    """The posts worth paying comment enrichment for.
+
+    Search results arrive before the date and relevance filters run, and the
+    loudest of them are often old or off-topic (a 2022 #bully video for "Kanye
+    West"). Picking the top posts by engagement from the raw list spent every
+    comment call on posts the report then dropped.
+
+    Posts dated outside the window are never candidates (an undated post can
+    still be kept). A post is preferred when it is on-topic the way the report
+    judges it: by the early score, by its text plus fetched caption (the report
+    rescores with the caption, so a spoken-caption match counts), or by being a
+    requested creator's post (the platform-scoped exemption the relevance prune
+    applies). Enrichment ranks its input by engagement and takes ``want``, so
+    other posts only fill the slots preferred posts leave empty, loudest
+    first, and never displace one. The dicts are shared, so comments attached
+    here stay on the kept items.
+    """
+    handles = {h.lstrip("@").strip().lower() for h in (creators or []) if h and h.strip()}
+
+    def in_window(item: dict) -> bool:
+        day = str(item.get("date") or "")
+        return not day or from_date <= day <= to_date
+
+    def preferred(item: dict) -> bool:
+        author = str(item.get("author_name") or "").lstrip("@").strip().lower()
+        if author and author in handles:
+            return True
+        score = item.get("relevance")
+        if score is None or float(score) >= relevance.RELEVANCE_FLOOR:
+            return True
+        body = " ".join(
+            str(item.get(key) or "") for key in ("text", "caption_snippet")
+        ).strip()
+        return bool(topic and body) and (
+            relevance.token_overlap_relevance(topic, body, item.get("hashtags") or None)
+            >= relevance.RELEVANCE_FLOOR
+        )
+
+    def loudness(item: dict) -> int:
+        eng = item.get("engagement") or {}
+        return sum(int(eng.get(key) or 0) for key in ("views", "likes", "comments"))
+
+    dated = [item for item in items if in_window(item)]
+    first = [item for item in dated if preferred(item)]
+    if len(first) >= want:
+        return first
+    rest = sorted((item for item in dated if not preferred(item)), key=loudness, reverse=True)
+    return first + rest[: want - len(first)]
+
+
 def _retrieve_stream(*args, **kwargs) -> tuple[list[dict], dict]:
     """Run one stream and retain HTTP failures swallowed by source adapters."""
     # run_started is passed through but not used here; it goes to _retrieve_stream_impl
@@ -7626,6 +7705,7 @@ def _retrieve_stream_impl(
                 token=env.get_tiktok_token(config),
                 hashtags=tiktok_hashtags,
                 creators=tiktok_creators,
+                config=config,
                 deadline=deadline,
                 cancel=cancel,
             )
@@ -7633,11 +7713,58 @@ def _retrieve_stream_impl(
             if (
                 items
                 and env.is_tiktok_comments_available(config)
+                and not items[0].get("_oss_backend")
                 and result.get("error") != tiktok.BUDGET_ERROR
             ):
                 sc_token = config.get("SCRAPECREATORS_API_KEY", "")
                 try:
-                    tiktok.enrich_with_comments(items, token=sc_token, deadline=deadline, cancel=cancel)
+                    public_got = 0
+                    # The public attempt gets its own short budget and always
+                    # leaves the fallback time, so a stalled endpoint cannot
+                    # use up the deadline ScrapeCreators would answer within.
+                    public_deadline = min(
+                        time.monotonic() + PUBLIC_COMMENT_BUDGET_SECONDS,
+                        deadline - SC_COMMENT_RESERVE_SECONDS,
+                    )
+                    if env.is_tiktok_public_comments_on(config) and public_deadline > time.monotonic():
+                        # Free and keyless, so every kept-sized slate of videos
+                        # gets comments, not just the three ScrapeCreators pays for.
+                        slate = _comment_candidates(
+                            items, from_date, to_date, tiktok_creators,
+                            want=PUBLIC_COMMENT_POSTS, topic=tiktok_query,
+                        )
+                        try:
+                            tiktok.enrich_with_comments(
+                                slate, token="", max_posts=PUBLIC_COMMENT_POSTS,
+                                deadline=public_deadline, cancel=cancel, public=True,
+                            )
+                        except http.DeadlineExceeded:
+                            # Only the public budget ran out: keep what came
+                            # back and let the fallback run on the real deadline.
+                            if (cancel is not None and cancel.is_set()) or time.monotonic() >= deadline:
+                                raise
+                        public_got = sum(1 for item in slate if item.get("top_comments"))
+                    if not public_got:
+                        # Endpoint off, blocked or empty: ScrapeCreators as before.
+                        tiktok.enrich_with_comments(
+                            _comment_candidates(items, from_date, to_date, tiktok_creators, topic=tiktok_query),
+                            token=sc_token, deadline=deadline, cancel=cancel,
+                        )
+                except http.DeadlineExceeded:
+                    result["error"] = tiktok.BUDGET_ERROR
+            elif (
+                items
+                and items[0].get("_oss_backend")
+                and env.is_tiktok_public_comments_on(config)
+                and result.get("error") != tiktok.BUDGET_ERROR
+            ):
+                # Keyless lane: the public endpoint is the only comment source,
+                # and the lane already returns only in-window, on-topic videos.
+                try:
+                    tiktok.enrich_with_comments(
+                        items, token="", max_posts=PUBLIC_COMMENT_POSTS,
+                        deadline=deadline, cancel=cancel, public=True,
+                    )
                 except http.DeadlineExceeded:
                     result["error"] = tiktok.BUDGET_ERROR
             return items, _result_outcome_artifact(source, result)
@@ -7648,6 +7775,7 @@ def _retrieve_stream_impl(
                 bool(env.get_tiktok_token(config)),
                 tuple(tiktok_hashtags or ()), tuple(tiktok_creators or ()),
                 env.is_tiktok_comments_available(config),
+                env.is_tiktok_public_comments_on(config),
             ),
             _fetch_tiktok,
             timeout=_memo_wait_seconds(config),
@@ -7671,13 +7799,19 @@ def _retrieve_stream_impl(
                 depth=depth,
                 token=env.get_instagram_token(config),
                 ig_creators=ig_creators,
+                config=config,
                 deadline=ig_deadline,
                 cancel=ig_cancel,
             )
             items = instagram.parse_instagram_response(result)
-            if items and env.is_instagram_comments_available(config):
+            if (
+                items
+                and env.is_instagram_comments_available(config)
+                and not items[0].get("_oss_backend")
+            ):
                 instagram.enrich_with_comments(
-                    items, token=config.get("SCRAPECREATORS_API_KEY", ""),
+                    _comment_candidates(items, from_date, to_date, ig_creators, topic=ig_query),
+                    token=config.get("SCRAPECREATORS_API_KEY", ""),
                     deadline=ig_deadline, cancel=ig_cancel,
                 )
             if (ig_cancel is not None and ig_cancel.is_set()) or time.monotonic() >= ig_deadline:
