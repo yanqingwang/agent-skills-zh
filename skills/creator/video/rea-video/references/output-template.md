@@ -49,4 +49,4 @@
 
 **报告**：out/ref/report.html
 
-**VLM**：照抄 `rea-video summary` 的 `VLM:` 一行（已生效 / 部分生效 / 全部调用失败 / 未配置 / 未开）。没生效、而且你自己也看不了图时，加一句建议："配置任意多模态模型（REA_VLM_BASE_URL / REA_VLM_API_KEY / REA_VLM_MODEL）后加 --vlm 重跑，实拍/AI/3D 的判断会更准。"你能看图时写"由 agent 看图复核"即可。
+**VLM**：照抄 `rea-video summary` 的 `VLM:` 一行（已生效 / 部分生效 / 全部调用失败 / 未配置 / 未开）。没生效、而且你自己也看不了图时，加一句建议："配置 GEMINI_API_KEY 后加 --vlm 重跑，实拍/AI/3D 的判断会更准。"你能看图时写"由 agent 看图复核"即可。

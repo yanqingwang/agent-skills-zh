@@ -51,13 +51,12 @@ pip install "rea-video[ocr,asr] @ git+https://github.com/JuneYaooo/rea-video"   
 
 **VLM（建议配置，不强制）**：VLM 是能看图/看视频的多模态大模型（Gemini、GPT-4o、豆包、Qwen-VL 等）。不开 VLM，工具只靠像素统计、帧率、OCR、元数据判断，照样能跑完、出报告，但**实拍 / AI / 3D 的区分明显变弱**，音效清单也只有信号层的低置信候选。开了 VLM，工具会把每个镜头的短片段和关键帧发给它，再和确定性结果融合。
 
-配置走 OpenAI 兼容接口，按以下顺序读取：
+两种配置：
 
-1. `REA_VLM_BASE_URL` / `REA_VLM_API_KEY` / `REA_VLM_MODEL`（`REA_VLM_MODEL` 可写多个模型、逗号分隔，前一个失败自动换下一个）
-2. 如果没有，回落到 capsule-cinema 的 `VIDEO_ANALYSIS_*` 或 `GEMINI3_*`
-3. 只有 Gemini 的 key（`GEMINI_API_KEY`，模型用 `REA_GEMINI_MODEL` 改）：特殊时刻（`moments`）走 Gemini 自己的接口，连声音一起看视频片段；视频会上传到 Google，用完即删
+- Gemini：设置 `GEMINI_API_KEY`（模型用 `REA_GEMINI_MODEL` 改），走 Gemini 官方接口，连声音一起看视频片段；视频会上传到 Google，用完即删
+- 其他多模态模型：设置 `REA_VLM_BASE_URL` / `REA_VLM_API_KEY` / `REA_VLM_MODEL`（可写多个模型、逗号分隔，前一个失败自动换下一个）。设置了这一组时优先用它
 
-用 `--env-file <某个 .env>` 读取配置（例如复用 capsule-cinema 的）。**不要把密钥写进对话、仓库或报告，也不要打开 .env 看内容。**
+用 `--env-file <某个 .env>` 读取配置。**不要把密钥写进对话、仓库或报告，也不要打开 .env 看内容。**
 
 用户没配 VLM 时：照常不加 `--vlm` 跑，不要因此中止任务。
 

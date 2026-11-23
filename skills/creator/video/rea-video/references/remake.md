@@ -12,7 +12,7 @@
 
 ## 用哪个模型
 
-- 模型、整条重做还是只做 AI 镜头、换什么，都写在 `remake/intent.yaml`（见 SKILL.md「复刻」），`rea-video plan out/ref` 按它出方案。用户没说用哪个模型就先问。
+- 模型、整条重做还是只做 AI 镜头、换什么，都写在 `remake/intent.yaml`（见 SKILL.md「复刻」），`rea-video plan out/ref` 按它出方案。用户没说用哪个模型时，先按默认模型（MiniMax H3，或 `prefs engine` 记住的模型）出方案并在回复里说明，不要先停下来追问；用户想换模型再跑 `rea-video plan out/ref --model <id>`。
 - 报告里每个单元的提示词是草稿。按 `rea-video models <id>` 打印的写法写成最终版放进 `remake/prompts.json`：时间和镜头怎么分、参考素材怎么指代、台词和不想要的内容怎么写；首帧 / 首尾帧模式下只留运动和运镜。`rea-video plan` 会按这个模型的格式规则检查。
 - 选帧、擦字、首尾帧怎么配：`rea-video models keyframes`。
 
