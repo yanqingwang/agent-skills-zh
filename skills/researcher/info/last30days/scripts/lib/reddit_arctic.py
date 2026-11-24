@@ -14,13 +14,19 @@ unreachable host it returns ``{}`` so the caller shows the thread without a poin
 count rather than failing the Reddit source.
 """
 
+import inspect
+import re
 import sys
 import threading
 import time
-from datetime import datetime, timezone
+from dataclasses import dataclass, field
+from datetime import date, datetime, timezone
 from typing import Any, Callable, Dict, List, Optional
+from urllib.parse import urlencode
 
-from . import http
+from . import http, reddit_refs
+
+_ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}\Z")
 
 API = "https://arctic-shift.photon-reddit.com/api/posts/ids"
 SEARCH_API = "https://arctic-shift.photon-reddit.com/api/posts/search"
@@ -70,11 +76,22 @@ _cache: Dict[str, Dict[str, int]] = {}
 # at 1.5s spacing alike, with or without a ``fields`` selection), and a retry
 # right after one tends to be refused again. A comment lookup retries once
 # after a pause; a listing walk asks again for its refused slices at the end.
+@dataclass
+class _ScoreSlot:
+    """In-flight score batch shared between the owner and waiting callers."""
+
+    done: threading.Event = field(default_factory=threading.Event)
+    scores: Dict[str, Dict[str, int]] = field(default_factory=dict)
+    attempted: bool = False
+
+
 MEMO_MAX = 512
 RETRY_422_PAUSE = 1.5
 _memo: Dict[str, Any] = {}
 _inflight: Dict[str, threading.Event] = {}
+_score_inflight: Dict[str, _ScoreSlot] = {}
 _memo_lock = threading.Lock()
+_tree_state = threading.local()
 
 
 def _log(msg: str) -> None:
@@ -82,12 +99,29 @@ def _log(msg: str) -> None:
     sys.stderr.flush()
 
 
+def _set_thread_tree_throttled(value: bool) -> None:
+    _tree_state.throttled = bool(value)
+
+
+def last_tree_was_throttled() -> bool:
+    """Whether this thread's last ``fetch_comment_tree`` call was throttled (422/429)."""
+    return bool(getattr(_tree_state, "throttled", False))
+
+
+def __getattr__(name: str) -> Any:
+    if name == "last_tree_throttled":
+        return last_tree_was_throttled()
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
 def reset_memo() -> None:
     """Forget memoized archive responses. Called once per command, and by tests."""
     with _memo_lock:
         _memo.clear()
         _inflight.clear()
-    _cache.clear()
+        _cache.clear()
+        _score_inflight.clear()
+    _set_thread_tree_throttled(False)
 
 
 def _is_slow_down(error: BaseException) -> bool:
@@ -192,57 +226,183 @@ def fetch_scores(
     point count for those threads).
     """
     out: Dict[str, Dict[str, int]] = {}
-    todo: List[str] = []
-    for pid in post_ids:
-        if not pid:
-            continue
-        if pid in _cache:
-            out[pid] = _cache[pid]
-        elif pid not in todo:
-            todo.append(pid)
+    clean_ids = list(dict.fromkeys(
+        clean for pid in post_ids if (clean := reddit_refs.normalize_post_id(pid))
+    ))
+    if not clean_ids:
+        return out
 
-    batches = [todo[i:i + BATCH] for i in range(0, len(todo), BATCH)][:MAX_BATCHES]
-    for n, batch in enumerate(batches):
-        if n:
-            time.sleep(PACE_SECONDS)
-        bound: Dict[str, Any] = {"timeout": TIMEOUT}
-        if deadline is not None:
-            remaining = deadline - time.monotonic()
-            if remaining <= 0:
-                _log(f"lookup stopped at its deadline; {len(batch)} ids left unscored")
-                break
-            bound = {"timeout": min(TIMEOUT, remaining), "retries": 1, "deadline_monotonic": deadline}
-        try:
-            data = http.get(
-                f"{API}?ids={','.join(batch)}",
-                headers={"User-Agent": http.BROWSER_USER_AGENT},
-                **bound,
-            )
-        except Exception as e:  # network error / non-200 — degrade, never raise
-            _log(f"lookup failed ({e}); {len(batch)} ids left unscored")
-            break
-        rows = (data or {}).get("data")
-        if not isinstance(rows, list):
-            # arctic-shift returns {"error": "..."} on rate-limit / bad request.
-            _log(f"unexpected response (rate-limited?): {str(data)[:80]}")
-            break
-        for row in rows:
-            if not isinstance(row, dict):
-                continue
-            rid = str(row.get("id") or "").removeprefix("t3_")
-            if not rid:
-                continue
+    pending: List[str] = list(clean_ids)
+    batches_fetched = 0
+    stop_fetching = False
+    wait_retries = 0
+    wait_end = (
+        deadline
+        if deadline is not None
+        else time.monotonic() + TIMEOUT * MAX_BATCHES + PACE_SECONDS * MAX_BATCHES
+    )
+
+    for _round in range(MAX_BATCHES + 3):
+        if batches_fetched > 0 and not stop_fetching:
+            if deadline is not None:
+                pace = min(PACE_SECONDS, max(0.0, deadline - time.monotonic()))
+                if pace > 0:
+                    time.sleep(pace)
+            else:
+                time.sleep(PACE_SECONDS)
+
+        todo: List[str] = []
+        waiting: List[tuple[str, _ScoreSlot]] = []
+        batch: List[str] = []
+        slot: Optional[_ScoreSlot] = None
+
+        with _memo_lock:
+            for clean in pending:
+                if clean in out:
+                    continue
+                if clean in _cache:
+                    out[clean] = dict(_cache[clean])
+                elif clean in _score_inflight:
+                    waiting.append((clean, _score_inflight[clean]))
+                else:
+                    todo.append(clean)
+            if todo and not stop_fetching and batches_fetched < MAX_BATCHES:
+                if deadline is not None and time.monotonic() >= deadline:
+                    _log(f"lookup stopped at its deadline; {len(todo)} ids left unscored")
+                    stop_fetching = True
+                else:
+                    # Claim one batch at a time so an owner that expires after
+                    # batch 1 never blocks waiting callers from fetching batch 2.
+                    batch = todo[:BATCH]
+                    slot = _ScoreSlot()
+                    for pid in batch:
+                        _score_inflight[pid] = slot
+
+        remaining_todo = todo[len(batch):]
+
+        if slot is not None:
             try:
-                entry = {
-                    "score": int(row.get("score") or 0),
-                    "num_comments": int(row.get("num_comments") or 0),
-                }
-            except (TypeError, ValueError):
+                bound: Dict[str, Any] = {"timeout": TIMEOUT}
+                if deadline is not None:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        _log(f"lookup stopped at its deadline; {len(batch)} ids left unscored")
+                        stop_fetching = True
+                    else:
+                        bound = {
+                            "timeout": min(TIMEOUT, remaining),
+                            "retries": 1,
+                            "deadline_monotonic": deadline,
+                        }
+                if not stop_fetching:
+                    batches_fetched += 1
+                    try:
+                        query = urlencode({"ids": ",".join(batch)}, safe=",")
+                        data = http.get(
+                            f"{API}?{query}",
+                            headers={"User-Agent": http.BROWSER_USER_AGENT},
+                            **bound,
+                        )
+                    except Exception as e:  # network error / non-200 — degrade, never raise
+                        _log(f"lookup failed ({e}); {len(batch)} ids left unscored")
+                        stop_fetching = True
+                    else:
+                        rows = (data or {}).get("data")
+                        if not isinstance(rows, list):
+                            # arctic-shift returns {"error": "..."} on rate-limit / bad request.
+                            _log(f"unexpected response (rate-limited?): {str(data)[:80]}")
+                            stop_fetching = True
+                        else:
+                            entries: Dict[str, Dict[str, int]] = {}
+                            for row in rows:
+                                if not isinstance(row, dict):
+                                    continue
+                                rid = str(row.get("id") or "").removeprefix("t3_")
+                                if not rid:
+                                    continue
+                                try:
+                                    entries[rid] = {
+                                        "score": int(row.get("score") or 0),
+                                        "num_comments": int(row.get("num_comments") or 0),
+                                    }
+                                except (TypeError, ValueError):
+                                    continue
+                            with _memo_lock:
+                                for rid, entry in entries.items():
+                                    if rid in _cache or len(_cache) < CACHE_MAX:
+                                        _cache[rid] = dict(entry)
+                                    slot.scores[rid] = dict(entry)
+                                    out[rid] = dict(entry)
+                                slot.attempted = True
+                                for pid in batch:
+                                    if _score_inflight.get(pid) is slot:
+                                        _score_inflight.pop(pid, None)
+            finally:
+                with _memo_lock:
+                    for pid in batch:
+                        if _score_inflight.get(pid) is slot:
+                            _score_inflight.pop(pid, None)
+                slot.done.set()
+
+            if remaining_todo and not stop_fetching and batches_fetched < MAX_BATCHES:
+                pending = remaining_todo + [pid for pid, _ in waiting]
                 continue
-            if len(_cache) < CACHE_MAX:
-                _cache[rid] = entry
-            out[rid] = entry
+
+        if not waiting:
+            break
+
+        unique_slots: List[_ScoreSlot] = []
+        seen_slot_ids: set[int] = set()
+        for _pid, wslot in waiting:
+            sid = id(wslot)
+            if sid not in seen_slot_ids:
+                seen_slot_ids.add(sid)
+                unique_slots.append(wslot)
+        timed_out = False
+        for wslot in unique_slots:
+            remaining = wait_end - time.monotonic()
+            if remaining <= 0:
+                timed_out = True
+                break
+            if not wslot.done.wait(timeout=remaining):
+                timed_out = True
+                break
+
+        retry_ids: List[str] = []
+        with _memo_lock:
+            for pid, wslot in waiting:
+                if pid in wslot.scores:
+                    out[pid] = dict(wslot.scores[pid])
+                elif pid in _cache:
+                    out[pid] = dict(_cache[pid])
+                elif wslot.done.is_set() and not wslot.attempted:
+                    retry_ids.append(pid)
+
+        if (
+            timed_out
+            or not retry_ids
+            or stop_fetching
+            or batches_fetched >= MAX_BATCHES
+            or wait_retries >= 1
+            or (deadline is not None and time.monotonic() >= deadline)
+        ):
+            break
+        wait_retries += 1
+        pending = retry_ids
+
     return out
+
+
+def _parse_iso_date(value: Optional[str]) -> Optional[date]:
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    if not _ISO_DATE.match(text):
+        return None
+    try:
+        return date.fromisoformat(text)
+    except ValueError:
+        return None
 
 
 def _epoch_to_date(value: Any) -> Optional[str]:
@@ -336,32 +496,33 @@ def fetch_listings(
     # window into ~7-day chunks (API caps 100 rows/request, newest-first, so
     # one request only covers the last day of a month window), and keep the
     # highest-scored n per subreddit (sort has no top lane — only asc/desc).
-    window = bool(from_date or to_date)
+    start = _parse_iso_date(from_date)
+    parsed_to = _parse_iso_date(to_date)
+    clean_from = start.isoformat() if start else None
+    clean_to = parsed_to.isoformat() if parsed_to else None
+    window = bool(clean_from or clean_to)
     slices: Optional[List[tuple]] = None
     if window:
-        from datetime import date as _date, timedelta as _timedelta
-        try:
-            start = _date.fromisoformat(from_date) if from_date else None
-            end = _date.fromisoformat(to_date) if to_date else _date.today()
-        except ValueError:
-            start, end = None, None
-        if end and not start:
-            start = end - _timedelta(days=30)
-        if start and end and start < end:
-            span = (end - start).days
+        from datetime import timedelta as _timedelta
+        end = parsed_to if parsed_to is not None else date.today()
+        win_start = start if start is not None else end - _timedelta(days=30)
+        if win_start < end:
+            span = (end - win_start).days
             n_slices = min(4, max(1, span // 7))
             step = max(1, -(-span // n_slices))
             slices = []
-            cursor = start
+            cursor = win_start
             while cursor < end:
                 slices.append((cursor, min(cursor + _timedelta(days=step), end)))
                 cursor += _timedelta(days=step)
     req_limit = 100 if window else n
     posts_by_sub: Dict[str, List[Dict[str, Any]]] = {}
-    for sub in subreddits:
-        sub = sub.removeprefix("r/").strip()
-        if sub and sub.lower() != "all":
+    for raw_sub in subreddits:
+        sub = reddit_refs.normalize_subreddit(raw_sub, allow_all=False)
+        if sub:
             posts_by_sub.setdefault(sub, [])
+    if not posts_by_sub:
+        return []
     seen_by_sub = {sub: set() for sub in posts_by_sub}
     # Give every subreddit a slice before spending the shared budget on more
     # slices for any one subreddit.
@@ -377,12 +538,20 @@ def fetch_listings(
         deadline = min(deadline, lane_deadline)
 
     def url_for(sub: str, span_pair: Optional[tuple]) -> str:
+        params: List[tuple[str, Any]] = [
+            ("subreddit", sub),
+            ("limit", req_limit),
+            ("sort", "desc"),
+        ]
         if span_pair:
-            win = f"&after={span_pair[0].isoformat()}&before={span_pair[1].isoformat()}"
+            params.append(("after", span_pair[0].isoformat()))
+            params.append(("before", span_pair[1].isoformat()))
         else:
-            win = f"&after={from_date}" if from_date else ""
-            win += f"&before={to_date}" if to_date else ""
-        return f"{SEARCH_API}?subreddit={sub}&limit={req_limit}&sort=desc{win}"
+            if clean_from:
+                params.append(("after", clean_from))
+            if clean_to:
+                params.append(("before", clean_to))
+        return f"{SEARCH_API}?{urlencode(params)}"
 
     def keep(sub: str, data: Any) -> None:
         rows = (data or {}).get("data")
@@ -454,10 +623,27 @@ def fetch_listings(
     return unique
 
 
+def _acquire_keyless_limiter(deadline: float) -> None:
+    limiter = http.REDDIT_KEYLESS_LIMITER
+    if isinstance(limiter, http.RateLimiter):
+        limiter.acquire(deadline_monotonic=deadline)
+        return
+    try:
+        params = inspect.signature(limiter.acquire).parameters
+    except (TypeError, ValueError):
+        params = {}
+    if "deadline_monotonic" in params or any(
+        p.kind == inspect.Parameter.VAR_KEYWORD for p in params.values()
+    ):
+        limiter.acquire(deadline_monotonic=deadline)
+    else:
+        limiter.acquire()
+
+
 def _archive_get(url: str, deadline: float) -> Any:
     """One serial archive request through the shared keyless Reddit limiter,
     retried once after a pause when the archive answers 422."""
-    http.REDDIT_KEYLESS_LIMITER.acquire()
+    _acquire_keyless_limiter(deadline)
     return _fetch_search(url, deadline, retry_422=True)
 
 
@@ -473,7 +659,9 @@ def fetch_posts_by_ids(
     batch is sent), or ``"down"`` when a batch failed any other way (later
     batches are still tried). Never raises.
     """
-    todo = list(dict.fromkeys(p for p in post_ids if p))
+    todo = list(dict.fromkeys(
+        clean for p in post_ids if (clean := reddit_refs.normalize_post_id(p))
+    ))
     end = deadline if deadline is not None else time.monotonic() + _LISTING_DEADLINE_SECONDS
     out: Dict[str, Dict[str, Any]] = {}
     state = "ok"
@@ -486,7 +674,24 @@ def fetch_posts_by_ids(
                 state = "down"
             break
         try:
-            data = _archive_get(f"{API}?ids={','.join(batch)}", end)
+            _acquire_keyless_limiter(end)
+        except http.DeadlineExceeded:
+            _log(f"post lookup stopped at its deadline; {len(todo) - start} ids left")
+            if state == "ok":
+                state = "down"
+            break
+        try:
+            query = urlencode({"ids": ",".join(batch)}, safe=",")
+            data = _fetch_search(f"{API}?{query}", end, retry_422=True)
+        except http.DeadlineExceeded as exc:
+            if time.monotonic() >= end:
+                _log(f"post lookup stopped at its deadline; {len(todo) - start} ids left")
+                if state == "ok":
+                    state = "down"
+                break
+            _log(f"post lookup batch timed out ({exc}); {len(batch)} ids left")
+            state = "down"
+            continue
         except Exception as exc:  # network error / non-200 — degrade, never raise
             if _is_slow_down(exc):
                 _log(f"post lookup throttled (422 twice); {len(todo) - start} ids left")
@@ -531,39 +736,33 @@ def _tree_rows(nodes: Any) -> List[Dict[str, Any]]:
     return rows
 
 
-# Whether the last fetch_comment_tree failure was the archive asking to slow
-# down (422 or 429) rather than an outage. Hydration fetches trees serially.
-last_tree_throttled = False
-
-
-def fetch_comment_tree(
+def _fetch_comment_tree_with_status(
     post_id: str, deadline: Optional[float] = None,
-) -> Optional[List[Dict[str, Any]]]:
-    """Comments of a post from the archive's ``/comments/tree``, flattened.
+) -> tuple[Optional[List[Dict[str, Any]]], bool]:
+    """Fetch comments of a post from ``/comments/tree``, returning ``(rows, throttled)``.
 
-    Each comment carries id, score, author, body, excerpt, permalink, url,
-    date, ``created_utc`` and ``depth`` (0 for a top-level comment). Deleted
-    and removed comments are left out. Returns ``None`` when the request
-    failed, so a caller can tell a failure from a thread with no comments.
+    Also updates the calling thread's ``last_tree_throttled`` state so concurrent
+    streams never overwrite each other's throttle classification.
     """
-    pid = str(post_id or "").removeprefix("t3_")
+    _set_thread_tree_throttled(False)
+    pid = reddit_refs.normalize_post_id(post_id)
     if not pid:
-        return None
+        return None, False
     end = deadline if deadline is not None else time.monotonic() + TIMEOUT
     if end - time.monotonic() < 1:
-        return None
-    global last_tree_throttled
-    last_tree_throttled = False
+        return None, False
     try:
-        data = _archive_get(f"{COMMENTS_TREE_API}?link_id=t3_{pid}&limit={MAX_COMMENT_ROWS}", end)
+        query = urlencode({"link_id": f"t3_{pid}", "limit": MAX_COMMENT_ROWS})
+        data = _archive_get(f"{COMMENTS_TREE_API}?{query}", end)
     except Exception as exc:  # network error / non-200 — degrade, never raise
-        last_tree_throttled = _is_slow_down(exc) or getattr(exc, "status_code", None) == 429
+        throttled = _is_slow_down(exc) or getattr(exc, "status_code", None) == 429
+        _set_thread_tree_throttled(throttled)
         _log(f"comment tree failed t3_{pid}: {exc}")
-        return None
+        return None, throttled
     nodes = (data or {}).get("data")
     if not isinstance(nodes, list):
         _log(f"unexpected comment tree response for t3_{pid}: {str(data)[:80]}")
-        return None
+        return None, False
 
     from .snippet import cut_quote
 
@@ -582,7 +781,7 @@ def fetch_comment_tree(
         except (TypeError, ValueError):
             depth = 0
         permalink = row.get("permalink") or ""
-        comments.append({
+        entry: Dict[str, Any] = {
             "id": str(row.get("id") or "").removeprefix("t1_"),
             "score": score,
             "author": author,
@@ -593,8 +792,29 @@ def fetch_comment_tree(
             "created_utc": row.get("created_utc"),
             "url": f"https://reddit.com{permalink}" if permalink else "",
             "depth": depth,
-        })
+        }
+        if isinstance(row.get("is_submitter"), bool):
+            entry["is_uploader"] = row["is_submitter"]
+        comments.append(entry)
+    return comments, False
+
+
+def fetch_comment_tree(
+    post_id: str, deadline: Optional[float] = None,
+) -> Optional[List[Dict[str, Any]]]:
+    """Comments of a post from the archive's ``/comments/tree``, flattened.
+
+    Each comment carries id, score, author, body, excerpt, permalink, url,
+    date, ``created_utc`` and ``depth`` (0 for a top-level comment), plus
+    ``is_uploader`` when the archive supplies ``is_submitter``. Deleted
+    and removed comments are left out. Returns ``None`` when the request
+    failed, so a caller can tell a failure from a thread with no comments.
+    """
+    comments, _throttled = _fetch_comment_tree_with_status(post_id, deadline=deadline)
     return comments
+
+
+_ORIG_FETCH_COMMENT_TREE = fetch_comment_tree
 
 
 def _row_depth(row: Dict[str, Any]) -> int:
@@ -621,7 +841,7 @@ def fetch_post_comments(
     ``time.monotonic()`` bound shared with the caller's budget. Best-effort, never raises:
     returns ``[]`` on any failure so the caller keeps whatever it had.
     """
-    pid = str(post_id or "").removeprefix("t3_")
+    pid = reddit_refs.normalize_post_id(post_id)
     if not pid:
         return []
     now = time.monotonic()
@@ -630,9 +850,8 @@ def fetch_post_comments(
         _log(f"comments lookup skipped t3_{pid}: enrichment budget spent")
         return []
     try:
-        data = _search_once(
-            f"{COMMENTS_TREE_API}?link_id=t3_{pid}&limit={FALLBACK_COMMENT_ROWS}", end,
-        )
+        query = urlencode({"link_id": f"t3_{pid}", "limit": FALLBACK_COMMENT_ROWS})
+        data = _search_once(f"{COMMENTS_TREE_API}?{query}", end)
     except Exception as e:  # network error / non-200 — degrade, never raise
         _log(f"comments lookup failed t3_{pid}: {e}")
         return []
@@ -656,7 +875,7 @@ def fetch_post_comments(
         except (TypeError, ValueError):
             score = 0
         permalink = row.get("permalink") or ""
-        comments.append({
+        entry: Dict[str, Any] = {
             "score": score,
             "author": author,
             "body": body[:300],
@@ -665,6 +884,9 @@ def fetch_post_comments(
             "date": _epoch_to_date(row.get("created_utc")),
             "url": f"https://reddit.com{permalink}" if permalink else "",
             "depth": _row_depth(row),
-        })
+        }
+        if isinstance(row.get("is_submitter"), bool):
+            entry["is_uploader"] = row["is_submitter"]
+        comments.append(entry)
     comments.sort(key=lambda c: c.get("score", 0), reverse=True)
     return comments[:limit]
