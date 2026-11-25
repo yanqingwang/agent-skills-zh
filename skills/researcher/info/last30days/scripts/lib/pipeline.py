@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import contextlib
+import contextvars
 import copy
+import functools
 from collections.abc import Callable, Iterable, Iterator, Mapping
 import heapq
 import math
+import os
 import queue
 import re
 import sqlite3
@@ -20,6 +23,8 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from shutil import which
 from typing import Any
+
+_ORIGINAL_WHICH = which
 
 from . import (
     amazon,
@@ -414,11 +419,12 @@ class _DaemonExecutor:
         return promoted
 
     def submit(self, fn: Callable[..., Any], /, *args: Any, **kwargs: Any) -> Future:
+        ctx = contextvars.copy_context()
         with self._cond:
             if self._shutdown:
                 raise RuntimeError("cannot schedule new futures after shutdown")
             future: Future = Future()
-            self._pending.append((future, fn, args, kwargs))
+            self._pending.append((future, ctx.run, (fn, *args), kwargs))
             self._ensure_workers_locked()
             self._cond.notify()
             return future
@@ -426,18 +432,19 @@ class _DaemonExecutor:
     def submit_delayed(
         self, ready_at: float, fn: Callable[..., Any], /, *args: Any, **kwargs: Any,
     ) -> Future:
+        ctx = contextvars.copy_context()
         with self._cond:
             if self._shutdown:
                 raise RuntimeError("cannot schedule new futures after shutdown")
             future: Future = Future()
             if ready_at <= time.monotonic():
-                self._priority_pending.append((future, fn, args, kwargs))
+                self._priority_pending.append((future, ctx.run, (fn, *args), kwargs))
                 self._ensure_workers_locked()
                 self._cond.notify()
             else:
                 seq = self._next_seq
                 self._next_seq += 1
-                heapq.heappush(self._delayed, (ready_at, seq, future, fn, args, kwargs))
+                heapq.heappush(self._delayed, (ready_at, seq, future, ctx.run, (fn, *args), kwargs))
                 self._ensure_workers_locked()
                 self._cond.notify_all()
             return future
@@ -678,6 +685,12 @@ MOCK_AVAILABLE_SOURCES = [
     "devto",
 ]
 
+# Full set of searchable source names accepted by --search /
+# LAST30DAYS_DEFAULT_SEARCH. Superset of MOCK_AVAILABLE_SOURCES so live-only
+# sources without mock fixtures (e.g. StockTwits) are accepted on the CLI
+# without altering mock-mode source availability.
+KNOWN_SEARCH_SOURCES: frozenset[str] = frozenset(MOCK_AVAILABLE_SOURCES) | {"stocktwits"}
+
 
 def normalize_requested_sources(sources: list[str] | None) -> list[str] | None:
     if not sources:
@@ -691,11 +704,7 @@ def normalize_requested_sources(sources: list[str] | None) -> list[str] | None:
 
 
 def _excluded_sources(config: dict[str, Any]) -> set[str]:
-    return {
-        source.strip().lower()
-        for source in str(config.get("EXCLUDE_SOURCES") or "").split(",")
-        if source.strip()
-    }
+    return env.exclude_sources(config)
 
 
 def with_plan_source_omissions(
@@ -711,6 +720,35 @@ def with_plan_source_omissions(
 
 class NoRequestedSourceAvailable(RuntimeError):
     """None of the sources the user asked for with --search is configured."""
+
+
+_ORIGINAL_IS_YTDLP_INSTALLED = youtube_yt.is_ytdlp_installed
+
+
+def _resolve_ytdlp(config: Mapping[str, Any] | None = None) -> tuple[bool, str | None]:
+    """Return ``(has_ytdlp, validated_ssh_host)``, validating the SSH alias once."""
+    raw_ssh = (config or {}).get("LAST30DAYS_YOUTUBE_SSH_HOST")
+    with youtube_yt.ssh_host_scope(raw_ssh):
+        ssh_host = youtube_yt._ytdlp_ssh_host()
+    if ssh_host:
+        return True, ssh_host
+    if which is not _ORIGINAL_WHICH:
+        return bool(which("yt-dlp")), None
+    # Clear any rejected config alias so is_ytdlp_installed() does not re-warn;
+    # if an invalid alias lives in os.environ, bypass _ytdlp_ssh_host unless
+    # is_ytdlp_installed was monkeypatched by a test.
+    with youtube_yt.ssh_host_scope(None):
+        if (
+            "LAST30DAYS_YOUTUBE_SSH_HOST" in os.environ
+            and youtube_yt.is_ytdlp_installed is _ORIGINAL_IS_YTDLP_INSTALLED
+        ):
+            return youtube_yt.shutil.which("yt-dlp") is not None, None
+        return youtube_yt.is_ytdlp_installed(), None
+
+
+def _has_ytdlp(config: Mapping[str, Any] | None = None) -> bool:
+    """Return True when yt-dlp is available locally or via SSH routing."""
+    return _resolve_ytdlp(config)[0]
 
 
 def available_sources(
@@ -743,31 +781,33 @@ def available_sources(
         config.get("_CORPUS_DIRS"), config.get("LAST30DAYS_CORPUS_DIRS")
     ):
         available.append("corpus")
-    if env.is_tiktok_available(config):
-        available.append("tiktok")
-    if env.is_instagram_available(config):
-        available.append("instagram")
-    if env.get_x_source(config, local_only=local_only):
-        available.append("x")
-    elif x_envelope or (
-        not suppress_x_host_lane and env.x_host_lane_declared(config)
-    ):
-        # Host-fetched X lane: the model passes connector results through
-        # --x-posts, so X is served without an engine backend.
-        available.append("x")
-    else:
-        # Safe inspection (--diagnose/--preflight) skips browser-cookie
-        # extraction, so get_x_source is None even though a real run would
-        # authenticate X via FROM_BROWSER. Report it as available so consumers
-        # of available_sources (SKILL.md ACTIVE_SOURCES_LIST) don't under-report.
-        # diagnose() precomputes the predicate and passes it via x_pending to
-        # avoid evaluating it twice in one diagnose() call.
-        if x_pending is None:
-            x_pending = env.x_pending_browser_auth(config)
-        if x_pending:
+    has_ytdlp, validated_ssh = _resolve_ytdlp(config)
+    with youtube_yt.ssh_host_scope(validated_ssh):
+        if env.is_tiktok_available(config):
+            available.append("tiktok")
+        if env.is_instagram_available(config):
+            available.append("instagram")
+        if env.get_x_source(config, local_only=local_only):
             available.append("x")
-    if which("yt-dlp") or env.is_youtube_sc_available(config):
-        available.append("youtube")
+        elif x_envelope or (
+            not suppress_x_host_lane and env.x_host_lane_declared(config)
+        ):
+            # Host-fetched X lane: the model passes connector results through
+            # --x-posts, so X is served without an engine backend.
+            available.append("x")
+        else:
+            # Safe inspection (--diagnose/--preflight) skips browser-cookie
+            # extraction, so get_x_source is None even though a real run would
+            # authenticate X via FROM_BROWSER. Report it as available so consumers
+            # of available_sources (SKILL.md ACTIVE_SOURCES_LIST) don't under-report.
+            # diagnose() precomputes the predicate and passes it via x_pending to
+            # avoid evaluating it twice in one diagnose() call.
+            if x_pending is None:
+                x_pending = env.x_pending_browser_auth(config, local_only=local_only)
+            if x_pending and health.probe_dependency("node").status == health.OK:
+                available.append("x")
+        if has_ytdlp or env.is_youtube_sc_available(config):
+            available.append("youtube")
     available.extend(["hackernews", "polymarket"])
     # StockTwits is gated to ticker/crypto topics only (flag set in run()).
     if config.get("_financial_topic"):
@@ -844,8 +884,13 @@ def available_sources(
     # consent pattern as Perplexity/LinkedIn). Off by default -- unlike arXiv and
     # Techmeme, which are zero-auth, it can spawn a one-time headless-Chrome WAF
     # cookie harvest on a brand topic, so activating it is the user's choice.
-    if which("trustpilot-pp-cli") and (
-        "trustpilot" in include_sources or (requested_sources and "trustpilot" in requested_sources)
+    if (
+        which("trustpilot-pp-cli")
+        and trustpilot._harvest_allowed(config)
+        and (
+            "trustpilot" in include_sources
+            or (requested_sources and "trustpilot" in requested_sources)
+        )
     ):
         available.append("trustpilot")
     # Amazon: opt-in additive source, dual-gated. The Bright Data CLI must be
@@ -869,10 +914,15 @@ def available_sources(
         or (requested_sources and "meta_ads" in requested_sources)
     ):
         available.append("meta_ads")
+    exclude = _excluded_sources(config)
     if (
-        "xiaohongshu" in include_sources
-        or (requested_sources and "xiaohongshu" in requested_sources)
-    ) and env.is_xiaohongshu_available(config):
+        "xiaohongshu" not in exclude
+        and (
+            "xiaohongshu" in include_sources
+            or (requested_sources and "xiaohongshu" in requested_sources)
+        )
+        and env.is_xiaohongshu_available(config)
+    ):
         available.append("xiaohongshu")
     # Threads: opt-in via INCLUDE_SOURCES (same pattern as perplexity/linkedin).
     # Was auto-on with the key; gated so the onboarding "Everything" tier is a
@@ -898,7 +948,6 @@ def available_sources(
             available.append("telegram")
     # xquik is a backend of the single "x" source (see env.x_backend_chain),
     # not a separate parallel source — registered via the "x" entry above.
-    exclude = _excluded_sources(config)
     if exclude:
         available = [s for s in available if s not in exclude]
     return available
@@ -1581,13 +1630,15 @@ def enrich_nominations(
             except Exception as exc:  # noqa: BLE001 - containment is the contract
                 results_queue.put((nomination, None, exc))
 
-    for nomination in nominations:
-        threading.Thread(
-            target=_worker,
-            args=(nomination,),
-            name=f"discover-enrich-{nomination.name[:32]}",
-            daemon=True,
-        ).start()
+    with fetch_memo.run_scope():
+        for nomination in nominations:
+            ctx = contextvars.copy_context()
+            threading.Thread(
+                target=ctx.run,
+                args=(_worker, nomination),
+                name=f"discover-enrich-{nomination.name[:32]}",
+                daemon=True,
+            ).start()
 
     def _record_result(
         nomination: Nomination,
@@ -1775,18 +1826,19 @@ def _discovery_sweep(
         notes=["discover-mode", "listing-sweep"],
     )
 
-    bundle = nominate_candidates(
-        plan,
-        from_date=from_date,
-        to_date=to_date,
-        depth=depth,
-        mock=mock,
-        config=config,
-        lookback_days=lookback_days,
-        # Global trending has no keyword to gate against - the river feeds' own
-        # hot ranking is the signal and the confidence floor culls the junk.
-        keyword_gate=not global_mode,
-    )
+    with fetch_memo.run_scope():
+        bundle = nominate_candidates(
+            plan,
+            from_date=from_date,
+            to_date=to_date,
+            depth=depth,
+            mock=mock,
+            config=config,
+            lookback_days=lookback_days,
+            # Global trending has no keyword to gate against - the river feeds' own
+            # hot ranking is the signal and the confidence floor culls the junk.
+            keyword_gate=not global_mode,
+        )
 
     source_status: dict[str, schema.SourceOutcome] = {}
     for source in DISCOVERY_SOURCES:
@@ -2439,7 +2491,10 @@ def diagnose(
     x_status = env.get_x_source_status(config, probe=probe_x)
     # Compute once and reuse for both the diag flag and available_sources below.
     # safe=True (doctor/--diagnose/--preflight) must stay network-free.
-    x_pending = env.x_pending_browser_auth(config, local_only=not probe_x)
+    x_pending = (
+        env.x_pending_browser_auth(config, local_only=not probe_x)
+        and health.probe_dependency("node").status == health.OK
+    )
     native_web_backend = None
     if config.get("BRAVE_API_KEY"):
         native_web_backend = "brave"
@@ -2487,10 +2542,12 @@ def diagnose(
     local_writes: list[dict[str, str]] = []
     if config.get("LAST30DAYS_MEMORY_DIR"):
         local_writes.append({"kind": "report", "path": str(config.get("LAST30DAYS_MEMORY_DIR"))})
+    reasoning_provider_cfg = (config.get("LAST30DAYS_REASONING_PROVIDER") or "auto").strip().lower()
+    reasoning_provider_forced_local = reasoning_provider_cfg in {"local", "off", "none"}
     diag = {
         "providers": providers_status,
-        "local_mode": not reasoning_provider_available,
-        "reasoning_provider": (config.get("LAST30DAYS_REASONING_PROVIDER") or "auto").lower(),
+        "local_mode": not reasoning_provider_available or reasoning_provider_forced_local,
+        "reasoning_provider": reasoning_provider_cfg,
         # The host-fetched connector lane serves X when no engine backend
         # exists and the model declared the lane.
         "x_backend": x_status["source"] or (
@@ -2550,15 +2607,72 @@ def _inner_max_workers(stream_count: int, *, internal_subrun: bool) -> int:
     return max(4, min(16, stream_count or 1))
 
 
+def is_blank_save_dir(save_dir: Path | str | None) -> bool:
+    """True when ``save_dir`` is a non-empty whitespace-only path string."""
+    if save_dir is None:
+        return False
+    text = str(save_dir)
+    return text != "" and not text.strip()
+
+
+def is_scoped_save_dir(save_dir: Path | str | None) -> bool:
+    """True when ``save_dir`` points to a directory other than DEFAULT_MEMORY_DIR.
+
+    Preserves non-empty paths verbatim (never strips leading/trailing spaces).
+    Whitespace-only inputs and resolution failures fail closed as scoped (True)
+    so they never select the shared default library or global briefing archive.
+    """
+    if save_dir is None or str(save_dir) == "":
+        return False
+    if is_blank_save_dir(save_dir):
+        return True
+    try:
+        return (
+            Path(save_dir).expanduser().resolve()
+            != Path(library.DEFAULT_MEMORY_DIR).expanduser().resolve()
+        )
+    except (OSError, ValueError, TypeError, RuntimeError):
+        return True
+
+
+def scoped_store_db_path(save_dir: Path | str | None) -> Path | None:
+    """Return the scoped research.db path, or None to use the shared default store.
+
+    Preserves non-empty paths verbatim and preserves an existing legacy
+    ``DEFAULT_MEMORY_DIR/research.db`` created by earlier builds rather than
+    abandoning its saved findings and discovery queue.
+    """
+    if save_dir is None or str(save_dir) == "":
+        return None
+    if is_blank_save_dir(save_dir):
+        raise ValueError("--save-dir / LAST30DAYS_MEMORY_DIR cannot be whitespace-only.")
+    try:
+        resolved = Path(save_dir).expanduser().resolve()
+    except (OSError, ValueError, TypeError, RuntimeError):
+        return Path(save_dir).expanduser() / "research.db"
+    candidate = resolved / "research.db"
+    if is_scoped_save_dir(resolved):
+        return candidate
+    if candidate.is_file():
+        return candidate
+    return None
+
+
 def library_context_index_path(
     config: dict[str, Any], save_dir: Path | str | None,
 ) -> Path | None:
     setting = str(config.get("LAST30DAYS_LIBRARY_CONTEXT") or "off").strip().lower()
-    if setting in {"0", "false", "no", "off"} or save_dir == "":
+    if (
+        setting in {"0", "false", "no", "off"}
+        or save_dir == ""
+        or is_blank_save_dir(save_dir)
+        or (save_dir is None and is_blank_save_dir(config.get("LAST30DAYS_MEMORY_DIR")))
+    ):
         return None
     if path := config.get("_LAST30DAYS_LIBRARY_DB"):
         return Path(path).expanduser()
-    if save_dir is not None:
+    if is_scoped_save_dir(save_dir):
+        assert save_dir is not None
         return Path(save_dir).expanduser().resolve() / ".last30days-library.db"
     return library_index.DEFAULT_LIBRARY_DB
 
@@ -2581,6 +2695,7 @@ def _load_library_context(
     if db_path is None:
         return [], None
 
+    scoped = is_scoped_save_dir(save_dir)
     memory_dir = (
         save_dir
         if save_dir is not None
@@ -2588,7 +2703,7 @@ def _load_library_context(
     )
     briefs_dir = config.get("_LAST30DAYS_LIBRARY_BRIEFS_DIR") or (
         Path(memory_dir).expanduser() / "briefings"
-        if save_dir is not None
+        if scoped
         else library.DEFAULT_BRIEFS_DIR
     )
     store_db = config.get("_LAST30DAYS_STORE_DB")
@@ -2596,9 +2711,8 @@ def _load_library_context(
         # Scoped runs read only a store inside the save dir (usually absent);
         # the shared store would leak other scopes' sightings into this one.
         store_db = (
-            Path(memory_dir).expanduser().resolve() / "research.db"
-            if save_dir is not None
-            else library_index.DEFAULT_STORE_DB
+            scoped_store_db_path(save_dir)
+            or library_index.DEFAULT_STORE_DB
         )
     queries = [topic, x_handle or "", github_user or "", *(github_repos or [])]
     queries = list(dict.fromkeys(value.strip() for value in queries if value and value.strip()))
@@ -2640,6 +2754,18 @@ def _load_library_context(
     return contexts, None
 
 
+def _scoped_fetch_memo(fn: Callable[..., schema.Report]) -> Callable[..., schema.Report]:
+    """Isolate top-level ``pipeline.run`` calls in their own ``fetch_memo.run_scope()``."""
+    @functools.wraps(fn)
+    def _wrapped(*args: Any, **kwargs: Any) -> schema.Report:
+        if kwargs.get("internal_subrun"):
+            return fn(*args, **kwargs)
+        with fetch_memo.run_scope():
+            return fn(*args, **kwargs)
+    return _wrapped
+
+
+@_scoped_fetch_memo
 def run(
     *,
     topic: str,
@@ -2979,7 +3105,7 @@ def run(
         if "corpus" not in plan.subqueries[0].sources:
             plan.subqueries[0].sources.append("corpus")
         if "corpus" not in plan.source_weights:
-            plan.source_weights["corpus"] = 1.0
+            plan.source_weights["corpus"] = _mean_source_weight(plan.source_weights)
             plan.source_weights = planner._normalize_weights(plan.source_weights)
 
     # Add the paid-only Perplexity lane after all normal-source safety nets.
@@ -3429,6 +3555,7 @@ def run(
             try:
                 raw_items, artifact = future.result(timeout=0)
             except Exception as exc:
+                _record_reddit_exception_notes(bundle, source, exc)
                 # Share 429 signal immediately (even if it came from a 5xx retry)
                 # so pending futures skip this source.
                 if _is_rate_limit_error(exc):
@@ -3797,18 +3924,11 @@ def run(
         x_floor_handles = resolved_handles - _creator_only_handles(
             creator_first_party, real_x_handles
         )
-        for key, stream in list(bundle.items_by_source_and_query.items()):
-            if key[1] != "x" or not stream:
-                continue
-            pruned = signals.prune_low_relevance(
-                stream,
-                first_party_handles=x_floor_handles,
-                first_party_by_source=creator_first_party,
-            )
-            _log_prune_drop("x", len(stream), len(pruned), scope="per-query stream")
-            bundle.items_by_source_and_query[key] = pruned
-        if bundle.items_by_source.get("x"):
-            x_stream = bundle.items_by_source["x"]
+        # Prune once on the merged X stream, then sync each per-query X stream
+        # to the exact surviving items so an all-fail rescue on one weak
+        # subquery cannot diverge fusion inputs from report/source_status.
+        x_stream = bundle.items_by_source.get("x")
+        if x_stream:
             pruned = signals.prune_low_relevance(
                 x_stream,
                 first_party_handles=x_floor_handles,
@@ -3816,6 +3936,22 @@ def run(
             )
             _log_prune_drop("x", len(x_stream), len(pruned), scope="merged stream")
             bundle.items_by_source["x"] = pruned
+            all_x_ids = {id(item) for item in x_stream}
+            kept_x_ids = {id(item) for item in pruned}
+            kept_x_keys = {source_item_key(item) for item in pruned}
+            for key, stream in list(bundle.items_by_source_and_query.items()):
+                if key[1] != "x" or not stream:
+                    continue
+                filtered = [
+                    item for item in stream
+                    if (
+                        id(item) in kept_x_ids
+                        if id(item) in all_x_ids
+                        else source_item_key(item) in kept_x_keys
+                    )
+                ]
+                _log_prune_drop("x", len(stream), len(filtered), scope="per-query stream")
+                bundle.items_by_source_and_query[key] = filtered
 
     # Finalize after the deferred floor so the report's per-source view and the
     # source_status counts describe the same post-floor evidence set fusion sees.
@@ -3850,15 +3986,31 @@ def run(
             from_date=from_date, to_date=to_date,
         )
         bundle.artifacts["person_profile"] = person_ctx.to_dict()
+    retained_poly = items_by_source.get("polymarket", [])
+    poly_eids = fusion.polymarket_event_ids_by_url(
+        (
+            *retained_poly,
+            *(
+                item
+                for key, stream in bundle.items_by_source_and_query.items()
+                if key[1] == "polymarket"
+                for item in stream
+            ),
+        )
+    )
     retained_markets = {
-        source_item_key(item) for item in items_by_source.get("polymarket", [])
+        source_item_key(item, polymarket_eids_by_url=poly_eids)
+        for item in retained_poly
     }
     for key, stream in bundle.items_by_source_and_query.items():
         if key[1] == "polymarket":
             bundle.items_by_source_and_query[key] = [
-                item for item in stream if source_item_key(item) in retained_markets
+                item
+                for item in stream
+                if source_item_key(item, polymarket_eids_by_url=poly_eids) in retained_markets
             ]
     source_status = _finalize_source_status(bundle.source_status, items_by_source)
+    _attach_reddit_lane_notes(bundle, source_status)
 
     candidates = weighted_rrf(
         bundle.items_by_source_and_query,
@@ -4035,22 +4187,96 @@ def run(
     )
 
 
+def _candidate_polymarket_items(candidate: schema.Candidate) -> list[schema.SourceItem]:
+    items = [
+        item for item in (candidate.source_items or ())
+        if item.source == "polymarket"
+    ]
+    if items:
+        return items
+    if candidate.source == "polymarket":
+        return [
+            schema.SourceItem(
+                item_id=candidate.item_id,
+                source="polymarket",
+                title=candidate.title,
+                body="",
+                url=candidate.url,
+                snippet=candidate.snippet,
+                metadata=dict(candidate.metadata or {}),
+            )
+        ]
+    return []
+
+
+def _candidate_polymarket_event_id(candidate: schema.Candidate) -> str:
+    for item in _candidate_polymarket_items(candidate):
+        eid = fusion._polymarket_event_id(item)
+        if eid:
+            return eid
+    if candidate.source == "polymarket":
+        return str((candidate.metadata or {}).get("event_id") or "").strip()
+    return ""
+
+
+def _polymarket_candidates_conflict(
+    a: schema.Candidate,
+    b: schema.Candidate,
+) -> bool:
+    id_a = _candidate_polymarket_event_id(a)
+    id_b = _candidate_polymarket_event_id(b)
+    return bool(id_a and id_b and id_a != id_b)
+
+
 def _candidate_is_duplicate(
     candidate: schema.Candidate,
     kept: list[schema.Candidate],
+    *,
+    conflicted_poly_urls: set[str] | None = None,
 ) -> bool:
-    if any(existing.candidate_id == candidate.candidate_id for existing in kept):
-        return True
-    if candidate.url and any(existing.url == candidate.url for existing in kept):
-        return True
-    candidate_text = " ".join((candidate.title, candidate.snippet)).strip()
-    return bool(candidate_text) and any(
-        dedupe.hybrid_similarity(
-            candidate_text,
-            " ".join((existing.title, existing.snippet)).strip(),
-        ) >= 0.7
-        for existing in kept
-    )
+    cand_eid = _candidate_polymarket_event_id(candidate)
+    cand_is_poly = bool(_candidate_polymarket_items(candidate))
+    cand_norm_url = fusion._normalize_url(candidate.url) if candidate.url else ""
+    cand_text = " ".join((candidate.title, candidate.snippet)).strip()
+    for existing in kept:
+        existing_eid = _candidate_polymarket_event_id(existing)
+        if cand_eid and existing_eid:
+            if cand_eid == existing_eid:
+                return True
+            continue
+        existing_norm_url = fusion._normalize_url(existing.url) if existing.url else ""
+        existing_is_poly = bool(_candidate_polymarket_items(existing))
+        if (
+            conflicted_poly_urls
+            and cand_norm_url
+            and cand_norm_url in conflicted_poly_urls
+            and cand_norm_url == existing_norm_url
+        ):
+            if bool(cand_eid) != bool(existing_eid):
+                continue
+            if cand_is_poly != existing_is_poly:
+                continue
+            if cand_is_poly and existing_is_poly:
+                if not cand_eid and not existing_eid:
+                    return True
+                continue
+        if existing.candidate_id == candidate.candidate_id:
+            return True
+        if candidate.url and existing.url == candidate.url:
+            return True
+        if (
+            not cand_is_poly
+            and not existing_is_poly
+            and cand_norm_url
+            and existing_norm_url == cand_norm_url
+            and candidate.source == existing.source
+        ):
+            return True
+        if cand_text:
+            existing_text = " ".join((existing.title, existing.snippet)).strip()
+            if existing_text and dedupe.hybrid_similarity(cand_text, existing_text) >= 0.7:
+                return True
+    return False
 
 
 def merge_drill_report(
@@ -4086,25 +4312,139 @@ def merge_drill_report(
         if original_summary:
             break
 
+    all_poly_eids = fusion.polymarket_event_ids_by_url(
+        item
+        for cand in (*merged.ranked_candidates, *drill_report.ranked_candidates)
+        for item in _candidate_polymarket_items(cand)
+    )
+    conflicted_poly_urls = {
+        url for url, eids in all_poly_eids.items() if len(eids) > 1
+    }
     unrelated_candidate_indexes = {
         candidate.candidate_id: index
         for index, candidate in enumerate(unrelated_candidates)
     }
+    unrelated_poly_event_indexes: dict[str, int] = {}
+    unrelated_poly_idless_url_indexes: dict[str, int] = {}
+    unrelated_source_url_indexes: dict[tuple[str, str], int] = {}
+    for index, candidate in enumerate(unrelated_candidates):
+        eid = _candidate_polymarket_event_id(candidate)
+        is_poly = bool(_candidate_polymarket_items(candidate))
+        norm = fusion._normalize_url(candidate.url) if candidate.url else ""
+        if eid:
+            unrelated_poly_event_indexes.setdefault(eid, index)
+        elif is_poly:
+            if norm:
+                unrelated_poly_idless_url_indexes.setdefault(norm, index)
+        elif norm:
+            unrelated_source_url_indexes.setdefault((candidate.source, norm), index)
+    selected_base_candidates = [
+        copy.deepcopy(candidate)
+        for candidate in merged.ranked_candidates
+        if candidate.candidate_id in selected_candidate_ids
+    ]
+    selected_base_by_id = {
+        candidate.candidate_id: candidate for candidate in selected_base_candidates
+    }
+    used_candidate_ids = {candidate.candidate_id for candidate in unrelated_candidates}
+
+    def _disambiguate_candidate_id(
+        candidate: schema.Candidate,
+        cand_eid: str,
+        reserved_ids: set[str],
+    ) -> None:
+        base_id = candidate.candidate_id
+        poly_items = _candidate_polymarket_items(candidate)
+        if poly_items:
+            disambiguated = fusion.polymarket_url_key(poly_items[0], all_poly_eids)
+            if disambiguated and disambiguated not in reserved_ids:
+                candidate.candidate_id = disambiguated
+                return
+        if cand_eid:
+            with_eid = f"{base_id}\x1fevent={cand_eid}"
+            if with_eid not in reserved_ids:
+                candidate.candidate_id = with_eid
+                return
+        source_tag = (candidate.source or "item").strip() or "item"
+        with_source = f"{base_id}\x1fsource={source_tag}"
+        if with_source not in reserved_ids:
+            candidate.candidate_id = with_source
+            return
+        suffix = 2
+        while f"{with_source}:{suffix}" in reserved_ids:
+            suffix += 1
+        candidate.candidate_id = f"{with_source}:{suffix}"
+
     focused_candidates: list[schema.Candidate] = []
-    for candidate in [
-        *copy.deepcopy(drill_report.ranked_candidates),
-        *[
-            copy.deepcopy(candidate)
-            for candidate in merged.ranked_candidates
-            if candidate.candidate_id in selected_candidate_ids
-        ],
+    for from_drill, candidate in [
+        *((True, copy.deepcopy(c)) for c in drill_report.ranked_candidates),
+        *((False, c) for c in selected_base_candidates),
     ]:
-        unrelated_index = unrelated_candidate_indexes.get(candidate.candidate_id)
+        cand_eid = _candidate_polymarket_event_id(candidate)
+        cand_is_poly = bool(_candidate_polymarket_items(candidate))
+        cand_norm_url = fusion._normalize_url(candidate.url) if candidate.url else ""
+        unrelated_index = unrelated_poly_event_indexes.get(cand_eid) if cand_eid else None
+        if unrelated_index is None:
+            by_id = unrelated_candidate_indexes.get(candidate.candidate_id)
+            if by_id is not None:
+                unrelated_cand = unrelated_candidates[by_id]
+                unrelated_eid = _candidate_polymarket_event_id(unrelated_cand)
+                unrelated_is_poly = bool(_candidate_polymarket_items(unrelated_cand))
+                if not _polymarket_candidates_conflict(candidate, unrelated_cand) and not (
+                    cand_norm_url in conflicted_poly_urls
+                    and (
+                        bool(cand_eid) != bool(unrelated_eid)
+                        or cand_is_poly != unrelated_is_poly
+                    )
+                ):
+                    unrelated_index = by_id
+        if unrelated_index is None and cand_norm_url:
+            if not cand_is_poly:
+                unrelated_index = unrelated_source_url_indexes.get(
+                    (candidate.source, cand_norm_url)
+                )
+            elif not cand_eid:
+                unrelated_index = unrelated_poly_idless_url_indexes.get(cand_norm_url)
         if unrelated_index is not None:
-            candidate.cluster_id = unrelated_candidates[unrelated_index].cluster_id
+            existing_unrelated = unrelated_candidates[unrelated_index]
+            candidate.candidate_id = existing_unrelated.candidate_id
+            candidate.cluster_id = existing_unrelated.cluster_id
             unrelated_candidates[unrelated_index] = candidate
             continue
-        if not _candidate_is_duplicate(candidate, focused_candidates):
+        if not _candidate_is_duplicate(
+            candidate,
+            focused_candidates,
+            conflicted_poly_urls=conflicted_poly_urls,
+        ):
+            reserved_ids = (
+                used_candidate_ids
+                | {
+                    base_cand.candidate_id
+                    for base_cand in selected_base_candidates
+                    if not _candidate_is_duplicate(
+                        base_cand,
+                        [candidate],
+                        conflicted_poly_urls=conflicted_poly_urls,
+                    )
+                }
+                if from_drill
+                else used_candidate_ids
+            )
+            base_collision = selected_base_by_id.get(candidate.candidate_id) if from_drill else None
+            if base_collision is not None and (
+                _polymarket_candidates_conflict(candidate, base_collision)
+                or (
+                    cand_norm_url in conflicted_poly_urls
+                    and (
+                        bool(cand_eid) != bool(_candidate_polymarket_event_id(base_collision))
+                        or cand_is_poly != bool(_candidate_polymarket_items(base_collision))
+                    )
+                )
+            ):
+                _disambiguate_candidate_id(candidate, cand_eid, reserved_ids)
+            if candidate.candidate_id in used_candidate_ids:
+                _disambiguate_candidate_id(candidate, cand_eid, reserved_ids)
+            used_candidate_ids.add(candidate.candidate_id)
             focused_candidates.append(candidate)
 
     primary_cluster = matched_clusters[0]
@@ -4148,10 +4488,15 @@ def merge_drill_report(
         new_items = drill_report.items_by_source.get(source, [])
         # Collapse exact URL matches first, preferring the drill's copy (it
         # carries fresh transcripts/comments); fuzzy dedupe alone keeps both
-        # when enrichment changed the text substantially.
-        new_urls = {item.url for item in new_items if item.url}
-        kept_old = [item for item in old_items if not (item.url and item.url in new_urls)]
-        combined = dedupe.dedupe_items([*copy.deepcopy(new_items), *kept_old])
+        # when enrichment changed the text substantially. For Polymarket,
+        # delegate to dedupe_items so distinct event_ids sharing a reused slug
+        # stay separate while same-event matched bundles merge coherently.
+        if source == "polymarket":
+            combined = dedupe.dedupe_items([*copy.deepcopy(new_items), *old_items])
+        else:
+            new_urls = {item.url for item in new_items if item.url}
+            kept_old = [item for item in old_items if not (item.url and item.url in new_urls)]
+            combined = dedupe.dedupe_items([*copy.deepcopy(new_items), *kept_old])
         old_unique = dedupe.dedupe_items(old_items)
         new_item_count += max(0, len(combined) - len(old_unique))
         merged_items[source] = combined
@@ -4591,7 +4936,8 @@ def _finalize_items_by_source(
                     config.get("SCRAPECREATORS_API_KEY")
                     if config and env.is_youtube_sc_available(config) else None
                 )
-                with youtube_yt.sc_spend_until(
+                with youtube_yt.ssh_host_scope(config.get("LAST30DAYS_YOUTUBE_SSH_HOST")), \
+                     youtube_yt.sc_spend_until(
                     lambda: _research_stopped(config),
                     cancel=cancel,
                     deadline=finalization_deadline,
@@ -5332,6 +5678,17 @@ def _apply_hiring_signal_gate(
     return summary
 
 
+def _mean_source_weight(weights: Mapping[str, float]) -> float:
+    """Return the mean positive weight in ``weights``, or 1.0 when empty.
+
+    Post-plan source injectors add sources onto an already-normalized map whose
+    values sum to 1.0; inserting at the mean prevents a raw 1.0 entry from
+    halving every planned source on renormalization.
+    """
+    positive = [w for w in weights.values() if w > 0]
+    return (sum(positive) / len(positive)) if positive else 1.0
+
+
 def _ensure_devto_in_plan(plan: schema.QueryPlan, available: list[str]) -> None:
     """Give an activated dev.to source the primary subquery.
 
@@ -5346,7 +5703,7 @@ def _ensure_devto_in_plan(plan: schema.QueryPlan, available: list[str]) -> None:
     if not any("devto" in subquery.sources for subquery in plan.subqueries):
         plan.subqueries[0].sources.append("devto")
     if "devto" not in plan.source_weights:
-        plan.source_weights["devto"] = 1.0
+        plan.source_weights["devto"] = _mean_source_weight(plan.source_weights)
         plan.source_weights = planner._normalize_weights(plan.source_weights)
 
 
@@ -5434,8 +5791,9 @@ def _ensure_unplanned_lanes_in_host_plan(
     if not missing:
         return
     plan.subqueries[0].sources.extend(missing)
+    default_weight = _mean_source_weight(plan.source_weights)
     for source in missing:
-        plan.source_weights.setdefault(source, 1.0)
+        plan.source_weights.setdefault(source, default_weight)
     plan.source_weights = planner._normalize_weights(plan.source_weights)
     log.source_log(
         "Planner",
@@ -5466,7 +5824,7 @@ def _ensure_company_jobs_in_host_plan(
     if any("jobs" in subquery.sources for subquery in plan.subqueries):
         return
     plan.subqueries[0].sources.append("jobs")
-    plan.source_weights.setdefault("jobs", 1.0)
+    plan.source_weights.setdefault("jobs", _mean_source_weight(plan.source_weights))
     plan.source_weights = planner._normalize_weights(plan.source_weights)
     log.source_log(
         "Planner",
@@ -5560,7 +5918,8 @@ def _ensure_jobs_in_plan(
     if not (explicit or _company_topic_likely(topic)):
         return
     if "jobs" not in plan.source_weights:
-        plan.source_weights["jobs"] = 1.0
+        plan.source_weights["jobs"] = _mean_source_weight(plan.source_weights)
+        plan.source_weights = planner._normalize_weights(plan.source_weights)
     for subquery in plan.subqueries:
         if "jobs" not in subquery.sources:
             subquery.sources.append("jobs")
@@ -5592,17 +5951,23 @@ def _ensure_perplexity_in_plan(
         ]
         if sources:
             retained.append(replace(subquery, sources=sources))
+    perplexity_weight = (
+        sum(sq.weight for sq in retained) / len(retained)
+        if retained else 1.0
+    )
     retained.append(
         schema.SubQuery(
             label="deep-research" if force else "perplexity-whole-topic",
             search_query=topic,
             ranking_query=f"What current source-grounded evidence matters for {topic}?",
             sources=["perplexity"],
-            weight=1.0,
+            weight=perplexity_weight,
         ),
     )
     plan.subqueries = planner._normalize_subquery_weights(retained)
-    plan.source_weights.setdefault("perplexity", 1.0)
+    plan.source_weights.setdefault(
+        "perplexity", _mean_source_weight(plan.source_weights),
+    )
     plan.source_weights = planner._normalize_weights(plan.source_weights)
 
 
@@ -5681,9 +6046,16 @@ def _is_rate_limit_error(exc: Exception) -> bool:
 class SourceRunError(RuntimeError):
     """Source-specific failure that survived a module's fallback logic."""
 
-    def __init__(self, message: str, state: schema.RunOutcomeState | None = None):
+    def __init__(
+        self,
+        message: str,
+        state: schema.RunOutcomeState | None = None,
+        lane_notes: Iterable[str] = (),
+    ):
         super().__init__(message)
         self.outcome_state = state or http.classify_failure(message=message)
+        # Display notes the lane observed. They never decide the state or the reason.
+        self.lane_notes = tuple(dict.fromkeys(lane_notes))
 
 
 def _classify_source_failure(exc: Exception) -> tuple[schema.RunOutcomeState, bool]:
@@ -5817,6 +6189,41 @@ def _with_reddit_lane_notes(artifact: dict[str, Any], notes: list[str]) -> dict[
     return artifact
 
 
+def _record_reddit_exception_notes(
+    bundle: schema.RetrievalBundle, source: str, exc: BaseException,
+) -> None:
+    """Keep the lane notes a failed Reddit stream carried, so the final report can show them."""
+    if source != "reddit":
+        return
+    known = reddit_keyless.searxng_note_texts()
+    for note in getattr(exc, "lane_notes", ()):
+        if note in known:
+            bundle.record_detail(source, note)
+
+
+def _attach_reddit_lane_notes(
+    bundle: schema.RetrievalBundle,
+    source_status: dict[str, schema.SourceOutcome],
+) -> None:
+    """Show the run's observed SearXNG notes on Reddit's final failure detail.
+
+    The bundle keeps a hard failure's own detail and drops the staged notes, and between
+    streams it keeps whichever failure outranks the others. So the notes stay as separate
+    data in ``detail_by_source`` until the winning outcome is chosen and classified. Only
+    then are the missing ones added after the winner's own reason. The state, the reason
+    and ``errors_by_source`` are never touched. A delivered or empty outcome already shows
+    its notes and is left alone.
+    """
+    outcome = source_status.get("reddit")
+    if outcome is None or not outcome.detail or outcome.state in (health.OK, schema.NO_RESULTS):
+        return
+    known = reddit_keyless.searxng_note_texts()
+    seen = (bundle.detail_by_source.get("reddit") or "").split("; ")
+    missing = [note for note in dict.fromkeys(seen) if note in known and note not in outcome.detail]
+    if missing:
+        outcome.detail = "; ".join([outcome.detail, *missing])
+
+
 def _reddit_sc_incomplete_notes(result: Any) -> list[str]:
     """Extract deadline-incompleteness notes from a ScrapeCreators Reddit result."""
     if not isinstance(result, dict):
@@ -5842,6 +6249,24 @@ def _outcome_artifact(
             "attempted": attempted,
         }
     }
+
+
+def _captured_failures_are_only_timeouts() -> bool:
+    """True when nothing is captured, or every captured failure is a timeout.
+
+    A timeout's own note is then the more specific account of the same failure. A failure of
+    another kind, such as a 429, keeps its priority and its kind through the stream resolver.
+    """
+    return all(failure.outcome_state == health.TIMEOUT for failure in http.captured_failures())
+
+
+def _reddit_timeout_artifact() -> dict[str, Any]:
+    # Give the stream resolver first choice of any recorded transport failure.
+    if http.has_captured_failures():
+        return {}
+    return _outcome_artifact(
+        health.TIMEOUT, "Reddit ran out of search time before it found threads",
+    )
 
 
 def _result_outcome_artifact(source: str, result: Any) -> dict[str, Any]:
@@ -6381,6 +6806,8 @@ def _run_supplemental_searches(
         xapi_token = config.get("X_BEARER_TOKEN") or ""
         xapi_deadline = supplemental_deadline
 
+        xapi_fatal_payment = False
+
         def _xapi_lane_receipt(lane_warnings: list[str]) -> None:
             # A deadline stop is incomplete coverage, reported in
             # report.warnings (the x_partial_coverage artifact), never a
@@ -6391,24 +6818,53 @@ def _run_supplemental_searches(
                 if line not in sink:
                     sink.append(line)
 
+        def _record_xapi_lane_errors(lane: str, lane_errors: list[str]) -> bool:
+            nonlocal xapi_fatal_payment
+            if not lane_errors:
+                return False
+            detail = "; ".join(lane_errors[:3])
+            if len(lane_errors) > 3:
+                detail += f" (+{len(lane_errors) - 3} more)"
+            winning_state = min(
+                (http.classify_failure(message=err) for err in lane_errors),
+                key=lambda st: _FAILURE_SPECIFICITY.get(st, 9),
+            )
+            if winning_state == health.AUTH_FAILED:
+                return True
+            if winning_state == health.PAYMENT_REQUIRED:
+                xapi_fatal_payment = True
+            bundle.record_failure(
+                x_slug,
+                winning_state,
+                f"Phase 2 {lane}-lane: {detail}",
+                attempted=True,
+            )
+            return False
+
         def _from_lane(hs: list, count: int, and_topic: bool = False) -> tuple[list, bool]:
+            if xapi_fatal_payment:
+                return [], False
             # x_api.search_handles doesn't support and_topic; topic ranks only
             lane_warnings: list[str] = []
+            lane_errors: list[str] = []
             items = x_api.search_handles(
                 hs, topic, from_date, to_date, count_per=count, token=xapi_token,
-                deadline=xapi_deadline, warnings=lane_warnings, cancel=cancel,
+                deadline=xapi_deadline, warnings=lane_warnings, errors=lane_errors, cancel=cancel,
             )
             _xapi_lane_receipt(lane_warnings)
-            return items, False
+            return items, _record_xapi_lane_errors("FROM", lane_errors)
 
         def _about_lane(hs: list, count: int) -> tuple[list, bool]:
+            if xapi_fatal_payment:
+                return [], False
             lane_warnings: list[str] = []
+            lane_errors: list[str] = []
             items = x_api.search_mentions(
                 hs, from_date, to_date, topic=topic, count_per=count, token=xapi_token,
-                deadline=xapi_deadline, warnings=lane_warnings, cancel=cancel,
+                deadline=xapi_deadline, warnings=lane_warnings, errors=lane_errors, cancel=cancel,
             )
             _xapi_lane_receipt(lane_warnings)
-            return items, False
+            return items, _record_xapi_lane_errors("ABOUT", lane_errors)
     elif primary == "xquik":
         xquik_token = env.get_xquik_token(config)
 
@@ -6843,6 +7299,7 @@ def _retry_thin_sources(
                 ) = future.result(timeout=0)
             except Exception as exc:
                 print(f"[Pipeline] Retry failed for {source}: {type(exc).__name__}: {exc}", file=sys.stderr)
+                _record_reddit_exception_notes(bundle, source, exc)
                 state, attempted = _classify_source_failure(exc)
                 bundle.record_failure(
                     source,
@@ -7423,6 +7880,9 @@ def _attempt_x_backend_memo(
     return items, err, err_state
 
 
+_SSH_HOST_UNSET: Any = object()
+
+
 def _fetch_youtube_stream(
     yt_query: str,
     from_date: str,
@@ -7432,12 +7892,19 @@ def _fetch_youtube_stream(
     *,
     has_ytdlp: bool,
     freshness_mode: str | None = None,
+    ssh_host: Any = _SSH_HOST_UNSET,
 ) -> tuple[list[dict], dict]:
     """Search, backfill, transcribe, and comment-enrich one YouTube query."""
     # An abandoned lane keeps running after the report is saved; once the
     # run is over, every ScrapeCreators call in it is wasted credit (#1315).
     deadline = config.get("_research_deadline")
-    with youtube_yt.sc_spend_until(
+    scoped_ssh = (
+        config.get("LAST30DAYS_YOUTUBE_SSH_HOST")
+        if ssh_host is _SSH_HOST_UNSET
+        else ssh_host
+    )
+    with youtube_yt.ssh_host_scope(scoped_ssh), \
+         youtube_yt.sc_spend_until(
         lambda: _research_stopped(config),
         cancel=config.get("_enrich_cancel"),
         deadline=deadline,
@@ -7692,6 +8159,7 @@ def _retrieve_stream_impl(
         reddit_query = raw_topic or subquery.search_query
         dedicated_subreddits = config.get("_dedicated_subreddits") or None
         has_sc_key = bool(config.get("SCRAPECREATORS_API_KEY"))
+        research_deadline = config.get("_research_deadline")
         if env.reddit_scrapecreators_primary(config):
             # env.REDDIT_BACKEND_PIN_VAR=scrapecreators: SC primary, public fallback
             if config.get("_reddit_envelope") is not None:
@@ -7702,7 +8170,7 @@ def _retrieve_stream_impl(
                 )
             primary_failure: Exception | None = None
             try:
-                with reddit.sc_spend_until(
+                with http.tee_failures() as sc_primary_failures, reddit.sc_spend_until(
                     deadline=config.get("_research_deadline"),
                     cancel=config.get("_enrich_cancel"),
                 ):
@@ -7728,6 +8196,15 @@ def _retrieve_stream_impl(
                         f"[Reddit] ScrapeCreators primary incomplete with no usable items "
                         f"({primary_failure}), using public fallback\n"
                     )
+                elif sc_primary_failures:
+                    primary_failure = min(
+                        sc_primary_failures,
+                        key=lambda f: _FAILURE_SPECIFICITY.get(f.outcome_state, 9),
+                    )
+                    sys.stderr.write(
+                        f"[Reddit] ScrapeCreators primary failed with no usable items "
+                        f"({primary_failure}), using public fallback\n"
+                    )
                 else:
                     sys.stderr.write(
                         "[Reddit] ScrapeCreators primary returned no items, "
@@ -7739,25 +8216,48 @@ def _retrieve_stream_impl(
                     f"[Reddit] ScrapeCreators primary failed "
                     f"({type(exc).__name__}: {exc}), using public fallback\n"
                 )
-            public_failure: Exception | None = None
-            try:
-                public_results = reddit_public.search_reddit_public(
-                    reddit_query, from_date, to_date, depth=depth,
-                    subreddits=subreddits,
+            # Leave time to hand back the public lane's partial results. The paid primary has
+            # spent part of the budget, so size the margin from what is left now (as the
+            # public-first lane does) rather than a flat 20s that can swallow a short budget.
+            public_deadline = (
+                research_deadline - min(
+                    REDDIT_LANE_RETURN_MARGIN_SECONDS,
+                    max(0.0, research_deadline - time.monotonic()) * 0.15,
                 )
+                if research_deadline is not None else None
+            )
+            public_failure: Exception | None = None
+            fallback_notes: list[str] = []
+            try:
+                with reddit_keyless.lane_deadline(public_deadline), \
+                        reddit_keyless.lane_notes() as fallback_notes, \
+                        reddit_keyless.lane_paths() as lane_paths:
+                    public_results = reddit_public.search_reddit_public(
+                        reddit_query, from_date, to_date, depth=depth,
+                        subreddits=subreddits, config=config,
+                    )
                 if public_results:
                     if primary_failure is not None:
                         state = (
-                            health.TIMEOUT
-                            if isinstance(primary_failure, TimeoutError)
-                            else reddit.classify_run_failure(str(primary_failure))
+                            getattr(primary_failure, "outcome_state", None)
+                            or (
+                                health.TIMEOUT
+                                if isinstance(primary_failure, TimeoutError)
+                                else reddit.classify_run_failure(str(primary_failure))
+                            )
                         )
-                        return public_results, _outcome_artifact(
+                        if state == health.RATE_LIMITED:
+                            # ScrapeCreators 429 does not mean reddit.com's public
+                            # fallback is rate-limited; reporting RATE_LIMITED here
+                            # puts "reddit" in rate_limited_sources and skips later
+                            # subqueries before they can use the working fallback.
+                            state = health.PARTIAL
+                        return public_results, _with_reddit_lane_notes(_outcome_artifact(
                             state,
                             f"Reddit primary failed; public fallback returned "
                             f"{len(public_results)} items: {primary_failure}",
-                        )
-                    return public_results, {}
+                        ), fallback_notes)
+                    return public_results, _with_reddit_lane_notes({}, fallback_notes)
                 sys.stderr.write(
                     "[Reddit] Public fallback returned no items after "
                     "ScrapeCreators primary miss\n"
@@ -7771,15 +8271,21 @@ def _retrieve_stream_impl(
             failure = public_failure or primary_failure
             if failure is not None:
                 state = (
-                    health.TIMEOUT
-                    if isinstance(failure, TimeoutError)
-                    else reddit.classify_run_failure(str(failure))
+                    getattr(failure, "outcome_state", None)
+                    or (
+                        health.TIMEOUT
+                        if isinstance(failure, TimeoutError)
+                        else reddit.classify_run_failure(str(failure))
+                    )
                 )
                 raise SourceRunError(
                     f"Reddit primary and fallback produced no results after failure: {failure}",
                     state,
+                    lane_notes=fallback_notes,
                 )
-            return [], {}
+            if lane_paths.get("web") == health.TIMEOUT or reddit_keyless._out_of_time(public_deadline):
+                return [], _with_reddit_lane_notes(_reddit_timeout_artifact(), fallback_notes)
+            return [], _with_reddit_lane_notes({}, fallback_notes)
 
         # Default: public Reddit first (free). ScrapeCreators backfills when the
         # free path returns fewer than the thinness floor (env.reddit_sc_min_items:
@@ -7822,6 +8328,7 @@ def _retrieve_stream_impl(
                 public_results = reddit_public.search_reddit_public(
                     reddit_query, from_date, to_date, depth=depth,
                     subreddits=subreddits, dedicated_subreddits=dedicated_subreddits,
+                    config=config,
                 ) or []
         except Exception as exc:
             public_failure = exc
@@ -7835,19 +8342,22 @@ def _retrieve_stream_impl(
                     if isinstance(exc, TimeoutError)
                     else reddit.classify_run_failure(str(exc))
                 )
-                raise SourceRunError(f"Reddit public search failed: {exc}", state) from exc
+                raise SourceRunError(
+                    f"Reddit public search failed: {exc}", state, lane_notes=lane_notes,
+                ) from exc
             sys.stderr.write(", using ScrapeCreators backup\n")
-        free_timed_out = (
+        # An actual web cutoff outranks completed failures; running inside the
+        # return margin does not (every path may have finished and failed).
+        free_cut_off = (
+            not public_results and public_failure is None
+            and lane_paths.get("web") == health.TIMEOUT
+        )
+        free_timed_out = free_cut_off or (
             not public_results and public_failure is None
             and reddit_keyless._out_of_time(lane_deadline)
         )
         if free_timed_out and not has_sc_key:
-            # The lane started with no budget left (queued behind slower
-            # streams): that is a timeout, not a topic nobody posted about.
-            return [], _outcome_artifact(
-                health.TIMEOUT,
-                "Reddit had no time left in the run's budget before it found threads",
-            )
+            return [], _with_reddit_lane_notes(_reddit_timeout_artifact(), lane_notes)
         free_failed = (
             not public_results and public_failure is None
             and reddit_health.every_path_failed(lane_paths)
@@ -7855,7 +8365,9 @@ def _retrieve_stream_impl(
         if free_failed and not has_sc_key:
             # Every path Reddit was asked through refused or failed: a
             # transport failure, never a topic nobody posted about.
-            return [], _outcome_artifact(*reddit_health.failure_outcome(lane_paths))
+            return [], _with_reddit_lane_notes(
+                _outcome_artifact(*reddit_health.failure_outcome(lane_paths)), lane_notes,
+            )
         # The floor counts the free threads that are on topic for this stream,
         # the ones its relevance prune will keep. Enough of them, or no key to
         # backfill with -> done. max(min_items, 1) keeps the default
@@ -7923,25 +8435,39 @@ def _retrieve_stream_impl(
                     # A ScrapeCreators rate limit says nothing about
                     # reddit.com (and the run memo already stops a retry).
                     artifact["_source_outcome_detail_state"] = state
-                return public_results, artifact
+                return public_results, _with_reddit_lane_notes(artifact, lane_notes)
             failed_paths = reddit_health.failures(lane_paths)
-            return public_results, _outcome_artifact(
+            return public_results, _with_reddit_lane_notes(_outcome_artifact(
                 state,
                 f"Reddit backup failed after {len(public_results)} public items: {exc}"
                 + "".join(f"; {failed}" for failed in failed_paths),
-            )
+            ), lane_notes)
         merged = _merge_reddit_items(public_results, sc_items)
         sc_notes = _reddit_sc_incomplete_notes(result)
-        if not merged and free_failed:
-            return [], _outcome_artifact(*reddit_health.failure_outcome(lane_paths))
-        if not merged and isinstance(result, dict) and result.get("incomplete"):
-            return [], _outcome_artifact(
+        backfill_timeout = (
+            _outcome_artifact(
                 health.TIMEOUT,
                 str(
                     result.get("incomplete_note")
                     or "Reddit ScrapeCreators backfill timed out before completing"
                 ),
             )
+            if isinstance(result, dict) and result.get("incomplete") else None
+        )
+        if not merged and free_cut_off:
+            # Both stages ran out of time, so the paid backfill's own note is the specific
+            # one. Only a captured failure of another kind is left to the stream resolver.
+            if backfill_timeout is not None and _captured_failures_are_only_timeouts():
+                return [], _with_reddit_lane_notes(backfill_timeout, lane_notes)
+            return [], _with_reddit_lane_notes(_reddit_timeout_artifact(), lane_notes)
+        if not merged and free_failed:
+            return [], _with_reddit_lane_notes(
+                _outcome_artifact(*reddit_health.failure_outcome(lane_paths)), lane_notes,
+            )
+        if not merged and backfill_timeout is not None:
+            return [], _with_reddit_lane_notes(backfill_timeout, lane_notes)
+        if not merged and free_timed_out:
+            return [], _with_reddit_lane_notes(_reddit_timeout_artifact(), lane_notes)
         if public_failure is not None:
             state = (
                 health.TIMEOUT
@@ -8235,30 +8761,33 @@ def _retrieve_stream_impl(
         # Use raw_topic so expand_youtube_queries() generates diverse variants
         # from the original user topic, not the planner's narrowed search_query.
         yt_query = raw_topic or subquery.search_query
-        has_ytdlp = bool(which("yt-dlp"))
-        # One memo unit covers yt-dlp search, the ScrapeCreators fallback and
-        # merge, transcripts, and comments, so subquery streams and the
-        # thin-source retry share one fetch (hosts without yt-dlp included).
-        return fetch_memo.fetch_once(
-            (
-                "youtube", yt_query, from_date, to_date, depth, freshness_mode, has_ytdlp,
-                env.is_youtube_sc_available(config),
-                env.youtube_sc_min_items(config),
-                env.is_youtube_comments_available(config),
-                _comparison_entity_count(config),
-            ),
-            lambda: _fetch_youtube_stream(
-                yt_query, from_date, to_date, depth, config, has_ytdlp=has_ytdlp,
-                freshness_mode=freshness_mode,
-            ),
-            timeout=_memo_wait_seconds(config),
-            cacheable=_clean_stream_result,
-            cancel=config.get("_enrich_cancel"),
-        )
+        has_ytdlp, ssh_host = _resolve_ytdlp(config)
+        with youtube_yt.ssh_host_scope(ssh_host):
+            # One memo unit covers yt-dlp search, the ScrapeCreators fallback and
+            # merge, transcripts, and comments, so subquery streams and the
+            # thin-source retry share one fetch (hosts without yt-dlp included).
+            return fetch_memo.fetch_once(
+                (
+                    "youtube", yt_query, from_date, to_date, depth, freshness_mode, has_ytdlp,
+                    ssh_host,
+                    env.is_youtube_sc_available(config),
+                    env.is_youtube_comments_available(config),
+                    env.youtube_sc_min_items(config),
+                    _comparison_entity_count(config),
+                ),
+                lambda: _fetch_youtube_stream(
+                    yt_query, from_date, to_date, depth, config, has_ytdlp=has_ytdlp,
+                    freshness_mode=freshness_mode, ssh_host=ssh_host,
+                ),
+                timeout=_memo_wait_seconds(config),
+                cacheable=_clean_stream_result,
+                cancel=config.get("_enrich_cancel"),
+            )
     if source == "tiktok":
         # Use raw_topic so expand_tiktok_queries() generates diverse variants
         # from the original user topic, not the planner's narrowed search_query.
         tiktok_query = raw_topic or subquery.search_query
+        has_ytdlp, ssh_host = _resolve_ytdlp(config)
 
         def _fetch_tiktok() -> tuple[list[dict], dict]:
             # Leave time to publish collected videos before the outer stream wait expires.
@@ -8336,23 +8865,26 @@ def _retrieve_stream_impl(
                     result["error"] = tiktok.BUDGET_ERROR
             return items, _result_outcome_artifact(source, result)
 
-        return fetch_memo.fetch_once(
-            (
-                "tiktok", tiktok_query, from_date, to_date, depth,
-                bool(env.get_tiktok_token(config)),
-                tuple(tiktok_hashtags or ()), tuple(tiktok_creators or ()),
-                env.is_tiktok_comments_available(config),
-                env.is_tiktok_public_comments_on(config),
-            ),
-            _fetch_tiktok,
-            timeout=_memo_wait_seconds(config),
-            cacheable=_clean_stream_result,
-            cancel=config.get("_enrich_cancel"),
-        )
+        with youtube_yt.ssh_host_scope(ssh_host):
+            return fetch_memo.fetch_once(
+                (
+                    "tiktok", tiktok_query, from_date, to_date, depth,
+                    bool(env.get_tiktok_token(config)),
+                    has_ytdlp, ssh_host,
+                    tuple(tiktok_hashtags or ()), tuple(tiktok_creators or ()),
+                    env.is_tiktok_comments_available(config),
+                    env.is_tiktok_public_comments_on(config),
+                ),
+                _fetch_tiktok,
+                timeout=_memo_wait_seconds(config),
+                cacheable=_clean_stream_result,
+                cancel=config.get("_enrich_cancel"),
+            )
     if source == "instagram":
         # Use raw_topic so expand_instagram_queries() generates diverse variants
         # from the original user topic, not the planner's narrowed search_query.
         ig_query = raw_topic or subquery.search_query
+        has_ytdlp, ssh_host = _resolve_ytdlp(config)
         ig_deadline = _research_deadline(config, STREAM_FUTURE_TIMEOUT_SECONDS)
         # Leave time to publish collected reels before the outer stream wait expires.
         remaining = max(0, ig_deadline - time.monotonic())
@@ -8388,18 +8920,20 @@ def _retrieve_stream_impl(
                 )
             return items, _result_outcome_artifact(source, result)
 
-        return fetch_memo.fetch_once(
-            (
-                "instagram", ig_query, from_date, to_date, depth,
-                bool(env.get_instagram_token(config)),
-                tuple(ig_creators or ()),
-                env.is_instagram_comments_available(config),
-            ),
-            _fetch_instagram,
-            timeout=_memo_wait_seconds(config),
-            cacheable=_clean_stream_result,
-            cancel=ig_cancel,
-        )
+        with youtube_yt.ssh_host_scope(ssh_host):
+            return fetch_memo.fetch_once(
+                (
+                    "instagram", ig_query, from_date, to_date, depth,
+                    bool(env.get_instagram_token(config)),
+                    has_ytdlp, ssh_host,
+                    tuple(ig_creators or ()),
+                    env.is_instagram_comments_available(config),
+                ),
+                _fetch_instagram,
+                timeout=_memo_wait_seconds(config),
+                cacheable=_clean_stream_result,
+                cancel=ig_cancel,
+            )
     if source == "linkedin":
         token = config.get("SCRAPECREATORS_API_KEY", "")
         result = linkedin.search_linkedin(
@@ -8588,6 +9122,10 @@ def _retrieve_stream_impl(
                     "attempted": True,
                 }
             }
+        elif result.get("outcome_state") and result.get("error"):
+            artifact = _outcome_artifact(
+                result["outcome_state"], str(result["error"]), attempted=True
+            )
         else:
             artifact = dict(_result_outcome_artifact(source, result) or {})
         # The footer needs the resolved advertiser and the pre-truncation

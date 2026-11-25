@@ -70,6 +70,17 @@ Claude Code や Codex に「プロダクトのプロモーション動画を作�
 </tr>
 <tr>
 <td align="center" valign="middle" width="25%">
+  <a href="https://www.openlux.ai/register?channel=c_n68puogw"><img src="./assets/readme/sponsors/openlux.png" width="168" alt="OpenLux ロゴ"></a><br>
+  <a href="https://www.openlux.ai/register?channel=c_n68puogw"><b>OpenLux</b></a>
+</td>
+<td>
+  <p>本プロジェクトをご支援いただいた OpenLux に感謝します！OpenLux は、世界の主要プロバイダーの先進的な AI モデルをまとめて利用できる、企業向けのオールインワン AI プラットフォームです。高速で安定したサービスと迅速な技術サポートを提供し、Claude、OpenAI、Gemini の各モデルの基本料金は、公式料金のそれぞれ 8.82%、4%、8% からです。</p>
+  <p>video-shotcraft ユーザー限定特典：紹介リンクから登録すると、クレジットのチャージが最大 7.5% オフになります！</p>
+  <p><a href="https://www.openlux.ai/register?channel=c_n68puogw">OpenLux に登録 →</a></p>
+</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="25%">
   <a href="https://aws.amazon.com/"><img src="./assets/readme/sponsors/aws.svg" width="200" alt="AWS ロゴ"></a><br>
   <a href="https://aws.amazon.com/"><b>AWS</b></a>
 </td>
@@ -300,10 +311,10 @@ BGM と既存テンプレート音声の提供元
 
 ## 💬 WeChat グループ
 
-「Vincent 的 AI 交流群 4」で、AI アプリ、プログラミング、動画制作について交流しましょう。
+「Vincent 的 AI 交流群 5」で、AI アプリ、プログラミング、動画制作について交流しましょう。
 
-<a href="assets/wechat-group.jpg?v=4"><img src="assets/wechat-group.jpg?v=4" alt="Vincent の AI WeChat グループ参加用 QR コード" width="400"></a>
+<a href="assets/wechat-group.png?v=5"><img src="assets/wechat-group.png?v=5" alt="Vincent の AI WeChat グループ参加用 QR コード" width="400"></a>
 
 WeChat で QR コードを読み取って参加できます。スマートフォンでは画像を保存し、WeChat のスキャン機能でアルバムから選んでください。
 
-この QR コードは **2026-11-28 より前**まで有効です（WeChat の表示を優先）。期限切れの場合は、[X で Vincent に連絡](https://x.com/VincentWei93)して最新の参加方法を確認してください。
+この QR コードは **2026-12-02 より前**まで有効です（WeChat の表示を優先）。期限切れの場合は、[X で Vincent に連絡](https://x.com/VincentWei93)して最新の参加方法を確認してください。

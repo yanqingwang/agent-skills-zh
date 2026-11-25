@@ -71,6 +71,17 @@
 </tr>
 <tr>
 <td align="center" valign="middle" width="25%">
+  <a href="https://www.openlux.ai/register?channel=c_n68puogw"><img src="./assets/readme/sponsors/openlux.png" width="168" alt="Логотип OpenLux"></a><br>
+  <a href="https://www.openlux.ai/register?channel=c_n68puogw"><b>OpenLux</b></a>
+</td>
+<td>
+  <p>Спасибо OpenLux за поддержку проекта! OpenLux — единая ИИ-платформа для бизнеса, которая объединяет ведущие модели крупнейших поставщиков со всего мира. Платформа предлагает быстрый и надёжный сервис и оперативную техническую поддержку. Базовые цены на модели Claude, OpenAI и Gemini могут составлять всего 8,82%, 4% и 8% от официальных тарифов соответственно.</p>
+  <p>Специальное предложение для пользователей video-shotcraft: зарегистрируйтесь по нашей реферальной ссылке и получите скидку до 7,5% на пополнение баланса!</p>
+  <p><a href="https://www.openlux.ai/register?channel=c_n68puogw">Зарегистрироваться в OpenLux →</a></p>
+</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="25%">
   <a href="https://aws.amazon.com/"><img src="./assets/readme/sponsors/aws.svg" width="200" alt="Логотип AWS"></a><br>
   <a href="https://aws.amazon.com/"><b>AWS</b></a>
 </td>
@@ -305,10 +316,10 @@ CLI поиска и загрузки Video Shotcraft реализован нез
 
 ## 💬 Сообщество WeChat
 
-Присоединяйтесь к «Vincent 的 AI 交流群 4», чтобы обсуждать приложения ИИ, программирование и создание видео.
+Присоединяйтесь к «Vincent 的 AI 交流群 5», чтобы обсуждать приложения ИИ, программирование и создание видео.
 
-<a href="assets/wechat-group.jpg?v=4"><img src="assets/wechat-group.jpg?v=4" alt="QR-код AI-сообщества Vincent в WeChat" width="400"></a>
+<a href="assets/wechat-group.png?v=5"><img src="assets/wechat-group.png?v=5" alt="QR-код AI-сообщества Vincent в WeChat" width="400"></a>
 
 Отсканируйте QR-код в WeChat. На телефоне сохраните изображение и выберите его из альбома в функции сканирования WeChat.
 
-QR-код действителен **до 2026-11-28**; ориентируйтесь на уведомление WeChat. Если срок истёк, [свяжитесь с Vincent в X](https://x.com/VincentWei93), чтобы узнать актуальный способ вступить.
+QR-код действителен **до 2026-12-02**; ориентируйтесь на уведомление WeChat. Если срок истёк, [свяжитесь с Vincent в X](https://x.com/VincentWei93), чтобы узнать актуальный способ вступить.

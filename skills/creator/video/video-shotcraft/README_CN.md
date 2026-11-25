@@ -69,6 +69,17 @@
 </tr>
 <tr>
 <td align="center" valign="middle" width="25%">
+  <a href="https://www.openlux.ai/register?channel=c_n68puogw"><img src="./assets/readme/sponsors/openlux.png" width="168" alt="OpenLux 标志"></a><br>
+  <a href="https://www.openlux.ai/register?channel=c_n68puogw"><b>OpenLux</b></a>
+</td>
+<td>
+  <p>感谢 OpenLux 赞助本项目！OpenLux 是面向企业的一站式 AI 平台，汇集全球主要供应商的领先 AI 模型，提供快速、稳定的服务和及时的技术支持。Claude、OpenAI 和 Gemini 模型的基础价格分别低至官方定价的 8.82%、4% 和 8%。</p>
+  <p>video-shotcraft 用户专享：通过我们的推荐链接注册，账户余额充值最高可享 7.5% 的折扣！</p>
+  <p><a href="https://www.openlux.ai/register?channel=c_n68puogw">立即注册 OpenLux →</a></p>
+</td>
+</tr>
+<tr>
+<td align="center" valign="middle" width="25%">
   <a href="https://aws.amazon.com/"><img src="./assets/readme/sponsors/aws.svg" width="200" alt="AWS 标志"></a><br>
   <a href="https://aws.amazon.com/"><b>AWS</b></a>
 </td>
@@ -311,10 +322,10 @@ Video Shotcraft 的搜索与下载 CLI 为独立实现。
 
 ## 💬 微信群
 
-欢迎加入「Vincent 的 AI 交流群 4」，一起交流 AI 应用、编程和视频创作。
+欢迎加入「Vincent 的 AI 交流群 5」，一起交流 AI 应用、编程和视频创作。
 
-<a href="assets/wechat-group.jpg?v=4"><img src="assets/wechat-group.jpg?v=4" alt="Vincent 的 AI 交流群 4 微信入群二维码" width="400"></a>
+<a href="assets/wechat-group.png?v=5"><img src="assets/wechat-group.png?v=5" alt="Vincent 的 AI 交流群 5 微信入群二维码" width="400"></a>
 
 用微信扫一扫加入。手机查看时，可保存图片，再在微信「扫一扫」中从相册选择。
 
-此二维码在 **2026-11-28 前**有效，以微信提示为准。若已失效，可[通过 X 联系 Vincent](https://x.com/VincentWei93)获取最新入群方式。
+此二维码在 **2026-12-02 前**有效，以微信提示为准。若已失效，可[通过 X 联系 Vincent](https://x.com/VincentWei93)获取最新入群方式。

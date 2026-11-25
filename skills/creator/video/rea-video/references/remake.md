@@ -8,19 +8,19 @@
 
 ## 先跑一条命令
 
-`rea-video remake out/ref`：静图按测得的运动重建（代码渲染镜头默认原片占位，建议交给 HTML 视频框架重做；加 `--code` 自动跑 `code-remake` 出快速草稿），`remake/results.json`（`remake-run` 生成的）和 `remake/mine.json`（用户给的或网页上手动生成的，格式 `{"results": {"镜头号": {"video": "绝对路径"}}}`）里的镜头剪进去，其余原片占位，按原时间线拼好，叠回字幕。`remake/status.md` 逐镜写了现在是怎么做的、还要做什么。每拿到一个新镜头就写进 `mine.json` 再跑一次。下面各节是每类镜头的细节。
+`rea-video remake out/ref`：静图按测得的运动重建（代码渲染镜头默认原片占位，建议让编程能力强的模型写代码重做；加 `--code` 自动跑 `code-remake` 出快速草稿），`remake/results.json`（`remake-run` 生成的）和 `remake/mine.json`（用户给的或网页上手动生成的，格式 `{"results": {"镜头号": {"video": "绝对路径"}}}`）里的镜头剪进去，其余原片占位，按原时间线拼好，叠回字幕。`remake/status.md` 逐镜写了现在是怎么做的、还要做什么。每拿到一个新镜头就写进 `mine.json` 再跑一次。下面各节是每类镜头的细节。
 
 ## 用哪个模型
 
 - 模型、整条重做还是只做 AI 镜头、换什么，都写在 `remake/intent.yaml`（见 SKILL.md「复刻」），`rea-video plan out/ref` 按它出方案。用户没说用哪个模型时，先按默认模型（MiniMax H3，或 `prefs engine` 记住的模型）出方案并在回复里说明，不要先停下来追问；用户想换模型再跑 `rea-video plan out/ref --model <id>`。
-- 报告里每个单元的提示词是草稿。按 `rea-video models <id>` 打印的写法写成最终版放进 `remake/prompts.json`：时间和镜头怎么分、参考素材怎么指代、台词和不想要的内容怎么写；首帧 / 首尾帧模式下只留运动和运镜。`rea-video plan` 会按这个模型的格式规则检查。
+- 报告里每个单元的提示词是草稿，已按该模型的镜头写法、语言、素材编号、台词音效格式排好（首帧 / 首尾帧模式下自动去掉重复的静态环境/光线描述，只留运动和运镜）。按 `rea-video models <id>` 打印的写法核对，写成最终版放进 `remake/prompts.json`（或运行 `rea-video plan out/ref --rewrite-prompts` 用配置的大模型自动重写并过校验）。`rea-video plan` 会按这个模型的格式规则检查。
 - 选帧、擦字、首尾帧怎么配：`rea-video models keyframes`。
 
 ## 各类镜头怎么复刻
 
 - **AI 类镜头**（`generate: all` 时实拍镜头也算）：连着的镜头尽量放进同一次生成。输入方式按模型能吃什么选：能吃参考视频就把这段原片擦掉字幕当 `@视频1`，模型照它的分镜和节奏出；不吃参考视频、但能一次多镜头和多图的，每个镜头给一张原片画面定构图；都不行才逐镜用首尾帧。要换进去的东西按意图里的图和描述写；其中有只靠文字描述的，多拆一次就多一次长得不一样的机会，所以尽量一次生成，图片名额不够的镜头构图写进提示词，给了参考图才会按名额拆得更细。可以通过 capsule-cinema 自动跑（会计费，先 `--dry-run`，并征得用户同意；见 `capsule-cinema.md`）。
 - **静态图推拉、静帧**：本地按测得的运动参数重建。
-- **代码渲染**：用 HTML 视频框架重做（如 HyperFrames，见 `hyperframes.md`）：切点、转场和每镜关键帧照 `video/rhythm.md`，版式、配色和元素照报告「代码合成」。`code-remake` 只是快速草稿，粒子、点云、数据可视化这类暗底图形能接近原片，插画角色的动作和形变转场出不来。要草稿时跑 `rea-video code-remake out/ref`。它按拆片包 `frames/` 里每个场景的采样点或抠图、测得的运动和背景光，写出 `out/ref/code/`（`spec.json` 每个场景一项、`render.py` 渲染器、`overlays.ass` 文字），逐场景把量和亮度对齐原片，渲染出 `code/remake.mp4`，再和原片打分。
+- **代码渲染**：让编程能力强的模型（如 Claude Opus 5.5 及以上、Gemini 4 系列）写代码重做，可以参考 HyperFrames、Remotion（见 `code-render.md`）：切点、转场和每镜关键帧照 `video/rhythm.md`，版式、配色和元素照报告「代码合成」。`code-remake` 只是快速草稿，粒子、点云、数据可视化这类暗底图形能接近原片，插画角色的动作和形变转场出不来。要草稿时跑 `rea-video code-remake out/ref`。它按拆片包 `frames/` 里每个场景的采样点或抠图、测得的运动和背景光，写出 `out/ref/code/`（`spec.json` 每个场景一项、`render.py` 渲染器、`overlays.ass` 文字），逐场景把量和亮度对齐原片，渲染出 `code/remake.mp4`，再和原片打分。
   - 往下改都从这一版开始：先改 `spec.json` 里的数（粒子数 `count`、大小 `dot`、亮度 `gain`、运动 `motion`、背景光 `glow`）；要换成新形状，就把 `points` 换成自己的点文件；要做原片没有的效果再改 `render.py`，或照着它改写成 Remotion / Three.js。改完重跑同一条命令，改过的 `spec.json` 会保留，`--reset` 才会从头重建。`python code/render.py --frame 12.5` 可以只出一帧来看。
   - 按输出里 `lowest_scenes` 的 `advice` 改，先改分数最低的场景，对照 `code/compare/compare_worst.jpg` 看。
   - 报告「代码合成」一节的每镜画面描述、`shots/` 里的元素截图和关键帧条，用来补工具测不到的东西：标注怎么入场、图形是什么含义。
