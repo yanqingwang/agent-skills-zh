@@ -5,7 +5,9 @@ from __future__ import annotations
 import math
 from collections.abc import Iterable, Mapping
 
-from . import dates, reddit_refs, relevance, schema
+from datetime import datetime, timezone
+
+from . import cjk, dates, reddit_refs, relevance, rust_accel, schema
 
 # Editorial signal-to-noise scores. Grounding (Google Search) is 1.0 baseline;
 # social platforms discounted for noise.
@@ -13,6 +15,8 @@ SOURCE_QUALITY = {
     "xiaohongshu": 0.7,
     "hackernews": 0.8,
     "devto": 0.78,
+    "v2ex": 0.72,
+    "juejin": 0.75,
     "youtube": 0.85,
     "digg": 0.85,
     "arxiv": 0.9,
@@ -197,6 +201,8 @@ ENGAGEMENT_WEIGHTS: dict[str, list[tuple[str, float]]] = {
     "instagram":        [("views", 0.50), ("likes", 0.30), ("comments", 0.20)],
     "hackernews":       [("points", 0.55), ("comments", 0.45)],
     "devto":            [("reactions", 0.60), ("comments", 0.40)],
+    "v2ex":             [("replies", 1.0)],
+    "juejin":           [("likes", 0.40), ("comments", 0.25), ("saves", 0.15), ("views", 0.20)],
     "github":           [("reactions", 0.60), ("comments", 0.40)],
     "bluesky":          [("likes", 0.40), ("reposts", 0.30), ("replies", 0.20), ("quotes", 0.10)],
     "truthsocial":      [("likes", 0.45), ("reposts", 0.30), ("replies", 0.25)],
@@ -336,6 +342,15 @@ _ENGAGEMENT_LOG_REFERENCE: dict[str, float] = {
     "threads":     9.2,  # ~log1p(10000)
     # Likes/comments/favorites on an Instagram-like feed.
     "xiaohongshu": 9.2,  # ~log1p(10000)
+    # Topic reply counts. The V2EX hot list on 2026-11-26 ran 130, 97, 81 at
+    # the top and 57 at the median, so ~150 replies is a very busy topic.
+    "v2ex":        5.0,  # ~log1p(150)
+    # Likes, comments, saves and views on the ENGAGEMENT_WEIGHTS mix. 467
+    # in-window articles across 8 topics on 2026-11-27 ran a weighted log
+    # mix of 0.76 at the median (no likes, ~35 views), 1.44 at p90, 2.86 at
+    # p99 (e.g. 8 likes, 3 comments, 4 saves, 1.2k views) and 4.08 at most,
+    # so the median article scores ~23 and the top percentile ~87.
+    "juejin":      3.3,
     # Saves on a viral pin reach ~10k.
     "pinterest":   9.2,  # ~log1p(10000)
     # Reactions run like Reddit upvotes: a viral post has ~2k.
@@ -455,6 +470,49 @@ def normalize(values: list[float | None]) -> list[int | None]:
     ]
 
 
+def _finite_number(value: object) -> float | None:
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    return numeric if math.isfinite(numeric) else None
+
+
+def _item_to_rust_signal(item: schema.SourceItem) -> dict[str, object]:
+    meta = item.metadata if isinstance(item.metadata, dict) else {}
+    eng = item.engagement if isinstance(item.engagement, dict) else {}
+    clean_eng: dict[str, float] = {}
+    for k, v in eng.items():
+        num = _finite_number(v)
+        if num is not None:
+            clean_eng[str(k)] = num
+    top_comment_score: float | None = None
+    comments = meta.get("top_comments")
+    if isinstance(comments, (list, tuple)) and comments and isinstance(comments[0], dict):
+        top_comment_score = _finite_number(comments[0].get("score"))
+    raw_hashtags = meta.get("hashtags")
+    hashtags = [str(h) for h in raw_hashtags] if isinstance(raw_hashtags, (list, tuple)) else []
+    raw_labels = meta.get("labels")
+    labels = [str(lbl) for lbl in raw_labels] if isinstance(raw_labels, (list, tuple)) else []
+    return {
+        "source": item.source,
+        "title": item.title or "",
+        "body": item.body or "",
+        "snippet": item.snippet or "",
+        "published_at": item.published_at if isinstance(item.published_at, str) else None,
+        "date_kind": "snapshot" if meta.get("date_is_snapshot") else "event",
+        "hashtags": hashtags,
+        "labels": labels,
+        "grounding": "exempt" if meta.get("grounding_exempt") else "standard",
+        "github_kind": "pull_request" if meta.get("is_pr") else "standard",
+        "engagement": clean_eng,
+        "has_stars_key": "stars" in eng,
+        "top_comment_score": top_comment_score,
+    }
+
+
 def annotate_stream(
     items: list[schema.SourceItem],
     ranking_query: "str | relevance.PreparedQuery",
@@ -463,6 +521,47 @@ def annotate_stream(
     max_days: int = 30,
 ) -> list[schema.SourceItem]:
     """Attach local scoring metadata and return items sorted by local_rank_score."""
+    mode = rust_accel.engine_mode()
+    if (mode == "rust" and items) or (mode == "auto" and len(items) >= 256):
+        raw_query = ranking_query.raw if isinstance(ranking_query, relevance.PreparedQuery) else ranking_query
+        jieba_active = cjk._jieba is not None
+        has_jieba_cjk = jieba_active and (
+            cjk.has_cjk(raw_query)
+            or any(
+                cjk.has_cjk(part)
+                for it in items
+                for part in (
+                    it.title or "",
+                    it.body or "",
+                    it.snippet or "",
+                    *(str(tag) for tag in ((it.metadata or {}).get("hashtags") or [])),
+                )
+            )
+        )
+        if not has_jieba_cjk:
+            ref_date = reference_date or datetime.now(timezone.utc).date().isoformat()
+            rust_mode = (
+                freshness_mode
+                if freshness_mode in {"strict_recent", "evergreen_ok", "balanced_recent"}
+                else "balanced_recent"
+            )
+            payload_items = [_item_to_rust_signal(item) for item in items]
+            annotated = rust_accel.annotate_stream(
+                payload_items, raw_query, rust_mode, ref_date, int(max_days)
+            )
+            if annotated is not None:
+                ordered: list[schema.SourceItem] = []
+                for entry in annotated:
+                    item = items[entry["index"]]
+                    item.local_relevance = float(entry["local_relevance"])
+                    item.freshness = int(entry["freshness"])
+                    eng_val = entry["engagement_score"]
+                    item.engagement_score = int(eng_val) if eng_val is not None else None
+                    item.source_quality = float(entry["source_quality"])
+                    item.local_rank_score = float(entry["local_rank_score"])
+                    ordered.append(item)
+                return ordered
+
     prepared_query = ranking_query if isinstance(ranking_query, relevance.PreparedQuery) else relevance.PreparedQuery(ranking_query)
     for item in items:
         eng_score = engagement_score(item)

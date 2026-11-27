@@ -67,6 +67,7 @@ from . import (
     private_files,
     proxy,
     reddit_health,
+    rust_accel,
     trustpilot,
     x_api,
 )
@@ -183,6 +184,8 @@ SOURCE_ORDER = (
     "polymarket",
     "github",
     "devto",
+    "v2ex",
+    "juejin",
     "digg",
     "techmeme",
     "arxiv",
@@ -838,6 +841,28 @@ def _devto_record(config):
     )
 
 
+def _v2ex_record(config):
+    requires = "none (public SOV2EX search and V2EX API)"
+    if "v2ex" in env.include_sources(config):
+        return _record(status=health.OK, requires=requires)
+    return _record(
+        status="opt-in", requires=requires,
+        fix="add v2ex to INCLUDE_SOURCES (or request it via --search v2ex)",
+        note="off by default",
+    )
+
+
+def _juejin_record(config):
+    requires = "none (public Juejin web API)"
+    if "juejin" in env.include_sources(config):
+        return _record(status=health.OK, requires=requires)
+    return _record(
+        status="opt-in", requires=requires,
+        fix="add juejin to INCLUDE_SOURCES (or request it via --search juejin)",
+        note="off by default",
+    )
+
+
 def _polymarket_record(config):
     return _record(status=health.OK, requires="none (public API)")
 
@@ -1270,6 +1295,8 @@ _SOURCE_BUILDERS: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
     "polymarket": _polymarket_record,
     "github": _github_record,
     "devto": _devto_record,
+    "v2ex": _v2ex_record,
+    "juejin": _juejin_record,
     "digg": _digg_record,
     "techmeme": _techmeme_record,
     "arxiv": _arxiv_record,
@@ -1822,6 +1849,7 @@ def build_report(config: Dict[str, Any]) -> Dict[str, Any]:
             "host_lane_file_ignored": bool(config.get("_X_HOST_LANE_FILE_IGNORED")),
         },
         "setup": _setup_block(config),
+        "rust_core": rust_accel.status(),
         "brief_capture_hooks": brief_hooks,
         "permissions": permissions,
         "sources": sources,
@@ -2010,6 +2038,29 @@ def render_text(report: Dict[str, Any]) -> str:
             f"permissions: {permissions['status']}"
             + (f"; browser cookies: {browser.get('status')}" if browser else "")
         )
+
+    rc = report.get("rust_core") or {}
+    if rc:
+        if rc.get("active"):
+            ver = f" v{rc['installed_version']}" if rc.get("installed_version") else ""
+            lines.append(f"compute core: rust (last30days-core{ver}, {rc.get('binary_path')})")
+        elif rc.get("mode") == "python":
+            lines.append("compute core: python (LAST30DAYS_ENGINE=python)")
+        elif rc.get("state") == "disabled_after_error":
+            detail = rc.get("detail") or "worker error"
+            lines.append(
+                f"compute core: python fallback (last30days-core disabled after runtime error: {detail})"
+            )
+        elif rc.get("binary_path"):
+            lines.append(
+                f"compute core: rust binary discovered at {rc.get('binary_path')} "
+                "(protocol not yet verified)"
+            )
+        else:
+            lines.append(
+                "compute core: python fallback (last30days-core binary not installed; "
+                "run `last30days.py setup` to install)"
+            )
 
     run_ev = report.get("run_evidence") or {}
     if run_ev.get("present") and run_ev.get("fresh"):

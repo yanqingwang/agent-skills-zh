@@ -46,6 +46,8 @@ _DISCOVERY_ENGAGEMENT_FIELDS = {
     "reddit": ("score", "num_comments"),
     "hackernews": ("points", "comments"),
     "devto": ("reactions", "comments"),
+    "v2ex": ("replies",),
+    "juejin": ("likes", "comments"),
     "digg": ("postCount", "uniqueAuthors"),
     "x": ("likes", "reposts", "replies", "quotes"),
 }
