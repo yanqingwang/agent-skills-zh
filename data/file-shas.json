@@ -1,13 +1,13 @@
 {
   "morluto/rea": {
-    ".agents/skills/reverse-engineer-anything/SKILL.md": "db669e36a38431abb7f6b42dec2e83befcce7cfb",
+    ".agents/skills/reverse-engineer-anything/SKILL.md": "47cf8bf923e98462aacf880207e8ad7c38936737",
     ".agents/skills/reverse-engineer-anything/references/android-applications.md": "b440aaab6167c943bcb7f0cb8f948631b379b0ce",
     ".agents/skills/reverse-engineer-anything/references/evidence-workflows.md": "157129ddb6cde3679f3d5ad9c110bd10cbd8308d",
-    ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "4761daa2ed02c480be3f09bee97e3c3d36fb4add",
+    ".agents/skills/reverse-engineer-anything/references/runtime-observation.md": "4522dc7453b8f70f7d4052a486e20d2604f05067",
     ".agents/skills/reverse-engineer-anything/references/connection-and-recovery.md": "f1e28dcc2e019732b9d14467cb2215f813dad4d3",
     ".agents/skills/reverse-engineer-anything/references/environments.md": "9b184c851ffb12f1be3621133db7c93aeba151d6",
     ".agents/skills/reverse-engineer-anything/references/javascript-applications.md": "209e32d7ae4b0035068f7a338ab7fa7a82ae6a1d",
-    ".agents/skills/reverse-engineer-anything/references/native-and-artifacts.md": "05072677920c5d861f2c77dd7112ce08888f7490"
+    ".agents/skills/reverse-engineer-anything/references/native-and-artifacts.md": "5b6ae5391e43d07064218fe0a55653a9bb2c0eeb"
   },
   "obra/superpowers": {
     "skills/test-driven-development/SKILL.md": "46838cc9e893c06259e3bdad0fc2425b36242f15",
@@ -107,7 +107,7 @@
     "understand-anything-plugin/skills/understand/locales/vi.md": "a77f787497c58cac2b6262781fc8a0c9558eeecc"
   },
   "mvanhorn/last30days-skill": {
-    "skills/last30days/SKILL.md": "e3fc09144cc4e8ee8c28e0cdb2f285380cbe536a",
+    "skills/last30days/SKILL.md": "2949aa4ba46188b95cadf06a3973cf3e416e82d8",
     "skills/last30days/references/agent-mode.md": "d619b025b0071f07f6dc5665baab2f96c6ec0af3",
     "skills/last30days/references/category-peers.md": "bafdfc936ab28ae6b388d6d76da54460f6a40f21",
     "skills/last30days/references/competitors.md": "eaeedaa5cf08fafe7fb2d8d8582d2d9092194071",
@@ -420,7 +420,7 @@
     "browse/sections/command-list.md": "5c125502b4700e3b31934a24a90206183d5bf407",
     "browser-skills/hackernews-frontpage/SKILL.md": "aa90258f6b9332fff82ed1903f9268181d9d7873",
     "canary/SKILL.md": "e3b23d95c6a14d2da2c78b4168369f8700d74f67",
-    "capy/skill/gstack/SKILL.md": "30729d357beb6435aa433c26cf5e542384ceb9ee",
+    "capy/skill/gstack/SKILL.md": "14c7137ac18c93cfb18f07b9626563b66b5ed937",
     "careful/SKILL.md": "f5c81f613838f1c82ab0fc507b4dd60e0459d2df",
     "codex/SKILL.md": "26425ebc04ec781905a50780eeb947212077f144",
     "codex/sections/challenge-mode.md": "e0256727a6e193a3228ceab5db391a64790e2314",
@@ -432,10 +432,10 @@
     "cso/sections/audit-phases.md": "ef80711b3fe05d61df12fde9db146961cafc7175",
     "design-consultation/SKILL.md": "38ea8c0e60842820829ac977d660bb3bea3612d7",
     "design-consultation/sections/proposal-and-preview.md": "4afffe6b752704382dfd24848683d18542f6a6fc",
-    "design-html/SKILL.md": "c33fce0f5dc37abc653cff8fcf702c08b303a8e2",
+    "design-html/SKILL.md": "7ba21d2e93dcd47c469062795062c89cdf53c1dd",
     "design-html/sections/detector-install-offer.md": "5d2bb69af7a8f578aed9e36f2d530df719af88dd",
     "design-html/sections/doctrine.md": "7ec4bdca98128fe330d2f87d07b333316760c786",
-    "design-html/sections/pretext-patterns.md": "059379350236931ad30e0c3566e31bca654fa531",
+    "design-html/sections/pretext-patterns.md": "4ecf69589f6ceb07227a01c689ccf25a2f2f01ad",
     "design-shotgun/SKILL.md": "85d5784b68c83733702be2e0ec22be28a5fbdfa8",
     "design-shotgun/sections/doctrine.md": "7ec4bdca98128fe330d2f87d07b333316760c786",
     "deslop-shared-libs/SKILL.md": "a5988668810021f95bf227e825e3f795d04a2bbd",
@@ -529,7 +529,7 @@
     "ETHOS.md": "498b19e82227cd7a814397fb88399eebdfab02af",
     "TODOS.md": "e5106940b8af28984b3dc8a94c6e62f7df757afc",
     "USING_GBRAIN_WITH_GSTACK.md": "ca3342a2e20d5066c7139b35d55944c9b6017125",
-    "agents-digest/gstack-AGENTS.md": "4ff0ee15d6ea01bf1a14a8322519ab0dd06f74a2",
+    "agents-digest/gstack-AGENTS.md": "c9ce5231fe4a46dc4e91e6463e7b4e072abc3ef2",
     "autoplan/DRIVER.md": "9da63ca57413881ce1bccf1ab65cd691bdc6576d",
     "browse/PLAN-snapshot-dropdown-interactive.md": "75356911e6e13c1803e7beed9d500837473bd018",
     "capy/skill/gstack/captain.md": "33ed43260fbfbe2e2b87827d59d943dd62a84669",
@@ -1245,6 +1245,6 @@
     "skills/reanimate/SKILL.md": "6d2b044db816f6d4c2b74d5c933d071f74178c7c"
   },
   "JuneYaooo/rea-video": {
-    "skills/rea-video/SKILL.md": "107b99e362f0652cfd02cd55bf3dccc8b9dc570d"
+    "skills/rea-video/SKILL.md": "31487de0354f0184b1442d9d27092a15c06f338d"
   }
 }
